@@ -1,0 +1,17 @@
+Package: gt
+Version: 0.0.0.9000
+Title: Build Presentation-Ready Tables Using the Grammar of Tables
+Description:  Build table output from tabular data using the Grammar of Tables
+    ethos. With this layering approach, we approach the building of table out
+    using a separation of concerns: you don't have to decide how the data gets
+    structured whilst also worrying about aesthetics.
+Authors@R: c(
+    person("Richard", "Iannone", , "rich@rstudio.com", c("aut", "cre")),
+    person("RStudio", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+URL: https://github.com/rstudio/gt
+BugReports: https://github.com/rstudio/gt/issues
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
