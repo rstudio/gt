@@ -9,6 +9,30 @@
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # The resulting object can be used
+#' # in transformations
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_column_style(
+#'     columns = 1,
+#'     property = "color",
+#'     values = "blue")
+#'
+#' # The object of this type can also be
+#' # rendered in the Viewer
+#' html_table_transformed %>%
+#'   render_table()
+#'
+#' # Once the table has been transformed
+#' # suitably, we can extract it as HTML
+#' # using `emit_html()`
+#' html_table_transformed %>%
+#'   emit_html()
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate
 #' @importFrom dplyr bind_rows inner_join
@@ -146,6 +170,20 @@ build_html_table <- function(tbl) {
 #' the individual values for the property will
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # With `add_column_style()` function,
+#' # we can manually apply a CSS style to
+#' # one or more columns
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_column_style(
+#'     columns = 1,
+#'     property = "color",
+#'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -244,6 +282,19 @@ add_column_style <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # With `add_table_style()` function,
+#' # we can manually apply a CSS style
+#' # to the <table> element
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_table_style(
+#'     property = "color",
+#'     values = "blue")
 #' @export
 add_table_style <- function(html_tbl,
                             property,
@@ -315,6 +366,19 @@ add_table_style <- function(html_tbl,
 #' the individual values for the property will
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # With `add_header_style()` function,
+#' # we can manually apply a CSS style
+#' # to the <thead> element
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_header_style(
+#'     property = "color",
+#'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -388,6 +452,19 @@ add_header_style <- function(html_tbl,
 #' the individual values for the property will
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # With `add_body_style()` function,
+#' # we can manually apply a CSS style
+#' # to the <tbody> element
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_body_style(
+#'     property = "color",
+#'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -452,6 +529,24 @@ add_body_style <- function(html_tbl,
 #' created using the \code{build_html_table()}
 #' function.
 #' @return a character object with an HTML fragment.
+#' @examples
+#' # Create an html table object using the
+#' # iris dataset
+#' html_table <- build_html_table(iris)
+#'
+#' # The resulting object can be used
+#' # in transformations
+#' html_table_transformed <-
+#'   html_table %>%
+#'   add_column_style(
+#'     columns = 1,
+#'     property = "color",
+#'     values = "blue")
+#'
+#' # We can extract the HTML from the
+#' # HTML table object using `emit_html()`
+#' html_table_transformed %>%
+#'   emit_html()
 #' @importFrom dplyr pull mutate filter
 #' @importFrom glue glue
 #' @importFrom tidyr unite
