@@ -800,7 +800,11 @@ quick_table <- function(tbl) {
       values = "1px solid #ddd") %>%
     add_table_style(
       property = "width",
-      values = "100%")
+      values = "100%") %>%
+    add_table_style(
+      property = "border-collapse",
+      value = "collapse"
+    )
 
-  emit_html(html_tbl = html_table)
+  emit_html(html_tbl = html_tbl)
 }
