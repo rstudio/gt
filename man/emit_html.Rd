@@ -12,7 +12,7 @@ created using the \code{build_html_table()}
 function.}
 }
 \value{
-an HTML table object.
+a character object with an HTML fragment.
 }
 \description{
 Take a suitably styled HTML table object and
