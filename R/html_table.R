@@ -610,18 +610,27 @@ emit_html <- function(html_tbl) {
       row  >  0 & style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
       row  >  0 & style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
 
+  # TODO: row pertaining to the <table> style will
+  # be moved into separate list component; this
+  # statement will be affected
   style_attrs_table <-
     table_content_styles %>%
     dplyr::filter(row == -3L) %>%
     dplyr::select(style_attrs) %>%
     dplyr::pull()
 
+  # TODO: row pertaining to the <thead> style will
+  # be moved into separate list component; this
+  # statement will be affected
   style_attrs_thead <-
     table_content_styles %>%
     dplyr::filter(row == -2L) %>%
     dplyr::select(style_attrs) %>%
     dplyr::pull()
 
+  # TODO: row pertaining to the <tbody> style will
+  # be moved into separate list component; this
+  # statement will be affected
   style_attrs_tbody <-
     table_content_styles %>%
     dplyr::filter(row == -1L) %>%
