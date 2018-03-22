@@ -50,6 +50,14 @@ build_html_table <- function(tbl) {
       tibble::rownames_to_column()
   }
 
+  # Automatically transform `factor` columns to
+  # `character` columns
+  tbl <-
+    tbl %>%
+    mutate_if(
+      .predicate = function(x) class(x) == "factor",
+      .funs = as.character)
+
   # Automatically select columns that are not
   # `list` columns
   tbl <-
