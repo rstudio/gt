@@ -13,8 +13,9 @@ License: MIT + file LICENSE
 Imports: 
     dplyr (>= 0.7.4),
     glue (>= 1.2.0),
+    htmltools (>= 0.3.6),
     knitr (>= 1.20),
-    magrittr,
+    magrittr (>= 1.5),
     purrr (>= 0.2.4),
     rlang (>= 0.2.0),
     stringr (>= 1.3.0),
