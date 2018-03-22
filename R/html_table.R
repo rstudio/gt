@@ -236,7 +236,7 @@ add_column_style <- function(html_tbl,
   # (3) use `NA_character_` for non-targeted columns
   if (!(property %in% colnames(html_tbl[["html_table"]]))) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(column %in% columns) %>%
@@ -253,7 +253,7 @@ add_column_style <- function(html_tbl,
   # non-targeted columns are untouched
   if (property %in% colnames(html_tbl[["html_table"]])) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(column %in% columns) %>%
@@ -263,7 +263,7 @@ add_column_style <- function(html_tbl,
       dplyr::arrange(row, column)
   }
 
-  html_tbl_style
+  html_tbl
 }
 
 
@@ -322,7 +322,7 @@ add_table_style <- function(html_tbl,
   # (3) use `NA_character_` for non-targeted elements
   if (!(property %in% colnames(html_tbl[["html_table"]]))) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -3L) %>%
@@ -339,7 +339,7 @@ add_table_style <- function(html_tbl,
   # non-targeted elements are untouched
   if (property %in% colnames(html_tbl[["html_table"]])) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -3L) %>%
@@ -349,7 +349,7 @@ add_table_style <- function(html_tbl,
       dplyr::arrange(row, column)
   }
 
-  html_tbl_style
+  html_tbl
 }
 
 
@@ -408,7 +408,7 @@ add_header_style <- function(html_tbl,
   # (3) use `NA_character_` for non-targeted elements
   if (!(property %in% colnames(html_tbl[["html_table"]]))) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -2L) %>%
@@ -425,7 +425,7 @@ add_header_style <- function(html_tbl,
   # non-targeted elements are untouched
   if (property %in% colnames(html_tbl[["html_table"]])) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -2L) %>%
@@ -435,7 +435,7 @@ add_header_style <- function(html_tbl,
       dplyr::arrange(row, column)
   }
 
-  html_tbl_style
+  html_tbl
 }
 
 
@@ -494,7 +494,7 @@ add_body_style <- function(html_tbl,
   # (3) use `NA_character_` for non-targeted elements
   if (!(property %in% colnames(html_tbl[["html_table"]]))) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -1L) %>%
@@ -511,7 +511,7 @@ add_body_style <- function(html_tbl,
   # non-targeted elements are untouched
   if (property %in% colnames(html_tbl[["html_table"]])) {
 
-    html_tbl_style <-
+    html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
           dplyr::filter(row == -1L) %>%
@@ -521,7 +521,7 @@ add_body_style <- function(html_tbl,
       dplyr::arrange(row, column)
   }
 
-  html_tbl_style
+  html_tbl
 }
 
 
@@ -705,22 +705,32 @@ emit_html <- function(html_tbl) {
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return a character object with an HTML fragment.
+#' @examples
+#' # Quickly create an html table using the
+#' # `quick_table()` with the iris dataset
+#' html <- quick_table(iris)
+#'
+#' # The resulting object is an
+#' # HTML fragment; and it can be viewed
+#' # with `render_table()`
+#' html %>% render_table()
 #' @importFrom dplyr filter pull mutate
 #' @importFrom stringr str_replace_all str_to_title
 #' @export
 quick_table <- function(tbl) {
 
-  html_table <-
-    build_html_table(tbl = tbl)
+  # With the input table, create an
+  # `html_table` object
+  html_tbl <- build_html_table(tbl = tbl)
 
   # Perform NA replacement with em dashes
-  html_table <-
-    html_table %>%
+  html_tbl[["html_table"]] <-
+    html_tbl[["html_table"]] %>%
     dplyr::mutate(content = ifelse(is.na(content) & row > 0, "&#8212", content))
 
   # Perform column name transformation
-  html_table <-
-    html_table %>%
+  html_tbl[["html_table"]] <-
+    html_tbl[["html_table"]] %>%
     dplyr::mutate(
       content = ifelse(
         row == 0,
@@ -729,7 +739,7 @@ quick_table <- function(tbl) {
 
   # Get column indices for numeric columns
   numeric_columns <-
-    html_table %>%
+    html_tbl[["html_table"]] %>%
     dplyr::filter(row > 0) %>%
     dplyr::filter(type %in% c("integer", "numeric")) %>%
     dplyr::pull(column) %>%
@@ -737,7 +747,7 @@ quick_table <- function(tbl) {
 
   # Get column indices for character-based columns
   character_columns <-
-    html_table %>%
+    html_tbl[["html_table"]] %>%
     dplyr::filter(row > 0) %>%
     dplyr::filter(type == "character") %>%
     dplyr::pull(column) %>%
@@ -746,8 +756,8 @@ quick_table <- function(tbl) {
   # Align text for any numeric columns to the right
   if (length(numeric_columns) > 0) {
 
-    html_table <-
-      html_table %>%
+    html_tbl <-
+      html_tbl %>%
       add_column_style(
         columns = numeric_columns,
         property = "text-align",
@@ -757,16 +767,16 @@ quick_table <- function(tbl) {
   # Align text for any character-based columns to the left
   if (length(character_columns) > 0) {
 
-    html_table <-
-      html_table %>%
+    html_tbl <-
+      html_tbl %>%
       add_column_style(
         columns = character_columns,
         property = "text-align",
         values = "left")
   }
 
-  html_table <-
-    html_table %>%
+  html_tbl <-
+    html_tbl %>%
     add_column_style(
       property = "padding",
       values = "5px") %>%
