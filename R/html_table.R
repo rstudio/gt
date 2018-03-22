@@ -2,14 +2,13 @@
 #'
 #' Create an HTML table object such that we can
 #' perform styling transformations before transforming
-#' the entire object to an HTML fragment (for
-#' inclusion into the email message body). This is
+#' the entire object to an HTML fragment. This is
 #' the first step in the \code{build_html_table()} ->
 #' \code{add_column_style()} -> \code{emit_html()}
 #' pattern.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
-#' @return an HTML table object.
+#' @return an object of class \code{html_table}.
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate
 #' @importFrom dplyr bind_rows inner_join
@@ -104,12 +103,21 @@ build_html_table <- function(tbl) {
       by = "column")
 
   # Bind rows from `table_heading` and `table_body`
-  dplyr::bind_rows(
-    table_table,
-    table_thead,
-    table_tbody,
-    table_heading,
-    table_body)
+  html_table <-
+    dplyr::bind_rows(
+      table_table,
+      table_thead,
+      table_tbody,
+      table_heading,
+      table_body)
+
+  # Create the list object for the html table
+  html_table <- list(html_table = html_table)
+
+  # Apply the `html_table` class
+  attr(html_table, "class") <- "html_table"
+
+  html_table
 }
 
 #' Add inline CSS styles to columns in an HTML table object
