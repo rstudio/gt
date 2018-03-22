@@ -145,7 +145,7 @@ build_html_table <- function(tbl) {
 #' to be inserted, or, as a vector of values where
 #' the individual values for the property will
 #' be transformed to a space-separated string.
-#' @return an HTML table object.
+#' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -241,7 +241,7 @@ add_column_style <- function(html_tbl,
 #' to be inserted, or, as a vector of values where
 #' the individual values for the property will
 #' be transformed to a space-separated string.
-#' @return an HTML table object.
+#' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -314,7 +314,7 @@ add_table_style <- function(html_tbl,
 #' to be inserted, or, as a vector of values where
 #' the individual values for the property will
 #' be transformed to a space-separated string.
-#' @return an HTML table object.
+#' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -387,7 +387,7 @@ add_header_style <- function(html_tbl,
 #' to be inserted, or, as a vector of values where
 #' the individual values for the property will
 #' be transformed to a space-separated string.
-#' @return an HTML table object.
+#' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
 #' @export
@@ -587,13 +587,12 @@ emit_html <- function(html_tbl) {
 }
 
 
-#' Helper function for adding a data table
+#' Quickly create an HTML table from tabular data
 #'
-#' Add a data table inside the body of the
-#' email with this helper function. Simply
-#' provide a \code{data.frame} or tibble
-#' object and the function will sensibly
-#' style the table during insertion.
+#' Create a simple HTML table by providing a
+#' \code{data.frame} or tibble object. The
+#' function will sensibly style the table and
+#' output an HTML fragment.
 #'
 #' If more control over the table styling is
 #' required, then an alternative is to use the
@@ -602,14 +601,11 @@ emit_html <- function(html_tbl) {
 #' pattern for building and inserting a table.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
-#' @return a character object with an HTML
-#' fragment that can be placed inside the
-#' message body wherever the table should
-#' appear.
+#' @return a character object with an HTML fragment.
 #' @importFrom dplyr filter pull mutate
 #' @importFrom stringr str_replace_all str_to_title
 #' @export
-add_table <- function(tbl) {
+quick_table <- function(tbl) {
 
   html_table <-
     build_html_table(tbl = tbl)
@@ -625,7 +621,8 @@ add_table <- function(tbl) {
     dplyr::mutate(
       content = ifelse(
         row == 0,
-        content %>% stringr::str_replace_all("_", " ") %>% stringr::str_to_title(), content))
+        content %>% stringr::str_replace_all("_", " ") %>%
+          stringr::str_to_title(), content))
 
   # Get column indices for numeric columns
   numeric_columns <-
