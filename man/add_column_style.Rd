@@ -39,3 +39,18 @@ of step in the \code{build_html_table()} ->
 \code{add_..._style()} -> \code{emit_html()}
 pattern.
 }
+\examples{
+# Create an html table object using the
+# iris dataset
+html_table <- build_html_table(iris)
+
+# With `add_column_style()` function,
+# we can manually apply a CSS style to
+# one or more columns
+html_table_transformed <-
+  html_table \%>\%
+  add_column_style(
+    columns = 1,
+    property = "color",
+    values = "blue")
+}

@@ -26,3 +26,13 @@ required, then an alternative is to use the
 \code{add_column_style()} -> \code{emit_html()}
 pattern for building and inserting a table.
 }
+\examples{
+# Quickly create an html table using the
+# `quick_table()` with the iris dataset
+html <- quick_table(iris)
+
+# The resulting object is an
+# HTML fragment; and it can be viewed
+# with `render_table()`
+html \%>\% render_table()
+}
