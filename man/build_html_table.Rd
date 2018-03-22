@@ -11,13 +11,12 @@ build_html_table(tbl)
 tibble.}
 }
 \value{
-an HTML table object.
+an object of class \code{html_table}.
 }
 \description{
 Create an HTML table object such that we can
 perform styling transformations before transforming
-the entire object to an HTML fragment (for
-inclusion into the email message body). This is
+the entire object to an HTML fragment. This is
 the first step in the \code{build_html_table()} ->
 \code{add_column_style()} -> \code{emit_html()}
 pattern.

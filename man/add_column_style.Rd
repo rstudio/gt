@@ -30,7 +30,7 @@ the individual values for the property will
 be transformed to a space-separated string.}
 }
 \value{
-an HTML table object.
+an object of class \code{html_table}.
 }
 \description{
 Modify column styles for a table within an HTML
