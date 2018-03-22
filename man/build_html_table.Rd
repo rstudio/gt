@@ -21,3 +21,28 @@ the first step in the \code{build_html_table()} ->
 \code{add_column_style()} -> \code{emit_html()}
 pattern.
 }
+\examples{
+# Create an html table object using the
+# iris dataset
+html_table <- build_html_table(iris)
+
+# The resulting object can be used
+# in transformations
+html_table_transformed <-
+  html_table \%>\%
+  add_column_style(
+    columns = 1,
+    property = "color",
+    values = "blue")
+
+# The object of this type can also be
+# rendered in the Viewer
+html_table_transformed \%>\%
+  render_table()
+
+# Once the table has been transformed
+# suitably, we can extract it as HTML
+# using `emit_html()`
+html_table_transformed \%>\%
+  emit_html()
+}

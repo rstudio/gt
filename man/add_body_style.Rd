@@ -32,3 +32,17 @@ an intermediate set of step in the
 \code{add_..._style()} -> \code{emit_html()}
 pattern.
 }
+\examples{
+# Create an html table object using the
+# iris dataset
+html_table <- build_html_table(iris)
+
+# With `add_body_style()` function,
+# we can manually apply a CSS style
+# to the <tbody> element
+html_table_transformed <-
+  html_table \%>\%
+  add_body_style(
+    property = "color",
+    values = "blue")
+}
