@@ -121,6 +121,7 @@ build_html_table <- function(tbl) {
       .f = function(x) {
         tbl[x, ] %>% t() %>%
           dplyr::as_tibble() %>%
+          dplyr::mutate(V1 = as.character(V1)) %>%
           dplyr::rename_at(.vars = 1, .funs = function(x) "content") %>%
           dplyr::mutate(type = tbl_classes) %>%
           dplyr::mutate(row = x) %>%
