@@ -19,7 +19,7 @@ render_table <- function(x) {
 
  } else if (inherits(x, "knit_asis")) {
 
-  html_table <- x
+  html_table <- x %>% as.character()
  }
 
  html_view <-
@@ -34,7 +34,7 @@ render_table <- function(x) {
    {html_table}
   </body>
   </html>"
-  )
+  ) %>% as.character()
 
  html_view %>%
   htmltools::HTML() %>%
