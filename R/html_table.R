@@ -35,7 +35,7 @@
 #'   emit_html()
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate
-#' @importFrom dplyr bind_rows inner_join
+#' @importFrom dplyr bind_rows inner_join mutate_if select_if
 #' @importFrom tibble rownames_to_column
 #' @export
 build_html_table <- function(tbl) {
@@ -54,7 +54,7 @@ build_html_table <- function(tbl) {
   # `character` columns
   tbl <-
     tbl %>%
-    mutate_if(
+    dplyr::mutate_if(
       .predicate = function(x) class(x) == "factor",
       .funs = as.character)
 
@@ -62,7 +62,7 @@ build_html_table <- function(tbl) {
   # `list` columns
   tbl <-
     tbl %>%
-    select_if(
+    dplyr::select_if(
       .predicate = function(x) class(x) != "list")
 
   # Obtain a vector of column types from `tbl`
@@ -555,7 +555,7 @@ add_body_style <- function(html_tbl,
 #' # HTML table object using `emit_html()`
 #' html_table_transformed %>%
 #'   emit_html()
-#' @importFrom dplyr pull mutate filter
+#' @importFrom dplyr pull mutate filter case_when
 #' @importFrom glue glue
 #' @importFrom tidyr unite
 #' @importFrom purrr map
