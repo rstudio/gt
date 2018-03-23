@@ -2,7 +2,7 @@
 % Please edit documentation in R/html_table.R
 \name{emit_html}
 \alias{emit_html}
-\title{Transform a HTML table object to an HTML fragment}
+\title{Transform an HTML table object to an HTML fragment}
 \usage{
 emit_html(html_tbl)
 }
