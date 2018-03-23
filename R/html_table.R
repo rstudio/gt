@@ -598,7 +598,7 @@ add_body_style <- function(html_tbl,
 
 
 
-#' Transform a HTML table object to an HTML fragment
+#' Transform an HTML table object to an HTML fragment
 #'
 #' Take a suitably styled HTML table object and
 #' transform it to an HTML fragment. This is the
@@ -638,11 +638,15 @@ emit_html <- function(html_tbl) {
 
   html_tbl <- html_tbl[["html_table"]]
 
-  if (ncol(html_tbl) >= 6) {
+  col_begin_styles <- 8
 
-    for (i in 6:ncol(html_tbl)) {
+  if (ncol(html_tbl) >= col_begin_styles) {
 
-      if (i == 6) style_names <- colnames(html_tbl)[6:ncol(html_tbl)]
+    for (i in col_begin_styles:ncol(html_tbl)) {
+
+      if (i == col_begin_styles) {
+        style_names <- colnames(html_tbl)[col_begin_styles:ncol(html_tbl)]
+      }
 
       for (j in 1:nrow(html_tbl)) {
 
@@ -659,11 +663,11 @@ emit_html <- function(html_tbl) {
     }
   }
 
-  if (ncol(html_tbl) >= 6) {
+  if (ncol(html_tbl) >= col_begin_styles) {
 
     table_content_styles <-
       html_tbl %>%
-      tidyr::unite(col = style_attrs, 6:ncol(html_tbl), sep = "")
+      tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_tbl), sep = "")
 
   } else {
 
