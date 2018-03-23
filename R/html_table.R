@@ -691,7 +691,7 @@ emit_html <- function(html_tbl) {
   # statement will be affected
   style_attrs_table <-
     table_content_styles %>%
-    dplyr::filter(row == -3L) %>%
+    dplyr::filter(column_name == "_table_") %>%
     dplyr::select(style_attrs) %>%
     dplyr::pull()
 
@@ -700,7 +700,7 @@ emit_html <- function(html_tbl) {
   # statement will be affected
   style_attrs_thead <-
     table_content_styles %>%
-    dplyr::filter(row == -2L) %>%
+    dplyr::filter(column_name == "_thead_") %>%
     dplyr::select(style_attrs) %>%
     dplyr::pull()
 
@@ -709,7 +709,7 @@ emit_html <- function(html_tbl) {
   # statement will be affected
   style_attrs_tbody <-
     table_content_styles %>%
-    dplyr::filter(row == -1L) %>%
+    dplyr::filter(column_name == "_tbody_") %>%
     dplyr::select(style_attrs) %>%
     dplyr::pull()
 
