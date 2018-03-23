@@ -34,8 +34,8 @@
 #' html_table_transformed %>%
 #'   emit_html()
 #' @importFrom purrr map_chr map_df
-#' @importFrom dplyr as_tibble tibble select rename rename_at mutate
-#' @importFrom dplyr bind_rows inner_join mutate_if select_if
+#' @importFrom dplyr as_tibble tibble select rename rename_at mutate select
+#' @importFrom dplyr bind_rows inner_join mutate_if select_if everything
 #' @importFrom tibble rownames_to_column
 #' @export
 build_html_table <- function(tbl) {
