@@ -20,7 +20,7 @@ The main structural parts of a table (and their subparts) are:
 
   - the **heading** (optional; possibly with a **table number**,
     **title**, or **headnote**)
-  - the **stub** (contains a **stub head** and one or more **stub
+  - the **stub** (contains a **stubhead** and one or more **stub
     blocks**)
   - the **boxhead** (contains **column headings**, optionally within
     **panels** having one or more **spanner headings**)
@@ -35,7 +35,7 @@ integral to finalized output.
 
 The **stub** is the area to the left in a table that contains **row
 captions**, **summary captions**, and **group headings**. Those subparts
-can be grouped in a sequence of **stub blocks**. The **stub head**
+can be grouped in a sequence of **stub blocks**. The **stubhead**
 provides a location for a caption that describes the **stub**.
 
 The **boxhead** is the part that contains the **column headings**, which
