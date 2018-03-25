@@ -51,9 +51,7 @@ apply_theme_striped <- function(html_tbl) {
         values = "left")
   }
 
-
-  html_tbl <-
-    html_tbl %>%
+  html_tbl %>%
     add_table_style(
       property = "border-collapse",
       values = "collapse") %>%
@@ -82,7 +80,4 @@ apply_theme_striped <- function(html_tbl) {
       every_n = 2,
       property = "background",
       values = "#E5E6EB")
-
-  html_tbl
 }
-
