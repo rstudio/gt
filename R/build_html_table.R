@@ -205,7 +205,7 @@ build_html_table <- function(tbl) {
    table_heading,
    table_body)
 
- # Bind the `table_stub` df if one is available
+ # Bind the `table_stub` tbl if one is available
  if (exists("table_stub")) {
 
   html_table <-
@@ -214,21 +214,34 @@ build_html_table <- function(tbl) {
    dplyr::arrange(row, column)
  }
 
- # Create the `html_heading` df
- html_heading <-
+ # Create a `heading` tbl
+ heading <-
    dplyr::tibble(
-     t_part = "heading",
-     t_subpart = c("title", "headnote"),
-     content = "",
-     type = "character",
-     row = 1L:0L,
-     column = 0L,
-     column_name = NA_character_)
+     title = NA_character_,
+     headnote = NA_character_,
+     table_number = NA_character_)
+
+ # Create an empty `footnote` tbl
+ footnote <-
+   dplyr::tibble(
+     index = NA_integer_,
+     marker = NA_character_,
+     footnote = NA_character_)[-1, ]
+
+ # Create an empty `source_note` tbl
+ source_note <-
+   dplyr::tibble(
+     index = NA_integer_,
+     lead_in = NA_character_,
+     source_note = NA_character_)[-1, ]
 
  # Create the list object for the html table
  html_table <-
   list(
-    html_heading = html_heading,
+    source_tbl = tbl,
+    heading = heading,
+    footnote = footnote,
+    source_note = source_note,
     html_table = html_table)
 
  # Apply the `html_table` class
