@@ -36,97 +36,46 @@
 #' @export
 emit_html <- function(html_tbl) {
 
-  # # Build heading part if there is content available
-  # if (html_tbl[["html_heading"]] %>%
-  #     dplyr::filter(t_subpart == "title") %>%
-  #     dplyr::pull(content) != "") {
-  #
-  #   html_heading <- html_tbl[["html_heading"]]
-  #
-  #   col_begin_styles <- 8
-  #
-  #   if (ncol(html_heading) >= col_begin_styles) {
-  #
-  #     for (i in col_begin_styles:ncol(html_heading)) {
-  #
-  #       if (i == col_begin_styles) {
-  #         style_names <- colnames(html_heading)[col_begin_styles:ncol(html_heading)]
-  #       }
-  #
-  #       for (j in 1:nrow(html_heading)) {
-  #
-  #         if (is.na(html_heading[j, i])) {
-  #
-  #           html_heading[j, i] <- ""
-  #
-  #         } else {
-  #
-  #           html_heading[j, i] <-
-  #             paste0(colnames(html_heading)[i], ":", html_heading[j, i] %>% dplyr::pull(), ";")
-  #         }
-  #       }
-  #     }
-  #   }
-  #
-  #   if (ncol(html_heading) >= col_begin_styles) {
-  #
-  #     table_content_styles <-
-  #       html_heading %>%
-  #       tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_heading), sep = "")
-  #
-  #   } else {
-  #
-  #     table_content_styles <-
-  #       html_heading %>%
-  #       dplyr::mutate(style_attrs = "")
-  #   }
-  #
-  #   table_content_styles <-
-  #     table_content_styles %>%
-  #     dplyr::mutate(style_attrs = case_when(
-  #       style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
-  #       style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
-  # }
+  html_table <- html_tbl[["html_table"]]
+  heading <- html_tbl[["heading"]]
 
   # Build HTML component with `stub`, `boxhead`,
   # and `field` table parts
-  html_tbl <- html_tbl[["html_table"]]
-
   col_begin_styles <- 8
 
-  if (ncol(html_tbl) >= col_begin_styles) {
+  if (ncol(html_table) >= col_begin_styles) {
 
-    for (i in col_begin_styles:ncol(html_tbl)) {
+    for (i in col_begin_styles:ncol(html_table)) {
 
       if (i == col_begin_styles) {
-        style_names <- colnames(html_tbl)[col_begin_styles:ncol(html_tbl)]
+        style_names <- colnames(html_table)[col_begin_styles:ncol(html_table)]
       }
 
-      for (j in 1:nrow(html_tbl)) {
+      for (j in 1:nrow(html_table)) {
 
-        if (is.na(html_tbl[j, i])) {
+        if (is.na(html_table[j, i])) {
 
-          html_tbl[j, i] <- ""
+          html_table[j, i] <- ""
 
         } else {
 
-          html_tbl[j, i] <-
-            paste0(colnames(html_tbl)[i], ":", html_tbl[j, i] %>% dplyr::pull(), ";")
+          html_table[j, i] <-
+            paste0(colnames(html_table)[i], ":", html_table[j, i] %>% dplyr::pull(), ";")
         }
       }
     }
   }
 
-  if (ncol(html_tbl) >= col_begin_styles) {
+  if (ncol(html_table) >= col_begin_styles) {
 
     table_content_styles <-
-      html_tbl %>%
-      tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_tbl), sep = "")
+      html_table %>%
+      tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_table), sep = "")
 
   } else {
 
     table_content_styles <-
-      html_tbl %>%
+      html_table %>%
       dplyr::mutate(style_attrs = "")
   }
 
@@ -212,17 +161,33 @@ emit_html <- function(html_tbl) {
     paste(collapse = "")
 
   # Define the table closing component
-  table_closing_component <- "</tbody>\n</table>\n"
+  tbody_closing_component <- "</tbody>\n"
+  table_closing_component <- "</table>\n"
+
+  # Generate the table caption
+  if (!is.na(heading$title)) {
+
+    table_caption_component <-
+      generate_table_caption(
+        title = heading$title,
+        headnote = heading$headnote,
+        border_bottom = NULL)
+
+  } else {
+    table_caption_component <- ""
+  }
 
   paste(
     "<!--html_preserve-->\n",
     table_component,
+    table_caption_component,
     thead_component,
     table_heading_component,
     thead_closing_component,
     tbody_component,
     table_body_component,
-    table_closing_component, "<br />",
+    tbody_closing_component,
+    table_closing_component,
     "<!--/html_preserve-->\n",
     collapse = "") %>%
     knitr::asis_output()
