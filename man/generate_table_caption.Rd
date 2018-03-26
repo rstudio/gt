@@ -28,11 +28,17 @@ the table headnote.}
 \item{title_font_size}{the font size to use for
 the table title.}
 
+\item{title_align}{the alignment of text to use
+in the table title.}
+
 \item{title_padding}{the amount of padding to
 use for the table title.}
 
 \item{headnote_font_size}{the font size to use for
 the table headnote.}
+
+\item{headnote_align}{the alignment of text to use
+in the table headnote.}
 
 \item{headnote_padding}{the amount of padding to
 use for the table headnote.}
