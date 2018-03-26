@@ -55,6 +55,47 @@ The **source note** area is for provision of citation information for
 the presented data. As it is commonly seen, the citation is preceeded by
 the word `Source`.
 
+## Example
+
+The `mtcars` dataset can be suitably transformed into a simple HTML
+table. We can use the `gt()` function to initiate the process (providing
+`mtcars` to the `tbl` argument), creating an HTML table object. We can
+apply a theme such as the basic striped row theme with
+`apply_theme_striped()`. The stubhead caption would otherwise be an
+empty box in the top-left of the table unless we specify some text to be
+placed there. We can use `add_stubhead_caption()` to provide the text
+for that part of the table. Finally, we add a heading to the table with
+`add_heading()`, where title text and a headnote (which is an optional
+statement that follows the title) is specified.
+
+``` r
+library(gt)
+
+mtcars_tbl <-
+  gt(tbl = mtcars) %>%
+  apply_theme_striped() %>%
+  add_stubhead_caption(text = "car model") %>%
+  add_heading(
+    title = "The `mtcars` dataset",
+    headnote = "[A rather famous Motor Trend table]")
+```
+
+The HTML table object is transformed to HTML with the `emit_html()`
+function. This works well inside an R Markdown code chunk since the
+table will appear when the document is rendered to HTML.
+
+``` r
+mtcars_tbl %>% emit_html()
+```
+
+We can also preview the table in the Viewer pane with `render_table()`:
+
+``` r
+mtcars_tbl %>% render_table()
+```
+
+<img src="man/figures/mtcars_render_table.png">
+
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
