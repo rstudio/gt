@@ -181,10 +181,10 @@ build_html_table <- function(tbl) {
     column = 0L,
     column_name = NA_character_)
 
-  table_stub_head <-
+  table_stubhead <-
    dplyr::tibble(
     t_part = "stub",
-    t_subpart = "stub_head",
+    t_subpart = "stubhead",
     content = "",
     type = "character",
     row = 0L,
@@ -192,7 +192,7 @@ build_html_table <- function(tbl) {
     column_name = NA_character_)
 
   table_stub <-
-   dplyr::bind_rows(table_stub_head, table_stub)
+   dplyr::bind_rows(table_stubhead, table_stub)
 
  }
 
