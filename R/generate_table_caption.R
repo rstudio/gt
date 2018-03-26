@@ -11,10 +11,14 @@
 #' the table headnote.
 #' @param title_font_size the font size to use for
 #' the table title.
+#' @param title_align the alignment of text to use
+#' in the table title.
 #' @param title_padding the amount of padding to
 #' use for the table title.
 #' @param headnote_font_size the font size to use for
 #' the table headnote.
+#' @param headnote_align the alignment of text to use
+#' in the table headnote.
 #' @param headnote_padding the amount of padding to
 #' use for the table headnote.
 #' @return a character object with an HTML fragment.
