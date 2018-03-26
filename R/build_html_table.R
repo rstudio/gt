@@ -3,16 +3,15 @@
 #' Create an HTML table object such that we can
 #' perform styling transformations before transforming
 #' the entire object to an HTML fragment. This is
-#' the first step in the \code{build_html_table()} ->
-#' \code{add_column_style()} -> \code{emit_html()}
-#' pattern.
+#' the first step in the \code{gt()} -> ... ->
+#' \code{emit_html()} pattern.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return an object of class \code{html_table}.
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- build_html_table(iris)
+#' html_table <- gt(tbl = iris)
 #'
 #' # The resulting object can be used
 #' # in transformations
@@ -38,7 +37,7 @@
 #' @importFrom dplyr bind_rows inner_join mutate_if select_if everything
 #' @importFrom tibble rownames_to_column
 #' @export
-build_html_table <- function(tbl) {
+gt <- function(tbl) {
 
  # If column names contain data (i.e. not numbered),
  # then incorporate the rownames as a column (called
