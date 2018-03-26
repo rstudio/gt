@@ -16,7 +16,7 @@ add_stubhead_caption <- function(html_tbl,
 
     html_tbl[["html_table"]] <-
       html_tbl[["html_table"]] %>%
-      dplyr:::mutate(content = case_when(
+      dplyr::mutate(content = case_when(
         t_subpart == "stubhead" ~ text,
         is.character(t_subpart) ~ content))
 
