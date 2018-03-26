@@ -10,21 +10,20 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull mutate case_when
 #' @export
-add_stub_head_caption <- function(html_tbl,
-                                  text) {
+add_stubhead_caption <- function(html_tbl,
+                                 text) {
 
- if ("stub_head" %in% (html_tbl[["html_table"]] %>% dplyr::pull(t_subpart))) {
+  if ("stubhead" %in% (html_tbl[["html_table"]] %>% dplyr::pull(t_subpart))) {
 
-  html_tbl[["html_table"]] <-
-   html_tbl[["html_table"]] %>%
-   dplyr:::mutate(content = case_when(
-    t_subpart == "stub_head" ~ text,
-    is.character(t_subpart) ~ content))
+    html_tbl[["html_table"]] <-
+      html_tbl[["html_table"]] %>%
+      dplyr:::mutate(content = case_when(
+        t_subpart == "stubhead" ~ text,
+        is.character(t_subpart) ~ content))
 
- } else {
-  message("There is no stub in the table, so, no stubhead caption can be added.")
- }
+  } else {
+    message("There is no stub in the table, so, no stubhead caption can be added.")
+  }
 
- html_tbl
+  html_tbl
 }
-
