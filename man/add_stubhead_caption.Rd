@@ -8,8 +8,7 @@ add_stubhead_caption(html_tbl, text)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 
 \item{text}{the text to be used as the stubhead.}
 }

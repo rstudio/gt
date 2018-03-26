@@ -9,8 +9,7 @@ add_style_every_n_rows(html_tbl, every_n, parts = c("stub", "field"),
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 
 \item{every_n}{the row interval with which to
 add an inline style.}

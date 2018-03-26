@@ -8,8 +8,7 @@ add_style_to_row_0(html_tbl, property, values)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 
 \item{property}{the CSS style property that is
 to the added.}

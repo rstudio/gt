@@ -8,8 +8,7 @@ add_table_style(html_tbl, property, values)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 
 \item{property}{the CSS style property that is
 to the added.}
@@ -28,14 +27,12 @@ an object of class \code{html_table}.
 Modify the overall table style for a table
 within an HTML table object. This is part of
 an intermediate set of step in the
-\code{build_html_table()} ->
-\code{add_..._style()} -> \code{emit_html()}
-pattern.
+\code{gt()} -> ... -> \code{emit_html()} pattern.
 }
 \examples{
 # Create an html table object using the
 # iris dataset
-html_table <- build_html_table(iris)
+html_table <- gt(tbl = iris)
 
 # With `add_table_style()` function,
 # we can manually apply a CSS style

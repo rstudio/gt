@@ -22,9 +22,8 @@ output an HTML fragment.
 \details{
 If more control over the table styling is
 required, then an alternative is to use the
-\code{build_html_table()} ->
-\code{add_column_style()} -> \code{emit_html()}
-pattern for building and inserting a table.
+\code{gt()} -> ... -> \code{emit_html()} pattern
+for building and inserting a table.
 }
 \examples{
 # Quickly create an html table using the
