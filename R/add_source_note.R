@@ -3,8 +3,7 @@
 #' Add a source note citation to the source note
 #' part of the table.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param source_note text to be used in the
 #' source note.
 #' @param lead_in a lead in word or phrase

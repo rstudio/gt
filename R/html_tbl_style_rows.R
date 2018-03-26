@@ -3,8 +3,7 @@
 #' Modify the style of specfied table rows in
 #' both the stub and field table parts.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param rows the rows that are to have the
 #' style values added.
 #' @param parts the table parts where rows are to
@@ -94,8 +93,7 @@ add_style_to_rows <- function(html_tbl,
 #' Add an inline CSS style to every n table rows
 #' in both the stub and field table parts.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param every_n the row interval with which to
 #' add an inline style.
 #' @param parts the table parts where rows are to
@@ -155,8 +153,7 @@ add_style_every_n_rows <- function(html_tbl,
 #' Add inline CSS style to the boxhead and stubhead
 #' table parts that are part of `row 0`.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.

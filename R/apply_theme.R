@@ -6,8 +6,7 @@
 #' a similar horizontal rule below the field and
 #' stub.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull mutate case_when
 #' @export
