@@ -23,8 +23,10 @@ generate_table_caption <- function(title,
                                    border_top = c("solid", "2px", "#A8A8A8"),
                                    border_bottom = c("solid", "2px", "#A8A8A8"),
                                    title_font_size = "115%",
+                                   title_align = "center",
                                    title_padding = "3px",
                                    headnote_font_size = "85%",
+                                   headnote_align = "center",
                                    headnote_padding = "3px") {
 
 
@@ -55,6 +57,15 @@ generate_table_caption <- function(title,
   title_font_size <- NA_character_
  }
 
+ if (!is.null(title_align)) {
+   title_align <-
+      paste(title_align, collapse = " ") %>%
+      as.character() %>%
+      paste0("text-align:", ., ";")
+  } else {
+    title_align <- NA_character_
+  }
+
  if (!is.null(title_padding)) {
   title_padding <-
    paste(title_padding, collapse = " ") %>%
@@ -73,6 +84,15 @@ generate_table_caption <- function(title,
   headnote_font_size <- NA_character_
  }
 
+  if (!is.null(headnote_align)) {
+    headnote_align <-
+      paste(headnote_align, collapse = " ") %>%
+      as.character() %>%
+      paste0("text-align:", ., ";")
+  } else {
+    headnote_align <- NA_character_
+  }
+
  if (!is.null(headnote_padding)) {
   headnote_padding <-
    paste(headnote_padding, collapse = " ") %>%
@@ -85,11 +105,11 @@ generate_table_caption <- function(title,
  # Generate title <caption> statement
  if (is.null(headnote)) {
 
-  if (!all(is.na(c(border_top, border_bottom, title_font_size, title_padding)))) {
+  if (!all(is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding)))) {
    caption <-
     paste(
-     c(border_top, border_bottom, title_font_size, title_padding)[
-      !is.na(c(border_top, border_bottom, title_font_size, title_padding))],
+     c(border_top, border_bottom, title_font_size, title_align, title_padding)[
+      !is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding))],
      collapse = "") %>%
     paste0("<caption style=\"", ., "\">", title, "</caption>\n")
   } else {
@@ -99,12 +119,12 @@ generate_table_caption <- function(title,
 
  if (!is.null(headnote) || headnote != "") {
 
-  if (!all(is.na(c(border_top, title_font_size, title_padding)))) {
+  if (!all(is.na(c(border_top, title_font_size, title_align, title_padding)))) {
 
    caption <-
     paste(
-     c(border_top, title_font_size, title_padding)[
-      !is.na(c(border_top, title_font_size, title_padding))],
+     c(border_top, title_font_size, title_align, title_padding)[
+      !is.na(c(border_top, title_font_size, title_align, title_padding))],
      collapse = "") %>%
     paste0("<caption style=\"", ., "\">", title, "</caption>\n")
 
@@ -124,8 +144,8 @@ generate_table_caption <- function(title,
     paste(
      caption,
      paste(
-      c(border_bottom, headnote_font_size, headnote_padding)[
-       !is.na(c(border_bottom, headnote_font_size, headnote_padding))],
+      c(border_bottom, headnote_font_size, headnote_align, headnote_padding)[
+       !is.na(c(border_bottom, headnote_font_size, headnote_align, headnote_padding))],
       collapse = "") %>%
       paste0("<caption style=\"", ., "\">", headnote, "</caption>\n"),
      collapse = "")
@@ -142,4 +162,3 @@ generate_table_caption <- function(title,
 
  caption
 }
-
