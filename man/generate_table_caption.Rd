@@ -6,8 +6,9 @@
 \usage{
 generate_table_caption(title, headnote = NULL, border_top = c("solid",
   "2px", "#A8A8A8"), border_bottom = c("solid", "2px", "#A8A8A8"),
-  title_font_size = "115\%", title_padding = "3px",
-  headnote_font_size = "85\%", headnote_padding = "3px")
+  title_font_size = "115\%", title_align = "center",
+  title_padding = "3px", headnote_font_size = "85\%",
+  headnote_align = "center", headnote_padding = "3px")
 }
 \arguments{
 \item{title}{the text to be used in the table title.}

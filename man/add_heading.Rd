@@ -8,8 +8,7 @@ add_heading(html_tbl, title = NULL, headnote = NULL, table_number = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 
 \item{title}{text to be used in the table title.}
 

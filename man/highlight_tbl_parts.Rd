@@ -8,8 +8,7 @@ highlight_tbl_parts(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 }
 \description{
 Highlights the parts of a table in a table object

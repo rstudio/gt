@@ -8,8 +8,7 @@ apply_theme_striped(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 }
 \value{
 an object of class \code{html_table}.

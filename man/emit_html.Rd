@@ -8,8 +8,7 @@ emit_html(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{build_html_table()}
-function.}
+created using the \code{gt()} function.}
 }
 \value{
 a character object with an HTML fragment.
@@ -17,14 +16,13 @@ a character object with an HTML fragment.
 \description{
 Take a suitably styled HTML table object and
 transform it to an HTML fragment. This is the
-final step in the \code{build_html_table()} ->
-\code{add_..._style()} -> \code{emit_html()}
-pattern.
+final step in the \code{gt()} -> ... ->
+\code{emit_html()} pattern.
 }
 \examples{
 # Create an html table object using the
 # iris dataset
-html_table <- build_html_table(iris)
+html_table <- gt(tbl = iris)
 
 # The resulting object can be used
 # in transformations
