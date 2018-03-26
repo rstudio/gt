@@ -47,8 +47,7 @@ render_table <- function(x) {
 #' Highlights the parts of a table in a table object
 #' with color fills.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 highlight_tbl_parts <- function(html_tbl) {
 
   html_tbl %>%

@@ -7,9 +7,8 @@
 #'
 #' If more control over the table styling is
 #' required, then an alternative is to use the
-#' \code{build_html_table()} ->
-#' \code{add_column_style()} -> \code{emit_html()}
-#' pattern for building and inserting a table.
+#' \code{gt()} -> ... -> \code{emit_html()} pattern
+#' for building and inserting a table.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return a character object with an HTML fragment.
@@ -29,7 +28,7 @@ quick_table <- function(tbl) {
 
   # With the input table, create an
   # `html_table` object
-  html_tbl <- build_html_table(tbl = tbl)
+  html_tbl <- gt(tbl = tbl)
 
   # Perform NA replacement with em dashes
   html_tbl[["html_table"]] <-

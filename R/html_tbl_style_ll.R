@@ -3,12 +3,10 @@
 #'
 #' Modify column styles for a table within an HTML
 #' table object. This is part of an intermediate set
-#' of step in the \code{build_html_table()} ->
-#' \code{add_..._style()} -> \code{emit_html()}
-#' pattern.
+#' of step in the \code{gt()} -> ... ->
+#' \code{emit_html()} pattern.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param columns an optional vector of column index
 #' numbers or column names (available in the
 #' \code{html_tbl}'s \code{column} and
@@ -28,7 +26,7 @@
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- build_html_table(iris)
+#' html_table <- gt(tbl = iris)
 #'
 #' # With `add_column_style()` function,
 #' # we can manually apply a CSS style to
@@ -120,12 +118,9 @@ add_column_style <- function(html_tbl,
 #' Modify the overall table style for a table
 #' within an HTML table object. This is part of
 #' an intermediate set of step in the
-#' \code{build_html_table()} ->
-#' \code{add_..._style()} -> \code{emit_html()}
-#' pattern.
+#' \code{gt()} -> ... -> \code{emit_html()} pattern.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.
@@ -140,7 +135,7 @@ add_column_style <- function(html_tbl,
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- build_html_table(iris)
+#' html_table <- gt(tbl = iris)
 #'
 #' # With `add_table_style()` function,
 #' # we can manually apply a CSS style
@@ -206,12 +201,9 @@ add_table_style <- function(html_tbl,
 #' Modify the style of the header for a table
 #' within an HTML table object. This is part of
 #' an intermediate set of step in the
-#' \code{build_html_table()} ->
-#' \code{add_..._style()} -> \code{emit_html()}
-#' pattern.
+#' \code{gt()} -> ... -> \code{emit_html()} pattern.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.
@@ -224,7 +216,7 @@ add_table_style <- function(html_tbl,
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- build_html_table(iris)
+#' html_table <- gt(tbl = iris)
 #'
 #' # With `add_header_style()` function,
 #' # we can manually apply a CSS style
@@ -292,12 +284,9 @@ add_header_style <- function(html_tbl,
 #' Modify the style of the body for a table
 #' within an HTML table object. This is part of
 #' an intermediate set of step in the
-#' \code{build_html_table()} ->
-#' \code{add_..._style()} -> \code{emit_html()}
-#' pattern.
+#' \code{gt()} -> ... -> \code{emit_html()} pattern.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.
@@ -310,7 +299,7 @@ add_header_style <- function(html_tbl,
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- build_html_table(iris)
+#' html_table <- gt(tbl = iris)
 #'
 #' # With `add_body_style()` function,
 #' # we can manually apply a CSS style

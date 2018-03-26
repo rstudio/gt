@@ -4,8 +4,7 @@
 #' a stub does not exist, no change will be made
 #' but a message to this effect will be emitted.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param text the text to be used as the stubhead.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull mutate case_when

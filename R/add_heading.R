@@ -3,8 +3,7 @@
 #' Add a title, headnote, and table number
 #' information to the heading part of the table.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{build_html_table()}
-#' function.
+#' created using the \code{gt()} function.
 #' @param title text to be used in the table title.
 #' @param headnote text to be used as the table's
 #' headnote.
