@@ -48,6 +48,7 @@ render_table <- function(x) {
 #' with color fills.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
+#' @export
 highlight_tbl_parts <- function(html_tbl) {
 
   html_tbl %>%
@@ -66,5 +67,6 @@ highlight_tbl_parts <- function(html_tbl) {
     add_table_style(
       property = "border-collapse",
       values = "collapse") %>%
-    emit_html() %>% render_table()
+    emit_html() %>%
+    render_table()
 }
