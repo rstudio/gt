@@ -213,13 +213,12 @@ emit_html <- function(html_tbl) {
 
   # Table Part: Caption -----------------------------------------------------
 
-  # Generate the table caption
-  if (!is.na(heading$title)) {
+  # Generate the table caption as an HTML fragment
+  if (nrow(heading) > 0) {
 
     table_caption_component <-
-      generate_table_caption(
-        title = heading$title,
-        headnote = heading$headnote,
+      to_html_table_caption(
+        tbl = heading,
         border_bottom = NULL)
 
   } else {
@@ -228,18 +227,17 @@ emit_html <- function(html_tbl) {
 
   # Table Part: Source Note -------------------------------------------------
 
-  # Generate the source note
+  # Generate the source note as an HTML fragment
   if (nrow(source_note) > 0) {
 
     source_note_component <-
-      generate_source_notes(
-        source_note_tbl = source_note,
+      to_html_source_notes(
+        tbl = source_note,
         span_amount = n_columns)
 
   } else {
     source_note_component <- ""
   }
-
 
 
   # Compose the HTML Table --------------------------------------------------
