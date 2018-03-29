@@ -1,7 +1,6 @@
 #' Generate a HTML fragment for the table heading part
-#' @param title the text to be used in the table title.
-#' @param headnote optional text to be used in the
-#' table headnote.
+#' @param tbl tbl the table that contains
+#' the table caption data.
 #' @param border_top values to be used for the
 #' \code{border-top} style property. This allows for
 #' a horizontal rule at the top of the table.
@@ -21,18 +20,23 @@
 #' in the table headnote.
 #' @param headnote_padding the amount of padding to
 #' use for the table headnote.
-#' @return a character object with an HTML fragment.
-generate_table_caption <- function(title,
-                                   headnote = NULL,
-                                   border_top = c("solid", "2px", "#A8A8A8"),
-                                   border_bottom = c("solid", "2px", "#A8A8A8"),
-                                   title_font_size = "115%",
-                                   title_align = "center",
-                                   title_padding = "3px",
-                                   headnote_font_size = "85%",
-                                   headnote_align = "center",
-                                   headnote_padding = "3px") {
+#' @return an HTML fragment containing the
+#' table caption table part.
+#' @noRd
+to_html_table_caption <- function(tbl,
+                                  border_top = c("solid", "2px", "#A8A8A8"),
+                                  border_bottom = c("solid", "2px", "#A8A8A8"),
+                                  title_font_size = "115%",
+                                  title_align = "center",
+                                  title_padding = "3px",
+                                  headnote_font_size = "85%",
+                                  headnote_align = "center",
+                                  headnote_padding = "3px") {
 
+
+  # Extract the title and headnote
+  title <- tbl$title
+  headnote <- tbl$headnote
 
   if (!is.null(border_top)) {
     border_top <-
@@ -110,14 +114,14 @@ generate_table_caption <- function(title,
   if (is.null(headnote)) {
 
     if (!all(is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding)))) {
-      caption <-
+      html_fragment <-
         paste(
           c(border_top, border_bottom, title_font_size, title_align, title_padding)[
             !is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding))],
           collapse = "") %>%
         paste0("<caption style=\"", ., "\">", title, "</caption>\n")
     } else {
-      caption <- paste0("<caption>", title, "</caption>\n")
+      html_fragment <- paste0("<caption>", title, "</caption>\n")
     }
   }
 
@@ -125,7 +129,7 @@ generate_table_caption <- function(title,
 
     if (!all(is.na(c(border_top, title_font_size, title_align, title_padding)))) {
 
-      caption <-
+      html_fragment <-
         paste(
           c(border_top, title_font_size, title_align, title_padding)[
             !is.na(c(border_top, title_font_size, title_align, title_padding))],
@@ -134,7 +138,7 @@ generate_table_caption <- function(title,
 
     } else {
 
-      caption <- paste0("<caption>", title, "</caption>\n")
+      html_fragment <- paste0("<caption>", title, "</caption>\n")
 
     }
   }
@@ -144,9 +148,9 @@ generate_table_caption <- function(title,
 
     if (!all(is.na(c(border_bottom, headnote_font_size, headnote_padding)))) {
 
-      caption <-
+      html_fragment <-
         paste(
-          caption,
+          html_fragment,
           paste(
             c(border_bottom, headnote_font_size, headnote_align, headnote_padding)[
               !is.na(c(border_bottom, headnote_font_size, headnote_align, headnote_padding))],
@@ -156,13 +160,60 @@ generate_table_caption <- function(title,
 
     } else {
 
-      caption <-
+      html_fragment <-
         paste(
-          caption,
+          html_fragment,
           paste0("<caption>", headnote, "</caption>\n"),
           collapse = "")
     }
   }
 
-  caption
+  html_fragment
+}
+
+
+
+
+#' Generate a HTML fragment for the source note part
+#' @param tbl the table that contains
+#' the source note data.
+#' @param font_size the font size to use for the
+#' source notes.
+#' @param align the alignment of text to use for the
+#' source notes.
+#' @param padding the amount of padding to use for
+#' the source notes.
+#' @return an HTML fragment containing the
+#' source notes table part.
+#' @importFrom dplyr arrange mutate pull
+#' @importFrom stringr str_squish
+#' @importFrom glue glue
+#' @noRd
+to_html_source_notes <- function(tbl,
+                                 span_amount,
+                                 font_size = "115%",
+                                 align = "center",
+                                 padding = "3px") {
+
+  # Ensure that the ordering of the table is correct
+  tbl <- tbl %>% dplyr::arrange(index)
+
+  # Generate the tag content for all source notes
+  content_str <-
+    tbl %>%
+    dplyr::mutate(
+      content = glue::glue("{lead_in}{source_note}") %>%
+        as.character() %>% stringr::str_squish()) %>%
+    dplyr::pull(content)
+
+  # Generate the `html_fragment` object
+  html_fragment <-
+    glue::glue(
+      "<tr>\n    <td colspan=\"{span_amount}\">{content}</td>\n  </tr>\n",
+      content = content_str) %>%
+    as.character() %>%
+    paste(collapse = "\n") %>%
+    paste0("<tfoot>\n", ., "\n</tfoot>\n")
+
+  html_fragment
 }
