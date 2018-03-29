@@ -162,15 +162,15 @@ add_table_style <- function(html_tbl,
   # object, then, (1) create the column, (2) add in
   # the values selectively to the <table> element,
   # (3) use `NA_character_` for non-targeted elements
-  if (!(property %in% colnames(html_tbl[["html_table"]]))) {
+  if (!(property %in% colnames(html_tbl[["html_head"]]))) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -3L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_table_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -3L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_table_") %>%
           dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
       dplyr::arrange(row, column)
   }
@@ -179,15 +179,15 @@ add_table_style <- function(html_tbl,
   # object, then, (1) add in the values selectively to
   # the <table> element, and (2) ensure that the
   # non-targeted elements are untouched
-  if (property %in% colnames(html_tbl[["html_table"]])) {
+  if (property %in% colnames(html_tbl[["html_head"]])) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -3L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_table_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -3L)) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_table_")) %>%
       dplyr::arrange(row, column)
   }
 
@@ -245,15 +245,15 @@ add_header_style <- function(html_tbl,
   # object, then, (1) create the column, (2) add in
   # the values selectively to the <thead> element,
   # (3) use `NA_character_` for non-targeted elements
-  if (!(property %in% colnames(html_tbl[["html_table"]]))) {
+  if (!(property %in% colnames(html_tbl[["html_head"]]))) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -2L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_thead_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -2L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_thead_") %>%
           dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
       dplyr::arrange(row, column)
   }
@@ -262,15 +262,15 @@ add_header_style <- function(html_tbl,
   # object, then, (1) add in the values selectively to
   # the <thead> element, and (2) ensure that the
   # non-targeted elements are untouched
-  if (property %in% colnames(html_tbl[["html_table"]])) {
+  if (property %in% colnames(html_tbl[["html_head"]])) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -2L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_thead_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -2L)) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_thead_")) %>%
       dplyr::arrange(row, column)
   }
 
@@ -328,15 +328,15 @@ add_body_style <- function(html_tbl,
   # object, then, (1) create the column, (2) add in
   # the values selectively to the <tbody> element,
   # (3) use `NA_character_` for non-targeted elements
-  if (!(property %in% colnames(html_tbl[["html_table"]]))) {
+  if (!(property %in% colnames(html_tbl[["html_head"]]))) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -1L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_tbody_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -1L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_tbody_") %>%
           dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
       dplyr::arrange(row, column)
   }
@@ -345,15 +345,15 @@ add_body_style <- function(html_tbl,
   # object, then, (1) add in the values selectively to
   # the <tbody> element, and (2) ensure that the
   # non-targeted elements are untouched
-  if (property %in% colnames(html_tbl[["html_table"]])) {
+  if (property %in% colnames(html_tbl[["html_head"]])) {
 
-    html_tbl[["html_table"]] <-
+    html_tbl[["html_head"]] <-
       dplyr::bind_rows(
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row == -1L) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name == "_tbody_") %>%
           dplyr::mutate(rlang::UQ(property) := values),
-        html_tbl[["html_table"]] %>%
-          dplyr::filter(row != -1L)) %>%
+        html_tbl[["html_head"]] %>%
+          dplyr::filter(column_name != "_tbody_")) %>%
       dplyr::arrange(row, column)
   }
 
