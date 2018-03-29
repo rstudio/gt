@@ -4,7 +4,7 @@
 \alias{add_source_note}
 \title{Add a source note citation}
 \usage{
-add_source_note(html_tbl, source_note, lead_in = "Source: ")
+add_source_note(html_tbl, source_note, lead_in = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
