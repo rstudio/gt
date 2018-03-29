@@ -87,6 +87,13 @@ apply_theme_striped <- function(html_tbl) {
 
 #' Apply spanner headings
 #'
+#' If column names in the \code{tbl} supplied
+#' use the naming convention of
+#' \code{[spanner_heading].[column_heading]},
+#' we can invoke \code{apply_spanner_headings()}
+#' to allow for parsing and expansion of column
+#' headings into one or more boxhead panels
+#' with spanner headings and column headings.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @return an object of class \code{html_table}.
