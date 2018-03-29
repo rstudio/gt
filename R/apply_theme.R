@@ -36,7 +36,7 @@ apply_theme_striped <- function(html_tbl) {
       add_column_style(
         columns = numeric_columns,
         property = "text-align",
-        values = "right")
+        values = "center")
   }
 
   # Align text for any character-based columns to the left
@@ -47,7 +47,7 @@ apply_theme_striped <- function(html_tbl) {
       add_column_style(
         columns = character_columns,
         property = "text-align",
-        values = "left")
+        values = "center")
   }
 
   html_tbl %>%
@@ -57,9 +57,6 @@ apply_theme_striped <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
-    add_table_style(
-      property = "border-bottom",
-      values = "2px solid #A8A8A8") %>%
     add_style_to_row_0(
       property = "border-bottom",
       values = "2px solid #A8A8A8") %>%
@@ -69,12 +66,18 @@ apply_theme_striped <- function(html_tbl) {
     add_style_to_row_0(
       property = "padding",
       values = "10px") %>%
-    add_style_to_rows(
-      property = "padding",
+    add_style_to_row_0(
+      property = "margin",
       values = "10px") %>%
     add_style_to_rows(
       property = "padding",
       values = "10px") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_row_n(
+      property = "border-bottom",
+      values = "2px solid #A8A8A8") %>%
     add_style_every_n_rows(
       every_n = 2,
       property = "background",
