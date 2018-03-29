@@ -2,27 +2,23 @@
 % Please edit documentation in R/apply_transform.R
 \name{apply_spanner_headings}
 \alias{apply_spanner_headings}
-\alias{apply_spanner_headings}
 \title{Apply spanner headings}
 \usage{
-apply_spanner_headings(html_tbl)
-
 apply_spanner_headings(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
 created using the \code{gt()} function.}
-
-\item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
 }
 \value{
 an object of class \code{html_table}.
-
-an object of class \code{html_table}.
 }
 \description{
-Apply spanner headings
-
-Apply spanner headings
+If column names in the \code{tbl} supplied
+use the naming convention of
+\code{[spanner_heading].[column_heading]},
+we can invoke \code{apply_spanner_headings()}
+to allow for parsing and expansion of column
+headings into one or more boxhead panels
+with spanner headings and column headings.
 }
