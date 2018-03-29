@@ -30,6 +30,7 @@
 #' @importFrom glue glue
 #' @importFrom rlang squash_chr
 #' @importFrom knitr asis_output
+#' @importFrom purrr map
 #' @export
 emit_html <- function(html_tbl) {
 
