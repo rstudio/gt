@@ -14,7 +14,7 @@
 #' @export
 add_source_note <- function(html_tbl,
                             source_note,
-                            lead_in = "Source: ") {
+                            lead_in = NULL) {
 
  source_note_str <- source_note %>% as.character()
 
