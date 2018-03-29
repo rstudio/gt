@@ -26,19 +26,20 @@
 #' html_table_transformed %>%
 #'   emit_html()
 #' @importFrom dplyr pull mutate filter case_when inner_join bind_rows
+#' @importFrom dplyr group_by summarize arrange select
 #' @importFrom glue glue
-#' @importFrom tidyr unite
-#' @importFrom purrr map
 #' @importFrom rlang squash_chr
 #' @importFrom knitr asis_output
 #' @export
 emit_html <- function(html_tbl) {
 
-  html_head <- html_tbl[["html_head"]]
-  html_table <- html_tbl[["html_table"]]
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
+
   boxhead_panel <- html_tbl[["boxhead_panel"]]
+
+  html_head <- html_tbl[["html_head"]]
+  html_table <- html_tbl[["html_table"]]
 
   # Table Part: Spanner Headings --------------------------------------------
 
