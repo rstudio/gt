@@ -137,7 +137,7 @@ emit_html <- function(html_tbl) {
       style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
 
 
-  # Process `html_table` head -----------------------------------------------
+  # Create `table_heading_component` ----------------------------------------
 
   table_head_styles <-
     gt:::transmute_style_attrs(html_table_component = html_head) %>%
@@ -186,6 +186,9 @@ emit_html <- function(html_tbl) {
   table_heading_component <-
     table_heading_component %>%
     paste(collapse = "\n")
+
+
+  # Create `table_body_component` -------------------------------------------
 
   # Build the table body component
   table_body_component <-
