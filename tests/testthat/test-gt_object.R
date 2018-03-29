@@ -7,12 +7,13 @@ test_that("an HTML table object contains the correct components", {
   table_object <-
     iris %>% gt()
 
-  # Expect that the list object has 5 components
+  # Expect that the list object has 7 components
   expect_equal(
-    length(table_object), 5)
+    length(table_object), 7)
 
   # Expect certain named components
   expect_equal(
     table_object %>% names(),
-    c("source_tbl", "heading", "footnote", "source_note", "html_table"))
+    c("source_tbl", "heading", "footnote", "source_note",
+      "boxhead_panel", "html_head", "html_table"))
 })
