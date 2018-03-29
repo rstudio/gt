@@ -78,8 +78,8 @@ emit_html <- function(html_tbl) {
       table_heading_styles_row_column <-
       bind_rows(
         table_heading_styles_row_column[c(i - 1, i), ] %>%
-          group_by(content) %>%
-          summarize(
+          dplyr::group_by(content) %>%
+          dplyr::summarize(
             row = min(row) %>% as.integer(),
             column = min(column) %>% as.integer(),
             rowspan = min(rowspan) %>% as.integer(),
@@ -100,10 +100,10 @@ emit_html <- function(html_tbl) {
         length() == 1) {
 
       table_heading_styles_row_column <-
-        bind_rows(
+        dplyr::bind_rows(
           table_heading_styles_row_column[c(i - 1, i), ] %>%
-            group_by(content) %>%
-            summarize(
+            dplyr::group_by(content) %>%
+            dplyr::summarize(
               row = min(row) %>% as.integer(),
               column = min(column) %>% as.integer(),
               rowspan = sum(rowspan),
@@ -114,17 +114,17 @@ emit_html <- function(html_tbl) {
 
   table_heading_styles_row_column <-
     table_heading_styles_row_column %>% filter(!is.na(content)) %>%
-    arrange(row, column)
+    dplyr::arrange(row, column)
 
   table_heading_styles <-
     table_heading_styles %>%
     dplyr::inner_join(
       table_heading_styles_row_column,
       by = c("content", "row", "column")) %>%
-    mutate(rowspan_attrs = glue::glue("rowspan=\"{rowspan}\"") %>% as.character()) %>%
-    mutate(colspan_attrs = glue::glue("colspan=\"{colspan}\"") %>% as.character()) %>%
-    select(-rowspan, -colspan) %>%
-    mutate(heading_tag = glue::glue("<th {style_attrs} {rowspan_attrs} {colspan_attrs}>{content}</th>"))
+    dplyr::mutate(rowspan_attrs = glue::glue("rowspan=\"{rowspan}\"") %>% as.character()) %>%
+    dplyr::mutate(colspan_attrs = glue::glue("colspan=\"{colspan}\"") %>% as.character()) %>%
+    dplyr::select(-rowspan, -colspan) %>%
+    dplyr::mutate(heading_tag = glue::glue("<th {style_attrs} {rowspan_attrs} {colspan_attrs}>{content}</th>"))
 
   # Process `html_table` content --------------------------------------------
 
