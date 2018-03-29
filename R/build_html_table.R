@@ -94,44 +94,21 @@ gt <- function(tbl) {
    .f = function(x) tbl[[x]] %>% class())
 
  # Create a tibble that contains basic metadata
- # for the `table` component of the table
- table_table <-
+ # for the <table>, <thead>, and <tbody> components
+ # of the HTML table
+ html_head <-
   dplyr::tibble(
    t_part = NA_character_,
    t_subpart = NA_character_,
    content = NA_character_,
    type = "character",
-   row = -3L,
+   row = c(-3:-1),
    column = 0L,
-   column_name = "_table_")
-
- # Create a tibble that contains basic metadata
- # for the `thead` component of the table
- table_thead <-
-  dplyr::tibble(
-   t_part = NA_character_,
-   t_subpart = NA_character_,
-   content = NA_character_,
-   type = "character",
-   row = -2L,
-   column = 0L,
-   column_name = "_thead_")
-
- # Create a tibble that contains basic metadata
- # for the `tbody` component of the table
- table_tbody <-
-  dplyr::tibble(
-   t_part = NA_character_,
-   t_subpart = NA_character_,
-   content = NA_character_,
-   type = "character",
-   row = -1L,
-   column = 0L,
-   column_name = "_tbody_")
+   column_name = c("_table_", "_thead_", "_tbody_"))
 
  # Create a tibble that contains basic metadata
  # for the boxhead component of the table
- table_heading <-
+ table_boxhead <-
   dplyr::tibble(content = data_col_names) %>%
   dplyr::mutate(type = "character") %>%
   dplyr::mutate(row = 0L) %>%
@@ -156,11 +133,11 @@ gt <- function(tbl) {
      dplyr::mutate(column = 1:nrow(.))})
 
  # Join in the column names into the `table_body`
- # tibble from `table_heading`
+ # tibble from `table_boxhead`
  table_body <-
   table_body %>%
   dplyr::inner_join(
-   table_heading %>% select(column, column_name),
+    table_boxhead %>% select(column, column_name),
    by = "column") %>%
   dplyr::mutate(t_part = "field") %>%
   dplyr::mutate(t_subpart = NA_character_) %>%
@@ -192,16 +169,12 @@ gt <- function(tbl) {
 
   table_stub <-
    dplyr::bind_rows(table_stubhead, table_stub)
-
  }
 
- # Bind rows from `table_heading` and `table_body`
+ # Bind rows from `table_boxhead` and `table_body`
  html_table <-
   dplyr::bind_rows(
-   table_table,
-   table_thead,
-   table_tbody,
-   table_heading,
+   table_boxhead,
    table_body)
 
  # Bind the `table_stub` tbl if one is available
@@ -234,6 +207,13 @@ gt <- function(tbl) {
      lead_in = NA_character_,
      source_note = NA_character_)[-1, ]
 
+ # Create an empty `boxhead_panel` tbl
+ boxhead_panel <-
+   dplyr::tibble(
+     column_name = NA_character_,
+     spanner_heading = NA_character_,
+     column_heading = NA_character_)[-1, ]
+
  # Create the list object for the html table
  html_table <-
   list(
@@ -241,6 +221,8 @@ gt <- function(tbl) {
     heading = heading,
     footnote = footnote,
     source_note = source_note,
+    boxhead_panel = boxhead_panel,
+    html_head = html_head,
     html_table = html_table)
 
  # Apply the `html_table` class
