@@ -109,7 +109,7 @@ add_style_to_rows <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr filter pull
-#' @export
+#' @noRd
 add_style_every_n_rows <- function(html_tbl,
                                    every_n,
                                    parts = c("stub", "field"),
@@ -165,7 +165,7 @@ add_style_every_n_rows <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_row_0 <- function(html_tbl,
                                property,
                                values) {
@@ -232,7 +232,7 @@ add_style_to_row_0 <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_row_n <- function(html_tbl,
                                property,
                                values) {
