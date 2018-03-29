@@ -213,3 +213,76 @@ add_style_to_row_0 <- function(html_tbl,
 
  html_tbl
 }
+
+
+#' Add inline CSS styles to `row n` (boxhead and stubhead)
+#'
+#' Add inline CSS style to the boxhead and stubhead
+#' table parts that are part of `row n`.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param property the CSS style property that is
+#' to the added.
+#' @param values values for the CSS style property.
+#' This could be provided as a single-length
+#' character string representing to exact string
+#' to be inserted, or, as a vector of values where
+#' the individual values for the property will
+#' be transformed to a space-separated string.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr bind_rows filter pull mutate arrange
+#' @importFrom rlang UQ
+#' @export
+add_style_to_row_n <- function(html_tbl,
+                               property,
+                               values) {
+
+  # For any `values`, ensure that they are
+  # transformed to character objects and that
+  # vector components are collapsed to a single
+  # string
+  values <-
+    paste(values, collapse = " ") %>%
+    as.character()
+
+  # Get the row number of 'row n' (the last row)
+  row_n <-
+    html_tbl[["html_table"]] %>%
+    dplyr::pull(row) %>%
+    max()
+
+  # If the property is not yet in the `html_tbl`
+  # object, then, (1) create the column, (2) add in
+  # the values selectively to the <tbody> element,
+  # (3) use `NA_character_` for non-targeted elements
+  if (!(property %in% colnames(html_tbl[["html_table"]]))) {
+
+    html_tbl[["html_table"]] <-
+      dplyr::bind_rows(
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(row == row_n) %>%
+          dplyr::mutate(rlang::UQ(property) := values),
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(row != row_n) %>%
+          dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
+      dplyr::arrange(row, column)
+  }
+
+  # If the property is already in the `html_tbl`
+  # object, then, (1) add in the values selectively to
+  # the <tbody> element, and (2) ensure that the
+  # non-targeted elements are untouched
+  if (property %in% colnames(html_tbl[["html_table"]])) {
+
+    html_tbl[["html_table"]] <-
+      dplyr::bind_rows(
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(row == row_n) %>%
+          dplyr::mutate(rlang::UQ(property) := values),
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(row != row_n)) %>%
+      dplyr::arrange(row, column)
+  }
+
+  html_tbl
+}
