@@ -178,7 +178,7 @@ emit_html <- function(html_tbl) {
     table_heading_component <-
       c(table_heading_component,
         table_heading_styles %>%
-          filter(row == i) %>%
+          dplyr::filter(row == i) %>%
           dplyr::pull(heading_tag) %>%
           paste(collapse = "\n") %>%
           paste0("<tr>\n", ., "</tr>\n"))
