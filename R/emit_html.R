@@ -25,7 +25,7 @@
 #' # HTML table object using `emit_html()`
 #' html_table_transformed %>%
 #'   emit_html()
-#' @importFrom dplyr pull mutate filter case_when
+#' @importFrom dplyr pull mutate filter case_when inner_join bind_rows
 #' @importFrom glue glue
 #' @importFrom tidyr unite
 #' @importFrom purrr map
@@ -34,112 +34,157 @@
 #' @export
 emit_html <- function(html_tbl) {
 
+  html_head <- html_tbl[["html_head"]]
   html_table <- html_tbl[["html_table"]]
   heading <- html_tbl[["heading"]]
+  source_note <- html_tbl[["source_note"]]
+  boxhead_panel <- html_tbl[["boxhead_panel"]]
 
-  # Build HTML component with `stub`, `boxhead`,
-  # and `field` table parts
-  col_begin_styles <- 8
+  # Table Part: Spanner Headings --------------------------------------------
 
-  if (ncol(html_table) >= col_begin_styles) {
+  # Generate the spanner headings
+  if (nrow(boxhead_panel) > 0) {
 
-    for (i in col_begin_styles:ncol(html_table)) {
+    html_tbl <-
+      gt:::modify_spanner_headings(html_tbl = html_tbl)
 
-      if (i == col_begin_styles) {
-        style_names <- colnames(html_table)[col_begin_styles:ncol(html_table)]
-      }
+    html_table <- html_tbl[["html_table"]]
+  }
 
-      for (j in 1:nrow(html_table)) {
 
-        if (is.na(html_table[j, i])) {
+  # Process `html_table` heading --------------------------------------------
 
-          html_table[j, i] <- ""
+  # A method to merge cells with the same content value and
+  # generate row_span and col_span values
 
-        } else {
+  table_heading_styles <-
+    gt:::transmute_style_attrs(html_table_component = html_table) %>%
+    dplyr::filter(row <= 0) %>%
+    dplyr::mutate(style_attrs = case_when(
+      row <= 0 & style_attrs != "" ~ glue::glue("style=\"{style_attrs}\"") %>% as.character(),
+      row <= 0 & style_attrs == "" ~ glue::glue("") %>% as.character()))
 
-          html_table[j, i] <-
-            paste0(colnames(html_table)[i], ":", html_table[j, i] %>% dplyr::pull(), ";")
-        }
-      }
+  table_heading_styles_row_column <-
+    table_heading_styles %>% select(content, row, column) %>%
+    mutate(rowspan = 1L, colspan = 1L)
+
+  # Move column-wise (sort by row then column)
+  for (i in 2:nrow(table_heading_styles_row_column)) {
+
+    if (table_heading_styles_row_column[c(i - 1, i), ]$content %>%
+        unique() %>%
+        length() == 1) {
+
+      table_heading_styles_row_column <-
+      bind_rows(
+        table_heading_styles_row_column[c(i - 1, i), ] %>%
+          group_by(content) %>%
+          summarize(
+            row = min(row) %>% as.integer(),
+            column = min(column) %>% as.integer(),
+            rowspan = min(rowspan) %>% as.integer(),
+            colspan = sum(colspan)),
+        table_heading_styles_row_column[-c(i - 1, i), ])
     }
   }
 
-  if (ncol(html_table) >= col_begin_styles) {
+  table_heading_styles_row_column <-
+    table_heading_styles_row_column %>% filter(!is.na(content)) %>%
+    arrange(column, row)
 
-    table_content_styles <-
-      html_table %>%
-      tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_table), sep = "")
+  # Move row-wise (sort by row then column)
+  for (i in 2:nrow(table_heading_styles_row_column)) {
 
-  } else {
+    if (table_heading_styles_row_column[c(i - 1, i), ]$content %>%
+        unique() %>%
+        length() == 1) {
 
-    table_content_styles <-
-      html_table %>%
-      dplyr::mutate(style_attrs = "")
+      table_heading_styles_row_column <-
+        bind_rows(
+          table_heading_styles_row_column[c(i - 1, i), ] %>%
+            group_by(content) %>%
+            summarize(
+              row = min(row) %>% as.integer(),
+              column = min(column) %>% as.integer(),
+              rowspan = sum(rowspan),
+              colspan = min(colspan) %>% as.integer()),
+          table_heading_styles_row_column[-c(i - 1, i), ])
+    }
   }
 
+  table_heading_styles_row_column <-
+    table_heading_styles_row_column %>% filter(!is.na(content)) %>%
+    arrange(row, column)
+
+  table_heading_styles <-
+    table_heading_styles %>%
+    dplyr::inner_join(
+      table_heading_styles_row_column,
+      by = c("content", "row", "column")) %>%
+    mutate(rowspan_attrs = glue::glue("rowspan=\"{rowspan}\"") %>% as.character()) %>%
+    mutate(colspan_attrs = glue::glue("colspan=\"{colspan}\"") %>% as.character()) %>%
+    select(-rowspan, -colspan) %>%
+    mutate(heading_tag = glue::glue("<th {style_attrs} {rowspan_attrs} {colspan_attrs}>{content}</th>"))
+
+  # Process `html_table` content --------------------------------------------
+
   table_content_styles <-
-    table_content_styles %>%
+    gt:::transmute_style_attrs(html_table_component = html_table) %>%
+    dplyr::filter(row > 0) %>%
     dplyr::mutate(style_attrs = case_when(
-      row %in% c(-1, -2, -3) & style_attrs != "" ~ style_attrs,
-      row %in% c(-1, -2, -3) & style_attrs == "" ~ "",
-      row ==  0 & style_attrs != "" ~ glue::glue("<th style=\"{style_attrs}\">{content}</th>") %>% as.character(),
-      row ==  0 & style_attrs == "" ~ glue::glue("<th>{content}</th>") %>% as.character(),
-      row  >  0 & style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
-      row  >  0 & style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
+      style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
+      style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
 
-  # TODO: row pertaining to the <table> style will
-  # be moved into separate list component; this
-  # statement will be affected
-  style_attrs_table <-
-    table_content_styles %>%
-    dplyr::filter(column_name == "_table_") %>%
-    dplyr::select(style_attrs) %>%
-    dplyr::pull()
 
-  # TODO: row pertaining to the <thead> style will
-  # be moved into separate list component; this
-  # statement will be affected
-  style_attrs_thead <-
-    table_content_styles %>%
-    dplyr::filter(column_name == "_thead_") %>%
-    dplyr::select(style_attrs) %>%
-    dplyr::pull()
+  # Process `html_table` head -----------------------------------------------
 
-  # TODO: row pertaining to the <tbody> style will
-  # be moved into separate list component; this
-  # statement will be affected
-  style_attrs_tbody <-
-    table_content_styles %>%
-    dplyr::filter(column_name == "_tbody_") %>%
-    dplyr::select(style_attrs) %>%
-    dplyr::pull()
+  table_head_styles <-
+    gt:::transmute_style_attrs(html_table_component = html_head) %>%
+    dplyr::mutate(style_attrs = case_when(
+      column_name == "_table_" &
+        style_attrs != "" ~ glue::glue("<table style=\"{style_attrs}\">\n") %>% as.character(),
+      column_name == "_table_" &
+        style_attrs == "" ~ "<table>\n",
+      column_name == "_thead_" &
+        style_attrs != "" ~ glue::glue("<thead style=\"{style_attrs}\">\n   <tr>\n") %>% as.character(),
+      column_name == "_thead_" &
+        style_attrs == "" ~ "<thead>\n   <tr>\n",
+      column_name == "_tbody_" &
+        style_attrs != "" ~ glue::glue("<tbody style=\"{style_attrs}\">\n") %>% as.character(),
+      column_name == "_tbody_" &
+        style_attrs == "" ~ "<tbody>\n"))
 
-  # Construct the `<table>` tag
-  table_component <-
-    ifelse(style_attrs_table == "", "<table>\n",
-           glue::glue("<table style=\"{style_attrs_table}\">\n") %>%
-             as.character())
+  # Get the `<table>` opening and closing tags
+  table_component <- table_head_styles$style_attrs[1]
+  table_closing_component <- "</table>\n"
 
-  # Construct the `<thead>` tag
-  thead_component <-
-    ifelse(style_attrs_thead == "", " <thead>\n   <tr>\n",
-           glue::glue("<thead style=\"{style_attrs_thead}\">\n   <tr>\n") %>%
-             as.character())
-
-  # Build the table heading component
-  table_heading_component <-
-    table_content_styles %>%
-    dplyr::filter(row == 0) %>%
-    dplyr::pull(style_attrs) %>%
-    paste("   ", ., "\n", collapse = "")
-
-  # Define the thead closing component
+  # Get the `<thead>` opening and closing tags
+  thead_component <- table_head_styles$style_attrs[2]
   thead_closing_component <- " </thead>\n"
 
-  tbody_component <-
-    ifelse(style_attrs_tbody == "", " <tbody>\n",
-           glue::glue(" <tbody style=\"{style_attrs_tbody}\">\n") %>%
-             as.character())
+  # Get the `<tbody>` opening and closing tags
+  tbody_component <- table_head_styles$style_attrs[3]
+  tbody_closing_component <- "</tbody>\n"
+
+  # Build the table heading component
+  for (i in table_heading_styles$row %>% unique()) {
+
+    if (i == (table_heading_styles$row %>% unique())[1]) {
+      table_heading_component <- vector(mode = "character")
+    }
+
+    table_heading_component <-
+      c(table_heading_component,
+        table_heading_styles %>%
+          filter(row == i) %>%
+          dplyr::pull(heading_tag) %>%
+          paste(collapse = "\n") %>%
+          paste0("<tr>\n", ., "</tr>\n"))
+  }
+
+  table_heading_component <-
+    table_heading_component %>%
+    paste(collapse = "\n")
 
   # Build the table body component
   table_body_component <-
@@ -158,9 +203,11 @@ emit_html <- function(html_tbl) {
     rlang::squash_chr() %>%
     paste(collapse = "")
 
-  # Define the table closing component
-  tbody_closing_component <- "</tbody>\n"
-  table_closing_component <- "</table>\n"
+  # Get the number of rows and columns in the table
+  n_rows <- table_content_styles$row %>% unique() %>% length()
+  n_columns <- table_content_styles$column %>% unique() %>% length()
+
+  # Table Part: Caption -----------------------------------------------------
 
   # Generate the table caption
   if (!is.na(heading$title)) {
@@ -175,6 +222,24 @@ emit_html <- function(html_tbl) {
     table_caption_component <- ""
   }
 
+  # Table Part: Source Note -------------------------------------------------
+
+  # Generate the source note
+  if (nrow(source_note) > 0) {
+
+    source_note_component <-
+      generate_source_notes(
+        source_note_tbl = source_note,
+        span_amount = n_columns)
+
+  } else {
+    source_note_component <- ""
+  }
+
+
+
+  # Compose the HTML Table --------------------------------------------------
+
   paste(
     "<!--html_preserve-->\n",
     table_component,
@@ -185,6 +250,7 @@ emit_html <- function(html_tbl) {
     tbody_component,
     table_body_component,
     tbody_closing_component,
+    source_note_component,
     table_closing_component,
     "<!--/html_preserve-->\n",
     collapse = "") %>%
