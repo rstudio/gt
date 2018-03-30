@@ -78,15 +78,15 @@ emit_html <- function(html_tbl) {
         length() == 1) {
 
       table_heading_styles_row_column <-
-      bind_rows(
-        table_heading_styles_row_column[c(i - 1, i), ] %>%
-          dplyr::group_by(content) %>%
-          dplyr::summarize(
-            row = min(row) %>% as.integer(),
-            column = min(column) %>% as.integer(),
-            rowspan = min(rowspan) %>% as.integer(),
-            colspan = sum(colspan)),
-        table_heading_styles_row_column[-c(i - 1, i), ])
+        dplyr::bind_rows(
+          table_heading_styles_row_column[c(i - 1, i), ] %>%
+            dplyr::group_by(content) %>%
+            dplyr::summarize(
+              row = min(row) %>% as.integer(),
+              column = min(column) %>% as.integer(),
+              rowspan = min(rowspan) %>% as.integer(),
+              colspan = sum(colspan)),
+          table_heading_styles_row_column[-c(i - 1, i), ])
     }
   }
 
