@@ -222,7 +222,6 @@ gt <- function(tbl) {
   # Create an empty `stubhead_caption` tbl
   stubhead_caption <-
     dplyr::tibble(
-      index = NA_integer_,
       caption_text = NA_character_,
       alignment = NA_character_)[-1, ]
 
