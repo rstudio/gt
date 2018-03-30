@@ -1,6 +1,6 @@
 #' Add inline CSS styles to specified table rows
 #'
-#' Modify the style of specfied table rows in
+#' Modify the style of specified table rows in
 #' both the stub and field table parts.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.

@@ -1,6 +1,6 @@
 #' Add inline CSS styles to a table part
 #'
-#' Modify the style of a specfic table part.
+#' Modify the style of a specific table part.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param part a table part which could be any
