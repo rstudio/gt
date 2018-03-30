@@ -1,8 +1,8 @@
 
 #' Decode the transform related to column names
 #' and column types
-#' @importFrom stringr str_replace str_split
 #' @return a named character vector.
+#' @importFrom stringr str_replace str_split
 #' @noRd
 decode_col_type_transform <- function(transform_text) {
 
@@ -62,6 +62,7 @@ htt_alignment_left <- function(html_tbl,
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @return an object of class \code{html_table}.
+#' @importFrom dplyr filter pull
 #' @noRd
 htt_alignment <- function(html_tbl,
                           transform,
@@ -193,3 +194,41 @@ htt_theme_striped <- function(html_tbl) {
 }
 
 
+#' HTT: add_stubhead_caption()
+#' @param html_table_component the HTML table
+#' component that contains style attribute columns.
+#' @param caption_text the text to be used as the
+#' stubhead caption.
+#' @param alignment the alignment of the
+#' stubhead caption.
+#' @importFrom dplyr mutate case_when
+#' @noRd
+htt_add_stubhead_caption <- function(html_table_component,
+                                     caption_text,
+                                     alignment) {
+
+  html_table_component <-
+    html_table_component %>%
+    dplyr::mutate(content = case_when(
+      t_subpart == "stubhead" ~ caption_text,
+      is.character(t_subpart) ~ content))
+
+
+  if ("text-align" %in% colnames(html_table_component)) {
+
+    html_table_component <-
+      html_table_component %>%
+      dplyr::mutate(`text-align` = case_when(
+        t_subpart == "stubhead" ~ alignment,
+        is.character(t_subpart) ~ `text-align`))
+
+  } else {
+
+    html_table_component <-
+      html_table_component %>%
+      dplyr::mutate(`text-align` = case_when(
+        t_subpart == "stubhead" ~ alignment))
+  }
+
+  html_table_component
+}
