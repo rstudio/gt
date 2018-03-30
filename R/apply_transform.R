@@ -1,3 +1,151 @@
+#' Apply left alignment to column data
+#'
+#' Apply the left alignment rule to data cells within
+#' table columns. Options exist to selectively
+#' apply the alignment to specified column names or
+#' to columns of certain types.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the left alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the left alignment should be applied.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr pull mutate case_when
+#' @export
+apply_alignment_left <- function(html_tbl,
+                                 columns = NULL,
+                                 types = NULL) {
+
+  if (!is.null(columns)) {
+
+    transform <-
+      columns %>%
+      paste(collapse = ";") %>%
+      paste0("columns:", .)
+  }
+
+  if (!is.null(types)) {
+
+    transform <-
+      types %>%
+      paste(collapse = ";") %>%
+      paste0("types:", .)
+  }
+
+  if (is.null(columns) & is.null(types)) {
+    transform <- NA_character_
+  }
+
+  html_tbl[["transform_opts"]] <-
+    html_tbl[["transform_opts"]] %>%
+    tibble::add_row(
+      type = "alignment_left",
+      transform = transform,
+      enabled = TRUE)
+
+  html_tbl
+}
+
+
+#' Apply center alignment to column data
+#'
+#' Apply the center alignment rule to data cells within
+#' table columns. Options exist to selectively
+#' apply the alignment to specified column names or
+#' to columns of certain types.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the center alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the center alignment should be applied.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr pull mutate case_when
+#' @export
+apply_alignment_center <- function(html_tbl,
+                                   columns = NULL,
+                                   types = NULL) {
+
+  if (!is.null(columns)) {
+
+    transform <-
+      columns %>%
+      paste(collapse = ";") %>%
+      paste0("columns:", .)
+  }
+
+  if (!is.null(types)) {
+
+    transform <-
+      types %>%
+      paste(collapse = ";") %>%
+      paste0("types:", .)
+  }
+
+  if (is.null(columns) & is.null(types)) {
+    transform <- NA_character_
+  }
+
+  html_tbl[["transform_opts"]] <-
+    html_tbl[["transform_opts"]] %>%
+    tibble::add_row(
+      type = "alignment_center",
+      transform = transform,
+      enabled = TRUE)
+
+  html_tbl
+}
+
+#' Apply right alignment to column data
+#'
+#' Apply the right alignment rule to data cells within
+#' table columns. Options exist to selectively
+#' apply the alignment to specified column names or
+#' to columns of certain types.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the right alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the right alignment should be applied.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr pull mutate case_when
+#' @export
+apply_alignment_right <- function(html_tbl,
+                                   columns = NULL,
+                                   types = NULL) {
+
+  if (!is.null(columns)) {
+
+    transform <-
+      columns %>%
+      paste(collapse = ";") %>%
+      paste0("columns:", .)
+  }
+
+  if (!is.null(types)) {
+
+    transform <-
+      types %>%
+      paste(collapse = ";") %>%
+      paste0("types:", .)
+  }
+
+  if (is.null(columns) & is.null(types)) {
+    transform <- NA_character_
+  }
+
+  html_tbl[["transform_opts"]] <-
+    html_tbl[["transform_opts"]] %>%
+    tibble::add_row(
+      type = "alignment_right",
+      transform = transform,
+      enabled = TRUE)
+
+  html_tbl
+}
+
 #' Apply the striped theme to the table
 #'
 #' Apply the striped theme to the table. This
