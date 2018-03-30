@@ -115,7 +115,7 @@ gt <- function(tbl) {
   # for the boxhead component of the table
   table_boxhead <-
     dplyr::tibble(content = data_col_names) %>%
-    dplyr::mutate(type = "character") %>%
+    dplyr::mutate(type = data_col_classes) %>%
     dplyr::mutate(row = 0L) %>%
     dplyr::mutate(column = 1:nrow(.)) %>%
     dplyr::mutate(column_name = content) %>%
