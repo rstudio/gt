@@ -34,7 +34,6 @@
 #' @export
 emit_html <- function(html_tbl) {
 
-
   # Apply transformations ---------------------------------------------------
 
   # Get table of transformation options
@@ -62,9 +61,10 @@ emit_html <- function(html_tbl) {
       dplyr::pull(transform)
 
     html_tbl <-
-      htt_alignment_center(
+      htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1])
+        transform = transforms[1],
+        align_type = "center")
   }
 
   # Apply left alignment if any such transformations are applied
@@ -76,9 +76,10 @@ emit_html <- function(html_tbl) {
       dplyr::pull(transform)
 
     html_tbl <-
-      htt_alignment_left(
+      htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1])
+        transform = transforms[1],
+        align_type = "left")
   }
 
   # Apply right alignment if any such transformations are applied
@@ -90,15 +91,17 @@ emit_html <- function(html_tbl) {
       dplyr::pull(transform)
 
     html_tbl <-
-      htt_alignment_right(
+      htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1])
+        transform = transforms[1],
+        align_type = "right")
   }
 
   # Extract object components -----------------------------------------------
 
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
+  stubhead_caption <- html_tbl[["stubhead_caption"]]
 
   boxhead_panel <- html_tbl[["boxhead_panel"]]
 
