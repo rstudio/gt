@@ -58,13 +58,14 @@ htt_alignment_left <- function(html_tbl,
   }
 }
 
-#' HTT: apply_alignment_center()
+#' HTT: apply_alignment_...()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @return an object of class \code{html_table}.
 #' @noRd
-htt_alignment_center <- function(html_tbl,
-                                 transform) {
+htt_alignment <- function(html_tbl,
+                          transform,
+                          align_type) {
 
   if (is.na(transform)) {
 
@@ -72,9 +73,80 @@ htt_alignment_center <- function(html_tbl,
       html_tbl %>%
       add_column_style(
         property = "text-align",
-        values = "center")
+        values = align_type)
 
     return(html_tbl)
+
+  } else {
+
+    transform_vector <-
+      decode_col_type_transform(
+        transform_text = transform)
+
+    if (names(transform_vector)[1] == "column") {
+
+      html_tbl <-
+        html_tbl %>%
+        add_column_style(
+          columns = transform_vector %>% unname(),
+          property = "text-align",
+          values = align_type)
+
+      return(html_tbl)
+    }
+
+    if (names(transform_vector)[1] == "type") {
+
+      column_indices <- vector(mode = "integer")
+
+      if ("numeric" %in% transform_vector) {
+
+      # Get column indices for numeric columns
+        column_indices <-
+          c(column_indices,
+            html_tbl[["html_table"]] %>%
+              dplyr::filter(row > 0) %>%
+              dplyr::filter(type == "numeric") %>%
+              dplyr::pull(column) %>%
+              unique())
+      }
+
+      if ("integer" %in% transform_vector) {
+
+        # Get column indices for numeric columns
+        column_indices <-
+          c(column_indices,
+            html_tbl[["html_table"]] %>%
+              dplyr::filter(row > 0) %>%
+              dplyr::filter(type == "integer") %>%
+              dplyr::pull(column) %>%
+              unique())
+      }
+
+      if ("character" %in% transform_vector) {
+
+        # Get column indices for numeric columns
+        column_indices <-
+          c(column_indices,
+            html_tbl[["html_table"]] %>%
+              dplyr::filter(row > 0) %>%
+              dplyr::filter(type == "character") %>%
+              dplyr::pull(column) %>%
+              unique())
+      }
+
+      if (length(column_indices) > 0) {
+
+        html_tbl <-
+          html_tbl %>%
+          add_column_style(
+            columns = column_indices,
+            property = "text-align",
+            values = align_type)
+      }
+
+      return(html_tbl)
+    }
   }
 }
 
