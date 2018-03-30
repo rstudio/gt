@@ -160,76 +160,14 @@ apply_alignment_right <- function(html_tbl,
 #' @export
 apply_theme_striped <- function(html_tbl) {
 
-  # Get column indices for numeric columns
-  numeric_columns <-
-    html_tbl[["html_table"]] %>%
-    dplyr::filter(row > 0) %>%
-    dplyr::filter(type %in% c("integer", "numeric")) %>%
-    dplyr::pull(column) %>%
-    unique()
+  html_tbl[["transform_opts"]] <-
+    html_tbl[["transform_opts"]] %>%
+    tibble::add_row(
+      type = "theme",
+      transform = "striped",
+      enabled = TRUE)
 
-  # Get column indices for character-based columns
-  character_columns <-
-    html_tbl[["html_table"]] %>%
-    dplyr::filter(row > 0) %>%
-    dplyr::filter(type == "character") %>%
-    dplyr::pull(column) %>%
-    unique()
-
-  # Align text for any numeric columns to the right
-  if (length(numeric_columns) > 0) {
-
-    html_tbl <-
-      html_tbl %>%
-      add_column_style(
-        columns = numeric_columns,
-        property = "text-align",
-        values = "center")
-  }
-
-  # Align text for any character-based columns to the left
-  if (length(character_columns) > 0) {
-
-    html_tbl <-
-      html_tbl %>%
-      add_column_style(
-        columns = character_columns,
-        property = "text-align",
-        values = "center")
-  }
-
-  html_tbl %>%
-    add_table_style(
-      property = "border-collapse",
-      values = "collapse") %>%
-    add_table_style(
-      property = "width",
-      values = "100%") %>%
-    add_style_to_row_0(
-      property = "border-bottom",
-      values = "2px solid #A8A8A8") %>%
-    add_style_to_row_0(
-      property = "border-top",
-      values = "2px solid #A8A8A8") %>%
-    add_style_to_row_0(
-      property = "padding",
-      values = "10px") %>%
-    add_style_to_row_0(
-      property = "margin",
-      values = "10px") %>%
-    add_style_to_rows(
-      property = "padding",
-      values = "10px") %>%
-    add_style_to_rows(
-      property = "padding",
-      values = "10px") %>%
-    add_style_to_row_n(
-      property = "border-bottom",
-      values = "2px solid #A8A8A8") %>%
-    add_style_every_n_rows(
-      every_n = 2,
-      property = "background",
-      values = "#E5E6EB")
+  html_tbl
 }
 
 
