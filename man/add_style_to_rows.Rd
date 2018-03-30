@@ -32,6 +32,6 @@ be transformed to a space-separated string.}
 an object of class \code{html_table}.
 }
 \description{
-Modify the style of specfied table rows in
+Modify the style of specified table rows in
 both the stub and field table parts.
 }

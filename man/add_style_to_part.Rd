@@ -27,5 +27,5 @@ be transformed to a space-separated string.}
 an object of class \code{html_table}.
 }
 \description{
-Modify the style of a specfic table part.
+Modify the style of a specific table part.
 }
