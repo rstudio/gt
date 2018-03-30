@@ -24,7 +24,6 @@ add_heading <- function(html_tbl,
       headnote = ifelse(is.null(headnote), "", headnote %>% as.character()),
       table_number = ifelse(is.null(table_number), "", table_number %>% as.character()))
 
-
   html_tbl
 }
 
@@ -37,25 +36,27 @@ add_heading <- function(html_tbl,
 #' but a message to this effect will be emitted.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
-#' @param text the text to be used as the stubhead.
+#' @param caption the text to be used as the
+#' stubhead caption.
+#' @param alignment an option to modify the
+#' alignment of the stubhead caption. By
+#' default this is \code{left}. Other options
+#' are \code{center} and \code{right}.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull mutate case_when
 #' @export
 add_stubhead_caption <- function(html_tbl,
-                                 text) {
+                                 caption,
+                                 alignment = NULL) {
 
-  # TODO: Move all of this to an unexported transform function
-  if ("stubhead" %in% (html_tbl[["html_table"]] %>% dplyr::pull(t_subpart))) {
-
-    html_tbl[["html_table"]] <-
-      html_tbl[["html_table"]] %>%
-      dplyr::mutate(content = case_when(
-        t_subpart == "stubhead" ~ text,
-        is.character(t_subpart) ~ content))
-
-  } else {
-    message("There is no stub in the table, so, no stubhead caption can be added.")
+  if (is.null(alignment) || !(alignment %in% c("left", "center", "right"))) {
+    alignment <- "left"
   }
+
+  html_tbl[["stubhead_caption"]] <-
+    dplyr::tibble(
+      caption_text = caption,
+      alignment = alignment)
 
   html_tbl
 }
