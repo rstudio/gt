@@ -58,43 +58,88 @@ the word `Source`.
 ## Example
 
 The `mtcars` dataset can be suitably transformed into a simple HTML
-table. We can use the `gt()` function to initiate the process (providing
-`mtcars` to the `tbl` argument), creating an HTML table object. We can
-apply a theme such as the basic striped row theme with
-`apply_theme_striped()`. The stubhead caption would otherwise be an
-empty box in the top-left of the table unless we specify some text to be
-placed there. We can use `add_stubhead_caption()` to provide the text
-for that part of the table. Finally, we add a heading to the table with
-`add_heading()`, where title text and a headnote (which is an optional
-statement that follows the title) is specified.
+table (for sake of brevity, we’ll use just the first 6 rows). We can use
+the `gt()` function to initiate the process (providing `mtcars` to the
+`tbl` argument), creating an HTML table object. Because `mtcars` is a
+data frame with rownames, a stub is automatically created–row names are
+cool again\! After that, a few functions can be used to add and
+customize the output table:
+
+  - `apply_theme_striped()`: styles the table with a basic striped row
+    theme
+  - `apply_alignment_center()`: center-aligns cell content in specified
+    columns
+  - `add_stubhead_caption()`: adds a caption to the stubhead (the box in
+    the top-left of the table)
+  - `add_heading()`: an opportunity to add a title and, optionally, a
+    headnote and a table number
+  - `add_source_note()`: not really a footnote, but a specialized note
+    concerned with the source of the data presented
+
+<!-- end list -->
 
 ``` r
 library(gt)
 
 mtcars_tbl <-
-  gt(tbl = mtcars) %>%
+  gt(tbl = mtcars[1:6, ]) %>%
   apply_theme_striped() %>%
+  apply_alignment_center() %>%
   add_stubhead_caption(text = "car model") %>%
   add_heading(
-    title = "The `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]")
+    title = "Excerpt from the `mtcars` dataset",
+    headnote = "[A rather famous Motor Trend table]") %>%
+  add_source_note(
+    source_note = "Henderson and Velleman (1981).",
+    lead_in = "Main Source of Data: ") %>%
+  add_source_note(
+    source_note = "Motor Trend Magazine (1974).",
+    lead_in = "Original Data: ")
 ```
 
-The HTML table object is transformed to HTML with the `emit_html()`
-function. This works well inside an R Markdown code chunk since the
-table will appear when the document is rendered to HTML.
+The HTML table object can then be transformed to HTML with the
+`emit_html()` function. This works well inside an R Markdown code chunk
+since the table will appear when the document is rendered to HTML.
 
 ``` r
 mtcars_tbl %>% emit_html()
 ```
 
-We can also preview the table in the Viewer pane with `render_table()`:
+We can also preview the table in the RStudio Viewer pane (or the default
+browser if invoked outside of RStudio) with `render_table()`:
 
 ``` r
 mtcars_tbl %>% render_table()
 ```
 
 <img src="man/figures/mtcars_render_table.png">
+
+Let’s build another table using another well-known dataset. In this
+table, we embrace the naming convention provided in the **iris**
+dataset’s column names. The dot-separated column names (such as
+`Sepal.Length` and `Petal.Width`) provide a means to specify heading
+levels as `<spanner_heading>.<column_heading>`. So long as we follow
+this column-name pattern, we can use the `apply_spanner_headings()`
+function to parse and expand the given column names into one or more
+boxhead panels with spanner headings and column headings.
+
+``` r
+iris_tbl <-
+  gt(tbl = iris[1:6, ]) %>%
+  apply_theme_striped() %>%
+  apply_spanner_headings() %>%
+  apply_alignment_center() %>%
+  add_heading(
+    title = "Excerpt from the `iris` dataset",
+    headnote = "[Findings on Iris germanica]") %>%
+  add_source_note(
+    source_note = "Fisher, R. A. (1936).",
+    lead_in = "Source: ")
+```
+
+This is how the table appears after using `render_table()`:
+
+<img src="man/figures/iris_render_table.png">
 
 ## Code of Conduct
 
