@@ -118,6 +118,17 @@ emit_html <- function(html_tbl) {
     html_table <- html_tbl[["html_table"]]
   }
 
+  # Table Part: Stubhead Caption --------------------------------------------
+
+  if ("stubhead" %in% (html_table %>% dplyr::pull(t_subpart)) &
+      nrow(stubhead_caption) == 1) {
+
+    html_table <-
+      htt_add_stubhead_caption(
+        html_table_component = html_table,
+        caption_text = stubhead_caption$caption_text,
+        alignment = stubhead_caption$alignment)
+  }
 
   # Process `html_table` heading --------------------------------------------
 
