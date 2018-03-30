@@ -34,6 +34,69 @@
 #' @export
 emit_html <- function(html_tbl) {
 
+
+  # Apply transformations ---------------------------------------------------
+
+  # Get table of transformation options
+  transform_opts <- html_tbl[["transform_opts"]]
+
+  # Apply theme if any theme setting is applied
+  if ("theme" %in% transform_opts$type) {
+
+    theme_name <-
+      transform_opts %>%
+      dplyr::filter(type == "theme") %>%
+      dplyr::pull(transform)
+
+    if (theme_name == "striped") {
+      html_tbl <- htt_theme_striped(html_tbl = html_tbl)
+    }
+  }
+
+  # Apply center alignment if any such transformations are applied
+  if ("alignment_center" %in% transform_opts$type) {
+
+    transforms <-
+      transform_opts %>%
+      dplyr::filter(type == "alignment_center") %>%
+      dplyr::pull(transform)
+
+    html_tbl <-
+      htt_alignment_center(
+        html_tbl = html_tbl,
+        transform = transforms[1])
+  }
+
+  # Apply left alignment if any such transformations are applied
+  if ("alignment_left" %in% transform_opts$type) {
+
+    transforms <-
+      transform_opts %>%
+      dplyr::filter(type == "alignment_left") %>%
+      dplyr::pull(transform)
+
+    html_tbl <-
+      htt_alignment_left(
+        html_tbl = html_tbl,
+        transform = transforms[1])
+  }
+
+  # Apply right alignment if any such transformations are applied
+  if ("alignment_right" %in% transform_opts$type) {
+
+    transforms <-
+      transform_opts %>%
+      dplyr::filter(type == "alignment_right") %>%
+      dplyr::pull(transform)
+
+    html_tbl <-
+      htt_alignment_right(
+        html_tbl = html_tbl,
+        transform = transforms[1])
+  }
+
+  # Extract object components -----------------------------------------------
+
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
 
@@ -47,8 +110,7 @@ emit_html <- function(html_tbl) {
   # Generate the spanner headings
   if (nrow(boxhead_panel) > 0) {
 
-    html_tbl <-
-      gt:::modify_spanner_headings(html_tbl = html_tbl)
+    html_tbl <- modify_spanner_headings(html_tbl = html_tbl)
 
     html_table <- html_tbl[["html_table"]]
   }
