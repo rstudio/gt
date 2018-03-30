@@ -4,13 +4,19 @@
 \alias{add_stubhead_caption}
 \title{Add caption text to the stubhead}
 \usage{
-add_stubhead_caption(html_tbl, text)
+add_stubhead_caption(html_tbl, caption, alignment = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
 created using the \code{gt()} function.}
 
-\item{text}{the text to be used as the stubhead.}
+\item{caption}{the text to be used as the
+stubhead caption.}
+
+\item{alignment}{an option to modify the
+alignment of the stubhead caption. By
+default this is \code{left}. Other options
+are \code{center} and \code{right}.}
 }
 \value{
 an object of class \code{html_table}.
