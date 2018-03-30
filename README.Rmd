@@ -59,7 +59,7 @@ mtcars_tbl <-
   gt(tbl = mtcars[1:6, ]) %>%
   apply_theme_striped() %>%
   apply_alignment_center() %>%
-  add_stubhead_caption(text = "car model") %>%
+  add_stubhead_caption(caption = "car model") %>%
   add_heading(
     title = "Excerpt from the `mtcars` dataset",
     headnote = "[A rather famous Motor Trend table]") %>%
