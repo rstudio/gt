@@ -193,6 +193,87 @@ htt_theme_striped <- function(html_tbl) {
       values = "#E5E6EB")
 }
 
+#' HTT: apply_theme_minimal()
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @return an object of class \code{html_table}.
+#' @noRd
+htt_theme_minimal <- function(html_tbl) {
+
+  html_tbl %>%
+    add_table_style(
+      property = "border-collapse",
+      values = "collapse") %>%
+    add_table_style(
+      property = "width",
+      values = "100%") %>%
+    add_style_to_row_0(
+      property = "border-bottom",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_row_0(
+      property = "border-top",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_row_0(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_row_0(
+      property = "margin",
+      values = "10px") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_row_n(
+      property = "border-bottom",
+      values = "2px solid #A8A8A8")
+}
+
+#' HTT: apply_theme_classical()
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @return an object of class \code{html_table}.
+#' @noRd
+htt_theme_classical <- function(html_tbl) {
+
+  html_tbl %>%
+    add_table_style(
+      property = "border-collapse",
+      values = "collapse") %>%
+    add_table_style(
+      property = "width",
+      values = "100%") %>%
+    add_style_to_row_0(
+      property = "border-bottom",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_row_0(
+      property = "border-top",
+      values = "4px double #A8A8A8") %>%
+    add_style_to_column_0(
+      property = "border-right",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_columns(
+      property = "border-right",
+      values = "2px solid #A8A8A8",
+      include_col_n = FALSE) %>%
+    add_style_to_row_0(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_row_0(
+      property = "margin",
+      values = "10px") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "3px") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "3px") %>%
+    add_style_to_row_n(
+      property = "border-bottom",
+      values = "2px solid #A8A8A8")
+}
+
 
 #' HTT: add_stubhead_caption()
 #' @param html_table_component the HTML table
