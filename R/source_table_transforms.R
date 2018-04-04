@@ -12,7 +12,7 @@ create_html_table_tbl <- function(tbl) {
 
   # Get the column names for the data columns
   data_col_names <-
-    colnames(tbl) %>% setdiff(c("rowname", "rowgroup"))
+    colnames(tbl) %>% base::setdiff(c("rowname", "rowgroup"))
 
   # Get the column indices for the data columns
   data_col_indices <-
@@ -55,7 +55,7 @@ create_html_table_tbl <- function(tbl) {
   table_body <-
     table_body %>%
     dplyr::inner_join(
-      table_boxhead %>% select(column, column_name),
+      table_boxhead %>% dplyr::select(column, column_name),
       by = "column") %>%
     dplyr::mutate(t_part = "field") %>%
     dplyr::mutate(t_subpart = NA_character_) %>%
@@ -69,7 +69,7 @@ create_html_table_tbl <- function(tbl) {
       dplyr::tibble(
         t_part = "stub",
         t_subpart = "row_caption",
-        content = tbl %>% pull(rowname),
+        content = tbl %>% dplyr::pull(rowname),
         type = "character",
         row = 1:nrow(tbl),
         column = 0L,
