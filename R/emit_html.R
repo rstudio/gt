@@ -34,66 +34,75 @@
 #' @export
 emit_html <- function(html_tbl) {
 
-  # Apply transformations ---------------------------------------------------
+
+  # Apply aesthetics --------------------------------------------------------
 
   # Get table of transformation options
-  transform_opts <- html_tbl[["transform_opts"]]
+  aesthetics <- html_tbl[["aesthetics"]]
 
   # Apply theme if any theme setting is applied
-  if ("theme" %in% transform_opts$type) {
+  if ("theme" %in% aesthetics$type) {
 
     theme_name <-
-      transform_opts %>%
+      aesthetics %>%
       dplyr::filter(type == "theme") %>%
-      dplyr::pull(transform)
+      dplyr::pull(options)
 
-    if (theme_name == "striped") {
+    if (theme_name[1] == "striped") {
       html_tbl <- htt_theme_striped(html_tbl = html_tbl)
+    }
+
+    if (theme_name[1] == "minimal") {
+      html_tbl <- htt_theme_minimal(html_tbl = html_tbl)
+    }
+
+    if (theme_name[1] == "classical") {
+      html_tbl <- htt_theme_classical(html_tbl = html_tbl)
     }
   }
 
   # Apply center alignment if any such transformations are applied
-  if ("alignment_center" %in% transform_opts$type) {
+  if ("alignment_center" %in% aesthetics$type) {
 
-    transforms <-
-      transform_opts %>%
+    options <-
+      aesthetics %>%
       dplyr::filter(type == "alignment_center") %>%
-      dplyr::pull(transform)
+      dplyr::pull(options)
 
     html_tbl <-
       htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1],
+        transform = options[1],
         align_type = "center")
   }
 
   # Apply left alignment if any such transformations are applied
-  if ("alignment_left" %in% transform_opts$type) {
+  if ("alignment_left" %in% aesthetics$type) {
 
-    transforms <-
-      transform_opts %>%
+    options <-
+      aesthetics %>%
       dplyr::filter(type == "alignment_left") %>%
-      dplyr::pull(transform)
+      dplyr::pull(options)
 
     html_tbl <-
       htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1],
+        transform = options[1],
         align_type = "left")
   }
 
   # Apply right alignment if any such transformations are applied
-  if ("alignment_right" %in% transform_opts$type) {
+  if ("alignment_right" %in% aesthetics$type) {
 
-    transforms <-
-      transform_opts %>%
+    options <-
+      aesthetics %>%
       dplyr::filter(type == "alignment_right") %>%
-      dplyr::pull(transform)
+      dplyr::pull(options)
 
     html_tbl <-
       htt_alignment(
         html_tbl = html_tbl,
-        transform = transforms[1],
+        transform = options[1],
         align_type = "right")
   }
 
