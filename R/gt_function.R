@@ -90,18 +90,22 @@ gt <- function(tbl) {
       column = 0L,
       column_name = c("_table_", "_thead_", "_tbody_"))
 
-  # Create `html_table` -----------------------------------------------------
-
-  html_table <- create_html_table_tbl(tbl = tbl)
-
   # Initialize metadata tbls ------------------------------------------------
 
-  # Create an empty `transform_opts` tbl
-  transform_opts <-
+  # Create an empty `transform_directives` tbl
+  transform_directives <-
+    dplyr::tibble(
+      index = NA_integer_,
+      transform_type = NA_character_,
+      transform_v1 = NA_character_,
+      transform_v2 = NA_character_,
+      transform_v3 = NA_character_)[-1, ]
+
+  # Create an empty `aesthetics` tbl
+  aesthetics <-
     dplyr::tibble(
       type = NA_character_,
-      transform = NA_character_,
-      enabled = NA)[-1, ]
+      options = NA_character_)[-1, ]
 
   # Create an empty `heading` tbl
   heading <-
@@ -137,21 +141,27 @@ gt <- function(tbl) {
       spanner_heading = NA_character_,
       column_heading = NA_character_)[-1, ]
 
-  # Create the list object for the html table
+  # Create the `html_table` list object -------------------------------------
   html_table <-
     list(
+      transform_directives = transform_directives,
+      aesthetics = aesthetics,
       source_tbl = tbl,
-      transform_opts = transform_opts,
+      modified_tbl = tbl,
       heading = heading,
       footnote = footnote,
       source_note = source_note,
       stubhead_caption = stubhead_caption,
       boxhead_panel = boxhead_panel,
       html_head = html_head,
-      html_table = html_table)
+      html_table = NULL)
 
   # Apply the `html_table` class
   attr(html_table, "class") <- "html_table"
+
+  # Modify the `html_table` list object -------------------------------------
+  html_table[["html_table"]] <-
+    create_html_table_tbl(tbl = html_table[["modified_tbl"]])
 
   html_table
 }
