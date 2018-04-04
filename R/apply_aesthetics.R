@@ -19,7 +19,7 @@ apply_alignment_left <- function(html_tbl,
 
   if (!is.null(columns)) {
 
-    transform <-
+    options <-
       columns %>%
       paste(collapse = ";") %>%
       paste0("columns:", .)
@@ -27,22 +27,21 @@ apply_alignment_left <- function(html_tbl,
 
   if (!is.null(types)) {
 
-    transform <-
+    options <-
       types %>%
       paste(collapse = ";") %>%
       paste0("types:", .)
   }
 
   if (is.null(columns) & is.null(types)) {
-    transform <- NA_character_
+    options <- NA_character_
   }
 
-  html_tbl[["transform_opts"]] <-
-    html_tbl[["transform_opts"]] %>%
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
     tibble::add_row(
       type = "alignment_left",
-      transform = transform,
-      enabled = TRUE)
+      options = options)
 
   html_tbl
 }
@@ -69,7 +68,7 @@ apply_alignment_center <- function(html_tbl,
 
   if (!is.null(columns)) {
 
-    transform <-
+    options <-
       columns %>%
       paste(collapse = ";") %>%
       paste0("columns:", .)
@@ -77,22 +76,21 @@ apply_alignment_center <- function(html_tbl,
 
   if (!is.null(types)) {
 
-    transform <-
+    options <-
       types %>%
       paste(collapse = ";") %>%
       paste0("types:", .)
   }
 
   if (is.null(columns) & is.null(types)) {
-    transform <- NA_character_
+    options <- NA_character_
   }
 
-  html_tbl[["transform_opts"]] <-
-    html_tbl[["transform_opts"]] %>%
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
     tibble::add_row(
       type = "alignment_center",
-      transform = transform,
-      enabled = TRUE)
+      options = options)
 
   html_tbl
 }
@@ -113,12 +111,12 @@ apply_alignment_center <- function(html_tbl,
 #' @importFrom dplyr pull mutate case_when
 #' @export
 apply_alignment_right <- function(html_tbl,
-                                   columns = NULL,
-                                   types = NULL) {
+                                  columns = NULL,
+                                  types = NULL) {
 
   if (!is.null(columns)) {
 
-    transform <-
+    options <-
       columns %>%
       paste(collapse = ";") %>%
       paste0("columns:", .)
@@ -126,22 +124,21 @@ apply_alignment_right <- function(html_tbl,
 
   if (!is.null(types)) {
 
-    transform <-
+    options <-
       types %>%
       paste(collapse = ";") %>%
       paste0("types:", .)
   }
 
   if (is.null(columns) & is.null(types)) {
-    transform <- NA_character_
+    options <- NA_character_
   }
 
-  html_tbl[["transform_opts"]] <-
-    html_tbl[["transform_opts"]] %>%
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
     tibble::add_row(
       type = "alignment_right",
-      transform = transform,
-      enabled = TRUE)
+      options = options)
 
   html_tbl
 }
@@ -156,16 +153,63 @@ apply_alignment_right <- function(html_tbl,
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull mutate case_when
+#' @importFrom tibble add_row
 #' @export
 apply_theme_striped <- function(html_tbl) {
 
-  html_tbl[["transform_opts"]] <-
-    html_tbl[["transform_opts"]] %>%
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
     tibble::add_row(
       type = "theme",
-      transform = "striped",
-      enabled = TRUE)
+      options = "striped")
+
+  html_tbl
+}
+
+
+#' Apply a minimal set of line styles to the table
+#'
+#' Apply line styles with a minimal set of
+#' horizontal rules for demarcation of the
+#' boxhead and the field. This adds reasonably
+#' thick horizontal rules enclosing the boxhead
+#' and stubhead and a similar horizontal rule
+#' below the field and stub.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @return an object of class \code{html_table}.
+#' @importFrom tibble add_row
+#' @export
+apply_theme_minimal <- function(html_tbl) {
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    tibble::add_row(
+      type = "theme",
+      options = "minimal")
+
+  html_tbl
+}
+
+
+#' Apply line styles that give a table a classic look
+#'
+#' Apply horizontal and vertical line styles that
+#' visually separate the columns and rows. This
+#' adds reasonably thick horizontal and vertical
+#' rules.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @return an object of class \code{html_table}.
+#' @importFrom tibble add_row
+#' @export
+apply_theme_classical <- function(html_tbl) {
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    tibble::add_row(
+      type = "theme",
+      options = "classical")
 
   html_tbl
 }
