@@ -1,4 +1,19 @@
 
+#' Get the next logical index integer in
+#' a table object that has an index column
+#' @param tbl a table object that contains
+#' an integer-based column called \code{index}
+#' @noRd
+get_next_index <- function(tbl) {
+
+  if (nrow(tbl) < 1) {
+    return(1L)
+  } else {
+    return((tbl$index %>% max()) + 1L)
+  }
+}
+
+
 #' Collapse all styles provided as individual columns
 #' to a single `style_attrs` column with a style information
 #' for each table cell
