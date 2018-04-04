@@ -28,35 +28,6 @@ add_heading <- function(html_tbl,
 }
 
 
-
-#' Add a stub to a table
-#' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
-#' @param column an option to use an existing
-#' column as the stub.
-#' @return an object of class \code{html_table}.
-#' @importFrom dplyr tibble
-#' @export
-add_stub <- function(html_tbl,
-                     column = NULL) {
-
-
-  if (is.null(column)) {
-    column <- NA_character_
-  }
-
-  html_tbl[["transform_opts"]] <-
-    html_tbl[["transform_opts"]] %>%
-    tibble::add_row(
-      type = "add_stub",
-      transform = column,
-      enabled = TRUE)
-
-  html_tbl
-}
-
-
-
 #' Add caption text to the stubhead
 #'
 #' Add a caption to the stubhead of a table. If
