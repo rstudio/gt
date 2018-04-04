@@ -52,6 +52,8 @@ add_stubhead_caption <- function(html_tbl,
     alignment <- "left"
   }
 
+  # Add the stubhead caption, replacing any
+  # previously set value
   html_tbl[["stubhead_caption"]] <-
     dplyr::tibble(
       caption_text = caption,
