@@ -1,5 +1,91 @@
 
+# Transform an internal table's column to
+# a stub column
+#' @param tbl an internal data table.
+#' @param column the name of the column to
+#' transform to the stub
+#' @importFrom dplyr rename select everything mutate
+#' @noRd
+transform_to_stub <- function(tbl,
+                              column) {
 
+  tbl %>%
+    dplyr::rename("rowname" = column) %>%
+    dplyr::select("rowname", everything()) %>%
+    dplyr::mutate(rowname = as.character(rowname))
+}
+
+#' Process an internal table with a single
+#' transform directive given in the internal
+#' \code{transform_directives} table.
+#' @param tbl an internal data table.
+#' @param transform_directives the internal
+#' \code{transform_directives} table.
+#' @param index the \code{index} value in
+#' the internal \code{transform_directives}
+#' table.
+#' @noRd
+tbl_transform_step <- function(tbl,
+                               transform_directives,
+                               index) {
+
+  # transform_directives <- cars_tbl[["transform_directives"]]
+  # index <- 1
+
+  transform_type <- transform_directives$transform_type[index]
+
+  transform_vars <-
+    c(transform_directives$transform_v1[index],
+      transform_directives$transform_v2[index],
+      transform_directives$transform_v3[index])
+
+  # Detect and perform the correct table transform --------------------------
+
+  # `to_stub` table transform
+  if (transform_type == "to_stub") {
+    tbl <- transform_to_stub(tbl = tbl, column = transform_vars[1])
+  }
+
+  tbl
+}
+
+#' Perform all tbl transform steps
+#' @param html_tbl an html table object
+#' @importFrom dplyr pull as_tibble
+#' @importFrom purrr map
+#' @noRd
+all_tbl_transform_steps <- function(html_tbl) {
+
+  all_transform_directives <- html_tbl[["transform_directives"]]
+
+  if (nrow(all_transform_directives) > 0) {
+
+    indices <- all_transform_directives %>% dplyr::pull(index)
+
+    transformed_tbl <-
+      indices %>%
+      purrr::map(.f = function(x) {
+        tbl_transform_step(
+          tbl = html_tbl[["source_tbl"]],
+          transform_directives = all_transform_directives,
+          index = x)})
+
+    html_tbl[["modified_tbl"]] <-
+      transformed_tbl[[length(transformed_tbl)]] %>% dplyr::as_tibble()
+  }
+
+  html_tbl
+}
+
+
+#' Transform a tibble of data to a row-wise
+#' table representation suitable for supporting
+#' cell-specific metadata
+#' @param tbl an internal data table.
+#' @importFrom dplyr select everything tibble mutate
+#' @importFrom dplyr arrange inner_join bind_rows
+#' @importFrom purrr map_chr map_df
+#' @noRd
 create_html_table_tbl <- function(tbl) {
 
   # Reorder `rowgroup` and `rowname` columns
