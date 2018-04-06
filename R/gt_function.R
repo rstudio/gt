@@ -95,14 +95,23 @@ gt <- function(tbl) {
 
   # Initialize metadata tbls ------------------------------------------------
 
-  # Create an empty `transform_directives` tbl
-  transform_directives <-
+  # Create an empty `transforms` tbl
+  transforms <-
     dplyr::tibble(
       index = NA_integer_,
       transform_type = NA_character_,
       transform_v1 = NA_character_,
       transform_v2 = NA_character_,
       transform_v3 = NA_character_)[-1, ]
+
+  # Create an empty `formats` tbl
+  formats <-
+    dplyr::tibble(
+      index = NA_integer_,
+      format_type = NA_character_,
+      format_v1 = NA_character_,
+      format_v2 = NA_character_,
+      format_v3 = NA_character_)[-1, ]
 
   # Create an empty `aesthetics` tbl
   aesthetics <-
@@ -147,10 +156,12 @@ gt <- function(tbl) {
   # Create the `html_table` list object -------------------------------------
   html_table <-
     list(
-      transform_directives = transform_directives,
+      transforms = transforms,
+      formats = formats,
       aesthetics = aesthetics,
       source_tbl = tbl,
-      modified_tbl = tbl,
+      modified_tbl = NULL,
+      content_tbl = NULL,
       heading = heading,
       footnote = footnote,
       source_note = source_note,
