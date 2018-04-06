@@ -174,8 +174,37 @@ gt <- function(tbl) {
   attr(html_table, "class") <- "html_table"
 
   # Modify the `html_table` list object -------------------------------------
+
+  ## [1] Perform all `source_tbl` transform steps
+  html_table <-
+    all_tbl_transform_steps(
+      html_tbl = html_table)
+
+  ## [2] Creation of the content table
+  html_table[["content_tbl"]] <-
+    create_content_tbl(tbl = tbl)
+
+  ## [3] Processing of the content table
+  html_table[["content_tbl"]] <-
+    process_content_tbl(
+      tbl = html_table[["content_tbl"]])
+
+  ## [4] Creation of the HTML table
   html_table[["html_table"]] <-
-    create_html_table_tbl(tbl = html_table[["modified_tbl"]])
+    create_html_table_tbl(
+      tbl = html_table[["modified_tbl"]])
+
+  ## [5] Join in formatted content
+  html_table[["html_table"]] <-
+    use_html_content(
+      html_tbl = html_table[["html_table"]],
+      content_tbl = html_table[["content_tbl"]])
+
+  ## [6] Apply HTML aesthetics
+  html_table <-
+    use_html_aesthetics(
+      html_tbl = html_table,
+      aesthetics_tbl = html_table[["aesthetics"]])
 
   html_table
 }
