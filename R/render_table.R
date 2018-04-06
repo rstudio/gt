@@ -67,6 +67,5 @@ highlight_tbl_parts <- function(html_tbl) {
     add_table_style(
       property = "border-collapse",
       values = "collapse") %>%
-    emit_html() %>%
     render_table()
 }
