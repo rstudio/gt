@@ -42,6 +42,9 @@ gt <- function(tbl) {
 
   # Table ingest ------------------------------------------------------------
 
+  # Perform conversion to tibble
+  tbl <- tbl %>% as_tibble()
+
   # If column names contain data (i.e. not numbered),
   # then incorporate the rownames as a column (called
   # `rowname`)
