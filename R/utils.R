@@ -14,6 +14,7 @@ get_next_index <- function(tbl) {
 }
 
 
+
 #' Collapse all styles provided as individual columns
 #' to a single `style_attrs` column with a style information
 #' for each table cell
@@ -31,7 +32,9 @@ transmute_style_attrs <- function(html_table_component) {
     for (i in col_begin_styles:ncol(html_table_component)) {
 
       if (i == col_begin_styles) {
-        style_names <- colnames(html_table_component)[col_begin_styles:ncol(html_table_component)]
+        style_names <-
+          colnames(html_table_component)[
+            col_begin_styles:ncol(html_table_component)]
       }
 
       for (j in 1:nrow(html_table_component)) {
@@ -43,7 +46,9 @@ transmute_style_attrs <- function(html_table_component) {
         } else {
 
           html_table_component[j, i] <-
-            paste0(colnames(html_table_component)[i], ":", html_table_component[j, i] %>% dplyr::pull(), ";")
+            paste0(
+              colnames(html_table_component)[i], ":",
+              html_table_component[j, i] %>% dplyr::pull(), ";")
         }
       }
     }
@@ -53,7 +58,10 @@ transmute_style_attrs <- function(html_table_component) {
 
     table_content_styles <-
       html_table_component %>%
-      tidyr::unite(col = style_attrs, col_begin_styles:ncol(html_table_component), sep = "")
+      tidyr::unite(
+        col = style_attrs,
+        col_begin_styles:ncol(html_table_component),
+        sep = "")
 
   } else {
 
