@@ -20,8 +20,8 @@ create_content_tbl <- function(tbl) {
               dplyr::tibble(
                 row = x,
                 col = y,
-                col_name = (tbl %>% dplyr::as_tibble())[, y] %>% colnames(),
-                col_type = (tbl %>% as.data.frame())[x, y] %>% class(),
+                column_name = (tbl %>% dplyr::as_tibble())[, y] %>% colnames(),
+                column_type = (tbl %>% as.data.frame())[x, y] %>% class(),
                 content = (tbl %>% as.data.frame())[x, y] %>% as.character())
             })
         }))
@@ -30,7 +30,7 @@ create_content_tbl <- function(tbl) {
     suppressWarnings(
       content_tbl %>%
         dplyr::mutate(scaling_factor = ifelse(
-          col_type %in% c("numeric", "integer"),
+          column_type %in% c("numeric", "integer"),
           1., NA_real_)) %>%
         dplyr::mutate(format_str = NA_character_)
     )
@@ -51,9 +51,9 @@ process_content_tbl <- function(tbl) {
     suppressWarnings(
       tbl %>%
         dplyr::mutate(content_1 = case_when(
-          col_type == "numeric" ~
+          column_type == "numeric" ~
             ((content %>% as.numeric()) * scaling_factor) %>% as.character(),
-          col_type == "integer" ~
+          column_type == "integer" ~
             ((content %>% as.integer()) * scaling_factor) %>% as.character(),
           TRUE ~ content)) %>%
         dplyr::mutate(content_formatted = case_when(
@@ -63,4 +63,3 @@ process_content_tbl <- function(tbl) {
 
   content_tbl
 }
-
