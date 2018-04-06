@@ -197,5 +197,12 @@ create_html_table_tbl <- function(tbl) {
       dplyr::arrange(row, column)
   }
 
+  # Reorder the table columns
+  html_table <-
+    html_table %>%
+    dplyr::select(
+      t_part, t_subpart, type, row, column, column_name, content)
+
   html_table
 }
+
