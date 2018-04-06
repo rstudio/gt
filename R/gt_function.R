@@ -111,7 +111,10 @@ gt <- function(tbl) {
       format_type = NA_character_,
       format_v1 = NA_character_,
       format_v2 = NA_character_,
-      format_v3 = NA_character_)[-1, ]
+      format_v3 = NA_character_,
+      format_v4 = NA_character_,
+      format_v5 = NA_character_,
+      format_v6 = NA_character_)[-1, ]
 
   # Create an empty `aesthetics` tbl
   aesthetics <-
