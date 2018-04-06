@@ -17,33 +17,33 @@ transform_to_stub <- function(tbl,
 
 #' Process an internal table with a single
 #' transform directive given in the internal
-#' \code{transform_directives} table.
+#' \code{transforms} table.
 #' @param tbl an internal data table.
-#' @param transform_directives the internal
-#' \code{transform_directives} table.
+#' @param transforms the internal
+#' \code{transforms} table.
 #' @param index the \code{index} value in
-#' the internal \code{transform_directives}
-#' table.
+#' the internal \code{transforms} table.
 #' @noRd
 tbl_transform_step <- function(tbl,
-                               transform_directives,
+                               transforms,
                                index) {
 
-  # transform_directives <- cars_tbl[["transform_directives"]]
-  # index <- 1
-
-  transform_type <- transform_directives$transform_type[index]
+  transform_type <- transforms$transform_type[index]
 
   transform_vars <-
-    c(transform_directives$transform_v1[index],
-      transform_directives$transform_v2[index],
-      transform_directives$transform_v3[index])
+    c(transforms$transform_v1[index],
+      transforms$transform_v2[index],
+      transforms$transform_v3[index])
 
   # Detect and perform the correct table transform --------------------------
 
   # `to_stub` table transform
   if (transform_type == "to_stub") {
-    tbl <- transform_to_stub(tbl = tbl, column = transform_vars[1])
+
+    tbl <-
+      transform_to_stub(
+        tbl = tbl,
+        column = transform_vars[1])
   }
 
   tbl
@@ -56,22 +56,29 @@ tbl_transform_step <- function(tbl,
 #' @noRd
 all_tbl_transform_steps <- function(html_tbl) {
 
-  all_transform_directives <- html_tbl[["transform_directives"]]
+  all_transforms <- html_tbl[["transforms"]]
 
-  if (nrow(all_transform_directives) > 0) {
+  if (nrow(all_transforms) > 0) {
 
-    indices <- all_transform_directives %>% dplyr::pull(index)
+    indices <- all_transforms %>% dplyr::pull(index)
 
     transformed_tbl <-
       indices %>%
       purrr::map(.f = function(x) {
         tbl_transform_step(
           tbl = html_tbl[["source_tbl"]],
-          transform_directives = all_transform_directives,
+          transforms = all_transforms,
           index = x)})
 
     html_tbl[["modified_tbl"]] <-
-      transformed_tbl[[length(transformed_tbl)]] %>% dplyr::as_tibble()
+      transformed_tbl[[length(transformed_tbl)]] %>%
+      dplyr::as_tibble()
+
+  } else {
+
+    html_tbl[["modified_tbl"]] <-
+      html_tbl[["source_tbl"]] %>%
+      dplyr::as_tibble()
   }
 
   html_tbl
