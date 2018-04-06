@@ -67,6 +67,46 @@ transmute_style_attrs <- function(html_table_component) {
 
 
 
+#' Decode the transform related to column names
+#' and column types
+#' @return a named character vector.
+#' @importFrom stringr str_replace str_split
+#' @noRd
+decode_col_type_transform <- function(transform_text) {
+
+  if (stringr::str_detect(
+    string = transform_text,
+    pattern = "^columns:.*")) {
+
+    columns <-
+      transform_text %>%
+      stringr::str_replace("^columns:(.*)", "\\1") %>%
+      stringr::str_split(pattern = ";") %>%
+      unlist()
+
+    names(columns) <- rep("column", length(columns))
+
+    return(columns)
+  }
+
+  if (stringr::str_detect(
+    string = transform_text,
+    pattern = "^types:.*")) {
+
+    types <-
+      transform_text %>%
+      stringr::str_replace("^types:(.*)", "\\1") %>%
+      stringr::str_split(pattern = ";") %>%
+      unlist()
+
+    names(types) <- rep("type", length(types))
+
+    return(types)
+  }
+}
+
+
+
 #' Modify the `html_table` to incorporate spanner headings
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
