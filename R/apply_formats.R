@@ -1,4 +1,5 @@
 
+
 #' Format values as a number
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
@@ -20,6 +21,7 @@
 #' parentheses.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
+#' @importFrom dplyr bind_rows
 #' @export
 format_as_number <- function(html_tbl,
                              columns = NULL,
@@ -31,30 +33,24 @@ format_as_number <- function(html_tbl,
 
   if (is.null(columns)) {
     columns <- NA_character_
-  } else {
-    columns <- paste0("columns:", columns %>% paste(collapse = ","))
   }
 
   if (is.null(decimals)) {
-    decimals <- NA_character_
-  } else {
-    decimals <- paste0("decimals:", decimals[1] %>% as.integer())
+    decimals <- NA_integer_
   }
-
-  thousands_sep <- paste0("thousands_sep:", as.character(thousands_sep))
-
-  negative_style <- paste0("negative_style:", as.character(negative_style))
 
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
-    html_tbl[["formats"]] %>%
-    tibble::add_row(
-      index = index %>% as.integer(),
-      format_type = "as_number",
-      format_v1 = columns,
-      format_v2 = decimals,
-      format_v3 = thousands_sep,
-      format_v4 = negative_style)
+    dplyr::bind_rows(
+      html_tbl[["formats"]],
+      empty_formats_tbl() %>%
+        tibble::add_row(
+          index = index %>% as.integer(),
+          format_type = "as_number",
+          columns = columns,
+          decimals = decimals %>% as.integer(),
+          thousands_sep = thousands_sep,
+          negative_style = negative_style))
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
@@ -114,6 +110,7 @@ format_as_number <- function(html_tbl,
 #' parentheses.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
+#' @importFrom dplyr bind_rows
 #' @export
 format_as_currency <- function(html_tbl,
                                columns = NULL,
@@ -127,36 +124,24 @@ format_as_currency <- function(html_tbl,
 
   if (is.null(columns)) {
     columns <- NA_character_
-  } else {
-    columns <- paste0("columns:", columns %>% paste(collapse = ","))
   }
 
   if (is.null(decimals)) {
-    decimals <- NA_character_
-  } else {
-    decimals <- paste0("decimals:", decimals[1] %>% as.integer())
+    decimals <- NA_integer_
   }
-
-  currency <- paste0("currency:", as.character(currency))
-
-  thousands_sep <- paste0("thousands_sep:", as.character(thousands_sep))
-
-  accounting_style <- paste0("accounting_style:", as.character(accounting_style))
-
-  negative_style <- paste0("negative_style:", as.character(negative_style))
 
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
-    html_tbl[["formats"]] %>%
-    tibble::add_row(
-      index = index %>% as.integer(),
-      format_type = "as_currency",
-      format_v1 = columns,
-      format_v2 = decimals,
-      format_v3 = currency,
-      format_v4 = thousands_sep,
-      format_v5 = accounting_style,
-      format_v6 = negative_style)
+    dplyr::bind_rows(
+      html_tbl[["formats"]],
+      empty_formats_tbl() %>%
+        tibble::add_row(
+          index = index %>% as.integer(),
+          format_type = "as_currency",
+          columns = columns,
+          decimals = decimals %>% as.integer(),
+          thousands_sep = thousands_sep,
+          currency = currency))
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
@@ -214,6 +199,7 @@ format_as_currency <- function(html_tbl,
 #' parentheses.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
+#' @importFrom dplyr bind_rows
 #' @export
 format_as_percentage <- function(html_tbl,
                                  columns = NULL,
@@ -225,30 +211,26 @@ format_as_percentage <- function(html_tbl,
 
   if (is.null(columns)) {
     columns <- NA_character_
-  } else {
-    columns <- paste0("columns:", columns %>% paste(collapse = ","))
   }
 
   if (is.null(decimals)) {
-    decimals <- NA_character_
-  } else {
-    decimals <- paste0("decimals:", decimals[1] %>% as.integer())
+    decimals <- NA_integer_
   }
-
-  thousands_sep <- paste0("thousands_sep:", as.character(thousands_sep))
-
-  negative_style <- paste0("negative_style:", as.character(negative_style))
 
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
-    html_tbl[["formats"]] %>%
-    tibble::add_row(
-      index = index %>% as.integer(),
-      format_type = "as_percentage",
-      format_v1 = columns,
-      format_v2 = decimals,
-      format_v3 = thousands_sep,
-      format_v4 = negative_style)
+    dplyr::bind_rows(
+      html_tbl[["formats"]],
+      empty_formats_tbl() %>%
+        tibble::add_row(
+          index = index %>% as.integer(),
+          format_type = "as_number",
+          columns = columns,
+          decimals = decimals %>% as.integer(),
+          thousands_sep = thousands_sep,
+          negative_style = negative_style))
+
+  # TODO: add scaling factor of 100. to targeted rows
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
@@ -303,6 +285,7 @@ format_as_percentage <- function(html_tbl,
 #' value.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
+#' @importFrom dplyr bind_rows
 #' @export
 format_as_fraction <- function(html_tbl,
                                columns = NULL,
@@ -312,20 +295,22 @@ format_as_fraction <- function(html_tbl,
 
   if (is.null(columns)) {
     columns <- NA_character_
-  } else {
-    columns <- paste0("columns:", columns %>% paste(collapse = ","))
   }
 
-  accuracy <- paste0("accuracy:", as.character(accuracy))
+  if (is.null(decimals)) {
+    decimals <- NA_integer_
+  }
 
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
-    html_tbl[["formats"]] %>%
-    tibble::add_row(
-      index = index %>% as.integer(),
-      format_type = "as_fraction",
-      format_v1 = columns,
-      format_v2 = accuracy)
+    dplyr::bind_rows(
+      html_tbl[["formats"]],
+      empty_formats_tbl() %>%
+        tibble::add_row(
+          index = index %>% as.integer(),
+          format_type = "as_number",
+          columns = columns,
+          accuracy = accuracy %>% as.character()))
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
