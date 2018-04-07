@@ -96,65 +96,28 @@ gt <- function(tbl) {
   # Initialize metadata tbls ------------------------------------------------
 
   # Create an empty `transforms` tbl
-  transforms <-
-    dplyr::tibble(
-      index = NA_integer_,
-      transform_type = NA_character_,
-      transform_v1 = NA_character_,
-      transform_v2 = NA_character_,
-      transform_v3 = NA_character_)[-1, ]
+  transforms <- empty_transforms_tbl()
 
   # Create an empty `formats` tbl
-  formats <-
-    dplyr::tibble(
-      index = NA_integer_,
-      format_type = NA_character_,
-      format_v1 = NA_character_,
-      format_v2 = NA_character_,
-      format_v3 = NA_character_,
-      format_v4 = NA_character_,
-      format_v5 = NA_character_,
-      format_v6 = NA_character_)[-1, ]
+  formats <- empty_formats_tbl()
 
   # Create an empty `aesthetics` tbl
-  aesthetics <-
-    dplyr::tibble(
-      type = NA_character_,
-      options = NA_character_)[-1, ]
+  aesthetics <- empty_aesthetics_tbl()
 
   # Create an empty `heading` tbl
-  heading <-
-    dplyr::tibble(
-      title = NA_character_,
-      headnote = NA_character_,
-      table_number = NA_character_)[-1, ]
+  heading <- empty_heading_tbl()
 
   # Create an empty `footnote` tbl
-  footnote <-
-    dplyr::tibble(
-      index = NA_integer_,
-      marker = NA_character_,
-      footnote = NA_character_)[-1, ]
+  footnote <- empty_footnote_tbl()
 
   # Create an empty `source_note` tbl
-  source_note <-
-    dplyr::tibble(
-      index = NA_integer_,
-      lead_in = NA_character_,
-      source_note = NA_character_)[-1, ]
+  source_note <- empty_source_note_tbl()
 
   # Create an empty `stubhead_caption` tbl
-  stubhead_caption <-
-    dplyr::tibble(
-      caption_text = NA_character_,
-      alignment = NA_character_)[-1, ]
+  stubhead_caption <- empty_stubhead_caption_tbl()
 
   # Create an empty `boxhead_panel` tbl
-  boxhead_panel <-
-    dplyr::tibble(
-      column_name = NA_character_,
-      spanner_heading = NA_character_,
-      column_heading = NA_character_)[-1, ]
+  boxhead_panel <- empty_boxhead_panel_tbl()
 
   # Create the `html_table` list object -------------------------------------
   html_table <-
