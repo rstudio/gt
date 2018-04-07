@@ -1,4 +1,113 @@
 
+#' Create an empty `transforms` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_transforms_tbl <- function() {
+
+  dplyr::tibble(
+    index = NA_integer_,
+    transform_type = NA_character_,
+    transform_v1 = NA_character_,
+    transform_v2 = NA_character_,
+    transform_v3 = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `formats` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_formats_tbl <- function() {
+
+  dplyr::tibble(
+    index = NA_integer_,
+    format_type = NA_character_,
+    columns = NA_character_,
+    decimals = NA_integer_,
+    thousands_sep = NA,
+    negative_style = NA_character_,
+    currency = NA_character_,
+    accuracy = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `aesthetics` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_aesthetics_tbl <- function() {
+
+  dplyr::tibble(
+    type = NA_character_,
+    options = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `heading` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_heading_tbl <- function() {
+
+  dplyr::tibble(
+    title = NA_character_,
+    headnote = NA_character_,
+    table_number = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `footnote` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_footnote_tbl <- function() {
+
+  dplyr::tibble(
+    index = NA_integer_,
+    marker = NA_character_,
+    footnote = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `source_note` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_source_note_tbl <- function() {
+
+  dplyr::tibble(
+    index = NA_integer_,
+    lead_in = NA_character_,
+    source_note = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `stubhead_caption` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_stubhead_caption_tbl <- function() {
+
+  dplyr::tibble(
+    caption_text = NA_character_,
+    alignment = NA_character_)[-1, ]
+}
+
+
+
+#' Create an empty `boxhead_panel` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_boxhead_panel_tbl <- function() {
+
+  dplyr::tibble(
+    column_name = NA_character_,
+    spanner_heading = NA_character_,
+    column_heading = NA_character_)[-1, ]
+}
+
+
+
 #' Get the next logical index integer in
 #' a table object that has an index column
 #' @param tbl a table object that contains
