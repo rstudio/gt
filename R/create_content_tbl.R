@@ -27,13 +27,20 @@ create_content_tbl <- function(tbl) {
         }))
 
   content_tbl <-
-    suppressWarnings(
-      content_tbl %>%
-        dplyr::mutate(scaling_factor = ifelse(
-          column_type %in% c("numeric", "integer"),
-          1., NA_real_)) %>%
-        dplyr::mutate(format_str = NA_character_)
-    )
+    content_tbl %>%
+    dplyr::mutate(scaling_factor = ifelse(
+      column_type %in% c("numeric", "integer"),
+      1., NA_real_)) %>%
+    dplyr::mutate(digits = NA_integer_) %>%
+    dplyr::mutate(flag = "") %>%
+    dplyr::mutate(big.mark = "") %>%
+    dplyr::mutate(big.interval = 3L) %>%
+    dplyr::mutate(small.mark = "") %>%
+    dplyr::mutate(small.interval = 5L) %>%
+    dplyr::mutate(decimal.mark = getOption("OutDec")) %>%
+    dplyr::mutate(drop0trailing = FALSE) %>%
+    dplyr::mutate(prepend = NA_character_) %>%
+    dplyr::mutate(append = NA_character_)
 
   content_tbl
 }
