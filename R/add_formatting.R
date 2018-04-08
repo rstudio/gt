@@ -21,6 +21,7 @@ tbl_format_step <- function(tbl,
 
     columns <- formats[index, ] %>% dplyr::pull(columns)
     decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
+    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
     thousands_sep <- formats[index, ] %>% dplyr::pull(thousands_sep)
     negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
 
@@ -36,7 +37,9 @@ tbl_format_step <- function(tbl,
       purrr::map_df(.f = function(x) {
 
         if (tbl[x, ]$column_name %in% columns) {
+
           tbl[x, ]$digits <- digits_
+          tbl[x, ]$drop0trailing <- drop_trailing_zeros
 
           if (thousands_sep) {
             tbl[x, ]$big.mark <- ","
@@ -53,6 +56,7 @@ tbl_format_step <- function(tbl,
 
     columns <- formats[index, ] %>% dplyr::pull(columns)
     decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
+    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
     thousands_sep <- formats[index, ] %>% dplyr::pull(thousands_sep)
     negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
 
@@ -70,6 +74,7 @@ tbl_format_step <- function(tbl,
         if (tbl[x, ]$column_name %in% columns) {
 
           tbl[x, ]$digits <- digits_
+          tbl[x, ]$drop0trailing <- drop_trailing_zeros
           tbl[x, ]$scaling_factor <- 100.
           tbl[x, ]$append <- "%"
 
