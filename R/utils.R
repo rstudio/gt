@@ -24,6 +24,7 @@ empty_formats_tbl <- function() {
     format_type = NA_character_,
     columns = NA_character_,
     decimals = NA_integer_,
+    drop_trailing_zeros = NA,
     thousands_sep = NA,
     negative_style = NA_character_,
     currency = NA_character_,
