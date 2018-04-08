@@ -80,7 +80,8 @@ process_content_tbl <- function(tbl) {
         format <- "s"
       }
 
-      if (!is.na(content_tbl[x, ]$digits)) {
+      if (content_tbl[x, ]$column_type != "character" &&
+          !is.na(content_tbl[x, ]$digits)) {
 
         formatted_value <-
           formatC(
@@ -91,11 +92,21 @@ process_content_tbl <- function(tbl) {
             big.interval = content_tbl[x, ]$big.interval,
             small.mark = content_tbl[x, ]$small.mark,
             small.interval = content_tbl[x, ]$small_interval,
-            decimal.mark = content_tbl[x, ]$decimal.mark)
+            decimal.mark = content_tbl[x, ]$decimal.mark,
+            drop0trailing = content_tbl[x, ]$drop0trailing)
 
       } else {
 
         formatted_value <- content_tbl[x, ]$content_1
+      }
+
+      if (content_tbl[x, ]$column_type != "character") {
+
+        formatted_value <-
+          gsub(
+            pattern = "-",
+            replacement = "&ndash;",
+            x = formatted_value)
       }
 
       # Prepend text to the formatted value if a `prepend`
