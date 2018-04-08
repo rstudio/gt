@@ -10,6 +10,9 @@
 #' @param thousands_sep a logical value that
 #' allows for inclusion of a separator at every
 #' three digits.
+#' @param drop_trailing_zeros a logical value that
+#' allows for removal of trailing zeros (those
+#' redundant zeros after the decimal mark).
 #' @param negative_style the formatting to use
 #' for negative numbers. With \code{signed},
 #' negative numbers will be shown with a negative
@@ -27,6 +30,7 @@ format_as_number <- function(html_tbl,
                              columns = NULL,
                              decimals = NULL,
                              thousands_sep = FALSE,
+                             drop_trailing_zeros = FALSE,
                              negative_style = "signed") {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
@@ -49,6 +53,7 @@ format_as_number <- function(html_tbl,
           format_type = "as_number",
           columns = columns,
           decimals = decimals %>% as.integer(),
+          drop_trailing_zeros = drop_trailing_zeros,
           thousands_sep = thousands_sep,
           negative_style = negative_style))
 
@@ -145,6 +150,7 @@ format_as_currency <- function(html_tbl,
           format_type = "as_currency",
           columns = columns,
           decimals = decimals %>% as.integer(),
+          drop_trailing_zeros = FALSE,
           thousands_sep = thousands_sep,
           currency = currency))
 
@@ -198,6 +204,9 @@ format_as_currency <- function(html_tbl,
 #' @param thousands_sep a logical value that
 #' allows for inclusion of a separator at every
 #' three digits.
+#' @param drop_trailing_zeros a logical value that
+#' allows for removal of trailing zeros (those
+#' redundant zeros after the decimal mark).
 #' @param negative_style the formatting to use
 #' for negative numbers. With \code{signed},
 #' negative numbers will be shown with a negative
@@ -215,6 +224,7 @@ format_as_percentage <- function(html_tbl,
                                  columns = NULL,
                                  decimals = NULL,
                                  thousands_sep = FALSE,
+                                 drop_trailing_zeros = FALSE,
                                  negative_style = "signed") {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
@@ -237,6 +247,7 @@ format_as_percentage <- function(html_tbl,
           format_type = "as_percentage",
           columns = columns,
           decimals = decimals %>% as.integer(),
+          drop_trailing_zeros = drop_trailing_zeros,
           thousands_sep = thousands_sep,
           negative_style = negative_style))
 
@@ -323,6 +334,8 @@ format_as_fraction <- function(html_tbl,
           index = index %>% as.integer(),
           format_type = "as_number",
           columns = columns,
+          decimals = NA_integer_,
+          drop_trailing_zeros = FALSE,
           accuracy = accuracy %>% as.character()))
 
   ## [1] Perform all `source_tbl` transform steps
