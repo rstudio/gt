@@ -150,6 +150,11 @@ gt <- function(tbl) {
   html_table[["content_tbl"]] <-
     create_content_tbl(tbl = tbl)
 
+  ## [2.5] Modification of the content table
+  html_table <-
+    all_tbl_format_steps(
+      html_tbl = html_table)
+
   ## [3] Processing of the content table
   html_table[["content_tbl"]] <-
     process_content_tbl(
