@@ -62,7 +62,8 @@ process_content_tbl <- function(tbl) {
         as.character(),
       column_type == "integer" ~
         ((content %>% as.integer()) * scaling_factor) %>%
-        as.character()))
+        as.character(),
+      column_type == "character" ~ content))
 
 
   content_tbl <-
