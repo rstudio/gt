@@ -52,6 +52,11 @@ apply_alignment_left <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -132,6 +137,11 @@ apply_alignment_center <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -211,6 +221,11 @@ apply_alignment_right <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -264,6 +279,11 @@ apply_theme_striped <- function(html_tbl) {
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
@@ -321,6 +341,11 @@ apply_theme_minimal <- function(html_tbl) {
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -374,6 +399,11 @@ apply_theme_classical <- function(html_tbl) {
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
@@ -454,6 +484,11 @@ apply_spanner_headings <- function(html_tbl) {
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-

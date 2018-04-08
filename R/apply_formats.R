@@ -61,6 +61,11 @@ format_as_number <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -152,6 +157,11 @@ format_as_currency <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -224,13 +234,11 @@ format_as_percentage <- function(html_tbl,
       empty_formats_tbl() %>%
         tibble::add_row(
           index = index %>% as.integer(),
-          format_type = "as_number",
+          format_type = "as_percentage",
           columns = columns,
           decimals = decimals %>% as.integer(),
           thousands_sep = thousands_sep,
           negative_style = negative_style))
-
-  # TODO: add scaling factor of 100. to targeted rows
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
@@ -240,6 +248,11 @@ format_as_percentage <- function(html_tbl,
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
@@ -320,6 +333,11 @@ format_as_fraction <- function(html_tbl,
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-

@@ -33,6 +33,11 @@ add_heading <- function(html_tbl,
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
 
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
     process_content_tbl(
@@ -98,6 +103,11 @@ add_stubhead_caption <- function(html_tbl,
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
@@ -167,6 +177,11 @@ add_source_note <- function(html_tbl,
   ## [2] Creation of the content table
   html_tbl[["content_tbl"]] <-
     create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
 
   ## [3] Processing of the content table
   html_tbl[["content_tbl"]] <-
