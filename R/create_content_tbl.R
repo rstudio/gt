@@ -55,18 +55,69 @@ create_content_tbl <- function(tbl) {
 process_content_tbl <- function(tbl) {
 
   content_tbl <-
-    suppressWarnings(
-      tbl %>%
-        dplyr::mutate(content_1 = case_when(
-          column_type == "numeric" ~
-            ((content %>% as.numeric()) * scaling_factor) %>% as.character(),
-          column_type == "integer" ~
-            ((content %>% as.integer()) * scaling_factor) %>% as.character(),
-          TRUE ~ content)) %>%
-        dplyr::mutate(content_formatted = case_when(
-          !is.na(format_str) ~ sprintf(format_str, content_1),
-          TRUE ~ content_1))) %>%
-    dplyr::select(-content_1)
+    tbl %>%
+    dplyr::mutate(content_1 = case_when(
+      column_type == "numeric" ~
+        ((content %>% as.numeric()) * scaling_factor) %>%
+        as.character(),
+      column_type == "integer" ~
+        ((content %>% as.integer()) * scaling_factor) %>%
+        as.character()))
+
+
+  content_tbl <-
+    seq(nrow(content_tbl)) %>%
+    purrr::map_df(.f = function(x) {
+
+      if (content_tbl[x, ]$column_type == "numeric") {
+        format <- "f"
+      } else if (content_tbl[x, ]$column_type == "integer") {
+        format <- "d"
+      } else if (content_tbl[x, ]$column_type == "character") {
+        format <- "s"
+      } else {
+        format <- "s"
+      }
+
+      if (!is.na(content_tbl[x, ]$digits)) {
+
+        formatted_value <-
+          formatC(
+            x = content_tbl[x, ]$content_1 %>% as.numeric(),
+            digits = content_tbl[x, ]$digits,
+            format = format,
+            big.mark = content_tbl[x, ]$big.mark,
+            big.interval = content_tbl[x, ]$big.interval,
+            small.mark = content_tbl[x, ]$small.mark,
+            small.interval = content_tbl[x, ]$small_interval,
+            decimal.mark = content_tbl[x, ]$decimal.mark)
+
+      } else {
+
+        formatted_value <- content_tbl[x, ]$content_1
+      }
+
+      # Prepend text to the formatted value if a `prepend`
+      # string is available
+      if (!is.na(content_tbl[x, ]$prepend)) {
+
+        formatted_value <-
+          paste0(content_tbl[x, ]$prepend, formatted_value)
+      }
+
+      # Append text to the formatted value if an `append`
+      # string is available
+      if (!is.na(content_tbl[x, ]$append)) {
+
+        formatted_value <-
+          paste0(formatted_value, content_tbl[x, ]$append)
+      }
+
+      # Add the `formatted_value` string as a value in
+      # the column `content_formatted`
+      content_tbl[x, ] %>%
+        dplyr::mutate(content_formatted = formatted_value %>% as.character())
+    })
 
   content_tbl
 }
