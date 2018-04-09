@@ -153,13 +153,13 @@ process_content_tbl <- function(tbl) {
           }
         }
 
-        # Replace hyphens with en dashes
+        # Replace hyphens with minus signs
         if (content_tbl[x, ]$column_type != "character") {
 
           formatted_value <-
             gsub(
               pattern = "-",
-              replacement = "&ndash;",
+              replacement = "&minus;",
               x = formatted_value)
         }
 
