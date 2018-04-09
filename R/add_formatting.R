@@ -50,6 +50,36 @@ tbl_format_step <- function(tbl,
       })
   }
 
+  # `format_as_scientific` formatting
+  if (format_type == "as_scientific") {
+
+    columns <- formats[index, ] %>% dplyr::pull(columns)
+    decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
+    scientific <- TRUE
+    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
+    negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
+
+
+    if (!is.na(decimals)) {
+      digits_ <- decimals
+    } else {
+      digits_ <- NA_integer_
+    }
+
+    tbl <-
+      seq(nrow(tbl)) %>%
+      purrr::map_df(.f = function(x) {
+
+        if (tbl[x, ]$column_name %in% columns) {
+
+          tbl[x, ]$digits <- digits_
+          tbl[x, ]$scientific <- scientific
+          tbl[x, ]$drop0trailing <- drop_trailing_zeros
+        }
+
+        tbl[x, ]
+      })
+  }
 
   # `format_as_percentage` formatting
   if (format_type == "as_percentage") {
