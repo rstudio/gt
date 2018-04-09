@@ -51,7 +51,7 @@ create_content_tbl <- function(tbl) {
 #' \code{content_tbl}.
 #' @param tbl the internal table called
 #' \code{content_tbl}.
-#' @importFrom dplyr mutate case_when select
+#' @importFrom dplyr mutate case_when
 #' @importFrom stringr str_split str_detect
 #' @importFrom purrr map_df
 #' @noRd
@@ -110,7 +110,6 @@ process_content_tbl <- function(tbl) {
         formatted_value <-
           formatC(
             x = content_tbl[x, ]$content_1 %>% as.numeric(),
-            #digits = content_tbl[x, ]$digits,
             format = format,
             big.mark = content_tbl[x, ]$big.mark,
             big.interval = content_tbl[x, ]$big.interval,

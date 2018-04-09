@@ -78,7 +78,7 @@ add_heading <- function(html_tbl,
 #' default this is \code{left}. Other options
 #' are \code{center} and \code{right}.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull mutate case_when
+#' @importFrom dplyr tibble
 #' @export
 add_stubhead_caption <- function(html_tbl,
                                  caption,
