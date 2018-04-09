@@ -40,6 +40,7 @@ tbl_format_step <- function(tbl,
 
           tbl[x, ]$digits <- digits_
           tbl[x, ]$drop0trailing <- drop_trailing_zeros
+          tbl[x, ]$negative_style <- negative_style
 
           if (thousands_sep) {
             tbl[x, ]$big.mark <- ","
@@ -75,6 +76,7 @@ tbl_format_step <- function(tbl,
           tbl[x, ]$digits <- digits_
           tbl[x, ]$scientific <- scientific
           tbl[x, ]$drop0trailing <- drop_trailing_zeros
+          tbl[x, ]$negative_style <- negative_style
         }
 
         tbl[x, ]
@@ -106,6 +108,7 @@ tbl_format_step <- function(tbl,
           tbl[x, ]$digits <- digits_
           tbl[x, ]$drop0trailing <- drop_trailing_zeros
           tbl[x, ]$scaling_factor <- 100.
+          tbl[x, ]$negative_style <- negative_style
           tbl[x, ]$append <- "%"
 
           if (thousands_sep) {
