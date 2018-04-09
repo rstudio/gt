@@ -40,6 +40,7 @@ create_content_tbl <- function(tbl) {
     dplyr::mutate(small.interval = 5L) %>%
     dplyr::mutate(decimal.mark = getOption("OutDec")) %>%
     dplyr::mutate(drop0trailing = FALSE) %>%
+    dplyr::mutate(negative_style = "signed") %>%
     dplyr::mutate(prepend = NA_character_) %>%
     dplyr::mutate(append = NA_character_)
 
@@ -177,6 +178,25 @@ process_content_tbl <- function(tbl) {
 
           formatted_value <-
             paste0(formatted_value, content_tbl[x, ]$append)
+        }
+
+        # Format negative values when the option is chosen
+        # to use parentheses for negative values
+        if (content_tbl[x, ]$column_type != "character") {
+
+          if (content_tbl[x, ]$content_1 %>% as.numeric() < 0 &
+              content_tbl[x, ]$negative_style == "parens") {
+
+            formatted_value <-
+              paste0(
+                "(",
+                gsub(
+                  pattern = "&minus;",
+                  replacement = "",
+                  formatted_value),
+                ")"
+              )
+          }
         }
 
         # Add the `formatted_value` string as a value in
