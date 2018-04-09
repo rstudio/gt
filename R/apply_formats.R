@@ -98,6 +98,98 @@ format_as_number <- function(html_tbl,
 
 
 
+#' Format values to scientific notation
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an option specify which columns
+#' are to be formatted.
+#' @param decimals an option to specify exactly
+#' the number of decimal places to use.
+#' @param drop_trailing_zeros a logical value that
+#' allows for removal of trailing zeros (those
+#' redundant zeros after the decimal mark).
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed},
+#' negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the
+#' negative value in parentheses. The \code{red}
+#' option will display the number in red.
+#' Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in
+#' parentheses.
+#' @return an object of class \code{html_table}.
+#' @importFrom tibble add_row
+#' @importFrom dplyr bind_rows
+#' @export
+format_as_scientific <- function(html_tbl,
+                                 columns = NULL,
+                                 decimals = NULL,
+                                 drop_trailing_zeros = FALSE,
+                                 negative_style = "signed") {
+
+  index <- get_next_index(tbl = html_tbl[["formats"]])
+
+  if (is.null(columns)) {
+    columns <- NA_character_
+  }
+
+  if (is.null(decimals)) {
+    decimals <- NA_integer_
+  }
+
+  # Add to `formats` tbl
+  html_tbl[["formats"]] <-
+    dplyr::bind_rows(
+      html_tbl[["formats"]],
+      empty_formats_tbl() %>%
+        tibble::add_row(
+          index = index %>% as.integer(),
+          format_type = "as_scientific",
+          columns = columns,
+          decimals = decimals %>% as.integer(),
+          drop_trailing_zeros = drop_trailing_zeros,
+          negative_style = negative_style))
+
+  ## [1] Perform all `source_tbl` transform steps
+  html_tbl <-
+    all_tbl_transform_steps(
+      html_tbl = html_tbl)
+
+  ## [2] Creation of the content table
+  html_tbl[["content_tbl"]] <-
+    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
+
+  ## [2.5] Modification of the content table
+  html_tbl <-
+    all_tbl_format_steps(
+      html_tbl = html_tbl)
+
+  ## [3] Processing of the content table
+  html_tbl[["content_tbl"]] <-
+    process_content_tbl(
+      tbl = html_tbl[["content_tbl"]])
+
+  ## [4] Creation of the HTML table
+  html_tbl[["html_table"]] <-
+    create_html_table_tbl(
+      tbl = html_tbl[["modified_tbl"]])
+
+  ## [5] Join in formatted content
+  html_tbl[["html_table"]] <-
+    use_html_content(
+      html_tbl = html_tbl[["html_table"]],
+      content_tbl = html_tbl[["content_tbl"]])
+
+  ## [6] Apply HTML aesthetics
+  html_tbl <-
+    use_html_aesthetics(
+      html_tbl = html_tbl,
+      aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  html_tbl
+}
+
+
 #' Format values as currency amounts
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
