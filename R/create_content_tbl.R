@@ -32,6 +32,7 @@ create_content_tbl <- function(tbl) {
       column_type %in% c("numeric", "integer"),
       1., NA_real_)) %>%
     dplyr::mutate(digits = NA_integer_) %>%
+    dplyr::mutate(scientific = FALSE) %>%
     dplyr::mutate(flag = "") %>%
     dplyr::mutate(big.mark = "") %>%
     dplyr::mutate(big.interval = 3L) %>%
@@ -51,6 +52,8 @@ create_content_tbl <- function(tbl) {
 #' @param tbl the internal table called
 #' \code{content_tbl}.
 #' @importFrom dplyr mutate case_when select
+#' @importFrom stringr str_split str_detect
+#' @importFrom purrr map_df
 #' @noRd
 process_content_tbl <- function(tbl) {
 
@@ -70,17 +73,23 @@ process_content_tbl <- function(tbl) {
     seq(nrow(content_tbl)) %>%
     purrr::map_df(.f = function(x) {
 
-      if (content_tbl[x, ]$column_type == "numeric") {
+      if (content_tbl[x, ]$column_type == "numeric" &
+          content_tbl[x, ]$scientific == FALSE) {
         format <- "f"
-      } else if (content_tbl[x, ]$column_type == "integer") {
+      } else if (content_tbl[x, ]$column_type == "integer" &
+                 content_tbl[x, ]$scientific == FALSE) {
         format <- "d"
+      } else if (
+        content_tbl[x, ]$column_type %in% c("numeric", "integer") &
+        content_tbl[x, ]$scientific == TRUE) {
+        format <- "e"
       } else if (content_tbl[x, ]$column_type == "character") {
         format <- "s"
       } else {
         format <- "s"
       }
 
-      if (content_tbl[x, ]$column_type != "character" &&
+      if (content_tbl[x, ]$column_type != "character" &
           !is.na(content_tbl[x, ]$digits)) {
 
         formatted_value <-
@@ -95,11 +104,55 @@ process_content_tbl <- function(tbl) {
             decimal.mark = content_tbl[x, ]$decimal.mark,
             drop0trailing = content_tbl[x, ]$drop0trailing)
 
+      } else if (content_tbl[x, ]$column_type != "character" &
+                 format == "e" & is.na(content_tbl[x, ]$digits)) {
+
+        formatted_value <-
+          formatC(
+            x = content_tbl[x, ]$content_1 %>% as.numeric(),
+            #digits = content_tbl[x, ]$digits,
+            format = format,
+            big.mark = content_tbl[x, ]$big.mark,
+            big.interval = content_tbl[x, ]$big.interval,
+            small.mark = content_tbl[x, ]$small.mark,
+            small.interval = content_tbl[x, ]$small_interval,
+            decimal.mark = content_tbl[x, ]$decimal.mark,
+            drop0trailing = content_tbl[x, ]$drop0trailing)
+
       } else {
 
         formatted_value <- content_tbl[x, ]$content_1
       }
 
+      # Format to scientific notation
+      if (format == "e") {
+
+        if (formatted_value %>%
+            stringr::str_detect(pattern = ".e.")) {
+
+          m_part <-
+            (formatted_value %>%
+               stringr::str_split(pattern = "e") %>%
+               unlist())[1]
+
+          n_part <-
+            (formatted_value %>%
+               stringr::str_split(pattern = "e") %>%
+               unlist())[2] %>%
+            as.integer()
+
+          if (n_part != 0) {
+
+            formatted_value <-
+              paste0(m_part, " &times; 10<sup>", n_part, "</sup>")
+
+          } else {
+            formatted_value <- m_part
+          }
+        }
+      }
+
+      # Replace hyphens with en dashes
       if (content_tbl[x, ]$column_type != "character") {
 
         formatted_value <-
