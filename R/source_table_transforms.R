@@ -4,13 +4,16 @@
 #' @param tbl an internal data table.
 #' @param column the name of the column to
 #' transform to the stub
-#' @importFrom dplyr rename select everything mutate
+#' @importFrom dplyr select everything mutate
 #' @noRd
 transform_to_stub <- function(tbl,
                               column) {
 
+  column_index <- colnames(tbl) %in% column %>% which()
+
+  colnames(tbl)[column_index] <- "rowname"
+
   tbl %>%
-    dplyr::rename("rowname" = column) %>%
     dplyr::select("rowname", everything()) %>%
     dplyr::mutate(rowname = as.character(rowname))
 }
