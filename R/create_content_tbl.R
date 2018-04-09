@@ -57,131 +57,134 @@ create_content_tbl <- function(tbl) {
 #' @noRd
 process_content_tbl <- function(tbl) {
 
-  content_tbl <-
-    tbl %>%
-    dplyr::mutate(content_1 = case_when(
-      column_type == "numeric" ~
-        ((content %>% as.numeric()) * scaling_factor) %>%
-        as.character(),
-      column_type == "integer" ~
-        ((content %>% as.integer()) * scaling_factor) %>%
-        as.character(),
-      column_type == "character" ~ content))
+  suppressWarnings(
+    content_tbl <-
+      tbl %>%
+      dplyr::mutate(content_1 = case_when(
+        column_type == "numeric" ~
+          ((content %>% as.numeric()) * scaling_factor) %>%
+          as.character(),
+        column_type == "integer" ~
+          ((content %>% as.integer()) * scaling_factor) %>%
+          as.character(),
+        column_type == "character" ~ content))
+  )
 
+  suppressWarnings(
+    content_tbl <-
+      seq(nrow(content_tbl)) %>%
+      purrr::map_df(.f = function(x) {
 
-  content_tbl <-
-    seq(nrow(content_tbl)) %>%
-    purrr::map_df(.f = function(x) {
+        if (content_tbl[x, ]$column_type == "numeric" &
+            content_tbl[x, ]$scientific == FALSE) {
+          format <- "f"
+        } else if (content_tbl[x, ]$column_type == "integer" &
+                   content_tbl[x, ]$scientific == FALSE) {
+          format <- "d"
+        } else if (
+          content_tbl[x, ]$column_type %in% c("numeric", "integer") &
+          content_tbl[x, ]$scientific == TRUE) {
+          format <- "e"
+        } else if (content_tbl[x, ]$column_type == "character") {
+          format <- "s"
+        } else {
+          format <- "s"
+        }
 
-      if (content_tbl[x, ]$column_type == "numeric" &
-          content_tbl[x, ]$scientific == FALSE) {
-        format <- "f"
-      } else if (content_tbl[x, ]$column_type == "integer" &
-                 content_tbl[x, ]$scientific == FALSE) {
-        format <- "d"
-      } else if (
-        content_tbl[x, ]$column_type %in% c("numeric", "integer") &
-        content_tbl[x, ]$scientific == TRUE) {
-        format <- "e"
-      } else if (content_tbl[x, ]$column_type == "character") {
-        format <- "s"
-      } else {
-        format <- "s"
-      }
+        if (content_tbl[x, ]$column_type != "character" &
+            !is.na(content_tbl[x, ]$digits)) {
 
-      if (content_tbl[x, ]$column_type != "character" &
-          !is.na(content_tbl[x, ]$digits)) {
+          formatted_value <-
+            formatC(
+              x = content_tbl[x, ]$content_1 %>% as.numeric(),
+              digits = content_tbl[x, ]$digits,
+              format = format,
+              big.mark = content_tbl[x, ]$big.mark,
+              big.interval = content_tbl[x, ]$big.interval,
+              small.mark = content_tbl[x, ]$small.mark,
+              small.interval = content_tbl[x, ]$small_interval,
+              decimal.mark = content_tbl[x, ]$decimal.mark,
+              drop0trailing = content_tbl[x, ]$drop0trailing)
 
-        formatted_value <-
-          formatC(
-            x = content_tbl[x, ]$content_1 %>% as.numeric(),
-            digits = content_tbl[x, ]$digits,
-            format = format,
-            big.mark = content_tbl[x, ]$big.mark,
-            big.interval = content_tbl[x, ]$big.interval,
-            small.mark = content_tbl[x, ]$small.mark,
-            small.interval = content_tbl[x, ]$small_interval,
-            decimal.mark = content_tbl[x, ]$decimal.mark,
-            drop0trailing = content_tbl[x, ]$drop0trailing)
+        } else if (content_tbl[x, ]$column_type != "character" &
+                   format == "e" & is.na(content_tbl[x, ]$digits)) {
 
-      } else if (content_tbl[x, ]$column_type != "character" &
-                 format == "e" & is.na(content_tbl[x, ]$digits)) {
+          formatted_value <-
+            formatC(
+              x = content_tbl[x, ]$content_1 %>% as.numeric(),
+              format = format,
+              big.mark = content_tbl[x, ]$big.mark,
+              big.interval = content_tbl[x, ]$big.interval,
+              small.mark = content_tbl[x, ]$small.mark,
+              small.interval = content_tbl[x, ]$small_interval,
+              decimal.mark = content_tbl[x, ]$decimal.mark,
+              drop0trailing = content_tbl[x, ]$drop0trailing)
 
-        formatted_value <-
-          formatC(
-            x = content_tbl[x, ]$content_1 %>% as.numeric(),
-            format = format,
-            big.mark = content_tbl[x, ]$big.mark,
-            big.interval = content_tbl[x, ]$big.interval,
-            small.mark = content_tbl[x, ]$small.mark,
-            small.interval = content_tbl[x, ]$small_interval,
-            decimal.mark = content_tbl[x, ]$decimal.mark,
-            drop0trailing = content_tbl[x, ]$drop0trailing)
+        } else {
 
-      } else {
+          formatted_value <- content_tbl[x, ]$content_1
+        }
 
-        formatted_value <- content_tbl[x, ]$content_1
-      }
+        # Format to scientific notation
+        if (format == "e") {
 
-      # Format to scientific notation
-      if (format == "e") {
+          if (formatted_value %>%
+              stringr::str_detect(pattern = ".e.")) {
 
-        if (formatted_value %>%
-            stringr::str_detect(pattern = ".e.")) {
+            m_part <-
+              (formatted_value %>%
+                 stringr::str_split(pattern = "e") %>%
+                 unlist())[1]
 
-          m_part <-
-            (formatted_value %>%
-               stringr::str_split(pattern = "e") %>%
-               unlist())[1]
+            n_part <-
+              (formatted_value %>%
+                 stringr::str_split(pattern = "e") %>%
+                 unlist())[2] %>%
+              as.integer()
 
-          n_part <-
-            (formatted_value %>%
-               stringr::str_split(pattern = "e") %>%
-               unlist())[2] %>%
-            as.integer()
+            if (n_part != 0) {
 
-          if (n_part != 0) {
+              formatted_value <-
+                paste0(m_part, " &times; 10<sup>", n_part, "</sup>")
 
-            formatted_value <-
-              paste0(m_part, " &times; 10<sup>", n_part, "</sup>")
-
-          } else {
-            formatted_value <- m_part
+            } else {
+              formatted_value <- m_part
+            }
           }
         }
-      }
 
-      # Replace hyphens with en dashes
-      if (content_tbl[x, ]$column_type != "character") {
+        # Replace hyphens with en dashes
+        if (content_tbl[x, ]$column_type != "character") {
 
-        formatted_value <-
-          gsub(
-            pattern = "-",
-            replacement = "&ndash;",
-            x = formatted_value)
-      }
+          formatted_value <-
+            gsub(
+              pattern = "-",
+              replacement = "&ndash;",
+              x = formatted_value)
+        }
 
-      # Prepend text to the formatted value if a `prepend`
-      # string is available
-      if (!is.na(content_tbl[x, ]$prepend)) {
+        # Prepend text to the formatted value if a `prepend`
+        # string is available
+        if (!is.na(content_tbl[x, ]$prepend)) {
 
-        formatted_value <-
-          paste0(content_tbl[x, ]$prepend, formatted_value)
-      }
+          formatted_value <-
+            paste0(content_tbl[x, ]$prepend, formatted_value)
+        }
 
-      # Append text to the formatted value if an `append`
-      # string is available
-      if (!is.na(content_tbl[x, ]$append)) {
+        # Append text to the formatted value if an `append`
+        # string is available
+        if (!is.na(content_tbl[x, ]$append)) {
 
-        formatted_value <-
-          paste0(formatted_value, content_tbl[x, ]$append)
-      }
+          formatted_value <-
+            paste0(formatted_value, content_tbl[x, ]$append)
+        }
 
-      # Add the `formatted_value` string as a value in
-      # the column `content_formatted`
-      content_tbl[x, ] %>%
-        dplyr::mutate(content_formatted = formatted_value %>% as.character())
-    })
+        # Add the `formatted_value` string as a value in
+        # the column `content_formatted`
+        content_tbl[x, ] %>%
+          dplyr::mutate(content_formatted = formatted_value %>% as.character())
+      })
+  )
 
   content_tbl
 }
