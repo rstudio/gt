@@ -11,7 +11,7 @@
 #' @param types an optional vector of column types
 #' for which the left alignment should be applied.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull mutate case_when
+#' @importFrom tibble add_row
 #' @export
 apply_alignment_left <- function(html_tbl,
                                  columns = NULL,
@@ -96,7 +96,7 @@ apply_alignment_left <- function(html_tbl,
 #' @param types an optional vector of column types
 #' for which the center alignment should be applied.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull mutate case_when
+#' @importFrom tibble add_row
 #' @export
 apply_alignment_center <- function(html_tbl,
                                    columns = NULL,
@@ -180,7 +180,7 @@ apply_alignment_center <- function(html_tbl,
 #' @param types an optional vector of column types
 #' for which the right alignment should be applied.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull mutate case_when
+#' @importFrom tibble add_row
 #' @export
 apply_alignment_right <- function(html_tbl,
                                   columns = NULL,
@@ -463,12 +463,12 @@ apply_spanner_headings <- function(html_tbl) {
                        colnames())[group_cols],
       spanner_heading = (html_tbl[["source_tbl"]] %>%
                            colnames())[group_cols] %>%
-        str_replace(
+        stringr::str_replace(
           pattern = "(.*?)\\.(.*)",
           replacement = "\\1"),
       column_heading = (html_tbl[["source_tbl"]] %>%
                           colnames())[group_cols] %>%
-        str_replace(
+        stringr::str_replace(
           pattern = "(.*?)\\.(.*)",
           replacement = "\\2"))
 
