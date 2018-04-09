@@ -80,8 +80,9 @@ emit_html <- function(html_tbl) {
       row <= 0 & style_attrs == "" ~ glue::glue("") %>% as.character()))
 
   table_heading_styles_row_column <-
-    table_heading_styles %>% select(content, row, column) %>%
-    mutate(rowspan = 1L, colspan = 1L)
+    table_heading_styles %>%
+    dplyr::select(content, row, column) %>%
+    dplyr::mutate(rowspan = 1L, colspan = 1L)
 
   # Move column-wise (sort by row then column)
   for (i in 2:nrow(table_heading_styles_row_column)) {
