@@ -28,7 +28,9 @@ empty_formats_tbl <- function() {
     thousands_sep = NA,
     negative_style = NA_character_,
     currency = NA_character_,
-    accuracy = NA_character_)[-1, ]
+    accuracy = NA_character_,
+    date_style = NA_character_,
+    time_style = NA_character_)[-1, ]
 }
 
 
