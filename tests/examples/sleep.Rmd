@@ -1,0 +1,38 @@
+---
+output: html_document
+---
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+library(gt)
+library(tidyverse)
+```
+
+
+## Create a presentation table based on `pressure`
+
+### Student's Sleep Data
+
+Steps in detail:
+
+ 1. we take the `datasets::sleep` data.frame
+
+ 2. the 'striped' theme is applied
+
+ 3. all column values are left aligned
+
+ 4. we are formatting numbers in the `extra` column to have 1 decimal place
+ 
+```{r create_gt_object}
+sleep_tbl <-
+  gt(tbl = sleep) %>%  # 1
+  apply_theme_striped() %>%  # 2
+  apply_alignment_left() %>%  # 3
+  format_as_number(
+    columns = "extra",
+    decimals = 1,
+    negative_style = "parens")  # 4
+```
+ 
+```{r show_table, echo=FALSE}
+sleep_tbl %>% emit_html()
+```
