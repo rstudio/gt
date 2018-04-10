@@ -491,10 +491,6 @@ format_as_date <- function(html_tbl,
     columns <- NA_character_
   }
 
-  if (is.null(decimals)) {
-    decimals <- NA_integer_
-  }
-
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
     dplyr::bind_rows(
@@ -504,6 +500,12 @@ format_as_date <- function(html_tbl,
           index = index %>% as.integer(),
           format_type = "as_date",
           columns = columns,
+          decimals = NA_integer_,
+          drop_trailing_zeros = FALSE,
+          thousands_sep = FALSE,
+          negative_style = NA_character_,
+          currency = NA_character_,
+          accuracy = NA_character_,
           date_style = date_style))
 
   ## [1] Perform all `source_tbl` transform steps
@@ -568,10 +570,6 @@ format_as_time <- function(html_tbl,
     columns <- NA_character_
   }
 
-  if (is.null(decimals)) {
-    decimals <- NA_integer_
-  }
-
   # Add to `formats` tbl
   html_tbl[["formats"]] <-
     dplyr::bind_rows(
@@ -581,6 +579,13 @@ format_as_time <- function(html_tbl,
           index = index %>% as.integer(),
           format_type = "as_time",
           columns = columns,
+          decimals = NA_integer_,
+          drop_trailing_zeros = FALSE,
+          thousands_sep = FALSE,
+          negative_style = NA_character_,
+          currency = NA_character_,
+          accuracy = NA_character_,
+          date_style = NA_character_,
           time_style = time_style))
 
   ## [1] Perform all `source_tbl` transform steps
@@ -661,6 +666,12 @@ format_as_datetime <- function(html_tbl,
           index = index %>% as.integer(),
           format_type = "as_datetime",
           columns = columns,
+          decimals = NA_integer_,
+          drop_trailing_zeros = FALSE,
+          thousands_sep = FALSE,
+          negative_style = NA_character_,
+          currency = NA_character_,
+          accuracy = NA_character_,
           date_style = date_style,
           time_style = time_style))
 
