@@ -125,6 +125,28 @@ get_next_index <- function(tbl) {
   }
 }
 
+#' Create a tibble containing date formats
+#' @importFrom tibble tribble
+#' @noRd
+date_formats <- function() {
+
+  tibble::tribble(
+    ~format_number, ~format_name,           ~format_code,
+    "1",	          "iso",                  "%F",
+    "2",	          "wday_month_day_year",  "%A, %B %d, %Y",
+    "3",	          "wd_m_day_year",        "%a, %b %d, %Y",
+    "4",	          "wday_day_month_year",  "%A %d %B %Y",
+    "5",	          "month_day_year",       "%B %d, %Y",
+    "6",	          "m_day_year",           "%b %d, %Y",
+    "7",	          "day_m_year",           "%d %b %Y",
+    "8",	          "day_month_year",       "%d %B %Y",
+    "9",	          "day_month",            "%d %B",
+    "10",	          "year",                 "%Y",
+    "11",	          "month",                "%B",
+    "12",	          "day",                  "%d",
+    "13",	          "year.mn.day",          "%Y/%m/%d",
+    "14",	          "y.mn.day",             "%y/%m/%d")
+}
 
 
 #' Collapse all styles provided as individual columns
