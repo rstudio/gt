@@ -1,0 +1,37 @@
+---
+output: html_document
+---
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+library(gt)
+library(tidyverse)
+```
+
+
+## Create a presentation table based on `pressure`
+
+### Vapor Pressure of Mercury as a Function of Temperature
+
+Steps in detail:
+
+ 1. we take the `datasets::pressure` data.frame
+ 
+ 2. the 'striped' theme is applied
+ 
+ 3. we are formatting numbers in the `pressure` column to scientific notation
+ 
+ 4. all column values are center aligned
+
+```{r create_gt_object}
+pressure_tbl <-
+  gt(tbl = pressure) %>%  # 1
+  apply_theme_striped() %>%  # 2
+  format_as_scientific(
+    columns = "pressure",
+    decimals = 2) %>%  # 3
+  apply_alignment_center()  # 4
+```
+
+```{r show_table, echo=FALSE}
+pressure_tbl %>% emit_html()
+```
