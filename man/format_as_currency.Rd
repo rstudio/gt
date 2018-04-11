@@ -2,11 +2,10 @@
 % Please edit documentation in R/apply_formats.R
 \name{format_as_currency}
 \alias{format_as_currency}
-\title{Format values as currency amounts}
+\title{Format values as currency values}
 \usage{
-format_as_currency(html_tbl, columns = NULL, decimals = NULL,
-  currency = "dollar", thousands_sep = FALSE, accounting_style = FALSE,
-  negative_style = "signed")
+format_as_currency(html_tbl, columns = NULL, currency, use_subunits = TRUE,
+  decimals = NULL, thousands_sep = FALSE, negative_style = "signed")
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -15,10 +14,15 @@ created using the \code{gt()} function.}
 \item{columns}{an option specify which columns
 are to be formatted.}
 
+\item{currency}{the currency to use for the
+numeric value.}
+
+\item{use_subunits}{an option for whether the
+subunits portion of a currency value should be
+displayed.}
+
 \item{decimals}{an option to specify exactly
 the number of decimal places to use.}
-
-\item{currency}{the currency symbol to use.}
 
 \item{thousands_sep}{a logical value that
 allows for inclusion of a separator at every
@@ -38,5 +42,5 @@ parentheses.}
 an object of class \code{html_table}.
 }
 \description{
-Format values as currency amounts
+Format values as currency values
 }
