@@ -125,6 +125,8 @@ get_next_index <- function(tbl) {
   }
 }
 
+
+
 #' Create a tibble containing date formats
 #' @importFrom tibble tribble
 #' @noRd
@@ -147,6 +149,195 @@ date_formats <- function() {
     "13",	          "year.mn.day",          "%Y/%m/%d",
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
+
+
+
+#' Create a vector of date format names
+#' @noRd
+date_format_names <- function() {
+  c("iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year",
+    "month_day_year", "m_day_year", "day_m_year", "day_month_year",
+    "day_month", "year", "month", "day", "year.mn.day", "y.mn.day")
+}
+
+
+#' Determine if `date_style` has a valid value
+#' @noRd
+is_date_style_valid <- function(date_style) {
+
+  ifelse(
+    as.character(date_style) %in% as.character(1:14) |
+      as.character(date_style) %in% date_format_names(),
+    TRUE, FALSE)
+}
+
+
+#' Create a tibble containing time formats
+#' @importFrom tibble tribble
+#' @noRd
+time_formats <- function() {
+
+  tibble::tribble(
+    ~format_number, ~format_name, ~format_code,
+    "1",	          "hms",        "%H:%M:%S",
+    "2",	          "hm",         "%H:%M",
+    "3",	          "hms_p",      "%H:%M:%S %P",
+    "4",	          "hm_p",       "%H:%M %P",
+    "5",	          "h_p",        "%H %P")
+}
+
+
+
+#' Create a vector of time format names
+#' @noRd
+time_format_names <- function() {
+  c("hms", "hm", "hms_p", "hm_p", "h_p")
+}
+
+
+#' Determine if `time_style` has a valid value
+#' @noRd
+is_time_style_valid <- function(time_style) {
+
+  ifelse(
+    as.character(time_style) %in% as.character(1:5) |
+      as.character(time_style) %in% time_format_names(),
+    TRUE, FALSE)
+}
+
+
+
+#' Transform `date_style` to `date_format`
+#' @importFrom dplyr filter pull
+#' @noRd
+get_date_format <- function(date_style) {
+
+  if (date_style %in% 1:14 | date_style %in% as.character(1:14)) {
+
+    return(
+      date_formats() %>%
+        dplyr::filter(format_number == as.character(date_style)) %>%
+        dplyr::pull(format_code))
+  }
+
+  if (date_style %in% date_formats()$format_name) {
+    return(
+      date_formats() %>%
+        dplyr::filter(format_name == date_style) %>%
+        dplyr::pull(format_code))
+  }
+}
+
+
+#' Transform `time_style` to `time_format`
+#' @importFrom dplyr filter pull
+#' @noRd
+get_time_format <- function(time_style) {
+
+  if (time_style %in% 1:5 | time_style %in% as.character(1:5)) {
+
+    return(
+      time_formats() %>%
+        dplyr::filter(format_number == as.character(time_style)) %>%
+        dplyr::pull(format_code))
+  }
+
+  if (time_style %in% time_formats()$format_name) {
+    return(
+      time_formats() %>%
+        dplyr::filter(format_name == time_style) %>%
+        dplyr::pull(format_code))
+  }
+}
+
+
+#' Concatenate date and time formats to form a
+#' single date-time formatting string
+#' @noRd
+concat_date_time_formats <- function(date_format, time_format) {
+
+  if (is.na(date_format)) {
+    return(time_format)
+  } else if (is.na(time_format)) {
+    return(date_format)
+  } else if (!is.na(date_format) & !is.na(time_format)) {
+    return(paste(date_format, time_format))
+  } else {
+    return(NA_character_)
+  }
+}
+
+
+#' Determine if a provided `currency` type is valid
+#' @noRd
+is_currency_valid <- function(currency) {
+
+  ifelse(
+    as.character(currency) %in% gt:::currency_symbols$curr_symbol |
+      as.character(currency) %in% gt:::currencies$curr_code |
+      as.character(currency) %in% gt:::currencies$curr_number,
+    TRUE, FALSE)
+}
+
+
+#' Transform `currency` to currency string
+#' @importFrom dplyr filter pull
+#' @noRd
+get_currency_str <- function(currency) {
+
+  if (currency[1] %in% gt:::currency_symbols$curr_symbol) {
+
+    return(
+      gt:::currency_symbols %>%
+        dplyr::filter(curr_symbol == currency) %>%
+        dplyr::pull(symbol))
+
+  } else if (currency[1] %in% gt:::currencies$curr_code) {
+
+    return(
+      gt:::currencies %>%
+        dplyr::filter(curr_code == currency) %>%
+        dplyr::pull(symbol))
+
+  } else if (currency[1] %in% gt:::currencies$curr_number) {
+
+    return(
+      gt:::currencies %>%
+        dplyr::filter(curr_number == currency) %>%
+        dplyr::pull(symbol))
+
+  } else {
+    return(NA)
+  }
+}
+
+#' Transform `currency` to a currency exponent
+#' @importFrom dplyr filter pull
+#' @noRd
+get_currency_exponent <- function(currency) {
+
+  if (currency[1] %in% gt:::currencies$curr_code) {
+
+    exponent <-
+      gt:::currencies %>%
+      dplyr::filter(curr_code == currency) %>%
+      dplyr::pull(exponent)
+
+  } else if (currency[1] %in% gt:::currencies$curr_number) {
+
+    exponent <-
+      gt:::currencies %>%
+      dplyr::filter(curr_number == currency) %>%
+      dplyr::pull(exponent)
+  }
+
+  if (is.na(exponent)) {
+    return(0L)
+  } else {
+    return(exponent %>% as.integer())
+  }
+}
+
 
 
 #' Collapse all styles provided as individual columns
