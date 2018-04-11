@@ -41,6 +41,8 @@ create_content_tbl <- function(tbl) {
     dplyr::mutate(decimal.mark = getOption("OutDec")) %>%
     dplyr::mutate(drop0trailing = FALSE) %>%
     dplyr::mutate(negative_style = "signed") %>%
+    dplyr::mutate(date_format = NA_character_) %>%
+    dplyr::mutate(time_format = NA_character_) %>%
     dplyr::mutate(prepend = NA_character_) %>%
     dplyr::mutate(append = NA_character_)
 
@@ -151,6 +153,36 @@ process_content_tbl <- function(tbl) {
             } else {
               formatted_value <- m_part
             }
+          }
+        }
+
+        # Format dates/times
+        if (!is.na(content_tbl[x, ]$date_format) |
+            !is.na(content_tbl[x, ]$time_format)) {
+
+          # Concatenate date and time formats to form a
+          # single date-time formatting string
+          date_time_format_str <-
+            concat_date_time_formats(
+              date_format = content_tbl[x, ]$date_format,
+              time_format = content_tbl[x, ]$time_format)
+
+          # Format date, time, or date-time using `strftime()`
+          if (stringr::str_detect(
+            string = content_tbl[x, ]$content_1,
+            pattern = "^[0-9]*?\\:[0-9]*?")) {
+
+            formatted_value <-
+              paste("1970-01-01", content_tbl[x, ]$content_1) %>%
+              strftime(format = date_time_format_str) %>%
+              toupper() %>%
+              gsub("^0", "", .)
+
+          } else {
+
+            formatted_value <-
+              content_tbl[x, ]$content_1 %>%
+              strftime(format = date_time_format_str)
           }
         }
 
