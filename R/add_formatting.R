@@ -124,9 +124,92 @@ tbl_format_step <- function(tbl,
 
         tbl[x, ]
       })
+
+    return(tbl)
   }
 
-  tbl
+  # `format_as_date` formatting
+  if (format_type == "as_date") {
+
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+
+    date_style <- formats[index_, ] %>% dplyr::pull(date_style)
+
+    # transform `date_style` to `date_format`
+    date_format <- get_date_format(date_style = date_style)
+
+    tbl <-
+      seq(nrow(tbl)) %>%
+      purrr::map_df(.f = function(x) {
+
+        if (tbl[x, ]$column_name %in% columns) {
+          tbl[x, ]$date_format <- date_format
+        }
+
+        tbl[x, ]
+      })
+
+    return(tbl)
+  }
+
+  # `format_as_time` formatting
+  if (format_type == "as_time") {
+
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    time_style <- formats[index_, ] %>% dplyr::pull(time_style)
+
+    # transform `time_style` to `time_format`
+    time_format <- get_time_format(time_style = time_style)
+
+    tbl <-
+      seq(nrow(tbl)) %>%
+      purrr::map_df(.f = function(x) {
+
+        if (tbl[x, ]$column_name %in% columns) {
+          tbl[x, ]$time_format <- time_format
+        }
+
+        tbl[x, ]
+      })
+
+    return(tbl)
+  }
+
+  # `format_as_time` formatting
+  if (format_type == "as_currency") {
+
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
+    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
+    currency_str <- formats[index_, ] %>% dplyr::pull(currency)
+
+    if (!is.na(decimals)) {
+      digits_ <- decimals
+    } else {
+      digits_ <- NA_integer_
+    }
+
+    tbl <-
+      seq(nrow(tbl)) %>%
+      purrr::map_df(.f = function(x) {
+
+        if (tbl[x, ]$column_name %in% columns) {
+
+          tbl[x, ]$digits <- digits_
+          tbl[x, ]$negative_style <- negative_style
+          tbl[x, ]$prepend <- currency_str
+
+          if (thousands_sep) {
+            tbl[x, ]$big.mark <- ","
+          }
+        }
+
+        tbl[x, ]
+      })
+
+    return(tbl)
+  }
 }
 
 
