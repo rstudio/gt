@@ -625,6 +625,23 @@ format_as_datetime <- function(html_tbl,
 #' are to be formatted.
 #' @param currency the currency to use for the
 #' numeric value.
+#' @param use_subunits an option for whether the
+#' subunits portion of a currency value should be
+#' displayed.
+#' @param decimals an option to specify exactly
+#' the number of decimal places to use.
+#' @param thousands_sep a logical value that
+#' allows for inclusion of a separator at every
+#' three digits.
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed},
+#' negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the
+#' negative value in parentheses. The \code{red}
+#' option will display the number in red.
+#' Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in
+#' parentheses.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
