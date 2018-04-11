@@ -12,18 +12,20 @@ tbl_format_step <- function(tbl,
                             formats,
                             index) {
 
-  format_type <- formats$format_type[index]
+  index_ <- index
+
+  format_type <- formats$format_type[index_]
 
   # Detect the type of formatting in the index step -------------------------
 
   # `format_as_number` formatting
   if (format_type == "as_number") {
 
-    columns <- formats[index, ] %>% dplyr::pull(columns)
-    decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
-    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
-    thousands_sep <- formats[index, ] %>% dplyr::pull(thousands_sep)
-    negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
+    drop_trailing_zeros <- formats[index_, ] %>% dplyr::pull(drop_trailing_zeros)
+    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
 
 
     if (!is.na(decimals)) {
@@ -49,16 +51,18 @@ tbl_format_step <- function(tbl,
 
         tbl[x, ]
       })
+
+    return(tbl)
   }
 
   # `format_as_scientific` formatting
   if (format_type == "as_scientific") {
 
-    columns <- formats[index, ] %>% dplyr::pull(columns)
-    decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
     scientific <- TRUE
-    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
-    negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
+    drop_trailing_zeros <- formats[index_, ] %>% dplyr::pull(drop_trailing_zeros)
+    negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
 
 
     if (!is.na(decimals)) {
@@ -81,16 +85,18 @@ tbl_format_step <- function(tbl,
 
         tbl[x, ]
       })
+
+    return(tbl)
   }
 
   # `format_as_percentage` formatting
   if (format_type == "as_percentage") {
 
-    columns <- formats[index, ] %>% dplyr::pull(columns)
-    decimals <- formats[index, ] %>% dplyr::pull(decimals) %>% as.integer()
-    drop_trailing_zeros <- formats[index, ] %>% dplyr::pull(drop_trailing_zeros)
-    thousands_sep <- formats[index, ] %>% dplyr::pull(thousands_sep)
-    negative_style <- formats[index, ] %>% dplyr::pull(negative_style)
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
+    drop_trailing_zeros <- formats[index_, ] %>% dplyr::pull(drop_trailing_zeros)
+    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
 
 
     if (!is.na(decimals)) {
