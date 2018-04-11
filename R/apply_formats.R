@@ -618,25 +618,52 @@ format_as_datetime <- function(html_tbl,
   html_tbl
 }
 
-
-
-#' Format values as date-times
+#' Format values as currency values
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
-#' @param date_style the formatting style to use
-#' for dates.
-#' @param time_style the formatting style to use
-#' for times.
+#' @param currency the currency to use for the
+#' numeric value.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_datetime <- function(html_tbl,
-                           columns = NULL,
-                           date_style = NULL,
-                           time_style = NULL) {
+format_as_currency <- function(html_tbl,
+                               columns = NULL,
+                               currency,
+                               use_subunits = TRUE,
+                               decimals = NULL,
+                               thousands_sep = FALSE,
+                               negative_style = "signed") {
+
+  if (is.null(columns)) {
+    columns <- NA_character_
+  }
+
+  # Return early if `currency` does not have a valid value
+  if (!is_currency_valid(currency = currency)) {
+
+    message("The value supplied for `currency` is not valid.")
+    return(html_tbl)
+  }
+
+  # Get the currency string
+  currency_str <- gt:::get_currency_str(currency = currency)
+
+  # Get the number of decimal places
+  if (is.null(decimals) & use_subunits) {
+
+    # TODO: create function `get_currency_exponent`
+    if (currency %in% gt:::currency_symbols$curr_symbol) {
+      decimals <- 2L
+    } else {
+      decimals <- gt:::get_currency_exponent(currency = currency)
+    }
+
+  } else if (is.null(decimals) & use_subunits == FALSE) {
+    decimals <- NA_integer_
+  }
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -651,16 +678,12 @@ format_as_datetime <- function(html_tbl,
       empty_formats_tbl() %>%
         tibble::add_row(
           index = index %>% as.integer(),
-          format_type = "as_datetime",
+          format_type = "as_currency",
           columns = columns,
-          decimals = NA_integer_,
-          drop_trailing_zeros = FALSE,
-          thousands_sep = FALSE,
-          negative_style = NA_character_,
-          currency = NA_character_,
-          accuracy = NA_character_,
-          date_style = date_style,
-          time_style = time_style))
+          decimals = decimals,
+          thousands_sep = thousands_sep,
+          negative_style = negative_style,
+          currency = currency_str))
 
   ## [1] Perform all `source_tbl` transform steps
   html_tbl <-
