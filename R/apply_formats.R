@@ -666,12 +666,12 @@ format_as_currency <- function(html_tbl,
   }
 
   # Get the currency string
-  currency_str <- gt:::get_currency_str(currency = currency)
+  currency_str <- get_currency_str(currency = currency)
 
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
 
-    # TODO: create function `get_currency_exponent`
+    # Get decimal places using `get_currency_exponent()` fcn
     if (currency %in% gt:::currency_symbols$curr_symbol) {
       decimals <- 2L
     } else {
