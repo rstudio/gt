@@ -175,6 +175,34 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
+  # `format_as_datetime` formatting
+  if (format_type == "as_datetime") {
+
+    columns <- formats[index_, ] %>% dplyr::pull(columns)
+    date_style <- formats[index_, ] %>% dplyr::pull(date_style)
+    time_style <- formats[index_, ] %>% dplyr::pull(time_style)
+
+    # transform `date_style` to `date_format`
+    date_format <- get_date_format(date_style = date_style)
+
+    # transform `time_style` to `time_format`
+    time_format <- get_time_format(time_style = time_style)
+
+    tbl <-
+      seq(nrow(tbl)) %>%
+      purrr::map_df(.f = function(x) {
+
+        if (tbl[x, ]$column_name %in% columns) {
+          tbl[x, ]$date_format <- date_format
+          tbl[x, ]$time_format <- time_format
+        }
+
+        tbl[x, ]
+      })
+
+    return(tbl)
+  }
+
   # `format_as_time` formatting
   if (format_type == "as_currency") {
 
