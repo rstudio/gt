@@ -485,7 +485,7 @@ format_as_time <- function(html_tbl,
     return(html_tbl)
   }
 
-  index <- gt:::get_next_index(tbl = html_tbl[["formats"]])
+  index <- get_next_index(tbl = html_tbl[["formats"]])
 
   if (is.null(columns)) {
     columns <- NA_character_
@@ -495,7 +495,7 @@ format_as_time <- function(html_tbl,
   html_tbl[["formats"]] <-
     dplyr::bind_rows(
       html_tbl[["formats"]],
-      gt:::empty_formats_tbl() %>%
+      empty_formats_tbl() %>%
         tibble::add_row(
           index = index %>% as.integer(),
           format_type = "as_time",
