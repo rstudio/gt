@@ -175,14 +175,21 @@ process_content_tbl <- function(tbl) {
             formatted_value <-
               paste("1970-01-01", content_tbl[x, ]$content_1) %>%
               strftime(format = date_time_format_str) %>%
-              toupper() %>%
-              gsub("^0", "", .)
+              #toupper() %>%
+              gsub("^0", "", .) %>%
+              gsub(" 0([0-9])", " \\1", .) %>%
+              gsub("pm$", "PM", .) %>%
+              gsub("am$", "AM", .)
 
           } else {
 
             formatted_value <-
               content_tbl[x, ]$content_1 %>%
-              strftime(format = date_time_format_str)
+              strftime(format = date_time_format_str) %>%
+              gsub(" 0([0-9])", " \\1", .) %>%
+              gsub(" 0([0-9])", " \\1", .) %>%
+              gsub("pm$", "PM", .) %>%
+              gsub("am$", "AM", .)
           }
         }
 
