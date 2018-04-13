@@ -12,8 +12,6 @@ empty_transforms_tbl <- function() {
     transform_v3 = NA_character_)[-1, ]
 }
 
-
-
 #' Create an empty `formats` tbl
 #' @importFrom dplyr tibble
 #' @noRd
@@ -33,8 +31,6 @@ empty_formats_tbl <- function() {
     time_style = NA_character_)[-1, ]
 }
 
-
-
 #' Create an empty `aesthetics` tbl
 #' @importFrom dplyr tibble
 #' @noRd
@@ -44,8 +40,6 @@ empty_aesthetics_tbl <- function() {
     type = NA_character_,
     options = NA_character_)[-1, ]
 }
-
-
 
 #' Create an empty `heading` tbl
 #' @importFrom dplyr tibble
@@ -58,8 +52,6 @@ empty_heading_tbl <- function() {
     table_number = NA_character_)[-1, ]
 }
 
-
-
 #' Create an empty `footnote` tbl
 #' @importFrom dplyr tibble
 #' @noRd
@@ -70,8 +62,6 @@ empty_footnote_tbl <- function() {
     marker = NA_character_,
     footnote = NA_character_)[-1, ]
 }
-
-
 
 #' Create an empty `source_note` tbl
 #' @importFrom dplyr tibble
@@ -84,8 +74,6 @@ empty_source_note_tbl <- function() {
     source_note = NA_character_)[-1, ]
 }
 
-
-
 #' Create an empty `stubhead_caption` tbl
 #' @importFrom dplyr tibble
 #' @noRd
@@ -95,8 +83,6 @@ empty_stubhead_caption_tbl <- function() {
     caption_text = NA_character_,
     alignment = NA_character_)[-1, ]
 }
-
-
 
 #' Create an empty `boxhead_panel` tbl
 #' @importFrom dplyr tibble
@@ -108,8 +94,6 @@ empty_boxhead_panel_tbl <- function() {
     spanner_heading = NA_character_,
     column_heading = NA_character_)[-1, ]
 }
-
-
 
 #' Get the next logical index integer in
 #' a table object that has an index column
@@ -124,8 +108,6 @@ get_next_index <- function(tbl) {
     return((tbl$index %>% max()) + 1L)
   }
 }
-
-
 
 #' Create a tibble containing date formats
 #' @importFrom tibble tribble
@@ -150,8 +132,6 @@ date_formats <- function() {
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
 
-
-
 #' Create a vector of date format names
 #' @noRd
 date_format_names <- function() {
@@ -159,7 +139,6 @@ date_format_names <- function() {
     "month_day_year", "m_day_year", "day_m_year", "day_month_year",
     "day_month", "year", "month", "day", "year.mn.day", "y.mn.day")
 }
-
 
 #' Determine if `date_style` has a valid value
 #' @noRd
@@ -171,7 +150,6 @@ is_date_style_valid <- function(date_style) {
     TRUE, FALSE)
 }
 
-
 #' Create a tibble containing time formats
 #' @importFrom tibble tribble
 #' @noRd
@@ -181,19 +159,16 @@ time_formats <- function() {
     ~format_number, ~format_name, ~format_code,
     "1",	          "hms",        "%H:%M:%S",
     "2",	          "hm",         "%H:%M",
-    "3",	          "hms_p",      "%H:%M:%S %P",
-    "4",	          "hm_p",       "%H:%M %P",
-    "5",	          "h_p",        "%H %P")
+    "3",	          "hms_p",      "%I:%M:%S %P",
+    "4",	          "hm_p",       "%I:%M %P",
+    "5",	          "h_p",        "%I %P")
 }
-
-
 
 #' Create a vector of time format names
 #' @noRd
 time_format_names <- function() {
   c("hms", "hm", "hms_p", "hm_p", "h_p")
 }
-
 
 #' Determine if `time_style` has a valid value
 #' @noRd
@@ -204,8 +179,6 @@ is_time_style_valid <- function(time_style) {
       as.character(time_style) %in% time_format_names(),
     TRUE, FALSE)
 }
-
-
 
 #' Transform `date_style` to `date_format`
 #' @importFrom dplyr filter pull
@@ -228,7 +201,6 @@ get_date_format <- function(date_style) {
   }
 }
 
-
 #' Transform `time_style` to `time_format`
 #' @importFrom dplyr filter pull
 #' @noRd
@@ -250,7 +222,6 @@ get_time_format <- function(time_style) {
   }
 }
 
-
 #' Concatenate date and time formats to form a
 #' single date-time formatting string
 #' @noRd
@@ -267,7 +238,6 @@ concat_date_time_formats <- function(date_format, time_format) {
   }
 }
 
-
 #' Determine if a provided `currency` type is valid
 #' @noRd
 is_currency_valid <- function(currency) {
@@ -278,7 +248,6 @@ is_currency_valid <- function(currency) {
       as.character(currency) %in% gt:::currencies$curr_number,
     TRUE, FALSE)
 }
-
 
 #' Transform `currency` to currency string
 #' @importFrom dplyr filter pull
@@ -338,8 +307,6 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-
-
 #' Collapse all styles provided as individual columns
 #' to a single `style_attrs` column with a style information
 #' for each table cell
@@ -398,8 +365,6 @@ transmute_style_attrs <- function(html_table_component) {
   table_content_styles
 }
 
-
-
 #' Decode the transform related to column names
 #' and column types
 #' @return a named character vector.
@@ -437,8 +402,6 @@ decode_col_type_transform <- function(transform_text) {
     return(types)
   }
 }
-
-
 
 #' Modify the `html_table` to incorporate spanner headings
 #' @param html_tbl an HTML table object that is
@@ -480,4 +443,3 @@ modify_spanner_headings <- function(html_tbl) {
 
   html_tbl
 }
-
