@@ -1,6 +1,6 @@
 
-# Transform an internal table's column to
-# a stub column
+#' Transform an internal table's column to
+#' a stub column
 #' @param tbl an internal data table.
 #' @param column the name of the column to
 #' transform to the stub
@@ -16,6 +16,119 @@ transform_to_stub <- function(tbl,
   tbl %>%
     dplyr::select("rowname", everything()) %>%
     dplyr::mutate(rowname = as.character(rowname))
+}
+
+#' Transform by moving selected columns to the
+#' beginning of the column series
+#' @param tbl an internal data table.
+#' @param columns the columns to move.
+#' @importFrom dplyr select everything
+#' @noRd
+transform_move_columns_to_start <- function(tbl,
+                                            columns) {
+
+  # Filter the vector of column names by the
+  # column names actually in `tbl`
+  columns <- columns[which(columns %in% colnames(tbl))]
+
+  if (length(columns) > 0) {
+    tbl %>% dplyr::select(columns, everything())
+  } else {
+    tbl
+  }
+}
+
+#' Transform by moving selected columns to the
+#' end of the column series
+#' @param tbl an internal data table.
+#' @param columns the columns to move.
+#' @importFrom dplyr select
+#' @noRd
+transform_move_columns_to_end <- function(tbl,
+                                          columns) {
+
+  # Filter the vector of column names by the
+  # column names actually in `tbl`
+  columns <- columns[which(columns %in% colnames(tbl))]
+
+  if (length(columns) > 0) {
+    tbl %>% dplyr::select(-columns, columns)
+  } else {
+    tbl
+  }
+}
+
+#' Transform by removing selected columns
+#' @param tbl an internal data table.
+#' @param columns the columns to remove.
+#' @importFrom dplyr select everything mutate
+#' @noRd
+transform_remove_columns <- function(tbl,
+                                     columns) {
+
+  # Filter the vector of column names by the
+  # column names actually in `tbl`
+  columns <- columns[which(columns %in% colnames(tbl))]
+
+  if (length(columns) > 0) {
+    tbl %>% dplyr::select(-columns)
+  } else {
+    tbl
+  }
+}
+
+#' Transform by moving selected columns to
+#' a specified insertion point
+#' @param tbl an internal data table.
+#' @param columns the columns to remove.
+#' @importFrom dplyr select everything
+#' @noRd
+transform_move_columns <- function(tbl,
+                                   columns,
+                                   after) {
+
+  # Filter the vector of column names by the
+  # column names actually in `tbl`
+  columns <- columns[which(columns %in% colnames(tbl))]
+
+  # Get the remaining column names in the table
+  column_names <- base::setdiff(colnames(tbl), columns)
+
+  # Get the column index for where the set
+  # of `columns` should be inserted after
+  column_index <- which(column_names == after)
+
+  if (length(columns) > 0 & column_index != length(column_names)) {
+
+    tbl %>%
+      dplyr::select(
+        column_names[1:column_index],
+        columns,
+        column_names[(column_index + 1):length(column_names)])
+
+  } else if (length(columns) > 0 & column_index == length(column_names)) {
+
+    tbl %>%
+      dplyr::select(
+        column_names[1:column_index],
+        columns)
+
+  } else {
+    tbl
+  }
+}
+
+#' Transform by reordering columns
+#' @param tbl an internal data table.
+#' @param columns the columns in the
+#' revised ordering.
+#' @importFrom dplyr select
+#' @noRd
+transform_reorder_columns <- function(tbl,
+                                      columns) {
+
+  # Reorder the table columns
+  tbl %>% dplyr::select(columns)
 }
 
 #' Process an internal table with a single
@@ -41,12 +154,102 @@ tbl_transform_step <- function(tbl,
   # Detect and perform the correct table transform --------------------------
 
   # `to_stub` table transform
-  if (transform_type == "to_stub") {
+  if (transform_type == "add_stub") {
 
     tbl <-
       transform_to_stub(
         tbl = tbl,
         column = transform_vars[1])
+
+    return(tbl)
+  }
+
+  # `move_columns_to_start` table transform
+  if (transform_type == "move_columns_to_start") {
+
+    columns <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+    tbl <-
+      transform_move_columns_to_start(
+        tbl = tbl,
+        columns = columns)
+
+    return(tbl)
+  }
+
+  # `move_columns_to_end` table transform
+  if (transform_type == "move_columns_to_end") {
+
+    columns <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+    tbl <-
+      transform_move_columns_to_end(
+        tbl = tbl,
+        columns = columns)
+
+    return(tbl)
+  }
+
+  # `remove_columns` table transform
+  if (transform_type == "remove_columns") {
+
+    columns <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+    tbl <-
+      transform_remove_columns(
+        tbl = tbl,
+        columns = columns)
+
+    return(tbl)
+  }
+
+  # `move_columns` table transform
+  if (transform_type == "move_columns") {
+
+    columns <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+    after <- transform_vars[2]
+
+    tbl <-
+      transform_move_columns(
+        tbl = tbl,
+        columns = columns,
+        after = after)
+
+    return(tbl)
+  }
+
+  # `reorder_columns` table transform
+  if (transform_type == "reorder_columns") {
+
+    columns <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+    tbl <-
+      transform_reorder_columns(
+        tbl = tbl,
+        columns = columns)
+
+    return(tbl)
   }
 
   tbl
@@ -65,17 +268,25 @@ all_tbl_transform_steps <- function(html_tbl) {
 
     indices <- all_transforms %>% dplyr::pull(index)
 
-    transformed_tbl <-
-      indices %>%
-      purrr::map(.f = function(x) {
-        tbl_transform_step(
-          tbl = html_tbl[["source_tbl"]],
-          transforms = all_transforms,
-          index = x)})
+    for (i in seq(indices)) {
 
-    html_tbl[["modified_tbl"]] <-
-      transformed_tbl[[length(transformed_tbl)]] %>%
-      dplyr::as_tibble()
+      if (i == 1) {
+
+        html_tbl[["modified_tbl"]] <-
+          tbl_transform_step(
+            tbl = html_tbl[["source_tbl"]],
+            transforms = all_transforms,
+            index = i)
+
+      } else {
+
+        html_tbl[["modified_tbl"]] <-
+          tbl_transform_step(
+            tbl = html_tbl[["modified_tbl"]],
+            transforms = all_transforms,
+            index = i)
+      }
+    }
 
   } else {
 
