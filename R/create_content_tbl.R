@@ -1,54 +1,84 @@
 #' Create a rowwise table that's is used for
 #' application of scaling factors and string/
-#' number formatting for cell content.
+#' number formatting for cell content
 #' @param tbl the internal table called
 #' \code{modified_tbl}.
-#' @importFrom purrr map_df
-#' @importFrom dplyr tibble as_tibble mutate
+#' @importFrom purrr map_chr
+#' @importFrom dplyr tibble pull mutate bind_rows arrange
 #' @noRd
 create_content_tbl <- function(tbl) {
 
+  # Get the row series from `tbl`
+  row_series <- seq(nrow(tbl))
+
+  # Get the column series from `tbl`
+  column_series <- seq(ncol(tbl))
+
+  # Get the column names in `tbl`
+  tbl_colnames <- colnames(tbl)
+
+  # Get the column types in `tbl`
+  tbl_coltypes <-
+    seq(ncol(tbl)) %>%
+    purrr::map_chr(
+      .f = function(x) tbl[[x]] %>% class())
+
   # Get a tibble with rowwise content
-  content_tbl <-
-    suppressWarnings(
-      seq(nrow(tbl)) %>%
-        purrr::map_df(.f = function(x) {
+  for (i in seq(ncol(tbl))) {
 
-          seq(ncol(tbl)) %>%
-            purrr::map_df(.f = function(y) {
+    if (i == 1) {
 
-              dplyr::tibble(
-                row = x,
-                col = y,
-                column_name = (tbl %>% dplyr::as_tibble())[, y] %>% colnames(),
-                column_type = (tbl %>% as.data.frame())[x, y] %>% class(),
-                content = (tbl %>% as.data.frame())[x, y] %>% as.character())
-            })
-        }))
+      content_tbl <-
+        dplyr::tibble(
+          content = tbl[, i] %>%
+            dplyr::pull() %>%
+            as.character()) %>%
+        dplyr::mutate(
+          row = row_series,
+          col = column_series[i],
+          column_name = tbl_colnames[i],
+          column_type = tbl_coltypes[i])
 
-  content_tbl <-
-    content_tbl %>%
+
+    } else {
+
+      content_tbl_set <-
+        dplyr::tibble(
+          content = tbl[, i] %>%
+            dplyr::pull() %>%
+            as.character()) %>%
+        dplyr::mutate(
+          row = row_series,
+          col = column_series[i],
+          column_name = tbl_colnames[i],
+          column_type = tbl_coltypes[i])
+
+      content_tbl <-
+        dplyr::bind_rows(content_tbl, content_tbl_set)
+    }
+  }
+
+  content_tbl %>%
     dplyr::mutate(scaling_factor = ifelse(
       column_type %in% c("numeric", "integer"),
       1., NA_real_)) %>%
-    dplyr::mutate(digits = NA_integer_) %>%
-    dplyr::mutate(scientific = FALSE) %>%
-    dplyr::mutate(flag = "") %>%
-    dplyr::mutate(big.mark = "") %>%
-    dplyr::mutate(big.interval = 3L) %>%
-    dplyr::mutate(small.mark = "") %>%
-    dplyr::mutate(small.interval = 5L) %>%
-    dplyr::mutate(decimal.mark = getOption("OutDec")) %>%
-    dplyr::mutate(drop0trailing = FALSE) %>%
-    dplyr::mutate(negative_style = "signed") %>%
-    dplyr::mutate(date_format = NA_character_) %>%
-    dplyr::mutate(time_format = NA_character_) %>%
-    dplyr::mutate(prepend = NA_character_) %>%
-    dplyr::mutate(append = NA_character_)
-
-  content_tbl
+    dplyr::mutate(
+      digits = NA_integer_,
+      scientific = FALSE,
+      flag = "",
+      big.mark = "",
+      big.interval = 3L,
+      small.mark = "",
+      small.interval = 5L,
+      decimal.mark = getOption("OutDec"),
+      drop0trailing = FALSE,
+      negative_style = "signed",
+      date_format = NA_character_,
+      time_format = NA_character_,
+      prepend = NA_character_,
+      append = NA_character_) %>%
+    dplyr::arrange(row, col)
 }
-
 
 #' Process the rowwise internal table called
 #' \code{content_tbl}.
