@@ -58,7 +58,8 @@ create_content_tbl <- function(tbl) {
     }
   }
 
-  content_tbl %>%
+  content_tbl <-
+    content_tbl %>%
     dplyr::mutate(scaling_factor = ifelse(
       column_type %in% c("numeric", "integer"),
       1., NA_real_)) %>%
@@ -78,202 +79,272 @@ create_content_tbl <- function(tbl) {
       prepend = NA_character_,
       append = NA_character_) %>%
     dplyr::arrange(row, col)
+
+  content_tbl
 }
 
 #' Process the rowwise internal table called
 #' \code{content_tbl}.
 #' @param tbl the internal table called
 #' \code{content_tbl}.
-#' @importFrom dplyr mutate case_when
+#' @importFrom dplyr mutate
 #' @importFrom stringr str_split str_detect
 #' @importFrom purrr map_df
 #' @noRd
 process_content_tbl <- function(tbl) {
 
-  suppressWarnings(
-    content_tbl <-
-      tbl %>%
-      dplyr::mutate(content_1 = case_when(
-        column_type == "numeric" ~
-          ((content %>% as.numeric()) * scaling_factor) %>%
-          as.character(),
-        column_type == "integer" ~
-          ((content %>% as.integer()) * scaling_factor) %>%
-          as.character(),
-        column_type == "character" ~ content))
-  )
+  # Initialize the `content_1` column
+  content_tbl <-
+    tbl %>%
+    dplyr::mutate(content_1 = content)
 
-  suppressWarnings(
-    content_tbl <-
-      seq(nrow(content_tbl)) %>%
-      purrr::map_df(.f = function(x) {
+  # Initialize the `content_formatted` column
+  content_tbl <-
+    content_tbl %>%
+    dplyr::mutate(content_formatted = NA_character_)
 
-        if (content_tbl[x, ]$column_type == "numeric" &
-            content_tbl[x, ]$scientific == FALSE) {
-          format <- "f"
-        } else if (content_tbl[x, ]$column_type == "integer" &
-                   content_tbl[x, ]$scientific == FALSE) {
-          format <- "d"
-        } else if (
-          content_tbl[x, ]$column_type %in% c("numeric", "integer") &
-          content_tbl[x, ]$scientific == TRUE) {
-          format <- "e"
-        } else if (content_tbl[x, ]$column_type == "character") {
-          format <- "s"
-        } else {
-          format <- "s"
-        }
+  content_1_col <-
+    which(colnames(content_tbl) == "content_1")
 
-        if (content_tbl[x, ]$column_type != "character" &
-            !is.na(content_tbl[x, ]$digits)) {
+  # Get the row indices for any `numeric`
+  # columns with a scaling factor other than 1.
+  rows_numeric <-
+    which(
+      content_tbl$column_type == "numeric" &
+        content_tbl$scaling_factor != 1)
 
-          formatted_value <-
-            formatC(
-              x = content_tbl[x, ]$content_1 %>% as.numeric(),
-              digits = content_tbl[x, ]$digits,
-              format = format,
-              big.mark = content_tbl[x, ]$big.mark,
-              big.interval = content_tbl[x, ]$big.interval,
-              small.mark = content_tbl[x, ]$small.mark,
-              small.interval = content_tbl[x, ]$small_interval,
-              decimal.mark = content_tbl[x, ]$decimal.mark,
-              drop0trailing = content_tbl[x, ]$drop0trailing)
+  # Get the row indices for any `integer`
+  # columns with a scaling factor other than 1.
+  rows_integer <-
+    which(
+      content_tbl$column_type == "integer" &
+        content_tbl$scaling_factor != 1)
 
-        } else if (content_tbl[x, ]$column_type != "character" &
-                   format == "e" & is.na(content_tbl[x, ]$digits)) {
+  # Scale the necessary numeric values
+  if (length(rows_numeric) > 0) {
+    content_tbl[rows_numeric, content_1_col] <-
+      ((content_tbl[rows_numeric, ]$content %>% as.numeric()) *
+         content_tbl[rows_numeric, ]$scaling_factor) %>% as.character()
+  }
 
-          formatted_value <-
-            formatC(
-              x = content_tbl[x, ]$content_1 %>% as.numeric(),
-              format = format,
-              big.mark = content_tbl[x, ]$big.mark,
-              big.interval = content_tbl[x, ]$big.interval,
-              small.mark = content_tbl[x, ]$small.mark,
-              small.interval = content_tbl[x, ]$small_interval,
-              decimal.mark = content_tbl[x, ]$decimal.mark,
-              drop0trailing = content_tbl[x, ]$drop0trailing)
+  # Scale the necessary integer values
+  if (length(rows_integer) > 0) {
+    content_tbl[rows_integer, content_1_col] <-
+      ((content_tbl[rows_integer, ]$content %>% as.integer()) *
+         content_tbl[rows_integer, ]$scaling_factor) %>% as.character()
+  }
 
-        } else {
+  # Tag `content_tbl` rows with the appropriate
+  # `format` values
+  # `f`: numeric float value
+  # `d`: numeric integer value
+  # `e`: numeric exponent value
+  # `s`: string value
+  content_tbl <-
+    content_tbl %>%
+    dplyr::mutate(format = case_when(
+      column_type == "numeric" & scientific == FALSE ~ "f",
+      column_type == "integer" & scientific == FALSE ~ "d",
+      column_type %in% c("numeric", "integer") & scientific == TRUE ~ "e",
+      TRUE ~ "s"))
 
-          formatted_value <- content_tbl[x, ]$content_1
-        }
+  #
+  # Apply numeric formatting to non-character rows
+  #
+  rows_num_format_def_w_digits <-
+    which(
+      content_tbl$format %in% c("d", "e", "f") &
+        !is.na(content_tbl$digits))
 
-        # Format to scientific notation
-        if (format == "e") {
+  rows_num_format_e_na_digits <-
+    which(
+      content_tbl$format == "e" &
+        is.na(content_tbl$digits))
 
-          if (formatted_value %>%
-              stringr::str_detect(pattern = ".e.")) {
+  rows_num_format_df_na_digits <-
+    which(
+      content_tbl$format %in% c("d", "f") &
+        is.na(content_tbl$digits))
 
-            m_part <-
-              (formatted_value %>%
-                 stringr::str_split(pattern = "e") %>%
-                 unlist())[1]
+  rows_str_format <- which(content_tbl$format == "s")
 
-            n_part <-
-              (formatted_value %>%
-                 stringr::str_split(pattern = "e") %>%
-                 unlist())[2] %>%
-              as.integer()
 
-            if (n_part != 0) {
+  if (length(rows_num_format_def_w_digits) > 0) {
 
-              formatted_value <-
-                paste0(m_part, " &times; 10<sup>", n_part, "</sup>")
+    for (i in rows_num_format_def_w_digits) {
 
-            } else {
-              formatted_value <- m_part
-            }
-          }
-        }
+      content_tbl[i, ]$content_formatted <-
+        formatC(
+          x = as.numeric(content_tbl[i, ]$content_1),
+          digits = content_tbl[i, ]$digits,
+          format = content_tbl[i, ]$format,
+          big.mark = content_tbl[i, ]$big.mark,
+          big.interval = content_tbl[i, ]$big.interval,
+          small.mark = content_tbl[i, ]$small.mark,
+          small.interval = content_tbl[i, ]$small_interval,
+          decimal.mark = content_tbl[i, ]$decimal.mark,
+          drop0trailing = content_tbl[i, ]$drop0trailing)
+    }
+  }
 
-        # Format dates/times
-        if (!is.na(content_tbl[x, ]$date_format) |
-            !is.na(content_tbl[x, ]$time_format)) {
+  if (length(rows_num_format_e_na_digits) > 0) {
 
-          # Concatenate date and time formats to form a
-          # single date-time formatting string
-          date_time_format_str <-
-            concat_date_time_formats(
-              date_format = content_tbl[x, ]$date_format,
-              time_format = content_tbl[x, ]$time_format)
+    for (i in rows_num_format_e_na_digits) {
 
-          # Format date, time, or date-time using `strftime()`
-          if (stringr::str_detect(
-            string = content_tbl[x, ]$content_1,
-            pattern = "^[0-9]*?\\:[0-9]*?")) {
+      content_tbl[i, ]$content_formatted <-
+        formatC(
+          x = as.numeric(content_tbl[i, ]$content_1),
+          format = content_tbl[i, ]$format,
+          big.mark = content_tbl[i, ]$big.mark,
+          big.interval = content_tbl[i, ]$big.interval,
+          small.mark = content_tbl[i, ]$small.mark,
+          small.interval = content_tbl[i, ]$small_interval,
+          decimal.mark = content_tbl[i, ]$decimal.mark,
+          drop0trailing = content_tbl[i, ]$drop0trailing)
+    }
+  }
 
-            formatted_value <-
-              paste("1970-01-01", content_tbl[x, ]$content_1) %>%
-              strftime(format = date_time_format_str) %>%
-              #toupper() %>%
-              gsub("^0", "", .) %>%
-              gsub(" 0([0-9])", " \\1", .) %>%
-              gsub("pm$", "PM", .) %>%
-              gsub("am$", "AM", .)
+  if (length(rows_num_format_df_na_digits) > 0) {
+    for (i in rows_num_format_df_na_digits) {
+      content_tbl[i, ]$content_formatted <-
+        content_tbl[i, ]$content_1
+    }
+  }
 
-          } else {
+  if (length(rows_str_format) > 0) {
+    for (i in rows_str_format) {
+      content_tbl[i, ]$content_formatted <-
+        content_tbl[i, ]$content_1
+    }
+  }
 
-            formatted_value <-
-              content_tbl[x, ]$content_1 %>%
-              strftime(format = date_time_format_str) %>%
-              gsub(" 0([0-9])", " \\1", .) %>%
-              gsub(" 0([0-9])", " \\1", .) %>%
-              gsub("pm$", "PM", .) %>%
-              gsub("am$", "AM", .)
-          }
-        }
+  #
+  # Format to scientific notation
+  #
 
-        # Replace hyphens with minus signs
-        if (content_tbl[x, ]$column_type != "character") {
+  rows_num_format_e <- which(content_tbl$format == "e")
 
-          formatted_value <-
+  if (length(rows_num_format_e) > 0) {
+
+    for (i in rows_num_format_e) {
+
+      # Get the `m` and `n` parts as a vector
+      #content_tbl[i, ]$content_formatted
+      m_n_parts <-
+        (content_tbl[i, ]$content_formatted %>%
+           stringr::str_split(pattern = "e") %>%
+           unlist()) %>% as.numeric()
+
+      if (m_n_parts[2] != 0) {
+
+        content_tbl[i, ]$content_formatted <-
+          paste0(m_n_parts[1], " &times; 10<sup>", as.integer(m_n_parts[2]), "</sup>")
+
+      } else {
+        content_tbl[i, ]$content_formatted <- m_n_parts[1] %>% as.character()
+      }
+    }
+  }
+
+  #
+  # Format to dates/times
+  #
+
+  rows_dates_times <-
+    which(!is.na(content_tbl$date_format) |
+            !is.na(content_tbl$time_format))
+
+  if (length(rows_dates_times) > 0) {
+
+    for (i in rows_dates_times) {
+
+      date_time_format_str <-
+        gt:::concat_date_time_formats(
+          date_format = content_tbl[i, ]$date_format,
+          time_format = content_tbl[i, ]$time_format)
+
+      # Format date, time, or date-time using `strftime()`
+      if (stringr::str_detect(
+        string = content_tbl[i, ]$content_formatted,
+        pattern = "^[0-9]*?\\:[0-9]*?")) {
+
+        content_tbl[i, ]$content_formatted <-
+          paste("1970-01-01", content_tbl[i, ]$content_formatted) %>%
+          strftime(format = date_time_format_str) %>%
+          gsub("^0", "", .) %>%
+          gsub(" 0([0-9])", " \\1", .) %>%
+          gsub("pm$", "PM", .) %>%
+          gsub("am$", "AM", .)
+
+      } else {
+
+        content_tbl[i, ]$content_formatted <-
+          content_tbl[i, ]$content_formatted %>%
+          strftime(format = date_time_format_str) %>%
+          gsub(" 0([0-9])", " \\1", .) %>%
+          gsub(" 0([0-9])", " \\1", .) %>%
+          gsub("pm$", "PM", .) %>%
+          gsub("am$", "AM", .)
+      }
+    }
+  }
+
+  # Prepend text to the formatted value if a `prepend`
+  # string is available
+  rows_prepend <- which(!is.na(content_tbl$prepend))
+
+  if (length(rows_prepend) > 0) {
+
+    for (i in rows_prepend) {
+
+      content_tbl[i, ]$content_formatted <-
+        paste0(content_tbl[i, ]$prepend, content_tbl[i, ]$content_formatted)
+    }
+  }
+
+  # Append text to the formatted value if a `append`
+  # string is available
+  rows_append <- which(!is.na(content_tbl$append))
+
+  if (length(rows_append) > 0) {
+
+    for (i in rows_append) {
+
+      content_tbl[i, ]$content_formatted <-
+        paste0(content_tbl[i, ]$content_formatted, content_tbl[i, ]$append)
+    }
+  }
+
+  # Format negative values when the option is chosen
+  # to use parentheses for negative values
+  rows_parens <-
+    which(
+      content_tbl$column_type != "character" &
+        content_tbl$negative_style == "parens")
+
+  if (length(rows_parens) > 0) {
+
+    for (i in rows_parens) {
+
+      if (as.numeric(content_tbl[i, ]$content_formatted) < 0) {
+        content_tbl[i, ]$content_formatted <-
+          paste0(
+            "(",
             gsub(
-              pattern = "-",
-              replacement = "&minus;",
-              x = formatted_value)
-        }
+              pattern = "&minus;",
+              replacement = "",
+              content_tbl[i, ]$content_formatted),
+            ")")
+      }
+    }
+  }
 
-        # Prepend text to the formatted value if a `prepend`
-        # string is available
-        if (!is.na(content_tbl[x, ]$prepend)) {
-
-          formatted_value <-
-            paste0(content_tbl[x, ]$prepend, formatted_value)
-        }
-
-        # Append text to the formatted value if an `append`
-        # string is available
-        if (!is.na(content_tbl[x, ]$append)) {
-
-          formatted_value <-
-            paste0(formatted_value, content_tbl[x, ]$append)
-        }
-
-        # Format negative values when the option is chosen
-        # to use parentheses for negative values
-        if (content_tbl[x, ]$column_type != "character") {
-
-          if (content_tbl[x, ]$content_1 %>% as.numeric() < 0 &
-              content_tbl[x, ]$negative_style == "parens") {
-
-            formatted_value <-
-              paste0(
-                "(",
-                gsub(
-                  pattern = "&minus;",
-                  replacement = "",
-                  formatted_value),
-                ")"
-              )
-          }
-        }
-
-        # Add the `formatted_value` string as a value in
-        # the column `content_formatted`
-        content_tbl[x, ] %>%
-          dplyr::mutate(content_formatted = formatted_value %>% as.character())
-      })
-  )
+  # Replace hyphens with minus signs
+  content_tbl$content_formatted <-
+    gsub(
+      pattern = "-",
+      replacement = "&minus;",
+      x = content_tbl$content_formatted)
 
   content_tbl
 }
