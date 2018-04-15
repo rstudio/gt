@@ -6,7 +6,6 @@
 #' @importFrom glue glue
 #' @importFrom htmltools HTML html_print
 #' @export
-
 render_table <- function(x) {
 
  if (inherits(x, "data.frame")) {
@@ -15,7 +14,7 @@ render_table <- function(x) {
 
  } else if (inherits(x, "html_table")) {
 
-  html_table <- emit_html(html_tbl = x)
+  html_table <- x[["html_tbl_text"]]
 
  } else if (inherits(x, "knit_asis")) {
 
