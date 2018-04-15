@@ -79,6 +79,10 @@ apply_alignment_left <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -164,6 +168,10 @@ apply_alignment_center <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -248,6 +256,10 @@ apply_alignment_right <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -306,6 +318,10 @@ apply_theme_striped <- function(html_tbl) {
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -368,6 +384,10 @@ apply_theme_minimal <- function(html_tbl) {
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -426,6 +446,10 @@ apply_theme_classical <- function(html_tbl) {
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -511,6 +535,10 @@ apply_spanner_headings <- function(html_tbl) {
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }

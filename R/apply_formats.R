@@ -91,6 +91,10 @@ format_as_number <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -183,6 +187,10 @@ format_as_scientific <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -282,6 +290,10 @@ format_as_percentage <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -369,6 +381,10 @@ format_as_fraction <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -452,6 +468,10 @@ format_as_date <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -538,6 +558,10 @@ format_as_time <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -614,6 +638,10 @@ format_as_datetime <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -737,6 +765,10 @@ format_as_currency <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }

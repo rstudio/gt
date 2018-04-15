@@ -60,6 +60,10 @@ add_heading <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -130,6 +134,10 @@ add_stubhead_caption <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -204,6 +212,10 @@ add_source_note <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
