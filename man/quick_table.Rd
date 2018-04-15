@@ -11,7 +11,8 @@ quick_table(tbl)
 tibble.}
 }
 \value{
-a character object with an HTML fragment.
+a character object with an HTML
+fragment.
 }
 \description{
 Create a simple HTML table by providing a
@@ -21,9 +22,9 @@ output an HTML fragment.
 }
 \details{
 If more control over the table styling is
-required, then an alternative is to use the
-\code{gt()} -> ... -> \code{emit_html()} pattern
-for building and inserting a table.
+required, then an alternative is to use
+\code{gt()} and other API functions for
+building a table.
 }
 \examples{
 # Quickly create an html table using the
