@@ -6,12 +6,13 @@
 #' output an HTML fragment.
 #'
 #' If more control over the table styling is
-#' required, then an alternative is to use the
-#' \code{gt()} -> ... -> \code{emit_html()} pattern
-#' for building and inserting a table.
+#' required, then an alternative is to use
+#' \code{gt()} and other API functions for
+#' building a table.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
-#' @return a character object with an HTML fragment.
+#' @return a character object with an HTML
+#' fragment.
 #' @examples
 #' # Quickly create an html table using the
 #' # `quick_table()` with the iris dataset
@@ -104,5 +105,5 @@ quick_table <- function(tbl) {
       value = "collapse"
     )
 
-  emit_html(html_tbl = html_tbl)
+  create_html(html_tbl = html_tbl)
 }
