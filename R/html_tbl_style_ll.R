@@ -2,9 +2,7 @@
 #' Add inline CSS styles to columns in an HTML table object
 #'
 #' Modify column styles for a table within an HTML
-#' table object. This is part of an intermediate set
-#' of step in the \code{gt()} -> ... ->
-#' \code{emit_html()} pattern.
+#' table object.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param columns an optional vector of column index
@@ -116,9 +114,7 @@ add_column_style <- function(html_tbl,
 #' Add inline CSS styles to the HTML table object
 #'
 #' Modify the overall table style for a table
-#' within an HTML table object. This is part of
-#' an intermediate set of step in the
-#' \code{gt()} -> ... -> \code{emit_html()} pattern.
+#' within an HTML table object.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param property the CSS style property that is
@@ -199,9 +195,7 @@ add_table_style <- function(html_tbl,
 #' Add inline CSS styles to the header of an HTML table object
 #'
 #' Modify the style of the header for a table
-#' within an HTML table object. This is part of
-#' an intermediate set of step in the
-#' \code{gt()} -> ... -> \code{emit_html()} pattern.
+#' within an HTML table object.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param property the CSS style property that is
@@ -282,9 +276,7 @@ add_header_style <- function(html_tbl,
 #' Add inline CSS styles to the body of an HTML table object
 #'
 #' Modify the style of the body for a table
-#' within an HTML table object. This is part of
-#' an intermediate set of step in the
-#' \code{gt()} -> ... -> \code{emit_html()} pattern.
+#' within an HTML table object.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @param property the CSS style property that is
