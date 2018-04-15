@@ -25,9 +25,7 @@ an object of class \code{html_table}.
 }
 \description{
 Modify the overall table style for a table
-within an HTML table object. This is part of
-an intermediate set of step in the
-\code{gt()} -> ... -> \code{emit_html()} pattern.
+within an HTML table object.
 }
 \examples{
 # Create an html table object using the
