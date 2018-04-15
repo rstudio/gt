@@ -96,28 +96,28 @@ gt <- function(tbl) {
   # Initialize metadata tbls ------------------------------------------------
 
   # Create an empty `transforms` tbl
-  transforms <- empty_transforms_tbl()
+  transforms <- gt:::empty_transforms_tbl()
 
   # Create an empty `formats` tbl
-  formats <- empty_formats_tbl()
+  formats <- gt:::empty_formats_tbl()
 
   # Create an empty `aesthetics` tbl
-  aesthetics <- empty_aesthetics_tbl()
+  aesthetics <- gt:::empty_aesthetics_tbl()
 
   # Create an empty `heading` tbl
-  heading <- empty_heading_tbl()
+  heading <- gt:::empty_heading_tbl()
 
   # Create an empty `footnote` tbl
-  footnote <- empty_footnote_tbl()
+  footnote <- gt:::empty_footnote_tbl()
 
   # Create an empty `source_note` tbl
-  source_note <- empty_source_note_tbl()
+  source_note <- gt:::empty_source_note_tbl()
 
   # Create an empty `stubhead_caption` tbl
-  stubhead_caption <- empty_stubhead_caption_tbl()
+  stubhead_caption <- gt:::empty_stubhead_caption_tbl()
 
   # Create an empty `boxhead_panel` tbl
-  boxhead_panel <- empty_boxhead_panel_tbl()
+  boxhead_panel <- gt:::empty_boxhead_panel_tbl()
 
   # Create the `html_table` list object -------------------------------------
   html_table <-
@@ -134,7 +134,8 @@ gt <- function(tbl) {
       stubhead_caption = stubhead_caption,
       boxhead_panel = boxhead_panel,
       html_head = html_head,
-      html_table = NULL)
+      html_table = NULL,
+      html_tbl_text = NA_character_)
 
   # Apply the `html_table` class
   attr(html_table, "class") <- "html_table"
@@ -176,6 +177,10 @@ gt <- function(tbl) {
     use_html_aesthetics(
       html_tbl = html_table,
       aesthetics_tbl = html_table[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_table[["html_tbl_text"]] <-
+    create_html(html_tbl = html_table)
 
   html_table
 }
