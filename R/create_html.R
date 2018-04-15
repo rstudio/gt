@@ -31,8 +31,7 @@
 #' @importFrom rlang squash_chr
 #' @importFrom knitr asis_output
 #' @importFrom purrr map
-#' @export
-emit_html <- function(html_tbl) {
+create_html <- function(html_tbl) {
 
   # Extract object components -----------------------------------------------
 
