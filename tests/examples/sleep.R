@@ -5,18 +5,20 @@ library(tidyverse)
 # Student's Sleep Data
 
 # 1 - we take the `datasets::sleep` data.frame
-# 2 - the 'striped' theme is applied
-# 3 - all column values are left aligned
-# 4 - we are formatting numbers in the `extra` column to have 1 decimal place;
+# 2 - move the `group` and `ID` columns to the start (LHS)
+# 3 - the 'striped' theme is applied
+# 4 - all column values are left aligned
+# 5 - we are formatting numbers in the `extra` column to have 1 decimal place;
 #     all negative values are shown in parentheses
 sleep_tbl <-
   gt(tbl = sleep) %>%  # 1
-  apply_theme_striped() %>%  # 2
-  apply_alignment_left() %>%  # 3
+  move_columns_to_start(columns = c("group", "ID")) %>% #2
+  apply_theme_striped() %>%  # 3
+  apply_alignment_left() %>%  # 4
   format_as_number(
     columns = "extra",
     decimals = 1,
-    negative_style = "parens")  # 4
+    negative_style = "parens")  # 5
 
 # Render the table in the Viewer
 sleep_tbl %>% render_table()
