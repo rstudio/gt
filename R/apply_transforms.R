@@ -63,6 +63,10 @@ add_stub <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -144,6 +148,10 @@ move_columns_to_start <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -224,6 +232,10 @@ move_columns_to_end <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -303,6 +315,10 @@ remove_columns <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -394,6 +410,10 @@ move_columns <- function(html_tbl,
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
 
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
+
   html_tbl
 }
 
@@ -473,6 +493,10 @@ reorder_columns <- function(html_tbl,
     use_html_aesthetics(
       html_tbl = html_tbl,
       aesthetics_tbl = html_tbl[["aesthetics"]])
+
+  ## [7] Generate the table HTML
+  html_tbl[["html_tbl_text"]] <-
+    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
