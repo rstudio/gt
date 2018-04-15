@@ -13,7 +13,8 @@ library(tidyverse)
 # 6 - a heading is added
 # 7 - a source note is added
 iris_tbl <-
-  gt(tbl = iris %>% dplyr::select(Species, everything())) %>%  # 1
+  gt(tbl = iris %>%
+       dplyr::select(Species, everything())) %>%  # 1
   apply_theme_striped() %>%  # 2
   apply_spanner_headings() %>%  # 3
   apply_alignment_center() %>%  # 4
