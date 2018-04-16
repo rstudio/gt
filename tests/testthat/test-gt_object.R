@@ -9,7 +9,7 @@ test_that("an HTML table object contains the correct components", {
 
   # Expect that the list object has 14 components
   expect_equal(
-    length(table_object), 14)
+    length(table_object), 12)
 
   # Expect certain named components
   expect_equal(
@@ -17,5 +17,5 @@ test_that("an HTML table object contains the correct components", {
     c("transforms", "formats", "aesthetics",
       "source_tbl", "modified_tbl", "content_tbl",
       "heading", "footnote", "source_note", "stubhead_caption", "boxhead_panel",
-      "html_head", "html_table", "html_tbl_text"))
+      "html_head"))
 })
