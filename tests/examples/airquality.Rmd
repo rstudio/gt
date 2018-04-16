@@ -1,4 +1,5 @@
 ---
+title: airquality
 output: html_document
 ---
 
@@ -33,5 +34,5 @@ airquality_tbl <-
 ```
 
 ```{r show_table, echo=FALSE}
-airquality_tbl %>% emit_html()
+airquality_tbl
 ```
