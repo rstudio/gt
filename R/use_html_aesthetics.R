@@ -29,6 +29,35 @@ use_html_aesthetics <- function(html_tbl, aesthetics_tbl) {
     }
   }
 
+  # Apply fonts if any such transformations are applied
+  if ("apply_font" %in% aesthetics_tbl$type) {
+
+    column <-
+      aesthetics_tbl %>%
+      dplyr::filter(type == "apply_font") %>%
+      dplyr::pull(columns)
+
+    type <-
+      aesthetics_tbl %>%
+      dplyr::filter(type == "apply_font") %>%
+      dplyr::pull(types)
+
+    font <-
+      aesthetics_tbl %>%
+      dplyr::filter(type == "apply_font") %>%
+      dplyr::pull(font)
+
+    for (i in seq(column)) {
+
+      html_tbl <-
+        htt_font(
+          html_tbl = html_tbl,
+          column = column[i],
+          type = type[i],
+          font = font[i])
+    }
+  }
+
   # Apply center alignment if any such transformations are applied
   if ("alignment_center" %in% aesthetics_tbl$type) {
 
