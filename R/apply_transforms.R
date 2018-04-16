@@ -27,45 +27,10 @@ add_stub <- function(html_tbl,
       transform_v1 = column)
 
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -112,45 +77,10 @@ move_columns_to_start <- function(html_tbl,
       transform_v1 = columns)
 
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -196,45 +126,10 @@ move_columns_to_end <- function(html_tbl,
       transform_v1 = columns)
 
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -280,45 +175,10 @@ remove_columns <- function(html_tbl,
       transform_v1 = columns)
 
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -374,45 +234,10 @@ move_columns <- function(html_tbl,
       transform_v1 = columns,
       transform_v2 = after[1])
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
@@ -458,45 +283,10 @@ reorder_columns <- function(html_tbl,
       transform_type = "reorder_columns",
       transform_v1 = columns)
 
-  ## [1] Perform all `source_tbl` transform steps
+  # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
       html_tbl = html_tbl)
-
-  ## [2] Creation of the content table
-  html_tbl[["content_tbl"]] <-
-    create_content_tbl(tbl = html_tbl[["modified_tbl"]])
-
-  ## [2.5] Modification of the content table
-  html_tbl <-
-    all_tbl_format_steps(
-      html_tbl = html_tbl)
-
-  ## [3] Processing of the content table
-  html_tbl[["content_tbl"]] <-
-    process_content_tbl(
-      tbl = html_tbl[["content_tbl"]])
-
-  ## [4] Creation of the HTML table
-  html_tbl[["html_table"]] <-
-    create_html_table_tbl(
-      tbl = html_tbl[["modified_tbl"]])
-
-  ## [5] Join in formatted content
-  html_tbl[["html_table"]] <-
-    use_html_content(
-      html_tbl = html_tbl[["html_table"]],
-      content_tbl = html_tbl[["content_tbl"]])
-
-  ## [6] Apply HTML aesthetics
-  html_tbl <-
-    use_html_aesthetics(
-      html_tbl = html_tbl,
-      aesthetics_tbl = html_tbl[["aesthetics"]])
-
-  ## [7] Generate the table HTML
-  html_tbl[["html_tbl_text"]] <-
-    create_html(html_tbl = html_tbl)
 
   html_tbl
 }
