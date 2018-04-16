@@ -7,29 +7,11 @@
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
 #' @return a character object with an HTML fragment.
-#' @examples
-#' # Create an html table object using the
-#' # iris dataset
-#' html_table <- gt(tbl = iris)
-#'
-#' # The resulting object can be used
-#' # in transformations
-#' html_table_transformed <-
-#'   html_table %>%
-#'   add_column_style(
-#'     columns = 1,
-#'     property = "color",
-#'     values = "blue")
-#'
-#' # We can extract the HTML from the
-#' # HTML table object using `emit_html()`
-#' html_table_transformed %>%
-#'   emit_html()
 #' @importFrom dplyr pull mutate filter case_when inner_join bind_rows
 #' @importFrom dplyr group_by summarize arrange select
 #' @importFrom glue glue
 #' @importFrom rlang squash_chr
-#' @importFrom knitr asis_output
+#' @importFrom htmltools HTML
 #' @importFrom purrr map
 create_html <- function(html_tbl) {
 
@@ -253,11 +235,9 @@ create_html <- function(html_tbl) {
     source_note_component <- ""
   }
 
-
   # Compose the HTML Table --------------------------------------------------
 
   paste(
-    "<!--html_preserve-->\n",
     table_component,
     table_caption_component,
     thead_component,
@@ -268,7 +248,6 @@ create_html <- function(html_tbl) {
     tbody_closing_component,
     source_note_component,
     table_closing_component,
-    "<!--/html_preserve-->\n",
     collapse = "") %>%
-    knitr::asis_output()
+    htmltools::HTML()
 }
