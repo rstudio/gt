@@ -22,16 +22,9 @@
 #'     property = "color",
 #'     values = "blue")
 #'
-#' # The object of this type can also be
-#' # rendered in the Viewer
-#' html_table_transformed %>%
-#'   render_table()
-#'
-#' # Once the table has been transformed
-#' # suitably, we can extract it as HTML
-#' # using `emit_html()`
-#' html_table_transformed %>%
-#'   emit_html()
+#' # The object of this type can be
+#' # shown in the Viewer
+#' html_table_transformed
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate select
 #' @importFrom dplyr bind_rows inner_join mutate_if select_if everything
