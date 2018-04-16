@@ -1,4 +1,5 @@
 ---
+title: mtcars
 output: html_document
 ---
 
@@ -54,5 +55,5 @@ mtcars_tbl <-
 ```
 
 ```{r show_table, echo=FALSE}
-mtcars_tbl %>% emit_html()
+mtcars_tbl
 ```

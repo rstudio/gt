@@ -1,4 +1,5 @@
 ---
+title: morley
 output: html_document
 ---
 
@@ -37,5 +38,5 @@ morley_tbl <-
 ```
 
 ```{r show_table, echo=FALSE}
-morley_tbl %>% emit_html()
+morley_tbl
 ```

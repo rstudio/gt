@@ -1,4 +1,5 @@
 ---
+title: sleep
 output: html_document
 ---
 
@@ -34,5 +35,5 @@ sleep_tbl <-
 ```
  
 ```{r show_table, echo=FALSE}
-sleep_tbl %>% emit_html()
+sleep_tbl
 ```

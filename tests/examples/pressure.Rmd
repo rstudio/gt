@@ -1,4 +1,5 @@
 ---
+title: pressure
 output: html_document
 ---
 
@@ -33,5 +34,5 @@ pressure_tbl <-
 ```
 
 ```{r show_table, echo=FALSE}
-pressure_tbl %>% emit_html()
+pressure_tbl
 ```
