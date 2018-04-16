@@ -17,8 +17,7 @@ an object of class \code{html_table}.
 Create an HTML table object such that we can
 perform styling transformations before transforming
 the entire object to an HTML fragment. This is
-the first step in the \code{gt()} -> ... ->
-\code{emit_html()} pattern.
+the first step in creating a display table.
 }
 \examples{
 # Create an html table object using the
@@ -34,14 +33,7 @@ html_table_transformed <-
     property = "color",
     values = "blue")
 
-# The object of this type can also be
-# rendered in the Viewer
-html_table_transformed \%>\%
-  render_table()
-
-# Once the table has been transformed
-# suitably, we can extract it as HTML
-# using `emit_html()`
-html_table_transformed \%>\%
-  emit_html()
+# The object of this type can be
+# shown in the Viewer
+html_table_transformed
 }

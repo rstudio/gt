@@ -19,22 +19,3 @@ transform it to an HTML fragment. This is the
 final step in the \code{gt()} -> ... ->
 \code{emit_html()} pattern.
 }
-\examples{
-# Create an html table object using the
-# iris dataset
-html_table <- gt(tbl = iris)
-
-# The resulting object can be used
-# in transformations
-html_table_transformed <-
-  html_table \%>\%
-  add_column_style(
-    columns = 1,
-    property = "color",
-    values = "blue")
-
-# We can extract the HTML from the
-# HTML table object using `emit_html()`
-html_table_transformed \%>\%
-  emit_html()
-}

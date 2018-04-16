@@ -4,14 +4,13 @@
 \alias{print.html_table}
 \title{Print the table}
 \usage{
-\method{print}{html_table}(x, ...)
+\method{print}{html_table}(x, ..., view = interactive())
 }
 \arguments{
-\item{x}{an object of class
-\code{html_table}.}
+\item{x}{an object of class \code{html_table}.}
 }
 \description{
-This function will provide a
-print out of the HTML table.
+This facilitates printing of the
+HTML table to the R console.
 }
 \keyword{internal}
