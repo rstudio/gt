@@ -402,10 +402,6 @@ format_as_currency <- function(html_tbl,
                                thousands_sep = FALSE,
                                negative_style = "signed") {
 
-  if (is.null(columns)) {
-    columns <- NA_character_
-  }
-
   # Return early if `currency` does not have a valid value
   if (!is_currency_valid(currency = currency)) {
 
@@ -452,3 +448,5 @@ format_as_currency <- function(html_tbl,
 
   html_tbl
 }
+
+
