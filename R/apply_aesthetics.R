@@ -143,6 +143,52 @@ apply_alignment_right <- function(html_tbl,
   html_tbl
 }
 
+
+#' Apply fonts to column data
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the font should be applied.
+#' @param types an optional vector of column types
+#' for which the font should be applied.
+#' @param font the name of the font to use for
+#' the specified columns. This could be provided
+#' as a vector of fonts where subsequent font names
+#' provide fallbacks in the case that fonts are
+#' not available.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr bind_rows tibble
+#' @export
+apply_font <- function(html_tbl,
+                       columns = NULL,
+                       types = NULL,
+                       font) {
+
+  if (is.null(columns)) {
+    columns <- NA_character_
+  }
+
+  if (is.null(types)) {
+    types <- NA_character_
+  }
+
+  font <-
+    font %>%
+    paste(collapse = ", ")
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    dplyr::bind_rows(
+      dplyr::tibble(
+        type = "apply_font",
+        columns = columns,
+        types = types,
+        font = font))
+
+  html_tbl
+}
+
+
 #' Apply the striped theme to the table
 #'
 #' Apply the striped theme to the table. This
