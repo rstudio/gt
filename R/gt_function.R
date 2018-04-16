@@ -3,8 +3,7 @@
 #' Create an HTML table object such that we can
 #' perform styling transformations before transforming
 #' the entire object to an HTML fragment. This is
-#' the first step in the \code{gt()} -> ... ->
-#' \code{emit_html()} pattern.
+#' the first step in creating a display table.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return an object of class \code{html_table}.
