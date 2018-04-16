@@ -19,8 +19,5 @@ morley_tbl <-
   apply_alignment_left(types = "integer") %>%  # 4
   apply_alignment_center(types = "numeric")  # 5
 
-# Render the table in the Viewer
-morley_tbl %>% render_table()
-
-# Render with the different table parts highlighted
-# morley_tbl %>% highlight_tbl_parts()
+# Display the table in the Viewer
+morley_tbl

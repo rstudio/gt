@@ -12,7 +12,7 @@ library(tidyverse)
 #     all negative values are shown in parentheses
 sleep_tbl <-
   gt(tbl = sleep) %>%  # 1
-  move_columns_to_start(columns = c("group", "ID")) %>% #2
+  move_columns_to_start(columns = c("group", "ID")) %>%  # 2
   apply_theme_striped() %>%  # 3
   apply_alignment_left() %>%  # 4
   format_as_number(
@@ -20,8 +20,5 @@ sleep_tbl <-
     decimals = 1,
     negative_style = "parens")  # 5
 
-# Render the table in the Viewer
-sleep_tbl %>% render_table()
-
-# Render with the different table parts highlighted
-# sleep_tbl %>% highlight_tbl_parts()
+# Display the table in the Viewer
+sleep_tbl

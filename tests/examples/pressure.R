@@ -16,8 +16,5 @@ pressure_tbl <-
     decimals = 2) %>%  # 3
   apply_alignment_center()  # 4
 
-# Render the table in the Viewer
-pressure_tbl %>% render_table()
-
-# Render with the different table parts highlighted
-# pressure_tbl %>% highlight_tbl_parts()
+# Display the table in the Viewer
+pressure_tbl
