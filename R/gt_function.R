@@ -10,19 +10,20 @@
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- gt(tbl = iris)
+#' html_table <- gt(tbl = airquality)
 #'
 #' # The resulting object can be used
 #' # in transformations
 #' html_table_transformed <-
 #'   html_table %>%
-#'   add_column_style(
-#'     columns = 1,
-#'     property = "color",
-#'     values = "blue")
+#'   apply_theme_minimal() %>%
+#'   apply_alignment_right() %>%
+#'   format_as_number(
+#'     columns = "Wind",
+#'     decimals = 1)
 #'
 #' # The object of this type can be
-#' # shown in the Viewer
+#' # displayed in the Viewer
 #' html_table_transformed
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate select
@@ -30,7 +31,6 @@
 #' @importFrom tibble rownames_to_column
 #' @export
 gt <- function(tbl) {
-
 
   # Table ingest ------------------------------------------------------------
 
