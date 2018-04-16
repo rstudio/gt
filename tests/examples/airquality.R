@@ -16,8 +16,5 @@ airquality_tbl <-
     columns = "Wind",
     decimals = 1)  # 4
 
-# Render the table in the Viewer
-airquality_tbl %>% render_table()
-
-# Render with the different table parts highlighted
-# airquality_tbl %>% highlight_tbl_parts()
+# Display the table in the Viewer
+airquality_tbl

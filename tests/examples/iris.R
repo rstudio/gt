@@ -29,8 +29,5 @@ iris_tbl <-
     source_note = "Anderson, Edgar (1935).",
     lead_in = "The data were collected by ")  # 7
 
-# Render the table in the Viewer
-iris_tbl %>% render_table()
-
-# Render with the different table parts highlighted
-# iris_tbl %>% highlight_tbl_parts()
+# Display the table in the Viewer
+iris_tbl
