@@ -55,7 +55,7 @@ The **source note** area is for provision of citation information for
 the presented data. As it is commonly seen, the citation is preceeded by
 the word `Source`.
 
-## Example
+## Examples
 
 The `mtcars` dataset can be suitably transformed into a simple HTML
 table (for sake of brevity, we’ll use just the first 6 rows). We can use
@@ -79,40 +79,43 @@ customize the output table:
 <!-- end list -->
 
 ``` r
-library(gt)
+
+# 1 - we take the first six rows of `datasets::mtcars` data.frame
+# 2 - the 'striped' theme is applied
+# 3 - we are formatting numbers in 4 columns to have 1 decimal place
+# 4 - we are formatting numbers in the `wt` column to have 3 decimal places
+# 5 - all `numeric` values are right aligned
+# 6 - the dataset has rownames so they've been moved to the stub;
+#     here, we supply a stubhead caption
+# 7 - a heading is added
+# 8,9 - two source notes are added
 
 mtcars_tbl <-
   gt(tbl = mtcars[1:6, ]) %>%
-  apply_theme_striped() %>%
-  apply_alignment_center() %>%
-  add_stubhead_caption(caption = "car model") %>%
+  apply_theme_striped() %>%  # 2
+  format_as_number(
+    columns = c("mpg", "disp", "drat", "qsec"),
+    decimals = 1) %>%  # 3
+  format_as_number(
+    columns = "wt",
+    decimals = 3) %>%  # 4
+  apply_alignment_right(types = "numeric") %>%  # 5
+  add_stubhead_caption(caption = "car model") %>%  # 6
   add_heading(
     title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]") %>%
+    headnote = "[A rather famous Motor Trend table]") %>%  # 7
   add_source_note(
     source_note = "Henderson and Velleman (1981).",
-    lead_in = "Main Source of Data: ") %>%
+    lead_in = "Main Source of Data: ") %>%  # 8
   add_source_note(
     source_note = "Motor Trend Magazine (1974).",
-    lead_in = "Original Data: ")
+    lead_in = "Original Data: ")  # 9
 ```
 
-The HTML table object can then be transformed to HTML with the
-`emit_html()` function. This works well inside an R Markdown code chunk
-since the table will appear when the document is rendered to HTML.
+Invoking the object interactively displays it in the Viewer. In R
+Markdown chunks, the object becomes an HTML table.
 
-``` r
-mtcars_tbl %>% emit_html()
-```
-
-We can also preview the table in the RStudio Viewer pane (or the default
-browser if invoked outside of RStudio) with `render_table()`:
-
-``` r
-mtcars_tbl %>% render_table()
-```
-
-<img src="man/figures/mtcars_render_table.png">
+<img src="man/figures/mtcars.png">
 
 Let’s build another table using another well-known dataset. In this
 table, we embrace the naming convention provided in the **iris**
@@ -124,22 +127,36 @@ function to parse and expand the given column names into one or more
 boxhead panels with spanner headings and column headings.
 
 ``` r
+
+# 1 - we take the `datasets::iris` data.frame and move `Species` to front during ingest
+# 2 - the 'striped' theme is applied
+# 3 - we are taking the column naming format `[heading].[caption]` and
+#     automatically creating spanner headings to add structure
+# 4 - all column values are center aligned
+# 5 - we are formatting numbers in the named columns to have 1 decimal place
+# 6 - a heading is added
+# 7 - a source note is added
 iris_tbl <-
-  gt(tbl = iris[1:6, ]) %>%
-  apply_theme_striped() %>%
-  apply_spanner_headings() %>%
-  apply_alignment_center() %>%
+  gt(tbl = iris %>%
+       dplyr::select(Species, everything())) %>%  # 1
+  apply_theme_striped() %>%  # 2
+  apply_spanner_headings() %>%  # 3
+  apply_alignment_center() %>%  # 4
+  format_as_number(
+    columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    decimals = 1) %>%  # 5
   add_heading(
-    title = "Excerpt from the `iris` dataset",
-    headnote = "[Findings on Iris germanica]") %>%
+    title = "The `iris` dataset",
+    headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]",
+    table_number = 1) %>%  # 6
   add_source_note(
-    source_note = "Fisher, R. A. (1936).",
-    lead_in = "Source: ")
+    source_note = "Anderson, Edgar (1935).",
+    lead_in = "The data were collected by ")  # 7
 ```
 
-This is how the table appears after using `render_table()`:
+This is how the table appears:
 
-<img src="man/figures/iris_render_table.png">
+<img src="man/figures/iris.png">
 
 ## Code of Conduct
 
