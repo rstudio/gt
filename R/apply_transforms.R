@@ -290,3 +290,58 @@ reorder_columns <- function(html_tbl,
 
   html_tbl
 }
+
+
+#' Apply uncertainty values to a column of data
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
+#' @param value_column the column containing the
+#' values where uncertainties should be applied.
+#' @param uncert_column the column containing
+#' uncertainties related to quantities in
+#' \code{value column}.
+#' @return an object of class \code{html_table}.
+#' @importFrom tibble add_row
+#' @export
+add_uncertainty <- function(html_tbl,
+                            value_column,
+                            uncert_column) {
+
+  # If the column given in `value_column` does
+  # not exist in the table, return input object
+  # with a message
+  if (!(value_column[1] %in% colnames(html_tbl[["modified_tbl"]]))) {
+
+    message("The column supplied in `value_column` does not exist in the table.")
+    return(html_tbl)
+  }
+
+  # If the column given in `uncert_column` does
+  # not exist in the table, return input object
+  # with a message
+  if (!(uncert_column[1] %in% colnames(html_tbl[["modified_tbl"]]))) {
+
+    message("The column supplied in `uncert_column` does not exist in the table.")
+    return(html_tbl)
+  }
+
+  # Obtain the next index value for the
+  # `transforms` table
+  index <- get_next_index(tbl = html_tbl[["transforms"]])
+
+  # Add to `transforms` tbl
+  html_tbl[["transforms"]] <-
+    html_tbl[["transforms"]] %>%
+    tibble::add_row(
+      index = index %>% as.integer(),
+      transform_type = "add_uncertainty",
+      transform_v1 = value_column,
+      transform_v2 = uncert_column)
+
+  # Perform all `source_tbl` transform steps
+  html_tbl <-
+    all_tbl_transform_steps(
+      html_tbl = html_tbl)
+
+  html_tbl
+}
