@@ -31,14 +31,19 @@ print.html_table <- function(x, ..., view = interactive()) {
       html_tbl = x[["html_table"]],
       content_tbl = x[["content_tbl"]])
 
-  # [6] Apply HTML aesthetics
+  # [6] Merge columns
+  x <-
+    merge_columns(
+      html_tbl = x)
+
+  # [7] Apply HTML aesthetics
   x <-
     use_html_aesthetics(
       html_tbl = x,
       aesthetics_tbl = x[["aesthetics"]])
 
-  # [7] Generatation of table HTML
-  html_output <- gt:::create_html(html_tbl = x)
+  # [8] Generation of table HTML
+  html_output <- create_html(html_tbl = x)
 
   # Use `print()` to print to the console
   print(html_output, browse = view, ...)
