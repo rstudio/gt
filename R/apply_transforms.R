@@ -138,55 +138,6 @@ move_columns_to_end <- function(html_tbl,
 #' Move one or more columns to the end
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
-#' @param columns the column names to remove
-#' from the table. The order of the remaining
-#' columns will be preserved. Values provided
-#' that do not correspond to column names will
-#' be disregarded.
-#' @return an object of class \code{html_table}.
-#' @importFrom tibble add_row
-#' @export
-remove_columns <- function(html_tbl,
-                           columns) {
-
-  # If none of the columns given in `columns` are
-  # in the table, then don't add an entry to the
-  # `transforms` table
-  if (all(!(columns %in% colnames(html_tbl[["modified_tbl"]])))) {
-
-    message("All columns supplied in `columns` are not in the table.")
-    return(html_tbl)
-  }
-
-  # Obtain the next index value for the
-  # `transforms` table
-  index <- get_next_index(tbl = html_tbl[["transforms"]])
-
-  # Collapse the vector of column names as a
-  # string with names separated by `::`
-  columns <- paste(columns, collapse = "::")
-
-  # Add to `transforms` tbl
-  html_tbl[["transforms"]] <-
-    html_tbl[["transforms"]] %>%
-    tibble::add_row(
-      index = index %>% as.integer(),
-      transform_type = "remove_columns",
-      transform_v1 = columns)
-
-
-  # Perform all `source_tbl` transform steps
-  html_tbl <-
-    all_tbl_transform_steps(
-      html_tbl = html_tbl)
-
-  html_tbl
-}
-
-
-#' Move one or more columns to the end
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
 #' @param columns the column names to move to
 #' as a group to a different position. The
 #' order of the remaining columns will be
@@ -282,6 +233,55 @@ reorder_columns <- function(html_tbl,
       index = index %>% as.integer(),
       transform_type = "reorder_columns",
       transform_v1 = columns)
+
+  # Perform all `source_tbl` transform steps
+  html_tbl <-
+    all_tbl_transform_steps(
+      html_tbl = html_tbl)
+
+  html_tbl
+}
+
+
+#' Move one or more columns to the end
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
+#' @param columns the column names to remove
+#' from the table. The order of the remaining
+#' columns will be preserved. Values provided
+#' that do not correspond to column names will
+#' be disregarded.
+#' @return an object of class \code{html_table}.
+#' @importFrom tibble add_row
+#' @export
+remove_columns <- function(html_tbl,
+                           columns) {
+
+  # If none of the columns given in `columns` are
+  # in the table, then don't add an entry to the
+  # `transforms` table
+  if (all(!(columns %in% colnames(html_tbl[["modified_tbl"]])))) {
+
+    message("All columns supplied in `columns` are not in the table.")
+    return(html_tbl)
+  }
+
+  # Obtain the next index value for the
+  # `transforms` table
+  index <- get_next_index(tbl = html_tbl[["transforms"]])
+
+  # Collapse the vector of column names as a
+  # string with names separated by `::`
+  columns <- paste(columns, collapse = "::")
+
+  # Add to `transforms` tbl
+  html_tbl[["transforms"]] <-
+    html_tbl[["transforms"]] %>%
+    tibble::add_row(
+      index = index %>% as.integer(),
+      transform_type = "remove_columns",
+      transform_v1 = columns)
+
 
   # Perform all `source_tbl` transform steps
   html_tbl <-
