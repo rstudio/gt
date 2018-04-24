@@ -119,6 +119,7 @@ gt <- function(tbl) {
       aesthetics = aesthetics,
       source_tbl = tbl,
       modified_tbl = NULL,
+      summary_tbl = NULL,
       content_tbl = NULL,
       heading = heading,
       footnote = footnote,
