@@ -360,6 +360,41 @@ tbl_transform_step <- function(tbl,
     return(tbl)
   }
 
+  # `create_summary_lines` table transform
+  if (transform_type == "create_summary_lines") {
+
+    groups <-
+      stringr::str_split(
+        transform_vars[1],
+        pattern = "::") %>%
+      unlist()
+
+
+    columns <-
+      stringr::str_split(
+        transform_vars[2],
+        pattern = "::") %>%
+      unlist()
+
+    fcn <- transform_vars[3]
+
+    summary_labels <-
+      stringr::str_split(
+        transform_vars[4],
+        pattern = "::") %>%
+      unlist()
+
+    tbl <-
+      transform_create_summary_lines(
+        tbl = tbl,
+        groups = groups,
+        columns = columns,
+        fcn = fcn,
+        summary_labels = summary_labels)
+
+    return(tbl)
+  }
+
   tbl
 }
 
