@@ -267,44 +267,55 @@ apply_theme_classical <- function(html_tbl) {
 #' use the naming convention of
 #' \code{[spanner_heading].[column_heading]},
 #' we can invoke \code{apply_spanner_headings()}
-#' to allow for parsing and expansion of column
-#' headings into one or more boxhead panels
-#' with spanner headings and column headings.
+#' with the \code{use_names} option set to
+#' \code{TRUE}. This allows for parsing and
+#' expansion of column headings into one or
+#' more boxhead panels with spanner headings
+#' and column headings.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
+#' @param use_names an options to use the the
+#' naming convention of \code{[spanner_heading].[column_heading]}
+#' to generate spanner headings that correctly
+#' enclose column headings.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr tibble
 #' @importFrom stringr str_detect str_replace
 #' @export
-apply_spanner_headings <- function(html_tbl) {
+apply_spanner_headings <- function(html_tbl,
+                                   use_names = FALSE) {
 
-  # Get column names and determine groupings
-  # via format of `[group].[column_name]`
-  group_cols <-
-    html_tbl[["source_tbl"]] %>%
-    colnames() %>%
-    stringr::str_detect(pattern = ".*?\\..*?") %>%
-    which()
+  if (use_names == TRUE) {
 
-  # Create `boxhead_panel_tbl` object
-  boxhead_panel_tbl <-
-    dplyr::tibble(
-      column_name = (html_tbl[["source_tbl"]] %>%
-                       colnames())[group_cols],
-      spanner_heading = (html_tbl[["source_tbl"]] %>%
-                           colnames())[group_cols] %>%
-        stringr::str_replace(
-          pattern = "(.*?)\\.(.*)",
-          replacement = "\\1"),
-      column_heading = (html_tbl[["source_tbl"]] %>%
-                          colnames())[group_cols] %>%
-        stringr::str_replace(
-          pattern = "(.*?)\\.(.*)",
-          replacement = "\\2"))
+    # Get column names and determine groupings
+    # via format of `[group].[column_name]`
+    group_cols <-
+      html_tbl[["source_tbl"]] %>%
+      colnames() %>%
+      stringr::str_detect(pattern = ".*?\\..*?") %>%
+      which()
 
-  # Replace `boxhead_panel` component with
-  # `boxhead_panel_tbl` table
-  html_tbl[["boxhead_panel"]] <- boxhead_panel_tbl
+    # Create `boxhead_panel_tbl` object
+    boxhead_panel_tbl <-
+      dplyr::tibble(
+        column_name = (html_tbl[["source_tbl"]] %>%
+                         colnames())[group_cols],
+        spanner_heading = (html_tbl[["source_tbl"]] %>%
+                             colnames())[group_cols] %>%
+          stringr::str_replace(
+            pattern = "(.*?)\\.(.*)",
+            replacement = "\\1"),
+        column_heading = (html_tbl[["source_tbl"]] %>%
+                            colnames())[group_cols] %>%
+          stringr::str_replace(
+            pattern = "(.*?)\\.(.*)",
+            replacement = "\\2"))
+
+
+    # Replace `boxhead_panel` component with
+    # `boxhead_panel_tbl` table
+    html_tbl[["boxhead_panel"]] <- boxhead_panel_tbl
+  }
 
   html_tbl
 }
