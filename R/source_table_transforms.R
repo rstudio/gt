@@ -256,7 +256,8 @@ tbl_transform_step <- function(tbl,
   transform_vars <-
     c(transforms$transform_v1[index],
       transforms$transform_v2[index],
-      transforms$transform_v3[index])
+      transforms$transform_v3[index],
+      transforms$transform_v4[index])
 
   # Detect and perform the correct table transform --------------------------
 
