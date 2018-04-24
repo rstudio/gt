@@ -57,8 +57,7 @@ add_column_style <- function(html_tbl,
     columns <-
       html_tbl[["html_table"]] %>%
       dplyr::pull(column) %>%
-      unique() %>%
-      base::setdiff(0L)
+      unique()
   }
 
   # If the values provided in columns are stings,
