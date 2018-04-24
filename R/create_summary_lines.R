@@ -7,10 +7,7 @@
 #' group per column.
 #' @param summary_labels the labels to use in the stub
 #' for the created summary rows.
-#' @importFrom dplyr group_by summarize_at arrange bind_cols bind_rows
-#' @importFrom dplyr tibble distinct mutate select row_number everything
-#' @importFrom dplyr rename case_when
-#' @importFrom rlang sym UQ
+#' @importFrom tibble add_row
 #' @export
 create_summary_lines <- function(html_tbl,
                                  groups = NULL,
@@ -18,63 +15,39 @@ create_summary_lines <- function(html_tbl,
                                  fcn,
                                  summary_labels) {
 
-  if (!is.null(groups)) {
-
-    summary_lines <-
-      html_tbl$modified_tbl %>%
-      dplyr::group_by(rlang::UQ(rlang::sym(groups))) %>%
-      dplyr::summarize_at(.vars = columns, .funs = fcn)
-
-    # Arrange data such that the grouped data
-    # is contigious
-    html_tbl$modified_tbl <-
-      html_tbl$modified_tbl %>%
-      dplyr::arrange(rlang::UQ(rlang::sym(groups)))
-
-  } else {
-
-    summary_lines <-
-      html_tbl$modified_tbl %>%
-      dplyr::group_by() %>%
-      dplyr::summarize_at(.vars = columns, .funs = fcn)
+  # Assign NA to `groups` if values are
+  # not provided
+  if (is.null(groups)) {
+    groups <- NA_character_
   }
 
-  summary_lines <-
-    dplyr::bind_cols(
-      dplyr::tibble(
-        `::groups::` = rep(paste(groups, collapse = "::"), nrow(summary_lines)),
-        `::summary_label::` = summary_labels),
-      summary_lines)
+  # Collapse the vector of column names as a
+  # string with names separated by `::`
+  columns <- paste(columns, collapse = "::")
 
-  if (is.null(html_tbl$summary_tbl)) {
-    html_tbl$summary_tbl <- summary_lines
-  } else {
-    html_tbl$summary_tbl <-
-      dplyr::bind_rows(
-        html_tbl$summary_tbl,
-        summary_lines)
-  }
+  # Collapse the vector of `summary_labels` as a
+  # string with labels separated by `::`
+  summary_labels <- paste(summary_labels, collapse = "::")
 
-  # Use `distinct()` on `html_tbl$summary_tbl` to
-  # ensure that there are no exact duplicate rows
-  html_tbl$summary_tbl <-
-    html_tbl$summary_tbl %>%
-    dplyr::distinct() %>%
-    dplyr::mutate(index = row_number() + 10000) %>%
-    dplyr::select(index, everything())
+  # Obtain the next index value for the
+  # `transforms` table
+  index <- get_next_index(tbl = html_tbl[["transforms"]])
 
-  html_tbl$modified_tbl <-
-    bind_rows(
-      html_tbl$summary_tbl,
-      html_tbl$modified_tbl %>%
-        dplyr::mutate(index = row_number()) %>%
-        dplyr::select(index, everything())) %>%
-    dplyr::arrange(rlang::UQ(rlang::sym(groups)), index) %>%
-    dplyr::select(-`::groups::`, -index) %>%
-    dplyr::rename(rowname = `::summary_label::`) %>%
-    dplyr::mutate(rowname = case_when(
-      is.na(rowname) ~ "",
-      !is.na(rowname) ~ rowname))
+  # Add to `transforms` tbl
+  html_tbl[["transforms"]] <-
+    html_tbl[["transforms"]] %>%
+    tibble::add_row(
+      index = index %>% as.integer(),
+      transform_type = "create_summary_lines",
+      transform_v1 = groups,
+      transform_v2 = columns,
+      transform_v3 = fcn,
+      transform_v4 = summary_labels)
+
+  # Perform all `source_tbl` transform steps
+  html_tbl <-
+    all_tbl_transform_steps(
+      html_tbl = html_tbl)
 
   html_tbl
 }
