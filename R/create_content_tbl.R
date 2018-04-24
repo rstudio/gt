@@ -36,6 +36,7 @@ create_content_tbl <- function(tbl) {
         dplyr::mutate(
           row = row_series,
           col = column_series[i],
+          row_type = "data",
           column_name = tbl_colnames[i],
           column_type = tbl_coltypes[i])
 
@@ -50,6 +51,7 @@ create_content_tbl <- function(tbl) {
         dplyr::mutate(
           row = row_series,
           col = column_series[i],
+          row_type = "data",
           column_name = tbl_colnames[i],
           column_type = tbl_coltypes[i])
 
