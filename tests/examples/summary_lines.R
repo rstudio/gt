@@ -30,7 +30,29 @@ summary_tbl <-
   format_as_number(
     columns = c("value_1", "value_2"),
     decimals = 1) %>%
-  add_stubhead_caption(caption = "statistic")
+  add_stubhead_caption(caption = "statistic") %>%
+  apply_font(font = "Helvetica")
 
 # Display the table in the Viewer
 summary_tbl
+
+html_tbl <-
+  gt(tbl = mtcars) %>%
+  apply_theme_striped() %>%
+  create_summary_lines(
+    groups = "cyl",
+    columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
+    fcn = "mean",
+    summary_labels = "MEAN") %>%
+  apply_alignment_right(types = "numeric") %>%
+  format_as_number(
+    columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
+    decimals = 1) %>%
+  remove_columns(columns = c("vs", "am", "gear", "carb")) %>%
+  apply_font(font = "Courier")
+
+html_tbl
+
+
+
+
