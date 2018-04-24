@@ -1,4 +1,3 @@
-
 #' Add a stub to a table
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
@@ -34,7 +33,6 @@ add_stub <- function(html_tbl,
 
   html_tbl
 }
-
 
 #' Move one or more columns to the start
 #' @param html_tbl an HTML table object that
@@ -134,7 +132,6 @@ move_columns_to_end <- function(html_tbl,
   html_tbl
 }
 
-
 #' Move one or more columns to the end
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
@@ -193,7 +190,6 @@ move_columns <- function(html_tbl,
   html_tbl
 }
 
-
 #' Reorder all columns
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
@@ -242,7 +238,6 @@ reorder_columns <- function(html_tbl,
   html_tbl
 }
 
-
 #' Move one or more columns to the end
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
@@ -282,7 +277,6 @@ remove_columns <- function(html_tbl,
       transform_type = "remove_columns",
       transform_v1 = columns)
 
-
   # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
@@ -290,7 +284,6 @@ remove_columns <- function(html_tbl,
 
   html_tbl
 }
-
 
 #' Apply uncertainty values to a column of data
 #' @param html_tbl an HTML table object that
