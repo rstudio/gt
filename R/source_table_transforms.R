@@ -131,6 +131,113 @@ transform_reorder_columns <- function(tbl,
   tbl %>% dplyr::select(columns)
 }
 
+#' Transform by creating summary lines
+#' @param tbl an internal data table.
+#' @param groups the groups to use when summarizing.
+#' @param columns the columns to summarize.
+#' @param fcn the name of a function to apply per
+#' group per column.
+#' @param summary_labels the labels to use in
+#' the stub for the created summary rows.
+#' @importFrom dplyr group_by summarize_at arrange bind_cols bind_rows
+#' @importFrom dplyr tibble distinct mutate select row_number everything
+#' @importFrom dplyr rename case_when
+#' @importFrom rlang sym UQ
+#' @noRd
+transform_create_summary_lines <- function(tbl,
+                                           groups,
+                                           columns,
+                                           fcn,
+                                           summary_labels) {
+
+  if (!is.na(groups)) {
+
+    # If groups are provided then group by
+    # those columns
+    summary_lines <-
+      tbl %>%
+      dplyr::group_by(rlang::UQ(rlang::sym(groups))) %>%
+      dplyr::summarize_at(.vars = columns, .funs = fcn)
+
+    # Arrange data such that the grouped data
+    # is contigious
+    tbl <-
+      tbl %>%
+      dplyr::arrange(rlang::UQ(rlang::sym(groups)))
+
+  } else {
+
+    # If groups are not provided then all rows are
+    # to be considered as a single group
+    summary_lines <-
+      tbl %>%
+      dplyr::group_by() %>%
+      dplyr::summarize_at(.vars = columns, .funs = fcn)
+  }
+
+  # Create a table of summary lines; one line per group
+  summary_lines <-
+    dplyr::bind_cols(
+      dplyr::tibble(
+        `::groups::` = rep(paste(groups, collapse = "::"), nrow(summary_lines)),
+        `::summary_label::` = summary_labels),
+      summary_lines)
+
+  # Use `distinct()` on `summary_lines` to
+  # ensure that there are no exact duplicate rows;
+  # add an index column that ensures that the summary
+  # lines retain their ordering and also appear last
+  # when combined with their groups of source data
+  summary_lines <-
+    summary_lines %>%
+    dplyr::distinct() %>%
+    dplyr::mutate(index = row_number() + 10000) %>%
+    dplyr::select(index, everything())
+
+  # Combine the summary lines with the source
+  # data using `bind_rows()`; arrange by groups and
+  # by line index
+  tbl <-
+    dplyr::bind_rows(
+      summary_lines,
+      tbl %>%
+        dplyr::mutate(index = row_number()) %>%
+        dplyr::select(index, everything())) %>%
+    dplyr::arrange(rlang::UQ(rlang::sym(groups)), index) %>%
+    dplyr::select(-`::groups::`, -index)
+
+  if ("rowname" %in% colnames(tbl)) {
+
+    # The rowname column extant in `tbl` indicates the
+    # presence of a stub; this statement coalesces the
+    # summary label with the row labels (or row captions)
+    tbl <-
+      tbl %>%
+      dplyr::select(rowname, everything()) %>%
+      dplyr::mutate(rowname = case_when(
+        !is.na(`::summary_label::`) ~ `::summary_label::`,
+        is.na(`::summary_label::`) ~ rowname)) %>%
+      dplyr::select(-`::summary_label::`)
+
+  } else {
+
+    # This case is for the situation where no stub
+    # exists in the table; no coalescing is required,
+    # we simply make the summary label column the
+    # `rowname` column and use empty strings in place
+    # of the NAs
+    tbl <-
+      tbl %>%
+      dplyr::rename(rowname = `::summary_label::`) %>%
+      dplyr::mutate(rowname = case_when(
+        is.na(rowname) ~ "",
+        !is.na(rowname) ~ rowname))
+  }
+
+  tbl
+}
+
+
 #' Process an internal table with a single
 #' transform directive given in the internal
 #' \code{transforms} table.
