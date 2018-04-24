@@ -9,7 +9,8 @@ empty_transforms_tbl <- function() {
     transform_type = NA_character_,
     transform_v1 = NA_character_,
     transform_v2 = NA_character_,
-    transform_v3 = NA_character_)[-1, ]
+    transform_v3 = NA_character_,
+    transform_v4 = NA_character_)[-1, ]
 }
 
 #' Create an empty `formats` tbl
