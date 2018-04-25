@@ -1,29 +1,33 @@
 #' Create lines with summarized data
 #' @param html_tbl an HTML table object that
 #' is created using the \code{gt()} function.
-#' @param groups the groups to use when summarizing.
+#' @param group the group to use when summarizing.
 #' @param columns the columns to summarize.
-#' @param fcn the name of a function to apply per
+#' @param fcns the names of functions to apply per
 #' group per column.
 #' @param summary_labels the labels to use in the stub
 #' for the created summary rows.
 #' @importFrom tibble add_row
 #' @export
 create_summary_lines <- function(html_tbl,
-                                 groups = NULL,
+                                 group = NULL,
                                  columns,
-                                 fcn,
+                                 fcns,
                                  summary_labels) {
 
-  # Assign NA to `groups` if values are
+  # Assign NA to `group` if values are
   # not provided
-  if (is.null(groups)) {
-    groups <- NA_character_
+  if (is.null(group)) {
+    group <- NA_character_
   }
 
   # Collapse the vector of column names as a
   # string with names separated by `::`
   columns <- paste(columns, collapse = "::")
+
+  # Collapse the vector of `fcns` as a
+  # string with labels separated by `::`
+  fcns <- paste(fcns, collapse = "::")
 
   # Collapse the vector of `summary_labels` as a
   # string with labels separated by `::`
@@ -39,9 +43,9 @@ create_summary_lines <- function(html_tbl,
     tibble::add_row(
       index = index %>% as.integer(),
       transform_type = "create_summary_lines",
-      transform_v1 = groups,
+      transform_v1 = group,
       transform_v2 = columns,
-      transform_v3 = fcn,
+      transform_v3 = fcns,
       transform_v4 = summary_labels)
 
   # Perform all `source_tbl` transform steps
