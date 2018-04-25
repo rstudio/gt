@@ -145,41 +145,41 @@ transform_reorder_columns <- function(tbl,
 #' @importFrom rlang sym UQ
 #' @noRd
 transform_create_summary_lines <- function(tbl,
-                                           groups,
+                                           group,
                                            columns,
-                                           fcn,
+                                           fcns,
                                            summary_labels) {
 
-  if (!is.na(groups)) {
+  if (!is.na(group)) {
 
-    # If groups are provided then group by
-    # those columns
+    # If a grouping column is provided then
+    # group by that column
     summary_lines <-
       tbl %>%
-      dplyr::group_by(rlang::UQ(rlang::sym(groups))) %>%
-      dplyr::summarize_at(.vars = columns, .funs = fcn)
+      dplyr::group_by(rlang::UQ(rlang::sym(group))) %>%
+      dplyr::summarize_at(.vars = columns, .funs = fcns)
 
     # Arrange data such that the grouped data
     # is contigious
     tbl <-
       tbl %>%
-      dplyr::arrange(rlang::UQ(rlang::sym(groups)))
+      dplyr::arrange(rlang::UQ(rlang::sym(group)))
 
   } else {
 
-    # If groups are not provided then all rows are
+    # If a group column is not provided then all rows are
     # to be considered as a single group
     summary_lines <-
       tbl %>%
       dplyr::group_by() %>%
-      dplyr::summarize_at(.vars = columns, .funs = fcn)
+      dplyr::summarize_at(.vars = columns, .funs = fcns)
   }
 
   # Create a table of summary lines; one line per group
   summary_lines <-
     dplyr::bind_cols(
       dplyr::tibble(
-        `::groups::` = rep(paste(groups, collapse = "::"), nrow(summary_lines)),
+        `::group::` = rep(paste(group, collapse = "::"), nrow(summary_lines)),
         `::summary_label::` = summary_labels),
       summary_lines)
 
@@ -203,8 +203,8 @@ transform_create_summary_lines <- function(tbl,
       tbl %>%
         dplyr::mutate(index = row_number()) %>%
         dplyr::select(index, everything())) %>%
-    dplyr::arrange(rlang::UQ(rlang::sym(groups)), index) %>%
-    dplyr::select(-`::groups::`, -index)
+    dplyr::arrange(rlang::UQ(rlang::sym(group)), index) %>%
+    dplyr::select(-`::group::`, -index)
 
   if ("rowname" %in% colnames(tbl)) {
 
@@ -363,20 +363,20 @@ tbl_transform_step <- function(tbl,
   # `create_summary_lines` table transform
   if (transform_type == "create_summary_lines") {
 
-    groups <-
+    group <-
       stringr::str_split(
         transform_vars[1],
         pattern = "::") %>%
       unlist()
 
 
-    columns <-
+    columns <- transform_vars[2]
+
+    fcns <-
       stringr::str_split(
-        transform_vars[2],
+        transform_vars[3],
         pattern = "::") %>%
       unlist()
-
-    fcn <- transform_vars[3]
 
     summary_labels <-
       stringr::str_split(
@@ -387,9 +387,9 @@ tbl_transform_step <- function(tbl,
     tbl <-
       transform_create_summary_lines(
         tbl = tbl,
-        groups = groups,
+        group = group,
         columns = columns,
-        fcn = fcn,
+        fcns = fcns,
         summary_labels = summary_labels)
 
     return(tbl)
