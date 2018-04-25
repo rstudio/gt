@@ -4,17 +4,17 @@
 \alias{create_summary_lines}
 \title{Create lines with summarized data}
 \usage{
-create_summary_lines(html_tbl, groups = NULL, columns, fcn, summary_labels)
+create_summary_lines(html_tbl, group = NULL, columns, fcns, summary_labels)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that
 is created using the \code{gt()} function.}
 
-\item{groups}{the groups to use when summarizing.}
+\item{group}{the group to use when summarizing.}
 
 \item{columns}{the columns to summarize.}
 
-\item{fcn}{the name of a function to apply per
+\item{fcns}{the names of functions to apply per
 group per column.}
 
 \item{summary_labels}{the labels to use in the stub
