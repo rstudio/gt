@@ -62,12 +62,20 @@ gt <- function(tbl) {
     dplyr::select_if(
       .predicate = function(x) class(x) != "list")
 
-  # Determine if the `rowgroup` column is available in `tbl`
-  if ("rowgroup" %in% colnames(tbl)) {
-    tbl <- tbl %>% dplyr::select(rowgroup, everything())
-    rowgroup_available <- TRUE
-  } else {
-    rowgroup_available <- FALSE
+  # If the column `rowname` is available in `tbl`,
+  # ensure it is placed at the start of the column series
+  if ("rowname" %in% colnames(tbl)) {
+    tbl <-
+      tbl %>%
+      dplyr::select(rowname, everything())
+  }
+
+  # If the column `groupname` is available in `tbl`,
+  # ensure it is placed at the start of the column series
+  if ("groupname" %in% colnames(tbl)) {
+    tbl <-
+      tbl %>%
+      dplyr::select(groupname, everything())
   }
 
   # The <head>, <thead>, and <tbody> elements -------------------------------
