@@ -363,14 +363,13 @@ tbl_transform_step <- function(tbl,
   # `create_summary_lines` table transform
   if (transform_type == "create_summary_lines") {
 
-    group <-
+    group <- transform_vars[1]
+
+    columns <-
       stringr::str_split(
-        transform_vars[1],
-        pattern = "::") %>%
+      transform_vars[2],
+      pattern = "::") %>%
       unlist()
-
-
-    columns <- transform_vars[2]
 
     fcns <-
       stringr::str_split(
