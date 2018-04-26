@@ -445,8 +445,10 @@ all_tbl_transform_steps <- function(html_tbl) {
 #' table representation suitable for supporting
 #' cell-specific metadata
 #' @param tbl an internal data table.
-#' @importFrom dplyr select everything tibble mutate
-#' @importFrom dplyr arrange inner_join bind_rows
+#' @importFrom dplyr select everything mutate tibble as_tibble
+#' @importFrom dplyr rename_at arrange inner_join bind_rows pull
+#' @importFrom dplyr group_by summarize distinct full_join
+#' @importFrom tibble rownames_to_column
 #' @importFrom purrr map_chr map_df
 #' @noRd
 create_html_table_tbl <- function(tbl) {
