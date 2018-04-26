@@ -451,17 +451,37 @@ all_tbl_transform_steps <- function(html_tbl) {
 #' @noRd
 create_html_table_tbl <- function(tbl) {
 
-  # Reorder `rowgroup` and `rowname` columns
+  # Determine if the `rowname` column is available
   if ("rowname" %in% colnames(tbl)) {
-    tbl <- tbl %>% dplyr::select(rowname, everything())
+
+    tbl <-
+      tbl %>%
+      dplyr::select(rowname, everything())
+
     rowname_available <- TRUE
+
   } else {
+
     rowname_available <- FALSE
+  }
+
+  # Determine if the `groupname` column is available
+  if ("groupname" %in% colnames(tbl)) {
+
+    tbl <-
+      tbl %>%
+      dplyr::select(groupname, everything())
+
+    groupname_available <- TRUE
+
+  } else {
+
+    groupname_available <- FALSE
   }
 
   # Get the column names for the data columns
   data_col_names <-
-    colnames(tbl) %>% base::setdiff(c("rowname", "rowgroup"))
+    colnames(tbl) %>% base::setdiff(c("rowname", "groupname"))
 
   # Get the column indices for the data columns
   data_col_indices <-
@@ -520,8 +540,8 @@ create_html_table_tbl <- function(tbl) {
         t_subpart = "row_caption",
         content = tbl %>% dplyr::pull(rowname),
         type = "character",
-        row = 1:nrow(tbl),
-        column = 0L,
+        row = as.numeric(1:nrow(tbl)),
+        column = 0.,
         column_name = NA_character_)
 
     table_stubhead <-
@@ -530,12 +550,55 @@ create_html_table_tbl <- function(tbl) {
         t_subpart = "stubhead",
         content = "",
         type = "character",
-        row = 0L,
-        column = 0L,
+        row = 0.,
+        column = 0.,
         column_name = NA_character_)
 
     table_stub <-
       dplyr::bind_rows(table_stubhead, table_stub)
+  }
+
+  if (rowname_available & groupname_available) {
+
+    group_headings_and_rows <-
+      tbl %>%
+      dplyr::select(groupname) %>%
+      tibble::rownames_to_column() %>%
+      dplyr::mutate(rowname = as.numeric(rowname)) %>%
+      dplyr::group_by(groupname) %>%
+      dplyr::summarize(
+        row = min(rowname) - 0.05)
+
+    table_stub_group_headings <-
+      dplyr::tibble(
+        t_part = "stub",
+        t_subpart = "group_heading",
+        content = group_headings_and_rows %>% dplyr::pull(groupname),
+        type = "character",
+        row = group_headings_and_rows %>% dplyr::pull(row),
+        column = 0.,
+        column_name = NA_character_)
+
+    # Bind `table_stub_group_headings` with `table_stub`
+    table_stub <-
+      dplyr::bind_rows(table_stub, table_stub_group_headings) %>%
+      dplyr::arrange(row, column)
+
+    # Create blank cells for rows with group headings
+    blank_field_cells <-
+      table_body %>%
+      mutate(content = "") %>%
+      select(-row) %>% distinct() %>% mutate(k = 1) %>%
+      full_join(
+        group_headings_and_rows %>%
+          select(row) %>% mutate(k = 1),
+        by = "k") %>%
+      select(-k)
+
+    # Bind `blank_field_cells` with `table_body`
+    table_body <-
+      dplyr::bind_rows(blank_field_cells, table_body) %>%
+      dplyr::arrange(row, column)
   }
 
   # Bind rows from `table_boxhead` and `table_body`
@@ -552,6 +615,7 @@ create_html_table_tbl <- function(tbl) {
       dplyr::bind_rows(table_stub) %>%
       dplyr::arrange(row, column)
   }
+
 
   # Reorder the table columns
   html_table <-
