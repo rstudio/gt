@@ -589,13 +589,15 @@ create_html_table_tbl <- function(tbl) {
     # Create blank cells for rows with group headings
     blank_field_cells <-
       table_body %>%
-      mutate(content = "") %>%
-      select(-row) %>% distinct() %>% mutate(k = 1) %>%
-      full_join(
+      dplyr::mutate(content = "") %>%
+      dplyr::select(-row) %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(k = 1) %>%
+      dplyr::full_join(
         group_headings_and_rows %>%
-          select(row) %>% mutate(k = 1),
+          dplyr::select(row) %>% dplyr::mutate(k = 1),
         by = "k") %>%
-      select(-k)
+      dplyr::select(-k)
 
     # Bind `blank_field_cells` with `table_body`
     table_body <-
