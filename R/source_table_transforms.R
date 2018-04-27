@@ -544,7 +544,11 @@ create_html_table_tbl <- function(tbl) {
         type = "character",
         row = as.numeric(1:nrow(tbl)),
         column = 0.,
-        column_name = NA_character_)
+        column_name = NA_character_) %>%
+      dplyr::mutate(t_subpart = ifelse(
+        grepl("^~", content), "summary_caption", "row_caption")) %>%
+      dplyr::mutate(content = ifelse(
+        grepl("^~", content), gsub("^~", "", content), content))
 
     table_stubhead <-
       dplyr::tibble(
