@@ -31,7 +31,7 @@ create_summary_lines <- function(html_tbl,
 
   # Collapse the vector of `summary_labels` as a
   # string with labels separated by `::`
-  summary_labels <- paste(summary_labels, collapse = "::")
+  summary_labels <- paste(paste0("~", summary_labels), collapse = "::")
 
   # Obtain the next index value for the
   # `transforms` table
