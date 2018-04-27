@@ -529,7 +529,7 @@ create_html_table_tbl <- function(tbl) {
       table_boxhead %>% dplyr::select(column, column_name),
       by = "column") %>%
     dplyr::mutate(t_part = "field") %>%
-    dplyr::mutate(t_subpart = NA_character_) %>%
+    dplyr::mutate(t_subpart = "data") %>%
     dplyr::select(t_part, t_subpart, everything())
 
   # Create a tibble that contains basic metadata
