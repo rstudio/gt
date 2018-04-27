@@ -217,7 +217,12 @@ transform_create_summary_lines <- function(tbl,
       dplyr::mutate(rowname = case_when(
         !is.na(`::summary_label::`) ~ `::summary_label::`,
         is.na(`::summary_label::`) ~ rowname)) %>%
-      dplyr::select(-`::summary_label::`)
+      dplyr::select(-`::summary_label::`) %>%
+      dplyr::select(rlang::UQ(rlang::sym(group)), everything()) %>%
+      dplyr::rename(groupname = rlang::UQ(rlang::sym(group))) %>%
+      dplyr::mutate(groupname = paste0(
+        group, ": ", as.character(groupname)))
+
 
   } else {
 
