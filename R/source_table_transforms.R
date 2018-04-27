@@ -598,6 +598,7 @@ create_html_table_tbl <- function(tbl) {
     # Create blank cells for rows with group headings
     blank_field_cells <-
       table_body %>%
+      dplyr::mutate(t_subpart = "group_heading") %>%
       dplyr::mutate(content = "") %>%
       dplyr::select(-row) %>%
       dplyr::distinct() %>%
