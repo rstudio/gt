@@ -611,7 +611,7 @@ create_html_table_tbl <- function(tbl) {
 
     # Bind `blank_field_cells` with `table_body`
     table_body <-
-      dplyr::bind_rows(blank_field_cells, table_body) %>%
+      dplyr::bind_rows(table_stub, blank_field_cells, table_body) %>%
       dplyr::arrange(row, column)
   }
 
@@ -619,17 +619,8 @@ create_html_table_tbl <- function(tbl) {
   html_table <-
     dplyr::bind_rows(
       table_boxhead,
-      table_body)
-
-  # Bind the `table_stub` tbl if one is available
-  if (exists("table_stub")) {
-
-    html_table <-
-      html_table %>%
-      dplyr::bind_rows(table_stub) %>%
-      dplyr::arrange(row, column)
-  }
-
+      table_body) %>%
+    dplyr::arrange(row, column)
 
   # Reorder the table columns
   html_table <-
