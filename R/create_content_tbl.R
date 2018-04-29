@@ -333,7 +333,7 @@ process_content_tbl <- function(tbl) {
           paste0(
             "(",
             gsub(
-              pattern = "&minus;",
+              pattern = "&minus;|-",
               replacement = "",
               content_tbl[i, ]$content_formatted),
             ")")
