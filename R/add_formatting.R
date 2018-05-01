@@ -243,7 +243,8 @@ tbl_format_step <- function(tbl,
 
 
 #' Perform all tbl format steps
-#' @param html_tbl an html table object
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
 #' @importFrom dplyr pull as_tibble
 #' @importFrom purrr map
 #' @noRd

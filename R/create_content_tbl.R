@@ -1,36 +1,36 @@
 #' Create a rowwise table that's is used for
 #' application of scaling factors and string/
 #' number formatting for cell content
-#' @param tbl the internal table called
-#' \code{modified_tbl}.
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
 #' @importFrom purrr map_chr
 #' @importFrom dplyr tibble pull mutate bind_rows arrange
 #' @noRd
-create_content_tbl <- function(tbl) {
+create_content_tbl <- function(html_tbl) {
 
   # Get the row series from `tbl`
-  row_series <- seq(nrow(tbl))
+  row_series <- seq(nrow(html_tbl[["modified_tbl"]]))
 
   # Get the column series from `tbl`
-  column_series <- seq(ncol(tbl))
+  column_series <- seq(ncol(html_tbl[["modified_tbl"]]))
 
   # Get the column names in `tbl`
-  tbl_colnames <- colnames(tbl)
+  tbl_colnames <- colnames(html_tbl[["modified_tbl"]])
 
   # Get the column types in `tbl`
   tbl_coltypes <-
-    seq(ncol(tbl)) %>%
+    seq(ncol(html_tbl[["modified_tbl"]])) %>%
     purrr::map_chr(
-      .f = function(x) tbl[[x]] %>% class())
+      .f = function(x) html_tbl[["modified_tbl"]][[x]] %>% class())
 
   # Get a tibble with rowwise content
-  for (i in seq(ncol(tbl))) {
+  for (i in seq(ncol(html_tbl[["modified_tbl"]]))) {
 
     if (i == 1) {
 
       content_tbl <-
         dplyr::tibble(
-          content = tbl[, i] %>%
+          content = html_tbl[["modified_tbl"]][, i] %>%
             dplyr::pull() %>%
             as.character()) %>%
         dplyr::mutate(
@@ -45,7 +45,7 @@ create_content_tbl <- function(tbl) {
 
       content_tbl_set <-
         dplyr::tibble(
-          content = tbl[, i] %>%
+          content = html_tbl[["modified_tbl"]][, i] %>%
             dplyr::pull() %>%
             as.character()) %>%
         dplyr::mutate(
@@ -82,22 +82,23 @@ create_content_tbl <- function(tbl) {
       append = NA_character_) %>%
     dplyr::arrange(row, col)
 
-  content_tbl
+  html_tbl[["content_tbl"]] <- content_tbl
+  html_tbl
 }
 
 #' Process the rowwise internal table called
 #' \code{content_tbl}.
-#' @param tbl the internal table called
-#' \code{content_tbl}.
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
 #' @importFrom dplyr mutate
 #' @importFrom stringr str_split str_detect
 #' @importFrom purrr map_df
 #' @noRd
-process_content_tbl <- function(tbl) {
+process_content_tbl <- function(html_tbl) {
 
   # Initialize the `content_1` column
   content_tbl <-
-    tbl %>%
+    html_tbl[["content_tbl"]] %>%
     dplyr::mutate(content_1 = content)
 
   # Initialize the `content_formatted` column
@@ -348,5 +349,57 @@ process_content_tbl <- function(tbl) {
       replacement = "&minus;",
       x = content_tbl$content_formatted)
 
-  content_tbl
+  # Replace NA values if the option is
+  # taken to do so
+  if ("replace_missing_values" %in% html_tbl[["aesthetics"]]$type) {
+
+    replace_directives <-
+      html_tbl[["aesthetics"]] %>%
+      dplyr::filter(type == "replace_missing_values")
+
+
+    replace_values_in_content_tbl <- function(content_tbl,
+                                              replace_directives) {
+
+      columns <- replace_directives$columns
+      types <- replace_directives$types
+      replacement <- replace_directives$replacement
+
+      for (i in seq(nrow(replace_directives))) {
+
+        if (is.na(columns) & is.na(types)) {
+
+          content_tbl <-
+            content_tbl %>%
+            dplyr::mutate(content_formatted = ifelse(
+              is.na(content), replacement[i], content_formatted))
+
+        } else if (!is.na(column)) {
+
+          content_tbl <-
+            content_tbl %>%
+            dplyr::mutate(content_formatted = case_when(
+              column_name %in% columns[i] & is.na(content) ~ replacement[i],
+              TRUE ~ content_formatted))
+
+        } else if (!is.na(types)) {
+          content_tbl <-
+            content_tbl %>%
+            dplyr::mutate(content_formatted = case_when(
+              column_type %in% types[i] & is.na(content) ~ replacement[i],
+              TRUE ~ content_formatted))
+        }
+      }
+
+      content_tbl
+    }
+
+    content_tbl <-
+      replace_values_in_content_tbl(
+        content_tbl = content_tbl,
+        replace_directives = replace_directives)
+  }
+
+  html_tbl[["content_tbl"]] <- content_tbl
+  html_tbl
 }
