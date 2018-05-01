@@ -408,7 +408,8 @@ tbl_transform_step <- function(tbl,
 }
 
 #' Perform all tbl transform steps
-#' @param html_tbl an html table object
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
 #' @importFrom dplyr pull as_tibble
 #' @importFrom purrr map
 #' @noRd
@@ -454,14 +455,17 @@ all_tbl_transform_steps <- function(html_tbl) {
 #' Transform a tibble of data to a row-wise
 #' table representation suitable for supporting
 #' cell-specific metadata
-#' @param tbl an internal data table.
+#' @param html_tbl an HTML table object that
+#' is created using the \code{gt()} function.
 #' @importFrom dplyr select everything mutate tibble as_tibble
 #' @importFrom dplyr rename_at arrange inner_join bind_rows pull
 #' @importFrom dplyr group_by summarize distinct full_join
 #' @importFrom tibble rownames_to_column
 #' @importFrom purrr map_chr map_df
 #' @noRd
-create_html_table_tbl <- function(tbl) {
+create_html_table_tbl <- function(html_tbl) {
+
+  tbl <- html_tbl[["modified_tbl"]]
 
   # Determine if the `rowname` column is available
   if ("rowname" %in% colnames(tbl)) {
@@ -633,6 +637,7 @@ create_html_table_tbl <- function(tbl) {
     dplyr::select(
       t_part, t_subpart, type, row, column, column_name, content)
 
-  html_table
+  html_tbl[["html_table"]] <- html_table
+  html_tbl
 }
 

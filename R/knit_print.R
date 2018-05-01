@@ -8,8 +8,8 @@
 knit_print.html_table <- function(x, ...) {
 
   # [1] Creation of the content table
-  x[["content_tbl"]] <-
-    create_content_tbl(tbl = x[["modified_tbl"]])
+  x <-
+    gt:::create_content_tbl(html_tbl = x)
 
   # [2] Modification of the content table
   x <-
@@ -17,20 +17,19 @@ knit_print.html_table <- function(x, ...) {
       html_tbl = x)
 
   # [3] Processing of the content table
-  x[["content_tbl"]] <-
+  x <-
     process_content_tbl(
-      tbl = x[["content_tbl"]])
+      html_tbl = x)
 
   # [4] Creation of the HTML table
-  x[["html_table"]] <-
+  x <-
     create_html_table_tbl(
-      tbl = x[["modified_tbl"]])
+      html_tbl = x)
 
   # [5] Join in formatted content
-  x[["html_table"]] <-
-    use_html_content(
-      html_tbl = x[["html_table"]],
-      content_tbl = x[["content_tbl"]])
+  x <-
+    gt:::use_html_content(
+      html_tbl = x)
 
   # [6] Merge columns
   x <-

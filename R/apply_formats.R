@@ -58,8 +58,6 @@ format_as_number <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Format values to scientific notation
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
@@ -114,8 +112,6 @@ format_as_scientific <- function(html_tbl,
 
   html_tbl
 }
-
-
 
 #' Format values as a percentage
 #' @param html_tbl an HTML table object that is
@@ -177,8 +173,6 @@ format_as_percentage <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Format values as a fraction
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
@@ -228,7 +222,6 @@ format_as_fraction <- function(html_tbl,
   html_tbl
 }
 
-
 #' Format values as dates
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
@@ -276,8 +269,6 @@ format_as_date <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Format values as times
 #' @param html_tbl an HTML table object that is
 #' created using the \code{gt()} function.
@@ -324,8 +315,6 @@ format_as_time <- function(html_tbl,
 
   html_tbl
 }
-
-
 
 #' Format values as date-times
 #' @param html_tbl an HTML table object that is
@@ -448,5 +437,3 @@ format_as_currency <- function(html_tbl,
 
   html_tbl
 }
-
-
