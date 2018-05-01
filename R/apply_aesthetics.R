@@ -319,3 +319,43 @@ apply_spanner_headings <- function(html_tbl,
 
   html_tbl
 }
+
+#' Replace missing values
+#'
+#' Replace any missing values in specified columns
+#' or columns of a given type.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the left alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the left alignment should be applied.
+#' @param replacement the value or string that
+#' should be used to replace the missing values.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr bind_rows tibble
+#' @export
+replace_missing_values <- function(html_tbl,
+                                   columns = NULL,
+                                   types = NULL,
+                                   replacement) {
+
+  if (is.null(columns)) {
+    columns <- NA_character_
+  }
+
+  if (is.null(types)) {
+    types <- NA_character_
+  }
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    dplyr::bind_rows(
+      dplyr::tibble(
+        type = "replace_missing_values",
+        columns = columns,
+        types = types,
+        replacement = replacement))
+
+  html_tbl
+}
