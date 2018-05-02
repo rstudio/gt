@@ -24,7 +24,7 @@ tbl_format_step <- function(tbl,
     columns <- formats[index_, ] %>% dplyr::pull(columns)
     decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
     drop_trailing_zeros <- formats[index_, ] %>% dplyr::pull(drop_trailing_zeros)
-    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    use_big_mark <- formats[index_, ] %>% dplyr::pull(use_big_mark)
     negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
 
 
@@ -44,7 +44,7 @@ tbl_format_step <- function(tbl,
           tbl[x, ]$drop0trailing <- drop_trailing_zeros
           tbl[x, ]$negative_style <- negative_style
 
-          if (thousands_sep) {
+          if (use_big_mark) {
             tbl[x, ]$big.mark <- ","
           }
         }
@@ -95,7 +95,7 @@ tbl_format_step <- function(tbl,
     columns <- formats[index_, ] %>% dplyr::pull(columns)
     decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
     drop_trailing_zeros <- formats[index_, ] %>% dplyr::pull(drop_trailing_zeros)
-    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    use_big_mark <- formats[index_, ] %>% dplyr::pull(use_big_mark)
     negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
 
 
@@ -117,7 +117,7 @@ tbl_format_step <- function(tbl,
           tbl[x, ]$negative_style <- negative_style
           tbl[x, ]$append <- "%"
 
-          if (thousands_sep) {
+          if (use_big_mark) {
             tbl[x, ]$big.mark <- ","
           }
         }
@@ -208,7 +208,7 @@ tbl_format_step <- function(tbl,
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
     decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
-    thousands_sep <- formats[index_, ] %>% dplyr::pull(thousands_sep)
+    use_big_mark <- formats[index_, ] %>% dplyr::pull(use_big_mark)
     negative_style <- formats[index_, ] %>% dplyr::pull(negative_style)
     currency_str <- formats[index_, ] %>% dplyr::pull(currency)
 
@@ -228,7 +228,7 @@ tbl_format_step <- function(tbl,
           tbl[x, ]$negative_style <- negative_style
           tbl[x, ]$prepend <- currency_str
 
-          if (thousands_sep) {
+          if (use_big_mark) {
             tbl[x, ]$big.mark <- ","
           }
         }

@@ -5,7 +5,7 @@
 \title{Format values as a percentage}
 \usage{
 format_as_percentage(html_tbl, columns = NULL, decimals = NULL,
-  thousands_sep = FALSE, drop_trailing_zeros = FALSE,
+  use_big_mark = FALSE, drop_trailing_zeros = FALSE,
   negative_style = "signed")
 }
 \arguments{
@@ -18,9 +18,9 @@ are to be formatted.}
 \item{decimals}{an option to specify exactly
 the number of decimal places to use.}
 
-\item{thousands_sep}{a logical value that
-allows for inclusion of a separator at every
-three digits.}
+\item{use_big_mark}{a logical value that
+allows for inclusion of a number grouping
+separator for larger numbers.}
 
 \item{drop_trailing_zeros}{a logical value that
 allows for removal of trailing zeros (those
