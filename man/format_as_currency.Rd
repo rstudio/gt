@@ -5,7 +5,7 @@
 \title{Format values as currency values}
 \usage{
 format_as_currency(html_tbl, columns = NULL, currency, use_subunits = TRUE,
-  decimals = NULL, thousands_sep = FALSE, negative_style = "signed")
+  decimals = NULL, use_big_mark = FALSE, negative_style = "signed")
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -24,9 +24,9 @@ displayed.}
 \item{decimals}{an option to specify exactly
 the number of decimal places to use.}
 
-\item{thousands_sep}{a logical value that
-allows for inclusion of a separator at every
-three digits.}
+\item{use_big_mark}{a logical value that
+allows for inclusion of a number grouping
+separator for larger numbers.}
 
 \item{negative_style}{the formatting to use
 for negative numbers. With \code{signed},

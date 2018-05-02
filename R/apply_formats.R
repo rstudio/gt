@@ -5,9 +5,9 @@
 #' are to be formatted.
 #' @param decimals an option to specify exactly
 #' the number of decimal places to use.
-#' @param thousands_sep a logical value that
-#' allows for inclusion of a separator at every
-#' three digits.
+#' @param use_big_mark a logical value that
+#' allows for inclusion of a number grouping
+#' separator for larger numbers.
 #' @param drop_trailing_zeros a logical value that
 #' allows for removal of trailing zeros (those
 #' redundant zeros after the decimal mark).
@@ -27,7 +27,7 @@
 format_as_number <- function(html_tbl,
                              columns = NULL,
                              decimals = NULL,
-                             thousands_sep = FALSE,
+                             use_big_mark = FALSE,
                              drop_trailing_zeros = FALSE,
                              negative_style = "signed") {
 
@@ -52,7 +52,7 @@ format_as_number <- function(html_tbl,
           columns = columns,
           decimals = decimals %>% as.integer(),
           drop_trailing_zeros = drop_trailing_zeros,
-          thousands_sep = thousands_sep,
+          use_big_mark = use_big_mark,
           negative_style = negative_style))
 
   html_tbl
@@ -120,9 +120,9 @@ format_as_scientific <- function(html_tbl,
 #' are to be formatted.
 #' @param decimals an option to specify exactly
 #' the number of decimal places to use.
-#' @param thousands_sep a logical value that
-#' allows for inclusion of a separator at every
-#' three digits.
+#' @param use_big_mark a logical value that
+#' allows for inclusion of a number grouping
+#' separator for larger numbers.
 #' @param drop_trailing_zeros a logical value that
 #' allows for removal of trailing zeros (those
 #' redundant zeros after the decimal mark).
@@ -142,7 +142,7 @@ format_as_scientific <- function(html_tbl,
 format_as_percentage <- function(html_tbl,
                                  columns = NULL,
                                  decimals = NULL,
-                                 thousands_sep = FALSE,
+                                 use_big_mark = FALSE,
                                  drop_trailing_zeros = FALSE,
                                  negative_style = "signed") {
 
@@ -167,7 +167,7 @@ format_as_percentage <- function(html_tbl,
           columns = columns,
           decimals = decimals %>% as.integer(),
           drop_trailing_zeros = drop_trailing_zeros,
-          thousands_sep = thousands_sep,
+          use_big_mark = use_big_mark,
           negative_style = negative_style))
 
   html_tbl
@@ -367,9 +367,9 @@ format_as_datetime <- function(html_tbl,
 #' displayed.
 #' @param decimals an option to specify exactly
 #' the number of decimal places to use.
-#' @param thousands_sep a logical value that
-#' allows for inclusion of a separator at every
-#' three digits.
+#' @param use_big_mark a logical value that
+#' allows for inclusion of a number grouping
+#' separator for larger numbers.
 #' @param negative_style the formatting to use
 #' for negative numbers. With \code{signed},
 #' negative numbers will be shown with a negative
@@ -388,7 +388,7 @@ format_as_currency <- function(html_tbl,
                                currency,
                                use_subunits = TRUE,
                                decimals = NULL,
-                               thousands_sep = FALSE,
+                               use_big_mark = FALSE,
                                negative_style = "signed") {
 
   # Return early if `currency` does not have a valid value
@@ -431,7 +431,7 @@ format_as_currency <- function(html_tbl,
           format_type = "as_currency",
           columns = columns,
           decimals = decimals,
-          thousands_sep = thousands_sep,
+          use_big_mark = use_big_mark,
           negative_style = negative_style,
           currency = currency_str))
 
