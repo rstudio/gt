@@ -12,7 +12,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr tibble
 #' @export
-add_heading <- function(html_tbl,
+tab_heading <- function(html_tbl,
                         title,
                         headnote = NULL,
                         table_number = NULL) {
@@ -44,7 +44,7 @@ add_heading <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr tibble
 #' @export
-add_stubhead_caption <- function(html_tbl,
+tab_stubhead_caption <- function(html_tbl,
                                  caption,
                                  alignment = NULL) {
 
@@ -77,7 +77,7 @@ add_stubhead_caption <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-add_source_note <- function(html_tbl,
+tab_source_note <- function(html_tbl,
                             source_note,
                             lead_in = NULL) {
 

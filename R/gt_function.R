@@ -16,9 +16,9 @@
 #' # in transformations
 #' html_table_transformed <-
 #'   html_table %>%
-#'   apply_theme_minimal() %>%
-#'   apply_alignment_right() %>%
-#'   format_as_number(
+#'   theme_minimal() %>%
+#'   cols_align_right() %>%
+#'   fmt_number(
 #'     columns = "Wind",
 #'     decimals = 1)
 #'

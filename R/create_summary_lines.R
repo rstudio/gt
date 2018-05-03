@@ -1,4 +1,4 @@
-#' Create lines with summarized data
+#' Add lines with summarized data
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param group the group to use when summarizing.
@@ -9,11 +9,11 @@
 #' for the created summary rows.
 #' @importFrom tibble add_row
 #' @export
-create_summary_lines <- function(html_tbl,
-                                 group = NULL,
-                                 columns,
-                                 fcns,
-                                 summary_labels) {
+add_summary <- function(html_tbl,
+                        group = NULL,
+                        columns,
+                        fcns,
+                        summary_labels) {
 
   # Assign NA to `group` if values are
   # not provided
@@ -42,7 +42,7 @@ create_summary_lines <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "create_summary_lines",
+      transform_type = "add_summary",
       transform_v1 = group,
       transform_v2 = columns,
       transform_v3 = fcns,

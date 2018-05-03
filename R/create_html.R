@@ -40,7 +40,7 @@ create_html <- function(html_tbl) {
       nrow(stubhead_caption) == 1) {
 
     html_table <-
-      htt_add_stubhead_caption(
+      htt_tab_stubhead_caption(
         html_table_component = html_table,
         caption_text = stubhead_caption$caption_text,
         alignment = stubhead_caption$alignment)

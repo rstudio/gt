@@ -51,11 +51,12 @@ transform_move_columns_to_end <- function(tbl,
   # column names actually in `tbl`
   columns <- columns[which(columns %in% colnames(tbl))]
 
-  if (length(columns) > 0) {
-    tbl %>% dplyr::select(-columns, columns)
-  } else {
-    tbl
-  }
+  # TODO: make this work with dplyr 0.7.4
+  # if (length(columns) > 0) {
+  #   tbl %>% dplyr::select(-columns, columns)
+  # } else {
+  #   tbl
+  # }
 }
 
 #' Transform by removing selected columns
@@ -70,11 +71,12 @@ transform_remove_columns <- function(tbl,
   # column names actually in `tbl`
   columns <- columns[which(columns %in% colnames(tbl))]
 
-  if (length(columns) > 0) {
-    tbl %>% dplyr::select(-columns)
-  } else {
-    tbl
-  }
+  # TODO: make this work with dplyr 0.7.4
+  # if (length(columns) > 0) {
+  #   tbl %>% dplyr::select(-columns)
+  # } else {
+  #   tbl
+  # }
 }
 
 #' Transform by moving selected columns to
@@ -131,7 +133,7 @@ transform_reorder_columns <- function(tbl,
   tbl %>% dplyr::select(columns)
 }
 
-#' Transform by creating summary lines
+#' Add summary lines to the table
 #' @param tbl an internal data table.
 #' @param groups the groups to use when summarizing.
 #' @param columns the columns to summarize.
@@ -144,11 +146,11 @@ transform_reorder_columns <- function(tbl,
 #' @importFrom dplyr rename case_when
 #' @importFrom rlang sym UQ
 #' @noRd
-transform_create_summary_lines <- function(tbl,
-                                           group,
-                                           columns,
-                                           fcns,
-                                           summary_labels) {
+transform_add_summary <- function(tbl,
+                                  group,
+                                  columns,
+                                  fcns,
+                                  summary_labels) {
 
   if (!is.na(group)) {
 
@@ -271,8 +273,8 @@ tbl_transform_step <- function(tbl,
 
   # Detect and perform the correct table transform --------------------------
 
-  # `to_stub` table transform
-  if (transform_type == "add_stub") {
+  # `tab_stub` table transform
+  if (transform_type == "tab_stub") {
 
     tbl <-
       transform_to_stub(
@@ -370,15 +372,15 @@ tbl_transform_step <- function(tbl,
     return(tbl)
   }
 
-  # `create_summary_lines` table transform
-  if (transform_type == "create_summary_lines") {
+  # `add_summary` table transform
+  if (transform_type == "add_summary") {
 
     group <- transform_vars[1]
 
     columns <-
       stringr::str_split(
-      transform_vars[2],
-      pattern = "::") %>%
+        transform_vars[2],
+        pattern = "::") %>%
       unlist()
 
     fcns <-
@@ -394,7 +396,7 @@ tbl_transform_step <- function(tbl,
       unlist()
 
     tbl <-
-      transform_create_summary_lines(
+      transform_add_summary(
         tbl = tbl,
         group = group,
         columns = columns,

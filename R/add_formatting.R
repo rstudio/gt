@@ -55,7 +55,7 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_scientific` formatting
+  # `fmt_scientific` formatting
   if (format_type == "as_scientific") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
@@ -89,8 +89,8 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_percentage` formatting
-  if (format_type == "as_percentage") {
+  # `fmt_percentage` formatting
+  if (format_type == "as_percent") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
     decimals <- formats[index_, ] %>% dplyr::pull(decimals) %>% as.integer()
@@ -128,7 +128,7 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_date` formatting
+  # `fmt_date` formatting
   if (format_type == "as_date") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
@@ -152,7 +152,7 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_time` formatting
+  # `fmt_time` formatting
   if (format_type == "as_time") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
@@ -175,7 +175,7 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_datetime` formatting
+  # `fmt_datetime` formatting
   if (format_type == "as_datetime") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)
@@ -203,7 +203,7 @@ tbl_format_step <- function(tbl,
     return(tbl)
   }
 
-  # `format_as_time` formatting
+  # `fmt_time` formatting
   if (format_type == "as_currency") {
 
     columns <- formats[index_, ] %>% dplyr::pull(columns)

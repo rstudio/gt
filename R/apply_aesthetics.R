@@ -13,7 +13,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_alignment_left <- function(html_tbl,
+cols_align_left <- function(html_tbl,
                                  columns = NULL,
                                  types = NULL) {
 
@@ -62,7 +62,7 @@ apply_alignment_left <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_alignment_center <- function(html_tbl,
+cols_align_center <- function(html_tbl,
                                    columns = NULL,
                                    types = NULL) {
 
@@ -110,7 +110,7 @@ apply_alignment_center <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_alignment_right <- function(html_tbl,
+cols_align_right <- function(html_tbl,
                                   columns = NULL,
                                   types = NULL) {
 
@@ -144,7 +144,7 @@ apply_alignment_right <- function(html_tbl,
 }
 
 
-#' Apply fonts to column data
+#' Format fonts used in column data
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
@@ -159,10 +159,10 @@ apply_alignment_right <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows tibble
 #' @export
-apply_font <- function(html_tbl,
-                       columns = NULL,
-                       types = NULL,
-                       font) {
+fmt_font <- function(html_tbl,
+                     columns = NULL,
+                     types = NULL,
+                     font) {
 
   if (is.null(columns)) {
     columns <- NA_character_
@@ -180,7 +180,7 @@ apply_font <- function(html_tbl,
     html_tbl[["aesthetics"]] %>%
     dplyr::bind_rows(
       dplyr::tibble(
-        type = "apply_font",
+        type = "fmt_font",
         columns = columns,
         types = types,
         font = font))
@@ -201,7 +201,7 @@ apply_font <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_theme_striped <- function(html_tbl) {
+theme_striped <- function(html_tbl) {
 
   html_tbl[["aesthetics"]] <-
     html_tbl[["aesthetics"]] %>%
@@ -226,7 +226,7 @@ apply_theme_striped <- function(html_tbl) {
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_theme_minimal <- function(html_tbl) {
+theme_minimal <- function(html_tbl) {
 
   html_tbl[["aesthetics"]] <-
     html_tbl[["aesthetics"]] %>%
@@ -249,7 +249,7 @@ apply_theme_minimal <- function(html_tbl) {
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-apply_theme_classical <- function(html_tbl) {
+theme_classical <- function(html_tbl) {
 
   html_tbl[["aesthetics"]] <-
     html_tbl[["aesthetics"]] %>%
@@ -266,7 +266,7 @@ apply_theme_classical <- function(html_tbl) {
 #' If column names in the \code{tbl} supplied
 #' use the naming convention of
 #' \code{[spanner_heading].[column_heading]},
-#' we can invoke \code{apply_spanner_headings()}
+#' we can invoke \code{tab_spanner_headings()}
 #' with the \code{use_names} option set to
 #' \code{TRUE}. This allows for parsing and
 #' expansion of column headings into one or
@@ -282,8 +282,8 @@ apply_theme_classical <- function(html_tbl) {
 #' @importFrom dplyr tibble
 #' @importFrom stringr str_detect str_replace
 #' @export
-apply_spanner_headings <- function(html_tbl,
-                                   use_names = FALSE) {
+tab_spanner_headings <- function(html_tbl,
+                                 use_names = FALSE) {
 
   if (use_names == TRUE) {
 
@@ -335,10 +335,10 @@ apply_spanner_headings <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows tibble
 #' @export
-replace_missing_values <- function(html_tbl,
-                                   columns = NULL,
-                                   types = NULL,
-                                   replacement) {
+replace_missing <- function(html_tbl,
+                            columns = NULL,
+                            types = NULL,
+                            replacement) {
 
   if (is.null(columns)) {
     columns <- NA_character_
@@ -352,7 +352,7 @@ replace_missing_values <- function(html_tbl,
     html_tbl[["aesthetics"]] %>%
     dplyr::bind_rows(
       dplyr::tibble(
-        type = "replace_missing_values",
+        type = "replace_missing",
         columns = columns,
         types = types,
         replacement = replacement))

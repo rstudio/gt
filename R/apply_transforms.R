@@ -6,7 +6,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-add_stub <- function(html_tbl,
+tab_stub <- function(html_tbl,
                      column = NULL) {
 
   # Obtain the next index value for the
@@ -22,7 +22,7 @@ add_stub <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "add_stub",
+      transform_type = "tab_stub",
       transform_v1 = column)
 
 
@@ -296,7 +296,7 @@ remove_columns <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-add_uncertainty <- function(html_tbl,
+fmt_uncertainty <- function(html_tbl,
                             value_column,
                             uncert_column) {
 
@@ -327,7 +327,7 @@ add_uncertainty <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "add_uncertainty",
+      transform_type = "fmt_uncertainty",
       transform_v1 = value_column,
       transform_v2 = uncert_column)
 

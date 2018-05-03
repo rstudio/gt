@@ -6,11 +6,11 @@
 #' @export
 merge_columns <- function(html_tbl) {
 
-  if ("add_uncertainty" %in% html_tbl[["transforms"]]$transform_type) {
+  if ("fmt_uncertainty" %in% html_tbl[["transforms"]]$transform_type) {
 
     add_uncert_transforms <-
       html_tbl[["transforms"]] %>%
-      dplyr::filter(transform_type == "add_uncertainty")
+      dplyr::filter(transform_type == "fmt_uncertainty")
 
     value_column <- add_uncert_transforms$transform_v1
     uncert_column <- add_uncert_transforms$transform_v2

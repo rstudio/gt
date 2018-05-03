@@ -24,12 +24,12 @@
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_number <- function(html_tbl,
-                             columns = NULL,
-                             decimals = NULL,
-                             use_big_mark = FALSE,
-                             drop_trailing_zeros = FALSE,
-                             negative_style = "signed") {
+fmt_number <- function(html_tbl,
+                       columns = NULL,
+                       decimals = NULL,
+                       use_big_mark = FALSE,
+                       drop_trailing_zeros = FALSE,
+                       negative_style = "signed") {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -81,11 +81,11 @@ format_as_number <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_scientific <- function(html_tbl,
-                                 columns = NULL,
-                                 decimals = NULL,
-                                 drop_trailing_zeros = FALSE,
-                                 negative_style = "signed") {
+fmt_scientific <- function(html_tbl,
+                           columns = NULL,
+                           decimals = NULL,
+                           drop_trailing_zeros = FALSE,
+                           negative_style = "signed") {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -139,12 +139,12 @@ format_as_scientific <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_percentage <- function(html_tbl,
-                                 columns = NULL,
-                                 decimals = NULL,
-                                 use_big_mark = FALSE,
-                                 drop_trailing_zeros = FALSE,
-                                 negative_style = "signed") {
+fmt_percent <- function(html_tbl,
+                        columns = NULL,
+                        decimals = NULL,
+                        use_big_mark = FALSE,
+                        drop_trailing_zeros = FALSE,
+                        negative_style = "signed") {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -163,7 +163,7 @@ format_as_percentage <- function(html_tbl,
       empty_formats_tbl() %>%
         tibble::add_row(
           index = index %>% as.integer(),
-          format_type = "as_percentage",
+          format_type = "as_percent",
           columns = columns,
           decimals = decimals %>% as.integer(),
           drop_trailing_zeros = drop_trailing_zeros,
@@ -192,9 +192,9 @@ format_as_percentage <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_fraction <- function(html_tbl,
-                               columns = NULL,
-                               accuracy = 3) {
+fmt_fraction <- function(html_tbl,
+                         columns = NULL,
+                         accuracy = 3) {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -213,7 +213,7 @@ format_as_fraction <- function(html_tbl,
       empty_formats_tbl() %>%
         tibble::add_row(
           index = index %>% as.integer(),
-          format_type = "as_number",
+          format_type = "as_fraction",
           columns = columns,
           decimals = NA_integer_,
           drop_trailing_zeros = FALSE,
@@ -233,9 +233,9 @@ format_as_fraction <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_date <- function(html_tbl,
-                           columns = NULL,
-                           date_style = NULL) {
+fmt_date <- function(html_tbl,
+                     columns = NULL,
+                     date_style = NULL) {
 
   # If no `date_style` provided, use `iso`
   if (is.null(date_style)) {
@@ -280,9 +280,9 @@ format_as_date <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_time <- function(html_tbl,
-                           columns = NULL,
-                           time_style = NULL) {
+fmt_time <- function(html_tbl,
+                     columns = NULL,
+                     time_style = NULL) {
 
   # If no `time_style` provided, use `hms`
   if (is.null(time_style)) {
@@ -329,10 +329,10 @@ format_as_time <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_datetime <- function(html_tbl,
-                               columns = NULL,
-                               date_style = NULL,
-                               time_style = NULL) {
+fmt_datetime <- function(html_tbl,
+                         columns = NULL,
+                         date_style = NULL,
+                         time_style = NULL) {
 
   index <- get_next_index(tbl = html_tbl[["formats"]])
 
@@ -383,13 +383,13 @@ format_as_datetime <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
-format_as_currency <- function(html_tbl,
-                               columns = NULL,
-                               currency,
-                               use_subunits = TRUE,
-                               decimals = NULL,
-                               use_big_mark = FALSE,
-                               negative_style = "signed") {
+fmt_currency <- function(html_tbl,
+                         columns = NULL,
+                         currency,
+                         use_subunits = TRUE,
+                         decimals = NULL,
+                         use_big_mark = FALSE,
+                         negative_style = "signed") {
 
   # Return early if `currency` does not have a valid value
   if (!is_currency_valid(currency = currency)) {
