@@ -10,11 +10,11 @@ library(tidyverse)
 # 4 - all column values are center aligned
 pressure_tbl <-
   tab_create(tbl = pressure) %>%  # 1
-  apply_theme_striped() %>%  # 2
-  format_as_scientific(
+  theme_striped() %>%  # 2
+  fmt_scientific(
     columns = "pressure",
     decimals = 2) %>%  # 3
-  apply_alignment_center()  # 4
+  cols_align_center()  # 4
 
 # Display the table in the Viewer
 pressure_tbl

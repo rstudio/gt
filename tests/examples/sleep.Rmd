@@ -26,9 +26,9 @@ Steps in detail:
 ```{r create_gt_object}
 sleep_tbl <-
   tab_create(tbl = sleep) %>%  # 1
-  apply_theme_striped() %>%  # 2
-  apply_alignment_left() %>%  # 3
-  format_as_number(
+  theme_striped() %>%  # 2
+  cols_align_left() %>%  # 3
+  fmt_number(
     columns = "extra",
     decimals = 1,
     negative_style = "parens")  # 4

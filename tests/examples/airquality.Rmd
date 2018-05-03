@@ -28,10 +28,10 @@ Steps in detail:
 ```{r create_gt_object}
 airquality_tbl <-
   tab_create(tbl = airquality %>% dplyr::filter(row_number() %in% 1:10)) %>%  # 1
-  apply_theme_minimal() %>%  # 2
-  apply_font(font = "Helvetica") %>%  # 3
-  apply_alignment_right() %>%  # 4
-  format_as_number(
+  theme_minimal() %>%  # 2
+  fmt_font(font = "Helvetica") %>%  # 3
+  cols_align_right() %>%  # 4
+  fmt_number(
     columns = "Wind",
     decimals = 1)  # 5
 ```

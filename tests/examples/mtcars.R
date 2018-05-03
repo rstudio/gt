@@ -15,22 +15,22 @@ library(tidyverse)
 # 8,9 - two source notes are added
 mtcars_tbl <-
   tab_create(tbl = mtcars) %>%  # 1
-  apply_theme_striped() %>%  # 2
-  format_as_number(
+  theme_striped() %>%  # 2
+  fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1) %>%  # 3
-  format_as_number(
+  fmt_number(
     columns = "wt",
     decimals = 3) %>%  # 4
-  apply_alignment_right(types = "numeric") %>%  # 5
-  add_stubhead_caption(caption = "car model") %>%  # 6
-  add_heading(
+  cols_align_right(types = "numeric") %>%  # 5
+  tab_stubhead_caption(caption = "car model") %>%  # 6
+  tab_heading(
     title = "Excerpt from the `mtcars` dataset",
     headnote = "[A rather famous Motor Trend table]") %>%  # 7
-  add_source_note(
+  tab_source_note(
     source_note = "Henderson and Velleman (1981).",
     lead_in = "Main Source of Data: ") %>%  # 8
-  add_source_note(
+  tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
     lead_in = "Original Data: ")  # 9
 

@@ -19,9 +19,9 @@ tbl <-
 
 tbl_2 <-
   tab_create(tbl = tbl) %>%
-  apply_theme_striped() %>%
-  apply_alignment_center() %>%
-  apply_font(font = "Helvetica") %>%
-  add_stubhead_caption(caption = "groups", alignment = "center")
+  theme_striped() %>%
+  cols_align_center() %>%
+  fmt_font(font = "Helvetica") %>%
+  tab_stubhead_caption(caption = "groups", alignment = "center")
 
 tbl_2

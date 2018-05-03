@@ -26,11 +26,11 @@ Steps in detail:
 ```{r create_gt_object}
 pressure_tbl <-
   tab_create(tbl = pressure) %>%  # 1
-  apply_theme_striped() %>%  # 2
-  format_as_scientific(
+  theme_striped() %>%  # 2
+  fmt_scientific(
     columns = "pressure",
     decimals = 2) %>%  # 3
-  apply_alignment_center()  # 4
+  cols_align_center()  # 4
 ```
 
 ```{r show_table, echo=FALSE}

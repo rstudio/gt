@@ -13,11 +13,11 @@ tbl <-
 # Create a table
 uncert_tbl <-
   tab_create(tbl = tbl) %>%
-  apply_alignment_center() %>%
-  add_uncertainty(value_column = "value", uncert_column = "uncertainty") %>%
-  format_as_number(columns = c("value", "uncertainty"), decimals = 2) %>%
-  apply_theme_striped() %>%
-  apply_font(font = "Helvetica")
+  cols_align_center() %>%
+  fmt_uncertainty(value_column = "value", uncert_column = "uncertainty") %>%
+  fmt_number(columns = c("value", "uncertainty"), decimals = 2) %>%
+  theme_striped() %>%
+  fmt_font(font = "Helvetica")
 
 # Display the table in the Viewer
 uncert_tbl

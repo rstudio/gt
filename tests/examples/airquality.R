@@ -11,13 +11,13 @@ library(tidyverse)
 # 5 - we are formatting numbers in the `Wind` column to have 1 decimal place
 airquality_tbl <-
   tab_create(tbl = airquality) %>%  # 1
-  apply_theme_minimal() %>%  # 2
-  apply_font(font = "Helvetica") %>%  # 3
-  apply_alignment_right() %>%  # 4
-  format_as_number(
+  theme_minimal() %>%  # 2
+  fmt_font(font = "Helvetica") %>%  # 3
+  cols_align_right() %>%  # 4
+  fmt_number(
     columns = "Wind",
     decimals = 1)  %>% # 5
-  replace_missing_values(replacement = "&lt; 0.1")
+  replace_missing(replacement = "&lt; 0.1")
 
 # Display the table in the Viewer
 airquality_tbl
