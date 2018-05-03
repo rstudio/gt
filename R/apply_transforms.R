@@ -74,7 +74,6 @@ move_columns_to_start <- function(html_tbl,
       transform_type = "move_columns_to_start",
       transform_v1 = columns)
 
-
   # Perform all `source_tbl` transform steps
   html_tbl <-
     all_tbl_transform_steps(
@@ -122,7 +121,6 @@ move_columns_to_end <- function(html_tbl,
       index = index %>% as.integer(),
       transform_type = "move_columns_to_end",
       transform_v1 = columns)
-
 
   # Perform all `source_tbl` transform steps
   html_tbl <-
