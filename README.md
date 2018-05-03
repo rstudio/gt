@@ -64,15 +64,14 @@ to the `tbl` argument), creating an HTML table object. Because `mtcars`
 is a data frame with rownames, a stub is automatically created. After
 that, a few functions can be used to add and customize the output table:
 
-  - `apply_theme_striped()`: styles the table with a basic striped row
-    theme
-  - `apply_alignment_center()`: center-aligns cell content in specified
+  - `theme_striped()`: styles the table with a basic striped row theme
+  - `cols_align_center()`: center-aligns cell content in specified
     columns
-  - `add_stubhead_caption()`: adds a caption to the stubhead (the box in
+  - `tab_stubhead_caption()`: adds a caption to the stubhead (the box in
     the top-left of the table)
-  - `add_heading()`: an opportunity to add a title and, optionally, a
+  - `tab_heading()`: an opportunity to add a title and, optionally, a
     headnote and a table number
-  - `add_source_note()`: not really a footnote, but a specialized note
+  - `tab_source_note()`: not really a footnote, but a specialized note
     concerned with the source of the data presented
 
 <!-- end list -->
@@ -91,22 +90,22 @@ that, a few functions can be used to add and customize the output table:
 
 mtcars_tbl <-
   tab_create(tbl = mtcars[1:6, ]) %>%
-  apply_theme_striped() %>%  # 2
-  format_as_number(
+  theme_striped() %>%  # 2
+  fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1) %>%  # 3
-  format_as_number(
+  fmt_number(
     columns = "wt",
     decimals = 3) %>%  # 4
-  apply_alignment_right(types = "numeric") %>%  # 5
-  add_stubhead_caption(caption = "car model") %>%  # 6
-  add_heading(
+  cols_align_right(types = "numeric") %>%  # 5
+  tab_stubhead_caption(caption = "car model") %>%  # 6
+  tab_heading(
     title = "Excerpt from the `mtcars` dataset",
     headnote = "[A rather famous Motor Trend table]") %>%  # 7
-  add_source_note(
+  tab_source_note(
     source_note = "Henderson and Velleman (1981).",
     lead_in = "Main Source of Data: ") %>%  # 8
-  add_source_note(
+  tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
     lead_in = "Original Data: ")  # 9
 ```
@@ -121,7 +120,7 @@ table, we embrace the naming convention provided in the **iris**
 dataset’s column names. The dot-separated column names (such as
 `Sepal.Length` and `Petal.Width`) provide a means to specify heading
 levels as `<spanner_heading>.<column_heading>`. So long as we follow
-this column-name pattern, we can use the `apply_spanner_headings()`
+this column-name pattern, we can use the `tab_spanner_headings()`
 function to parse and expand the given column names into one or more
 boxhead panels with spanner headings and column headings.
 
@@ -139,17 +138,17 @@ boxhead panels with spanner headings and column headings.
 iris_tbl <-
   tab_create(tbl = iris) %>%  # 1
   move_columns_to_start(columns = "Species") %>%  # 2
-  apply_theme_striped() %>%  # 3
-  apply_spanner_headings(use_names = TRUE) %>%  # 4
-  apply_alignment_center() %>%  # 5
-  format_as_number(
+  theme_striped() %>%  # 3
+  tab_spanner_headings(use_names = TRUE) %>%  # 4
+  cols_align_center() %>%  # 5
+  fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
     decimals = 1) %>%  # 6
-  add_heading(
+  tab_heading(
     title = "The `iris` dataset",
     headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]",
     table_number = 1) %>%  # 7
-  add_source_note(
+  tab_source_note(
     source_note = "Anderson, Edgar (1935).",
     lead_in = "The data were collected by ")  # 8
 ```
