@@ -13,9 +13,9 @@ library(tidyverse)
 sleep_tbl <-
   tab_create(tbl = sleep) %>%  # 1
   move_columns_to_start(columns = c("group", "ID")) %>%  # 2
-  apply_theme_striped() %>%  # 3
-  apply_alignment_left() %>%  # 4
-  format_as_number(
+  theme_striped() %>%  # 3
+  cols_align_left() %>%  # 4
+  fmt_number(
     columns = "extra",
     decimals = 1,
     negative_style = "parens")  # 5

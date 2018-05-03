@@ -20,36 +20,36 @@ tbl <-
 # does not create group names and summary captions
 html_tbl <-
   tab_create(tbl = tbl) %>%
-  create_summary_lines(
+  add_summary(
     group = "date",
     columns = "value_1",
     fcns = "mean",
     summary_labels = "mean") %>%
-  apply_theme_striped() %>%
-  apply_alignment_right(types = "numeric") %>%
-  apply_alignment_left(types = "character") %>%
-  format_as_number(
+  theme_striped() %>%
+  cols_align_right(types = "numeric") %>%
+  cols_align_left(types = "character") %>%
+  fmt_number(
     columns = c("value_1", "value_2"),
     decimals = 1) %>%
-  apply_font(font = "Helvetica") %>%
-  replace_missing_values(replacement = "-")
+  fmt_font(font = "Helvetica") %>%
+  replace_missing(replacement = "-")
 
 html_tbl
 
 html_tbl <-
   tab_create(tbl = mtcars) %>%
-  apply_theme_striped() %>%
-  create_summary_lines(
+  theme_striped() %>%
+  add_summary(
     group = "cyl",
     columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
     fcns = "mean",
     summary_labels = "mean") %>%
-  add_stubhead_caption(caption = "the mtcars") %>%
-  apply_alignment_right(types = "numeric") %>%
-  format_as_number(
+  tab_stubhead_caption(caption = "the mtcars") %>%
+  cols_align_right(types = "numeric") %>%
+  fmt_number(
     columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
     decimals = 1) %>%
-  remove_columns(columns = c("vs", "am", "gear", "carb")) %>%
-  apply_font(font = "Helvetica")
+  fmt_font(font = "Helvetica") %>%
+  remove_columns(columns = c("vs", "am", "gear", "carb"))
 
 html_tbl

@@ -23,17 +23,17 @@ sp500_tbl <-
     system.file("extdata", "sp500.csv", package = "gt"),
     col_types = "cddddd") %>% # 0
   tab_create() %>%  # 1
-  apply_theme_striped() %>%  # 2
-  apply_font(font = "Courier") %>%  # 3
-  apply_alignment_right(types = "numeric") %>%  # 4
-  apply_alignment_left(columns = "Date") %>%  # 5
-  move_columns_to_start(columns = c("Open", "Close")) %>%  # 6
-  move_columns_to_end(columns = "Date") %>%  # 7
-  remove_columns(columns = "Volume") %>%  # 8
-  format_as_date(
+  theme_striped() %>%  # 2
+  fmt_font(font = "Courier") %>%  # 3
+  cols_align_right(types = "numeric") %>%  # 4
+  cols_align_left(columns = "Date") %>%  # 5
+  #move_columns_to_start(columns = c("Open", "Close")) %>%  # 6
+  #move_columns_to_end(columns = "Date") %>%  # 7
+  #remove_columns(columns = "Volume") %>%  # 8
+  fmt_date(
     columns = "Date",
     date_style = 3) %>%  # 9
-  format_as_currency(
+  fmt_currency(
     columns = c("Open", "High", "Low", "Close"),
     currency = "USD",
     use_big_mark = TRUE)  # 10
