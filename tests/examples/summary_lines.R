@@ -50,6 +50,6 @@ html_tbl <-
     columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
     decimals = 1) %>%
   fmt_font(font = "Helvetica") %>%
-  remove_columns(columns = c("vs", "am", "gear", "carb"))
+  cols_remove(columns = c("vs", "am", "gear", "carb"))
 
 html_tbl
