@@ -16,43 +16,40 @@ tbl <-
     "2018-02-11",     76.2,      197.2,
     "2018-02-11",     55.3,      284.6)
 
-# Create a table
-summary_tbl <-
-  gt(tbl = tbl) %>%
+# Create a table -- # does not have rownames initially so this
+# does not create group names and summary captions
+html_tbl <-
+  tab_create(tbl = tbl) %>%
   create_summary_lines(
-    groups = "date",
+    group = "date",
     columns = "value_1",
-    fcn = "mean",
-    summary_labels = c("mean_1", "mean_2")) %>%
+    fcns = "mean",
+    summary_labels = "mean") %>%
   apply_theme_striped() %>%
   apply_alignment_right(types = "numeric") %>%
   apply_alignment_left(types = "character") %>%
   format_as_number(
     columns = c("value_1", "value_2"),
     decimals = 1) %>%
-  add_stubhead_caption(caption = "statistic") %>%
-  apply_font(font = "Helvetica")
+  apply_font(font = "Helvetica") %>%
+  replace_missing_values(replacement = "-")
 
-# Display the table in the Viewer
-summary_tbl
+html_tbl
 
 html_tbl <-
-  gt(tbl = mtcars) %>%
+  tab_create(tbl = mtcars) %>%
   apply_theme_striped() %>%
   create_summary_lines(
-    groups = "cyl",
+    group = "cyl",
     columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
-    fcn = "mean",
-    summary_labels = "MEAN") %>%
+    fcns = "mean",
+    summary_labels = "mean") %>%
+  add_stubhead_caption(caption = "the mtcars") %>%
   apply_alignment_right(types = "numeric") %>%
   format_as_number(
     columns = c("mpg", "disp", "hp", "drat", "wt", "qsec"),
     decimals = 1) %>%
   remove_columns(columns = c("vs", "am", "gear", "carb")) %>%
-  apply_font(font = "Courier")
+  apply_font(font = "Helvetica")
 
 html_tbl
-
-
-
-

@@ -5,7 +5,7 @@ library(tidyverse)
 # S&P 500
 
 # 0 - read in the data using `readr::read_csv()`
-# 1 - ingest the data frame using `gt()`
+# 1 - ingest the data frame using `tab_create()`
 # 2 - the 'striped' theme is applied
 # 3 - apply the Courier font to all columns
 # 4 - all `numeric`-type columns have right aligned values
@@ -22,7 +22,7 @@ sp500_tbl <-
   readr::read_csv(
     system.file("extdata", "sp500.csv", package = "gt"),
     col_types = "cddddd") %>% # 0
-  gt() %>%  # 1
+  tab_create() %>%  # 1
   apply_theme_striped() %>%  # 2
   apply_font(font = "Courier") %>%  # 3
   apply_alignment_right(types = "numeric") %>%  # 4
@@ -36,7 +36,7 @@ sp500_tbl <-
   format_as_currency(
     columns = c("Open", "High", "Low", "Close"),
     currency = "USD",
-    thousands_sep = TRUE)  # 10
+    use_big_mark = TRUE)  # 10
 
 # Display the table in the Viewer
 sp500_tbl

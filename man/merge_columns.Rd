@@ -7,8 +7,8 @@
 merge_columns(html_tbl)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 }
 \description{
 Merge columns according to transform directives

@@ -1,16 +1,16 @@
-#' Create an HTML table object that can be styled
+#' Create gt table object
 #'
-#' Create an HTML table object such that we can
-#' perform styling transformations before transforming
-#' the entire object to an HTML fragment. This is
-#' the first step in creating a display table.
+#' Create a gt table object so that we can perform
+#' styling transformations before transforming
+#' the entire object to a display table. Using this
+#' function is the first step in that process.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
 #' @return an object of class \code{html_table}.
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
-#' html_table <- gt(tbl = airquality)
+#' html_table <- tab_create(tbl = airquality)
 #'
 #' # The resulting object can be used
 #' # in transformations
@@ -30,7 +30,7 @@
 #' @importFrom dplyr bind_rows inner_join mutate_if select_if everything
 #' @importFrom tibble rownames_to_column
 #' @export
-gt <- function(tbl) {
+tab_create <- function(tbl) {
 
   # Table ingest ------------------------------------------------------------
 

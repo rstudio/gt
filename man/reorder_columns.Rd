@@ -7,8 +7,8 @@
 reorder_columns(html_tbl, columns)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{columns}{a vector of column names in
 the revised order. All column names must

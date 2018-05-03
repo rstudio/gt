@@ -8,7 +8,7 @@ apply_spanner_headings(html_tbl, use_names = FALSE)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{use_names}{an options to use the the
 naming convention of \code{[spanner_heading].[column_heading]}

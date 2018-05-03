@@ -12,7 +12,7 @@ tbl <-
 
 # Create a table
 uncert_tbl <-
-  gt(tbl = tbl) %>%
+  tab_create(tbl = tbl) %>%
   apply_alignment_center() %>%
   add_uncertainty(value_column = "value", uncert_column = "uncertainty") %>%
   format_as_number(columns = c("value", "uncertainty"), decimals = 2) %>%

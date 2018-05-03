@@ -9,7 +9,7 @@ library(tidyverse)
 # 3 - we are formatting numbers in the `pressure` column to scientific notation
 # 4 - all column values are center aligned
 pressure_tbl <-
-  gt(tbl = pressure) %>%  # 1
+  tab_create(tbl = pressure) %>%  # 1
   apply_theme_striped() %>%  # 2
   format_as_scientific(
     columns = "pressure",

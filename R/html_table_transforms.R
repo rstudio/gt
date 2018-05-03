@@ -1,7 +1,7 @@
 
 #' HTT: apply_font()
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param column the name of the column to style.
 #' @param type the type of the column to style.
 #' @param font the name of a single font, or,
@@ -95,7 +95,7 @@ htt_font <- function(html_tbl,
 
 #' HTT: apply_alignment_...()
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create} function.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr filter pull
 #' @noRd
@@ -189,7 +189,7 @@ htt_alignment <- function(html_tbl,
 
 #' HTT: apply_theme_striped()
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @noRd
 htt_theme_striped <- function(html_tbl) {
@@ -258,7 +258,7 @@ htt_theme_striped <- function(html_tbl) {
 
 #' HTT: apply_theme_minimal()
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @noRd
 htt_theme_minimal <- function(html_tbl) {
@@ -295,7 +295,7 @@ htt_theme_minimal <- function(html_tbl) {
 
 #' HTT: apply_theme_classical()
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @noRd
 htt_theme_classical <- function(html_tbl) {

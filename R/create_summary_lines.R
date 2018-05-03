@@ -1,6 +1,6 @@
 #' Create lines with summarized data
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param group the group to use when summarizing.
 #' @param columns the columns to summarize.
 #' @param fcns the names of functions to apply per

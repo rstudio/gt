@@ -18,7 +18,7 @@ tbl <-
 
 
 tbl_2 <-
-  gt(tbl = tbl) %>%
+  tab_create(tbl = tbl) %>%
   apply_theme_striped() %>%
   apply_alignment_center() %>%
   apply_font(font = "Helvetica") %>%

@@ -9,7 +9,7 @@ format_as_scientific(html_tbl, columns = NULL, decimals = NULL,
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{columns}{an option specify which columns
 are to be formatted.}

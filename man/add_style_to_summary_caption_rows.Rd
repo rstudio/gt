@@ -9,7 +9,7 @@ add_style_to_summary_caption_rows(html_tbl, extend_to_field = FALSE, property,
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{extend_to_field}{an option for applying
 property values to adjacent cells in the field.}

@@ -1,7 +1,7 @@
 #' Apply the content values in \code{content_tbl} to
 #' the \code{html_table}.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @importFrom dplyr bind_rows filter right_join select rename arrange distinct
 #' @noRd
 use_html_content <- function(html_tbl) {

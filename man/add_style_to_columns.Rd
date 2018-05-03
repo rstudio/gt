@@ -9,7 +9,7 @@ add_style_to_columns(html_tbl, columns = NULL, include_col_n = TRUE,
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{columns}{the columns that are to have the
 style values added.}

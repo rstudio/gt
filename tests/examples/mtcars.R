@@ -14,7 +14,7 @@ library(tidyverse)
 # 7 - a heading is added
 # 8,9 - two source notes are added
 mtcars_tbl <-
-  gt(tbl = mtcars) %>%  # 1
+  tab_create(tbl = mtcars) %>%  # 1
   apply_theme_striped() %>%  # 2
   format_as_number(
     columns = c("mpg", "disp", "drat", "qsec"),

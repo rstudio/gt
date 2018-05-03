@@ -8,14 +8,12 @@ create_html(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 }
 \value{
 a character object with an HTML fragment.
 }
 \description{
 Take a suitably styled HTML table object and
-transform it to an HTML fragment. This is the
-final step in the \code{gt()} -> ... ->
-\code{emit_html()} pattern.
+transform it to an HTML fragment.
 }

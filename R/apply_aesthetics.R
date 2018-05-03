@@ -5,7 +5,7 @@
 #' apply the alignment to specified column names or
 #' to columns of certain types.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
 #' for which the left alignment should be applied.
 #' @param types an optional vector of column types
@@ -54,7 +54,7 @@ apply_alignment_left <- function(html_tbl,
 #' apply the alignment to specified column names or
 #' to columns of certain types.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
 #' for which the center alignment should be applied.
 #' @param types an optional vector of column types
@@ -102,7 +102,7 @@ apply_alignment_center <- function(html_tbl,
 #' apply the alignment to specified column names or
 #' to columns of certain types.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
 #' for which the right alignment should be applied.
 #' @param types an optional vector of column types
@@ -146,7 +146,7 @@ apply_alignment_right <- function(html_tbl,
 
 #' Apply fonts to column data
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
 #' for which the font should be applied.
 #' @param types an optional vector of column types
@@ -197,7 +197,7 @@ apply_font <- function(html_tbl,
 #' a similar horizontal rule below the field and
 #' stub.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
@@ -222,7 +222,7 @@ apply_theme_striped <- function(html_tbl) {
 #' and stubhead and a similar horizontal rule
 #' below the field and stub.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
@@ -245,7 +245,7 @@ apply_theme_minimal <- function(html_tbl) {
 #' adds reasonably thick horizontal and vertical
 #' rules.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
@@ -273,7 +273,7 @@ apply_theme_classical <- function(html_tbl) {
 #' more boxhead panels with spanner headings
 #' and column headings.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param use_names an options to use the the
 #' naming convention of \code{[spanner_heading].[column_heading]}
 #' to generate spanner headings that correctly
@@ -325,7 +325,7 @@ apply_spanner_headings <- function(html_tbl,
 #' Replace any missing values in specified columns
 #' or columns of a given type.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
 #' for which the left alignment should be applied.
 #' @param types an optional vector of column types

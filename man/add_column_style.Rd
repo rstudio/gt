@@ -8,7 +8,7 @@ add_column_style(html_tbl, columns = NULL, property, values)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{columns}{an optional vector of column index
 numbers or column names (available in the
@@ -38,7 +38,7 @@ table object.
 \examples{
 # Create an html table object using the
 # iris dataset
-html_table <- gt(tbl = iris)
+html_table <- tab_create(tbl = iris)
 
 # With `add_column_style()` function,
 # we can manually apply a CSS style to

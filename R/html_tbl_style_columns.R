@@ -2,7 +2,7 @@
 #'
 #' Modify the style of table columns.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns the columns that are to have the
 #' style values added.
 #' @param include_col_n an option for whether to
@@ -90,7 +90,7 @@ add_style_to_columns <- function(html_tbl,
 #' Add inline CSS style to the stub and stubhead
 #' table parts that are part of `column 0`.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.

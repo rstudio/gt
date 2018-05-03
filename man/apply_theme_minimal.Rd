@@ -8,7 +8,7 @@ apply_theme_minimal(html_tbl)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 }
 \value{
 an object of class \code{html_table}.

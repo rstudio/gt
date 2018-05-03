@@ -9,7 +9,7 @@ format_as_currency(html_tbl, columns = NULL, currency, use_subunits = TRUE,
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{columns}{an option specify which columns
 are to be formatted.}

@@ -8,7 +8,7 @@ add_table_style(html_tbl, property, values)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create} function.}
 
 \item{property}{the CSS style property that is
 to the added.}
@@ -30,7 +30,7 @@ within an HTML table object.
 \examples{
 # Create an html table object using the
 # iris dataset
-html_table <- gt(tbl = iris)
+html_table <- tab_create(tbl = iris)
 
 # With `add_table_style()` function,
 # we can manually apply a CSS style

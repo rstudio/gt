@@ -14,7 +14,7 @@ library(tidyverse)
 # 7 - a heading is added
 # 8 - a source note is added
 iris_tbl <-
-  gt(tbl = iris) %>%  # 1
+  tab_create(tbl = iris) %>%  # 1
   move_columns_to_start(columns = "Species") %>%  # 2
   apply_theme_striped() %>%  # 3
   apply_spanner_headings(use_names = TRUE) %>%  # 4

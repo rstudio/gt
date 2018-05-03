@@ -8,7 +8,7 @@ apply_font(html_tbl, columns = NULL, types = NULL, font)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{columns}{an optional vector of column names
 for which the font should be applied.}

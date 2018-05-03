@@ -9,7 +9,7 @@ add_style_to_rows(html_tbl, rows = NULL, parts = c("stub", "field"),
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{rows}{the rows that are to have the
 style values added.}

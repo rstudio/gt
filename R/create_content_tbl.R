@@ -2,7 +2,7 @@
 #' application of scaling factors and string/
 #' number formatting for cell content
 #' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' is created using the \code{tab_create()} function.
 #' @importFrom purrr map_chr
 #' @importFrom dplyr tibble pull mutate bind_rows arrange
 #' @noRd
@@ -88,8 +88,8 @@ create_content_tbl <- function(html_tbl) {
 
 #' Process the rowwise internal table called
 #' \code{content_tbl}.
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @importFrom dplyr mutate
 #' @importFrom stringr str_split str_detect
 #' @importFrom purrr map_df

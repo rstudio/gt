@@ -7,8 +7,8 @@
 move_columns_to_start(html_tbl, columns)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{columns}{the column names to move to
 the left-most side of the table. The order in

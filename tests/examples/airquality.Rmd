@@ -27,7 +27,7 @@ Steps in detail:
 
 ```{r create_gt_object}
 airquality_tbl <-
-  gt(tbl = airquality %>% dplyr::filter(row_number() %in% 1:10)) %>%  # 1
+  tab_create(tbl = airquality %>% dplyr::filter(row_number() %in% 1:10)) %>%  # 1
   apply_theme_minimal() %>%  # 2
   apply_font(font = "Helvetica") %>%  # 3
   apply_alignment_right() %>%  # 4
