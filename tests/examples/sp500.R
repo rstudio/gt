@@ -27,9 +27,9 @@ sp500_tbl <-
   fmt_font(font = "Courier") %>%  # 3
   cols_align_right(types = "numeric") %>%  # 4
   cols_align_left(columns = "Date") %>%  # 5
-  #move_columns_to_start(columns = c("Open", "Close")) %>%  # 6
-  #move_columns_to_end(columns = "Date") %>%  # 7
-  #remove_columns(columns = "Volume") %>%  # 8
+  cols_move_to_start(columns = c("Open", "Close")) %>%  # 6
+  cols_move_to_end(columns = "Date") %>%  # 7
+  cols_remove(columns = "Volume") %>%  # 8
   fmt_date(
     columns = "Date",
     date_style = 3) %>%  # 9

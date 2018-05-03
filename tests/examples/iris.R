@@ -15,7 +15,7 @@ library(tidyverse)
 # 8 - a source note is added
 iris_tbl <-
   tab_create(tbl = iris) %>%  # 1
-  move_columns_to_start(columns = "Species") %>%  # 2
+  cols_move_to_start(columns = "Species") %>%  # 2
   theme_striped() %>%  # 3
   tab_spanner_headings(use_names = TRUE) %>%  # 4
   cols_align_center() %>%  # 5

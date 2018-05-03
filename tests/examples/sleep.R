@@ -12,7 +12,7 @@ library(tidyverse)
 #     all negative values are shown in parentheses
 sleep_tbl <-
   tab_create(tbl = sleep) %>%  # 1
-  move_columns_to_start(columns = c("group", "ID")) %>%  # 2
+  cols_move_to_start(columns = c("group", "ID")) %>%  # 2
   theme_striped() %>%  # 3
   cols_align_left() %>%  # 4
   fmt_number(
