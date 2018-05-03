@@ -89,25 +89,30 @@ that, a few functions can be used to add and customize the output table:
 # 8,9 - two source notes are added
 
 mtcars_tbl <-
-  tab_create(tbl = mtcars[1:6, ]) %>%
+  tab_create(tbl = mtcars[1:6, ]) %>%  # 1
   theme_striped() %>%  # 2
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
-    decimals = 1) %>%  # 3
+    decimals = 1
+    ) %>%  # 3
   fmt_number(
     columns = "wt",
-    decimals = 3) %>%  # 4
+    decimals = 3
+    ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
   tab_stubhead_caption(caption = "car model") %>%  # 6
   tab_heading(
     title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]") %>%  # 7
+    headnote = "[A rather famous Motor Trend table]"
+    ) %>%  # 7
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
-    lead_in = "Main Source of Data: ") %>%  # 8
+    lead_in = "Main Source of Data: "
+    ) %>%  # 8
   tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
-    lead_in = "Original Data: ")  # 9
+    lead_in = "Original Data: "
+    )  # 9
 ```
 
 Invoking the object interactively displays it in the Viewer. In R
@@ -137,20 +142,22 @@ boxhead panels with spanner headings and column headings.
 # 8 - a source note is added
 iris_tbl <-
   tab_create(tbl = iris) %>%  # 1
-  move_columns_to_start(columns = "Species") %>%  # 2
+  cols_move_to_start(columns = "Species") %>%  # 2
   theme_striped() %>%  # 3
   tab_spanner_headings(use_names = TRUE) %>%  # 4
   cols_align_center() %>%  # 5
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
-    decimals = 1) %>%  # 6
+    decimals = 1
+    ) %>%  # 6
   tab_heading(
     title = "The `iris` dataset",
-    headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]",
-    table_number = 1) %>%  # 7
+    headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]"
+    ) %>%  # 7
   tab_source_note(
     source_note = "Anderson, Edgar (1935).",
-    lead_in = "The data were collected by ")  # 8
+    lead_in = "The data were collected by "
+    )  # 8
 ```
 
 This is how the table appears:
