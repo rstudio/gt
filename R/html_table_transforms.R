@@ -1,5 +1,5 @@
 
-#' HTT: apply_font()
+#' HTT: fmt_font()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param column the name of the column to style.
@@ -10,10 +10,10 @@
 #' @importFrom dplyr filter pull
 #' @importFrom stringr str_detect str_split
 #' @noRd
-htt_font <- function(html_tbl,
-                     column,
-                     type,
-                     font) {
+htt_fmt_font <- function(html_tbl,
+                         column,
+                         type,
+                         font) {
 
   if (is.na(column) & is.na(type)) {
 
@@ -93,7 +93,7 @@ htt_font <- function(html_tbl,
 }
 
 
-#' HTT: apply_alignment_...()
+#' HTT: cols_align_...()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create} function.
 #' @return an object of class \code{html_table}.
@@ -187,7 +187,7 @@ htt_alignment <- function(html_tbl,
 }
 
 
-#' HTT: apply_theme_striped()
+#' HTT: theme_striped()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
@@ -256,7 +256,7 @@ htt_theme_striped <- function(html_tbl) {
       values = "2px solid #5B5B5B")
 }
 
-#' HTT: apply_theme_minimal()
+#' HTT: theme_minimal()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
@@ -293,7 +293,7 @@ htt_theme_minimal <- function(html_tbl) {
       values = "2px solid #A8A8A8")
 }
 
-#' HTT: apply_theme_classical()
+#' HTT: theme_classical()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
@@ -338,7 +338,7 @@ htt_theme_classical <- function(html_tbl) {
 }
 
 
-#' HTT: add_stubhead_caption()
+#' HTT: tab_stubhead_caption()
 #' @param html_table_component the HTML table
 #' component that contains style attribute columns.
 #' @param caption_text the text to be used as the
@@ -347,7 +347,7 @@ htt_theme_classical <- function(html_tbl) {
 #' stubhead caption.
 #' @importFrom dplyr mutate case_when
 #' @noRd
-htt_add_stubhead_caption <- function(html_table_component,
+htt_tab_stubhead_caption <- function(html_table_component,
                                      caption_text,
                                      alignment) {
 

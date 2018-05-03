@@ -351,11 +351,11 @@ process_content_tbl <- function(html_tbl) {
 
   # Replace NA values if the option is
   # taken to do so
-  if ("replace_missing_values" %in% html_tbl[["aesthetics"]]$type) {
+  if ("replace_missing" %in% html_tbl[["aesthetics"]]$type) {
 
     replace_directives <-
       html_tbl[["aesthetics"]] %>%
-      dplyr::filter(type == "replace_missing_values")
+      dplyr::filter(type == "replace_missing")
 
 
     replace_values_in_content_tbl <- function(content_tbl,
