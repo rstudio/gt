@@ -46,8 +46,8 @@ tab_stub <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-move_columns_to_start <- function(html_tbl,
-                                  columns) {
+cols_move_to_start <- function(html_tbl,
+                               columns) {
 
   # If none of the columns given in `columns` are
   # in the table, then don't add an entry to the
@@ -71,7 +71,7 @@ move_columns_to_start <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "move_columns_to_start",
+      transform_type = "cols_move_to_start",
       transform_v1 = columns)
 
   # Perform all `source_tbl` transform steps
@@ -94,8 +94,8 @@ move_columns_to_start <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-move_columns_to_end <- function(html_tbl,
-                                columns) {
+cols_move_to_end <- function(html_tbl,
+                             columns) {
 
   # If none of the columns given in `columns` are
   # in the table, then don't add an entry to the
@@ -119,7 +119,7 @@ move_columns_to_end <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "move_columns_to_end",
+      transform_type = "cols_move_to_end",
       transform_v1 = columns)
 
   # Perform all `source_tbl` transform steps
@@ -142,9 +142,9 @@ move_columns_to_end <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-move_columns <- function(html_tbl,
-                         columns,
-                         after) {
+cols_move <- function(html_tbl,
+                      columns,
+                      after) {
 
   # If none of the columns given in `columns` are
   # in the table, then don't add an entry to the
@@ -176,7 +176,7 @@ move_columns <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "move_columns",
+      transform_type = "cols_move",
       transform_v1 = columns,
       transform_v2 = after[1])
 
@@ -197,7 +197,7 @@ move_columns <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-reorder_columns <- function(html_tbl,
+cols_reorder <- function(html_tbl,
                             columns) {
 
   # If the columns given in `columns` do not
@@ -225,7 +225,7 @@ reorder_columns <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "reorder_columns",
+      transform_type = "cols_reorder",
       transform_v1 = columns)
 
   # Perform all `source_tbl` transform steps
@@ -247,8 +247,8 @@ reorder_columns <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
-remove_columns <- function(html_tbl,
-                           columns) {
+cols_remove <- function(html_tbl,
+                        columns) {
 
   # If none of the columns given in `columns` are
   # in the table, then don't add an entry to the
@@ -272,7 +272,7 @@ remove_columns <- function(html_tbl,
     html_tbl[["transforms"]] %>%
     tibble::add_row(
       index = index %>% as.integer(),
-      transform_type = "remove_columns",
+      transform_type = "cols_remove",
       transform_v1 = columns)
 
   # Perform all `source_tbl` transform steps
