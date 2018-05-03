@@ -408,8 +408,8 @@ tbl_transform_step <- function(tbl,
 }
 
 #' Perform all tbl transform steps
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @importFrom dplyr pull as_tibble
 #' @importFrom purrr map
 #' @noRd
@@ -455,8 +455,8 @@ all_tbl_transform_steps <- function(html_tbl) {
 #' Transform a tibble of data to a row-wise
 #' table representation suitable for supporting
 #' cell-specific metadata
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @importFrom dplyr select everything mutate tibble as_tibble
 #' @importFrom dplyr rename_at arrange inner_join bind_rows pull
 #' @importFrom dplyr group_by summarize distinct full_join

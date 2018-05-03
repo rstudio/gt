@@ -11,7 +11,7 @@ library(tidyverse)
 # 5 - we are formatting numbers in the `extra` column to have 1 decimal place;
 #     all negative values are shown in parentheses
 sleep_tbl <-
-  gt(tbl = sleep) %>%  # 1
+  tab_create(tbl = sleep) %>%  # 1
   move_columns_to_start(columns = c("group", "ID")) %>%  # 2
   apply_theme_striped() %>%  # 3
   apply_alignment_left() %>%  # 4

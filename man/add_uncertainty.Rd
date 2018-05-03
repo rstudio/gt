@@ -7,8 +7,8 @@
 add_uncertainty(html_tbl, value_column, uncert_column)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{value_column}{the column containing the
 values where uncertainties should be applied.}

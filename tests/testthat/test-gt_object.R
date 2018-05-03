@@ -2,10 +2,10 @@ context("test-gt_object.R")
 
 test_that("an HTML table object contains the correct components", {
 
-  # Create an HTML table object with `gt()`
+  # Create an HTML table object with `tab_create()`
   table_object <-
     dplyr::tibble(a = 1:5, b = letters[1:5]) %>%
-    gt()
+    tab_create()
 
   # Expect that the list object has 12 components
   expect_equal(

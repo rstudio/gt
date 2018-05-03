@@ -3,7 +3,7 @@
 #' Modify the style of specified table rows in
 #' both the stub and field table parts.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param rows the rows that are to have the
 #' style values added.
 #' @param parts the table parts where rows are to
@@ -89,7 +89,7 @@ add_style_to_rows <- function(html_tbl,
 
 #' Add inline CSS styles to \code{summary_caption} rows.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param extend_to_field an option for applying
 #' property values to adjacent cells in the field.
 #' @param property the CSS style property that is
@@ -185,7 +185,7 @@ add_style_to_summary_caption_rows <- function(html_tbl,
 
 #' Add inline CSS styles to \code{group_heading} rows.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param extend_to_field an option for applying
 #' property values to adjacent cells in the field.
 #' @param property the CSS style property that is
@@ -284,7 +284,7 @@ add_style_to_group_heading_rows <- function(html_tbl,
 #' Add an inline CSS style to every n table rows
 #' in both the stub and field table parts.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param every_n the row interval with which to
 #' add an inline style.
 #' @param parts the table parts where rows are to
@@ -345,7 +345,7 @@ add_style_every_n_rows <- function(html_tbl,
 #' Add inline CSS style to the boxhead and stubhead
 #' table parts that are part of `row 0`.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.
@@ -411,7 +411,7 @@ add_style_to_row_0 <- function(html_tbl,
 #' Add inline CSS style to the boxhead and stubhead
 #' table parts that are part of `row n`.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param property the CSS style property that is
 #' to the added.
 #' @param values values for the CSS style property.

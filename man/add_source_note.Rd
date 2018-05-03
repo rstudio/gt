@@ -8,7 +8,7 @@ add_source_note(html_tbl, source_note, lead_in = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{source_note}{text to be used in the
 source note.}

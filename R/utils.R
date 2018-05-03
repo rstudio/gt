@@ -406,7 +406,7 @@ decode_col_type_transform <- function(transform_text) {
 
 #' Modify the `html_table` to incorporate spanner headings
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @importFrom dplyr filter mutate full_join select case_when bind_rows
 #' @noRd
 modify_spanner_headings <- function(html_tbl) {

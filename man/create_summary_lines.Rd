@@ -7,8 +7,8 @@
 create_summary_lines(html_tbl, group = NULL, columns, fcns, summary_labels)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{group}{the group to use when summarizing.}
 

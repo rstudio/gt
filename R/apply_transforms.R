@@ -1,6 +1,6 @@
 #' Add a stub to a table
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param column an option to use an existing
 #' column as the stub.
 #' @return an object of class \code{html_table}.
@@ -35,8 +35,8 @@ add_stub <- function(html_tbl,
 }
 
 #' Move one or more columns to the start
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param columns the column names to move to
 #' the left-most side of the table. The order in
 #' which columns are provided will be preserved
@@ -84,8 +84,8 @@ move_columns_to_start <- function(html_tbl,
 }
 
 #' Move one or more columns to the end
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param columns the column names to move to
 #' the right-most side of the table. The order in
 #' which columns are provided will be preserved
@@ -133,8 +133,8 @@ move_columns_to_end <- function(html_tbl,
 }
 
 #' Move one or more columns to the end
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param columns the column names to move to
 #' as a group to a different position. The
 #' order of the remaining columns will be
@@ -191,8 +191,8 @@ move_columns <- function(html_tbl,
 }
 
 #' Reorder all columns
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param columns a vector of column names in
 #' the revised order. All column names must
 #' be provided without any repeats.
@@ -239,8 +239,8 @@ reorder_columns <- function(html_tbl,
 }
 
 #' Move one or more columns to the end
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param columns the column names to remove
 #' from the table. The order of the remaining
 #' columns will be preserved. Values provided
@@ -286,8 +286,8 @@ remove_columns <- function(html_tbl,
 }
 
 #' Apply uncertainty values to a column of data
-#' @param html_tbl an HTML table object that
-#' is created using the \code{gt()} function.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
 #' @param value_column the column containing the
 #' values where uncertainties should be applied.
 #' @param uncert_column the column containing

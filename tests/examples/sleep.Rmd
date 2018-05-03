@@ -25,7 +25,7 @@ Steps in detail:
  
 ```{r create_gt_object}
 sleep_tbl <-
-  gt(tbl = sleep) %>%  # 1
+  tab_create(tbl = sleep) %>%  # 1
   apply_theme_striped() %>%  # 2
   apply_alignment_left() %>%  # 3
   format_as_number(

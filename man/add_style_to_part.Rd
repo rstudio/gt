@@ -8,7 +8,7 @@ add_style_to_part(html_tbl, part, property, values)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{part}{a table part which could be any
 of \code{stub}, \code{boxhead}, or \code{field}.}

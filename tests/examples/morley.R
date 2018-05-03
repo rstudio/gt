@@ -11,13 +11,13 @@ library(tidyverse)
 # 5 - all `integer` columns values are left aligned
 # 6 - all `numeric` columns values are center aligned
 morley_tbl <-
-  gt(tbl = morley %>% dplyr::mutate(Speed = Speed %>% as.numeric())) %>%  # 1
+  tab_create(tbl = morley %>% dplyr::mutate(Speed = Speed %>% as.numeric())) %>%  # 1
   apply_theme_striped() %>%  # 2
   apply_font(font = "Helvetica") %>%  # 3
   format_as_number(
     columns = "Speed",
     decimals = 0,
-    thousands_sep = TRUE) %>%  # 4
+    use_big_mark = TRUE) %>%  # 4
   apply_alignment_left(types = "integer") %>%  # 5
   apply_alignment_center(types = "numeric")  # 6
 

@@ -1,6 +1,6 @@
 #' Format values as a number
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param decimals an option to specify exactly
@@ -60,7 +60,7 @@ format_as_number <- function(html_tbl,
 
 #' Format values to scientific notation
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param decimals an option to specify exactly
@@ -115,7 +115,7 @@ format_as_scientific <- function(html_tbl,
 
 #' Format values as a percentage
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param decimals an option to specify exactly
@@ -175,7 +175,7 @@ format_as_percentage <- function(html_tbl,
 
 #' Format values as a fraction
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param accuracy an option to specify the
@@ -224,7 +224,7 @@ format_as_fraction <- function(html_tbl,
 
 #' Format values as dates
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param date_style the formatting style to use
@@ -271,7 +271,7 @@ format_as_date <- function(html_tbl,
 
 #' Format values as times
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param time_style the formatting style to use
@@ -318,7 +318,7 @@ format_as_time <- function(html_tbl,
 
 #' Format values as date-times
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param date_style the formatting style to use
@@ -357,7 +357,7 @@ format_as_datetime <- function(html_tbl,
 
 #' Format values as currency values
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
 #' are to be formatted.
 #' @param currency the currency to use for the

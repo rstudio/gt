@@ -7,8 +7,8 @@
 move_columns(html_tbl, columns, after)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{columns}{the column names to move to
 as a group to a different position. The

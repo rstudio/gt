@@ -7,8 +7,8 @@
 add_stub(html_tbl, column = NULL)
 }
 \arguments{
-\item{html_tbl}{an HTML table object that
-is created using the \code{gt()} function.}
+\item{html_tbl}{an HTML table object that is
+created using the \code{tab_create()} function.}
 
 \item{column}{an option to use an existing
 column as the stub.}

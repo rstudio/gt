@@ -10,13 +10,14 @@ library(tidyverse)
 # 4 - all column values are right aligned
 # 5 - we are formatting numbers in the `Wind` column to have 1 decimal place
 airquality_tbl <-
-  gt(tbl = airquality) %>%  # 1
+  tab_create(tbl = airquality) %>%  # 1
   apply_theme_minimal() %>%  # 2
   apply_font(font = "Helvetica") %>%  # 3
   apply_alignment_right() %>%  # 4
   format_as_number(
     columns = "Wind",
-    decimals = 1)  # 5
+    decimals = 1)  %>% # 5
+  replace_missing_values(replacement = "&lt; 0.1")
 
 # Display the table in the Viewer
 airquality_tbl

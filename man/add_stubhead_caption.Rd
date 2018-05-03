@@ -8,7 +8,7 @@ add_stubhead_caption(html_tbl, caption, alignment = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
-created using the \code{gt()} function.}
+created using the \code{tab_create()} function.}
 
 \item{caption}{the text to be used as the
 stubhead caption.}

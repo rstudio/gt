@@ -3,7 +3,7 @@
 #' Add a title, headnote, and table number
 #' information to the heading part of the table.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param title text to be used in the table title.
 #' @param headnote text to be used as the table's
 #' headnote.
@@ -34,7 +34,7 @@ add_heading <- function(html_tbl,
 #' a stub does not exist, no change will be made
 #' but a message to this effect will be emitted.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param caption the text to be used as the
 #' stubhead caption.
 #' @param alignment an option to modify the
@@ -68,7 +68,7 @@ add_stubhead_caption <- function(html_tbl,
 #' Add a source note citation to the source note
 #' part of the table.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param source_note text to be used in the
 #' source note.
 #' @param lead_in a lead in word or phrase

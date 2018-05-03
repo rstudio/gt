@@ -2,7 +2,7 @@
 #'
 #' Modify the style of a specific table part.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @param part a table part which could be any
 #' of \code{stub}, \code{boxhead}, or \code{field}.
 #' @param property the CSS style property that is

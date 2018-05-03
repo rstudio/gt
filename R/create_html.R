@@ -1,11 +1,9 @@
 #' Transform an HTML table object to an HTML fragment
 #'
 #' Take a suitably styled HTML table object and
-#' transform it to an HTML fragment. This is the
-#' final step in the \code{gt()} -> ... ->
-#' \code{emit_html()} pattern.
+#' transform it to an HTML fragment.
 #' @param html_tbl an HTML table object that is
-#' created using the \code{gt()} function.
+#' created using the \code{tab_create()} function.
 #' @return a character object with an HTML fragment.
 #' @importFrom dplyr pull mutate filter case_when inner_join bind_rows
 #' @importFrom dplyr group_by summarize arrange select
