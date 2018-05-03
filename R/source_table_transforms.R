@@ -24,8 +24,8 @@ transform_to_stub <- function(tbl,
 #' @param columns the columns to move.
 #' @importFrom dplyr select everything
 #' @noRd
-transform_move_columns_to_start <- function(tbl,
-                                            columns) {
+transform_cols_move_to_start <- function(tbl,
+                                         columns) {
 
   # Filter the vector of column names by the
   # column names actually in `tbl`
@@ -44,8 +44,8 @@ transform_move_columns_to_start <- function(tbl,
 #' @param columns the columns to move.
 #' @importFrom dplyr select
 #' @noRd
-transform_move_columns_to_end <- function(tbl,
-                                          columns) {
+transform_cols_move_to_end <- function(tbl,
+                                       columns) {
 
   # Filter the vector of column names by the
   # column names actually in `tbl`
@@ -67,8 +67,8 @@ transform_move_columns_to_end <- function(tbl,
 #' @param columns the columns to remove.
 #' @importFrom dplyr select everything mutate
 #' @noRd
-transform_remove_columns <- function(tbl,
-                                     columns) {
+transform_cols_remove <- function(tbl,
+                                  columns) {
 
   # Filter the vector of column names by the
   # column names actually in `tbl`
@@ -91,9 +91,9 @@ transform_remove_columns <- function(tbl,
 #' @param columns the columns to remove.
 #' @importFrom dplyr select everything
 #' @noRd
-transform_move_columns <- function(tbl,
-                                   columns,
-                                   after) {
+transform_cols_move <- function(tbl,
+                                columns,
+                                after) {
 
   # Filter the vector of column names by the
   # column names actually in `tbl`
@@ -132,8 +132,8 @@ transform_move_columns <- function(tbl,
 #' revised ordering.
 #' @importFrom dplyr select
 #' @noRd
-transform_reorder_columns <- function(tbl,
-                                      columns) {
+transform_cols_reorder <- function(tbl,
+                                   columns) {
 
   # Reorder the table columns
   tbl %>% dplyr::select(columns)
@@ -290,8 +290,8 @@ tbl_transform_step <- function(tbl,
     return(tbl)
   }
 
-  # `move_columns_to_start` table transform
-  if (transform_type == "move_columns_to_start") {
+  # `cols_move_to_start` table transform
+  if (transform_type == "cols_move_to_start") {
 
     columns <-
       stringr::str_split(
@@ -300,15 +300,15 @@ tbl_transform_step <- function(tbl,
       unlist()
 
     tbl <-
-      transform_move_columns_to_start(
+      transform_cols_move_to_start(
         tbl = tbl,
         columns = columns)
 
     return(tbl)
   }
 
-  # `move_columns_to_end` table transform
-  if (transform_type == "move_columns_to_end") {
+  # `cols_move_to_end` table transform
+  if (transform_type == "cols_move_to_end") {
 
     columns <-
       stringr::str_split(
@@ -317,15 +317,15 @@ tbl_transform_step <- function(tbl,
       unlist()
 
     tbl <-
-      transform_move_columns_to_end(
+      transform_cols_move_to_end(
         tbl = tbl,
         columns = columns)
 
     return(tbl)
   }
 
-  # `remove_columns` table transform
-  if (transform_type == "remove_columns") {
+  # `cols_remove` table transform
+  if (transform_type == "cols_remove") {
 
     columns <-
       stringr::str_split(
@@ -334,15 +334,15 @@ tbl_transform_step <- function(tbl,
       unlist()
 
     tbl <-
-      transform_remove_columns(
+      transform_cols_remove(
         tbl = tbl,
         columns = columns)
 
     return(tbl)
   }
 
-  # `move_columns` table transform
-  if (transform_type == "move_columns") {
+  # `cols_move` table transform
+  if (transform_type == "cols_move") {
 
     columns <-
       stringr::str_split(
@@ -353,7 +353,7 @@ tbl_transform_step <- function(tbl,
     after <- transform_vars[2]
 
     tbl <-
-      transform_move_columns(
+      transform_cols_move(
         tbl = tbl,
         columns = columns,
         after = after)
@@ -361,8 +361,8 @@ tbl_transform_step <- function(tbl,
     return(tbl)
   }
 
-  # `reorder_columns` table transform
-  if (transform_type == "reorder_columns") {
+  # `cols_reorder` table transform
+  if (transform_type == "cols_reorder") {
 
     columns <-
       stringr::str_split(
@@ -371,7 +371,7 @@ tbl_transform_step <- function(tbl,
       unlist()
 
     tbl <-
-      transform_reorder_columns(
+      transform_cols_reorder(
         tbl = tbl,
         columns = columns)
 
