@@ -51,12 +51,15 @@ transform_move_columns_to_end <- function(tbl,
   # column names actually in `tbl`
   columns <- columns[which(columns %in% colnames(tbl))]
 
-  # TODO: make this work with dplyr 0.7.4
-  # if (length(columns) > 0) {
-  #   tbl %>% dplyr::select(-columns, columns)
-  # } else {
-  #   tbl
-  # }
+  # Place the column names at the end
+  columns <- c(base::setdiff(colnames(tbl), columns), columns)
+
+  # Perform movement of columns using `dplyr::select()`
+  if (length(columns) > 0) {
+    tbl %>% dplyr::select(columns)
+  } else {
+    tbl
+  }
 }
 
 #' Transform by removing selected columns
@@ -71,12 +74,15 @@ transform_remove_columns <- function(tbl,
   # column names actually in `tbl`
   columns <- columns[which(columns %in% colnames(tbl))]
 
-  # TODO: make this work with dplyr 0.7.4
-  # if (length(columns) > 0) {
-  #   tbl %>% dplyr::select(-columns)
-  # } else {
-  #   tbl
-  # }
+  # Remove the column names from the column list
+  columns <- c(base::setdiff(colnames(tbl), columns))
+
+  # Perform removal of columns using `dplyr::select()`
+  if (length(columns) > 0) {
+    tbl %>% dplyr::select(columns)
+  } else {
+    tbl
+  }
 }
 
 #' Transform by moving selected columns to
