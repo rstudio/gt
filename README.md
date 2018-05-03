@@ -59,10 +59,10 @@ the word `Source`.
 
 The `mtcars` dataset can be suitably transformed into a simple HTML
 table (for sake of brevity, we’ll use just the first 6 rows). We can use
-the `gt()` function to initiate the process (providing `mtcars` to the
-`tbl` argument), creating an HTML table object. Because `mtcars` is a
-data frame with rownames, a stub is automatically created. After that, a
-few functions can be used to add and customize the output table:
+the `tab_create()` function to initiate the process (providing `mtcars`
+to the `tbl` argument), creating an HTML table object. Because `mtcars`
+is a data frame with rownames, a stub is automatically created. After
+that, a few functions can be used to add and customize the output table:
 
   - `apply_theme_striped()`: styles the table with a basic striped row
     theme
@@ -90,7 +90,7 @@ few functions can be used to add and customize the output table:
 # 8,9 - two source notes are added
 
 mtcars_tbl <-
-  gt(tbl = mtcars[1:6, ]) %>%
+  tab_create(tbl = mtcars[1:6, ]) %>%
   apply_theme_striped() %>%  # 2
   format_as_number(
     columns = c("mpg", "disp", "drat", "qsec"),
@@ -137,7 +137,7 @@ boxhead panels with spanner headings and column headings.
 # 7 - a heading is added
 # 8 - a source note is added
 iris_tbl <-
-  gt(tbl = iris) %>%  # 1
+  tab_create(tbl = iris) %>%  # 1
   move_columns_to_start(columns = "Species") %>%  # 2
   apply_theme_striped() %>%  # 3
   apply_spanner_headings(use_names = TRUE) %>%  # 4

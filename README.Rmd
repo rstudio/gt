@@ -50,7 +50,7 @@ The **source note** area is for provision of citation information for the presen
 
 ## Examples
 
-The `mtcars` dataset can be suitably transformed into a simple HTML table (for sake of brevity, we'll use just the first 6 rows). We can use the `gt()` function to initiate the process (providing `mtcars` to the `tbl` argument), creating an HTML table object. Because `mtcars` is a data frame with rownames, a stub is automatically created. After that, a few functions can be used to add and customize the output table:
+The `mtcars` dataset can be suitably transformed into a simple HTML table (for sake of brevity, we'll use just the first 6 rows). We can use the `tab_create()` function to initiate the process (providing `mtcars` to the `tbl` argument), creating an HTML table object. Because `mtcars` is a data frame with rownames, a stub is automatically created. After that, a few functions can be used to add and customize the output table:
 
 - `apply_theme_striped()`: styles the table with a basic striped row theme
 - `apply_alignment_center()`: center-aligns cell content in specified columns
@@ -71,7 +71,7 @@ The `mtcars` dataset can be suitably transformed into a simple HTML table (for s
 # 8,9 - two source notes are added
 
 mtcars_tbl <-
-  gt(tbl = mtcars[1:6, ]) %>%
+  tab_create(tbl = mtcars[1:6, ]) %>%
   apply_theme_striped() %>%  # 2
   format_as_number(
     columns = c("mpg", "disp", "drat", "qsec"),
@@ -110,7 +110,7 @@ Let's build another table using another well-known dataset. In this table, we em
 # 7 - a heading is added
 # 8 - a source note is added
 iris_tbl <-
-  gt(tbl = iris) %>%  # 1
+  tab_create(tbl = iris) %>%  # 1
   move_columns_to_start(columns = "Species") %>%  # 2
   apply_theme_striped() %>%  # 3
   apply_spanner_headings(use_names = TRUE) %>%  # 4
