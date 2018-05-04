@@ -24,7 +24,7 @@ iris_tbl <-
     decimals = 1) %>%  # 6
   tab_heading(
     title = "The `iris` dataset",
-    headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]",
+    headnote = "[All about *Iris setosa*, *versicolor*, and *virginica*]",
     table_number = 1) %>%  # 7
   tab_source_note(
     source_note = "Anderson, Edgar (1935).",

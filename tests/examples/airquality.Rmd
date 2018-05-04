@@ -23,17 +23,23 @@ Steps in detail:
  
  4. all column values are right aligned
  
- 5. we are formatting numbers in the `Wind` column to have 1 decimal place
+ 5. the `Month` and `Day` columns are moved to the beginning of the column series
+ 
+ 6. we are formatting numbers in the `Wind` column to have 1 decimal place
+ 
+ 7. we replace missing (NA) values in all columns with a string replacement
 
 ```{r create_gt_object}
 airquality_tbl <-
-  tab_create(tbl = airquality %>% dplyr::filter(row_number() %in% 1:10)) %>%  # 1
-  theme_minimal() %>%  # 2
+  tab_create(tbl = airquality) %>%  # 1
+  theme_striped() %>%  # 2
   fmt_font(font = "Helvetica") %>%  # 3
   cols_align_right() %>%  # 4
+  cols_move_to_start(columns = c("Month", "Day")) %>% # 5
   fmt_number(
     columns = "Wind",
-    decimals = 1)  # 5
+    decimals = 1)  %>% # 6
+  replace_missing(replacement = "&lt; 0.1") # 7
 ```
 
 ```{r show_table, echo=FALSE}

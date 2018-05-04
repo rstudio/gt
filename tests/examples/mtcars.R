@@ -26,7 +26,7 @@ mtcars_tbl <-
   tab_stubhead_caption(caption = "car model") %>%  # 6
   tab_heading(
     title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]") %>%  # 7
+    headnote = "[A rather famous **Motor Trend** table]") %>%  # 7
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
     lead_in = "Main Source of Data: ") %>%  # 8
