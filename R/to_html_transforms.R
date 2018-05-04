@@ -22,21 +22,40 @@
 #' use for the table headnote.
 #' @return an HTML fragment containing the
 #' table caption table part.
+#' @importFrom commonmark markdown_html
+#' @importFrom stringr str_replace_all
 #' @noRd
 to_html_table_caption <- function(tbl,
-                                  border_top = c("solid", "2px", "#A8A8A8"),
-                                  border_bottom = c("solid", "2px", "#A8A8A8"),
-                                  title_font_size = "115%",
-                                  title_align = "center",
-                                  title_padding = "3px",
-                                  headnote_font_size = "85%",
-                                  headnote_align = "center",
-                                  headnote_padding = "3px") {
+                                  border_top = NULL,
+                                  border_bottom = NULL,
+                                  title_font_size = NULL,
+                                  title_align = NULL,
+                                  title_padding = NULL,
+                                  headnote_font_size = NULL,
+                                  headnote_align = NULL,
+                                  headnote_padding = NULL) {
 
+  # Set defaults for styles
+  border_top = c("solid", "2px", "#A8A8A8")
+  border_bottom = c("solid", "2px", "#A8A8A8")
+  title_font_size = "115%"
+  title_align = "center"
+  title_padding = "1px"
+  headnote_font_size = "115%"
+  headnote_align = "center"
+  headnote_padding = "1px"
 
   # Extract the title and headnote
   title <- tbl$title
   headnote <- tbl$headnote
+
+  # Convert from markdown to HTML
+  title <-
+    commonmark::markdown_html(text = title) %>%
+    stringr::str_replace_all("^<p>|</p>|\n", "")
+
+  headnote <- commonmark::markdown_html(text = headnote) %>%
+    stringr::str_replace_all("^<p>|</p>|\n", "")
 
   if (!is.null(border_top)) {
     border_top <-
