@@ -274,6 +274,9 @@ theme_classical <- function(html_tbl) {
 #' and column headings.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
+#' @param ... an optional series of named vectors
+#' for specifying the mappings between column names
+#' to spanner headings.
 #' @param use_names an options to use the the
 #' naming convention of \code{[spanner_heading].[column_heading]}
 #' to generate spanner headings that correctly
