@@ -10,6 +10,10 @@ tab_spanner_headings(html_tbl, ..., use_names = FALSE)
 \item{html_tbl}{an HTML table object that is
 created using the \code{tab_create()} function.}
 
+\item{...}{an optional series of named vectors
+for specifying the mappings between column names
+to spanner headings.}
+
 \item{use_names}{an options to use the the
 naming convention of \code{[spanner_heading].[column_heading]}
 to generate spanner headings that correctly
