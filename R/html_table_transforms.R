@@ -270,8 +270,8 @@ htt_theme_minimal <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
-    add_style_to_row_0(
-      property = "border-bottom",
+    add_style_to_row_1(
+      property = "border-top",
       values = "2px solid #A8A8A8") %>%
     add_style_to_row_0(
       property = "border-top",
