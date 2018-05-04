@@ -4,7 +4,7 @@
 \alias{tab_spanner_headings}
 \title{Apply spanner headings}
 \usage{
-tab_spanner_headings(html_tbl, use_names = FALSE)
+tab_spanner_headings(html_tbl, ..., use_names = FALSE)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -28,4 +28,20 @@ with the \code{use_names} option set to
 expansion of column headings into one or
 more boxhead panels with spanner headings
 and column headings.
+}
+\examples{
+# Create a table based on `mtcars` where
+# there are column headings grouped under
+# spanner headings
+mtcars_tab <-
+  tab_create(tbl = mtcars) \%>\%
+    cols_remove(c("drat", "wt", "vs", "am")) \%>\%
+    tab_spanner_headings(
+      "numbers" = c("cyl", "gear", "carb"),
+      "measurements" = c(
+        "hp", "qsec", "mpg", "disp")) \%>\%
+    cols_reorder(columns = c(
+      "mpg", "disp", "hp", "qsec",
+      "cyl", "gear", "carb")) \%>\%
+    theme_striped()
 }
