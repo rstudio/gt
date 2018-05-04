@@ -279,11 +279,53 @@ theme_classical <- function(html_tbl) {
 #' to generate spanner headings that correctly
 #' enclose column headings.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr tibble
+#' @examples
+#' # Create a table based on `mtcars` where
+#' # there are column headings grouped under
+#' # spanner headings
+#' mtcars_tab <-
+#'   tab_create(tbl = mtcars) %>%
+#'     cols_remove(c("drat", "wt", "vs", "am")) %>%
+#'     tab_spanner_headings(
+#'       "numbers" = c("cyl", "gear", "carb"),
+#'       "measurements" = c(
+#'         "hp", "qsec", "mpg", "disp")) %>%
+#'     cols_reorder(columns = c(
+#'       "mpg", "disp", "hp", "qsec",
+#'       "cyl", "gear", "carb")) %>%
+#'     theme_striped()
+#' @importFrom dplyr tibble rename mutate
 #' @importFrom stringr str_detect str_replace
+#' @importFrom purrr map_df
+#' @importFrom rlang sym UQ
 #' @export
 tab_spanner_headings <- function(html_tbl,
+                                 ...,
                                  use_names = FALSE) {
+
+  # Obtain any column-to-spanner mappings
+  mappings <- list(...)
+
+  # Get the mappings of heading names to spanner headings
+  if (length(mappings) > 0) {
+
+    # Create `boxhead_panel_tbl` object
+    boxhead_panel_tbl <-
+      seq(length(mappings)) %>%
+      purrr::map_df(.f = function(x) {
+
+        spanner_heading <- mappings[x] %>% names()
+
+        as_tibble(mappings[x]) %>%
+          dplyr::rename("column_name" = rlang::UQ(rlang::sym(spanner_heading))) %>%
+          dplyr::mutate(spanner_heading = spanner_heading) %>%
+          dplyr::mutate(column_heading = column_name)
+      })
+
+    # Replace `boxhead_panel` component with
+    # `boxhead_panel_tbl` table
+    html_tbl[["boxhead_panel"]] <- boxhead_panel_tbl
+  }
 
   if (use_names == TRUE) {
 
