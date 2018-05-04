@@ -14,8 +14,8 @@
 #' @importFrom tibble add_row
 #' @export
 cols_align_left <- function(html_tbl,
-                                 columns = NULL,
-                                 types = NULL) {
+                            columns = NULL,
+                            types = NULL) {
 
   if (!is.null(columns)) {
 
@@ -63,8 +63,8 @@ cols_align_left <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @export
 cols_align_center <- function(html_tbl,
-                                   columns = NULL,
-                                   types = NULL) {
+                              columns = NULL,
+                              types = NULL) {
 
   if (!is.null(columns)) {
 
@@ -111,8 +111,8 @@ cols_align_center <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @export
 cols_align_right <- function(html_tbl,
-                                  columns = NULL,
-                                  types = NULL) {
+                             columns = NULL,
+                             types = NULL) {
 
   if (!is.null(columns)) {
 
