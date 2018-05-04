@@ -201,10 +201,7 @@ htt_theme_striped <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
-    add_style_to_row_0(
-      property = "border-bottom",
-      values = "2px solid #A8A8A8") %>%
-    add_style_to_row_0(
+    add_style_to_row_1(
       property = "border-top",
       values = "2px solid #A8A8A8") %>%
     add_style_to_row_0(
@@ -228,11 +225,12 @@ htt_theme_striped <- function(html_tbl) {
       property = "border-top",
       values = "2px solid #A8A8A8") %>%
     add_style_to_group_heading_rows(
+      extend_to_field = TRUE,
       property = "border-bottom",
-      values = "1px solid #A8A8A8") %>%
+      values = "1px solid #BDBDBD") %>%
     add_style_to_group_heading_rows(
       property = "padding",
-      values = "5px") %>%
+      values = "8px") %>%
     add_style_to_group_heading_rows(
       property = "text-align",
       values = "center") %>%
@@ -244,16 +242,8 @@ htt_theme_striped <- function(html_tbl) {
       values = "right") %>%
     add_style_to_summary_caption_rows(
       extend_to_field = TRUE,
-      property = "background",
-      values = "#5B5B5B") %>%
-    add_style_to_summary_caption_rows(
-      extend_to_field = TRUE,
-      property = "color",
-      values = "#FFFFFF") %>%
-    add_style_to_summary_caption_rows(
-      extend_to_field = TRUE,
       property = "border-top",
-      values = "2px solid #5B5B5B")
+      values = "1px solid #BDBDBD")
 }
 
 #' HTT: theme_minimal()
