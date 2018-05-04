@@ -30,7 +30,6 @@ create_html <- function(html_tbl) {
   if (nrow(boxhead_panel) > 0) {
 
     html_tbl <- modify_spanner_headings(html_tbl = html_tbl)
-
     html_table <- html_tbl[["html_table"]]
   }
 
@@ -51,11 +50,14 @@ create_html <- function(html_tbl) {
   # A method to merge cells with the same content value and
   # generate row_span and col_span values
 
+  # Combine all style attributes into a
+  # single column [`style_attrs`]
   table_heading_styles <-
-    gt:::transmute_style_attrs(html_table_component = html_table) %>%
+    transmute_style_attrs(html_table_component = html_table) %>%
     dplyr::filter(row <= 0) %>%
     dplyr::mutate(style_attrs = case_when(
-      row <= 0 & style_attrs != "" ~ glue::glue("style=\"{style_attrs}\"") %>% as.character(),
+      row <= 0 & style_attrs != "" ~ glue::glue("style=\"{style_attrs}\"") %>%
+        as.character(),
       row <= 0 & style_attrs == "" ~ glue::glue("") %>% as.character()))
 
   table_heading_styles_row_column <-
@@ -64,22 +66,39 @@ create_html <- function(html_tbl) {
     dplyr::mutate(rowspan = 1L, colspan = 1L)
 
   # Move column-wise (sort by row then column)
-  for (i in 2:nrow(table_heading_styles_row_column)) {
+  for (i in 1:nrow(table_heading_styles_row_column)) {
 
-    if (table_heading_styles_row_column[c(i - 1, i), ]$content %>%
+    if (i == nrow(table_heading_styles_row_column)) break
+
+    if (table_heading_styles_row_column[c(i + 1, i), ]$content %>%
         unique() %>%
         length() == 1) {
 
+      # Determine the number of columns of spanning
+      for (j in seq(1, nrow(table_heading_styles_row_column))) {
+
+        does_span <-
+          table_heading_styles_row_column[seq(i, i + j), ]$content %>%
+          unique() %>%
+          length() == 1
+
+        if (does_span == FALSE) {
+          span_width <- j
+          rows_affected <- seq(i, i + j - 1)
+          break
+        }
+      }
+
       table_heading_styles_row_column <-
         dplyr::bind_rows(
-          table_heading_styles_row_column[c(i - 1, i), ] %>%
+          table_heading_styles_row_column[rows_affected, ] %>%
             dplyr::group_by(content) %>%
             dplyr::summarize(
               row = min(row) %>% as.integer(),
               column = min(column) %>% as.integer(),
               rowspan = min(rowspan) %>% as.integer(),
-              colspan = sum(colspan)),
-          table_heading_styles_row_column[-c(i - 1, i), ])
+              colspan = span_width),
+          table_heading_styles_row_column[-rows_affected, ])
     }
   }
 
