@@ -422,6 +422,10 @@ modify_spanner_headings <- function(html_tbl) {
     dplyr::mutate(content = case_when(
       !is.na(spanner_heading) ~ spanner_heading,
       is.na(spanner_heading) ~ content)) %>%
+    dplyr::mutate(`border-right` = ifelse(
+      !is.na(spanner_heading), "5px solid white", NA_character_)) %>%
+    dplyr::mutate(`border-bottom` = ifelse(
+      !is.na(spanner_heading), "2px solid #A8A8A8", NA_character_)) %>%
     dplyr::select(-spanner_heading)
 
   column_heading_subpart <-
