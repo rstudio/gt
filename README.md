@@ -87,7 +87,6 @@ that, a few functions can be used to add and customize the output table:
 #     here, we supply a stubhead caption
 # 7 - a heading is added
 # 8,9 - two source notes are added
-
 mtcars_tbl <-
   tab_create(tbl = mtcars[1:6, ]) %>%  # 1
   theme_striped() %>%  # 2
@@ -103,7 +102,7 @@ mtcars_tbl <-
   tab_stubhead_caption(caption = "car model") %>%  # 6
   tab_heading(
     title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]"
+    headnote = "[A rather famous **Motor Trend** table]"
     ) %>%  # 7
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
@@ -141,7 +140,7 @@ boxhead panels with spanner headings and column headings.
 # 7 - a heading is added
 # 8 - a source note is added
 iris_tbl <-
-  tab_create(tbl = iris) %>%  # 1
+  tab_create(tbl = iris[1:6, ]) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
   theme_striped() %>%  # 3
   tab_spanner_headings(use_names = TRUE) %>%  # 4
@@ -151,8 +150,8 @@ iris_tbl <-
     decimals = 1
     ) %>%  # 6
   tab_heading(
-    title = "The `iris` dataset",
-    headnote = "[A rather famous dataset about Iris setosa, versicolor, and virginica]"
+    title = "Excerpt from the `iris` dataset",
+    headnote = "[All about *Iris setosa*, *versicolor*, and *virginica*]"
     ) %>%  # 7
   tab_source_note(
     source_note = "Anderson, Edgar (1935).",
