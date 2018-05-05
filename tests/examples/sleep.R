@@ -5,7 +5,7 @@ library(tidyverse)
 # Student's Sleep Data
 
 # 1 - we take the `datasets::sleep` data.frame
-# 2 - move the `group` and `ID` columns to the start (LHS)
+# 2 - we are moving the `group` and `ID` columns to the start (LHS)
 # 3 - the 'striped' theme is applied
 # 4 - all column values are left aligned
 # 5 - we are formatting numbers in the `extra` column to have 1 decimal place;
@@ -18,7 +18,8 @@ sleep_tbl <-
   fmt_number(
     columns = "extra",
     decimals = 1,
-    negative_style = "parens")  # 5
+    negative_style = "parens"
+    )  # 5
 
 # Display the table in the Viewer
 sleep_tbl
