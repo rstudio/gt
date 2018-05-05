@@ -26,8 +26,8 @@
 #' # displayed in the Viewer
 #' html_table_transformed
 #' @importFrom purrr map_chr map_df
-#' @importFrom dplyr as_tibble tibble select rename rename_at mutate select
-#' @importFrom dplyr bind_rows inner_join mutate_if select_if everything
+#' @importFrom dplyr as_tibble tibble select rename rename_at mutate filter pull
+#' @importFrom dplyr bind_rows inner_join mutate_if select_if everything add_row
 #' @importFrom tibble rownames_to_column
 #' @export
 tab_create <- function(tbl) {
