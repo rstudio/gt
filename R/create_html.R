@@ -15,6 +15,8 @@ create_html <- function(html_tbl) {
 
   # Extract object components -----------------------------------------------
 
+  fonts <- html_tbl[["fonts"]]
+
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
   stubhead_caption <- html_tbl[["stubhead_caption"]]
@@ -23,6 +25,35 @@ create_html <- function(html_tbl) {
 
   html_head <- html_tbl[["html_head"]]
   html_table <- html_tbl[["html_table"]]
+
+
+  # Determine which default fonts to use for each table part ----------------
+
+  # Obtain default fonts for the heading
+  if ("heading" %in% fonts$type) {
+    fonts_heading <-
+      fonts %>% dplyr::filter(type == "heading") %>%
+      dplyr::select(-type) %>%
+      unlist() %>% unname()
+  } else {
+    fonts_heading <-
+      fonts %>% dplyr::filter(type == "all") %>%
+      dplyr::select(-type) %>%
+      unlist() %>% unname()
+  }
+
+  # Obtain default fonts for source notes
+  if ("source_note" %in% fonts$type) {
+    fonts_source_note <-
+      fonts %>% dplyr::filter(type == "source_note") %>%
+      dplyr::select(-type) %>%
+      unlist() %>% unname()
+  } else {
+    fonts_source_note <-
+      fonts %>% dplyr::filter(type == "all") %>%
+      dplyr::select(-type) %>%
+      unlist() %>% unname()
+  }
 
   # Table Part: Spanner Headings --------------------------------------------
 
@@ -143,7 +174,7 @@ create_html <- function(html_tbl) {
   # Process `html_table` content --------------------------------------------
 
   table_content_styles <-
-    gt:::transmute_style_attrs(html_table_component = html_table) %>%
+    transmute_style_attrs(html_table_component = html_table) %>%
     dplyr::filter(row > 0) %>%
     dplyr::mutate(style_attrs = case_when(
       style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
@@ -153,7 +184,7 @@ create_html <- function(html_tbl) {
   # Create `table_heading_component` ----------------------------------------
 
   table_head_styles <-
-    gt:::transmute_style_attrs(html_table_component = html_head) %>%
+    transmute_style_attrs(html_table_component = html_head) %>%
     dplyr::mutate(style_attrs = case_when(
       column_name == "_table_" &
         style_attrs != "" ~ glue::glue("<table style=\"{style_attrs}\">\n") %>% as.character(),
