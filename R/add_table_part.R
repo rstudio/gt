@@ -9,20 +9,49 @@
 #' headnote.
 #' @param table_number a number to use as the
 #' table number.
+#' @param font the name of the font to use for
+#' the specified columns. This could be provided
+#' as a vector of fonts where subsequent font names
+#' provide fallbacks in the case that fonts are
+#' not available.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr tibble
 #' @export
 tab_heading <- function(html_tbl,
                         title,
                         headnote = NULL,
-                        table_number = NULL) {
+                        table_number = NULL,
+                        font = NULL) {
 
+
+  if (is.null(headnote)) {
+    headnote <- ""
+  } else {
+    headnote <-
+      headnote %>% as.character()
+  }
+
+  if (is.null(table_number)) {
+    table_number <- ""
+  } else {
+    table_number <-
+      table_number %>% as.character()
+  }
+
+  if (is.null(font)) {
+    font <- NA_character_
+  } else {
+    font <-
+      font %>%
+      paste(collapse = ", ")
+  }
 
   html_tbl[["heading"]] <-
     dplyr::tibble(
       title = title,
       headnote = ifelse(is.null(headnote), "", headnote %>% as.character()),
-      table_number = ifelse(is.null(table_number), "", table_number %>% as.character()))
+      table_number = ifelse(is.null(table_number), "", table_number %>% as.character()),
+      font = font)
 
   html_tbl
 }
