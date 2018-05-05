@@ -26,6 +26,7 @@
 #' @importFrom stringr str_replace_all
 #' @noRd
 to_html_table_caption <- function(tbl,
+                                  font,
                                   border_top = NULL,
                                   border_bottom = NULL,
                                   title_font_size = NULL,
