@@ -64,7 +64,8 @@ empty_heading_tbl <- function() {
   dplyr::tibble(
     title = NA_character_,
     headnote = NA_character_,
-    table_number = NA_character_)[-1, ]
+    table_number = NA_character_,
+    font = NA_character_)[-1, ]
 }
 
 #' Create an empty `footnote` tbl
