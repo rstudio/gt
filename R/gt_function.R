@@ -104,6 +104,9 @@ tab_create <- function(tbl) {
   # Create an empty `aesthetics` tbl
   aesthetics <- gt:::empty_aesthetics_tbl()
 
+  # Create an empty `fonts` tbl
+  fonts <- gt:::empty_fonts_tbl()
+
   # Create an empty `heading` tbl
   heading <- gt:::empty_heading_tbl()
 
