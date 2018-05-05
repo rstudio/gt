@@ -152,6 +152,21 @@ tab_create <- function(tbl) {
   # Apply the `html_table` class
   attr(html_table, "class") <- "html_table"
 
+  # Set the fonts immediately
+  html_table <-
+    fmt_font(
+      html_tbl = html_table,
+      font = c(
+        html_table[["fonts"]] %>% dplyr::filter(type == "all") %>% dplyr::pull(font_1),
+        html_table[["fonts"]] %>% dplyr::filter(type == "all") %>% dplyr::pull(font_2),
+        html_table[["fonts"]] %>% dplyr::filter(type == "all") %>% dplyr::pull(font_3),
+        html_table[["fonts"]] %>% dplyr::filter(type == "all") %>% dplyr::pull(font_4)))
+
+  # Set the alignment immediately
+  html_table <-
+    cols_align_center(
+      html_tbl = html_table)
+
   # Perform all `source_tbl` transform steps
   html_table <-
     all_tbl_transform_steps(
