@@ -38,12 +38,12 @@ to_html_table_caption <- function(tbl,
   # Set defaults for styles
   border_top = c("solid", "2px", "#A8A8A8")
   border_bottom = c("solid", "2px", "#A8A8A8")
-  title_font_size = "115%"
+  title_font_size = "125%"
   title_align = "center"
-  title_padding = "1px"
-  headnote_font_size = "115%"
+  title_padding = "5px"
+  headnote_font_size = "85%"
   headnote_align = "center"
-  headnote_padding = "1px"
+  headnote_padding = "5px"
 
   # Extract the title and headnote
   title <- tbl$title
