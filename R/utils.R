@@ -42,6 +42,20 @@ empty_aesthetics_tbl <- function() {
     options = NA_character_)[-1, ]
 }
 
+#' Create an empty `fonts` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_fonts_tbl <- function() {
+
+  dplyr::tibble(
+    type = NA_character_,
+    color = NA_character_,
+    font_1 = NA_character_,
+    font_2 = NA_character_,
+    font_3 = NA_character_,
+    font_4 = NA_character_)[-1, ]
+}
+
 #' Create an empty `heading` tbl
 #' @importFrom dplyr tibble
 #' @noRd
