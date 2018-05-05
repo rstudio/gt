@@ -122,12 +122,23 @@ tab_create <- function(tbl) {
   # Create an empty `boxhead_panel` tbl
   boxhead_panel <- gt:::empty_boxhead_panel_tbl()
 
+  # Set default fonts -------------------------------------------------------
+  fonts <-
+    fonts %>%
+    dplyr::add_row(
+      type = "all",
+      font_1 = "Helvetica",
+      font_2 = "Segoe UI",
+      font_3 = "Arial",
+      font_4 = "Sans-Serif")
+
   # Create the `html_table` list object -------------------------------------
   html_table <-
     list(
       transforms = transforms,
       formats = formats,
       aesthetics = aesthetics,
+      fonts = fonts,
       source_tbl = tbl,
       modified_tbl = NULL,
       content_tbl = NULL,
