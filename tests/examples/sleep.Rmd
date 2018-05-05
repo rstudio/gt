@@ -16,22 +16,26 @@ library(tidyverse)
 Steps in detail:
 
  1. we take the `datasets::sleep` data.frame
+ 
+ 2. we are moving the `group` and `ID` columns to the start (LHS)
 
- 2. the 'striped' theme is applied
+ 3. the 'striped' theme is applied
 
- 3. all column values are left aligned
+ 4. all column values are left aligned
 
- 4. we are formatting numbers in the `extra` column to have 1 decimal place
+ 5. we are formatting numbers in the `extra` column to have 1 decimal place
  
 ```{r create_gt_object}
 sleep_tbl <-
   tab_create(tbl = sleep) %>%  # 1
-  theme_striped() %>%  # 2
-  cols_align_left() %>%  # 3
+  cols_move_to_start(columns = c("group", "ID")) %>%  # 2
+  theme_striped() %>%  # 3
+  cols_align_left() %>%  # 4
   fmt_number(
     columns = "extra",
     decimals = 1,
-    negative_style = "parens")  # 4
+    negative_style = "parens"
+    )  # 5
 ```
  
 ```{r show_table, echo=FALSE}

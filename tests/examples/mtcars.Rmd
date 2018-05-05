@@ -33,25 +33,30 @@ Steps in detail:
 
 ```{r create_gt_object}
 mtcars_tbl <-
-  tab_create(tbl = mtcars[1:6, 1:3]) %>%  # 1
+  tab_create(tbl = mtcars) %>%  # 1
   theme_striped() %>%  # 2
   fmt_number(
-    columns = "mpg",
-    decimals = 1) %>%  # 3
+    columns = c("mpg", "disp", "drat", "qsec"),
+    decimals = 1
+    ) %>%  # 3
   fmt_number(
-    columns = "cyl",
-    decimals = 2) %>%  # 4
+    columns = "wt",
+    decimals = 3
+    ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
   tab_stubhead_caption(caption = "car model") %>%  # 6
   tab_heading(
-    title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous Motor Trend table]") %>%  # 7
+    title = "Excerpt from the **mtcars** dataset",
+    headnote = "[A rather famous *Motor Trend* table]"
+    ) %>%  # 7
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
-    lead_in = "Main Source of Data: ") %>%  # 8
+    lead_in = "Main Source of Data: "
+    ) %>%  # 8
   tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
-    lead_in = "Original Data: ")  # 9
+    lead_in = "Original Data: "
+    )  # 9
 ```
 
 ```{r show_table, echo=FALSE}

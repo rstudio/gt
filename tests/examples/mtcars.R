@@ -18,21 +18,26 @@ mtcars_tbl <-
   theme_striped() %>%  # 2
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
-    decimals = 1) %>%  # 3
+    decimals = 1
+    ) %>%  # 3
   fmt_number(
     columns = "wt",
-    decimals = 3) %>%  # 4
+    decimals = 3
+    ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
   tab_stubhead_caption(caption = "car model") %>%  # 6
   tab_heading(
-    title = "Excerpt from the `mtcars` dataset",
-    headnote = "[A rather famous **Motor Trend** table]") %>%  # 7
+    title = "Excerpt from the **mtcars** dataset",
+    headnote = "[A rather famous *Motor Trend* table]"
+    ) %>%  # 7
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
-    lead_in = "Main Source of Data: ") %>%  # 8
+    lead_in = "Main Source of Data: "
+    ) %>%  # 8
   tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
-    lead_in = "Original Data: ")  # 9
+    lead_in = "Original Data: "
+    )  # 9
 
 # Display the table in the Viewer
 mtcars_tbl
