@@ -99,9 +99,11 @@ mtcars_tbl <-
     decimals = 3
     ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
-  tab_stubhead_caption(caption = "car model") %>%  # 6
+  tab_stubhead_caption(
+    caption = "car model",
+    alignment = "center") %>%  # 6
   tab_heading(
-    title = "Excerpt from the `mtcars` dataset",
+    title = "Excerpt from the **mtcars** dataset",
     headnote = "[A rather famous **Motor Trend** table]"
     ) %>%  # 7
   tab_source_note(
@@ -135,28 +137,26 @@ boxhead panels with spanner headings and column headings.
 # 3 - the 'striped' theme is applied
 # 4 - we are taking the column naming format `[heading].[caption]` and
 #     automatically creating spanner headings to add structure
-# 5 - all column values are center aligned
-# 6 - we are formatting numbers in the named columns to have 1 decimal place
-# 7 - a heading is added
-# 8 - a source note is added
+# 5 - we are formatting numbers in the named columns to have 1 decimal place
+# 6 - a heading is added
+# 7 - a source note is added
 iris_tbl <-
   tab_create(tbl = iris[1:6, ]) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
   theme_striped() %>%  # 3
   tab_spanner_headings(use_names = TRUE) %>%  # 4
-  cols_align_center() %>%  # 5
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
     decimals = 1
-    ) %>%  # 6
+    ) %>%  # 5
   tab_heading(
-    title = "Excerpt from the `iris` dataset",
+    title = "Excerpt from the **iris** dataset",
     headnote = "[All about *Iris setosa*, *versicolor*, and *virginica*]"
-    ) %>%  # 7
+    ) %>%  # 6
   tab_source_note(
     source_note = "Anderson, Edgar (1935).",
     lead_in = "The data were collected by "
-    )  # 8
+    )  # 7
 ```
 
 This is how the table appears:
