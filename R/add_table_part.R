@@ -23,7 +23,6 @@ tab_heading <- function(html_tbl,
                         table_number = NULL,
                         font = NULL) {
 
-
   if (is.null(headnote)) {
     headnote <- ""
   } else {
@@ -49,8 +48,8 @@ tab_heading <- function(html_tbl,
   html_tbl[["heading"]] <-
     dplyr::tibble(
       title = title,
-      headnote = ifelse(is.null(headnote), "", headnote %>% as.character()),
-      table_number = ifelse(is.null(table_number), "", table_number %>% as.character()),
+      headnote = headnote,
+      table_number = table_number,
       font = font)
 
   html_tbl
