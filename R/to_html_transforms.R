@@ -1,6 +1,8 @@
 #' Generate a HTML fragment for the table heading part
 #' @param tbl tbl the table that contains
 #' the table caption data.
+#' @param font values to be used for the \code{font-family}
+#' style property.
 #' @param border_top values to be used for the
 #' \code{border-top} style property. This allows for
 #' a horizontal rule at the top of the table.
