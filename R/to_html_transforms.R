@@ -202,9 +202,9 @@ to_html_table_caption <- function(tbl,
 #' Generate a HTML fragment for the source note part
 #' @param tbl the table that contains
 #' the source note data.
-#' @param font_size the font size to use for the
+#' @param font the font family to use for the
 #' source notes.
-#' @param align the alignment of text to use for the
+#' @param font_size the font size to use for the
 #' source notes.
 #' @param padding the amount of padding to use for
 #' the source notes.
@@ -216,12 +216,50 @@ to_html_table_caption <- function(tbl,
 #' @noRd
 to_html_source_notes <- function(tbl,
                                  span_amount,
-                                 font_size = "115%",
-                                 align = "center",
-                                 padding = "3px") {
+                                 font = NULL,
+                                 font_size = NULL,
+                                 padding = NULL) {
 
   # Ensure that the ordering of the table is correct
   tbl <- tbl %>% dplyr::arrange(index)
+
+  font <- "Helvetica"
+  font_size <- "90%"
+  padding <- "3px"
+
+  if (!is.null(font)) {
+    font_family <-
+      paste(font, collapse = " ") %>%
+      as.character() %>%
+      paste0("font-family:", ., ";")
+  } else {
+    font_family <- NA_character_
+  }
+
+  if (!is.null(font_size)) {
+    font_size <-
+      paste(font_size, collapse = " ") %>%
+      as.character() %>%
+      paste0("font-size:", ., ";")
+  } else {
+    font_size <- NA_character_
+  }
+
+  if (!is.null(padding)) {
+    padding <-
+      paste(padding, collapse = " ") %>%
+      as.character() %>%
+      paste0("padding:", ., ";")
+  } else {
+    padding <- NA_character_
+  }
+
+  # Generate the styles
+  styles_str <-
+    paste(
+      c(font_family, font_size, padding)[
+        !is.na(c(font_family, font_size, padding))],
+      collapse = "")
 
   # Generate the tag content for all source notes
   content_str <-
@@ -234,7 +272,8 @@ to_html_source_notes <- function(tbl,
   # Generate the `html_fragment` object
   html_fragment <-
     glue::glue(
-      "<tr>\n    <td colspan=\"{span_amount}\">{content}</td>\n  </tr>\n",
+      "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
+      styles = styles_str,
       content = content_str) %>%
     as.character() %>%
     paste(collapse = "\n") %>%
