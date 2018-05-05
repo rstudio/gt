@@ -4,7 +4,8 @@
 \alias{tab_heading}
 \title{Add content to the heading part of the table}
 \usage{
-tab_heading(html_tbl, title, headnote = NULL, table_number = NULL)
+tab_heading(html_tbl, title, headnote = NULL, table_number = NULL,
+  font = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -17,6 +18,12 @@ headnote.}
 
 \item{table_number}{a number to use as the
 table number.}
+
+\item{font}{the name of the font to use for
+the specified columns. This could be provided
+as a vector of fonts where subsequent font names
+provide fallbacks in the case that fonts are
+not available.}
 }
 \value{
 an object of class \code{html_table}.
