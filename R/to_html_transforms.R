@@ -57,6 +57,9 @@ to_html_table_caption <- function(tbl,
   headnote <- commonmark::markdown_html(text = headnote) %>%
     stringr::str_replace_all("^<p>|</p>|\n", "")
 
+  font_family <-
+    paste0("font-family:", font, ";")
+
   if (!is.null(border_top)) {
     border_top <-
       paste(border_top, collapse = " ") %>%
