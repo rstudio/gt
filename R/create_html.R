@@ -263,7 +263,7 @@ create_html <- function(html_tbl) {
     table_caption_component <-
       to_html_table_caption(
         tbl = heading,
-        border_bottom = NULL)
+        font = fonts_heading)
 
   } else {
     table_caption_component <- ""
