@@ -102,12 +102,18 @@ tab_stubhead_caption <- function(html_tbl,
 #' @param lead_in a lead in word or phrase
 #' indicating the citation as the source of the
 #' tabulated data.
+#' @param font the name of the font to use for
+#' the specified columns. This could be provided
+#' as a vector of fonts where subsequent font names
+#' provide fallbacks in the case that fonts are
+#' not available.
 #' @return an object of class \code{html_table}.
-#' @importFrom tibble add_row
+#' @importFrom dplyr add_row
 #' @export
 tab_source_note <- function(html_tbl,
                             source_note,
-                            lead_in = NULL) {
+                            lead_in = NULL,
+                            font = NULL) {
 
   source_note_str <- source_note %>% as.character()
 
@@ -117,12 +123,21 @@ tab_source_note <- function(html_tbl,
     lead_in_str <- ""
   }
 
+  if (is.null(font)) {
+    font <- NA_character_
+  } else {
+    font <-
+      font %>%
+      paste(collapse = ", ")
+  }
+
   html_tbl[["source_note"]] <-
     html_tbl[["source_note"]] %>%
-    tibble::add_row(
+    dplyr::add_row(
+      index = (nrow(html_tbl[["source_note"]]) + 1L),
       source_note = source_note_str,
       lead_in = lead_in_str,
-      index = (nrow(.) + 1L))
+      font = font)
 
   html_tbl
 }
