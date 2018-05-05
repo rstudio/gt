@@ -632,6 +632,13 @@ create_html_table_tbl <- function(html_tbl) {
       dplyr::arrange(row, column)
   }
 
+  if (rowname_available & groupname_available == FALSE) {
+
+    table_body <-
+      dplyr::bind_rows(table_stub, table_body) %>%
+      dplyr::arrange(row, column)
+  }
+
   # Bind rows from `table_boxhead` and `table_body`
   html_table <-
     dplyr::bind_rows(
