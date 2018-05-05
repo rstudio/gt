@@ -4,7 +4,7 @@
 \alias{tab_source_note}
 \title{Add a source note citation}
 \usage{
-tab_source_note(html_tbl, source_note, lead_in = NULL)
+tab_source_note(html_tbl, source_note, lead_in = NULL, font = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -16,6 +16,12 @@ source note.}
 \item{lead_in}{a lead in word or phrase
 indicating the citation as the source of the
 tabulated data.}
+
+\item{font}{the name of the font to use for
+the specified columns. This could be provided
+as a vector of fonts where subsequent font names
+provide fallbacks in the case that fonts are
+not available.}
 }
 \value{
 an object of class \code{html_table}.
