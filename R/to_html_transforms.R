@@ -141,8 +141,8 @@ to_html_table_caption <- function(tbl,
     if (!all(is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding)))) {
       html_fragment <-
         paste(
-          c(border_top, border_bottom, title_font_size, title_align, title_padding)[
-            !is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding))],
+          c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding)[
+            !is.na(c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding))],
           collapse = "") %>%
         paste0("<caption style=\"", ., "\">", title, "</caption>\n")
     } else {
@@ -152,12 +152,12 @@ to_html_table_caption <- function(tbl,
 
   if (!is.null(headnote) || headnote != "") {
 
-    if (!all(is.na(c(border_top, title_font_size, title_align, title_padding)))) {
+    if (!all(is.na(c(font_family, border_top, title_font_size, title_align, title_padding)))) {
 
       html_fragment <-
         paste(
-          c(border_top, title_font_size, title_align, title_padding)[
-            !is.na(c(border_top, title_font_size, title_align, title_padding))],
+          c(font_family, border_top, title_font_size, title_align, title_padding)[
+            !is.na(c(font_family, border_top, title_font_size, title_align, title_padding))],
           collapse = "") %>%
         paste0("<caption style=\"", ., "\">", title, "</caption>\n")
 
@@ -171,14 +171,14 @@ to_html_table_caption <- function(tbl,
   # Generate headnote <caption> statement
   if (!is.null(headnote)) {
 
-    if (!all(is.na(c(border_bottom, headnote_font_size, headnote_padding)))) {
+    if (!all(is.na(c(font_family, border_bottom, headnote_font_size, headnote_padding)))) {
 
       html_fragment <-
         paste(
           html_fragment,
           paste(
-            c(border_bottom, headnote_font_size, headnote_align, headnote_padding)[
-              !is.na(c(border_bottom, headnote_font_size, headnote_align, headnote_padding))],
+            c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding)[
+              !is.na(c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding))],
             collapse = "") %>%
             paste0("<caption style=\"", ., "\">", headnote, "</caption>\n"),
           collapse = "")
