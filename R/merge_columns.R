@@ -3,7 +3,7 @@
 #' created using the \code{tab_create()} function.
 #' @importFrom dplyr filter bind_rows arrange mutate pull select arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 merge_columns <- function(html_tbl) {
 
   if ("fmt_uncertainty" %in% html_tbl[["transforms"]]$transform_type) {
@@ -47,4 +47,3 @@ merge_columns <- function(html_tbl) {
 
   html_tbl
 }
-
