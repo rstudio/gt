@@ -1,4 +1,4 @@
-#' Format values as a number
+#' Format numeric values
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
@@ -173,7 +173,7 @@ fmt_percent <- function(html_tbl,
   html_tbl
 }
 
-#' Format values as a fraction
+#' Format values to fractions
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
@@ -355,7 +355,7 @@ fmt_datetime <- function(html_tbl,
   html_tbl
 }
 
-#' Format values as currency values
+#' Format values as currencies
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an option specify which columns
