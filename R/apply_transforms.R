@@ -34,6 +34,103 @@ tab_stub <- function(html_tbl,
   html_tbl
 }
 
+#' Arrange a table stub into blocks
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @param ... a series of named vectors for
+#' specifying the mappings between row names
+#' to stub block headings.
+#' @return an object of class \code{html_table}.
+#' @examples
+#' # Create an `mtcars` presentation table that
+#' # groups certain rows together in stub blocks
+#' mtcars_tbl <-
+#'   tab_create(tbl = mtcars) %>%  # 1
+#'   theme_striped() %>%
+#'   tab_stub_block(
+#'     "Mazda" = rownames_with("Mazda"),
+#'     "Mercs" = rownames_with("Merc"),
+#'     "Hornets" = rownames_with("Hornet"),
+#'     "Toyotas" = rownames_with("Toyota"),
+#'     "Supercars" = c(
+#'       "Ferrari Dino","Maserati Bora",
+#'       "Porsche 914-2"))
+#' @importFrom dplyr pull add_row
+#' @importFrom stringr str_match
+#' @export
+tab_stub_block <- function(html_tbl,
+                           ...) {
+
+  # Get `rownames` and `row_indices`
+  # from `modified_tbl`
+  if ("rowname" %in% colnames(html_tbl[["modified_tbl"]])) {
+    rownames <- html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)
+    row_indices <- seq(rownames)
+  } else {
+    rownames <- NA_character_
+    row_indices <- NA_integer_
+  }
+
+  rownames_with <- function(pattern) {
+
+    matching_rows <-
+      !is.na(
+        stringr::str_match(
+          string = rownames, pattern = pattern) %>%
+          as.character())
+
+    matching_rows %>% which()
+  }
+
+  x <- list(...)
+
+  # Obtain row numbers for literal rownames
+  for (i in seq(length(x))) {
+    if (!(x[[i]] %>% is.integer())) {
+
+      row_indices <- vector(mode = "integer")
+
+      for (j in seq(x[[i]])) {
+
+        row_indices <-
+          c(row_indices,
+            which(rownames == x[[i]][j])[1])
+      }
+
+      x[[i]] <- row_indices
+    }
+  }
+
+  # Obtain `::other::`, or remaining rows
+  others_rows <-
+    base::setdiff(
+      row_indices,
+      (x %>% unlist() %>% unname()))
+
+  # Add to the `stub_block` tbl
+  for (i in seq(length(x))) {
+
+    html_tbl[["stub_block"]] <-
+      html_tbl[["stub_block"]] %>%
+      dplyr::add_row(
+        stub_heading = x[i] %>% names(),
+        row_number = x[[i]])
+  }
+
+  # If there are remaining rows, add
+  # those in
+  if (length(others_rows) > 0) {
+
+    html_tbl[["stub_block"]] <-
+      html_tbl[["stub_block"]] %>%
+      dplyr::add_row(
+        stub_heading = "::other::",
+        row_number = others_rows)
+  }
+
+  html_tbl
+}
+
 #' Move one or more columns to the start
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
