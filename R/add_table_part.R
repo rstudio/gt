@@ -1,4 +1,4 @@
-#' Add content to the heading part of the table
+#' Add a table heading
 #'
 #' Add a title, headnote, and table number
 #' information to the heading part of the table.
@@ -89,7 +89,6 @@ tab_stubhead_caption <- function(html_tbl,
 
   html_tbl
 }
-
 
 #' Add a source note citation
 #'

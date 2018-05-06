@@ -1,9 +1,9 @@
-#' Apply left alignment to column data
+#' Use left alignment
 #'
-#' Apply the left alignment rule to data cells within
-#' table columns. Options exist to selectively
-#' apply the alignment to specified column names or
-#' to columns of certain types.
+#' Use left alignment on one or more table
+#' columns. Options exist to selectively apply the
+#' alignment to specified column names or to
+#' columns of certain types.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
@@ -46,13 +46,12 @@ cols_align_left <- function(html_tbl,
   html_tbl
 }
 
-
-#' Apply center alignment to column data
+#' Use center alignment
 #'
-#' Apply the center alignment rule to data cells within
-#' table columns. Options exist to selectively
-#' apply the alignment to specified column names or
-#' to columns of certain types.
+#' Use center alignment on one or more table
+#' columns. Options exist to selectively apply the
+#' alignment to specified column names or to
+#' columns of certain types.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
@@ -95,12 +94,12 @@ cols_align_center <- function(html_tbl,
   html_tbl
 }
 
-#' Apply right alignment to column data
+#' Use right alignment
 #'
-#' Apply the right alignment rule to data cells within
-#' table columns. Options exist to selectively
-#' apply the alignment to specified column names or
-#' to columns of certain types.
+#' Use right alignment on one or more table
+#' columns. Options exist to selectively apply the
+#' alignment to specified column names or to
+#' columns of certain types.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
@@ -144,7 +143,7 @@ cols_align_right <- function(html_tbl,
 }
 
 
-#' Format fonts used in column data
+#' Format fonts used for values
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns an optional vector of column names
@@ -189,7 +188,7 @@ fmt_font <- function(html_tbl,
 }
 
 
-#' Apply the striped theme to the table
+#' Use the striped table theme
 #'
 #' Apply the striped theme to the table. This
 #' adds striped rows, reasonably thick horizontal
@@ -213,7 +212,7 @@ theme_striped <- function(html_tbl) {
 }
 
 
-#' Apply a minimal set of line styles to the table
+#' Use the minimal table theme
 #'
 #' Apply line styles with a minimal set of
 #' horizontal rules for demarcation of the
@@ -238,7 +237,7 @@ theme_minimal <- function(html_tbl) {
 }
 
 
-#' Apply line styles that give a table a classic look
+#' Use the classical table theme
 #'
 #' Apply horizontal and vertical line styles that
 #' visually separate the columns and rows. This
@@ -261,7 +260,7 @@ theme_classical <- function(html_tbl) {
 }
 
 
-#' Apply spanner headings
+#' Add spanner headings
 #'
 #' If column names in the \code{tbl} supplied
 #' use the naming convention of

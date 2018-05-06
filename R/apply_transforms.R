@@ -227,7 +227,7 @@ cols_move_to_end <- function(html_tbl,
   html_tbl
 }
 
-#' Move one or more columns to the end
+#' Move one or more columns
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns the column names to move to
@@ -333,7 +333,7 @@ cols_reorder <- function(html_tbl,
   html_tbl
 }
 
-#' Move one or more columns to the end
+#' Remove one or more columns
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param columns the column names to remove
@@ -380,7 +380,7 @@ cols_remove <- function(html_tbl,
   html_tbl
 }
 
-#' Apply uncertainty values to a column of data
+#' Format as values with uncertainties
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param value_column the column containing the
