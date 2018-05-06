@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_transforms.R
 \name{fmt_uncertainty}
 \alias{fmt_uncertainty}
-\title{Apply uncertainty values to a column of data}
+\title{Format as values with uncertainties}
 \usage{
 fmt_uncertainty(html_tbl, value_column, uncert_column)
 }
@@ -21,5 +21,5 @@ uncertainties related to quantities in
 an object of class \code{html_table}.
 }
 \description{
-Apply uncertainty values to a column of data
+Format as values with uncertainties
 }

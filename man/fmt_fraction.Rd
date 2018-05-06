@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_formats.R
 \name{fmt_fraction}
 \alias{fmt_fraction}
-\title{Format values as a fraction}
+\title{Format values to fractions}
 \usage{
 fmt_fraction(html_tbl, columns = NULL, accuracy = 3)
 }
@@ -28,5 +28,5 @@ value.}
 an object of class \code{html_table}.
 }
 \description{
-Format values as a fraction
+Format values to fractions
 }

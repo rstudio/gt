@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_transforms.R
 \name{cols_move}
 \alias{cols_move}
-\title{Move one or more columns to the end}
+\title{Move one or more columns}
 \usage{
 cols_move(html_tbl, columns, after)
 }
@@ -21,5 +21,5 @@ disregarded.}
 an object of class \code{html_table}.
 }
 \description{
-Move one or more columns to the end
+Move one or more columns
 }

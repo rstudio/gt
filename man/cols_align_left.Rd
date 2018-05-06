@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{cols_align_left}
 \alias{cols_align_left}
-\title{Apply left alignment to column data}
+\title{Use left alignment}
 \usage{
 cols_align_left(html_tbl, columns = NULL, types = NULL)
 }
@@ -20,8 +20,8 @@ for which the left alignment should be applied.}
 an object of class \code{html_table}.
 }
 \description{
-Apply the left alignment rule to data cells within
-table columns. Options exist to selectively
-apply the alignment to specified column names or
-to columns of certain types.
+Use left alignment on one or more table
+columns. Options exist to selectively apply the
+alignment to specified column names or to
+columns of certain types.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{theme_classical}
 \alias{theme_classical}
-\title{Apply line styles that give a table a classic look}
+\title{Use the classical table theme}
 \usage{
 theme_classical(html_tbl)
 }

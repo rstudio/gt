@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{theme_striped}
 \alias{theme_striped}
-\title{Apply the striped theme to the table}
+\title{Use the striped table theme}
 \usage{
 theme_striped(html_tbl)
 }

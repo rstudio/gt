@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{fmt_font}
 \alias{fmt_font}
-\title{Format fonts used in column data}
+\title{Format fonts used for values}
 \usage{
 fmt_font(html_tbl, columns = NULL, types = NULL, font)
 }
@@ -26,5 +26,5 @@ not available.}
 an object of class \code{html_table}.
 }
 \description{
-Format fonts used in column data
+Format fonts used for values
 }

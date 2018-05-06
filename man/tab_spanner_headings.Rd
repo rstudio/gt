@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{tab_spanner_headings}
 \alias{tab_spanner_headings}
-\title{Apply spanner headings}
+\title{Add spanner headings}
 \usage{
 tab_spanner_headings(html_tbl, ..., use_names = FALSE)
 }
