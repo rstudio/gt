@@ -119,6 +119,9 @@ tab_create <- function(tbl) {
   # Create an empty `stubhead_caption` tbl
   stubhead_caption <- gt:::empty_stubhead_caption_tbl()
 
+  # Create an empty `stub_block` tbl
+  stub_block <- gt:::empty_stub_block_tbl()
+
   # Create an empty `boxhead_panel` tbl
   boxhead_panel <- gt:::empty_boxhead_panel_tbl()
 
@@ -147,6 +150,7 @@ tab_create <- function(tbl) {
       source_note = source_note,
       stubhead_caption = stubhead_caption,
       boxhead_panel = boxhead_panel,
+      stub_block = stub_block,
       html_head = html_head)
 
   # Apply the `html_table` class
