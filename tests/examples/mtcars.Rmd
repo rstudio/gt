@@ -25,11 +25,13 @@ Steps in detail:
  
  5. all `numeric` values are right aligned
  
- 6. the dataset has rownames, they are moved to the stub; we supply a stubhead caption
+ 6. all `character` values are left aligned
  
- 7. a heading is added
+ 7. the dataset has rownames, they are moved to the stub; we supply a stubhead caption
  
- 8.,9. two source notes are added
+ 8. a heading is added
+ 
+ 9.,10. two source notes are added
 
 ```{r create_gt_object}
 mtcars_tbl <-
@@ -44,19 +46,20 @@ mtcars_tbl <-
     decimals = 3
     ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
-  tab_stubhead_caption(caption = "car model") %>%  # 6
+  cols_align_left(types = "character") %>%  # 6
+  tab_stubhead_caption(caption = "car model") %>%  # 7
   tab_heading(
     title = "Excerpt from the **mtcars** dataset",
     headnote = "[A rather famous *Motor Trend* table]"
-    ) %>%  # 7
+    ) %>%  # 8
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
     lead_in = "Main Source of Data: "
-    ) %>%  # 8
+    ) %>%  # 9
   tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
     lead_in = "Original Data: "
-    )  # 9
+    )  # 10
 ```
 
 ```{r show_table, echo=FALSE}

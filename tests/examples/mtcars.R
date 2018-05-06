@@ -9,10 +9,11 @@ library(tidyverse)
 # 3 - we are formatting numbers in 4 columns to have 1 decimal place
 # 4 - we are formatting numbers in the `wt` column to have 3 decimal places
 # 5 - all `numeric` values are right aligned
-# 6 - the dataset has rownames so they've been moved to the stub;
+# 6 - all `character` values are left aligned
+# 7 - the dataset has rownames so they've been moved to the stub;
 #     here, we supply a stubhead caption
-# 7 - a heading is added
-# 8,9 - two source notes are added
+# 8 - a heading is added
+# 9,10 - two source notes are added
 mtcars_tbl <-
   tab_create(tbl = mtcars) %>%  # 1
   theme_striped() %>%  # 2
@@ -25,19 +26,20 @@ mtcars_tbl <-
     decimals = 3
     ) %>%  # 4
   cols_align_right(types = "numeric") %>%  # 5
-  tab_stubhead_caption(caption = "car model") %>%  # 6
+  cols_align_left(types = "character") %>%  # 6
+  tab_stubhead_caption(caption = "car model") %>%  # 7
   tab_heading(
     title = "Excerpt from the **mtcars** dataset",
     headnote = "[A rather famous *Motor Trend* table]"
-    ) %>%  # 7
+    ) %>%  # 8
   tab_source_note(
     source_note = "Henderson and Velleman (1981).",
     lead_in = "Main Source of Data: "
-    ) %>%  # 8
+    ) %>%  # 9
   tab_source_note(
     source_note = "Motor Trend Magazine (1974).",
     lead_in = "Original Data: "
-    )  # 9
+    )  # 10
 
 # Display the table in the Viewer
 mtcars_tbl
