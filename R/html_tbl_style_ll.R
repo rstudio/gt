@@ -1,4 +1,3 @@
-
 #' Add inline CSS styles to columns in an HTML table object
 #'
 #' Modify column styles for a table within an HTML
@@ -37,7 +36,7 @@
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_column_style <- function(html_tbl,
                              columns = NULL,
                              property,
@@ -108,8 +107,6 @@ add_column_style <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Add inline CSS styles to the HTML table object
 #'
 #' Modify the overall table style for a table
@@ -140,7 +137,7 @@ add_column_style <- function(html_tbl,
 #'   add_table_style(
 #'     property = "color",
 #'     values = "blue")
-#' @export
+#' @noRd
 add_table_style <- function(html_tbl,
                             property,
                             values) {
@@ -189,8 +186,6 @@ add_table_style <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Add inline CSS styles to the header of an HTML table object
 #'
 #' Modify the style of the header for a table
@@ -221,7 +216,7 @@ add_table_style <- function(html_tbl,
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_header_style <- function(html_tbl,
                              property,
                              values) {
@@ -270,8 +265,6 @@ add_header_style <- function(html_tbl,
   html_tbl
 }
 
-
-
 #' Add inline CSS styles to the body of an HTML table object
 #'
 #' Modify the style of the body for a table
@@ -302,7 +295,7 @@ add_header_style <- function(html_tbl,
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_body_style <- function(html_tbl,
                            property,
                            values) {

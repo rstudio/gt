@@ -19,7 +19,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_columns <- function(html_tbl,
                                  columns = NULL,
                                  include_col_n = TRUE,
@@ -82,8 +82,6 @@ add_style_to_columns <- function(html_tbl,
 
   html_tbl
 }
-
-
 
 #' Add inline CSS styles to `column 0` (the stub and stubhead)
 #'

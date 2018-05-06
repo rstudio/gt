@@ -1,11 +1,9 @@
-
 #' Highlight Table Parts and Preview
 #'
 #' Highlights the parts of a table in a table object
 #' with color fills.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
-#' @export
 highlight_tbl_parts <- function(html_tbl) {
 
   html_tbl %>%
