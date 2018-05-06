@@ -101,6 +101,16 @@ empty_stubhead_caption_tbl <- function() {
     alignment = NA_character_)[-1, ]
 }
 
+#' Create an empty `stub_block` tbl
+#' @importFrom dplyr tibble
+#' @noRd
+empty_stub_block_tbl <- function() {
+
+  dplyr::tibble(
+    stub_heading = NA_character_,
+    row_number = NA_integer_)[-1, ]
+}
+
 #' Create an empty `boxhead_panel` tbl
 #' @importFrom dplyr tibble
 #' @noRd
