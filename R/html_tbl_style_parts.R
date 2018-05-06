@@ -16,7 +16,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr pull bind_rows filter mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_part <- function(html_tbl,
                               part,
                               property,

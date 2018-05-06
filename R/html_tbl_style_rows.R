@@ -20,7 +20,7 @@
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_rows <- function(html_tbl,
                               rows = NULL,
                               parts = c("stub", "field"),
@@ -103,7 +103,7 @@ add_style_to_rows <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_summary_caption_rows <- function(html_tbl,
                                               extend_to_field = FALSE,
                                               property,
@@ -130,7 +130,6 @@ add_style_to_summary_caption_rows <- function(html_tbl,
       dplyr::pull(row)
 
   } else {
-
     return(html_tbl)
   }
 
@@ -199,7 +198,7 @@ add_style_to_summary_caption_rows <- function(html_tbl,
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
 #' @importFrom rlang UQ
-#' @export
+#' @noRd
 add_style_to_group_heading_rows <- function(html_tbl,
                                             extend_to_field = FALSE,
                                             property,
@@ -406,7 +405,6 @@ add_style_to_row_0 <- function(html_tbl,
   html_tbl
 }
 
-
 #' Add inline CSS styles to `row 1` (first row of field)
 #'
 #' Add inline CSS style to the boxhead and stubhead
@@ -472,7 +470,6 @@ add_style_to_row_1 <- function(html_tbl,
 
   html_tbl
 }
-
 
 #' Add inline CSS styles to `row n` (the final row)
 #'
