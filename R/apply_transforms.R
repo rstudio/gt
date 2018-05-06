@@ -64,40 +64,37 @@ tab_stub_block <- function(html_tbl,
   # Get `rownames` and `row_indices`
   # from `modified_tbl`
   if ("rowname" %in% colnames(html_tbl[["modified_tbl"]])) {
-    rownames <- html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)
-    row_indices <- seq(rownames)
-  } else {
-    rownames <- NA_character_
-    row_indices <- NA_integer_
-  }
+    assign(
+      x = "rowname",
+      value = html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname),
+      envir = .GlobalEnv)
 
-  rownames_with <- function(pattern) {
+    assign(
+      x = "row_indices",
+      value = seq(html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)),
+      envir = .GlobalEnv)
 
-    matching_rows <-
-      !is.na(
-        stringr::str_match(
-          string = rownames, pattern = pattern) %>%
-          as.character())
-
-    matching_rows %>% which()
+    on.exit(expr = rm(rowname, envir = .GlobalEnv))
+    on.exit(expr = rm(row_indices, envir = .GlobalEnv), add = TRUE)
   }
 
   x <- list(...)
 
   # Obtain row numbers for literal rownames
   for (i in seq(length(x))) {
+
     if (!(x[[i]] %>% is.integer())) {
 
-      row_indices <- vector(mode = "integer")
+      row_indices_x <- vector(mode = "integer")
 
       for (j in seq(x[[i]])) {
 
-        row_indices <-
-          c(row_indices,
-            which(rownames == x[[i]][j])[1])
+        row_indices_x <-
+          c(row_indices_x,
+            which(rowname == x[[i]][j])[1])
       }
 
-      x[[i]] <- row_indices
+      x[[i]] <- row_indices_x
     }
   }
 
