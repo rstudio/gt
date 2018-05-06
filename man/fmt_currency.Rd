@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_formats.R
 \name{fmt_currency}
 \alias{fmt_currency}
-\title{Format values as currency values}
+\title{Format values as currencies}
 \usage{
 fmt_currency(html_tbl, columns = NULL, currency, use_subunits = TRUE,
   decimals = NULL, use_big_mark = FALSE, negative_style = "signed")
@@ -42,5 +42,5 @@ parentheses.}
 an object of class \code{html_table}.
 }
 \description{
-Format values as currency values
+Format values as currencies
 }

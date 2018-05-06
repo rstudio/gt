@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{theme_minimal}
 \alias{theme_minimal}
-\title{Apply a minimal set of line styles to the table}
+\title{Use the minimal table theme}
 \usage{
 theme_minimal(html_tbl)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_formats.R
 \name{fmt_number}
 \alias{fmt_number}
-\title{Format values as a number}
+\title{Format numeric values}
 \usage{
 fmt_number(html_tbl, columns = NULL, decimals = NULL,
   use_big_mark = FALSE, drop_trailing_zeros = FALSE,
@@ -40,5 +40,5 @@ parentheses.}
 an object of class \code{html_table}.
 }
 \description{
-Format values as a number
+Format numeric values
 }

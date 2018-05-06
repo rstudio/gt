@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_table_part.R
 \name{tab_heading}
 \alias{tab_heading}
-\title{Add content to the heading part of the table}
+\title{Add a table heading}
 \usage{
 tab_heading(html_tbl, title, headnote = NULL, table_number = NULL,
   font = NULL)
