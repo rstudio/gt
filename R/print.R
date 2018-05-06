@@ -6,6 +6,10 @@
 #' @export
 print.html_table <- function(x, ..., view = interactive()) {
 
+  # [0.5] Creation of stub block groups
+  x <-
+    create_stub_block_groups(html_tbl = x)
+
   # [1] Creation of the content table
   x <-
     create_content_tbl(html_tbl = x)
@@ -27,7 +31,7 @@ print.html_table <- function(x, ..., view = interactive()) {
 
   # [5] Join in formatted content
   x <-
-    gt:::use_html_content(
+    use_html_content(
       html_tbl = x)
 
   # [6] Merge columns

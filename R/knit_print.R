@@ -7,9 +7,13 @@
 #' @export
 knit_print.html_table <- function(x, ...) {
 
+  # [0.5] Creation of stub block groups
+  x <-
+    create_stub_block_groups(html_tbl = x)
+
   # [1] Creation of the content table
   x <-
-    gt:::create_content_tbl(html_tbl = x)
+    create_content_tbl(html_tbl = x)
 
   # [2] Modification of the content table
   x <-
@@ -28,7 +32,7 @@ knit_print.html_table <- function(x, ...) {
 
   # [5] Join in formatted content
   x <-
-    gt:::use_html_content(
+    use_html_content(
       html_tbl = x)
 
   # [6] Merge columns
