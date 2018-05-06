@@ -9,10 +9,8 @@ essentially want the activity of building tables to be done with a clear
 separation of concerns: you don’t have to decide how the tabular data
 gets transformed and structured while also worrying about aesthetics.
 
-While the Grammar of Tables API is still undergoing a first draft, the
-model for the constituent parts of a table has been tentatively put
-forward. The schematic below provides an outline of how the table
-components fit together.
+The model for the constituent parts of a table can be explained in part
+by the following schematic:
 
 <img src="man/figures/gt_parts_of_a_table.png">
 
@@ -36,7 +34,9 @@ integral to finalized output.
 The **stub** is the area to the left in a table that contains **row
 captions**, **summary captions**, and **group headings**. Those subparts
 can be grouped in a sequence of **stub blocks**. The **stubhead**
-provides a location for a caption that describes the **stub**.
+provides a location for a caption that describes the **stub**. The
+**stub** is optional and there are many cases where a **stub** wouldn’t
+be useful in a table.
 
 The **boxhead** is the part that contains the **column headings**, which
 can themselves be supplemented by **spanner headings** (which are placed
@@ -55,7 +55,23 @@ The **source note** area is for provision of citation information for
 the presented data. As it is commonly seen, the citation is preceeded by
 the word `Source`.
 
-## Examples
+The formalized table parts fit together well and can be used effectively
+for the vast majority of the tables that one may create. However, the
+grammar is meant to be flexibile and not at all rigid. We put forward
+two main considerations for tabular presentation:
+
+1.  use common sense when planning a table
+
+2.  imagine the viewing of the table from the standpoint of the user
+
+When taking these considerations to heart, we may naturally arrive to an
+overarching design
+    objective:
+
+    The single objective is to make the display table as easy to read and to 
+    understand as the nature of the material will permit.
+
+## Examples of Display Table Creation using **gt**
 
 The `mtcars` dataset can be suitably transformed into a simple HTML
 table (for sake of brevity, we’ll use just the first 6 rows). We can use
@@ -162,6 +178,65 @@ iris_tbl <-
 This is how the table appears:
 
 <img src="man/figures/iris.png">
+
+## Package API
+
+The package API consists of the following functions:
+
+**Create/Modify Table Parts**
+
+  - `tab_create()` – create gt table object
+  - `tab_heading()` – add a table heading
+  - `tab_source_note()` – add a source note citation
+  - `tab_spanner_headings()` – add spanner headings
+  - `tab_stub()` – add a stub to a table
+  - `tab_stub_block()` – arrange a table stub into blocks
+  - `tab_stubhead_caption()` – add caption text to the stubhead
+
+**Format Data**
+
+  - `fmt_number()` – format numeric values
+  - `fmt_scientific()` – format values to scientific notation
+  - `fmt_percent()` – format values as a percentage
+  - `fmt_currency()` – format values as currencies
+  - `fmt_fraction()` – format values to fractions
+  - `fmt_date()` – format values as dates
+  - `fmt_time()` – format values as times
+  - `fmt_datetime()` – format values as date-times
+  - `fmt_uncertainty()` – format as values with uncertainties
+  - `fmt_font()` – format fonts used for values
+
+**Modify Columns**
+
+  - `cols_align_left()` – use left alignment
+  - `cols_align_center()` – use center alignment
+  - `cols_align_right()` – use right alignment
+  - `cols_move()` – move one or more columns
+  - `cols_move_to_start()` – move one or more columns to the start
+  - `cols_move_to_end()` – move one or more columns to the end
+  - `cols_reorder()` – reorder all columns
+  - `cols_remove()` – remove one or more columns
+
+**Apply Table Theme**
+
+  - `theme_striped()` – use the striped table theme
+  - `theme_classical()` – use the classical table theme
+  - `theme_minimal()` – use the minimal table theme
+
+There are more functions yet to come.
+
+## Inner Workings
+
+For those interested in the package design itself and especially how the
+**gt** functions relate to each other, here is a graph showing just
+that:
+
+<img src="man/figures/gt_function_graph.png">
+
+The green nodes represent those functions that are exported. The
+relative sizing of nodes is scaled the number of package functions
+called by each (no matter whether the function is exported or not). Each
+edge represents the relationship `called_in`.
 
 ## Code of Conduct
 
