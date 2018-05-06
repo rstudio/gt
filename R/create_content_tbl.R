@@ -1,3 +1,43 @@
+#' Apply a final modification to the input table
+#' to facilitate generation of stub block groups.
+#' @param html_tbl an HTML table object that
+#' is created using the \code{tab_create()} function.
+#' @importFrom dplyr mutate select inner_join rename
+#' @noRd
+create_stub_block_groups <- function(html_tbl) {
+
+  # Get the row series from `tbl`
+  stub_block_tbl <- html_tbl[["stub_block"]]
+
+  if (nrow(stub_block_tbl) > 0) {
+
+    modified_tbl <-
+      html_tbl[["modified_tbl"]] %>%
+      dplyr::mutate(.row_number = 1:nrow(html_tbl[["modified_tbl"]]))
+
+    if ("groupname" %in% colnames(modified_tbl)) {
+      modified_tbl <- modified_tbl %>% dplyr::select(-groupname)
+    }
+
+    modified_tbl <-
+      modified_tbl %>%
+      dplyr::inner_join(
+        stub_block_tbl %>%
+          dplyr::rename(groupname = stub_heading),
+        by = c(".row_number" = "row_number")) %>%
+      dplyr::select(groupname, everything()) %>%
+      dplyr::select(-.row_number) %>%
+      dplyr::arrange(
+        match(
+          groupname,
+          stub_block_tbl %>% dplyr::pull(stub_heading) %>% unique()))
+
+    html_tbl[["modified_tbl"]] <- modified_tbl
+  }
+
+  html_tbl
+}
+
 #' Create a rowwise table that's is used for
 #' application of scaling factors and string/
 #' number formatting for cell content
