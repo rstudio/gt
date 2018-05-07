@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{theme_minimal}
 \alias{theme_minimal}
-\title{Use the minimal table theme}
+\title{Use the 'minimal' table theme}
 \usage{
 theme_minimal(html_tbl)
 }
@@ -14,7 +14,8 @@ created using the \code{tab_create()} function.}
 an object of class \code{html_table}.
 }
 \description{
-Apply line styles with a minimal set of
+Apply the 'minimal' theme to the table. This
+employs line styles with a minimal set of
 horizontal rules for demarcation of the
 boxhead and the field. This adds reasonably
 thick horizontal rules enclosing the boxhead
