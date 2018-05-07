@@ -192,7 +192,7 @@ The package API consists of the following functions:
   - `tab_stub()` – add a stub to a table
   - `tab_stubhead_caption()` – add caption text to the stubhead
   - `tab_stub_block()` – arrange a table stub into blocks
-  - `tab_boxhead_panel()` – arrange a table stub into blocks
+  - `tab_boxhead_panel()` – arrange a boxhead into panels
 
 **Format Data**
 
