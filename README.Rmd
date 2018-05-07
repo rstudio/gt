@@ -113,7 +113,7 @@ Invoking the object interactively displays it in the Viewer. In R Markdown chunk
 
 <img src="man/figures/mtcars.png">
 
-Let's build another table using another well-known dataset. In this table, we embrace the naming convention provided in the **iris** dataset's column names. The dot-separated column names (such as `Sepal.Length` and `Petal.Width`) provide a means to specify heading levels as `<spanner_heading>.<column_heading>`. So long as we follow this column-name pattern, we can use the `tab_spanner_headings()` function to parse and expand the given column names into one or more boxhead panels with spanner headings and column headings.
+Let's build another table using another well-known dataset. In this table, we embrace the naming convention provided in the **iris** dataset's column names. The dot-separated column names (such as `Sepal.Length` and `Petal.Width`) provide a means to specify heading levels as `<spanner_heading>.<column_heading>`. So long as we follow this column-name pattern, we can use the `tab_boxhead_panel()` function to parse and expand the given column names into one or more boxhead panels with spanner headings and column headings.
 
 ```{r}
 
@@ -129,7 +129,7 @@ iris_tbl <-
   tab_create(tbl = iris[1:6, ]) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
   theme_striped() %>%  # 3
-  tab_spanner_headings(use_names = TRUE) %>%  # 4
+  tab_boxhead_panel(use_names = TRUE) %>%  # 4
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
     decimals = 1
@@ -157,10 +157,10 @@ The package API consists of the following functions:
 - `tab_create()` -- create gt table object
 - `tab_heading()` -- add a table heading
 - `tab_source_note()` -- add a source note citation
-- `tab_spanner_headings()` -- add spanner headings
 - `tab_stub()` -- add a stub to a table
-- `tab_stub_block()` -- arrange a table stub into blocks
 - `tab_stubhead_caption()` -- add caption text to the stubhead
+- `tab_stub_block()` -- arrange a table stub into blocks
+- `tab_boxhead_panel()` -- arrange a table stub into blocks
 
 **Format Data**
 
