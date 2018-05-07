@@ -405,10 +405,10 @@ add_style_to_row_0 <- function(html_tbl,
   html_tbl
 }
 
-#' Add inline CSS styles to `row 1` (first row of field)
+#' Add inline CSS styles to the first row of the table
 #'
-#' Add inline CSS style to the boxhead and stubhead
-#' table parts that are part of `row 1`.
+#' Add inline CSS style to the stub and field
+#' table parts that are part of the first row.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param property the CSS style property that is
@@ -420,12 +420,18 @@ add_style_to_row_0 <- function(html_tbl,
 #' the individual values for the property will
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr bind_rows filter pull mutate arrange
+#' @importFrom dplyr bind_rows filter pull mutate arrange pull
 #' @importFrom rlang UQ
 #' @noRd
-add_style_to_row_1 <- function(html_tbl,
-                               property,
-                               values) {
+add_style_to_first_row <- function(html_tbl,
+                                   property,
+                                   values) {
+
+  # Get the first row number
+  first_row <-
+    base::setdiff(
+      (html_tbl[["html_table"]] %>%
+         dplyr::pull(row) %>% unique()), -2:0)[1]
 
   # For any `values`, ensure that they are
   # transformed to character objects and that
@@ -444,10 +450,10 @@ add_style_to_row_1 <- function(html_tbl,
     html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
-          dplyr::filter(row == 1) %>%
+          dplyr::filter(row == first_row) %>%
           dplyr::mutate(rlang::UQ(property) := values),
         html_tbl[["html_table"]] %>%
-          dplyr::filter(row != 1) %>%
+          dplyr::filter(row != first_row) %>%
           dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
       dplyr::arrange(row, column)
   }
@@ -461,10 +467,10 @@ add_style_to_row_1 <- function(html_tbl,
     html_tbl[["html_table"]] <-
       dplyr::bind_rows(
         html_tbl[["html_table"]] %>%
-          dplyr::filter(row == 1) %>%
+          dplyr::filter(row == first_row) %>%
           dplyr::mutate(rlang::UQ(property) := values),
         html_tbl[["html_table"]] %>%
-          dplyr::filter(row != 1)) %>%
+          dplyr::filter(row != first_row)) %>%
       dplyr::arrange(row, column)
   }
 
