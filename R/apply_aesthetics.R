@@ -163,7 +163,6 @@ cols_align_right <- function(html_tbl,
   html_tbl
 }
 
-
 #' Format fonts used for values
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
@@ -215,10 +214,9 @@ fmt_font <- function(html_tbl,
   html_tbl
 }
 
-
-#' Use the striped table theme
+#' Use the 'striped' table theme
 #'
-#' Apply the striped theme to the table. This
+#' Apply the 'striped' theme to the table. This
 #' adds striped rows, reasonably thick horizontal
 #' rules enclosing the boxhead and stubhead and
 #' a similar horizontal rule below the field and
@@ -245,10 +243,10 @@ theme_striped <- function(html_tbl) {
   html_tbl
 }
 
-
-#' Use the minimal table theme
+#' Use the 'minimal' table theme
 #'
-#' Apply line styles with a minimal set of
+#' Apply the 'minimal' theme to the table. This
+#' employs line styles with a minimal set of
 #' horizontal rules for demarcation of the
 #' boxhead and the field. This adds reasonably
 #' thick horizontal rules enclosing the boxhead
@@ -276,10 +274,10 @@ theme_minimal <- function(html_tbl) {
   html_tbl
 }
 
-
-#' Use the classical table theme
+#' Use the 'classical' table theme
 #'
-#' Apply horizontal and vertical line styles that
+#' Apply the 'minimal' theme to the table.
+#' Horizontal and vertical line styles
 #' visually separate the columns and rows. This
 #' adds reasonably thick horizontal and vertical
 #' rules.
