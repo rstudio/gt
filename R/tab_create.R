@@ -8,23 +8,24 @@
 #' tibble.
 #' @return an object of class \code{html_table}.
 #' @examples
-#' # Create an html table object using the
-#' # iris dataset
-#' html_table <- tab_create(tbl = airquality)
+#' # Create a table object using the
+#' # `mtcars` dataset
+#' tab <-
+#'   tab_create(tbl = mtcars)
 #'
 #' # The resulting object can be used
 #' # in transformations
-#' html_table_transformed <-
-#'   html_table %>%
-#'   theme_minimal() %>%
+#' tab_2 <-
+#'   tab %>%
+#'   theme_striped() %>%
 #'   cols_align_right() %>%
 #'   fmt_number(
-#'     columns = "Wind",
+#'     columns = c("drat", "wt", "qsec"),
 #'     decimals = 1)
 #'
 #' # The object of this type can be
 #' # displayed in the Viewer
-#' html_table_transformed
+#' tab_2
 #' @importFrom purrr map_chr map_df
 #' @importFrom dplyr as_tibble tibble select rename rename_at mutate filter pull
 #' @importFrom dplyr bind_rows inner_join mutate_if select_if everything add_row
