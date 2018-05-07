@@ -18,10 +18,11 @@ fmt_scientific
 fmt_time
 fmt_uncertainty
 replace_missing
+rownames_with
+tab_boxhead_panel
 tab_create
 tab_heading
 tab_source_note
-tab_spanner_headings
 tab_stub
 tab_stub_block
 tab_stubhead_caption
