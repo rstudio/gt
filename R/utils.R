@@ -433,7 +433,7 @@ decode_col_type_transform <- function(transform_text) {
 #' Modify the `html_table` to incorporate spanner headings
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
-#' @importFrom dplyr filter mutate full_join select case_when bind_rows
+#' @importFrom dplyr filter mutate full_join select case_when bind_rows distinct
 #' @noRd
 modify_spanner_headings <- function(html_tbl) {
 
@@ -470,7 +470,8 @@ modify_spanner_headings <- function(html_tbl) {
       column_spanner_subpart,
       column_heading_subpart,
       html_tbl[["html_table"]] %>%
-        dplyr::filter(t_subpart != "col_heading" | is.na(t_subpart)))
+        dplyr::filter(t_subpart != "col_heading" | is.na(t_subpart))) %>%
+    dplyr::distinct()
 
   html_tbl
 }
