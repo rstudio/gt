@@ -152,3 +152,63 @@ tab_source_note <- function(html_tbl,
 
   html_tbl
 }
+
+#' Add a footnote
+#'
+#' Add a footnote with a glyph attached to the
+#' targeted cells, rows, or columns.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @param glyph the type of glyph or the literal
+#' glyph to associate with the targeted cells,
+#' rows, or columns.
+#' @param ... a series of named vectors for
+#' specifying the mappings between footnotes and
+#' the targeted cells, rows, or columns.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr add_row
+#' @importFrom commonmark markdown_html
+#' @importFrom stringr str_replace_all
+#' @export
+tab_footnote <- function(html_tbl,
+                         glyph = "number",
+                         ...,
+                         .row = NULL,
+                         .column = NULL) {
+
+
+  x <- list(...)
+
+  if (is.list(x) && is.list(x[[1]]) == 1 && length(x[[1]]) == 2) {
+
+    row <- x[[1]][[1]] %>% as.integer()
+    column <- x[[1]][[2]] %>% as.integer()
+    footnote <-
+      names(x)[1] %>%
+      as.character() %>%
+      commonmark::markdown_html() %>%
+      stringr::str_replace_all("^<p>|</p>|\n", "")
+  }
+
+  if (is.list(x) && length(x) == 1 && length(x[[1]]) == 2 && inherits(x[[1]], "numeric")) {
+
+    row <- x[[1]][[1]] %>% as.integer()
+    column <- x[[1]][[2]] %>% as.integer()
+    footnote <-
+      names(x) %>%
+      as.character() %>%
+      commonmark::markdown_html() %>%
+      stringr::str_replace_all("^<p>|</p>|\n", "")
+  }
+
+  html_tbl[["footnote"]] <-
+    html_tbl[["footnote"]] %>%
+    dplyr::add_row(
+      index = (nrow(html_tbl[["footnote"]]) + 1L),
+      glyph = glyph,
+      row = row,
+      column = column,
+      footnote = footnote)
+
+  html_tbl
+}
