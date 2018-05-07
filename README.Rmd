@@ -188,9 +188,9 @@ The package API consists of the following functions:
 
 **Apply Table Theme**
 
-- `theme_striped()` -- use the striped table theme
-- `theme_classical()` -- use the classical table theme
-- `theme_minimal()` -- use the minimal table theme
+- `theme_striped()` -- use the 'striped' table theme
+- `theme_classical()` -- use the 'classical' table theme
+- `theme_minimal()` -- use the 'minimal' table theme
 
 There are more functions yet to come.
 
