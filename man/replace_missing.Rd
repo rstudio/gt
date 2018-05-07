@@ -26,3 +26,11 @@ an object of class \code{html_table}.
 Replace any missing values in specified columns
 or columns of a given type.
 }
+\examples{
+# Create a table based on `airquality` where
+# the `NA` values are replaced with the
+# text `missing`
+tab_create(tbl = airquality) \%>\%
+  theme_striped() \%>\%
+  replace_missing(replacement = "missing")
+}

@@ -21,3 +21,10 @@ thick horizontal rules enclosing the boxhead
 and stubhead and a similar horizontal rule
 below the field and stub.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and use the
+# 'minimal' theme
+tab_create(tbl = mtcars) \%>\%
+  theme_minimal()
+}

@@ -42,3 +42,15 @@ an object of class \code{html_table}.
 \description{
 Format numeric values
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and format specified
+# numeric columns to display values to
+# two decimal places
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  fmt_number(
+    columns = c("drat", "wt", "qsec"),
+    decimals = 2
+    )
+}

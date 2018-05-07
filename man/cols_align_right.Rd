@@ -25,3 +25,11 @@ columns. Options exist to selectively apply the
 alignment to specified column names or to
 columns of certain types.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and align all
+# columns to the right
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  cols_align_right()
+}
