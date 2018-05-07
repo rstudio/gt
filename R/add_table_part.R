@@ -108,21 +108,33 @@ tab_stubhead_caption <- function(html_tbl,
 #' not available.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr add_row
+#' @importFrom commonmark markdown_html
+#' @importFrom stringr str_replace_all
 #' @export
 tab_source_note <- function(html_tbl,
                             source_note,
                             lead_in = NULL,
                             font = NULL) {
 
-  source_note_str <- source_note %>% as.character()
+  source_note_str <-
+    source_note %>%
+    as.character() %>%
+    commonmark::markdown_html() %>%
+    stringr::str_replace_all("^<p>|</p>|\n", "")
 
   if (!is.null(lead_in)) {
-    lead_in_str <- lead_in %>% as.character()
+
+    lead_in_str <-
+      lead_in %>% as.character() %>%
+      commonmark::markdown_html() %>%
+      stringr::str_replace_all("^<p>|</p>|\n", "")
+
   } else {
     lead_in_str <- ""
   }
 
   if (is.null(font)) {
+
     font <- NA_character_
   } else {
     font <-
