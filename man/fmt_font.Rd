@@ -28,3 +28,11 @@ an object of class \code{html_table}.
 \description{
 Format fonts used for values
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and set all of
+# the values in the Courier font
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  fmt_font(font = "Courier")
+}

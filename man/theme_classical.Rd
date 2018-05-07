@@ -19,3 +19,10 @@ visually separate the columns and rows. This
 adds reasonably thick horizontal and vertical
 rules.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and use the
+# 'classical' theme
+tab_create(tbl = mtcars) \%>\%
+  theme_classical()
+}

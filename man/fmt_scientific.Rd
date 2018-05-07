@@ -37,3 +37,15 @@ an object of class \code{html_table}.
 \description{
 Format values to scientific notation
 }
+\examples{
+# Create a table object using the
+# `pressure` dataset and format a
+# numeric column to display values in
+# scientific notation to two decimal places
+tab_create(tbl = pressure) \%>\%
+  theme_striped() \%>\%
+  fmt_scientific(
+    columns = "pressure",
+    decimals = 2
+  )
+}
