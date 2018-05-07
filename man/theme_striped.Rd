@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_aesthetics.R
 \name{theme_striped}
 \alias{theme_striped}
-\title{Use the striped table theme}
+\title{Use the 'striped' table theme}
 \usage{
 theme_striped(html_tbl)
 }
@@ -14,7 +14,7 @@ created using the \code{tab_create()} function.}
 an object of class \code{html_table}.
 }
 \description{
-Apply the striped theme to the table. This
+Apply the 'striped' theme to the table. This
 adds striped rows, reasonably thick horizontal
 rules enclosing the boxhead and stubhead and
 a similar horizontal rule below the field and
