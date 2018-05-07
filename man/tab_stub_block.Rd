@@ -4,15 +4,18 @@
 \alias{tab_stub_block}
 \title{Arrange a table stub into blocks}
 \usage{
-tab_stub_block(html_tbl, ...)
+tab_stub_block(html_tbl, ..., .default = NULL)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
 created using the \code{tab_create()} function.}
 
 \item{...}{a series of named vectors for
-specifying the mappings between row names
-to stub block headings.}
+specifying the mappings between row names or
+row numbers to subhead names.}
+
+\item{.default}{a subhead name to apply to
+those rows not encapsulated \code{...}.}
 }
 \value{
 an object of class \code{html_table}.
