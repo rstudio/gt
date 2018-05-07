@@ -201,15 +201,15 @@ htt_theme_striped <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
-    add_style_to_row_1(
-      property = "border-top",
-      values = "2px solid #A8A8A8") %>%
     add_style_to_row_0(
       property = "padding",
       values = "10px") %>%
     add_style_to_row_0(
       property = "margin",
       values = "10px") %>%
+    add_style_to_first_row(
+      property = "border-top",
+      values = "2px solid #A8A8A8") %>%
     add_style_to_rows(
       property = "padding",
       values = "10px") %>%
@@ -260,7 +260,7 @@ htt_theme_minimal <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
-    add_style_to_row_1(
+    add_style_to_first_row(
       property = "border-top",
       values = "2px solid #A8A8A8") %>%
     add_style_to_row_0(
