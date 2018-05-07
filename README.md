@@ -3,28 +3,30 @@
 
 ## Grammar of Tables
 
-The goal of **gt** is to allow anyone to easily build presentation
-tables from tabular data using the Grammar of Tables approach. We
-essentially want the activity of building tables to be done with a clear
+The **gt** package allows anyone to easily build presentation tables
+from tabular data using the Grammar of Tables approach. We essentially
+want the activity of building tables to be performed with a clear
 separation of concerns: you don’t have to decide how the tabular data
 gets transformed and structured while also worrying about aesthetics.
 
-The model for the constituent parts of a table can be explained in part
-by the following schematic:
+Before we can talk about the package and its API, we need to identify
+the underlying components of a table and understand their functions. The
+model for the constituent parts of a table can be explained in part by
+the following schematic:
 
 <img src="man/figures/gt_parts_of_a_table.png">
 
-The main structural parts of a table (and their subparts) are:
+The main parts of a table (and their subparts) are:
 
   - the **heading** (optional; possibly with a **table number**,
     **title**, or **headnote**)
-  - the **stub** (contains a **stubhead** and one or more **stub
-    blocks**)
+  - the **stub** (optional; contains a **stubhead** and one or more
+    **stub blocks**)
   - the **boxhead** (contains **column headings**, optionally within
     **panels** having one or more **spanner headings**)
   - the **field** (contains *cells*, *columns*, and *rows*)
-  - the **footnote**
-  - the **source note**
+  - the **footnote** area
+  - the **source note** area
 
 The **heading** table part contains the table title and the optional
 table number and headnote subparts. This part is often overlooked but as
@@ -200,7 +202,7 @@ The package API consists of the following functions:
   - `fmt_scientific()` – format values to scientific notation
   - `fmt_percent()` – format values as a percentage
   - `fmt_currency()` – format values as currencies
-  - `fmt_fraction()` – format values to fractions
+  - `fmt_fraction()` – format values as fractions
   - `fmt_date()` – format values as dates
   - `fmt_time()` – format values as times
   - `fmt_datetime()` – format values as date-times
@@ -224,7 +226,9 @@ The package API consists of the following functions:
   - `theme_classical()` – use the ‘classical’ table theme
   - `theme_minimal()` – use the ‘minimal’ table theme
 
-There are more functions yet to come.
+There are more functions yet to come. A means to selectively target
+rows, columns, or rows will be introduced and incorporated into
+functions that apply transformations on cell content.
 
 ## Inner Workings
 
