@@ -38,8 +38,10 @@ tab_stub <- function(html_tbl,
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @param ... a series of named vectors for
-#' specifying the mappings between row names
-#' to stub block headings.
+#' specifying the mappings between row names or
+#' row numbers to subhead names.
+#' @param .default a subhead name to apply to
+#' those rows not encapsulated \code{...}.
 #' @return an object of class \code{html_table}.
 #' @examples
 #' # Create an `mtcars` presentation table that
@@ -59,7 +61,14 @@ tab_stub <- function(html_tbl,
 #' @importFrom stringr str_match
 #' @export
 tab_stub_block <- function(html_tbl,
-                           ...) {
+                           ...,
+                           .default = NULL) {
+
+  # Assign a name to the subhead where there
+  # is none formally assigned
+  if (is.null(.default)) {
+    .default <- "Others"
+  }
 
   # Get `rownames` and `row_indices`
   # from `modified_tbl`
@@ -121,7 +130,7 @@ tab_stub_block <- function(html_tbl,
     html_tbl[["stub_block"]] <-
       html_tbl[["stub_block"]] %>%
       dplyr::add_row(
-        stub_heading = "::other::",
+        stub_heading = .default,
         row_number = others_rows)
   }
 
