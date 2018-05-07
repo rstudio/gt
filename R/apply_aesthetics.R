@@ -259,13 +259,12 @@ theme_classical <- function(html_tbl) {
   html_tbl
 }
 
-
-#' Add spanner headings
+#' Arrange a boxhead into panels
 #'
 #' If column names in the \code{tbl} supplied
 #' use the naming convention of
 #' \code{[spanner_heading].[column_heading]},
-#' we can invoke \code{tab_spanner_headings()}
+#' we can invoke \code{tab_boxhead_panel()}
 #' with the \code{use_names} option set to
 #' \code{TRUE}. This allows for parsing and
 #' expansion of column headings into one or
@@ -285,25 +284,24 @@ theme_classical <- function(html_tbl) {
 #' # Create a table based on `mtcars` where
 #' # there are column headings grouped under
 #' # spanner headings
-#' mtcars_tab <-
-#'   tab_create(tbl = mtcars) %>%
-#'     cols_remove(c("drat", "wt", "vs", "am")) %>%
-#'     tab_spanner_headings(
-#'       "numbers" = c("cyl", "gear", "carb"),
-#'       "measurements" = c(
-#'         "hp", "qsec", "mpg", "disp")) %>%
-#'     cols_reorder(columns = c(
-#'       "mpg", "disp", "hp", "qsec",
-#'       "cyl", "gear", "carb")) %>%
-#'     theme_striped()
+#' tab_create(tbl = mtcars) %>%
+#'   cols_remove(c("drat", "wt", "vs", "am")) %>%
+#'   tab_boxhead_panel(
+#'     "numbers" = c("cyl", "gear", "carb"),
+#'     "measurements" = c(
+#'       "hp", "qsec", "mpg", "disp")) %>%
+#'   cols_reorder(columns = c(
+#'     "mpg", "disp", "hp", "qsec",
+#'     "cyl", "gear", "carb")) %>%
+#'   theme_striped()
 #' @importFrom dplyr tibble rename mutate
 #' @importFrom stringr str_detect str_replace
 #' @importFrom purrr map_df
 #' @importFrom rlang sym UQ
 #' @export
-tab_spanner_headings <- function(html_tbl,
-                                 ...,
-                                 use_names = FALSE) {
+tab_boxhead_panel <- function(html_tbl,
+                              ...,
+                              use_names = FALSE) {
 
   # Obtain any column-to-spanner mappings
   mappings <- list(...)
