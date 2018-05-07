@@ -11,6 +11,13 @@
 #' @param types an optional vector of column types
 #' for which the left alignment should be applied.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and align all
+#' # columns to the left
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   cols_align_left()
 #' @importFrom tibble add_row
 #' @export
 cols_align_left <- function(html_tbl,
@@ -59,6 +66,13 @@ cols_align_left <- function(html_tbl,
 #' @param types an optional vector of column types
 #' for which the center alignment should be applied.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and center align
+#' # all columns
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   cols_align_center()
 #' @importFrom tibble add_row
 #' @export
 cols_align_center <- function(html_tbl,
@@ -107,6 +121,13 @@ cols_align_center <- function(html_tbl,
 #' @param types an optional vector of column types
 #' for which the right alignment should be applied.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and align all
+#' # columns to the right
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   cols_align_right()
 #' @importFrom tibble add_row
 #' @export
 cols_align_right <- function(html_tbl,
@@ -156,6 +177,13 @@ cols_align_right <- function(html_tbl,
 #' provide fallbacks in the case that fonts are
 #' not available.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and set all of
+#' # the values in the Courier font
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   fmt_font(font = "Courier")
 #' @importFrom dplyr bind_rows tibble
 #' @export
 fmt_font <- function(html_tbl,
@@ -198,6 +226,12 @@ fmt_font <- function(html_tbl,
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and use the
+#' # 'striped' theme
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped()
 #' @importFrom tibble add_row
 #' @export
 theme_striped <- function(html_tbl) {
@@ -223,6 +257,12 @@ theme_striped <- function(html_tbl) {
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and use the
+#' # 'minimal' theme
+#' tab_create(tbl = mtcars) %>%
+#'   theme_minimal()
 #' @importFrom tibble add_row
 #' @export
 theme_minimal <- function(html_tbl) {
@@ -246,6 +286,12 @@ theme_minimal <- function(html_tbl) {
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and use the
+#' # 'classical' theme
+#' tab_create(tbl = mtcars) %>%
+#'   theme_classical()
 #' @importFrom tibble add_row
 #' @export
 theme_classical <- function(html_tbl) {
@@ -375,6 +421,13 @@ tab_boxhead_panel <- function(html_tbl,
 #' @param replacement the value or string that
 #' should be used to replace the missing values.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table based on `airquality` where
+#' # the `NA` values are replaced with the
+#' # text `missing`
+#' tab_create(tbl = airquality) %>%
+#'   theme_striped() %>%
+#'   replace_missing(replacement = "missing")
 #' @importFrom dplyr bind_rows tibble
 #' @export
 replace_missing <- function(html_tbl,

@@ -21,6 +21,17 @@
 #' negative numbers as red and enclosed in
 #' parentheses.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and format specified
+#' # numeric columns to display values to
+#' # two decimal places
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   fmt_number(
+#'     columns = c("drat", "wt", "qsec"),
+#'     decimals = 2
+#'     )
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
@@ -78,6 +89,17 @@ fmt_number <- function(html_tbl,
 #' negative numbers as red and enclosed in
 #' parentheses.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `pressure` dataset and format a
+#' # numeric column to display values in
+#' # scientific notation to two decimal places
+#' tab_create(tbl = pressure) %>%
+#'   theme_striped() %>%
+#'   fmt_scientific(
+#'     columns = "pressure",
+#'     decimals = 2
+#'   )
 #' @importFrom tibble add_row
 #' @importFrom dplyr bind_rows
 #' @export
