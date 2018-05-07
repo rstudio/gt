@@ -61,7 +61,7 @@ When taking these considerations to heart, we may naturally arrive to an overarc
 
 ## Examples of Display Table Creation using **gt**
 
-The `mtcars` dataset can be suitably transformed into a simple HTML table (for sake of brevity, we'll use just the first 6 rows). We can use the `tab_create()` function to initiate the process (providing `mtcars` to the `tbl` argument), creating an HTML table object. Because `mtcars` is a data frame with rownames, a stub is automatically created. After that, a few functions can be used to add and customize the output table:
+The `mtcars` dataset can be suitably transformed into a display table (for sake of brevity, we'll use just the first 6 rows). We can use the `tab_create()` function to initiate the process (providing `mtcars` to the `tbl` argument), creating a table object. Because `mtcars` is a data frame with rownames, a stub is automatically created: it contains the row names that are really the car models. After that, a few functions can be used to refine the display table:
 
 - `theme_striped()`: styles the table with a basic striped row theme
 - `cols_align_center()`: center-aligns cell content in specified columns
@@ -154,7 +154,7 @@ The package API consists of the following functions:
 
 **Create/Modify Table Parts**
 
-- `tab_create()` -- create gt table object
+- `tab_create()` -- create **gt** table object
 - `tab_heading()` -- add a table heading
 - `tab_source_note()` -- add a source note citation
 - `tab_stub()` -- add a stub to a table
