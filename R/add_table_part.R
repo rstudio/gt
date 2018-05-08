@@ -166,7 +166,7 @@ tab_source_note <- function(html_tbl,
 #' specifying the mappings between footnotes and
 #' the targeted cells, rows, or columns.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr add_row
+#' @importFrom dplyr tibble arrange bind_rows distinct filter mutate
 #' @importFrom commonmark markdown_html
 #' @importFrom stringr str_replace_all
 #' @export
@@ -201,14 +201,48 @@ tab_footnote <- function(html_tbl,
       stringr::str_replace_all("^<p>|</p>|\n", "")
   }
 
-  html_tbl[["footnote"]] <-
-    html_tbl[["footnote"]] %>%
-    dplyr::add_row(
-      index = (nrow(html_tbl[["footnote"]]) + 1L),
-      glyph = glyph,
-      row = row,
-      column = column,
-      footnote = footnote)
+  footnote_tbl <-
+    dplyr::bind_rows(
+      html_tbl[["footnote"]],
+      dplyr::tibble(
+        index = (nrow(html_tbl[["footnote"]]) + 1L),
+        type = glyph,
+        glyph = glyph,
+        row = row,
+        column = column,
+        footnote = footnote))
 
+  footnote_number_tbl <-
+    footnote_tbl %>%
+    dplyr::arrange(row, column, index) %>%
+    dplyr::distinct() %>%
+    dplyr::filter(type == "number")
+
+  if (nrow(footnote_number_tbl) > 0) {
+    footnote_number_tbl <-
+      footnote_number_tbl %>%
+      dplyr::mutate(glyph = seq(nrow(footnote_number_tbl)) %>% as.character())
+  }
+
+  footnote_character_tbl <-
+    footnote_tbl %>%
+    dplyr::arrange(row, column, index) %>%
+    dplyr::distinct() %>%
+    dplyr::filter(type == "character")
+
+  if (nrow(footnote_character_tbl) > 0) {
+    footnote_character_tbl <-
+      footnote_character_tbl %>%
+      dplyr::mutate(glyph = letters[seq(nrow(footnote_character_tbl))])
+  }
+
+  footnote_tbl <-
+    dplyr::bind_rows(
+      footnote_number_tbl,
+      footnote_character_tbl) %>%
+    dplyr::arrange(row, column, index) %>%
+    dplyr::distinct()
+
+  html_tbl[["footnote"]] <- footnote_tbl
   html_tbl
 }
