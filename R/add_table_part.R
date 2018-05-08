@@ -176,7 +176,6 @@ tab_footnote <- function(html_tbl,
                          .row = NULL,
                          .column = NULL) {
 
-
   x <- list(...)
 
   if (is.list(x) && is.list(x[[1]]) == 1 && length(x[[1]]) == 2) {
@@ -212,6 +211,12 @@ tab_footnote <- function(html_tbl,
         column = column,
         footnote = footnote))
 
+  footnote_listing <-
+    footnote_tbl %>%
+    dplyr::arrange(row, column) %>%
+    dplyr::select(footnote) %>%
+    dplyr::distinct()
+
   footnote_number_tbl <-
     footnote_tbl %>%
     dplyr::arrange(row, column, index) %>%
@@ -219,9 +224,13 @@ tab_footnote <- function(html_tbl,
     dplyr::filter(type == "number")
 
   if (nrow(footnote_number_tbl) > 0) {
-    footnote_number_tbl <-
-      footnote_number_tbl %>%
-      dplyr::mutate(glyph = seq(nrow(footnote_number_tbl)) %>% as.character())
+
+    for (i in seq(nrow(footnote_listing))) {
+
+      footnote_number_tbl[which(footnote_number_tbl$footnote %in% footnote_listing[i, 1]), ] <-
+        footnote_number_tbl[which(footnote_number_tbl$footnote %in% footnote_listing[i, 1]), ] %>%
+        dplyr::mutate(glyph = as.character(i))
+    }
   }
 
   footnote_character_tbl <-

@@ -293,7 +293,7 @@ to_html_source_notes <- function(tbl,
 #' the footnotes.
 #' @return an HTML fragment containing the
 #' footnotes table part.
-#' @importFrom dplyr arrange mutate pull
+#' @importFrom dplyr arrange mutate pull select distinct
 #' @importFrom stringr str_squish
 #' @importFrom glue glue
 #' @noRd
@@ -304,7 +304,11 @@ to_html_footnotes <- function(tbl,
                               padding = NULL) {
 
   # Ensure that the ordering of the table is correct
-  tbl <- tbl %>% dplyr::select(glyph, footnote) %>% dplyr::arrange(glyph)
+  tbl <-
+    tbl %>%
+    dplyr::select(glyph, footnote) %>%
+    dplyr::arrange(glyph) %>%
+    dplyr::distinct()
 
   font <- "Helvetica"
   font_size <- "90%"
