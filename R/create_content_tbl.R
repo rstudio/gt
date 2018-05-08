@@ -499,18 +499,21 @@ process_content_tbl <- function(html_tbl) {
 
   # Append footnote glyphs to the formatted value
   # if a `glyph` string is available
-  rows_glyph <- which(!is.na(content_tbl$glyph))
 
-  if (length(rows_glyph) > 0) {
+  if ("glyph" %in% colnames(content_tbl)) {
+    rows_glyph <- which(!is.na(content_tbl$glyph))
 
-    for (i in rows_glyph) {
+    if (length(rows_glyph) > 0) {
 
-      content_tbl[i, ]$content_formatted <-
-        paste0(
-          content_tbl[i, ]$content_formatted,
-          " <sup><em>",
-          content_tbl[i, ]$glyph,
-          "</em></sup>")
+      for (i in rows_glyph) {
+
+        content_tbl[i, ]$content_formatted <-
+          paste0(
+            content_tbl[i, ]$content_formatted,
+            " <sup><em>",
+            content_tbl[i, ]$glyph,
+            "</em></sup>")
+      }
     }
   }
 
