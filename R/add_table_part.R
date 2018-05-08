@@ -15,6 +15,16 @@
 #' provide fallbacks in the case that fonts are
 #' not available.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and add a heading
+#' # to describe the table
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   tab_heading(
+#'     title = "Data listing from **mtcars**",
+#'     headnote = "`mtcars` is an R dataset"
+#'     )
 #' @importFrom dplyr tibble
 #' @export
 tab_heading <- function(html_tbl,
@@ -55,7 +65,6 @@ tab_heading <- function(html_tbl,
   html_tbl
 }
 
-
 #' Add caption text to the stubhead
 #'
 #' Add a caption to the stubhead of a table. If
@@ -70,6 +79,16 @@ tab_heading <- function(html_tbl,
 #' default this is \code{left}. Other options
 #' are \code{center} and \code{right}.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and add a caption
+#' # to describe what is in the stub
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   tab_stubhead_caption(
+#'     caption = "car make/model"
+#'     ) %>%
+#'   cols_align_left(types = "character")
 #' @importFrom dplyr tibble
 #' @export
 tab_stubhead_caption <- function(html_tbl,
@@ -107,6 +126,15 @@ tab_stubhead_caption <- function(html_tbl,
 #' provide fallbacks in the case that fonts are
 #' not available.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and add a source note
+#' # to describe the source of the data
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   tab_source_note(
+#'     source_note = "*Henderson and Velleman* (1981)."
+#'     )
 #' @importFrom dplyr add_row
 #' @importFrom commonmark markdown_html
 #' @importFrom stringr str_replace_all
@@ -166,22 +194,43 @@ tab_source_note <- function(html_tbl,
 #' specifying the mappings between footnotes and
 #' the targeted cells, rows, or columns.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and several footnotes
+#' # to explain values in specified cells
+#' tab_create(tbl = mtcars) %>%
+#'   theme_striped() %>%
+#'   tab_footnote(
+#'     "Examples of poor gas mileage." =
+#'       cells(row = c(22, 23), column = 2)
+#'   ) %>%  # 10
+#'   tab_footnote(
+#'     "Really fast quarter mile" =
+#'       cells(row = 18, column = 8)
+#'   ) %>%  # 10
+#'   tab_footnote(
+#'     "Excellent gas mileage." =
+#'       cells(row = 12, column = 2)
+#'   )
 #' @importFrom dplyr tibble arrange bind_rows distinct filter mutate
 #' @importFrom commonmark markdown_html
 #' @importFrom stringr str_replace_all
 #' @export
 tab_footnote <- function(html_tbl,
                          glyph = "number",
-                         ...,
-                         .row = NULL,
-                         .column = NULL) {
+                         ...) {
 
   x <- list(...)
 
-  if (is.list(x) && is.list(x[[1]]) == 1 && length(x[[1]]) == 2) {
+  if (is.list(x) &&
+      is.list(x[[1]]) == 1 &&
+      length(x[[1]]) == 2 &&
+      inherits(x[[1]], "helper_cells")) {
 
+    # Get the targeted row/column coordinates
     row <- x[[1]][[1]] %>% as.integer()
     column <- x[[1]][[2]] %>% as.integer()
+
     footnote <-
       names(x)[1] %>%
       as.character() %>%
@@ -191,8 +240,10 @@ tab_footnote <- function(html_tbl,
 
   if (is.list(x) && length(x) == 1 && length(x[[1]]) == 2 && inherits(x[[1]], "numeric")) {
 
+    # Get the targeted row/column coordinates
     row <- x[[1]][[1]] %>% as.integer()
     column <- x[[1]][[2]] %>% as.integer()
+
     footnote <-
       names(x) %>%
       as.character() %>%
