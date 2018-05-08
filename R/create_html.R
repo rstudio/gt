@@ -19,6 +19,7 @@ create_html <- function(html_tbl) {
 
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
+  footnote <- html_tbl[["footnote"]]
   stubhead_caption <- html_tbl[["stubhead_caption"]]
 
   boxhead_panel <- html_tbl[["boxhead_panel"]]
@@ -279,8 +280,25 @@ create_html <- function(html_tbl) {
         tbl = source_note,
         span_amount = n_columns)
 
+    source_note_rows <- nrow(source_note)
+
   } else {
     source_note_component <- ""
+    source_note_rows <- 0
+  }
+
+  # Table Part: Footnotes ---------------------------------------------------
+
+  # Generate the footnotes as an HTML fragment
+  if (nrow(footnote) > 0) {
+
+    footnote_component <-
+      to_html_footnotes(
+        tbl = footnote,
+        span_amount = n_columns + source_note_rows)
+
+  } else {
+    footnote_component <- ""
   }
 
   # Compose the HTML Table --------------------------------------------------
@@ -295,6 +313,7 @@ create_html <- function(html_tbl) {
     table_body_component,
     tbody_closing_component,
     source_note_component,
+    footnote_component,
     table_closing_component,
     collapse = "") %>%
     htmltools::HTML()
