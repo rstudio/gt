@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_table_part.R
 \name{tab_footnote}
 \alias{tab_footnote}
-\title{Add a footnote}
+\title{Add one or more footnotes}
 \usage{
 tab_footnote(html_tbl, glyph = "number", ..., .row = NULL, .column = NULL)
 }
