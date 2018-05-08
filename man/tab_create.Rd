@@ -33,7 +33,8 @@ tab_2 <-
   cols_align_right() \%>\%
   fmt_number(
     columns = c("drat", "wt", "qsec"),
-    decimals = 1)
+    decimals = 1
+    )
 
 # The object of this type can be
 # displayed in the Viewer

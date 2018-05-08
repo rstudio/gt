@@ -30,3 +30,13 @@ an object of class \code{html_table}.
 Add a source note citation to the source note
 part of the table.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and add a source note
+# to describe the source of the data
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  tab_source_note(
+    source_note = "*Henderson and Velleman* (1981)."
+    )
+}

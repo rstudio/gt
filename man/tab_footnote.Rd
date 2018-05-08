@@ -4,7 +4,7 @@
 \alias{tab_footnote}
 \title{Add one or more footnotes}
 \usage{
-tab_footnote(html_tbl, glyph = "number", ..., .row = NULL, .column = NULL)
+tab_footnote(html_tbl, glyph = "number", ...)
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -24,4 +24,23 @@ an object of class \code{html_table}.
 \description{
 Add a footnote with a glyph attached to the
 targeted cells, rows, or columns.
+}
+\examples{
+# Create a table object using the
+# `mtcars` dataset and several footnotes
+# to explain values in specified cells
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  tab_footnote(
+    "Examples of poor gas mileage." =
+      cells(row = c(22, 23), column = 2)
+  ) \%>\%  # 10
+  tab_footnote(
+    "Really fast quarter mile" =
+      cells(row = 18, column = 8)
+  ) \%>\%  # 10
+  tab_footnote(
+    "Excellent gas mileage." =
+      cells(row = 12, column = 2)
+  )
 }

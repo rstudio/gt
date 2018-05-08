@@ -32,3 +32,14 @@ an object of class \code{html_table}.
 Add a title, headnote, and table number
 information to the heading part of the table.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and add a heading
+# to describe the table
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  tab_heading(
+    title = "Data listing from **mtcars**",
+    headnote = "`mtcars` is an R dataset"
+    )
+}
