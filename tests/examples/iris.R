@@ -27,7 +27,7 @@ iris_tbl <-
     table_number = 1
     ) %>%  # 6
   tab_source_note(
-    source_note = "Anderson, Edgar (1935).",
+    source_note = "*Anderson* (1935).",
     lead_in = "The data were collected by "
     )  # 7
 
