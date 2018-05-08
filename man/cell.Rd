@@ -2,15 +2,19 @@
 % Please edit documentation in R/cell_selection_helpers.R
 \name{cell}
 \alias{cell}
-\title{Define a table cell}
+\title{Define a single table cell}
 \usage{
 cell(row, column)
 }
 \arguments{
-\item{row}{an integer representing the table
-row to target (as part of the \code{row}-\code{column}
-dyad).}
+\item{row}{an integer representing the
+table row to target (as part of the
+\code{row}-\code{column} dyad).}
+
+\item{column}{an integer representing the
+table column to target (as part of the
+\code{row}-\code{column} dyad).}
 }
 \description{
-Define a table cell
+Define a single table cell
 }
