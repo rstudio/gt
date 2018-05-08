@@ -1,4 +1,5 @@
 add_summary
+cells
 cols_align_center
 cols_align_left
 cols_align_right
@@ -21,6 +22,7 @@ replace_missing
 rownames_with
 tab_boxhead_panel
 tab_create
+tab_footnote
 tab_heading
 tab_source_note
 tab_stub
