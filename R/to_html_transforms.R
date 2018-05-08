@@ -281,3 +281,89 @@ to_html_source_notes <- function(tbl,
 
   html_fragment
 }
+
+#' Generate a HTML fragment for the footnote part
+#' @param tbl the table that contains
+#' the footnote note data.
+#' @param font the font family to use for the
+#' footnotes.
+#' @param font_size the font size to use for the
+#' footnotes.
+#' @param padding the amount of padding to use for
+#' the footnotes.
+#' @return an HTML fragment containing the
+#' footnotes table part.
+#' @importFrom dplyr arrange mutate pull
+#' @importFrom stringr str_squish
+#' @importFrom glue glue
+#' @noRd
+to_html_footnotes <- function(tbl,
+                              span_amount,
+                              font = NULL,
+                              font_size = NULL,
+                              padding = NULL) {
+
+  # Ensure that the ordering of the table is correct
+  tbl <- tbl %>% dplyr::select(glyph, footnote) %>% dplyr::arrange(glyph)
+
+  font <- "Helvetica"
+  font_size <- "90%"
+  padding <- "2px"
+
+  if (!is.null(font)) {
+    font_family <-
+      paste(font, collapse = " ") %>%
+      as.character() %>%
+      paste0("font-family:", ., ";")
+  } else {
+    font_family <- NA_character_
+  }
+
+  if (!is.null(font_size)) {
+    font_size <-
+      paste(font_size, collapse = " ") %>%
+      as.character() %>%
+      paste0("font-size:", ., ";")
+  } else {
+    font_size <- NA_character_
+  }
+
+  if (!is.null(padding)) {
+    padding <-
+      paste(padding, collapse = " ") %>%
+      as.character() %>%
+      paste0("padding:", ., ";")
+  } else {
+    padding <- NA_character_
+  }
+
+  # Generate the styles
+  styles_str <-
+    paste(
+      c(font_family, font_size, padding)[
+        !is.na(c(font_family, font_size, padding))],
+      collapse = "")
+
+  # Generate the tag content for all footnotes
+  content_str <-
+    tbl %>%
+    dplyr::mutate(
+      content = paste0("<sup><em>", glyph, "</em></sup> ", footnote) %>%
+        as.character() %>% stringr::str_squish()) %>%
+    dplyr::pull(content)
+
+  # One-line style for footnotes
+  content_str <- paste(content_str, collapse = "&nbsp;&nbsp;")
+
+  # Generate the `html_fragment` object
+  html_fragment <-
+    glue::glue(
+      "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
+      styles = styles_str,
+      content = content_str) %>%
+    as.character() %>%
+    paste(collapse = "\n") %>%
+    paste0("<tfoot>\n", ., "\n</tfoot>\n")
+
+  html_fragment
+}
