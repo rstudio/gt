@@ -130,6 +130,9 @@ create_content_tbl <- function(html_tbl) {
 
     footnotes <- html_tbl[["footnote"]]
 
+    has_stub_block <-
+      ifelse(nrow(html_tbl[["stub_block"]]) > 0, TRUE, FALSE)
+
     group_a <-
       footnotes %>%
       dplyr::select(row, column) %>%
@@ -160,6 +163,14 @@ create_content_tbl <- function(html_tbl) {
     combined_glyphs_tbl <-
       group_a %>%
       dplyr::mutate(glyph = combined_glyphs)
+
+    # Modify column number if stub blocks are present
+    if (has_stub_block == TRUE) {
+
+      combined_glyphs_tbl <-
+        combined_glyphs_tbl %>%
+        dplyr::mutate(column = column + 1)
+    }
 
     content_tbl <-
       content_tbl %>%
