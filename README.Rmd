@@ -155,11 +155,12 @@ The package API consists of the following functions:
 
 - `tab_create()` -- create **gt** table object
 - `tab_heading()` -- add a table heading
-- `tab_source_note()` -- add a source note citation
 - `tab_stub()` -- add a stub to a table
 - `tab_stubhead_caption()` -- add caption text to the stubhead
 - `tab_stub_block()` -- arrange a table stub into blocks
 - `tab_boxhead_panel()` -- arrange a boxhead into panels
+- `tab_footnote()` -- add one or more footnotes
+- `tab_source_note()` -- add a source note citation
 
 **Format Data**
 
