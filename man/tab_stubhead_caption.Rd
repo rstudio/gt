@@ -26,3 +26,14 @@ Add a caption to the stubhead of a table. If
 a stub does not exist, no change will be made
 but a message to this effect will be emitted.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and add a caption
+# to describe what is in the stub
+tab_create(tbl = mtcars) \%>\%
+  theme_striped() \%>\%
+  tab_stubhead_caption(
+    caption = "car make/model"
+    ) \%>\%
+  cols_align_left(types = "character")
+}
