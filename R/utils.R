@@ -75,6 +75,7 @@ empty_footnote_tbl <- function() {
 
   dplyr::tibble(
     index = NA_integer_,
+    type = NA_character_,
     glyph = NA_character_,
     row = NA_integer_,
     column = NA_integer_,
