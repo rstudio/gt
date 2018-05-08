@@ -153,7 +153,7 @@ tab_source_note <- function(html_tbl,
   html_tbl
 }
 
-#' Add a footnote
+#' Add one or more footnotes
 #'
 #' Add a footnote with a glyph attached to the
 #' targeted cells, rows, or columns.
