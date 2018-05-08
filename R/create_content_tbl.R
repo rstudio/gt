@@ -45,6 +45,7 @@ create_stub_block_groups <- function(html_tbl) {
 #' is created using the \code{tab_create()} function.
 #' @importFrom purrr map_chr
 #' @importFrom dplyr tibble pull mutate bind_rows arrange
+#' @importFrom dplyr select distinct inner_join left_join
 #' @noRd
 create_content_tbl <- function(html_tbl) {
 
@@ -100,6 +101,7 @@ create_content_tbl <- function(html_tbl) {
     }
   }
 
+  # Create the `content_tbl`
   content_tbl <-
     content_tbl %>%
     dplyr::mutate(scaling_factor = ifelse(
@@ -121,6 +123,50 @@ create_content_tbl <- function(html_tbl) {
       prepend = NA_character_,
       append = NA_character_) %>%
     dplyr::arrange(row, col)
+
+  # Join in glyphs for footnotes, if any
+  # are available, to generate a `glyph` column
+  if (nrow(html_tbl[["footnote"]]) > 0) {
+
+    footnotes <- html_tbl[["footnote"]]
+
+    group_a <-
+      footnotes %>%
+      dplyr::select(row, column) %>%
+      dplyr::distinct()
+
+    group_b <-
+      footnotes %>%
+      dplyr::select(row, column, glyph) %>%
+      dplyr::distinct()
+
+    for (i in seq(nrow(group_a))) {
+
+      if (i == 1) {
+        combined_glyphs <- vector(mode = "character")
+      }
+
+      combined_glyphs_cell <-
+        group_a[i, ] %>%
+        dplyr::inner_join(
+          group_b, by = c("row", "column")) %>%
+        dplyr::pull(glyph) %>%
+        paste(collapse = ",")
+
+      combined_glyphs <-
+        c(combined_glyphs, combined_glyphs_cell)
+    }
+
+    combined_glyphs_tbl <-
+      group_a %>%
+      dplyr::mutate(glyph = combined_glyphs)
+
+    content_tbl <-
+      content_tbl %>%
+      dplyr::left_join(
+        combined_glyphs_tbl,
+        by = c("row" = "row", "col" = "column"))
+  }
 
   html_tbl[["content_tbl"]] <- content_tbl
   html_tbl
