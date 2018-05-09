@@ -132,10 +132,10 @@ tab_create <- function(tbl) {
     fonts %>%
     dplyr::add_row(
       type = "all",
-      font_1 = "Helvetica",
-      font_2 = "Segoe UI",
-      font_3 = "Arial",
-      font_4 = "Sans-Serif")
+      font_1 = default_font_1(),
+      font_2 = default_font_2(),
+      font_3 = default_font_3(),
+      font_4 = default_font_4())
 
   # Create the `html_table` list object -------------------------------------
   html_table <-
