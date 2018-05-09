@@ -144,7 +144,7 @@ default_font_3 <- function() {
 
 #' Define the fourth default font
 #' @noRd
-default_font_3 <- function() {
+default_font_4 <- function() {
   "Sans-Serif"
 }
 
