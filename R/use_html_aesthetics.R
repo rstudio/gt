@@ -20,8 +20,8 @@ use_html_aesthetics <- function(html_tbl, aesthetics_tbl) {
       html_tbl <- htt_theme_striped(html_tbl = html_tbl)
     }
 
-    if (theme_name[1] == "minimal") {
-      html_tbl <- htt_theme_minimal(html_tbl = html_tbl)
+    if (theme_name[1] == "horizontal") {
+      html_tbl <- htt_theme_horizontal(html_tbl = html_tbl)
     }
 
     if (theme_name[1] == "classical") {

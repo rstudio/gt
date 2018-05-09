@@ -243,9 +243,9 @@ theme_striped <- function(html_tbl) {
   html_tbl
 }
 
-#' Use the 'minimal' table theme
+#' Use the 'horizontal' table theme
 #'
-#' Apply the 'minimal' theme to the table. This
+#' Apply the 'horizontal' theme to the table. This
 #' employs line styles with a minimal set of
 #' horizontal rules for demarcation of the
 #' boxhead and the field. This adds reasonably
@@ -258,12 +258,12 @@ theme_striped <- function(html_tbl) {
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and use the
-#' # 'minimal' theme
+#' # 'horizontal' theme
 #' tab_create(tbl = mtcars) %>%
-#'   theme_minimal()
+#'   theme_horizontal()
 #' @importFrom tibble add_row
 #' @export
-theme_minimal <- function(html_tbl) {
+theme_horizontal <- function(html_tbl) {
 
   html_tbl[["aesthetics"]] <-
     html_tbl[["aesthetics"]] %>%
