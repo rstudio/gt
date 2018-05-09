@@ -338,7 +338,10 @@ process_content_tbl <- function(html_tbl) {
       if (m_n_parts[2] != 0) {
 
         content_tbl[i, ]$content_formatted <-
-          paste0(m_n_parts[1], " &times; 10<sup>", as.integer(m_n_parts[2]), "</sup>")
+          paste0(
+            m_n_parts[1],
+            " &times; 10<sup style='font-size:55%'>",
+            as.integer(m_n_parts[2]), "</sup>")
 
       } else {
         content_tbl[i, ]$content_formatted <- m_n_parts[1] %>% as.character()
@@ -499,7 +502,6 @@ process_content_tbl <- function(html_tbl) {
 
   # Append footnote glyphs to the formatted value
   # if a `glyph` string is available
-
   if ("glyph" %in% colnames(content_tbl)) {
     rows_glyph <- which(!is.na(content_tbl$glyph))
 
@@ -510,7 +512,7 @@ process_content_tbl <- function(html_tbl) {
         content_tbl[i, ]$content_formatted <-
           paste0(
             content_tbl[i, ]$content_formatted,
-            " <sup><em>",
+            "<sup style='font-size:55%'><em>",
             content_tbl[i, ]$glyph,
             "</em></sup>")
       }
