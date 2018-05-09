@@ -1,4 +1,3 @@
-
 #' Create an empty `transforms` tbl
 #' @importFrom dplyr tibble
 #' @noRd
@@ -123,6 +122,30 @@ empty_boxhead_panel_tbl <- function() {
     column_name = NA_character_,
     spanner_heading = NA_character_,
     column_heading = NA_character_)[-1, ]
+}
+
+#' Define the first default font
+#' @noRd
+default_font_1 <- function() {
+  "Helvetica"
+}
+
+#' Define the second default font
+#' @noRd
+default_font_2 <- function() {
+  "Segoe UI"
+}
+
+#' Define the third default font
+#' @noRd
+default_font_3 <- function() {
+  "Arial"
+}
+
+#' Define the fourth default font
+#' @noRd
+default_font_3 <- function() {
+  "Sans-Serif"
 }
 
 #' Get the next logical index integer in
