@@ -310,53 +310,41 @@ to_html_footnotes <- function(tbl,
     dplyr::arrange(glyph) %>%
     dplyr::distinct()
 
-  font <- "Helvetica"
-  font_size <- "90%"
-  padding <- "2px"
-
-  if (!is.null(font)) {
-    font_family <-
-      paste(font, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-family:", ., ";")
+  if (is.null(font)) {
+    font <-
+      paste(
+        c(default_font_1(), default_font_2(), default_font_3(), default_font_4()),
+        collapse = ",")
   } else {
-    font_family <- NA_character_
+    font <- paste(font, collapse = ",")
   }
 
-  if (!is.null(font_size)) {
-    font_size <-
-      paste(font_size, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-size:", ., ";")
-  } else {
-    font_size <- NA_character_
+  if (is.null(font_size)) {
+    font_size <- "90%"
   }
 
-  if (!is.null(padding)) {
-    padding <-
-      paste(padding, collapse = " ") %>%
-      as.character() %>%
-      paste0("padding:", ., ";")
-  } else {
-    padding <- NA_character_
+  if (is.null(padding)) {
+    padding <- "2px"
   }
 
   # Generate the styles
   styles_str <-
     paste(
-      c(font_family, font_size, padding)[
-        !is.na(c(font_family, font_size, padding))],
+      paste0("font-family:", font, ";"),
+      paste0("font-size:", font_size, ";"),
+      paste0("padding:", padding, ";"),
       collapse = "")
 
   # Generate the tag content for all footnotes
   content_str <-
     tbl %>%
     dplyr::mutate(
-      content = paste0("<sup><em>", glyph, "</em></sup> ", footnote) %>%
-        as.character() %>% stringr::str_squish()) %>%
+      content = paste0("<sup style='font-size:65%'><em>", glyph, "</em></sup> ", footnote) %>%
+        as.character() %>%
+        stringr::str_squish()) %>%
     dplyr::pull(content)
 
-  # One-line style for footnotes
+  # Use a one-line style for footnotes
   content_str <- paste(content_str, collapse = "&nbsp;&nbsp;")
 
   # Generate the `html_fragment` object
