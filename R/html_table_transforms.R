@@ -246,12 +246,12 @@ htt_theme_striped <- function(html_tbl) {
       values = "1px solid #BDBDBD")
 }
 
-#' HTT: theme_minimal()
+#' HTT: theme_horizontal()
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @return an object of class \code{html_table}.
 #' @noRd
-htt_theme_minimal <- function(html_tbl) {
+htt_theme_horizontal <- function(html_tbl) {
 
   html_tbl %>%
     add_table_style(
