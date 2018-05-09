@@ -190,7 +190,7 @@ The package API consists of the following functions:
 
 - `theme_striped()` -- use the 'striped' table theme
 - `theme_classical()` -- use the 'classical' table theme
-- `theme_minimal()` -- use the 'minimal' table theme
+- `theme_horizontal()` -- use the 'horizontal' table theme
 
 There are more functions yet to come. A means to selectively target rows, columns, or rows will be introduced and incorporated into functions that apply transformations on cell content.
 
