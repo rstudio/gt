@@ -86,7 +86,7 @@ tab_heading <- function(html_tbl,
 #' tab_create(tbl = mtcars) %>%
 #'   theme_striped() %>%
 #'   tab_stubhead_caption(
-#'     caption = "car make/model"
+#'     caption = "car *make* and *model*"
 #'     ) %>%
 #'   cols_align_left(types = "character")
 #' @importFrom dplyr tibble
@@ -94,6 +94,14 @@ tab_heading <- function(html_tbl,
 tab_stubhead_caption <- function(html_tbl,
                                  caption,
                                  alignment = NULL) {
+
+
+  # Sanitize input text and transform
+  # markdown to HTML
+  caption <- caption %>%
+    sanitize_text() %>%
+    commonmark::markdown_html() %>%
+    stringr::str_replace_all("^<p>|</p>|\n", "")
 
   if (is.null(alignment) || !(alignment %in% c("left", "center", "right"))) {
     alignment <- "left"
@@ -144,16 +152,23 @@ tab_source_note <- function(html_tbl,
                             lead_in = NULL,
                             font = NULL) {
 
+  # Sanitize input text and transform
+  # markdown to HTML
   source_note_str <-
     source_note %>%
     as.character() %>%
+    sanitize_text() %>%
     commonmark::markdown_html() %>%
     stringr::str_replace_all("^<p>|</p>|\n", "")
 
   if (!is.null(lead_in)) {
 
+    # Sanitize input text and transform
+    # markdown to HTML
     lead_in_str <-
-      lead_in %>% as.character() %>%
+      lead_in %>%
+      as.character() %>%
+      sanitize_text() %>%
       commonmark::markdown_html() %>%
       stringr::str_replace_all("^<p>|</p>|\n", "")
 
@@ -231,9 +246,12 @@ tab_footnote <- function(html_tbl,
     row <- x[[1]][[1]] %>% as.integer()
     column <- x[[1]][[2]] %>% as.integer()
 
+    # Sanitize footnote text and transform
+    # markdown to HTML
     footnote <-
       names(x)[1] %>%
       as.character() %>%
+      sanitize_text() %>%
       commonmark::markdown_html() %>%
       stringr::str_replace_all("^<p>|</p>|\n", "")
   }
@@ -244,9 +262,12 @@ tab_footnote <- function(html_tbl,
     row <- x[[1]][[1]] %>% as.integer()
     column <- x[[1]][[2]] %>% as.integer()
 
+    # Sanitize footnote text and transform
+    # markdown to HTML
     footnote <-
       names(x) %>%
       as.character() %>%
+      sanitize_text() %>%
       commonmark::markdown_html() %>%
       stringr::str_replace_all("^<p>|</p>|\n", "")
   }

@@ -58,7 +58,8 @@ tab_stub <- function(html_tbl,
 #'       "Ferrari Dino","Maserati Bora",
 #'       "Porsche 914-2"))
 #' @importFrom dplyr pull add_row
-#' @importFrom stringr str_match
+#' @importFrom stringr str_match str_replace_all
+#' @importFrom commonmark markdown_html
 #' @export
 tab_stub_block <- function(html_tbl,
                            ...,
@@ -107,7 +108,7 @@ tab_stub_block <- function(html_tbl,
     }
   }
 
-  # Obtain `::other::`, or remaining rows
+  # Obtain remaining rows
   others_rows <-
     base::setdiff(
       row_indices,
@@ -119,7 +120,11 @@ tab_stub_block <- function(html_tbl,
     html_tbl[["stub_block"]] <-
       html_tbl[["stub_block"]] %>%
       dplyr::add_row(
-        stub_heading = x[i] %>% names(),
+        stub_heading = x[i] %>%
+          names() %>%
+          sanitize_text() %>%
+          commonmark::markdown_html() %>%
+          stringr::str_replace_all("^<p>|</p>|\n", ""),
         row_number = x[[i]])
   }
 
@@ -130,7 +135,10 @@ tab_stub_block <- function(html_tbl,
     html_tbl[["stub_block"]] <-
       html_tbl[["stub_block"]] %>%
       dplyr::add_row(
-        stub_heading = .default,
+        stub_heading = .default %>%
+          sanitize_text() %>%
+          commonmark::markdown_html() %>%
+          stringr::str_replace_all("^<p>|</p>|\n", ""),
         row_number = others_rows)
   }
 
