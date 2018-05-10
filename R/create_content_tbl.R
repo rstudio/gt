@@ -318,6 +318,11 @@ process_content_tbl <- function(html_tbl) {
     }
   }
 
+  # Sanitize all text in `content_formatted`
+  content_tbl <- content_tbl %>%
+    dplyr::mutate(
+      content_formatted = sanitize_text(content_formatted))
+
   #
   # Format to scientific notation
   #
