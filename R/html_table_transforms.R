@@ -260,27 +260,45 @@ htt_theme_horizontal <- function(html_tbl) {
     add_table_style(
       property = "width",
       values = "100%") %>%
+    add_style_to_row_0(
+      property = "padding",
+      values = "5px") %>%
+    add_style_to_row_0(
+      property = "margin",
+      values = "5px") %>%
     add_style_to_first_row(
       property = "border-top",
       values = "2px solid #A8A8A8") %>%
-    add_style_to_row_0(
-      property = "border-top",
-      values = "2px solid #A8A8A8") %>%
-    add_style_to_row_0(
-      property = "padding",
-      values = "10px") %>%
-    add_style_to_row_0(
-      property = "margin",
-      values = "10px") %>%
     add_style_to_rows(
       property = "padding",
-      values = "10px") %>%
-    add_style_to_rows(
-      property = "padding",
-      values = "10px") %>%
+      values = "5px") %>%
     add_style_to_row_n(
       property = "border-bottom",
-      values = "2px solid #A8A8A8")
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_group_heading_rows(
+      extend_to_field = TRUE,
+      property = "border-top",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_group_heading_rows(
+      extend_to_field = FALSE,
+      property = "border-bottom",
+      values = "1px solid #BDBDBD") %>%
+    add_style_to_group_heading_rows(
+      property = "padding",
+      values = "5px") %>%
+    add_style_to_group_heading_rows(
+      property = "text-align",
+      values = "center") %>%
+    add_style_to_group_heading_rows(
+      property = "font-weight",
+      values = "bold") %>%
+    add_style_to_summary_caption_rows(
+      property = "text-align",
+      values = "right") %>%
+    add_style_to_summary_caption_rows(
+      extend_to_field = TRUE,
+      property = "border-top",
+      values = "1px solid #BDBDBD")
 }
 
 #' HTT: theme_classical()
