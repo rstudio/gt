@@ -33,7 +33,7 @@ but a message to this effect will be emitted.
 tab_create(tbl = mtcars) \%>\%
   theme_striped() \%>\%
   tab_stubhead_caption(
-    caption = "car make/model"
+    caption = "car *make* and *model*"
     ) \%>\%
   cols_align_left(types = "character")
 }
