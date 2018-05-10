@@ -34,17 +34,15 @@ more boxhead panels with spanner headings
 and column headings.
 }
 \examples{
-# Create a table based on `mtcars` where
+# Create a table based on `rock` where
 # there are column headings grouped under
 # spanner headings
-tab_create(tbl = mtcars) \%>\%
-  cols_remove(c("drat", "wt", "vs", "am")) \%>\%
+tab_create(tbl = rock) \%>\%
   tab_boxhead_panel(
-    "numbers" = c("cyl", "gear", "carb"),
-    "measurements" = c(
-      "hp", "qsec", "mpg", "disp")) \%>\%
-  cols_reorder(columns = c(
-    "mpg", "disp", "hp", "qsec",
-    "cyl", "gear", "carb")) \%>\%
+    "perimeter" = c("peri", "shape")
+    ) \%>\%
+  cols_reorder(
+    columns = c("area", "perm", "peri", "shape")
+    ) \%>\%
   theme_striped()
 }
