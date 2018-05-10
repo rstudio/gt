@@ -360,6 +360,20 @@ get_currency_exponent <- function(currency) {
   }
 }
 
+#' Sanitize input data
+#' This converts single \code{<}, \code{>},
+#' and \code{=} characters to HTML entities.
+#' @param text the text to be sanitized.
+#' @importFrom stringr str_replace_all
+#' @noRd
+sanitize_text <- function(text) {
+
+ text %>%
+   stringr::str_replace_all(pattern = "<", replacement = "&#60;") %>%
+   stringr::str_replace_all(pattern = "=", replacement = "&#61;") %>%
+   stringr::str_replace_all(pattern = ">", replacement = "&#62;")
+}
+
 #' Collapse all styles provided as individual columns
 #' to a single `style_attrs` column with a style information
 #' for each table cell
