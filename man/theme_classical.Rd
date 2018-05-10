@@ -14,7 +14,7 @@ created using the \code{tab_create()} function.}
 an object of class \code{html_table}.
 }
 \description{
-Apply the 'minimal' theme to the table.
+Apply the 'classical' theme to the table.
 Horizontal and vertical line styles
 visually separate the columns and rows. This
 adds reasonably thick horizontal and vertical
