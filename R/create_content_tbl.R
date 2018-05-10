@@ -187,7 +187,7 @@ create_content_tbl <- function(html_tbl) {
 #' \code{content_tbl}.
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate filter case_when
 #' @importFrom stringr str_split str_detect
 #' @importFrom purrr map_df
 #' @noRd
