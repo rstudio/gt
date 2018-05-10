@@ -269,14 +269,14 @@ theme_horizontal <- function(html_tbl) {
     html_tbl[["aesthetics"]] %>%
     tibble::add_row(
       type = "theme",
-      options = "minimal")
+      options = "horizontal")
 
   html_tbl
 }
 
 #' Use the 'classical' table theme
 #'
-#' Apply the 'minimal' theme to the table.
+#' Apply the 'classical' theme to the table.
 #' Horizontal and vertical line styles
 #' visually separate the columns and rows. This
 #' adds reasonably thick horizontal and vertical
