@@ -16,6 +16,7 @@ create_html <- function(html_tbl) {
   # Extract object components -----------------------------------------------
 
   fonts <- html_tbl[["fonts"]]
+  aesthetics <- html_tbl[["aesthetics"]]
 
   heading <- html_tbl[["heading"]]
   source_note <- html_tbl[["source_note"]]
@@ -169,7 +170,32 @@ create_html <- function(html_tbl) {
       by = c("content", "row", "column")) %>%
     dplyr::mutate(rowspan_attrs = glue::glue("rowspan=\"{rowspan}\"") %>% as.character()) %>%
     dplyr::mutate(colspan_attrs = glue::glue("colspan=\"{colspan}\"") %>% as.character()) %>%
-    dplyr::select(-rowspan, -colspan) %>%
+    dplyr::select(-rowspan, -colspan)
+
+  # Rename `column_name` values if there are
+  # any entries in `aesthetics`
+  if ("cols_rename" %in% aesthetics$type) {
+
+    replace_directives <-
+      aesthetics %>%
+      dplyr::filter(type == "cols_rename")
+
+    columns <- replace_directives$columns
+    renamed <- replace_directives$renamed
+
+    for (i in seq(columns)) {
+
+      table_heading_styles <-
+        table_heading_styles %>%
+        dplyr::mutate(content = case_when(
+          column > 0 & row == 0 & column_name == columns[i] ~ renamed[i],
+          column == 0 ~ content,
+          TRUE ~ content))
+    }
+  }
+
+  table_heading_styles <-
+    table_heading_styles %>%
     dplyr::mutate(heading_tag = glue::glue("<th {style_attrs} {rowspan_attrs} {colspan_attrs}>{content}</th>"))
 
   # Process `html_table` content --------------------------------------------
@@ -180,7 +206,6 @@ create_html <- function(html_tbl) {
     dplyr::mutate(style_attrs = case_when(
       style_attrs != "" ~ glue::glue("<td style=\"{style_attrs}\">{content}</td>") %>% as.character(),
       style_attrs == "" ~ glue::glue("<td>{content}</td>") %>% as.character()))
-
 
   # Create `table_heading_component` ----------------------------------------
 
