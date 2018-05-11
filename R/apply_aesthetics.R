@@ -450,3 +450,51 @@ replace_missing <- function(html_tbl,
 
   html_tbl
 }
+
+#' Rename one or more columns
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @param ... a series of named vectors for
+#' specifying the mappings between new column
+#' names and existing column names.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr tibble bind_rows filter
+#' @importFrom commonmark markdown_html
+#' @importFrom purrr map_df
+#' @importFrom stringr str_replace_all
+#' @export
+cols_rename <- function(html_tbl,
+                        ...) {
+
+  # Obtain any existing-column-to-new-name mappings
+  x <- list(...)
+
+  # Generate table of column names and
+  # renamed column heading names
+  cols_rename_tbl <-
+    seq(length(x)) %>%
+    purrr::map_df(.f = function(y) {
+
+      dplyr::tibble(
+        type = "cols_rename",
+        renamed = (x[y] %>%
+          names() %>%
+          sanitize_text() %>%
+          commonmark::markdown_html() %>%
+          stringr::str_replace_all("^<p>|</p>|\n", "")),
+        columns = x[[y]])
+    })
+
+  # Filter by column names in `modified_tbl`
+  cols_rename_tbl <-
+    cols_rename_tbl %>%
+    dplyr::filter(columns %in% colnames(html_tbl[["modified_tbl"]]))
+
+  # Add to `transforms` tbl
+  html_tbl[["aesthetics"]] <-
+    dplyr::bind_rows(
+      html_tbl[["aesthetics"]],
+      cols_rename_tbl)
+
+  html_tbl
+}
