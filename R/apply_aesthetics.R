@@ -458,6 +458,17 @@ replace_missing <- function(html_tbl,
 #' specifying the mappings between new column
 #' names and existing column names.
 #' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table based on `airquality` where
+#' # some of the columns are renamed
+#' tab_create(tbl = airquality) %>%
+#'   theme_striped() %>%
+#'   cols_rename(
+#'     "Solar Radiation" = "Solar.R",
+#'     "Wind (mph)" = "Wind",
+#'     "Ozone (ppbV)" = "Ozone",
+#'     "T (degrees F)" = "Temp"
+#'     )
 #' @importFrom dplyr tibble bind_rows filter
 #' @importFrom commonmark markdown_html
 #' @importFrom purrr map_df
