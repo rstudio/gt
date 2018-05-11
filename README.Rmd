@@ -185,6 +185,7 @@ The package API consists of the following functions:
 - `cols_move_to_end()` -- move one or more columns to the end
 - `cols_reorder()` -- reorder all columns
 - `cols_remove()` -- remove one or more columns
+- `cols_rename()` -- rename one or more columns
 
 **Apply Table Theme**
 
