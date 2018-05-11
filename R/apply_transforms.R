@@ -309,7 +309,7 @@ cols_move <- function(html_tbl,
 #' @importFrom tibble add_row
 #' @export
 cols_reorder <- function(html_tbl,
-                            columns) {
+                         columns) {
 
   # If the columns given in `columns` do not
   # contain the same columns as in the table,
