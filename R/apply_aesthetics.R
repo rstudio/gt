@@ -489,10 +489,8 @@ cols_rename <- function(html_tbl,
       dplyr::tibble(
         type = "cols_rename",
         renamed = (x[y] %>%
-          names() %>%
-          sanitize_text() %>%
-          commonmark::markdown_html() %>%
-          stringr::str_replace_all("^<p>|</p>|\n", "")),
+                     names() %>%
+                     process_text()),
         columns = x[[y]])
     })
 

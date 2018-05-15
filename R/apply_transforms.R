@@ -122,9 +122,7 @@ tab_stub_block <- function(html_tbl,
       dplyr::add_row(
         stub_heading = x[i] %>%
           names() %>%
-          sanitize_text() %>%
-          commonmark::markdown_html() %>%
-          stringr::str_replace_all("^<p>|</p>|\n", ""),
+          process_text(),
         row_number = x[[i]])
   }
 
@@ -136,9 +134,7 @@ tab_stub_block <- function(html_tbl,
       html_tbl[["stub_block"]] %>%
       dplyr::add_row(
         stub_heading = .default %>%
-          sanitize_text() %>%
-          commonmark::markdown_html() %>%
-          stringr::str_replace_all("^<p>|</p>|\n", ""),
+          process_text(),
         row_number = others_rows)
   }
 
