@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a presentation table based on `mtcars`
 # Motor Trend Car Road Tests
@@ -16,7 +15,7 @@ library(tidyverse)
 # 9 - a heading is added
 # 10 - two source notes are added
 # 11 - we add footnotes that target several cell values
-# 12 - renaming of column headers
+# 12 - column headings are provided with new names
 html_tbl <-
   tab_create(tbl = mtcars) %>%  # 1
   theme_horizontal() %>%  # 2
@@ -39,16 +38,16 @@ html_tbl <-
       "Porsche 914-2", "Ford Pantera L",
       "Camaro Z28")
   ) %>% # 7
-  tab_stubhead_caption(caption = "car model") %>%  # 8
+  tab_stubhead_caption(caption = md("*car* model")) %>%  # 8
   tab_heading(
-    title = "Excerpt from the **mtcars** dataset",
-    headnote = "[A rather famous *Motor Trend* table]"
+    title = md("Excerpt from the **mtcars** dataset"),
+    headnote = md("[A rather famous *Motor Trend* table]")
   ) %>%  # 9
   tab_source_note(
-    source_note = "Main Source of Data: *Henderson and Velleman* (1981).",
+    source_note = md("Main Source of Data: *Henderson and Velleman* (1981)."),
   ) %>%  # 10
   tab_source_note(
-    source_note = "Original Data: *Motor Trend Magazine* (1974).",
+    source_note = md("Original Data: *Motor Trend Magazine* (1974)."),
   ) %>%  # 10
   tab_footnote(
     "Examples of poor gas mileage." =
@@ -67,11 +66,11 @@ html_tbl <-
       cells(row = 4, column = 8)
   ) %>%  # 11
   tab_footnote(
-    "Massive **hp**." =
+    "Massive hp." =
       cells(row = 18, column = 5)
   ) %>% # 11
   cols_rename(
-    "*MPG*" = "mpg",
+    "MPG" = "mpg",
     "C" = "cyl",
     "D" = "disp",
     "HP" = "hp",
@@ -85,4 +84,3 @@ html_tbl <-
 
 # Display the table in the Viewer
 html_tbl
-
