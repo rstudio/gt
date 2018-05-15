@@ -22,8 +22,8 @@
 #' tab_create(tbl = mtcars) %>%
 #'   theme_striped() %>%
 #'   tab_heading(
-#'     title = "Data listing from **mtcars**",
-#'     headnote = "`mtcars` is an R dataset"
+#'     title = md("Data listing from **mtcars**"),
+#'     headnote = md("`mtcars` is an R dataset")
 #'     )
 #' @importFrom dplyr tibble
 #' @export
@@ -33,11 +33,15 @@ tab_heading <- function(html_tbl,
                         table_number = NULL,
                         font = NULL) {
 
+  # Process the `title` text
+  title <- title %>% process_text()
+
+  # Process the `headnote` text
   if (is.null(headnote)) {
     headnote <- ""
   } else {
     headnote <-
-      headnote %>% as.character()
+      headnote %>% process_text()
   }
 
   if (is.null(table_number)) {
@@ -86,7 +90,7 @@ tab_heading <- function(html_tbl,
 #' tab_create(tbl = mtcars) %>%
 #'   theme_striped() %>%
 #'   tab_stubhead_caption(
-#'     caption = "car *make* and *model*"
+#'     caption = md("car *make* and *model*")
 #'     ) %>%
 #'   cols_align_left(types = "character")
 #' @importFrom dplyr tibble
@@ -95,14 +99,11 @@ tab_stubhead_caption <- function(html_tbl,
                                  caption,
                                  alignment = NULL) {
 
+  # Process the incoming text
+  caption <- process_text(text = caption)
 
-  # Sanitize input text and transform
-  # markdown to HTML
-  caption <- caption %>%
-    sanitize_text() %>%
-    commonmark::markdown_html() %>%
-    stringr::str_replace_all("^<p>|</p>|\n", "")
-
+  # If alignment is not provided (or if the provided
+  # is incorrect), set default alignment to `left`
   if (is.null(alignment) || !(alignment %in% c("left", "center", "right"))) {
     alignment <- "left"
   }
@@ -138,7 +139,7 @@ tab_stubhead_caption <- function(html_tbl,
 #' tab_create(tbl = mtcars) %>%
 #'   theme_striped() %>%
 #'   tab_source_note(
-#'     source_note = "*Henderson and Velleman* (1981)."
+#'     source_note = md("*Henderson and Velleman* (1981).")
 #'     )
 #' @importFrom dplyr add_row
 #' @importFrom commonmark markdown_html
@@ -226,9 +227,7 @@ tab_footnote <- function(html_tbl,
     footnote <-
       names(x)[1] %>%
       as.character() %>%
-      sanitize_text() %>%
-      commonmark::markdown_html() %>%
-      stringr::str_replace_all("^<p>|</p>|\n", "")
+      process_text()
   }
 
   if (is.list(x) && length(x) == 1 && length(x[[1]]) == 2 && inherits(x[[1]], "numeric")) {
@@ -241,11 +240,8 @@ tab_footnote <- function(html_tbl,
     # markdown to HTML
     footnote <-
       names(x) %>%
-      as.character() %>%
-      sanitize_text() %>%
-      commonmark::markdown_html() %>%
-      stringr::str_replace_all("^<p>|</p>|\n", "")
-  }
+      process_text()
+    }
 
   footnote_tbl <-
     dplyr::bind_rows(
