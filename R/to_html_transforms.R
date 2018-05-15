@@ -52,14 +52,7 @@ to_html_table_caption <- function(tbl,
   title <- tbl$title
   headnote <- tbl$headnote
 
-  # Convert from markdown to HTML
-  title <-
-    commonmark::markdown_html(text = title) %>%
-    stringr::str_replace_all("^<p>|</p>|\n", "")
-
-  headnote <- commonmark::markdown_html(text = headnote) %>%
-    stringr::str_replace_all("^<p>|</p>|\n", "")
-
+  # Set the `font-family` attribute
   font_family <-
     paste0("font-family:", font, ";")
 
