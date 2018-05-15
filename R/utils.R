@@ -360,18 +360,47 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-#' Sanitize input data
-#' This converts single \code{<}, \code{>},
-#' and \code{=} characters to HTML entities.
+#' Process input text
+#' This processes input text based on the class. If
+#' incoming text has the class \code{from_markdown}
+#' (applied by the \code{md()} helper function), then
+#' the text will be sanitized and transformed to HTML
+#' from Markdown. If the incoming text has the class
+#' \code{preserve_html} (applied by \code{html()}
+#' helper function), then the text will be seen as
+#' HTML and it won't undergo sanitization
 #' @param text the text to be sanitized.
 #' @importFrom stringr str_replace_all
+#' @importFrom htmltools htmlEscape
+#' @importFrom commonmark markdown_html
 #' @noRd
-sanitize_text <- function(text) {
+process_text <- function(text) {
 
- text %>%
-   stringr::str_replace_all(pattern = "<", replacement = "&#60;") %>%
-   stringr::str_replace_all(pattern = "=", replacement = "&#61;") %>%
-   stringr::str_replace_all(pattern = ">", replacement = "&#62;")
+  if (inherits(text, "from_markdown")) {
+
+    text <-
+      text %>%
+      as.character() %>%
+      htmltools::htmlEscape() %>%
+      commonmark::markdown_html() %>%
+      stringr::str_replace_all("^<p>|</p>|\n", "")
+
+    return(text)
+
+  } else if (inherits(text, "preserve_html")) {
+
+    text <- text %>% as.character()
+
+    return(text)
+
+  } else {
+
+    text <- text %>%
+      as.character() %>%
+      htmltools::htmlEscape()
+
+    return(text)
+  }
 }
 
 #' Collapse all styles provided as individual columns
