@@ -65,8 +65,8 @@ The `mtcars` dataset can be suitably transformed into a display table (for sake 
 - `theme_striped()`: styles the table with a basic striped row theme
 - `cols_align_center()`: center-aligns cell content in specified columns
 - `tab_stubhead_caption()`: adds a caption to the stubhead (the box in the top-left of the table)
-- `tab_heading()`: an opportunity to add a title and, optionally, a headnote and a table number
-- `tab_source_note()`: not really a footnote, but a specialized note concerned with the source of the data presented
+- `tab_heading()`: an opportunity to add a title and optionally a headnote
+- `tab_source_note()`: a note that states the source of the presented data
 
 ```{r}
 
@@ -77,8 +77,8 @@ The `mtcars` dataset can be suitably transformed into a display table (for sake 
 # 5 - all `numeric` values are right aligned
 # 6 - the dataset has rownames so they've been moved to the stub;
 #     here, we supply a stubhead caption
-# 7 - a heading is added
-# 8,9 - two source notes are added
+# 7 - a heading is added, both parts are interpreted as Markdown
+# 8 - two source notes are added, the first is interpreted as Markdown
 mtcars_tbl <-
   tab_create(tbl = mtcars[1:6, ]) %>%  # 1
   theme_striped() %>%  # 2
@@ -93,18 +93,17 @@ mtcars_tbl <-
   cols_align_right(types = "numeric") %>%  # 5
   tab_stubhead_caption(
     caption = "car model",
-    alignment = "center") %>%  # 6
+    alignment = "center"
+    ) %>%  # 6
   tab_heading(
-    title = "Excerpt from the **mtcars** dataset",
-    headnote = "[A rather famous **Motor Trend** table]"
+    title = md("Excerpt from the **mtcars** dataset"),
+    headnote = md("[A rather famous *Motor Trend* table]")
     ) %>%  # 7
   tab_source_note(
-    source_note = "Henderson and Velleman (1981).",
-    lead_in = "Main Source of Data: "
+    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
     ) %>%  # 8
   tab_source_note(
-    source_note = "Motor Trend Magazine (1974).",
-    lead_in = "Original Data: "
+    source_note = "Original Data from Motor Trend Magazine (1974)."
     )  # 9
 ```
 
@@ -134,12 +133,11 @@ iris_tbl <-
     decimals = 1
     ) %>%  # 5
   tab_heading(
-    title = "Excerpt from the **iris** dataset",
-    headnote = "[All about *Iris setosa*, *versicolor*, and *virginica*]"
+    title = md("Excerpt from the **iris** dataset"),
+    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
     ) %>%  # 6
   tab_source_note(
-    source_note = "Anderson, Edgar (1935).",
-    lead_in = "The data were collected by "
+    source_note = md("The data were collected by *Anderson, Edgar* (1935).")
     )  # 7
 ```
 
