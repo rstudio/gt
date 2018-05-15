@@ -166,7 +166,6 @@ tab_source_note <- function(html_tbl,
     dplyr::add_row(
       index = (nrow(html_tbl[["source_note"]]) + 1L),
       source_note = source_note_str,
-      lead_in = lead_in_str,
       font = font)
 
   html_tbl
