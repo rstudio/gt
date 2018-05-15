@@ -39,7 +39,7 @@ information to the heading part of the table.
 tab_create(tbl = mtcars) \%>\%
   theme_striped() \%>\%
   tab_heading(
-    title = "Data listing from **mtcars**",
-    headnote = "`mtcars` is an R dataset"
+    title = md("Data listing from **mtcars**"),
+    headnote = md("`mtcars` is an R dataset")
     )
 }
