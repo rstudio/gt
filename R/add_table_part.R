@@ -125,9 +125,6 @@ tab_stubhead_caption <- function(html_tbl,
 #' created using the \code{tab_create()} function.
 #' @param source_note text to be used in the
 #' source note.
-#' @param lead_in a lead in word or phrase
-#' indicating the citation as the source of the
-#' tabulated data.
 #' @param font the name of the font to use for
 #' the specified columns. This could be provided
 #' as a vector of fonts where subsequent font names
@@ -149,32 +146,11 @@ tab_stubhead_caption <- function(html_tbl,
 #' @export
 tab_source_note <- function(html_tbl,
                             source_note,
-                            lead_in = NULL,
                             font = NULL) {
 
   # Sanitize input text and transform
   # markdown to HTML
-  source_note_str <-
-    source_note %>%
-    as.character() %>%
-    sanitize_text() %>%
-    commonmark::markdown_html() %>%
-    stringr::str_replace_all("^<p>|</p>|\n", "")
-
-  if (!is.null(lead_in)) {
-
-    # Sanitize input text and transform
-    # markdown to HTML
-    lead_in_str <-
-      lead_in %>%
-      as.character() %>%
-      sanitize_text() %>%
-      commonmark::markdown_html() %>%
-      stringr::str_replace_all("^<p>|</p>|\n", "")
-
-  } else {
-    lead_in_str <- ""
-  }
+  source_note_str <- process_text(text = source_note)
 
   if (is.null(font)) {
 
