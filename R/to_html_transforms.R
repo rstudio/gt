@@ -258,7 +258,7 @@ to_html_source_notes <- function(tbl,
   content_str <-
     tbl %>%
     dplyr::mutate(
-      content = glue::glue("{lead_in}{source_note}") %>%
+      content = source_note %>%
         as.character() %>% stringr::str_squish()) %>%
     dplyr::pull(content)
 
