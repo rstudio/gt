@@ -88,7 +88,6 @@ empty_source_note_tbl <- function() {
 
   dplyr::tibble(
     index = NA_integer_,
-    lead_in = NA_character_,
     source_note = NA_character_,
     font = NA_character_)[-1, ]
 }
