@@ -214,6 +214,31 @@ fmt_font <- function(html_tbl,
   html_tbl
 }
 
+#' Format to use HTML
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @param columns a vector of column names
+#' for which the HTML formatting should be applied.
+#' @return an object of class \code{html_table}.
+#' @importFrom dplyr bind_rows tibble
+#' @export
+fmt_html <- function(html_tbl,
+                     columns = NULL) {
+
+  if (is.null(columns)) {
+    columns <- NA_character_
+  }
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    dplyr::bind_rows(
+      dplyr::tibble(
+        type = "fmt_html",
+        columns = columns))
+
+  html_tbl
+}
+
 #' Use the 'striped' table theme
 #'
 #' Apply the 'striped' theme to the table. This
