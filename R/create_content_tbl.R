@@ -121,7 +121,8 @@ create_content_tbl <- function(html_tbl) {
       date_format = NA_character_,
       time_format = NA_character_,
       prepend = NA_character_,
-      append = NA_character_) %>%
+      append = NA_character_,
+      html_escape = TRUE) %>%
     dplyr::arrange(row, col)
 
   # Join in glyphs for footnotes, if any
@@ -268,7 +269,6 @@ process_content_tbl <- function(html_tbl) {
 
   rows_str_format <- which(content_tbl$format == "s")
 
-
   if (length(rows_num_format_def_w_digits) > 0) {
 
     for (i in rows_num_format_def_w_digits) {
@@ -318,10 +318,51 @@ process_content_tbl <- function(html_tbl) {
     }
   }
 
-  # Sanitize all text in `content_formatted`
+  # Determine which cells should be preserved as HTML
+  if ("fmt_html" %in% html_tbl[["aesthetics"]]$type) {
+
+    html_preserve_directives <-
+      html_tbl[["aesthetics"]] %>%
+      dplyr::filter(type == "fmt_html")
+
+    html_preserve_in_content_tbl <- function(content_tbl,
+                                             html_preserve_directives) {
+
+      columns <- html_preserve_directives$columns
+
+      for (i in seq(nrow(html_preserve_directives))) {
+
+        if (is.na(columns[i])) {
+
+          content_tbl <-
+            content_tbl %>%
+            dplyr::mutate(html_escape = FALSE)
+
+        } else if (!is.na(columns[i])) {
+
+          content_tbl <-
+            content_tbl %>%
+            dplyr::mutate(html_escape = case_when(
+              column_name == columns[i] ~ FALSE,
+              column_name != columns[i] ~ TRUE))
+        }
+      }
+
+      content_tbl
+    }
+
+    content_tbl <-
+      html_preserve_in_content_tbl(
+        content_tbl = content_tbl,
+        html_preserve_directives = html_preserve_directives)
+  }
+
+  # Conditionally sanitize text in
+  # `content_formatted`
   content_tbl <- content_tbl %>%
-    dplyr::mutate(
-      content_formatted = process_text(content_formatted))
+    dplyr::mutate(content_formatted = case_when(
+      html_escape == TRUE ~ process_text(content_formatted),
+      html_escape == FALSE ~ content_formatted))
 
   #
   # Format to scientific notation
@@ -447,13 +488,6 @@ process_content_tbl <- function(html_tbl) {
     }
   }
 
-  # Replace hyphens with minus signs
-  content_tbl$content_formatted <-
-    gsub(
-      pattern = "-",
-      replacement = "&minus;",
-      x = content_tbl$content_formatted)
-
   # Replace NA values if the option is
   # taken to do so
   if ("replace_missing" %in% html_tbl[["aesthetics"]]$type) {
@@ -479,7 +513,7 @@ process_content_tbl <- function(html_tbl) {
             dplyr::mutate(content_formatted = ifelse(
               is.na(content), replacement[i], content_formatted))
 
-        } else if (!is.na(column)) {
+        } else if (!is.na(columns)) {
 
           content_tbl <-
             content_tbl %>%
