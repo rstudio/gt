@@ -79,11 +79,22 @@ fa_icon <- function(name,
                     height = 30,
                     fill = NULL) {
 
-  svg <-
-    (gt:::fa_tbl %>%
-       dplyr::rename(short_name = name) %>%
-       dplyr::filter(short_name %in% name) %>%
-       dplyr::pull(svg))[1]
+  fa_tbl <- gt:::fa_tbl
+
+  if (name %in% (fa_tbl %>% dplyr::pull(full_name))) {
+
+    svg <-
+      (fa_tbl %>%
+         dplyr::filter(full_name %in% rlang::UQ(rlang::enquo(name))) %>%
+         dplyr::pull(svg))[1]
+
+  } else if (name %in% (fa_tbl %>% dplyr::pull(name))) {
+
+    svg <-
+      (fa_tbl %>%
+         dplyr::filter(name %in% rlang::UQ(rlang::enquo(name))) %>%
+         dplyr::pull(svg))[1]
+  }
 
   style <- glue::glue("style=\"height: {height};")
 
