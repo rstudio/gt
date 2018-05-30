@@ -23,7 +23,7 @@ local_image <- function(file,
 
   uri <- knitr::image_uri(f = file)
 
-  glue::glue("<img src=\"{uri}\" style=\"height: {height};\">") %>%
+  glue::glue("<img src=\"{uri}\" style=\"height:{height};\">") %>%
     as.character()
 }
 
@@ -50,7 +50,7 @@ local_image <- function(file,
 web_image <- function(url,
                       height = 30) {
 
-  glue::glue("<img src=\"{url}\" style=\"height: {height};\">") %>%
+  glue::glue("<img src=\"{url}\" style=\"height:{height};\">") %>%
     as.character()
 }
 
@@ -96,10 +96,10 @@ fa_icon <- function(name,
          dplyr::pull(svg))[1]
   }
 
-  style <- glue::glue("style=\"height: {height};")
+  style <- glue::glue("style=\"height:{height};")
 
   if (!is.null(fill)) {
-    style <- glue::glue("{style}fill: {fill};")
+    style <- glue::glue("{style}fill:{fill};")
   }
 
   style <- glue::glue("{style}\"")
@@ -108,6 +108,53 @@ fa_icon <- function(name,
     string = svg,
     pattern = "^<svg",
     replacement = glue::glue("<svg {style}")) %>%
+    as.character()
+}
+
+#' Helper function for adding a local image
+#'
+#' Add an image from a local SVG file inside a
+#' table with this helper function.
+#' @param file a path to an SVG file.
+#' @param height the absolute height (px)
+#' of the image in the table cell.
+#' @return a character object with an HTML
+#' fragment that can be placed inside a cell.
+#' @examples
+#' \dontrun{
+#' # Create an HTML fragment that
+#' # contains the SVG
+#' img_file_html <-
+#'   local_svg(
+#'     file = "path/to/file.svg")
+#' }
+#' @importFrom glue glue
+#' @importFrom stringr str_replace str_squish
+#' @export
+local_svg <- function(file,
+                      height = 30) {
+
+  style <- glue::glue("style=\"height:{height};\"")
+
+  svg <-
+    suppressWarnings(
+      readLines(file) %>%
+        paste(collapse = " ") %>%
+        stringr::str_squish())
+
+  if (svg %>% stringr::str_detect(pattern = "^<\\?xml.*?\\?>")) {
+
+    svg <- svg %>%
+      stringr::str_replace(
+        pattern = "^<\\?xml.*?\\?>",
+        replacement = "") %>%
+      stringr::str_squish()
+  }
+
+  svg %>%
+    stringr::str_replace(
+      pattern = "^<svg",
+      replacement = glue::glue("<svg {style}")) %>%
     as.character()
 }
 
