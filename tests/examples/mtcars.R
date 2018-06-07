@@ -40,7 +40,7 @@ html_tbl <-
   ) %>% # 7
   tab_stubhead_caption(caption = md("*car* model")) %>%  # 8
   tab_heading(
-    title = md("Excerpt from the **mtcars** dataset"),
+    title = md("The **mtcars** dataset"),
     headnote = md("[A rather famous *Motor Trend* table]")
   ) %>%  # 9
   tab_source_note(
