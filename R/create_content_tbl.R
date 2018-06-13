@@ -204,6 +204,7 @@ process_content_tbl <- function(html_tbl) {
     content_tbl %>%
     dplyr::mutate(content_formatted = NA_character_)
 
+  # Determine the index of the `content_1` column
   content_1_col <-
     which(colnames(content_tbl) == "content_1")
 
@@ -356,6 +357,13 @@ process_content_tbl <- function(html_tbl) {
         content_tbl = content_tbl,
         html_preserve_directives = html_preserve_directives)
   }
+
+  # Detect instances where SVGs are included and set
+  # the directive for the content to not be sanitized
+  content_tbl <- content_tbl %>%
+    dplyr::mutate(html_escape = case_when(
+      grepl(pattern = ".*<svg.*?</svg>.*", x = content) ~ FALSE,
+      TRUE ~ html_escape))
 
   # Conditionally sanitize text in
   # `content_formatted`
