@@ -4,11 +4,15 @@
 \alias{tab_create}
 \title{Create gt table object}
 \usage{
-tab_create(tbl)
+tab_create(tbl, use_font_defaults = TRUE)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} object or a
 tibble.}
+
+\item{use_font_defaults}{an option to use the
+recommended font defaults for the table. This
+is set to \code{TRUE} by default.}
 }
 \value{
 an object of class \code{html_table}.
