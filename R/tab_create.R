@@ -6,6 +6,9 @@
 #' function is the first step in that process.
 #' @param tbl a \code{data.frame} object or a
 #' tibble.
+#' @param use_font_defaults an option to use the
+#' recommended font defaults for the table. This
+#' is set to \code{TRUE} by default.
 #' @return an object of class \code{html_table}.
 #' @examples
 #' # Create a table object using the
@@ -32,7 +35,8 @@
 #' @importFrom dplyr bind_rows inner_join mutate_if select_if everything add_row
 #' @importFrom tibble rownames_to_column
 #' @export
-tab_create <- function(tbl) {
+tab_create <- function(tbl,
+                       use_font_defaults = TRUE) {
 
   # Table ingest ------------------------------------------------------------
 
@@ -128,16 +132,21 @@ tab_create <- function(tbl) {
   boxhead_panel <- gt:::empty_boxhead_panel_tbl()
 
   # Set default fonts -------------------------------------------------------
-  fonts <-
-    fonts %>%
-    dplyr::add_row(
-      type = "all",
-      font_1 = default_font_1(),
-      font_2 = default_font_2(),
-      font_3 = default_font_3(),
-      font_4 = default_font_4())
+
+  if (use_font_defaults) {
+
+    fonts <-
+      fonts %>%
+      dplyr::add_row(
+        type = "all",
+        font_1 = default_font_1(),
+        font_2 = default_font_2(),
+        font_3 = default_font_3(),
+        font_4 = default_font_4())
+  }
 
   # Create the `html_table` list object -------------------------------------
+
   html_table <-
     list(
       transforms = transforms,
