@@ -34,7 +34,7 @@ html_tbl <-
     "Hornets" = rownames_with("Hornet"),
     "Toyotas" = rownames_with("Toyota"),
     "Supercars" = c(
-      "Ferrari Dino","Maserati Bora",
+      "Ferrari Dino", "Maserati Bora",
       "Porsche 914-2", "Ford Pantera L",
       "Camaro Z28")
   ) %>% # 7
