@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.0.0.9000
+Version: 0.1.0
 Title: Build Presentation-Ready Tables Using the Grammar of Tables
 Description: Build table output from tabular data using the Grammar of Tables
     ethos. With this layering approach, we aim to construct presentation
