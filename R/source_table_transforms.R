@@ -535,8 +535,15 @@ create_html_table_tbl <- function(html_tbl) {
   table_boxhead <-
     dplyr::tibble(content = data_col_names) %>%
     dplyr::mutate(type = data_col_classes) %>%
-    dplyr::mutate(row = 0L) %>%
-    dplyr::mutate(column = data_col_indices) %>%
+    dplyr::mutate(row = 0L)
+
+  # Get the number of rows in `table_boxhead`
+  tbl_boxhead_rows <- nrow(table_boxhead)
+
+  # Continue creation of the metadata tbl
+  # for the boxhead component of the table
+  table_boxhead <- table_boxhead %>%
+    dplyr::mutate(column = 1:tbl_boxhead_rows) %>%
     dplyr::mutate(column_name = content) %>%
     dplyr::mutate(t_part = "boxhead") %>%
     dplyr::mutate(t_subpart = "col_heading") %>%
