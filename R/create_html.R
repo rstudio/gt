@@ -8,9 +8,9 @@
 #' @importFrom dplyr pull mutate filter case_when inner_join bind_rows
 #' @importFrom dplyr group_by summarize arrange select
 #' @importFrom glue glue
-#' @importFrom rlang squash_chr
 #' @importFrom htmltools HTML
 #' @importFrom purrr map
+#' @import rlang
 create_html <- function(html_tbl) {
 
   # Extract object components -----------------------------------------------

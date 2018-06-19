@@ -35,7 +35,7 @@
 #'     property = "color",
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_column_style <- function(html_tbl,
                              columns = NULL,
@@ -122,8 +122,6 @@ add_column_style <- function(html_tbl,
 #' the individual values for the property will
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
-#' @importFrom dplyr pull bind_rows filter mutate arrange
-#' @importFrom rlang UQ
 #' @examples
 #' # Create an html table object using the
 #' # iris dataset
@@ -137,6 +135,8 @@ add_column_style <- function(html_tbl,
 #'   add_table_style(
 #'     property = "color",
 #'     values = "blue")
+#' @importFrom dplyr pull bind_rows filter mutate arrange
+#' @import rlang
 #' @noRd
 add_table_style <- function(html_tbl,
                             property,
@@ -215,7 +215,7 @@ add_table_style <- function(html_tbl,
 #'     property = "color",
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_header_style <- function(html_tbl,
                              property,
@@ -294,7 +294,7 @@ add_header_style <- function(html_tbl,
 #'     property = "color",
 #'     values = "blue")
 #' @importFrom dplyr pull bind_rows filter mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_body_style <- function(html_tbl,
                            property,

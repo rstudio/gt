@@ -2,7 +2,7 @@
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @importFrom dplyr filter bind_rows arrange mutate pull select arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 merge_columns <- function(html_tbl) {
 
