@@ -295,9 +295,9 @@ concat_date_time_formats <- function(date_format, time_format) {
 is_currency_valid <- function(currency) {
 
   ifelse(
-    as.character(currency) %in% gt:::currency_symbols$curr_symbol |
-      as.character(currency) %in% gt:::currencies$curr_code |
-      as.character(currency) %in% gt:::currencies$curr_number,
+    as.character(currency) %in% currency_symbols$curr_symbol |
+      as.character(currency) %in% currencies$curr_code |
+      as.character(currency) %in% currencies$curr_number,
     TRUE, FALSE)
 }
 
@@ -306,24 +306,24 @@ is_currency_valid <- function(currency) {
 #' @noRd
 get_currency_str <- function(currency) {
 
-  if (currency[1] %in% gt:::currency_symbols$curr_symbol) {
+  if (currency[1] %in% currency_symbols$curr_symbol) {
 
     return(
-      gt:::currency_symbols %>%
+      currency_symbols %>%
         dplyr::filter(curr_symbol == currency) %>%
         dplyr::pull(symbol))
 
-  } else if (currency[1] %in% gt:::currencies$curr_code) {
+  } else if (currency[1] %in% currencies$curr_code) {
 
     return(
-      gt:::currencies %>%
+      currencies %>%
         dplyr::filter(curr_code == currency) %>%
         dplyr::pull(symbol))
 
-  } else if (currency[1] %in% gt:::currencies$curr_number) {
+  } else if (currency[1] %in% currencies$curr_number) {
 
     return(
-      gt:::currencies %>%
+      currencies %>%
         dplyr::filter(curr_number == currency) %>%
         dplyr::pull(symbol))
 
@@ -337,17 +337,17 @@ get_currency_str <- function(currency) {
 #' @noRd
 get_currency_exponent <- function(currency) {
 
-  if (currency[1] %in% gt:::currencies$curr_code) {
+  if (currency[1] %in% currencies$curr_code) {
 
     exponent <-
-      gt:::currencies %>%
+      currencies %>%
       dplyr::filter(curr_code == currency) %>%
       dplyr::pull(exponent)
 
-  } else if (currency[1] %in% gt:::currencies$curr_number) {
+  } else if (currency[1] %in% currencies$curr_number) {
 
     exponent <-
-      gt:::currencies %>%
+      currencies %>%
       dplyr::filter(curr_number == currency) %>%
       dplyr::pull(exponent)
   }
