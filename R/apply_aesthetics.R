@@ -27,17 +27,21 @@ cols_align_left <- function(html_tbl,
   if (!is.null(columns)) {
 
     options <-
-      columns %>%
-      paste(collapse = ";") %>%
-      paste0("columns:", .)
+      paste0(
+        "columns:",
+        columns %>%
+          paste(collapse = ";")
+      )
   }
 
   if (!is.null(types)) {
 
     options <-
-      types %>%
-      paste(collapse = ";") %>%
-      paste0("types:", .)
+      paste0(
+        "types:",
+        types %>%
+          paste(collapse = ";")
+      )
   }
 
   if (is.null(columns) & is.null(types)) {
@@ -82,17 +86,21 @@ cols_align_center <- function(html_tbl,
   if (!is.null(columns)) {
 
     options <-
-      columns %>%
-      paste(collapse = ";") %>%
-      paste0("columns:", .)
+      paste0(
+        "columns:",
+        columns %>%
+          paste(collapse = ";")
+      )
   }
 
   if (!is.null(types)) {
 
     options <-
-      types %>%
-      paste(collapse = ";") %>%
-      paste0("types:", .)
+      paste0(
+        "types:",
+        types %>%
+          paste(collapse = ";")
+      )
   }
 
   if (is.null(columns) & is.null(types)) {
@@ -137,17 +145,21 @@ cols_align_right <- function(html_tbl,
   if (!is.null(columns)) {
 
     options <-
-      columns %>%
-      paste(collapse = ";") %>%
-      paste0("columns:", .)
+      paste0(
+        "columns:",
+        columns %>%
+          paste(collapse = ";")
+      )
   }
 
   if (!is.null(types)) {
 
     options <-
-      types %>%
-      paste(collapse = ";") %>%
-      paste0("types:", .)
+      paste0(
+        "types:",
+        types %>%
+          paste(collapse = ";")
+      )
   }
 
   if (is.null(columns) & is.null(types)) {
