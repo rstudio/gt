@@ -19,6 +19,8 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 RoxygenNote: 6.0.1
+Depends:
+    R (>= 3.2.0)
 Imports: 
     commonmark (>= 1.5),
     dplyr (>= 0.7.4),
