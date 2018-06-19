@@ -6,6 +6,9 @@
 #' @noRd
 use_html_content <- function(html_tbl) {
 
+  # Create bindings for specific variables
+  column <- column_name <- content <- t_part <- content_formatted <- NULL
+
   html_table <- html_tbl[["html_table"]]
   content_table <- html_tbl[["content_tbl"]]
 

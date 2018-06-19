@@ -9,6 +9,9 @@
 transform_to_stub <- function(tbl,
                               column) {
 
+  # Create bindings for specific variables
+  rowname <- NULL
+
   column_index <- colnames(tbl) %in% column %>% which()
 
   colnames(tbl)[column_index] <- "rowname"
@@ -157,6 +160,9 @@ transform_add_summary <- function(tbl,
                                   columns,
                                   fcns,
                                   summary_labels) {
+
+  # Create bindings for specific variables
+  index <- rowname <- groupname <- `::group::` <- `::summary_label::` <- NULL
 
   if (!is.na(group)) {
 
@@ -423,6 +429,9 @@ tbl_transform_step <- function(tbl,
 #' @noRd
 all_tbl_transform_steps <- function(html_tbl) {
 
+  # Create bindings for specific variables
+  index <- NULL
+
   all_transforms <- html_tbl[["transforms"]]
 
   if (nrow(all_transforms) > 0) {
@@ -472,6 +481,10 @@ all_tbl_transform_steps <- function(html_tbl) {
 #' @importFrom purrr map_chr map_df
 #' @noRd
 create_html_table_tbl <- function(html_tbl) {
+
+  # Create bindings for specific variables
+  rowname <- groupname <- content <- t_part <- t_subpart <- NULL
+  content <- column <- column_name <- k <- type <- NULL
 
   tbl <- html_tbl[["modified_tbl"]]
 
@@ -523,7 +536,7 @@ create_html_table_tbl <- function(html_tbl) {
     dplyr::tibble(content = data_col_names) %>%
     dplyr::mutate(type = data_col_classes) %>%
     dplyr::mutate(row = 0L) %>%
-    dplyr::mutate(column = 1:nrow(.)) %>%
+    dplyr::mutate(column = data_col_indices) %>%
     dplyr::mutate(column_name = content) %>%
     dplyr::mutate(t_part = "boxhead") %>%
     dplyr::mutate(t_subpart = "col_heading") %>%

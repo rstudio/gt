@@ -42,6 +42,9 @@ add_column_style <- function(html_tbl,
                              property,
                              values) {
 
+  # Create bindings for specific variables
+  column <- column_name <- NULL
+
   # For any `values`, ensure that they are
   # transformed to character objects and that
   # vector components are collapsed to a single
@@ -142,6 +145,9 @@ add_table_style <- function(html_tbl,
                             property,
                             values) {
 
+  # Create bindings for specific variables
+  column <- column_name <- NULL
+
   # For any `values`, ensure that they are
   # transformed to character objects and that
   # vector components are collapsed to a single
@@ -221,6 +227,9 @@ add_header_style <- function(html_tbl,
                              property,
                              values) {
 
+  # Create bindings for specific variables
+  column <- column_name <- NULL
+
   # For any `values`, ensure that they are
   # transformed to character objects and that
   # vector components are collapsed to a single
@@ -299,6 +308,9 @@ add_header_style <- function(html_tbl,
 add_body_style <- function(html_tbl,
                            property,
                            values) {
+
+  # Create bindings for specific variables
+  column <- column_name <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that

@@ -26,6 +26,9 @@ add_style_to_columns <- function(html_tbl,
                                  property,
                                  values) {
 
+  # Create bindings for specific variables
+  column <- NULL
+
   # If specific columns not provided assume that
   # style should be added to all columns
   if (is.null(columns)) {
@@ -104,6 +107,9 @@ add_style_to_columns <- function(html_tbl,
 add_style_to_column_0 <- function(html_tbl,
                                   property,
                                   values) {
+
+  # Create bindings for specific variables
+  column <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that

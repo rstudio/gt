@@ -65,6 +65,9 @@ tab_stub_block <- function(html_tbl,
                            ...,
                            .default = NULL) {
 
+  # Create bindings for specific variables
+  #rowname <- row_indices <- NULL
+
   # Assign a name to the subhead where there
   # is none formally assigned
   if (is.null(.default)) {

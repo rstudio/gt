@@ -237,6 +237,9 @@ is_time_style_valid <- function(time_style) {
 #' @noRd
 get_date_format <- function(date_style) {
 
+  # Create bindings for specific variables
+  format_number <- format_code <- format_name <- NULL
+
   if (date_style %in% 1:14 | date_style %in% as.character(1:14)) {
 
     return(
@@ -257,6 +260,9 @@ get_date_format <- function(date_style) {
 #' @importFrom dplyr filter pull
 #' @noRd
 get_time_format <- function(time_style) {
+
+  # Create bindings for specific variables
+  format_number <- format_code <- format_name <- NULL
 
   if (time_style %in% 1:5 | time_style %in% as.character(1:5)) {
 
@@ -306,6 +312,9 @@ is_currency_valid <- function(currency) {
 #' @noRd
 get_currency_str <- function(currency) {
 
+  # Create bindings for specific variables
+  curr_symbol <- symbol <- curr_code <- curr_number <- NULL
+
   if (currency[1] %in% currency_symbols$curr_symbol) {
 
     return(
@@ -336,6 +345,9 @@ get_currency_str <- function(currency) {
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_exponent <- function(currency) {
+
+  # Create bindings for specific variables
+  curr_code <- curr_number <- NULL
 
   if (currency[1] %in% currencies$curr_code) {
 
@@ -504,6 +516,9 @@ decode_col_type_transform <- function(transform_text) {
 #' @importFrom dplyr filter mutate full_join select case_when bind_rows distinct
 #' @noRd
 modify_spanner_headings <- function(html_tbl) {
+
+  # Create bindings for specific variables
+  t_subpart <- column_name <- spanner_heading <- column_heading <- NULL
 
   column_spanner_subpart <-
     html_tbl[["html_table"]] %>%

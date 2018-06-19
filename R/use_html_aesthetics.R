@@ -8,6 +8,9 @@
 #' @noRd
 use_html_aesthetics <- function(html_tbl, aesthetics_tbl) {
 
+  # Create bindings for specific variables
+  columns <- types <- NULL
+
   # Apply theme if any theme setting is applied
   if ("theme" %in% aesthetics_tbl$type) {
 

@@ -213,6 +213,9 @@ to_html_source_notes <- function(tbl,
                                  font_size = NULL,
                                  padding = NULL) {
 
+  # Create bindings for specific variables
+  index <- source_note <- content <- NULL
+
   # Ensure that the ordering of the table is correct
   tbl <- tbl %>% dplyr::arrange(index)
 
@@ -295,6 +298,9 @@ to_html_footnotes <- function(tbl,
                               font = NULL,
                               font_size = NULL,
                               padding = NULL) {
+
+  # Create bindings for specific variables
+  glyph <- footnote <- content <- NULL
 
   # Ensure that the ordering of the table is correct
   tbl <-

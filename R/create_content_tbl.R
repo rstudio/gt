@@ -6,6 +6,9 @@
 #' @noRd
 create_stub_block_groups <- function(html_tbl) {
 
+  # Create bindings for specific variables
+  groupname <- stub_heading <- .row_number <- NULL
+
   # Get the row series from `tbl`
   stub_block_tbl <- html_tbl[["stub_block"]]
 
@@ -48,6 +51,9 @@ create_stub_block_groups <- function(html_tbl) {
 #' @importFrom dplyr select distinct inner_join left_join
 #' @noRd
 create_content_tbl <- function(html_tbl) {
+
+  # Create bindings for specific variables
+  column_type <- column <- glyph <- NULL
 
   # Get the row series from `tbl`
   row_series <- seq(nrow(html_tbl[["modified_tbl"]]))
@@ -193,6 +199,9 @@ create_content_tbl <- function(html_tbl) {
 #' @importFrom purrr map_df
 #' @noRd
 process_content_tbl <- function(html_tbl) {
+
+  # Create bindings for specific variables
+  content <- type <- NULL
 
   # Initialize the `content_1` column
   content_tbl <-
@@ -507,6 +516,9 @@ process_content_tbl <- function(html_tbl) {
 
     replace_values_in_content_tbl <- function(content_tbl,
                                               replace_directives) {
+
+      # Create bindings for specific variables
+      content <- content_formatted <- NULL
 
       columns <- replace_directives$columns
       types <- replace_directives$types

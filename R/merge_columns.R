@@ -6,6 +6,10 @@
 #' @noRd
 merge_columns <- function(html_tbl) {
 
+  # Create bindings for specific variables
+  transform_type <- column_name <- t_part <- NULL
+  content <- content_2 <- column <- NULL
+
   if ("fmt_uncertainty" %in% html_tbl[["transforms"]]$transform_type) {
 
     add_uncert_transforms <-
