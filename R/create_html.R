@@ -250,17 +250,18 @@ create_html <- function(html_tbl) {
 
     table_heading_component <-
       c(table_heading_component,
-        table_heading_styles %>%
-          dplyr::filter(row == i) %>%
-          dplyr::pull(heading_tag) %>%
-          paste(collapse = "\n") %>%
-          paste0("<tr>\n", ., "</tr>\n"))
+        paste0(
+          "<tr>\n",
+          table_heading_styles %>%
+            dplyr::filter(row == i) %>%
+            dplyr::pull(heading_tag) %>%
+            paste(collapse = "\n"),
+          "</tr>\n"))
   }
 
   table_heading_component <-
     table_heading_component %>%
     paste(collapse = "\n")
-
 
   # Create `table_body_component` -------------------------------------------
 
@@ -272,11 +273,13 @@ create_html <- function(html_tbl) {
     unique() %>%
     purrr::map(.f = function(x) {
 
-      table_content_styles %>%
+      y <- table_content_styles %>%
         dplyr::filter(row == x) %>%
-        dplyr::pull(style_attrs) %>%
-        paste("   ", ., collapse = "\n") %>%
-        paste0("  <tr>\n", ., "\n  </tr>\n")
+        dplyr::pull(style_attrs)
+
+      y <- paste("   ", y, collapse = "\n")
+      y <- paste0("  <tr>\n", y, "\n  </tr>\n")
+      y
     }) %>%
     rlang::squash_chr() %>%
     paste(collapse = "")
