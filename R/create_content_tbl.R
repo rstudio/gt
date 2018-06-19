@@ -416,7 +416,7 @@ process_content_tbl <- function(html_tbl) {
     for (i in rows_dates_times) {
 
       date_time_format_str <-
-        gt:::concat_date_time_formats(
+        concat_date_time_formats(
           date_format = content_tbl[i, ]$date_format,
           time_format = content_tbl[i, ]$time_format)
 
