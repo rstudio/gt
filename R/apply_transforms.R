@@ -246,6 +246,10 @@ cols_move_to_end <- function(html_tbl,
 #' preserved. Values provided that do not
 #' correspond to column names will be
 #' disregarded.
+#' @param after a column name used to anchor the
+#' insertion of the moved columns. All of the
+#' moved columns will be placed to the right of
+#' this column.
 #' @return an object of class \code{html_table}.
 #' @importFrom tibble add_row
 #' @export
