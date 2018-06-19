@@ -38,6 +38,10 @@
 tab_create <- function(tbl,
                        use_font_defaults = TRUE) {
 
+  # Create bindings for specific variables
+  rowname <- groupname <- type <-  NULL
+  font_1 <- font_2 <- font_3 <- font_4 <- NULL
+
   # Table ingest ------------------------------------------------------------
 
   # Perform conversion to tibble

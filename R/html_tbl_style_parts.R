@@ -22,51 +22,54 @@ add_style_to_part <- function(html_tbl,
                               property,
                               values) {
 
- # Validate the `part` provided
- if (!(part %in% c("stub", "boxhead", "field"))) {
-  stop("The value for `part` must be either `stub`, `boxhead`, or `field`", call. = FALSE)
- }
+  # Create bindings for specific variables
+  column <- t_part <- NULL
 
- # For any `values`, ensure that they are
- # transformed to character objects and that
- # vector components are collapsed to a single
- # string
- values <-
-  paste(values, collapse = " ") %>%
-  as.character()
+  # Validate the `part` provided
+  if (!(part %in% c("stub", "boxhead", "field"))) {
+    stop("The value for `part` must be either `stub`, `boxhead`, or `field`", call. = FALSE)
+  }
 
- # If the property is not yet in the `html_tbl`
- # object, then, (1) create the column, (2) add in
- # the values selectively to the <tbody> element,
- # (3) use `NA_character_` for non-targeted elements
- if (!(property %in% colnames(html_tbl[["html_table"]]))) {
+  # For any `values`, ensure that they are
+  # transformed to character objects and that
+  # vector components are collapsed to a single
+  # string
+  values <-
+    paste(values, collapse = " ") %>%
+    as.character()
 
-  html_tbl[["html_table"]] <-
-   dplyr::bind_rows(
-    html_tbl[["html_table"]] %>%
-     dplyr::filter(t_part == part) %>%
-     dplyr::mutate(rlang::UQ(property) := values),
-    html_tbl[["html_table"]] %>%
-     dplyr::filter(t_part != part | is.na(t_part)) %>%
-     dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
-   dplyr::arrange(row, column)
- }
+  # If the property is not yet in the `html_tbl`
+  # object, then, (1) create the column, (2) add in
+  # the values selectively to the <tbody> element,
+  # (3) use `NA_character_` for non-targeted elements
+  if (!(property %in% colnames(html_tbl[["html_table"]]))) {
 
- # If the property is already in the `html_tbl`
- # object, then, (1) add in the values selectively to
- # the <tbody> element, and (2) ensure that the
- # non-targeted elements are untouched
- if (property %in% colnames(html_tbl[["html_table"]])) {
+    html_tbl[["html_table"]] <-
+      dplyr::bind_rows(
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(t_part == part) %>%
+          dplyr::mutate(rlang::UQ(property) := values),
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(t_part != part | is.na(t_part)) %>%
+          dplyr::mutate(rlang::UQ(property) := NA_character_)) %>%
+      dplyr::arrange(row, column)
+  }
 
-  html_tbl[["html_table"]] <-
-   dplyr::bind_rows(
-    html_tbl[["html_table"]] %>%
-     dplyr::filter(t_part == part) %>%
-     dplyr::mutate(rlang::UQ(property) := values),
-    html_tbl[["html_table"]] %>%
-     dplyr::filter(t_part != part | is.na(t_part))) %>%
-   dplyr::arrange(row, column)
- }
+  # If the property is already in the `html_tbl`
+  # object, then, (1) add in the values selectively to
+  # the <tbody> element, and (2) ensure that the
+  # non-targeted elements are untouched
+  if (property %in% colnames(html_tbl[["html_table"]])) {
 
- html_tbl
+    html_tbl[["html_table"]] <-
+      dplyr::bind_rows(
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(t_part == part) %>%
+          dplyr::mutate(rlang::UQ(property) := values),
+        html_tbl[["html_table"]] %>%
+          dplyr::filter(t_part != part | is.na(t_part))) %>%
+      dplyr::arrange(row, column)
+  }
+
+  html_tbl
 }

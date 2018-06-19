@@ -211,6 +211,9 @@ tab_footnote <- function(html_tbl,
                          glyph = "number",
                          ...) {
 
+  # Create bindings for specific variables
+  index <- type <- NULL
+
   x <- list(...)
 
   if (is.list(x) &&

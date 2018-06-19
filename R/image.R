@@ -80,6 +80,9 @@ fa_icon <- function(name,
                     height = 30,
                     fill = NULL) {
 
+  # Create bindings for specific variables
+  full_name <- NULL
+
   fa_tbl <- fa_tbl
 
   if (name %in% (fa_tbl %>% dplyr::pull(full_name))) {

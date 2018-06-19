@@ -13,6 +13,10 @@
 #' @import rlang
 create_html <- function(html_tbl) {
 
+  # Create bindings for specific variables
+  type <- t_subpart <- content <- column <- NULL
+  rowspan <- colspan <- heading_tag <- NULL
+
   # Extract object components -----------------------------------------------
 
   fonts <- html_tbl[["fonts"]]

@@ -5,6 +5,9 @@
 #' @export
 rownames_with <- function(pattern) {
 
+  # Create bindings for specific variables
+  #rowname <- NULL
+
   matching_rows <-
     !is.na(
       stringr::str_match(

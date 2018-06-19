@@ -381,6 +381,9 @@ tab_boxhead_panel <- function(html_tbl,
       seq(length(mappings)) %>%
       purrr::map_df(.f = function(x) {
 
+        # Create bindings for specific variables
+        column_name <- NULL
+
         spanner_heading <- mappings[x] %>% names()
 
         as_tibble(mappings[x]) %>%
@@ -501,6 +504,9 @@ replace_missing <- function(html_tbl,
 #' @export
 cols_rename <- function(html_tbl,
                         ...) {
+
+  # Create bindings for specific variables
+  columns <- NULL
 
   # Obtain any existing-column-to-new-name mappings
   x <- list(...)

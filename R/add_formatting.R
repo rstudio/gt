@@ -12,6 +12,9 @@ tbl_format_step <- function(tbl,
                             formats,
                             index) {
 
+  # Create bindings for specific variables
+  currency <- NULL
+
   index_ <- index
 
   format_type <- formats$format_type[index_]
@@ -249,6 +252,9 @@ tbl_format_step <- function(tbl,
 #' @importFrom purrr map
 #' @noRd
 all_tbl_format_steps <- function(html_tbl) {
+
+  # Create bindings for specific variables
+  index <- NULL
 
   all_formats <- html_tbl[["formats"]]
 

@@ -27,6 +27,9 @@ add_style_to_rows <- function(html_tbl,
                               property,
                               values) {
 
+  # Create bindings for specific variables
+  column <- t_part <- NULL
+
   # Validate the `parts` provided
   if (!any(parts %in% c("stub", "field"))) {
     stop("The value for `parts` must be either or both of `stub` or `field`.",
@@ -108,6 +111,9 @@ add_style_to_summary_caption_rows <- function(html_tbl,
                                               extend_to_field = FALSE,
                                               property,
                                               values) {
+
+  # Create bindings for specific variables
+  column <- t_subpart <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that
@@ -203,6 +209,9 @@ add_style_to_group_heading_rows <- function(html_tbl,
                                             extend_to_field = FALSE,
                                             property,
                                             values) {
+
+  # Create bindings for specific variables
+  column <- t_subpart <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that
@@ -306,6 +315,9 @@ add_style_every_n_rows <- function(html_tbl,
                                    property,
                                    values) {
 
+  # Create bindings for specific variables
+  t_part <- NULL
+
   # Validate the `parts` provided
   if (!any(parts %in% c("stub", "field"))) {
     stop("The value for `parts` must be either or both of `stub` or `field`.",
@@ -360,6 +372,9 @@ add_style_every_n_rows <- function(html_tbl,
 add_style_to_row_0 <- function(html_tbl,
                                property,
                                values) {
+
+  # Create bindings for specific variables
+  column <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that
@@ -426,6 +441,9 @@ add_style_to_row_0 <- function(html_tbl,
 add_style_to_first_row <- function(html_tbl,
                                    property,
                                    values) {
+
+  # Create bindings for specific variables
+  column <- NULL
 
   # Get the first row number
   first_row <-
@@ -498,6 +516,9 @@ add_style_to_first_row <- function(html_tbl,
 add_style_to_row_n <- function(html_tbl,
                                property,
                                values) {
+
+  # Create bindings for specific variables
+  column <- NULL
 
   # For any `values`, ensure that they are
   # transformed to character objects and that

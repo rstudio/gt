@@ -103,6 +103,9 @@ htt_alignment <- function(html_tbl,
                           transform,
                           align_type) {
 
+  # Create bindings for specific variables
+  type <- column <- NULL
+
   if (is.na(transform)) {
 
     html_tbl <-
