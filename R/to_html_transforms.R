@@ -58,72 +58,88 @@ to_html_table_caption <- function(tbl,
 
   if (!is.null(border_top)) {
     border_top <-
-      paste(border_top, collapse = " ") %>%
-      as.character() %>%
-      paste0("border-top:", ., ";")
+      paste0(
+        "border-top:",
+        paste(border_top, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     border_top <- NA_character_
   }
 
   if (!is.null(border_bottom)) {
     border_bottom <-
-      paste(border_bottom, collapse = " ") %>%
-      as.character() %>%
-      paste0("border-bottom:", ., ";")
+      paste0(
+        "border-bottom:",
+        paste(border_bottom, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     border_bottom <- NA_character_
   }
 
   if (!is.null(title_font_size)) {
     title_font_size <-
-      paste(title_font_size, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-size:", ., ";")
+      paste0(
+        "font-size:",
+        paste(title_font_size, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     title_font_size <- NA_character_
   }
 
   if (!is.null(title_align)) {
     title_align <-
-      paste(title_align, collapse = " ") %>%
-      as.character() %>%
-      paste0("text-align:", ., ";")
+      paste0(
+        "text-align:",
+        paste(title_align, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     title_align <- NA_character_
   }
 
   if (!is.null(title_padding)) {
     title_padding <-
-      paste(title_padding, collapse = " ") %>%
-      as.character() %>%
-      paste0("padding:", ., ";")
+      paste0(
+        "padding:",
+        paste(title_padding, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     title_padding <- NA_character_
   }
 
   if (!is.null(headnote_font_size)) {
     headnote_font_size <-
-      paste(headnote_font_size, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-size:", ., ";")
+      paste0(
+        "font-size:",
+        paste(headnote_font_size, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     headnote_font_size <- NA_character_
   }
 
   if (!is.null(headnote_align)) {
     headnote_align <-
-      paste(headnote_align, collapse = " ") %>%
-      as.character() %>%
-      paste0("text-align:", ., ";")
+      paste0(
+        "text-align:",
+        paste(headnote_align, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     headnote_align <- NA_character_
   }
 
   if (!is.null(headnote_padding)) {
     headnote_padding <-
-      paste(headnote_padding, collapse = " ") %>%
-      as.character() %>%
-      paste0("padding:", ., ";")
+      paste0(
+        "padding:",
+        paste(headnote_padding, collapse = " ") %>%
+          as.character(),
+        ";")
   } else {
     headnote_padding <- NA_character_
   }
@@ -133,11 +149,13 @@ to_html_table_caption <- function(tbl,
 
     if (!all(is.na(c(border_top, border_bottom, title_font_size, title_align, title_padding)))) {
       html_fragment <-
-        paste(
-          c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding)[
-            !is.na(c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding))],
-          collapse = "") %>%
-        paste0("<caption style=\"", ., "\">", title, "</caption>\n")
+        paste0(
+          "<caption style=\"",
+          paste(
+            c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding)[
+              !is.na(c(font_family, border_top, border_bottom, title_font_size, title_align, title_padding))],
+            collapse = ""),
+          "\">", title, "</caption>\n")
     } else {
       html_fragment <- paste0("<caption>", title, "</caption>\n")
     }
@@ -148,16 +166,17 @@ to_html_table_caption <- function(tbl,
     if (!all(is.na(c(font_family, border_top, title_font_size, title_align, title_padding)))) {
 
       html_fragment <-
-        paste(
-          c(font_family, border_top, title_font_size, title_align, title_padding)[
-            !is.na(c(font_family, border_top, title_font_size, title_align, title_padding))],
-          collapse = "") %>%
-        paste0("<caption style=\"", ., "\">", title, "</caption>\n")
+        paste0(
+          "<caption style=\"",
+          paste(
+            c(font_family, border_top, title_font_size, title_align, title_padding)[
+              !is.na(c(font_family, border_top, title_font_size, title_align, title_padding))],
+            collapse = ""),
+          "\">", title, "</caption>\n")
 
     } else {
 
       html_fragment <- paste0("<caption>", title, "</caption>\n")
-
     }
   }
 
@@ -170,10 +189,14 @@ to_html_table_caption <- function(tbl,
         paste(
           html_fragment,
           paste(
-            c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding)[
-              !is.na(c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding))],
-            collapse = "") %>%
-            paste0("<caption style=\"", ., "\">", headnote, "</caption>\n"),
+            paste0(
+              "<caption style=\"",
+              c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding)[
+                !is.na(c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding))],
+              collapse = ""),
+            "\">",
+            headnote,
+            "</caption>\n"),
           collapse = "")
 
     } else {
@@ -188,9 +211,6 @@ to_html_table_caption <- function(tbl,
 
   html_fragment
 }
-
-
-
 
 #' Generate a HTML fragment for the source note part
 #' @param tbl the table that contains
@@ -267,13 +287,15 @@ to_html_source_notes <- function(tbl,
 
   # Generate the `html_fragment` object
   html_fragment <-
-    glue::glue(
-      "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
-      styles = styles_str,
-      content = content_str) %>%
-    as.character() %>%
-    paste(collapse = "\n") %>%
-    paste0("<tfoot>\n", ., "\n</tfoot>\n")
+    paste0(
+      "<tfoot>\n",
+      glue::glue(
+        "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
+        styles = styles_str,
+        content = content_str) %>%
+        as.character() %>%
+        paste(collapse = "\n"),
+      "\n</tfoot>\n")
 
   html_fragment
 }
@@ -348,13 +370,15 @@ to_html_footnotes <- function(tbl,
 
   # Generate the `html_fragment` object
   html_fragment <-
-    glue::glue(
-      "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
-      styles = styles_str,
-      content = content_str) %>%
-    as.character() %>%
-    paste(collapse = "\n") %>%
-    paste0("<tfoot>\n", ., "\n</tfoot>\n")
+    paste0(
+      "<tfoot>\n",
+      glue::glue(
+        "<tr>\n<td colspan=\"{span_amount}\" style=\"{styles}\">{content}</td>\n  </tr>\n",
+        styles = styles_str,
+        content = content_str) %>%
+        as.character() %>%
+        paste(collapse = "\n"),
+      "\n</tfoot>\n")
 
   html_fragment
 }
