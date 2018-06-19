@@ -74,7 +74,7 @@ web_image <- function(url,
 #' @importFrom glue glue
 #' @importFrom dplyr filter pull rename
 #' @importFrom stringr str_replace
-#' @importFrom rlang enquo UQ
+#' @import rlang
 #' @export
 fa_icon <- function(name,
                     height = 30,

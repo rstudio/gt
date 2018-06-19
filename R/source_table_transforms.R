@@ -150,7 +150,7 @@ transform_cols_reorder <- function(tbl,
 #' @importFrom dplyr group_by summarize_at arrange bind_cols bind_rows
 #' @importFrom dplyr tibble distinct mutate select row_number everything
 #' @importFrom dplyr rename case_when
-#' @importFrom rlang sym UQ
+#' @import rlang
 #' @noRd
 transform_add_summary <- function(tbl,
                                   group,

@@ -19,7 +19,7 @@
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_rows <- function(html_tbl,
                               rows = NULL,
@@ -102,7 +102,7 @@ add_style_to_rows <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_summary_caption_rows <- function(html_tbl,
                                               extend_to_field = FALSE,
@@ -197,7 +197,7 @@ add_style_to_summary_caption_rows <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_group_heading_rows <- function(html_tbl,
                                             extend_to_field = FALSE,
@@ -355,7 +355,7 @@ add_style_every_n_rows <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_row_0 <- function(html_tbl,
                                property,
@@ -421,7 +421,7 @@ add_style_to_row_0 <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange pull
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_first_row <- function(html_tbl,
                                    property,
@@ -493,7 +493,7 @@ add_style_to_first_row <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_row_n <- function(html_tbl,
                                property,

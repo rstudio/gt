@@ -364,7 +364,7 @@ theme_classical <- function(html_tbl) {
 #' @importFrom dplyr tibble rename mutate
 #' @importFrom stringr str_detect str_replace
 #' @importFrom purrr map_df
-#' @importFrom rlang sym UQ
+#' @import rlang
 #' @export
 tab_boxhead_panel <- function(html_tbl,
                               ...,

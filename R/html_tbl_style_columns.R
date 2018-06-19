@@ -18,7 +18,7 @@
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_columns <- function(html_tbl,
                                  columns = NULL,
@@ -99,7 +99,7 @@ add_style_to_columns <- function(html_tbl,
 #' be transformed to a space-separated string.
 #' @return an object of class \code{html_table}.
 #' @importFrom dplyr bind_rows filter pull mutate arrange
-#' @importFrom rlang UQ
+#' @import rlang
 #' @noRd
 add_style_to_column_0 <- function(html_tbl,
                                   property,
