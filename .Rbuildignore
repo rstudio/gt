@@ -4,3 +4,5 @@
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
 ^API$
+tests/examples
+tests/manual_tests
