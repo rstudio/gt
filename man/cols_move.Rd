@@ -16,6 +16,11 @@ order of the remaining columns will be
 preserved. Values provided that do not
 correspond to column names will be
 disregarded.}
+
+\item{after}{a column name used to anchor the
+insertion of the moved columns. All of the
+moved columns will be placed to the right of
+this column.}
 }
 \value{
 an object of class \code{html_table}.
