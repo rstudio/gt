@@ -427,10 +427,10 @@ fmt_currency <- function(html_tbl,
   if (is.null(decimals) & use_subunits) {
 
     # Get decimal places using `get_currency_exponent()` fcn
-    if (currency %in% gt:::currency_symbols$curr_symbol) {
+    if (currency %in% currency_symbols$curr_symbol) {
       decimals <- 2L
     } else {
-      decimals <- gt:::get_currency_exponent(currency = currency)
+      decimals <- get_currency_exponent(currency = currency)
     }
 
   } else if (is.null(decimals) & use_subunits == FALSE) {

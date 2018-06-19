@@ -80,7 +80,7 @@ fa_icon <- function(name,
                     height = 30,
                     fill = NULL) {
 
-  fa_tbl <- gt:::fa_tbl
+  fa_tbl <- fa_tbl
 
   if (name %in% (fa_tbl %>% dplyr::pull(full_name))) {
 

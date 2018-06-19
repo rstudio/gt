@@ -102,34 +102,34 @@ tab_create <- function(tbl,
   # Initialize metadata tbls ------------------------------------------------
 
   # Create an empty `transforms` tbl
-  transforms <- gt:::empty_transforms_tbl()
+  transforms <- empty_transforms_tbl()
 
   # Create an empty `formats` tbl
-  formats <- gt:::empty_formats_tbl()
+  formats <- empty_formats_tbl()
 
   # Create an empty `aesthetics` tbl
-  aesthetics <- gt:::empty_aesthetics_tbl()
+  aesthetics <- empty_aesthetics_tbl()
 
   # Create an empty `fonts` tbl
-  fonts <- gt:::empty_fonts_tbl()
+  fonts <- empty_fonts_tbl()
 
   # Create an empty `heading` tbl
-  heading <- gt:::empty_heading_tbl()
+  heading <- empty_heading_tbl()
 
   # Create an empty `footnote` tbl
-  footnote <- gt:::empty_footnote_tbl()
+  footnote <- empty_footnote_tbl()
 
   # Create an empty `source_note` tbl
-  source_note <- gt:::empty_source_note_tbl()
+  source_note <- empty_source_note_tbl()
 
   # Create an empty `stubhead_caption` tbl
-  stubhead_caption <- gt:::empty_stubhead_caption_tbl()
+  stubhead_caption <- empty_stubhead_caption_tbl()
 
   # Create an empty `stub_block` tbl
-  stub_block <- gt:::empty_stub_block_tbl()
+  stub_block <- empty_stub_block_tbl()
 
   # Create an empty `boxhead_panel` tbl
-  boxhead_panel <- gt:::empty_boxhead_panel_tbl()
+  boxhead_panel <- empty_boxhead_panel_tbl()
 
   # Set default fonts -------------------------------------------------------
 
