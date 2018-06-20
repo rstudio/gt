@@ -2,7 +2,8 @@
 % Please edit documentation in R/helpers_rownames.R
 \name{rownames_with}
 \alias{rownames_with}
-\title{Obtain rownames that fit a naming pattern}
+\title{Provide a directive to get rows that fit a
+naming pattern}
 \usage{
 rownames_with(pattern)
 }
@@ -11,5 +12,6 @@ rownames_with(pattern)
 targeting rownames.}
 }
 \description{
-Obtain rownames that fit a naming pattern
+Provide a directive to get rows that fit a
+naming pattern
 }
