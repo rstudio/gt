@@ -65,33 +65,30 @@ tab_stub_block <- function(html_tbl,
                            ...,
                            .default = NULL) {
 
-  # Create bindings for specific variables
-  #rowname <- row_indices <- NULL
-
-  # Assign a name to the subhead where there
-  # is none formally assigned
+  # Assign a default name to the subhead
+  # where there is none formally assigned
   if (is.null(.default)) {
     .default <- "Others"
   }
 
-  # Get `rownames` and `row_indices`
-  # from `modified_tbl`
-  if ("rowname" %in% colnames(html_tbl[["modified_tbl"]])) {
-    assign(
-      x = "rowname",
-      value = html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname),
-      envir = .GlobalEnv)
+  # Obtain vectors for rownames and their indices
+  rowname <- html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)
+  row_indices <- seq(html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname))
 
-    assign(
-      x = "row_indices",
-      value = seq(html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)),
-      envir = .GlobalEnv)
-
-    on.exit(expr = rm(rowname, envir = .GlobalEnv))
-    on.exit(expr = rm(row_indices, envir = .GlobalEnv), add = TRUE)
-  }
-
+  # Collect statements in a list
   x <- list(...)
+
+  # Iterate through the list and expand rownames
+  # when helper directives are observed
+  for (i in seq(x)) {
+
+    if (grepl("^::rownames_with::.*", x[[i]][1])) {
+      x[[i]] <-
+        get_rownames_with(
+          html_tbl = html_tbl,
+          directive = x[[i]][1])
+    }
+  }
 
   # Obtain row numbers for literal rownames
   for (i in seq(length(x))) {
@@ -114,7 +111,7 @@ tab_stub_block <- function(html_tbl,
   # Obtain remaining rows
   others_rows <-
     base::setdiff(
-      row_indices,
+      seq(html_tbl[["modified_tbl"]] %>% dplyr::pull(rowname)),
       (x %>% unlist() %>% unname()))
 
   # Add to the `stub_block` tbl
