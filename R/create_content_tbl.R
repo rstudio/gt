@@ -403,7 +403,7 @@ process_content_tbl <- function(html_tbl) {
         content_tbl[i, ]$content_formatted <-
           paste0(
             m_n_parts[1],
-            " &times; 10<sup style='font-size:55%'>",
+            " &times; 10<sup style='font-size:65%'>",
             as.integer(m_n_parts[2]), "</sup>")
 
       } else {
@@ -571,7 +571,7 @@ process_content_tbl <- function(html_tbl) {
         content_tbl[i, ]$content_formatted <-
           paste0(
             content_tbl[i, ]$content_formatted,
-            "<sup style='font-size:55%'><em>",
+            "<sup style='font-size:65%'><em>",
             content_tbl[i, ]$glyph,
             "</em></sup>")
       }
