@@ -475,7 +475,7 @@ transmute_style_attrs <- function(html_table_component) {
 #' Decode the transform related to column names
 #' and column types
 #' @return a named character vector.
-#' @importFrom stringr str_replace str_split
+#' @importFrom stringr str_detect str_replace str_split
 #' @noRd
 decode_col_type_transform <- function(transform_text) {
 
