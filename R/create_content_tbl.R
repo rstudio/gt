@@ -195,7 +195,7 @@ create_content_tbl <- function(html_tbl) {
 #' @param html_tbl an HTML table object that is
 #' created using the \code{tab_create()} function.
 #' @importFrom dplyr mutate filter case_when
-#' @importFrom stringr str_split str_detect
+#' @importFrom stringr str_split str_detect str_replace_all
 #' @importFrom purrr map_df
 #' @noRd
 process_content_tbl <- function(html_tbl) {
@@ -437,20 +437,20 @@ process_content_tbl <- function(html_tbl) {
         content_tbl[i, ]$content_formatted <-
           paste("1970-01-01", content_tbl[i, ]$content_formatted) %>%
           strftime(format = date_time_format_str) %>%
-          gsub("^0", "", .) %>%
-          gsub(" 0([0-9])", " \\1", .) %>%
-          gsub("pm$", "PM", .) %>%
-          gsub("am$", "AM", .)
+          stringr::str_replace_all("^0", "") %>%
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all("pm$", "PM") %>%
+          stringr::str_replace_all("am$", "AM")
 
       } else {
 
         content_tbl[i, ]$content_formatted <-
           content_tbl[i, ]$content_formatted %>%
           strftime(format = date_time_format_str) %>%
-          gsub(" 0([0-9])", " \\1", .) %>%
-          gsub(" 0([0-9])", " \\1", .) %>%
-          gsub("pm$", "PM", .) %>%
-          gsub("am$", "AM", .)
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all("pm$", "PM") %>%
+          stringr::str_replace_all("am$", "AM")
       }
     }
   }
