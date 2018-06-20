@@ -555,13 +555,23 @@ create_html_table_tbl <- function(html_tbl) {
     seq(nrow(tbl)) %>%
     purrr::map_df(
       .f = function(x) {
-        tbl[x, data_col_indices] %>% t() %>%
+
+        y <-
+          tbl[x, data_col_indices] %>%
+          t() %>%
           dplyr::as_tibble() %>%
           dplyr::rename_at(.vars = 1, .funs = function(x) "content") %>%
           dplyr::mutate(content = as.character(content)) %>%
           dplyr::mutate(type = data_col_classes) %>%
-          dplyr::mutate(row = x) %>%
-          dplyr::mutate(column = 1:nrow(.))})
+          dplyr::mutate(row = x)
+
+        tbl_rows <- nrow(y)
+
+        y <- y %>%
+          dplyr::mutate(column = 1:tbl_rows)
+
+        y
+      })
 
   # Join in the column names into the `table_body`
   # tibble from `table_boxhead`
@@ -675,4 +685,3 @@ create_html_table_tbl <- function(html_tbl) {
   html_tbl[["html_table"]] <- html_table
   html_tbl
 }
-
