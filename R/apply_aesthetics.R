@@ -340,6 +340,34 @@ theme_classical <- function(html_tbl) {
   html_tbl
 }
 
+#' Use the 'schematic' table theme
+#'
+#' Apply the 'schematic' theme to the table.
+#' This allows you to inspect the table's parts
+#' since parts and subparts will be decorated with
+#' with background fills and border effects.
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @return an object of class \code{html_table}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and use the
+#' # 'schematic' theme
+#' tab_create(tbl = mtcars) %>%
+#'   theme_schematic()
+#' @importFrom tibble add_row
+#' @export
+theme_schematic <- function(html_tbl) {
+
+  html_tbl[["aesthetics"]] <-
+    html_tbl[["aesthetics"]] %>%
+    tibble::add_row(
+      type = "theme",
+      options = "schematic")
+
+  html_tbl
+}
+
 #' Arrange a boxhead into panels
 #'
 #' If column names in the \code{tbl} supplied
