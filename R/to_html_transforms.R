@@ -57,89 +57,105 @@ to_html_table_caption <- function(tbl,
     paste0("font-family:", font, ";")
 
   if (!is.null(border_top)) {
+
     border_top <-
       paste0(
         "border-top:",
         paste(border_top, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     border_top <- NA_character_
   }
 
   if (!is.null(border_bottom)) {
+
     border_bottom <-
       paste0(
         "border-bottom:",
         paste(border_bottom, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     border_bottom <- NA_character_
   }
 
   if (!is.null(title_font_size)) {
+
     title_font_size <-
       paste0(
         "font-size:",
         paste(title_font_size, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     title_font_size <- NA_character_
   }
 
   if (!is.null(title_align)) {
+
     title_align <-
       paste0(
         "text-align:",
         paste(title_align, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     title_align <- NA_character_
   }
 
   if (!is.null(title_padding)) {
+
     title_padding <-
       paste0(
         "padding:",
         paste(title_padding, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     title_padding <- NA_character_
   }
 
   if (!is.null(headnote_font_size)) {
+
     headnote_font_size <-
       paste0(
         "font-size:",
         paste(headnote_font_size, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     headnote_font_size <- NA_character_
   }
 
   if (!is.null(headnote_align)) {
+
     headnote_align <-
       paste0(
         "text-align:",
         paste(headnote_align, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     headnote_align <- NA_character_
   }
 
   if (!is.null(headnote_padding)) {
+
     headnote_padding <-
       paste0(
         "padding:",
         paste(headnote_padding, collapse = " ") %>%
           as.character(),
         ";")
+
   } else {
     headnote_padding <- NA_character_
   }
@@ -177,6 +193,7 @@ to_html_table_caption <- function(tbl,
     } else {
 
       html_fragment <- paste0("<caption>", title, "</caption>\n")
+
     }
   }
 
@@ -188,15 +205,15 @@ to_html_table_caption <- function(tbl,
       html_fragment <-
         paste(
           html_fragment,
-          paste(
-            paste0(
-              "<caption style=\"",
-              c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding)[
-                !is.na(c(font_family, border_bottom, headnote_font_size, headnote_align, headnote_padding))],
+          paste0(
+            "<caption style=\"",
+            paste(
+              c(font_family, border_bottom, headnote_font_size,
+                headnote_align, headnote_padding)[
+                  !is.na(c(font_family, border_bottom, headnote_font_size,
+                           headnote_align, headnote_padding))],
               collapse = ""),
-            "\">",
-            headnote,
-            "</caption>\n"),
+            "\">", headnote, "</caption>\n"),
           collapse = "")
 
     } else {
@@ -244,28 +261,40 @@ to_html_source_notes <- function(tbl,
   padding <- "3px"
 
   if (!is.null(font)) {
+
     font_family <-
-      paste(font, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-family:", ., ";")
+      paste0(
+        "font-family:",
+        paste(font, collapse = " ") %>%
+          as.character(),
+        ";")
+
   } else {
     font_family <- NA_character_
   }
 
   if (!is.null(font_size)) {
+
     font_size <-
-      paste(font_size, collapse = " ") %>%
-      as.character() %>%
-      paste0("font-size:", ., ";")
+      paste0(
+        "font-size:",
+        paste(font_size, collapse = " ") %>%
+          as.character(),
+        ";")
+
   } else {
     font_size <- NA_character_
   }
 
   if (!is.null(padding)) {
+
     padding <-
-      paste(padding, collapse = " ") %>%
-      as.character() %>%
-      paste0("padding:", ., ";")
+      paste0(
+        "padding:",
+        paste(padding, collapse = " ") %>%
+          as.character(),
+        ";")
+
   } else {
     padding <- NA_character_
   }
