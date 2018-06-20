@@ -348,6 +348,65 @@ htt_theme_classical <- function(html_tbl) {
       values = "2px solid #A8A8A8")
 }
 
+#' HTT: theme_schematic()
+#' @param html_tbl an HTML table object that is
+#' created using the \code{tab_create()} function.
+#' @return an object of class \code{html_table}.
+#' @noRd
+htt_theme_schematic <- function(html_tbl) {
+
+  html_tbl %>%
+    add_table_style(
+      property = "border-collapse",
+      values = "collapse") %>%
+    add_table_style(
+      property = "width",
+      values = "100%") %>%
+    add_style_to_row_0(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_row_0(
+      property = "margin",
+      values = "10px") %>%
+    add_style_to_first_row(
+      property = "border-top",
+      values = "2px solid #A8A8A8") %>%
+    add_style_to_rows(
+      property = "padding",
+      values = "10px") %>%
+    add_style_to_subpart(
+      subpart = "stubhead",
+      property = "background",
+      values = "RGBA(233, 217, 230, 0.70)") %>%
+    add_style_to_subpart(
+      subpart = "group_heading",
+      property = "background",
+      values = "RGBA(236, 236, 188, 1.00)") %>%
+    add_style_to_subpart(
+      subpart = "row_caption",
+      property = "background",
+      values = "RGBA(236, 236, 188, 0.70)") %>%
+    add_style_to_subpart(
+      subpart = "col_heading",
+      property = "border",
+      values = "5px solid RGBA(248, 219, 201, 0.70)") %>%
+    add_style_to_subpart(
+      subpart = "col_heading",
+      property = "background",
+      values = "RGBA(210, 247, 213, 0.70)") %>%
+    add_style_to_part(
+      part = "stub",
+      property = "border",
+      values = "5px solid RGBA(214, 233, 248, 0.70)") %>%
+    add_style_to_part(
+      part = "field",
+      property = "background",
+      values = "RGBA(227, 254, 254, 0.70)") %>%
+    add_style_to_part(
+      part = "field",
+      property = "border",
+      values = "1px solid RGBA(152, 168, 248, 0.70)")
+}
 
 #' HTT: tab_stubhead_caption()
 #' @param html_table_component the HTML table
