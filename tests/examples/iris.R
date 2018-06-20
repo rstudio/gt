@@ -22,12 +22,12 @@ iris_tbl <-
     decimals = 1
     ) %>%  # 5
   tab_heading(
-    title = "The **iris** dataset",
-    headnote = "[All about *Iris setosa*, *versicolor*, and *virginica*]",
+    title = md("The **iris** dataset"),
+    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]"),
     table_number = 1
     ) %>%  # 6
   tab_source_note(
-    source_note = "The data were collected by *Anderson* (1935).")  # 7
+    source_note = md("The data were collected by *Anderson* (1935)."))  # 7
 
 # Display the table in the Viewer
 iris_tbl
