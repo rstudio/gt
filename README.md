@@ -1,6 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
+
 ## Grammar of Tables
 
 The **gt** package allows anyone to easily build presentation tables
@@ -225,6 +228,7 @@ The package API consists of the following functions:
   - `theme_striped()` – use the ‘striped’ table theme
   - `theme_classical()` – use the ‘classical’ table theme
   - `theme_horizontal()` – use the ‘horizontal’ table theme
+  - `theme_schematic()` – use the ‘schematic’ table theme
 
 There are more functions yet to come. A means to selectively target
 rows, columns, or rows will be introduced and incorporated into
