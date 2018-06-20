@@ -30,6 +30,10 @@ use_html_aesthetics <- function(html_tbl, aesthetics_tbl) {
     if (theme_name[1] == "classical") {
       html_tbl <- htt_theme_classical(html_tbl = html_tbl)
     }
+
+    if (theme_name[1] == "schematic") {
+      html_tbl <- htt_theme_schematic(html_tbl = html_tbl)
+    }
   }
 
   # Apply fonts if any such transformations are applied
