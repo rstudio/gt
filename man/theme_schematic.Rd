@@ -15,7 +15,9 @@ an object of class \code{html_table}.
 }
 \description{
 Apply the 'schematic' theme to the table.
-This allows you to inspect the table's parts.
+This allows you to inspect the table's parts
+since parts and subparts will be decorated with
+with background fills and border effects.
 }
 \examples{
 # Create a table object using the
