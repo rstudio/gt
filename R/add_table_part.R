@@ -80,8 +80,8 @@ tab_heading <- function(html_tbl,
 #' stubhead caption.
 #' @param alignment an option to modify the
 #' alignment of the stubhead caption. By
-#' default this is \code{left}. Other options
-#' are \code{center} and \code{right}.
+#' default this is \code{center}. Other options
+#' are \code{left} and \code{right}.
 #' @return an object of class \code{html_table}.
 #' @examples
 #' # Create a table object using the
@@ -97,7 +97,7 @@ tab_heading <- function(html_tbl,
 #' @export
 tab_stubhead_caption <- function(html_tbl,
                                  caption,
-                                 alignment = NULL) {
+                                 alignment = "center") {
 
   # Process the incoming text
   caption <- process_text(text = caption)
