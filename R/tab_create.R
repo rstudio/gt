@@ -68,6 +68,10 @@ tab_create <- function(tbl,
     tbl <-
       tbl %>%
       dplyr::select(rowname, everything())
+
+    has_rowname <- TRUE
+  } else {
+    has_rowname <- FALSE
   }
 
   # If the column `groupname` is available in `tbl`,
@@ -76,6 +80,10 @@ tab_create <- function(tbl,
     tbl <-
       tbl %>%
       dplyr::select(groupname, everything())
+
+    has_groupname <- TRUE
+  } else {
+    has_groupname <- FALSE
   }
 
   # The <head>, <thead>, and <tbody> elements -------------------------------
@@ -154,6 +162,8 @@ tab_create <- function(tbl,
       footnote = footnote,
       source_note = source_note,
       stubhead_caption = stubhead_caption,
+      has_rowname = has_rowname,
+      has_groupname = has_groupname,
       boxhead_panel = boxhead_panel,
       stub_block = stub_block,
       html_head = html_head)
