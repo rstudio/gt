@@ -47,16 +47,6 @@ tab_create <- function(tbl,
   # Perform conversion to tibble
   tbl <- tbl %>% as_tibble()
 
-  # If column names contain data (i.e. not numbered),
-  # then incorporate the rownames as a column (called
-  # `rowname`)
-  if (!(all(row.names(tbl) == 1:nrow(tbl) %>% as.character()))) {
-
-    tbl <-
-      tbl %>%
-      tibble::rownames_to_column()
-  }
-
   # Automatically transform `factor` columns to
   # `character` columns
   tbl <-
