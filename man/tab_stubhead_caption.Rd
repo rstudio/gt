@@ -4,7 +4,7 @@
 \alias{tab_stubhead_caption}
 \title{Add caption text to the stubhead}
 \usage{
-tab_stubhead_caption(html_tbl, caption, alignment = NULL)
+tab_stubhead_caption(html_tbl, caption, alignment = "center")
 }
 \arguments{
 \item{html_tbl}{an HTML table object that is
@@ -15,8 +15,8 @@ stubhead caption.}
 
 \item{alignment}{an option to modify the
 alignment of the stubhead caption. By
-default this is \code{left}. Other options
-are \code{center} and \code{right}.}
+default this is \code{center}. Other options
+are \code{left} and \code{right}.}
 }
 \value{
 an object of class \code{html_table}.
