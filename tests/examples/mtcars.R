@@ -1,4 +1,5 @@
 library(gt)
+library(tidyverse)
 
 # Create a presentation table based on `mtcars`
 # Motor Trend Car Road Tests
@@ -16,9 +17,9 @@ library(gt)
 # 10 - two source notes are added
 # 11 - we add footnotes that target several cell values
 # 12 - column headings are provided with new names
-html_tbl <-
-  tab_create(tbl = mtcars) %>%  # 1
-  theme_horizontal() %>%  # 2
+mtcars_tbl <-
+  tab_create(tbl = mtcars %>% rownames_to_column()) %>%  # 1
+  theme_striped() %>%  # 2
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1
@@ -70,17 +71,11 @@ html_tbl <-
       cells(row = 18, column = 5)
   ) %>% # 11
   cols_rename(
-    "MPG" = "mpg",
-    "C" = "cyl",
-    "D" = "disp",
-    "HP" = "hp",
-    "DR" = "drat",
-    "Wt." = "wt",
-    "QMT" = "qsec",
-    "VS" = "vs",
-    "AM" = "am",
-    "Gears" = "gear",
-    "Cs" = "carb") # 12
+    "C" = "cyl", "D" = "disp", "HP" = "hp",
+    "DR" = "drat", "Wt." = "wt", "QMT" = "qsec",
+    "V/S" = "vs", "A/M" = "am", "Gears" = "gear",
+    "Carbs" = "carb", "MPG" = "mpg"
+    )
 
 # Display the table in the Viewer
-html_tbl
+mtcars_tbl

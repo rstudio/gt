@@ -30,8 +30,8 @@ Steps in detail:
 
 ```{r create_gt_object}
 mtcars_tbl <-
-  tab_create(tbl = mtcars) %>%  # 1
-  theme_horizontal() %>%  # 2
+  tab_create(tbl = mtcars %>% rownames_to_column()) %>%  # 1
+  theme_striped() %>%  # 2
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1
@@ -83,17 +83,10 @@ mtcars_tbl <-
       cells(row = 18, column = 5)
   ) %>% # 11
   cols_rename(
-    "MPG" = "mpg",
-    "C" = "cyl",
-    "D" = "disp",
-    "HP" = "hp",
-    "DR" = "drat",
-    "Wt." = "wt",
-    "QMT" = "qsec",
-    "VS" = "vs",
-    "AM" = "am",
-    "Gears" = "gear",
-    "Cs" = "carb") # 12
+    "C" = "cyl", "D" = "disp", "HP" = "hp",
+    "DR" = "drat", "Wt." = "wt", "QMT" = "qsec",
+    "V/S" = "vs", "A/M" = "am", "Gears" = "gear",
+    "Carbs" = "carb", "MPG" = "mpg") # 12
 ```
 
 ```{r show_table, echo=FALSE}
