@@ -67,7 +67,8 @@ tab_create <- function(tbl,
   if ("rowname" %in% colnames(tbl)) {
     tbl <-
       tbl %>%
-      dplyr::select(rowname, everything())
+      dplyr::select(rowname, everything()) %>%
+      dplyr::mutate(rowname = as.character(rowname))
 
     has_rowname <- TRUE
   } else {
@@ -79,7 +80,8 @@ tab_create <- function(tbl,
   if ("groupname" %in% colnames(tbl)) {
     tbl <-
       tbl %>%
-      dplyr::select(groupname, everything())
+      dplyr::select(groupname, everything()) %>%
+      dplyr::mutate(groupname = as.character(groupname))
 
     has_groupname <- TRUE
   } else {
