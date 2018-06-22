@@ -523,6 +523,8 @@ modify_spanner_headings <- function(html_tbl) {
 
   # Use `boxhead_panel` entries to create a row `-1`,
   # which is the spanner row above the heading row (row `0`)
+  # TODO: only include `border-right` line if there is a
+  #       colspan to the immediate right
   column_spanner_subpart <-
     html_tbl[["html_table"]] %>%
     dplyr::filter(t_subpart %in% c("col_heading", "stubhead")) %>%
