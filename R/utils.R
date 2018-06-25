@@ -571,3 +571,9 @@ modify_spanner_headings <- function(html_tbl) {
 
   html_tbl
 }
+
+#' A wrapper for `system.file()`
+#' @noRd
+system_file <- function(file) {
+  system.file(file, package = "gt")
+}
