@@ -1,4 +1,8 @@
-encase_tbl <- function(data, data_types = NULL) {
+#' @importFrom purrr map_chr
+#' @importFrom dplyr mutate select everything bind_rows tibble
+#' @noRd
+encase_tbl <- function(data,
+                       data_types = NULL) {
 
   n_col <- ncol(data)
 
@@ -8,24 +12,25 @@ encase_tbl <- function(data, data_types = NULL) {
       purrr::map_chr(.f = function(x) class(data[[x]]))
   }
 
-  data <-
-    data %>% mutate(`:row_number:` = 1:nrow(data)) %>%
-    mutate(`:group_name:` = NA_character_) %>%
-    mutate(`:row_name:` = NA_character_) %>%
-    select(`:row_number:`, `:group_name:`, `:row_name:`, everything())
+  data <- data %>%
+    dplyr::mutate(`:row_number:` = 1:nrow(data)) %>%
+    dplyr::mutate(`:group_name:` = NA_character_) %>%
+    dplyr::mutate(`:row_name:` = NA_character_) %>%
+    dplyr::select(`:row_number:`, `:group_name:`, `:row_name:`, everything())
 
   if ("rowname" %in% colnames(data)) {
+
     rowname_col <- which(colnames(data[, c(-1, -2, -3)]) == "rowname")
     data_types <- data_types[-rowname_col]
     n_col <- n_col - 1
 
     data <- data %>%
-      mutate(`:row_name:` = rowname) %>%
-      select(-rowname)
+      dplyr::mutate(`:row_name:` = rowname) %>%
+      dplyr::select(-rowname)
   }
 
   data <-
-    bind_rows(
+    dplyr::bind_rows(
       dplyr::tibble(
         `:row_number:` = NA_integer_,
         `:group_name:` = "column_number",
@@ -59,21 +64,24 @@ encase_tbl <- function(data, data_types = NULL) {
   data
 }
 
-# Apply types to data frame columns
+#' Apply data types to data frame columns
+#' @noRd
 apply_data_types <- function(data, types){
 
   for (i in 1:length(data)){
     FUN <-
-      switch(types[i],
-             character = as.character,
-             numeric = as.numeric)
+      switch(
+        types[i],
+        character = as.character,
+        numeric = as.numeric)
 
     data[,i] <- FUN(data[,i])
   }
   data
 }
 
-# Function to extract formatted data table
+#' Extract an encased data table
+#' @noRd
 get_working_tbl <- function(data,
                             apply_original_types = FALSE,
                             data_types = NULL) {
@@ -101,11 +109,40 @@ get_working_tbl <- function(data,
   data
 }
 
-# Function to get original data types
+#' Get the original data types
+#' @noRd
 get_orig_types <- function(data) {
   data[2, c(-1, -2, -3)] %>% t() %>% as.character()
 }
 
+#' Create gt table object
+#'
+#' Create a gt table object so that we can perform
+#' styling transformations before transforming
+#' the entire object to a display table. Using this
+#' function is the first step in that process.
+#' @param data a \code{data.frame} object or a
+#' tibble.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset
+#' tab <-
+#'   gt(data = mtcars)
+#'
+#' # The resulting object can be used
+#' # in transformations
+#' tab_2 <-
+#'   tab %>%
+#'   set_cols_align_right() %>%
+#'   set_fmt_numeric(
+#'     columns = c("drat", "wt", "qsec"),
+#'     decimals = 1
+#'     )
+#'
+#' # The object of this type can be
+#' # displayed in the Viewer
+#' tab_2
 #' @export
 gt <- function(data) {
 
@@ -119,6 +156,27 @@ gt <- function(data) {
   )
 }
 
+#' Arrange a boxhead into panels
+#'
+#' Set a spanner with a name and mappings
+#' to columns extant in the table. This
+#' creates a boxhead panel with spanner
+#' headings and column headings.
+#' @param html_tbl a table object that is
+#' created using the \code{gt()} function.
+#' @param spanner the spanner heading name.
+#' @param columns the columns to be components of
+#' the spanner heading.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table based on `rock` where
+#' # there are column headings grouped under
+#' # spanner headings
+#' gt(data = rock) %>%
+#'   set_spanner(
+#'     spanner = "perimeter",
+#'     columns = c("peri", "shape"))
+#' @importFrom dplyr bind_cols
 #' @export
 set_spanner <- function(data,
                         spanner,
@@ -136,6 +194,7 @@ set_spanner <- function(data,
   data
 }
 
+#' @importFrom dplyr bind_cols
 #' @export
 set_cols_align <- function(data,
                            align = "center",
@@ -167,36 +226,6 @@ set_cols_align <- function(data,
   data
 }
 
-#' @export
-set_cols_align <- function(data,
-                           align = "center",
-                           columns = NULL,
-                           types = NULL) {
-
-  if (!(align %in% c("left", "center", "right"))) {
-    return(data)
-  }
-
-  data_lhs <- data$data[, c(1, 2)]
-  data_rhs <- data$data[, -c(1, 2)]
-
-  if (!is.null(columns)) {
-    data_columns <-
-      columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
-    if ("stub" %in% columns) {
-      data_columns <- c(":row_name:", data_columns)
-    }
-
-    data_rhs[3, data_columns] <- align
-
-  } else if (!is.null(types)) {
-
-    data_rhs[3, which(data_rhs[2, ] %in% types)] <- align
-  }
-
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
-  data
-}
 
 #' @export
 set_cols_align_left <- function(data,
@@ -236,6 +265,7 @@ set_cols_align_right <- function(data,
 }
 
 
+#' @importFrom dplyr select everything bind_cols
 #' @export
 set_cols_move_to_start <- function(data,
                                    columns) {
@@ -261,6 +291,7 @@ set_cols_move_to_start <- function(data,
   data
 }
 
+#' @importFrom dplyr select bind_cols
 #' @export
 set_cols_move_to_end <- function(data,
                                  columns) {
@@ -290,6 +321,7 @@ set_cols_move_to_end <- function(data,
   data
 }
 
+#' @importFrom dplyr select bind_cols
 #' @export
 set_cols_remove <- function(data,
                             columns) {
@@ -320,6 +352,7 @@ set_cols_remove <- function(data,
   data
 }
 
+#' @importFrom dplyr select bind_cols
 #' @export
 set_cols_move <- function(tbl,
                           columns,
@@ -442,7 +475,7 @@ set_footnote <- function(data,
   # Determine if the footnote already exists;
   # if it does, get the index
   if ("footnote" %in% names(data) &&
-      gt:::process_text(footnote) %in%
+      process_text(footnote) %in%
       (data$footnote[[1]] %>% as.character())) {
 
     # Obtain the index of the already present
@@ -450,7 +483,7 @@ set_footnote <- function(data,
     # the appropriate cell)
     index <-
       data$footnote[[1]][
-        which(data$footnote[[1]] == gt:::process_text(footnote))] %>%
+        which(data$footnote[[1]] == process_text(footnote))] %>%
       names() %>% as.integer()
 
   } else if ("footnote" %in% names(data)) {
