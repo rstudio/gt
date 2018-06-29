@@ -1,3 +1,11 @@
+#' Transform a gt table object to an HTML table
+#'
+#' Take a \code{gt_tbl} table object and transform
+#' it to an HTML table.
+#' @param tbl a \code{gt_tbl} object that is
+#' created using the \code{gt()} function.
+#' @return a character object with an HTML table
+#' @importFrom stringr str_extract_all str_split
 #' @export
 process_html <- function(tbl) {
 
