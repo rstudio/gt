@@ -10,8 +10,8 @@
 process_html <- function(tbl) {
 
   # Determine if there is a stub
-  if (!all(is.na(tbl$data$`:row_name:`)) ||
-      !all(is.na(tbl$data$`:group_name:`))) {
+  if (!all(is.na(tbl$data$`:row_name:`[c(-1, -2, -3, -4)])) ||
+      !all(is.na(tbl$data$`:group_name:`[c(-1, -2, -3, -4)]))) {
     stub_available <- TRUE
   } else {
     stub_available <- FALSE
@@ -44,19 +44,19 @@ process_html <- function(tbl) {
   }
 
   # Extract the table (case of table with a stub w/ only row names)
-  if (stub_available & all(stub_components == "row_name")) {
+  if (stub_available && all(stub_components == "row_name")) {
     extracted <- tbl$data[c(-1, -2, -3, -4), c(-1, -2)]
     col_alignment <- tbl$data[3, c(-1, -2)] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub w/ only group names)
-  if (stub_available & all(stub_components == "group_name")) {
+  if (stub_available && all(stub_components == "group_name")) {
     extracted <- tbl$data[c(-1, -2, -3, -4), c(-1, -3)]
     col_alignment <- tbl$data[3, c(-1, -2, -3)] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub of row and group names)
-  if (stub_available & all(stub_components == c("row_name", "group_name"))) {
+  if (stub_available && all(stub_components == c("row_name", "group_name"))) {
     extracted <- tbl$data[c(-1, -2, -3, -4), -1]
     col_alignment <- tbl$data[3, c(-1, -2)] %>% t() %>% as.vector()
   }
