@@ -631,21 +631,29 @@ set_fmt_percent <- function(data,
       columns = columns,
       formatter = function(x) {
 
-        if (!is.numeric(x) && any(grepl("::percent", x))) {
-          x <- as.numeric(gsub("::percent", "", x)) / 100
-        }
+        # Uncouple formats from the base value
+        formats <- x %>% gt:::extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
 
+        # Transform the number by multiplying
+        # it by 100
         x <- as.numeric(x) * 100
 
-        paste0(
-          formatC(
-            x = x,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "f",
-            drop0trailing = drop0trailing), "::percent")
+        x <-
+          paste0(
+            formatC(
+              x = x,
+              digits = decimals,
+              mode = "double",
+              big.mark = sep_mark,
+              decimal.mark = dec_mark,
+              format = "f",
+              drop0trailing = drop0trailing), "::percent")
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
       }
     )
 }
@@ -666,13 +674,15 @@ set_fmt_scientific <- function(data,
       columns = columns,
       formatter = function(x) {
 
-        if (!is.numeric(x) && any(grepl("::percent", x))) {
-          x <- as.numeric(gsub("::percent", "", x)) / 100
-        }
+        # Uncouple formats from the base value
+        formats <- x %>% gt:::extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
 
         x <- as.numeric(x)
 
-        formatC(
+        x <- formatC(
           x = x,
           digits = decimals,
           mode = "double",
@@ -680,6 +690,9 @@ set_fmt_scientific <- function(data,
           decimal.mark = dec_mark,
           format = "e",
           drop0trailing = drop0trailing)
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
       })
 }
 
@@ -699,13 +712,15 @@ set_fmt_numeric <- function(data,
       columns = columns,
       formatter = function(x) {
 
-        if (!is.numeric(x) && any(grepl("::percent", x))) {
-          x <- as.numeric(gsub("::percent", "", x)) / 100
-        }
+        # Uncouple formats from the base value
+        formats <- x %>% gt:::extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
 
         x <- as.numeric(x)
 
-        formatC(
+        x <- formatC(
           x = x,
           digits = decimals,
           mode = "double",
@@ -713,6 +728,9 @@ set_fmt_numeric <- function(data,
           decimal.mark = dec_mark,
           format = "f",
           drop0trailing = drop0trailing)
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
       }
     )
 }
