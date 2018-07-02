@@ -115,6 +115,67 @@ get_orig_types <- function(data) {
   data[2, c(-1, -2, -3)] %>% t() %>% as.character()
 }
 
+#' Reverse percentages back to the original value
+#' @noRd
+reverse_percent <- function(x) {
+  if (!is.numeric(x) && any(grepl("::percent", x))) {
+
+    # Set aside extra formats
+    formats <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\2", x)
+    base <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\1", x)
+
+    return(paste0(as.numeric(gsub("(::percent|,)", "", base)) / 100, formats))
+  } else {
+    return(x)
+  }
+}
+
+#' Extract a value from a cell that is free
+#' of any attached formatting directives
+#' @noRd
+extract_value <- function(x) {
+  # Extract value from a string that may
+  # contain format directives
+  values <- c()
+  for (i in seq(x)) {
+    if (grepl("::percent", x[i])) {
+      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
+      values[i] <- paste0(values[i], "::percent")
+    } else {
+      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
+    }
+  }
+  values
+}
+
+#' Extract formatting directives from a cell
+#' value so that we may recombine them later
+#' @noRd
+extract_formats <- function(x) {
+  # Extract formats from a string
+  formats <- c()
+  for (i in seq(x)) {
+    if (grepl("::", x[i])) {
+      formats <- c(formats, gsub("(.*?)(::.*)", "\\2", x[i]))
+      formats[i] <- gsub("::percent", "", formats[i])
+    } else {
+      formats <- c(formats, "")
+    }
+  }
+  formats
+}
+
+#' Recombine the value (`x`) and the formats;
+#' this is usually after some operation has
+#' been done to `x` and we'd like to restore
+#' the association between value and the
+#' previously-set formatting directives
+recombine_formats <- function(x, formats) {
+  # Combine the format-free value with
+  # the `formats` string
+  paste0(x, formats)
+}
+
 #' Create gt table object
 #'
 #' Create a gt table object so that we can perform
