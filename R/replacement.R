@@ -255,6 +255,78 @@ set_spanner <- function(data,
   data
 }
 
+
+#' Arrange a stub into blocks
+#'
+#' Set a group with a name and mappings to rows extant
+#' in the table. This creates a stub block with group
+#' headings and row captions.
+#' @param html_tbl a table object that is created using
+#' the \code{gt()} function.
+#' @param spanner the spanner heading name.
+#' @param columns the columns to be components of
+#' the spanner heading.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table based on `rock` where
+#' # there are column headings grouped under
+#' # spanner headings
+#' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+#'   set_group(
+#'     group = "perimeter",
+#'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
+#' @importFrom dplyr bind_cols bind_rows arrange
+#' @export
+set_group <- function(data,
+                      group,
+                      rows,
+                      others = NULL) {
+
+  # Set a name for the `others` group if a
+  # name is provided
+  if (!is.null(others)) {
+    data[["others_group"]] <-
+      list(others = others)
+  }
+
+  # Look at the rows to determine if helpers used
+  if (inherits(rows, "not_in_group")) {
+    data_rows <- which(is.na(data$data[-1:-4, 2])) + 4
+  } else {
+    data_rows <- which(data$data[-1:-4, 3] %in% rows) + 4
+  }
+
+  data_lhs <- data$data[, c(1, 2)]
+  data_rhs <- data$data[, -c(1, 2)]
+
+  data_lhs[data_rows, 2] <- group
+
+  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+
+  data_top <- data$data[1:4, ]
+  data_bottom <- data$data[-1:-4, ]
+
+  data_bottom <- data_bottom %>% dplyr::arrange(`:group_name:`)
+  data_bottom[, 1] <- as.character(1:nrow(data_bottom))
+
+  data$data <- dplyr::bind_rows(data_top, data_bottom)
+  data
+}
+
+#' Modify the ordering of the stub block groups
+#' @export
+arrange_groups <- function(data,
+                           groups) {
+
+  # Set a name for the `others` group if a
+  # name is provided
+  data[["arrange_groups"]] <-
+    list(groups = groups)
+
+  data
+}
+
+#' Set the alignment of columns
 #' @importFrom dplyr bind_cols
 #' @export
 set_cols_align <- function(data,
