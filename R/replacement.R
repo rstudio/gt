@@ -688,6 +688,115 @@ set_fmt <- function(data,
 }
 
 #' @export
+set_fmt_datetime <- function(data,
+                             columns = NULL,
+                             date_style = NULL,
+                             time_style = NULL) {
+
+  data %>%
+    set_fmt(
+      columns = columns,
+      formatter = function(x) {
+
+        # Uncouple formats from the base value
+        formats <- x %>% extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
+
+        # Transform `date_style` to `date_format`
+        date_format <- get_date_format(date_style = date_style)
+
+        # Transform `time_style` to `time_format`
+        time_format <- get_time_format(time_style = time_style)
+
+        # Combine into a single datetime format string
+        date_time_format_str <-
+          paste0(date_format, " ", time_format)
+
+        x <-
+          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+          strftime(format = date_time_format_str) %>%
+          stringr::str_replace_all("^0", "") %>%
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all("pm$", "PM") %>%
+          stringr::str_replace_all("am$", "AM")
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
+      }
+    )
+}
+
+
+#' @export
+set_fmt_date <- function(data,
+                         columns = NULL,
+                         date_style = NULL) {
+
+  data %>%
+    set_fmt(
+      columns = columns,
+      formatter = function(x) {
+
+        # Uncouple formats from the base value
+        formats <- x %>% extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
+
+        # Transform `date_style` to `date_format_str`
+        date_format_str <- get_date_format(date_style = date_style)
+
+        x <-
+          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+          strftime(format = date_format_str) %>%
+          stringr::str_replace_all("^0", "") %>%
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all("pm$", "PM") %>%
+          stringr::str_replace_all("am$", "AM")
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
+      }
+    )
+}
+
+#' @export
+set_fmt_time <- function(data,
+                         columns = NULL,
+                         time_style = NULL) {
+
+  data %>%
+    set_fmt(
+      columns = columns,
+      formatter = function(x) {
+
+        # Uncouple formats from the base value
+        formats <- x %>% extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
+
+        # Transform `time_style` to `time_format_str`
+        time_format_str <- get_time_format(time_style = time_style)
+
+        x <-
+          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+          strftime(format = time_format_str) %>%
+          stringr::str_replace_all("^0", "") %>%
+          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+          stringr::str_replace_all("pm$", "PM") %>%
+          stringr::str_replace_all("am$", "AM")
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
+      }
+    )
+}
+
+
+#' @export
 set_fmt_percent <- function(data,
                             columns,
                             decimals = NULL,
