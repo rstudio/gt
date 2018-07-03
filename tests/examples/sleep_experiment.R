@@ -1,3 +1,5 @@
+library(gt)
+library(htmltools)
 
 html_table <-
   gt(data = sleep) %>%
