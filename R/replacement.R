@@ -97,12 +97,6 @@ get_working_tbl <- function(data,
   # the table; here, the casement is removed
   data <- data[c(-1, -2, -3, -4), c(-1, -2, -3)]
 
-  # if (apply_original_types) {
-  #   data <- apply_data_types(data = data, types = original_types)
-  # } else if (!is.null(data_types)) {
-  #   data <- apply_data_types(data = data, types = data_types)
-  # }
-
   # Reset the official rownames for the table
   rownames(data) <- NULL
 
@@ -343,7 +337,7 @@ set_cols_align <- function(data,
 
   if (!is.null(columns)) {
     data_columns <-
-      columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+      columns[which(columns %in% colnames(data$data[, -1:-3]))]
     if ("stub" %in% columns) {
       data_columns <- c(":row_name:", data_columns)
     }
@@ -359,7 +353,7 @@ set_cols_align <- function(data,
   data
 }
 
-
+#' Set columns to be aligned left
 #' @export
 set_cols_align_left <- function(data,
                                 columns = NULL,
@@ -372,6 +366,7 @@ set_cols_align_left <- function(data,
     types = types)
 }
 
+#' Set columns to be aligned to the center
 #' @export
 set_cols_align_center <- function(data,
                                   columns = NULL,
@@ -384,7 +379,7 @@ set_cols_align_center <- function(data,
     types = types)
 }
 
-
+#' Set columns to be aligned right
 #' @export
 set_cols_align_right <- function(data,
                                  columns = NULL,
@@ -406,10 +401,10 @@ set_cols_move_to_start <- function(data,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+    columns[which(columns %in% colnames(data$data[, -1:-3]))]
 
-  data_lhs <- data$data[, c(1, 2, 3)]
-  data_rhs <- data$data[, -c(1, 2, 3)]
+  data_lhs <- data$data[, 1:3]
+  data_rhs <- data$data[, -1:-3]
 
   if (length(columns) > 0) {
     data_rhs <- data_rhs %>% dplyr::select(columns, everything())
@@ -432,10 +427,10 @@ set_cols_move_to_end <- function(data,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+    columns[which(columns %in% colnames(data$data[, -1:-3]))]
 
-  data_lhs <- data$data[, c(1, 2, 3)]
-  data_rhs <- data$data[, -c(1, 2, 3)]
+  data_lhs <- data$data[, 1:3]
+  data_rhs <- data$data[, -1:-3]
 
   if (length(columns) > 0) {
 
@@ -462,10 +457,10 @@ set_cols_remove <- function(data,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+    columns[which(columns %in% colnames(data$data[, -1:-3]))]
 
-  data_lhs <- data$data[, c(1, 2, 3)]
-  data_rhs <- data$data[, -c(1, 2, 3)]
+  data_lhs <- data$data[, 1:3]
+  data_rhs <- data$data[, -1:-3]
 
   # Perform removal of columns using `dplyr::select()`
   if (length(columns) > 0) {
@@ -494,10 +489,10 @@ set_cols_move <- function(tbl,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+    columns[which(columns %in% colnames(data$data[, -1:-3]))]
 
-  data_lhs <- data$data[, c(1, 2, 3)]
-  data_rhs <- data$data[, -c(1, 2, 3)]
+  data_lhs <- data$data[, 1:3]
+  data_rhs <- data$data[, -1:-3]
 
   # Get the remaining column names in the table
   column_names <- base::setdiff(colnames(data_rhs), columns)
@@ -597,6 +592,14 @@ target_cell <- function(row = NULL,
   attr(cell_targeted, "class") <- "single_cell_target"
 
   cell_targeted
+}
+
+#' Helper for collecting ungrouped rows or columns
+#' @export
+not_in_group <- function() {
+  x <- ":not_in_group"
+  class(x) <- "not_in_group"
+  x
 }
 
 
@@ -813,7 +816,7 @@ set_fmt_percent <- function(data,
       formatter = function(x) {
 
         # Uncouple formats from the base value
-        formats <- x %>% gt:::extract_formats()
+        formats <- x %>% extract_formats()
         x <- x %>%
           extract_value() %>%
           reverse_percent()
@@ -856,7 +859,7 @@ set_fmt_scientific <- function(data,
       formatter = function(x) {
 
         # Uncouple formats from the base value
-        formats <- x %>% gt:::extract_formats()
+        formats <- x %>% extract_formats()
         x <- x %>%
           extract_value() %>%
           reverse_percent()
