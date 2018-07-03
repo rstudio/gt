@@ -164,6 +164,7 @@ extract_formats <- function(x) {
 #' been done to `x` and we'd like to restore
 #' the association between value and the
 #' previously-set formatting directives
+#' @noRd
 recombine_formats <- function(x, formats) {
   # Combine the format-free value with
   # the `formats` string
