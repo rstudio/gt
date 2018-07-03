@@ -20,7 +20,7 @@ encase_tbl <- function(data,
 
   if ("rowname" %in% colnames(data)) {
 
-    rowname_col <- which(colnames(data[, c(-1, -2, -3)]) == "rowname")
+    rowname_col <- which(colnames(data[, -1:-3]) == "rowname")
     data_types <- data_types[-rowname_col]
     n_col <- n_col - 1
 
@@ -88,14 +88,14 @@ get_working_tbl <- function(data,
 
   if (apply_original_types) {
     original_types <-
-      data[2, c(-1, -2, -3)] %>%
+      data[2, -1:-3] %>%
       t() %>%
       as.character()
   }
 
   # The data is in the unencased portion of
   # the table; here, the casement is removed
-  data <- data[c(-1, -2, -3, -4), c(-1, -2, -3)]
+  data <- data[-1:-4, -1:-3]
 
   # Reset the official rownames for the table
   rownames(data) <- NULL
@@ -106,7 +106,7 @@ get_working_tbl <- function(data,
 #' Get the original data types
 #' @noRd
 get_orig_types <- function(data) {
-  data[2, c(-1, -2, -3)] %>% t() %>% as.character()
+  data[2, -1:-3] %>% t() %>% as.character()
 }
 
 #' Reverse percentages back to the original value
@@ -239,10 +239,10 @@ set_spanner <- function(data,
                         columns) {
 
   data_columns <-
-    columns[which(columns %in% colnames(data$data[, c(-1, -2, -3)]))]
+    columns[which(columns %in% colnames(data$data[, -1:-3]))]
 
-  data_lhs <- data$data[, c(1, 2, 3)]
-  data_rhs <- data$data[, -c(1, 2, 3)]
+  data_lhs <- data$data[, 1:3]
+  data_rhs <- data$data[, -1:-3]
 
   data_rhs[4, data_columns] <- spanner
 
