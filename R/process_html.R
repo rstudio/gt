@@ -10,15 +10,22 @@
 process_html <- function(tbl) {
 
   # Determine if there is a stub
-  if (!all(is.na(tbl$data$`:row_name:`[c(-1, -2, -3, -4)])) ||
-      !all(is.na(tbl$data$`:group_name:`[c(-1, -2, -3, -4)]))) {
+  if (!all(is.na(tbl$data$`:row_name:`[-1:-4])) ||
+      !all(is.na(tbl$data$`:group_name:`[-1:-4]))) {
     stub_available <- TRUE
   } else {
     stub_available <- FALSE
   }
 
+  # Determine if there are any groups present
+  if (!all(is.na(tbl$data$`:group_name:`[-1:-4]))) {
+    groups_present <- TRUE
+  } else {
+    groups_present <- FALSE
+  }
+
   # Determine if there are any spanners present
-  if (!all(is.na(tbl$data[4, c(-1, -2, -3)] %>% t() %>% as.vector()))) {
+  if (!all(is.na(tbl$data[4, -1:-3] %>% t() %>% as.vector()))) {
     spanners_present <- TRUE
   } else {
     spanners_present <- FALSE
@@ -32,33 +39,78 @@ process_html <- function(tbl) {
       stub_components <- c(stub_components, "row_name")
     }
 
-    if (any(!is.na(tbl$data$`:group_name:`[c(-1, -2, -3, -4)]))) {
+    if (any(!is.na(tbl$data$`:group_name:`[-1:-4]))) {
       stub_components <- c(stub_components, "group_name")
     }
   }
 
   # Extract the table (case of table with no stub)
   if (stub_available == FALSE) {
-    extracted <- tbl$data[c(-1, -2, -3, -4), c(-1, -2, -3)]
-    col_alignment <- tbl$data[3, c(-1, -2, -3)] %>% t() %>% as.vector()
+    extracted <- tbl$data[-1:-4, -1:-3]
+    col_alignment <- tbl$data[3, -1:-3] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub w/ only row names)
   if (stub_available && all(stub_components == "row_name")) {
-    extracted <- tbl$data[c(-1, -2, -3, -4), c(-1, -2)]
-    col_alignment <- tbl$data[3, c(-1, -2)] %>% t() %>% as.vector()
+    extracted <- tbl$data[-1:-4, -1:-2]
+    col_alignment <- tbl$data[3, -1:-2] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub w/ only group names)
   if (stub_available && all(stub_components == "group_name")) {
-    extracted <- tbl$data[c(-1, -2, -3, -4), c(-1, -3)]
-    col_alignment <- tbl$data[3, c(-1, -2, -3)] %>% t() %>% as.vector()
+    extracted <- tbl$data[-1:-4, c(-1, -3)]
+    col_alignment <- tbl$data[3, -1:-3] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub of row and group names)
   if (stub_available && all(stub_components == c("row_name", "group_name"))) {
-    extracted <- tbl$data[c(-1, -2, -3, -4), -1]
-    col_alignment <- tbl$data[3, c(-1, -2)] %>% t() %>% as.vector()
+
+
+    # Replace NA values in the `:group_name:` column
+    if ("others_group" %in% names(tbl)) {
+      tbl$data[which(is.na(tbl$data[, 2])), 2] <- tbl$others_group[[1]]
+    } else {
+      tbl$data[which(is.na(tbl$data[, 2])), 2] <- "Others"
+    }
+
+    if ("arrange_groups" %in% names(tbl)) {
+
+      ordering <- tbl$arrange_groups$groups
+
+      all_groups <- unique(tbl$data[-1:-4, 2])
+
+      ordering <- c(ordering, base::setdiff(all_groups, ordering))
+
+      reordered_top <- tbl$data[1:4, ]
+      reordered_bottom <- tbl$data[-1:-4, ]
+
+      reordered_tab <- tbl$data[0, ]
+
+      for (i in seq(ordering)) {
+        reordered_tab <-
+          rbind(
+            reordered_tab,
+            subset(reordered_bottom, `:group_name:` == ordering[i]))
+      }
+
+      rownames(reordered_tab) <- NULL
+      reordered_tab[, 1] <- rownames(reordered_tab)
+
+      tbl$data <- rbind(reordered_top, reordered_tab)
+    }
+
+    groups_rows <-
+      tbl$data[-1:-4, 1:2] %>%
+      dplyr::mutate(`:row_number:` = as.numeric(`:row_number:`)) %>%
+      dplyr::group_by(`:group_name:`) %>%
+      dplyr::summarize(row = min(`:row_number:`)) %>%
+      dplyr::ungroup() %>%
+      dplyr::rename(group = `:group_name:`) %>%
+      dplyr::mutate(row = as.numeric(row)) %>%
+      dplyr::arrange(row)
+
+    extracted <- tbl$data[-1:-4, -1:-2]
+    col_alignment <- tbl$data[3, -1:-2] %>% t() %>% as.vector()
   }
 
   # Reset the rownames for the extracted content
@@ -204,6 +256,16 @@ process_html <- function(tbl) {
   body_rows <- c()
   for (i in 1:n_rows) {
 
+    if (exists("groups_rows") && i %in% groups_rows$row) {
+      body_rows <-
+        c(body_rows,
+          paste0(
+            "<tr>\n<td class='stub_heading font_bold'>",
+            groups_rows[which(groups_rows$row %in% i), 1][[1]],
+            "</td>\n<td class='stub_heading_field' colspan='",
+            n_cols - 1, "'></td>\n</tr>\n"))
+    }
+
     body_rows <-
       c(body_rows,
         paste0(
@@ -211,8 +273,7 @@ process_html <- function(tbl) {
           paste0(
             "<td class='row ", col_alignment, "'>",
             row_splits[i][[1]], "</td>", collapse = "\n"),
-          "\n</tr>\n")
-      )
+          "\n</tr>\n"))
   }
 
   body_rows <- body_rows %>% paste(collapse = "")
