@@ -1,4 +1,5 @@
-# mtcars with new functions
+library(gt)
+library(htmltools)
 
 html_table <-
   gt(data = mtcars %>% tibble::rownames_to_column()) %>%
@@ -10,10 +11,24 @@ html_table <-
     columns = "hp") %>%
   set_spanner(
     spanner = "group_b",
+    #columns = target_cols(drat, wt, qsec, vs, am, gear, carb),
     columns = c("drat", "wt", "qsec", "vs", "am", "gear", "carb")) %>%
+  # set_group(group = "Mazdas", rows = rownames_with("Mazda")) %>%
+  set_group(
+    group = "Supercars",
+    rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L"),
+    others = "Slower Cars") %>%
+  set_group(
+    group = "Mazdas",
+    rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
+  set_group(
+    group = "Others",
+    rows = not_in_group()) %>%
+  arrange_groups(groups = c("Mazdas", "Supercars", "Others")) %>%
   set_cols_align_right(
     columns = c("disp", "wt")) %>%
   set_cols_align_left(
+    #columns = target_cols(stub),
     columns = "stub") %>%
   set_fmt_percent(
     columns = "drat",
