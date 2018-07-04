@@ -83,8 +83,8 @@ The `mtcars` dataset can be suitably transformed into a display table
 `gt()` function to initiate the process (providing `mtcars` to the
 `data` argument), creating a table object. The `mtcars` dataset has car
 names as rownames, so we will expose those in a column with the
-`dplyr::rownames_to_column()` function. After that, a few functions can
-be used to refine the display table:
+`rownames_to_stub = TRUE` option After that, a few functions can be used
+to refine the display table:
 
   - `cols_align_center()`: center-aligns cell content in specified
     columns
@@ -108,7 +108,7 @@ be used to refine the display table:
 # 6 - a heading is added, both parts are interpreted as Markdown
 # 7 - two source notes are added, the first is interpreted as Markdown
 mtcars_tbl <-
-  gt(data = mtcars[1:6, ] %>% tibble::rownames_to_column()) %>%  # 1
+  gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>%  # 1
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1
@@ -157,7 +157,7 @@ panels with spanner headings and column headings.
 # 5 - a heading is added
 # 6 - a source note is added
 iris_tbl <-
-  gt(data = iris[1:6, ]) %>%  # 1
+  gt(iris[1:6, ]) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
   tab_boxhead_panel(use_names = TRUE) %>%  # 3
   fmt_number(
