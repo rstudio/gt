@@ -2,7 +2,7 @@ library(gt)
 library(htmltools)
 
 html_table <-
-  gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+  gt(mtcars, rownames_to_stub = TRUE) %>%
   tab_boxhead_panel(
     spanner = "group_a",
     columns = c("mpg", "cyl", "disp")) %>%

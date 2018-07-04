@@ -18,7 +18,7 @@ library(tidyverse)
 # 11 - we add footnotes that target several cell values
 # 12 - column headings are provided with new names
 mtcars_tbl <-
-  tab_create(tbl = mtcars %>% rownames_to_column()) %>%  # 1
+  gt(mtcars, rownames_to_stub = TRUE) %>%  # 1
   theme_striped() %>%  # 2
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
