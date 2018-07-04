@@ -44,7 +44,7 @@ fmt_number <- function(data,
       formatter = function(x) {
 
         # Uncouple formats from the base value
-        formats <- x %>% gt:::extract_formats()
+        formats <- x %>% extract_formats()
         x <- x %>%
           extract_value() %>%
           reverse_percent()
