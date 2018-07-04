@@ -22,9 +22,8 @@ sp500_tbl <-
   readr::read_csv(
     system.file("extdata", "sp500.csv", package = "gt"),
     col_types = "cddddd") %>% # 0
-  tab_create() %>%  # 1
-  theme_striped() %>%  # 2
-  fmt_font(font = "Courier") %>%  # 3
+  gt() %>%  # 1
+  #fmt_font(font = "Courier") %>% # TODO: doesn't work
   cols_align_right(types = "numeric") %>%  # 4
   cols_align_left(columns = "Date") %>%  # 5
   cols_move_to_start(columns = c("Open", "Close")) %>%  # 6
@@ -36,7 +35,7 @@ sp500_tbl <-
   fmt_currency(
     columns = c("Open", "High", "Low", "Close"),
     currency = "USD",
-    use_big_mark = TRUE)  # 10
+    sep_mark = ",")  # 10
 
 # Display the table in the Viewer
 sp500_tbl

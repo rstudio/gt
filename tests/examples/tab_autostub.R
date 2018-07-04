@@ -4,7 +4,7 @@ library(tidyverse)
 # Create a table that creates a stub and
 # stub blocks based on a naming convention
 tbl <-
-  tibble::tribble(
+  dplyr::tribble(
     ~groupname, ~rowname, ~value,  ~value_2,
     "A",        "1",      361.1,   260.1,
     "A",        "2",      184.3,   84.4,
@@ -19,10 +19,8 @@ tbl <-
 
 # Create a display table
 tab_autostub <-
-  tab_create(tbl = tbl) %>%
-  theme_striped() %>%
+  gt(data = tbl) %>%
   tab_stubhead_caption(
-    caption = "groups",
-    alignment = "center")
+    caption = "groups")
 
 tab_autostub

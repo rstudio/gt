@@ -13,9 +13,8 @@ library(tidyverse)
 # 6 - a heading is added
 # 7 - a source note is added
 iris_tbl <-
-  tab_create(tbl = iris) %>%  # 1
+  gt(data = iris) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
-  theme_striped() %>%  # 3
   tab_boxhead_panel(use_names = TRUE) %>%  # 4
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
