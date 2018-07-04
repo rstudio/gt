@@ -23,7 +23,7 @@
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values to
 #' # two decimal places
-#' gt(tbl = mtcars) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   fmt_number(
 #'     columns = c("drat", "wt", "qsec"),
 #'     decimals = 2)
