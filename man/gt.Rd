@@ -4,11 +4,15 @@
 \alias{gt}
 \title{Create gt table object}
 \usage{
-gt(data)
+gt(data, rownames_to_stub = FALSE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a
 tibble.}
+
+\item{rownames_to_stub}{an option to take
+rownames from the input \code{data} table
+as row captions in the stub.}
 }
 \value{
 an object of class \code{gt_tbl}.
