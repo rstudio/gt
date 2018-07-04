@@ -62,51 +62,47 @@ When taking these considerations to heart, we may naturally arrive to an overarc
 
 ## Examples of Display Table Creation using **gt**
 
-The `mtcars` dataset can be suitably transformed into a display table (for sake of brevity, we'll use just the first 6 rows). We can use the `tab_create()` function to initiate the process (providing `mtcars` to the `tbl` argument), creating a table object. Because `mtcars` is a data frame with rownames, a stub is automatically created: it contains the row names that are really the car models. After that, a few functions can be used to refine the display table:
+The `mtcars` dataset can be suitably transformed into a display table (for sake of brevity, we'll use just the first 6 rows). We can use the `gt()` function to initiate the process (providing `mtcars` to the `data` argument), creating a table object. The `mtcars` dataset has car names as rownames, so we will expose those in a column with the `dplyr::rownames_to_column()` function. After that, a few functions can be used to refine the display table:
 
-- `theme_striped()`: styles the table with a basic striped row theme
 - `cols_align_center()`: center-aligns cell content in specified columns
 - `tab_stubhead_caption()`: adds a caption to the stubhead (the box in the top-left of the table)
 - `tab_heading()`: an opportunity to add a title and optionally a headnote
 - `tab_source_note()`: a note that states the source of the presented data
 
-```{r}
+```{r eval=FALSE}
 
 # 1 - we take the first six rows of `datasets::mtcars` data.frame
-# 2 - the 'striped' theme is applied
-# 3 - we are formatting numbers in 4 columns to have 1 decimal place
-# 4 - we are formatting numbers in the `wt` column to have 3 decimal places
-# 5 - all `numeric` values are right aligned
-# 6 - the dataset has rownames so they've been moved to the stub;
+# 2 - we are formatting numbers in 4 columns to have 1 decimal place
+# 3 - we are formatting numbers in the `wt` column to have 3 decimal places
+# 4 - all `character` value columns are center aligned
+# 5 - the dataset has rownames so they've been moved to the stub;
 #     here, we supply a stubhead caption
-# 7 - a heading is added, both parts are interpreted as Markdown
-# 8 - two source notes are added, the first is interpreted as Markdown
+# 6 - a heading is added, both parts are interpreted as Markdown
+# 7 - two source notes are added, the first is interpreted as Markdown
 mtcars_tbl <-
-  tab_create(tbl = mtcars[1:6, ]) %>%  # 1
-  theme_striped() %>%  # 2
+  gt(data = mtcars[1:6, ] %>% tibble::rownames_to_column()) %>%  # 1
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1
-    ) %>%  # 3
+    ) %>%  # 2
   fmt_number(
     columns = "wt",
     decimals = 3
-    ) %>%  # 4
-  cols_align_right(types = "numeric") %>%  # 5
+    ) %>%  # 3
+  cols_align_center(types = "character") %>% # 4
   tab_stubhead_caption(
-    caption = "car model",
-    alignment = "center"
-    ) %>%  # 6
+    caption = "car model"
+    ) %>%  # 5
   tab_heading(
     title = md("Excerpt from the **mtcars** dataset"),
     headnote = md("[A rather famous *Motor Trend* table]")
-    ) %>%  # 7
+    ) %>%  # 6
   tab_source_note(
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
-    ) %>%  # 8
+    ) %>%  # 7
   tab_source_note(
     source_note = "Original Data from Motor Trend Magazine (1974)."
-    )  # 9
+    )  # 7
 ```
 
 Invoking the object interactively displays it in the Viewer. In R Markdown chunks, the object becomes an HTML table.
@@ -115,32 +111,30 @@ Invoking the object interactively displays it in the Viewer. In R Markdown chunk
 
 Let's build another table using another well-known dataset. In this table, we embrace the naming convention provided in the **iris** dataset's column names. The dot-separated column names (such as `Sepal.Length` and `Petal.Width`) provide a means to specify heading levels as `<spanner_heading>.<column_heading>`. So long as we follow this column-name pattern, we can use the `tab_boxhead_panel()` function to parse and expand the given column names into one or more boxhead panels with spanner headings and column headings.
 
-```{r}
+```{r eval=FALSE}
 
 # 1 - we take the `datasets::iris` data.frame
 # 2 - the `Species` column is moved to the start of the column series
-# 3 - the 'striped' theme is applied
-# 4 - we are taking the column naming format `[heading].[caption]` and
+# 3 - we are taking the column naming format `[heading].[caption]` and
 #     automatically creating spanner headings to add structure
-# 5 - we are formatting numbers in the named columns to have 1 decimal place
-# 6 - a heading is added
-# 7 - a source note is added
+# 4 - we are formatting numbers in the named columns to have 1 decimal place
+# 5 - a heading is added
+# 6 - a source note is added
 iris_tbl <-
-  tab_create(tbl = iris[1:6, ]) %>%  # 1
+  gt(data = iris[1:6, ]) %>%  # 1
   cols_move_to_start(columns = "Species") %>%  # 2
-  theme_striped() %>%  # 3
-  tab_boxhead_panel(use_names = TRUE) %>%  # 4
+  tab_boxhead_panel(use_names = TRUE) %>%  # 3
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
     decimals = 1
-    ) %>%  # 5
+    ) %>%  # 4
   tab_heading(
     title = md("Excerpt from the **iris** dataset"),
     headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
-    ) %>%  # 6
+    ) %>%  # 5
   tab_source_note(
     source_note = md("The data were collected by *Anderson, Edgar* (1935).")
-    )  # 7
+    )  # 6
 ```
 
 This is how the table appears:
@@ -153,7 +147,7 @@ The package API consists of the following functions:
 
 **Create/Modify Table Parts**
 
-- `tab_create()` -- create **gt** table object
+- `gt()` -- create **gt** table object
 - `tab_heading()` -- add a table heading
 - `tab_stub()` -- add a stub to a table
 - `tab_stubhead_caption()` -- add caption text to the stubhead
@@ -186,13 +180,6 @@ The package API consists of the following functions:
 - `cols_reorder()` -- reorder all columns
 - `cols_remove()` -- remove one or more columns
 - `cols_rename()` -- rename one or more columns
-
-**Apply Table Theme**
-
-- `theme_striped()` -- use the 'striped' table theme
-- `theme_classical()` -- use the 'classical' table theme
-- `theme_horizontal()` -- use the 'horizontal' table theme
-- `theme_schematic()` -- use the 'schematic' table theme
 
 There are more functions yet to come. A means to selectively target rows, columns, or rows will be introduced and incorporated into functions that apply transformations on cell content.
 
