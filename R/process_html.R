@@ -5,7 +5,9 @@
 #' @param tbl a \code{gt_tbl} object that is
 #' created using the \code{gt()} function.
 #' @return a character object with an HTML table
+#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stringr str_extract_all str_split
+#' @importFrom stats setNames
 #' @export
 process_html <- function(tbl) {
 
@@ -194,7 +196,7 @@ process_html <- function(tbl) {
           # Check if the footnote text has been seen before
           if (!(footnote_text %in% glyphs_footnotes)) {
             glyphs_footnotes <-
-              c(glyphs_footnotes, setNames(footnote_text, footnote_indices[j]))
+              c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
           }
 
           footnote_glyph <-
