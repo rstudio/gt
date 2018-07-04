@@ -38,7 +38,7 @@ html_table <-
     columns = "drat",
     decimals = 1,
     drop0trailing = FALSE) %>%
-  set_fmt_numeric(
+  set_fmt_number(
     columns = "cyl",
     decimals = 3,
     drop0trailing = FALSE) %>%
