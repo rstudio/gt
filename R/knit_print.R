@@ -1,54 +1,25 @@
 #' Knit print the table
 #' @description This facilitates printing of the
 #' HTML table within a knitr code chunk.
-#' @param x an object of class \code{html_table}.
+#' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 #' @importFrom knitr knit_print
-#' @export
-knit_print.html_table <- function(x, ...) {
+knit_print.gt_tbl <- function(x, ...) {
 
-  # [0.5] Creation of stub block groups
-  x <-
-    create_stub_block_groups(html_tbl = x)
+  # Generation of the HTML table
+  html_table <- process_html(tbl = x)
 
-  # [1] Creation of the content table
-  x <-
-    create_content_tbl(html_tbl = x)
+  # Create the htmlDependency
+  dep <- htmltools::htmlDependency(
+    name = 'gt',
+    version = '0.1',
+    src = system_file(file = 'css'),
+    stylesheet = 'gt.css')
 
-  # [2] Modification of the content table
-  x <-
-    all_tbl_format_steps(
-      html_tbl = x)
-
-  # [3] Processing of the content table
-  x <-
-    process_content_tbl(
-      html_tbl = x)
-
-  # [4] Creation of the HTML table
-  x <-
-    create_html_table_tbl(
-      html_tbl = x)
-
-  # [5] Join in formatted content
-  x <-
-    use_html_content(
-      html_tbl = x)
-
-  # [6] Merge columns
-  x <-
-    merge_columns(
-      html_tbl = x)
-
-  # [7] Apply HTML aesthetics
-  x <-
-    use_html_aesthetics(
-      html_tbl = x,
-      aesthetics_tbl = x[["aesthetics"]])
-
-  # [8] Generation of table HTML
-  html_output <- create_html(html_tbl = x)
+  # Attach the dependency to the HTML table
+  html_tbl <-
+    htmltools::attachDependencies(htmltools::HTML(html_table), dep)
 
   # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(html_output, ...)
+  knitr::knit_print(html_tbl, ...)
 }

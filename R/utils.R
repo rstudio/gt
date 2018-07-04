@@ -1,172 +1,182 @@
-#' Create an empty `transforms` tbl
-#' @importFrom dplyr tibble
+#' @importFrom purrr map_chr
+#' @importFrom dplyr mutate select everything bind_rows tibble
 #' @noRd
-empty_transforms_tbl <- function() {
+encase_tbl <- function(data,
+                       data_types = NULL) {
 
-  dplyr::tibble(
-    index = NA_integer_,
-    transform_type = NA_character_,
-    transform_v1 = NA_character_,
-    transform_v2 = NA_character_,
-    transform_v3 = NA_character_,
-    transform_v4 = NA_character_)[-1, ]
+  n_col <- ncol(data)
+
+  if (is.null(data_types)) {
+    data_types <-
+      seq(ncol(data)) %>%
+      purrr::map_chr(.f = function(x) class(data[[x]]))
+  }
+
+  data <- data %>%
+    dplyr::mutate(`:row_number:` = 1:nrow(data)) %>%
+    dplyr::mutate(`:group_name:` = NA_character_) %>%
+    dplyr::mutate(`:row_name:` = NA_character_) %>%
+    dplyr::select(`:row_number:`, `:group_name:`, `:row_name:`, everything())
+
+  if ("rowname" %in% colnames(data)) {
+
+    rowname_col <- which(colnames(data[, -1:-3]) == "rowname")
+    data_types <- data_types[-rowname_col]
+    n_col <- n_col - 1
+
+    data <- data %>%
+      dplyr::mutate(`:row_name:` = rowname) %>%
+      dplyr::select(-rowname)
+  }
+
+  data <-
+    dplyr::bind_rows(
+      dplyr::tibble(
+        `:row_number:` = NA_integer_,
+        `:group_name:` = "column_number",
+        `:row_name:` = NA_character_),
+      dplyr::tibble(
+        `:row_number:` = NA_integer_,
+        `:group_name:` = "column_type"),
+      dplyr::tibble(
+        `:row_number:` = NA_integer_,
+        `:group_name:` = "column_align"),
+      dplyr::tibble(
+        `:row_number:` = NA_integer_,
+        `:group_name:` = "spanner_name"),
+      data) %>%
+    as.data.frame(stringsAsFactors = FALSE)
+
+  data[, 1:length(names(data))] <-
+    as.character(unlist(data[, 1:length(names(data))]))
+
+  for (i in 4:(3 + n_col)) {
+    data[1, i] <- i - 3
+    data[2, i] <- data_types[i - 3]
+    data[3, i] <- "center"
+  }
+
+  data[1, 3] <- "0"
+  data[2, 3] <- "character"
+  data[3, 3] <- "right"
+  data[4, 3] <- NA_character_
+
+  data
 }
 
-#' Create an empty `formats` tbl
-#' @importFrom dplyr tibble
+#' Apply data types to data frame columns
 #' @noRd
-empty_formats_tbl <- function() {
+apply_data_types <- function(data, types){
 
-  dplyr::tibble(
-    index = NA_integer_,
-    format_type = NA_character_,
-    columns = NA_character_,
-    decimals = NA_integer_,
-    drop_trailing_zeros = NA,
-    use_big_mark = NA,
-    negative_style = NA_character_,
-    currency = NA_character_,
-    accuracy = NA_character_,
-    date_style = NA_character_,
-    time_style = NA_character_)[-1, ]
+  for (i in 1:length(data)){
+    FUN <-
+      switch(
+        types[i],
+        character = as.character,
+        numeric = as.numeric)
+
+    data[,i] <- FUN(data[,i])
+  }
+  data
 }
 
-#' Create an empty `aesthetics` tbl
-#' @importFrom dplyr tibble
+#' Extract an encased data table
 #' @noRd
-empty_aesthetics_tbl <- function() {
+get_working_tbl <- function(data,
+                            apply_original_types = FALSE,
+                            data_types = NULL) {
 
-  dplyr::tibble(
-    type = NA_character_,
-    options = NA_character_)[-1, ]
+  if (apply_original_types) {
+    original_types <-
+      data[2, -1:-3] %>%
+      t() %>%
+      as.character()
+  }
+
+  # The data is in the unencased portion of
+  # the table; here, the casement is removed
+  data <- data[-1:-4, -1:-3]
+
+  # Reset the official rownames for the table
+  rownames(data) <- NULL
+
+  data
 }
 
-#' Create an empty `fonts` tbl
-#' @importFrom dplyr tibble
+#' Get the original data types
 #' @noRd
-empty_fonts_tbl <- function() {
-
-  dplyr::tibble(
-    type = NA_character_,
-    color = NA_character_,
-    font_1 = NA_character_,
-    font_2 = NA_character_,
-    font_3 = NA_character_,
-    font_4 = NA_character_)[-1, ]
+get_orig_types <- function(data) {
+  data[2, -1:-3] %>% t() %>% as.character()
 }
 
-#' Create an empty `heading` tbl
-#' @importFrom dplyr tibble
+#' Reverse percentages back to the original value
 #' @noRd
-empty_heading_tbl <- function() {
+reverse_percent <- function(x) {
+  if (!is.numeric(x) && any(grepl("::percent", x))) {
 
-  dplyr::tibble(
-    title = NA_character_,
-    headnote = NA_character_,
-    table_number = NA_character_,
-    font = NA_character_)[-1, ]
-}
+    # Set aside extra formats
+    formats <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\2", x)
+    base <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\1", x)
 
-#' Create an empty `footnote` tbl
-#' @importFrom dplyr tibble
-#' @noRd
-empty_footnote_tbl <- function() {
-
-  dplyr::tibble(
-    index = NA_integer_,
-    type = NA_character_,
-    glyph = NA_character_,
-    row = NA_integer_,
-    column = NA_integer_,
-    footnote = NA_character_)[-1, ]
-}
-
-#' Create an empty `source_note` tbl
-#' @importFrom dplyr tibble
-#' @noRd
-empty_source_note_tbl <- function() {
-
-  dplyr::tibble(
-    index = NA_integer_,
-    source_note = NA_character_,
-    font = NA_character_)[-1, ]
-}
-
-#' Create an empty `stubhead_caption` tbl
-#' @importFrom dplyr tibble
-#' @noRd
-empty_stubhead_caption_tbl <- function() {
-
-  dplyr::tibble(
-    caption_text = NA_character_,
-    alignment = NA_character_)[-1, ]
-}
-
-#' Create an empty `stub_block` tbl
-#' @importFrom dplyr tibble
-#' @noRd
-empty_stub_block_tbl <- function() {
-
-  dplyr::tibble(
-    stub_heading = NA_character_,
-    row_number = NA_integer_)[-1, ]
-}
-
-#' Create an empty `boxhead_panel` tbl
-#' @importFrom dplyr tibble
-#' @noRd
-empty_boxhead_panel_tbl <- function() {
-
-  dplyr::tibble(
-    column_name = NA_character_,
-    spanner_heading = NA_character_,
-    column_heading = NA_character_)[-1, ]
-}
-
-#' Define the first default font
-#' @noRd
-default_font_1 <- function() {
-  "Helvetica"
-}
-
-#' Define the second default font
-#' @noRd
-default_font_2 <- function() {
-  "Segoe UI"
-}
-
-#' Define the third default font
-#' @noRd
-default_font_3 <- function() {
-  "Arial"
-}
-
-#' Define the fourth default font
-#' @noRd
-default_font_4 <- function() {
-  "Sans-Serif"
-}
-
-#' Get the next logical index integer in
-#' a table object that has an index column
-#' @param tbl a table object that contains
-#' an integer-based column called \code{index}
-#' @noRd
-get_next_index <- function(tbl) {
-
-  if (nrow(tbl) < 1) {
-    return(1L)
+    return(paste0(as.numeric(gsub("(::percent|,)", "", base)) / 100, formats))
   } else {
-    return((tbl$index %>% max()) + 1L)
+    return(x)
   }
 }
 
+#' Extract a value from a cell that is free
+#' of any attached formatting directives
+#' @noRd
+extract_value <- function(x) {
+  # Extract value from a string that may
+  # contain format directives
+  values <- c()
+  for (i in seq(x)) {
+    if (grepl("::percent", x[i])) {
+      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
+      values[i] <- paste0(values[i], "::percent")
+    } else {
+      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
+    }
+  }
+  values
+}
+
+#' Extract formatting directives from a cell
+#' value so that we may recombine them later
+#' @noRd
+extract_formats <- function(x) {
+  # Extract formats from a string
+  formats <- c()
+  for (i in seq(x)) {
+    if (grepl("::", x[i])) {
+      formats <- c(formats, gsub("(.*?)(::.*)", "\\2", x[i]))
+      formats[i] <- gsub("::percent", "", formats[i])
+    } else {
+      formats <- c(formats, "")
+    }
+  }
+  formats
+}
+
+#' Recombine the value (`x`) and the formats;
+#' this is usually after some operation has
+#' been done to `x` and we'd like to restore
+#' the association between value and the
+#' previously-set formatting directives
+#' @noRd
+recombine_formats <- function(x, formats) {
+  # Combine the format-free value with
+  # the `formats` string
+  paste0(x, formats)
+}
+
 #' Create a tibble containing date formats
-#' @importFrom tibble tribble
+#' @importFrom dplyr tribble
 #' @noRd
 date_formats <- function() {
 
-  tibble::tribble(
+  dplyr::tribble(
     ~format_number, ~format_name,           ~format_code,
     "1",	          "iso",                  "%F",
     "2",	          "wday_month_day_year",  "%A, %B %d, %Y",
@@ -203,11 +213,11 @@ is_date_style_valid <- function(date_style) {
 }
 
 #' Create a tibble containing time formats
-#' @importFrom tibble tribble
+#' @importFrom dplyr tribble
 #' @noRd
 time_formats <- function() {
 
-  tibble::tribble(
+  dplyr::tribble(
     ~format_number, ~format_name, ~format_code,
     "1",	          "hms",        "%H:%M:%S",
     "2",	          "hm",         "%H:%M",
@@ -341,6 +351,7 @@ get_currency_str <- function(currency) {
   }
 }
 
+
 #' Transform `currency` to a currency exponent
 #' @importFrom dplyr filter pull
 #' @noRd
@@ -387,6 +398,9 @@ get_currency_exponent <- function(currency) {
 #' @noRd
 process_text <- function(text) {
 
+  # TODO: implement as S3 generic (good for extension of method)
+  # TODO: consider changing name to something more specific
+
   if (inherits(text, "from_markdown")) {
 
     text <-
@@ -414,163 +428,9 @@ process_text <- function(text) {
   }
 }
 
-#' Collapse all styles provided as individual columns
-#' to a single `style_attrs` column with a style information
-#' for each table cell
-#' @param html_table_component the HTML table
-#' component that contains style attribute columns.
-#' @importFrom dplyr mutate
-#' @importFrom tidyr unite
-#' @noRd
-transmute_style_attrs <- function(html_table_component) {
 
-  col_begin_styles <- 8
 
-  if (ncol(html_table_component) >= col_begin_styles) {
 
-    for (i in col_begin_styles:ncol(html_table_component)) {
-
-      if (i == col_begin_styles) {
-        style_names <-
-          colnames(html_table_component)[
-            col_begin_styles:ncol(html_table_component)]
-      }
-
-      for (j in 1:nrow(html_table_component)) {
-
-        if (is.na(html_table_component[j, i])) {
-
-          html_table_component[j, i] <- ""
-
-        } else {
-
-          html_table_component[j, i] <-
-            paste0(
-              colnames(html_table_component)[i], ":",
-              html_table_component[j, i] %>% dplyr::pull(), ";")
-        }
-      }
-    }
-  }
-
-  if (ncol(html_table_component) >= col_begin_styles) {
-
-    table_content_styles <-
-      html_table_component %>%
-      tidyr::unite(
-        col = style_attrs,
-        col_begin_styles:ncol(html_table_component),
-        sep = "")
-
-  } else {
-
-    table_content_styles <-
-      html_table_component %>%
-      dplyr::mutate(style_attrs = "")
-  }
-
-  table_content_styles
-}
-
-#' Decode the transform related to column names
-#' and column types
-#' @return a named character vector.
-#' @importFrom stringr str_detect str_replace str_split
-#' @noRd
-decode_col_type_transform <- function(transform_text) {
-
-  if (stringr::str_detect(
-    string = transform_text,
-    pattern = "^columns:.*")) {
-
-    columns <-
-      transform_text %>%
-      stringr::str_replace("^columns:(.*)", "\\1") %>%
-      stringr::str_split(pattern = ";") %>%
-      unlist()
-
-    names(columns) <- rep("column", length(columns))
-
-    return(columns)
-  }
-
-  if (stringr::str_detect(
-    string = transform_text,
-    pattern = "^types:.*")) {
-
-    types <-
-      transform_text %>%
-      stringr::str_replace("^types:(.*)", "\\1") %>%
-      stringr::str_split(pattern = ";") %>%
-      unlist()
-
-    names(types) <- rep("type", length(types))
-
-    return(types)
-  }
-}
-
-#' Modify the `html_table` to incorporate spanner headings
-#' @param html_tbl an HTML table object that is
-#' created using the \code{tab_create()} function.
-#' @importFrom dplyr filter mutate full_join select
-#' @importFrom dplyr case_when bind_rows distinct
-#' @noRd
-modify_spanner_headings <- function(html_tbl) {
-
-  # Create bindings for specific variables
-  t_subpart <- column_name <- spanner_heading <- column_heading <- NULL
-
-  # Use `boxhead_panel` entries to create a row `-1`,
-  # which is the spanner row above the heading row (row `0`)
-  # TODO: only include `border-right` line if there is a
-  #       colspan to the immediate right
-  # TODO: ensure that the stubhead caption has a rowspan of 2
-  column_spanner_subpart <-
-    html_tbl[["html_table"]] %>%
-    dplyr::filter(t_subpart %in% c("col_heading", "stubhead")) %>%
-    dplyr::mutate(row = -1L) %>%
-    dplyr::full_join(
-      html_tbl[["boxhead_panel"]] %>% dplyr::select(column_name, spanner_heading),
-      by = "column_name") %>%
-    dplyr::mutate(t_subpart = "spanner_heading") %>%
-    dplyr::mutate(content = case_when(
-      !is.na(spanner_heading) ~ spanner_heading,
-      is.na(spanner_heading) ~ content)) %>%
-    dplyr::mutate(`border-right` = ifelse(
-      !is.na(spanner_heading), "5px solid white", NA_character_)) %>%
-    dplyr::mutate(`border-bottom` = ifelse(
-      !is.na(spanner_heading), "2px solid #A8A8A8", NA_character_)) %>%
-    dplyr::select(-spanner_heading)
-
-  # Use the `boxhead_panel` entries to modify the
-  # heading row (row `0`)
-  column_heading_subpart <-
-    html_tbl[["html_table"]] %>%
-    dplyr::filter(t_subpart %in% c("col_heading", "stubhead")) %>%
-    dplyr::full_join(
-      html_tbl[["boxhead_panel"]] %>% dplyr::select(column_name, column_heading),
-      by = "column_name") %>%
-    dplyr::mutate(content = case_when(
-      !is.na(column_heading) ~ column_heading,
-      is.na(column_heading) ~ content)) %>%
-    dplyr::select(-column_heading)
-
-  # Recombine the `spanner`, `heading`, and the
-  # remainder of the `html_table`
-  html_tbl[["html_table"]] <-
-    dplyr::bind_rows(
-      column_spanner_subpart,
-      column_heading_subpart,
-      html_tbl[["html_table"]] %>%
-        dplyr::filter(
-          t_subpart != "col_heading" |
-            t_subpart != "stubhead" |
-            is.na(t_subpart))) %>%
-    dplyr::distinct()
-
-  html_tbl
-}
 
 #' A wrapper for `system.file()`
 #' @noRd
