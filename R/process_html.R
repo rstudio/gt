@@ -153,6 +153,25 @@ process_html <- function(tbl) {
                    unlist())[2],
       "</sup>")
 
+  # Replace currency values
+  if (any(grepl("::curr.*", body_content))) {
+
+    currency_value_indices <- which(grepl("::curr.*", body_content))
+
+    for (i in currency_value_indices) {
+
+      value <- (stringr::str_split(body_content[i], "::") %>% unlist())[1]
+      pos <- substring((stringr::str_split(body_content[i], "::") %>% unlist())[2], 6, 6)
+      symbol <- gsub("curr_._", "", (stringr::str_split(body_content[i], "::") %>% unlist())[2])
+
+      if (pos == "l") {
+        body_content[i] <- paste0(symbol, value)
+      } else {
+        body_content[i] <- paste0(value, symbol)
+      }
+    }
+  }
+
   # Handle any available footnotes
   if ("footnote" %in% names(tbl)) {
 
