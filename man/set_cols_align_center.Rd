@@ -6,6 +6,19 @@
 \usage{
 set_cols_align_center(data, columns = NULL, types = NULL)
 }
+\arguments{
+\item{data}{a table object that is created using the
+\code{gt()} function.}
+
+\item{columns}{an optional vector of column names
+for which the center alignment should be applied.}
+
+\item{types}{an optional vector of column types
+for which the center alignment should be applied.}
+}
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Set columns to be aligned to the center
 }

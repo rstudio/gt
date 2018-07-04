@@ -6,6 +6,22 @@
 \usage{
 set_cols_align(data, align = "center", columns = NULL, types = NULL)
 }
+\arguments{
+\item{data}{a table object that is created using the
+\code{gt()} function.}
+
+\item{align}{the alignment direction. This can either
+be \code{"center"}, \code{"left"}, or \code{"right"}.}
+
+\item{columns}{an optional vector of column names
+for which the alignment should be applied.}
+
+\item{types}{an optional vector of column types
+for which the alignment should be applied.}
+}
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Set the alignment of columns
 }

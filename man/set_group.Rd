@@ -7,13 +7,15 @@
 set_group(data, group, rows, others = NULL)
 }
 \arguments{
-\item{html_tbl}{a table object that is created using
-the \code{gt()} function.}
+\item{data}{a table object that is created using the
+\code{gt()} function.}
 
-\item{spanner}{the spanner heading name.}
+\item{group}{the stub block group heading name.}
 
-\item{columns}{the columns to be components of
-the spanner heading.}
+\item{rows}{the rows to be made components of the stub block.}
+
+\item{others}{an optional group heading to use for any rows
+not part of a stub block.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -24,9 +26,9 @@ in the table. This creates a stub block with group
 headings and row captions.
 }
 \examples{
-# Create a table based on `rock` where
-# there are column headings grouped under
-# spanner headings
+# Create a table based on `mtcars` where
+# there are group headings grouped inside
+# stub blocks
 gt(data = mtcars \%>\% tibble::rownames_to_column()) \%>\%
   set_group(
     group = "perimeter",

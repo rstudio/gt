@@ -7,21 +7,20 @@
 set_spanner(data, spanner, columns)
 }
 \arguments{
+\item{data}{a table object that is created using the
+\code{gt()} function.}
+
 \item{spanner}{the spanner heading name.}
 
-\item{columns}{the columns to be components of
-the spanner heading.}
-
-\item{html_tbl}{a table object that is
-created using the \code{gt()} function.}
+\item{columns}{the columns to be components of the
+spanner heading.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Set a spanner with a name and mappings
-to columns extant in the table. This
-creates a boxhead panel with spanner
+Set a spanner with a name and mappings to columns extant
+in the table. This creates a boxhead panel with spanner
 headings and column headings.
 }
 \examples{
