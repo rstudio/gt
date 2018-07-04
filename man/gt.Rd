@@ -34,7 +34,7 @@ tab <-
 tab_2 <-
   tab \%>\%
   cols_align_right() \%>\%
-  fmt_numeric(
+  fmt_number(
     columns = c("drat", "wt", "qsec"),
     decimals = 1)
 
