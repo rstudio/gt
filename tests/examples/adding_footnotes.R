@@ -4,7 +4,7 @@ library(tidyverse)
 # Create a table with rownames and two columns of
 # values
 tbl <-
-  tibble::tribble(
+  dplyr::tribble(
     ~date,         ~rowname,  ~value_1,  ~value_2,
     "2018-02-10",  "1",       20.4,      361.1,
     "2018-02-10",  "2",       10.9,      743.3,
@@ -19,8 +19,7 @@ tbl <-
 
 # Create a display table with footnotes
 html_tbl <-
-  tab_create(tbl = tbl) %>%
-  theme_striped() %>%
+  gt(data = tbl) %>%
   tab_footnote("This is a small number." = cells(row = 4, column = 3)) %>%
   tab_footnote("The value for *value_2* is quite small." = c(7, 4)) %>%
   tab_footnote("this is also small." = c(9, 3))

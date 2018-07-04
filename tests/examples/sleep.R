@@ -1,25 +1,28 @@
 library(gt)
-library(tidyverse)
+library(htmltools)
 
-# Create a presentation table based on `pressure`
 # Student's Sleep Data
 
-# 1 - we take the `datasets::sleep` data.frame
-# 2 - we are moving the `group` and `ID` columns to the start (LHS)
-# 3 - the 'striped' theme is applied
-# 4 - all column values are left aligned
-# 5 - we are formatting numbers in the `extra` column to have 1 decimal place;
-#     all negative values are shown in parentheses
-sleep_tbl <-
-  tab_create(tbl = sleep) %>%  # 1
-  cols_move_to_start(columns = c("group", "ID")) %>%  # 2
-  theme_striped() %>%  # 3
-  cols_align_left() %>%  # 4
-  fmt_number(
-    columns = "extra",
-    decimals = 1,
-    negative_style = "parens"
-    )  # 5
+html_table <-
+  gt(data = sleep) %>%
+  fmt_percent(columns = "extra") %>%
+  tab_footnote("This is a footnote", location = target_cell(1, 1)) %>%
+  fmt_percent(columns = "extra", decimals = 2) %>%
+  fmt_number(columns = "extra", decimals = 2, drop0trailing = FALSE) %>%
+  fmt_scientific(columns = "extra", decimals = 2)
 
-# Display the table in the Viewer
-sleep_tbl
+# Use the HTML processing step
+html_table <- process_html(html_table)
+
+# Create an HTML dependency for the stylesheet
+dep <- htmltools::htmlDependency(
+  name = 'gt',
+  version = '0.1',
+  src = gt:::system_file(file = 'css'),
+  stylesheet = 'gt.css')
+
+# Attach the dependency to the HTML table
+html_tbl <- htmltools::attachDependencies(HTML(html_table), dep)
+
+# Print the object in the Viewer
+html_print(html_tbl)

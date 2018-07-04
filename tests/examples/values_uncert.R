@@ -3,7 +3,7 @@ library(tidyverse)
 
 # Create a table with values and uncertainties
 tbl <-
-  tibble::tribble(
+  dplyr::tribble(
     ~value,   ~uncertainty,  ~type,
     0.352,    0.10,          "a",
     0.983,    0.13,          "a",
@@ -12,12 +12,11 @@ tbl <-
 
 # Create a table
 uncert_tbl <-
-  tab_create(tbl = tbl) %>%
+  gt(data = tbl) %>%
   cols_align_center() %>%
-  fmt_uncertainty(value_column = "value", uncert_column = "uncertainty") %>%
-  fmt_number(columns = c("value", "uncertainty"), decimals = 2) %>%
-  theme_striped() %>%
-  fmt_font(font = "Helvetica")
+  #fmt_uncertainty(value_column = "value", uncert_column = "uncertainty") %>%
+  fmt_number(columns = c("value", "uncertainty"), decimals = 2) #%>%
+  #fmt_font(font = "Helvetica")
 
 # Display the table in the Viewer
 uncert_tbl

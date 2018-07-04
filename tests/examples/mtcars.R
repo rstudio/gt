@@ -79,3 +79,5 @@ mtcars_tbl <-
 
 # Display the table in the Viewer
 mtcars_tbl
+
+profvis::profvis(print(mtcars_tbl))
