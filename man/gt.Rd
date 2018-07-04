@@ -27,7 +27,7 @@ function is the first step in that process.
 # Create a table object using the
 # `mtcars` dataset
 tab <-
-  gt(data = mtcars)
+  gt(mtcars, rownames_to_stub = TRUE)
 
 # The resulting object can be used
 # in transformations

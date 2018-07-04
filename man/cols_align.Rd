@@ -25,3 +25,10 @@ an object of class \code{gt_tbl}.
 \description{
 Set the alignment of columns
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and align all
+# columns to the left
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  cols_align("left")
+}

@@ -26,7 +26,7 @@ part of the table.
 # Create a table object using the
 # `mtcars` dataset and add a heading
 # to describe the table
-gt(tbl = mtcars \%>\% tibble::rownames_to_column()) \%>\%
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_heading(
     title = md("Data listing from **mtcars**"),
     headnote = md("`mtcars` is an R dataset"))
