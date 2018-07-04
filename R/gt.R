@@ -6,12 +6,15 @@
 #' function is the first step in that process.
 #' @param data a \code{data.frame} object or a
 #' tibble.
+#' @param rownames_to_stub an option to take
+#' rownames from the input \code{data} table
+#' as row captions in the stub.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset
 #' tab <-
-#'   gt(data = mtcars)
+#'   gt(mtcars, rownames_to_stub = TRUE)
 #'
 #' # The resulting object can be used
 #' # in transformations
@@ -25,8 +28,14 @@
 #' # The object of this type can be
 #' # displayed in the Viewer
 #' tab_2
+#' @importFrom tibble rownames_to_column
 #' @export
-gt <- function(data) {
+gt <- function(data,
+               rownames_to_stub = FALSE) {
+
+  if (rownames_to_stub) {
+    data <- tibble::rownames_to_column(data)
+  }
 
   encased_tbl <- encase_tbl(data = data)
 
