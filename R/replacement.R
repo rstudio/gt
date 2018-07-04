@@ -809,8 +809,7 @@ set_fmt <- function(data,
 #' Format values as date-times
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
+#' @param columns the column names to format.
 #' @param date_style the date style to use.
 #' @param time_style the time style to use.
 #' @return an object of class \code{gt_tbl}.
@@ -858,8 +857,7 @@ set_fmt_datetime <- function(data,
 #' Format values as dates
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
+#' @param columns the column names to format.
 #' @param date_style the date style to use.
 #' @return an object of class \code{gt_tbl}.
 #' @export
@@ -898,8 +896,7 @@ set_fmt_date <- function(data,
 #' Format values as times
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
+#' @param columns the column names to format.
 #' @param time_style the time style to use.
 #' @export
 set_fmt_time <- function(data,
@@ -937,9 +934,8 @@ set_fmt_time <- function(data,
 #' Format values as a percentage
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
-#' @param decimals an option to specify exactly the number
+#' @param columns the column names to format.
+#' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
@@ -1001,9 +997,8 @@ set_fmt_percent <- function(data,
 #' Format values to scientific notation
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
-#' @param decimals an option to specify exactly the number
+#' @param columns the column names to format.
+#' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
@@ -1060,9 +1055,8 @@ set_fmt_scientific <- function(data,
 #' Format numeric values
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
-#' @param decimals an option to specify exactly the number
+#' @param columns the column names to format.
+#' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
