@@ -1126,6 +1126,106 @@ set_fmt_number <- function(data,
     )
 }
 
+#' Format values as currencies
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the column names to format.
+#' @param currency the currency to use for the numeric value.
+#' @param use_subunits an option for whether the subunits
+#' portion of a currency value should be displayed.
+#' @param decimals an option to specify the exact number
+#' of decimal places to use.
+#' @param sep_mark the mark to use as a separator between
+#' groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @param placement the placement of the currency symbol.
+#' This can be either be \code{left} (the default) or
+#' \code{right}.
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed} (the default),
+#' negative numbers will be shown with a negative sign.
+#' Using \code{parens} will show the negative value in
+#' parentheses. The \code{red} option will display the
+#' number in red. Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in parentheses.
+#' @return an object of class \code{gt_tbl}.
+#' @export
+set_fmt_currency <- function(data,
+                             columns,
+                             currency,
+                             use_subunits = TRUE,
+                             decimals = NULL,
+                             sep_mark = "",
+                             dec_mark = ".",
+                             placement = "left",
+                             negative_style = "signed") {
+
+  if (is.null(decimals)) decimals <- 2
+
+  if (placement == "left") {
+    placement <- "l"
+  } else if (placement == "right") {
+    placement <- "r"
+  } else {
+    placement <- "l"
+  }
+
+  # Return early if `currency` does not have a valid value
+  if (!is_currency_valid(currency = currency)) {
+
+    message("The value supplied for `currency` is not valid.")
+    return(data)
+  }
+
+  # Get the currency string
+  currency_str <- get_currency_str(currency = currency)
+
+  # Get the number of decimal places
+  if (is.null(decimals) & use_subunits) {
+
+    # Get decimal places using `get_currency_exponent()` fcn
+    if (currency %in% currency_symbols$curr_symbol) {
+      decimals <- 2L
+    } else {
+      decimals <- get_currency_exponent(currency = currency)
+    }
+
+  } else if (is.null(decimals) & use_subunits == FALSE) {
+    decimals <- NA_integer_
+  }
+
+  data %>%
+    set_fmt(
+      columns = columns,
+      formatter = function(x) {
+
+        # Uncouple formats from the base value
+        formats <- x %>% extract_formats()
+        x <- x %>%
+          extract_value() %>%
+          reverse_percent()
+
+        x <- as.numeric(x)
+
+        x <-
+          paste0(
+            formatC(
+              x = x,
+              digits = decimals,
+              mode = "double",
+              big.mark = sep_mark,
+              decimal.mark = dec_mark,
+              format = "f",
+              drop0trailing = FALSE),
+            paste0(
+              "::curr_", placement, "_", currency_str))
+
+        x <- recombine_formats(x = x, formats = formats)
+        x
+      }
+    )
+}
+
 #' Render the table using the formatting options
 #' @noRd
 render_format <- function(data) {
