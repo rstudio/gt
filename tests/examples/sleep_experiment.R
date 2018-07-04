@@ -6,7 +6,7 @@ html_table <-
   set_fmt_percent(columns = "extra") %>%
   set_footnote("This is a footnote", location = target_cell(1, 1)) %>%
   set_fmt_percent(columns = "extra", decimals = 2) %>%
-  set_fmt_numeric(columns = "extra", decimals = 2, drop0trailing = FALSE) %>%
+  set_fmt_number(columns = "extra", decimals = 2, drop0trailing = FALSE) %>%
   set_fmt_scientific(columns = "extra", decimals = 2)
 
 # Use the HTML processing step
