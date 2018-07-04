@@ -26,6 +26,6 @@ Set columns to be aligned right
 # Create a table object using the
 # `mtcars` dataset and align all
 # columns to the right
-gt(data = mtcars \%>\% tibble::rownames_to_column()) \%>\%
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
   cols_align_right()
 }

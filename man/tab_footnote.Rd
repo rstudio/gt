@@ -28,7 +28,7 @@ targeted cells, rows, or columns.
 \examples{
 # Add a footnote that is in reference to
 # a specified table cell
-gt(tbl = mtcars \%>\% tibble::rownames_to_column()) \%>\%
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_footnote(
     footnote = "Massive hp.",
     location = target_cell(

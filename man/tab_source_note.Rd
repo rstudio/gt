@@ -20,7 +20,7 @@ Add a source note citation to the source note
 part of the table.
 }
 \examples{
-gt(tbl = mtcars \%>\% tibble::rownames_to_column()) \%>\%
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_source_note(
     source_note = md("*Henderson and Velleman* (1981)."))
 }
