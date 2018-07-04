@@ -3,11 +3,11 @@ library(htmltools)
 
 html_table <-
   gt(data = sleep) %>%
-  set_fmt_percent(columns = "extra") %>%
-  set_footnote("This is a footnote", location = target_cell(1, 1)) %>%
-  set_fmt_percent(columns = "extra", decimals = 2) %>%
-  set_fmt_number(columns = "extra", decimals = 2, drop0trailing = FALSE) %>%
-  set_fmt_scientific(columns = "extra", decimals = 2)
+  fmt_percent(columns = "extra") %>%
+  tab_footnote("This is a footnote", location = target_cell(1, 1)) %>%
+  fmt_percent(columns = "extra", decimals = 2) %>%
+  fmt_number(columns = "extra", decimals = 2, drop0trailing = FALSE) %>%
+  fmt_scientific(columns = "extra", decimals = 2)
 
 # Use the HTML processing step
 html_table <- process_html(html_table)
