@@ -10,8 +10,7 @@ set_fmt_time(data, columns = NULL, time_style = NULL)
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
-\item{columns}{an option specify which columns are to be
-formatted.}
+\item{columns}{the column names to format.}
 
 \item{time_style}{the time style to use.}
 }

@@ -11,10 +11,9 @@ set_fmt_scientific(data, columns, decimals, sep_mark = "", dec_mark = ".",
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
-\item{columns}{an option specify which columns are to be
-formatted.}
+\item{columns}{the column names to format.}
 
-\item{decimals}{an option to specify exactly the number
+\item{decimals}{an option to specify the exact number
 of decimal places to use.}
 
 \item{sep_mark}{the mark to use as a separator between
