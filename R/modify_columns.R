@@ -8,6 +8,12 @@
 #' @param types an optional vector of column types
 #' for which the alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and align all
+#' # columns to the left
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_align("left")
 #' @importFrom dplyr bind_cols
 #' @export
 cols_align <- function(data,
@@ -53,12 +59,12 @@ cols_align <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and align all
 #' # columns to the left
-#' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_left()
 #' @export
 cols_align_left <- function(data,
-                                columns = NULL,
-                                types = NULL) {
+                            columns = NULL,
+                            types = NULL) {
 
   cols_align(
     data = data,
@@ -79,12 +85,12 @@ cols_align_left <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and center align
 #' # all columns
-#' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_center()
 #' @export
 cols_align_center <- function(data,
-                                  columns = NULL,
-                                  types = NULL) {
+                              columns = NULL,
+                              types = NULL) {
 
   cols_align(
     data = data,
@@ -105,12 +111,12 @@ cols_align_center <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and align all
 #' # columns to the right
-#' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_right()
 #' @export
 cols_align_right <- function(data,
-                                 columns = NULL,
-                                 types = NULL) {
+                             columns = NULL,
+                             types = NULL) {
 
   cols_align(
     data = data,
@@ -133,8 +139,8 @@ cols_align_right <- function(data,
 #' @importFrom dplyr select bind_cols
 #' @export
 cols_move <- function(data,
-                          columns,
-                          after) {
+                      columns,
+                      after) {
 
   # Filter the vector of column names by the
   # column names actually in `data$data`
@@ -191,7 +197,7 @@ cols_move <- function(data,
 #' @importFrom dplyr select everything bind_cols
 #' @export
 cols_move_to_start <- function(data,
-                                   columns) {
+                               columns) {
 
   # Filter the vector of column names by the
   # column names actually in `data$data`
@@ -227,7 +233,7 @@ cols_move_to_start <- function(data,
 #' @importFrom dplyr select bind_cols
 #' @export
 cols_move_to_end <- function(data,
-                                 columns) {
+                             columns) {
 
   # Filter the vector of column names by the
   # column names actually in `data$data`
@@ -264,7 +270,7 @@ cols_move_to_end <- function(data,
 #' @importFrom dplyr select bind_cols
 #' @export
 cols_remove <- function(data,
-                            columns) {
+                        columns) {
 
   # Filter the vector of column names by the
   # column names actually in `data$data`

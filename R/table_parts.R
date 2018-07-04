@@ -12,7 +12,7 @@
 #' # Create a table object using the
 #' # `mtcars` dataset and add a heading
 #' # to describe the table
-#' gt(tbl = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_heading(
 #'     title = md("Data listing from **mtcars**"),
 #'     headnote = md("`mtcars` is an R dataset"))
@@ -50,7 +50,7 @@ tab_heading <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
 #' # to describe what is in the stub
-#' gt(tbl = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_stubhead_caption(
 #'     caption = md("car *make* and *model*"))
 #' @export
@@ -79,7 +79,7 @@ tab_stubhead_caption <- function(data,
 #' # Create a table based on `mtcars` where
 #' # there are group headings grouped inside
 #' # stub blocks
-#' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_stub_block(
 #'     group = "perimeter",
 #'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
@@ -174,12 +174,13 @@ tab_boxhead_panel <- function(data,
 #' @examples
 #' # Add a footnote that is in reference to
 #' # a specified table cell
-#' gt(tbl = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_footnote(
 #'     footnote = "Massive hp.",
 #'     location = target_cell(
 #'       row = "Maserati Bora",
 #'       column = "hp"))
+#' @importFrom stats setNames
 #' @export
 tab_footnote <- function(data,
                          footnote,
@@ -205,7 +206,7 @@ tab_footnote <- function(data,
     # list component (case where `footnote` exists)
     index <- max(as.numeric(names(data[["footnote"]][[1]]))) + 1L
 
-    footnote <- setNames(process_text(footnote), nm = index)
+    footnote <- stats::setNames(process_text(footnote), nm = index)
 
     data[["footnote"]][[1]] <-
       c(data[["footnote"]][[1]], footnote)
@@ -217,7 +218,7 @@ tab_footnote <- function(data,
     # exist)
     index <- 1L
 
-    footnote <- setNames(process_text(footnote), nm = index)
+    footnote <- stats::setNames(process_text(footnote), nm = index)
 
     data[["footnote"]] <-
       list(
@@ -263,7 +264,7 @@ tab_footnote <- function(data,
 #' @param source_note text to be used in the source note.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' gt(tbl = mtcars %>% tibble::rownames_to_column()) %>%
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_source_note(
 #'     source_note = md("*Henderson and Velleman* (1981)."))
 #' @export
