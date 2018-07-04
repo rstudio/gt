@@ -214,15 +214,14 @@ gt <- function(data) {
 
 #' Arrange a boxhead into panels
 #'
-#' Set a spanner with a name and mappings
-#' to columns extant in the table. This
-#' creates a boxhead panel with spanner
+#' Set a spanner with a name and mappings to columns extant
+#' in the table. This creates a boxhead panel with spanner
 #' headings and column headings.
-#' @param html_tbl a table object that is
-#' created using the \code{gt()} function.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
 #' @param spanner the spanner heading name.
-#' @param columns the columns to be components of
-#' the spanner heading.
+#' @param columns the columns to be components of the
+#' spanner heading.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `rock` where
@@ -250,22 +249,22 @@ set_spanner <- function(data,
   data
 }
 
-
 #' Arrange a stub into blocks
 #'
 #' Set a group with a name and mappings to rows extant
 #' in the table. This creates a stub block with group
 #' headings and row captions.
-#' @param html_tbl a table object that is created using
-#' the \code{gt()} function.
-#' @param spanner the spanner heading name.
-#' @param columns the columns to be components of
-#' the spanner heading.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param group the stub block group heading name.
+#' @param rows the rows to be made components of the stub block.
+#' @param others an optional group heading to use for any rows
+#' not part of a stub block.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table based on `rock` where
-#' # there are column headings grouped under
-#' # spanner headings
+#' # Create a table based on `mtcars` where
+#' # there are group headings grouped inside
+#' # stub blocks
 #' gt(data = mtcars %>% tibble::rownames_to_column()) %>%
 #'   set_group(
 #'     group = "perimeter",
@@ -309,6 +308,10 @@ set_group <- function(data,
 }
 
 #' Modify the ordering of the stub block groups
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param groups a vector of stub block group heading names.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 arrange_groups <- function(data,
                            groups) {
@@ -322,6 +325,15 @@ arrange_groups <- function(data,
 }
 
 #' Set the alignment of columns
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param align the alignment direction. This can either
+#' be \code{"center"}, \code{"left"}, or \code{"right"}.
+#' @param columns an optional vector of column names
+#' for which the alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the alignment should be applied.
+#' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr bind_cols
 #' @export
 set_cols_align <- function(data,
@@ -355,6 +367,14 @@ set_cols_align <- function(data,
 }
 
 #' Set columns to be aligned left
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the left alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the left alignment should be applied.
+#' \code{gt()} function.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_cols_align_left <- function(data,
                                 columns = NULL,
@@ -368,6 +388,13 @@ set_cols_align_left <- function(data,
 }
 
 #' Set columns to be aligned to the center
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the center alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the center alignment should be applied.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_cols_align_center <- function(data,
                                   columns = NULL,
@@ -381,6 +408,13 @@ set_cols_align_center <- function(data,
 }
 
 #' Set columns to be aligned right
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an optional vector of column names
+#' for which the right alignment should be applied.
+#' @param types an optional vector of column types
+#' for which the right alignment should be applied.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_cols_align_right <- function(data,
                                  columns = NULL,
@@ -393,7 +427,16 @@ set_cols_align_right <- function(data,
     types = types)
 }
 
-
+#' Move one or more columns to the start
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the column names to move to
+#' the left-most side of the table. The order in
+#' which columns are provided will be preserved
+#' (as is the case with the remaining columns).
+#' Values provided that do not correspond to
+#' column names will be disregarded.
+#' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select everything bind_cols
 #' @export
 set_cols_move_to_start <- function(data,
@@ -420,6 +463,16 @@ set_cols_move_to_start <- function(data,
   data
 }
 
+#' Move one or more columns to the end
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the column names to move to
+#' the right-most side of the table. The order in
+#' which columns are provided will be preserved
+#' (as is the case with the remaining columns).
+#' Values provided that do not correspond to
+#' column names will be disregarded.
+#' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select bind_cols
 #' @export
 set_cols_move_to_end <- function(data,
@@ -450,6 +503,13 @@ set_cols_move_to_end <- function(data,
   data
 }
 
+#' Remove one or more columns
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the column names to remove from the table.
+#' The order of the remaining columns will be preserved. Values
+#' provided that do not correspond to column names will be disregarded.
+#' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select bind_cols
 #' @export
 set_cols_remove <- function(data,
@@ -481,9 +541,20 @@ set_cols_remove <- function(data,
   data
 }
 
+#' Move one or more columns
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the column names to move to as a group to
+#' a different position. The order of the remaining columns
+#' will be preserved. Values provided that do not correspond
+#' to column names will be disregarded.
+#' @param after a column name used to anchor the insertion of
+#' the moved columns. All of the moved columns will be placed
+#' to the right of this column.
+#' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select bind_cols
 #' @export
-set_cols_move <- function(tbl,
+set_cols_move <- function(data,
                           columns,
                           after) {
 
@@ -529,7 +600,16 @@ set_cols_move <- function(tbl,
   data
 }
 
-
+#' Add a table heading
+#'
+#' Add a title and optional headnote to the heading
+#' part of the table.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param title text to be used in the table title.
+#' @param headnote optional text to be used as the table's
+#' headnote.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_heading <- function(data,
                         title,
@@ -552,6 +632,14 @@ set_heading <- function(data,
   data
 }
 
+#' Add caption text to the stubhead
+#'
+#' Add a caption to the stubhead of a table. If a stub does
+#' not exist, no change will be made.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param caption the text to be used as the stubhead caption.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_stubhead_caption <- function(data,
                                  caption) {
@@ -562,6 +650,14 @@ set_stubhead_caption <- function(data,
   data
 }
 
+#' Add a source note citation
+#'
+#' Add a source note citation to the source note
+#' part of the table.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param source_note text to be used in the source note.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_source_note <- function(data,
                             source_note) {
@@ -582,6 +678,10 @@ set_source_note <- function(data,
   data
 }
 
+#' Helper to target a single table cell
+#' @param row a single row to target.
+#' @param column a single column to target.
+#' @return a list object of class \code{single_cell_target}.
 #' @export
 target_cell <- function(row = NULL,
                         column = NULL) {
@@ -603,11 +703,20 @@ not_in_group <- function() {
   x
 }
 
-
+#' Add a table footnote
+#'
+#' Add a footnote with a glyph attached to the
+#' targeted cells, rows, or columns.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param footnote text to be used in the footnote.
+#' @param location the cell or set of cells to be
+#' associated with the footnote.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_footnote <- function(data,
                          footnote,
-                         location = NULL) {
+                         location) {
 
   # Determine if the footnote already exists;
   # if it does, get the index
@@ -678,7 +787,13 @@ set_footnote <- function(data,
   data
 }
 
-
+#' Set a column format with a formatter function
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param formatter a formatting function.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt <- function(data,
                     columns,
@@ -691,6 +806,14 @@ set_fmt <- function(data,
   data %>% render_format()
 }
 
+#' Format values as date-times
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param date_style the date style to use.
+#' @param time_style the time style to use.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt_datetime <- function(data,
                              columns = NULL,
@@ -732,7 +855,13 @@ set_fmt_datetime <- function(data,
     )
 }
 
-
+#' Format values as dates
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param date_style the date style to use.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt_date <- function(data,
                          columns = NULL,
@@ -766,6 +895,12 @@ set_fmt_date <- function(data,
     )
 }
 
+#' Format values as times
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param time_style the time style to use.
 #' @export
 set_fmt_time <- function(data,
                          columns = NULL,
@@ -799,7 +934,27 @@ set_fmt_time <- function(data,
     )
 }
 
-
+#' Format values as a percentage
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param decimals an option to specify exactly the number
+#' of decimal places to use.
+#' @param sep_mark the mark to use as a separator between
+#' groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @param drop0trailing a logical value that allows for
+#' removal of trailing zeros (those redundant zeros after
+#' the decimal mark).
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed} (the default),
+#' negative numbers will be shown with a negative sign.
+#' Using \code{parens} will show the negative value in
+#' parentheses. The \code{red} option will display the
+#' number in red. Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in parentheses.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt_percent <- function(data,
                             columns,
@@ -843,6 +998,27 @@ set_fmt_percent <- function(data,
     )
 }
 
+#' Format values to scientific notation
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param decimals an option to specify exactly the number
+#' of decimal places to use.
+#' @param sep_mark the mark to use as a separator between
+#' groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @param drop0trailing a logical value that allows for
+#' removal of trailing zeros (those redundant zeros after
+#' the decimal mark).
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed} (the default),
+#' negative numbers will be shown with a negative sign.
+#' Using \code{parens} will show the negative value in
+#' parentheses. The \code{red} option will display the
+#' number in red. Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in parentheses.
+#' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt_scientific <- function(data,
                                columns,
@@ -881,14 +1057,44 @@ set_fmt_scientific <- function(data,
       })
 }
 
+#' Format numeric values
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns an option specify which columns are to be
+#' formatted.
+#' @param decimals an option to specify exactly the number
+#' of decimal places to use.
+#' @param sep_mark the mark to use as a separator between
+#' groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @param drop0trailing a logical value that allows for
+#' removal of trailing zeros (those redundant zeros after
+#' the decimal mark).
+#' @param negative_style the formatting to use
+#' for negative numbers. With \code{signed} (the default),
+#' negative numbers will be shown with a negative sign.
+#' Using \code{parens} will show the negative value in
+#' parentheses. The \code{red} option will display the
+#' number in red. Finally, \code{parens-red} will display
+#' negative numbers as red and enclosed in parentheses.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and format specified
+#' # numeric columns to display values to
+#' # two decimal places
+#' gt(tbl = mtcars) %>%
+#'   set_fmt_number(
+#'     columns = c("drat", "wt", "qsec"),
+#'     decimals = 2)
 #' @export
-set_fmt_numeric <- function(data,
-                            columns,
-                            decimals,
-                            sep_mark = "",
-                            dec_mark = ".",
-                            negative_style = "signed",
-                            drop0trailing = TRUE) {
+set_fmt_number <- function(data,
+                           columns,
+                           decimals,
+                           sep_mark = "",
+                           dec_mark = ".",
+                           drop0trailing = TRUE,
+                           negative_style = "signed") {
 
   if (is.null(decimals)) decimals <- 4
 
@@ -920,7 +1126,8 @@ set_fmt_numeric <- function(data,
     )
 }
 
-# Render the table using the formatting options
+#' Render the table using the formatting options
+#' @noRd
 render_format <- function(data) {
 
   orig_types <- get_orig_types(data$data)
