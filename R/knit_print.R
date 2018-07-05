@@ -4,6 +4,8 @@
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 #' @importFrom knitr knit_print
+#' @importFrom htmltools tagList htmlDependency attachDependencies HTML
+#' @export
 knit_print.gt_tbl <- function(x, ...) {
 
   # Generation of the HTML table
@@ -18,7 +20,7 @@ knit_print.gt_tbl <- function(x, ...) {
 
   # Attach the dependency to the HTML table
   html_tbl <-
-    htmltools::attachDependencies(htmltools::HTML(html_table), dep)
+    htmltools::attachDependencies(htmltools::tagList(htmltools::HTML(html_table)), dep)
 
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(html_tbl, ...)
