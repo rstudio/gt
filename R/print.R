@@ -3,7 +3,8 @@
 #' HTML table to the R console.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
-#' @importFrom htmltools htmlDependency attachDependencies HTML
+#' @importFrom htmltools tagList htmlDependency attachDependencies HTML
+#' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
   # Generation of the HTML table
@@ -18,7 +19,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
   # Attach the dependency to the HTML table
   html_tbl <-
-    htmltools::attachDependencies(htmltools::HTML(html_table), dep)
+    htmltools::attachDependencies(htmltools::tagList(htmltools::HTML(html_table)), dep)
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)
