@@ -1,9 +1,5 @@
-
-table {
-  font-family:Helvetica,Segoe UI,Arial,Sans-Serif;
-}
-
 .gt_table {
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   border-top:solid 2px #A8A8A8;
   background-color: #FFFFFF; /* table.background.color */
   width:100%; /* table.width */
@@ -25,6 +21,10 @@ table {
   font-size:85%; /* headnote.font.size */
   padding-bottom:4px;
   /* headnote.background.color */
+}
+
+.spacer {
+  border-bottom-style: none;
 }
 
 .bottom_border {
