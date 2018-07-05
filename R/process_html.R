@@ -252,7 +252,7 @@ process_html <- function(tbl) {
     paste0(
       heading_component,
       paste0(
-        "<tr>\n<th colspan='", n_cols, "'></th>\n</tr>\n"))
+        "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
 
   if ("source_note" %in% names(tbl)) {
 
