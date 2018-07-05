@@ -1,5 +1,4 @@
 library(gt)
-library(htmltools)
 
 html_table <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -69,18 +68,4 @@ html_table <-
     location = target_cell(
       row = "Merc 230", column = "qsec"))
 
-# Use the HTML processing step
-html_table <- process_html(html_table)
-
-# Create an HTML dependency for the stylesheet
-dep <- htmltools::htmlDependency(
-  name = 'gt',
-  version = '0.1',
-  src = gt:::system_file(file = 'css'),
-  stylesheet = 'gt.css')
-
-# Attach the dependency to the HTML table
-html_tbl <- htmltools::attachDependencies(HTML(html_table), dep)
-
-# Print the object in the Viewer
-html_print(html_tbl)
+html_table
