@@ -7,8 +7,11 @@
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
+  # Render all formatting
+  x <- render_formats(data = x)
+
   # Generation of the HTML table
-  html_table <- process_html(tbl = x)
+  html_table <- render_as_html(tbl = x)
 
   # Create the htmlDependency
   dep <- htmltools::htmlDependency(
@@ -19,7 +22,9 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
   # Attach the dependency to the HTML table
   html_tbl <-
-    htmltools::attachDependencies(htmltools::tagList(htmltools::HTML(html_table)), dep)
+    htmltools::attachDependencies(
+      htmltools::tagList(
+        htmltools::HTML(html_table)), dep)
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)

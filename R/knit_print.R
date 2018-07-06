@@ -8,8 +8,11 @@
 #' @export
 knit_print.gt_tbl <- function(x, ...) {
 
+  # Render all formatting
+  x <- render_formats(data = x)
+
   # Generation of the HTML table
-  html_table <- process_html(tbl = x)
+  html_table <- render_as_html(tbl = x)
 
   # Create the htmlDependency
   dep <- htmltools::htmlDependency(
@@ -20,7 +23,9 @@ knit_print.gt_tbl <- function(x, ...) {
 
   # Attach the dependency to the HTML table
   html_tbl <-
-    htmltools::attachDependencies(htmltools::tagList(htmltools::HTML(html_table)), dep)
+    htmltools::attachDependencies(
+      htmltools::tagList(
+        htmltools::HTML(html_table)), dep)
 
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(html_tbl, ...)
