@@ -2,6 +2,8 @@
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
@@ -30,28 +32,42 @@
 #' @export
 fmt_number <- function(data,
                        columns,
-                       decimals,
+                       rows = NULL,
+                       decimals = NULL,
                        sep_mark = "",
                        dec_mark = ".",
-                       drop0trailing = TRUE,
+                       drop0trailing = FALSE,
                        negative_style = "signed") {
 
+  # If the number of decimals is not provided,
+  # use a default value of 4
   if (is.null(decimals)) decimals <- 4
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
-
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        x <- as.numeric(x)
-
-        x <- formatC(
+        formatC(
           x = x,
           digits = decimals,
           mode = "double",
@@ -59,17 +75,18 @@ fmt_number <- function(data,
           decimal.mark = dec_mark,
           format = "f",
           drop0trailing = drop0trailing)
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
       }
     )
+
+  data
 }
 
 #' Format values to scientific notation
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
@@ -89,28 +106,41 @@ fmt_number <- function(data,
 #' @export
 fmt_scientific <- function(data,
                            columns,
-                           decimals,
+                           rows = NULL,
+                           decimals = NULL,
                            sep_mark = "",
                            dec_mark = ".",
                            negative_style = "signed",
-                           drop0trailing = TRUE) {
+                           drop0trailing = FALSE) {
 
+  # If the number of decimals is not provided,
+  # use a default value of 4
   if (is.null(decimals)) decimals <- 4
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
-
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        x <- as.numeric(x)
-
-        x <- formatC(
+        formatC(
           x = x,
           digits = decimals,
           mode = "double",
@@ -118,16 +148,17 @@ fmt_scientific <- function(data,
           decimal.mark = dec_mark,
           format = "e",
           drop0trailing = drop0trailing)
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
       })
+
+  data
 }
 
 #' Format values as a percentage
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
 #' of decimal places to use.
 #' @param sep_mark the mark to use as a separator between
@@ -147,50 +178,71 @@ fmt_scientific <- function(data,
 #' @export
 fmt_percent <- function(data,
                         columns,
+                        rows = NULL,
                         decimals = NULL,
                         sep_mark = "",
                         dec_mark = ".",
                         negative_style = "signed",
-                        drop0trailing = TRUE) {
+                        drop0trailing = FALSE) {
 
+  # If the number of decimals is not provided,
+  # use a default value of 4
   if (is.null(decimals)) decimals <- 4
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
-
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        # Transform the number by multiplying
-        # it by 100
-        x <- as.numeric(x) * 100
-
-        x <-
-          paste0(
-            formatC(
-              x = x,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop0trailing), "::percent")
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
+        formatC(
+          x = as.numeric(x) * 100.0,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = drop0trailing)
       }
     )
+
+  # Set the decorator
+  data <-
+    set_decorator(
+      data = data,
+      columns = columns,
+      rows = rows,
+      decorator = function(x) {
+        "::percent"
+      })
+
+  data
 }
 
 #' Format values as currencies
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param currency the currency to use for the numeric value.
 #' @param use_subunits an option for whether the subunits
 #' portion of a currency value should be displayed.
@@ -213,6 +265,7 @@ fmt_percent <- function(data,
 #' @export
 fmt_currency <- function(data,
                          columns,
+                         rows = NULL,
                          currency,
                          use_subunits = TRUE,
                          decimals = NULL,
@@ -221,7 +274,11 @@ fmt_currency <- function(data,
                          placement = "left",
                          negative_style = "signed") {
 
-  if (is.null(decimals)) decimals <- 2
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
 
   if (placement == "left") {
     placement <- "l"
@@ -231,7 +288,18 @@ fmt_currency <- function(data,
     placement <- "l"
   }
 
-  # Return early if `currency` does not have a valid value
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Return data if `currency` does not have a valid value
   if (!is_currency_valid(currency = currency)) {
 
     message("The value supplied for `currency` is not valid.")
@@ -243,216 +311,330 @@ fmt_currency <- function(data,
 
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
-
     # Get decimal places using `get_currency_exponent()` fcn
     if (currency %in% currency_symbols$curr_symbol) {
-      decimals <- 2L
+      decimals <- 2
     } else {
       decimals <- get_currency_exponent(currency = currency)
     }
-
   } else if (is.null(decimals) & use_subunits == FALSE) {
-    decimals <- NA_integer_
+     decimals <- 0
   }
 
-  data %>%
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
 
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        x <- as.numeric(x)
-
-        x <-
-          paste0(
-            formatC(
-              x = x,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE),
-            paste0(
-              "::curr_", placement, "_", currency_str))
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
+        formatC(
+          x = x,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = FALSE)
       }
     )
+
+  # Set the decorator
+  data <-
+    set_decorator(
+      data = data,
+      columns = columns,
+      rows = rows,
+      decorator = function(x) {
+        paste0("::curr_", placement, "_", currency_str)
+      })
+
+  data
 }
 
 #' Format values as dates
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param date_style the date style to use.
 #' @return an object of class \code{gt_tbl}.
 #' @export
 fmt_date <- function(data,
-                     columns = NULL,
+                     columns,
+                     rows = NULL,
                      date_style = NULL) {
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Transform `date_style` to `date_format_str`
+  date_format_str <- get_date_format(date_style = date_style)
+
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
 
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        # Transform `date_style` to `date_format_str`
-        date_format_str <- get_date_format(date_style = date_style)
-
-        x <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
           strftime(format = date_format_str) %>%
           stringr::str_replace_all("^0", "") %>%
           stringr::str_replace_all(" 0([0-9])", " \\1") %>%
           stringr::str_replace_all("pm$", "PM") %>%
           stringr::str_replace_all("am$", "AM")
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
       }
     )
+
+  data
 }
 
 #' Format values as times
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param time_style the time style to use.
 #' @export
 fmt_time <- function(data,
-                     columns = NULL,
+                     columns,
+                     rows = NULL,
                      time_style = NULL) {
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Transform `time_style` to `time_format_str`
+  time_format_str <- gt:::get_time_format(time_style = time_style)
+
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
 
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        # Transform `time_style` to `time_format_str`
-        time_format_str <- get_time_format(time_style = time_style)
-
-        x <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
           strftime(format = time_format_str) %>%
           stringr::str_replace_all("^0", "") %>%
           stringr::str_replace_all(" 0([0-9])", " \\1") %>%
           stringr::str_replace_all("pm$", "PM") %>%
           stringr::str_replace_all("am$", "AM")
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
       }
     )
+
+  data
 }
 
 #' Format values as date-times
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any
+#' value results in all rows in \code{columns} being formatted.
 #' @param date_style the date style to use.
 #' @param time_style the time style to use.
 #' @return an object of class \code{gt_tbl}.
 #' @export
 fmt_datetime <- function(data,
-                         columns = NULL,
+                         columns,
+                         rows = NULL,
                          date_style = NULL,
                          time_style = NULL) {
 
-  data %>%
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Transform `date_style` to `date_format`
+  date_format <- gt:::get_date_format(date_style = date_style)
+
+  # Transform `time_style` to `time_format`
+  time_format <- gt:::get_time_format(time_style = time_style)
+
+  # Combine into a single datetime format string
+  date_time_format_str <-
+    paste0(date_format, " ", time_format)
+
+  # Set the format
+  data <-
     set_fmt(
+      data = data,
       columns = columns,
+      rows = rows,
       formatter = function(x) {
 
-        # Uncouple formats from the base value
-        formats <- x %>% extract_formats()
-        x <- x %>%
-          extract_value() %>%
-          reverse_percent()
-
-        # Transform `date_style` to `date_format`
-        date_format <- get_date_format(date_style = date_style)
-
-        # Transform `time_style` to `time_format`
-        time_format <- get_time_format(time_style = time_style)
-
-        # Combine into a single datetime format string
-        date_time_format_str <-
-          paste0(date_format, " ", time_format)
-
-        x <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
           strftime(format = date_time_format_str) %>%
           stringr::str_replace_all("^0", "") %>%
           stringr::str_replace_all(" 0([0-9])", " \\1") %>%
           stringr::str_replace_all("pm$", "PM") %>%
           stringr::str_replace_all("am$", "AM")
-
-        x <- recombine_formats(x = x, formats = formats)
-        x
       }
     )
+
+  data
 }
 
 #' Set a column format with a formatter function
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an option specify which columns are to be
-#' formatted.
+#' @param columns the specification for which columns are to
+#' be formatted.
+#' @param rows an optional specification for which rows are
+#' to be formatted.
 #' @param formatter a formatting function.
 #' @return an object of class \code{gt_tbl}.
 #' @export
 set_fmt <- function(data,
                     columns,
+                    rows = TRUE,
                     formatter) {
 
-  for (i in columns) {
-    data$formats[[i]] <- formatter
-  }
+  a_list <- list(
+    func = formatter,
+    cols = columns,
+    rows = rows)
 
-  data %>% render_format()
+  next_index <- length(data$formats) + 1
+
+  data$formats[[next_index]] <- a_list
+
+  data
 }
 
-#' Render the table using the formatting options
+#' Set a column format with a formatter function
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param columns the specification for which columns are to
+#' be formatted.
+#' @param rows an optional specification for which rows are
+#' to be formatted.
+#' @param decorator a decorator function.
+#' @return an object of class \code{gt_tbl}.
+#' @export
+set_decorator <- function(data,
+                          columns,
+                          rows = TRUE,
+                          decorator) {
+
+  a_list <- list(
+    func = decorator,
+    cols = columns,
+    rows = rows)
+
+  next_index <- length(data$decorators) + 1
+
+  data$decorators[[next_index]] <- a_list
+
+  data
+}
+
+#' Render the formatting functions
 #' @noRd
-render_format <- function(data) {
+#' @export
+render_formats <- function(data) {
 
-  orig_types <- get_orig_types(data$data)
+  # Render input data to output data where formatting
+  # is specified
+  for (i in seq(data$formats))  {
+    for (col in data$formats[[i]]$cols) {
 
-  row_names <- data$data$`:row_name:`
-  group_names <- data$data$`:group_name:`
-  column_align <- data$data[3, ]
-  spanner_name <- data$data[4, ]
-
-  formatted_tbl <- data$data %>% get_working_tbl(apply_original_types = TRUE)
-
-  for (colname in names(data$formats)) {
-    formatted_tbl[, colname] <- data$formats[[colname]](formatted_tbl[[colname]])
+      # Only perform rendering if column is present
+      if (col %in% colnames(data$input_df)) {
+        data$output_df[[col]][data$formats[[i]]$rows] <-
+          data$formats[[i]]$func(data$input_df[[col]][data$formats[[i]]$rows])
+      }
+    }
   }
 
-  data$data <- formatted_tbl %>% encase_tbl(data_types = orig_types)
-  data$data$`:row_name:` <- row_names
-  data$data$`:group_name:` <- group_names
-  data$data[3, ] <- column_align
-  data$data[4, ] <- spanner_name
-  data$formats <- list()
+  # Render decorator flags for certain formats that
+  # require special handling
+  for (i in seq(data$decorators))  {
+    for (col in data$decorators[[i]]$cols) {
+
+      # Only perform rendering if column is present
+      if (col %in% colnames(data$input_df)) {
+        data$forms_df[[col]][data$decorators[[i]]$rows] <-
+          data$decorators[[i]]$func(data$input_df[[col]][data$decorators[[i]]$rows])
+      }
+    }
+  }
+
+  # Transfer any input format that has not been
+  # explicitly formatted to the output data frame
+  for (colname in colnames(data$output_df)) {
+    for (row in 1:nrow(data$output_df)) {
+      if (is.na(data$output_df[row, colname])) {
+        data$output_df[row, colname] <- as.character(data$input_df[row, colname])
+      }
+    }
+  }
+
+  # Assign labels as column names for any labels
+  # that are not explicitly set
+  for (colname in colnames(data$boxhead_df)) {
+    if (is.na(data$boxhead_df[2, colname])) {
+      data$boxhead_df[2, colname] <- colname
+    }
+  }
+
+  # Assign center alignment for all columns
+  # that haven't had alignment explicitly set
+  for (colname in colnames(data$boxhead_df)) {
+    if (is.na(data$boxhead_df[3, colname])) {
+      data$boxhead_df[3, colname] <- "center"
+    }
+  }
+
+  data$formats <- data$decorators <- list()
+
   data
 }
