@@ -532,7 +532,7 @@ fmt_datetime <- function(data,
 #' to be formatted.
 #' @param formatter a formatting function.
 #' @return an object of class \code{gt_tbl}.
-#' @export
+#' @noRd
 set_fmt <- function(data,
                     columns,
                     rows = TRUE,
@@ -559,7 +559,7 @@ set_fmt <- function(data,
 #' to be formatted.
 #' @param decorator a decorator function.
 #' @return an object of class \code{gt_tbl}.
-#' @export
+#' @noRd
 set_decorator <- function(data,
                           columns,
                           rows = TRUE,
@@ -579,7 +579,6 @@ set_decorator <- function(data,
 
 #' Render the formatting functions
 #' @noRd
-#' @export
 render_formats <- function(data) {
 
   # Render input data to output data where formatting
