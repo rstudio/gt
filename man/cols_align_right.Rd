@@ -4,16 +4,13 @@
 \alias{cols_align_right}
 \title{Set columns to be aligned right}
 \usage{
-cols_align_right(data, columns = NULL, types = NULL)
+cols_align_right(data, columns = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
 \item{columns}{an optional vector of column names
-for which the right alignment should be applied.}
-
-\item{types}{an optional vector of column types
 for which the right alignment should be applied.}
 }
 \value{

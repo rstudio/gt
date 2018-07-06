@@ -4,14 +4,17 @@
 \alias{fmt_percent}
 \title{Format values as a percentage}
 \usage{
-fmt_percent(data, columns, decimals = NULL, sep_mark = "", dec_mark = ".",
-  negative_style = "signed", drop0trailing = TRUE)
+fmt_percent(data, columns, rows = NULL, decimals = NULL, sep_mark = "",
+  dec_mark = ".", negative_style = "signed", drop0trailing = FALSE)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
 \item{columns}{the column names to format.}
+
+\item{rows}{optional rows to format. Not providing any
+value results in all rows in \code{columns} being formatted.}
 
 \item{decimals}{an option to specify the exact number
 of decimal places to use.}

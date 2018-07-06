@@ -4,13 +4,16 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns = NULL, time_style = NULL)
+fmt_time(data, columns, rows = NULL, time_style = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
 \item{columns}{the column names to format.}
+
+\item{rows}{optional rows to format. Not providing any
+value results in all rows in \code{columns} being formatted.}
 
 \item{time_style}{the time style to use.}
 }
