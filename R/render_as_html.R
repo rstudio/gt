@@ -8,7 +8,7 @@
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stringr str_extract_all str_split
 #' @importFrom stats setNames
-#' @export
+#' @noRd
 render_as_html <- function(tbl) {
 
   # Determine if there is a populated stub
