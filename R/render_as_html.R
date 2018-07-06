@@ -339,6 +339,15 @@ render_as_html <- function(tbl) {
   # Compose the HTML heading
   headings <- names(extracted)
 
+  # Merge the heading labels
+  headings_rev <- headings %>% rev()
+  labels_rev <- tbl$boxhead_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
+
+  for (i in seq(labels_rev)) {
+    headings_rev[i] <- labels_rev[i]
+  }
+  headings <- rev(headings_rev)
+
   # If `stub_available` == TRUE, then replace with a set stubhead
   # caption or nothing
   if (stub_available &&
@@ -437,10 +446,13 @@ render_as_html <- function(tbl) {
 
     first_set <- paste(first_set, collapse = "\n")
 
+    remaining_headings <-
+      headings[!(headings %in% headings_stack)]
+
     second_set <-
       paste0(
         "<th class='col_heading' rowspan='1' colspan='1'>",
-        base::setdiff(headings, headings_stack), "</th>",
+        remaining_headings, "</th>",
         collapse = "\n")
 
     table_col_headings <-
