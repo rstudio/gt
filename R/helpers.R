@@ -26,6 +26,28 @@ html <- function(text) {
   text
 }
 
+#' @export
+rownames_with <- function(pattern) {
+
+  # Create the list object
+  x <- list(pattern = pattern)
+
+  # Apply the `rownames_with` class
+  attr(x, "class") <- "rownames_with"
+  x
+}
+
+#' @export
+columns_with <- function(pattern) {
+
+  # Create a list object
+  x <- list(pattern = pattern)
+
+  # Apply the `columns_with` class
+  attr(x, "class") <- "columns_with"
+  x
+}
+
 #' Helper to target a single table cell
 #' @param row a single row to target.
 #' @param column a single column to target.
@@ -34,7 +56,7 @@ html <- function(text) {
 target_cell <- function(row = NULL,
                         column = NULL) {
 
-  # Create the list object
+  # Create a list object
   cell_targeted <- list(row = row, column = column)
 
   # Apply the `helper_cells` class
@@ -47,37 +69,9 @@ target_cell <- function(row = NULL,
 #' @export
 not_in_group <- function() {
 
-  x <- ":not_in_group"
+  # Create a character object
+  x <- ":not_in_group:"
 
   class(x) <- "not_in_group"
   x
 }
-
-#' #' Define one or more table cells
-#' #' @param row an integer representing the
-#' #' table row to target (as part of the
-#' #' \code{row}-\code{column} dyad).
-#' #' @param column an integer representing the
-#' #' table column to target (as part of the
-#' #' \code{row}-\code{column} dyad).
-#' #' @return a list object of class \code{helper_cells}
-#' #' @export
-#' cells <- function(row, column) {
-#'
-#'   # Create the list object
-#'   cells <- list(row = row, column = column)
-#'
-#'   # Apply the `helper_cells` class
-#'   attr(cells, "class") <- "helper_cells"
-#'   cells
-#' }
-
-#' #' Provide a directive to get rows that fit a
-#' #' naming pattern
-#' #' @param pattern a matching pattern for
-#' #' targeting rownames.
-#' #' @export
-#' rownames_with <- function(pattern) {
-#'
-#'   paste0("::rownames_with::", pattern)
-#' }
