@@ -34,15 +34,40 @@ gt <- function(data,
                rownames_to_stub = FALSE) {
 
   if (rownames_to_stub) {
-    data <- tibble::rownames_to_column(data)
+    stub_df <-
+      data.frame(
+        groupname = NA_character_,
+        rowname = tibble::rownames_to_column(dplyr::as_tibble(data))$rowname,
+        stringsAsFactors = FALSE)
+  } else {
+    stub_df <-
+      data.frame(
+        groupname = rep(NA_character_, nrow(data)),
+        rowname = rep(NA_character_, nrow(data)))
   }
 
-  encased_tbl <- encase_tbl(data = data)
+  data_tbl <- data %>% as.data.frame(stringsAsFactors = FALSE)
+  rownames(data_tbl) <- NULL
+
+  output_df <- data_tbl
+  output_df[] <- NA_character_
+
+  boxhead_df <-
+    output_df[0, ] %>%
+    tibble::add_row() %>%  # spanner_name
+    tibble::add_row() %>%  # column_name (relabeled)
+    tibble::add_row()      # alignment
 
   structure(
     list(
-      data = encased_tbl,
-      formats = list()),
+      input_df = data_tbl,
+      boxhead_df = boxhead_df,
+      stub_df = stub_df,
+      forms_df = output_df,
+      foot_df = output_df,
+      output_df = output_df,
+      formats = list(),
+      decorators = list()),
     class = "gt_tbl"
   )
 }
