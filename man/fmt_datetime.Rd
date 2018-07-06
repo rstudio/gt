@@ -4,13 +4,17 @@
 \alias{fmt_datetime}
 \title{Format values as date-times}
 \usage{
-fmt_datetime(data, columns = NULL, date_style = NULL, time_style = NULL)
+fmt_datetime(data, columns, rows = NULL, date_style = NULL,
+  time_style = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
 \item{columns}{the column names to format.}
+
+\item{rows}{optional rows to format. Not providing any
+value results in all rows in \code{columns} being formatted.}
 
 \item{date_style}{the date style to use.}
 

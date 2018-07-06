@@ -4,7 +4,7 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = "center", columns = NULL, types = NULL)
+cols_align(data, align = "center", columns = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -14,9 +14,6 @@ cols_align(data, align = "center", columns = NULL, types = NULL)
 be \code{"center"}, \code{"left"}, or \code{"right"}.}
 
 \item{columns}{an optional vector of column names
-for which the alignment should be applied.}
-
-\item{types}{an optional vector of column types
 for which the alignment should be applied.}
 }
 \value{

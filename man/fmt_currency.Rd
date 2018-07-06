@@ -4,8 +4,8 @@
 \alias{fmt_currency}
 \title{Format values as currencies}
 \usage{
-fmt_currency(data, columns, currency, use_subunits = TRUE, decimals = NULL,
-  sep_mark = "", dec_mark = ".", placement = "left",
+fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
+  decimals = NULL, sep_mark = "", dec_mark = ".", placement = "left",
   negative_style = "signed")
 }
 \arguments{
@@ -13,6 +13,9 @@ fmt_currency(data, columns, currency, use_subunits = TRUE, decimals = NULL,
 \code{gt()} function.}
 
 \item{columns}{the column names to format.}
+
+\item{rows}{optional rows to format. Not providing any
+value results in all rows in \code{columns} being formatted.}
 
 \item{currency}{the currency to use for the numeric value.}
 

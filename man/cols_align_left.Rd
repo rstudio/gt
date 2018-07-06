@@ -4,7 +4,7 @@
 \alias{cols_align_left}
 \title{Set columns to be aligned left}
 \usage{
-cols_align_left(data, columns = NULL, types = NULL)
+cols_align_left(data, columns = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -12,10 +12,6 @@ cols_align_left(data, columns = NULL, types = NULL)
 
 \item{columns}{an optional vector of column names
 for which the left alignment should be applied.}
-
-\item{types}{an optional vector of column types
-for which the left alignment should be applied.
-\code{gt()} function.}
 }
 \value{
 an object of class \code{gt_tbl}.

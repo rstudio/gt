@@ -4,16 +4,13 @@
 \alias{cols_align_center}
 \title{Set columns to be aligned to the center}
 \usage{
-cols_align_center(data, columns = NULL, types = NULL)
+cols_align_center(data, columns = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
 \item{columns}{an optional vector of column names
-for which the center alignment should be applied.}
-
-\item{types}{an optional vector of column types
 for which the center alignment should be applied.}
 }
 \value{
