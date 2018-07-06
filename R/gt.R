@@ -9,6 +9,12 @@
 #' @param rownames_to_stub an option to take
 #' rownames from the input \code{data} table
 #' as row captions in the stub.
+#' @param split_cols_dots an option to split
+#' dot-separated column names such that the
+#' first component is promoted to a spanner and
+#' subsequent components represent the column label.
+#' Please note that reference to individual columns
+#' must still be via the original column names.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -31,7 +37,8 @@
 #' @importFrom tibble rownames_to_column
 #' @export
 gt <- function(data,
-               rownames_to_stub = FALSE) {
+               rownames_to_stub = FALSE,
+               split_cols_dots = TRUE) {
 
   if (rownames_to_stub) {
     stub_df <-
@@ -57,6 +64,20 @@ gt <- function(data,
     tibble::add_row() %>%  # spanner_name
     tibble::add_row() %>%  # column_name (relabeled)
     tibble::add_row()      # alignment
+
+  if (split_cols_dots) {
+
+    colnames <- colnames(data_tbl)
+
+    for (i in seq(colnames)) {
+      if (grepl(".+\\..+", colnames[i])) {
+        split_colname <- strsplit(colnames[i], "\\.") %>% unlist()
+        boxhead_df[1, i] <- split_colname[1]
+        boxhead_df[2, i] <-
+          paste0(split_colname[2:length(split_colname)], collapse = ".")
+      }
+    }
+  }
 
   structure(
     list(
