@@ -5,8 +5,6 @@
 #' be \code{"center"}, \code{"left"}, or \code{"right"}.
 #' @param columns an optional vector of column names
 #' for which the alignment should be applied.
-#' @param types an optional vector of column types
-#' for which the alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -18,31 +16,23 @@
 #' @export
 cols_align <- function(data,
                        align = "center",
-                       columns = NULL,
-                       types = NULL) {
+                       columns = NULL) {
 
   if (!(align %in% c("left", "center", "right"))) {
     return(data)
   }
 
-  data_lhs <- data$data[, c(1, 2)]
-  data_rhs <- data$data[, -c(1, 2)]
+  # Filter the vector of column names by the
+  # column names actually in `data$input_df`
+  columns <-
+    columns[which(columns %in% colnames(data$input_df))]
 
-  if (!is.null(columns)) {
-    data_columns <-
-      columns[which(columns %in% colnames(data$data[, -1:-3]))]
-    if ("stub" %in% columns) {
-      data_columns <- c(":row_name:", data_columns)
-    }
-
-    data_rhs[3, data_columns] <- align
-
-  } else if (!is.null(types)) {
-
-    data_rhs[3, which(data_rhs[2, ] %in% types)] <- align
+  if (length(columns) == 0) {
+    return(data)
   }
 
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+  data$boxhead_df[3, columns] <- align
+
   data
 }
 
@@ -51,9 +41,6 @@ cols_align <- function(data,
 #' \code{gt()} function.
 #' @param columns an optional vector of column names
 #' for which the left alignment should be applied.
-#' @param types an optional vector of column types
-#' for which the left alignment should be applied.
-#' \code{gt()} function.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -63,22 +50,18 @@ cols_align <- function(data,
 #'   cols_align_left()
 #' @export
 cols_align_left <- function(data,
-                            columns = NULL,
-                            types = NULL) {
+                            columns = NULL) {
 
   cols_align(
     data = data,
     align = "left",
-    columns = columns,
-    types = types)
+    columns = columns)
 }
 
 #' Set columns to be aligned to the center
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns an optional vector of column names
-#' for which the center alignment should be applied.
-#' @param types an optional vector of column types
 #' for which the center alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -89,22 +72,18 @@ cols_align_left <- function(data,
 #'   cols_align_center()
 #' @export
 cols_align_center <- function(data,
-                              columns = NULL,
-                              types = NULL) {
+                              columns = NULL) {
 
   cols_align(
     data = data,
     align = "center",
-    columns = columns,
-    types = types)
+    columns = columns)
 }
 
 #' Set columns to be aligned right
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns an optional vector of column names
-#' for which the right alignment should be applied.
-#' @param types an optional vector of column types
 #' for which the right alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -115,14 +94,12 @@ cols_align_center <- function(data,
 #'   cols_align_right()
 #' @export
 cols_align_right <- function(data,
-                             columns = NULL,
-                             types = NULL) {
+                             columns = NULL) {
 
   cols_align(
     data = data,
     align = "right",
-    columns = columns,
-    types = types)
+    columns = columns)
 }
 
 #' Move one or more columns
@@ -143,15 +120,16 @@ cols_move <- function(data,
                       after) {
 
   # Filter the vector of column names by the
-  # column names actually in `data$data`
+  # column names actually in `data$input_df`
   columns <-
-    columns[which(columns %in% colnames(data$data[, -1:-3]))]
+    columns[which(columns %in% colnames(data$input_df))]
 
-  data_lhs <- data$data[, 1:3]
-  data_rhs <- data$data[, -1:-3]
+  if (length(columns) == 0) {
+    return(data)
+  }
 
   # Get the remaining column names in the table
-  column_names <- base::setdiff(colnames(data_rhs), columns)
+  column_names <- base::setdiff(colnames(data$input_df), columns)
 
   # Get the column index for where the set
   # of `columns` should be inserted after
@@ -159,28 +137,49 @@ cols_move <- function(data,
 
   if (length(columns) > 0 & column_index != length(column_names)) {
 
-    data_rhs <-
-      data_rhs %>%
+    data$input_df <- data$input_df %>%
       dplyr::select(
-        column_names[1:column_index],
-        columns,
+        column_names[1:column_index], columns,
+        column_names[(column_index + 1):length(column_names)])
+
+    data$output_df <- data$output_df %>%
+      dplyr::select(
+        column_names[1:column_index], columns,
+        column_names[(column_index + 1):length(column_names)])
+
+    data$foot_df <- data$foot_df %>%
+      dplyr::select(
+        column_names[1:column_index], columns,
+        column_names[(column_index + 1):length(column_names)])
+
+    data$forms_df <- data$forms_df %>%
+      dplyr::select(
+        column_names[1:column_index], columns,
+        column_names[(column_index + 1):length(column_names)])
+
+    data$boxhead_df <- data$boxhead_df %>%
+      dplyr::select(
+        column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
 
   } else if (length(columns) > 0 & column_index == length(column_names)) {
 
-    data_rhs <-
-      data_rhs %>%
-      dplyr::select(
-        column_names[1:column_index],
-        columns)
+    data$input_df <- data$input_df %>%
+      dplyr::select(column_names[1:column_index], columns)
+
+    data$output_df <- data$output_df %>%
+      dplyr::select(column_names[1:column_index], columns)
+
+    data$foot_df <- data$foot_df %>%
+      dplyr::select(column_names[1:column_index], columns)
+
+    data$forms_df <- data$forms_df %>%
+      dplyr::select(column_names[1:column_index], columns)
+
+    data$boxhead_df <- data$boxhead_df %>%
+      dplyr::select(column_names[1:column_index], columns)
   }
 
-  # Reindex the column numbers
-  for (i in seq(ncol(data_rhs))) {
-    data_rhs[1, i] <- i
-  }
-
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
   data
 }
 
@@ -194,29 +193,26 @@ cols_move <- function(data,
 #' Values provided that do not correspond to
 #' column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select everything bind_cols
+#' @importFrom dplyr select everything
 #' @export
 cols_move_to_start <- function(data,
                                columns) {
 
   # Filter the vector of column names by the
-  # column names actually in `data$data`
+  # column names actually in `data$input_df`
   columns <-
-    columns[which(columns %in% colnames(data$data[, -1:-3]))]
+    columns[which(columns %in% colnames(data$input_df))]
 
-  data_lhs <- data$data[, 1:3]
-  data_rhs <- data$data[, -1:-3]
-
-  if (length(columns) > 0) {
-    data_rhs <- data_rhs %>% dplyr::select(columns, everything())
-
-    # Reindex the column numbers
-    for (i in seq(ncol(data_rhs))) {
-      data_rhs[1, i] <- i
-    }
+  if (length(columns) == 0) {
+    return(data)
   }
 
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+  data$input_df <- data$input_df %>% dplyr::select(columns, everything())
+  data$output_df <- data$output_df %>% dplyr::select(columns, everything())
+  data$foot_df <- data$foot_df %>% dplyr::select(columns, everything())
+  data$forms_df <- data$forms_df %>% dplyr::select(columns, everything())
+  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns, everything())
+
   data
 }
 
@@ -230,7 +226,7 @@ cols_move_to_start <- function(data,
 #' Values provided that do not correspond to
 #' column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select bind_cols
+#' @importFrom dplyr select
 #' @export
 cols_move_to_end <- function(data,
                              columns) {
@@ -238,25 +234,21 @@ cols_move_to_end <- function(data,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, -1:-3]))]
+    columns[which(columns %in% colnames(data$input_df))]
 
-  data_lhs <- data$data[, 1:3]
-  data_rhs <- data$data[, -1:-3]
-
-  if (length(columns) > 0) {
-
-    # Place the column names at the end
-    columns <- c(base::setdiff(colnames(data_rhs), columns), columns)
-
-    data_rhs <- data_rhs %>% dplyr::select(columns)
-
-    # Reindex the column numbers
-    for (i in seq(ncol(data_rhs))) {
-      data_rhs[1, i] <- i
-    }
+  if (length(columns) == 0) {
+    return(data)
   }
 
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+  # Organize a vector of column names for `dplyr::select()`
+  columns <- c(base::setdiff(colnames(data$input_df), columns), columns)
+
+  data$input_df <- data$input_df %>% dplyr::select(columns)
+  data$output_df <- data$output_df %>% dplyr::select(columns)
+  data$foot_df <- data$foot_df %>% dplyr::select(columns)
+  data$forms_df <- data$forms_df %>% dplyr::select(columns)
+  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns)
+
   data
 }
 
@@ -275,25 +267,20 @@ cols_remove <- function(data,
   # Filter the vector of column names by the
   # column names actually in `data$data`
   columns <-
-    columns[which(columns %in% colnames(data$data[, -1:-3]))]
+    columns[which(columns %in% colnames(data$input_df))]
 
-  data_lhs <- data$data[, 1:3]
-  data_rhs <- data$data[, -1:-3]
-
-  # Perform removal of columns using `dplyr::select()`
-  if (length(columns) > 0) {
-
-    # Remove the column names from the column list
-    columns <- c(base::setdiff(colnames(data_rhs), columns))
-
-    data_rhs <- data_rhs %>% dplyr::select(columns)
-
-    # Reindex the column numbers
-    for (i in seq(ncol(data_rhs))) {
-      data_rhs[1, i] <- i
-    }
+  if (length(columns) == 0) {
+    return(data)
   }
 
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+  # Organize a vector of column names for `dplyr::select()`
+  columns <- c(base::setdiff(colnames(data$input_df), columns))
+
+  data$input_df <- data$input_df %>% dplyr::select(columns)
+  data$output_df <- data$output_df %>% dplyr::select(columns)
+  data$foot_df <- data$foot_df %>% dplyr::select(columns)
+  data$forms_df <- data$forms_df %>% dplyr::select(columns)
+  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns)
+
   data
 }
