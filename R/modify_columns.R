@@ -12,7 +12,6 @@
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align("left")
-#' @importFrom dplyr bind_cols
 #' @export
 cols_align <- function(data,
                        align = "center",
@@ -100,6 +99,31 @@ cols_align_right <- function(data,
     data = data,
     align = "right",
     columns = columns)
+}
+
+#' Re-label one or more columns
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param labels a named vector of column names and their
+#' labels for display of the column headers.
+#' @export
+cols_label <- function(data,
+                       labels) {
+
+  # Filter the vector of labels by the column names
+  # actually in `data$input_df`
+  labels <-
+    labels[which(names(labels) %in% colnames(data$input_df))]
+
+  if (length(labels) == 0) {
+    return(data)
+  }
+
+  for (i in seq(labels)) {
+    data$boxhead_df[2, names(labels[i])] <- unname(labels[i][1])
+  }
+
+  data
 }
 
 #' Move one or more columns
