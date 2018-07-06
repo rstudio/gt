@@ -1,174 +1,51 @@
-#' @importFrom purrr map_chr
-#' @importFrom dplyr mutate select everything bind_rows tibble
 #' @noRd
-encase_tbl <- function(data,
-                       data_types = NULL) {
-
-  n_col <- ncol(data)
-
-  if (is.null(data_types)) {
-    data_types <-
-      seq(ncol(data)) %>%
-      purrr::map_chr(.f = function(x) class(data[[x]]))
+resolve_rows <- function(data, rows) {
+  if (inherits(rows, "rownames_with")) {
+    rows <- which(grepl(paste(rows$pattern, collapse = "|"), data$stub_df$rowname))
+  } else if (is.numeric(rows)) {
+    rows <- rows[rows %in% 1:nrow(data$input_df)]
+  } else if (is.character(rows) && all(!is.na(data$stub_df$rowname))) {
+    rows <- which(data$stub_df$rowname %in% rows)
   }
 
-  data <- data %>%
-    dplyr::mutate(`:row_number:` = 1:nrow(data)) %>%
-    dplyr::mutate(`:group_name:` = NA_character_) %>%
-    dplyr::mutate(`:row_name:` = NA_character_) %>%
-    dplyr::select(`:row_number:`, `:group_name:`, `:row_name:`, everything())
-
-  if ("rowname" %in% colnames(data)) {
-
-    rowname_col <- which(colnames(data[, -1:-3]) == "rowname")
-    data_types <- data_types[-rowname_col]
-    n_col <- n_col - 1
-
-    data <- data %>%
-      dplyr::mutate(`:row_name:` = rowname) %>%
-      dplyr::select(-rowname)
-  }
-
-  data <-
-    dplyr::bind_rows(
-      dplyr::tibble(
-        `:row_number:` = NA_integer_,
-        `:group_name:` = "column_number",
-        `:row_name:` = NA_character_),
-      dplyr::tibble(
-        `:row_number:` = NA_integer_,
-        `:group_name:` = "column_type"),
-      dplyr::tibble(
-        `:row_number:` = NA_integer_,
-        `:group_name:` = "column_align"),
-      dplyr::tibble(
-        `:row_number:` = NA_integer_,
-        `:group_name:` = "spanner_name"),
-      data) %>%
-    as.data.frame(stringsAsFactors = FALSE)
-
-  data[, 1:length(names(data))] <-
-    as.character(unlist(data[, 1:length(names(data))]))
-
-  for (i in 4:(3 + n_col)) {
-    data[1, i] <- i - 3
-    data[2, i] <- data_types[i - 3]
-    data[3, i] <- "center"
-  }
-
-  data[1, 3] <- "0"
-  data[2, 3] <- "character"
-  data[3, 3] <- "right"
-  data[4, 3] <- NA_character_
-
-  data
+  rows
 }
 
-#' Apply data types to data frame columns
 #' @noRd
-apply_data_types <- function(data, types){
-
-  for (i in 1:length(data)){
-    FUN <-
-      switch(
-        types[i],
-        character = as.character,
-        numeric = as.numeric)
-
-    data[,i] <- FUN(data[,i])
-  }
-  data
-}
-
-#' Extract an encased data table
-#' @noRd
-get_working_tbl <- function(data,
-                            apply_original_types = FALSE,
-                            data_types = NULL) {
-
-  if (apply_original_types) {
-    original_types <-
-      data[2, -1:-3] %>%
-      t() %>%
-      as.character()
+resolve_columns <- function(data, columns) {
+  if (inherits(columns, "columns_with")) {
+    columns <- colnames(data$input_df)[
+      which(grepl(paste(columns$pattern, collapse = "|"), colnames(data$input_df)))]
+  } else if (is.numeric(columns)) {
+    columns <- colnames(data$input_df)[columns[columns %in% 1:ncol(data$input_df)]]
+  } else if (is.character(columns)) {
+    columns <- colnames(data$input_df)[which(colnames(data$input_df) %in% columns)]
   }
 
-  # The data is in the unencased portion of
-  # the table; here, the casement is removed
-  data <- data[-1:-4, -1:-3]
-
-  # Reset the official rownames for the table
-  rownames(data) <- NULL
-
-  data
+  columns
 }
 
-#' Get the original data types
 #' @noRd
-get_orig_types <- function(data) {
-  data[2, -1:-3] %>% t() %>% as.character()
-}
+is_target_in_table <- function(data, location) {
 
-#' Reverse percentages back to the original value
-#' @noRd
-reverse_percent <- function(x) {
-  if (!is.numeric(x) && any(grepl("::percent", x))) {
-
-    # Set aside extra formats
-    formats <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\2", x)
-    base <- gsub("([0-9,-\\.]*?::percent)(.*)", "\\1", x)
-
-    return(paste0(as.numeric(gsub("(::percent|,)", "", base)) / 100, formats))
+  if (is.numeric(location$row) &&
+      !(location$row %in% 1:nrow(data$input_df))) {
+    return(FALSE)
+  }
+  if (is.character(location$row) &&
+      !(location$row %in% data$stub_df$rowname)) {
+    return(FALSE)
+  }
+  if (is.numeric(location$column) &&
+      !(location$column %in% 1:ncol(data$input_df))) {
+    return(FALSE)
+  }
+  if (is.character(location$column) &&
+      !(location$column %in% colnames(data$input_df))) {
+    return(FALSE)
   } else {
-    return(x)
+    return(TRUE)
   }
-}
-
-#' Extract a value from a cell that is free
-#' of any attached formatting directives
-#' @noRd
-extract_value <- function(x) {
-  # Extract value from a string that may
-  # contain format directives
-  values <- c()
-  for (i in seq(x)) {
-    if (grepl("::percent", x[i])) {
-      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
-      values[i] <- paste0(values[i], "::percent")
-    } else {
-      values <- c(values, gsub("(.*?)(::.*)", "\\1", x[i]))
-    }
-  }
-  values
-}
-
-#' Extract formatting directives from a cell
-#' value so that we may recombine them later
-#' @noRd
-extract_formats <- function(x) {
-  # Extract formats from a string
-  formats <- c()
-  for (i in seq(x)) {
-    if (grepl("::", x[i])) {
-      formats <- c(formats, gsub("(.*?)(::.*)", "\\2", x[i]))
-      formats[i] <- gsub("::percent", "", formats[i])
-    } else {
-      formats <- c(formats, "")
-    }
-  }
-  formats
-}
-
-#' Recombine the value (`x`) and the formats;
-#' this is usually after some operation has
-#' been done to `x` and we'd like to restore
-#' the association between value and the
-#' previously-set formatting directives
-#' @noRd
-recombine_formats <- function(x, formats) {
-  # Combine the format-free value with
-  # the `formats` string
-  paste0(x, formats)
 }
 
 #' Create a tibble containing date formats
@@ -351,7 +228,6 @@ get_currency_str <- function(currency) {
   }
 }
 
-
 #' Transform `currency` to a currency exponent
 #' @importFrom dplyr filter pull
 #' @noRd
@@ -427,10 +303,6 @@ process_text <- function(text) {
     return(text)
   }
 }
-
-
-
-
 
 #' A wrapper for `system.file()`
 #' @noRd
