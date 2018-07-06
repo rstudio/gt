@@ -97,27 +97,18 @@ tab_stub_block <- function(data,
       list(others = others)
   }
 
-  # Look at the rows to determine if helpers used
   if (inherits(rows, "not_in_group")) {
-    data_rows <- which(is.na(data$data[-1:-4, 2])) + 4
+
+    if ("others_group" %in% names(data)) {
+      data$stub_df[which(is.na(data$stub_df$groupname)), 1] <-
+        data[["others_group"]][["others"]]
+    } else {
+      data$stub_df[which(is.na(data$stub_df$groupname)), 1] <- group
+    }
   } else {
-    data_rows <- which(data$data[-1:-4, 3] %in% rows) + 4
+    data$stub_df[which(data$stub_df$rowname %in% rows), 1] <- group
   }
 
-  data_lhs <- data$data[, c(1, 2)]
-  data_rhs <- data$data[, -c(1, 2)]
-
-  data_lhs[data_rows, 2] <- group
-
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
-
-  data_top <- data$data[1:4, ]
-  data_bottom <- data$data[-1:-4, ]
-
-  data_bottom <- data_bottom %>% dplyr::arrange(`:group_name:`)
-  data_bottom[, 1] <- as.character(1:nrow(data_bottom))
-
-  data$data <- dplyr::bind_rows(data_top, data_bottom)
   data
 }
 
@@ -146,15 +137,16 @@ tab_boxhead_panel <- function(data,
                               spanner,
                               columns) {
 
-  data_columns <-
-    columns[which(columns %in% colnames(data$data[, -1:-3]))]
+  # Filter the vector of column names by the
+  # column names actually in `data$data`
+  columns <-
+    columns[which(columns %in% colnames(data$input_df))]
 
-  data_lhs <- data$data[, 1:3]
-  data_rhs <- data$data[, -1:-3]
+  if (length(columns) == 0) {
+    return(data)
+  }
 
-  data_rhs[4, data_columns] <- spanner
-
-  data$data <- dplyr::bind_cols(data_lhs, data_rhs)
+  data$boxhead_df[1, columns] <- spanner
   data
 }
 
@@ -185,6 +177,12 @@ tab_boxhead_panel <- function(data,
 tab_footnote <- function(data,
                          footnote,
                          location) {
+
+  # Check if the target location is actually in the table
+  if (inherits(location, "single_cell_target") &&
+      !is_target_in_table(data = data, location = location)) {
+    return(data)
+  }
 
   # Determine if the footnote already exists;
   # if it does, get the index
@@ -218,11 +216,9 @@ tab_footnote <- function(data,
     # exist)
     index <- 1L
 
-    footnote <- stats::setNames(process_text(footnote), nm = index)
+    footnote <- stats::setNames(gt:::process_text(footnote), nm = index)
 
-    data[["footnote"]] <-
-      list(
-        footnote = footnote)
+    data[["footnote"]] <- list(footnote = footnote)
   }
 
   # Add markup to the targeted cell(s)
@@ -232,24 +228,32 @@ tab_footnote <- function(data,
     column <- location$column
 
     if (is.numeric(column)) {
-      data_col <- which(data$data[1, ] == column)
+      data_col <- colnames(data$input_df)[column]
     }
 
     if (is.numeric(row)) {
-      data_row <- which(data$data[, 1] == row)
+      data_row <- row
     }
 
     if (is.character(column)) {
-      data_col <- which(names(data$data) == column)[1]
+      data_col <- column
     }
 
     if (is.character(row)) {
-      data_row <- which(data$data[, 3] == row)[1]
+      data_row <- which(data$stub_df$rowname == row)[1]
     }
 
-    # Apply markup to targeted cell
-    data$data[data_row, data_col] <-
-      paste0(data$data[data_row, data_col], "::foot_", index)
+    # Append the footnote
+    if (is.na(data$foot_df[data_row, data_col])) {
+        data$foot_df[data_row, data_col] <-
+          paste0("::foot_", index)
+    } else {
+      data$foot_df[data_row, data_col] <-
+        paste0(
+          data$foot_df[data_row, data_col],
+          "::foot_",
+          index)
+    }
   }
 
   data
