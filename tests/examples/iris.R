@@ -11,7 +11,7 @@ library(gt)
 # 4 - a heading is added
 # 5 - a source note is added
 iris_tbl <-
-  gt(data = iris) %>% # 1
+  gt(data = iris, split_cols_dots = TRUE) %>% # 1
   cols_move_to_start(columns = "Species") %>% # 2
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
