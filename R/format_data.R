@@ -550,6 +550,32 @@ set_fmt <- function(data,
   data
 }
 
+#' Add a standardized mark for missing data
+#'
+#' Wherever there is missing data (i.e., \code{NA} values)
+#' a customizable mark may present better than the
+#' standard `NA` text that would otherwise appear.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param missing_mark the text to be used in place
+#' of \code{NA} values in the rendered table.
+#' @return an object of class \code{gt_tbl}.
+#' @export
+fmt_missing <- function(data,
+                        missing_mark = "---") {
+
+  if (missing_mark == "---") {
+    missing_mark <- "&mdash;"
+  } else if (missing_mark == "--") {
+    missing_mark <- "&ndash;"
+  }
+
+  data[["missing_mark"]] <-
+    list(missing_mark = missing_mark)
+
+  data
+}
+
 #' Set a column format with a formatter function
 #' @param data a table object that is created using the
 #' \code{gt()} function.
