@@ -86,8 +86,7 @@ names as rownames, so we will expose those in a column with the
 `rownames_to_stub = TRUE` option After that, a few functions can be used
 to refine the display table:
 
-  - `cols_align_center()`: center-aligns cell content in specified
-    columns
+  - `fmt_number()`: allows us to format numbers with some exactness
   - `tab_stubhead_caption()`: adds a caption to the stubhead (the box in
     the top-left of the table)
   - `tab_heading()`: an opportunity to add a title and optionally a
@@ -102,35 +101,33 @@ to refine the display table:
 # 1 - we take the first six rows of `datasets::mtcars` data.frame
 # 2 - we are formatting numbers in 4 columns to have 1 decimal place
 # 3 - we are formatting numbers in the `wt` column to have 3 decimal places
-# 4 - all `character` value columns are center aligned
-# 5 - the dataset has rownames so they've been moved to the stub;
+# 4 - the dataset has rownames so they've been moved to the stub;
 #     here, we supply a stubhead caption
-# 6 - a heading is added, both parts are interpreted as Markdown
-# 7 - two source notes are added, the first is interpreted as Markdown
+# 5 - a heading is added, both parts are interpreted as Markdown
+# 6 - two source notes are added, the first is interpreted as Markdown
 mtcars_tbl <-
-  gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>%  # 1
+  gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>% # 1
   fmt_number(
     columns = c("mpg", "disp", "drat", "qsec"),
     decimals = 1
-    ) %>%  # 2
+    ) %>% # 2
   fmt_number(
     columns = "wt",
     decimals = 3
-    ) %>%  # 3
-  cols_align_center(types = "character") %>% # 4
+    ) %>% # 3
   tab_stubhead_caption(
     caption = "car model"
-    ) %>%  # 5
+    ) %>% # 4
   tab_heading(
     title = md("Excerpt from the **mtcars** dataset"),
     headnote = md("[A rather famous *Motor Trend* table]")
-    ) %>%  # 6
+    ) %>% # 5
   tab_source_note(
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
-    ) %>%  # 7
+    ) %>% # 6
   tab_source_note(
     source_note = "Original Data from Motor Trend Magazine (1974)."
-    )  # 7
+    ) # 6
 ```
 
 Invoking the object interactively displays it in the Viewer. In R
