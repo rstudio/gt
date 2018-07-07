@@ -203,6 +203,16 @@ render_as_html <- function(tbl) {
     }
   }
 
+  # Replace any NA values
+  if ("missing_mark" %in% names(tbl)) {
+
+    for (i in seq(body_content)) {
+      if (is.na(body_content[i])) {
+        body_content[i] <- tbl$missing_mark[[1]]
+      }
+    }
+  }
+
   # Handle any available footnotes
   if ("footnote" %in% names(tbl)) {
 
