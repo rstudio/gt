@@ -38,7 +38,7 @@
 #' @export
 gt <- function(data,
                rownames_to_stub = FALSE,
-               split_cols_dots = TRUE) {
+               split_cols_dots = FALSE) {
 
   if (rownames_to_stub) {
     stub_df <-
