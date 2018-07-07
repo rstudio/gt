@@ -109,32 +109,29 @@ Invoking the object interactively displays it in the Viewer. In R Markdown chunk
 
 <img src="man/figures/mtcars.png">
 
-Let's build another table using another well-known dataset. In this table, we embrace the naming convention provided in the **iris** dataset's column names. The dot-separated column names (such as `Sepal.Length` and `Petal.Width`) provide a means to specify heading levels as `<spanner_heading>.<column_heading>`. So long as we follow this column-name pattern, we can use the `tab_boxhead_panel()` function to parse and expand the given column names into one or more boxhead panels with spanner headings and column headings.
+Let's build another table using another well-known dataset. In this table, we embrace the naming convention provided in the **iris** dataset's column names. Having columns in dot notation (such as `Sepal.Length` and `Petal.Width`) provide a means to specify heading levels as `<spanner_heading>.<column_heading>`. So long as we follow this column-name pattern, we can use the `tab_boxhead_panel()` function to parse and expand the given column names into one or more boxhead panels with spanner headings and column headings.
 
 ```{r eval=FALSE}
 
 # 1 - we take the `datasets::iris` data.frame
+#   - the dot-notation column naming format (i.e., `[heading].[caption]`)
+#     is used to automatically creating spanner headings to add structure
 # 2 - the `Species` column is moved to the start of the column series
-# 3 - we are taking the column naming format `[heading].[caption]` and
-#     automatically creating spanner headings to add structure
-# 4 - we are formatting numbers in the named columns to have 1 decimal place
-# 5 - a heading is added
-# 6 - a source note is added
+# 3 - we are formatting numbers in the named columns to have 1 decimal place
+# 4 - a heading is added
+# 5 - a source note is added
 iris_tbl <-
-  gt(iris[1:6, ]) %>%  # 1
-  cols_move_to_start(columns = "Species") %>%  # 2
-  tab_boxhead_panel(use_names = TRUE) %>%  # 3
+  gt(iris[1:6, ], split_cols_dots = TRUE) %>% # 1
+  cols_move_to_start(columns = "Species") %>% # 2
   fmt_number(
     columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
     decimals = 1
-    ) %>%  # 4
+    ) %>% # 3
   tab_heading(
-    title = md("Excerpt from the **iris** dataset"),
-    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
-    ) %>%  # 5
+    title = md("The **iris** dataset"),
+    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>% # 4
   tab_source_note(
-    source_note = md("The data were collected by *Anderson, Edgar* (1935).")
-    )  # 6
+    source_note = md("The data were collected by *Anderson* (1935).")) # 5
 ```
 
 This is how the table appears:
@@ -162,12 +159,10 @@ The package API consists of the following functions:
 - `fmt_scientific()` -- format values to scientific notation
 - `fmt_percent()` -- format values as a percentage
 - `fmt_currency()` -- format values as currencies
-- `fmt_fraction()` -- format values as fractions
 - `fmt_date()` -- format values as dates
 - `fmt_time()` -- format values as times
 - `fmt_datetime()` -- format values as date-times
-- `fmt_uncertainty()` -- format as values with uncertainties
-- `fmt_font()` -- format fonts used for values
+- `fmt_missing()` -- format missing values
 
 **Modify Columns**
 
@@ -177,7 +172,6 @@ The package API consists of the following functions:
 - `cols_move()` -- move one or more columns
 - `cols_move_to_start()` -- move one or more columns to the start
 - `cols_move_to_end()` -- move one or more columns to the end
-- `cols_reorder()` -- reorder all columns
 - `cols_remove()` -- remove one or more columns
 - `cols_rename()` -- rename one or more columns
 
