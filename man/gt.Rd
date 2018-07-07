@@ -4,7 +4,7 @@
 \alias{gt}
 \title{Create gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE, split_cols_dots = TRUE)
+gt(data, rownames_to_stub = FALSE, split_cols_dots = FALSE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a
