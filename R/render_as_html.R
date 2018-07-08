@@ -93,8 +93,8 @@ render_as_html <- function(tbl) {
       ordering <- c(ordering, base::setdiff(all_groups, ordering))
 
 
-      forms_df <- cbind(stub_df, tbl$forms_df)
-      foot_df <- cbind(stub_df, tbl$foot_df)
+      forms_df <- cbind(extracted[, 1:2], tbl$forms_df)
+      foot_df <- cbind(extracted[, 1:2], tbl$foot_df)
 
 
       extracted_reorder <- forms_df_reorder <- foot_df_reorder <- extracted[0, ]
