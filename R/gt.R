@@ -79,16 +79,19 @@ gt <- function(data,
     }
   }
 
-  structure(
-    list(
-      input_df = data_tbl,
-      boxhead_df = boxhead_df,
-      stub_df = stub_df,
-      forms_df = output_df,
-      foot_df = output_df,
-      output_df = output_df,
-      formats = list(),
-      decorators = list()),
-    class = "gt_tbl"
-  )
+  object <-
+    structure(
+      list(
+        input_df = data_tbl,
+        boxhead_df = boxhead_df,
+        stub_df = stub_df,
+        forms_df = output_df,
+        foot_df = output_df,
+        output_df = output_df,
+        formats = list(),
+        decorators = list()))
+
+  attr(object, "class") <- "gt_tbl"
+
+  object
 }
