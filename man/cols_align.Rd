@@ -4,7 +4,7 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = "center", columns = NULL)
+cols_align(data, align = "center", columns)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -13,8 +13,8 @@ cols_align(data, align = "center", columns = NULL)
 \item{align}{the alignment direction. This can either
 be \code{"center"}, \code{"left"}, or \code{"right"}.}
 
-\item{columns}{an optional vector of column names
-for which the alignment should be applied.}
+\item{columns}{an vector of column names for which the
+alignment should be applied.}
 }
 \value{
 an object of class \code{gt_tbl}.
