@@ -4,13 +4,13 @@
 \alias{tab_boxhead_panel}
 \title{Arrange a boxhead into panels}
 \usage{
-tab_boxhead_panel(data, spanner, columns)
+tab_boxhead_panel(data, group, columns)
 }
 \arguments{
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
-\item{spanner}{the spanner heading name.}
+\item{group}{the name to assign to the spanner heading.}
 
 \item{columns}{the columns to be components of the
 spanner heading.}
@@ -29,6 +29,6 @@ headings and column headings.
 # spanner headings
 gt(data = rock) \%>\%
   tab_boxhead_panel(
-    spanner = "perimeter",
+    group = "perimeter",
     columns = c("peri", "shape"))
 }
