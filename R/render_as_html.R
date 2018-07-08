@@ -193,13 +193,17 @@ render_as_html <- function(tbl) {
   for (i in seq(body_content)) {
     if (grepl("[eE](\\+|-)\\d+?", body_content[i])) {
       body_content[i] <-
-        paste0(
+        ifelse(
+          as.numeric(body_content[i]) >= 1 & as.numeric(body_content[i]) < 10,
           (stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
              unlist())[1],
-          " &times; 10<sup class='gt_super'>",
-          as.numeric(stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
-                       unlist())[2],
-          "</sup>")
+          paste0(
+            (stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
+               unlist())[1],
+            " &times; 10<sup class='gt_super'>",
+            as.numeric(stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
+                         unlist())[2],
+            "</sup>"))
     }
   }
 
