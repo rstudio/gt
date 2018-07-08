@@ -64,6 +64,36 @@ target_cell <- function(row = NULL,
   cell_targeted
 }
 
+#' Helper for targeting a series of row labels or columns
+#' @importFrom rlang enquos get_expr
+#' @export
+tgt <- function(...) {
+
+  # Get the requested `copy_attrs_from`
+  x <- rlang::enquos(...) %>% unlist()
+
+  cols <- c()
+  for (i in seq(x)) {
+    cols <- c(cols, (x[[i]] %>% rlang::get_expr() %>% as.character()))
+  }
+
+  cols
+}
+
+#' Helper for processing column labels
+#' @return a named vector of column labels.
+#' @export
+col_labels <- function(...) {
+
+  x <- list(...)
+
+  for (i in seq(x)) {
+    x[[i]] <- x[[i]] %>% gt:::process_text()
+  }
+
+  x %>% unlist()
+}
+
 #' Helper for collecting ungrouped rows or columns
 #' @return a character object of class \code{not_in_group}.
 #' @export
