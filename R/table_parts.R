@@ -131,10 +131,15 @@ tab_stub_block <- function(data,
 #'   tab_boxhead_panel(
 #'     group = "perimeter",
 #'     columns = c("peri", "shape"))
+#' @importFrom rlang enquo get_expr
 #' @export
 tab_boxhead_panel <- function(data,
                               group,
                               columns) {
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>% rlang::get_expr() %>% as.character()
 
   # Filter the vector of column names by the
   # column names actually in `data$data`
