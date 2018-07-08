@@ -119,7 +119,7 @@ tab_stub_block <- function(data,
 #' headings and column headings.
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param spanner the spanner heading name.
+#' @param group the name to assign to the spanner heading.
 #' @param columns the columns to be components of the
 #' spanner heading.
 #' @return an object of class \code{gt_tbl}.
@@ -129,12 +129,11 @@ tab_stub_block <- function(data,
 #' # spanner headings
 #' gt(data = rock) %>%
 #'   tab_boxhead_panel(
-#'     spanner = "perimeter",
+#'     group = "perimeter",
 #'     columns = c("peri", "shape"))
-#' @importFrom dplyr bind_cols
 #' @export
 tab_boxhead_panel <- function(data,
-                              spanner,
+                              group,
                               columns) {
 
   # Filter the vector of column names by the
@@ -146,7 +145,7 @@ tab_boxhead_panel <- function(data,
     return(data)
   }
 
-  data$boxhead_df[1, columns] <- spanner
+  data$boxhead_df[1, columns] <- process_text(group)
   data
 }
 
