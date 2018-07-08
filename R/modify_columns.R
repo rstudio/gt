@@ -12,20 +12,31 @@
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align("left")
-#' @importFrom rlang enquo get_expr
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_align <- function(data,
                        align = "center",
                        columns) {
 
-  if (!(align %in% c("left", "center", "right"))) {
-    return(data)
-  }
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Filter the vector of column names by the
   # column names actually in `data$input_df`
-  columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+  columns <- columns[which(columns %in% colnames(data$input_df))]
+
+  if (!(align %in% c("left", "center", "right"))) {
+    return(data)
+  }
 
   if (length(columns) == 0) {
     return(data)
@@ -48,9 +59,22 @@ cols_align <- function(data,
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_left()
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_align_left <- function(data,
                             columns) {
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   cols_align(
     data = data,
@@ -70,9 +94,22 @@ cols_align_left <- function(data,
 #' # all columns
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_center()
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_align_center <- function(data,
                               columns) {
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   cols_align(
     data = data,
@@ -92,9 +129,22 @@ cols_align_center <- function(data,
 #' # columns to the right
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_right()
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_align_right <- function(data,
                              columns) {
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   cols_align(
     data = data,
@@ -113,8 +163,7 @@ cols_label <- function(data,
 
   # Filter the vector of labels by the column names
   # actually in `data$input_df`
-  labels <-
-    labels[which(names(labels) %in% colnames(data$input_df))]
+  labels <- labels[which(names(labels) %in% colnames(data$input_df))]
 
   if (length(labels) == 0) {
     return(data)
@@ -139,7 +188,8 @@ cols_label <- function(data,
 #' to the right of this column.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select bind_cols
-#' @importFrom rlang get_expr
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_move <- function(data,
                       columns,
@@ -147,16 +197,29 @@ cols_move <- function(data,
 
   # Get the requested `columns`
   columns <-
-    rlang::enquo(columns) %>% rlang::get_expr() %>% as.character()
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Get the requested `after`
   after <-
-    rlang::enquo(after) %>% rlang::get_expr() %>% as.character()
+    rlang::enquo(after) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  after <- after[after != "&"]
 
   # Filter the vector of column names by the
   # column names actually in `data$input_df`
-  columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+  columns <- columns[which(columns %in% colnames(data$input_df))]
 
   if (length(columns) == 0) {
     return(data)
@@ -235,14 +298,26 @@ cols_move <- function(data,
 #' column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select everything
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_move_to_start <- function(data,
                                columns) {
 
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
+
   # Filter the vector of column names by the
   # column names actually in `data$input_df`
-  columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+  columns <- columns[which(columns %in% colnames(data$input_df))]
 
   if (length(columns) == 0) {
     return(data)
@@ -268,14 +343,26 @@ cols_move_to_start <- function(data,
 #' column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_move_to_end <- function(data,
                              columns) {
 
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
+
   # Filter the vector of column names by the
   # column names actually in `data$data`
-  columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+  columns <- columns[which(columns %in% colnames(data$input_df))]
 
   if (length(columns) == 0) {
     return(data)
@@ -300,15 +387,27 @@ cols_move_to_end <- function(data,
 #' The order of the remaining columns will be preserved. Values
 #' provided that do not correspond to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select bind_cols
+#' @importFrom dplyr select
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 cols_remove <- function(data,
                         columns) {
 
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
+
   # Filter the vector of column names by the
   # column names actually in `data$data`
-  columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+  columns <- columns[which(columns %in% colnames(data$input_df))]
 
   if (length(columns) == 0) {
     return(data)

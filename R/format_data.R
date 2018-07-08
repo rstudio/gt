@@ -29,6 +29,8 @@
 #'   fmt_number(
 #'     columns = c("drat", "wt", "qsec"),
 #'     decimals = 2)
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 fmt_number <- function(data,
                        columns,
@@ -48,6 +50,17 @@ fmt_number <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -103,6 +116,8 @@ fmt_number <- function(data,
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
 #' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 fmt_scientific <- function(data,
                            columns,
@@ -122,6 +137,17 @@ fmt_scientific <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -175,6 +201,8 @@ fmt_scientific <- function(data,
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
 #' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 fmt_percent <- function(data,
                         columns,
@@ -194,6 +222,17 @@ fmt_percent <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -262,6 +301,8 @@ fmt_percent <- function(data,
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
 #' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim
 #' @export
 fmt_currency <- function(data,
                          columns,
@@ -287,6 +328,17 @@ fmt_currency <- function(data,
   } else {
     placement <- "l"
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -361,6 +413,8 @@ fmt_currency <- function(data,
 #' value results in all rows in \code{columns} being formatted.
 #' @param date_style the date style to use.
 #' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim str_replace_all
 #' @export
 fmt_date <- function(data,
                      columns,
@@ -372,6 +426,17 @@ fmt_date <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -414,6 +479,8 @@ fmt_date <- function(data,
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
 #' @param time_style the time style to use.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim str_replace_all
 #' @export
 fmt_time <- function(data,
                      columns,
@@ -425,6 +492,17 @@ fmt_time <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -469,6 +547,8 @@ fmt_time <- function(data,
 #' @param date_style the date style to use.
 #' @param time_style the time style to use.
 #' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim str_replace_all
 #' @export
 fmt_datetime <- function(data,
                          columns,
@@ -481,6 +561,17 @@ fmt_datetime <- function(data,
   if (is.null(rows)) {
     rows <- TRUE
   }
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
