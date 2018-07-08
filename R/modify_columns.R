@@ -3,8 +3,8 @@
 #' \code{gt()} function.
 #' @param align the alignment direction. This can either
 #' be \code{"center"}, \code{"left"}, or \code{"right"}.
-#' @param columns an optional vector of column names
-#' for which the alignment should be applied.
+#' @param columns an vector of column names for which the
+#' alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -12,10 +12,11 @@
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align("left")
+#' @importFrom rlang enquo get_expr
 #' @export
 cols_align <- function(data,
                        align = "center",
-                       columns = NULL) {
+                       columns) {
 
   if (!(align %in% c("left", "center", "right"))) {
     return(data)
@@ -38,8 +39,8 @@ cols_align <- function(data,
 #' Set columns to be aligned left
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an optional vector of column names
-#' for which the left alignment should be applied.
+#' @param columns an vector of column names for which the
+#' left alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -49,7 +50,7 @@ cols_align <- function(data,
 #'   cols_align_left()
 #' @export
 cols_align_left <- function(data,
-                            columns = NULL) {
+                            columns) {
 
   cols_align(
     data = data,
@@ -60,8 +61,8 @@ cols_align_left <- function(data,
 #' Set columns to be aligned to the center
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an optional vector of column names
-#' for which the center alignment should be applied.
+#' @param columns an vector of column names for which the
+#' center alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -71,7 +72,7 @@ cols_align_left <- function(data,
 #'   cols_align_center()
 #' @export
 cols_align_center <- function(data,
-                              columns = NULL) {
+                              columns) {
 
   cols_align(
     data = data,
@@ -82,8 +83,8 @@ cols_align_center <- function(data,
 #' Set columns to be aligned right
 #' @param data a table object that is created using the
 #' \code{gt()} function.
-#' @param columns an optional vector of column names
-#' for which the right alignment should be applied.
+#' @param columns an vector of column names for which the
+#' right alignment should be applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -93,7 +94,7 @@ cols_align_center <- function(data,
 #'   cols_align_right()
 #' @export
 cols_align_right <- function(data,
-                             columns = NULL) {
+                             columns) {
 
   cols_align(
     data = data,
@@ -138,10 +139,19 @@ cols_label <- function(data,
 #' to the right of this column.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select bind_cols
+#' @importFrom rlang get_expr
 #' @export
 cols_move <- function(data,
                       columns,
                       after) {
+
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>% rlang::get_expr() %>% as.character()
+
+  # Get the requested `after`
+  after <-
+    rlang::enquo(after) %>% rlang::get_expr() %>% as.character()
 
   # Filter the vector of column names by the
   # column names actually in `data$input_df`
@@ -150,6 +160,13 @@ cols_move <- function(data,
 
   if (length(columns) == 0) {
     return(data)
+  }
+
+  # Ensure that only the last element of `after` is
+  # retained in the case that multiple columns are
+  # provided
+  if (length(after) > 1) {
+    after <- after[length(after)]
   }
 
   # Get the remaining column names in the table
