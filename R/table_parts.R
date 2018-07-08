@@ -83,7 +83,8 @@ tab_stubhead_caption <- function(data,
 #'   tab_stub_block(
 #'     group = "perimeter",
 #'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
-#' @importFrom dplyr bind_cols bind_rows arrange
+#' @importFrom rlang enquo get_expr flatten_chr
+#' @importFrom stringr str_trim str_remove_all
 #' @export
 tab_stub_block <- function(data,
                            group,
@@ -97,16 +98,26 @@ tab_stub_block <- function(data,
       list(others = others)
   }
 
-  if (inherits(rows, "not_in_group")) {
+  # Get the requested `rows`
+  rows <-
+    rlang::enquo(rows) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
 
-    if ("others_group" %in% names(data)) {
-      data$stub_df[which(is.na(data$stub_df$groupname)), 1] <-
-        data[["others_group"]][["others"]]
-    } else {
-      data$stub_df[which(is.na(data$stub_df$groupname)), 1] <- group
-    }
+  rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
+
+  data$stub_df[which(data$stub_df$rowname %in% rows), 1] <-
+    process_text(group)
+
+  # Insert the group into the `blocks_arrange` component
+  if (!("arrange_groups" %in% names(data))) {
+    data <- blocks_arrange(data = data, groups = group)
   } else {
-    data$stub_df[which(data$stub_df$rowname %in% rows), 1] <- group
+    data[["arrange_groups"]][["groups"]] <-
+      c(data[["arrange_groups"]][["groups"]], group)
   }
 
   data
@@ -249,8 +260,8 @@ tab_footnote <- function(data,
 
     # Append the footnote
     if (is.na(data$foot_df[data_row, data_col])) {
-        data$foot_df[data_row, data_col] <-
-          paste0("::foot_", index)
+      data$foot_df[data_row, data_col] <-
+        paste0("::foot_", index)
     } else {
       data$foot_df[data_row, data_col] <-
         paste0(
