@@ -229,4 +229,4 @@ to abide by its terms.
 
 ## License
 
-MIT © RStudio
+MIT © RStudio, Inc.
