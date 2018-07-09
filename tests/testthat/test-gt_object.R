@@ -16,6 +16,6 @@ test_that("an gt table object contains the correct components", {
   # Expect certain named components
   expect_equal(
     table_object %>% names(),
-    c("input_df", "boxhead_df", "stub_df", "forms_df",
+    c("input_df", "boxh_df", "stub_df", "fmts_df",
       "foot_df", "output_df", "formats", "decorators"))
 })
