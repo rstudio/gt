@@ -15,6 +15,8 @@
 #' subsequent components represent the column label.
 #' Please note that reference to individual columns
 #' must still be via the original column names.
+#' @param output the output format for the table.
+#' Currently, this is only the \code{html} format.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -38,7 +40,8 @@
 #' @export
 gt <- function(data,
                rownames_to_stub = FALSE,
-               split_cols_dots = FALSE) {
+               split_cols_dots = FALSE,
+               output = "html") {
 
   if (rownames_to_stub) {
     stub_df <-
@@ -91,7 +94,9 @@ gt <- function(data,
         formats = list(),
         decorators = list()))
 
-  attr(object, "class") <- "gt_tbl"
+  if (output == "html") {
+    attr(object, "class") <- "gt_tbl"
+  }
 
   object
 }
