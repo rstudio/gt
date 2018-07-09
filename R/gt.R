@@ -59,7 +59,7 @@ gt <- function(data,
   output_df <- data_tbl
   output_df[] <- NA_character_
 
-  boxhead_df <-
+  boxh_df <-
     output_df[0, ] %>%
     tibble::add_row() %>%  # spanner_name
     tibble::add_row() %>%  # column_name (relabeled)
@@ -72,8 +72,8 @@ gt <- function(data,
     for (i in seq(colnames)) {
       if (grepl(".+\\..+", colnames[i])) {
         split_colname <- strsplit(colnames[i], "\\.") %>% unlist()
-        boxhead_df[1, i] <- split_colname[1]
-        boxhead_df[2, i] <-
+        boxh_df[1, i] <- split_colname[1]
+        boxh_df[2, i] <-
           paste0(split_colname[2:length(split_colname)], collapse = ".")
       }
     }
@@ -83,9 +83,9 @@ gt <- function(data,
     structure(
       list(
         input_df = data_tbl,
-        boxhead_df = boxhead_df,
+        boxh_df = boxh_df,
         stub_df = stub_df,
-        forms_df = output_df,
+        fmts_df = output_df,
         foot_df = output_df,
         output_df = output_df,
         formats = list(),

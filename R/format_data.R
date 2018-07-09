@@ -718,7 +718,7 @@ render_formats <- function(data) {
 
       # Only perform rendering if column is present
       if (col %in% colnames(data$input_df)) {
-        data$forms_df[[col]][data$decorators[[i]]$rows] <-
+        data$fmts_df[[col]][data$decorators[[i]]$rows] <-
           data$decorators[[i]]$func(data$input_df[[col]][data$decorators[[i]]$rows])
       }
     }
@@ -736,17 +736,17 @@ render_formats <- function(data) {
 
   # Assign labels as column names for any labels
   # that are not explicitly set
-  for (colname in colnames(data$boxhead_df)) {
-    if (is.na(data$boxhead_df[2, colname])) {
-      data$boxhead_df[2, colname] <- colname
+  for (colname in colnames(data$boxh_df)) {
+    if (is.na(data$boxh_df[2, colname])) {
+      data$boxh_df[2, colname] <- colname
     }
   }
 
   # Assign center alignment for all columns
   # that haven't had alignment explicitly set
-  for (colname in colnames(data$boxhead_df)) {
-    if (is.na(data$boxhead_df[3, colname])) {
-      data$boxhead_df[3, colname] <- "center"
+  for (colname in colnames(data$boxh_df)) {
+    if (is.na(data$boxh_df[3, colname])) {
+      data$boxh_df[3, colname] <- "center"
     }
   }
 

@@ -42,7 +42,7 @@ cols_align <- function(data,
     return(data)
   }
 
-  data$boxhead_df[3, columns] <- align
+  data$boxh_df[3, columns] <- align
 
   data
 }
@@ -76,10 +76,13 @@ cols_align_left <- function(data,
 
   columns <- columns[columns != "&"]
 
-  cols_align(
-    data = data,
-    align = "left",
-    columns = columns)
+  if (length(columns) == 0) {
+    return(data)
+  }
+
+  data$boxh_df[3, columns] <- "left"
+
+  data
 }
 
 #' Set columns to be aligned to the center
@@ -111,10 +114,13 @@ cols_align_center <- function(data,
 
   columns <- columns[columns != "&"]
 
-  cols_align(
-    data = data,
-    align = "center",
-    columns = columns)
+  if (length(columns) == 0) {
+    return(data)
+  }
+
+  data$boxh_df[3, columns] <- "center"
+
+  data
 }
 
 #' Set columns to be aligned right
@@ -146,10 +152,13 @@ cols_align_right <- function(data,
 
   columns <- columns[columns != "&"]
 
-  cols_align(
-    data = data,
-    align = "right",
-    columns = columns)
+  if (length(columns) == 0) {
+    return(data)
+  }
+
+  data$boxh_df[3, columns] <- "right"
+
+  data
 }
 
 #' Re-label one or more columns
@@ -170,7 +179,7 @@ cols_label <- function(data,
   }
 
   for (i in seq(labels)) {
-    data$boxhead_df[2, names(labels[i])] <- unname(labels[i][1])
+    data$boxh_df[2, names(labels[i])] <- unname(labels[i][1])
   }
 
   data
@@ -256,12 +265,12 @@ cols_move <- function(data,
         column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
 
-    data$forms_df <- data$forms_df %>%
+    data$fmts_df <- data$fmts_df %>%
       dplyr::select(
         column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
 
-    data$boxhead_df <- data$boxhead_df %>%
+    data$boxh_df <- data$boxh_df %>%
       dplyr::select(
         column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
@@ -277,10 +286,10 @@ cols_move <- function(data,
     data$foot_df <- data$foot_df %>%
       dplyr::select(column_names[1:column_index], columns)
 
-    data$forms_df <- data$forms_df %>%
+    data$fmts_df <- data$fmts_df %>%
       dplyr::select(column_names[1:column_index], columns)
 
-    data$boxhead_df <- data$boxhead_df %>%
+    data$boxh_df <- data$boxh_df %>%
       dplyr::select(column_names[1:column_index], columns)
   }
 
@@ -326,8 +335,8 @@ cols_move_to_start <- function(data,
   data$input_df <- data$input_df %>% dplyr::select(columns, everything())
   data$output_df <- data$output_df %>% dplyr::select(columns, everything())
   data$foot_df <- data$foot_df %>% dplyr::select(columns, everything())
-  data$forms_df <- data$forms_df %>% dplyr::select(columns, everything())
-  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns, everything())
+  data$fmts_df <- data$fmts_df %>% dplyr::select(columns, everything())
+  data$boxh_df <- data$boxh_df %>% dplyr::select(columns, everything())
 
   data
 }
@@ -374,8 +383,8 @@ cols_move_to_end <- function(data,
   data$input_df <- data$input_df %>% dplyr::select(columns)
   data$output_df <- data$output_df %>% dplyr::select(columns)
   data$foot_df <- data$foot_df %>% dplyr::select(columns)
-  data$forms_df <- data$forms_df %>% dplyr::select(columns)
-  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns)
+  data$fmts_df <- data$fmts_df %>% dplyr::select(columns)
+  data$boxh_df <- data$boxh_df %>% dplyr::select(columns)
 
   data
 }
@@ -419,8 +428,8 @@ cols_remove <- function(data,
   data$input_df <- data$input_df %>% dplyr::select(columns)
   data$output_df <- data$output_df %>% dplyr::select(columns)
   data$foot_df <- data$foot_df %>% dplyr::select(columns)
-  data$forms_df <- data$forms_df %>% dplyr::select(columns)
-  data$boxhead_df <- data$boxhead_df %>% dplyr::select(columns)
+  data$fmts_df <- data$fmts_df %>% dplyr::select(columns)
+  data$boxh_df <- data$boxh_df %>% dplyr::select(columns)
 
   data
 }
