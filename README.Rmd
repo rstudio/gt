@@ -185,4 +185,4 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 
 ## License
 
-MIT &copy; RStudio
+MIT &copy; RStudio, Inc.
