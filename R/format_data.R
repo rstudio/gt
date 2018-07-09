@@ -214,8 +214,8 @@ fmt_percent <- function(data,
                         drop0trailing = FALSE) {
 
   # If the number of decimals is not provided,
-  # use a default value of 4
-  if (is.null(decimals)) decimals <- 4
+  # use a default value of 2
+  if (is.null(decimals)) decimals <- 2
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
