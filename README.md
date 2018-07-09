@@ -108,26 +108,22 @@ to refine the display table:
 mtcars_tbl <-
   gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>% # 1
   fmt_number(
-    columns = c("mpg", "disp", "drat", "qsec"),
+    columns = tgt(mpg, disp, drat, qsec),
     decimals = 1
     ) %>% # 2
   fmt_number(
-    columns = "wt",
+    columns = wt,
     decimals = 3
     ) %>% # 3
-  tab_stubhead_caption(
-    caption = "car model"
-    ) %>% # 4
+  tab_stubhead_caption(caption = "car model") %>% # 4
   tab_heading(
     title = md("Excerpt from the **mtcars** dataset"),
     headnote = md("[A rather famous *Motor Trend* table]")
     ) %>% # 5
   tab_source_note(
-    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
-    ) %>% # 6
+    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")) %>% # 6
   tab_source_note(
-    source_note = "Original Data from Motor Trend Magazine (1974)."
-    ) # 6
+    source_note = "Original Data from Motor Trend Magazine (1974).") # 6
 ```
 
 Invoking the object interactively displays it in the Viewer. In R
@@ -140,9 +136,9 @@ table, we embrace the naming convention provided in the **iris**
 dataset’s column names. Having columns in dot notation (such as
 `Sepal.Length` and `Petal.Width`) provide a means to specify heading
 levels as `<spanner_heading>.<column_heading>`. So long as we follow
-this column-name pattern, we can use the `tab_boxhead_panel()` function
-to parse and expand the given column names into one or more boxhead
-panels with spanner headings and column headings.
+this column-name pattern, we can use the `gt()` function to parse and
+expand the given column names into one or more boxhead panels with
+spanner headings and column headings.
 
 ``` r
 
@@ -155,9 +151,9 @@ panels with spanner headings and column headings.
 # 5 - a source note is added
 iris_tbl <-
   gt(iris[1:6, ], split_cols_dots = TRUE) %>% # 1
-  cols_move_to_start(columns = "Species") %>% # 2
+  cols_move_to_start(columns = Species) %>% # 2
   fmt_number(
-    columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    columns = tgt(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
     ) %>% # 3
   tab_heading(
@@ -206,7 +202,7 @@ The package API consists of the following functions:
   - `cols_move_to_start()` – move one or more columns to the start
   - `cols_move_to_end()` – move one or more columns to the end
   - `cols_remove()` – remove one or more columns
-  - `cols_rename()` – rename one or more columns
+  - `cols_label()` – relabel one or more columns
 
 There are more functions yet to come. A means to selectively target
 rows, columns, or rows will be introduced and incorporated into
