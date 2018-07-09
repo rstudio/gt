@@ -12,7 +12,7 @@
 render_as_html <- function(tbl) {
 
   # Determine if there is a populated stub
-  if (!all(is.na(tbl$stub_df$row_name)) ||
+  if (!all(is.na(tbl$stub_df$rowname)) ||
       !all(is.na(tbl$stub_df$groupname))) {
     stub_available <- TRUE
   } else {
