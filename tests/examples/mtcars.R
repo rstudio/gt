@@ -7,7 +7,7 @@ library(gt)
 # 2 - the `disp` and `vs` column values are right aligned
 # 3 - creation of two boxhead panels
 # 4 - columns are being moved around in several ways
-# 5 - two stub blocks are created (`Supercars` and `Others`)
+# 5 - three stub blocks are created (`Mercs`, `Supercars`, and `Others`)
 # 6 - the stub blocks are arranged
 # 7 - we are formatting numbers in different columns to specific decimal places
 # 8 - a heading is added
@@ -30,14 +30,17 @@ mtcars_tbl <-
   cols_remove(columns = carb) %>% # 4
   cols_move(columns = wt & carb & qsec, after = gear) %>% # 4
   tab_stub_block(
+    group = "Mercs",
+    rows = rownames_with("Merc")) %>% # 5
+  tab_stub_block(
     group = "Supercars",
     rows = `Ferrari Dino` & `Maserati Bora` & `Porsche 914-2` & `Ford Pantera L`) %>% # 5
   blocks_arrange(
-    groups = tgt(Supercars, Others)) %>% # 6
+    groups = tgt(Mercs, Supercars, Others)) %>% # 6
   fmt_number(
     columns = disp & drat & wt, decimals = 3) %>% # 7
   fmt_number(
-    columns = qsec, decimals = 2) %>% # 7
+    columns = qsec, decimals = 3, rows = rownames_with("Merc")) %>% # 7
   fmt_number(
     columns = mpg, decimals = 1) %>% # 7
   tab_heading(
