@@ -10,7 +10,7 @@ Description: Build table output from tabular data using the Grammar of Tables
 Authors@R: c(
     person("Richard", "Iannone", , "rich@rstudio.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
-    person("RStudio", role = c("cph", "fnd"))
+    person("RStudio, Inc.", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
 URL: https://github.com/rstudio/gt
@@ -23,8 +23,8 @@ Depends:
     R (>= 3.2.0)
 Imports: 
     commonmark (>= 1.5),
-    dplyr (>= 0.7.5),
-    ggplot2 (>= 2.2.1),
+    dplyr (>= 0.7.6),
+    ggplot2 (>= 3.0.0),
     glue (>= 1.2.0),
     htmltools (>= 0.3.6),
     knitr (>= 1.20),
