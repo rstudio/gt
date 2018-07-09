@@ -56,6 +56,44 @@ columns_with <- function(pattern) {
 target_cell <- function(row = NULL,
                         column = NULL) {
 
+  # Get the requested `row`
+  row <-
+    rlang::enquo(row) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  if ("&" %in% row) {
+    row <- row[row != "&"]
+  }
+
+  row <- row[1]
+
+  if (suppressWarnings(!(row %>% as.integer() %>% is.na()))) {
+    row <- as.integer(row)
+  }
+
+  # Get the requested `column`
+  column <-
+    rlang::enquo(column) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  if ("&" %in% column) {
+    column <- column[column != "&"]
+  }
+
+  column <- column[1]
+
+  if (suppressWarnings(!(column %>% as.integer() %>% is.na()))) {
+    column <- as.integer(column)
+  }
+
   # Create a list object
   cell_targeted <- list(row = row, column = column)
 
@@ -69,7 +107,7 @@ target_cell <- function(row = NULL,
 #' @export
 tgt <- function(...) {
 
-  # Get the requested `copy_attrs_from`
+  # Get the requested targets
   x <- rlang::enquos(...) %>% unlist()
 
   cols <- c()
