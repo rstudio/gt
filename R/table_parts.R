@@ -58,7 +58,7 @@ tab_stubhead_caption <- function(data,
                                  caption) {
 
   data[["stubhead_caption"]] <-
-    list(stubhead_caption = caption)
+    list(stubhead_caption = process_text(caption))
 
   data
 }
@@ -109,8 +109,7 @@ tab_stub_block <- function(data,
 
   rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
 
-  data$stub_df[which(data$stub_df$rowname %in% rows), 1] <-
-    process_text(group)
+  data$stub_df[which(data$stub_df$rowname %in% rows), 1] <- group
 
   # Insert the group into the `blocks_arrange` component
   if (!("arrange_groups" %in% names(data))) {
@@ -161,7 +160,7 @@ tab_boxhead_panel <- function(data,
     return(data)
   }
 
-  data$boxhead_df[1, columns] <- process_text(group)
+  data$boxh_df[1, columns] <- process_text(group)
   data
 }
 

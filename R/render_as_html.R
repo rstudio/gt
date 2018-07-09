@@ -27,7 +27,7 @@ render_as_html <- function(tbl) {
   }
 
   # Determine if there are any spanners present
-  if (!all(is.na(tbl$boxhead_df[1,] %>% t() %>% as.vector()))) {
+  if (!all(is.na(tbl$boxh_df[1,] %>% t() %>% as.vector()))) {
     spanners_present <- TRUE
   } else {
     spanners_present <- FALSE
@@ -49,7 +49,7 @@ render_as_html <- function(tbl) {
   # Extract the table (case of table with no stub)
   if (stub_available == FALSE) {
     extracted <- tbl$output_df
-    col_alignment <- tbl$boxhead_df[3, ] %>% t() %>% as.vector()
+    col_alignment <- tbl$boxh_df[3, ] %>% t() %>% as.vector()
   }
 
   # Extract the table (case of table with a stub w/ only row names)
@@ -57,7 +57,7 @@ render_as_html <- function(tbl) {
     stub_df <- tbl$stub_df
     colnames(stub_df)[2] <- ":row_name:"
     extracted <- cbind(stub_df, tbl$output_df)[, -1]
-    col_alignment <- c("right", tbl$boxhead_df[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", tbl$boxh_df[3, ] %>% t() %>% as.vector())
   }
 
   # Extract the table (case of table with a stub w/ only group names)
@@ -65,7 +65,7 @@ render_as_html <- function(tbl) {
     stub_df <- tbl$stub_df
     colnames(stub_df)[1] <- ":group_name:"
     extracted <- cbind(stub_df, tbl$output_df)[, -2]
-    col_alignment <- c("right", tbl$boxhead_df[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", tbl$boxh_df[3, ] %>% t() %>% as.vector())
   }
 
   # Extract the table (case of table with a stub of row and group names)
@@ -93,11 +93,11 @@ render_as_html <- function(tbl) {
       ordering <- c(ordering, base::setdiff(all_groups, ordering))
 
 
-      forms_df <- cbind(extracted[, 1:2], tbl$forms_df)
+      fmts_df <- cbind(extracted[, 1:2], tbl$fmts_df)
       foot_df <- cbind(extracted[, 1:2], tbl$foot_df)
 
 
-      extracted_reorder <- forms_df_reorder <- foot_df_reorder <- extracted[0, ]
+      extracted_reorder <- fmts_df_reorder <- foot_df_reorder <- extracted[0, ]
 
       for (i in seq(ordering)) {
 
@@ -106,10 +106,10 @@ render_as_html <- function(tbl) {
             extracted_reorder,
             subset(extracted, `:group_name:` == ordering[i]))
 
-        forms_df_reorder <-
+        fmts_df_reorder <-
           rbind(
-            forms_df_reorder,
-            subset(forms_df, `:group_name:` == ordering[i]))
+            fmts_df_reorder,
+            subset(fmts_df, `:group_name:` == ordering[i]))
 
         foot_df_reorder <-
           rbind(
@@ -118,10 +118,10 @@ render_as_html <- function(tbl) {
       }
 
       rownames(extracted_reorder) <- NULL
-      rownames(forms_df_reorder) <- NULL
+      rownames(fmts_df_reorder) <- NULL
       rownames(foot_df_reorder) <- NULL
 
-      tbl$forms_df <- forms_df_reorder[, -c(1:2)]
+      tbl$fmts_df <- fmts_df_reorder[, -c(1:2)]
       tbl$foot_df <- foot_df_reorder[, -c(1:2)]
       extracted <- extracted_reorder
     }
@@ -136,7 +136,7 @@ render_as_html <- function(tbl) {
       dplyr::arrange(row)
 
     extracted <- extracted[, -1]
-    col_alignment <- c("right", tbl$boxhead_df[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", tbl$boxh_df[3, ] %>% t() %>% as.vector())
   }
 
   # Reset the rownames for the extracted content
@@ -147,21 +147,21 @@ render_as_html <- function(tbl) {
   n_cols <- ncol(extracted)
 
   # Replace percent sign markers
-  for (colname in colnames(tbl$forms_df)) {
-    for (row in 1:nrow(tbl$forms_df)) {
-      if (grepl("::percent", tbl$forms_df[row, colname])) {
+  for (colname in colnames(tbl$fmts_df)) {
+    for (row in 1:nrow(tbl$fmts_df)) {
+      if (grepl("::percent", tbl$fmts_df[row, colname])) {
         extracted[row, colname] <- paste0(extracted[row, colname], "%")
       }
     }
   }
 
   # Replace currency values
-  for (colname in colnames(tbl$forms_df)) {
-    for (row in 1:nrow(tbl$forms_df)) {
-      if (grepl("::curr.*", tbl$forms_df[row, colname])) {
+  for (colname in colnames(tbl$fmts_df)) {
+    for (row in 1:nrow(tbl$fmts_df)) {
+      if (grepl("::curr.*", tbl$fmts_df[row, colname])) {
 
-        pos <- substring(tbl$forms_df[row, colname], 8, 8)
-        symbol <- gsub("::curr_._", "", tbl$forms_df[row, colname])
+        pos <- substring(tbl$fmts_df[row, colname], 8, 8)
+        symbol <- gsub("::curr_._", "", tbl$fmts_df[row, colname])
 
         if (pos == "l") {
           extracted[row, colname] <- paste0(symbol, extracted[row, colname])
@@ -355,7 +355,7 @@ render_as_html <- function(tbl) {
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
-  labels_rev <- tbl$boxhead_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
+  labels_rev <- tbl$boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
 
   for (i in seq(labels_rev)) {
     headings_rev[i] <- labels_rev[i]
@@ -386,7 +386,7 @@ render_as_html <- function(tbl) {
   } else {
 
     # spanners
-    spanners <- tbl$boxhead_df[1, ] %>% t() %>% as.vector()
+    spanners <- tbl$boxh_df[1, ] %>% t() %>% as.vector()
 
     first_set <- c()
     second_set <- c()
