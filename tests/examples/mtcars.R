@@ -54,16 +54,16 @@ mtcars_tbl <-
     caption = md("*car*")) %>% # 10
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    location = target_cell(row = "Ford Pantera L", column = "qsec")) %>% # 11
+    location = target_cell(row = `Ford Pantera L`, column = qsec)) %>% # 11
   tab_footnote(
     footnote = "Massive hp.",
-    location = target_cell(row = "Ford Pantera L", column = "hp")) %>% # 11
+    location = target_cell(row = "Ford Pantera L", column = hp)) %>% # 11
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    location = target_cell("Toyota Corolla", column = 1)) %>% # 11
+    location = target_cell(`Toyota Corolla`, column = 2)) %>% # 11
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    location = target_cell("Merc 230", "qsec")) %>% # 11
+    location = target_cell("Merc 230", qsec)) %>% # 11
   cols_label(
     labels = col_labels(
       hp = md("*HP*"), qsec = "QMT, seconds")) # 12
