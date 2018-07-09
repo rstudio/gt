@@ -2,7 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_label}
 \alias{cols_label}
-\title{Re-label one or more columns}
+\title{Relabel one or more columns}
 \usage{
 cols_label(data, labels)
 }
@@ -14,5 +14,5 @@ cols_label(data, labels)
 labels for display of the column headers.}
 }
 \description{
-Re-label one or more columns
+Relabel one or more columns
 }

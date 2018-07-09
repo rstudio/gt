@@ -161,7 +161,7 @@ cols_align_right <- function(data,
   data
 }
 
-#' Re-label one or more columns
+#' Relabel one or more columns
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param labels a named vector of column names and their
