@@ -6,12 +6,12 @@ library(tidyverse)
 
 # 1 - we take the `datasets::morley` data.frame and make `Speed` numeric
 # 2 - we are formatting numbers in the `Speed` column to have commas (but no decimal places)
-# 3 - all `integer` columns values are left aligned
+# 3 - the `Speed` and `Run` columns values are left aligned
 morley_tbl <-
   gt(data = morley %>% dplyr::mutate(Speed = Speed %>% as.numeric())) %>%  # 1
   fmt_number(
     columns = Speed,
-    decimals = 2,
+    decimals = 0,
     sep_mark = ","
     ) %>% # 2
   cols_align_left(columns = Speed & Run) # 3
