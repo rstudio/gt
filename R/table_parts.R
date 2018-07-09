@@ -109,6 +109,13 @@ tab_stub_block <- function(data,
 
   rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
 
+  if (rows[1] == "rownames_with" && length(rows) == 2) {
+    rows <- data$stub_df$rowname[which(grepl(rows[2], data$stub_df$rowname))]
+    if (length(rows) == 0) {
+      return(data)
+    }
+  }
+
   data$stub_df[which(data$stub_df$rowname %in% rows), 1] <- group
 
   # Insert the group into the `blocks_arrange` component
