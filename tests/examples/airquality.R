@@ -14,15 +14,15 @@ library(gt)
 #     with a string replacement (default is an em dash)
 airquality_tbl <-
   gt(data = airquality) %>%  # 1
-  cols_move_to_start(columns = c("Month", "Day")) %>% # 2
-  cols_label(c("Solar.R" = "Solar<br>Radiation")) %>% # 3
+  cols_move_to_start(columns = Month & Day) %>% # 2
+  cols_label(col_labels(Solar.R = html("Solar<br>Radiation"))) %>% # 3
   fmt_number(
-    columns = "Wind",
-    decimals = 1
+    columns = Wind,
+    decimals = 2
     )  %>% # 4
   tab_boxhead_panel(
-    spanner = "Measurement Period",
-    columns = c("Month", "Day")
+    group = "Measurement Period",
+    columns = Month & Day
     ) %>% # 5
   fmt_missing() # 6
 
