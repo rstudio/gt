@@ -309,3 +309,105 @@ process_text <- function(text) {
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
+
+#' Transform a CSS stylesheet to a tibble
+#' @noRd
+#' @importFrom dplyr bind_rows tibble filter mutate case_when select
+#' @importFrom stringr str_remove str_extract str_trim str_detect
+get_css_tbl <- function(css_file = "gt.css") {
+
+  raw_css_vec <-
+    system_file(file = paste0("css/", css_file)) %>% read_lines()
+
+  ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
+  ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
+
+  css_tbl <- tibble()
+  for (i in seq(ruleset_start)) {
+
+    css_tbl <-
+      dplyr::bind_rows(
+        css_tbl,
+        dplyr::tibble(
+          selector = rep(
+            stringr::str_remove(raw_css_vec[ruleset_start[i]], "\\s*\\{\\s*$"),
+            (ruleset_end[i] - ruleset_start[i] - 1)),
+          property = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
+            stringr::str_extract("[a-zA-z-]*?(?=:)") %>%
+            stringr::str_trim(),
+          value = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
+            stringr::str_extract("(?<=:).*") %>%
+            stringr::str_remove(pattern = ";\\s*") %>%
+            stringr::str_remove(pattern = "\\/\\*.*") %>%
+            stringr::str_trim()) %>%
+          dplyr::filter(!is.na(property))
+      )
+  }
+
+  css_tbl <- css_tbl %>%
+    dplyr::mutate(type = case_when(
+      stringr::str_detect(selector, "^[a-z]") ~ "element",
+      stringr::str_detect(selector, "^#") ~ "id",
+      stringr::str_detect(selector, "^\\.") ~ "class")) %>%
+    dplyr::select(selector, type, property, value)
+
+  css_tbl
+}
+
+#' Create an inlined style block from a CSS tibble
+#' @noRd
+#' @param class_names the literal class names used within
+#' an HTML class attribute.
+#' @param css_tbl a CSS tibble that can be created using the
+#' \code{get_css_tbl} function.
+#' @importFrom dplyr filter select distinct mutate pull
+#' @importFrom stringr str_split
+create_inline_styles <- function(class_names, css_tbl) {
+
+  class_names <-
+    class_names %>%
+    stringr::str_split("\\s+") %>%
+    unlist()
+
+  paste0(
+    "style=\"",
+    css_tbl %>%
+      dplyr::filter(selector %in% paste0(".", class_names)) %>%
+      dplyr::select(property, value) %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(property_value = paste0(property, ":", value, ";")) %>%
+      dplyr::pull(property_value) %>%
+      paste(collapse = ""),
+    "\"")
+}
+
+
+#' Create an inlined style block from a CSS tibble
+#' @noRd
+#' @importFrom stringr str_extract str_replace
+inline_html_styles <- function(html, css_tbl) {
+
+  repeat {
+    if (grepl("class=\\'(.*?)\\'", html)) {
+
+      class_names <-
+        html %>%
+        stringr::str_extract(
+          pattern = "class=\\'(.*?)\\'") %>%
+        stringr::str_extract("(?<=\\').*(?=\\')")
+
+      inline_styles <-
+        create_inline_styles(
+          class_names = class_names, css_tbl)
+
+      html <- html %>%
+        str_replace(
+          pattern = "class=\\'(.*?)\\'",
+          replacement = inline_styles)
+    } else {
+      break
+    }
+  }
+
+  html
+}
