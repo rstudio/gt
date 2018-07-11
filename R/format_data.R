@@ -516,7 +516,7 @@ fmt_time <- function(data,
   }
 
   # Transform `time_style` to `time_format_str`
-  time_format_str <- gt:::get_time_format(time_style = time_style)
+  time_format_str <- get_time_format(time_style = time_style)
 
   # Set the format
   data <-
@@ -585,10 +585,10 @@ fmt_datetime <- function(data,
   }
 
   # Transform `date_style` to `date_format`
-  date_format <- gt:::get_date_format(date_style = date_style)
+  date_format <- get_date_format(date_style = date_style)
 
   # Transform `time_style` to `time_format`
-  time_format <- gt:::get_time_format(time_style = time_style)
+  time_format <- get_time_format(time_style = time_style)
 
   # Combine into a single datetime format string
   date_time_format_str <-
@@ -634,9 +634,9 @@ set_fmt <- function(data,
     cols = columns,
     rows = rows)
 
-  next_index <- length(data$formats) + 1
+  next_index <- length(attr(data, "formats")) + 1
 
-  data$formats[[next_index]] <- a_list
+  attr(data, "formats")[[next_index]] <- a_list
 
   data
 }
@@ -661,7 +661,7 @@ fmt_missing <- function(data,
     missing_mark <- "&ndash;"
   }
 
-  data[["missing_mark"]] <-
+  attr(data, "missing_mark") <-
     list(missing_mark = missing_mark)
 
   data
@@ -687,9 +687,9 @@ set_decorator <- function(data,
     cols = columns,
     rows = rows)
 
-  next_index <- length(data$decorators) + 1
+  next_index <- length(attr(data, "decorators")) + 1
 
-  data$decorators[[next_index]] <- a_list
+  attr(data, "decorators")[[next_index]] <- a_list
 
   data
 }
@@ -700,57 +700,58 @@ render_formats <- function(data) {
 
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(data$formats))  {
-    for (col in data$formats[[i]]$cols) {
+  for (i in seq(attr(data, "formats")))  {
+    for (col in attr(data, "formats")[[i]][["cols"]]) {
 
       # Only perform rendering if column is present
-      if (col %in% colnames(data$input_df)) {
-        data$output_df[[col]][data$formats[[i]]$rows] <-
-          data$formats[[i]]$func(data$input_df[[col]][data$formats[[i]]$rows])
+      if (col %in% colnames(data)) {
+        attr(data, "output_df")[[col]][attr(data, "formats")[[i]]$rows] <-
+          attr(data, "formats")[[i]]$func(data[[col]][attr(data, "formats")[[i]]$rows])
       }
     }
   }
 
   # Render decorator flags for certain formats that
   # require special handling
-  for (i in seq(data$decorators))  {
-    for (col in data$decorators[[i]]$cols) {
+  for (i in seq(attr(data, "decorators")))  {
+    for (col in attr(data, "decorators")[[i]]$cols) {
 
       # Only perform rendering if column is present
-      if (col %in% colnames(data$input_df)) {
-        data$fmts_df[[col]][data$decorators[[i]]$rows] <-
-          data$decorators[[i]]$func(data$input_df[[col]][data$decorators[[i]]$rows])
+      if (col %in% colnames(data)) {
+        attr(data, "fmts_df")[[col]][attr(data, "decorators")[[i]]$rows] <-
+          attr(data, "decorators")[[i]]$func(data[[col]][attr(data, "decorators")[[i]]$rows])
       }
     }
   }
 
   # Transfer any input format that has not been
   # explicitly formatted to the output data frame
-  for (colname in colnames(data$output_df)) {
-    for (row in 1:nrow(data$output_df)) {
-      if (is.na(data$output_df[row, colname])) {
-        data$output_df[row, colname] <- as.character(data$input_df[row, colname])
+  for (colname in colnames(attr(data, "output_df"))) {
+    for (row in 1:nrow(attr(data, "output_df"))) {
+      if (is.na(attr(data, "output_df")[row, colname])) {
+        attr(data, "output_df")[row, colname] <- as.character(data[row, colname])
       }
     }
   }
 
   # Assign labels as column names for any labels
   # that are not explicitly set
-  for (colname in colnames(data$boxh_df)) {
-    if (is.na(data$boxh_df[2, colname])) {
-      data$boxh_df[2, colname] <- colname
+  for (colname in colnames(attr(data, "boxh_df"))) {
+    if (is.na(attr(data, "boxh_df")[2, colname])) {
+      attr(data, "boxh_df")[2, colname] <- colname
     }
   }
 
   # Assign center alignment for all columns
   # that haven't had alignment explicitly set
-  for (colname in colnames(data$boxh_df)) {
-    if (is.na(data$boxh_df[3, colname])) {
-      data$boxh_df[3, colname] <- "center"
+  for (colname in colnames(attr(data, "boxh_df"))) {
+    if (is.na(attr(data, "boxh_df")[3, colname])) {
+      attr(data, "boxh_df")[3, colname] <- "center"
     }
   }
 
-  data$formats <- data$decorators <- list()
+  attr(data, "formats") <- list()
+  attr(data, "decorators") <- list()
 
   data
 }

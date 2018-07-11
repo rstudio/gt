@@ -1,11 +1,12 @@
 #' @noRd
 resolve_rows <- function(data, rows) {
+
   if (inherits(rows, "rownames_with")) {
-    rows <- which(grepl(paste(rows$pattern, collapse = "|"), data$stub_df$rowname))
+    rows <- which(grepl(paste(rows$pattern, collapse = "|"), attr(data, "stub_df")[["rowname"]]))
   } else if (is.numeric(rows)) {
-    rows <- rows[rows %in% 1:nrow(data$input_df)]
-  } else if (is.character(rows) && all(!is.na(data$stub_df$rowname))) {
-    rows <- which(data$stub_df$rowname %in% rows)
+    rows <- rows[rows %in% 1:nrow(data)]
+  } else if (is.character(rows) && all(!is.na(attr(data, "stub_df")[["rowname"]]))) {
+    rows <- which(attr(data, "stub_df")[["rowname"]] %in% rows)
   }
 
   rows
@@ -13,13 +14,14 @@ resolve_rows <- function(data, rows) {
 
 #' @noRd
 resolve_columns <- function(data, columns) {
+
   if (inherits(columns, "columns_with")) {
-    columns <- colnames(data$input_df)[
-      which(grepl(paste(columns$pattern, collapse = "|"), colnames(data$input_df)))]
+    columns <- colnames(data)[
+      which(grepl(paste(columns$pattern, collapse = "|"), colnames(data)))]
   } else if (is.numeric(columns)) {
-    columns <- colnames(data$input_df)[columns[columns %in% 1:ncol(data$input_df)]]
+    columns <- colnames(data)[columns[columns %in% 1:ncol(data)]]
   } else if (is.character(columns)) {
-    columns <- colnames(data$input_df)[which(colnames(data$input_df) %in% columns)]
+    columns <- colnames(data)[which(colnames(data) %in% columns)]
   }
 
   columns
@@ -29,19 +31,19 @@ resolve_columns <- function(data, columns) {
 is_target_in_table <- function(data, location) {
 
   if (is.numeric(location$row) &&
-      !(location$row %in% 1:nrow(data$input_df))) {
+      !(location$row %in% 1:nrow(data))) {
     return(FALSE)
   }
   if (is.character(location$row) &&
-      !(location$row %in% data$stub_df$rowname)) {
+      !(location$row %in% attr(data, "stub_df")[["rowname"]])) {
     return(FALSE)
   }
   if (is.numeric(location$column) &&
-      !(location$column %in% 1:ncol(data$input_df))) {
+      !(location$column %in% 1:ncol(data))) {
     return(FALSE)
   }
   if (is.character(location$column) &&
-      !(location$column %in% colnames(data$input_df))) {
+      !(location$column %in% colnames(data))) {
     return(FALSE)
   } else {
     return(TRUE)
@@ -273,9 +275,6 @@ get_currency_exponent <- function(currency) {
 #' @importFrom commonmark markdown_html
 #' @noRd
 process_text <- function(text) {
-
-  # TODO: implement as S3 generic (good for extension of method)
-  # TODO: consider changing name to something more specific
 
   if (inherits(text, "from_markdown")) {
 
