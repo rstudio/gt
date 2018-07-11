@@ -9,6 +9,7 @@ blocks_arrange <- function(data,
 
   # Create and store a list of stub block
   # groups in the intended ordering
-  data[["arrange_groups"]] <- list(groups = groups)
+  attr(data, "arrange_groups") <- list(groups = groups)
+
   data
 }

@@ -15,7 +15,7 @@ as_raw_html <- function(data, inline_css = TRUE) {
   data <- render_formats(data = data)
 
   # Generation of the HTML table
-  html_table <- render_as_html(tbl = data)
+  html_table <- render_as_html(data = data)
 
   if (inline_css) {
 

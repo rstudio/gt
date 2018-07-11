@@ -44,16 +44,20 @@ gt <- function(data,
                output = "html") {
 
   if (rownames_to_stub) {
+
     stub_df <-
       data.frame(
         groupname = NA_character_,
         rowname = tibble::rownames_to_column(dplyr::as_tibble(data))$rowname,
         stringsAsFactors = FALSE)
+
   } else {
+
     stub_df <-
       data.frame(
         groupname = rep(NA_character_, nrow(data)),
-        rowname = rep(NA_character_, nrow(data)))
+        rowname = rep(NA_character_, nrow(data)),
+        stringsAsFactors = FALSE)
   }
 
   data_tbl <- data %>% as.data.frame(stringsAsFactors = FALSE)
@@ -82,21 +86,17 @@ gt <- function(data,
     }
   }
 
-  object <-
-    structure(
-      list(
-        input_df = data_tbl,
-        boxh_df = boxh_df,
-        stub_df = stub_df,
-        fmts_df = output_df,
-        foot_df = output_df,
-        output_df = output_df,
-        formats = list(),
-        decorators = list()))
+  attr(data_tbl, "boxh_df") <- boxh_df
+  attr(data_tbl, "stub_df") <- stub_df
+  attr(data_tbl, "fmts_df") <- output_df
+  attr(data_tbl, "foot_df") <- output_df
+  attr(data_tbl, "output_df") <- output_df
+  attr(data_tbl, "formats") <- list()
+  attr(data_tbl, "decorators") <- list()
 
   if (output == "html") {
-    attr(object, "class") <- "gt_tbl"
+    attr(data_tbl, "class") <- c("gt_html", "gt_tbl", class(data_tbl))
   }
 
-  object
+  data_tbl
 }

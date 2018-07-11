@@ -31,7 +31,7 @@ tab_heading <- function(data,
     headnote <- process_text(headnote)
   }
 
-  data[["heading"]] <-
+  attr(data, "heading") <-
     list(title = title,
          headnote = headnote)
 
@@ -57,7 +57,7 @@ tab_heading <- function(data,
 tab_stubhead_caption <- function(data,
                                  caption) {
 
-  data[["stubhead_caption"]] <-
+  attr(data, "stubhead_caption") <-
     list(stubhead_caption = process_text(caption))
 
   data
@@ -94,7 +94,7 @@ tab_stub_block <- function(data,
   # Set a name for the `others` group if a
   # name is provided
   if (!is.null(others)) {
-    data[["others_group"]] <-
+    attr(data, "others_group") <-
       list(others = others)
   }
 
@@ -110,20 +110,21 @@ tab_stub_block <- function(data,
   rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
 
   if (rows[1] == "rownames_with" && length(rows) == 2) {
-    rows <- data$stub_df$rowname[which(grepl(rows[2], data$stub_df$rowname))]
+    rows <- attr(data, "stub_df")$rowname[which(grepl(rows[2], attr(data, "stub_df")$rowname))]
     if (length(rows) == 0) {
       return(data)
     }
   }
 
-  data$stub_df[which(data$stub_df$rowname %in% rows), 1] <- group
+  attr(data, "stub_df")[which(attr(data, "stub_df")$rowname %in% rows), 1] <- group
 
   # Insert the group into the `blocks_arrange` component
-  if (!("arrange_groups" %in% names(data))) {
+  if (!("arrange_groups" %in% names(attributes(data)))) {
     data <- blocks_arrange(data = data, groups = group)
   } else {
-    data[["arrange_groups"]][["groups"]] <-
-      c(data[["arrange_groups"]][["groups"]], group)
+
+    attr(data, "arrange_groups")[["groups"]] <-
+      c(attr(data, "arrange_groups")[["groups"]], group)
   }
 
   data
@@ -159,15 +160,16 @@ tab_boxhead_panel <- function(data,
     rlang::enquo(columns) %>% rlang::get_expr() %>% as.character()
 
   # Filter the vector of column names by the
-  # column names actually in `data$data`
+  # column names actually in `input_df`
   columns <-
-    columns[which(columns %in% colnames(data$input_df))]
+    columns[which(columns %in% colnames(data))]
 
   if (length(columns) == 0) {
     return(data)
   }
 
-  data$boxh_df[1, columns] <- process_text(group)
+
+  attr(data, "boxh_df")[1, columns] <- process_text(group)
   data
 }
 
@@ -207,39 +209,38 @@ tab_footnote <- function(data,
 
   # Determine if the footnote already exists;
   # if it does, get the index
-  if ("footnote" %in% names(data) &&
+  if ("footnote" %in% names(attributes(data)) &&
       process_text(footnote) %in%
-      (data$footnote[[1]] %>% as.character())) {
+      (attr(data, "footnote")[[1]] %>% as.character())) {
 
     # Obtain the index of the already present
     # footnote (it will be applied as markup to
     # the appropriate cell)
     index <-
-      data$footnote[[1]][
-        which(data$footnote[[1]] == process_text(footnote))] %>%
+      attr(data, "footnote")[[1]][
+        which(attr(data, "footnote")[[1]] == process_text(footnote))] %>%
       names() %>% as.integer()
 
-  } else if ("footnote" %in% names(data)) {
+  } else if ("footnote" %in% names(attributes(data))) {
 
     # Store the footnote text and index in the `footnote`
     # list component (case where `footnote` exists)
-    index <- max(as.numeric(names(data[["footnote"]][[1]]))) + 1L
+    index <- max(as.numeric(names(attr(data, "footnote")[[1]]))) + 1L
 
     footnote <- stats::setNames(process_text(footnote), nm = index)
 
-    data[["footnote"]][[1]] <-
-      c(data[["footnote"]][[1]], footnote)
+    attr(data, "footnote")[[1]] <-
+      c(attr(data, "footnote")[[1]], footnote)
 
   } else {
 
     # Store the footnote text and index in the `footnote`
-    # list component (case where `footnote` does not yet
-    # exist)
+    # list component (case where `footnote` does not yet exist)
     index <- 1L
 
-    footnote <- stats::setNames(gt:::process_text(footnote), nm = index)
+    footnote <- stats::setNames(process_text(footnote), nm = index)
 
-    data[["footnote"]] <- list(footnote = footnote)
+    attr(data, "footnote") <- list(footnote = footnote)
   }
 
   # Add markup to the targeted cell(s)
@@ -249,7 +250,7 @@ tab_footnote <- function(data,
     column <- location$column
 
     if (is.numeric(column)) {
-      data_col <- colnames(data$input_df)[column]
+      data_col <- colnames(data)[column]
     }
 
     if (is.numeric(row)) {
@@ -261,19 +262,18 @@ tab_footnote <- function(data,
     }
 
     if (is.character(row)) {
-      data_row <- which(data$stub_df$rowname == row)[1]
+      data_row <- which(attr(data, "stub_df")[["rowname"]] == row)[1]
     }
 
     # Append the footnote
-    if (is.na(data$foot_df[data_row, data_col])) {
-      data$foot_df[data_row, data_col] <-
+    if (is.na(attr(data, "foot_df")[data_row, data_col])) {
+      attr(data, "foot_df")[data_row, data_col] <-
         paste0("::foot_", index)
     } else {
-      data$foot_df[data_row, data_col] <-
+      attr(data, "foot_df")[data_row, data_col] <-
         paste0(
-          data$foot_df[data_row, data_col],
-          "::foot_",
-          index)
+          attr(data, "foot_df")[data_row, data_col],
+          "::foot_", index)
     }
   }
 
@@ -298,14 +298,14 @@ tab_source_note <- function(data,
 
   source_note <- process_text(source_note)
 
-  if ("source_note" %in% names(data)) {
+  if ("source_note" %in% names(attributes(data))) {
 
-    data[["source_note"]]$source_note <-
-      c(data[["source_note"]]$source_note, source_note)
+    attr(data, "source_note")[["source_note"]] <-
+      c(attr(data, "source_note")[["source_note"]], source_note)
 
   } else {
 
-    data[["source_note"]] <-
+    attr(data, "source_note") <-
       list(source_note = source_note)
   }
 
