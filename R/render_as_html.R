@@ -12,15 +12,15 @@
 render_as_html <- function(data) {
 
   # Determine if there is a populated stub
-  if (!all(is.na(attr(data, "stub_df")$rowname)) ||
-      !all(is.na(attr(data, "stub_df")$groupname))) {
+  if (!all(is.na(attr(data, "stub_df")[["rowname"]])) ||
+      !all(is.na(attr(data, "stub_df")[["groupname"]]))) {
     stub_available <- TRUE
   } else {
     stub_available <- FALSE
   }
 
   # Determine if there are any groups present
-  if (!all(is.na(attr(data, "stub_df")$groupname))) {
+  if (!all(is.na(attr(data, "stub_df")[["groupname"]]))) {
     groups_present <- TRUE
   } else {
     groups_present <- FALSE
@@ -37,11 +37,11 @@ render_as_html <- function(data) {
 
     stub_components <- c()
 
-    if (any(!is.na(attr(data, "stub_df")$rowname))) {
+    if (any(!is.na(attr(data, "stub_df")[["rowname"]]))) {
       stub_components <- c(stub_components, "row_name")
     }
 
-    if (any(!is.na(attr(data, "stub_df")$groupname))) {
+    if (any(!is.na(attr(data, "stub_df")[["groupname"]]))) {
       stub_components <- c(stub_components, "group_name")
     }
   }
