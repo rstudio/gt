@@ -17,3 +17,12 @@ RTF file.}
 Take a \code{gt_tbl} table object and render it to
 an RTF file with the extension \code{.rtf}.
 }
+\examples{
+\dontrun{
+# Create a `gt` table using the `sleep`
+# dataset and then write the table to
+# an RTF file
+gt(data = sleep) \%>\%
+  write_rtf(file = "sleep.rtf")
+}
+}
