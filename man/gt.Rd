@@ -4,8 +4,7 @@
 \alias{gt}
 \title{Create gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE, split_cols_dots = FALSE,
-  output = "html")
+gt(data, rownames_to_stub = FALSE, split_cols_dots = FALSE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a
@@ -21,9 +20,6 @@ first component is promoted to a spanner and
 subsequent components represent the column label.
 Please note that reference to individual columns
 must still be via the original column names.}
-
-\item{output}{the output format for the table.
-Currently, this is only the \code{html} format.}
 }
 \value{
 an object of class \code{gt_tbl}.
