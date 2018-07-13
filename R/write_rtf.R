@@ -266,6 +266,8 @@ write_rtf <- function(data, file) {
           title = attr(data, "heading")[["title"]],
           n_cols = n_cols)
     }
+  } else {
+    heading_component <- ""
   }
 
   # if ("source_note" %in% names(attributes(data))) {
