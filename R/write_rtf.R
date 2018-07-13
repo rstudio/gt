@@ -9,6 +9,14 @@
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stringr str_extract_all
 #' @importFrom stats setNames
+#' @examples
+#' \dontrun{
+#' # Create a `gt` table using the `sleep`
+#' # dataset and then write the table to
+#' # an RTF file
+#' gt(data = sleep) %>%
+#'   write_rtf(file = "sleep.rtf")
+#' }
 #' @export
 write_rtf <- function(data, file) {
 
