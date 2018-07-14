@@ -61,36 +61,41 @@ rtf_title <- function(title, n_cols) {
 }
 
 #' @noRd
-rtf_heading_group_row <- function(spanners_lengths) {
+rtf_heading_group_row <- function(spanners_lengths,
+                                    headings,
+                                    spanners) {
 
   values <- spanners_lengths$values
   lengths <- spanners_lengths$lengths
 
   twips <- 1:sum(lengths) * col_width_twips()
 
-  output <- "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil\n"
+  # Creation of Top Row
+
+  output <- "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrt\\brdrnil \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil\n"
 
   for (i in seq(lengths)) {
 
-    if (lengths[i] == 1 && values[i] == "") {
-      output <- c(output, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+    if (lengths[i] == 1 && values[i] %in% headings) {
 
-    } else if (lengths[i] == 1 && values[i] != "") {
+      output <- c(output, "\\clvmgf \\clvertalc \\clshdrawnil \\clheight1100 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
 
-      output <- c(output, "\\clvertalc \\clshdrawnil \\clheight520 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
-
-    } else {
+    } else if (lengths[i] > 1 && !(values[i] %in% headings)) {
 
       for (j in 1:lengths[i]) {
 
         if (j == 1) {
-          output <- c(output, "\\clmgf \\clvertalc \\clshdrawnil \\clheight520 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+          output <- c(output, "\\clmgf \\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrs\\brdrw20\\brdrcf3 \\clbrdrb\\brdrs\\brdrw20\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
         }
 
         if (j != 1) {
-          output <- c(output, "\\clmrg \\clvertalc \\clshdrawnil \\clheight520 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+          output <- c(output, "\\clmrg \\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrs\\brdrw20\\brdrcf3 \\clbrdrb\\brdrs\\brdrw20\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
         }
       }
+
+    } else if (lengths[i] == 1 && !(values[i] %in% headings)) {
+
+      output <- c(output, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrs\\brdrw20\\brdrcf3 \\clbrdrb\\brdrs\\brdrw20\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
     }
   }
 
@@ -100,36 +105,113 @@ rtf_heading_group_row <- function(spanners_lengths) {
 
   for (i in seq(lengths)) {
 
-    if (lengths[i] == 1 && values[i] == "") {
-      output <- c(output, "\\pard\\intbl\\itap1\\pardeftab20\\partightenfactor0\\cf0 \\cell\n")
-
-    } else if (lengths[i] == 1 && values[i] != "") {
+    if (lengths[i] == 1 && values[i] %in% headings) {
 
       output <-
         c(output,
-          paste0(
-            "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0",
-            paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", values[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
-          ))
+          "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
+          ifelse(i == 1, "\\f0\\fs24\n", ""),
+          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", values[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
 
-    } else {
+    } else if (lengths[i] > 1 && !(values[i] %in% headings)) {
+
+      for (j in 1:lengths[i]) {
+
+        if (j == 1) {
+          output <-
+            c(output,
+              "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
+              ifelse(i == 1, "\\f0\\fs24\n", ""),
+              "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+              "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", values[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+        }
+
+        if (j != 1) {
+          output <- c(output, "\\pard\\intbl\\itap1\\cell\n")
+        }
+      }
+
+    } else if (lengths[i] == 1 && !(values[i] %in% headings)) {
 
       output <-
         c(output,
-          paste0(
-            "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0",
-            paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", values[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")),
-          rep("\\pard\\intbl\\itap1\\cell\n", lengths[i] - 2))
+          "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
+          ifelse(i == 1, "\\f0\\fs24\n", ""),
+          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", values[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
     }
   }
 
   output <- c(output, "\\row\n")
 
-  output <- paste(output, collapse = "")
+  output <- paste0(output, collapse = "")
 
-  output
+  # Creation of Bottom Row
+  output_b <- "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrt\\brdrnil \\trbrdrr\\brdrnil\n"
+
+  for (i in seq(lengths)) {
+
+    if (lengths[i] == 1 && values[i] %in% headings) {
+
+      output_b <- c(output_b, "\\clvmrg \\clvertalc \\clshdrawnil \\clheight1100 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+
+    } else if (lengths[i] > 1 && !(values[i] %in% headings)) {
+
+      for (j in 1:lengths[i]) {
+
+        if (j == 1) {
+          output_b <- c(output_b, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw20\\brdrcf3 \\clbrdrl\\brdrs\\brdrw20\\brdrcf3 \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+        }
+
+        if (j > 1 & j < lengths[i]) {
+          output_b <- c(output_b, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw20\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx")
+        }
+
+        if (j == lengths[i]) {
+          output_b <- c(output_b, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw20\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
+        }
+      }
+
+    } else if (lengths[i] == 1 && !(values[i] %in% headings)) {
+
+      output_b <- c(output_b, "\\clvertalc \\clshdrawnil \\clheight540 \\clbrdrt\\brdrs\\brdrw20\\brdrcf3 \\clbrdrl\\brdrs\\brdrw20\\brdrcf3 \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrs\\brdrw20\\brdrcf3 \\clpadl100 \\clpadr100 \\gaph\\cellx")
+    }
+  }
+
+  for (i in 2:length(output_b)) {
+    output_b[i] <- paste0(output_b[i], twips[i - 1], "\n")
+  }
+
+  for (i in seq(headings)) {
+
+    if (headings[i] == spanners[i]) {
+
+      output_b <- c(output_b, "\\pard\\intbl\\itap1\\cell\n")
+
+    } else if (headings[i] != spanners[i] && sum(spanners == spanners[i]) > 1) {
+
+      output_b <-
+        c(output_b,
+          "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
+          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", headings[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+
+    } else if (headings[i] != spanners[i] && sum(spanners == spanners[i]) == 1) {
+
+      output_b <-
+        c(output_b,
+          "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
+          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", headings[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\cell\n")
+    }
+  }
+
+  output_b <- c(output_b, "\\row\n")
+  output_b <- paste0(output_b, collapse = "")
+
+  paste0(output, output_b, collapse = "")
 }
 
 #' @noRd
@@ -142,7 +224,7 @@ rtf_heading_row <- function(content) {
       "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil\n",
       paste0("\\clvertalc \\clshdrawnil \\clheight520 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx", twips, "\n", collapse = ""),
       paste0(
-        "\\pard\\intbl\\itap1\\pardeftab20\\partightenfactor0\n",
+        "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
         "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
         "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
       collapse = ""),
@@ -159,7 +241,7 @@ rtf_body_row <- function(content) {
       "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil\n",
       paste0("\\clvertalc \\clshdrawnil \\clbrdrt\\brdrs\\brdrw20\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw20\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt50 \\clpadb50 \\gaph\\cellx", twips, "\n", collapse = ""),
       paste0(
-        "\\pard\\intbl\\itap1\\pardeftab20\\partightenfactor0\n",
+        "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
         "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
         "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
       collapse = ""),
@@ -182,7 +264,7 @@ rtf_last_body_row <- function(content) {
       output <-
         c(output,
           paste0(
-            "\\pard\\intbl\\itap1\\pardeftab20\\partightenfactor0\n",
+            "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
             "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
             "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n"))
 
@@ -190,7 +272,7 @@ rtf_last_body_row <- function(content) {
       output <-
         c(output,
           paste0(
-            "\\pard\\intbl\\itap1\\pardeftab20\\partightenfactor0\n",
+            "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
             "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
             "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0\\cf2 \\expnd0\\expndtw0\\kerning0\n",
             "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\cell \\lastrow\\row"))
