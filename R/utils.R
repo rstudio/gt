@@ -309,6 +309,12 @@ system_file <- function(file) {
   system.file(file, package = "gt")
 }
 
+#' Remove HTML tags from input text
+#' @noRd
+remove_html <- function(text) {
+  gsub("<.+?>", "", text)
+}
+
 #' Transform a CSS stylesheet to a tibble
 #' @noRd
 #' @importFrom dplyr bind_rows tibble filter mutate case_when select
