@@ -98,7 +98,7 @@ write_rtf <- function(data, file) {
 
     if ("arrange_groups" %in% names(attributes(data))) {
 
-      ordering <- attr(data, "arrange_groups")$groups
+      ordering <- attr(data, "arrange_groups")[["groups"]]
 
       all_groups <- unique(extracted[, 1])
 
@@ -227,7 +227,8 @@ write_rtf <- function(data, file) {
           footnote_text <-
             attr(data, "footnote")[[1]][
               which(names(attr(data, "footnote")[[1]]) == footnote_indices[j])] %>%
-            unname()
+            unname() %>%
+            remove_html()
 
           # Check if the footnote text has been seen before
           if (!(footnote_text %in% glyphs_footnotes)) {
@@ -238,15 +239,20 @@ write_rtf <- function(data, file) {
           footnote_glyph <-
             c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
         }
+
+        body_content[i] <-
+          paste0(body_content[i], " (", paste(footnote_glyph, collapse = ","), ")")
       }
     }
 
     # Create the footnotes block
     footnote_component <-
       paste0(
-        "\\cf0\n",
-        paste0("\\i \\super ", seq(glyphs_footnotes), " \\i0 \\nosupersub ", unname(glyphs_footnotes), "\\",
-               collapse = "\n")) %>% cat()
+        "\\pard\\pardeftab720\\sl288\\slmult1\\partightenfactor0\n",
+        paste0(
+          "\\f2\\i\\fs14\\fsmilli7333 \\cf2 \\super \\strokec2 ", seq(glyphs_footnotes),
+          "\\f0\\i0\\fs22 \\cf2 \\nosupersub \\strokec2  ", unname(glyphs_footnotes), "\\",
+          collapse = "\n"), "\n")
 
   } else {
     footnote_component <- ""
@@ -263,38 +269,34 @@ write_rtf <- function(data, file) {
 
       heading_component <-
         rtf_title_headnote(
-          title = attr(data, "heading")[["title"]],
-          headnote = attr(data, "heading")[["headnote"]],
+          title = attr(data, "heading")[["title"]] %>% remove_html(),
+          headnote = attr(data, "heading")[["headnote"]] %>% remove_html(),
           n_cols = n_cols)
 
     } else {
 
       heading_component <-
         rtf_title(
-          title = attr(data, "heading")[["title"]],
+          title = attr(data, "heading")[["title"]] %>% remove_html(),
           n_cols = n_cols)
     }
   } else {
     heading_component <- ""
   }
 
-  # if ("source_note" %in% names(attributes(data))) {
-  #
-  #   # Create a source note
-  #   source_note_rows <-
-  #     paste0(
-  #       "<tfoot>\n",
-  #       paste0(
-  #         "<tr>\n<td colspan='", n_cols + 1 ,
-  #         "' class='sourcenote'>", attr(data, "source_note")[[1]],
-  #         "</td>\n</tr>\n",
-  #         collapse = ""),
-  #       "</tfoot>\n")
-  # } else {
-  #   source_note_rows <- ""
-  # }
+  if ("source_note" %in% names(attributes(data))) {
 
-
+    # Create a source note
+    source_note_rows <-
+      paste0(
+        "\\pard\\pardeftab720\\sl288\\slmult1\\partightenfactor0\n",
+        paste0(
+          "\\cf2 \\strokec2 ", remove_html(attr(data, "source_note")[[1]]), "\\\n",
+          collapse = ""),
+        collapse = "")
+  } else {
+    source_note_rows <- ""
+  }
 
   body_rows <- c()
   for (i in seq(row_splits)) {
@@ -308,7 +310,7 @@ write_rtf <- function(data, file) {
     }
   }
 
-  body_rows <- body_rows %>% paste(collapse = "")
+  body_rows <- paste0(body_rows, collapse = "")
 
   table_start <- rtf_head()
 
@@ -337,6 +339,9 @@ write_rtf <- function(data, file) {
     headings[which(headings == ":row_name:")] <- ""
   }
 
+  # Remove any HTML tags from `headings`
+  headings <- remove_html(headings)
+
   if (spanners_present == FALSE) {
 
     table_col_headings <-
@@ -347,21 +352,26 @@ write_rtf <- function(data, file) {
     # spanners
     spanners <- attr(data, "boxh_df")[1, ] %>% t() %>% as.vector()
 
-    spanners[which(is.na(spanners))] <- ""
+    # Remove any HTML tags from `spanners`
+    spanners <- remove_html(spanners)
 
     if (stub_available) {
-      spanners <- c(headings[1], spanners)
+      spanners <- c(NA_character_, spanners)
+    }
+
+    for (i in seq(spanners)) {
+      if (is.na(spanners[i])) {
+        spanners[i] <- headings[i]
+      }
     }
 
     spanners_lengths <- rle(spanners)
 
     table_col_headings <-
-      paste0(
-        c(
-          rtf_heading_group_row(spanners_lengths = spanners_lengths),
-          rtf_heading_row(content = headings)),
-        collapse = "")
-
+      rtf_heading_group_row(
+        spanners_lengths = spanners_lengths,
+        headings = headings,
+        spanners = spanners)
   }
 
   # Compose the RTF table
@@ -371,6 +381,8 @@ write_rtf <- function(data, file) {
       heading_component,
       table_col_headings,
       body_rows,
+      source_note_rows,
+      footnote_component,
       table_end,
       collapse = "")
 
