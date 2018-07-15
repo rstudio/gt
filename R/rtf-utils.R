@@ -27,7 +27,7 @@ rtf_title_headnote <- function(title, headnote, n_cols) {
     paste0("\\clmgf \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx", twips[1], "\n"),
     paste0("\\clmrg \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx", twips[2:length(twips)], "\n", collapse = ""),
     "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-    "\\f0\\fs28 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
+    "\\f0\\fs36 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
     paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", title, "\n"),
     "\\fs24 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n",
     paste0(rep("\\pard\\intbl\\itap1\\cell\n", n_cols - 1), collapse = ""),
@@ -38,7 +38,7 @@ rtf_title_headnote <- function(title, headnote, n_cols) {
     "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n\n",
     "\\fs20 \\cf2 \\expnd0\\expndtw0\\kerning0",
     paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", headnote, "\n"),
-    "\\fs24 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell",
+    "\\fs28 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell",
     paste0(rep("\\pard\\intbl\\itap1\\cell\n", n_cols - 1), collapse = ""),
     "\\row")
 }
