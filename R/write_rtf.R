@@ -299,11 +299,21 @@ write_rtf <- function(data, file) {
   }
 
   body_rows <- c()
-  for (i in seq(row_splits)) {
+  for (i in 1:n_rows) {
+
+    if (exists("groups_rows") && i %in% groups_rows$row) {
+
+      body_rows <-
+        c(body_rows,
+          rtf_body_row(
+            c(
+              groups_rows[which(groups_rows$row %in% i), 1][[1]],
+              rep("", n_cols - 1)), type = "group"))
+    }
 
     if (i != length(row_splits)) {
       body_rows <-
-        c(body_rows, rtf_body_row(content = row_splits[[i]]))
+        c(body_rows, rtf_body_row(row_splits[[i]], type = "row"))
     } else {
       body_rows <-
         c(body_rows, rtf_last_body_row(content = row_splits[[i]]))
