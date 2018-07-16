@@ -301,6 +301,84 @@ perform_col_merge <- function(data) {
   data
 }
 
+#' Get a data frame of the `mean` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_mean_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(mean)) %>%
+    dplyr::mutate(rowname = "Summary: Mean") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `min` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_min_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(min)) %>%
+    dplyr::mutate(rowname = "Summary: Min") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `max` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_max_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(max)) %>%
+    dplyr::mutate(rowname = "Summary: Max") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `median` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_median_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(median)) %>%
+    dplyr::mutate(rowname = "Summary: Median") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `sd` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_sd_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(sd)) %>%
+    dplyr::mutate(rowname = "Summary: S.D.") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `n` summary stat per group
+#' in the input data table
+#' @importFrom dplyr group_by summarize_at mutate select
+#' @noRd
+get_n_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(n())) %>%
+    dplyr::mutate(rowname = "Summary: N") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
 #' Process input text
 #' This processes input text based on the class. If
 #' incoming text has the class \code{from_markdown}
