@@ -46,6 +46,11 @@ render_as_html <- function(data) {
     }
   }
 
+  # Perform column merge operations
+  if ("col_merge" %in% names(attributes(data))) {
+    data <- perform_col_merge(data = data)
+  }
+
   # Extract the table (case of table with no stub)
   if (stub_available == FALSE) {
     extracted <- attr(data, "output_df")
