@@ -260,6 +260,47 @@ get_currency_exponent <- function(currency) {
   }
 }
 
+#' Perform column merging operations
+#' @noRd
+perform_col_merge <- function(data) {
+
+  extracted <- attr(data, "output_df")
+
+  for (i in seq(attr(data, "col_merge")[[1]])) {
+
+    type <- attr(data, "col_merge")[["type"]][i]
+    value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
+    value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
+
+    values_1 <- extracted[, which(colnames(extracted) == value_1_col)]
+    values_2 <- extracted[, which(colnames(extracted) == value_2_col)]
+
+    if (type == "uncertainty") {
+      separator <- " &plusmn; "
+    } else if (type == "range") {
+      separator <- " &mdash; "
+    }
+
+    for (j in seq(values_1)) {
+
+      if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
+          !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+        values_1[j] <- paste(values_1[j], values_2[j], sep = separator)
+      }
+    }
+
+    attr(data, "output_df")[, which(colnames(extracted) == value_1_col)] <- values_1
+
+    # Remove the `uncert` column across key dfs
+    attr(data, "boxh_df") <- attr(data, "boxh_df")[, -which(colnames(extracted) == value_2_col)]
+    attr(data, "fmts_df") <- attr(data, "fmts_df")[, -which(colnames(extracted) == value_2_col)]
+    attr(data, "foot_df") <- attr(data, "foot_df")[, -which(colnames(extracted) == value_2_col)]
+    attr(data, "output_df") <- attr(data, "output_df")[, -which(colnames(extracted) == value_2_col)]
+  }
+
+  data
+}
+
 #' Process input text
 #' This processes input text based on the class. If
 #' incoming text has the class \code{from_markdown}
