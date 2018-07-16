@@ -2,7 +2,7 @@
 % Please edit documentation in R/merge_columns.R
 \name{fmt_range}
 \alias{fmt_range}
-\title{Combine columns to a single value range column}
+\title{Combine two columns to a single, value range column}
 \usage{
 fmt_range(data, col_begin, col_end)
 }
@@ -10,15 +10,15 @@ fmt_range(data, col_begin, col_end)
 \item{data}{a table object that is created using the
 \code{gt()} function.}
 
-\item{col_end}{a single column name for values at the end
+\item{col_begin}{a column that contains values for the start
 of the range.}
 
-\item{col_val}{a single column name for values at the start
+\item{col_end}{a column that contains values for the end
 of the range.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Combine columns to a single value range column
+Combine two columns to a single, value range column
 }
