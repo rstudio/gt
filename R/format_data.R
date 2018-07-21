@@ -5,7 +5,8 @@
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
-#' of decimal places to use.
+#' of decimal places to use. The default number of decimal
+#' places is \code{4}.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -35,15 +36,11 @@
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
-                       decimals = NULL,
+                       decimals = 4,
                        sep_mark = "",
                        dec_mark = ".",
                        drop0trailing = FALSE,
                        negative_style = "signed") {
-
-  # If the number of decimals is not provided,
-  # use a default value of 4
-  if (is.null(decimals)) decimals <- 4
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
@@ -101,7 +98,8 @@ fmt_number <- function(data,
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
-#' of decimal places to use.
+#' of decimal places to use. The default number of decimal
+#' places is \code{4}.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -122,15 +120,11 @@ fmt_number <- function(data,
 fmt_scientific <- function(data,
                            columns,
                            rows = NULL,
-                           decimals = NULL,
+                           decimals = 4,
                            sep_mark = "",
                            dec_mark = ".",
                            negative_style = "signed",
                            drop0trailing = FALSE) {
-
-  # If the number of decimals is not provided,
-  # use a default value of 4
-  if (is.null(decimals)) decimals <- 4
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
@@ -186,7 +180,8 @@ fmt_scientific <- function(data,
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
-#' of decimal places to use.
+#' of decimal places to use. The default number of decimal
+#' places is \code{2}.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -207,15 +202,11 @@ fmt_scientific <- function(data,
 fmt_percent <- function(data,
                         columns,
                         rows = NULL,
-                        decimals = NULL,
+                        decimals = 2,
                         sep_mark = "",
                         dec_mark = ".",
                         negative_style = "signed",
                         drop0trailing = FALSE) {
-
-  # If the number of decimals is not provided,
-  # use a default value of 2
-  if (is.null(decimals)) decimals <- 2
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
@@ -370,7 +361,7 @@ fmt_currency <- function(data,
       decimals <- get_currency_exponent(currency = currency)
     }
   } else if (is.null(decimals) & use_subunits == FALSE) {
-     decimals <- 0
+    decimals <- 0
   }
 
   # Set the format
@@ -380,7 +371,6 @@ fmt_currency <- function(data,
       columns = columns,
       rows = rows,
       formatter = function(x) {
-
         formatC(
           x = x,
           digits = decimals,
