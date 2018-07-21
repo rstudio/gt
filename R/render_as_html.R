@@ -11,85 +11,140 @@
 #' @noRd
 render_as_html <- function(data) {
 
+  # Extract internal data frames
+  fmts_df <- attr(data, "fmts_df")
+  boxh_df <- attr(data, "boxh_df")
+  stub_df <- attr(data, "stub_df")
+  foot_df <- attr(data, "foot_df")
+
+  # Get the available property names
+  property_names <-
+    base::setdiff(
+      names(attributes(data)),
+      c("row.names", "class", "names", "boxh_df", "stub_df",
+        "fmts_df", "foot_df", "output_df", "formats", "decorators"))
+
+  # Create `output_df` with rendered values
+  output_df <- render_formats(data = data)
+
+  # Create `fmts_df` with additional formatting instructions
+  fmts_df <- apply_decorators(data = data, fmts_df = fmts_df)
+
+  # Move input data cells to `output_df` that didn't have
+  # any rendering applied during `render_formats()`
+  output_df <-
+    migrate_unformatted_to_output(
+      data = data,
+      output_df = output_df)
+
+  # Apply column names to column labels for any of
+  # those column labels not explicitly set
+  boxh_df <-
+    migrate_colnames_to_labels(
+      boxh_df = boxh_df)
+
+  # Assign center alignment for all columns
+  # that haven't had alignment explicitly set
+  boxh_df <-
+    set_default_alignments(
+      boxh_df = boxh_df)
+
   # Determine if there is a populated stub
-  if (!all(is.na(attr(data, "stub_df")[["rowname"]])) ||
-      !all(is.na(attr(data, "stub_df")[["groupname"]]))) {
-    stub_available <- TRUE
-  } else {
-    stub_available <- FALSE
-  }
+  stub_available <- is_stub_available(stub_df = stub_df)
 
   # Determine if there are any groups present
-  if (!all(is.na(attr(data, "stub_df")[["groupname"]]))) {
-    groups_present <- TRUE
-  } else {
-    groups_present <- FALSE
-  }
+  groups_present <- are_groups_present(stub_df = stub_df)
 
   # Determine if there are any spanners present
-  if (!all(is.na(attr(data, "boxh_df")[1,] %>% t() %>% as.vector()))) {
-    spanners_present <- TRUE
-  } else {
-    spanners_present <- FALSE
-  }
+  spanners_present <- are_spanners_present(boxh_df = boxh_df)
 
-  if (stub_available) {
-
-    stub_components <- c()
-
-    if (any(!is.na(attr(data, "stub_df")[["rowname"]]))) {
-      stub_components <- c(stub_components, "row_name")
-    }
-
-    if (any(!is.na(attr(data, "stub_df")[["groupname"]]))) {
-      stub_components <- c(stub_components, "group_name")
-    }
-  }
+  # Get the available stub components, if any
+  stub_components <- get_stub_components(stub_df = stub_df)
 
   # Perform column merge operations
-  if ("col_merge" %in% names(attributes(data))) {
-    data <- perform_col_merge(data = data)
+  if ("col_merge" %in% property_names) {
+
+    #data <- perform_col_merge(data = data)
+
+    # TODO: rewrite this
+    extracted <- attr(data, "output_df")
+
+    for (i in seq(attr(data, "col_merge")[[1]])) {
+
+      type <- attr(data, "col_merge")[["type"]][i]
+      value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
+      value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
+
+      values_1 <- extracted[, which(colnames(extracted) == value_1_col)]
+      values_2 <- extracted[, which(colnames(extracted) == value_2_col)]
+
+      if (type == "uncertainty") {
+        separator <- " &plusmn; "
+      } else if (type == "range") {
+        separator <- " &mdash; "
+      }
+
+      for (j in seq(values_1)) {
+
+        if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
+            !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+          values_1[j] <- paste(values_1[j], values_2[j], sep = separator)
+        }
+      }
+
+      attr(data, "output_df")[, which(colnames(extracted) == value_1_col)] <- values_1
+
+      # Remove the second column across key dfs
+      attr(data, "boxh_df") <- attr(data, "boxh_df")[, -which(colnames(extracted) == value_2_col)]
+      attr(data, "fmts_df") <- attr(data, "fmts_df")[, -which(colnames(extracted) == value_2_col)]
+      attr(data, "foot_df") <- attr(data, "foot_df")[, -which(colnames(extracted) == value_2_col)]
+      attr(data, "output_df") <- attr(data, "output_df")[, -which(colnames(extracted) == value_2_col)]
+    }
+
+    data
   }
 
   # Extract the table (case of table with no stub)
-  if (stub_available == FALSE) {
-    extracted <- attr(data, "output_df")
-    col_alignment <- attr(data, "boxh_df")[3, ] %>% t() %>% as.vector()
+  if (is.null(stub_components)) {
+    extracted <- output_df
+    col_alignment <- boxh_df[3, ] %>% t() %>% as.vector()
+    groups_rows <- NULL
   }
 
   # Extract the table (case of table with a stub w/ only row names)
-  if (stub_available && all(stub_components == "row_name")) {
-    stub_df <- attr(data, "stub_df")
+  if (!is.null(stub_components) && all(stub_components == "row_name")) {
+
     colnames(stub_df)[2] <- ":row_name:"
-    extracted <- cbind(stub_df, attr(data, "output_df"))[, -1]
-    col_alignment <- c("right", attr(data, "boxh_df")[3, ] %>% t() %>% as.vector())
+    extracted <- cbind(stub_df, output_df)[, -1]
+    col_alignment <- c("right", boxh_df[3, ] %>% t() %>% as.vector())
+    groups_rows <- NULL
   }
 
   # Extract the table (case of table with a stub w/ only group names)
-  if (stub_available && all(stub_components == "group_name")) {
-    stub_df <- attr(data, "stub_df")
+  if (!is.null(stub_components) && all(stub_components == "group_name")) {
+
     colnames(stub_df)[1] <- ":group_name:"
-    extracted <- cbind(stub_df, attr(data, "output_df"))[, -2]
-    col_alignment <- c("right", attr(data, "boxh_df")[3, ] %>% t() %>% as.vector())
+    extracted <- cbind(stub_df, output_df)[, -2]
+    col_alignment <- c("right", boxh_df[3, ] %>% t() %>% as.vector())
+    groups_rows <- NULL
   }
 
   # Extract the table (case of table with a stub of row and group names)
-  if (stub_available && all(stub_components == c("row_name", "group_name"))) {
+  if (!is.null(stub_components) && all(stub_components == c("row_name", "group_name"))) {
 
-    stub_df <- attr(data, "stub_df")
     colnames(stub_df) <- c(":group_name:", ":row_name:")
 
-    # Combine stub with output table
-    extracted <- cbind(stub_df, attr(data, "output_df"))
+    # Combine stub with output table to form `extracted`
+    extracted <- cbind(stub_df, output_df)
 
     # Replace NA values in the `:group_name:` column
-    if ("others_group" %in% names(attributes(data))) {
+    if ("others_group" %in% property_names) {
       extracted[which(is.na(extracted[, 1])), 1] <- attr(data, "others_group")[[1]]
     } else {
       extracted[which(is.na(extracted[, 1])), 1] <- "Others"
     }
 
-    if ("arrange_groups" %in% names(attributes(data))) {
+    if ("arrange_groups" %in% property_names) {
 
       ordering <- attr(data, "arrange_groups")$groups
 
@@ -97,9 +152,8 @@ render_as_html <- function(data) {
 
       ordering <- c(ordering, base::setdiff(all_groups, ordering))
 
-
-      fmts_df <- cbind(extracted[, 1:2], attr(data, "fmts_df"))
-      foot_df <- cbind(extracted[, 1:2], attr(data, "foot_df"))
+      fmts_df <- cbind(extracted[, 1:2], fmts_df)
+      foot_df <- cbind(extracted[, 1:2], foot_df)
 
       extracted_reorder <- fmts_df_reorder <- foot_df_reorder <- extracted[0, ]
 
@@ -125,8 +179,8 @@ render_as_html <- function(data) {
       rownames(fmts_df_reorder) <- NULL
       rownames(foot_df_reorder) <- NULL
 
-      attr(data, "fmts_df") <- fmts_df_reorder[, -c(1:2)]
-      attr(data, "foot_df") <- foot_df_reorder[, -c(1:2)]
+      fmts_df <- fmts_df_reorder[, -c(1:2)]
+      foot_df <- foot_df_reorder[, -c(1:2)]
       extracted <- extracted_reorder
     }
 
@@ -151,21 +205,21 @@ render_as_html <- function(data) {
   n_cols <- ncol(extracted)
 
   # Replace percent sign markers
-  for (colname in colnames(attr(data, "fmts_df"))) {
-    for (row in 1:nrow(attr(data, "fmts_df"))) {
-      if (grepl("::percent", attr(data, "fmts_df")[row, colname])) {
+  for (colname in colnames(fmts_df)) {
+    for (row in 1:nrow(fmts_df)) {
+      if (grepl("::percent", fmts_df[row, colname])) {
         extracted[row, colname] <- paste0(extracted[row, colname], "%")
       }
     }
   }
 
   # Replace currency values
-  for (colname in colnames(attr(data, "fmts_df"))) {
-    for (row in 1:nrow(attr(data, "fmts_df"))) {
-      if (grepl("::curr.*", attr(data, "fmts_df")[row, colname])) {
+  for (colname in colnames(fmts_df)) {
+    for (row in 1:nrow(fmts_df)) {
+      if (grepl("::curr.*", fmts_df[row, colname])) {
 
-        pos <- substring(attr(data, "fmts_df")[row, colname], 8, 8)
-        symbol <- gsub("::curr_._", "", attr(data, "fmts_df")[row, colname])
+        pos <- substring(fmts_df[row, colname], 8, 8)
+        symbol <- gsub("::curr_._", "", fmts_df[row, colname])
 
         if (pos == "l") {
           extracted[row, colname] <- paste0(symbol, extracted[row, colname])
@@ -182,7 +236,7 @@ render_as_html <- function(data) {
   # Extract footnote references and place into separate list
   list_footnotes <-
     stringr::str_extract_all(
-      string = as.vector(t(cbind(attr(data, "stub_df"), attr(data, "foot_df"))[, -1])),
+      string = as.vector(t(cbind(stub_df, foot_df)[, -1])),
       pattern = "::foot_\\d+?")
 
   for (i in seq(list_footnotes)) {
@@ -212,7 +266,7 @@ render_as_html <- function(data) {
   }
 
   # Replace any NA values
-  if ("missing_mark" %in% names(attributes(data))) {
+  if ("missing_mark" %in% property_names) {
 
     for (i in seq(body_content)) {
       if (is.na(body_content[i])) {
@@ -222,7 +276,7 @@ render_as_html <- function(data) {
   }
 
   # Handle any available footnotes
-  if ("footnote" %in% names(attributes(data))) {
+  if ("footnote" %in% property_names) {
 
     glyphs_footnotes <- c()
 
@@ -275,7 +329,7 @@ render_as_html <- function(data) {
   }
 
   # Create a heading
-  if ("heading" %in% names(attributes(data))) {
+  if ("heading" %in% property_names) {
 
     heading_component <-
       paste0(
@@ -301,7 +355,7 @@ render_as_html <- function(data) {
       paste0(
         "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
 
-  if ("source_note" %in% names(attributes(data))) {
+  if ("source_note" %in% property_names) {
 
     # Create a source note
     source_note_rows <-
@@ -324,7 +378,7 @@ render_as_html <- function(data) {
   body_rows <- c()
   for (i in 1:n_rows) {
 
-    if (exists("groups_rows") && i %in% groups_rows$row) {
+    if (!is.null(groups_rows) && i %in% groups_rows$row) {
       body_rows <-
         c(body_rows,
           paste0(
@@ -359,7 +413,7 @@ render_as_html <- function(data) {
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
-  labels_rev <- attr(data, "boxh_df")[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
+  labels_rev <- boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
 
   for (i in seq(labels_rev)) {
     headings_rev[i] <- labels_rev[i]
@@ -371,9 +425,12 @@ render_as_html <- function(data) {
   if (stub_available &&
       "stubhead_caption" %in% names(attributes(data)) &&
       ":row_name:" %in% headings) {
+
     headings[which(headings == ":row_name:")] <-
       attr(data, "stubhead_caption")[[1]]
+
   } else if (":row_name:" %in% headings) {
+
     headings[which(headings == ":row_name:")] <- ""
   }
 
@@ -464,8 +521,7 @@ render_as_html <- function(data) {
 
     first_set <- paste(first_set, collapse = "\n")
 
-    remaining_headings <-
-      headings[!(headings %in% headings_stack)]
+    remaining_headings <- headings[!(headings %in% headings_stack)]
 
     second_set <-
       paste0(
