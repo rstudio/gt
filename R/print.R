@@ -7,10 +7,7 @@
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
-  # Render all formatting
-  x <- render_formats(data = x)
-
-  # Generation of the HTML table
+  # Generate the HTML table
   html_table <- render_as_html(data = x)
 
   # Create the htmlDependency
