@@ -243,26 +243,18 @@ fmt_percent <- function(data,
       columns = columns,
       rows = rows,
       formatter = function(x) {
-        formatC(
-          x = as.numeric(x) * 100.0,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "f",
-          drop0trailing = drop0trailing)
+        paste0(
+          formatC(
+            x = as.numeric(x) * 100.0,
+            digits = decimals,
+            mode = "double",
+            big.mark = sep_mark,
+            decimal.mark = dec_mark,
+            format = "f",
+            drop0trailing = drop0trailing),
+          "%")
       }
     )
-
-  # Set the decorator
-  data <-
-    set_decorator(
-      data = data,
-      columns = columns,
-      rows = rows,
-      decorator = function(x) {
-        "::percent"
-      })
 
   data
 }
