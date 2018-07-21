@@ -11,9 +11,6 @@
 #' @export
 as_raw_html <- function(data, inline_css = TRUE) {
 
-  # Render all formatting
-  data <- render_formats(data = data)
-
   # Generation of the HTML table
   html_table <- render_as_html(data = data)
 
