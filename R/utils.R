@@ -430,6 +430,140 @@ process_text <- function(text) {
   }
 }
 
+#' Render any formatting directives
+#' @noRd
+render_formats <- function(data) {
+
+  output_df <- data %>% as.data.frame(stringsAsFactors = FALSE)
+  output_df[] <- NA_character_
+
+  # Render input data to output data where formatting
+  # is specified
+  for (i in seq(attr(data, "formats")))  {
+    for (col in attr(data, "formats")[[i]][["cols"]]) {
+
+      # Only perform rendering if column is present
+      if (col %in% colnames(data)) {
+        output_df[[col]][attr(data, "formats")[[i]]$rows] <-
+          attr(data, "formats")[[i]]$func(data[[col]][attr(data, "formats")[[i]]$rows])
+      }
+    }
+  }
+
+  output_df
+}
+
+#' Move input data cells to `output_df` that didn't have
+#' any rendering applied during `render_formats()`
+#' @noRd
+migrate_unformatted_to_output <- function(data, output_df) {
+
+  for (colname in colnames(output_df)) {
+
+    row_index <- is.na(output_df[[colname]])
+    output_df[[colname]][row_index] <- as.character(data[[colname]][row_index])
+  }
+
+  output_df
+}
+
+#' Apply column names to column labels for any of
+#' those column labels not explicitly set
+#' @noRd
+migrate_colnames_to_labels <- function(boxh_df) {
+
+  for (colname in colnames(boxh_df)) {
+    if (is.na(boxh_df[2, colname])) {
+      boxh_df[2, colname] <- colname
+    }
+  }
+
+  boxh_df
+}
+
+#' Assign center alignment for all columns
+#' that haven't had alignment explicitly set
+#' @noRd
+set_default_alignments <- function(boxh_df) {
+
+  for (colname in colnames(boxh_df)) {
+    if (is.na(boxh_df[3, colname])) {
+      boxh_df[3, colname] <- "center"
+    }
+  }
+
+  boxh_df
+}
+
+#' Create a data frame with formatting directives
+#' @noRd
+apply_decorators <- function(data, fmts_df) {
+
+  for (i in seq(attr(data, "decorators")))  {
+    for (col in attr(data, "decorators")[[i]]$cols) {
+
+      # Only perform rendering if column is present
+      if (col %in% colnames(data)) {
+        fmts_df[[col]][attr(data, "decorators")[[i]]$rows] <-
+          attr(data, "decorators")[[i]]$func(data[[col]][attr(data, "decorators")[[i]]$rows])
+      }
+    }
+  }
+
+  fmts_df
+}
+
+#' Is there any defined elements of a stub present?
+#' @noRd
+is_stub_available <- function(stub_df) {
+
+  if (!all(is.na((stub_df)[["rowname"]])) ||
+      !all(is.na((stub_df)[["groupname"]]))) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+#' Is there any group names defined in the stub?
+#' @noRd
+are_groups_present <- function(stub_df) {
+
+  if (!all(is.na((stub_df)[["groupname"]]))) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+#' Are there any spanners present?
+#' @noRd
+are_spanners_present <- function(boxh_df) {
+
+  if (!all(is.na((boxh_df)[1,] %>% t() %>% as.vector()))) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+#' Get the stub components that are available
+#' @noRd
+get_stub_components <- function(stub_df) {
+
+  stub_components <- c()
+
+  if (any(!is.na(stub_df[["rowname"]]))) {
+    stub_components <- c(stub_components, "row_name")
+  }
+
+  if (any(!is.na(stub_df[["groupname"]]))) {
+    stub_components <- c(stub_components, "group_name")
+  }
+
+  stub_components
+}
+
 #' A wrapper for `system.file()`
 #' @noRd
 system_file <- function(file) {
