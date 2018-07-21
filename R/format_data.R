@@ -651,7 +651,7 @@ fmt_missing <- function(data,
     missing_mark <- "&ndash;"
   }
 
-  attr(data, "missing_mark", exact = TRUE) <-
+  attr(data, "missing_mark") <-
     list(missing_mark = missing_mark)
 
   data
