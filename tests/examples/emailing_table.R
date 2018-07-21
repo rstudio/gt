@@ -3,11 +3,11 @@ library(blastula)
 
 # Create an HTML table that is suitable for
 # emailing; this requires `as_raw_html()` to
-# generate inline CSS styles, which are absolutely
-# essential (i.e., they won't be stripped away)
+# generate inline CSS styles, which are essential
+# (i.e., they won't be stripped away)
 html_tbl <-
   gt(data = airquality) %>%
-  cols_move_to_start(columns = Month & Day) %>%
+  cols_move_to_start(columns = vars(Month, Day)) %>%
   cols_label(labels = col_labels(Solar.R = html("Solar<br>Radiation"))) %>%
   fmt_number(
     columns = Wind,
@@ -15,7 +15,7 @@ html_tbl <-
   )  %>%
   tab_boxhead_panel(
     group = "Measurement Period",
-    columns = Month & Day
+    columns = vars(Month, Day)
   ) %>%
   fmt_missing() %>%
   as_raw_html()
