@@ -10,7 +10,7 @@ data <-
     columns = Date,
     date_style = 6) %>%
   fmt_currency(
-    columns = tgt(High, Open, Low, Close),
+    columns = vars(High, Open, Low, Close),
     currency = "USD")
 
 data
