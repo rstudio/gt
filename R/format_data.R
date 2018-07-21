@@ -626,7 +626,7 @@ set_fmt <- function(data,
 
   next_index <- length(attr(data, "formats", exact = TRUE)) + 1
 
-  attr(data, "formats", exact = TRUE)[[next_index]] <- a_list
+  attr(data, "formats")[[next_index]] <- a_list
 
   data
 }
