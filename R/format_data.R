@@ -679,7 +679,7 @@ set_decorator <- function(data,
 
   next_index <- length(attr(data, "decorators", exact = TRUE)) + 1
 
-  attr(data, "decorators", exact = TRUE)[[next_index]] <- a_list
+  attr(data, "decorators")[[next_index]] <- a_list
 
   data
 }
