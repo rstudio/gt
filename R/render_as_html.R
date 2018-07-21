@@ -415,8 +415,6 @@ render_as_html <- function(data) {
       body_rows,
       "</tbody>\n")
 
-  table_start <- "<!--gt table start-->\n<table class='gt_table'>\n"
-
   # Compose the HTML heading
   headings <- names(extracted)
 
@@ -545,6 +543,12 @@ render_as_html <- function(data) {
         second_set, "\n</tr>\n")
   }
 
+  # Create an HTML fragment for the start of the table
+  table_start <- "<!--gt table start-->\n<table class='gt_table'>\n"
+
+  # Create an HTML fragment for the end of the table
+  table_end <- "</table>\n<!--gt table end-->\n"
+
   # Compose the HTML table
   html_table <-
     paste0(
@@ -554,6 +558,7 @@ render_as_html <- function(data) {
       table_body,
       source_note_rows,
       footnote_component,
+      table_end,
       collapse = "")
 
   html_table
