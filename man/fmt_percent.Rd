@@ -4,7 +4,7 @@
 \alias{fmt_percent}
 \title{Format values as a percentage}
 \usage{
-fmt_percent(data, columns, rows = NULL, decimals = NULL, sep_mark = "",
+fmt_percent(data, columns, rows = NULL, decimals = 2, sep_mark = "",
   dec_mark = ".", negative_style = "signed", drop0trailing = FALSE)
 }
 \arguments{
@@ -17,7 +17,8 @@ fmt_percent(data, columns, rows = NULL, decimals = NULL, sep_mark = "",
 value results in all rows in \code{columns} being formatted.}
 
 \item{decimals}{an option to specify the exact number
-of decimal places to use.}
+of decimal places to use. The default number of decimal
+places is \code{2}.}
 
 \item{sep_mark}{the mark to use as a separator between
 groups of digits.}
