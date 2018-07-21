@@ -255,11 +255,6 @@ cols_move <- function(data,
         column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
 
-    attr(data, "output_df") <- attr(data, "output_df") %>%
-      dplyr::select(
-        column_names[1:column_index], columns,
-        column_names[(column_index + 1):length(column_names)])
-
     attr(data, "foot_df") <- attr(data, "foot_df") %>%
       dplyr::select(
         column_names[1:column_index], columns,
@@ -278,9 +273,6 @@ cols_move <- function(data,
   } else if (length(columns) > 0 & column_index == length(column_names)) {
 
     data <- data %>%
-      dplyr::select(column_names[1:column_index], columns)
-
-    attr(data, "output_df") <- attr(data, "output_df") %>%
       dplyr::select(column_names[1:column_index], columns)
 
     attr(data, "foot_df") <- attr(data, "foot_df") %>%
@@ -333,7 +325,7 @@ cols_move_to_start <- function(data,
   }
 
   data <- data %>% dplyr::select(columns, everything())
-  attr(data, "output_df") <- attr(data, "output_df") %>% dplyr::select(columns, everything())
+
   attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns, everything())
   attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns, everything())
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns, everything())
@@ -381,7 +373,7 @@ cols_move_to_end <- function(data,
   columns <- c(base::setdiff(colnames(data), columns), columns)
 
   data <- data %>% dplyr::select(columns)
-  attr(data, "output_df") <- attr(data, "output_df") %>% dplyr::select(columns)
+
   attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns)
   attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns)
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
