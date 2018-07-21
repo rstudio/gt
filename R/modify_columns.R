@@ -418,10 +418,69 @@ cols_remove <- function(data,
   columns <- c(base::setdiff(colnames(data), columns))
 
   data <- data %>% dplyr::select(columns)
-  attr(data, "output_df") <- attr(data, "output_df") %>% dplyr::select(columns)
+
   attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns)
   attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns)
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
+
+  data
+}
+
+#' Create group names and column labels via delimited column names
+#' This option will split delimited column names such that the
+#' first component is promoted to the group name (and hence
+#' will span over column labels) and subsequent components will
+#' represent the column label. Please note that reference to individual
+#' columns must still be via the original column names.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param delim the delimiter to use to split an input column name.
+#' The delimiter supplied will be autoescaped for the internal
+#' splitting procedure. The first component of the split will
+#' become the group name and the second component will be the
+#' column label.
+#' @param columns an optional vector of column names that this
+#' operation should be limited to. The default is to consider all
+#' columns in the table.
+#' @return an object of class \code{gt_tbl}.
+#' @export
+cols_split_delim <- function(data,
+                             delim,
+                             columns = NULL) {
+
+  # Escape any characters that require escaping
+  delim <- gsub("\\.", "\\\\.", delim)
+
+  # Get all of the columns in the dataset
+  all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
+
+  # Get the column names in the dataset
+  colnames <- colnames(attr(data, "boxh_df", exact = TRUE))
+
+  if (!is.null(columns)) {
+    colnames <- base::intersect(colnames, columns)
+  }
+
+  if (length(colnames) == 0) {
+    return(data)
+  }
+
+  colnames_indices <-
+    which(colnames(attr(data, "boxh_df", exact = TRUE)) %in% colnames)
+
+  for (i in colnames_indices) {
+
+    if (grepl(paste0("[^.]", delim, "[^.]"), all_cols[i])) {
+
+      split_colname <- strsplit(x = all_cols[i], split = delim) %>% unlist()
+
+      attr(data, "boxh_df")[
+        1, i] <- split_colname[1]
+
+      attr(data, "boxh_df")[
+        2, i] <- paste0(split_colname[-1], collapse = delim)
+    }
+  }
 
   data
 }
