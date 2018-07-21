@@ -278,7 +278,7 @@ render_as_html <- function(data) {
   if ("missing_mark" %in% property_names) {
 
     for (i in seq(body_content)) {
-      if (is.na(body_content[i])) {
+      if (is.na(body_content[i]) | grepl("^\\s*?NA\\s*?$", body_content[i])) {
         body_content[i] <- attr(data, "missing_mark")[[1]]
       }
     }
