@@ -220,15 +220,6 @@ render_as_html <- function(data) {
   n_rows <- nrow(extracted)
   n_cols <- ncol(extracted)
 
-  # Replace percent sign markers
-  for (colname in colnames(fmts_df)) {
-    for (row in 1:nrow(fmts_df)) {
-      if (grepl("::percent", fmts_df[row, colname])) {
-        extracted[row, colname] <- paste0(extracted[row, colname], "%")
-      }
-    }
-  }
-
   # Replace currency values
   for (colname in colnames(fmts_df)) {
     for (row in 1:nrow(fmts_df)) {
