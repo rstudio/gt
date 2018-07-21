@@ -24,11 +24,16 @@ resolve_rows <- function(data, rows) {
 resolve_columns <- function(data, columns) {
 
   if (inherits(columns, "columns_with")) {
+
     columns <- colnames(data)[
       which(grepl(paste(columns$pattern, collapse = "|"), colnames(data)))]
+
   } else if (is.numeric(columns)) {
-    columns <- colnames(data)[columns[columns %in% 1:ncol(data)]]
+
+    columns <- colnames(data)[columns]
+
   } else if (is.character(columns)) {
+
     columns <- colnames(data)[which(colnames(data) %in% columns)]
   }
 
