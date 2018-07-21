@@ -237,10 +237,7 @@ render_as_html <- function(data) {
     }
   }
 
-  # Extract the body content as a vector
-  body_content <- as.vector(t(extracted))
-
-  # Extract footnote references and place into separate list
+  # Extract footnote references and place into a separate list
   list_footnotes <-
     stringr::str_extract_all(
       string = as.vector(t(cbind(stub_df, foot_df)[, -1])),
@@ -253,6 +250,9 @@ render_as_html <- function(data) {
       list_footnotes[[i]] <- gsub("::foot_", "", list_footnotes[[i]])
     }
   }
+
+  # Extract the body content as a vector
+  body_content <- as.vector(t(extracted))
 
   # Replace values in scientific notation
   for (i in seq(body_content)) {
