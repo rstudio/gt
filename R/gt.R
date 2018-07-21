@@ -45,7 +45,7 @@ gt <- function(data,
     stub_df <-
       data.frame(
         groupname = NA_character_,
-        rowname = tibble::rownames_to_column(dplyr::as_tibble(data))$rowname,
+        rowname = rownames(data),
         stringsAsFactors = FALSE)
 
   } else {
