@@ -61,51 +61,67 @@ render_as_html <- function(data) {
   # Get the available stub components, if any
   stub_components <- get_stub_components(stub_df = stub_df)
 
-  # Perform column merge operations
+  # Perform any necessary column merge operations
   if ("col_merge" %in% property_names) {
 
-    #data <- perform_col_merge(data = data)
+    perform_col_merge <- function(data,
+                                  output_df,
+                                  boxh_df,
+                                  fmts_df,
+                                  foot_df) {
 
-    # TODO: rewrite this
-    extracted <- attr(data, "output_df")
+      for (i in seq(attr(data, "col_merge")[[1]])) {
 
-    for (i in seq(attr(data, "col_merge")[[1]])) {
+        type <- attr(data, "col_merge")[["type"]][i]
+        value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
+        value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
 
-      type <- attr(data, "col_merge")[["type"]][i]
-      value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
-      value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
+        values_1 <- output_df[, which(colnames(output_df) == value_1_col)]
+        values_2 <- output_df[, which(colnames(output_df) == value_2_col)]
 
-      values_1 <- extracted[, which(colnames(extracted) == value_1_col)]
-      values_2 <- extracted[, which(colnames(extracted) == value_2_col)]
-
-      if (type == "uncertainty") {
-        separator <- " &plusmn; "
-      } else if (type == "range") {
-        separator <- " &mdash; "
-      }
-
-      for (j in seq(values_1)) {
-
-        if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
-            !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
-          values_1[j] <- paste(values_1[j], values_2[j], sep = separator)
+        if (type == "uncertainty") {
+          separator <- " &plusmn; "
+        } else if (type == "range") {
+          separator <- " &mdash; "
         }
+
+        for (j in seq(values_1)) {
+
+          if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
+              !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+            values_1[j] <-
+              gsub(
+                "^\\s+|\\s+$", "",
+                paste(values_1[j], values_2[j], sep = separator))
+          }
+        }
+
+        output_df[, which(colnames(output_df) == value_1_col)] <- values_1
+
+        # Remove the second column across key dfs
+        boxh_df <- boxh_df[, -which(colnames(output_df) == value_2_col)]
+        fmts_df <- fmts_df[, -which(colnames(output_df) == value_2_col)]
+        foot_df <- foot_df[, -which(colnames(output_df) == value_2_col)]
+        output_df <- output_df[, -which(colnames(output_df) == value_2_col)]
+
+        boxh_df <<- boxh_df
+        fmts_df <<- fmts_df
+        foot_df <<- foot_df
+        output_df <<- output_df
       }
-
-      attr(data, "output_df")[, which(colnames(extracted) == value_1_col)] <- values_1
-
-      # Remove the second column across key dfs
-      attr(data, "boxh_df") <- attr(data, "boxh_df")[, -which(colnames(extracted) == value_2_col)]
-      attr(data, "fmts_df") <- attr(data, "fmts_df")[, -which(colnames(extracted) == value_2_col)]
-      attr(data, "foot_df") <- attr(data, "foot_df")[, -which(colnames(extracted) == value_2_col)]
-      attr(data, "output_df") <- attr(data, "output_df")[, -which(colnames(extracted) == value_2_col)]
     }
 
-    data
+    perform_col_merge(
+      data = data,
+      output_df = output_df,
+      boxh_df = boxh_df,
+      fmts_df = fmts_df,
+      foot_df = foot_df)
   }
 
   # Extract the table (case of table with no stub)
   if (is.null(stub_components)) {
+
     extracted <- output_df
     col_alignment <- boxh_df[3, ] %>% t() %>% as.vector()
     groups_rows <- NULL
