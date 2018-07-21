@@ -430,7 +430,7 @@ render_as_html <- function(data) {
   # If `stub_available` == TRUE, then replace with a set stubhead
   # caption or nothing
   if (stub_available &&
-      "stubhead_caption" %in% names(attributes(data)) &&
+      "stubhead_caption" %in% property_names &&
       ":row_name:" %in% headings) {
 
     headings[which(headings == ":row_name:")] <-
@@ -454,7 +454,7 @@ render_as_html <- function(data) {
   } else {
 
     # spanners
-    spanners <- attr(data, "boxh_df")[1, ] %>% t() %>% as.vector()
+    spanners <- boxh_df[1, ] %>% t() %>% as.vector()
 
     first_set <- c()
     second_set <- c()
