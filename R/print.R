@@ -28,4 +28,6 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)
+
+  invisible(x)
 }
