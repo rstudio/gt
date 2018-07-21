@@ -2,10 +2,18 @@
 resolve_rows <- function(data, rows) {
 
   if (inherits(rows, "rownames_with")) {
-    rows <- which(grepl(paste(rows$pattern, collapse = "|"), attr(data, "stub_df")[["rowname"]]))
+
+    rows <-
+      which(
+        grepl(paste(rows$pattern, collapse = "|"),
+              attr(data, "stub_df", exact = TRUE)[["rowname"]]))
+
   } else if (is.numeric(rows)) {
+
     rows <- rows[rows %in% 1:nrow(data)]
+
   } else if (is.character(rows) && all(!is.na(attr(data, "stub_df")[["rowname"]]))) {
+
     rows <- which(attr(data, "stub_df")[["rowname"]] %in% rows)
   }
 
