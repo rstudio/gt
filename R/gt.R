@@ -68,7 +68,10 @@ gt <- function(data,
   attr(data_tbl, "fmts_df") <- empty_df
   attr(data_tbl, "foot_df") <- empty_df
 
-  attr(data_tbl, "formats") <- list()
+  attr(data_tbl, "formats_html") <- list()
+  attr(data_tbl, "formats_rtf") <- list()
+  attr(data_tbl, "formats_text") <- list()
+
   attr(data_tbl, "decorators") <- list()
 
   class(data_tbl) <- c("gt_tbl", class(data_tbl))
