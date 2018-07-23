@@ -4,7 +4,7 @@
 \alias{fmt_number}
 \title{Format numeric values}
 \usage{
-fmt_number(data, columns, rows = NULL, decimals = 4, sep_mark = "",
+fmt_number(data, columns, rows = NULL, decimals = 2, sep_mark = "",
   dec_mark = ".", drop0trailing = FALSE, negative_style = "signed")
 }
 \arguments{
@@ -18,7 +18,7 @@ value results in all rows in \code{columns} being formatted.}
 
 \item{decimals}{an option to specify the exact number
 of decimal places to use. The default number of decimal
-places is \code{4}.}
+places is \code{2}.}
 
 \item{sep_mark}{the mark to use as a separator between
 groups of digits.}
