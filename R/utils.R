@@ -344,7 +344,7 @@ get_mean_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(mean)) %>%
-    dplyr::mutate(rowname = "Summary: Mean") %>%
+    dplyr::mutate(rowname = "Summary: Mean", type = "mean") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
@@ -357,7 +357,7 @@ get_min_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(min)) %>%
-    dplyr::mutate(rowname = "Summary: Min") %>%
+    dplyr::mutate(rowname = "Summary: Min", type = "min") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
@@ -370,7 +370,7 @@ get_max_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(max)) %>%
-    dplyr::mutate(rowname = "Summary: Max") %>%
+    dplyr::mutate(rowname = "Summary: Max", type = "max") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
@@ -383,7 +383,7 @@ get_median_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(median)) %>%
-    dplyr::mutate(rowname = "Summary: Median") %>%
+    dplyr::mutate(rowname = "Summary: Median", type = "median") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
@@ -396,7 +396,7 @@ get_sd_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(sd)) %>%
-    dplyr::mutate(rowname = "Summary: S.D.") %>%
+    dplyr::mutate(rowname = "Summary: S.D.", type = "sd") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
@@ -409,8 +409,24 @@ get_n_df <- function(data) {
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(n())) %>%
-    dplyr::mutate(rowname = "Summary: N") %>%
+    dplyr::mutate(rowname = "Summary: N", type = "n") %>%
     dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of summary lines for all summary
+#' types automatically handled in the package
+#' in the input data table
+#' @importFrom dplyr bind_rows
+#' @noRd
+get_all_summaries <- function(df) {
+
+  dplyr::bind_rows(
+    get_mean_df(df),
+    get_min_df(df),
+    get_max_df(df),
+    get_median_df(df),
+    get_sd_df(df),
+    get_n_df(df))
 }
 
 #' Process input text
