@@ -160,15 +160,82 @@ fmt_scientific <- function(data,
       columns = columns,
       rows = rows,
       formatter = function(x) {
-        formatC(
-          x = x,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "e",
-          drop0trailing = drop0trailing)
-      })
+
+        # Format the number component
+        x <-
+          formatC(
+            x = x,
+            digits = decimals,
+            mode = "double",
+            big.mark = sep_mark,
+            decimal.mark = dec_mark,
+            format = "e",
+            drop0trailing = drop0trailing)
+
+        for (i in seq(x)) {
+
+          if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
+              (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
+              as.numeric(x[i]) == 0) {
+
+            x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
+
+          } else {
+
+            x[i] <-
+              paste0(
+                unlist(strsplit(x[i], "e|E"))[1],
+                " &times; 10<sup class='gt_super'>",
+                as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
+                "</sup>")
+          }
+        }
+
+        x
+      },
+      contexts = "html")
+
+  data <-
+    set_fmt(
+      data = data,
+      columns = columns,
+      rows = rows,
+      formatter = function(x) {
+
+        # Format the number component
+        x <-
+          formatC(
+            x = x,
+            digits = decimals,
+            mode = "double",
+            big.mark = sep_mark,
+            decimal.mark = dec_mark,
+            format = "e",
+            drop0trailing = drop0trailing)
+
+        # Apply scientific notation formatting
+        for (i in seq(x)) {
+
+          if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
+              (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
+              as.numeric(x[i]) == 0) {
+
+            x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
+
+          } else {
+
+            x[i] <-
+              paste0(
+                unlist(strsplit(x[i], "e|E"))[1],
+                " x 10(",
+                as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
+                ")")
+          }
+        }
+
+        x
+      },
+      contexts = c("rtf", "text"))
 
   data
 }
@@ -237,26 +304,23 @@ fmt_percent <- function(data,
   }
 
   # Set the format
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = function(x) {
-        paste0(
-          formatC(
-            x = as.numeric(x) * 100.0,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "f",
-            drop0trailing = drop0trailing),
-          "%")
-      }
-    )
-
-  data
+  set_fmt(
+    data = data,
+    columns = columns,
+    rows = rows,
+    formatter = function(x) {
+      paste0(
+        formatC(
+          x = as.numeric(x) * 100.0,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = drop0trailing),
+        "%")
+    }
+  )
 }
 
 #' Format values as currencies
@@ -304,14 +368,6 @@ fmt_currency <- function(data,
     rows <- TRUE
   }
 
-  if (placement == "left") {
-    placement <- "l"
-  } else if (placement == "right") {
-    placement <- "r"
-  } else {
-    placement <- "l"
-  }
-
   # Get the requested `columns`
   columns <-
     rlang::enquo(columns) %>%
@@ -341,17 +397,27 @@ fmt_currency <- function(data,
     return(data)
   }
 
-  # Get the currency string
-  currency_str <- get_currency_str(currency = currency)
+  # Get the currency string for the HTML context
+  currency_str_html <-
+    get_currency_str(currency = currency)
+
+  # Get the currency string for the non-HTML context
+  currency_str <-
+    get_currency_str(currency = currency, fallback_to_code = TRUE)
 
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
+
     # Get decimal places using `get_currency_exponent()` fcn
     if (currency %in% currency_symbols$curr_symbol) {
+
       decimals <- 2
+
     } else {
+
       decimals <- get_currency_exponent(currency = currency)
     }
+
   } else if (is.null(decimals) & use_subunits == FALSE) {
     decimals <- 0
   }
@@ -363,26 +429,53 @@ fmt_currency <- function(data,
       columns = columns,
       rows = rows,
       formatter = function(x) {
-        formatC(
-          x = x,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "f",
-          drop0trailing = FALSE)
-      }
-    )
 
-  # Set the decorator
+        x <-
+          formatC(
+            x = x,
+            digits = decimals,
+            mode = "double",
+            big.mark = sep_mark,
+            decimal.mark = dec_mark,
+            format = "f",
+            drop0trailing = FALSE)
+
+        if (placement == "left") {
+          x <- paste0(currency_str_html, x)
+        } else {
+          x <- paste0(x, currency_str_html)
+        }
+
+        x
+      },
+      contexts = "html")
+
   data <-
-    set_decorator(
+    set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      decorator = function(x) {
-        paste0("::curr_", placement, "_", currency_str)
-      })
+      formatter = function(x) {
+
+        x <-
+          formatC(
+            x = x,
+            digits = decimals,
+            mode = "double",
+            big.mark = sep_mark,
+            decimal.mark = dec_mark,
+            format = "f",
+            drop0trailing = FALSE)
+
+        if (placement == "left") {
+          x <- paste0(currency_str, x)
+        } else {
+          x <- paste0(x, currency_str)
+        }
+
+        x
+      },
+      contexts = c("rtf", "text"))
 
   data
 }
@@ -622,6 +715,74 @@ fmt_missing <- function(data,
   data
 }
 
+#' Add summary lines based on simple aggregations
+#'
+#' Add a summary lines to one or more stub blocks by
+#' using the input data already provided in the \code{gt()}
+#' function.
+#' @param data a table object that is created using the
+#' \code{gt()} function.
+#' @param groups the stub block groups heading names
+#' for which summary lines will be added.
+#' @param columns the columns for which the summaries
+#' should be calculated.
+#' @param agg a vector of aggregate function names. This
+#' can include any of these: \code{mean}, \code{min},
+#' \code{max}, \code{median}, \code{sd}, or \code{n}.
+#' @param decimals an option to specify the exact number
+#' of decimal places to use. The default number of decimal
+#' places is \code{2}.
+#' @param sep_mark the mark to use as a separator between
+#' groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   tab_stub_block(
+#'     group = "Mercs",
+#'     rows = rownames_with("Merc")) %>%
+#'   fmt_summary_auto(
+#'     agg = "mean")
+#' @export
+fmt_summary_auto <- function(data,
+                             groups = NULL,
+                             columns = NULL,
+                             agg,
+                             decimals = 2,
+                             sep_mark = "",
+                             dec_mark = ".") {
+
+  if ("summary_auto" %in% names(attributes(data))) {
+
+    attr(data, "summary_auto") <-
+      c(
+        attr(data, "summary_auto"),
+        list(
+          list(
+            groups = groups,
+            columns = columns,
+            agg = agg,
+            decimals = decimals,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark))
+      )
+
+  } else {
+
+    attr(data, "summary_auto") <-
+      list(
+        list(
+          groups = groups,
+          columns = columns,
+          agg = agg,
+          decimals = decimals,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark))
+  }
+
+  data
+}
+
 #' Set a column format with a formatter function
 #' @param data a table object that is created using the
 #' \code{gt()} function.
@@ -630,21 +791,34 @@ fmt_missing <- function(data,
 #' @param rows an optional specification for which rows are
 #' to be formatted.
 #' @param formatter a formatting function.
+#' @param context the context that is considered for the
+#' formatter function. Options are \code{html} (the default),
+#' \code{rtf}, and \code{text}.
 #' @return an object of class \code{gt_tbl}.
 #' @noRd
 set_fmt <- function(data,
                     columns,
                     rows = TRUE,
-                    formatter) {
+                    formatter,
+                    contexts = "all") {
+
+  if (contexts[1] == "all") {
+    contexts <- c("html", "rtf", "text")
+  }
 
   a_list <- list(
     func = formatter,
     cols = columns,
     rows = rows)
 
-  next_index <- length(attr(data, "formats", exact = TRUE)) + 1
+  for (i in seq(contexts)) {
 
-  attr(data, "formats")[[next_index]] <- a_list
+    format_type <- paste0("formats_", contexts[i])
+
+    next_index <- length(attr(data, format_type, exact = TRUE)) + 1
+
+    attr(data, format_type)[[next_index]] <- a_list
+  }
 
   data
 }
