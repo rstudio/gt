@@ -4,7 +4,7 @@
 \alias{fmt_scientific}
 \title{Format values to scientific notation}
 \usage{
-fmt_scientific(data, columns, rows = NULL, decimals = 4, sep_mark = "",
+fmt_scientific(data, columns, rows = NULL, decimals = 2, sep_mark = "",
   dec_mark = ".", negative_style = "signed", drop0trailing = FALSE)
 }
 \arguments{
@@ -18,7 +18,7 @@ value results in all rows in \code{columns} being formatted.}
 
 \item{decimals}{an option to specify the exact number
 of decimal places to use. The default number of decimal
-places is \code{4}.}
+places is \code{2}.}
 
 \item{sep_mark}{the mark to use as a separator between
 groups of digits.}
