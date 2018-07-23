@@ -27,7 +27,7 @@
 #' # The object of this type can be
 #' # displayed in the Viewer
 #' tab_2
-#' @importFrom tibble rownames_to_column
+#' @importFrom tibble add_row
 #' @export
 gt <- function(data,
                rownames_to_stub = FALSE) {
