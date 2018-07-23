@@ -25,7 +25,7 @@ render_as_html <- function(data) {
         "fmts_df", "foot_df", "output_df", "formats", "decorators"))
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(data = data)
+  output_df <- render_formats(data = data, context = "html")
 
   # Create `fmts_df` with additional formatting instructions
   fmts_df <- apply_decorators(data = data, fmts_df = fmts_df)
@@ -36,6 +36,69 @@ render_as_html <- function(data) {
     migrate_unformatted_to_output(
       data = data,
       output_df = output_df)
+
+  # Integrate any summary lines available
+  if ("summary_auto" %in% property_names) {
+
+    summary_lines <- get_all_summaries(df = cbind(stub_df, data))
+
+    for (i in seq(attr(data, "summary_auto"))) {
+
+      groups <- attr(data, "summary_auto")[[i]][["groups"]]
+      columns <- attr(data, "summary_auto")[[i]][["columns"]]
+      agg <- attr(data, "summary_auto")[[i]][["agg"]]
+      decimals <- attr(data, "summary_auto")[[i]][["decimals"]]
+      sep_mark <- attr(data, "summary_auto")[[i]][["sep_mark"]]
+      dec_mark <- attr(data, "summary_auto")[[i]][["dec_mark"]]
+
+      # Filter the `summary_lines` table by the requested
+      # aggregation types
+      summary_lines_mod <-
+        summary_lines %>%
+        dplyr::filter(type %in% agg) %>%
+        dplyr::select(-type)
+
+      # Filter by the groups requested
+      if (!is.null(groups)) {
+        summary_lines_mod <- dplyr::filter(summary_lines_mod, groupname %in% groups)
+      }
+
+      # Place empty strings in any columns not requested for aggregation
+      if (!is.null(columns)) {
+
+        empty_cols <-
+          base::setdiff(colnames(summary_lines_mod), c("groupname", "rowname", columns))
+
+        summary_lines_mod <-
+          dplyr::mutate_at(summary_lines_mod, .vars = empty_cols, .funs = function(x) {""})
+      }
+
+      # Format to summary values and cast values as character
+      summary_lines_mod <-
+        summary_lines_mod %>%
+        dplyr::mutate_if(
+          .predicate = is.numeric,
+          .funs = function(x) {
+            formatC(x,
+                    digits = decimals,
+                    mode = "double",
+                    big.mark = sep_mark,
+                    decimal.mark = dec_mark,
+                    format = "f",
+                    drop0trailing = FALSE)}
+        ) %>%
+        dplyr::mutate_all(funs(as.character))
+
+      summary_lines_na <- summary_lines_mod
+      summary_lines_na[] <- NA_character_
+
+      stub_df <- dplyr::bind_rows(stub_df, summary_lines_mod[, 1:2])
+
+      output_df <- dplyr::bind_rows(output_df, summary_lines_mod[, -c(1:2)])
+      fmts_df <- dplyr::bind_rows(fmts_df, summary_lines_na[, -c(1:2)])
+      foot_df <- dplyr::bind_rows(foot_df, summary_lines_na[, -c(1:2)])
+    }
+  }
 
   # Apply column names to column labels for any of
   # those column labels not explicitly set
@@ -296,6 +359,7 @@ render_as_html <- function(data) {
           "</em></sup> ", unname(glyphs_footnotes),
           collapse = "<br />"),
         "</td>\n</tr>\n</tfoot>")
+
   } else {
     footnote_component <- ""
   }
@@ -317,6 +381,7 @@ render_as_html <- function(data) {
             "<tr>\n<th class='heading headnote font_normal center bottom_border' colspan='",
             n_cols, "'>", attr(data, "heading")$headnote ,"</th>\n</tr>\n"))
     }
+
   } else {
     heading_component <- c()
   }
