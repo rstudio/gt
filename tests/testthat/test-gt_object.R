@@ -9,13 +9,13 @@ test_that("an gt table object contains the correct components", {
     dplyr::tibble(a = 1:5, b = letters[1:5]) %>%
     gt()
 
-  # Expect that the object has 9 attributes
+  # Expect that the object has 11 attributes
   expect_equal(
-    length(attributes(table_object)), 9)
+    length(attributes(table_object)), 11)
 
   # Expect certain named attributes
   expect_equal(
     names(attributes(table_object)),
-    c("class", "names", "row.names", "boxh_df", "stub_df",
-      "fmts_df", "foot_df", "formats", "decorators"))
+    c("class", "names", "row.names", "boxh_df", "stub_df", "fmts_df", "foot_df",
+      "formats_html", "formats_rtf", "formats_text", "decorators"))
 })
