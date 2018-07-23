@@ -126,7 +126,7 @@ col_labels <- function(...) {
   x <- list(...)
 
   for (i in seq(x)) {
-    x[[i]] <- x[[i]] %>% gt:::process_text()
+    x[[i]] <- x[[i]] %>% process_text()
   }
 
   x %>% unlist()
