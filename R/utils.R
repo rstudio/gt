@@ -212,7 +212,8 @@ is_currency_valid <- function(currency) {
 #' Transform `currency` to currency string
 #' @importFrom dplyr filter pull
 #' @noRd
-get_currency_str <- function(currency) {
+get_currency_str <- function(currency,
+                             fallback_to_code = FALSE) {
 
   # Create bindings for specific variables
   curr_symbol <- symbol <- curr_code <- curr_number <- NULL
@@ -226,17 +227,37 @@ get_currency_str <- function(currency) {
 
   } else if (currency[1] %in% currencies$curr_code) {
 
-    return(
+    currency_symbol <-
       currencies %>%
+      dplyr::filter(curr_code == currency) %>%
+      dplyr::pull(symbol)
+
+    if (fallback_to_code && grepl("&#", currency_symbol)) {
+
+      currency_symbol <-
+        currencies %>%
         dplyr::filter(curr_code == currency) %>%
-        dplyr::pull(symbol))
+        dplyr::pull(curr_code)
+    }
+
+    return(currency_symbol)
 
   } else if (currency[1] %in% currencies$curr_number) {
 
-    return(
+    currency_symbol <-
       currencies %>%
-        dplyr::filter(curr_number == currency) %>%
-        dplyr::pull(symbol))
+      dplyr::filter(curr_number == currency) %>%
+      dplyr::pull(symbol)
+
+    if (fallback_to_code && grepl("&#", currency_symbol)) {
+
+      currency_symbol <-
+        currencies %>%
+        dplyr::filter(curr_code == currency) %>%
+        dplyr::pull(curr_code)
+    }
+
+    return(currency_symbol)
 
   } else {
     return(NA)
