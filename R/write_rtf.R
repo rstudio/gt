@@ -229,23 +229,6 @@ write_rtf <- function(data, file) {
   n_rows <- nrow(extracted)
   n_cols <- ncol(extracted)
 
-  # Replace currency values
-  for (colname in colnames(fmts_df)) {
-    for (row in 1:nrow(fmts_df)) {
-      if (grepl("::curr.*", fmts_df[row, colname])) {
-
-        pos <- substring(fmts_df[row, colname], 8, 8)
-        symbol <- gsub("::curr_._", "", fmts_df[row, colname])
-
-        if (pos == "l") {
-          extracted[row, colname] <- paste0(symbol, extracted[row, colname])
-        } else {
-          extracted[row, colname] <- paste0(extracted[row, colname], symbol)
-        }
-      }
-    }
-  }
-
   # Extract footnote references and place into a separate list
   list_footnotes <-
     stringr::str_extract_all(
