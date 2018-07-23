@@ -1,7 +1,6 @@
 library(gt)
 library(tidyverse)
 
-
 data <-
   gt(mtcars[, 1:7], rownames_to_stub = TRUE) %>%
   tab_boxhead_panel(
@@ -42,4 +41,3 @@ data <-
 # Writing to an RTF file
 data %>% write_rtf(file = "mtcars.rtf")
 
-browseURL("mtcars.rtf")
