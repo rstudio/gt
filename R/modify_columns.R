@@ -11,7 +11,9 @@
 #' # `mtcars` dataset and align all
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align("left")
+#'   cols_align(
+#'     align = "left",
+#'     columns = mpg)
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
 #' @export
@@ -58,7 +60,7 @@ cols_align <- function(data,
 #' # `mtcars` dataset and align all
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_left()
+#'   cols_align_left(mpg)
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
 #' @export
@@ -96,7 +98,7 @@ cols_align_left <- function(data,
 #' # `mtcars` dataset and center align
 #' # all columns
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_center()
+#'   cols_align_center(mpg)
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
 #' @export
@@ -134,7 +136,7 @@ cols_align_center <- function(data,
 #' # `mtcars` dataset and align all
 #' # columns to the right
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_right()
+#'   cols_align_right(mpg)
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
 #' @export
