@@ -6,7 +6,7 @@
 #' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
 #' of decimal places to use. The default number of decimal
-#' places is \code{4}.
+#' places is \code{2}.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -36,7 +36,7 @@
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
-                       decimals = 4,
+                       decimals = 2,
                        sep_mark = "",
                        dec_mark = ".",
                        drop0trailing = FALSE,
@@ -99,7 +99,7 @@ fmt_number <- function(data,
 #' value results in all rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number
 #' of decimal places to use. The default number of decimal
-#' places is \code{4}.
+#' places is \code{2}.
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -120,7 +120,7 @@ fmt_number <- function(data,
 fmt_scientific <- function(data,
                            columns,
                            rows = NULL,
-                           decimals = 4,
+                           decimals = 2,
                            sep_mark = "",
                            dec_mark = ".",
                            negative_style = "signed",
