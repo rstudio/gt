@@ -337,78 +337,84 @@ perform_col_merge <- function(data) {
 
 #' Get a data frame of the `mean` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_mean_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(mean)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: Mean", type = "mean") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
 #' Get a data frame of the `min` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_min_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(min)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: Min", type = "min") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
 #' Get a data frame of the `max` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_max_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(max)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: Max", type = "max") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
 #' Get a data frame of the `median` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_median_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(median)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: Median", type = "median") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
 #' Get a data frame of the `sd` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_sd_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(sd)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: S.D.", type = "sd") %>%
     dplyr::select(groupname, rowname, everything())
 }
 
 #' Get a data frame of the `n` summary stat per group
 #' in the input data table
-#' @importFrom dplyr group_by summarize_at mutate select
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_n_df <- function(data) {
 
   data %>%
     dplyr::group_by(groupname) %>%
     dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(n())) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(rowname = "Summary: N", type = "n") %>%
     dplyr::select(groupname, rowname, everything())
 }
