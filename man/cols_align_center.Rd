@@ -24,5 +24,5 @@ Set columns to be aligned to the center
 # `mtcars` dataset and center align
 # all columns
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_center()
+  cols_align_center(mpg)
 }

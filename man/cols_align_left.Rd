@@ -24,5 +24,5 @@ Set columns to be aligned left
 # `mtcars` dataset and align all
 # columns to the left
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_left()
+  cols_align_left(mpg)
 }
