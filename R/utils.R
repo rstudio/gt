@@ -629,7 +629,7 @@ remove_html <- function(text) {
 get_css_tbl <- function(css_file = "gt.css") {
 
   raw_css_vec <-
-    system_file(file = paste0("css/", css_file)) %>% read_lines()
+    readLines(system_file(file = paste0("css/", css_file)))
 
   ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
   ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
