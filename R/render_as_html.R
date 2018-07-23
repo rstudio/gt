@@ -220,23 +220,6 @@ render_as_html <- function(data) {
   n_rows <- nrow(extracted)
   n_cols <- ncol(extracted)
 
-  # Replace currency values
-  for (colname in colnames(fmts_df)) {
-    for (row in 1:nrow(fmts_df)) {
-      if (grepl("::curr.*", fmts_df[row, colname])) {
-
-        pos <- substring(fmts_df[row, colname], 8, 8)
-        symbol <- gsub("::curr_._", "", fmts_df[row, colname])
-
-        if (pos == "l") {
-          extracted[row, colname] <- paste0(symbol, extracted[row, colname])
-        } else {
-          extracted[row, colname] <- paste0(extracted[row, colname], symbol)
-        }
-      }
-    }
-  }
-
   # Extract footnote references and place into a separate list
   list_footnotes <-
     stringr::str_extract_all(
@@ -253,26 +236,6 @@ render_as_html <- function(data) {
 
   # Extract the body content as a vector
   body_content <- as.vector(t(extracted))
-
-  # Replace values in scientific notation
-  for (i in seq(body_content)) {
-    if (grepl("[eE](\\+|-)\\d+?", body_content[i])) {
-      body_content[i] <-
-        ifelse(
-          (as.numeric(body_content[i]) >= 1 & as.numeric(body_content[i]) < 10) |
-            (as.numeric(body_content[i]) <= -1 & as.numeric(body_content[i]) > -10) |
-            as.numeric(body_content[i]) == 0,
-          (stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
-             unlist())[1],
-          paste0(
-            (stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
-               unlist())[1],
-            " &times; 10<sup class='gt_super'>",
-            as.numeric(stringr::str_split(body_content[i][which(grepl("[eE](\\+|-)\\d+?", body_content[i]))], "e") %>%
-                         unlist())[2],
-            "</sup>"))
-    }
-  }
 
   # Replace any NA values
   if ("missing_mark" %in% property_names) {
