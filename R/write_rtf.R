@@ -34,7 +34,7 @@ write_rtf <- function(data, file) {
         "fmts_df", "foot_df", "output_df", "formats", "decorators"))
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(data = data)
+  output_df <- render_formats(data = data, context = "rtf")
 
   # Create `fmts_df` with additional formatting instructions
   fmts_df <- apply_decorators(data = data, fmts_df = fmts_df)
