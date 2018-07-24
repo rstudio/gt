@@ -429,6 +429,7 @@ cols_remove <- function(data,
 }
 
 #' Create group names and column labels via delimited column names
+#'
 #' This option will split delimited column names such that the
 #' first component is promoted to the group name (and hence
 #' will span over column labels) and subsequent components will
