@@ -2,12 +2,7 @@
 % Please edit documentation in R/as_raw_html.R
 \name{as_raw_html}
 \alias{as_raw_html}
-\title{Get the HTML content of a gt table
-Get the HTML content string from a \code{gt_tbl}
-object as a single-length character vector. There is
-also the option to transform the HTML such that CSS
-styles are inlined. This option is preferable when
-using the output HTML table in an emailing context.}
+\title{Get the HTML content of a gt table}
 \usage{
 as_raw_html(data, inline_css = TRUE)
 }
@@ -19,7 +14,6 @@ as_raw_html(data, inline_css = TRUE)
 elements as inlined CSS styles.}
 }
 \description{
-Get the HTML content of a gt table
 Get the HTML content string from a \code{gt_tbl}
 object as a single-length character vector. There is
 also the option to transform the HTML such that CSS
