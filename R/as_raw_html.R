@@ -1,4 +1,5 @@
 #' Get the HTML content of a gt table
+#'
 #' Get the HTML content string from a \code{gt_tbl}
 #' object as a single-length character vector. There is
 #' also the option to transform the HTML such that CSS
