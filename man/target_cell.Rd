@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{target_cell}
 \alias{target_cell}
-\title{Helper to target a single table cell}
+\title{Helper for targeting a single table cell}
 \usage{
 target_cell(row = NULL, column = NULL)
 }
@@ -15,5 +15,5 @@ target_cell(row = NULL, column = NULL)
 a list object of class \code{single_cell_target}.
 }
 \description{
-Helper to target a single table cell
+Helper for targeting a single table cell
 }

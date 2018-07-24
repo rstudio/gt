@@ -6,6 +6,10 @@
 \usage{
 tgt(...)
 }
+\arguments{
+\item{...}{one or more column names, given as bare
+column names.}
+}
 \description{
 Helper for targeting a series of row labels or columns
 }
