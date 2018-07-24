@@ -6,9 +6,30 @@
 \usage{
 col_labels(...)
 }
+\arguments{
+\item{...}{a series of named arguments representing the
+column names and values representing the column labels.}
+}
 \value{
 a named vector of column labels.
 }
 \description{
-Helper for processing column labels
+This helper is to be used specifically within the
+\code{cols_label()} function as an alternative to
+using named vectors within that function. The advantage
+in using this helper is that the assigned column labels
+can be marked as Markdown (with the \code{md()} function)
+or as HTML (with the \code{html()} function).
+}
+\examples{
+# Create a gt table based on the mtcars
+# dataset; label some of the columns (i.e.,
+# provide replacement names for use in the
+# output) with `cols_label()` and the
+# `col_labels()` helper function
+tab <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  cols_label(
+    labels = col_labels(
+      hp = md("*HP*"), qsec = "QMT, seconds"))
 }
