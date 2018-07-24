@@ -435,6 +435,12 @@ get_all_summaries <- function(df) {
     get_n_df(df))
 }
 
+#' Create a vector of CSS color tints
+#' @noRd
+color_tints <- function() {
+  c("yellow", "blue", "pink", "green", "sand")
+}
+
 #' Process input text
 #' This processes input text based on the class. If
 #' incoming text has the class \code{from_markdown}
