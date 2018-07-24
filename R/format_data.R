@@ -581,7 +581,10 @@ fmt_date <- function(data,
 #' @param columns the column names to format.
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
-#' @param time_style the time style to use.
+#' @param time_style the time style to use. Supply a number
+#' (from \code{1} to \code{5}) that corresponds to the
+#' preferred time style. Use \code{time_style_info()} to
+#' see the different numbered and named time presets.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
 #' @export
@@ -647,8 +650,14 @@ fmt_time <- function(data,
 #' @param columns the column names to format.
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
-#' @param date_style the date style to use.
-#' @param time_style the time style to use.
+#' @param date_style the date style to use. Supply a number
+#' (from \code{1} to \code{14}) that corresponds to the
+#' preferred date style. Use \code{date_style_info()} to
+#' see the different numbered and named date presets.
+#' @param time_style the time style to use. Supply a number
+#' (from \code{1} to \code{5}) that corresponds to the
+#' preferred time style. Use \code{time_style_info()} to
+#' see the different numbered and named time presets.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
