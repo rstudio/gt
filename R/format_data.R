@@ -40,12 +40,19 @@ fmt_number <- function(data,
                        sep_mark = "",
                        dec_mark = ".",
                        drop0trailing = FALSE,
-                       negative_style = "signed") {
+                       negative_style = "signed",
+                       locale = NULL) {
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
   if (is.null(rows)) {
     rows <- TRUE
+  }
+
+  # Use locale-based marks if a locale ID is provided
+  if (!is.null(locale) && locale %in% locales$base_locale_id) {
+    sep_mark <- get_locale_sep_mark(locale = locale)
+    dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
   # Get the requested `columns`
@@ -130,6 +137,12 @@ fmt_scientific <- function(data,
   # that all rows are in the selection
   if (is.null(rows)) {
     rows <- TRUE
+  }
+
+  # Use locale-based marks if a locale ID is provided
+  if (!is.null(locale) && locale %in% locales$base_locale_id) {
+    sep_mark <- get_locale_sep_mark(locale = locale)
+    dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
   # Get the requested `columns`
@@ -281,6 +294,12 @@ fmt_percent <- function(data,
     rows <- TRUE
   }
 
+  # Use locale-based marks if a locale ID is provided
+  if (!is.null(locale) && locale %in% locales$base_locale_id) {
+    sep_mark <- get_locale_sep_mark(locale = locale)
+    dec_mark <- get_locale_dec_mark(locale = locale)
+  }
+
   # Get the requested `columns`
   columns <-
     rlang::enquo(columns) %>%
@@ -366,6 +385,12 @@ fmt_currency <- function(data,
   # that all rows are in the selection
   if (is.null(rows)) {
     rows <- TRUE
+  }
+
+  # Use locale-based marks if a locale ID is provided
+  if (!is.null(locale) && locale %in% locales$base_locale_id) {
+    sep_mark <- get_locale_sep_mark(locale = locale)
+    dec_mark <- get_locale_monetary_dec_mark(locale = locale)
   }
 
   # Get the requested `columns`
