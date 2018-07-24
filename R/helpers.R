@@ -26,6 +26,10 @@ html <- function(text) {
   text
 }
 
+#' Helper for targeting multiple rows with a pattern
+#' @param pattern a pattern that can help capture one or
+#' more row names and hence the rows themselves.
+#' @return a list object of class \code{rownames_with}.
 #' @export
 rownames_with <- function(pattern) {
 
@@ -37,6 +41,10 @@ rownames_with <- function(pattern) {
   x
 }
 
+#' Helper for targeting multiple columns with a pattern
+#' @param pattern a pattern that can help capture one or
+#' more column names.
+#' @return a list object of class \code{columns_with}.
 #' @export
 columns_with <- function(pattern) {
 
@@ -48,7 +56,7 @@ columns_with <- function(pattern) {
   x
 }
 
-#' Helper to target a single table cell
+#' Helper for targeting a single table cell
 #' @param row a single row to target.
 #' @param column a single column to target.
 #' @return a list object of class \code{single_cell_target}.
@@ -104,6 +112,8 @@ target_cell <- function(row = NULL,
 
 #' Helper for targeting a series of row labels or columns
 #' @importFrom rlang enquos get_expr
+#' @param ... one or more column names, given as bare
+#' column names.
 #' @export
 tgt <- function(...) {
 
@@ -119,7 +129,27 @@ tgt <- function(...) {
 }
 
 #' Helper for processing column labels
+#'
+#' This helper is to be used specifically within the
+#' \code{cols_label()} function as an alternative to
+#' using named vectors within that function. The advantage
+#' in using this helper is that the assigned column labels
+#' can be marked as Markdown (with the \code{md()} function)
+#' or as HTML (with the \code{html()} function).
+#' @param ... a series of named arguments representing the
+#' column names and values representing the column labels.
 #' @return a named vector of column labels.
+#' @examples
+#' # Create a gt table based on the mtcars
+#' # dataset; label some of the columns (i.e.,
+#' # provide replacement names for use in the
+#' # output) with `cols_label()` and the
+#' # `col_labels()` helper function
+#' tab <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_label(
+#'     labels = col_labels(
+#'       hp = md("*HP*"), qsec = "QMT, seconds"))
 #' @export
 col_labels <- function(...) {
 
