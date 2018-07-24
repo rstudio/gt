@@ -511,7 +511,10 @@ fmt_currency <- function(data,
 #' @param columns the column names to format.
 #' @param rows optional rows to format. Not providing any
 #' value results in all rows in \code{columns} being formatted.
-#' @param date_style the date style to use.
+#' @param date_style the date style to use. Supply a number
+#' (from \code{1} to \code{14}) that corresponds to the
+#' preferred date style. Use \code{date_style_info()} to
+#' see the different numbered and named date presets.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
