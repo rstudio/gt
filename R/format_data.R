@@ -735,6 +735,10 @@ fmt_missing <- function(data,
 #' @param sep_mark the mark to use as a separator between
 #' groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
+#' @param tint an optional tinting color to apply to the
+#' summary rows created. The available tinting colors are:
+#' \code{yellow}, \code{blue}, \code{pink}, \code{green},
+#' and \code{sand}. By default, no tinting is applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -750,7 +754,8 @@ fmt_summary_auto <- function(data,
                              agg,
                              decimals = 2,
                              sep_mark = "",
-                             dec_mark = ".") {
+                             dec_mark = ".",
+                             tint = NULL) {
 
   if ("summary_auto" %in% names(attributes(data))) {
 
@@ -764,8 +769,10 @@ fmt_summary_auto <- function(data,
             agg = agg,
             decimals = decimals,
             sep_mark = sep_mark,
-            dec_mark = dec_mark))
-      )
+            dec_mark = dec_mark,
+            tint = tint)))
+
+    data
 
   } else {
 
@@ -777,7 +784,8 @@ fmt_summary_auto <- function(data,
           agg = agg,
           decimals = decimals,
           sep_mark = sep_mark,
-          dec_mark = dec_mark))
+          dec_mark = dec_mark,
+          tint = tint))
   }
 
   data
