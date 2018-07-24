@@ -14,10 +14,13 @@ tab_summary <-
   fmt_summary_auto(
     agg = "mean",
     groups = "Mercs",
-    columns = c("mpg", "disp", "hp")) %>%
+    columns = c("mpg", "disp", "hp"),
+    decimals = 1,
+    tint = "blue") %>%
   fmt_summary_auto(
     agg = c("max", "min"),
     groups = c("Supercars", NA),
-    decimals = 1)
+    decimals = 1,
+    tint = "green")
 
 tab_summary
