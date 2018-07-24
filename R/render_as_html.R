@@ -50,6 +50,7 @@ render_as_html <- function(data) {
       decimals <- attr(data, "summary_auto")[[i]][["decimals"]]
       sep_mark <- attr(data, "summary_auto")[[i]][["sep_mark"]]
       dec_mark <- attr(data, "summary_auto")[[i]][["dec_mark"]]
+      tint <- attr(data, "summary_auto")[[i]][["tint"]]
 
       # Filter the `summary_lines` table by the requested
       # aggregation types
@@ -57,6 +58,15 @@ render_as_html <- function(data) {
         summary_lines %>%
         dplyr::filter(type %in% agg) %>%
         dplyr::select(-type)
+
+      # If there is a tint color set, apply that to the
+      # label
+      if (!is.null(tint)) {
+
+        summary_lines_mod <-
+          summary_lines_mod %>%
+          dplyr::mutate(rowname = paste0(rowname, "__", tint))
+      }
 
       # Filter by the groups requested
       if (!is.null(groups)) {
@@ -273,7 +283,7 @@ render_as_html <- function(data) {
       dplyr::arrange(row)
 
     extracted <- extracted[, -1]
-    col_alignment <- c("right", attr(data, "boxh_df")[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", boxh_df[3, ] %>% t() %>% as.vector())
   }
 
   # Reset the rownames for the extracted content
@@ -425,14 +435,49 @@ render_as_html <- function(data) {
             n_cols - 1, "'></td>\n</tr>\n"))
     }
 
-    body_rows <-
-      c(body_rows,
-        paste0(
-          "<tr>\n",
+    color_tints <- function() {
+      c("yellow", "blue", "pink", "green", "sand")
+    }
+
+    if (grepl("Summary: ", row_splits[i][[1]][[1]])) {
+
+      if (grepl(paste0("__", color_tints(), "$", collapse = "|"),
+                row_splits[i][[1]][[1]])) {
+
+        # Extract the tint from the string
+        tint <- gsub("^.*?__", "", row_splits[i][[1]][[1]])
+
+        # Remove the tint indicator from the string
+        row_splits[i][[1]][[1]] <-
+          gsub(
+            paste0("__", color_tints(), "$", collapse = "|"),
+            "", row_splits[i][[1]][[1]])
+
+      } else {
+        tint <- ""
+      }
+
+      body_rows <-
+        c(body_rows,
           paste0(
-            "<td class='row ", col_alignment, "'>",
-            row_splits[i][[1]], "</td>", collapse = "\n"),
-          "\n</tr>\n"))
+            "<tr>\n",
+            paste0(
+              "<td class='row summary_row ", tint, " ", col_alignment, "'>",
+              row_splits[i][[1]], "</td>", collapse = "\n"),
+            "\n</tr>\n"))
+
+    } else {
+
+      body_rows <-
+        c(body_rows,
+          paste0(
+            "<tr>\n",
+            paste0(
+              "<td class='row ", col_alignment, "'>",
+              row_splits[i][[1]], "</td>", collapse = "\n"),
+            "\n</tr>\n")
+          )
+    }
   }
 
   body_rows <- body_rows %>% paste(collapse = "")
