@@ -5,7 +5,7 @@
 \title{Add summary lines based on simple aggregations}
 \usage{
 fmt_summary_auto(data, groups = NULL, columns = NULL, agg, decimals = 2,
-  sep_mark = "", dec_mark = ".")
+  sep_mark = "", dec_mark = ".", tint = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -29,6 +29,11 @@ places is \code{2}.}
 groups of digits.}
 
 \item{dec_mark}{the character to use as a decimal mark.}
+
+\item{tint}{an optional tinting color to apply to the
+summary rows created. The available tinting colors are:
+\code{yellow}, \code{blue}, \code{pink}, \code{green},
+and \code{sand}. By default, no tinting is applied.}
 }
 \value{
 an object of class \code{gt_tbl}.

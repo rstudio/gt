@@ -15,7 +15,10 @@ fmt_time(data, columns, rows = NULL, time_style = NULL)
 \item{rows}{optional rows to format. Not providing any
 value results in all rows in \code{columns} being formatted.}
 
-\item{time_style}{the time style to use.}
+\item{time_style}{the time style to use. Supply a number
+(from \code{1} to \code{5}) that corresponds to the
+preferred time style. Use \code{time_style_info()} to
+see the different numbered and named time presets.}
 }
 \description{
 Format values as times
