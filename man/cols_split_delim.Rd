@@ -2,12 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_split_delim}
 \alias{cols_split_delim}
-\title{Create group names and column labels via delimited column names
-This option will split delimited column names such that the
-first component is promoted to the group name (and hence
-will span over column labels) and subsequent components will
-represent the column label. Please note that reference to individual
-columns must still be via the original column names.}
+\title{Create group names and column labels via delimited column names}
 \usage{
 cols_split_delim(data, delim, columns = NULL)
 }
@@ -29,7 +24,6 @@ columns in the table.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Create group names and column labels via delimited column names
 This option will split delimited column names such that the
 first component is promoted to the group name (and hence
 will span over column labels) and subsequent components will
