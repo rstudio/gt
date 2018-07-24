@@ -6,7 +6,7 @@
 \usage{
 fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
   decimals = NULL, sep_mark = "", dec_mark = ".", placement = "left",
-  negative_style = "signed")
+  negative_style = "signed", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -41,6 +41,11 @@ Using \code{parens} will show the negative value in
 parentheses. The \code{red} option will display the
 number in red. Finally, \code{parens-red} will display
 negative numbers as red and enclosed in parentheses.}
+
+\item{locale}{an optional locale ID that can be used
+for formatting the value according the locale's rules.
+Examples include \code{"en_US"} for English (United
+States) and \code{"fr_FR"} for French (France).}
 }
 \value{
 an object of class \code{gt_tbl}.

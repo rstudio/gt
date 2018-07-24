@@ -5,7 +5,8 @@
 \title{Format values as a percentage}
 \usage{
 fmt_percent(data, columns, rows = NULL, decimals = 2, sep_mark = "",
-  dec_mark = ".", negative_style = "signed", drop0trailing = FALSE)
+  dec_mark = ".", drop0trailing = FALSE, negative_style = "signed",
+  locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -25,6 +26,10 @@ groups of digits.}
 
 \item{dec_mark}{the character to use as a decimal mark.}
 
+\item{drop0trailing}{a logical value that allows for
+removal of trailing zeros (those redundant zeros after
+the decimal mark).}
+
 \item{negative_style}{the formatting to use
 for negative numbers. With \code{signed} (the default),
 negative numbers will be shown with a negative sign.
@@ -33,9 +38,10 @@ parentheses. The \code{red} option will display the
 number in red. Finally, \code{parens-red} will display
 negative numbers as red and enclosed in parentheses.}
 
-\item{drop0trailing}{a logical value that allows for
-removal of trailing zeros (those redundant zeros after
-the decimal mark).}
+\item{locale}{an optional locale ID that can be used
+for formatting the value according the locale's rules.
+Examples include \code{"en_US"} for English (United
+States) and \code{"fr_FR"} for French (France).}
 }
 \value{
 an object of class \code{gt_tbl}.
