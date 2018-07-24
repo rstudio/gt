@@ -37,6 +37,11 @@ Using \code{parens} will show the negative value in
 parentheses. The \code{red} option will display the
 number in red. Finally, \code{parens-red} will display
 negative numbers as red and enclosed in parentheses.}
+
+\item{locale}{an optional locale ID that can be used
+for formatting the value according the locale's rules.
+Examples include \code{"en_US"} for English (United
+States) and \code{"fr_FR"} for French (France).}
 }
 \value{
 an object of class \code{gt_tbl}.
