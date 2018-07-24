@@ -1,5 +1,25 @@
 #' @importFrom utils globalVariables
 globalVariables(
   c(
-    ":row_number:", ":group_name:", ":row_name:", ":row_number:",
-    "rowname"))
+    ":row_number:",
+    ":group_name:",
+    ":row_name:",
+    ":row_number:",
+    "rowname",
+    "groupname",
+    "base_locale_id",
+    "group_sep",
+    "dec_sep",
+    "monetary_dec_sep",
+    "locale",
+    "median",
+    "n",
+    "property",
+    "property_value",
+    "sd",
+    "selector",
+    "time",
+    "type",
+    "value"
+    )
+  )
