@@ -20,6 +20,10 @@
 #' parentheses. The \code{red} option will display the
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used
+#' for formatting the value according the locale's rules.
+#' Examples include \code{"en_US"} for English (United
+#' States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -120,6 +124,10 @@ fmt_number <- function(data,
 #' parentheses. The \code{red} option will display the
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used
+#' for formatting the value according the locale's rules.
+#' Examples include \code{"en_US"} for English (United
+#' States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -130,8 +138,9 @@ fmt_scientific <- function(data,
                            decimals = 2,
                            sep_mark = "",
                            dec_mark = ".",
+                           drop0trailing = FALSE,
                            negative_style = "signed",
-                           drop0trailing = FALSE) {
+                           locale = NULL) {
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
@@ -275,6 +284,10 @@ fmt_scientific <- function(data,
 #' parentheses. The \code{red} option will display the
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used
+#' for formatting the value according the locale's rules.
+#' Examples include \code{"en_US"} for English (United
+#' States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -285,8 +298,9 @@ fmt_percent <- function(data,
                         decimals = 2,
                         sep_mark = "",
                         dec_mark = ".",
+                        drop0trailing = FALSE,
                         negative_style = "signed",
-                        drop0trailing = FALSE) {
+                        locale = NULL) {
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
@@ -366,6 +380,10 @@ fmt_percent <- function(data,
 #' parentheses. The \code{red} option will display the
 #' number in red. Finally, \code{parens-red} will display
 #' negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used
+#' for formatting the value according the locale's rules.
+#' Examples include \code{"en_US"} for English (United
+#' States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -379,7 +397,8 @@ fmt_currency <- function(data,
                          sep_mark = "",
                          dec_mark = ".",
                          placement = "left",
-                         negative_style = "signed") {
+                         negative_style = "signed",
+                         locale = NULL) {
 
   # If nothing is provided for rows, assume
   # that all rows are in the selection
