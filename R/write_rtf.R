@@ -216,7 +216,7 @@ write_rtf <- function(data, file) {
       dplyr::arrange(row)
 
     extracted <- extracted[, -1]
-    col_alignment <- c("right", attr(data, "boxh_df")[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", boxh_df[3, ] %>% t() %>% as.vector())
   }
 
   # Reset the rownames for the extracted content
