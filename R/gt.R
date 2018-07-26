@@ -32,6 +32,10 @@
 gt <- function(data,
                rownames_to_stub = FALSE) {
 
+  # If the option to place rownames in the stub
+  # is taken, then the `stub_df` data frame will
+  # be pre-populated with rownames in the `rowname`
+  # column; otherwise, this will be an empty df
   if (rownames_to_stub) {
 
     stub_df <-
