@@ -31,13 +31,10 @@ write_rtf <- function(data, file) {
     base::setdiff(
       names(attributes(data)),
       c("row.names", "class", "names", "boxh_df", "stub_df",
-        "fmts_df", "foot_df", "output_df", "formats", "decorators"))
+        "fmts_df", "foot_df", "output_df", "formats"))
 
   # Create `output_df` with rendered values
   output_df <- render_formats(data = data, context = "rtf")
-
-  # Create `fmts_df` with additional formatting instructions
-  fmts_df <- apply_decorators(data = data, fmts_df = fmts_df)
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
