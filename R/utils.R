@@ -530,18 +530,26 @@ render_formats <- function(data,
   output_df <- data %>% as.data.frame(stringsAsFactors = FALSE)
   output_df[] <- NA_character_
 
-  format_type <- paste0("formats_", context)
-
-
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(attr(data, format_type)))  {
-    for (col in attr(data, format_type)[[i]][["cols"]]) {
+  for (i in seq(attr(data, "formats")))  {
 
-      # Only perform rendering if column is present
+    # Determine if the formatter has a function relevant
+    # to the context; if not, use the `default` function
+    # (which should always be present)
+    if (context %in% names(attr(data, "formats")[[i]]$func)) {
+      eval_func <- context
+    } else {
+      eval_func <- "default"
+    }
+
+    for (col in attr(data, "formats")[[i]][["cols"]]) {
+
+      # Perform rendering but only do so if the column is present
       if (col %in% colnames(data)) {
-        output_df[[col]][attr(data, format_type)[[i]]$rows] <-
-          attr(data, format_type)[[i]]$func(data[[col]][attr(data, format_type)[[i]]$rows])
+
+        output_df[[col]][attr(data, "formats")[[i]]$rows] <-
+          attr(data, "formats")[[i]]$func[[eval_func]](data[[col]][attr(data, "formats")[[i]]$rows])
       }
     }
   }
