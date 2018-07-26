@@ -81,23 +81,31 @@ fmt_number <- function(data,
     return(data)
   }
 
-  # Set the format
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    formatC(
+      x = x,
+      digits = decimals,
+      mode = "double",
+      big.mark = sep_mark,
+      decimal.mark = dec_mark,
+      format = "f",
+      drop0trailing = drop0trailing)
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-        formatC(
-          x = x,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "f",
-          drop0trailing = drop0trailing)
-      }
-    )
+      formatter = format_fcn_list)
 
   data
 }
@@ -176,88 +184,92 @@ fmt_scientific <- function(data,
     return(data)
   }
 
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    # Format the number component
+    x <-
+      formatC(
+        x = x,
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "e",
+        drop0trailing = drop0trailing)
+
+    # Apply scientific notation formatting
+    for (i in seq(x)) {
+
+      if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
+          (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
+          as.numeric(x[i]) == 0) {
+
+        x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
+
+      } else {
+
+        x[i] <-
+          paste0(
+            unlist(strsplit(x[i], "e|E"))[1],
+            " x 10(",
+            as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
+            ")")
+      }
+    }
+
+    x
+  }
+
+  # Create the html formatting function
+  format_fcn_html <- function(x) {
+
+    # Format the number component
+    x <-
+      formatC(
+        x = x,
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "e",
+        drop0trailing = drop0trailing)
+
+    for (i in seq(x)) {
+
+      if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
+          (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
+          as.numeric(x[i]) == 0) {
+
+        x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
+
+      } else {
+
+        x[i] <-
+          paste0(
+            unlist(strsplit(x[i], "e|E"))[1],
+            " &times; 10<sup class='gt_super'>",
+            as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
+            "</sup>")
+      }
+    }
+
+    x
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      html = format_fcn_html,
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-
-        # Format the number component
-        x <-
-          formatC(
-            x = x,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "e",
-            drop0trailing = drop0trailing)
-
-        for (i in seq(x)) {
-
-          if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
-              (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
-              as.numeric(x[i]) == 0) {
-
-            x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
-
-          } else {
-
-            x[i] <-
-              paste0(
-                unlist(strsplit(x[i], "e|E"))[1],
-                " &times; 10<sup class='gt_super'>",
-                as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
-                "</sup>")
-          }
-        }
-
-        x
-      },
-      contexts = "html")
-
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = function(x) {
-
-        # Format the number component
-        x <-
-          formatC(
-            x = x,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "e",
-            drop0trailing = drop0trailing)
-
-        # Apply scientific notation formatting
-        for (i in seq(x)) {
-
-          if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
-              (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
-              as.numeric(x[i]) == 0) {
-
-            x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
-
-          } else {
-
-            x[i] <-
-              paste0(
-                unlist(strsplit(x[i], "e|E"))[1],
-                " x 10(",
-                as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
-                ")")
-          }
-        }
-
-        x
-      },
-      contexts = c("rtf", "text"))
+      formatter = format_fcn_list)
 
   data
 }
@@ -336,24 +348,35 @@ fmt_percent <- function(data,
     return(data)
   }
 
-  # Set the format
-  set_fmt(
-    data = data,
-    columns = columns,
-    rows = rows,
-    formatter = function(x) {
-      paste0(
-        formatC(
-          x = as.numeric(x) * 100.0,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "f",
-          drop0trailing = drop0trailing),
-        "%")
-    }
-  )
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    paste0(
+      formatC(
+        x = as.numeric(x) * 100.0,
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "f",
+        drop0trailing = drop0trailing),
+      "%")
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
+  data <-
+    set_fmt(
+      data = data,
+      columns = columns,
+      rows = rows,
+      formatter = format_fcn_list)
+
+  data
 }
 
 #' Format values as currencies
@@ -466,60 +489,63 @@ fmt_currency <- function(data,
     decimals <- 0
   }
 
-  # Set the format
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    x <-
+      formatC(
+        x = x,
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "f",
+        drop0trailing = FALSE)
+
+    if (placement == "left") {
+      x <- paste0(currency_str, x)
+    } else {
+      x <- paste0(x, currency_str)
+    }
+
+    x
+  }
+
+  # Create the html formatting function
+  format_fcn_html <- function(x) {
+
+    x <-
+      formatC(
+        x = x,
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "f",
+        drop0trailing = FALSE)
+
+    if (placement == "left") {
+      x <- paste0(currency_str_html, x)
+    } else {
+      x <- paste0(x, currency_str_html)
+    }
+
+    x
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      html = format_fcn_html,
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-
-        x <-
-          formatC(
-            x = x,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "f",
-            drop0trailing = FALSE)
-
-        if (placement == "left") {
-          x <- paste0(currency_str_html, x)
-        } else {
-          x <- paste0(x, currency_str_html)
-        }
-
-        x
-      },
-      contexts = "html")
-
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = function(x) {
-
-        x <-
-          formatC(
-            x = x,
-            digits = decimals,
-            mode = "double",
-            big.mark = sep_mark,
-            decimal.mark = dec_mark,
-            format = "f",
-            drop0trailing = FALSE)
-
-        if (placement == "left") {
-          x <- paste0(currency_str, x)
-        } else {
-          x <- paste0(x, currency_str)
-        }
-
-        x
-      },
-      contexts = c("rtf", "text"))
+      formatter = format_fcn_list)
 
   data
 }
@@ -574,22 +600,29 @@ fmt_date <- function(data,
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
-  # Set the format
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+      strftime(format = date_format_str) %>%
+      stringr::str_replace_all("^0", "") %>%
+      stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+      stringr::str_replace_all("pm$", "PM") %>%
+      stringr::str_replace_all("am$", "AM")
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-
-        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_format_str) %>%
-          stringr::str_replace_all("^0", "") %>%
-          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
-          stringr::str_replace_all("pm$", "PM") %>%
-          stringr::str_replace_all("am$", "AM")
-      }
-    )
+      formatter = format_fcn_list)
 
   data
 }
@@ -643,22 +676,29 @@ fmt_time <- function(data,
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Set the format
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+      strftime(format = time_format_str) %>%
+      stringr::str_replace_all("^0", "") %>%
+      stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+      stringr::str_replace_all("pm$", "PM") %>%
+      stringr::str_replace_all("am$", "AM")
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-
-        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = time_format_str) %>%
-          stringr::str_replace_all("^0", "") %>%
-          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
-          stringr::str_replace_all("pm$", "PM") %>%
-          stringr::str_replace_all("am$", "AM")
-      }
-    )
+      formatter = format_fcn_list)
 
   data
 }
@@ -725,22 +765,29 @@ fmt_datetime <- function(data,
   date_time_format_str <-
     paste0(date_format, " ", time_format)
 
-  # Set the format
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+
+    ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+      strftime(format = date_time_format_str) %>%
+      stringr::str_replace_all("^0", "") %>%
+      stringr::str_replace_all(" 0([0-9])", " \\1") %>%
+      stringr::str_replace_all("pm$", "PM") %>%
+      stringr::str_replace_all("am$", "AM")
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
   data <-
     set_fmt(
       data = data,
       columns = columns,
       rows = rows,
-      formatter = function(x) {
-
-        ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_time_format_str) %>%
-          stringr::str_replace_all("^0", "") %>%
-          stringr::str_replace_all(" 0([0-9])", " \\1") %>%
-          stringr::str_replace_all("pm$", "PM") %>%
-          stringr::str_replace_all("am$", "AM")
-      }
-    )
+      formatter = format_fcn_list)
 
   data
 }
@@ -771,82 +818,6 @@ fmt_missing <- function(data,
   data
 }
 
-#' Add summary lines based on simple aggregations
-#'
-#' Add a summary lines to one or more stub blocks by
-#' using the input data already provided in the \code{gt()}
-#' function.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
-#' @param groups the stub block groups heading names
-#' for which summary lines will be added.
-#' @param columns the columns for which the summaries
-#' should be calculated.
-#' @param agg a vector of aggregate function names. This
-#' can include any of these: \code{mean}, \code{min},
-#' \code{max}, \code{median}, \code{sd}, or \code{n}.
-#' @param decimals an option to specify the exact number
-#' of decimal places to use. The default number of decimal
-#' places is \code{2}.
-#' @param sep_mark the mark to use as a separator between
-#' groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
-#' @param tint an optional tinting color to apply to the
-#' summary rows created. The available tinting colors are:
-#' \code{yellow}, \code{blue}, \code{pink}, \code{green},
-#' and \code{sand}. By default, no tinting is applied.
-#' @return an object of class \code{gt_tbl}.
-#' @examples
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stub_block(
-#'     group = "Mercs",
-#'     rows = rownames_with("Merc")) %>%
-#'   fmt_summary_auto(
-#'     agg = "mean")
-#' @export
-fmt_summary_auto <- function(data,
-                             groups = NULL,
-                             columns = NULL,
-                             agg,
-                             decimals = 2,
-                             sep_mark = "",
-                             dec_mark = ".",
-                             tint = NULL) {
-
-  if ("summary_auto" %in% names(attributes(data))) {
-
-    attr(data, "summary_auto") <-
-      c(
-        attr(data, "summary_auto"),
-        list(
-          list(
-            groups = groups,
-            columns = columns,
-            agg = agg,
-            decimals = decimals,
-            sep_mark = sep_mark,
-            dec_mark = dec_mark,
-            tint = tint)))
-
-    data
-
-  } else {
-
-    attr(data, "summary_auto") <-
-      list(
-        list(
-          groups = groups,
-          columns = columns,
-          agg = agg,
-          decimals = decimals,
-          sep_mark = sep_mark,
-          dec_mark = dec_mark,
-          tint = tint))
-  }
-
-  data
-}
-
 #' Set a column format with a formatter function
 #' @param data a table object that is created using the
 #' \code{gt()} function.
@@ -855,61 +826,24 @@ fmt_summary_auto <- function(data,
 #' @param rows an optional specification for which rows are
 #' to be formatted.
 #' @param formatter a formatting function.
-#' @param context the context that is considered for the
-#' formatter function. Options are \code{html} (the default),
-#' \code{rtf}, and \code{text}.
 #' @return an object of class \code{gt_tbl}.
 #' @noRd
 set_fmt <- function(data,
                     columns,
                     rows = TRUE,
-                    formatter,
-                    contexts = "all") {
+                    formatter) {
 
-  if (contexts[1] == "all") {
-    contexts <- c("html", "rtf", "text")
-  }
-
-  a_list <- list(
+  # Create a formatter list, which is a bundle of
+  # formatting functions for specific columns and rows
+  formatter_list <- list(
     func = formatter,
     cols = columns,
     rows = rows)
 
-  for (i in seq(contexts)) {
-
-    format_type <- paste0("formats_", contexts[i])
-
-    next_index <- length(attr(data, format_type, exact = TRUE)) + 1
-
-    attr(data, format_type)[[next_index]] <- a_list
-  }
-
-  data
-}
-
-#' Set a column format with a formatter function
-#' @param data a table object that is created using the
-#' \code{gt()} function.
-#' @param columns the specification for which columns are to
-#' be formatted.
-#' @param rows an optional specification for which rows are
-#' to be formatted.
-#' @param decorator a decorator function.
-#' @return an object of class \code{gt_tbl}.
-#' @noRd
-set_decorator <- function(data,
-                          columns,
-                          rows = TRUE,
-                          decorator) {
-
-  a_list <- list(
-    func = decorator,
-    cols = columns,
-    rows = rows)
-
-  next_index <- length(attr(data, "decorators", exact = TRUE)) + 1
-
-  attr(data, "decorators")[[next_index]] <- a_list
+  # Incorporate the `formatter_list` object as the next
+  # list in the `formats` list of lists
+  next_index <- length(attr(data, "formats", exact = TRUE)) + 1
+  attr(data, "formats")[[next_index]] <- formatter_list
 
   data
 }
