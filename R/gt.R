@@ -53,30 +53,43 @@ gt <- function(data,
         stringsAsFactors = FALSE)
   }
 
-  data_tbl <- data %>% as.data.frame(stringsAsFactors = FALSE)
+  # Take the input data and convert to a
+  # data frame
+  data_tbl <-
+    data %>%
+    as.data.frame(stringsAsFactors = FALSE)
+
+  # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
+  # Create an empty facsimile df based on
+  # `data_tbl`; this will serve as a template for
+  # data frames that contain specialized formatting
+  # directives that will be used during render time
   empty_df <- data_tbl
   empty_df[] <- NA_character_
 
+  # Create a data frame that represents the table's
+  # boxhead (`boxh_df`); each row has a special
+  # meaning and this will be used during render time
   boxh_df <-
     empty_df[0, ] %>%
-    tibble::add_row() %>%  # spanner_name
-    tibble::add_row() %>%  # column_name (relabeled)
-    tibble::add_row()      # alignment
+    tibble::add_row() %>%  # group label
+    tibble::add_row() %>%  # column label
+    tibble::add_row()      # column alignment
 
+  # Apply initialized data frames as attributes
+  # within the object
   attr(data_tbl, "boxh_df") <- boxh_df
   attr(data_tbl, "stub_df") <- stub_df
-
   attr(data_tbl, "fmts_df") <- empty_df
   attr(data_tbl, "foot_df") <- empty_df
 
-  attr(data_tbl, "formats_html") <- list()
-  attr(data_tbl, "formats_rtf") <- list()
-  attr(data_tbl, "formats_text") <- list()
+  # Apply an empty `formats` list as an attribute
+  attr(data_tbl, "formats") <- list()
 
-  attr(data_tbl, "decorators") <- list()
-
+  # Apply the `gt_tbl` class to the object while
+  # also keeping the `data.frame` class
   class(data_tbl) <- c("gt_tbl", class(data_tbl))
 
   data_tbl
