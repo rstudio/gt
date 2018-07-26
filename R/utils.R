@@ -591,24 +591,6 @@ set_default_alignments <- function(boxh_df) {
   boxh_df
 }
 
-#' Create a data frame with formatting directives
-#' @noRd
-apply_decorators <- function(data, fmts_df) {
-
-  for (i in seq(attr(data, "decorators")))  {
-    for (col in attr(data, "decorators")[[i]]$cols) {
-
-      # Only perform rendering if column is present
-      if (col %in% colnames(data)) {
-        fmts_df[[col]][attr(data, "decorators")[[i]]$rows] <-
-          attr(data, "decorators")[[i]]$func(data[[col]][attr(data, "decorators")[[i]]$rows])
-      }
-    }
-  }
-
-  fmts_df
-}
-
 #' Is there any defined elements of a stub present?
 #' @noRd
 is_stub_available <- function(stub_df) {
