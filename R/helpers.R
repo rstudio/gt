@@ -1,8 +1,7 @@
 #' Interpret input text as Markdown-formatted text
-#' @param text the text that is understood to contain
-#' Markdown formatting.
-#' @return a character object that is tagged for
-#' a Markdown to HTML transformation.
+#' @param text the text that is understood to contain Markdown formatting.
+#' @return a character object that is tagged for a Markdown-to-HTML
+#' transformation.
 #' @return a character object of class \code{from_markdown}.
 #' @export
 md <- function(text) {
@@ -13,10 +12,10 @@ md <- function(text) {
 }
 
 #' Interpret input text as HTML-formatted text
-#' @param text the text that is understood to be
-#' HTML text, which is to be preserved.
-#' @return a character object that is tagged as an
-#' HTML fragment that is not to be santized.
+#' @param text the text that is understood to be HTML text, which is to be
+#' preserved.
+#' @return a character object that is tagged as an HTML fragment that is not to
+#' be sanitized.
 #' @return a character object of class \code{preserve_html}.
 #' @export
 html <- function(text) {
@@ -27,8 +26,8 @@ html <- function(text) {
 }
 
 #' Helper for targeting multiple rows with a pattern
-#' @param pattern a pattern that can help capture one or
-#' more row names and hence the rows themselves.
+#' @param pattern a pattern that can help capture one or more row names and
+#' hence the rows themselves.
 #' @return a list object of class \code{rownames_with}.
 #' @export
 rownames_with <- function(pattern) {
@@ -42,8 +41,7 @@ rownames_with <- function(pattern) {
 }
 
 #' Helper for targeting multiple columns with a pattern
-#' @param pattern a pattern that can help capture one or
-#' more column names.
+#' @param pattern a pattern that can help capture one or more column names.
 #' @return a list object of class \code{columns_with}.
 #' @export
 columns_with <- function(pattern) {
@@ -130,14 +128,13 @@ tgt <- function(...) {
 
 #' Helper for processing column labels
 #'
-#' This helper is to be used specifically within the
-#' \code{cols_label()} function as an alternative to
-#' using named vectors within that function. The advantage
-#' in using this helper is that the assigned column labels
-#' can be marked as Markdown (with the \code{md()} function)
-#' or as HTML (with the \code{html()} function).
-#' @param ... a series of named arguments representing the
-#' column names and values representing the column labels.
+#' This helper is to be used specifically within the \code{cols_label()}
+#' function as an alternative to using named vectors within that function. The
+#' advantage in using this helper is that the assigned column labels can be
+#' marked as Markdown (with the \code{md()} function) or as HTML (with the
+#' \code{html()} function).
+#' @param ... a series of named arguments representing the column names and
+#' values representing the column labels.
 #' @return a named vector of column labels.
 #' @examples
 #' # Create a gt table based on the mtcars

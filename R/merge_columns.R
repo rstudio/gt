@@ -1,10 +1,7 @@
 #' Combine columns to a single value + uncertainty column
-#' @param data a table object that is created using the
-#' \code{gt()} function.
-#' @param col_val a single column name that contains the base
-#' values.
-#' @param col_uncert a single column name that contains the
-#' uncertainty values.
+#' @param data a table object that is created using the \code{gt()} function.
+#' @param col_val a single column name that contains the base values.
+#' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr
 #' @export
@@ -54,12 +51,9 @@ fmt_uncertainty <- function(data,
 }
 
 #' Combine two columns to a single, value range column
-#' @param data a table object that is created using the
-#' \code{gt()} function.
-#' @param col_begin a column that contains values for the start
-#' of the range.
-#' @param col_end a column that contains values for the end
-#' of the range.
+#' @param data a table object that is created using the \code{gt()} function.
+#' @param col_begin a column that contains values for the start of the range.
+#' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr
 #' @export
@@ -107,4 +101,3 @@ fmt_range <- function(data,
 
   data
 }
-
