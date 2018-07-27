@@ -772,21 +772,77 @@ fmt_datetime <- function(data,
 #' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 #' may present better than the standard `NA` text that would otherwise appear.
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param missing_mark the text to be used in place
-#' of \code{NA} values in the rendered table.
+#' @param columns the column names to format.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param missing_text the text to be used in place of \code{NA} values in the
+#' rendered table.
 #' @return an object of class \code{gt_tbl}.
 #' @export
 fmt_missing <- function(data,
-                        missing_mark = "---") {
+                        columns,
+                        rows = NULL,
+                        missing_text = "---") {
 
-  if (missing_mark == "---") {
-    missing_mark <- "&mdash;"
-  } else if (missing_mark == "--") {
-    missing_mark <- "&ndash;"
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
   }
 
-  attr(data, "missing_mark") <-
-    list(missing_mark = missing_mark)
+  # Get the requested `columns`
+  columns <-
+    rlang::enquo(columns) %>%
+    rlang::get_expr() %>%
+    as.character() %>%
+    strsplit(split = " & ") %>%
+    rlang::flatten_chr() %>%
+    stringr::str_trim()
+
+  columns <- columns[columns != "&"]
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  # Return data if there are no rows or columns to format
+  if (length(rows) == 0 | length(columns) == 0) {
+    return(data)
+  }
+
+  # Create the default formatting function
+  format_fcn_default <- function(x) {
+    x[is.na(x)] <- missing_text
+  }
+
+  # Create the html formatting function
+  format_fcn_html <- function(x) {
+
+    if (missing_text == "---") {
+      missing_text <- "\u2014"
+    } else if (missing_text == "--") {
+      missing_text <- "\u2013"
+    }
+
+    x[is.na(x)] <- missing_text
+    x
+  }
+
+  # Create the function list
+  format_fcn_list <-
+    list(
+      html = format_fcn_html,
+      default = format_fcn_default)
+
+  # Set the format for all of the output types
+  data <-
+    set_fmt(
+      data = data,
+      columns = columns,
+      rows = rows,
+      formatter = format_fcn_list)
 
   data
 }
