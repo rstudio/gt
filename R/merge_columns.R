@@ -1,13 +1,66 @@
-#' Combine columns to a single value + uncertainty column
+#' Merge two columns to a single column with a formatter
+#' @param data a table object that is created using the \code{gt()} function.
+#' @param col_1 a column that contains values for the start of the range.
+#' @param col_2 a column that contains values for the end of the range.
+#' @return an object of class \code{gt_tbl}.
+#' @importFrom rlang enquo get_expr
+#' @export
+cols_merge <- function(data,
+                       col_1,
+                       col_2,
+                       format = "{1} {2}") {
+
+  # Get the requested `col_1`
+  col_1 <-
+    (rlang::enquo(col_1) %>% rlang::get_expr() %>% as.character())[1]
+
+  # Get the requested `col_2`
+  col_2 <-
+    (rlang::enquo(col_2) %>% rlang::get_expr() %>% as.character())[1]
+
+  if (!(col_1 %in% colnames(data)) |
+      !(col_2 %in% colnames(data))) {
+    return(data)
+  }
+
+  col_1 <- stats::setNames(col_1, nm = col_2)
+
+  # Create and store a list of column pairs
+  if ("col_merge" %in% names(attributes(data))) {
+
+    if (col_1 %in% unname(attr(data, "col_merge")[["col_1"]]) |
+        col_2 %in% names(attr(data, "col_merge")[["col_1"]])) {
+      return(data)
+    }
+
+    attr(data, "col_merge")[["format"]] <-
+      c(attr(data, "col_merge")[["format"]], format)
+
+    attr(data, "col_merge")[["col_1"]] <-
+      c(attr(data, "col_merge")[["col_1"]], col_1)
+
+  } else {
+
+    attr(data, "col_merge") <-
+      list(
+        format = format,
+        col_1 = col_1)
+  }
+
+  data
+}
+
+#' Merge two columns to a value + uncertainty column
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param col_val a single column name that contains the base values.
 #' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr
 #' @export
-fmt_uncertainty <- function(data,
-                            col_val,
-                            col_uncert) {
+cols_merge_uncert <- function(data,
+                              col_val,
+                              col_uncert) {
+
+  format <- "{1} \u00B1 {2}"
 
   # Get the requested `col_val`
   col_val <-
@@ -22,8 +75,7 @@ fmt_uncertainty <- function(data,
     return(data)
   }
 
-  col_1 <- stats::setNames(col_val, nm = col_uncert)
-  type <- "uncertainty"
+  col_val <- stats::setNames(col_val, nm = col_uncert)
 
   # Create and store a list of column pairs
   if ("col_merge" %in% names(attributes(data))) {
@@ -33,33 +85,34 @@ fmt_uncertainty <- function(data,
       return(data)
     }
 
-    attr(data, "col_merge")[["type"]] <-
-      c(attr(data, "col_merge")[["type"]], type)
+    attr(data, "col_merge")[["format"]] <-
+      c(attr(data, "col_merge")[["format"]], format)
 
     attr(data, "col_merge")[["col_1"]] <-
-      c(attr(data, "col_merge")[["col_1"]], col_1)
+      c(attr(data, "col_merge")[["col_1"]], col_val)
 
   } else {
 
     attr(data, "col_merge") <-
       list(
-        type = type,
-        col_1 = col_1)
+        format = format,
+        col_1 = col_val)
   }
 
   data
 }
 
-#' Combine two columns to a single, value range column
+#' Merge two columns to a value range column
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param col_begin a column that contains values for the start of the range.
 #' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr
 #' @export
-fmt_range <- function(data,
-                      col_begin,
-                      col_end) {
+cols_merge_range <- function(data,
+                             col_begin,
+                             col_end) {
+
+  format <- "{1} \u2014 {2}"
 
   # Get the requested `col_begin`
   col_begin <-
@@ -74,8 +127,7 @@ fmt_range <- function(data,
     return(data)
   }
 
-  col_1 <- stats::setNames(col_begin, nm = col_end)
-  type <- "range"
+  col_begin <- stats::setNames(col_begin, nm = col_end)
 
   # Create and store a list of column pairs
   if ("col_merge" %in% names(attributes(data))) {
@@ -85,18 +137,18 @@ fmt_range <- function(data,
       return(data)
     }
 
-    attr(data, "col_merge")[["type"]] <-
-      c(attr(data, "col_merge")[["type"]], type)
+    attr(data, "col_merge")[["format"]] <-
+      c(attr(data, "col_merge")[["format"]], format)
 
     attr(data, "col_merge")[["col_1"]] <-
-      c(attr(data, "col_merge")[["col_1"]], col_1)
+      c(attr(data, "col_merge")[["col_1"]], col_begin)
 
   } else {
 
     attr(data, "col_merge") <-
       list(
-        type = type,
-        col_1 = col_1)
+        format = format,
+        col_1 = col_begin)
   }
 
   data
