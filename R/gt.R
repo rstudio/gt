@@ -1,14 +1,11 @@
 #' Create gt table object
 #'
-#' Create a gt table object so that we can perform
-#' styling transformations before transforming
-#' the entire object to a display table. Using this
-#' function is the first step in that process.
-#' @param data a \code{data.frame} object or a
-#' tibble.
-#' @param rownames_to_stub an option to take
-#' rownames from the input \code{data} table
-#' as row captions in the stub.
+#' Create a gt table object so that we can perform styling transformations
+#' before transforming the entire object to a display table. Using this function
+#' is the first step in that process.
+#' @param data a \code{data.frame} object or a tibble.
+#' @param rownames_to_stub an option to take rownames from the input \code{data}
+#' table as row captions in the stub.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the

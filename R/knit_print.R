@@ -1,6 +1,6 @@
 #' Knit print the table
-#' @description This facilitates printing of the
-#' HTML table within a knitr code chunk.
+#' @description This facilitates printing of the HTML table within a knitr
+#' code chunk.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 #' @importFrom knitr knit_print

@@ -1,9 +1,7 @@
 #' Transform a gt table object to an HTML table
 #'
-#' Take a \code{gt_tbl} table object and transform
-#' it to an HTML table.
-#' @param data a \code{gt_tbl} object that is
-#' created using the \code{gt()} function.
+#' Take a \code{gt_tbl} table object and transform it to an HTML table.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @return a character object with an HTML table
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stringr str_extract_all str_split

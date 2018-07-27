@@ -1,6 +1,5 @@
 #' Print the table
-#' @description This facilitates printing of the
-#' HTML table to the R console.
+#' @description This facilitates printing of the HTML table to the R console.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 #' @importFrom htmltools tagList htmlDependency attachDependencies HTML

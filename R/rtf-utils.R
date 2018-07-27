@@ -1,4 +1,3 @@
-
 #' @noRd
 col_width_twips <- function() {
   1080L

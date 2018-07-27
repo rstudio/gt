@@ -1,12 +1,10 @@
 #' Helper function for adding a local image
 #'
-#' Add a local image inside a table with this
-#' helper function.
+#' Add a local image inside a table with this helper function.
 #' @param file a path to an image file.
-#' @param height the absolute height (px)
-#' of the image in the table cell.
-#' @return a character object with an HTML
-#' fragment that can be placed inside a cell.
+#' @param height the absolute height (px) of the image in the table cell.
+#' @return a character object with an HTML fragment that can be placed inside of
+#' a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -30,13 +28,11 @@ local_image <- function(file,
 
 #' Helper function for adding an image from the web
 #'
-#' Add a web image inside a table with this
-#' helper function.
+#' Add a web image inside a table with this helper function.
 #' @param url a url that resolves to an image file.
-#' @param height the absolute height (px)
-#' of the image in the table cell.
-#' @return a character object with an HTML
-#' fragment that can be placed inside a cell.
+#' @param height the absolute height (px) of the image in the table cell.
+#' @return a character object with an HTML fragment that can be placed inside of
+#' a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -56,15 +52,12 @@ web_image <- function(url,
 
 #' Helper function for adding a FontAwesome icon
 #'
-#' Add a FontAwesome icon inside a table with
-#' this helper function.
+#' Add a FontAwesome icon inside a table with this helper function.
 #' @param name the name of the FontAwesome icon.
-#' @param height the absolute height (px)
-#' of the image in the table cell.
-#' @param fill an option to change the fill
-#' color of the icon.
-#' @return a character object with an HTML
-#' fragment that can be placed inside a cell.
+#' @param height the absolute height (px) of the icon in the table cell.
+#' @param fill an option to change the fill color of the icon.
+#' @return a character object with an HTML fragment that can be placed inside of
+#' a cell.
 #' @examples
 #' # Create an HTML fragment that
 #' # contains an FA icon
@@ -117,13 +110,11 @@ fa_icon <- function(name,
 
 #' Helper function for adding a local image
 #'
-#' Add an image from a local SVG file inside a
-#' table with this helper function.
+#' Add an image from a local SVG file inside a table with this helper function.
 #' @param file a path to an SVG file.
-#' @param height the absolute height (px)
-#' of the image in the table cell.
-#' @return a character object with an HTML
-#' fragment that can be placed inside a cell.
+#' @param height the absolute height (px) of the image in the table cell.
+#' @return a character object with an HTML fragment that can be placed inside of
+#' a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -164,17 +155,13 @@ local_svg <- function(file,
 
 #' Helper function for adding a ggplot
 #'
-#' Add a ggplot plot inside a table with this
-#' helper function.
+#' Add a ggplot plot inside a table with this helper function.
 #' @param plot_object the ggplot plot object.
-#' @param height the absolute height (px)
-#' of the image in the table cell.
-#' @param x the x component of the plot's
-#' final aspect ratio.
-#' @param y the y component of the plot's
-#' final aspect ratio.
-#' @return a character object with an HTML
-#' fragment that can be placed inside a cell.
+#' @param height the absolute height (px) of the image in the table cell.
+#' @param x the x component of the plot's final aspect ratio.
+#' @param y the y component of the plot's final aspect ratio.
+#' @return a character object with an HTML fragment that can be placed inside of
+#' a cell.
 #' @examples
 #' \dontrun{
 #' library(ggplot2)
@@ -198,7 +185,7 @@ local_svg <- function(file,
 #' @export
 ggplot_image <- function(plot_object,
                          height = 30,
-                         x = 7,
+                         x = 5,
                          y = 5) {
 
   ggplot2::ggsave(

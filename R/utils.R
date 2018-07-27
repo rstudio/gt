@@ -12,7 +12,8 @@ resolve_rows <- function(data, rows) {
 
     rows <- rows[rows %in% 1:nrow(data)]
 
-  } else if (is.character(rows) && all(!is.na(attr(data, "stub_df")[["rowname"]]))) {
+  } else if (is.character(rows) &&
+             all(!is.na(attr(data, "stub_df")[["rowname"]]))) {
 
     rows <- which(attr(data, "stub_df")[["rowname"]] %in% rows)
   }
@@ -364,17 +365,23 @@ perform_col_merge <- function(data) {
     attr(data, "output_df")[, which(colnames(extracted) == value_1_col)] <- values_1
 
     # Remove the `uncert` column across key dfs
-    attr(data, "boxh_df") <- attr(data, "boxh_df")[, -which(colnames(extracted) == value_2_col)]
-    attr(data, "fmts_df") <- attr(data, "fmts_df")[, -which(colnames(extracted) == value_2_col)]
-    attr(data, "foot_df") <- attr(data, "foot_df")[, -which(colnames(extracted) == value_2_col)]
-    attr(data, "output_df") <- attr(data, "output_df")[, -which(colnames(extracted) == value_2_col)]
+    attr(data, "boxh_df") <-
+      attr(data, "boxh_df")[, -which(colnames(extracted) == value_2_col)]
+
+    attr(data, "fmts_df") <-
+      attr(data, "fmts_df")[, -which(colnames(extracted) == value_2_col)]
+
+    attr(data, "foot_df") <-
+      attr(data, "foot_df")[, -which(colnames(extracted) == value_2_col)]
+
+    attr(data, "output_df") <-
+      attr(data, "output_df")[, -which(colnames(extracted) == value_2_col)]
   }
 
   data
 }
 
-#' Get a data frame of the `mean` summary stat per group
-#' in the input data table
+#' Get a data frame of the `mean` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_mean_df <- function(data) {
@@ -387,8 +394,7 @@ get_mean_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of the `min` summary stat per group
-#' in the input data table
+#' Get a data frame of the `min` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_min_df <- function(data) {
@@ -401,8 +407,7 @@ get_min_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of the `max` summary stat per group
-#' in the input data table
+#' Get a data frame of the `max` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_max_df <- function(data) {
@@ -415,8 +420,8 @@ get_max_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of the `median` summary stat per group
-#' in the input data table
+#' Get a data frame of the `median` summary stat per group in the input data
+#' table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_median_df <- function(data) {
@@ -429,8 +434,7 @@ get_median_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of the `sd` summary stat per group
-#' in the input data table
+#' Get a data frame of the `sd` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_sd_df <- function(data) {
@@ -443,8 +447,7 @@ get_sd_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of the `n` summary stat per group
-#' in the input data table
+#' Get a data frame of the `n` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
 get_n_df <- function(data) {
@@ -457,9 +460,8 @@ get_n_df <- function(data) {
     dplyr::select(groupname, rowname, everything())
 }
 
-#' Get a data frame of summary lines for all summary
-#' types automatically handled in the package
-#' in the input data table
+#' Get a data frame of summary lines for all summary types automatically handled
+#' in the package in the input data table
 #' @importFrom dplyr bind_rows
 #' @noRd
 get_all_summaries <- function(df) {
@@ -480,14 +482,13 @@ color_tints <- function() {
 }
 
 #' Process input text
-#' This processes input text based on the class. If
-#' incoming text has the class \code{from_markdown}
-#' (applied by the \code{md()} helper function), then
-#' the text will be sanitized and transformed to HTML
-#' from Markdown. If the incoming text has the class
-#' \code{preserve_html} (applied by \code{html()}
-#' helper function), then the text will be seen as
-#' HTML and it won't undergo sanitization
+#'
+#' This processes input text based on the class. If incoming text has the class
+#' \code{from_markdown} (applied by the \code{md()} helper function), then the
+#' text will be sanitized and transformed to HTML from Markdown. If the incoming
+#' text has the class \code{preserve_html} (applied by \code{html()} helper
+#' function), then the text will be seen as HTML and it won't undergo
+#' sanitization.
 #' @param text the text to be sanitized.
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
@@ -549,7 +550,8 @@ render_formats <- function(data,
       if (col %in% colnames(data)) {
 
         output_df[[col]][attr(data, "formats")[[i]]$rows] <-
-          attr(data, "formats")[[i]]$func[[eval_func]](data[[col]][attr(data, "formats")[[i]]$rows])
+          attr(data, "formats")[[i]]$func[[eval_func]](
+            data[[col]][attr(data, "formats")[[i]]$rows])
       }
     }
   }
@@ -557,8 +559,8 @@ render_formats <- function(data,
   output_df
 }
 
-#' Move input data cells to `output_df` that didn't have
-#' any rendering applied during `render_formats()`
+#' Move input data cells to `output_df` that didn't have any rendering applied
+#' during `render_formats()`
 #' @noRd
 migrate_unformatted_to_output <- function(data, output_df) {
 
@@ -571,8 +573,8 @@ migrate_unformatted_to_output <- function(data, output_df) {
   output_df
 }
 
-#' Apply column names to column labels for any of
-#' those column labels not explicitly set
+#' Apply column names to column labels for any of those column labels not
+#' explicitly set
 #' @noRd
 migrate_colnames_to_labels <- function(boxh_df) {
 
@@ -585,8 +587,8 @@ migrate_colnames_to_labels <- function(boxh_df) {
   boxh_df
 }
 
-#' Assign center alignment for all columns
-#' that haven't had alignment explicitly set
+#' Assign center alignment for all columns that haven't had alignment
+#' explicitly set
 #' @noRd
 set_default_alignments <- function(boxh_df) {
 

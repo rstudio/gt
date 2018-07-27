@@ -1,29 +1,22 @@
 #' Format numeric values
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param decimals an option to specify the exact number
-#' of decimal places to use. The default number of decimal
-#' places is \code{2}.
-#' @param sep_mark the mark to use as a separator between
-#' groups of digits.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param decimals an option to specify the exact number of decimal places to
+#' use. The default number of decimal places is \code{2}.
+#' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
-#' @param drop0trailing a logical value that allows for
-#' removal of trailing zeros (those redundant zeros after
-#' the decimal mark).
-#' @param negative_style the formatting to use
-#' for negative numbers. With \code{signed} (the default),
-#' negative numbers will be shown with a negative sign.
-#' Using \code{parens} will show the negative value in
-#' parentheses. The \code{red} option will display the
-#' number in red. Finally, \code{parens-red} will display
-#' negative numbers as red and enclosed in parentheses.
-#' @param locale an optional locale ID that can be used
-#' for formatting the value according the locale's rules.
-#' Examples include \code{"en_US"} for English (United
-#' States) and \code{"fr_FR"} for French (France).
+#' @param drop0trailing a logical value that allows for removal of trailing
+#' zeros (those redundant zeros after the decimal mark).
+#' @param negative_style the formatting to use for negative numbers. With
+#' \code{signed} (the default), negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the negative value in parentheses. The
+#' \code{red} option will display the number in red. Finally, \code{parens-red}
+#' will display negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used for formatting the value
+#' according the locale's rules. Examples include \code{"en_US"} for English
+#' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -114,28 +107,22 @@ fmt_number <- function(data,
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param decimals an option to specify the exact number
-#' of decimal places to use. The default number of decimal
-#' places is \code{2}.
-#' @param sep_mark the mark to use as a separator between
-#' groups of digits.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param decimals an option to specify the exact number of decimal places to
+#' use. The default number of decimal places is \code{2}.
+#' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
-#' @param drop0trailing a logical value that allows for
-#' removal of trailing zeros (those redundant zeros after
-#' the decimal mark).
-#' @param negative_style the formatting to use
-#' for negative numbers. With \code{signed} (the default),
-#' negative numbers will be shown with a negative sign.
-#' Using \code{parens} will show the negative value in
-#' parentheses. The \code{red} option will display the
-#' number in red. Finally, \code{parens-red} will display
-#' negative numbers as red and enclosed in parentheses.
-#' @param locale an optional locale ID that can be used
-#' for formatting the value according the locale's rules.
-#' Examples include \code{"en_US"} for English (United
-#' States) and \code{"fr_FR"} for French (France).
+#' @param drop0trailing a logical value that allows for removal of trailing
+#' zeros (those redundant zeros after the decimal mark).
+#' @param negative_style the formatting to use for negative numbers. With
+#' \code{signed} (the default), negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the negative value in parentheses. The
+#' \code{red} option will display the number in red. Finally, \code{parens-red}
+#' will display negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used for formatting the value
+#' according the locale's rules. Examples include \code{"en_US"} for English
+#' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -235,6 +222,7 @@ fmt_scientific <- function(data,
         format = "e",
         drop0trailing = drop0trailing)
 
+    # TODO: remove for loop
     for (i in seq(x)) {
 
       if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
@@ -278,28 +266,22 @@ fmt_scientific <- function(data,
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param decimals an option to specify the exact number
-#' of decimal places to use. The default number of decimal
-#' places is \code{2}.
-#' @param sep_mark the mark to use as a separator between
-#' groups of digits.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param decimals an option to specify the exact number of decimal places to
+#' use. The default number of decimal places is \code{2}.
+#' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
-#' @param drop0trailing a logical value that allows for
-#' removal of trailing zeros (those redundant zeros after
-#' the decimal mark).
-#' @param negative_style the formatting to use
-#' for negative numbers. With \code{signed} (the default),
-#' negative numbers will be shown with a negative sign.
-#' Using \code{parens} will show the negative value in
-#' parentheses. The \code{red} option will display the
-#' number in red. Finally, \code{parens-red} will display
-#' negative numbers as red and enclosed in parentheses.
-#' @param locale an optional locale ID that can be used
-#' for formatting the value according the locale's rules.
-#' Examples include \code{"en_US"} for English (United
-#' States) and \code{"fr_FR"} for French (France).
+#' @param drop0trailing a logical value that allows for removal of trailing
+#' zeros (those redundant zeros after the decimal mark).
+#' @param negative_style the formatting to use for negative numbers. With
+#' \code{signed} (the default), negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the negative value in parentheses. The
+#' \code{red} option will display the number in red. Finally, \code{parens-red}
+#' will display negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used for formatting the value
+#' according the locale's rules. Examples include \code{"en_US"} for English
+#' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -383,30 +365,26 @@ fmt_percent <- function(data,
 #' @param data a table object that is created using the
 #' \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
 #' @param currency the currency to use for the numeric value.
-#' @param use_subunits an option for whether the subunits
-#' portion of a currency value should be displayed.
-#' @param decimals an option to specify the exact number
-#' of decimal places to use.
-#' @param sep_mark the mark to use as a separator between
-#' groups of digits.
+#' @param use_subunits an option for whether the subunits portion of a currency
+#' value should be displayed.
+#' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
+#' @param drop0trailing a logical value that allows for removal of trailing
+#' zeros (those redundant zeros after the decimal mark).
 #' @param placement the placement of the currency symbol.
 #' This can be either be \code{left} (the default) or
 #' \code{right}.
-#' @param negative_style the formatting to use
-#' for negative numbers. With \code{signed} (the default),
-#' negative numbers will be shown with a negative sign.
-#' Using \code{parens} will show the negative value in
-#' parentheses. The \code{red} option will display the
-#' number in red. Finally, \code{parens-red} will display
-#' negative numbers as red and enclosed in parentheses.
-#' @param locale an optional locale ID that can be used
-#' for formatting the value according the locale's rules.
-#' Examples include \code{"en_US"} for English (United
-#' States) and \code{"fr_FR"} for French (France).
+#' @param negative_style the formatting to use for negative numbers. With
+#' \code{signed} (the default), negative numbers will be shown with a negative
+#' sign. Using \code{parens} will show the negative value in parentheses. The
+#' \code{red} option will display the number in red. Finally, \code{parens-red}
+#' will display negative numbers as red and enclosed in parentheses.
+#' @param locale an optional locale ID that can be used for formatting the value
+#' according the locale's rules. Examples include \code{"en_US"} for English
+#' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
@@ -551,15 +529,14 @@ fmt_currency <- function(data,
 }
 
 #' Format values as dates
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param date_style the date style to use. Supply a number
-#' (from \code{1} to \code{14}) that corresponds to the
-#' preferred date style. Use \code{date_style_info()} to
-#' see the different numbered and named date presets.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param date_style the date style to use. Supply a number (from \code{1} to
+#' \code{14}) that corresponds to the preferred date style. Use
+#' \code{date_style_info()} to see the different numbered and named date
+#' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
@@ -628,15 +605,14 @@ fmt_date <- function(data,
 }
 
 #' Format values as times
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param time_style the time style to use. Supply a number
-#' (from \code{1} to \code{5}) that corresponds to the
-#' preferred time style. Use \code{time_style_info()} to
-#' see the different numbered and named time presets.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param time_style the time style to use. Supply a number (from \code{1} to
+#' \code{5}) that corresponds to the preferred time style. Use
+#' \code{time_style_info()} to see the different numbered and named time
+#' presets.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
 #' @export
@@ -704,19 +680,18 @@ fmt_time <- function(data,
 }
 
 #' Format values as date-times
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any
-#' value results in all rows in \code{columns} being formatted.
-#' @param date_style the date style to use. Supply a number
-#' (from \code{1} to \code{14}) that corresponds to the
-#' preferred date style. Use \code{date_style_info()} to
-#' see the different numbered and named date presets.
-#' @param time_style the time style to use. Supply a number
-#' (from \code{1} to \code{5}) that corresponds to the
-#' preferred time style. Use \code{time_style_info()} to
-#' see the different numbered and named time presets.
+#' @param rows optional rows to format. Not providing any value results in all
+#' rows in \code{columns} being formatted.
+#' @param date_style the date style to use. Supply a number (from \code{1} to
+#' \code{14}) that corresponds to the preferred date style. Use
+#' \code{date_style_info()} to see the different numbered and named date
+#' presets.
+#' @param time_style the time style to use. Supply a number (from \code{1} to
+#' \code{5}) that corresponds to the preferred time style. Use
+#' \code{time_style_info()} to see the different numbered and named time
+#' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_replace_all
@@ -794,11 +769,9 @@ fmt_datetime <- function(data,
 
 #' Add a standardized mark for missing data
 #'
-#' Wherever there is missing data (i.e., \code{NA} values)
-#' a customizable mark may present better than the
-#' standard `NA` text that would otherwise appear.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
+#' may present better than the standard `NA` text that would otherwise appear.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param missing_mark the text to be used in place
 #' of \code{NA} values in the rendered table.
 #' @return an object of class \code{gt_tbl}.

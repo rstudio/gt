@@ -1,12 +1,9 @@
 #' Add a table heading
 #'
-#' Add a title and optional headnote to the heading
-#' part of the table.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Add a title and optional headnote to the heading part of the table.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param title text to be used in the table title.
-#' @param headnote optional text to be used as the table's
-#' headnote.
+#' @param headnote optional text to be used as the table's headnote.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -40,10 +37,9 @@ tab_heading <- function(data,
 
 #' Add caption text to the stubhead
 #'
-#' Add a caption to the stubhead of a table. If a stub does
-#' not exist, no change will be made.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Add a caption to the stubhead of a table. If a stub does not exist, no
+#' change will be made.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param caption the text to be used as the stubhead caption.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -65,15 +61,13 @@ tab_stubhead_caption <- function(data,
 
 #' Arrange a stub into blocks
 #'
-#' Set a group with a name and mappings to rows extant
-#' in the table. This creates a stub block with group
-#' headings and row captions.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Set a group with a name and mappings to rows extant in the table. This
+#' creates a stub block with group headings and row captions.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block.
-#' @param others an optional group heading to use for any rows
-#' not part of a stub block.
+#' @param others an optional group heading to use for any rows not part of a
+#' stub block.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `mtcars` where
@@ -110,13 +104,16 @@ tab_stub_block <- function(data,
   rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
 
   if (rows[1] == "rownames_with" && length(rows) == 2) {
-    rows <- attr(data, "stub_df")$rowname[which(grepl(rows[2], attr(data, "stub_df")$rowname))]
+    rows <-
+      attr(data, "stub_df")$rowname[
+        which(grepl(rows[2], attr(data, "stub_df")$rowname))]
     if (length(rows) == 0) {
       return(data)
     }
   }
 
-  attr(data, "stub_df")[which(attr(data, "stub_df")$rowname %in% rows), 1] <- group
+  attr(data, "stub_df")[
+    which(attr(data, "stub_df")$rowname %in% rows), 1] <- group
 
   # Insert the group into the `blocks_arrange` component
   if (!("arrange_groups" %in% names(attributes(data)))) {
@@ -132,19 +129,16 @@ tab_stub_block <- function(data,
 
 #' Arrange a boxhead into panels
 #'
-#' Set a spanner with a name and mappings to columns extant
-#' in the table. This creates a boxhead panel with spanner
-#' headings and column headings.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Set a spanner with a name and mappings to columns extant in the table. This
+#' creates a boxhead panel with spanner headings and column headings.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param group the name to assign to the spanner heading.
-#' @param columns the columns to be components of the
-#' spanner heading.
+#' @param columns the columns to be components of the spanner heading.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `rock` where
-#' # there are column headings grouped under
-#' # spanner headings
+#' # there are column headings grouped
+#' # under spanner headings
 #' gt(data = rock) %>%
 #'   tab_boxhead_panel(
 #'     group = "perimeter",
@@ -168,27 +162,22 @@ tab_boxhead_panel <- function(data,
     return(data)
   }
 
-
   attr(data, "boxh_df")[1, columns] <- process_text(group)
   data
 }
 
 #' Add a table footnote
 #'
-#' Add a footnote with a glyph attached to the
-#' targeted cells, rows, or columns.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Add a footnote with a glyph attached to the targeted cells, rows, or columns.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param footnote text to be used in the footnote.
-#' @param location the cell or set of cells to be
-#' associated with the footnote. Supplying an object
-#' with the \code{target_cell()} helper function is
-#' a useful way to specify the cell that is associated
-#' with the footnote.
+#' @param location the cell or set of cells to be associated with the footnote.
+#' Supplying an object with the \code{target_cell()} helper function is a useful
+#' way to specify the cell that is associated with the footnote.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Add a footnote that is in reference to
-#' # a specified table cell
+#' # Add a footnote that is in
+#' # reference to a single table cell
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_footnote(
 #'     footnote = "Massive hp.",
@@ -282,10 +271,8 @@ tab_footnote <- function(data,
 
 #' Add a source note citation
 #'
-#' Add a source note citation to the source note
-#' part of the table.
-#' @param data a table object that is created using the
-#' \code{gt()} function.
+#' Add a source note citation to the source note part of the table.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param source_note text to be used in the source note.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
