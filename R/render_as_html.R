@@ -147,10 +147,14 @@ render_as_html <- function(data) {
         values_1 <- output_df[, which(colnames(output_df) == value_1_col)]
         values_2 <- output_df[, which(colnames(output_df) == value_2_col)]
 
+        values_1_data <- data[, which(colnames(data) == value_1_col)]
+        values_2_data <- data[, which(colnames(data) == value_2_col)]
+
         for (j in seq(values_1)) {
 
           if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
-              !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+              !is.na(values_2[j]) && !grepl("NA", values_2[j]) &&
+              !is.na(values_1_data[j]) && !is.na(values_2_data[j])) {
 
             values_1[j] <-
               format %>%
