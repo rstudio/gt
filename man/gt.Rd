@@ -7,21 +7,18 @@
 gt(data, rownames_to_stub = FALSE)
 }
 \arguments{
-\item{data}{a \code{data.frame} object or a
-tibble.}
+\item{data}{a \code{data.frame} object or a tibble.}
 
-\item{rownames_to_stub}{an option to take
-rownames from the input \code{data} table
-as row captions in the stub.}
+\item{rownames_to_stub}{an option to take rownames from the input \code{data}
+table as row captions in the stub.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Create a gt table object so that we can perform
-styling transformations before transforming
-the entire object to a display table. Using this
-function is the first step in that process.
+Create a gt table object so that we can perform styling transformations
+before transforming the entire object to a display table. Using this function
+is the first step in that process.
 }
 \examples{
 # Create a table object using the

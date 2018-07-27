@@ -7,26 +7,22 @@
 cols_split_delim(data, delim, columns = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{delim}{the delimiter to use to split an input column name.
-The delimiter supplied will be autoescaped for the internal
-splitting procedure. The first component of the split will
-become the group name and the second component will be the
-column label.}
+\item{delim}{the delimiter to use to split an input column name. The
+delimiter supplied will be autoescaped for the internal splitting procedure.
+The first component of the split will become the group name and the second
+component will be the column label.}
 
-\item{columns}{an optional vector of column names that this
-operation should be limited to. The default is to consider all
-columns in the table.}
+\item{columns}{an optional vector of column names that this operation should
+be limited to. The default is to consider all columns in the table.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-This option will split delimited column names such that the
-first component is promoted to the group name (and hence
-will span over column labels) and subsequent components will
-represent the column label. Please note that reference to individual
-columns must still be via the original column names.
+This option will split delimited column names such that the first component
+is promoted to the group name (and hence will span over column labels) and
+subsequent components will represent the column label. Please note that
+reference to individual columns must still be via the original column names.
 }

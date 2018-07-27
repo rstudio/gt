@@ -8,23 +8,22 @@ fmt_datetime(data, columns, rows = NULL, date_style = NULL,
   time_style = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{columns}{the column names to format.}
 
-\item{rows}{optional rows to format. Not providing any
-value results in all rows in \code{columns} being formatted.}
+\item{rows}{optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted.}
 
-\item{date_style}{the date style to use. Supply a number
-(from \code{1} to \code{14}) that corresponds to the
-preferred date style. Use \code{date_style_info()} to
-see the different numbered and named date presets.}
+\item{date_style}{the date style to use. Supply a number (from \code{1} to
+\code{14}) that corresponds to the preferred date style. Use
+\code{date_style_info()} to see the different numbered and named date
+presets.}
 
-\item{time_style}{the time style to use. Supply a number
-(from \code{1} to \code{5}) that corresponds to the
-preferred time style. Use \code{time_style_info()} to
-see the different numbered and named time presets.}
+\item{time_style}{the time style to use. Supply a number (from \code{1} to
+\code{5}) that corresponds to the preferred time style. Use
+\code{time_style_info()} to see the different numbered and named time
+presets.}
 }
 \value{
 an object of class \code{gt_tbl}.

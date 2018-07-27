@@ -7,15 +7,13 @@
 write_rtf(data, file)
 }
 \arguments{
-\item{data}{a \code{gt_tbl} object that is
-created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{file}{a filename to use for writing out the
-RTF file.}
+\item{file}{a filename to use for writing out the RTF file.}
 }
 \description{
-Take a \code{gt_tbl} table object and render it to
-an RTF file with the extension \code{.rtf}.
+Take a \code{gt_tbl} table object and render it to an RTF file with the
+extension \code{.rtf}.
 }
 \examples{
 \dontrun{

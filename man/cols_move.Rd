@@ -7,17 +7,14 @@
 cols_move(data, columns, after)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{columns}{the column names to move to as a group to
-a different position. The order of the remaining columns
-will be preserved. Values provided that do not correspond
-to column names will be disregarded.}
+\item{columns}{the column names to move to as a group to a different
+position. The order of the remaining columns will be preserved. Values
+provided that do not correspond to column names will be disregarded.}
 
-\item{after}{a column name used to anchor the insertion of
-the moved columns. All of the moved columns will be placed
-to the right of this column.}
+\item{after}{a column name used to anchor the insertion of the moved columns.
+All of the moved columns will be placed to the right of this column.}
 }
 \value{
 an object of class \code{gt_tbl}.

@@ -7,16 +7,14 @@
 as_raw_html(data, inline_css = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{inline_css}{an option to supply styles to table
-elements as inlined CSS styles.}
+\item{inline_css}{an option to supply styles to table elements as inlined
+CSS styles.}
 }
 \description{
-Get the HTML content string from a \code{gt_tbl}
-object as a single-length character vector. There is
-also the option to transform the HTML such that CSS
-styles are inlined. This option is preferable when
-using the output HTML table in an emailing context.
+Get the HTML content string from a \code{gt_tbl} object as a single-length
+character vector. There is also the option to transform the HTML such that
+CSS styles are inlined. This option is preferable when using the output HTML
+table in an emailing context.
 }

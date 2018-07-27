@@ -7,11 +7,10 @@
 cols_label(data, labels)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{labels}{a named vector of column names and their
-labels for display of the column headers.}
+\item{labels}{a named vector of column names and their labels for display of
+the column headers.}
 }
 \description{
 Relabel one or more columns

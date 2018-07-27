@@ -9,19 +9,16 @@ fa_icon(name, height = 30, fill = NULL)
 \arguments{
 \item{name}{the name of the FontAwesome icon.}
 
-\item{height}{the absolute height (px)
-of the image in the table cell.}
+\item{height}{the absolute height (px) of the icon in the table cell.}
 
-\item{fill}{an option to change the fill
-color of the icon.}
+\item{fill}{an option to change the fill color of the icon.}
 }
 \value{
-a character object with an HTML
-fragment that can be placed inside a cell.
+a character object with an HTML fragment that can be placed inside of
+a cell.
 }
 \description{
-Add a FontAwesome icon inside a table with
-this helper function.
+Add a FontAwesome icon inside a table with this helper function.
 }
 \examples{
 # Create an HTML fragment that

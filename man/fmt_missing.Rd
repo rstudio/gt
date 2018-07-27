@@ -7,8 +7,7 @@
 fmt_missing(data, missing_mark = "---")
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{missing_mark}{the text to be used in place
 of \code{NA} values in the rendered table.}
@@ -17,7 +16,6 @@ of \code{NA} values in the rendered table.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Wherever there is missing data (i.e., \code{NA} values)
-a customizable mark may present better than the
-standard `NA` text that would otherwise appear.
+Wherever there is missing data (i.e., \code{NA} values) a customizable mark
+may present better than the standard `NA` text that would otherwise appear.
 }

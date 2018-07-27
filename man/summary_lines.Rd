@@ -8,40 +8,34 @@ summary_lines(data, groups = NULL, columns = NULL, agg, decimals = 2,
   sep_mark = "", dec_mark = ".", tint = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{groups}{the stub block groups heading names
-for which summary lines will be added.}
+\item{groups}{the stub block groups heading names for which summary lines
+will be added.}
 
-\item{columns}{the columns for which the summaries
-should be calculated.}
+\item{columns}{the columns for which the summaries should be calculated.}
 
-\item{agg}{a vector of aggregate function names. This
-can include any of these: \code{mean}, \code{min},
-\code{max}, \code{median}, \code{sd}, or \code{n}.}
+\item{agg}{a vector of aggregate function names. This can include any of
+these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
+\code{n}.}
 
-\item{decimals}{an option to specify the exact number
-of decimal places to use. The default number of decimal
-places is \code{2}.}
+\item{decimals}{an option to specify the exact number of decimal places to
+use. The default number of decimal places is \code{2}.}
 
-\item{sep_mark}{the mark to use as a separator between
-groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits.}
 
 \item{dec_mark}{the character to use as a decimal mark.}
 
-\item{tint}{an optional tinting color to apply to the
-summary rows created. The available tinting colors are:
-\code{yellow}, \code{blue}, \code{pink}, \code{green},
-and \code{sand}. By default, no tinting is applied.}
+\item{tint}{an optional tinting color to apply to the summary rows created.
+The available tinting colors are: \code{yellow}, \code{blue}, \code{pink},
+\code{green}, and \code{sand}. By default, no tinting is applied.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a summary lines to one or more stub blocks by
-using the input data already provided in the \code{gt()}
-function.
+Add a summary lines to one or more stub blocks by using the input data
+already provided in the \code{gt()} function.
 }
 \examples{
 gt(mtcars, rownames_to_stub = TRUE) \%>\%

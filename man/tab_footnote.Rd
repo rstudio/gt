@@ -7,27 +7,23 @@
 tab_footnote(data, footnote, location)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{footnote}{text to be used in the footnote.}
 
-\item{location}{the cell or set of cells to be
-associated with the footnote. Supplying an object
-with the \code{target_cell()} helper function is
-a useful way to specify the cell that is associated
-with the footnote.}
+\item{location}{the cell or set of cells to be associated with the footnote.
+Supplying an object with the \code{target_cell()} helper function is a useful
+way to specify the cell that is associated with the footnote.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a footnote with a glyph attached to the
-targeted cells, rows, or columns.
+Add a footnote with a glyph attached to the targeted cells, rows, or columns.
 }
 \examples{
-# Add a footnote that is in reference to
-# a specified table cell
+# Add a footnote that is in
+# reference to a single table cell
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_footnote(
     footnote = "Massive hp.",

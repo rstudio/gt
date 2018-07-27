@@ -7,19 +7,18 @@
 col_labels(...)
 }
 \arguments{
-\item{...}{a series of named arguments representing the
-column names and values representing the column labels.}
+\item{...}{a series of named arguments representing the column names and
+values representing the column labels.}
 }
 \value{
 a named vector of column labels.
 }
 \description{
-This helper is to be used specifically within the
-\code{cols_label()} function as an alternative to
-using named vectors within that function. The advantage
-in using this helper is that the assigned column labels
-can be marked as Markdown (with the \code{md()} function)
-or as HTML (with the \code{html()} function).
+This helper is to be used specifically within the \code{cols_label()}
+function as an alternative to using named vectors within that function. The
+advantage in using this helper is that the assigned column labels can be
+marked as Markdown (with the \code{md()} function) or as HTML (with the
+\code{html()} function).
 }
 \examples{
 # Create a gt table based on the mtcars

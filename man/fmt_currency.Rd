@@ -14,19 +14,15 @@ fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
 
 \item{columns}{the column names to format.}
 
-\item{rows}{optional rows to format. Not providing any
-value results in all rows in \code{columns} being formatted.}
+\item{rows}{optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted.}
 
 \item{currency}{the currency to use for the numeric value.}
 
-\item{use_subunits}{an option for whether the subunits
-portion of a currency value should be displayed.}
+\item{use_subunits}{an option for whether the subunits portion of a currency
+value should be displayed.}
 
-\item{decimals}{an option to specify the exact number
-of decimal places to use.}
-
-\item{sep_mark}{the mark to use as a separator between
-groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits.}
 
 \item{dec_mark}{the character to use as a decimal mark.}
 
@@ -34,18 +30,18 @@ groups of digits.}
 This can be either be \code{left} (the default) or
 \code{right}.}
 
-\item{negative_style}{the formatting to use
-for negative numbers. With \code{signed} (the default),
-negative numbers will be shown with a negative sign.
-Using \code{parens} will show the negative value in
-parentheses. The \code{red} option will display the
-number in red. Finally, \code{parens-red} will display
-negative numbers as red and enclosed in parentheses.}
+\item{negative_style}{the formatting to use for negative numbers. With
+\code{signed} (the default), negative numbers will be shown with a negative
+sign. Using \code{parens} will show the negative value in parentheses. The
+\code{red} option will display the number in red. Finally, \code{parens-red}
+will display negative numbers as red and enclosed in parentheses.}
 
-\item{locale}{an optional locale ID that can be used
-for formatting the value according the locale's rules.
-Examples include \code{"en_US"} for English (United
-States) and \code{"fr_FR"} for French (France).}
+\item{locale}{an optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France).}
+
+\item{drop0trailing}{a logical value that allows for removal of trailing
+zeros (those redundant zeros after the decimal mark).}
 }
 \value{
 an object of class \code{gt_tbl}.

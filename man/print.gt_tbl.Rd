@@ -10,7 +10,6 @@
 \item{x}{an object of class \code{gt_tbl}.}
 }
 \description{
-This facilitates printing of the
-HTML table to the R console.
+This facilitates printing of the HTML table to the R console.
 }
 \keyword{internal}

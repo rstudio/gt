@@ -7,20 +7,17 @@
 tab_heading(data, title, headnote = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{title}{text to be used in the table title.}
 
-\item{headnote}{optional text to be used as the table's
-headnote.}
+\item{headnote}{optional text to be used as the table's headnote.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a title and optional headnote to the heading
-part of the table.
+Add a title and optional headnote to the heading part of the table.
 }
 \examples{
 # Create a table object using the
