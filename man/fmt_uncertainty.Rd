@@ -7,14 +7,11 @@
 fmt_uncertainty(data, col_val, col_uncert)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{col_val}{a single column name that contains the base
-values.}
+\item{col_val}{a single column name that contains the base values.}
 
-\item{col_uncert}{a single column name that contains the
-uncertainty values.}
+\item{col_uncert}{a single column name that contains the uncertainty values.}
 }
 \value{
 an object of class \code{gt_tbl}.

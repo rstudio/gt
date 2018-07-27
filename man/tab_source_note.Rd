@@ -7,8 +7,7 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{source_note}{text to be used in the source note.}
 }
@@ -16,8 +15,7 @@ tab_source_note(data, source_note)
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a source note citation to the source note
-part of the table.
+Add a source note citation to the source note part of the table.
 }
 \examples{
 gt(mtcars, rownames_to_stub = TRUE) \%>\%

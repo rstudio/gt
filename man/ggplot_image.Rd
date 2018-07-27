@@ -4,27 +4,23 @@
 \alias{ggplot_image}
 \title{Helper function for adding a ggplot}
 \usage{
-ggplot_image(plot_object, height = 30, x = 7, y = 5)
+ggplot_image(plot_object, height = 30, x = 5, y = 5)
 }
 \arguments{
 \item{plot_object}{the ggplot plot object.}
 
-\item{height}{the absolute height (px)
-of the image in the table cell.}
+\item{height}{the absolute height (px) of the image in the table cell.}
 
-\item{x}{the x component of the plot's
-final aspect ratio.}
+\item{x}{the x component of the plot's final aspect ratio.}
 
-\item{y}{the y component of the plot's
-final aspect ratio.}
+\item{y}{the y component of the plot's final aspect ratio.}
 }
 \value{
-a character object with an HTML
-fragment that can be placed inside a cell.
+a character object with an HTML fragment that can be placed inside of
+a cell.
 }
 \description{
-Add a ggplot plot inside a table with this
-helper function.
+Add a ggplot plot inside a table with this helper function.
 }
 \examples{
 \dontrun{

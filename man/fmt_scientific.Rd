@@ -14,34 +14,28 @@ fmt_scientific(data, columns, rows = NULL, decimals = 2, sep_mark = "",
 
 \item{columns}{the column names to format.}
 
-\item{rows}{optional rows to format. Not providing any
-value results in all rows in \code{columns} being formatted.}
+\item{rows}{optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted.}
 
-\item{decimals}{an option to specify the exact number
-of decimal places to use. The default number of decimal
-places is \code{2}.}
+\item{decimals}{an option to specify the exact number of decimal places to
+use. The default number of decimal places is \code{2}.}
 
-\item{sep_mark}{the mark to use as a separator between
-groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits.}
 
 \item{dec_mark}{the character to use as a decimal mark.}
 
-\item{drop0trailing}{a logical value that allows for
-removal of trailing zeros (those redundant zeros after
-the decimal mark).}
+\item{drop0trailing}{a logical value that allows for removal of trailing
+zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_style}{the formatting to use
-for negative numbers. With \code{signed} (the default),
-negative numbers will be shown with a negative sign.
-Using \code{parens} will show the negative value in
-parentheses. The \code{red} option will display the
-number in red. Finally, \code{parens-red} will display
-negative numbers as red and enclosed in parentheses.}
+\item{negative_style}{the formatting to use for negative numbers. With
+\code{signed} (the default), negative numbers will be shown with a negative
+sign. Using \code{parens} will show the negative value in parentheses. The
+\code{red} option will display the number in red. Finally, \code{parens-red}
+will display negative numbers as red and enclosed in parentheses.}
 
-\item{locale}{an optional locale ID that can be used
-for formatting the value according the locale's rules.
-Examples include \code{"en_US"} for English (United
-States) and \code{"fr_FR"} for French (France).}
+\item{locale}{an optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France).}
 }
 \value{
 an object of class \code{gt_tbl}.

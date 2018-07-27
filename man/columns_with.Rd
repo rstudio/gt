@@ -7,8 +7,7 @@
 columns_with(pattern)
 }
 \arguments{
-\item{pattern}{a pattern that can help capture one or
-more column names.}
+\item{pattern}{a pattern that can help capture one or more column names.}
 }
 \value{
 a list object of class \code{columns_with}.

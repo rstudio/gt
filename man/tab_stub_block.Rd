@@ -7,23 +7,21 @@
 tab_stub_block(data, group, rows, others = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{group}{the stub block group heading name.}
 
 \item{rows}{the rows to be made components of the stub block.}
 
-\item{others}{an optional group heading to use for any rows
-not part of a stub block.}
+\item{others}{an optional group heading to use for any rows not part of a
+stub block.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Set a group with a name and mappings to rows extant
-in the table. This creates a stub block with group
-headings and row captions.
+Set a group with a name and mappings to rows extant in the table. This
+creates a stub block with group headings and row captions.
 }
 \examples{
 # Create a table based on `mtcars` where

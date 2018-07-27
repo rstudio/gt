@@ -7,26 +7,23 @@
 tab_boxhead_panel(data, group, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{group}{the name to assign to the spanner heading.}
 
-\item{columns}{the columns to be components of the
-spanner heading.}
+\item{columns}{the columns to be components of the spanner heading.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Set a spanner with a name and mappings to columns extant
-in the table. This creates a boxhead panel with spanner
-headings and column headings.
+Set a spanner with a name and mappings to columns extant in the table. This
+creates a boxhead panel with spanner headings and column headings.
 }
 \examples{
 # Create a table based on `rock` where
-# there are column headings grouped under
-# spanner headings
+# there are column headings grouped
+# under spanner headings
 gt(data = rock) \%>\%
   tab_boxhead_panel(
     group = "perimeter",

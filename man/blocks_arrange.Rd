@@ -7,8 +7,7 @@
 blocks_arrange(data, groups)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
 \item{groups}{a vector of stub block group heading names.}
 }

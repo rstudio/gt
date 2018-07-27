@@ -9,16 +9,14 @@ local_image(file, height = 30)
 \arguments{
 \item{file}{a path to an image file.}
 
-\item{height}{the absolute height (px)
-of the image in the table cell.}
+\item{height}{the absolute height (px) of the image in the table cell.}
 }
 \value{
-a character object with an HTML
-fragment that can be placed inside a cell.
+a character object with an HTML fragment that can be placed inside of
+a cell.
 }
 \description{
-Add a local image inside a table with this
-helper function.
+Add a local image inside a table with this helper function.
 }
 \examples{
 \dontrun{

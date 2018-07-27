@@ -7,14 +7,13 @@
 cols_align(data, align = "center", columns)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{align}{the alignment direction. This can either
-be \code{"center"}, \code{"left"}, or \code{"right"}.}
+\item{align}{the alignment direction. This can either be \code{"center"},
+\code{"left"}, or \code{"right"}.}
 
-\item{columns}{an vector of column names for which the
-alignment should be applied.}
+\item{columns}{an vector of column names for which the alignment should be
+applied.}
 }
 \value{
 an object of class \code{gt_tbl}.

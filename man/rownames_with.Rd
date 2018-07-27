@@ -7,8 +7,8 @@
 rownames_with(pattern)
 }
 \arguments{
-\item{pattern}{a pattern that can help capture one or
-more row names and hence the rows themselves.}
+\item{pattern}{a pattern that can help capture one or more row names and
+hence the rows themselves.}
 }
 \value{
 a list object of class \code{rownames_with}.

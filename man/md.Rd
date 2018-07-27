@@ -7,12 +7,11 @@
 md(text)
 }
 \arguments{
-\item{text}{the text that is understood to contain
-Markdown formatting.}
+\item{text}{the text that is understood to contain Markdown formatting.}
 }
 \value{
-a character object that is tagged for
-a Markdown to HTML transformation.
+a character object that is tagged for a Markdown-to-HTML
+transformation.
 
 a character object of class \code{from_markdown}.
 }
