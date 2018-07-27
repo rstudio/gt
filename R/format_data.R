@@ -819,19 +819,22 @@ fmt_missing <- function(data,
 }
 
 #' Set a column format with a formatter function
-#' @param data a table object that is created using the
-#' \code{gt()} function.
-#' @param columns the specification for which columns are to
-#' be formatted.
-#' @param rows an optional specification for which rows are
-#' to be formatted.
-#' @param formatter a formatting function.
+#' @param data a table object that is created using the \code{gt()} function.
+#' @param columns the specification for which columns are to be formatted.
+#' @param rows an optional specification for which rows are to be formatted.
+#' @param formatter a formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
 #' @noRd
 set_fmt <- function(data,
                     columns,
                     rows = TRUE,
                     formatter) {
+
+  # If a single function is supplied to `formatter` then
+  # repackage that into a list as the `default` function
+  if (is.function(formatter)) {
+    formatter <- list(default = formatter)
+  }
 
   # Create a formatter list, which is a bundle of
   # formatting functions for specific columns and rows
