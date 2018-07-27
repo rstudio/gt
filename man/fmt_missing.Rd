@@ -4,13 +4,18 @@
 \alias{fmt_missing}
 \title{Add a standardized mark for missing data}
 \usage{
-fmt_missing(data, missing_mark = "---")
+fmt_missing(data, columns, rows = NULL, missing_text = "---")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{missing_mark}{the text to be used in place
-of \code{NA} values in the rendered table.}
+\item{columns}{the column names to format.}
+
+\item{rows}{optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted.}
+
+\item{missing_text}{the text to be used in place of \code{NA} values in the
+rendered table.}
 }
 \value{
 an object of class \code{gt_tbl}.
