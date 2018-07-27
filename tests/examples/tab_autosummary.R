@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 tab_summary <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -11,15 +10,14 @@ tab_summary <-
     rows = `Ferrari Dino` & `Maserati Bora` & `Porsche 914-2` & `Ford Pantera L`) %>%
   blocks_arrange(
     groups = tgt(Mercs, Supercars, Others)) %>%
-  fmt_summary_auto(
+  summary_rows(
     agg = "mean",
     groups = "Mercs",
     columns = c("mpg", "disp", "hp"),
     decimals = 1,
-    tint = "blue") %>%
-  fmt_summary_auto(
+    tint = "pink") %>%
+  summary_rows(
     agg = c("max", "min"),
-    groups = c("Supercars", NA),
     decimals = 1,
     tint = "green")
 
