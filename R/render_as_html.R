@@ -4,7 +4,7 @@
 #' @param data a table object that is created using the \code{gt()} function.
 #' @return a character object with an HTML table
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stringr str_extract_all str_split
+#' @importFrom stringr str_extract_all str_replace
 #' @importFrom stats setNames
 #' @noRd
 render_as_html <- function(data) {
@@ -140,27 +140,22 @@ render_as_html <- function(data) {
 
       for (i in seq(attr(data, "col_merge")[[1]])) {
 
-        type <- attr(data, "col_merge")[["type"]][i]
+        format <- attr(data, "col_merge")[["format"]][i]
         value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
         value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
 
         values_1 <- output_df[, which(colnames(output_df) == value_1_col)]
         values_2 <- output_df[, which(colnames(output_df) == value_2_col)]
 
-        if (type == "uncertainty") {
-          separator <- " &plusmn; "
-        } else if (type == "range") {
-          separator <- " &mdash; "
-        }
-
         for (j in seq(values_1)) {
 
           if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
               !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+
             values_1[j] <-
-              gsub(
-                "^\\s+|\\s+$", "",
-                paste(values_1[j], values_2[j], sep = separator))
+              format %>%
+              stringr::str_replace(fixed("{1}"), values_1[j]) %>%
+              stringr::str_replace(fixed("{2}"), values_2[j])
           }
         }
 
@@ -471,7 +466,7 @@ render_as_html <- function(data) {
               "<td class='row ", col_alignment, "'>",
               row_splits[i][[1]], "</td>", collapse = "\n"),
             "\n</tr>\n")
-          )
+        )
     }
   }
 

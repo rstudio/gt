@@ -5,7 +5,7 @@
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param file a filename to use for writing out the RTF file.
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stringr str_extract_all
+#' @importFrom stringr str_extract_all str_replace
 #' @importFrom stats setNames
 #' @examples
 #' \dontrun{
@@ -83,20 +83,15 @@ write_rtf <- function(data, file) {
         values_1 <- output_df[, which(colnames(output_df) == value_1_col)]
         values_2 <- output_df[, which(colnames(output_df) == value_2_col)]
 
-        if (type == "uncertainty") {
-          separator <- " &plusmn; "
-        } else if (type == "range") {
-          separator <- " &mdash; "
-        }
-
         for (j in seq(values_1)) {
 
           if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
               !is.na(values_2[j]) && !grepl("NA", values_2[j])) {
+
             values_1[j] <-
-              gsub(
-                "^\\s+|\\s+$", "",
-                paste(values_1[j], values_2[j], sep = separator))
+              format %>%
+              stringr::str_replace(fixed("{1}"), values_1[j]) %>%
+              stringr::str_replace(fixed("{2}"), values_2[j])
           }
         }
 
