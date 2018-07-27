@@ -13,13 +13,13 @@ tbl <-
 # Create a table
 tab <-
   gt(data = tbl) %>%
-  fmt_uncertainty(
-    col_val = value,
-    col_uncert = uncertainty) %>%
-  fmt_uncertainty(
+  cols_merge_range(
+    col_begin = value,
+    col_end = uncertainty) %>%
+  cols_merge_uncert(
     col_val = value_2,
     col_uncert = uncertainty_2) %>%
-  fmt_number(columns = vars(uncertainty, value), decimals = 3) %>%
+  fmt_number(columns = vars(uncertainty, value), decimals = 2) %>%
   fmt_missing()
 
 # Display the table in the Viewer
