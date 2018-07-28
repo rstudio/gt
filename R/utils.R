@@ -717,3 +717,17 @@ inline_html_styles <- function(html, css_tbl) {
 
   html
 }
+
+
+is_equal_to <- function(x, y) {
+  vapply(x, function(a, b) isTRUE(all.equal(a, b)), logical(1), y)
+}
+
+split_scientific_notn <- function(x_str) {
+
+  exp_parts <- strsplit(x_str, "e|E")
+  num_part <- exp_parts %>% vapply(`[[`, character(1), 1)
+  exp_part <- exp_parts %>% vapply(`[[`, character(1), 2) %>% as.numeric()
+
+  list(num = num_part, exp = exp_part)
+}
