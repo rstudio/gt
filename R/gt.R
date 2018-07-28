@@ -1,4 +1,4 @@
-#' Create gt table object
+#' Create a gt table object
 #'
 #' Create a gt table object so that we can perform styling transformations
 #' before transforming the entire object to a display table. Using this function
