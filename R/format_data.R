@@ -251,6 +251,10 @@ fmt_scientific <- function(data,
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
 #' will display negative numbers as red and enclosed in parentheses.
+#' @param incl_space an option on whether to include a space between the value
+#' and the percent sign. The default is to not introduce a space character.
+#' @param placement the placement of the percent sign This can be either be
+#' \code{right} (the default) or \code{left}.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
