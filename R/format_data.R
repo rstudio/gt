@@ -359,9 +359,8 @@ fmt_percent <- function(data,
 #' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
-#' @param placement the placement of the currency symbol.
-#' This can be either be \code{left} (the default) or
-#' \code{right}.
+#' @param placement the placement of the currency symbol. This can be either be
+#' \code{left} (the default) or \code{right}.
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
