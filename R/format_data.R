@@ -9,7 +9,7 @@
 #' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
-#' @param negative_style the formatting to use for negative numbers. With
+#' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
@@ -35,7 +35,7 @@ fmt_number <- function(data,
                        sep_mark = "",
                        dec_mark = ".",
                        drop0trailing = FALSE,
-                       negative_style = "signed",
+                       negative_val = "signed",
                        locale = NULL) {
 
   # If nothing is provided for rows, assume
@@ -107,7 +107,7 @@ fmt_number <- function(data,
 #' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
-#' @param negative_style the formatting to use for negative numbers. With
+#' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
@@ -124,7 +124,7 @@ fmt_scientific <- function(data,
                            sep_mark = "",
                            dec_mark = ".",
                            drop0trailing = FALSE,
-                           negative_style = "signed",
+                           negative_val = "signed",
                            locale = NULL) {
 
   # If nothing is provided for rows, assume
@@ -239,7 +239,7 @@ fmt_scientific <- function(data,
 #' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
-#' @param negative_style the formatting to use for negative numbers. With
+#' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
@@ -334,7 +334,7 @@ fmt_percent <- function(data,
 #' @param placement the placement of the currency symbol.
 #' This can be either be \code{left} (the default) or
 #' \code{right}.
-#' @param negative_style the formatting to use for negative numbers. With
+#' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
@@ -353,7 +353,7 @@ fmt_currency <- function(data,
                          sep_mark = "",
                          dec_mark = ".",
                          placement = "left",
-                         negative_style = "signed",
+                         negative_val = "signed",
                          locale = NULL) {
 
   # If nothing is provided for rows, assume
