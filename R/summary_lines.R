@@ -34,6 +34,17 @@ summary_rows <- function(data,
                          dec_mark = ".",
                          tint = NULL) {
 
+  # If using the `vars()` helper, get the groups as a character vector
+  if (!is.null(groups) && inherits(groups, "quosures")) {
+    groups <- groups %>% lapply(`[[`, 2) %>% as.character()
+  }
+
+  # If using the `vars()` helper, get the columns as a character vector
+  if (!is.null(columns) && inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
+
+
   if ("summary_auto" %in% names(attributes(data))) {
 
     attr(data, "summary_auto") <-
