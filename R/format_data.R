@@ -171,79 +171,60 @@ fmt_scientific <- function(data,
     return(data)
   }
 
-  # Create the default formatting function
-  format_fcn_default <- function(x) {
+  format_fcn_sci_notn_factory <- function(exp_start_str, exp_end_str) {
 
-    # Format the number component
-    x <-
-      formatC(
-        x = x,
-        digits = decimals,
-        mode = "double",
-        big.mark = sep_mark,
-        decimal.mark = dec_mark,
-        format = "e",
-        drop0trailing = drop0trailing)
+    function(x) {
 
-    # Apply scientific notation formatting
-    for (i in seq(x)) {
+      # Format the number component as a character vector
+      x_str <-
+        formatC(
+          x = x,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "e",
+          drop0trailing = drop0trailing)
 
-      if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
-          (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
-          as.numeric(x[i]) == 0) {
+      small_pos <- (
+        (x >= 1 & x < 10) |
+          (x <= -1 & x > -10) |
+          is_equal_to(x, 0)
+      )
 
-        x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
-
-      } else {
-
-        x[i] <-
-          paste0(
-            unlist(strsplit(x[i], "e|E"))[1],
-            " x 10(",
-            as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
-            ")")
+      # For any numbers that shouldn't have an exponent, remove
+      # that portion from the character version
+      if (any(small_pos)) {
+        x_str[small_pos] <- split_scientific_notn(x_str[small_pos])$num
       }
-    }
 
-    x
+      if (any(!small_pos)) {
+        sci_parts <- split_scientific_notn(x_str[!small_pos])
+
+        x_str[!small_pos] <- paste0(
+          sci_parts$num, exp_start_str,
+          sci_parts$exp, exp_end_str)
+      }
+
+      x_str
+    }
   }
+
+  # Create the default formatting function for scientific notation
+  format_fcn_sci_notn_default <- format_fcn_sci_notn_factory(
+    exp_start_str = " x 10(",
+    exp_end_str = ")")
+
+  # Create the html formatting function for scientific notation
+  format_fcn_sci_notn_html <- format_fcn_sci_notn_factory(
+    exp_start_str = " &times; 10<sup class='gt_super'>",
+    exp_end_str = "</sup>")
+
+  # Create the default formatting function
+  format_fcn_default <- format_fcn_sci_notn_default
 
   # Create the html formatting function
-  format_fcn_html <- function(x) {
-
-    # Format the number component
-    x <-
-      formatC(
-        x = x,
-        digits = decimals,
-        mode = "double",
-        big.mark = sep_mark,
-        decimal.mark = dec_mark,
-        format = "e",
-        drop0trailing = drop0trailing)
-
-    # TODO: remove for loop
-    for (i in seq(x)) {
-
-      if ((as.numeric(x[i]) >= 1 & as.numeric(x[i]) < 10) |
-          (as.numeric(x[i]) <= -1 & as.numeric(x[i]) > -10) |
-          as.numeric(x[i]) == 0) {
-
-        x[i] <- (strsplit(x[i], "e|E") %>% unlist())[1]
-
-      } else {
-
-        x[i] <-
-          paste0(
-            unlist(strsplit(x[i], "e|E"))[1],
-            " &times; 10<sup class='gt_super'>",
-            as.numeric(unlist(strsplit(x[i], "e|E"))[2]),
-            "</sup>")
-      }
-    }
-
-    x
-  }
+  format_fcn_html <- format_fcn_sci_notn_html
 
   # Create the function list
   format_fcn_list <-
