@@ -27,8 +27,6 @@
 #'   fmt_number(
 #'     columns = c("drat", "wt", "qsec"),
 #'     decimals = 2)
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim
 #' @export
 fmt_number <- function(data,
                        columns,
@@ -52,16 +50,10 @@ fmt_number <- function(data,
     dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -124,8 +116,6 @@ fmt_number <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim
 #' @export
 fmt_scientific <- function(data,
                            columns,
@@ -149,16 +139,10 @@ fmt_scientific <- function(data,
     dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -264,8 +248,6 @@ fmt_scientific <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim
 #' @export
 fmt_percent <- function(data,
                         columns,
@@ -289,16 +271,10 @@ fmt_percent <- function(data,
     dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -367,8 +343,6 @@ fmt_percent <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim
 #' @export
 fmt_currency <- function(data,
                          columns,
@@ -394,16 +368,10 @@ fmt_currency <- function(data,
     dec_mark <- get_locale_monetary_dec_mark(locale = locale)
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -519,8 +487,7 @@ fmt_currency <- function(data,
 #' \code{date_style_info()} to see the different numbered and named date
 #' presets.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim str_replace_all
+#' @importFrom stringr str_replace_all
 #' @export
 fmt_date <- function(data,
                      columns,
@@ -533,16 +500,10 @@ fmt_date <- function(data,
     rows <- TRUE
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -594,8 +555,7 @@ fmt_date <- function(data,
 #' \code{5}) that corresponds to the preferred time style. Use
 #' \code{time_style_info()} to see the different numbered and named time
 #' presets.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim str_replace_all
+#' @importFrom stringr str_replace_all
 #' @export
 fmt_time <- function(data,
                      columns,
@@ -608,16 +568,10 @@ fmt_time <- function(data,
     rows <- TRUE
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -674,8 +628,7 @@ fmt_time <- function(data,
 #' \code{time_style_info()} to see the different numbered and named time
 #' presets.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim str_replace_all
+#' @importFrom stringr str_replace_all
 #' @export
 fmt_datetime <- function(data,
                          columns,
@@ -689,16 +642,10 @@ fmt_datetime <- function(data,
     rows <- TRUE
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
@@ -771,16 +718,10 @@ fmt_missing <- function(data,
     rows <- TRUE
   }
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  columns <- columns[columns != "&"]
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Resolve the columns to be targeted
   columns <- resolve_columns(data = data, columns = columns)
