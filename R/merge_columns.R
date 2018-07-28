@@ -3,20 +3,21 @@
 #' @param col_1 a column that contains values for the start of the range.
 #' @param col_2 a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom rlang enquo get_expr
 #' @export
 cols_merge <- function(data,
                        col_1,
                        col_2,
                        format = "{1} {2}") {
 
-  # Get the requested `col_1`
-  col_1 <-
-    (rlang::enquo(col_1) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_1` as a character vector
+  if (inherits(col_1, "quosures")) {
+    col_1 <- col_1 %>% lapply(`[[`, 2) %>% as.character()
+  }
 
-  # Get the requested `col_2`
-  col_2 <-
-    (rlang::enquo(col_2) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_2` as a character vector
+  if (inherits(col_2, "quosures")) {
+    col_2 <- col_2 %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   if (!(col_1 %in% colnames(data)) |
       !(col_2 %in% colnames(data))) {
@@ -62,13 +63,15 @@ cols_merge_uncert <- function(data,
 
   format <- "{1} \u00B1 {2}"
 
-  # Get the requested `col_val`
-  col_val <-
-    (rlang::enquo(col_val) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_val` as a character vector
+  if (inherits(col_val, "quosures")) {
+    col_val <- col_val %>% lapply(`[[`, 2) %>% as.character()
+  }
 
-  # Get the requested `col_uncert`
-  col_uncert <-
-    (rlang::enquo(col_uncert) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_uncert` as a character vector
+  if (inherits(col_uncert, "quosures")) {
+    col_uncert <- col_uncert %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   if (!(col_val %in% colnames(data)) |
       !(col_uncert %in% colnames(data))) {
@@ -114,13 +117,15 @@ cols_merge_range <- function(data,
 
   format <- "{1} \u2014 {2}"
 
-  # Get the requested `col_begin`
-  col_begin <-
-    (rlang::enquo(col_begin) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_begin` as a character vector
+  if (inherits(col_begin, "quosures")) {
+    col_begin <- col_begin %>% lapply(`[[`, 2) %>% as.character()
+  }
 
-  # Get the requested `col_end`
-  col_end <-
-    (rlang::enquo(col_end) %>% rlang::get_expr() %>% as.character())[1]
+  # If using the `vars()` helper, get `col_end` as a character vector
+  if (inherits(col_end, "quosures")) {
+    col_end <- col_end %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   if (!(col_begin %in% colnames(data)) |
       !(col_end %in% colnames(data))) {

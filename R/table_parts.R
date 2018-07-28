@@ -92,17 +92,6 @@ tab_stub_block <- function(data,
       list(others = others)
   }
 
-  # Get the requested `rows`
-  rows <-
-    rlang::enquo(rows) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  rows <- rows[rows != "&"] %>% stringr::str_remove_all("`")
-
   if (rows[1] == "rownames_with" && length(rows) == 2) {
     rows <-
       attr(data, "stub_df")$rowname[
@@ -149,9 +138,10 @@ tab_boxhead_panel <- function(data,
                               group,
                               columns) {
 
-  # Get the requested `columns`
-  columns <-
-    rlang::enquo(columns) %>% rlang::get_expr() %>% as.character()
+  # If using the `vars()` helper, get the columns as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
 
   # Filter the vector of column names by the
   # column names actually in `input_df`
