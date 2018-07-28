@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_missing}
 \alias{fmt_missing}
-\title{Add a standardized mark for missing data}
+\title{Format missing values}
 \usage{
 fmt_missing(data, columns, rows = NULL, missing_text = "---")
 }
