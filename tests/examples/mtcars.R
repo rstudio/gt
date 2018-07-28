@@ -18,31 +18,33 @@ library(gt)
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>% # 1
   cols_align_right(
-    columns = disp & vs) %>% # 2
+    columns = vars(mpg)) %>% # 2
   tab_boxhead_panel(
     group = md("*group_a*"),
-    columns = tgt(mpg, cyl, disp, hp)) %>% # 3
+    columns = vars(mpg, cyl, disp, hp)) %>% # 3
   tab_boxhead_panel(
     group = md("*group_b*"),
-    columns = tgt(drat, wt, qsec, vs, am, gear, carb)) %>% # 3
-  cols_move_to_start(columns = hp) %>% # 4
-  cols_move_to_end(columns = am & gear) %>% # 4
-  cols_remove(columns = carb) %>% # 4
-  cols_move(columns = wt & carb & qsec, after = gear) %>% # 4
+    columns = vars(drat, wt, qsec, vs, am, gear, carb)) %>% # 3
+  cols_move_to_start(columns = vars(hp)) %>% # 4
+  cols_move_to_end(columns = vars(am, gear)) %>% # 4
+  cols_remove(columns = vars(carb)) %>% # 4
+  cols_move(columns = vars(wt, carb, qsec), after = vars(gear)) %>% # 4
   tab_stub_block(
     group = "Mercs",
-    rows = rownames_with("Merc")) %>% # 5
+    rows = c(
+      "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
+      "Merc 450SE", "Merc 450SL", "Merc 450SLC")) %>% # 5
   tab_stub_block(
     group = "Supercars",
-    rows = `Ferrari Dino` & `Maserati Bora` & `Porsche 914-2` & `Ford Pantera L`) %>% # 5
+    rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")) %>% # 5
   blocks_arrange(
-    groups = tgt(Mercs, Supercars, Others)) %>% # 6
+    groups = vars(Supercars, Mercs)) %>% # 6
   fmt_number(
-    columns = disp & drat & wt, decimals = 3) %>% # 7
+    columns = vars(disp, drat, wt), decimals = 2) %>% # 7
   fmt_number(
-    columns = qsec, decimals = 3, rows = rownames_with("Merc")) %>% # 7
+    columns = vars(qsec, wt), decimals = 3, rows = rownames_with("Merc")) %>% # 7
   fmt_number(
-    columns = mpg, decimals = 1) %>% # 7
+    columns = vars(mpg), decimals = 1) %>% # 7
   tab_heading(
     title = md("The **mtcars** dataset"),
     headnote = md("[A rather famous *Motor Trend* table]")) %>% # 8

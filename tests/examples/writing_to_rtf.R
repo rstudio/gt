@@ -5,18 +5,20 @@ data <-
   gt(mtcars[, 1:7], rownames_to_stub = TRUE) %>%
   tab_boxhead_panel(
     group = md("grp_a"),
-    columns = tgt(mpg, cyl, disp)) %>%
+    columns = vars(mpg, cyl, disp)) %>%
   tab_boxhead_panel(
     group = md("grp_b"),
-    columns = drat) %>%
+    columns = vars(drat)) %>%
   tab_stub_block(
     group = "Mercs",
-    rows = rownames_with("Merc")) %>%
+    rows = c(
+      "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
+      "Merc 450SE", "Merc 450SL", "Merc 450SLC")) %>%
   tab_stub_block(
     group = "Supercars",
-    rows = `Ferrari Dino` & `Maserati Bora` & `Porsche 914-2` & `Ford Pantera L`) %>%
+    rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L"))  %>%
   blocks_arrange(
-    groups = tgt(Mercs, Supercars, Others)) %>%
+    groups = vars(Supercars, Mercs)) %>%
   tab_heading(
     title = md("The **mtcars** dataset")) %>%
   tab_source_note(

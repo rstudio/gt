@@ -9,7 +9,7 @@ library(tidyverse)
 pressure_tbl <-
   gt(data = pressure) %>% # 1
   fmt_scientific(
-    columns = pressure,
+    columns = vars(pressure),
     decimals = 2) # 2
 
 # Display the table in the Viewer
