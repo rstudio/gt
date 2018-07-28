@@ -263,7 +263,9 @@ fmt_percent <- function(data,
                         sep_mark = "",
                         dec_mark = ".",
                         drop0trailing = FALSE,
-                        negative_style = "signed",
+                        negative_val = "signed",
+                        incl_space = FALSE,
+                        placement = "right",
                         locale = NULL) {
 
   # If nothing is provided for rows, assume
@@ -297,16 +299,31 @@ fmt_percent <- function(data,
   # Create the default formatting function
   format_fcn_default <- function(x) {
 
-    paste0(
+    # Determine which of `x` are not NA
+    non_na_x <- !is.na(x)
+
+    # Format all non-NA x values
+    x[non_na_x] <-
       formatC(
-        x = as.numeric(x) * 100.0,
+        x = x[non_na_x] * 100.0,
         digits = decimals,
         mode = "double",
         big.mark = sep_mark,
         decimal.mark = dec_mark,
         format = "f",
-        drop0trailing = drop0trailing),
-      "%")
+        drop0trailing = drop0trailing)
+
+    if (placement == "right") {
+      x[non_na_x] <- paste0(
+        x[non_na_x],
+        ifelse(incl_space, " %", "%"))
+    } else {
+      x[non_na_x] <- paste0(
+        ifelse(incl_space, "% ", "%"),
+        x[non_na_x])
+    }
+
+    x
   }
 
   # Create the function list
