@@ -69,14 +69,21 @@ fmt_number <- function(data,
   # Create the default formatting function
   format_fcn_default <- function(x) {
 
-    formatC(
-      x = x,
-      digits = decimals,
-      mode = "double",
-      big.mark = sep_mark,
-      decimal.mark = dec_mark,
-      format = "f",
-      drop0trailing = drop0trailing)
+    # Determine which of `x` are not NA
+    non_na_x <- !is.na(x)
+
+    # Format all non-NA x values
+    x[non_na_x] <-
+      formatC(
+        x = x[non_na_x],
+        digits = decimals,
+        mode = "double",
+        big.mark = sep_mark,
+        decimal.mark = dec_mark,
+        format = "f",
+        drop0trailing = drop0trailing)
+
+    x
   }
 
   # Create the function list
