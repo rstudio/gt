@@ -204,6 +204,19 @@ The package API consists of the following functions:
   - `cols_move_to_end()` – move one or more columns to the end
   - `cols_remove()` – remove one or more columns
   - `cols_label()` – relabel one or more columns
+  - `cols_split_delim()` – create group names and column labels via
+    delimited column names
+  - `cols_merge()` – merge two columns to a single column with a
+    formatter
+  - `cols_merge_uncert()` – merge two columns to a value + uncertainty
+    column
+  - `cols_merge_range()` – merge two columns to a value range column
+
+**Modify Rows** - `blocks_arrange()` – modify the ordering of the stub
+block groups
+
+**Export Table** - `write_rtf()` – save a gt table object as an RTF file
+- `as_raw_html()` – get the HTML content of a gt table
 
 ## Inner Workings
 
