@@ -695,7 +695,7 @@ fmt_datetime <- function(data,
   data
 }
 
-#' Add a standardized mark for missing data
+#' Format missing values
 #'
 #' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 #' may present better than the standard `NA` text that would otherwise appear.
