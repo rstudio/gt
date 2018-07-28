@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt.R
 \name{gt}
 \alias{gt}
-\title{Create gt table object}
+\title{Create a gt table object}
 \usage{
 gt(data, rownames_to_stub = FALSE)
 }
