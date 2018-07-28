@@ -10,14 +10,14 @@ html_tbl <-
   cols_move_to_start(columns = vars(Month, Day)) %>%
   cols_label(labels = col_labels(Solar.R = html("Solar<br>Radiation"))) %>%
   fmt_number(
-    columns = Wind,
+    columns = vars(Wind),
     decimals = 2
   )  %>%
   tab_boxhead_panel(
     group = "Measurement Period",
     columns = vars(Month, Day)
   ) %>%
-  fmt_missing() %>%
+  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp)) %>%
   as_raw_html()
 
 # Create an email message using the

@@ -13,9 +13,9 @@ library(gt)
 iris_tbl <-
   gt(data = iris) %>% # 1
   cols_split_delim(delim = ".") %>% # 2
-  cols_move_to_start(columns = "Species") %>% # 3
+  cols_move_to_start(columns = vars(Species)) %>% # 3
   fmt_number(
-    columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
     ) %>% # 4
   tab_heading(

@@ -14,11 +14,11 @@ tbl <-
 tab <-
   gt(data = tbl) %>%
   cols_merge_uncert(
-    col_val = value,
-    col_uncert = uncertainty) %>%
+    col_val = vars(value),
+    col_uncert = vars(uncertainty)) %>%
   cols_merge_uncert(
-    col_val = value_2,
-    col_uncert = uncertainty_2) %>%
+    col_val = vars(value_2),
+    col_uncert = vars(uncertainty_2)) %>%
   fmt_number(
     columns = vars(value, value_2),
     decimals = 2) %>%
@@ -26,4 +26,3 @@ tab <-
 
 # Display the table in the Viewer
 tab
-

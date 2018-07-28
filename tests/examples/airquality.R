@@ -14,17 +14,17 @@ library(gt)
 #     with a string replacement (default is an em dash)
 airquality_tbl <-
   gt(data = airquality) %>%  # 1
-  cols_move_to_start(columns = Month & Day) %>% # 2
+  cols_move_to_start(columns = vars(Month, Day)) %>% # 2
   cols_label(col_labels(Solar.R = html("Solar<br>Radiation"))) %>% # 3
   fmt_number(
-    columns = Wind,
+    columns = vars(Wind),
     decimals = 2
     )  %>% # 4
   tab_boxhead_panel(
     group = "Measurement Period",
-    columns = Month & Day
+    columns = vars(Month, Day)
     ) %>% # 5
-  fmt_missing() # 6
+  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp)) # 6
 
 # Display the table in the Viewer
 airquality_tbl

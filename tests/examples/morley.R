@@ -10,11 +10,11 @@ library(tidyverse)
 morley_tbl <-
   gt(data = morley %>% dplyr::mutate(Speed = Speed %>% as.numeric())) %>%  # 1
   fmt_number(
-    columns = Speed,
+    columns = vars(Speed),
     decimals = 0,
     sep_mark = ","
     ) %>% # 2
-  cols_align_left(columns = Speed & Run) # 3
+  cols_align_left(columns = vars(Speed, Run)) # 3
 
 # Display the table in the Viewer
 morley_tbl

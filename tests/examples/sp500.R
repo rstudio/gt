@@ -7,7 +7,7 @@ data <-
     col_types = "cddddd") %>%
   gt() %>%
   fmt_date(
-    columns = Date,
+    columns = vars(Date),
     date_style = 6) %>%
   fmt_currency(
     columns = vars(High, Open, Low, Close),

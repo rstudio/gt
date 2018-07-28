@@ -20,9 +20,15 @@ tbl <-
 # Create a display table with footnotes
 html_tbl <-
   gt(data = tbl) %>%
-  tab_footnote("This is a small number." = cells(row = 4, column = 3)) %>%
-  tab_footnote("The value for *value_2* is quite small." = c(7, 4)) %>%
-  tab_footnote("this is also small." = c(9, 3))
+  tab_footnote(
+    footnote = "This is a small number.",
+    location = target_cell(row = 1, column = 1)) %>%
+  tab_footnote(
+    footnote = md("The value for *value_2* is quite small."),
+    location = target_cell(7, 4)) %>%
+  tab_footnote(
+    footnote = "this is also small.",
+    location = target_cell(row = 1, column = 3))
 
 html_tbl
 
