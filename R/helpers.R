@@ -109,22 +109,17 @@ target_cell <- function(row = NULL,
 }
 
 #' Helper for targeting a series of row labels or columns
-#' @importFrom rlang enquos get_expr
-#' @param ... one or more column names, given as bare
-#' column names.
+#'
+#' See \code{dplyr::\link[dplyr]{vars}} for details.
+#' @name vars
+#' @rdname vars
+#' @keywords internal
+#' @importFrom dplyr vars
+#' @usage vars(...)
+#' @param ... one or more column names or row labels, depending on the enclosing
+#' function. This can be provided as bare column names or row labels.
 #' @export
-tgt <- function(...) {
-
-  # Get the requested targets
-  x <- rlang::enquos(...) %>% unlist()
-
-  cols <- c()
-  for (i in seq(x)) {
-    cols <- c(cols, (x[[i]] %>% rlang::get_expr() %>% as.character()))
-  }
-
-  cols
-}
+NULL
 
 #' Helper for processing column labels
 #'
