@@ -108,11 +108,11 @@ to refine the display table:
 mtcars_tbl <-
   gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>% # 1
   fmt_number(
-    columns = tgt(mpg, disp, drat, qsec),
+    columns = vars(mpg, disp, drat, qsec),
     decimals = 1
     ) %>% # 2
   fmt_number(
-    columns = wt,
+    columns = vars(wt),
     decimals = 3
     ) %>% # 3
   tab_stubhead_caption(caption = "car model") %>% # 4
@@ -136,31 +136,32 @@ table, we embrace the naming convention provided in the **iris**
 dataset’s column names. Having columns in dot notation (such as
 `Sepal.Length` and `Petal.Width`) provide a means to specify heading
 levels as `<spanner_heading>.<column_heading>`. So long as we follow
-this column-name pattern, we can use the `gt()` function to parse and
-expand the given column names into one or more boxhead panels with
-spanner headings and column headings.
+this column-name pattern, we can use the `cols_split_delim()` function
+to parse and expand the given column names into one or more boxhead
+panels with group and column headings.
 
 ``` r
 
 # 1 - we take the `datasets::iris` data.frame
-#   - the dot-notation column naming format (i.e., `[heading].[caption]`)
-#     is used to automatically creating spanner headings to add structure
-# 2 - the `Species` column is moved to the start of the column series
-# 3 - we are formatting numbers in the named columns to have 1 decimal place
-# 4 - a heading is added
-# 5 - a source note is added
+# 2 - the dot-notation column naming format (i.e., `[heading].[caption]`)
+#     can be used to create group headings to add structure
+# 3 - the `Species` column is moved to the start of the column series
+# 4 - we are formatting numbers in the named columns to have 1 decimal place
+# 5 - a heading is added
+# 6 - a source note is added
 iris_tbl <-
-  gt(iris[1:6, ], split_cols_dots = TRUE) %>% # 1
-  cols_move_to_start(columns = Species) %>% # 2
+  gt(iris[1:6, ]) %>% # 1
+  cols_split_delim(delim = ".") %>% # 2
+  cols_move_to_start(columns = vars(Species)) %>% # 3
   fmt_number(
-    columns = tgt(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+    columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
-    ) %>% # 3
+    ) %>% # 4
   tab_heading(
     title = md("The **iris** dataset"),
-    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>% # 4
+    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>% # 5
   tab_source_note(
-    source_note = md("The data were collected by *Anderson* (1935).")) # 5
+    source_note = md("The data were collected by *Anderson* (1935).")) # 6
 ```
 
 This is how the table appears:
@@ -173,7 +174,7 @@ The package API consists of the following functions:
 
 **Create/Modify Table Parts**
 
-  - `gt()` – create **gt** table object
+  - `gt()` – create a **gt** table object
   - `tab_heading()` – add a table heading
   - `tab_stub()` – add a stub to a table
   - `tab_stubhead_caption()` – add caption text to the stubhead
@@ -203,10 +204,6 @@ The package API consists of the following functions:
   - `cols_move_to_end()` – move one or more columns to the end
   - `cols_remove()` – remove one or more columns
   - `cols_label()` – relabel one or more columns
-
-There are more functions yet to come. A means to selectively target
-rows, columns, or rows will be introduced and incorporated into
-functions that apply transformations on cell content.
 
 ## Inner Workings
 
