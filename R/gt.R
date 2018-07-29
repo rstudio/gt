@@ -50,6 +50,20 @@ gt <- function(data,
         stringsAsFactors = FALSE)
   }
 
+  # If `rowname` is a column available in `data`,
+  # place that column's data into `stub_df` and
+  # remove it from `data`
+  if ("rowname" %in% colnames(data)) {
+    stub_df[["rowname"]] <- as.character(data[["rowname"]])
+  }
+
+  # If `groupname` is a column available in `data`,
+  # place that column's data into `stub_df` and
+  # remove it from `data`
+  if ("groupname" %in% colnames(data)) {
+    stub_df[["groupname"]] <- as.character(data[["groupname"]])
+  }
+
   # Take the input data and convert to a
   # data frame
   data_tbl <-
