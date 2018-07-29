@@ -5,8 +5,6 @@
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
@@ -14,6 +12,8 @@
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
 #' will display negative numbers as red and enclosed in parentheses.
+#' @param sep_mark the mark to use as a separator between groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
@@ -32,10 +32,10 @@ fmt_number <- function(data,
                        columns,
                        rows = NULL,
                        decimals = 2,
-                       sep_mark = "",
-                       dec_mark = ".",
                        drop0trailing = FALSE,
                        negative_val = "signed",
+                       sep_mark = "",
+                       dec_mark = ".",
                        locale = NULL) {
 
   # If nothing is provided for rows, assume
@@ -110,8 +110,6 @@ fmt_number <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
@@ -119,6 +117,8 @@ fmt_number <- function(data,
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
 #' will display negative numbers as red and enclosed in parentheses.
+#' @param sep_mark the mark to use as a separator between groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
@@ -128,10 +128,10 @@ fmt_scientific <- function(data,
                            columns,
                            rows = NULL,
                            decimals = 2,
-                           sep_mark = "",
-                           dec_mark = ".",
                            drop0trailing = FALSE,
                            negative_val = "signed",
+                           sep_mark = "",
+                           dec_mark = ".",
                            locale = NULL) {
 
   # If nothing is provided for rows, assume
@@ -242,8 +242,6 @@ fmt_scientific <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
@@ -251,9 +249,11 @@ fmt_scientific <- function(data,
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
 #' will display negative numbers as red and enclosed in parentheses.
+#' @param sep_mark the mark to use as a separator between groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
 #' @param incl_space an option on whether to include a space between the value
 #' and the percent sign. The default is to not introduce a space character.
-#' @param placement the placement of the percent sign This can be either be
+#' @param placement the placement of the percent sign. This can be either be
 #' \code{right} (the default) or \code{left}.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
@@ -264,10 +264,10 @@ fmt_percent <- function(data,
                         columns,
                         rows = NULL,
                         decimals = 2,
-                        sep_mark = "",
-                        dec_mark = ".",
                         drop0trailing = FALSE,
                         negative_val = "signed",
+                        sep_mark = "",
+                        dec_mark = ".",
                         incl_space = FALSE,
                         placement = "right",
                         locale = NULL) {
@@ -355,17 +355,17 @@ fmt_percent <- function(data,
 #' @param currency the currency to use for the numeric value.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #' value should be displayed.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
-#' @param drop0trailing a logical value that allows for removal of trailing
-#' zeros (those redundant zeros after the decimal mark).
-#' @param placement the placement of the currency symbol. This can be either be
-#' \code{left} (the default) or \code{right}.
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses. The
 #' \code{red} option will display the number in red. Finally, \code{parens-red}
 #' will display negative numbers as red and enclosed in parentheses.
+#' @param decimals an option to specify the exact number of decimal places to
+#' use.
+#' @param sep_mark the mark to use as a separator between groups of digits.
+#' @param dec_mark the character to use as a decimal mark.
+#' @param placement the placement of the currency symbol. This can be either be
+#' \code{left} (the default) or \code{right}.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
@@ -376,11 +376,11 @@ fmt_currency <- function(data,
                          rows = NULL,
                          currency,
                          use_subunits = TRUE,
+                         negative_val = "signed",
                          decimals = NULL,
                          sep_mark = "",
                          dec_mark = ".",
                          placement = "left",
-                         negative_val = "signed",
                          locale = NULL) {
 
   # If nothing is provided for rows, assume
