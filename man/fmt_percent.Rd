@@ -4,8 +4,9 @@
 \alias{fmt_percent}
 \title{Format values as a percentage}
 \usage{
-fmt_percent(data, columns, rows = NULL, decimals = 2, sep_mark = "",
-  dec_mark = ".", drop0trailing = FALSE, negative_style = "signed",
+fmt_percent(data, columns, rows = NULL, decimals = 2,
+  drop0trailing = FALSE, negative_val = "signed", sep_mark = "",
+  dec_mark = ".", incl_space = FALSE, placement = "right",
   locale = NULL)
 }
 \arguments{
@@ -20,18 +21,24 @@ rows in \code{columns} being formatted.}
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits.}
-
-\item{dec_mark}{the character to use as a decimal mark.}
-
 \item{drop0trailing}{a logical value that allows for removal of trailing
 zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_style}{the formatting to use for negative numbers. With
+\item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
 sign. Using \code{parens} will show the negative value in parentheses. The
 \code{red} option will display the number in red. Finally, \code{parens-red}
 will display negative numbers as red and enclosed in parentheses.}
+
+\item{sep_mark}{the mark to use as a separator between groups of digits.}
+
+\item{dec_mark}{the character to use as a decimal mark.}
+
+\item{incl_space}{an option on whether to include a space between the value
+and the percent sign. The default is to not introduce a space character.}
+
+\item{placement}{the placement of the percent sign. This can be either be
+\code{right} (the default) or \code{left}.}
 
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
