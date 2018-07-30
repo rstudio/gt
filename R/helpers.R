@@ -3,6 +3,13 @@
 #' @return a character object that is tagged for a Markdown-to-HTML
 #' transformation.
 #' @return a character object of class \code{from_markdown}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and add a caption
+#' # that is to interpreted as Markdown
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   tab_stubhead_caption(
+#'     caption = md("car *make* and *model*"))
 #' @export
 md <- function(text) {
 
@@ -17,6 +24,13 @@ md <- function(text) {
 #' @return a character object that is tagged as an HTML fragment that is not to
 #' be sanitized.
 #' @return a character object of class \code{preserve_html}.
+#' # Create a table object using the
+#' # `mtcars` dataset and add a caption
+#' # that is to interpreted as HTML
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   tab_stubhead_caption(
+#'     caption = html(
+#'       "car <em>make</em> and <em>model</em>"))
 #' @export
 html <- function(text) {
 
