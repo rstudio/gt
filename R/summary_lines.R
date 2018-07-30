@@ -7,8 +7,8 @@
 #' will be added.
 #' @param columns the columns for which the summaries should be calculated.
 #' @param agg a vector of aggregate function names. This can include any of
-#' these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
-#' \code{n}.
+#' these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd},
+#' \code{sum} or \code{n}.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
 #' @param sep_mark the mark to use as a separator between groups of digits.
