@@ -15,6 +15,7 @@
 #' gt(data = sleep) %>%
 #'   write_rtf(file = "sleep.rtf")
 #' }
+#' @family table export functions
 #' @export
 write_rtf <- function(data, file) {
 

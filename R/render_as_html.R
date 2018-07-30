@@ -6,6 +6,7 @@
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stringr str_extract_all str_replace
 #' @importFrom stats setNames
+#' @family table export functions
 #' @noRd
 render_as_html <- function(data) {
 
