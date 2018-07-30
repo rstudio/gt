@@ -212,11 +212,18 @@ The package API consists of the following functions:
     column
   - `cols_merge_range()` – merge two columns to a value range column
 
-**Modify Rows** - `blocks_arrange()` – modify the ordering of the stub
-block groups
+**Modify Rows**
 
-**Export Table** - `write_rtf()` – save a gt table object as an RTF file
-- `as_raw_html()` – get the HTML content of a gt table
+  - `blocks_arrange()` – modify the ordering of the stub block groups
+
+**Add Rows**
+
+  - `summary_rows()` – add summary rows based on simple aggregations
+
+**Export Table**
+
+  - `write_rtf()` – save a gt table object as an RTF file
+  - `as_raw_html()` – get the HTML content of a gt table
 
 ## Inner Workings
 
