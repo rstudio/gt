@@ -13,6 +13,7 @@
 #'   cols_align(
 #'     align = "left",
 #'     columns = mpg)
+#' @family column modification functions
 #' @export
 cols_align <- function(data,
                        align = "center",
@@ -51,6 +52,7 @@ cols_align <- function(data,
 #' # columns to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_left(mpg)
+#' @family column modification functions
 #' @export
 cols_align_left <- function(data,
                             columns) {
@@ -82,6 +84,7 @@ cols_align_left <- function(data,
 #'   cols_align_center(mpg)
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim
+#' @family column modification functions
 #' @export
 cols_align_center <- function(data,
                               columns) {
@@ -111,6 +114,7 @@ cols_align_center <- function(data,
 #' # columns to the right
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align_right(mpg)
+#' @family column modification functions
 #' @export
 cols_align_right <- function(data,
                              columns) {
@@ -133,6 +137,7 @@ cols_align_right <- function(data,
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param labels a named vector of column names and their labels for display of
 #' the column headers.
+#' @family column modification functions
 #' @export
 cols_label <- function(data,
                        labels) {
@@ -160,7 +165,8 @@ cols_label <- function(data,
 #' @param after a column name used to anchor the insertion of the moved columns.
 #' All of the moved columns will be placed to the right of this column.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select bind_cols
+#' @importFrom dplyr select
+#' @family column modification functions
 #' @export
 cols_move <- function(data,
                       columns,
@@ -246,6 +252,7 @@ cols_move <- function(data,
 #' names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select everything
+#' @family column modification functions
 #' @export
 cols_move_to_start <- function(data,
                                columns) {
@@ -280,6 +287,7 @@ cols_move_to_start <- function(data,
 #' names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select
+#' @family column modification functions
 #' @export
 cols_move_to_end <- function(data,
                              columns) {
@@ -316,6 +324,7 @@ cols_move_to_end <- function(data,
 #' to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom dplyr select
+#' @family column modification functions
 #' @export
 cols_remove <- function(data,
                         columns) {
@@ -359,6 +368,7 @@ cols_remove <- function(data,
 #' @param columns an optional vector of column names that this operation should
 #' be limited to. The default is to consider all columns in the table.
 #' @return an object of class \code{gt_tbl}.
+#' @family column modification functions
 #' @export
 cols_split_delim <- function(data,
                              delim,

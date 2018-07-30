@@ -2,6 +2,7 @@
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param groups a vector of stub block group heading names.
 #' @return an object of class \code{gt_tbl}.
+#' @family row modification functions
 #' @export
 blocks_arrange <- function(data,
                            groups) {
