@@ -18,3 +18,11 @@ a character object of class \code{from_markdown}.
 \description{
 Interpret input text as Markdown-formatted text
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and add a caption
+# that is to interpreted as Markdown
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  tab_stubhead_caption(
+    caption = md("car *make* and *model*"))
+}
