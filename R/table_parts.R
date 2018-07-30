@@ -13,6 +13,7 @@
 #'   tab_heading(
 #'     title = md("Data listing from **mtcars**"),
 #'     headnote = md("`mtcars` is an R dataset"))
+#' @family table-part creation/modification functions
 #' @export
 tab_heading <- function(data,
                         title,
@@ -49,6 +50,7 @@ tab_heading <- function(data,
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_stubhead_caption(
 #'     caption = md("car *make* and *model*"))
+#' @family table-part creation/modification functions
 #' @export
 tab_stubhead_caption <- function(data,
                                  caption) {
@@ -77,6 +79,7 @@ tab_stubhead_caption <- function(data,
 #'   tab_stub_block(
 #'     group = "perimeter",
 #'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
+#' @family table-part creation/modification functions
 #' @importFrom rlang enquo get_expr flatten_chr
 #' @importFrom stringr str_trim str_remove_all
 #' @export
@@ -132,6 +135,7 @@ tab_stub_block <- function(data,
 #'   tab_boxhead_panel(
 #'     group = "perimeter",
 #'     columns = c("peri", "shape"))
+#' @family table-part creation/modification functions
 #' @importFrom rlang enquo get_expr
 #' @export
 tab_boxhead_panel <- function(data,
@@ -174,6 +178,9 @@ tab_boxhead_panel <- function(data,
 #'     location = target_cell(
 #'       row = "Maserati Bora",
 #'       column = "hp"))
+#' @family table-part creation/modification functions
+#' @seealso [target_cell()] as a useful helper function for targeting the cell
+#' associated with the footnote.
 #' @importFrom stats setNames
 #' @export
 tab_footnote <- function(data,
@@ -269,6 +276,7 @@ tab_footnote <- function(data,
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_source_note(
 #'     source_note = md("*Henderson and Velleman* (1981)."))
+#' @family table-part creation/modification functions
 #' @export
 tab_source_note <- function(data,
                             source_note) {

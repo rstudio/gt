@@ -27,6 +27,7 @@
 #'   fmt_number(
 #'     columns = c("drat", "wt", "qsec"),
 #'     decimals = 2)
+#' @family data formatting functions
 #' @export
 fmt_number <- function(data,
                        columns,
@@ -123,6 +124,7 @@ fmt_number <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
 #' @export
 fmt_scientific <- function(data,
                            columns,
@@ -259,6 +261,7 @@ fmt_scientific <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
 #' @export
 fmt_percent <- function(data,
                         columns,
@@ -370,6 +373,7 @@ fmt_percent <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
 #' @export
 fmt_currency <- function(data,
                          columns,
@@ -515,6 +519,7 @@ fmt_currency <- function(data,
 #' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @importFrom stringr str_replace_all
+#' @family data formatting functions
 #' @export
 fmt_date <- function(data,
                      columns,
@@ -582,6 +587,7 @@ fmt_date <- function(data,
 #' \code{5}) that corresponds to the preferred time style. Use
 #' \code{time_style_info()} to see the different numbered and named time
 #' presets.
+#' @family data formatting functions
 #' @importFrom stringr str_replace_all
 #' @export
 fmt_time <- function(data,
@@ -655,6 +661,7 @@ fmt_time <- function(data,
 #' \code{time_style_info()} to see the different numbered and named time
 #' presets.
 #' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
 #' @importFrom stringr str_replace_all
 #' @export
 fmt_datetime <- function(data,
@@ -733,6 +740,7 @@ fmt_datetime <- function(data,
 #' @param missing_text the text to be used in place of \code{NA} values in the
 #' rendered table.
 #' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
 #' @export
 fmt_missing <- function(data,
                         columns,
@@ -802,7 +810,8 @@ fmt_missing <- function(data,
 #' @param rows an optional specification for which rows are to be formatted.
 #' @param formatter a formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
-#' @noRd
+#' @family data formatting functions
+#' @export
 set_fmt <- function(data,
                     columns,
                     rows = TRUE,
