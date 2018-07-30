@@ -10,6 +10,7 @@
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_stubhead_caption(
 #'     caption = md("car *make* and *model*"))
+#' @family helper functions
 #' @export
 md <- function(text) {
 
@@ -31,6 +32,7 @@ md <- function(text) {
 #'   tab_stubhead_caption(
 #'     caption = html(
 #'       "car <em>make</em> and <em>model</em>"))
+#' @family helper functions
 #' @export
 html <- function(text) {
 
@@ -57,6 +59,7 @@ rownames_with <- function(pattern) {
 #' Helper for targeting multiple columns with a pattern
 #' @param pattern a pattern that can help capture one or more column names.
 #' @return a list object of class \code{columns_with}.
+#' @family helper functions
 #' @export
 columns_with <- function(pattern) {
 
@@ -117,6 +120,7 @@ target_cell <- function(row = NULL,
 #' @usage vars(...)
 #' @param ... one or more column names or row labels, depending on the enclosing
 #' function. This can be provided as bare column names or row labels.
+#' @family helper functions
 #' @export
 NULL
 
@@ -141,6 +145,7 @@ NULL
 #'   cols_label(
 #'     labels = col_labels(
 #'       hp = md("*HP*"), qsec = "QMT, seconds"))
+#' @family helper functions
 #' @export
 col_labels <- function(...) {
 
@@ -155,6 +160,7 @@ col_labels <- function(...) {
 
 #' Helper for collecting ungrouped rows or columns
 #' @return a character object of class \code{not_in_group}.
+#' @family helper functions
 #' @export
 not_in_group <- function() {
 
