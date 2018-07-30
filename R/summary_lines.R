@@ -24,6 +24,7 @@
 #'     rows = rownames_with("Merc")) %>%
 #'   summary_rows(
 #'     agg = "mean")
+#' @family row addition functions
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
