@@ -26,3 +26,11 @@ is promoted to the group name (and hence will span over column labels) and
 subsequent components will represent the column label. Please note that
 reference to individual columns must still be via the original column names.
 }
+\seealso{
+Other column modification functions: \code{\link{cols_align_center}},
+  \code{\link{cols_align_left}},
+  \code{\link{cols_align_right}}, \code{\link{cols_align}},
+  \code{\link{cols_label}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_remove}}
+}

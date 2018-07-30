@@ -16,8 +16,8 @@ will be added.}
 \item{columns}{the columns for which the summaries should be calculated.}
 
 \item{agg}{a vector of aggregate function names. This can include any of
-these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
-\code{n}.}
+these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd},
+\code{sum} or \code{n}.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}

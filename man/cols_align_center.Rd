@@ -25,3 +25,11 @@ Set columns to be aligned to the center
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   cols_align_center(mpg)
 }
+\seealso{
+Other column modification functions: \code{\link{cols_align_left}},
+  \code{\link{cols_align_right}}, \code{\link{cols_align}},
+  \code{\link{cols_label}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_remove}},
+  \code{\link{cols_split_delim}}
+}

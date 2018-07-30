@@ -30,3 +30,12 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     align = "left",
     columns = mpg)
 }
+\seealso{
+Other column modification functions: \code{\link{cols_align_center}},
+  \code{\link{cols_align_left}},
+  \code{\link{cols_align_right}}, \code{\link{cols_label}},
+  \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_remove}},
+  \code{\link{cols_split_delim}}
+}
