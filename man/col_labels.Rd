@@ -32,3 +32,9 @@ tab <-
     labels = col_labels(
       hp = md("*HP*"), qsec = "QMT, seconds"))
 }
+\seealso{
+Other helper functions: \code{\link{columns_with}},
+  \code{\link{html}}, \code{\link{md}},
+  \code{\link{not_in_group}}, \code{\link{target_cell}},
+  \code{\link{vars}}
+}

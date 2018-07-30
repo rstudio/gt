@@ -28,3 +28,10 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     title = md("Data listing from **mtcars**"),
     headnote = md("`mtcars` is an R dataset"))
 }
+\seealso{
+Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+  \code{\link{tab_footnote}},
+  \code{\link{tab_source_note}},
+  \code{\link{tab_stub_block}},
+  \code{\link{tab_stubhead_caption}}
+}

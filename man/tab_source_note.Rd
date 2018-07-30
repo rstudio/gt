@@ -22,3 +22,9 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_source_note(
     source_note = md("*Henderson and Velleman* (1981)."))
 }
+\seealso{
+Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+  \code{\link{tab_footnote}}, \code{\link{tab_heading}},
+  \code{\link{tab_stub_block}},
+  \code{\link{tab_stubhead_caption}}
+}

@@ -15,3 +15,9 @@ a list object of class \code{columns_with}.
 \description{
 Helper for targeting multiple columns with a pattern
 }
+\seealso{
+Other helper functions: \code{\link{col_labels}},
+  \code{\link{html}}, \code{\link{md}},
+  \code{\link{not_in_group}}, \code{\link{target_cell}},
+  \code{\link{vars}}
+}

@@ -22,3 +22,10 @@ presets.}
 \description{
 Format values as times
 }
+\seealso{
+Other data formatting functions: \code{\link{fmt_currency}},
+  \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{set_fmt}}
+}

@@ -17,3 +17,9 @@ a list object of class \code{single_cell_target}.
 \description{
 Helper for targeting a single table cell
 }
+\seealso{
+Other helper functions: \code{\link{col_labels}},
+  \code{\link{columns_with}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{not_in_group}},
+  \code{\link{vars}}
+}

@@ -52,3 +52,10 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     columns = c("drat", "wt", "qsec"),
     decimals = 2)
 }
+\seealso{
+Other data formatting functions: \code{\link{fmt_currency}},
+  \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{set_fmt}}
+}
