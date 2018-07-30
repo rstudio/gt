@@ -72,40 +72,25 @@ columns_with <- function(pattern) {
 #' @param row a single row to target.
 #' @param column a single column to target.
 #' @return a list object of class \code{single_cell_target}.
+#' @family helper functions
 #' @export
 target_cell <- function(row = NULL,
                         column = NULL) {
 
-  # Get the requested `row`
-  row <-
-    rlang::enquo(row) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
+  # If using the `vars()` helper, get the row as a character vector
+  if (inherits(row, "quosures")) {
+    row <- row %>% lapply(`[[`, 2) %>% as.character()
+  }
 
-  if ("&" %in% row) {
-    row <- row[row != "&"]
+  # If using the `vars()` helper, get the column as a character vector
+  if (inherits(column, "quosures")) {
+    column <- column %>% lapply(`[[`, 2) %>% as.character()
   }
 
   row <- row[1]
 
   if (suppressWarnings(!(row %>% as.integer() %>% is.na()))) {
     row <- as.integer(row)
-  }
-
-  # Get the requested `column`
-  column <-
-    rlang::enquo(column) %>%
-    rlang::get_expr() %>%
-    as.character() %>%
-    strsplit(split = " & ") %>%
-    rlang::flatten_chr() %>%
-    stringr::str_trim()
-
-  if ("&" %in% column) {
-    column <- column[column != "&"]
   }
 
   column <- column[1]
