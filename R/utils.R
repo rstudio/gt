@@ -402,6 +402,19 @@ get_sd_df <- function(data) {
 #' Get a data frame of the `n` summary stat per group in the input data table
 #' @importFrom dplyr group_by summarize_at ungroup mutate select funs
 #' @noRd
+get_sum_df <- function(data) {
+
+  data %>%
+    dplyr::group_by(groupname) %>%
+    dplyr::summarize_at(.vars = 3:ncol(data), .funs = funs(sum)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(rowname = "Summary: Sum", type = "sum") %>%
+    dplyr::select(groupname, rowname, everything())
+}
+
+#' Get a data frame of the `n` summary stat per group in the input data table
+#' @importFrom dplyr group_by summarize_at ungroup mutate select funs
+#' @noRd
 get_n_df <- function(data) {
 
   data %>%
@@ -424,6 +437,7 @@ get_all_summaries <- function(df) {
     get_max_df(df),
     get_median_df(df),
     get_sd_df(df),
+    get_sum_df(df),
     get_n_df(df))
 }
 
