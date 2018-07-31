@@ -669,3 +669,14 @@ set_fmt <- function(data,
 
   data
 }
+
+# Wrapper function for `set_fmt()` that takes a list of
+# resolved columns and rows
+set_fmt_resolved <- function(data, resolved, formatter) {
+
+  set_fmt(
+    data = data,
+    columns = resolved$columns,
+    rows = resolved$rows,
+    formatter = formatter)
+}
