@@ -24,6 +24,10 @@ resolve_rows <- function(data, rows) {
 #' @noRd
 resolve_columns <- function(data, columns) {
 
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
+
   if (inherits(columns, "columns_with")) {
 
     columns <- colnames(data)[
