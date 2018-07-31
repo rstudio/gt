@@ -15,20 +15,22 @@ a character object that is tagged as an HTML fragment that is not to
 be sanitized.
 
 a character object of class \code{preserve_html}.
-# Create a table object using the
-# `mtcars` dataset and add a caption
-# that is to interpreted as HTML
-gt(mtcars, rownames_to_stub = TRUE) %>%
-  tab_stubhead_caption(
-    caption = html(
-      "car <em>make</em> and <em>model</em>"))
 }
 \description{
 Interpret input text as HTML-formatted text
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and add a caption
+# that is to interpreted as HTML
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  tab_stubhead_caption(
+    caption = html(
+      "car <em>make</em> and <em>model</em>"))
+}
 \seealso{
 Other helper functions: \code{\link{col_labels}},
   \code{\link{columns_with}}, \code{\link{md}},
-  \code{\link{not_in_group}}, \code{\link{target_cell}},
-  \code{\link{vars}}
+  \code{\link{not_in_group}}, \code{\link{rownames_with}},
+  \code{\link{target_cell}}, \code{\link{vars}}
 }
