@@ -16,3 +16,20 @@ a list object of class \code{rownames_with}.
 \description{
 Helper for targeting multiple rows with a pattern
 }
+\examples{
+# With the `mtcars` dataset (preserving the
+# rownames in the stub), we can target number
+# formatting to those rows that fit a
+# specified pattern
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  fmt_number(
+    columns = vars(qsec, wt),
+    rows = rownames_with("Merc"),
+    decimals = 3)
+}
+\seealso{
+Other helper functions: \code{\link{col_labels}},
+  \code{\link{columns_with}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{not_in_group}},
+  \code{\link{target_cell}}, \code{\link{vars}}
+}

@@ -15,9 +15,18 @@ a list object of class \code{columns_with}.
 \description{
 Helper for targeting multiple columns with a pattern
 }
+\examples{
+# With the `mtcars` dataset we can target
+# number formatting to those column labels
+# that fit a specified pattern
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  fmt_number(
+    columns = columns_with("^c"),
+    decimals = 3)
+}
 \seealso{
 Other helper functions: \code{\link{col_labels}},
   \code{\link{html}}, \code{\link{md}},
-  \code{\link{not_in_group}}, \code{\link{target_cell}},
-  \code{\link{vars}}
+  \code{\link{not_in_group}}, \code{\link{rownames_with}},
+  \code{\link{target_cell}}, \code{\link{vars}}
 }

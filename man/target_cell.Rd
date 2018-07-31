@@ -21,5 +21,5 @@ Helper for targeting a single table cell
 Other helper functions: \code{\link{col_labels}},
   \code{\link{columns_with}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{not_in_group}},
-  \code{\link{vars}}
+  \code{\link{rownames_with}}, \code{\link{vars}}
 }
