@@ -39,32 +39,18 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
+
+  # Return data if there are no rows or columns to format
+  if (no_intersection(resolved)) {
+    return(data)
   }
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
-
-  # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
-    return(data)
   }
 
   # Create the default formatting function
@@ -92,15 +78,8 @@ fmt_number <- function(data,
     list(
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values to scientific notation
@@ -136,32 +115,18 @@ fmt_scientific <- function(data,
                            dec_mark = ".",
                            locale = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
+
+  # Return data if there are no rows or columns to format
+  if (no_intersection(resolved)) {
+    return(data)
   }
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
-
-  # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
-    return(data)
   }
 
   format_fcn_sci_notn_factory <- function(exp_start_str, exp_end_str) {
@@ -225,15 +190,8 @@ fmt_scientific <- function(data,
       html = format_fcn_html,
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values as a percentage
@@ -275,32 +233,18 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
+
+  # Return data if there are no rows or columns to format
+  if (no_intersection(resolved)) {
+    return(data)
   }
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
-
-  # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
-    return(data)
   }
 
   # Create the default formatting function
@@ -338,15 +282,8 @@ fmt_percent <- function(data,
     list(
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values as currencies
@@ -387,32 +324,18 @@ fmt_currency <- function(data,
                          placement = "left",
                          locale = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
+
+  # Return data if there are no rows or columns to format
+  if (no_intersection(resolved)) {
+    return(data)
   }
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_monetary_dec_mark(locale = locale)
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
-
-  # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
-    return(data)
   }
 
   # Return data if `currency` does not have a valid value
@@ -497,15 +420,8 @@ fmt_currency <- function(data,
       html = format_fcn_html,
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values as dates
@@ -526,25 +442,11 @@ fmt_date <- function(data,
                      rows = NULL,
                      date_style = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
 
   # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
+  if (no_intersection(resolved)) {
     return(data)
   }
 
@@ -567,15 +469,8 @@ fmt_date <- function(data,
     list(
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values as times
@@ -595,25 +490,11 @@ fmt_time <- function(data,
                      rows = NULL,
                      time_style = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
 
   # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
+  if (no_intersection(resolved)) {
     return(data)
   }
 
@@ -636,15 +517,8 @@ fmt_time <- function(data,
     list(
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format values as date-times
@@ -670,25 +544,11 @@ fmt_datetime <- function(data,
                          date_style = NULL,
                          time_style = NULL) {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
 
   # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
+  if (no_intersection(resolved)) {
     return(data)
   }
 
@@ -718,15 +578,8 @@ fmt_datetime <- function(data,
     list(
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Format missing values
@@ -747,25 +600,11 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
-  # If nothing is provided for rows, assume
-  # that all rows are in the selection
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Resolve the columns to be targeted
-  columns <- resolve_columns(data = data, columns = columns)
-
-  # Resolve the rows to be targeted
-  rows <- resolve_rows(data = data, rows = rows)
+  # Obtain the resolved columns and rows
+  resolved <- column_row_resolution(data, columns, rows)
 
   # Return data if there are no rows or columns to format
-  if (length(rows) == 0 | length(columns) == 0) {
+  if (no_intersection(resolved)) {
     return(data)
   }
 
@@ -793,15 +632,8 @@ fmt_missing <- function(data,
       html = format_fcn_html,
       default = format_fcn_default)
 
-  # Set the format for all of the output types
-  data <-
-    set_fmt(
-      data = data,
-      columns = columns,
-      rows = rows,
-      formatter = format_fcn_list)
-
-  data
+  # Set the format with the resolved columns and rows
+  set_fmt_resolved(data, resolved, formatter = format_fcn_list)
 }
 
 #' Set a column format with a formatter function
