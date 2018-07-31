@@ -46,6 +46,35 @@ resolve_columns <- function(data, columns) {
 }
 
 #' @noRd
+column_row_resolution <- function(data, columns, rows) {
+
+  # If nothing is provided for rows, assume
+  # that all rows are in the selection
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
+
+  # Resolve the columns to be targeted
+  columns <- resolve_columns(data = data, columns = columns)
+
+  # Resolve the rows to be targeted
+  rows <- resolve_rows(data = data, rows = rows)
+
+  resolved <- list(columns = columns, rows = rows)
+
+  if (length(rows) == 0 || length(columns) == 0) {
+    class(resolved) <- c("no_intersection", class(resolved))
+  }
+
+  resolved
+}
+
+#' @noRd
+no_intersection <- function(resolved) {
+  inherits(resolved, "no_intersection")
+}
+
+#' @noRd
 is_target_in_table <- function(data, location) {
 
   if (is.numeric(location$row) &&
