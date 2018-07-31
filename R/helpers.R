@@ -25,6 +25,7 @@ md <- function(text) {
 #' @return a character object that is tagged as an HTML fragment that is not to
 #' be sanitized.
 #' @return a character object of class \code{preserve_html}.
+#' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
 #' # that is to interpreted as HTML
@@ -45,6 +46,17 @@ html <- function(text) {
 #' @param pattern a pattern that can help capture one or more row names and
 #' hence the rows themselves.
 #' @return a list object of class \code{rownames_with}.
+#' @examples
+#' # With the `mtcars` dataset (preserving the
+#' # rownames in the stub), we can target number
+#' # formatting to those rows that fit a
+#' # specified pattern
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   fmt_number(
+#'     columns = vars(qsec, wt),
+#'     rows = rownames_with("Merc"),
+#'     decimals = 3)
+#' @family helper functions
 #' @export
 rownames_with <- function(pattern) {
 
@@ -59,6 +71,14 @@ rownames_with <- function(pattern) {
 #' Helper for targeting multiple columns with a pattern
 #' @param pattern a pattern that can help capture one or more column names.
 #' @return a list object of class \code{columns_with}.
+#' @examples
+#' # With the `mtcars` dataset we can target
+#' # number formatting to those column labels
+#' # that fit a specified pattern
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   fmt_number(
+#'     columns = columns_with("^c"),
+#'     decimals = 3)
 #' @family helper functions
 #' @export
 columns_with <- function(pattern) {
