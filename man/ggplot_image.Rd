@@ -4,16 +4,14 @@
 \alias{ggplot_image}
 \title{Helper function for adding a ggplot}
 \usage{
-ggplot_image(plot_object, height = 30, x = 5, y = 5)
+ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \arguments{
 \item{plot_object}{the ggplot plot object.}
 
 \item{height}{the absolute height (px) of the image in the table cell.}
 
-\item{x}{the x component of the plot's final aspect ratio.}
-
-\item{y}{the y component of the plot's final aspect ratio.}
+\item{aspect_ratio}{the plot's final aspect ratio.}
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
@@ -24,10 +22,10 @@ Add a ggplot plot inside a table with this helper function.
 }
 \examples{
 \dontrun{
-library(ggplot2)
+library(tidyverse)
 
 # Create a ggplot plot
-plot <-
+plot_object <-
   ggplot(
     data = mtcars,
     aes(x = disp, y = hp,
@@ -36,9 +34,18 @@ plot <-
 
 # Create an HTML fragment that
 # contains an the ggplot as an
-# embedded plot
+# embedded plot that's 100px high
 plot_html <-
+  plot \%>\%
   ggplot_image(
-    plot_object = plot)
+    height = 200)
+
+# Create a table that contains the
+# the html fragment with the plot
+# then pass it to `gt()`
+tribble(
+  ~row, ~plot,
+  1,  plot_html) \%>\%
+  gt()
 }
 }
