@@ -14,17 +14,29 @@
 #'     file = "path/to/image.png")
 #' }
 #' @importFrom glue glue
-#' @importFrom knitr image_uri
 #' @export
 local_image <- function(file,
                         height = 30) {
 
-  uri <- knitr::image_uri(f = file)
+  if (is.numeric(height)) {
+    height <- paste0(height, "px")
+  }
 
-  glue::glue("<img src=\"{uri}\" style=\"height:{height};\">") %>%
+  # Construct a CID based on the filename
+  # with a random string prepended to it
+  cid <-
+    paste0(
+      sample(letters, 12) %>% paste(collapse = ""), "__",
+      basename(file))
+
+  # Create the image URI
+  uri <- get_image_uri(file)
+
+  # Generate the Base64-encoded image and place it
+  # within <img> tags
+  glue::glue("<img cid=\"{cid}\" src=\"{uri}\" style=\"height:{height};\">") %>%
     as.character()
 }
-
 
 #' Helper function for adding an image from the web
 #'
