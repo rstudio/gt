@@ -46,6 +46,10 @@ local_image <- function(file,
 web_image <- function(url,
                       height = 30) {
 
+  if (is.numeric(height)) {
+    height <- paste0(height, "px")
+  }
+
   glue::glue("<img src=\"{url}\" style=\"height:{height};\">") %>%
     as.character()
 }
@@ -72,6 +76,10 @@ web_image <- function(url,
 fa_icon <- function(name,
                     height = 30,
                     fill = NULL) {
+
+  if (is.numeric(height)) {
+    height <- paste0(height, "px")
+  }
 
   # Create bindings for specific variables
   full_name <- NULL
@@ -128,6 +136,10 @@ fa_icon <- function(name,
 #' @export
 local_svg <- function(file,
                       height = 30) {
+
+  if (is.numeric(height)) {
+    height <- paste0(height, "px")
+  }
 
   style <- glue::glue("style=\"height:{height};\"")
 
