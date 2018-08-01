@@ -49,7 +49,7 @@ Format numeric values
 # two decimal places
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   fmt_number(
-    columns = c("drat", "wt", "qsec"),
+    columns = vars(mpg, disp, drat, qsec),
     decimals = 2)
 }
 \seealso{
