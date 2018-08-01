@@ -182,16 +182,15 @@ local_svg <- function(file,
 #' Add a ggplot plot inside a table with this helper function.
 #' @param plot_object the ggplot plot object.
 #' @param height the absolute height (px) of the image in the table cell.
-#' @param x the x component of the plot's final aspect ratio.
-#' @param y the y component of the plot's final aspect ratio.
+#' @param aspect_ratio the plot's final aspect ratio.
 #' @return a character object with an HTML fragment that can be placed inside of
 #' a cell.
 #' @examples
 #' \dontrun{
-#' library(ggplot2)
+#' library(tidyverse)
 #'
 #' # Create a ggplot plot
-#' plot <-
+#' plot_object <-
 #'   ggplot(
 #'     data = mtcars,
 #'     aes(x = disp, y = hp,
@@ -200,24 +199,37 @@ local_svg <- function(file,
 #'
 #' # Create an HTML fragment that
 #' # contains an the ggplot as an
-#' # embedded plot
+#' # embedded plot that's 100px high
 #' plot_html <-
+#'   plot %>%
 #'   ggplot_image(
-#'     plot_object = plot)
+#'     height = 200)
+#'
+#' # Create a table that contains the
+#' # the html fragment with the plot
+#' # then pass it to `gt()`
+#' tribble(
+#'   ~row, ~plot,
+#'   1,  plot_html) %>%
+#'   gt()
 #' }
 #' @importFrom ggplot2 ggsave
 #' @export
 ggplot_image <- function(plot_object,
-                         height = 30,
-                         x = 5,
-                         y = 5) {
+                         height = 100,
+                         aspect_ratio = 1.0) {
+
+  if (is.numeric(height)) {
+    height <- paste0(height, "px")
+  }
 
   ggplot2::ggsave(
     device = "png",
     plot = plot_object,
     filename = "temp_ggplot.png",
-    width = x,
-    height = y)
+    dpi = 100,
+    width = 5 * aspect_ratio,
+    height = 5)
 
   Sys.sleep(1)
 
