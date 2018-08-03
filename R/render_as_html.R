@@ -167,10 +167,10 @@ render_as_html <- function(data) {
         output_df[, which(colnames(output_df) == value_1_col)] <- values_1
 
         # Remove the second column across key dfs
-        boxh_df <- boxh_df[, -which(colnames(output_df) == value_2_col)]
-        fmts_df <- fmts_df[, -which(colnames(output_df) == value_2_col)]
-        foot_df <- foot_df[, -which(colnames(output_df) == value_2_col)]
-        output_df <- output_df[, -which(colnames(output_df) == value_2_col)]
+        boxh_df <- boxh_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
+        fmts_df <- fmts_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
+        foot_df <- foot_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
+        output_df <- output_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
 
         boxh_df <<- boxh_df
         fmts_df <<- fmts_df
