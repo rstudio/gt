@@ -1,5 +1,5 @@
 #' @importFrom rlang UQ
-#' @importFrom tibble rownames_to_column()
+#' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter
 #' @noRd
 resolve_rows <- function(data, rows) {
