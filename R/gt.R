@@ -18,12 +18,13 @@
 #' tab_2 <-
 #'   tab %>%
 #'   fmt_number(
-#'     columns = c("drat", "wt", "qsec"),
+#'     columns = vars(drat, wt, qsec),
 #'     decimals = 1)
 #'
 #' # The object of this type can be
 #' # displayed in the Viewer
 #' tab_2
+#' @family table-part creation/modification functions
 #' @importFrom tibble add_row
 #' @export
 gt <- function(data,
