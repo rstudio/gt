@@ -35,7 +35,7 @@ fmt_number <- function(data,
                        decimals = 2,
                        drop0trailing = FALSE,
                        negative_val = "signed",
-                       sep_mark = "",
+                       sep_mark = ",",
                        dec_mark = ".",
                        locale = NULL) {
 
@@ -103,6 +103,15 @@ fmt_number <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and format specified
+#' # numeric columns to display values in
+#' # scientific notation
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   fmt_scientific(
+#'     columns = vars(disp),
+#'     decimals = 2)
 #' @family data formatting functions
 #' @export
 fmt_scientific <- function(data,
@@ -111,7 +120,7 @@ fmt_scientific <- function(data,
                            decimals = 2,
                            drop0trailing = FALSE,
                            negative_val = "signed",
-                           sep_mark = "",
+                           sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
 
@@ -219,6 +228,24 @@ fmt_scientific <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with two columns
+#' # that are both numeric
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~val_1, ~val_2,
+#'     0.345,  2.6,
+#'     0.234,  3.3,
+#'     0.53,   3.8,
+#'     0.391,  4.2)
+#'
+#' # Create a table object using this
+#' # dataset and where the `val_1` columns
+#' # are formatted as percentage values
+#' gt(data_tbl) %>%
+#'   fmt_percent(columns = vars(val_1))
 #' @family data formatting functions
 #' @export
 fmt_percent <- function(data,
@@ -227,7 +254,7 @@ fmt_percent <- function(data,
                         decimals = 2,
                         drop0trailing = FALSE,
                         negative_val = "signed",
-                        sep_mark = "",
+                        sep_mark = ",",
                         dec_mark = ".",
                         incl_space = FALSE,
                         placement = "right",
@@ -310,6 +337,30 @@ fmt_percent <- function(data,
 #' according the locale's rules. Examples include \code{"en_US"} for English
 #' (United States) and \code{"fr_FR"} for French (France).
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with two columns
+#' # that are both numeric
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~val_usd, ~val_jpy,
+#'     23.346,   2606.95,
+#'     832.830,  93002.54,
+#'     72.013,   8041.73,
+#'     83.1,     9279.82)
+#'
+#' # Create a table object using this
+#' # dataset and where the `val_usd`
+#' # and `val_jpy` are formatted as
+#' # the `USD` and `JPY` currencies
+#' gt(data_tbl) %>%
+#'   fmt_currency(
+#'     columns = vars(val_usd),
+#'     currency = "USD") %>%
+#'   fmt_currency(
+#'     columns = vars(val_jpy),
+#'     currency = "JPY")
 #' @family data formatting functions
 #' @export
 fmt_currency <- function(data,
@@ -319,7 +370,7 @@ fmt_currency <- function(data,
                          use_subunits = TRUE,
                          negative_val = "signed",
                          decimals = NULL,
-                         sep_mark = "",
+                         sep_mark = ",",
                          dec_mark = ".",
                          placement = "left",
                          locale = NULL) {
@@ -431,16 +482,36 @@ fmt_currency <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param date_style the date style to use. Supply a number (from \code{1} to
 #' \code{14}) that corresponds to the preferred date style. Use
-#' \code{date_style_info()} to see the different numbered and named date
+#' \code{info_date_style()} to see the different numbered and named date
 #' presets.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom stringr str_replace_all
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with a column
+#' # that contains dates
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~date,
+#'     "2017-10-15",
+#'     "2013-02-22",
+#'     "2014-09-22",
+#'     "2018-01-10")
+#'
+#' # Create a table object using this
+#' # dataset and format the `date`
+#' # column with `date_style` '2'
+#' gt(data_tbl) %>%
+#'   fmt_date(
+#'     columns = vars(date),
+#'     date_style = 2)
 #' @family data formatting functions
+#' @importFrom stringr str_replace_all
 #' @export
 fmt_date <- function(data,
                      columns,
                      rows = NULL,
-                     date_style = NULL) {
+                     date_style) {
 
   # Obtain the resolved columns and rows
   resolved <- column_row_resolution(data, columns, rows)
@@ -480,15 +551,35 @@ fmt_date <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param time_style the time style to use. Supply a number (from \code{1} to
 #' \code{5}) that corresponds to the preferred time style. Use
-#' \code{time_style_info()} to see the different numbered and named time
+#' \code{info_time_style()} to see the different numbered and named time
 #' presets.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with a column
+#' # that contains 24-hour time strings
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~time,
+#'     "12:35:23",
+#'     "15:01:34",
+#'     "09:45:23",
+#'     "01:32:00")
+#'
+#' # Create a table object using this
+#' # dataset and format the `time`
+#' # column with `time_style` '3'
+#' gt(data_tbl) %>%
+#'   fmt_time(
+#'     columns = vars(time),
+#'     time_style = 3)
 #' @family data formatting functions
 #' @importFrom stringr str_replace_all
 #' @export
 fmt_time <- function(data,
                      columns,
                      rows = NULL,
-                     time_style = NULL) {
+                     time_style) {
 
   # Obtain the resolved columns and rows
   resolved <- column_row_resolution(data, columns, rows)
@@ -528,11 +619,11 @@ fmt_time <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param date_style the date style to use. Supply a number (from \code{1} to
 #' \code{14}) that corresponds to the preferred date style. Use
-#' \code{date_style_info()} to see the different numbered and named date
+#' \code{info_date_style()} to see the different numbered and named date
 #' presets.
 #' @param time_style the time style to use. Supply a number (from \code{1} to
 #' \code{5}) that corresponds to the preferred time style. Use
-#' \code{time_style_info()} to see the different numbered and named time
+#' \code{info_time_style_info()} to see the different numbered and named time
 #' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
@@ -541,8 +632,8 @@ fmt_time <- function(data,
 fmt_datetime <- function(data,
                          columns,
                          rows = NULL,
-                         date_style = NULL,
-                         time_style = NULL) {
+                         date_style,
+                         time_style) {
 
   # Obtain the resolved columns and rows
   resolved <- column_row_resolution(data, columns, rows)
