@@ -533,6 +533,19 @@ process_text <- function(text) {
   }
 }
 
+#' Get prepending and appending text based on a simple pattern
+#' @noRd
+get_pre_post_txt <- function(pattern) {
+
+  prefix <- strsplit(pattern, "\\{1\\}")[[1]][1]
+  suffix <- strsplit(pattern, "\\{1\\}")[[1]][2]
+
+  prefix <- ifelse(is.na(prefix), "", prefix)
+  suffix <- ifelse(is.na(suffix), "", suffix)
+
+  c(prefix, suffix)
+}
+
 #' Render any formatting directives
 #' @noRd
 render_formats <- function(data,
