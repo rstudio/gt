@@ -1,3 +1,6 @@
+#' @importFrom rlang UQ
+#' @importFrom tibble rownames_to_column()
+#' @importFrom dplyr filter
 #' @noRd
 resolve_rows <- function(data, rows) {
 
@@ -7,6 +10,14 @@ resolve_rows <- function(data, rows) {
       which(
         grepl(paste(rows$pattern, collapse = "|"),
               attr(data, "stub_df", exact = TRUE)[["rowname"]]))
+
+  } else if (inherits(rows, "quosure")) {
+
+    rows <-
+      (data %>%
+         tibble::rownames_to_column() %>%
+         dplyr::filter(rlang::UQ(rows)))[["rowname"]] %>%
+      as.numeric()
 
   } else if (is.numeric(rows)) {
 
