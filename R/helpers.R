@@ -68,6 +68,28 @@ rownames_with <- function(pattern) {
   x
 }
 
+#' Helper for targeting rows based on conditional data
+#' @param conditions conditional expressions involving column names that can
+#' help capture one or more rows.
+#' @return a quosure.
+#' # With the `mtcars` dataset, apply
+#' # number formatting to to `qsec` (3
+#' # decimal places) to those rows where
+#' # `cyl >= 6` and `vs == 1`
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   fmt_number(
+#'     columns = vars(qsec),
+#'     rows = rows_where(cyl >= 6 & vs == 1),
+#'     decimals = 3)
+#' @family helper functions
+#' @importFrom rlang enquo
+#' @export
+rows_where <- function(conditions) {
+
+  # Capture provided conditions
+  rlang::enquo(conditions)
+}
+
 #' Helper for targeting multiple columns with a pattern
 #' @param pattern a pattern that can help capture one or more column names.
 #' @return a list object of class \code{columns_with}.
