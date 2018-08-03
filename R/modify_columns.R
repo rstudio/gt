@@ -7,12 +7,12 @@
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and align all
-#' # columns to the left
+#' # `mtcars` dataset and align the `mpg`
+#' # column to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_align(
 #'     align = "left",
-#'     columns = mpg)
+#'     columns = vars(mpg))
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
@@ -48,10 +48,10 @@ cols_align <- function(data,
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and align all
-#' # columns to the left
+#' # `mtcars` dataset and align the
+#' # `disp` column to the left
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_left(mpg)
+#'   cols_align_left(columns = vars(disp))
 #' @family column modification functions
 #' @export
 cols_align_left <- function(data,
@@ -79,11 +79,9 @@ cols_align_left <- function(data,
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and center align
-#' # all columns
+#' # the `drat` column
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_center(mpg)
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim
+#'   cols_align_center(columns = vars(drat))
 #' @family column modification functions
 #' @export
 cols_align_center <- function(data,
@@ -110,10 +108,10 @@ cols_align_center <- function(data,
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and align all
-#' # columns to the right
+#' # `mtcars` dataset and align the
+#' # `qsec` column to the right
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_right(mpg)
+#'   cols_align_right(columns = vars(qsec))
 #' @family column modification functions
 #' @export
 cols_align_right <- function(data,
@@ -136,8 +134,24 @@ cols_align_right <- function(data,
 #' Relabel one or more columns
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param labels a named vector of column names and their labels for display of
-#' the column headers.
+#' the column headers. We can use the \code{col_labels()} function to more
+#' easily specify column names and column labels, since we can also wrap the
+#' column labels with \code{md()} (to interpret text as Markdown) and
+#' \code{HTML()} (to interpret text as HTML).
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and apply different
+#' # column labels to the `mpg` and `qsec`
+#' # columns (the column labels will be
+#' # inherited from the column names)
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_label(
+#'     labels = col_labels(
+#'       mpg = md("*MPG*"),
+#'       qsec = "QMT, seconds"))
 #' @family column modification functions
+#' @seealso \code{\link{col_labels}} as a useful helper function for processing
+#' column labels.
 #' @export
 cols_label <- function(data,
                        labels) {
@@ -165,8 +179,17 @@ cols_label <- function(data,
 #' @param after a column name used to anchor the insertion of the moved columns.
 #' All of the moved columns will be placed to the right of this column.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and move the `mpg`,
+#' # `cyl`, and `disp` columns to the right
+#' # of `qsec`
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_move(
+#'     columns = vars(mpg, cyl, disp),
+#'     after = vars(qsec))
 #' @family column modification functions
+#' @importFrom dplyr select
 #' @export
 cols_move <- function(data,
                       columns,
@@ -251,8 +274,16 @@ cols_move <- function(data,
 #' with the remaining columns). Values provided that do not correspond to column
 #' names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select everything
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and move the `mpg`,
+#' # `cyl`, and `disp` columns to the start
+#' # of the column series
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_move_to_start(
+#'     columns = vars(mpg, cyl, disp))
 #' @family column modification functions
+#' @importFrom dplyr select everything
 #' @export
 cols_move_to_start <- function(data,
                                columns) {
@@ -286,8 +317,16 @@ cols_move_to_start <- function(data,
 #' with the remaining columns). Values provided that do not correspond to column
 #' names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and move the `mpg`,
+#' # `cyl`, and `disp` columns to the end
+#' # of the column series
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_move_to_end(
+#'     columns = vars(mpg, cyl, disp))
 #' @family column modification functions
+#' @importFrom dplyr select
 #' @export
 cols_move_to_end <- function(data,
                              columns) {
@@ -323,8 +362,15 @@ cols_move_to_end <- function(data,
 #' remaining columns will be preserved. Values provided that do not correspond
 #' to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
-#' @importFrom dplyr select
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and remove the `mpg`,
+#' # `cyl`, and `disp` columns
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   cols_remove(
+#'     columns = vars(mpg, cyl, disp))
 #' @family column modification functions
+#' @importFrom dplyr select
 #' @export
 cols_remove <- function(data,
                         columns) {
@@ -368,6 +414,13 @@ cols_remove <- function(data,
 #' @param columns an optional vector of column names that this operation should
 #' be limited to. The default is to consider all columns in the table.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `iris` dataset and split any columns
+#' # that are dot separated between column
+#' # groups and column labels.
+#' gt(iris) %>%
+#'   cols_split_delim(delim = ".")
 #' @family column modification functions
 #' @export
 cols_split_delim <- function(data,
@@ -421,6 +474,17 @@ cols_split_delim <- function(data,
 #' @param col_1 a column that contains values for the start of the range.
 #' @param col_2 a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `sleep` dataset and merge the `group`
+#' # and `ID` columns together (where the
+#' # `ID` number is in parentheses after
+#' # the `group` number
+#' gt(sleep) %>%
+#'   cols_merge(
+#'     col_1 = vars(group),
+#'     col_2 = vars(ID),
+#'     format = "{1} ({2})")
 #' @family column modification functions
 #' @export
 cols_merge <- function(data,
@@ -475,6 +539,29 @@ cols_merge <- function(data,
 #' @param col_val a single column name that contains the base values.
 #' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with two columns;
+#' # both are numeric but the `uncert`
+#' # column contains uncertainty values
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~value,   ~uncert,
+#'     0.352,    0.10,
+#'     0.983,    0.13,
+#'     0.639,    NA_real_,
+#'     NA_real_, 0.17)
+#'
+#' # Create a table object using this
+#' # dataset where the `uncert` column
+#' # is merged into the `value` column,
+#' # forming a single column of values
+#' # with uncertainties
+#' gt(data_tbl) %>%
+#'   cols_merge_uncert(
+#'     col_val = vars(value),
+#'     col_uncert = vars(uncert))
 #' @family column modification functions
 #' @export
 cols_merge_uncert <- function(data,
@@ -530,6 +617,28 @@ cols_merge_uncert <- function(data,
 #' @param col_begin a column that contains values for the start of the range.
 #' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with two columns
+#' # that are both numeric
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~val_1, ~val_2,
+#'     1.6,    2.6,
+#'     1.9,    3.3,
+#'     2.6,    3.8,
+#'     2.1,    4.2)
+#'
+#' # Create a table object using this
+#' # dataset where the `val_1` and
+#' # `val_2` columns are merged together
+#' # with an em-dash between them (the
+#' # `val_1` column is retained)
+#' gt(data_tbl) %>%
+#'   cols_merge_range(
+#'     col_begin = vars(val_1),
+#'     col_end = vars(val_2))
 #' @family column modification functions
 #' @export
 cols_merge_range <- function(data,
