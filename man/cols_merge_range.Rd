@@ -19,6 +19,29 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a value range column
 }
+\examples{
+library(tidyverse)
+
+# Create a tibble with two columns
+# that are both numeric
+data_tbl <-
+  dplyr::tribble(
+    ~val_1, ~val_2,
+    1.6,    2.6,
+    1.9,    3.3,
+    2.6,    3.8,
+    2.1,    4.2)
+
+# Create a table object using this
+# dataset where the `val_1` and
+# `val_2` columns are merged together
+# with an em-dash between them (the
+# `val_1` column is retained)
+gt(data_tbl) \%>\%
+  cols_merge_range(
+    col_begin = vars(val_1),
+    col_end = vars(val_2))
+}
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

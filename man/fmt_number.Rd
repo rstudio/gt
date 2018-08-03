@@ -5,7 +5,7 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", sep_mark = "",
+  drop0trailing = FALSE, negative_val = "signed", sep_mark = ",",
   dec_mark = ".", locale = NULL)
 }
 \arguments{

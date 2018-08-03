@@ -31,10 +31,17 @@ tab <-
 tab_2 <-
   tab \%>\%
   fmt_number(
-    columns = c("drat", "wt", "qsec"),
+    columns = vars(drat, wt, qsec),
     decimals = 1)
 
 # The object of this type can be
 # displayed in the Viewer
 tab_2
+}
+\seealso{
+Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+  \code{\link{tab_footnote}}, \code{\link{tab_heading}},
+  \code{\link{tab_source_note}},
+  \code{\link{tab_stub_block}},
+  \code{\link{tab_stubhead_caption}}
 }

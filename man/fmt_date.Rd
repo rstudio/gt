@@ -4,7 +4,7 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = NULL, date_style = NULL)
+fmt_date(data, columns, rows = NULL, date_style)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -16,7 +16,7 @@ rows in \code{columns} being formatted.}
 
 \item{date_style}{the date style to use. Supply a number (from \code{1} to
 \code{14}) that corresponds to the preferred date style. Use
-\code{date_style_info()} to see the different numbered and named date
+\code{info_date_style()} to see the different numbered and named date
 presets.}
 }
 \value{
@@ -24,6 +24,27 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Format values as dates
+}
+\examples{
+library(tidyverse)
+
+# Create a tibble with a column
+# that contains dates
+data_tbl <-
+  dplyr::tribble(
+    ~date,
+    "2017-10-15",
+    "2013-02-22",
+    "2014-09-22",
+    "2018-01-10")
+
+# Create a table object using this
+# dataset and format the `date`
+# column with `date_style` '2'
+gt(data_tbl) \%>\%
+  fmt_date(
+    columns = vars(date),
+    date_style = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

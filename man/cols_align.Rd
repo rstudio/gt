@@ -23,12 +23,12 @@ Set the alignment of columns
 }
 \examples{
 # Create a table object using the
-# `mtcars` dataset and align all
-# columns to the left
+# `mtcars` dataset and align the `mpg`
+# column to the left
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   cols_align(
     align = "left",
-    columns = mpg)
+    columns = vars(mpg))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

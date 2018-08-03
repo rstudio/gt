@@ -33,7 +33,8 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     rows = c("Mazda RX4", "Mazda RX4 Wag"))
 }
 \seealso{
-Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+Other table-part creation/modification functions: \code{\link{gt}},
+  \code{\link{tab_boxhead_panel}},
   \code{\link{tab_footnote}}, \code{\link{tab_heading}},
   \code{\link{tab_source_note}},
   \code{\link{tab_stubhead_caption}}

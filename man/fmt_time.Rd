@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = NULL, time_style = NULL)
+fmt_time(data, columns, rows = NULL, time_style)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -16,11 +16,32 @@ rows in \code{columns} being formatted.}
 
 \item{time_style}{the time style to use. Supply a number (from \code{1} to
 \code{5}) that corresponds to the preferred time style. Use
-\code{time_style_info()} to see the different numbered and named time
+\code{info_time_style()} to see the different numbered and named time
 presets.}
 }
 \description{
 Format values as times
+}
+\examples{
+library(tidyverse)
+
+# Create a tibble with a column
+# that contains 24-hour time strings
+data_tbl <-
+  dplyr::tribble(
+    ~time,
+    "12:35:23",
+    "15:01:34",
+    "09:45:23",
+    "01:32:00")
+
+# Create a table object using this
+# dataset and format the `time`
+# column with `time_style` '3'
+gt(data_tbl) \%>\%
+  fmt_time(
+    columns = vars(time),
+    time_style = 3)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

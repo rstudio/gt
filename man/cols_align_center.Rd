@@ -21,9 +21,9 @@ Set columns to be aligned to the center
 \examples{
 # Create a table object using the
 # `mtcars` dataset and center align
-# all columns
+# the `drat` column
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_center(mpg)
+  cols_align_center(columns = vars(drat))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_left}},
