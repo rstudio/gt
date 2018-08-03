@@ -84,7 +84,7 @@ gt <- function(data,
   # boxhead (`boxh_df`); each row has a special
   # meaning and this will be used during render time
   boxh_df <-
-    empty_df[0, ] %>%
+    empty_df[c(), , drop = FALSE] %>%
     tibble::add_row() %>%  # group label
     tibble::add_row() %>%  # column label
     tibble::add_row()      # column alignment
