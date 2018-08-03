@@ -19,6 +19,14 @@ an object of class \code{gt_tbl}.
 \description{
 Remove one or more columns
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and remove the `mpg`,
+# `cyl`, and `disp` columns
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  cols_remove(
+    columns = vars(mpg, cyl, disp))
+}
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

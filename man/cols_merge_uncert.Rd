@@ -19,6 +19,30 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a value + uncertainty column
 }
+\examples{
+library(tidyverse)
+
+# Create a tibble with two columns;
+# both are numeric but the `uncert`
+# column contains uncertainty values
+data_tbl <-
+  dplyr::tribble(
+    ~value,   ~uncert,
+    0.352,    0.10,
+    0.983,    0.13,
+    0.639,    NA_real_,
+    NA_real_, 0.17)
+
+# Create a table object using this
+# dataset where the `uncert` column
+# is merged into the `value` column,
+# forming a single column of values
+# with uncertainties
+gt(data_tbl) \%>\%
+  cols_merge_uncert(
+    col_val = vars(value),
+    col_uncert = vars(uncert))
+}
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

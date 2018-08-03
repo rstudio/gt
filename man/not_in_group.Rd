@@ -16,5 +16,6 @@ Helper for collecting ungrouped rows or columns
 Other helper functions: \code{\link{col_labels}},
   \code{\link{columns_with}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{rownames_with}},
-  \code{\link{target_cell}}, \code{\link{vars}}
+  \code{\link{rows_where}}, \code{\link{target_cell}},
+  \code{\link{vars}}
 }

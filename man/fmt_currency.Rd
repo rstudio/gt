@@ -5,7 +5,7 @@
 \title{Format values as currencies}
 \usage{
 fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
-  negative_val = "signed", decimals = NULL, sep_mark = "",
+  negative_val = "signed", decimals = NULL, sep_mark = ",",
   dec_mark = ".", placement = "left", locale = NULL)
 }
 \arguments{
@@ -47,6 +47,31 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Format values as currencies
+}
+\examples{
+library(tidyverse)
+
+# Create a tibble with two columns
+# that are both numeric
+data_tbl <-
+  dplyr::tribble(
+    ~val_usd, ~val_jpy,
+    23.346,   2606.95,
+    832.830,  93002.54,
+    72.013,   8041.73,
+    83.1,     9279.82)
+
+# Create a table object using this
+# dataset and where the `val_usd`
+# and `val_jpy` are formatted as
+# the `USD` and `JPY` currencies
+gt(data_tbl) \%>\%
+  fmt_currency(
+    columns = vars(val_usd),
+    currency = "USD") \%>\%
+  fmt_currency(
+    columns = vars(val_jpy),
+    currency = "JPY")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},

@@ -27,7 +27,8 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     caption = md("car *make* and *model*"))
 }
 \seealso{
-Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+Other table-part creation/modification functions: \code{\link{gt}},
+  \code{\link{tab_boxhead_panel}},
   \code{\link{tab_footnote}}, \code{\link{tab_heading}},
   \code{\link{tab_source_note}},
   \code{\link{tab_stub_block}}

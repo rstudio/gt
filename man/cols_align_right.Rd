@@ -20,10 +20,10 @@ Set columns to be aligned right
 }
 \examples{
 # Create a table object using the
-# `mtcars` dataset and align all
-# columns to the right
+# `mtcars` dataset and align the
+# `qsec` column to the right
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_right(mpg)
+  cols_align_right(columns = vars(qsec))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

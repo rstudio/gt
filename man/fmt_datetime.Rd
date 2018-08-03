@@ -4,8 +4,7 @@
 \alias{fmt_datetime}
 \title{Format values as date-times}
 \usage{
-fmt_datetime(data, columns, rows = NULL, date_style = NULL,
-  time_style = NULL)
+fmt_datetime(data, columns, rows = NULL, date_style, time_style)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -17,12 +16,12 @@ rows in \code{columns} being formatted.}
 
 \item{date_style}{the date style to use. Supply a number (from \code{1} to
 \code{14}) that corresponds to the preferred date style. Use
-\code{date_style_info()} to see the different numbered and named date
+\code{info_date_style()} to see the different numbered and named date
 presets.}
 
 \item{time_style}{the time style to use. Supply a number (from \code{1} to
 \code{5}) that corresponds to the preferred time style. Use
-\code{time_style_info()} to see the different numbered and named time
+\code{info_time_style_info()} to see the different numbered and named time
 presets.}
 }
 \value{

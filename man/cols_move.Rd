@@ -22,6 +22,16 @@ an object of class \code{gt_tbl}.
 \description{
 Move one or more columns
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and move the `mpg`,
+# `cyl`, and `disp` columns to the right
+# of `qsec`
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  cols_move(
+    columns = vars(mpg, cyl, disp),
+    after = vars(qsec))
+}
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

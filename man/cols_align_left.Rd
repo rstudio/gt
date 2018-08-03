@@ -20,10 +20,10 @@ Set columns to be aligned left
 }
 \examples{
 # Create a table object using the
-# `mtcars` dataset and align all
-# columns to the left
+# `mtcars` dataset and align the
+# `disp` column to the left
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_left(mpg)
+  cols_align_left(columns = vars(disp))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

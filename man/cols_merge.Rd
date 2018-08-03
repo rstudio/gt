@@ -19,6 +19,18 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a single column with a formatter
 }
+\examples{
+# Create a table object using the
+# `sleep` dataset and merge the `group`
+# and `ID` columns together (where the
+# `ID` number is in parentheses after
+# the `group` number
+gt(sleep) \%>\%
+  cols_merge(
+    col_1 = vars(group),
+    col_2 = vars(ID),
+    format = "{1} ({2})")
+}
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

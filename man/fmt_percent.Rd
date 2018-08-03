@@ -5,7 +5,7 @@
 \title{Format values as a percentage}
 \usage{
 fmt_percent(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", sep_mark = "",
+  drop0trailing = FALSE, negative_val = "signed", sep_mark = ",",
   dec_mark = ".", incl_space = FALSE, placement = "right",
   locale = NULL)
 }
@@ -49,6 +49,25 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Format values as a percentage
+}
+\examples{
+library(tidyverse)
+
+# Create a tibble with two columns
+# that are both numeric
+data_tbl <-
+  dplyr::tribble(
+    ~val_1, ~val_2,
+    0.345,  2.6,
+    0.234,  3.3,
+    0.53,   3.8,
+    0.391,  4.2)
+
+# Create a table object using this
+# dataset and where the `val_1` columns
+# are formatted as percentage values
+gt(data_tbl) \%>\%
+  fmt_percent(columns = vars(val_1))
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

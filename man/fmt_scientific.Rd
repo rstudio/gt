@@ -5,7 +5,7 @@
 \title{Format values to scientific notation}
 \usage{
 fmt_scientific(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", sep_mark = "",
+  drop0trailing = FALSE, negative_val = "signed", sep_mark = ",",
   dec_mark = ".", locale = NULL)
 }
 \arguments{
@@ -42,6 +42,16 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Format values to scientific notation
+}
+\examples{
+# Create a table object using the
+# `mtcars` dataset and format specified
+# numeric columns to display values in
+# scientific notation
+gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  fmt_scientific(
+    columns = vars(disp),
+    decimals = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
