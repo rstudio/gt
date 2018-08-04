@@ -294,7 +294,9 @@ fmt_scientific <- function(data,
 #' \code{right} (the default) or \code{left}.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
-#' (United States) and \code{"fr_FR"} for French (France).
+#' (United States) and \code{"fr_FR"} for French (France). The use of a valid
+#' locale ID will override any values provided in \code{sep_mark} and
+#' \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
@@ -438,7 +440,9 @@ fmt_percent <- function(data,
 #' \code{left} (the default) or \code{right}.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
-#' (United States) and \code{"fr_FR"} for French (France).
+#' (United States) and \code{"fr_FR"} for French (France). The use of a valid
+#' locale ID will override any values provided in \code{sep_mark} and
+#' \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
