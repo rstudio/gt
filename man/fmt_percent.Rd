@@ -5,9 +5,9 @@
 \title{Format values as a percentage}
 \usage{
 fmt_percent(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", sep_mark = ",",
-  dec_mark = ".", incl_space = FALSE, placement = "right",
-  locale = NULL)
+  drop0trailing = FALSE, negative_val = "signed", use_seps = TRUE,
+  pattern = "{1}", sep_mark = ",", dec_mark = ".", incl_space = FALSE,
+  placement = "right", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -26,9 +26,15 @@ zeros (those redundant zeros after the decimal mark).}
 
 \item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses. The
-\code{red} option will display the number in red. Finally, \code{parens-red}
-will display negative numbers as red and enclosed in parentheses.}
+sign. Using \code{parens} will show the negative value in parentheses.}
+
+\item{use_seps}{an option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{pattern}{a formatting pattern that allows for decoration of the
+formatted number. The number itself is represented by \code{{1}} and all
+other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
 
@@ -64,10 +70,16 @@ data_tbl <-
     0.391,  4.2)
 
 # Create a table object using this
-# dataset and where the `val_1` columns
-# are formatted as percentage values
+# dataset and foramt the `val_1` column
+# as percentage values and `val_2`
+# as numeric values
 gt(data_tbl) \%>\%
-  fmt_percent(columns = vars(val_1))
+  fmt_percent(
+    columns = vars(val_1),
+    decimals = 1) \%>\%
+  fmt_number(
+    columns = vars(val_2),
+    decimals = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

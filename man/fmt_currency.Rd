@@ -5,8 +5,9 @@
 \title{Format values as currencies}
 \usage{
 fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
-  negative_val = "signed", decimals = NULL, sep_mark = ",",
-  dec_mark = ".", placement = "left", locale = NULL)
+  negative_val = "signed", decimals = NULL, use_seps = TRUE,
+  scale_by = 1, pattern = "{1}", sep_mark = ",", dec_mark = ".",
+  placement = "left", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -24,12 +25,20 @@ value should be displayed.}
 
 \item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses. The
-\code{red} option will display the number in red. Finally, \code{parens-red}
-will display negative numbers as red and enclosed in parentheses.}
+sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
-use.}
+use for the currency's subunits.}
+
+\item{use_seps}{an option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+
+\item{pattern}{a formatting pattern that allows for decoration of the
+formatted number. The number itself is represented by \code{{1}} and all
+other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
 
@@ -72,6 +81,37 @@ gt(data_tbl) \%>\%
   fmt_currency(
     columns = vars(val_jpy),
     currency = "JPY")
+
+# Create another tibble with larger
+# numeric values
+data_tbl_lg <-
+  dplyr::tribble(
+    ~val_usd_lg, ~val_jpy_lg,
+    546262,      3950249,
+    729472,      5390202,
+    292592,      9373824,
+    573256,      2350300)
+
+# Create a table object using this
+# dataset and where the `val_usd`
+# and `val_jpy` are still formatted as
+# the `USD` and `JPY` currencies but
+# this time with scaled values
+# (thousands and millions with the
+# appropriate suffixes)
+gt(data_tbl_lg) \%>\%
+  fmt_currency(
+    columns = vars(val_usd_lg),
+    currency = "USD",
+    decimals = 1,
+    scale_by = 1/1000,
+    pattern = "{1}K") \%>\%
+  fmt_currency(
+    columns = vars(val_jpy_lg),
+    currency = "JPY",
+    decimals = 2,
+    scale_by = 1E-6,
+    pattern = "{1}M")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},
