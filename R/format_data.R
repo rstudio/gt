@@ -9,16 +9,25 @@
 #' zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
-#' sign. Using \code{parens} will show the negative value in parentheses. The
-#' \code{red} option will display the number in red. Finally, \code{parens-red}
-#' will display negative numbers as red and enclosed in parentheses.
+#' sign. Using \code{parens} will show the negative value in parentheses.
+#' @param use_seps an option to use digit group separators. The type of digit
+#' group separator is set by \code{sep_mark} and overridden if a locale ID is
+#' provided to \code{locale}. This setting is \code{TRUE} by default.
+#' @param scale_by a value to scale the input. The default is \code{1.0}.
+#' @param pattern a formatting pattern that allows for decoration of the
+#' formatted number. The number itself is represented by \code{{1}} and all
+#' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
-#' (United States) and \code{"fr_FR"} for French (France).
+#' (United States) and \code{"fr_FR"} for French (France). The use of a valid
+#' locale ID will override any values provided in \code{sep_mark} and
+#' \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
+#' library(tidyverse)
+#'
 #' # Create a table object using the
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values to
@@ -27,6 +36,31 @@
 #'   fmt_number(
 #'     columns = vars(mpg, disp, drat, qsec),
 #'     decimals = 2)
+#'
+#' # Create a tibble with two columns
+#' # that are both numeric
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~val_1,   ~val_2,
+#'     8236625,  -2345,
+#'     6533405,  -7865,
+#'     7363931,  2345,
+#'     9326440,  7543)
+#'
+#' # Create a gt table from `data_tbl` and
+#' # scale the numeric values in columns
+#' # `val_1` and `val_2` and apply a suffix
+#' gt(data_tbl) %>%
+#'   fmt_number(
+#'     columns = vars(val_1),
+#'     decimals = 2,
+#'     scale_by = 1E-6,
+#'     pattern = "{1}M") %>%
+#'   fmt_number(
+#'     columns = vars(val_2),
+#'     decimals = 2,
+#'     scale_by = 1/1000,
+#'     pattern = "{1}K")
 #' @family data formatting functions
 #' @export
 fmt_number <- function(data,
@@ -35,6 +69,9 @@ fmt_number <- function(data,
                        decimals = 2,
                        drop0trailing = FALSE,
                        negative_val = "signed",
+                       use_seps = TRUE,
+                       scale_by = 1.0,
+                       pattern = "{1}",
                        sep_mark = ",",
                        dec_mark = ".",
                        locale = NULL) {
@@ -53,6 +90,12 @@ fmt_number <- function(data,
     dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
+  # Provide an empty string for `sep_mark` if we choose
+  # to not use digit group separators
+  if (!use_seps) {
+    sep_mark <- ""
+  }
+
   # Create the default formatting function
   format_fcn_default <- function(x) {
 
@@ -62,13 +105,29 @@ fmt_number <- function(data,
     # Format all non-NA x values
     x[non_na_x] <-
       formatC(
-        x = x[non_na_x],
+        x = x[non_na_x] * scale_by,
         digits = decimals,
         mode = "double",
         big.mark = sep_mark,
         decimal.mark = dec_mark,
         format = "f",
         drop0trailing = drop0trailing)
+
+    # Handle negative values
+    if (negative_val == "parens") {
+
+      # Determine which of `x` are not NA and also negative
+      negative_x <- x < 0 & !is.na(x)
+
+      # Apply parentheses to the formatted value and remove
+      # the minus sign
+      x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+    }
+
+    # Handle formatting of pattern
+    pre_post_txt <- get_pre_post_txt(pattern)
+    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
+    x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
 
     x
   }
@@ -92,11 +151,10 @@ fmt_number <- function(data,
 #' use. The default number of decimal places is \code{2}.
 #' @param drop0trailing a logical value that allows for removal of trailing
 #' zeros (those redundant zeros after the decimal mark).
-#' @param negative_val the formatting to use for negative numbers. With
-#' \code{signed} (the default), negative numbers will be shown with a negative
-#' sign. Using \code{parens} will show the negative value in parentheses. The
-#' \code{red} option will display the number in red. Finally, \code{parens-red}
-#' will display negative numbers as red and enclosed in parentheses.
+#' @param scale_by a value to scale the input. The default is \code{1.0}.
+#' @param pattern a formatting pattern that allows for decoration of the
+#' formatted number. The number itself is represented by \code{{1}} and all
+#' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
@@ -119,7 +177,8 @@ fmt_scientific <- function(data,
                            rows = NULL,
                            decimals = 2,
                            drop0trailing = FALSE,
-                           negative_val = "signed",
+                           scale_by = 1.0,
+                           pattern = "{1}",
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
@@ -145,7 +204,7 @@ fmt_scientific <- function(data,
       # Format the number component as a character vector
       x_str <-
         formatC(
-          x = x,
+          x = x * scale_by,
           digits = decimals,
           mode = "double",
           big.mark = sep_mark,
@@ -172,6 +231,11 @@ fmt_scientific <- function(data,
           sci_parts$num, exp_start_str,
           sci_parts$exp, exp_end_str)
       }
+
+      # Handle formatting of pattern
+      pre_post_txt <- get_pre_post_txt(pattern)
+      x_str <- paste0(pre_post_txt[1], x_str)
+      x_str <- paste0(x_str, pre_post_txt[2])
 
       x_str
     }
@@ -215,9 +279,13 @@ fmt_scientific <- function(data,
 #' zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
-#' sign. Using \code{parens} will show the negative value in parentheses. The
-#' \code{red} option will display the number in red. Finally, \code{parens-red}
-#' will display negative numbers as red and enclosed in parentheses.
+#' sign. Using \code{parens} will show the negative value in parentheses.
+#' @param use_seps an option to use digit group separators. The type of digit
+#' group separator is set by \code{sep_mark} and overridden if a locale ID is
+#' provided to \code{locale}. This setting is \code{TRUE} by default.
+#' @param pattern a formatting pattern that allows for decoration of the
+#' formatted number. The number itself is represented by \code{{1}} and all
+#' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @param incl_space an option on whether to include a space between the value
@@ -242,10 +310,16 @@ fmt_scientific <- function(data,
 #'     0.391,  4.2)
 #'
 #' # Create a table object using this
-#' # dataset and where the `val_1` columns
-#' # are formatted as percentage values
+#' # dataset and foramt the `val_1` column
+#' # as percentage values and `val_2`
+#' # as numeric values
 #' gt(data_tbl) %>%
-#'   fmt_percent(columns = vars(val_1))
+#'   fmt_percent(
+#'     columns = vars(val_1),
+#'     decimals = 1) %>%
+#'   fmt_number(
+#'     columns = vars(val_2),
+#'     decimals = 2)
 #' @family data formatting functions
 #' @export
 fmt_percent <- function(data,
@@ -254,6 +328,8 @@ fmt_percent <- function(data,
                         decimals = 2,
                         drop0trailing = FALSE,
                         negative_val = "signed",
+                        use_seps = TRUE,
+                        pattern = "{1}",
                         sep_mark = ",",
                         dec_mark = ".",
                         incl_space = FALSE,
@@ -272,6 +348,12 @@ fmt_percent <- function(data,
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
+  }
+
+  # Provide an empty string for `sep_mark` if we choose
+  # to not use digit group separators
+  if (!use_seps) {
+    sep_mark <- ""
   }
 
   # Create the default formatting function
@@ -301,6 +383,22 @@ fmt_percent <- function(data,
         x[non_na_x])
     }
 
+    # Handle negative values
+    if (negative_val == "parens") {
+
+      # Determine which of `x` are not NA and also negative
+      negative_x <- x < 0 & !is.na(x)
+
+      # Apply parentheses to the formatted value and remove
+      # the minus sign
+      x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+    }
+
+    # Handle formatting of pattern
+    pre_post_txt <- get_pre_post_txt(pattern)
+    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
+    x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
+
     x
   }
 
@@ -324,11 +422,16 @@ fmt_percent <- function(data,
 #' value should be displayed.
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
-#' sign. Using \code{parens} will show the negative value in parentheses. The
-#' \code{red} option will display the number in red. Finally, \code{parens-red}
-#' will display negative numbers as red and enclosed in parentheses.
+#' sign. Using \code{parens} will show the negative value in parentheses.
 #' @param decimals an option to specify the exact number of decimal places to
-#' use.
+#' use for the currency's subunits.
+#' @param use_seps an option to use digit group separators. The type of digit
+#' group separator is set by \code{sep_mark} and overridden if a locale ID is
+#' provided to \code{locale}. This setting is \code{TRUE} by default.
+#' @param scale_by a value to scale the input. The default is \code{1.0}.
+#' @param pattern a formatting pattern that allows for decoration of the
+#' formatted number. The number itself is represented by \code{{1}} and all
+#' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @param placement the placement of the currency symbol. This can be either be
@@ -361,6 +464,37 @@ fmt_percent <- function(data,
 #'   fmt_currency(
 #'     columns = vars(val_jpy),
 #'     currency = "JPY")
+#'
+#' # Create another tibble with larger
+#' # numeric values
+#' data_tbl_lg <-
+#'   dplyr::tribble(
+#'     ~val_usd_lg, ~val_jpy_lg,
+#'     546262,      3950249,
+#'     729472,      5390202,
+#'     292592,      9373824,
+#'     573256,      2350300)
+#'
+#' # Create a table object using this
+#' # dataset and where the `val_usd`
+#' # and `val_jpy` are still formatted as
+#' # the `USD` and `JPY` currencies but
+#' # this time with scaled values
+#' # (thousands and millions with the
+#' # appropriate suffixes)
+#' gt(data_tbl_lg) %>%
+#'   fmt_currency(
+#'     columns = vars(val_usd_lg),
+#'     currency = "USD",
+#'     decimals = 1,
+#'     scale_by = 1/1000,
+#'     pattern = "{1}K") %>%
+#'   fmt_currency(
+#'     columns = vars(val_jpy_lg),
+#'     currency = "JPY",
+#'     decimals = 2,
+#'     scale_by = 1E-6,
+#'     pattern = "{1}M")
 #' @family data formatting functions
 #' @export
 fmt_currency <- function(data,
@@ -370,6 +504,9 @@ fmt_currency <- function(data,
                          use_subunits = TRUE,
                          negative_val = "signed",
                          decimals = NULL,
+                         use_seps = TRUE,
+                         scale_by = 1.0,
+                         pattern = "{1}",
                          sep_mark = ",",
                          dec_mark = ".",
                          placement = "left",
@@ -421,12 +558,22 @@ fmt_currency <- function(data,
     decimals <- 0
   }
 
+  # Provide an empty string for `sep_mark` if we choose
+  # to not use digit group separators
+  if (!use_seps) {
+    sep_mark <- ""
+  }
+
   # Create the default formatting function
   format_fcn_default <- function(x) {
 
-    x <-
+    # Determine which of `x` are not NA
+    non_na_x <- !is.na(x)
+
+    # Format all non-NA x values
+    x[non_na_x] <-
       formatC(
-        x = x,
+        x = x[non_na_x] * scale_by,
         digits = decimals,
         mode = "double",
         big.mark = sep_mark,
@@ -434,11 +581,28 @@ fmt_currency <- function(data,
         format = "f",
         drop0trailing = FALSE)
 
+    # Handle placement of the currency symbol
     if (placement == "left") {
-      x <- paste0(currency_str, x)
+      x[non_na_x] <- paste0(currency_str, x[non_na_x])
     } else {
-      x <- paste0(x, currency_str)
+      x[non_na_x] <- paste0(x[non_na_x], currency_str)
     }
+
+    # Handle negative values
+    if (negative_val == "parens") {
+
+      # Determine which of `x` are not NA and also negative
+      negative_x <- x < 0 & !is.na(x)
+
+      # Apply parentheses to the formatted value and remove
+      # the minus sign
+      x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+    }
+
+    # Handle formatting of pattern
+    pre_post_txt <- get_pre_post_txt(pattern)
+    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
+    x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
 
     x
   }
@@ -446,9 +610,12 @@ fmt_currency <- function(data,
   # Create the html formatting function
   format_fcn_html <- function(x) {
 
-    x <-
+    # Determine which of `x` are not NA
+    non_na_x <- !is.na(x)
+
+    x[non_na_x] <-
       formatC(
-        x = x,
+        x = x[non_na_x] * scale_by,
         digits = decimals,
         mode = "double",
         big.mark = sep_mark,
@@ -456,11 +623,28 @@ fmt_currency <- function(data,
         format = "f",
         drop0trailing = FALSE)
 
+    # Handle placement of the currency symbol
     if (placement == "left") {
-      x <- paste0(currency_str_html, x)
+      x[non_na_x] <- paste0(currency_str_html, x[non_na_x])
     } else {
-      x <- paste0(x, currency_str_html)
+      x[non_na_x] <- paste0(x[non_na_x], currency_str_html)
     }
+
+    # Handle negative values
+    if (negative_val == "parens") {
+
+      # Determine which of `x` are not NA and also negative
+      negative_x <- x < 0 & !is.na(x)
+
+      # Apply parentheses to the formatted value and remove
+      # the minus sign
+      x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+    }
+
+    # Handle formatting of pattern
+    pre_post_txt <- get_pre_post_txt(pattern)
+    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
+    x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
 
     x
   }
