@@ -4,7 +4,7 @@
 \alias{cols_merge}
 \title{Merge two columns to a single column with a formatter}
 \usage{
-cols_merge(data, col_1, col_2, format = "{1} {2}")
+cols_merge(data, col_1, col_2, pattern = "{1} {2}")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -12,6 +12,11 @@ cols_merge(data, col_1, col_2, format = "{1} {2}")
 \item{col_1}{a column that contains values for the start of the range.}
 
 \item{col_2}{a column that contains values for the end of the range.}
+
+\item{pattern}{a formatting pattern that specifies the arrangement of the
+\code{col_1} and \code{col_1} values and any string literals. The
+\code{col_1} column is represented as \code{{1}} whereas \code{col_2} is
+\code{{2}}. All other characters are taken to be string literals.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -29,7 +34,7 @@ gt(sleep) \%>\%
   cols_merge(
     col_1 = vars(group),
     col_2 = vars(ID),
-    format = "{1} ({2})")
+    pattern = "{1} ({2})")
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},
