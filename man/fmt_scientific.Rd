@@ -35,7 +35,9 @@ other characters are taken to be string literals.}
 
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France).}
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and
+\code{dec_mark}.}
 }
 \value{
 an object of class \code{gt_tbl}.
