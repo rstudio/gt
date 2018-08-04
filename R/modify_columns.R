@@ -473,6 +473,10 @@ cols_split_delim <- function(data,
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param col_1 a column that contains values for the start of the range.
 #' @param col_2 a column that contains values for the end of the range.
+#' @param pattern a formatting pattern that specifies the arrangement of the
+#' \code{col_1} and \code{col_1} values and any string literals. The
+#' \code{col_1} column is represented as \code{{1}} whereas \code{col_2} is
+#' \code{{2}}. All other characters are taken to be string literals.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -484,13 +488,14 @@ cols_split_delim <- function(data,
 #'   cols_merge(
 #'     col_1 = vars(group),
 #'     col_2 = vars(ID),
-#'     format = "{1} ({2})")
+#'     pattern = "{1} ({2})")
 #' @family column modification functions
+#' @importFrom stats setNames
 #' @export
 cols_merge <- function(data,
                        col_1,
                        col_2,
-                       format = "{1} {2}") {
+                       pattern = "{1} {2}") {
 
   # If using the `vars()` helper, get `col_1` as a character vector
   if (inherits(col_1, "quosures")) {
@@ -517,8 +522,8 @@ cols_merge <- function(data,
       return(data)
     }
 
-    attr(data, "col_merge")[["format"]] <-
-      c(attr(data, "col_merge")[["format"]], format)
+    attr(data, "col_merge")[["pattern"]] <-
+      c(attr(data, "col_merge")[["pattern"]], pattern)
 
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_1)
@@ -527,7 +532,7 @@ cols_merge <- function(data,
 
     attr(data, "col_merge") <-
       list(
-        format = format,
+        pattern = pattern,
         col_1 = col_1)
   }
 
@@ -563,12 +568,14 @@ cols_merge <- function(data,
 #'     col_val = vars(value),
 #'     col_uncert = vars(uncert))
 #' @family column modification functions
+#' @importFrom stats setNames
 #' @export
 cols_merge_uncert <- function(data,
                               col_val,
                               col_uncert) {
 
-  format <- "{1} \u00B1 {2}"
+  # Set the formatting pattern
+  pattern <- "{1} \u00B1 {2}"
 
   # If using the `vars()` helper, get `col_val` as a character vector
   if (inherits(col_val, "quosures")) {
@@ -595,8 +602,8 @@ cols_merge_uncert <- function(data,
       return(data)
     }
 
-    attr(data, "col_merge")[["format"]] <-
-      c(attr(data, "col_merge")[["format"]], format)
+    attr(data, "col_merge")[["pattern"]] <-
+      c(attr(data, "col_merge")[["pattern"]], pattern)
 
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_val)
@@ -605,7 +612,7 @@ cols_merge_uncert <- function(data,
 
     attr(data, "col_merge") <-
       list(
-        format = format,
+        pattern = pattern,
         col_1 = col_val)
   }
 
@@ -640,12 +647,14 @@ cols_merge_uncert <- function(data,
 #'     col_begin = vars(val_1),
 #'     col_end = vars(val_2))
 #' @family column modification functions
+#' @importFrom stats setNames
 #' @export
 cols_merge_range <- function(data,
                              col_begin,
                              col_end) {
 
-  format <- "{1} \u2014 {2}"
+  # Set the formatting pattern
+  pattern <- "{1} \u2014 {2}"
 
   # If using the `vars()` helper, get `col_begin` as a character vector
   if (inherits(col_begin, "quosures")) {
@@ -672,8 +681,8 @@ cols_merge_range <- function(data,
       return(data)
     }
 
-    attr(data, "col_merge")[["format"]] <-
-      c(attr(data, "col_merge")[["format"]], format)
+    attr(data, "col_merge")[["pattern"]] <-
+      c(attr(data, "col_merge")[["pattern"]], pattern)
 
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_begin)
@@ -682,7 +691,7 @@ cols_merge_range <- function(data,
 
     attr(data, "col_merge") <-
       list(
-        format = format,
+        pattern = pattern,
         col_1 = col_begin)
   }
 
