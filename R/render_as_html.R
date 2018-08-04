@@ -141,7 +141,7 @@ render_as_html <- function(data) {
 
       for (i in seq(attr(data, "col_merge")[[1]])) {
 
-        format <- attr(data, "col_merge")[["format"]][i]
+        pattern <- attr(data, "col_merge")[["pattern"]][i]
         value_1_col <- attr(data, "col_merge")[["col_1"]][i] %>% unname()
         value_2_col <- attr(data, "col_merge")[["col_1"]][i] %>% names()
 
@@ -158,7 +158,7 @@ render_as_html <- function(data) {
               !is.na(values_1_data[j]) && !is.na(values_2_data[j])) {
 
             values_1[j] <-
-              format %>%
+              pattern %>%
               stringr::str_replace(fixed("{1}"), values_1[j]) %>%
               stringr::str_replace(fixed("{2}"), values_2[j])
           }
@@ -305,16 +305,6 @@ render_as_html <- function(data) {
   # Extract the body content as a vector
   body_content <- as.vector(t(extracted))
 
-  # Replace any NA values
-  if ("missing_mark" %in% property_names) {
-
-    for (i in seq(body_content)) {
-      if (is.na(body_content[i]) | grepl("^\\s*?NA\\s*?$", body_content[i])) {
-        body_content[i] <- attr(data, "missing_mark")[[1]]
-      }
-    }
-  }
-
   # Handle any available footnotes
   if ("footnote" %in% property_names) {
 
@@ -428,10 +418,6 @@ render_as_html <- function(data) {
             groups_rows[which(groups_rows$row %in% i), 1][[1]],
             "</td>\n<td class='stub_heading_field' colspan='",
             n_cols - 1, "'></td>\n</tr>\n"))
-    }
-
-    color_tints <- function() {
-      c("yellow", "blue", "pink", "green", "sand")
     }
 
     if (grepl("Summary: ", row_splits[i][[1]][[1]])) {
