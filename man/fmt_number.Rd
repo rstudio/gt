@@ -5,8 +5,9 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", sep_mark = ",",
-  dec_mark = ".", locale = NULL)
+  drop0trailing = FALSE, negative_val = "signed", use_seps = TRUE,
+  scale_by = 1, pattern = "{1}", sep_mark = ",", dec_mark = ".",
+  locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -24,9 +25,17 @@ zeros (those redundant zeros after the decimal mark).}
 
 \item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses. The
-\code{red} option will display the number in red. Finally, \code{parens-red}
-will display negative numbers as red and enclosed in parentheses.}
+sign. Using \code{parens} will show the negative value in parentheses.}
+
+\item{use_seps}{an option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+
+\item{pattern}{a formatting pattern that allows for decoration of the
+formatted number. The number itself is represented by \code{{1}} and all
+other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
 
@@ -34,7 +43,9 @@ will display negative numbers as red and enclosed in parentheses.}
 
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France).}
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and
+\code{dec_mark}.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -43,6 +54,8 @@ an object of class \code{gt_tbl}.
 Format numeric values
 }
 \examples{
+library(tidyverse)
+
 # Create a table object using the
 # `mtcars` dataset and format specified
 # numeric columns to display values to
@@ -51,6 +64,31 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
   fmt_number(
     columns = vars(mpg, disp, drat, qsec),
     decimals = 2)
+
+# Create a tibble with two columns
+# that are both numeric
+data_tbl <-
+  dplyr::tribble(
+    ~val_1,   ~val_2,
+    8236625,  -2345,
+    6533405,  -7865,
+    7363931,  2345,
+    9326440,  7543)
+
+# Create a gt table from `data_tbl` and
+# scale the numeric values in columns
+# `val_1` and `val_2` and apply a suffix
+gt(data_tbl) \%>\%
+  fmt_number(
+    columns = vars(val_1),
+    decimals = 2,
+    scale_by = 1E-6,
+    pattern = "{1}M") \%>\%
+  fmt_number(
+    columns = vars(val_2),
+    decimals = 2,
+    scale_by = 1/1000,
+    pattern = "{1}K")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
