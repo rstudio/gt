@@ -159,7 +159,9 @@ fmt_number <- function(data,
 #' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
 #' according the locale's rules. Examples include \code{"en_US"} for English
-#' (United States) and \code{"fr_FR"} for French (France).
+#' (United States) and \code{"fr_FR"} for French (France). The use of a valid
+#' locale ID will override any values provided in \code{sep_mark} and
+#' \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
