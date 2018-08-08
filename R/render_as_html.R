@@ -347,7 +347,8 @@ render_as_html <- function(data) {
     # Create the footnotes block
     footnote_component <-
       paste0(
-        "<tfoot>\n<tr>\n<td colspan='", n_cols,
+        "<tfoot data-type='table_footnotes'>\n",
+        "<tr data-type='table_footnote'>\n<td colspan='", n_cols,
         "' class='footnote'>",
         paste0(
           "<sup class='gt_super'><em>", seq(glyphs_footnotes),
@@ -364,7 +365,8 @@ render_as_html <- function(data) {
 
     heading_component <-
       paste0(
-        "<thead>\n<tr>\n<th class='heading title font_normal center' colspan='",
+        "<thead>\n<tr data-type='table_headings'>\n",
+        "<th data-type='table_heading' class='heading title font_normal center' colspan='",
         n_cols, "'>", attr(data, "heading")$title ,"</th>\n</tr>\n")
 
     if ("headnote" %in% names(attr(data, "heading"))) {
@@ -373,7 +375,9 @@ render_as_html <- function(data) {
         paste0(
           heading_component,
           paste0(
-            "<tr>\n<th class='heading headnote font_normal center bottom_border' colspan='",
+            "<tr data-type='table_headings'>\n",
+            "<th data-type='table_headnote' ",
+            "class='heading headnote font_normal center bottom_border' colspan='",
             n_cols, "'>", attr(data, "heading")$headnote ,"</th>\n</tr>\n"))
     }
 
@@ -392,7 +396,7 @@ render_as_html <- function(data) {
     # Create a source note
     source_note_rows <-
       paste0(
-        "<tfoot>\n",
+        "<tfoot data-type='source_notes'>\n",
         paste0(
           "<tr>\n<td colspan='", n_cols + 1 ,
           "' class='sourcenote'>", attr(data, "source_note")[[1]],
@@ -404,8 +408,7 @@ render_as_html <- function(data) {
   }
 
   # Split the body_content by slices of rows
-  row_splits <-
-    split(body_content, ceiling(seq_along(body_content)/n_cols))
+  row_splits <- split(body_content, ceiling(seq_along(body_content)/n_cols))
 
   body_rows <- c()
   for (i in 1:n_rows) {
@@ -414,7 +417,8 @@ render_as_html <- function(data) {
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr>\n<td class='stub_heading font_bold'>",
+            "<tr>\n",
+            "<td data-type='stub_group' class='stub_heading font_bold'>",
             groups_rows[which(groups_rows$row %in% i), 1][[1]],
             "</td>\n<td class='stub_heading_field' colspan='",
             n_cols - 1, "'></td>\n</tr>\n"))
@@ -441,7 +445,7 @@ render_as_html <- function(data) {
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr>\n",
+            "<tr data-type='summary' data-row='", i,"'>\n",
             paste0(
               "<td class='row summary_row ", tint, " ", col_alignment, "'>",
               row_splits[i][[1]], "</td>", collapse = "\n"),
@@ -452,7 +456,7 @@ render_as_html <- function(data) {
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr>\n",
+            "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
               "<td class='row ", col_alignment, "'>",
               row_splits[i][[1]], "</td>", collapse = "\n"),
@@ -518,7 +522,7 @@ render_as_html <- function(data) {
       first_set <-
         c(first_set,
           paste0(
-            "<th class='col_heading' rowspan='2' colspan='1'>",
+            "<th data-type='column_heading' class='col_heading' rowspan='2' colspan='1'>",
             headings[1], "</th>"))
 
       headings <- headings[-1]
@@ -531,7 +535,7 @@ render_as_html <- function(data) {
         first_set <-
           c(first_set,
             paste0(
-              "<th class='col_heading' rowspan='2' colspan='1'>",
+              "<th data-type='column_heading' class='col_heading' rowspan='2' colspan='1'>",
               headings[i], "</th>"))
 
         headings_stack <- c(headings_stack, headings[i])
@@ -573,7 +577,7 @@ render_as_html <- function(data) {
           first_set <-
             c(first_set,
               paste0(
-                "<th class='col_heading ",
+                "<th data-type='column_heading' class='col_heading ",
                 class, "' rowspan='1' colspan='",
                 colspan, "'>", spanners[i], "</th>"))
         }
@@ -586,7 +590,7 @@ render_as_html <- function(data) {
 
     second_set <-
       paste0(
-        "<th class='col_heading' rowspan='1' colspan='1'>",
+        "<th data-type='column_heading' class='col_heading' rowspan='1' colspan='1'>",
         remaining_headings, "</th>",
         collapse = "\n")
 
@@ -598,7 +602,14 @@ render_as_html <- function(data) {
   }
 
   # Create an HTML fragment for the start of the table
-  table_start <- "<!--gt table start-->\n<table class='gt_table'>\n"
+  table_start <-
+    paste0(
+      "<!--gt table start-->\n",
+      "<table ",
+      "data-nrow='", n_rows, "' ",
+      "data-ncol='", n_cols, "' ",
+      "data-ngroup='", get_n_groups(groups_rows), "' ",
+      "class='gt_table'>\n")
 
   # Create an HTML fragment for the end of the table
   table_end <- "</table>\n<!--gt table end-->\n"
