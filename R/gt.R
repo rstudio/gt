@@ -6,6 +6,8 @@
 #' @param data a \code{data.frame} object or a tibble.
 #' @param rownames_to_stub an option to take rownames from the input \code{data}
 #' table as row captions in the stub.
+#' @param preview an option to ingest the table such that only the head and tail
+#' of the table is shown.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -28,7 +30,25 @@
 #' @importFrom tibble add_row
 #' @export
 gt <- function(data,
-               rownames_to_stub = FALSE) {
+               rownames_to_stub = FALSE,
+               preview = FALSE) {
+
+  # If a preview table (head and tail) is requested,
+  # then modify `data_tbl` to only include the head
+  # and tail plus an ellipsis row
+  if (preview) {
+
+    if (nrow(data) >= 6) {
+
+      data <-
+        rbind(
+          data[1:5, ],
+          rep("...", ncol(data)),
+          data[nrow(data), ])
+
+      rownames(data)[6] <- "..."
+    }
+  }
 
   # If the option to place rownames in the stub
   # is taken, then the `stub_df` data frame will
