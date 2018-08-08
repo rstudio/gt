@@ -1,4 +1,4 @@
-context("test-gt_object.R")
+context("test-fmt_number.R")
 
 test_that("formatting a column of numeric data as a number works correctly", {
 
