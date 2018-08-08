@@ -675,6 +675,17 @@ get_stub_components <- function(stub_df) {
   stub_components
 }
 
+#' Get the number of stub groups in the table
+#' @noRd
+get_n_groups <- function(groups_rows) {
+
+  if (!is.null(groups_rows)) {
+    return(nrow(groups_rows))
+  } else {
+    return(0)
+  }
+}
+
 #' A wrapper for `system.file()`
 #' @noRd
 system_file <- function(file) {
