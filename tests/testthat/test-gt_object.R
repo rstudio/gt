@@ -1,6 +1,6 @@
 context("test-gt_object.R")
 
-test_that("an gt table object contains the correct components", {
+test_that("a gt table object contains the correct components", {
 
   # Create an `gt_tbl` object with `gt()`
   tab <- gt(data = iris)
