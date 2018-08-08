@@ -6,7 +6,7 @@
 \usage{
 fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
   negative_val = "signed", decimals = NULL, use_seps = TRUE,
-  scale_by = 1, pattern = "{1}", sep_mark = ",", dec_mark = ".",
+  scale_by = 1, pattern = "{x}", sep_mark = ",", dec_mark = ".",
   placement = "left", locale = NULL)
 }
 \arguments{
@@ -37,7 +37,7 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{1}} and all
+formatted number. The number itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -107,13 +107,13 @@ gt(data_tbl_lg) \%>\%
     currency = "USD",
     decimals = 1,
     scale_by = 1/1000,
-    pattern = "{1}K") \%>\%
+    pattern = "{x}K") \%>\%
   fmt_currency(
     columns = vars(val_jpy_lg),
     currency = "JPY",
     decimals = 2,
     scale_by = 1E-6,
-    pattern = "{1}M")
+    pattern = "{x}M")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},

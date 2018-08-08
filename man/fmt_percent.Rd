@@ -5,8 +5,8 @@
 \title{Format values as a percentage}
 \usage{
 fmt_percent(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", use_seps = TRUE,
-  pattern = "{1}", sep_mark = ",", dec_mark = ".", incl_space = FALSE,
+  drop_trailing_zeros = FALSE, negative_val = "signed", use_seps = TRUE,
+  pattern = "{x}", sep_mark = ",", dec_mark = ".", incl_space = FALSE,
   placement = "right", locale = NULL)
 }
 \arguments{
@@ -21,8 +21,8 @@ rows in \code{columns} being formatted.}
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop0trailing}{a logical value that allows for removal of trailing
-zeros (those redundant zeros after the decimal mark).}
+\item{drop_trailing_zeros}{a logical value that allows for removal of
+trailing zeros (those redundant zeros after the decimal mark).}
 
 \item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
@@ -33,7 +33,7 @@ group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{1}} and all
+formatted number. The number itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}

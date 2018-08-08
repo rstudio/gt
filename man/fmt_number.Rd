@@ -5,8 +5,8 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, negative_val = "signed", use_seps = TRUE,
-  scale_by = 1, pattern = "{1}", sep_mark = ",", dec_mark = ".",
+  drop_trailing_zeros = FALSE, negative_val = "signed", use_seps = TRUE,
+  scale_by = 1, pattern = "{x}", sep_mark = ",", dec_mark = ".",
   locale = NULL)
 }
 \arguments{
@@ -20,8 +20,8 @@ rows in \code{columns} being formatted.}
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop0trailing}{a logical value that allows for removal of trailing
-zeros (those redundant zeros after the decimal mark).}
+\item{drop_trailing_zeros}{a logical value that allows for removal of
+trailing zeros (those redundant zeros after the decimal mark).}
 
 \item{negative_val}{the formatting to use for negative numbers. With
 \code{signed} (the default), negative numbers will be shown with a negative
@@ -34,7 +34,7 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{1}} and all
+formatted number. The number itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -83,12 +83,12 @@ gt(data_tbl) \%>\%
     columns = vars(val_1),
     decimals = 2,
     scale_by = 1E-6,
-    pattern = "{1}M") \%>\%
+    pattern = "{x}M") \%>\%
   fmt_number(
     columns = vars(val_2),
     decimals = 2,
     scale_by = 1/1000,
-    pattern = "{1}K")
+    pattern = "{x}K")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
