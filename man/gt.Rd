@@ -4,13 +4,16 @@
 \alias{gt}
 \title{Create a gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE)
+gt(data, rownames_to_stub = FALSE, preview = FALSE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a tibble.}
 
 \item{rownames_to_stub}{an option to take rownames from the input \code{data}
 table as row captions in the stub.}
+
+\item{preview}{an option to ingest the table such that only the head and tail
+of the table is shown.}
 }
 \value{
 an object of class \code{gt_tbl}.
