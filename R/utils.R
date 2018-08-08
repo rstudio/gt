@@ -537,8 +537,8 @@ process_text <- function(text) {
 #' @noRd
 get_pre_post_txt <- function(pattern) {
 
-  prefix <- strsplit(pattern, "\\{1\\}")[[1]][1]
-  suffix <- strsplit(pattern, "\\{1\\}")[[1]][2]
+  prefix <- strsplit(pattern, "\\{x\\}")[[1]][1]
+  suffix <- strsplit(pattern, "\\{x\\}")[[1]][2]
 
   prefix <- ifelse(is.na(prefix), "", prefix)
   suffix <- ifelse(is.na(suffix), "", suffix)
