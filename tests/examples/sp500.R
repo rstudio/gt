@@ -11,7 +11,13 @@ data <-
     date_style = 6) %>%
   fmt_currency(
     columns = vars(High, Open, Low, Close),
-    currency = "USD")
+    currency = "USD",
+    scale_by = 1/1000,
+    pattern = "{x}K") %>%
+  fmt_number(
+    columns = vars(Volume),
+    decimals = 3,
+    scale_by = 1E-9,
+    pattern = "{x}B")
 
 data
-
