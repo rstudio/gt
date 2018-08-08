@@ -17,3 +17,6 @@ an object of class \code{gt_tbl}.
 \description{
 Modify the ordering of the stub block groups
 }
+\seealso{
+Other row modification functions: \code{\link{rows_omit}}
+}

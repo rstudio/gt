@@ -5,8 +5,8 @@
 \title{Format values to scientific notation}
 \usage{
 fmt_scientific(data, columns, rows = NULL, decimals = 2,
-  drop0trailing = FALSE, scale_by = 1, pattern = "{1}", sep_mark = ",",
-  dec_mark = ".", locale = NULL)
+  drop_trailing_zeros = FALSE, scale_by = 1, pattern = "{x}",
+  sep_mark = ",", dec_mark = ".", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the
@@ -20,13 +20,13 @@ rows in \code{columns} being formatted.}
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop0trailing}{a logical value that allows for removal of trailing
-zeros (those redundant zeros after the decimal mark).}
+\item{drop_trailing_zeros}{a logical value that allows for removal of
+trailing zeros (those redundant zeros after the decimal mark).}
 
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{1}} and all
+formatted number. The number itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
