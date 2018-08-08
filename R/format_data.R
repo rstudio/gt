@@ -5,8 +5,8 @@
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param drop0trailing a logical value that allows for removal of trailing
-#' zeros (those redundant zeros after the decimal mark).
+#' @param drop_trailing_zeros a logical value that allows for removal of
+#' trailing zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses.
@@ -15,7 +15,7 @@
 #' provided to \code{locale}. This setting is \code{TRUE} by default.
 #' @param scale_by a value to scale the input. The default is \code{1.0}.
 #' @param pattern a formatting pattern that allows for decoration of the
-#' formatted number. The number itself is represented by \code{{1}} and all
+#' formatted number. The number itself is represented by \code{{x}} and all
 #' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -55,23 +55,23 @@
 #'     columns = vars(val_1),
 #'     decimals = 2,
 #'     scale_by = 1E-6,
-#'     pattern = "{1}M") %>%
+#'     pattern = "{x}M") %>%
 #'   fmt_number(
 #'     columns = vars(val_2),
 #'     decimals = 2,
 #'     scale_by = 1/1000,
-#'     pattern = "{1}K")
+#'     pattern = "{x}K")
 #' @family data formatting functions
 #' @export
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
                        decimals = 2,
-                       drop0trailing = FALSE,
+                       drop_trailing_zeros = FALSE,
                        negative_val = "signed",
                        use_seps = TRUE,
                        scale_by = 1.0,
-                       pattern = "{1}",
+                       pattern = "{x}",
                        sep_mark = ",",
                        dec_mark = ".",
                        locale = NULL) {
@@ -86,8 +86,8 @@ fmt_number <- function(data,
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
-    sep_mark <- get_locale_sep_mark(locale = locale)
-    dec_mark <- get_locale_dec_mark(locale = locale)
+      sep_mark <- get_locale_sep_mark(locale = locale)
+      dec_mark <- get_locale_dec_mark(locale = locale)
   }
 
   # Provide an empty string for `sep_mark` if we choose
@@ -111,7 +111,7 @@ fmt_number <- function(data,
         big.mark = sep_mark,
         decimal.mark = dec_mark,
         format = "f",
-        drop0trailing = drop0trailing)
+        drop0trailing = drop_trailing_zeros)
 
     # Handle negative values
     if (negative_val == "parens") {
@@ -126,9 +126,7 @@ fmt_number <- function(data,
 
     # Handle formatting of pattern
     pre_post_txt <- get_pre_post_txt(pattern)
-    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
-    x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
-
+    x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
     x
   }
 
@@ -149,11 +147,11 @@ fmt_number <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param drop0trailing a logical value that allows for removal of trailing
-#' zeros (those redundant zeros after the decimal mark).
+#' @param drop_trailing_zeros a logical value that allows for removal of
+#' trailing zeros (those redundant zeros after the decimal mark).
 #' @param scale_by a value to scale the input. The default is \code{1.0}.
 #' @param pattern a formatting pattern that allows for decoration of the
-#' formatted number. The number itself is represented by \code{{1}} and all
+#' formatted number. The number itself is represented by \code{{x}} and all
 #' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -178,9 +176,9 @@ fmt_scientific <- function(data,
                            columns,
                            rows = NULL,
                            decimals = 2,
-                           drop0trailing = FALSE,
+                           drop_trailing_zeros = FALSE,
                            scale_by = 1.0,
-                           pattern = "{1}",
+                           pattern = "{x}",
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
@@ -212,7 +210,7 @@ fmt_scientific <- function(data,
           big.mark = sep_mark,
           decimal.mark = dec_mark,
           format = "e",
-          drop0trailing = drop0trailing)
+          drop0trailing = drop_trailing_zeros)
 
       small_pos <- (
         (x >= 1 & x < 10) |
@@ -277,8 +275,8 @@ fmt_scientific <- function(data,
 #' rows in \code{columns} being formatted.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
-#' @param drop0trailing a logical value that allows for removal of trailing
-#' zeros (those redundant zeros after the decimal mark).
+#' @param drop_trailing_zeros a logical value that allows for removal of
+#' trailing zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative numbers. With
 #' \code{signed} (the default), negative numbers will be shown with a negative
 #' sign. Using \code{parens} will show the negative value in parentheses.
@@ -286,7 +284,7 @@ fmt_scientific <- function(data,
 #' group separator is set by \code{sep_mark} and overridden if a locale ID is
 #' provided to \code{locale}. This setting is \code{TRUE} by default.
 #' @param pattern a formatting pattern that allows for decoration of the
-#' formatted number. The number itself is represented by \code{{1}} and all
+#' formatted number. The number itself is represented by \code{{x}} and all
 #' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -330,10 +328,10 @@ fmt_percent <- function(data,
                         columns,
                         rows = NULL,
                         decimals = 2,
-                        drop0trailing = FALSE,
+                        drop_trailing_zeros = FALSE,
                         negative_val = "signed",
                         use_seps = TRUE,
-                        pattern = "{1}",
+                        pattern = "{x}",
                         sep_mark = ",",
                         dec_mark = ".",
                         incl_space = FALSE,
@@ -375,7 +373,7 @@ fmt_percent <- function(data,
         big.mark = sep_mark,
         decimal.mark = dec_mark,
         format = "f",
-        drop0trailing = drop0trailing)
+        drop0trailing = drop_trailing_zeros)
 
     if (placement == "right") {
       x[non_na_x] <- paste0(
@@ -434,7 +432,7 @@ fmt_percent <- function(data,
 #' provided to \code{locale}. This setting is \code{TRUE} by default.
 #' @param scale_by a value to scale the input. The default is \code{1.0}.
 #' @param pattern a formatting pattern that allows for decoration of the
-#' formatted number. The number itself is represented by \code{{1}} and all
+#' formatted number. The number itself is represented by \code{{x}} and all
 #' other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
@@ -494,13 +492,13 @@ fmt_percent <- function(data,
 #'     currency = "USD",
 #'     decimals = 1,
 #'     scale_by = 1/1000,
-#'     pattern = "{1}K") %>%
+#'     pattern = "{x}K") %>%
 #'   fmt_currency(
 #'     columns = vars(val_jpy_lg),
 #'     currency = "JPY",
 #'     decimals = 2,
 #'     scale_by = 1E-6,
-#'     pattern = "{1}M")
+#'     pattern = "{x}M")
 #' @family data formatting functions
 #' @export
 fmt_currency <- function(data,
@@ -512,7 +510,7 @@ fmt_currency <- function(data,
                          decimals = NULL,
                          use_seps = TRUE,
                          scale_by = 1.0,
-                         pattern = "{1}",
+                         pattern = "{x}",
                          sep_mark = ",",
                          dec_mark = ".",
                          placement = "left",
