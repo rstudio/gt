@@ -56,6 +56,7 @@ gt <- function(data,
   # remove it from `data`
   if ("rowname" %in% colnames(data)) {
     stub_df[["rowname"]] <- as.character(data[["rowname"]])
+    data[["rowname"]] <- NULL
   }
 
   # If `groupname` is a column available in `data`,
@@ -63,6 +64,7 @@ gt <- function(data,
   # remove it from `data`
   if ("groupname" %in% colnames(data)) {
     stub_df[["groupname"]] <- as.character(data[["groupname"]])
+    data[["groupname"]] <- NULL
   }
 
   # Take the input data and convert to a
