@@ -813,6 +813,15 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
+#' Create a vector of HTML lines from gt table HTML
+#' @noRd
+create_html_lines <- function(html) {
+
+  unlist(strsplit(html, "\n"))
+}
+
+#' Obtain a line number from a vector of HTML lines by use of a pattern
+#' @noRd
 get_html_line <- function(html_lines, pattern) {
 
   lines <- grepl(pattern, html_lines)
