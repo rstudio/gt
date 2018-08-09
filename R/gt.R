@@ -8,6 +8,10 @@
 #' table as row captions in the stub.
 #' @param preview an option to ingest the table such that only the head and tail
 #' of the table is shown.
+#' @param top_n if \code{preview = TRUE} then the value provided here will be
+#' used as the number of rows from the top of the table to display.
+#' @param bottom_n if \code{preview = TRUE} then the value provided here will be
+#' used as the number of rows from the bottom of the table to display.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -31,22 +35,24 @@
 #' @export
 gt <- function(data,
                rownames_to_stub = FALSE,
-               preview = FALSE) {
+               preview = FALSE,
+               top_n = 5,
+               bottom_n = 1) {
 
   # If a preview table (head and tail) is requested,
   # then modify `data_tbl` to only include the head
   # and tail plus an ellipsis row
   if (preview) {
 
-    if (nrow(data) >= 6) {
+    if (nrow(data) > (top_n + bottom_n)) {
 
       data <-
         rbind(
-          data[1:5, ],
+          data[seq(top_n), ],
           rep("...", ncol(data)),
-          data[nrow(data), ])
+          data[nrow(data) - bottom_n, ])
 
-      rownames(data)[6] <- "..."
+      rownames(data)[top_n + 1] <- "..."
     }
   }
 
