@@ -4,7 +4,8 @@
 \alias{gt}
 \title{Create a gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE, preview = FALSE)
+gt(data, rownames_to_stub = FALSE, preview = FALSE, top_n = 5,
+  bottom_n = 1)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a tibble.}
@@ -14,6 +15,12 @@ table as row captions in the stub.}
 
 \item{preview}{an option to ingest the table such that only the head and tail
 of the table is shown.}
+
+\item{top_n}{if \code{preview = TRUE} then the value provided here will be
+used as the number of rows from the top of the table to display.}
+
+\item{bottom_n}{if \code{preview = TRUE} then the value provided here will be
+used as the number of rows from the bottom of the table to display.}
 }
 \value{
 an object of class \code{gt_tbl}.
