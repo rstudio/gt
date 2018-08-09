@@ -50,7 +50,7 @@ gt <- function(data,
         rbind(
           data[seq(top_n), ],
           rep("...", ncol(data)),
-          data[nrow(data) - bottom_n, ])
+          data[(nrow(data) - rev(seq(bottom_n))), ])
 
       rownames(data)[top_n + 1] <- "..."
     }
