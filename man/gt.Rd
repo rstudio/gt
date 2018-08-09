@@ -28,7 +28,8 @@ an object of class \code{gt_tbl}.
 \description{
 Create a gt table object so that we can perform styling transformations
 before transforming the entire object to a display table. Using this function
-is the first step in that process.
+is the first step in that process, and, there are a few data ingest options
+we can consider at this stage.
 }
 \examples{
 # Create a table object using the
