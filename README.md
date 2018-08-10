@@ -1,23 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<div style="text-align:center">
+<p align="center">
 
 <img src="man/figures/gt_logo_1x.png" height="500px">
 
-</div>
+</p>
 
-<div>
-
-</div>
-
-<div style="text-align:center">
+<p align="center">
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
 
-</div>
+</p>
 
 The **gt** package allows anyone to easily display tables from tabular
 data. The building of tables can be performed with a clear separation of
