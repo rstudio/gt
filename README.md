@@ -15,10 +15,10 @@ status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/pac
 
 </p>
 
-The **gt** package allows anyone to easily display tables from tabular
-data. The building of tables can be performed with a clear separation of
-concerns: you don’t have to decide how the tabular data gets transformed
-and structured while also worrying about aesthetics.
+The **gt** package allows anyone to easily create display tables from
+tabular data. The building of such tables can be performed with a clear
+separation of concerns: you don’t have to decide how the tabular data
+gets transformed and structured while also worrying about aesthetics.
 
 Let’s identify the underlying components of a table and understand their
 roles. The model for the constituent parts of a table can be explained

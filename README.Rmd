@@ -21,9 +21,10 @@ library(tidyverse)
 <p align="center"><img src="man/figures/gt_logo_1x.png" height="500px"></p>
 
 
-<p align="center">[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![CRAN status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)</p>
+<p align="center">[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)</p>
 
-The **gt** package allows anyone to easily display tables from tabular data. The building of tables can be performed with a clear separation of concerns: you don't have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.
+The **gt** package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don't have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.
 
 Let's identify the underlying components of a table and understand their roles. The model for the constituent parts of a table can be explained in part by the following schematic:
 
