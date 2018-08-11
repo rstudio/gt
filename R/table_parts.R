@@ -1,7 +1,7 @@
 #' Add a table heading
 #'
 #' Add a title and optional headnote to the heading part of the table.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param title text to be used in the table title.
 #' @param headnote optional text to be used as the table's headnote.
 #' @return an object of class \code{gt_tbl}.
@@ -41,7 +41,7 @@ tab_heading <- function(data,
 #'
 #' Add a caption to the stubhead of a table. If a stub does not exist, no
 #' change will be made.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param caption the text to be used as the stubhead caption.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -66,7 +66,7 @@ tab_stubhead_caption <- function(data,
 #'
 #' Set a group with a name and mappings to rows extant in the table. This
 #' creates a stub block with group headings and row captions.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block.
 #' @param others an optional group heading to use for any rows not part of a
@@ -122,7 +122,7 @@ tab_stub_block <- function(data,
 #'
 #' Set a spanner with a name and mappings to columns extant in the table. This
 #' creates a boxhead panel with spanner headings and column headings.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param group the name to assign to the spanner heading.
 #' @param columns the columns to be components of the spanner heading.
 #' @return an object of class \code{gt_tbl}.
@@ -161,7 +161,7 @@ tab_boxhead_panel <- function(data,
 #' Add a table footnote
 #'
 #' Add a footnote with a glyph attached to the targeted cells, rows, or columns.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param footnote text to be used in the footnote.
 #' @param location the cell or set of cells to be associated with the footnote.
 #' Supplying an object with the \code{target_cell()} helper function is a useful
@@ -267,10 +267,12 @@ tab_footnote <- function(data,
 #' Add a source note citation
 #'
 #' Add a source note citation to the source note part of the table.
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams fmt_number
 #' @param source_note text to be used in the source note.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
+#' # Add a source note that provides
+#' # a citation for the tabular data
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_source_note(
 #'     source_note = md("*Henderson and Velleman* (1981)."))
