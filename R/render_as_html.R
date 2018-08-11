@@ -10,16 +10,19 @@
 #' @noRd
 render_as_html <- function(data) {
 
+  # Extract all attributes
+  data_attr <- attributes(data)
+
   # Extract internal data frames
-  fmts_df <- attr(data, "fmts_df")
-  boxh_df <- attr(data, "boxh_df")
-  stub_df <- attr(data, "stub_df")
-  foot_df <- attr(data, "foot_df")
+  fmts_df <- data_attr$fmts_df
+  boxh_df <- data_attr$boxh_df
+  stub_df <- data_attr$stub_df
+  foot_df <- data_attr$foot_df
 
   # Get the available property names
   property_names <-
     base::setdiff(
-      names(attributes(data)),
+      names(data_attr),
       c("row.names", "class", "names", "boxh_df", "stub_df",
         "fmts_df", "foot_df", "output_df", "formats"))
 
