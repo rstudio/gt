@@ -10,7 +10,7 @@ fmt_number(data, columns, rows = NULL, decimals = 2,
   locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -23,8 +23,8 @@ use. The default number of decimal places is \code{2}.}
 \item{drop_trailing_zeros}{a logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_val}{the formatting to use for negative numbers. With
-\code{signed} (the default), negative numbers will be shown with a negative
+\item{negative_val}{the formatting to use for negative values. With
+\code{signed} (the default), negative values will be shown with a negative
 sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{use_seps}{an option to use digit group separators. The type of digit
@@ -34,7 +34,7 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{x}} and all
+formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -63,7 +63,7 @@ library(tidyverse)
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   fmt_number(
     columns = vars(mpg, disp, drat, qsec),
-    decimals = 2)
+    decimals = 5)
 
 # Create a tibble with two columns
 # that are both numeric
@@ -83,7 +83,7 @@ gt(data_tbl) \%>\%
     columns = vars(val_1),
     decimals = 2,
     scale_by = 1E-6,
-    pattern = "{x}M") \%>\%
+    pattern = "{x}") \%>\%
   fmt_number(
     columns = vars(val_2),
     decimals = 2,
@@ -95,5 +95,5 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
   \code{\link{fmt_missing}}, \code{\link{fmt_percent}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }

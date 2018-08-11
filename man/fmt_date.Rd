@@ -7,7 +7,7 @@
 fmt_date(data, columns, rows = NULL, date_style)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -16,14 +16,15 @@ rows in \code{columns} being formatted.}
 
 \item{date_style}{the date style to use. Supply a number (from \code{1} to
 \code{14}) that corresponds to the preferred date style. Use
-\code{info_date_style()} to see the different numbered and named date
+\code{\link{info_date_style}()} to see the different numbered and named date
 presets.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Format values as dates
+See \code{\link{info_date_style}()} for a useful reference on
+\code{date_style}.
 }
 \examples{
 library(tidyverse)
@@ -44,12 +45,12 @@ data_tbl <-
 gt(data_tbl) \%>\%
   fmt_date(
     columns = vars(date),
-    date_style = 2)
+    date_style = "2")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_missing}},
   \code{\link{fmt_number}}, \code{\link{fmt_percent}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }
