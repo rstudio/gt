@@ -30,8 +30,9 @@ tab_heading <- function(data,
   }
 
   attr(data, "heading") <-
-    list(title = title,
-         headnote = headnote)
+    list(
+      title = title,
+      headnote = headnote)
 
   data
 }
