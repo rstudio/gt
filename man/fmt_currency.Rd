@@ -10,21 +10,22 @@ fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
   placement = "left", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
 \item{rows}{optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted.}
 
-\item{currency}{the currency to use for the numeric value.}
+\item{currency}{the currency to use for the numeric value. This is to be
+supplied as a 3-letter currency code. Examples include \code{"USD"} for
+U.S. Dollars and \code{"EUR"} for the Euro currency.}
 
 \item{use_subunits}{an option for whether the subunits portion of a currency
 value should be displayed.}
 
-\item{negative_val}{the formatting to use for negative numbers. With
-\code{signed} (the default), negative numbers will be shown with a negative
+\item{negative_val}{the formatting to use for negative values. With
+\code{signed} (the default), negative values will be shown with a negative
 sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
@@ -37,7 +38,7 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{x}} and all
+formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -120,5 +121,5 @@ Other data formatting functions: \code{\link{fmt_datetime}},
   \code{\link{fmt_date}}, \code{\link{fmt_missing}},
   \code{\link{fmt_number}}, \code{\link{fmt_percent}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }

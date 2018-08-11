@@ -10,8 +10,7 @@ fmt_percent(data, columns, rows = NULL, decimals = 2,
   placement = "right", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -24,8 +23,8 @@ use. The default number of decimal places is \code{2}.}
 \item{drop_trailing_zeros}{a logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_val}{the formatting to use for negative numbers. With
-\code{signed} (the default), negative numbers will be shown with a negative
+\item{negative_val}{the formatting to use for negative values. With
+\code{signed} (the default), negative values will be shown with a negative
 sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{use_seps}{an option to use digit group separators. The type of digit
@@ -33,7 +32,7 @@ group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{x}} and all
+formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -88,5 +87,5 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
   \code{\link{fmt_missing}}, \code{\link{fmt_number}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }

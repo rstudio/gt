@@ -9,8 +9,7 @@ fmt_scientific(data, columns, rows = NULL, decimals = 2,
   sep_mark = ",", dec_mark = ".", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the
-\code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -26,7 +25,7 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted number. The number itself is represented by \code{{x}} and all
+formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits.}
@@ -60,5 +59,5 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
   \code{\link{fmt_missing}}, \code{\link{fmt_number}},
   \code{\link{fmt_percent}}, \code{\link{fmt_time}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }

@@ -7,7 +7,7 @@
 fmt_time(data, columns, rows = NULL, time_style)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -16,7 +16,7 @@ rows in \code{columns} being formatted.}
 
 \item{time_style}{the time style to use. Supply a number (from \code{1} to
 \code{5}) that corresponds to the preferred time style. Use
-\code{info_time_style()} to see the different numbered and named time
+\code{\link{info_time_style}()} to see the different numbered and named time
 presets.}
 }
 \description{
@@ -48,5 +48,5 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
   \code{\link{fmt_missing}}, \code{\link{fmt_number}},
   \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{set_fmt}}
+  \code{\link{fmt}}
 }
