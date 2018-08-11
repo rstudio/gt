@@ -194,21 +194,21 @@ render_as_html <- function(data) {
   if (is.null(stub_components)) {
 
     extracted <- output_df
-    col_alignment <- boxh_df[3, ] %>% t() %>% as.vector()
+    col_alignment <- boxh_df[3, ] %>% unlist() %>% unname()
     groups_rows <- NULL
   }
 
   # Extract the table (case of table with a stub w/ only row names)
-  if (!is.null(stub_components) && all(stub_components == "row_name")) {
+  if (!is.null(stub_components) && identical(stub_components, "row_name")) {
 
     colnames(stub_df)[2] <- ":row_name:"
     extracted <- cbind(stub_df, output_df)[, -1]
-    col_alignment <- c("right", boxh_df[3, ] %>% t() %>% as.vector())
+    col_alignment <- c("right", boxh_df[3, ] %>% unlist() %>% unname())
     groups_rows <- NULL
   }
 
   # Extract the table (case of table with a stub w/ only group names)
-  if (!is.null(stub_components) && all(stub_components == "group_name")) {
+  if (!is.null(stub_components) && identical(stub_components, "group_name")) {
 
     colnames(stub_df)[1] <- ":group_name:"
     extracted <- cbind(stub_df, output_df)[, -2]
@@ -217,7 +217,7 @@ render_as_html <- function(data) {
   }
 
   # Extract the table (case of table with a stub of row and group names)
-  if (!is.null(stub_components) && all(stub_components == c("row_name", "group_name"))) {
+  if (!is.null(stub_components) && identical(stub_components, c("row_name", "group_name"))) {
 
     colnames(stub_df) <- c(":group_name:", ":row_name:")
 
