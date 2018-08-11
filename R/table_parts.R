@@ -81,8 +81,6 @@ tab_stubhead_caption <- function(data,
 #'     group = "perimeter",
 #'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
 #' @family table-part creation/modification functions
-#' @importFrom rlang enquo get_expr flatten_chr
-#' @importFrom stringr str_trim str_remove_all
 #' @export
 tab_stub_block <- function(data,
                            group,
@@ -137,7 +135,6 @@ tab_stub_block <- function(data,
 #'     group = "perimeter",
 #'     columns = c("peri", "shape"))
 #' @family table-part creation/modification functions
-#' @importFrom rlang enquo get_expr
 #' @export
 tab_boxhead_panel <- function(data,
                               group,
