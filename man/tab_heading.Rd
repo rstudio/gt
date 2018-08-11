@@ -7,7 +7,7 @@
 tab_heading(data, title, headnote = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{title}{text to be used in the table title.}
 

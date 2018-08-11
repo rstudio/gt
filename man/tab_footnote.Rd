@@ -7,7 +7,7 @@
 tab_footnote(data, footnote, location)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{footnote}{text to be used in the footnote.}
 

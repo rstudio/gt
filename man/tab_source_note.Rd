@@ -7,7 +7,7 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{source_note}{text to be used in the source note.}
 }
@@ -18,6 +18,8 @@ an object of class \code{gt_tbl}.
 Add a source note citation to the source note part of the table.
 }
 \examples{
+# Add a source note that provides
+# a citation for the tabular data
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_source_note(
     source_note = md("*Henderson and Velleman* (1981)."))
