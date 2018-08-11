@@ -835,6 +835,7 @@ get_html_line <- function(html_lines, pattern) {
 
 #' Wrapper for `gsub()` that uses default argument values
 #' and rearranges first three arguments for better pipelining
+#' @noRd
 tidy_gsub <- function(x, pattern, replacement) {
 
   gsub(pattern, replacement, x)
