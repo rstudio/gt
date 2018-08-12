@@ -840,3 +840,134 @@ tidy_gsub <- function(x, pattern, replacement) {
 
   gsub(pattern, replacement, x)
 }
+
+#' Used to splice in summary lines into the final gt table
+#' @noRd
+integrate_summary_lines <- function(data_attr) {
+
+  summary_lines <- get_all_summaries(df = cbind(data_attr$stub_df, data_attr$data_df))
+
+  for (i in seq(data_attr$summary_auto)) {
+
+    summary_attrs <- data_attr$summary_auto[[i]]
+
+    # Filter the `summary_lines` table by the requested
+    # aggregation types
+    summary_lines_mod <-
+      (summary_lines %>%
+         subset(type %in% summary_attrs$agg))[, -ncol(summary_lines)]
+
+    # If there is a tint color set, apply that to the
+    # label
+    if (!is.null(summary_attrs$tint)) {
+      summary_lines_mod <-
+        summary_lines_mod %>%
+        dplyr::mutate(rowname = paste0(rowname, "__", summary_attrs$tint))
+    }
+
+    # Filter by the groups requested
+    if (!is.null(summary_attrs$groups)) {
+      summary_lines_mod <-
+        summary_lines_mod %>%
+        subset(groupname %in% summary_attrs$groups)
+    }
+
+    # Place empty strings in any columns not requested for aggregation
+    if (!is.null(summary_attrs$columns)) {
+
+      empty_cols <-
+        base::setdiff(
+          colnames(summary_lines_mod),
+          c("groupname", "rowname", summary_attrs$columns))
+
+      summary_lines_mod[
+        , which(colnames(summary_lines_mod) %in% empty_cols)] <- ""
+    }
+
+    # Format the summary values and cast values as character
+    summary_lines_mod <-
+      summary_lines_mod %>%
+      dplyr::mutate_if(
+        .predicate = is.numeric,
+        .funs = function(x) {
+          formatC(
+            x,
+            digits = summary_attrs$decimals,
+            mode = "double",
+            big.mark = summary_attrs$sep_mark,
+            decimal.mark = summary_attrs$dec_mark,
+            format = "f",
+            drop0trailing = FALSE)}
+      ) %>%
+      dplyr::mutate_all(funs(as.character))
+
+    summary_lines_na <- summary_lines_mod
+    summary_lines_na[] <- NA_character_
+
+    data_attr$fmts_df <- rbind(data_attr$fmts_df, summary_lines_na[, -c(1:2)])
+    data_attr$foot_df <- rbind(data_attr$foot_df, summary_lines_na[, -c(1:2)])
+    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines_mod[, 1:2])
+    data_attr$output_df <- rbind(data_attr$output_df, summary_lines_mod[, -c(1:2)])
+  }
+
+  data_attr
+}
+
+#' Used to merge two columns together in the final gt table
+#' @noRd
+perform_col_merge <- function(data_attr) {
+
+  for (i in seq(data_attr$col_merge[[1]])) {
+
+    pattern <- data_attr$col_merge[["pattern"]][i]
+    value_1_col <- data_attr$col_merge[["col_1"]][i] %>% unname()
+    value_2_col <- data_attr$col_merge[["col_1"]][i] %>% names()
+
+    values_1 <-
+      data_attr$output_df[, which(colnames(data_attr$output_df) == value_1_col)]
+
+    values_2 <-
+      data_attr$output_df[, which(colnames(data_attr$output_df) == value_2_col)]
+
+    values_1_data <-
+      data_attr$data_df[, which(colnames(data_attr$data_df) == value_1_col)]
+
+    values_2_data <-
+      data_attr$data_df[, which(colnames(data_attr$data_df) == value_2_col)]
+
+    for (j in seq(values_1)) {
+
+      if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
+          !is.na(values_2[j]) && !grepl("NA", values_2[j]) &&
+          !is.na(values_1_data[j]) && !is.na(values_2_data[j])) {
+
+        values_1[j] <-
+          pattern %>%
+          stringr::str_replace(fixed("{1}"), values_1[j]) %>%
+          stringr::str_replace(fixed("{2}"), values_2[j])
+      }
+    }
+
+    data_attr$output_df[
+      , which(colnames(data_attr$output_df) == value_1_col)] <- values_1
+
+    # Remove the second column across key dfs
+    data_attr$boxh_df <-
+      data_attr$boxh_df[
+        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+
+    data_attr$fmts_df <-
+      data_attr$fmts_df[
+        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+
+    data_attr$foot_df <-
+      data_attr$foot_df[
+        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+
+    data_attr$output_df <-
+      data_attr$output_df[
+        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+  }
+
+  data_attr
+}
