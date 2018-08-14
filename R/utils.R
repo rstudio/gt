@@ -943,8 +943,8 @@ perform_col_merge <- function(data_attr) {
 
         values_1[j] <-
           pattern %>%
-          stringr::str_replace(fixed("{1}"), values_1[j]) %>%
-          stringr::str_replace(fixed("{2}"), values_2[j])
+          tidy_gsub("\\{1\\}", values_1[j]) %>%
+          tidy_gsub("\\{2\\}", values_2[j])
       }
     }
 
