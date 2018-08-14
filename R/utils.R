@@ -769,7 +769,6 @@ create_inline_styles <- function(class_names, css_tbl) {
     "\"")
 }
 
-
 #' Create an inlined style block from a CSS tibble
 #' @noRd
 #' @importFrom stringr str_extract str_replace
@@ -842,6 +841,7 @@ tidy_gsub <- function(x, pattern, replacement) {
 }
 
 #' Used to splice in summary lines into the final gt table
+#' @importFrom dplyr mutate mutate_if mutate_all
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
 
