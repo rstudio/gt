@@ -674,7 +674,9 @@ create_column_headings <- function(data_attr,
   }
 }
 
-create_table_start <- function(groups_rows, n_rows, n_cols) {
+create_table_start <- function(groups_rows,
+                               n_rows,
+                               n_cols) {
 
   paste0(
     "<!--gt table start-->\n",
