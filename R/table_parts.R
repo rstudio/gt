@@ -296,3 +296,76 @@ tab_source_note <- function(data,
 
   data
 }
+
+#' Add a table style
+#'
+#' Add a custom style to one or more cells
+#' @inheritParams fmt_number
+#' @param style a vector of styles to use. The \code{\link{apply_styles}()}
+#' helper function can be used here to more easily generate valid styles.
+#' @param location the cell or set of cells to be styled. Supplying an object
+#' with the \code{target_cell()} helper function is a useful way to specify the
+#' cell that is to be styled.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Add a style that is to be applied
+#' # to a single table cell
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   tab_style(
+#'     style = apply_styles(background_color = "steelblue"),
+#'     location = target_cell(
+#'       row = "Maserati Bora",
+#'       column = "hp"))
+#' @family table-part creation/modification functions
+#' @seealso [target_cell()] as a useful helper function for targeting the cell
+#' associated with the footnote.
+#' @importFrom stats setNames
+#' @export
+tab_style <- function(data,
+                      style,
+                      location) {
+
+  # Check if the target location is actually in the table
+  if (inherits(location, "single_cell_target") &&
+      !is_target_in_table(data = data, location = location)) {
+    return(data)
+  }
+
+  if (inherits(location, "single_cell_target")) {
+
+    row <- location$row
+    column <- location$column
+
+    if (is.numeric(column)) {
+      data_col <- colnames(data)[column]
+    }
+
+    if (is.numeric(row)) {
+      data_row <- row
+    }
+
+    if (is.character(column)) {
+      data_col <- column
+    }
+
+    if (is.character(row)) {
+      data_row <- which(attr(data, "stub_df")[["rowname"]] == row)[1]
+    }
+
+    # Append the style
+    if (is.na(attr(data, "fmts_df")[data_row, data_col])) {
+
+      attr(data, "fmts_df")[data_row, data_col] <-
+        paste0("::style_", style, collapse = "")
+
+    } else {
+
+      attr(data, "fmts_df")[data_row, data_col] <-
+        paste0(
+          attr(data, "fmts_df")[data_row, data_col],
+          "::style_", style, collapse = "")
+    }
+  }
+
+  data
+}
