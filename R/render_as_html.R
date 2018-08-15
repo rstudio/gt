@@ -92,7 +92,7 @@ render_as_html <- function(data) {
   } else if (stub_component_is_rowname(stub_components)) {
 
     # Extract the table (case of table with a stub w/ only row names)
-    colnames(stub_df)[2] <- ":row_name:"
+    colnames(data_attr$stub_df)[2] <- ":row_name:"
     extracted <- cbind(data_attr$stub_df, data_attr$output_df)[, -1]
 
     col_alignment <- c("right", data_attr$boxh_df[3, ] %>% unlist() %>% unname())
