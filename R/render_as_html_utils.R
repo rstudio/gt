@@ -417,7 +417,9 @@ create_footnote_component <- function(data_attr,
        body_content = body_content)
 }
 
-create_heading_component <- function(data_attr, n_cols) {
+#' @noRd
+create_heading_component <- function(data_attr,
+                                     n_cols) {
 
   heading_component <-
     paste0(
@@ -437,44 +439,47 @@ create_heading_component <- function(data_attr, n_cols) {
           n_cols, "'>", data_attr$heading$headnote ,"</th>\n</tr>\n"))
   }
 
-  heading_component <-
+  paste0(
+    heading_component,
     paste0(
-      heading_component,
-      paste0(
-        "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
-
-  heading_component
+      "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
 }
 
+#' @noRd
+create_source_note_rows <- function(data_attr,
+                                    n_cols) {
 
-create_source_note_rows <- function(data_attr, n_cols) {
-  source_note_rows <-
+  paste0(
+    "<tfoot data-type='source_notes'>\n",
     paste0(
-      "<tfoot data-type='source_notes'>\n",
-      paste0(
-        "<tr>\n<td colspan='", n_cols + 1 ,
-        "' class='sourcenote'>", data_attr$source_note[[1]],
-        "</td>\n</tr>\n",
-        collapse = ""),
-      "</tfoot>\n")
-
-  source_note_rows
+      "<tr>\n<td colspan='", n_cols + 1 ,
+      "' class='sourcenote'>", data_attr$source_note[[1]],
+      "</td>\n</tr>\n",
+      collapse = ""),
+    "</tfoot>\n")
 }
 
-split_body_content <- function(body_content, n_cols) {
+#' @noRd
+split_body_content <- function(body_content,
+                               n_cols) {
 
-  split(body_content, ceiling(seq_along(body_content)/n_cols))
+  split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
+#' @noRd
 create_table_body <- function(row_splits,
+                              row_splits_styles,
                               groups_rows,
                               col_alignment,
-                              n_rows, n_cols) {
+                              n_rows,
+                              n_cols) {
 
   body_rows <- c()
+
   for (i in 1:n_rows) {
 
-    if (!is.null(groups_rows) && i %in% groups_rows$row) {
+    if (!is.null(groups_rows) &&
+        i %in% groups_rows$row) {
       body_rows <-
         c(body_rows,
           paste0(
@@ -519,10 +524,11 @@ create_table_body <- function(row_splits,
           paste0(
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='row ", col_alignment, "'>",
-              row_splits[i][[1]], "</td>", collapse = "\n"),
-            "\n</tr>\n")
-        )
+              "<td class='row ", col_alignment, "' ",
+              "style='", row_splits_styles[i][[1]],
+              "'>", row_splits[i][[1]],
+              "</td>", collapse = "\n"),
+            "\n</tr>\n"))
     }
   }
 
