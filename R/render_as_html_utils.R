@@ -1,7 +1,8 @@
 #' Move input data cells to `output_df` that didn't have any rendering applied
 #' during `render_formats()`
 #' @noRd
-migrate_unformatted_to_output <- function(data, output_df) {
+migrate_unformatted_to_output <- function(data,
+                                          output_df) {
 
   for (colname in colnames(output_df)) {
 
@@ -91,22 +92,26 @@ get_stub_components <- function(data_attr) {
   stub_components
 }
 
-stub_component_is_rowname <- function(x) {
-  identical(x, "row_name")
+stub_component_is_rowname <- function(stub_components) {
+
+  identical(stub_components, "row_name")
 }
 
-stub_component_is_groupname <- function(x) {
-  identical(x, "group_name")
+stub_component_is_groupname <- function(stub_components) {
+
+  identical(stub_components, "group_name")
 }
 
-stub_component_is_rowname_groupname <- function(x) {
-  identical(x, c("row_name", "group_name"))
+stub_component_is_rowname_groupname <- function(stub_components) {
+
+  identical(stub_components, c("row_name", "group_name"))
 }
 
 #' Create a data frame with the rows that the group rows
 #' should appear above
 #' @noRd
-get_groups_rows <- function(extracted, ordering) {
+get_groups_rows <- function(extracted,
+                            ordering) {
 
   groups_rows <-
     data.frame(
@@ -133,7 +138,6 @@ get_n_groups <- function(groups_rows) {
     return(0)
   }
 }
-
 
 #' Used to merge two columns together in the final gt table
 #' @noRd
@@ -196,7 +200,8 @@ perform_col_merge <- function(data_attr) {
 
 #' Used to merge two columns together in the final gt table
 #' @noRd
-obtain_group_ordering <- function(data_attr, extracted) {
+obtain_group_ordering <- function(data_attr,
+                                  extracted) {
 
   ordering <- data_attr$arrange_groups$groups
   all_groups <- unique(extracted[, 1])
@@ -209,7 +214,8 @@ obtain_group_ordering <- function(data_attr, extracted) {
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
 
-  summary_lines <- get_all_summaries(df = cbind(data_attr$stub_df, data_attr$data_df))
+  summary_lines <-
+    get_all_summaries(df = cbind(data_attr$stub_df, data_attr$data_df))
 
   for (i in seq(data_attr$summary_auto)) {
 
@@ -277,7 +283,10 @@ integrate_summary_lines <- function(data_attr) {
   data_attr
 }
 
-arrange_dfs <- function(data_attr, extracted, ordering) {
+#' @noRd
+arrange_dfs <- function(data_attr,
+                        extracted,
+                        ordering) {
 
   data_attr$fmts_df <- cbind(extracted[, 1:2], data_attr$fmts_df)
   data_attr$foot_df <- cbind(extracted[, 1:2], data_attr$foot_df)
@@ -313,7 +322,7 @@ arrange_dfs <- function(data_attr, extracted, ordering) {
   list(data_attr = data_attr, extracted = extracted)
 }
 
-
+#' @noRd
 footnotes_to_list <- function(data_attr,
                               has_stub,
                               list_object = NULL) {
@@ -349,7 +358,8 @@ footnotes_to_list <- function(data_attr,
   list_
 }
 
-
+#' @importFrom stats setNames
+#' @noRd
 create_footnote_component <- function(data_attr,
                                       list_decorators,
                                       body_content,
