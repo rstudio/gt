@@ -106,10 +106,44 @@ render_as_html <- function(data) {
 
     # Extract the table (case of table with a stub w/ only group names)
     colnames(data_attr$stub_df)[1] <- ":group_name:"
+
+    # Combine `:group_name:` column in stub with the output
+    #   table to form `extracted`
     extracted <- cbind(data_attr$stub_df, data_attr$output_df)[, -2]
 
-    col_alignment <- c("right", data_attr$boxh_df[3, ] %>% unlist() %>% unname())
-    groups_rows <- NULL
+    # Replace NA values in the `:group_name:` column
+    extracted[which(is.na(extracted[, 1])), 1] <- data_attr$others_group[[1]] %||% "Others"
+
+    if ("arrange_groups" %in% property_names) {
+
+      # Obtain the `ordering` object, which is a vector that specifies
+      #   the order of the groups
+      ordering <- obtain_group_ordering(data_attr, extracted)
+
+      # Modify the `extracted` data frame (and associated data frames
+      #   in `data_attr`) so that rows are rearranged according to
+      #   the group names available in `ordering`
+      arranged <- arrange_dfs(data_attr, extracted, ordering)
+
+      # Reassign the transformed `extracted` and `data_attr` objects
+      extracted <- arranged$extracted
+      data_attr <- arranged$data_attr
+
+    } else {
+      ordering <- obtain_group_ordering(data_attr, extracted)
+    }
+
+    # Create the `groups_rows` data frame, which provides information
+    #   on which rows the group rows should appear above
+    groups_rows <- get_groups_rows(extracted, ordering)
+
+    # Remove the `:group_name:` column from the `extracted` data frame
+    extracted <- extracted[, -1]
+
+    # Define the `col_alignment` vector, which is a
+    #   vector of column alignment values for all of
+    #   the relevant columns in a table
+    col_alignment <- data_attr$boxh_df[3, ] %>% unlist() %>% unname()
 
     # Extract footnote references and place them into the
     # `list_decorators` object
@@ -142,7 +176,6 @@ render_as_html <- function(data) {
       data_attr <- arranged$data_attr
 
     } else {
-
       ordering <- obtain_group_ordering(data_attr, extracted)
     }
 
@@ -150,7 +183,7 @@ render_as_html <- function(data) {
     #   on which rows the group rows should appear above
     groups_rows <- get_groups_rows(extracted, ordering)
 
-    # Remove the `group_name` row from the `extracted` data frame
+    # Remove the `:group_name:` column from the `extracted` data frame
     extracted <- extracted[, -1]
 
     # Define the `col_alignment` vector, which is a
