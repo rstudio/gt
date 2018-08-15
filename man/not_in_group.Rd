@@ -13,9 +13,9 @@ a character object of class \code{not_in_group}.
 Helper for collecting ungrouped rows or columns
 }
 \seealso{
-Other helper functions: \code{\link{col_labels}},
-  \code{\link{columns_with}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{rownames_with}},
-  \code{\link{rows_where}}, \code{\link{target_cell}},
-  \code{\link{vars}}
+Other helper functions: \code{\link{apply_styles}},
+  \code{\link{col_labels}}, \code{\link{columns_with}},
+  \code{\link{html}}, \code{\link{md}},
+  \code{\link{rownames_with}}, \code{\link{rows_where}},
+  \code{\link{target_cell}}, \code{\link{vars}}
 }

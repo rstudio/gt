@@ -27,9 +27,9 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
     caption = md("car *make* and *model*"))
 }
 \seealso{
-Other helper functions: \code{\link{col_labels}},
-  \code{\link{columns_with}}, \code{\link{html}},
-  \code{\link{not_in_group}}, \code{\link{rownames_with}},
-  \code{\link{rows_where}}, \code{\link{target_cell}},
-  \code{\link{vars}}
+Other helper functions: \code{\link{apply_styles}},
+  \code{\link{col_labels}}, \code{\link{columns_with}},
+  \code{\link{html}}, \code{\link{not_in_group}},
+  \code{\link{rownames_with}}, \code{\link{rows_where}},
+  \code{\link{target_cell}}, \code{\link{vars}}
 }

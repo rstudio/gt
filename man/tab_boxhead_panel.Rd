@@ -34,5 +34,6 @@ Other table-part creation/modification functions: \code{\link{gt}},
   \code{\link{tab_footnote}}, \code{\link{tab_heading}},
   \code{\link{tab_source_note}},
   \code{\link{tab_stub_block}},
-  \code{\link{tab_stubhead_caption}}
+  \code{\link{tab_stubhead_caption}},
+  \code{\link{tab_style}}
 }
