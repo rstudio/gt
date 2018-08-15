@@ -212,3 +212,71 @@ not_in_group <- function() {
   class(x) <- "not_in_group"
   x
 }
+
+#' Helper for defining custom styles for table cells
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+apply_styles <- function(background_color = NULL,
+                         text_color = NULL,
+                         text_font = NULL,
+                         text_size = NULL,
+                         text_align = NULL,
+                         text_indent = NULL,
+                         text_style = NULL,
+                         text_decorate = NULL,
+                         text_transform = NULL) {
+
+  styles <- c()
+
+  if (!is.null(background_color)) {
+    styles <- c(styles, paste0("background-color:", background_color, ";"))
+  }
+
+  if (!is.null(text_color)) {
+    styles <- c(styles, paste0("color:", text_color, ";"))
+  }
+
+  if (!is.null(text_font)) {
+    styles <- c(styles, paste0("font-family:", text_font, ";"))
+  }
+
+  if (!is.null(text_size)) {
+    styles <- c(styles, paste0("font-size:", text_size, ";"))
+  }
+
+  if (!is.null(text_align)) {
+
+    if (text_align %in% c("center", "left", "right", "justify")) {
+    styles <- c(styles, paste0("text-align:", text_align, ";"))
+    }
+  }
+
+  if (!is.null(text_indent)) {
+    styles <- c(styles, paste0("text-indent:", text_indent, ";"))
+  }
+
+  if (!is.null(text_style)) {
+
+    if (text_style %in% c("normal", "italic", "oblique")) {
+      styles <- c(styles, paste0("font-style:", text_style, ";"))
+    }
+  }
+
+  if (!is.null(text_decorate)) {
+
+    if (text_decorate %in% c("overline", "line-through",
+                             "underline", "underline overline")) {
+      styles <- c(styles, paste0("text-decoration:", text_decorate, ";"))
+    }
+  }
+
+  if (!is.null(text_transform)) {
+
+    if (text_decorate %in% c("uppercase", "lowercase", "capitalize")) {
+      styles <- c(styles, paste0("text-transform:", text_transform, ";"))
+    }
+  }
+
+  styles
+}
