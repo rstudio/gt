@@ -249,10 +249,25 @@ render_as_html <- function(data) {
   # Split the body_content by slices of rows
   row_splits <- split_body_content(body_content, n_cols)
 
+  # Split any custom style attributes
+  row_splits_styles <-
+    as.vector(
+      t(
+        cbind(data.frame(empty = rep(NA_character_, n_rows)),
+              data_attr$fmts_df))) %>%
+    tidy_gsub("::style_", "")
+
+  row_splits_styles[is.na(row_splits_styles)] <- ""
+
+  row_splits_styles <-
+    row_splits_styles %>%
+    split_body_content(n_cols)
+
   # Create the table body
   table_body <-
     create_table_body(
       row_splits,
+      row_splits_styles,
       groups_rows,
       col_alignment,
       n_rows,
