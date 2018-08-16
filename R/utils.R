@@ -2,7 +2,8 @@
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter
 #' @noRd
-resolve_rows <- function(data, rows) {
+resolve_rows <- function(data,
+                         rows) {
 
   if (inherits(rows, "rownames_with")) {
 
@@ -50,7 +51,7 @@ resolve_columns <- function(data, columns) {
 
   } else if (is.character(columns)) {
 
-    columns <- colnames(data)[which(colnames(data) %in% columns)]
+    columns <- columns[columns %in% colnames(data)]
   }
 
   columns
