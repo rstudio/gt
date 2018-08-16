@@ -152,6 +152,36 @@ target_cell <- function(row = NULL,
   cell_targeted
 }
 
+#' Helper for targeting multiple table cells
+#' @param row a single row or a range of rows to target.
+#' @param column a single column or a range of columns to target.
+#' @return a list object of class \code{multi_cell_target}.
+#' @family helper functions
+#' @export
+target_cells <- function(rows = NULL,
+                         columns = NULL) {
+
+  # If using the `vars()` helper, get the row as a character vector
+  if (inherits(rows, "quosures")) {
+    rows <- rows %>% lapply(`[[`, 2) %>% as.character()
+  }
+
+  # If using the `vars()` helper, get the column as a character vector
+  if (inherits(columns, "quosures")) {
+    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  }
+
+  # Get all possible combinations with `expand.grid()`
+  expansion <- expand.grid(rows, columns, stringsAsFactors = FALSE)
+
+  # Create a list object
+  cells_targeted <- list(row = expansion[[1]], column = expansion[[2]])
+
+  # Apply the `helper_cells` class
+  attr(cells_targeted, "class") <- "multi_cell_target"
+  cells_targeted
+}
+
 #' Helper for targeting a series of row labels or columns
 #'
 #' See \code{dplyr::\link[dplyr]{vars}} for details.
