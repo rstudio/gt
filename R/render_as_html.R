@@ -207,7 +207,6 @@ render_as_html <- function(data) {
   # Composition of HTML -----------------------------------------------------
 
   # Handle any available footnotes
-  # TODO: make two functions, one for each output
   body_footnotes <-
     create_footnote_component(
       data_attr, list_footnotes, body_content, n_cols)
@@ -218,11 +217,11 @@ render_as_html <- function(data) {
   # Create a heading
   heading_component <- create_heading_component(data_attr, n_cols)
 
-  # heading_component <-
-  #   paste0(
-  #     heading_component,
-  #     paste0(
-  #       "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
+  heading_component <-
+    paste0(
+      heading_component,
+      paste0(
+        "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
 
   # Create the source note rows
   source_note_rows <- create_source_note_rows(data_attr, n_cols)
@@ -244,6 +243,17 @@ render_as_html <- function(data) {
     row_splits_styles %>%
     split_body_content(n_cols)
 
+  # Create an HTML fragment for the start of the table
+  table_start <- create_table_start(groups_rows, n_rows, n_cols)
+
+  # Create the table column headings
+  table_col_headings <-
+    create_column_headings(
+      data_attr,
+      extracted,
+      stub_available,
+      spanners_present)
+
   # Create the table body
   table_body <-
     create_table_body(
@@ -254,16 +264,6 @@ render_as_html <- function(data) {
       n_rows,
       n_cols)
 
-  # Create the table column headings
-  table_col_headings <-
-    create_column_headings(
-      data_attr,
-      extracted,
-      stub_available,
-      spanners_present)
-
-  # Create an HTML fragment for the start of the table
-  table_start <- create_table_start(groups_rows, n_rows, n_cols)
 
   # Create an HTML fragment for the end of the table
   table_end <- create_table_end()
