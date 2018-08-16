@@ -1,3 +1,13 @@
+
+as_character <- function(x) {
+
+  if (inherits(x, "quosures")) {
+    x <- x %>% lapply(`[[`, 2) %>% as.character()
+  }
+
+  x
+}
+
 #' @importFrom rlang UQ
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter
