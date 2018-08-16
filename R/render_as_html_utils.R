@@ -143,6 +143,10 @@ get_n_groups <- function(groups_rows) {
 #' @noRd
 perform_col_merge <- function(data_attr) {
 
+  if (is.null(data_attr$col_merge)) {
+    return(data_attr)
+  }
+
   for (i in seq(data_attr$col_merge[[1]])) {
 
     pattern <- data_attr$col_merge[["pattern"]][i]
@@ -213,6 +217,10 @@ obtain_group_ordering <- function(data_attr,
 #' @importFrom dplyr mutate mutate_if mutate_all
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
+
+  if (is.null(data_attr$summary_auto)) {
+    return(data_attr)
+  }
 
   summary_lines <-
     get_all_summaries(df = cbind(data_attr$stub_df, data_attr$data_df))
@@ -365,6 +373,12 @@ create_footnote_component <- function(data_attr,
                                       body_content,
                                       n_cols) {
 
+  if (is.null(data_attr$footnote)) {
+    return(
+      list(footnote_component = "",
+           body_content = body_content))
+  }
+
   glyphs_footnotes <- c()
 
   for (i in seq(list_footnotes$footnotes)) {
@@ -421,6 +435,10 @@ create_footnote_component <- function(data_attr,
 create_heading_component <- function(data_attr,
                                      n_cols) {
 
+  if (is.null(data_attr$heading)) {
+    return("")
+  }
+
   heading_component <-
     paste0(
       "<thead>\n<tr data-type='table_headings'>\n",
@@ -446,8 +464,13 @@ create_heading_component <- function(data_attr,
 }
 
 #' @noRd
+
 create_source_note_rows <- function(data_attr,
                                     n_cols) {
+
+  if (is.null(data_attr$source_note)) {
+    return("")
+  }
 
   paste0(
     "<tfoot data-type='source_notes'>\n",
@@ -546,8 +569,14 @@ create_table_body <- function(row_splits,
 create_column_headings <- function(data_attr,
                                    extracted,
                                    stub_available,
-                                   spanners_present,
-                                   property_names) {
+                                   spanners_present) {
+
+  # Get the available property names
+  property_names <-
+    base::setdiff(
+      names(data_attr),
+      c("row.names", "class", "names", "boxh_df", "stub_df",
+        "fmts_df", "foot_df", "output_df", "data_df", "formats"))
 
   # Compose the HTML heading
   headings <- names(extracted)
