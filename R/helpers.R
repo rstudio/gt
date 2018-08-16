@@ -245,22 +245,36 @@ not_in_group <- function() {
 
 #' Helper for defining custom styles for table cells
 #' @return a character vector containing formatted styles.
+#' @param bkgd_color the background color of the cell.
+#' @param text_color the text color.
+#' @param text_font the font or collection of fonts (subsequent font names are)
+#' used as fallbacks.
+#' @param text_style the text style. Can be one of either \code{"center"},
+#' \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
+#' @param text_size the size of the font.
+#' @param text_align the text alignment. Can be one of either \code{"center"},
+#' \code{"left"}, \code{"right"}, or \code{"justify"}.
+#' @param text_indent the indentation of the text.
+#' @param text_decorate allows for text decoration effect to be applied. Here,
+#' we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
+#' @param text_transform allows for the transformation of text. Options are
+#' \code{""uppercase"}, \code{""lowercase"}, or \code{""capitalize"}.
 #' @family helper functions
 #' @export
-apply_styles <- function(background_color = NULL,
+apply_styles <- function(bkgd_color = NULL,
                          text_color = NULL,
                          text_font = NULL,
+                         text_style = NULL,
                          text_size = NULL,
                          text_align = NULL,
                          text_indent = NULL,
-                         text_style = NULL,
                          text_decorate = NULL,
                          text_transform = NULL) {
 
   styles <- c()
 
-  if (!is.null(background_color)) {
-    styles <- c(styles, paste0("background-color:", background_color, ";"))
+  if (!is.null(bkgd_color)) {
+    styles <- c(styles, paste0("background-color:", bkgd_color, ";"))
   }
 
   if (!is.null(text_color)) {
@@ -269,6 +283,13 @@ apply_styles <- function(background_color = NULL,
 
   if (!is.null(text_font)) {
     styles <- c(styles, paste0("font-family:", text_font, ";"))
+  }
+
+  if (!is.null(text_style)) {
+
+    if (text_style %in% c("normal", "italic", "oblique")) {
+      styles <- c(styles, paste0("font-style:", text_style, ";"))
+    }
   }
 
   if (!is.null(text_size)) {
@@ -284,13 +305,6 @@ apply_styles <- function(background_color = NULL,
 
   if (!is.null(text_indent)) {
     styles <- c(styles, paste0("text-indent:", text_indent, ";"))
-  }
-
-  if (!is.null(text_style)) {
-
-    if (text_style %in% c("normal", "italic", "oblique")) {
-      styles <- c(styles, paste0("font-style:", text_style, ";"))
-    }
   }
 
   if (!is.null(text_decorate)) {
