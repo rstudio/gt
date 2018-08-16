@@ -258,7 +258,7 @@ not_in_group <- function() {
 #' @param text_decorate allows for text decoration effect to be applied. Here,
 #' we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
 #' @param text_transform allows for the transformation of text. Options are
-#' \code{""uppercase"}, \code{""lowercase"}, or \code{""capitalize"}.
+#' \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
 #' @family helper functions
 #' @export
 apply_styles <- function(bkgd_color = NULL,
