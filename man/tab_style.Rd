@@ -13,7 +13,7 @@ tab_style(data, style, location)
 helper function can be used here to more easily generate valid styles.}
 
 \item{location}{the cell or set of cells to be styled. Supplying an object
-with the \code{target_cell()} helper function is a useful way to specify the
+with the \code{data_cells()} helper function is a useful way to specify the
 cell that is to be styled.}
 }
 \value{
@@ -27,13 +27,13 @@ Add a custom style to one or more cells
 # to a single table cell
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_style(
-    style = apply_styles(background_color = "steelblue"),
-    location = target_cell(
+    style = apply_styles(bkgd_color = "steelblue"),
+    location = data_cells(
       row = "Maserati Bora",
-      column = "hp"))
+      column = vars(hp)))
 }
 \seealso{
-[target_cell()] as a useful helper function for targeting the cell
+[data_cells()] as a useful helper function for targeting the cell
 associated with the footnote.
 
 Other table-part creation/modification functions: \code{\link{gt}},
