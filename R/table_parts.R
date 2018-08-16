@@ -331,38 +331,29 @@ tab_style <- function(data,
     return(data)
   }
 
-  if (inherits(location, "single_cell_target")) {
+  if (inherits(location, "single_cell_target") |
+      inherits(location, "multi_cell_target")) {
 
-    row <- location$row
-    column <- location$column
+    rows <- location$row
+    columns <- location$column
+  }
 
-    if (is.numeric(column)) {
-      data_col <- colnames(data)[column]
-    }
+  data_rows <- resolve_rows(data, rows)
+  data_cols <- resolve_columns(data, columns)
 
-    if (is.numeric(row)) {
-      data_row <- row
-    }
+  # Append the style
+  for (i in seq(data_rows)) {
 
-    if (is.character(column)) {
-      data_col <- column
-    }
+    if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {
 
-    if (is.character(row)) {
-      data_row <- which(attr(data, "stub_df")[["rowname"]] == row)[1]
-    }
-
-    # Append the style
-    if (is.na(attr(data, "fmts_df")[data_row, data_col])) {
-
-      attr(data, "fmts_df")[data_row, data_col] <-
+      attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
         paste0("::style_", style, collapse = "")
 
     } else {
 
-      attr(data, "fmts_df")[data_row, data_col] <-
+      attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
         paste0(
-          attr(data, "fmts_df")[data_row, data_col],
+          attr(data, "fmts_df")[data_rows[i], data_cols[i]],
           "::style_", style, collapse = "")
     }
   }
