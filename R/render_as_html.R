@@ -83,8 +83,8 @@ render_as_html <- function(data) {
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
-    # `list_decorators` object
-    list_decorators <- footnotes_to_list(data_attr, has_stub = FALSE)
+    # `list_footnotes` object
+    list_footnotes <- footnotes_to_list(data_attr, has_stub = FALSE)
 
   } else if (stub_component_is_rowname(stub_components)) {
 
@@ -96,8 +96,8 @@ render_as_html <- function(data) {
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
-    # `list_decorators` object
-    list_decorators <- footnotes_to_list(data_attr, has_stub = TRUE)
+    # `list_footnotes` object
+    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
 
   } else if (stub_component_is_groupname(stub_components)) {
 
@@ -143,8 +143,8 @@ render_as_html <- function(data) {
     col_alignment <- data_attr$boxh_df[3, ] %>% unlist() %>% unname()
 
     # Extract footnote references and place them into the
-    # `list_decorators` object
-    list_decorators <- footnotes_to_list(data_attr, has_stub = TRUE)
+    # `list_footnotes` object
+    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
 
   } else if (stub_component_is_rowname_groupname(stub_components)) {
 
@@ -191,8 +191,8 @@ render_as_html <- function(data) {
     col_alignment <- c("right", data_attr$boxh_df[3, ] %>% unlist() %>% unname())
 
     # Extract footnote references and place them into the
-    # `list_decorators` object
-    list_decorators <- footnotes_to_list(data_attr, has_stub = TRUE)
+    # `list_footnotes` object
+    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
   }
 
   # Extract the body content as a vector
@@ -210,7 +210,7 @@ render_as_html <- function(data) {
 
     body_footnotes <-
       create_footnote_component(
-        data_attr, list_decorators, body_content, n_cols)
+        data_attr, list_footnotes, body_content, n_cols)
 
     body_content <- body_footnotes$body_content
     footnote_component <- body_footnotes$footnote_component
