@@ -164,7 +164,7 @@ tab_boxhead_panel <- function(data,
 #' @inheritParams fmt_number
 #' @param footnote text to be used in the footnote.
 #' @param location the cell or set of cells to be associated with the footnote.
-#' Supplying an object with the \code{target_cell()} helper function is a useful
+#' Supplying an object with the \code{data_cells()} helper function is a useful
 #' way to specify the cell that is associated with the footnote.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -173,11 +173,11 @@ tab_boxhead_panel <- function(data,
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_footnote(
 #'     footnote = "Massive hp.",
-#'     location = target_cell(
+#'     location = data_cells(
 #'       row = "Maserati Bora",
 #'       column = "hp"))
 #' @family table-part creation/modification functions
-#' @seealso [target_cell()] as a useful helper function for targeting the cell
+#' @seealso [data_cells()] as a useful helper function for targeting the cell
 #' associated with the footnote.
 #' @importFrom stats setNames
 #' @export
@@ -186,7 +186,7 @@ tab_footnote <- function(data,
                          location) {
 
   # Check if the target location is actually in the table
-  if (inherits(location, "single_cell_target") &&
+  if (inherits(location, "data_cells") &&
       !is_target_in_table(data = data, location = location)) {
     return(data)
   }
@@ -228,7 +228,7 @@ tab_footnote <- function(data,
   }
 
   # Add markup to the targeted cell(s)
-  if (inherits(location, "single_cell_target")) {
+  if (inherits(location, "data_cells")) {
 
     row <- location$row
     column <- location$column
@@ -304,7 +304,7 @@ tab_source_note <- function(data,
 #' @param style a vector of styles to use. The \code{\link{apply_styles}()}
 #' helper function can be used here to more easily generate valid styles.
 #' @param location the cell or set of cells to be styled. Supplying an object
-#' with the \code{target_cell()} helper function is a useful way to specify the
+#' with the \code{data_cells()} helper function is a useful way to specify the
 #' cell that is to be styled.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -312,12 +312,12 @@ tab_source_note <- function(data,
 #' # to a single table cell
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   tab_style(
-#'     style = apply_styles(background_color = "steelblue"),
-#'     location = target_cell(
+#'     style = apply_styles(bkgd_color = "steelblue"),
+#'     location = data_cells(
 #'       row = "Maserati Bora",
-#'       column = "hp"))
+#'       column = vars(hp)))
 #' @family table-part creation/modification functions
-#' @seealso [target_cell()] as a useful helper function for targeting the cell
+#' @seealso [data_cells()] as a useful helper function for targeting the cell
 #' associated with the footnote.
 #' @importFrom stats setNames
 #' @export
@@ -326,13 +326,12 @@ tab_style <- function(data,
                       location) {
 
   # Check if the target location is actually in the table
-  if (inherits(location, "single_cell_target") &&
+  if (inherits(location, "data_cells") &&
       !is_target_in_table(data = data, location = location)) {
     return(data)
   }
 
-  if (inherits(location, "single_cell_target") |
-      inherits(location, "multi_cell_target")) {
+  if (inherits(location, "data_cells")) {
 
     rows <- location$row
     columns <- location$column
