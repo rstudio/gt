@@ -8,6 +8,8 @@
 #' @noRd
 render_as_html <- function(data) {
 
+  # Preparation Work --------------------------------------------------------
+
   # Extract all attributes from the data object into `data_attr`;
   #   this will be one of the main objects going forward
   data_attr <- attributes(data)
