@@ -12,7 +12,7 @@ tab_footnote(data, footnote, location)
 \item{footnote}{text to be used in the footnote.}
 
 \item{location}{the cell or set of cells to be associated with the footnote.
-Supplying an object with the \code{target_cell()} helper function is a useful
+Supplying an object with the \code{data_cells()} helper function is a useful
 way to specify the cell that is associated with the footnote.}
 }
 \value{
@@ -27,12 +27,12 @@ Add a footnote with a glyph attached to the targeted cells, rows, or columns.
 gt(mtcars, rownames_to_stub = TRUE) \%>\%
   tab_footnote(
     footnote = "Massive hp.",
-    location = target_cell(
+    location = data_cells(
       row = "Maserati Bora",
       column = "hp"))
 }
 \seealso{
-[target_cell()] as a useful helper function for targeting the cell
+[data_cells()] as a useful helper function for targeting the cell
 associated with the footnote.
 
 Other table-part creation/modification functions: \code{\link{gt}},

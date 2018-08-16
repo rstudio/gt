@@ -31,8 +31,7 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
   \code{\link{col_labels}}, \code{\link{columns_with}},
-  \code{\link{md}}, \code{\link{not_in_group}},
-  \code{\link{rownames_with}}, \code{\link{rows_where}},
-  \code{\link{target_cells}}, \code{\link{target_cell}},
-  \code{\link{vars}}
+  \code{\link{data_cells}}, \code{\link{md}},
+  \code{\link{not_in_group}}, \code{\link{rownames_with}},
+  \code{\link{rows_where}}, \code{\link{vars}}
 }
