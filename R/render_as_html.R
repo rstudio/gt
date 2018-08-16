@@ -35,14 +35,10 @@ render_as_html <- function(data) {
         "fmts_df", "foot_df", "output_df", "data_df", "formats"))
 
   # Integrate any summary lines available
-  if ("summary_auto" %in% property_names) {
-    data_attr <- integrate_summary_lines(data_attr)
-  }
+  data_attr <- integrate_summary_lines(data_attr)
 
   # Perform any necessary column merge operations
-  if ("col_merge" %in% property_names) {
-    data_attr <- perform_col_merge(data_attr)
-  }
+  data_attr <- perform_col_merge(data_attr)
 
   # Apply column names to column labels for any of
   #   those column labels not explicitly set
@@ -207,30 +203,20 @@ render_as_html <- function(data) {
   # Get the number of cells in `body_content`
   n_cells <- length(body_content)
 
+
+  # Composition of HTML -----------------------------------------------------
+
   # Handle any available footnotes
-  if ("footnote" %in% property_names) {
+  # TODO: make two functions, one for each output
+  body_footnotes <-
+    create_footnote_component(
+      data_attr, list_footnotes, body_content, n_cols)
 
-    body_footnotes <-
-      create_footnote_component(
-        data_attr, list_footnotes, body_content, n_cols)
-
-    body_content <- body_footnotes$body_content
-    footnote_component <- body_footnotes$footnote_component
-
-  } else {
-    footnote_component <- ""
-  }
+  body_content <- body_footnotes$body_content
+  footnote_component <- body_footnotes$footnote_component
 
   # Create a heading
-  if ("heading" %in% property_names) {
-
-    heading_component <-
-      create_heading_component(
-        data_attr, n_cols)
-
-  } else {
-    heading_component <- ""
-  }
+  heading_component <- create_heading_component(data_attr, n_cols)
 
   # heading_component <-
   #   paste0(
@@ -238,15 +224,8 @@ render_as_html <- function(data) {
   #     paste0(
   #       "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
 
-  if ("source_note" %in% property_names) {
-
-    # Create a source note
-    source_note_rows <-
-      create_source_note_rows(data_attr, n_cols)
-
-  } else {
-    source_note_rows <- ""
-  }
+  # Create the source note rows
+  source_note_rows <- create_source_note_rows(data_attr, n_cols)
 
   # Split the body_content by slices of rows
   row_splits <- split_body_content(body_content, n_cols)
@@ -281,8 +260,7 @@ render_as_html <- function(data) {
       data_attr,
       extracted,
       stub_available,
-      spanners_present,
-      property_names)
+      spanners_present)
 
   # Create an HTML fragment for the start of the table
   table_start <- create_table_start(groups_rows, n_rows, n_cols)
