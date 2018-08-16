@@ -18,7 +18,7 @@ html_tbl <-
     columns = vars(Month, Day)
   ) %>%
   fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp)) %>%
-  as_raw_html()
+  as_raw_html(inline_css = TRUE)
 
 # Create an email message using the
 # `compose_email()` function from the
