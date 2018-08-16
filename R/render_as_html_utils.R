@@ -361,18 +361,18 @@ footnotes_to_list <- function(data_attr,
 #' @importFrom stats setNames
 #' @noRd
 create_footnote_component <- function(data_attr,
-                                      list_decorators,
+                                      list_footnotes,
                                       body_content,
                                       n_cols) {
 
   glyphs_footnotes <- c()
 
-  for (i in seq(list_decorators$footnotes)) {
+  for (i in seq(list_footnotes$footnotes)) {
 
-    if (any(!is.na(list_decorators$footnotes[[i]]))) {
+    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
 
       footnote_glyph <- c()
-      footnote_indices <- list_decorators$footnotes[[i]]
+      footnote_indices <- list_footnotes$footnotes[[i]]
 
       for (j in seq(footnote_indices)) {
 
