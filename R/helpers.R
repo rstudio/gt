@@ -113,53 +113,14 @@ columns_with <- function(pattern) {
   x
 }
 
-#' Helper for targeting a single table cell
-#' @param row a single row to target.
-#' @param column a single column to target.
-#' @return a list object of class \code{single_cell_target}.
-#' @family helper functions
-#' @export
-target_cell <- function(row = NULL,
-                        column = NULL) {
-
-  # If using the `vars()` helper, get the row as a character vector
-  if (inherits(row, "quosures")) {
-    row <- row %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # If using the `vars()` helper, get the column as a character vector
-  if (inherits(column, "quosures")) {
-    column <- column %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  row <- row[1]
-
-  if (suppressWarnings(!(row %>% as.integer() %>% is.na()))) {
-    row <- as.integer(row)
-  }
-
-  column <- column[1]
-
-  if (suppressWarnings(!(column %>% as.integer() %>% is.na()))) {
-    column <- as.integer(column)
-  }
-
-  # Create a list object
-  cell_targeted <- list(row = row, column = column)
-
-  # Apply the `helper_cells` class
-  attr(cell_targeted, "class") <- "single_cell_target"
-  cell_targeted
-}
-
 #' Helper for targeting multiple table cells
 #' @param row a single row or a range of rows to target.
 #' @param column a single column or a range of columns to target.
 #' @return a list object of class \code{multi_cell_target}.
 #' @family helper functions
 #' @export
-target_cells <- function(rows = NULL,
-                         columns = NULL) {
+data_cells <- function(rows = NULL,
+                       columns = NULL) {
 
   # If using the `vars()` helper, get the row as a character vector
   if (inherits(rows, "quosures")) {
@@ -178,7 +139,7 @@ target_cells <- function(rows = NULL,
   cells_targeted <- list(row = expansion[[1]], column = expansion[[2]])
 
   # Apply the `helper_cells` class
-  attr(cells_targeted, "class") <- "multi_cell_target"
+  attr(cells_targeted, "class") <- "data_cells"
   cells_targeted
 }
 
