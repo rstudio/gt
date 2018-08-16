@@ -4,9 +4,33 @@
 \alias{apply_styles}
 \title{Helper for defining custom styles for table cells}
 \usage{
-apply_styles(background_color = NULL, text_color = NULL, text_font = NULL,
-  text_size = NULL, text_align = NULL, text_indent = NULL,
-  text_style = NULL, text_decorate = NULL, text_transform = NULL)
+apply_styles(bkgd_color = NULL, text_color = NULL, text_font = NULL,
+  text_style = NULL, text_size = NULL, text_align = NULL,
+  text_indent = NULL, text_decorate = NULL, text_transform = NULL)
+}
+\arguments{
+\item{bkgd_color}{the background color of the cell.}
+
+\item{text_color}{the text color.}
+
+\item{text_font}{the font or collection of fonts (subsequent font names are)
+used as fallbacks.}
+
+\item{text_style}{the text style. Can be one of either \code{"center"},
+\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+
+\item{text_size}{the size of the font.}
+
+\item{text_align}{the text alignment. Can be one of either \code{"center"},
+\code{"left"}, \code{"right"}, or \code{"justify"}.}
+
+\item{text_indent}{the indentation of the text.}
+
+\item{text_decorate}{allows for text decoration effect to be applied. Here,
+we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
+
+\item{text_transform}{allows for the transformation of text. Options are
+\code{""uppercase"}, \code{""lowercase"}, or \code{""capitalize"}.}
 }
 \value{
 a character vector containing formatted styles.
