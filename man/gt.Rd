@@ -4,23 +4,13 @@
 \alias{gt}
 \title{Create a gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE, preview = FALSE, top_n = 5,
-  bottom_n = 1)
+gt(data, rownames_to_stub = FALSE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a tibble.}
 
 \item{rownames_to_stub}{an option to take rownames from the input \code{data}
 table as row captions in the stub.}
-
-\item{preview}{an option to ingest the table such that only the head and tail
-of the table is shown.}
-
-\item{top_n}{if \code{preview = TRUE} then the value provided here will be
-used as the number of rows from the top of the table to display.}
-
-\item{bottom_n}{if \code{preview = TRUE} then the value provided here will be
-used as the number of rows from the bottom of the table to display.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -50,9 +40,10 @@ tab_2 <-
 tab_2
 }
 \seealso{
-Other table-part creation/modification functions: \code{\link{tab_boxhead_panel}},
+Other table-part creation/modification functions: \code{\link{gt_preview}},
+  \code{\link{tab_boxhead_panel}},
   \code{\link{tab_footnote}}, \code{\link{tab_heading}},
-  \code{\link{tab_source_note}},
+  \code{\link{tab_options}}, \code{\link{tab_source_note}},
   \code{\link{tab_stub_block}},
   \code{\link{tab_stubhead_caption}},
   \code{\link{tab_style}}
