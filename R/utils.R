@@ -747,3 +747,18 @@ tidy_gsub <- function(x, pattern, replacement) {
   gsub(pattern, replacement, x)
 }
 
+#' Options setter for the `opts_df` data frame
+#' @noRd
+opts_df_set <- function(opts_df, option, value) {
+
+  opts_df[which(opts_df$parameter == option), 3] <- value
+
+  opts_df
+}
+
+#' Options getter for the `opts_df` data frame
+#' @noRd
+opts_df_get <- function(opts_df, option) {
+
+  opts_df[which(opts_df$parameter == option), 3]
+}
