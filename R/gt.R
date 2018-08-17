@@ -7,12 +7,6 @@
 #' @param data a \code{data.frame} object or a tibble.
 #' @param rownames_to_stub an option to take rownames from the input \code{data}
 #' table as row captions in the stub.
-#' @param preview an option to ingest the table such that only the head and tail
-#' of the table is shown.
-#' @param top_n if \code{preview = TRUE} then the value provided here will be
-#' used as the number of rows from the top of the table to display.
-#' @param bottom_n if \code{preview = TRUE} then the value provided here will be
-#' used as the number of rows from the bottom of the table to display.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
