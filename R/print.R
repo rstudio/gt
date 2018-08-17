@@ -11,7 +11,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
   # Generate the SCSS lines, compile, and write the CSS
   # to disk as `compiled.css`
-  create_css(data = x)
+  compile_css(data = x)
 
   # Create the htmlDependency
   dep <- htmltools::htmlDependency(
