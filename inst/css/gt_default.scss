@@ -1,7 +1,16 @@
 
+@function font-color($color) {
+  @return if(
+    red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114 > 186,
+    #000000, #ffffff
+  );
+}
+
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: $table_font_size;
   border-top: solid 2px #A8A8A8;
+  color: font-color($table_background_color);
   background-color: $table_background_color; /* table.background.color */
   width: $table_width; /* table.width */
   border-collapse: collapse;
@@ -12,16 +21,16 @@
 }
 
 .title {
+  color: font-color($heading_background_color);
   border-top: $heading_border_top; /* heading.border.top */
   font-size: $heading_title_font_size; /* heading.title.font.size */
   padding-top: 4px;
-  /* heading.title.background.color */
 }
 
 .headnote {
+  color: font-color($heading_background_color);
   font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
   padding-bottom: 4px;
-  /* heading.headnote.background.color */
 }
 
 .spacer {
@@ -44,11 +53,12 @@
 /* this is used to create a gutter between adjacent column spanners;
    the color should match that of .heading's background-color */
 .sep_right {
-  border-right: 5px solid #FFFFFF;
+  border-right: 5px solid #{$table_background_color};
 }
 
 .stub_heading {
   padding: 8px;
+  color: font-color($stub_heading_background_color);
   border-top: $stub_heading_border_top; /* stub_heading.border.top */
   border-bottom: $stub_heading_border_bottom; /* stub_heading.border.bottom */
   background-color: $stub_heading_background_color; /* stub_heading.background.color */
@@ -174,5 +184,5 @@
 }
 
 .striped tr:nth-child(even) {
-   background-color: $row_striping_background_color; /* row.striping.background.color */
+   background-color: darken($table_background_color, 5%); /* row.striping.background.color */
 }
