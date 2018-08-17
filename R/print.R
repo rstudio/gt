@@ -9,12 +9,22 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
+  # Generate the SCSS lines, compile, and write the CSS
+  # to disk as `compiled.css`
+  create_css(data = x)
+
   # Create the htmlDependency
+  # dep <- htmltools::htmlDependency(
+  #   name = 'gt',
+  #   version = '0.1',
+  #   src = system_file(file = 'css'),
+  #   stylesheet = 'gt.css')
+
   dep <- htmltools::htmlDependency(
-    name = 'gt',
-    version = '0.1',
-    src = system_file(file = 'css'),
-    stylesheet = 'gt.css')
+    name = "gt",
+    version = "0.1",
+    src = c(file = getwd()),
+    stylesheet = "compiled.css")
 
   # Attach the dependency to the HTML table
   html_tbl <-
