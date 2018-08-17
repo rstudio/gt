@@ -1,6 +1,6 @@
-#' Modify gt table output options
+#' Modify the table output options
 #'
-#' Change the options available in a table theme.
+#' Modify the options available in a table theme.
 #' @inheritParams fmt_number
 #' @param table.background.color the table's background color.
 #' @param table.width the width of the table.
