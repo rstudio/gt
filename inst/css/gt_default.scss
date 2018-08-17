@@ -1,0 +1,178 @@
+
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-top: solid 2px #A8A8A8;
+  background-color: $table_background_color; /* table.background.color */
+  width: $table_width; /* table.width */
+  border-collapse: collapse;
+}
+
+.heading {
+  background-color: $heading_background_color; /* heading.background.color */
+}
+
+.title {
+  border-top: $heading_border_top; /* heading.border.top */
+  font-size: $heading_title_font_size; /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.title.background.color */
+}
+
+.headnote {
+  font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.headnote.background.color */
+}
+
+.spacer {
+  border-bottom-style: none;
+}
+
+.bottom_border {
+  border-bottom: $heading_border_bottom; /* heading.border.bottom */
+}
+
+.column_spanner {
+  border-bottom: solid 2px #A8A8A8;
+}
+
+.col_heading {
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.stub_heading {
+  padding: 8px;
+  border-top: $stub_heading_border_top; /* stub_heading.border.top */
+  border-bottom: $stub_heading_border_bottom; /* stub_heading.border.bottom */
+  background-color: $stub_heading_background_color; /* stub_heading.background.color */
+}
+
+.stub_heading_field {
+  border-top: $stub_heading_field_border_top; /* stub_heading.field.border.top */
+  border-bottom: $stub_heading_field_border_bottom; /* stub_heading.field.border.bottom */
+  background-color: $stub_heading_field_background_color; /* stub.heading_field.background.color */
+}
+
+.row {
+  padding: $row_padding; /* row.padding */
+  margin: $row_margin; /* row.margin */
+}
+
+.summary_row {
+  padding: $summary_row_padding; /* summary_row.padding */
+  text-transform: $summary_row_text_transform; /* summary_row.text_transform */
+}
+
+.yellow {
+  background-color:#FFFF99;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity: 0.6;
+  /* Mozilla */
+  opacity: 0.6;
+  /* CSS3 */
+}
+
+.blue {
+  background-color:#99FFFF;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity: 0.6;
+  /* Mozilla */
+  opacity: 0.6;
+  /* CSS3 */
+}
+
+.pink {
+  background-color:#FF99FF;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity: 0.6;
+  /* Mozilla */
+  opacity: 0.6;
+  /* CSS3 */
+}
+
+.green {
+  background-color:#CCFF99;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity: 0.6;
+  /* Mozilla */
+  opacity: 0.6;
+  /* CSS3 */
+}
+
+.green {
+  background-color:#CCFF99;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity:0.6;
+  /* Mozilla */
+  opacity:0.6;
+  /* CSS3 */
+}
+
+.sand {
+  background-color:#FFCC99;
+  filter:alpha(opacity=60);
+  /* IE */
+  -moz-opacity:0.6;
+  /* Mozilla */
+  opacity:0.6;
+  /* CSS3 */
+}
+
+.table_body {
+  border-top: $field_border_top; /* field.border.top */
+  border-bottom: $field_border_bottom; /* field.border.bottom */
+}
+
+.footnote {
+  font-size: $footnote_font_size; /* footnote.font.size */
+  padding: $footnote_padding; /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: $sourcenote_font_size; /* sourcenote.font.size */
+  padding: $sourcenote_padding; /* sourcenote.padding */
+}
+
+.center {
+  text-align:center;
+}
+
+.left {
+  text-align:left;
+}
+
+.right {
+  text-align:right;
+}
+
+.font_normal {
+  font-weight:normal;
+}
+
+.font_bold {
+  font-weight:bold;
+}
+
+.font_italic {
+  font-style:italic;
+}
+
+.gt_super {
+  font-size:65%;
+}
+
+.striped tr:nth-child(even) {
+   background-color: $row_striping_background_color; /* row.striping.background.color */
+}
