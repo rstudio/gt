@@ -26,8 +26,8 @@ test_that("formatting a column of numeric data as a number works correctly", {
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df",
-          "fmts_df", "foot_df", "formats")))
+          "boxh_df", "stub_df", "fmts_df",
+          "foot_df", "opts_df", "formats")))
 
   # Extract vectors from the table object for comparison
   # to the original dataset

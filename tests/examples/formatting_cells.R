@@ -26,7 +26,10 @@ tab_cell_fmts <-
       bkgd_color = "orange",
       text_color = "white"),
     location = data_cells(
-      rows = 1, columns = vars(hp, wt)))
+      rows = 1, columns = vars(hp, wt))) %>%
+  tab_options(
+    table.background.color = "#E3D6D9",
+    row.striping.background.color = "#DAEDFE")
 
 tab_cell_fmts
 
