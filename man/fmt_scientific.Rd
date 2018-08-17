@@ -61,3 +61,4 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_percent}}, \code{\link{fmt_time}},
   \code{\link{fmt}}
 }
+\concept{data formatting functions}

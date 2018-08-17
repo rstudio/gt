@@ -33,3 +33,4 @@ Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{tab_options}}, \code{\link{tab_source_note}},
   \code{\link{tab_stub_block}}, \code{\link{tab_style}}
 }
+\concept{table-part creation/modification functions}

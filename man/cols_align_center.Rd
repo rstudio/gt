@@ -35,3 +35,4 @@ Other column modification functions: \code{\link{cols_align_left}},
   \code{\link{cols_move}}, \code{\link{cols_remove}},
   \code{\link{cols_split_delim}}
 }
+\concept{column modification functions}

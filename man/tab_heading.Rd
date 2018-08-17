@@ -37,3 +37,4 @@ Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{tab_stubhead_caption}},
   \code{\link{tab_style}}
 }
+\concept{table-part creation/modification functions}
