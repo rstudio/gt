@@ -297,9 +297,7 @@ tab_source_note <- function(data,
   data
 }
 
-#' Add a table style
-#'
-#' Add a custom style to one or more cells
+#' Add custom styles to one or more cells
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The \code{\link{apply_styles}()}
 #' helper function can be used here to more easily generate valid styles.
@@ -317,8 +315,9 @@ tab_source_note <- function(data,
 #'       row = "Maserati Bora",
 #'       column = vars(hp)))
 #' @family table-part creation/modification functions
-#' @seealso [data_cells()] as a useful helper function for targeting the cell
-#' associated with the footnote.
+#' @seealso [apply_styles()] as a helper for defining custom styles and
+#' [data_cells()] as a useful helper function for targeting the cells to be
+#' styled.
 #' @importFrom stats setNames
 #' @export
 tab_style <- function(data,
