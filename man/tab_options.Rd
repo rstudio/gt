@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_options.R
 \name{tab_options}
 \alias{tab_options}
-\title{Modify gt table output options}
+\title{Modify the table output options}
 \usage{
 tab_options(data, table.background.color = NULL, table.width = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
@@ -101,7 +101,7 @@ section.}
 when striping rows.}
 }
 \description{
-Change the options available in a table theme.
+Modify the options available in a table theme.
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

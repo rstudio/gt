@@ -2,7 +2,7 @@
 % Please edit documentation in R/table_parts.R
 \name{tab_style}
 \alias{tab_style}
-\title{Add a table style}
+\title{Add custom styles to one or more cells}
 \usage{
 tab_style(data, style, location)
 }
@@ -20,7 +20,7 @@ cell that is to be styled.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a custom style to one or more cells
+Add custom styles to one or more cells
 }
 \examples{
 # Add a style that is to be applied
@@ -33,8 +33,9 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
       column = vars(hp)))
 }
 \seealso{
-[data_cells()] as a useful helper function for targeting the cell
-associated with the footnote.
+[apply_styles()] as a helper for defining custom styles and
+[data_cells()] as a useful helper function for targeting the cells to be
+styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},
