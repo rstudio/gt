@@ -35,27 +35,7 @@
 #' @importFrom tibble add_row
 #' @export
 gt <- function(data,
-               rownames_to_stub = FALSE,
-               preview = FALSE,
-               top_n = 5,
-               bottom_n = 1) {
-
-  # If a preview table (head and tail) is requested,
-  # then modify `data_tbl` to only include the head
-  # and tail plus an ellipsis row
-  if (preview) {
-
-    if (nrow(data) > (top_n + bottom_n)) {
-
-      data <-
-        rbind(
-          data[seq(top_n), ],
-          rep("...", ncol(data)),
-          data[(nrow(data) - rev(seq(bottom_n))), ])
-
-      rownames(data)[top_n + 1] <- "..."
-    }
-  }
+               rownames_to_stub = FALSE) {
 
   # If the option to place rownames in the stub
   # is taken, then the `stub_df` data frame will
