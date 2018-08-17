@@ -100,6 +100,9 @@ gt <- function(data,
   attr(data_tbl, "fmts_df") <- empty_df
   attr(data_tbl, "foot_df") <- empty_df
 
+  # Apply the default theme options data frame as an attribute
+  attr(data_tbl, "opts_df") <- gt_options_default()
+
   # Apply an empty `formats` list as an attribute
   attr(data_tbl, "formats") <- list()
 
