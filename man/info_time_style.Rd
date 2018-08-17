@@ -12,3 +12,4 @@ View a table with info on time styles
 \seealso{
 Other information functions: \code{\link{info_date_style}}
 }
+\concept{information functions}

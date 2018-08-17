@@ -17,3 +17,4 @@ an object of class \code{gt_tbl}.
 \description{
 Modify the ordering of the stub block groups
 }
+\concept{row modification functions}

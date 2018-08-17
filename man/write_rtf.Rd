@@ -24,3 +24,4 @@ gt(data = sleep) \%>\%
   write_rtf(file = "sleep.rtf")
 }
 }
+\concept{table export functions}

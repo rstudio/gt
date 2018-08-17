@@ -45,3 +45,4 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
   summary_rows(
     agg = "mean")
 }
+\concept{row addition functions}

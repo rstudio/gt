@@ -42,3 +42,4 @@ Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_move_to_start}},
   \code{\link{cols_remove}}, \code{\link{cols_split_delim}}
 }
+\concept{column modification functions}

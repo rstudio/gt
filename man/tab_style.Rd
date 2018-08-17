@@ -44,3 +44,4 @@ Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{tab_stub_block}},
   \code{\link{tab_stubhead_caption}}
 }
+\concept{table-part creation/modification functions}

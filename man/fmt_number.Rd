@@ -5,9 +5,9 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop_trailing_zeros = FALSE, negative_val = "signed", use_seps = TRUE,
-  scale_by = 1, pattern = "{x}", sep_mark = ",", dec_mark = ".",
-  locale = NULL)
+  drop_trailing_zeros = FALSE, negative_val = "signed",
+  use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
+  dec_mark = ".", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()} function.}
@@ -97,3 +97,4 @@ Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
   \code{\link{fmt}}
 }
+\concept{data formatting functions}

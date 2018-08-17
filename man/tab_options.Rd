@@ -4,24 +4,27 @@
 \alias{tab_options}
 \title{Modify the table output options}
 \usage{
-tab_options(data, table.background.color = NULL, table.width = NULL,
+tab_options(data, table.font.size = NULL,
+  table.background.color = NULL, table.width = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
-  heading.title.background.color = NULL, heading.headnote.font.size = NULL,
-  heading.headnote.background.color = NULL, heading.border.top = NULL,
+  heading.headnote.font.size = NULL, heading.border.top = NULL,
   heading.border.bottom = NULL, stub_heading.background.color = NULL,
   stub_heading.border.top = NULL, stub_heading.border.bottom = NULL,
   stub_heading_field.background.color = NULL,
   stub_heading_field.border.top = NULL,
   stub_heading_field.border.bottom = NULL, field.border.top = NULL,
   field.border.bottom = NULL, row.padding = NULL, row.margin = NULL,
-  row.striping.background.color = NULL, row.striping.include.stub = NULL,
-  row.striping.include_field = NULL, summary_row.background.color = NULL,
-  summary_row.padding = NULL, summary_row.text_transform = NULL,
-  footnote.font.size = NULL, footnote.padding = NULL,
-  sourcenote.font.size = NULL, sourcenote.padding = NULL)
+  row.striping.background.color = NULL,
+  row.striping.include.stub = NULL, row.striping.include_field = NULL,
+  summary_row.background.color = NULL, summary_row.padding = NULL,
+  summary_row.text_transform = NULL, footnote.font.size = NULL,
+  footnote.padding = NULL, sourcenote.font.size = NULL,
+  sourcenote.padding = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()} function.}
+
+\item{table.font.size}{the table's font size.}
 
 \item{table.background.color}{the table's background color.}
 
@@ -32,14 +35,8 @@ tab_options(data, table.background.color = NULL, table.width = NULL,
 \item{heading.title.font.size}{the font size of the title in the table
 heading.}
 
-\item{heading.title.background.color}{the background color of the title in
-the table heading.}
-
 \item{heading.headnote.font.size}{the font size of the headnote in the table
 heading.}
-
-\item{heading.headnote.background.color}{the background color of the headnote
-in the table heading.}
 
 \item{heading.border.top}{the parameters for the top border of the table
 heading.}
@@ -112,3 +109,4 @@ Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{tab_stubhead_caption}},
   \code{\link{tab_style}}
 }
+\concept{table-part creation/modification functions}

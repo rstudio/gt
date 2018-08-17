@@ -123,3 +123,4 @@ Other data formatting functions: \code{\link{fmt_datetime}},
   \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
   \code{\link{fmt}}
 }
+\concept{data formatting functions}
