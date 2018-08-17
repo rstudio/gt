@@ -142,6 +142,7 @@ The package API consists of the following functions:
 **Create/Modify Table Parts**
 
 - `gt()` -- create a **gt** table object
+- `gt_preview()` -- preview a **gt** table object
 - `tab_heading()` -- add a table heading
 - `tab_stub()` -- add a stub to a table
 - `tab_stubhead_caption()` -- add caption text to the stubhead
@@ -149,6 +150,8 @@ The package API consists of the following functions:
 - `tab_boxhead_panel()` -- arrange a boxhead into panels
 - `tab_footnote()` -- add one or more footnotes
 - `tab_source_note()` -- add a source note citation
+- `tab_style()` -- add custom styles to one or more cells
+- `tab_options()` -- modify the table output options
 
 **Format Data**
 
