@@ -25,16 +25,13 @@
 .title {
   color: font-color($heading_background_color);
   font-size: $heading_title_font_size; /* heading.title.font.size */
-  border-top-style: $heading_border_top_style; /* heading.border.top.style */
-  border-top-width: $heading_border_top_width; /* heading.border.top.width */
-  border-top-color: $heading_border_top_color; /* heading.border.top.color */
-  padding-top: 4px; /* title.top.padding */
+  padding-top: 4px; /* heading.top.padding */
 }
 
 .headnote {
   color: font-color($heading_background_color);
   font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
-  padding-bottom: 4px;
+  padding-bottom: 4px; /* heading.bottom.padding */
 }
 
 .spacer {
@@ -48,37 +45,40 @@
 }
 
 .column_spanner {
-  border-bottom: solid 2px #A8A8A8;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
 }
 
 .col_heading {
+  color: font-color($boxhead_background_color);
+  background-color: $boxhead_background_color; /* boxhead.background.color */
+  font-size: $boxhead_font_size; /* boxhead.font.size */
+  font-weight: $boxhead_font_weight; /* boxhead.font.weight */
   padding: 10px;
   margin: 10px;
-    /*
-  border-top-style: solid; /* TODO: boxhead.border.top.style
-  border-top-width: 2px; /* TODO: boxhead.border.top.width
-  border-top-color: #A8A8A8; /* TODO: boxhead.border.top.color
-  */
 }
 
 /* this is used to create a gutter between adjacent column spanners;
    the color should match that of .heading's background-color */
 .sep_right {
-  border-right: 5px solid #{$table_background_color};
+  border-right: 5px solid #{$boxhead_background_color};
 }
 
 .stub_heading {
   padding: 8px;
-  color: font-color($stub_heading_background_color);
-  border-top: $stub_heading_border_top; /* stub_heading.border.top */
-  border-bottom: $stub_heading_border_bottom; /* stub_heading.border.bottom */
-  background-color: $stub_heading_background_color; /* stub_heading.background.color */
+  color: font-color($stub_group_background_color);
+  background-color: $stub_group_background_color; /* stub_group.background.color */
+  font-size: $stub_group_font_size; /* stub_group.font.size */
+  font-weight: $stub_group_font_weight; /* stub_group.font.weight */
+  border-top: $stub_group_border_top; /* stub_group.border.top */
+  border-bottom: $stub_group_border_bottom; /* stub_group.border.bottom */
 }
 
 .stub_heading_field {
-  background-color: $stub_heading_field_background_color; /* stub.heading_field.background.color */
-  border-top: $stub_heading_field_border_top; /* stub_heading.field.border.top */
-  border-bottom: $stub_heading_field_border_bottom; /* stub_heading.field.border.bottom */
+  background-color: $stub_group_field_background_color; /* stub.group_field.background.color */
+  border-top: $stub_group_field_border_top; /* stub_group.field.border.top */
+  border-bottom: $stub_group_field_border_bottom; /* stub_group.field.border.bottom */
 }
 
 .striped tr:nth-child(even) {
@@ -87,10 +87,21 @@
 
 .row {
   padding: $row_padding; /* row.padding */
-  margin: $row_margin; /* row.margin */
+  margin: 10px;
+}
+
+.stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: $table_background_color;
 }
 
 .summary_row {
+  background-color: $summary_row_background_color; /* summary_row.background.color */
   padding: $summary_row_padding; /* summary_row.padding */
   text-transform: $summary_row_text_transform; /* summary_row.text_transform */
 }
