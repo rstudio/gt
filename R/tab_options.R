@@ -5,15 +5,20 @@
 #' @param table.font.size the table's font size.
 #' @param table.background.color the table's background color.
 #' @param table.width the width of the table.
+#' @param table.border.top.style the style of the table's top border.
+#' @param table.border.top.width the width of the table's top border.
+#' @param table.border.top.color the color of the table's top border.
 #' @param heading.background.color the background color of the table heading.
 #' @param heading.title.font.size the font size of the title in the table
 #' heading.
 #' @param heading.headnote.font.size the font size of the headnote in the table
 #' heading.
-#' @param heading.border.top the parameters for the top border of the table
-#' heading.
-#' @param heading.border.bottom the parameters for the bottom border of the
-#' table heading.
+#' @param heading.border.top.style the style of the heading's top border.
+#' @param heading.border.top.width the width of the heading's top border.
+#' @param heading.border.top.color the color of the heading's top border.
+#' @param heading.border.bottom.style the style of the heading's bottom border.
+#' @param heading.border.bottom.width the width of the heading's bottom border.
+#' @param heading.border.bottom.color the color of the heading's bottom border.
 #' @param stub_heading.background.color the background color of the stub
 #' heading.
 #' @param stub_heading.border.top the parameters for the top border of the stub
