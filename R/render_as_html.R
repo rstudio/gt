@@ -260,9 +260,9 @@ render_as_html <- function(data) {
       row_splits_styles,
       groups_rows,
       col_alignment,
+      stub_available,
       n_rows,
       n_cols)
-
 
   # Create an HTML fragment for the end of the table
   table_end <- create_table_end()
