@@ -6,14 +6,20 @@
 \usage{
 tab_options(data, table.font.size = NULL,
   table.background.color = NULL, table.width = NULL,
-  heading.background.color = NULL, heading.title.font.size = NULL,
-  heading.headnote.font.size = NULL, heading.border.top = NULL,
-  heading.border.bottom = NULL, stub_heading.background.color = NULL,
-  stub_heading.border.top = NULL, stub_heading.border.bottom = NULL,
-  stub_heading_field.background.color = NULL,
-  stub_heading_field.border.top = NULL,
-  stub_heading_field.border.bottom = NULL, field.border.top = NULL,
-  field.border.bottom = NULL, row.padding = NULL, row.margin = NULL,
+  table.border.top.style = NULL, table.border.top.width = NULL,
+  table.border.top.color = NULL, heading.background.color = NULL,
+  heading.title.font.size = NULL, heading.headnote.font.size = NULL,
+  heading.border.bottom.style = NULL,
+  heading.border.bottom.width = NULL,
+  heading.border.bottom.color = NULL, boxhead.background.color = NULL,
+  boxhead.font.size = NULL, boxhead.font.weight = NULL,
+  stub_group.background.color = NULL, stub_group.font.size = NULL,
+  stub_group.font.weight = NULL, stub_group.border.top = NULL,
+  stub_group.border.bottom = NULL,
+  stub_group_field.background.color = NULL,
+  stub_group_field.border.top = NULL,
+  stub_group_field.border.bottom = NULL, field.border.top = NULL,
+  field.border.bottom = NULL, row.padding = NULL,
   row.striping.background.color = NULL,
   row.striping.include.stub = NULL, row.striping.include_field = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
@@ -24,11 +30,23 @@ tab_options(data, table.font.size = NULL,
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
-\item{table.font.size}{the table's font size.}
+\item{table.font.size}{the table text font size. Can be specified as a
+single-length character with units of pixels or as a percentage. If provided
+as a single-length numeric vector, it is assumed that the value is given in
+units of pixels.}
 
-\item{table.background.color}{the table's background color.}
+\item{table.background.color}{the table background color.}
 
-\item{table.width}{the width of the table.}
+\item{table.width}{the width of the table. Can be specified as a
+single-length character with units of pixels or as a percentage. If provided
+as a single-length numeric vector, it is assumed that the value is given in
+units of pixels.}
+
+\item{table.border.top.style}{the style of the table's top border.}
+
+\item{table.border.top.width}{the width of the table's top border.}
+
+\item{table.border.top.color}{the color of the table's top border.}
 
 \item{heading.background.color}{the background color of the table heading.}
 
@@ -38,28 +56,38 @@ heading.}
 \item{heading.headnote.font.size}{the font size of the headnote in the table
 heading.}
 
-\item{heading.border.top}{the parameters for the top border of the table
+\item{heading.border.bottom.style}{the style of the heading's bottom border.}
+
+\item{heading.border.bottom.width}{the width of the heading's bottom border.}
+
+\item{heading.border.bottom.color}{the color of the heading's bottom border.}
+
+\item{boxhead.background.color}{the background color of the boxhead.}
+
+\item{boxhead.font.size}{the font size of the boxhead labels.}
+
+\item{boxhead.font.weight}{the font weight of the boxhead labels.}
+
+\item{stub_group.background.color}{the background color of the stub
 heading.}
 
-\item{heading.border.bottom}{the parameters for the bottom border of the
-table heading.}
+\item{stub_group.font.size}{the font size of the boxhead labels.}
 
-\item{stub_heading.background.color}{the background color of the stub
+\item{stub_group.font.weight}{the font weight of the boxhead labels.}
+
+\item{stub_group.border.top}{the parameters for the top border of the stub
 heading.}
 
-\item{stub_heading.border.top}{the parameters for the top border of the stub
-heading.}
-
-\item{stub_heading.border.bottom}{the parameters for the bottom border of the
+\item{stub_group.border.bottom}{the parameters for the bottom border of the
 stub heading.}
 
-\item{stub_heading_field.background.color}{the background color of the stub
+\item{stub_group_field.background.color}{the background color of the stub
 heading's field component.}
 
-\item{stub_heading_field.border.top}{the parameters for the top border of the
+\item{stub_group_field.border.top}{the parameters for the top border of the
 stub heading's field component.}
 
-\item{stub_heading_field.border.bottom}{the parameters for the bottom border
+\item{stub_group_field.border.bottom}{the parameters for the bottom border
 of the stub heading's field component.}
 
 \item{field.border.top}{the parameters for the top border of the field.}
@@ -67,8 +95,6 @@ of the stub heading's field component.}
 \item{field.border.bottom}{the parameters for the bottom border of the field.}
 
 \item{row.padding}{the amount of padding in each row.}
-
-\item{row.margin}{the size of the margin in each row.}
 
 \item{row.striping.include_field}{an option for whether to include the field
 when striping rows.}

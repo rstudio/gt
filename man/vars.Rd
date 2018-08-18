@@ -22,4 +22,3 @@ Other helper functions: \code{\link{apply_styles}},
   \code{\link{rows_where}}
 }
 \concept{helper functions}
-\keyword{internal}
