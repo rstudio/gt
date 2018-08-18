@@ -690,6 +690,7 @@ create_column_headings <- function(data_attr,
         remaining_headings, "</th>",
         collapse = "\n")
 
+    # Create the `table_col_headings` HTML component
     table_col_headings <-
       paste0(
         "<tr>\n",
