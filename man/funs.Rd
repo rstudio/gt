@@ -24,4 +24,3 @@ Other helper functions: \code{\link{apply_styles}},
   \code{\link{vars}}
 }
 \concept{helper functions}
-\keyword{internal}
