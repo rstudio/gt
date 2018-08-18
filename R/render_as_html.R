@@ -203,7 +203,6 @@ render_as_html <- function(data) {
   # Get the number of cells in `body_content`
   n_cells <- length(body_content)
 
-
   # Composition of HTML -----------------------------------------------------
 
   # Handle any available footnotes
