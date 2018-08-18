@@ -147,8 +147,6 @@ data_cells <- function(rows = NULL,
 #'
 #' See \code{dplyr::\link[dplyr]{vars}} for details.
 #' @name vars
-#' @rdname vars
-#' @keywords internal
 #' @importFrom dplyr vars
 #' @usage vars(...)
 #' @param ... one or more column names or row labels, depending on the enclosing
@@ -161,8 +159,6 @@ NULL
 #'
 #' See \code{dplyr::\link[dplyr]{funs}} for details.
 #' @name funs
-#' @rdname funs
-#' @keywords internal
 #' @importFrom dplyr funs
 #' @usage funs(...)
 #' @param ... one or more functions that can be either a function name (e.g.,
