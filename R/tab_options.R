@@ -115,6 +115,27 @@ tab_options <- function(data,
       opts_df, "table_width", table.width)
   }
 
+  # table.border.top.style
+  if (!is.null(table.border.top.style)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "table_border_top_style", table.border.top.style)
+  }
+
+  # table.border.top.width
+  if (!is.null(table.border.top.width)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "table_border_top_width", table.border.top.width)
+  }
+
+  # table.border.top.color
+  if (!is.null(table.border.top.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "table_border_top_color", table.border.top.color)
+  }
+
   # heading.background.color
   if (!is.null(heading.background.color)) {
 
@@ -129,25 +150,32 @@ tab_options <- function(data,
       opts_df, "heading_title_font_size", heading.title.font.size)
   }
 
+  # heading.border.top.style
+  if (!is.null(heading.border.top.style)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "heading_border_top_style", heading.border.top.style)
+  }
+
+  # heading.border.top.width
+  if (!is.null(heading.border.top.width)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "heading_border_top_width", heading.border.top.width)
+  }
+
+  # heading.border.top.color
+  if (!is.null(heading.border.top.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "heading_border_top_color", heading.border.top.color)
+  }
+
   # heading.headnote.font.size
   if (!is.null(heading.headnote.font.size)) {
 
     opts_df <- opts_df_set(
       opts_df, "heading_headnote_font_size", heading.headnote.font.size)
-  }
-
-  # heading.border.top
-  if (!is.null(heading.border.top)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_top", heading.border.top)
-  }
-
-  # heading.border.bottom
-  if (!is.null(heading.border.bottom)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom", heading.border.bottom)
   }
 
   # stub_heading.background.color
