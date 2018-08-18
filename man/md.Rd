@@ -29,8 +29,9 @@ gt(mtcars, rownames_to_stub = TRUE) \%>\%
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
   \code{\link{col_labels}}, \code{\link{columns_with}},
-  \code{\link{data_cells}}, \code{\link{html}},
-  \code{\link{not_in_group}}, \code{\link{rownames_with}},
-  \code{\link{rows_where}}, \code{\link{vars}}
+  \code{\link{data_cells}}, \code{\link{funs}},
+  \code{\link{html}}, \code{\link{not_in_group}},
+  \code{\link{rownames_with}}, \code{\link{rows_where}},
+  \code{\link{vars}}
 }
 \concept{helper functions}
