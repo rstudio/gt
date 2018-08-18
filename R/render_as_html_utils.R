@@ -214,39 +214,43 @@ obtain_group_ordering <- function(data_attr,
 }
 
 #' Used to splice in summary lines into the final gt table
-#' @importFrom dplyr mutate mutate_if mutate_all
+#' @importFrom dplyr bind_rows select group_by everything ungroup
+#' @importFrom dplyr mutate mutate_if mutate_all summarize_at funs
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
 
-  if (is.null(data_attr$summary_auto)) {
+  if (is.null(data_attr$summary)) {
     return(data_attr)
   }
 
-  summary_lines <-
-    get_all_summaries(df = cbind(data_attr$stub_df, data_attr$data_df))
+  for (i in seq(data_attr$summary)) {
 
-  for (i in seq(data_attr$summary_auto)) {
+    summary_attrs <- data_attr$summary[[i]]
 
-    summary_attrs <- data_attr$summary_auto[[i]]
+    groups_data_df <- cbind(data_attr$stub_df, data_attr$data_df)
+    agg_funs <- summary_attrs$funs
+    labels <- summary_attrs$labels
 
-    # Filter the `summary_lines` table by the requested
-    # aggregation types
-    summary_lines_mod <-
-      (summary_lines %>%
-         subset(type %in% summary_attrs$agg))[, -ncol(summary_lines)]
+    summary_lines <- groups_data_df[0, ]
 
-    # If there is a tint color set, apply that to the
-    # label
-    if (!is.null(summary_attrs$tint)) {
-      summary_lines_mod <-
-        summary_lines_mod %>%
-        dplyr::mutate(rowname = paste0(rowname, "__", summary_attrs$tint))
+    for (j in seq(agg_funs)) {
+
+      summary_lines <-
+        dplyr::bind_rows(
+          summary_lines,
+          groups_data_df %>%
+            dplyr::group_by(groupname) %>%
+            dplyr::summarize_at(.vars = 3:ncol(groups_data_df), .funs = agg_funs[[j]]) %>%
+            dplyr::ungroup() %>%
+            dplyr::mutate(rowname = paste0("::summary_", labels[j])) %>%
+            dplyr::select(groupname, rowname, dplyr::everything()))
     }
 
     # Filter by the groups requested
     if (!is.null(summary_attrs$groups)) {
-      summary_lines_mod <-
-        summary_lines_mod %>%
+
+      summary_lines <-
+        summary_lines %>%
         subset(groupname %in% summary_attrs$groups)
     }
 
@@ -255,16 +259,15 @@ integrate_summary_lines <- function(data_attr) {
 
       empty_cols <-
         base::setdiff(
-          colnames(summary_lines_mod),
+          colnames(summary_lines),
           c("groupname", "rowname", summary_attrs$columns))
 
-      summary_lines_mod[
-        , which(colnames(summary_lines_mod) %in% empty_cols)] <- ""
+      summary_lines[, which(colnames(summary_lines) %in% empty_cols)] <- ""
     }
 
     # Format the summary values and cast values as character
-    summary_lines_mod <-
-      summary_lines_mod %>%
+    summary_lines <-
+      summary_lines %>%
       dplyr::mutate_if(
         .predicate = is.numeric,
         .funs = function(x) {
@@ -277,15 +280,15 @@ integrate_summary_lines <- function(data_attr) {
             format = "f",
             drop0trailing = FALSE)}
       ) %>%
-      dplyr::mutate_all(funs(as.character))
+      dplyr::mutate_all(dplyr::funs(as.character))
 
-    summary_lines_na <- summary_lines_mod
+    summary_lines_na <- summary_lines
     summary_lines_na[] <- NA_character_
 
     data_attr$fmts_df <- rbind(data_attr$fmts_df, summary_lines_na[, -c(1:2)])
     data_attr$foot_df <- rbind(data_attr$foot_df, summary_lines_na[, -c(1:2)])
-    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines_mod[, 1:2])
-    data_attr$output_df <- rbind(data_attr$output_df, summary_lines_mod[, -c(1:2)])
+    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines[, 1:2])
+    data_attr$output_df <- rbind(data_attr$output_df, summary_lines[, -c(1:2)])
   }
 
   data_attr
