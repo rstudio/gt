@@ -157,6 +157,22 @@ data_cells <- function(rows = NULL,
 #' @export
 NULL
 
+#' Helper for creating a list of functions
+#'
+#' See \code{dplyr::\link[dplyr]{funs}} for details.
+#' @name funs
+#' @rdname funs
+#' @keywords internal
+#' @importFrom dplyr funs
+#' @usage funs(...)
+#' @param ... one or more functions that can be either a function name (e.g.,
+#' \code{"mean"}), the function itself (e.g., \code{mean}), or calls to
+#' functions with \code{.} as a dummy argument (e.g.,
+#' \code{mean(., na.rm = TRUE)}).
+#' @family helper functions
+#' @export
+NULL
+
 #' Helper for processing column labels
 #'
 #' This helper is to be used specifically within the \code{cols_label()}
