@@ -6,16 +6,16 @@
 #' @param groups the stub block groups heading names for which summary rows
 #' will be added.
 #' @param columns the columns for which the summaries should be calculated.
-#' @param agg a vector of aggregate function names. This can include any of
+#' @param funs functions used for aggregations. This can include any of
 #' these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd},
 #' \code{sum} or \code{n}.
+#' @param labels a vector of stub labels for the summary rows. The vector length
+#' should match the number of \code{funs} provided. If this is not provided then
+#' the labels will be generated from the function names.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
-#' @param tint an optional tinting color to apply to the summary rows created.
-#' The available tinting colors are: \code{yellow}, \code{blue}, \code{pink},
-#' \code{green}, and \code{sand}. By default, no tinting is applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -23,17 +23,17 @@
 #'     group = "Mercs",
 #'     rows = rownames_with("Merc")) %>%
 #'   summary_rows(
-#'     agg = "mean")
+#'     funs = dplyr::funs(mean))
 #' @family row addition functions
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
-                         agg,
+                         funs,
+                         labels = NULL,
                          decimals = 2,
-                         sep_mark = "",
-                         dec_mark = ".",
-                         tint = NULL) {
+                         sep_mark = ",",
+                         dec_mark = ".") {
 
   # If using the `vars()` helper, get the groups as a character vector
   if (!is.null(groups) && inherits(groups, "quosures")) {
@@ -45,36 +45,42 @@ summary_rows <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
+  # Create labels from the function names if no labels are provided
+  if (is.null(labels)) {
+    labels <- funs %>% lapply(`[[`, 2) %>% as.character() %>% tidy_gsub("\\(\\.\\)", "")
+  } else {
+    labels <- labels[seq(funs)]
+  }
 
-  if ("summary_auto" %in% names(attributes(data))) {
+  if ("summary" %in% names(attributes(data))) {
 
-    attr(data, "summary_auto") <-
+    attr(data, "summary") <-
       c(
-        attr(data, "summary_auto"),
+        attr(data, "summary"),
         list(
           list(
             groups = groups,
             columns = columns,
-            agg = agg,
+            funs = funs,
+            labels = labels,
             decimals = decimals,
             sep_mark = sep_mark,
-            dec_mark = dec_mark,
-            tint = tint)))
+            dec_mark = dec_mark)))
 
     data
 
   } else {
 
-    attr(data, "summary_auto") <-
+    attr(data, "summary") <-
       list(
         list(
           groups = groups,
           columns = columns,
-          agg = agg,
+          funs = funs,
+          labels = labels,
           decimals = decimals,
           sep_mark = sep_mark,
-          dec_mark = dec_mark,
-          tint = tint))
+          dec_mark = dec_mark))
   }
 
   data
