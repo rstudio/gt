@@ -497,6 +497,7 @@ create_table_body <- function(row_splits,
                               row_splits_styles,
                               groups_rows,
                               col_alignment,
+                              stub_available,
                               n_rows,
                               n_cols) {
 
@@ -512,7 +513,7 @@ create_table_body <- function(row_splits,
         c(body_rows,
           paste0(
             "<tr>\n",
-            "<td data-type='group' class='stub_heading font_bold'>",
+            "<td data-type='group' class='stub_heading'>",
             groups_rows[which(groups_rows$row %in% i), 1][[1]],
             "</td>\n<td class='stub_heading_field' colspan='",
             n_cols - 1, "'></td>\n</tr>\n"))
@@ -526,24 +527,51 @@ create_table_body <- function(row_splits,
           paste0(
             "<tr data-type='summary' data-row='", i,"'>\n",
             paste0(
-              "<td class='row summary_row ", col_alignment, "'>",
-              tidy_gsub(row_splits[i][[1]], "::summary_", ""),
+              "<td class='stub row summary_row ", col_alignment[1], "'>",
+              tidy_gsub(row_splits[i][[1]][1], "::summary_", ""),
+              "</td>"), "\n",
+            paste0(
+              "<td class='row summary_row ", col_alignment[-1], "'>",
+              row_splits[i][[1]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n"))
 
     } else {
 
-      # Process 'data' rows
-      body_rows <-
-        c(body_rows,
-          paste0(
-            "<tr data-type='data' data-row='", i,"'>\n",
+      if (stub_available) {
+
+        # Process 'data' rows where a stub is present
+        body_rows <-
+          c(body_rows,
             paste0(
-              "<td class='row ", col_alignment, "' ",
-              "style='", row_splits_styles[i][[1]],
-              "'>", row_splits[i][[1]],
-              "</td>", collapse = "\n"),
-            "\n</tr>\n"))
+              "<tr data-type='data' data-row='", i,"'>\n",
+              paste0(
+                "<td class='stub row ", col_alignment[1], "' ",
+                "style='", row_splits_styles[i][[1]][1],
+                "'>", row_splits[i][[1]][1],
+                "</td>"), "\n",
+              paste0(
+                "<td class='row ", col_alignment[-1], "' ",
+                "style='", row_splits_styles[i][[1]][-1],
+                "'>", row_splits[i][[1]][-1],
+                "</td>", collapse = "\n"),
+              "\n</tr>\n") %>%
+              tidy_gsub(" style=''", ""))
+
+      } else {
+
+        # Process 'data' rows where no stub is present
+        body_rows <-
+          c(body_rows,
+            paste0(
+              "<tr data-type='data' data-row='", i,"'>\n",
+              paste0(
+                "<td class='row ", col_alignment, "' ",
+                "style='", row_splits_styles[i][[1]],
+                "'>", row_splits[i][[1]],
+                "</td>", collapse = "\n"),
+              "\n</tr>\n"))
+      }
     }
   }
 
