@@ -2,9 +2,15 @@
 #'
 #' Modify the options available in a table theme.
 #' @inheritParams fmt_number
-#' @param table.font.size the table's font size.
-#' @param table.background.color the table's background color.
-#' @param table.width the width of the table.
+#' @param table.font.size the table text font size. Can be specified as a
+#' single-length character with units of pixels or as a percentage. If provided
+#' as a single-length numeric vector, it is assumed that the value is given in
+#' units of pixels.
+#' @param table.background.color the table background color.
+#' @param table.width the width of the table. Can be specified as a
+#' single-length character with units of pixels or as a percentage. If provided
+#' as a single-length numeric vector, it is assumed that the value is given in
+#' units of pixels.
 #' @param table.border.top.style the style of the table's top border.
 #' @param table.border.top.width the width of the table's top border.
 #' @param table.border.top.color the color of the table's top border.
@@ -13,28 +19,29 @@
 #' heading.
 #' @param heading.headnote.font.size the font size of the headnote in the table
 #' heading.
-#' @param heading.border.top.style the style of the heading's top border.
-#' @param heading.border.top.width the width of the heading's top border.
-#' @param heading.border.top.color the color of the heading's top border.
 #' @param heading.border.bottom.style the style of the heading's bottom border.
 #' @param heading.border.bottom.width the width of the heading's bottom border.
 #' @param heading.border.bottom.color the color of the heading's bottom border.
-#' @param stub_heading.background.color the background color of the stub
+#' @param boxhead.background.color the background color of the boxhead.
+#' @param boxhead.font.size the font size of the boxhead labels.
+#' @param boxhead.font.weight the font weight of the boxhead labels.
+#' @param stub_group.background.color the background color of the stub
 #' heading.
-#' @param stub_heading.border.top the parameters for the top border of the stub
+#' @param stub_group.font.size the font size of the boxhead labels.
+#' @param stub_group.font.weight the font weight of the boxhead labels.
+#' @param stub_group.border.top the parameters for the top border of the stub
 #' heading.
-#' @param stub_heading.border.bottom the parameters for the bottom border of the
+#' @param stub_group.border.bottom the parameters for the bottom border of the
 #' stub heading.
-#' @param stub_heading_field.background.color the background color of the stub
+#' @param stub_group_field.background.color the background color of the stub
 #' heading's field component.
-#' @param stub_heading_field.border.top the parameters for the top border of the
+#' @param stub_group_field.border.top the parameters for the top border of the
 #' stub heading's field component.
-#' @param stub_heading_field.border.bottom the parameters for the bottom border
+#' @param stub_group_field.border.bottom the parameters for the bottom border
 #' of the stub heading's field component.
 #' @param field.border.top the parameters for the top border of the field.
 #' @param field.border.bottom the parameters for the bottom border of the field.
 #' @param row.padding the amount of padding in each row.
-#' @param row.margin the size of the margin in each row.
 #' @param row.striping.color the color of the background for the striped rows.
 #' @param row.striping.include_stub an option for whether to include the stub
 #' when striping rows.
