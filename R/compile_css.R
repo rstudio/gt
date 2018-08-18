@@ -14,21 +14,30 @@ compile_css <- function(data) {
         value = opts_df_get(gt_options_tbl, "table_background_color"))
   }
 
-  if (is.na(opts_df_get(gt_options_tbl, "stub_heading_background_color"))) {
+  if (is.na(opts_df_get(gt_options_tbl, "boxhead_background_color"))) {
 
     gt_options_tbl <-
       opts_df_set(
         gt_options_tbl,
-        option = "stub_heading_background_color",
+        option = "boxhead_background_color",
         value = opts_df_get(gt_options_tbl, "table_background_color"))
   }
 
-  if (is.na(opts_df_get(gt_options_tbl, "stub_heading_field_background_color"))) {
+  if (is.na(opts_df_get(gt_options_tbl, "stub_group_background_color"))) {
 
     gt_options_tbl <-
       opts_df_set(
         gt_options_tbl,
-        option = "stub_heading_field_background_color",
+        option = "stub_group_background_color",
+        value = opts_df_get(gt_options_tbl, "table_background_color"))
+  }
+
+  if (is.na(opts_df_get(gt_options_tbl, "stub_group_field_background_color"))) {
+
+    gt_options_tbl <-
+      opts_df_set(
+        gt_options_tbl,
+        option = "stub_group_field_background_color",
         value = opts_df_get(gt_options_tbl, "table_background_color"))
   }
 
