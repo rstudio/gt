@@ -506,45 +506,34 @@ create_table_body <- function(row_splits,
 
     if (!is.null(groups_rows) &&
         i %in% groups_rows$row) {
+
+      # Process 'group' rows
       body_rows <-
         c(body_rows,
           paste0(
             "<tr>\n",
-            "<td data-type='stub_group' class='stub_heading font_bold'>",
+            "<td data-type='group' class='stub_heading font_bold'>",
             groups_rows[which(groups_rows$row %in% i), 1][[1]],
             "</td>\n<td class='stub_heading_field' colspan='",
             n_cols - 1, "'></td>\n</tr>\n"))
     }
 
-    if (grepl("Summary: ", row_splits[i][[1]][[1]])) {
+    if (grepl("::summary_", row_splits[i][[1]][[1]])) {
 
-      if (grepl(paste0("__", color_tints(), "$", collapse = "|"),
-                row_splits[i][[1]][[1]])) {
-
-        # Extract the tint from the string
-        tint <- gsub("^.*?__", "", row_splits[i][[1]][[1]])
-
-        # Remove the tint indicator from the string
-        row_splits[i][[1]][[1]] <-
-          gsub(
-            paste0("__", color_tints(), "$", collapse = "|"),
-            "", row_splits[i][[1]][[1]])
-
-      } else {
-        tint <- ""
-      }
-
+      # Process 'summary' rows
       body_rows <-
         c(body_rows,
           paste0(
             "<tr data-type='summary' data-row='", i,"'>\n",
             paste0(
-              "<td class='row summary_row ", tint, " ", col_alignment, "'>",
-              row_splits[i][[1]], "</td>", collapse = "\n"),
+              "<td class='row summary_row ", col_alignment, "'>",
+              tidy_gsub(row_splits[i][[1]], "::summary_", ""),
+              "</td>", collapse = "\n"),
             "\n</tr>\n"))
 
     } else {
 
+      # Process 'data' rows
       body_rows <-
         c(body_rows,
           paste0(
@@ -558,15 +547,14 @@ create_table_body <- function(row_splits,
     }
   }
 
+  # Create a single-length vector by collapsing all vector components
   body_rows <- body_rows %>% paste(collapse = "")
 
-  table_body <-
-    paste0(
-      "<tbody class='table_body striped'>\n",
-      body_rows,
-      "</tbody>\n")
-
-  table_body
+  # Create the `table_body` HTML component
+  paste0(
+    "<tbody class='table_body striped'>\n",
+    body_rows,
+    "</tbody>\n")
 }
 
 create_column_headings <- function(data_attr,
