@@ -71,22 +71,23 @@ tab_options <- function(data,
                         heading.background.color = NULL,
                         heading.title.font.size = NULL,
                         heading.headnote.font.size = NULL,
-                        heading.border.top.style = NULL,
-                        heading.border.top.width = NULL,
-                        heading.border.top.color = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
-                        stub_heading.background.color = NULL,
-                        stub_heading.border.top = NULL,
-                        stub_heading.border.bottom = NULL,
-                        stub_heading_field.background.color = NULL,
-                        stub_heading_field.border.top = NULL,
-                        stub_heading_field.border.bottom = NULL,
+                        boxhead.background.color = NULL,
+                        boxhead.font.size = NULL,
+                        boxhead.font.weight = NULL,
+                        stub_group.background.color = NULL,
+                        stub_group.font.size = NULL,
+                        stub_group.font.weight = NULL,
+                        stub_group.border.top = NULL,
+                        stub_group.border.bottom = NULL,
+                        stub_group_field.background.color = NULL,
+                        stub_group_field.border.top = NULL,
+                        stub_group_field.border.bottom = NULL,
                         field.border.top = NULL,
                         field.border.bottom = NULL,
                         row.padding = NULL,
-                        row.margin = NULL,
                         row.striping.background.color = NULL,
                         row.striping.include.stub = NULL,
                         row.striping.include_field = NULL,
@@ -104,6 +105,10 @@ tab_options <- function(data,
   # table.font.size
   if (!is.null(table.font.size)) {
 
+    if (is.numeric(table.font.size)) {
+      table.font.size <- paste0(table.font.size, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "table_font_size", table.font.size)
   }
@@ -118,6 +123,10 @@ tab_options <- function(data,
   # table.width
   if (!is.null(table.width)) {
 
+    if (is.numeric(table.width)) {
+      table.width <- paste0(table.width, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "table_width", table.width)
   }
@@ -131,6 +140,10 @@ tab_options <- function(data,
 
   # table.border.top.width
   if (!is.null(table.border.top.width)) {
+
+    if (is.numeric(table.border.top.width)) {
+      table.border.top.width <- paste0(table.border.top.width, "px")
+    }
 
     opts_df <- opts_df_set(
       opts_df, "table_border_top_width", table.border.top.width)
@@ -153,78 +166,133 @@ tab_options <- function(data,
   # heading.title.font.size
   if (!is.null(heading.title.font.size)) {
 
+    if (is.numeric(heading.title.font.size)) {
+      heading.title.font.size <- paste0(heading.title.font.size, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "heading_title_font_size", heading.title.font.size)
-  }
-
-  # heading.border.top.style
-  if (!is.null(heading.border.top.style)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_top_style", heading.border.top.style)
-  }
-
-  # heading.border.top.width
-  if (!is.null(heading.border.top.width)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_top_width", heading.border.top.width)
-  }
-
-  # heading.border.top.color
-  if (!is.null(heading.border.top.color)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_top_color", heading.border.top.color)
   }
 
   # heading.headnote.font.size
   if (!is.null(heading.headnote.font.size)) {
 
+    if (is.numeric(heading.headnote.font.size)) {
+      heading.headnote.font.size <- paste0(heading.headnote.font.size, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "heading_headnote_font_size", heading.headnote.font.size)
   }
 
-  # stub_heading.background.color
-  if (!is.null(stub_heading.background.color)) {
+  # heading.border.bottom.style
+  if (!is.null(heading.border.bottom.style)) {
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_background_color", stub_heading.background.color)
+      opts_df, "heading_border_bottom_style", heading.border.bottom.style)
   }
 
-  # stub_heading.border.top
-  if (!is.null(stub_heading.border.top)) {
+  # heading.border.bottom.width
+  if (!is.null(heading.border.bottom.width)) {
+
+    if (is.numeric(heading.border.bottom.width)) {
+      heading.border.bottom.width <- paste0(heading.border.bottom.width, "px")
+    }
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_border_top", stub_heading.border.top)
+      opts_df, "heading_border_bottom_width", heading.border.bottom.width)
   }
 
-  # stub_heading.border.bottom
-  if (!is.null(stub_heading.border.bottom)) {
+  # heading.border.bottom.color
+  if (!is.null(heading.border.bottom.color)) {
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_border_bottom", stub_heading.border.bottom)
+      opts_df, "heading_border_bottom_color", heading.border.bottom.color)
   }
 
-  # stub_heading_field.background.color
-  if (!is.null(stub_heading_field.background.color)) {
+  # boxhead.background.color
+  if (!is.null(boxhead.background.color)) {
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_field_background_color", stub_heading_field.background.color)
+      opts_df, "boxhead_background_color", boxhead.background.color)
   }
 
-  # stub_heading_field.border.top
-  if (!is.null(stub_heading_field.border.top)) {
+  # boxhead.font.size
+  if (!is.null(boxhead.font.size)) {
+
+    if (is.numeric(boxhead.font.size)) {
+      boxhead.font.size <- paste0(boxhead.font.size, "px")
+    }
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_field_border_top", stub_heading_field.border.top)
+      opts_df, "boxhead_font_size", boxhead.font.size)
   }
 
-  # stub_heading_field.border.bottom
-  if (!is.null(stub_heading_field.border.bottom)) {
+  # boxhead.font.weight
+  if (!is.null(boxhead.font.weight)) {
 
     opts_df <- opts_df_set(
-      opts_df, "stub_heading_field_border_bottom", stub_heading_field.border.bottom)
+      opts_df, "boxhead_font_weight", boxhead.font.weight)
+  }
+
+  # stub_group.background.color
+  if (!is.null(stub_group.background.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_background_color", stub_group.background.color)
+  }
+
+  # stub_group.font.size
+  if (!is.null(stub_group.font.size)) {
+
+    if (is.numeric(stub_group.font.size)) {
+      stub_group.font.size <- paste0(stub_group.font.size, "px")
+    }
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_font_size", stub_group.font.size)
+  }
+
+  # stub_group.font.weight
+  if (!is.null(stub_group.font.weight)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_font_weight", stub_group.font.weight)
+  }
+
+  # stub_group.border.top
+  if (!is.null(stub_group.border.top)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_border_top", stub_group.border.top)
+  }
+
+  # stub_group.border.bottom
+  if (!is.null(stub_group.border.bottom)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_border_bottom", stub_group.border.bottom)
+  }
+
+  # stub_group_field.background.color
+  if (!is.null(stub_group_field.background.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_field_background_color", stub_group_field.background.color)
+  }
+
+  # stub_group_field.border.top
+  if (!is.null(stub_group_field.border.top)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_field_border_top", stub_group_field.border.top)
+  }
+
+  # stub_group_field.border.bottom
+  if (!is.null(stub_group_field.border.bottom)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_field_border_bottom", stub_group_field.border.bottom)
   }
 
   # field.border.top
@@ -244,15 +312,12 @@ tab_options <- function(data,
   # row.padding
   if (!is.null(row.padding)) {
 
+    if (is.numeric(row.padding)) {
+      row.padding <- paste0(row.padding, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "row_padding", row.padding)
-  }
-
-  # row.margin
-  if (!is.null(row.margin)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "row_margin", row.margin)
   }
 
   # row.striping.background.color
@@ -286,6 +351,10 @@ tab_options <- function(data,
   # summary_row.padding
   if (!is.null(summary_row.padding)) {
 
+    if (is.numeric(summary_row.padding)) {
+      summary_row.padding <- paste0(summary_row.padding, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "summary_row_padding", summary_row.padding)
   }
@@ -300,12 +369,20 @@ tab_options <- function(data,
   # footnote.font.size
   if (!is.null(footnote.font.size)) {
 
+    if (is.numeric(footnote.font.size)) {
+      footnote.font.size <- paste0(footnote.font.size, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "footnote_font_size", footnote.font.size)
   }
 
   # footnote.padding
   if (!is.null(footnote.padding)) {
+
+    if (is.numeric(footnote.padding)) {
+      footnote.padding <- paste0(footnote.padding, "px")
+    }
 
     opts_df <- opts_df_set(
       opts_df, "footnote_padding", footnote.padding)
@@ -314,12 +391,20 @@ tab_options <- function(data,
   # sourcenote.font.size
   if (!is.null(sourcenote.font.size)) {
 
+    if (is.numeric(sourcenote.font.size)) {
+      sourcenote.font.size <- paste0(sourcenote.font.size, "px")
+    }
+
     opts_df <- opts_df_set(
       opts_df, "sourcenote_font_size", sourcenote.font.size)
   }
 
   # sourcenote.padding
   if (!is.null(sourcenote.padding)) {
+
+    if (is.numeric(sourcenote.padding)) {
+      sourcenote.padding <- paste0(sourcenote.padding, "px")
+    }
 
     opts_df <- opts_df_set(
       opts_df, "sourcenote_padding", sourcenote.padding)
