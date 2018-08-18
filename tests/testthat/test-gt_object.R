@@ -34,7 +34,7 @@ test_that("a gt table object contains the correct components", {
   expect_equal(dim(attr(tab, "stub_df")), c(150, 2))
   expect_equal(dim(attr(tab, "fmts_df")), c(150, 5))
   expect_equal(dim(attr(tab, "foot_df")), c(150, 5))
-  expect_equal(dim(attr(tab, "opts_df")), c(29, 3))
+  expect_equal(dim(attr(tab, "opts_df")), c(36, 3))
   expect_equal(length(attr(tab, "formats")), 0)
 
   # Expect that extracted df has the same column
@@ -125,7 +125,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   expect_equal(dim(attr(tab, "stub_df")), c(32, 2))
   expect_equal(dim(attr(tab, "fmts_df")), c(32, 11))
   expect_equal(dim(attr(tab, "foot_df")), c(32, 11))
-  expect_equal(dim(attr(tab, "opts_df")), c(29, 3))
+  expect_equal(dim(attr(tab, "opts_df")), c(36, 3))
   expect_equal(length(attr(tab, "formats")), 0)
 
   # Expect that extracted df has the same column
@@ -225,7 +225,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_equal(dim(attr(tab, "stub_df")), c(10, 2))
   expect_equal(dim(attr(tab, "fmts_df")), c(10, 1))
   expect_equal(dim(attr(tab, "foot_df")), c(10, 1))
-  expect_equal(dim(attr(tab, "opts_df")), c(29, 3))
+  expect_equal(dim(attr(tab, "opts_df")), c(36, 3))
   expect_equal(length(attr(tab, "formats")), 0)
 
   # Expect that extracted df has one of the column
@@ -328,7 +328,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_equal(dim(attr(tab, "stub_df")), c(10, 2))
   expect_equal(dim(attr(tab, "fmts_df")), c(10, 1))
   expect_equal(dim(attr(tab, "foot_df")), c(10, 1))
-  expect_equal(dim(attr(tab, "opts_df")), c(29, 3))
+  expect_equal(dim(attr(tab, "opts_df")), c(36, 3))
   expect_equal(length(attr(tab, "formats")), 0)
 
   # Expect that extracted df has one of the column
