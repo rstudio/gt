@@ -185,12 +185,13 @@ The package API consists of the following functions:
 
 **Add Rows**
 
-- `summary_rows()` -- add summary rows based on simple aggregations
+- `summary_rows()` -- add summary rows using aggregation functions
 
 **Export Table**
 
 - `write_rtf()` -- save a gt table object as an RTF file
 - `as_raw_html()` -- get the HTML content of a gt table
+- `extract_summary()` -- extract a summary table from a gt table object
 
 ## Inner Workings
 
