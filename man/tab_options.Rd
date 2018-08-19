@@ -15,10 +15,7 @@ tab_options(data, table.font.size = NULL,
   boxhead.font.size = NULL, boxhead.font.weight = NULL,
   stub_group.background.color = NULL, stub_group.font.size = NULL,
   stub_group.font.weight = NULL, stub_group.border.top = NULL,
-  stub_group.border.bottom = NULL,
-  stub_group_field.background.color = NULL,
-  stub_group_field.border.top = NULL,
-  stub_group_field.border.bottom = NULL, field.border.top = NULL,
+  stub_group.border.bottom = NULL, field.border.top = NULL,
   field.border.bottom = NULL, row.padding = NULL,
   row.striping.background.color = NULL,
   row.striping.include.stub = NULL, row.striping.include_field = NULL,
@@ -80,15 +77,6 @@ heading.}
 
 \item{stub_group.border.bottom}{the parameters for the bottom border of the
 stub heading.}
-
-\item{stub_group_field.background.color}{the background color of the stub
-heading's field component.}
-
-\item{stub_group_field.border.top}{the parameters for the top border of the
-stub heading's field component.}
-
-\item{stub_group_field.border.bottom}{the parameters for the bottom border
-of the stub heading's field component.}
 
 \item{field.border.top}{the parameters for the top border of the field.}
 

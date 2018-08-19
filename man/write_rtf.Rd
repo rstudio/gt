@@ -24,4 +24,7 @@ gt(data = sleep) \%>\%
   write_rtf(file = "sleep.rtf")
 }
 }
+\seealso{
+Other table export functions: \code{\link{extract_summary}}
+}
 \concept{table export functions}
