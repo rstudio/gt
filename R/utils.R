@@ -1,13 +1,3 @@
-
-as_character <- function(x) {
-
-  if (inherits(x, "quosures")) {
-    x <- x %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  x
-}
-
 #' @importFrom rlang UQ
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter
@@ -238,22 +228,6 @@ get_time_format <- function(time_style) {
   }
 }
 
-#' Concatenate date and time formats to form a
-#' single date-time formatting string
-#' @noRd
-concat_date_time_formats <- function(date_format, time_format) {
-
-  if (is.na(date_format)) {
-    return(time_format)
-  } else if (is.na(time_format)) {
-    return(date_format)
-  } else if (!is.na(date_format) & !is.na(time_format)) {
-    return(paste(date_format, time_format))
-  } else {
-    return(NA_character_)
-  }
-}
-
 #' Determine if a provided `currency` type is valid
 #' @noRd
 is_currency_valid <- function(currency) {
@@ -372,18 +346,6 @@ get_locale_dec_mark <- function(locale) {
     locales %>%
     dplyr::filter(base_locale_id == locale) %>%
     dplyr::pull(dec_sep)
-
-  dec_mark
-}
-
-#' Get the monetary `dec_mark` value from a locale
-#' @noRd
-get_locale_monetary_dec_mark <- function(locale) {
-
-  dec_mark <-
-    locales %>%
-    dplyr::filter(base_locale_id == locale) %>%
-    dplyr::pull(monetary_dec_sep)
 
   dec_mark
 }
@@ -603,13 +565,6 @@ split_scientific_notn <- function(x_str) {
   exp_part <- exp_parts %>% vapply(`[[`, character(1), 2) %>% as.numeric()
 
   list(num = num_part, exp = exp_part)
-}
-
-#' Create a vector of HTML lines from gt table HTML
-#' @noRd
-create_html_lines <- function(html) {
-
-  unlist(strsplit(html, "\n"))
 }
 
 #' Obtain a line number from a vector of HTML lines by use of a pattern
