@@ -33,12 +33,6 @@
 #' heading.
 #' @param stub_group.border.bottom the parameters for the bottom border of the
 #' stub heading.
-#' @param stub_group_field.background.color the background color of the stub
-#' heading's field component.
-#' @param stub_group_field.border.top the parameters for the top border of the
-#' stub heading's field component.
-#' @param stub_group_field.border.bottom the parameters for the bottom border
-#' of the stub heading's field component.
 #' @param field.border.top the parameters for the top border of the field.
 #' @param field.border.bottom the parameters for the bottom border of the field.
 #' @param row.padding the amount of padding in each row.
@@ -82,9 +76,6 @@ tab_options <- function(data,
                         stub_group.font.weight = NULL,
                         stub_group.border.top = NULL,
                         stub_group.border.bottom = NULL,
-                        stub_group_field.background.color = NULL,
-                        stub_group_field.border.top = NULL,
-                        stub_group_field.border.bottom = NULL,
                         field.border.top = NULL,
                         field.border.bottom = NULL,
                         row.padding = NULL,
@@ -272,27 +263,6 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "stub_group_border_bottom", stub_group.border.bottom)
-  }
-
-  # stub_group_field.background.color
-  if (!is.null(stub_group_field.background.color)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "stub_group_field_background_color", stub_group_field.background.color)
-  }
-
-  # stub_group_field.border.top
-  if (!is.null(stub_group_field.border.top)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "stub_group_field_border_top", stub_group_field.border.top)
-  }
-
-  # stub_group_field.border.bottom
-  if (!is.null(stub_group_field.border.bottom)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "stub_group_field_border_bottom", stub_group_field.border.bottom)
   }
 
   # field.border.top
