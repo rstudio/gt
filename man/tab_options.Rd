@@ -14,9 +14,15 @@ tab_options(data, table.font.size = NULL,
   heading.border.bottom.color = NULL, boxhead.background.color = NULL,
   boxhead.font.size = NULL, boxhead.font.weight = NULL,
   stub_group.background.color = NULL, stub_group.font.size = NULL,
-  stub_group.font.weight = NULL, stub_group.border.top = NULL,
-  stub_group.border.bottom = NULL, field.border.top = NULL,
-  field.border.bottom = NULL, row.padding = NULL,
+  stub_group.font.weight = NULL, stub_group.border.top.style = NULL,
+  stub_group.border.top.width = NULL,
+  stub_group.border.top.color = NULL,
+  stub_group.border.bottom.style = NULL,
+  stub_group.border.bottom.width = NULL,
+  stub_group.border.bottom.color = NULL, field.border.top.style = NULL,
+  field.border.top.width = NULL, field.border.top.color = NULL,
+  field.border.bottom.style = NULL, field.border.bottom.width = NULL,
+  field.border.bottom.color = NULL, row.padding = NULL,
   row.striping.background.color = NULL,
   row.striping.include.stub = NULL, row.striping.include_field = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
@@ -47,11 +53,9 @@ units of pixels.}
 
 \item{heading.background.color}{the background color of the table heading.}
 
-\item{heading.title.font.size}{the font size of the title in the table
-heading.}
+\item{heading.title.font.size}{the font size of the heading title.}
 
-\item{heading.headnote.font.size}{the font size of the headnote in the table
-heading.}
+\item{heading.headnote.font.size}{the font size of the headnote.}
 
 \item{heading.border.bottom.style}{the style of the heading's bottom border.}
 
@@ -65,22 +69,33 @@ heading.}
 
 \item{boxhead.font.weight}{the font weight of the boxhead labels.}
 
-\item{stub_group.background.color}{the background color of the stub
-heading.}
+\item{stub_group.font.size}{the font size of the stub heading labels.}
 
-\item{stub_group.font.size}{the font size of the boxhead labels.}
+\item{stub_group.font.weight}{the font weight of the stub heading labels.}
 
-\item{stub_group.font.weight}{the font weight of the boxhead labels.}
+\item{stub_group.border.top.style}{the style of the stub heading's top border.}
 
-\item{stub_group.border.top}{the parameters for the top border of the stub
-heading.}
+\item{stub_group.border.top.width}{the width of the stub heading's top border.}
 
-\item{stub_group.border.bottom}{the parameters for the bottom border of the
-stub heading.}
+\item{stub_group.border.top.color}{the color of the stub heading's top border.}
 
-\item{field.border.top}{the parameters for the top border of the field.}
+\item{stub_group.border.bottom.style}{the style of the stub heading's bottom border.}
 
-\item{field.border.bottom}{the parameters for the bottom border of the field.}
+\item{stub_group.border.bottom.width}{the width of the stub heading's bottom border.}
+
+\item{stub_group.border.bottom.color}{the color of the stub heading's bottom border.}
+
+\item{field.border.top.style}{the style of the field's top border.}
+
+\item{field.border.top.width}{the width of the field's top border.}
+
+\item{field.border.top.color}{the color of the field's top border.}
+
+\item{field.border.bottom.style}{the style of the field's bottom border.}
+
+\item{field.border.bottom.width}{the width of the field's bottom border.}
+
+\item{field.border.bottom.color}{the color of the field's bottom border.}
 
 \item{row.padding}{the amount of padding in each row.}
 
@@ -105,6 +120,8 @@ note section.}
 
 \item{sourcenote.padding}{the amount of padding to apply to the source note
 section.}
+
+\item{field.background.color}{the background color of the field.}
 
 \item{row.striping.color}{the color of the background for the striped rows.}
 
