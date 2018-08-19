@@ -216,12 +216,6 @@ render_as_html <- function(data) {
   # Create a heading
   heading_component <- create_heading_component(data_attr, n_cols)
 
-  heading_component <-
-    paste0(
-      heading_component,
-      paste0(
-        "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
-
   # Create the source note rows
   source_note_rows <- create_source_note_rows(data_attr, n_cols)
 

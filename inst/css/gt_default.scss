@@ -34,10 +34,6 @@
   padding-bottom: 4px; /* heading.bottom.padding */
 }
 
-.spacer {
-  border-bottom-style: none;
-}
-
 .bottom_border {
   border-bottom-style: $heading_border_bottom_style; /* heading.border.bottom.style */
   border-bottom-width: $heading_border_bottom_width; /* heading.border.bottom.width */
@@ -48,6 +44,8 @@
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .col_heading {

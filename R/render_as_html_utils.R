@@ -492,10 +492,7 @@ create_heading_component <- function(data_attr,
           n_cols, "'>", data_attr$heading$headnote ,"</th>\n</tr>\n"))
   }
 
-  paste0(
-    heading_component,
-    paste0(
-      "<tr>\n<th class='spacer' colspan='", n_cols, "'></th>\n</tr>\n"))
+  heading_component
 }
 
 #' @noRd
