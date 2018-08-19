@@ -291,6 +291,18 @@ integrate_summary_lines <- function(data_attr) {
     data_attr$output_df <- rbind(data_attr$output_df, summary_lines[, -c(1:2)])
   }
 
+  # Process summary lines to add as the `summary_df` data frame
+  # to `data_attr`
+  labels_vector <- c()
+
+  for (i in seq(labels)) {
+    labels_vector <-
+      c(labels_vector, rep(labels[i], length(summary_attrs$groups)))
+  }
+
+  summary_lines$rowname <- labels_vector
+  data_attr$summary_df <- summary_lines
+
   data_attr
 }
 
