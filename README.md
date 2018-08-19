@@ -30,39 +30,41 @@ The main parts of a table (and their subparts) are:
 
   - the **heading** (optional; possibly with a **table number**,
     **title**, or **headnote**)
-  - the **stub** (optional; contains a **stubhead** and one or more
-    **stub blocks**)
-  - the **boxhead** (contains **column headings**, optionally within
-    **panels** having one or more **spanner headings**)
+  - the **stub** (optional; contains a **stub head** and **row
+    captions**, optionally within **stub blocks** having group headings
+    and possibly summary captions)
+  - the **boxhead** (contains **column labels**, optionally within
+    **boxhead panels** having one or more **spanner headings**)
   - the **field** (contains *cells*, *columns*, and *rows*)
-  - the **footnote** area
-  - the **source note** area
+  - the **footer** (optional; possible with **footnotes** and **source
+    notes**)
 
 The **heading** part contains the table title and the optional headnote
 subpart. A table heading is often overlooked but it really shouldn’t be.
 
 The **stub** is the area to the left in a table that contains **row
 captions**, **summary captions**, and **group headings**. Those subparts
-can be grouped in a sequence of **stub blocks**. The **stubhead**
+can be grouped in a sequence of **stub blocks**. The **stub head**
 provides a location for a caption that describes the **stub**. The
 **stub** is optional since there are cases where a **stub** wouldn’t be
 useful.
 
-The **boxhead** is the table part that contains the **column headings**,
-which can themselves be supplemented by **spanner headings** placed
-above. Units of both heading can be contained in one or more **panels**.
+The **boxhead** is the table part that contains the **column labels**,
+which can themselves be supplemented by **spanner headings** that are
+placed above. Groupings of **spanner headings** and **column labels**
+can be contained in one or more **boxhead panels**.
 
 The **field** is located below the **boxhead** and to the right of the
 **stub**. It is composed of *cells*, where vertical and horizontal
 collections are termed *columns* and *rows*.
 
-The **footnote** area can contains explanatory statements targeted to a
-column, a row, or one or more cells. This is done by affixing reference
-symbols or letters/digits to points of reference.
+The **footnotes** component within the **footer** can contain
+explanatory statements targeted to one or more cells. This is done by
+affixing reference symbols to points of reference.
 
-The **source note** area is for provision of citation information for
-the presented data. As it is commonly seen, the citation is preceeded by
-the word `Source`.
+The **source notes** component of the **footer** is for provision of
+citation information for the presented data. As it is commonly seen, the
+citation is preceeded by the word `Source`.
 
 The formalized table parts fit together well and can be used effectively
 for the vast majority of the tables that one may create. However, this
