@@ -18,7 +18,7 @@ render_as_html <- function(data) {
   data_attr$output_df <- render_formats(data, context = "html")
 
   # Move input data cells to `output_df` that didn't have
-  # any rendering applied during `render_formats()`
+  #   any rendering applied during `render_formats()`
   data_attr$output_df <-
     migrate_unformatted_to_output(
       data = data,
@@ -36,6 +36,12 @@ render_as_html <- function(data) {
 
   # Integrate any summary lines available
   data_attr <- integrate_summary_lines(data_attr)
+
+  # If a summary lines were processed, they were added to
+  #   `data_attr`; incorporate that data frame as a `data` attr
+  if ("summary_df" %in% names(data_attr)) {
+    attr(data, "summary_df") <- data_attr$summary_df
+  }
 
   # Perform any necessary column merge operations
   data_attr <- perform_col_merge(data_attr)
@@ -81,7 +87,7 @@ render_as_html <- function(data) {
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
-    # `list_footnotes` object
+    #   `list_footnotes` object
     list_footnotes <- footnotes_to_list(data_attr, has_stub = FALSE)
 
   } else if (stub_component_is_rowname(stub_components)) {
@@ -94,7 +100,7 @@ render_as_html <- function(data) {
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
-    # `list_footnotes` object
+    #   `list_footnotes` object
     list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
 
   } else if (stub_component_is_groupname(stub_components)) {
@@ -141,7 +147,7 @@ render_as_html <- function(data) {
     col_alignment <- data_attr$boxh_df[3, ] %>% unlist() %>% unname()
 
     # Extract footnote references and place them into the
-    # `list_footnotes` object
+    #   `list_footnotes` object
     list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
 
   } else if (stub_component_is_rowname_groupname(stub_components)) {
@@ -155,24 +161,18 @@ render_as_html <- function(data) {
     # Replace NA values in the `:group_name:` column
     extracted[which(is.na(extracted[, 1])), 1] <- data_attr$others_group[[1]] %||% "Others"
 
-    if ("arrange_groups" %in% property_names) {
+    # Obtain the `ordering` object, which is a vector that specifies
+    #   the order of the groups
+    ordering <- obtain_group_ordering(data_attr, extracted)
 
-      # Obtain the `ordering` object, which is a vector that specifies
-      #   the order of the groups
-      ordering <- obtain_group_ordering(data_attr, extracted)
+    # Modify the `extracted` data frame (and associated data frames
+    #   in `data_attr`) so that rows are rearranged according to
+    #   the group names available in `ordering`
+    arranged <- arrange_dfs(data_attr, extracted, ordering)
 
-      # Modify the `extracted` data frame (and associated data frames
-      #   in `data_attr`) so that rows are rearranged according to
-      #   the group names available in `ordering`
-      arranged <- arrange_dfs(data_attr, extracted, ordering)
-
-      # Reassign the transformed `extracted` and `data_attr` objects
-      extracted <- arranged$extracted
-      data_attr <- arranged$data_attr
-
-    } else {
-      ordering <- obtain_group_ordering(data_attr, extracted)
-    }
+    # Reassign the transformed `extracted` and `data_attr` objects
+    extracted <- arranged$extracted
+    data_attr <- arranged$data_attr
 
     # Create the `groups_rows` data frame, which provides information
     #   on which rows the group rows should appear above
