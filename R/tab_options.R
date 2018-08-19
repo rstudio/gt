@@ -15,26 +15,29 @@
 #' @param table.border.top.width the width of the table's top border.
 #' @param table.border.top.color the color of the table's top border.
 #' @param heading.background.color the background color of the table heading.
-#' @param heading.title.font.size the font size of the title in the table
-#' heading.
-#' @param heading.headnote.font.size the font size of the headnote in the table
-#' heading.
+#' @param heading.title.font.size the font size of the heading title.
+#' @param heading.headnote.font.size the font size of the headnote.
 #' @param heading.border.bottom.style the style of the heading's bottom border.
 #' @param heading.border.bottom.width the width of the heading's bottom border.
 #' @param heading.border.bottom.color the color of the heading's bottom border.
 #' @param boxhead.background.color the background color of the boxhead.
 #' @param boxhead.font.size the font size of the boxhead labels.
 #' @param boxhead.font.weight the font weight of the boxhead labels.
-#' @param stub_group.background.color the background color of the stub
-#' heading.
-#' @param stub_group.font.size the font size of the boxhead labels.
-#' @param stub_group.font.weight the font weight of the boxhead labels.
-#' @param stub_group.border.top the parameters for the top border of the stub
-#' heading.
-#' @param stub_group.border.bottom the parameters for the bottom border of the
-#' stub heading.
-#' @param field.border.top the parameters for the top border of the field.
-#' @param field.border.bottom the parameters for the bottom border of the field.
+#' @param field.background.color the background color of the field.
+#' @param stub_group.font.size the font size of the stub heading labels.
+#' @param stub_group.font.weight the font weight of the stub heading labels.
+#' @param stub_group.border.top.style the style of the stub heading's top border.
+#' @param stub_group.border.top.width the width of the stub heading's top border.
+#' @param stub_group.border.top.color the color of the stub heading's top border.
+#' @param stub_group.border.bottom.style the style of the stub heading's bottom border.
+#' @param stub_group.border.bottom.width the width of the stub heading's bottom border.
+#' @param stub_group.border.bottom.color the color of the stub heading's bottom border.
+#' @param field.border.top.style the style of the field's top border.
+#' @param field.border.top.width the width of the field's top border.
+#' @param field.border.top.color the color of the field's top border.
+#' @param field.border.bottom.style the style of the field's bottom border.
+#' @param field.border.bottom.width the width of the field's bottom border.
+#' @param field.border.bottom.color the color of the field's bottom border.
 #' @param row.padding the amount of padding in each row.
 #' @param row.striping.color the color of the background for the striped rows.
 #' @param row.striping.include_stub an option for whether to include the stub
@@ -74,10 +77,18 @@ tab_options <- function(data,
                         stub_group.background.color = NULL,
                         stub_group.font.size = NULL,
                         stub_group.font.weight = NULL,
-                        stub_group.border.top = NULL,
-                        stub_group.border.bottom = NULL,
-                        field.border.top = NULL,
-                        field.border.bottom = NULL,
+                        stub_group.border.top.style = NULL,
+                        stub_group.border.top.width = NULL,
+                        stub_group.border.top.color = NULL,
+                        stub_group.border.bottom.style = NULL,
+                        stub_group.border.bottom.width = NULL,
+                        stub_group.border.bottom.color = NULL,
+                        field.border.top.style = NULL,
+                        field.border.top.width = NULL,
+                        field.border.top.color = NULL,
+                        field.border.bottom.style = NULL,
+                        field.border.bottom.width = NULL,
+                        field.border.bottom.color = NULL,
                         row.padding = NULL,
                         row.striping.background.color = NULL,
                         row.striping.include.stub = NULL,
@@ -251,32 +262,104 @@ tab_options <- function(data,
       opts_df, "stub_group_font_weight", stub_group.font.weight)
   }
 
-  # stub_group.border.top
-  if (!is.null(stub_group.border.top)) {
+  # stub_group.border.top.style
+  if (!is.null(stub_group.border.top.style)) {
 
     opts_df <- opts_df_set(
-      opts_df, "stub_group_border_top", stub_group.border.top)
+      opts_df, "stub_group_border_top_style", stub_group.border.top.style)
   }
 
-  # stub_group.border.bottom
-  if (!is.null(stub_group.border.bottom)) {
+  # stub_group.border.top.width
+  if (!is.null(stub_group.border.top.width)) {
+
+    if (is.numeric(stub_group.border.top.width)) {
+      stub_group.border.top.width <- paste0(stub_group.border.top.width, "px")
+    }
 
     opts_df <- opts_df_set(
-      opts_df, "stub_group_border_bottom", stub_group.border.bottom)
+      opts_df, "stub_group_border_top_width", stub_group.border.top.width)
   }
 
-  # field.border.top
-  if (!is.null(field.border.top)) {
+  # stub_group.border.top.color
+  if (!is.null(stub_group.border.top.color)) {
 
     opts_df <- opts_df_set(
-      opts_df, "field_border_top", field.border.top)
+      opts_df, "stub_group_border_top_color", stub_group.border.top.color)
   }
 
-  # field.border.bottom
-  if (!is.null(field.border.bottom)) {
+  # stub_group.border.bottom.style
+  if (!is.null(stub_group.border.bottom.style)) {
 
     opts_df <- opts_df_set(
-      opts_df, "field_border_bottom", field.border.bottom)
+      opts_df, "stub_group_border_bottom_style", stub_group.border.bottom.style)
+  }
+
+  # stub_group.border.bottom.width
+  if (!is.null(stub_group.border.bottom.width)) {
+
+    if (is.numeric(stub_group.border.bottom.width)) {
+      stub_group.border.bottom.width <- paste0(stub_group.border.bottom.width, "px")
+    }
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_border_bottom_width", stub_group.border.bottom.width)
+  }
+
+  # stub_group.border.bottom.color
+  if (!is.null(stub_group.border.bottom.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "stub_group_border_bottom_color", stub_group.border.bottom.color)
+  }
+
+  # field.border.top.style
+  if (!is.null(field.border.top.style)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_top_style", field.border.top.style)
+  }
+
+  # field.border.top.width
+  if (!is.null(field.border.top.width)) {
+
+    if (is.numeric(field.border.top.width)) {
+      field.border.top.width <- paste0(field.border.top.width, "px")
+    }
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_top_width", field.border.top.width)
+  }
+
+  # field.border.top.color
+  if (!is.null(field.border.top.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_top_color", field.border.top.color)
+  }
+
+  # field.border.bottom.style
+  if (!is.null(field.border.bottom.style)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_bottom_style", field.border.bottom.style)
+  }
+
+  # field.border.bottom.width
+  if (!is.null(field.border.bottom.width)) {
+
+    if (is.numeric(field.border.bottom.width)) {
+      field.border.bottom.width <- paste0(field.border.bottom.width, "px")
+    }
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_bottom_width", field.border.bottom.width)
+  }
+
+  # field.border.bottom.color
+  if (!is.null(field.border.bottom.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "field_border_bottom_color", field.border.bottom.color)
   }
 
   # row.padding
