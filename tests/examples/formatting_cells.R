@@ -20,16 +20,13 @@ tbl <-
 # Create a display table where individual table
 # cells are styled
 tab_cell_fmts <-
-  gt(data = mtcars, rownames_to_stub = TRUE) %>%
+  gt(tbl) %>%
   tab_style(
     style = apply_styles(
       bkgd_color = "orange",
       text_color = "white"),
     location = data_cells(
-      rows = 1, columns = vars(hp, wt))) %>%
-  tab_options(
-    table.background.color = "#E3D6D9",
-    row.striping.background.color = "#DAEDFE")
+      rows = 1, columns = vars(value, value_2)))
 
 tab_cell_fmts
 
