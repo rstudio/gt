@@ -1,29 +1,64 @@
-#' Add summary rows based on simple aggregations
+#' Add summary rows using aggregation functions
 #'
-#' Add a summary rows to one or more stub blocks by using the input data
-#' already provided in the \code{gt()} function.
+#' Add summary rows to one or more stub blocks by using the input data
+#' already provided in the \code{gt()} function alongside any suitable
+#' aggregation functions. Should we need to obtain the summary data for
+#' external purposes, the \code{\link{extract_summary}()} can be used with
+#' a \code{gt_tbl} object where summary rows were added via
+#' \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param groups the stub block groups heading names for which summary rows
 #' will be added.
-#' @param columns the columns for which the summaries should be calculated.
+#' @param columns the columns for which the summaries should be calculated. If
+#' nothing is provided, then the supplied aggregation functions will be applied
+#' to all columns.
 #' @param funs functions used for aggregations. This can include any of
-#' these: \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd},
-#' \code{sum} or \code{n}.
+#' \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum}.
+#' The functions should be supplied using the \code{\link{funs}()} helper
+#' function. With \code{funs()}, we can specify the functions by use of function
+#' names (e.g., \code{"sum"}), the functions themselves (e.g., \code{sum}), or
+#' calls to functions with \code{.} as a dummy argument (e.g.,
+#' \code{sum(., na.rm = TRUE)}).
 #' @param labels a vector of stub labels for the summary rows. The vector length
 #' should match the number of \code{funs} provided. If this is not provided then
-#' the labels will be generated from the function names.
+#' the labels will be generated from the input given to \code{funs}.
 #' @param decimals an option to specify the exact number of decimal places to
 #' use. The default number of decimal places is \code{2}.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stub_block(
-#'     group = "Mercs",
-#'     rows = rownames_with("Merc")) %>%
+#' library(tidyverse)
+#'
+#' # Create a table that creates a stub and
+#' # stub blocks based on a naming convention
+#' tbl <-
+#'   dplyr::tribble(
+#'     ~groupname, ~rowname, ~value,  ~value_2,
+#'     "A",        "1",      NA,      260.1,
+#'     "A",        "2",      184.3,   84.4,
+#'     "A",        "3",      342.3,   126.3,
+#'     "A",        "4",      234.9,   NA,
+#'     "B",        "1",      190.9,   832.5,
+#'     "B",        "2",      743.3,   281.2,
+#'     "B",        "3",      252.3,   732.5,
+#'     "B",        "4",      344.7,   NA,
+#'     "C",        "1",      197.2,   818.0,
+#'     "C",        "2",      284.3,   394.4)
+#'
+#' # Create a table with summary rows for the
+#' # `A` and `C` groups; the 3 summary rows
+#' # for these groups represent the mean, sum,
+#' # and standard deviation of `value`
+#' gt(tbl) %>%
 #'   summary_rows(
-#'     funs = dplyr::funs(mean))
+#'     groups = vars(A, C),
+#'     columns = vars(value),
+#'     funs = funs(
+#'       mean(., na.rm = TRUE),
+#'       sum(., na.rm = TRUE),
+#'       sd(., na.rm = TRUE)),
+#'     labels = c("mean", "sum", "sd"))
 #' @family row addition functions
 #' @export
 summary_rows <- function(data,
@@ -66,8 +101,6 @@ summary_rows <- function(data,
             decimals = decimals,
             sep_mark = sep_mark,
             dec_mark = dec_mark)))
-
-    data
 
   } else {
 

@@ -1,7 +1,15 @@
 #' Extract a summary table from a gt table object
 #'
-#' Take a \code{gt_tbl} table object and transform it to an HTML table.
-#' @param data a table object that is created using the \code{gt()} function.
+#' Get a summary row data frame from a \code{gt_tbl} object where summary rows
+#' were added via the \code{summary_rows()} function. The output data frame
+#' contains the \code{groupname} and \code{rowname} columns, where
+#' \code{rowname} contains descriptive stub labels for the summary rows.
+#' The remaining columns are a subset of the original dataset, where only those
+#' columns that had aggregation functions applied are retained. The output data
+#' frame format is suitable for generating a summary table using the
+#' \code{\link{gt}()} function.
+#' @param data a table object that is created using the \code{\link{gt}()}
+#' function.
 #' @return a data frame containing summary data.
 #' @family table export functions
 #' @export
