@@ -69,8 +69,12 @@
   background-color: $stub_group_background_color; /* stub_group.background.color */
   font-size: $stub_group_font_size; /* stub_group.font.size */
   font-weight: $stub_group_font_weight; /* stub_group.font.weight */
-  border-top: $stub_group_border_top; /* stub_group.border.top */
-  border-bottom: $stub_group_border_bottom; /* stub_group.border.bottom */
+  border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
+  border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
+  border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
+  border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom.style */
+  border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom.width */
+  border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
 }
 
 .striped tr:nth-child(even) {
@@ -100,8 +104,12 @@
 }
 
 .table_body {
-  border-top: $field_border_top; /* field.border.top */
-  border-bottom: $field_border_bottom; /* field.border.bottom */
+  border-top-style: $field_border_top_style; /* field.border.top.style */
+  border-top-width: $field_border_top_width; /* field.border.top.width */
+  border-top-color: $field_border_top_color; /* field.border.top.color */
+  border-bottom-style: $field_border_bottom_style; /* field.border.bottom.style */
+  border-bottom-width: $field_border_bottom_width; /* field.border.bottom.width */
+  border-bottom-color: $field_border_bottom_color; /* field.border.bottom.color */
 }
 
 .footnote {
