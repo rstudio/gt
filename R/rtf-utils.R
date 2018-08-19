@@ -1,3 +1,61 @@
+#' @importFrom stats setNames
+#' @noRd
+create_footnote_component_rtf <- function(data_attr,
+                                          list_footnotes,
+                                          body_content,
+                                          n_cols) {
+
+  if (is.null(data_attr$footnote)) {
+    return(
+      list(footnote_component = "",
+           body_content = body_content))
+  }
+
+  glyphs_footnotes <- c()
+
+  for (i in seq(list_footnotes$footnotes)) {
+
+    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
+
+      footnote_glyph <- c()
+      footnote_indices <- list_footnotes$footnotes[[i]]
+
+      for (j in seq(footnote_indices)) {
+
+        footnote_text <-
+          data_attr$footnote[[1]][
+            which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
+          unname()
+
+        # Check if the footnote text has been seen before
+        if (!(footnote_text %in% glyphs_footnotes)) {
+          glyphs_footnotes <-
+            c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
+        }
+
+        footnote_glyph <-
+          c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
+      }
+
+      body_content[i] <-
+        paste0(body_content[i], " (", paste(footnote_glyph, collapse = ","), ")")
+    }
+  }
+
+  # Create the footnotes block
+  footnote_component <-
+    paste0(
+      "\\pard\\pardeftab720\\sl288\\slmult1\\partightenfactor0\n",
+      paste0(
+        "\\f2\\i\\fs14\\fsmilli7333 \\cf2 \\super \\strokec2 ", seq(glyphs_footnotes),
+        "\\f0\\i0\\fs22 \\cf2 \\nosupersub \\strokec2  ",
+        unname(glyphs_footnotes) %>% remove_html(), "\\",
+        collapse = "\n"), "\n")
+
+  list(footnote_component = footnote_component,
+       body_content = body_content)
+}
+
 #' @noRd
 col_width_twips <- function() {
   1080L
