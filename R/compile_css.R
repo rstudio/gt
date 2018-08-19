@@ -1,4 +1,4 @@
-#' @importFrom sassr compile_sass
+#' @import sassr
 compile_css <- function(data) {
 
   # Obtain the options table from `data`
