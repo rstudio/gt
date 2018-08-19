@@ -223,11 +223,17 @@ integrate_summary_lines <- function(data_attr) {
     return(data_attr)
   }
 
+  # Process summary lines to add as the `summary_df` data frame
+  # to `data_attr`
+  labels_vector <- c()
+
   for (i in seq(data_attr$summary)) {
 
     summary_attrs <- data_attr$summary[[i]]
 
-    groups_data_df <- cbind(data_attr$stub_df, data_attr$data_df)
+    groups_data_df <-
+      cbind(data_attr$stub_df[1:nrow(data_attr$data_df), ], data_attr$data_df)
+
     agg_funs <- summary_attrs$funs
     labels <- summary_attrs$labels
 
@@ -254,6 +260,9 @@ integrate_summary_lines <- function(data_attr) {
         subset(groupname %in% summary_attrs$groups)
     }
 
+    # Create a copy for storage
+    summary_lines_storage <- summary_lines
+
     # Place empty strings in any columns not requested for aggregation
     if (!is.null(summary_attrs$columns)) {
 
@@ -263,6 +272,22 @@ integrate_summary_lines <- function(data_attr) {
           c("groupname", "rowname", summary_attrs$columns))
 
       summary_lines[, which(colnames(summary_lines) %in% empty_cols)] <- ""
+
+      summary_lines_storage <-
+        summary_lines_storage %>%
+        dplyr::select(c("groupname", "rowname", summary_attrs$columns))
+    }
+
+    if (!is.null(data_attr$summary_df)) {
+
+      data_attr$summary_df <-
+        bind_rows(
+          data_attr$summary_df,
+          summary_lines_storage)
+
+    } else {
+
+      data_attr$summary_df <- summary_lines_storage
     }
 
     # Format the summary values and cast values as character
@@ -289,19 +314,14 @@ integrate_summary_lines <- function(data_attr) {
     data_attr$foot_df <- rbind(data_attr$foot_df, summary_lines_na[, -c(1:2)])
     data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines[, 1:2])
     data_attr$output_df <- rbind(data_attr$output_df, summary_lines[, -c(1:2)])
+
+    for (k in seq(labels)) {
+      labels_vector <-
+        c(labels_vector, rep(labels[k], length(summary_attrs$groups)))
+    }
   }
 
-  # Process summary lines to add as the `summary_df` data frame
-  # to `data_attr`
-  labels_vector <- c()
-
-  for (i in seq(labels)) {
-    labels_vector <-
-      c(labels_vector, rep(labels[i], length(summary_attrs$groups)))
-  }
-
-  summary_lines$rowname <- labels_vector
-  data_attr$summary_df <- summary_lines
+  data_attr$summary_df$rowname <- labels_vector
 
   data_attr
 }
