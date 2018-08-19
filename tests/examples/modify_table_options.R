@@ -37,7 +37,7 @@ data <-
   tab_options(
     table.font.size = 14,                # Entire table's font size
     table.background.color = NULL,       # Entire table's background color
-    table.width = "900px",                # Entire table's width
+    table.width = "100%",                # Entire table's width
     table.border.top.style = "dotted",   # Top line of table - style
     table.border.top.width = 3,          # Top line of table - width
     table.border.top.color = "orange",   # Top line of table - color
@@ -55,9 +55,6 @@ data <-
     stub_group.font.weight = 800,              # Stub group labels - font weight
     stub_group.border.top = "dashed 5px blue",    # works but split into separate components
     stub_group.border.bottom = "dashed 4px yellow",     # works but split into separate components
-    stub_group_field.background.color = "lightgreen",   # stub group (into field) background color
-    stub_group_field.border.top = "dashed 5px yellow",  # works but split into separate components
-    stub_group_field.border.bottom = "dashed 4px blue", # works but split into separate components
     field.border.top = "solid 5px purple",     # works but split into separate components
     field.border.bottom = "solid 5px purple",  # works but split into separate components
     row.padding = 8,                           # padding of all data rows (stub & field)
