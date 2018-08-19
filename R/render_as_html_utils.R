@@ -540,20 +540,20 @@ create_table_body <- function(row_splits,
     if (!is.null(groups_rows) &&
         i %in% groups_rows$row) {
 
-      # Process 'group' rows
+      # Process "group" rows
       body_rows <-
         c(body_rows,
           paste0(
             "<tr>\n",
-            "<td data-type='group' class='stub_heading'>",
+            "<td data-type='group' colspan='", n_cols ,"' class='group_heading'>",
             groups_rows[which(groups_rows$row %in% i), 1][[1]],
-            "</td>\n<td class='stub_heading_field' colspan='",
-            n_cols - 1, "'></td>\n</tr>\n"))
+            "</td>\n",
+            "</tr>\n"))
     }
 
     if (grepl("::summary_", row_splits[i][[1]][[1]])) {
 
-      # Process 'summary' rows
+      # Process "summary" rows
       body_rows <-
         c(body_rows,
           paste0(
@@ -572,7 +572,7 @@ create_table_body <- function(row_splits,
 
       if (stub_available) {
 
-        # Process 'data' rows where a stub is present
+        # Process "data" rows where a stub is present
         body_rows <-
           c(body_rows,
             paste0(
@@ -592,7 +592,7 @@ create_table_body <- function(row_splits,
 
       } else {
 
-        # Process 'data' rows where no stub is present
+        # Process "data" rows where no stub is present
         body_rows <-
           c(body_rows,
             paste0(
