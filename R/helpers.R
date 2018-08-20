@@ -297,3 +297,33 @@ apply_styles <- function(bkgd_color = NULL,
 
   styles
 }
+
+#' Helper for providing a numeric value as percentage
+#' @param x the numeric value to format as a string percentage for some
+#' \code{\link{tab_options}()} arguments that can take percentage values (e.g.,
+#' \code{table.width}).
+#' @family helper functions
+#' @export
+pct <- function(x) {
+
+  if (!inherits(x, "numeric")) {
+    stop("The supplied value must be numeric", call. = FALSE)
+  }
+
+  paste0(x, "%")
+}
+
+#' Helper for providing a numeric value as pixels value
+#' @param x the numeric value to format as a string (e.g., \code{"12px"}) for
+#' some \code{\link{tab_options}()} arguments that can take values as units of
+#' pixels (e.g., \code{table.font.size}).
+#' @family helper functions
+#' @export
+px <- function(x) {
+
+  if (!inherits(x, "numeric")) {
+    stop("The supplied value must be numeric", call. = FALSE)
+  }
+
+  paste0(x, "px")
+}
