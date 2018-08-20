@@ -36,7 +36,8 @@ tab <-
 Other helper functions: \code{\link{apply_styles}},
   \code{\link{columns_with}}, \code{\link{data_cells}},
   \code{\link{funs}}, \code{\link{html}}, \code{\link{md}},
-  \code{\link{not_in_group}}, \code{\link{rownames_with}},
+  \code{\link{not_in_group}}, \code{\link{pct}},
+  \code{\link{px}}, \code{\link{rownames_with}},
   \code{\link{rows_where}}, \code{\link{vars}}
 }
 \concept{helper functions}

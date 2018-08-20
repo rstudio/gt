@@ -16,8 +16,8 @@ Helper for collecting ungrouped rows or columns
 Other helper functions: \code{\link{apply_styles}},
   \code{\link{col_labels}}, \code{\link{columns_with}},
   \code{\link{data_cells}}, \code{\link{funs}},
-  \code{\link{html}}, \code{\link{md}},
-  \code{\link{rownames_with}}, \code{\link{rows_where}},
-  \code{\link{vars}}
+  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
+  \code{\link{px}}, \code{\link{rownames_with}},
+  \code{\link{rows_where}}, \code{\link{vars}}
 }
 \concept{helper functions}
