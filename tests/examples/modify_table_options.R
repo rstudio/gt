@@ -39,7 +39,7 @@ data <-
   tab_footnote(
     footnote = "Footnote #4",
     location = data_cells(row = 4, column = 4)) %>%
-  tab_source_note("Source Note") %>%
+  tab_source_note("A source note for the table.") %>%
   tab_options(
     table.font.size = px(14),            # Entire table's font size
     table.background.color = NULL,       # Entire table's background color
