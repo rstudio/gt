@@ -55,7 +55,7 @@ data <-
     heading.border.bottom.color = "purple",    # Bottom line of heading - color
     boxhead.font.size = px(16),                # Boxhead labels - font size
     boxhead.font.weight = "normal",            # Boxhead labels - font weight
-    boxhead.background.color = "gray",         # Boxhead background color
+    boxhead.background.color = "lightgray",    # Boxhead background color
     stub_group.background.color = "green",     # Stub group background color
     stub_group.font.size = px(14),             # Stub group labels - font size
     stub_group.font.weight = "800",            # Stub group labels - font weight
