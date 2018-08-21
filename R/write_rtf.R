@@ -4,9 +4,6 @@
 #' extension \code{.rtf}.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param file a filename to use for writing out the RTF file.
-#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stringr str_extract_all str_replace
-#' @importFrom stats setNames
 #' @importFrom rlang %||%
 #' @examples
 #' \dontrun{
