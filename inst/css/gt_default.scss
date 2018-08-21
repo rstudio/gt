@@ -78,7 +78,7 @@
 }
 
 .striped tr:nth-child(even) {
-   background-color: darken($table_background_color, 5%); /* row.striping.background.color */
+   background-color: darken($table_background_color, 5%);
 }
 
 .row {
