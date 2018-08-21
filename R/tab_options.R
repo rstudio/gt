@@ -1,68 +1,59 @@
 #' Modify the table output options
 #'
-#' Modify the options available in a table. These options are named by the 
-#' components, the subcomponents, and the element that can affected. 
+#' Modify the options available in a table. These options are named by the
+#' components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
-#' @param table.font.size the table text font size. Can be specified as a
-#' single-length character with units of pixels or as a percentage. If provided
-#' as a single-length numeric vector, it is assumed that the value is given in
-#' units of pixels.
-#' @param table.background.color the table background color.
 #' @param table.width the width of the table. Can be specified as a
-#' single-length character with units of pixels or as a percentage. If provided
-#' as a single-length numeric vector, it is assumed that the value is given in
-#' units of pixels.
-#' @param table.border.top.style the style of the table's top border.
-#' @param table.border.top.width the width of the table's top border.
-#' @param table.border.top.color the color of the table's top border.
-#' @param heading.background.color the background color of the table heading.
-#' @param heading.title.font.size the font size of the heading title.
-#' @param heading.headnote.font.size the font size of the headnote.
-#' @param heading.border.bottom.style the style of the heading's bottom border.
-#' @param heading.border.bottom.width the width of the heading's bottom border.
-#' @param heading.border.bottom.color the color of the heading's bottom border.
-#' @param boxhead.background.color the background color of the boxhead.
-#' @param boxhead.font.size the font size of the boxhead labels.
-#' @param boxhead.font.weight the font weight of the boxhead labels.
-#' @param field.background.color the background color of the field.
-#' @param stub_group.font.size the font size of the stub heading labels.
-#' @param stub_group.font.weight the font weight of the stub heading labels.
-#' @param stub_group.border.top.style the style of the stub heading's top border.
-#' @param stub_group.border.top.width the width of the stub heading's top border.
-#' @param stub_group.border.top.color the color of the stub heading's top border.
-#' @param stub_group.border.bottom.style the style of the stub heading's bottom border.
-#' @param stub_group.border.bottom.width the width of the stub heading's bottom border.
-#' @param stub_group.border.bottom.color the color of the stub heading's bottom border.
-#' @param field.border.top.style the style of the field's top border.
-#' @param field.border.top.width the width of the field's top border.
-#' @param field.border.top.color the color of the field's top border.
-#' @param field.border.bottom.style the style of the field's bottom border.
-#' @param field.border.bottom.width the width of the field's bottom border.
-#' @param field.border.bottom.color the color of the field's bottom border.
-#' @param row.padding the amount of padding in each row.
-#' @param row.striping.color the color of the background for the striped rows.
+#'   single-length character with units of pixels or as a percentage. If
+#'   provided as a single-length numeric vector, it is assumed that the value is
+#'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
+#'   helper functions can also be used to pass in numeric values and obtain
+#'   values as pixel or percent units.
+#' @param table.font.size,heading.title.font.size,heading.headnote.font.size,boxhead.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
+#'   font sizes for the parent text element \code{table} and the following child
+#'   elements: \code{heading.title}, \code{heading.headnote}, \code{boxhead},
+#'   \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
+#'   as a single-length character vector with units of pixels
+#'   (e.g., \code{12px}) or as a percentage (e.g., \code{80%}). If provided as a
+#'   single-length numeric vector, it is assumed that the value is given in
+#'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+#'   functions can also be used to pass in numeric values and obtain values as
+#'   pixel or percent units.
+#' @param boxhead.font.weight,stub_group.font.weight the font weight of the
+#'   \code{boxhead} and \code{stub_group} text element.
+#' @param summary_row.text_transform an option to apply text transformations to
+#' the label text in each summary row.
+#' @param table.background.color,heading.background.color,boxhead.background.color,stub_group.background.color,summary_row.background.color,field.background.color
+#'   background colors for the parent element \code{table} and the following
+#'   child elements: \code{heading}, \code{boxhead}, \code{stub_group},
+#'   \code{summary_row}, and \code{field}. A color name or a hexadecimal color
+#'   code should be provided.
+#' @param table.border.top.style,table.border.top.width,table.border.top.color
+#'   the style, width, and color of the table's top border.
+#' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
+#'   the style, width, and color of the heading's bottom border.
+#' @param stub_group.border.top.style,stub_group.border.top.width,stub_group.border.top.color
+#'   the style, width, and color of the stub heading's top border.
+#' @param stub_group.border.bottom.style,stub_group.border.bottom.width,stub_group.border.bottom.color
+#'   the style, width, and color of the stub heading's bottom border.
+#' @param field.border.top.style,field.border.top.width,field.border.top.color
+#'   the style, width, and color of the field's top border.
+#' @param field.border.bottom.style,field.border.bottom.width,field.border.bottom.color
+#'   the style, width, and color of the field's bottom border.
+#' @param row.padding,summary_row.padding the amount of padding in each row and
+#' in each summary row.
+#' @param footnote.padding,sourcenote.padding the amount of padding to apply to
+#' the footnote and source note sections.
 #' @param row.striping.include_stub an option for whether to include the stub
 #' when striping rows.
 #' @param row.striping.include_field an option for whether to include the field
 #' when striping rows.
-#' @param summary_row.background.color the background color of the summary rows.
-#' @param summary_row.padding the amount of padding in each summary row.
-#' @param summary_row.text_transform an option to apply text transformations to
-#' the label text in each summary row.
-#' @param footnote.font.size the font size of the footnotes in the footnote
-#' section.
-#' @param footnote.padding the amount of padding to apply to the footnote
-#' section.
-#' @param sourcenote.font.size the font size of the source notes in the source
-#' note section.
-#' @param sourcenote.padding the amount of padding to apply to the source note
-#' section.
 #' @family table-part creation/modification functions
 #' @export
 tab_options <- function(data,
+                        table.width = NULL,
                         table.font.size = NULL,
                         table.background.color = NULL,
-                        table.width = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
