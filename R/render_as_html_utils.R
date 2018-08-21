@@ -550,17 +550,25 @@ create_table_body <- function(row_splits,
 
     if (grepl("::summary_", row_splits[i][[1]][[1]])) {
 
+      # Modify the class names to use whether this is a leading
+      # summary row or not
+      if (i > 1 && !grepl("::summary_", row_splits[i - 1][[1]][[1]])) {
+        classes_summary_row <- "summary_row first_summary_row "
+      } else {
+        classes_summary_row <- "summary_row "
+      }
+
       # Process "summary" rows
       body_rows <-
         c(body_rows,
           paste0(
             "<tr data-type='summary' data-row='", i,"'>\n",
             paste0(
-              "<td class='stub row summary_row ", col_alignment[1], "'>",
+              "<td class='stub row ", classes_summary_row, col_alignment[1], "'>",
               tidy_gsub(row_splits[i][[1]][1], "::summary_", ""),
               "</td>"), "\n",
             paste0(
-              "<td class='row summary_row ", col_alignment[-1], "'>",
+              "<td class='row ", classes_summary_row, col_alignment[-1], "'>",
               row_splits[i][[1]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n"))
