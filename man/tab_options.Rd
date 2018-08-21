@@ -4,11 +4,11 @@
 \alias{tab_options}
 \title{Modify the table output options}
 \usage{
-tab_options(data, table.font.size = NULL,
-  table.background.color = NULL, table.width = NULL,
-  table.border.top.style = NULL, table.border.top.width = NULL,
-  table.border.top.color = NULL, heading.background.color = NULL,
-  heading.title.font.size = NULL, heading.headnote.font.size = NULL,
+tab_options(data, table.width = NULL, table.font.size = NULL,
+  table.background.color = NULL, table.border.top.style = NULL,
+  table.border.top.width = NULL, table.border.top.color = NULL,
+  heading.background.color = NULL, heading.title.font.size = NULL,
+  heading.headnote.font.size = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
   heading.border.bottom.color = NULL, boxhead.background.color = NULL,
@@ -23,114 +23,60 @@ tab_options(data, table.font.size = NULL,
   field.border.top.width = NULL, field.border.top.color = NULL,
   field.border.bottom.style = NULL, field.border.bottom.width = NULL,
   field.border.bottom.color = NULL, row.padding = NULL,
-  row.striping.background.color = NULL,
-  row.striping.include.stub = NULL, row.striping.include_field = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
   summary_row.text_transform = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
-  sourcenote.padding = NULL)
+  sourcenote.padding = NULL, row.striping.include.stub = NULL,
+  row.striping.include_field = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
-\item{table.font.size}{the table text font size. Can be specified as a
-single-length character with units of pixels or as a percentage. If provided
-as a single-length numeric vector, it is assumed that the value is given in
-units of pixels.}
-
-\item{table.background.color}{the table background color.}
-
 \item{table.width}{the width of the table. Can be specified as a
-single-length character with units of pixels or as a percentage. If provided
-as a single-length numeric vector, it is assumed that the value is given in
-units of pixels.}
+single-length character with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
+helper functions can also be used to pass in numeric values and obtain
+values as pixel or percent units.}
 
-\item{table.border.top.style}{the style of the table's top border.}
+\item{table.background.color, heading.background.color, boxhead.background.color, stub_group.background.color, summary_row.background.color, field.background.color}{background colors for the parent element \code{table} and the following
+child elements: \code{heading}, \code{boxhead}, \code{stub_group},
+\code{summary_row}, and \code{field}. A color name or a hexadecimal color
+code should be provided.}
 
-\item{table.border.top.width}{the width of the table's top border.}
+\item{table.border.top.style, table.border.top.width, table.border.top.color}{the style, width, and color of the table's top border.}
 
-\item{table.border.top.color}{the color of the table's top border.}
+\item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
 
-\item{heading.background.color}{the background color of the table heading.}
+\item{boxhead.font.weight, stub_group.font.weight}{the font weight of the
+\code{boxhead} and \code{stub_group} text element.}
 
-\item{heading.title.font.size}{the font size of the heading title.}
+\item{stub_group.border.top.style, stub_group.border.top.width, stub_group.border.top.color}{the style, width, and color of the stub heading's top border.}
 
-\item{heading.headnote.font.size}{the font size of the headnote.}
+\item{stub_group.border.bottom.style, stub_group.border.bottom.width, stub_group.border.bottom.color}{the style, width, and color of the stub heading's bottom border.}
 
-\item{heading.border.bottom.style}{the style of the heading's bottom border.}
+\item{field.border.top.style, field.border.top.width, field.border.top.color}{the style, width, and color of the field's top border.}
 
-\item{heading.border.bottom.width}{the width of the heading's bottom border.}
+\item{field.border.bottom.style, field.border.bottom.width, field.border.bottom.color}{the style, width, and color of the field's bottom border.}
 
-\item{heading.border.bottom.color}{the color of the heading's bottom border.}
-
-\item{boxhead.background.color}{the background color of the boxhead.}
-
-\item{boxhead.font.size}{the font size of the boxhead labels.}
-
-\item{boxhead.font.weight}{the font weight of the boxhead labels.}
-
-\item{stub_group.font.size}{the font size of the stub heading labels.}
-
-\item{stub_group.font.weight}{the font weight of the stub heading labels.}
-
-\item{stub_group.border.top.style}{the style of the stub heading's top border.}
-
-\item{stub_group.border.top.width}{the width of the stub heading's top border.}
-
-\item{stub_group.border.top.color}{the color of the stub heading's top border.}
-
-\item{stub_group.border.bottom.style}{the style of the stub heading's bottom border.}
-
-\item{stub_group.border.bottom.width}{the width of the stub heading's bottom border.}
-
-\item{stub_group.border.bottom.color}{the color of the stub heading's bottom border.}
-
-\item{field.border.top.style}{the style of the field's top border.}
-
-\item{field.border.top.width}{the width of the field's top border.}
-
-\item{field.border.top.color}{the color of the field's top border.}
-
-\item{field.border.bottom.style}{the style of the field's bottom border.}
-
-\item{field.border.bottom.width}{the width of the field's bottom border.}
-
-\item{field.border.bottom.color}{the color of the field's bottom border.}
-
-\item{row.padding}{the amount of padding in each row.}
-
-\item{row.striping.include_field}{an option for whether to include the field
-when striping rows.}
-
-\item{summary_row.background.color}{the background color of the summary rows.}
-
-\item{summary_row.padding}{the amount of padding in each summary row.}
+\item{row.padding, summary_row.padding}{the amount of padding in each row and
+in each summary row.}
 
 \item{summary_row.text_transform}{an option to apply text transformations to
 the label text in each summary row.}
 
-\item{footnote.font.size}{the font size of the footnotes in the footnote
-section.}
+\item{footnote.padding, sourcenote.padding}{the amount of padding to apply to
+the footnote and source note sections.}
 
-\item{footnote.padding}{the amount of padding to apply to the footnote
-section.}
-
-\item{sourcenote.font.size}{the font size of the source notes in the source
-note section.}
-
-\item{sourcenote.padding}{the amount of padding to apply to the source note
-section.}
-
-\item{field.background.color}{the background color of the field.}
-
-\item{row.striping.color}{the color of the background for the striped rows.}
+\item{row.striping.include_field}{an option for whether to include the field
+when striping rows.}
 
 \item{row.striping.include_stub}{an option for whether to include the stub
 when striping rows.}
 }
 \description{
-Modify the options available in a table. These options are named by the 
-components, the subcomponents, and the element that can affected.
+Modify the options available in a table. These options are named by the
+components, the subcomponents, and the element that can adjusted.
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
