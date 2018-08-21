@@ -278,34 +278,35 @@ integrate_summary_lines <- function(data_attr) {
         dplyr::select(c("groupname", "rowname", summary_attrs$columns))
     }
 
-    if (!is.null(data_attr$summary_df)) {
-
-      data_attr$summary_df <-
-        bind_rows(
-          data_attr$summary_df,
-          summary_lines_storage)
-
-    } else {
-
-      data_attr$summary_df <- summary_lines_storage
-    }
+    # Adding `summary_df` to the data object for later retrieval
+    data_attr$summary_df <-
+      dplyr::bind_rows(
+        data_attr$summary_df,
+        summary_lines_storage)
 
     # Format the summary values and cast values as character
     summary_lines <-
       summary_lines %>%
-      dplyr::mutate_if(
-        .predicate = is.numeric,
+      dplyr::mutate_at(
+        .vars = summary_attrs$columns,
         .funs = function(x) {
-          formatC(
-            x,
-            digits = summary_attrs$decimals,
-            mode = "double",
-            big.mark = summary_attrs$sep_mark,
-            decimal.mark = summary_attrs$dec_mark,
-            format = "f",
-            drop0trailing = FALSE)}
-      ) %>%
-      dplyr::mutate_all(dplyr::funs(as.character))
+
+          format_data <-
+            do.call(summary_attrs$formatter,
+                    append(list(
+                      data.frame(x = x),
+                      columns = "x"),
+                      summary_attrs$formatter_options))
+
+          formatter <- attr(format_data, "formats")[[1]]$func
+
+          if ("html" %in% names(formatter)) {
+            formatter$html(x)
+          } else {
+            formatter$default(x)
+          }
+        }
+      )
 
     summary_lines_na <- summary_lines
     summary_lines_na[] <- NA_character_
