@@ -353,9 +353,10 @@ output_latex <- function(data) {
       table_col_headings,
       body_rows,
       source_note_rows,
-      footnote_component,
       table_end,
-      collapse = "")
+      collapse = "") %>%
+    knitr::asis_output() %>%
+    knitr::knit_print()
 
   latex_table
 }
