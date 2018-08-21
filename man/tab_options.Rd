@@ -129,7 +129,8 @@ section.}
 when striping rows.}
 }
 \description{
-Modify the options available in a table theme.
+Modify the options available in a table. These options are named by the 
+components, the subcomponents, and the element that can affected.
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
