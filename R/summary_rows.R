@@ -22,10 +22,13 @@
 #' @param labels a vector of stub labels for the summary rows. The vector length
 #' should match the number of \code{funs} provided. If this is not provided then
 #' the labels will be generated from the input given to \code{funs}.
-#' @param decimals an option to specify the exact number of decimal places to
-#' use. The default number of decimal places is \code{2}.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
+#' @param formatter a formatter function name. These can be functions available
+#' in the package (e.g., \code{\link{fmt_number}}, \code{link{fmt_percent}},
+#' etc.), or a custom function using \code{\link{fmt}()}.
+#' @param ... values passed to the \code{formatter} function, where the provided
+#' values are to be in the form of named vectors. For example, when using the
+#' default \code{formatter} function, \code{\link{fmt_number}}, options such as
+#' \code{decimals}, \code{use_seps}, and \code{locale} can be used.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
@@ -65,10 +68,12 @@ summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
                          funs,
-                         labels = NULL,
-                         decimals = 2,
-                         sep_mark = ",",
-                         dec_mark = ".") {
+                         labels,
+                         formatter = fmt_number,
+                         ...) {
+
+  # Collect all provided formatter options in a list
+  formatter_options <- list(...)
 
   # If using the `vars()` helper, get the groups as a character vector
   if (!is.null(groups) && inherits(groups, "quosures")) {
@@ -81,8 +86,10 @@ summary_rows <- function(data,
   }
 
   # Create labels from the function names if no labels are provided
-  if (is.null(labels)) {
-    labels <- funs %>% lapply(`[[`, 2) %>% as.character() %>% tidy_gsub("\\(\\.\\)", "")
+  if (missing(labels)) {
+    labels <- names(funs)
+  } else if (is.null(labels)) {
+    labels <- rep("", length(funs))
   } else {
     labels <- labels[seq(funs)]
   }
@@ -98,9 +105,8 @@ summary_rows <- function(data,
             columns = columns,
             funs = funs,
             labels = labels,
-            decimals = decimals,
-            sep_mark = sep_mark,
-            dec_mark = dec_mark)))
+            formatter = formatter,
+            formatter_options = formatter_options)))
 
   } else {
 
@@ -111,9 +117,8 @@ summary_rows <- function(data,
           columns = columns,
           funs = funs,
           labels = labels,
-          decimals = decimals,
-          sep_mark = sep_mark,
-          dec_mark = dec_mark))
+          formatter = formatter,
+          formatter_options = formatter_options))
   }
 
   data
