@@ -282,7 +282,7 @@ output_latex <- function(data) {
 
   table_start <- latex_head()
 
-  tabular_start <- latex_tabular(n_cols = n_cols, col_alignment = col_alignment)
+  tabular_start <- latex_tabular(col_alignment = col_alignment)
 
   table_end <- latex_tail()
 
