@@ -33,7 +33,6 @@ gt_options_default <- function() {
     "field_border_bottom_width",          "field",               "2px",
     "field_border_bottom_color",          "field",               "#A8A8A8",
     "row_padding",                        "row",                 "10px",
-    "row_striping_background_color",      "row",                 "#F5F5F5",
     "row_striping_include_stub",          "row",                 "TRUE",
     "row_striping_include_field",         "row",                 "TRUE",
     "summary_row_background_color",       "summary_row",         NA_character_,
