@@ -60,8 +60,7 @@ gt_summary_a <-
   summary_rows(
     groups = vars(A, B),
     columns = vars(value_1),
-    funs = funs(mean, sum, sd),
-    labels = c("mean", "sum", "sd"))
+    funs = funs(mean, sum, sd))
 ```
 
 ```{r}
@@ -84,7 +83,7 @@ gt_summary_b <-
     groups = vars(A, B),
     columns = vars(value_1),
     funs = funs(function_vec),
-    labels = function_vec)
+    labels = c("average", "total", "std dev"))
 ```
 
 ### Formatting the summary output values
