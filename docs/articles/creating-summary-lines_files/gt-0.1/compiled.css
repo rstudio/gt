@@ -1,0 +1,190 @@
+/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: uppercase;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+
