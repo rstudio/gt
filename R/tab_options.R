@@ -364,27 +364,6 @@ tab_options <- function(data,
       opts_df, "row_padding", row.padding)
   }
 
-  # row.striping.background.color
-  if (!is.null(row.striping.background.color)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "row_striping_background_color", row.striping.background.color)
-  }
-
-  # row.striping.include.stub
-  if (!is.null(row.striping.include.stub)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "row_striping_include_stub", row.striping.include.stub)
-  }
-
-  # row.striping.include_field
-  if (!is.null(row.striping.include_field)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "row_striping_include_field", row.striping.include_field)
-  }
-
   # summary_row.background.color
   if (!is.null(summary_row.background.color)) {
 
@@ -452,6 +431,20 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "sourcenote_padding", sourcenote.padding)
+  }
+
+  # row.striping.include.stub
+  if (!is.null(row.striping.include.stub)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "row_striping_include_stub", row.striping.include.stub)
+  }
+
+  # row.striping.include_field
+  if (!is.null(row.striping.include_field)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "row_striping_include_field", row.striping.include_field)
   }
 
   # Write the modified `opts_df` to the `data` attribute
