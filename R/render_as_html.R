@@ -244,6 +244,7 @@ render_as_html <- function(data) {
     create_column_headings(
       data_attr,
       extracted,
+      col_alignment,
       stub_available,
       spanners_present)
 
