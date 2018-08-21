@@ -24,6 +24,7 @@ frame format is suitable for generating a summary table using the
 \code{\link{gt}()} function.
 }
 \seealso{
-Other table export functions: \code{\link{write_rtf}}
+Other table export functions: \code{\link{output_latex}},
+  \code{\link{write_rtf}}
 }
 \concept{table export functions}
