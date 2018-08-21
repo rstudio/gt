@@ -35,4 +35,6 @@ Imports:
 Remotes:
     rstudio/sassr
 Suggests: 
-    testthat
+    testthat,
+    rmarkdown
+VignetteBuilder: knitr
