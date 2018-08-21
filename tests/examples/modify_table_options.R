@@ -72,9 +72,6 @@ data <-
     field.border.bottom.width = px(5),         # Bottom line of field - width
     field.border.bottom.color = "turquoise",   # Bottom line of field - color
     row.padding = px(8),                       # Padding of all data rows (stub & field)
-    row.striping.background.color = "red",     # -- does nothing currently
-    row.striping.include.stub = FALSE,         # -- does nothing currently
-    row.striping.include_field = TRUE,         # -- does nothing currently
     summary_row.background.color = "pink", # -- background color of all summary rows (stub & field)
     summary_row.padding = px(3),               # padding of all summary rows (stub & field)
     summary_row.text_transform = "lowercase",  # text transform on all summary row labels
