@@ -66,8 +66,7 @@ latex_body_row <- function(content,
 latex_head <- function() {
 
   paste0(
-    "\\begin{table}[htbp]\n",
-    "\\centering\n",
+    "\\begin{table}[h]\n",
     collapse = "")
 }
 
@@ -75,6 +74,7 @@ latex_head <- function() {
 latex_tail <- function() {
 
   paste0(
+    "\\bottomrule\n",
     "\\end{tabular}\n",
     "\\end{minipage}\n",
     "\\end{table}\n",
@@ -82,12 +82,15 @@ latex_tail <- function() {
 }
 
 #' @noRd
-latex_tabular <- function(n_cols,
-                          col_alignment) {
+latex_tabular <- function(col_alignment) {
 
   paste0(
     "\\begin{minipage}{\\linewidth}\n",
-    "\\begin{tabular}{*{", n_cols, "}{l}}\n",
+    "\\centering",
+    "\\begin{tabular}{",
+    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+    "}\n",
+    "\\toprule\n",
     collapse = "")
 }
 
@@ -99,5 +102,8 @@ latex_title <- function(title) {
 
 latex_heading_row <- function(content) {
 
-  paste(paste(content, collapse = " & "), "\\\\ \n")
+  paste0(
+    paste(paste(content, collapse = " & "), "\\\\ \n"),
+    "\\midrule\n",
+    collapse = "")
 }
