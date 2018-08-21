@@ -37,7 +37,7 @@ gt_options_default <- function() {
     "row_striping_include_field",         "row",                 "TRUE",
     "summary_row_background_color",       "summary_row",         NA_character_,
     "summary_row_padding",                "summary_row",         "6px",
-    "summary_row_text_transform",         "summary_row",         "uppercase",
+    "summary_row_text_transform",         "summary_row",         "inherit",
     "footnote_font_size",                 "footnote",            "90%",
     "footnote_padding",                   "footnote",            "4px",
     "sourcenote_font_size",               "sourcenote",          "90%",
