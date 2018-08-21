@@ -624,6 +624,7 @@ create_table_body <- function(row_splits,
 
 create_column_headings <- function(data_attr,
                                    extracted,
+                                   col_alignment,
                                    stub_available,
                                    spanners_present) {
 
@@ -666,7 +667,7 @@ create_column_headings <- function(data_attr,
       paste0(
         "<tr>\n",
         paste0(
-          "<th class='col_heading' rowspan='1' colspan='1'>",
+          "<th class='col_heading ", col_alignment, "' rowspan='1' colspan='1'>",
           headings, "</th>", collapse = "\n"),
         "\n</tr>\n")
 
@@ -683,7 +684,9 @@ create_column_headings <- function(data_attr,
       first_set <-
         c(first_set,
           paste0(
-            "<th data-type='column_heading' class='col_heading' rowspan='2' colspan='1'>",
+            "<th data-type='column_heading' ",
+            "class='col_heading ", col_alignment[1],
+            "' rowspan='2' colspan='1'>",
             headings[1], "</th>"))
 
       headings <- headings[-1]
@@ -696,7 +699,8 @@ create_column_headings <- function(data_attr,
         first_set <-
           c(first_set,
             paste0(
-              "<th data-type='column_heading' class='col_heading' rowspan='2' colspan='1'>",
+              "<th data-type='column_heading' ",
+              "class='col_heading center' rowspan='2' colspan='1'>",
               headings[i], "</th>"))
 
         headings_stack <- c(headings_stack, headings[i])
@@ -733,13 +737,16 @@ create_column_headings <- function(data_attr,
             }
           }
 
-          if (spanner_adjacent) class <- paste0(class, " sep_right")
+          if (spanner_adjacent) {
+            class <- paste0(class, " sep_right")
+          }
 
           first_set <-
             c(first_set,
               paste0(
                 "<th data-type='column_heading' class='col_heading ",
-                class, "' rowspan='1' colspan='",
+                class, " ", col_alignment[-1][i],
+                "' rowspan='1' colspan='",
                 colspan, "'>", spanners[i], "</th>"))
         }
       }
@@ -749,9 +756,12 @@ create_column_headings <- function(data_attr,
 
     remaining_headings <- headings[!(headings %in% headings_stack)]
 
+    col_alignment <- col_alignment[-1][!(headings %in% headings_stack)]
+
     second_set <-
       paste0(
-        "<th data-type='column_heading' class='col_heading' rowspan='1' colspan='1'>",
+        "<th data-type='column_heading' class='col_heading ",
+        col_alignment, "' rowspan='1' colspan='1'>",
         remaining_headings, "</th>",
         collapse = "\n")
 
