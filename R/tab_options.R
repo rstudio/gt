@@ -82,16 +82,15 @@ tab_options <- function(data,
                         field.border.bottom.width = NULL,
                         field.border.bottom.color = NULL,
                         row.padding = NULL,
-                        row.striping.background.color = NULL,
-                        row.striping.include.stub = NULL,
-                        row.striping.include_field = NULL,
                         summary_row.background.color = NULL,
                         summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
                         footnote.font.size = NULL,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
-                        sourcenote.padding = NULL) {
+                        sourcenote.padding = NULL,
+                        row.striping.include.stub = NULL,
+                        row.striping.include_field = NULL) {
 
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
