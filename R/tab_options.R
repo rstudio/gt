@@ -1,6 +1,7 @@
 #' Modify the table output options
 #'
-#' Modify the options available in a table theme.
+#' Modify the options available in a table. These options are named by the 
+#' components, the subcomponents, and the element that can affected. 
 #' @inheritParams fmt_number
 #' @param table.font.size the table text font size. Can be specified as a
 #' single-length character with units of pixels or as a percentage. If provided
