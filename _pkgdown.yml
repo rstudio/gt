@@ -1,0 +1,39 @@
+development:
+  mode: unreleased
+
+reference:
+  - title: Create/Modify Table Parts
+    contents:
+    - starts_with("gt")
+    - starts_with("tab")
+  - title: Format Data
+    contents:
+    - starts_with("fmt")
+  - title: Modify Columns
+    contents:
+    - starts_with("cols")
+  - title: Modify Rows
+    contents:
+    - blocks_arrange
+  - title: Add Rows
+    contents:
+    - summary_rows
+  - title: Export Table
+    contents:
+    - write_rtf
+    - as_raw_html
+    - extract_summary
+  - title: Helper Functions
+    contents:
+    - md
+    - html
+    - columns_with
+    - rows_where
+    - rownames_with
+    - data_cells
+    - vars
+    - funs
+    - col_labels
+    - apply_styles
+    - pct
+    - px
