@@ -128,7 +128,7 @@ We were able to supply the reference locations in the table by using the `data_c
 
 The **stub** is the area to the left in a table that contains **row captions**, **summary captions**, and **group headings**. Those subparts can be grouped in a sequence of **stub blocks**. The **stub head** provides a location for a caption that describes the **stub**. The **stub** is optional since there are cases where a **stub** wouldn't be useful (e.g., the display tables presented above were just fine without a **stub**).
 
-The easiest way to generate a stub area is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as **row captions**. To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
+The easiest way to generate a **stub** part is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as **row captions**. To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
 
 ```{r}
 islands_tbl %>%
@@ -136,7 +136,7 @@ islands_tbl %>%
   gt()
 ```
 
-Notice that the landmass names are off the the left in an unstriped area? That's the stub. We can apply what's known as a **stubhead caption**. It's label text that technically lives both in the stub and in the boxhead. Think of it as the intersection of the stub and boxhead. This operation is done with the `tab_stubhead_caption()` function:
+Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead caption**, which is label text that technically lives both in the **stub** and in the **boxhead**. Think of it as the intersection of the **stub** and **boxhead.** This operation is done with the `tab_stubhead_caption()` function:
 
 ```{r}
 islands_tbl %>%
@@ -145,7 +145,7 @@ islands_tbl %>%
   tab_stubhead_caption(caption = "landmass")
 ```
 
-A very important thing to note here is that the table now has one field column. Before, when there was no stub, two columns were present (with **column labels** `name` and `size`) but now column `1` is `size`. This has implications for column referencing with the `data_cells()` helper function for instance. To apply our table parts as before, we use the following statements:
+A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` is `size`. This has implications for column referencing (for instance, with the `data_cells()` helper function). To apply our table parts as before, we use the following statements:
 
 ```{r}
 # Display the `islands_tbl` data with a heading,
@@ -164,4 +164,25 @@ islands_tbl %>%
   tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 1))
 ```
 
+Let's take this further and add one more magic column to `islands_tbl` as a way to incorporate **stub blocks** within the **stub**. These blocks can be considered groups of rows and so it's very logical that the magic column name is `groupname`. A `groupname` column will be added to `islands_tbl` and it will consist of categories that describe the landmass type.
 
+```{r}
+islands_tbl %>%
+  rename(rowname = name) %>%
+  mutate(groupname = c(
+    "continent", "continent", "continent", "continent",
+    "continent", "continent", "country", "country",
+    "subregion", "subregion")) %>%
+  gt() %>%
+  tab_stubhead_caption(caption = "landmass") %>%
+  tab_heading(
+    title = md("**Large Landmasses of the World**"),
+    headnote = md("The *top ten* largest are presented")
+  ) %>%
+  tab_source_note("Source: The World Almanac and Book of Facts, 1975, page 406.") %>%
+  tab_source_note(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")) %>%
+  tab_footnote(footnote = md("The **largest** by area."), location = data_cells(1, 1)) %>%
+  tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 1))
+```
+
+Three stub groups have been made since there are three unique categories under `groupname`.
