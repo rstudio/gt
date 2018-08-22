@@ -28,15 +28,15 @@ in part by the following schematic:
 
 The main parts of a table (and their subparts) are:
 
-  - the **heading** (optional; possibly with a **table number**,
-    **title**, or **headnote**)
+  - the **heading** (optional; with a **title** and possibly a
+    **headnote**)
   - the **stub** (optional; contains a **stub head** and **row
-    captions**, optionally within **stub blocks** having group headings
-    and possibly summary captions)
+    captions**, optionally within **stub blocks** having **group
+    headings** and possibly **summary captions**)
   - the **boxhead** (contains **column labels**, optionally within
     **boxhead panels** having one or more **spanner headings**)
   - the **field** (contains *cells*, *columns*, and *rows*)
-  - the **footer** (optional; possible with **footnotes** and **source
+  - the **footer** (optional; possibly with **footnotes** and **source
     notes**)
 
 The **heading** part contains the table title and the optional headnote
