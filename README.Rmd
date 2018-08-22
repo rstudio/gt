@@ -32,11 +32,11 @@ Let's identify the underlying components of a table and understand their roles. 
 
 The main parts of a table (and their subparts) are:
 
-- the **heading** (optional; possibly with a **table number**, **title**, or **headnote**)
-- the **stub** (optional; contains a **stub head** and **row captions**, optionally within **stub blocks** having group headings and possibly summary captions)
+- the **heading** (optional; with a **title** and possibly a **headnote**)
+- the **stub** (optional; contains a **stub head** and **row captions**, optionally within **stub blocks** having **group headings** and possibly **summary captions**)
 - the **boxhead** (contains **column labels**, optionally within **boxhead panels** having one or more **spanner headings**)
 - the **field** (contains *cells*, *columns*, and *rows*)
-- the **footer** (optional; possible with **footnotes** and **source notes**)
+- the **footer** (optional; possibly with **footnotes** and **source notes**)
 
 The **heading** part contains the table title and the optional headnote subpart. A table heading is often overlooked but it really shouldn't be.
 
