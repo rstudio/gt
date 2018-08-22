@@ -10,10 +10,7 @@ vignette: >
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.width = 7,
-  fig.height = 7,
-  fig.align = "center")
+  comment = "#>")
 
 library(gt)
 library(dplyr)
