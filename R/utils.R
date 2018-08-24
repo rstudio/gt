@@ -588,6 +588,29 @@ tidy_gsub <- function(x, pattern, replacement) {
   gsub(pattern, replacement, x)
 }
 
+#' A simple function that takes column classes and returns
+#' a vector of shortened class names
+#' @noRd
+class_shortener <- function(x) {
+
+  short_classes <- c()
+
+  for (i in seq(x)) {
+
+    short_classes <- c(
+      short_classes,
+      switch(
+        x[i],
+        numeric = "dbl",
+        integer = "int",
+        character = "chr",
+        logical = "lgl")
+    )
+  }
+
+  short_classes
+}
+
 #' Options setter for the `opts_df` data frame
 #' @noRd
 opts_df_set <- function(opts_df, option, value) {
