@@ -24,20 +24,20 @@ we can consider at this stage.
 \examples{
 # Create a table object using the
 # `mtcars` dataset
-tab <-
+gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE)
 
 # The resulting object can be used
-# in transformations
-tab_2 <-
-  tab \%>\%
+# in transformations (e.g., `tab_*()`,
+# `fmt_*()`, `cols_*()` functions)
+gt_tbl_2 <-
+  gt_tbl \%>\%
+  tab_heading(title = "mtcars") \%>\%
   fmt_number(
     columns = vars(drat, wt, qsec),
-    decimals = 1)
-
-# The object of this type can be
-# displayed in the Viewer
-tab_2
+    decimals = 1) \%>\%
+  cols_align_right(
+    columns = vars(mpg, cyl, disp))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

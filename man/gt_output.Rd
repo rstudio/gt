@@ -6,6 +6,9 @@
 \usage{
 gt_output(outputId)
 }
+\arguments{
+\item{outputId}{an output variable from which to read the table.}
+}
 \value{
 A gt table output element that can be included in a panel.
 }
@@ -13,5 +16,5 @@ A gt table output element that can be included in a panel.
 Create a gt display table output element for Shiny
 }
 \seealso{
-render_gt
+\link{render_gt}()
 }
