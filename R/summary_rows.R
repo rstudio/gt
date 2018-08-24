@@ -24,7 +24,9 @@
 #' the labels will be generated from the input given to \code{funs}.
 #' @param formatter a formatter function name. These can be functions available
 #' in the package (e.g., \code{\link{fmt_number}}, \code{link{fmt_percent}},
-#' etc.), or a custom function using \code{\link{fmt}()}.
+#' etc.), or a custom function using \code{\link{fmt}()}. The default function
+#' is \code{\link{fmt_number}()} and its options can be accessed through
+#' \code{...}.
 #' @param ... values passed to the \code{formatter} function, where the provided
 #' values are to be in the form of named vectors. For example, when using the
 #' default \code{formatter} function, \code{\link{fmt_number}}, options such as
@@ -62,37 +64,47 @@
 #'       sum(., na.rm = TRUE),
 #'       sd(., na.rm = TRUE)),
 #'     labels = c("mean", "sum", "sd"))
-#' @family row addition functions
+#' @family row addition functionsd
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
                          funs,
-                         labels,
+                         # labels,
                          formatter = fmt_number,
                          ...) {
 
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
-  # If using the `vars()` helper, get the groups as a character vector
-  if (!is.null(groups) && inherits(groups, "quosures")) {
-    groups <- groups %>% lapply(`[[`, 2) %>% as.character()
+  if (is.null(groups)) {
+    groups <- TRUE
   }
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (!is.null(columns) && inherits(columns, "quosures")) {
+  if (is.null(columns)) {
+    columns <- TRUE
+  } else if (!is.null(columns) && inherits(columns, "quosures")) {
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
+  # # If using the `vars()` helper, get the groups as a character vector
+  # if (!is.null(groups) && inherits(groups, "quosures")) {
+  #   groups <- groups %>% lapply(`[[`, 2) %>% as.character()
+  # }
+
+  # # If using the `vars()` helper, get the columns as a character vector
+  # if (!is.null(columns) && inherits(columns, "quosures")) {
+  #   columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  # }
+
   # Create labels from the function names if no labels are provided
-  if (missing(labels)) {
-    labels <- names(funs)
-  } else if (is.null(labels)) {
-    labels <- rep("", length(funs))
-  } else {
-    labels <- labels[seq(funs)]
-  }
+  # if (missing(labels)) {
+  #   labels <- names(funs)
+  # } else if (is.null(labels)) {
+  #   labels <- rep("", length(funs))
+  # } else {
+  #   labels <- labels[seq(funs)]
+  # }
 
   if ("summary" %in% names(attributes(data))) {
 
@@ -104,7 +116,7 @@ summary_rows <- function(data,
             groups = groups,
             columns = columns,
             funs = funs,
-            labels = labels,
+            # labels = labels,
             formatter = formatter,
             formatter_options = formatter_options)))
 
@@ -116,7 +128,7 @@ summary_rows <- function(data,
           groups = groups,
           columns = columns,
           funs = funs,
-          labels = labels,
+          # labels = labels,
           formatter = formatter,
           formatter_options = formatter_options))
   }

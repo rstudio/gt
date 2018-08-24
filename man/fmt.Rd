@@ -7,11 +7,12 @@
 fmt(data, columns, rows = TRUE, fcns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
-\item{columns}{the specification for which columns are to be formatted.}
+\item{columns}{the column names to format.}
 
-\item{rows}{an optional specification for which rows are to be formatted.}
+\item{rows}{optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted.}
 
 \item{fcns}{a single formatting function or a named list of functions.}
 }
@@ -25,7 +26,7 @@ Set a column format with a formatter function
 Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
   \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}}
 }
 \concept{data formatting functions}

@@ -7,7 +7,7 @@
 fmt_missing(data, columns, rows = NULL, missing_text = "---")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()} function.}
 
 \item{columns}{the column names to format.}
 
@@ -27,8 +27,8 @@ may present better than the standard `NA` text that would otherwise appear.
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
-  \code{\link{fmt_number}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{fmt}}
+  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}}
 }
 \concept{data formatting functions}

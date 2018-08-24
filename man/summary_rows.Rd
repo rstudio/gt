@@ -5,7 +5,7 @@
 \title{Add summary rows using aggregation functions}
 \usage{
 summary_rows(data, groups = NULL, columns = NULL, funs,
-  labels = NULL, decimals = 2, sep_mark = ",", dec_mark = ".")
+  formatter = fmt_number, ...)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -25,16 +25,20 @@ names (e.g., \code{"sum"}), the functions themselves (e.g., \code{sum}), or
 calls to functions with \code{.} as a dummy argument (e.g.,
 \code{sum(., na.rm = TRUE)}).}
 
+\item{formatter}{a formatter function name. These can be functions available
+in the package (e.g., \code{\link{fmt_number}}, \code{link{fmt_percent}},
+etc.), or a custom function using \code{\link{fmt}()}. The default function
+is \code{\link{fmt_number}()} and its options can be accessed through
+\code{...}.}
+
+\item{...}{values passed to the \code{formatter} function, where the provided
+values are to be in the form of named vectors. For example, when using the
+default \code{formatter} function, \code{\link{fmt_number}}, options such as
+\code{decimals}, \code{use_seps}, and \code{locale} can be used.}
+
 \item{labels}{a vector of stub labels for the summary rows. The vector length
 should match the number of \code{funs} provided. If this is not provided then
 the labels will be generated from the input given to \code{funs}.}
-
-\item{decimals}{an option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{2}.}
-
-\item{sep_mark}{the mark to use as a separator between groups of digits.}
-
-\item{dec_mark}{the character to use as a decimal mark.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -80,4 +84,4 @@ gt(tbl) \%>\%
       sd(., na.rm = TRUE)),
     labels = c("mean", "sum", "sd"))
 }
-\concept{row addition functions}
+\concept{row addition functionsd}

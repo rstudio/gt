@@ -119,8 +119,8 @@ gt(data_tbl_lg) \%>\%
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},
   \code{\link{fmt_date}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_number}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{fmt}}
+  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}}
 }
 \concept{data formatting functions}

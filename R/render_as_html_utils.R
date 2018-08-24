@@ -215,7 +215,8 @@ obtain_group_ordering <- function(data_attr,
 
 #' Used to splice in summary lines into the final gt table
 #' @importFrom dplyr bind_rows select group_by everything ungroup
-#' @importFrom dplyr mutate mutate_if mutate_all summarize_at funs
+#' @importFrom dplyr mutate mutate_if mutate_all summarize_at funs slice
+#' @importFrom tidyr fill
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
 
@@ -231,52 +232,112 @@ integrate_summary_lines <- function(data_attr) {
 
     summary_attrs <- data_attr$summary[[i]]
 
+    # Resolve the groups to consider
+    if (summary_attrs$groups[1] == TRUE) {
+      groups <- unique(data_attr$stub_df$groupname)
+    } else {
+      groups <- summary_attrs$groups
+    }
+
+    # Resolve the columns to consider
+    if (summary_attrs$columns[1] == TRUE) {
+      columns <- colnames(data_attr$data_df)
+    } else {
+      columns <- summary_attrs$columns
+    }
+
+    # Combine stub with the field data in order to
+    # process data by groups
     groups_data_df <-
       cbind(data_attr$stub_df[1:nrow(data_attr$data_df), ], data_attr$data_df)
 
+    # Get the registered function calls
     agg_funs <- summary_attrs$funs
-    labels <- summary_attrs$labels
 
-    summary_lines <- groups_data_df[0, ]
+    # Get the labels for each of the function calls
+    labels <- agg_funs %>% names()
+
+    summary_lines_display <- groups_data_df[0, ]
+    summary_lines_storage <- groups_data_df[0, ]
+
+    # Modify the column classes to be all "character" in
+    # summary_lines_display
+    summary_lines_display <-
+      summary_lines_display %>%
+      lapply(function(x) as.character(x)) %>%
+      as.data.frame(stringsAsFactors = FALSE)
 
     for (j in seq(agg_funs)) {
 
-      summary_lines <-
-        dplyr::bind_rows(
-          summary_lines,
-          groups_data_df %>%
-            dplyr::group_by(groupname) %>%
-            dplyr::summarize_at(.vars = 3:ncol(groups_data_df), .funs = agg_funs[[j]]) %>%
-            dplyr::ungroup() %>%
-            dplyr::mutate(rowname = paste0("::summary_", labels[j])) %>%
-            dplyr::select(groupname, rowname, dplyr::everything()))
+      # Get aggregation rows for each of the `agg_funs`
+      agg_rows <-
+        groups_data_df %>%
+        dplyr::filter(groupname %in% groups) %>%
+        dplyr::select(groupname, rowname, columns) %>%
+        dplyr::group_by(groupname) %>%
+        dplyr::summarize_at(.vars = columns, .funs = agg_funs[[j]]) %>%
+        dplyr::ungroup() %>%
+        dplyr::mutate(rowname = paste0("::summary_", labels[j])) %>%
+        dplyr::select(groupname, rowname, dplyr::everything())
+
+      # If any of the aggregated values are classed
+      # differently than numeric, append column names
+      # with a class identifier suffix
+      col_classes_agg_cols <-
+        agg_rows[, 3:ncol(agg_rows)] %>%
+        lapply(class) %>%
+        unlist() %>%
+        unname() %>%
+        class_shortener() %>%
+        tidy_gsub("^", "_") %>%
+        tidy_gsub("_dbl", "")
+
+      # Create a copy of `agg_rows` for use in `summary_lines_storage`
+      agg_rows_storage <- agg_rows
+
+      # Suffix any column names in `agg_rows_storage` should the
+      # `col_classes_agg_cols` should be anything but `numeric`
+      colnames(agg_rows_storage)[3:ncol(agg_rows_storage)] <-
+        paste0(
+          colnames(agg_rows_storage)[3:ncol(agg_rows_storage)],
+          col_classes_agg_cols)
+
+      # Format the displayed summary lines
+      agg_rows <-
+        agg_rows %>%
+        dplyr::mutate_at(
+          .vars = summary_attrs$columns,
+          .funs = function(x) {
+
+            format_data <-
+              do.call(
+                summary_attrs$formatter,
+                append(list(
+                  data.frame(x = x),
+                  columns = "x"),
+                  summary_attrs$formatter_options))
+
+            formatter <- attr(format_data, "formats")[[1]]$func
+
+            if ("html" %in% names(formatter)) {
+              formatter$html(x)
+            } else {
+              formatter$default(x)
+            }
+          }
+        )
+
+      # Bind rows in the displayed summary lines
+      summary_lines_display <-
+        dplyr::bind_rows(summary_lines_display, agg_rows)
+
+      # Bind rows in the stored summary lines
+      summary_lines_storage <-
+        dplyr::bind_rows(summary_lines_storage, agg_rows_storage)
     }
-
-    # Filter by the groups requested
-    if (!is.null(summary_attrs$groups)) {
-
-      summary_lines <-
-        summary_lines %>%
-        subset(groupname %in% summary_attrs$groups)
-    }
-
-    # Create a copy for storage
-    summary_lines_storage <- summary_lines
 
     # Place empty strings in any columns not requested for aggregation
-    if (!is.null(summary_attrs$columns)) {
-
-      empty_cols <-
-        base::setdiff(
-          colnames(summary_lines),
-          c("groupname", "rowname", summary_attrs$columns))
-
-      summary_lines[, which(colnames(summary_lines) %in% empty_cols)] <- ""
-
-      summary_lines_storage <-
-        summary_lines_storage %>%
-        dplyr::select(c("groupname", "rowname", summary_attrs$columns))
-    }
+    summary_lines_display[is.na(summary_lines_display)] <- ""
 
     # Adding `summary_df` to the data object for later retrieval
     data_attr$summary_df <-
@@ -284,37 +345,13 @@ integrate_summary_lines <- function(data_attr) {
         data_attr$summary_df,
         summary_lines_storage)
 
-    # Format the summary values and cast values as character
-    summary_lines <-
-      summary_lines %>%
-      dplyr::mutate_at(
-        .vars = summary_attrs$columns,
-        .funs = function(x) {
-
-          format_data <-
-            do.call(summary_attrs$formatter,
-                    append(list(
-                      data.frame(x = x),
-                      columns = "x"),
-                      summary_attrs$formatter_options))
-
-          formatter <- attr(format_data, "formats")[[1]]$func
-
-          if ("html" %in% names(formatter)) {
-            formatter$html(x)
-          } else {
-            formatter$default(x)
-          }
-        }
-      )
-
-    summary_lines_na <- summary_lines
+    summary_lines_na <- summary_lines_display
     summary_lines_na[] <- NA_character_
 
+    data_attr$output_df <- rbind(data_attr$output_df, summary_lines_display[, -c(1:2)])
     data_attr$fmts_df <- rbind(data_attr$fmts_df, summary_lines_na[, -c(1:2)])
     data_attr$foot_df <- rbind(data_attr$foot_df, summary_lines_na[, -c(1:2)])
-    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines[, 1:2])
-    data_attr$output_df <- rbind(data_attr$output_df, summary_lines[, -c(1:2)])
+    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines_display[, 1:2])
 
     for (k in seq(labels)) {
       labels_vector <-
@@ -322,7 +359,55 @@ integrate_summary_lines <- function(data_attr) {
     }
   }
 
+  # Apply labels to the `summary_df`
   data_attr$summary_df$rowname <- labels_vector
+
+  # Extract summary part of `output_df` for additional
+  # processing of rows
+  summary_part <-
+    cbind(data_attr$stub_df, data_attr$output_df) %>%
+    filter(grepl("::summary_", rowname))
+
+  # Transform `""` to NA for subsequent fill operations
+  summary_part[summary_part == ""] <- NA_character_
+
+  # Squash rows with common `groupname`` and `rowname`
+  squashed_summary_rows <-
+    summary_part %>% arrange(groupname, rowname) %>%
+    dplyr::group_by(groupname, rowname) %>%
+    tidyr::fill(dplyr::everything(), .direction = "down") %>%
+    tidyr::fill(dplyr::everything(), .direction = "up") %>%
+    dplyr::slice(1) %>%
+    dplyr::ungroup()
+
+  squashed_summary_rows[is.na(squashed_summary_rows)] <- ""
+
+  # Determine how many rows have been removed as a result
+  # of the squashing procedure
+  n_rows_removed <-
+    nrow(summary_part) - nrow(squashed_summary_rows)
+
+  # If it is found that rows are removed (i.e., some
+  # squashing had occurred), reprocess the data_attr
+  # data frames
+  if (n_rows_removed > 0) {
+
+    data_attr$output_df <-
+      dplyr::bind_rows(
+        data_attr$output_df[seq(nrow(data_attr$data_df)), ],
+        squashed_summary_rows[, -c(1:2)])
+
+    data_attr$fmts_df <-
+      data_attr$fmts_df[seq(nrow(data_attr$output_df)), ]
+
+    data_attr$foot_df <-
+      data_attr$foot_df[seq(nrow(data_attr$output_df)), ]
+
+    data_attr$stub_df <-
+      dplyr::bind_rows(
+        data_attr$stub_df[seq(nrow(data_attr$data_df)), ],
+        squashed_summary_rows[, c(1:2)])
+  }
 
   data_attr
 }
