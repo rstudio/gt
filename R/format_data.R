@@ -707,14 +707,47 @@ fmt_datetime <- function(data,
         }))
 }
 
+#' Format by simply passing data through
+#'
+#' Format by passing data through no other transformation other than: (1)
+#' coercing to \code{character} (as all the \code{fmt_*()} functions do), and
+#' (2) applying prefixed or suffixed text via the \code{pattern} argument (the
+#' default is to apply nothing). All of this is useful when don't want to modify
+#' the input data other than to decorate it within a pattern. Also, this
+#' function is useful when used as a \code{formatter} function in the
+#' \code{summary_rows} function, where the output may be text or useful as is
+#' (that function requires a formatter function).
+#' @inheritParams fmt_number
+#' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
+#' @export
+fmt_passthrough <- function(data,
+                            columns,
+                            rows = NULL,
+                            pattern = "{x}") {
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions (as a function list) to `fmt()`
+  fmt(data = data,
+      columns = columns,
+      rows = rows,
+      fcns = list(
+        default = function(x) {
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+
+          x
+        }
+      ))
+}
+
 #' Format missing values
 #'
 #' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 #' may present better than the standard `NA` text that would otherwise appear.
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param columns the column names to format.
-#' @param rows optional rows to format. Not providing any value results in all
-#' rows in \code{columns} being formatted.
+#' @inheritParams fmt_number
 #' @param missing_text the text to be used in place of \code{NA} values in the
 #' rendered table.
 #' @return an object of class \code{gt_tbl}.
@@ -750,9 +783,7 @@ fmt_missing <- function(data,
 }
 
 #' Set a column format with a formatter function
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param columns the specification for which columns are to be formatted.
-#' @param rows an optional specification for which rows are to be formatted.
+#' @inheritParams fmt_number
 #' @param fcns a single formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
