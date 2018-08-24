@@ -24,10 +24,11 @@ creates a boxhead panel with spanner headings and column headings.
 # Create a table based on `rock` where
 # there are column headings grouped
 # under spanner headings
-gt(data = rock) \%>\%
-  tab_boxhead_panel(
-    group = "perimeter",
-    columns = c("peri", "shape"))
+gt_tbl <-
+  gt(data = rock) \%>\%
+    tab_boxhead_panel(
+      group = "perimeter",
+      columns = c("peri", "shape"))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

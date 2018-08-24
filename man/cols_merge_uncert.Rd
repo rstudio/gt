@@ -38,10 +38,11 @@ data_tbl <-
 # is merged into the `value` column,
 # forming a single column of values
 # with uncertainties
-gt(data_tbl) \%>\%
-  cols_merge_uncert(
-    col_val = vars(value),
-    col_uncert = vars(uncert))
+gt_tbl <-
+  gt(data_tbl) \%>\%
+    cols_merge_uncert(
+      col_val = vars(value),
+      col_uncert = vars(uncert))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

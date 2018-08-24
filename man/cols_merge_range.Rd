@@ -37,10 +37,11 @@ data_tbl <-
 # `val_2` columns are merged together
 # with an em-dash between them (the
 # `val_1` column is retained)
-gt(data_tbl) \%>\%
-  cols_merge_range(
-    col_begin = vars(val_1),
-    col_end = vars(val_2))
+gt_tbl <-
+  gt(data_tbl) \%>\%
+    cols_merge_range(
+      col_begin = vars(val_1),
+      col_end = vars(val_2))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

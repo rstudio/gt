@@ -25,9 +25,10 @@ Move one or more columns to the start
 # `mtcars` dataset and move the `mpg`,
 # `cyl`, and `disp` columns to the start
 # of the column series
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_move_to_start(
-    columns = vars(mpg, cyl, disp))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    cols_move_to_start(
+      columns = vars(mpg, cyl, disp))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

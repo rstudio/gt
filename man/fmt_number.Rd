@@ -60,10 +60,11 @@ library(tidyverse)
 # `mtcars` dataset and format specified
 # numeric columns to display values to
 # two decimal places
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  fmt_number(
-    columns = vars(mpg, disp, drat, qsec),
-    decimals = 5)
+gt_tbl_1 <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    fmt_number(
+      columns = vars(mpg, disp, drat, qsec),
+      decimals = 5)
 
 # Create a tibble with two columns
 # that are both numeric
@@ -78,17 +79,18 @@ data_tbl <-
 # Create a gt table from `data_tbl` and
 # scale the numeric values in columns
 # `val_1` and `val_2` and apply a suffix
-gt(data_tbl) \%>\%
-  fmt_number(
-    columns = vars(val_1),
-    decimals = 2,
-    scale_by = 1E-6,
-    pattern = "{x}") \%>\%
-  fmt_number(
-    columns = vars(val_2),
-    decimals = 2,
-    scale_by = 1/1000,
-    pattern = "{x}K")
+gt_tbl_2 <-
+  gt(data_tbl) \%>\%
+    fmt_number(
+      columns = vars(val_1),
+      decimals = 2,
+      scale_by = 1E-6,
+      pattern = "{x}") \%>\%
+    fmt_number(
+      columns = vars(val_2),
+      decimals = 2,
+      scale_by = 1/1000,
+      pattern = "{x}K")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

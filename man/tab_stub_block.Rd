@@ -27,10 +27,11 @@ creates a stub block with group headings and row captions.
 # Create a table based on `mtcars` where
 # there are group headings grouped inside
 # stub blocks
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_stub_block(
-    group = "perimeter",
-    rows = c("Mazda RX4", "Mazda RX4 Wag"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_stub_block(
+      group = "perimeter",
+      rows = c("Mazda RX4", "Mazda RX4 Wag"))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

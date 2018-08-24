@@ -22,8 +22,9 @@ Set columns to be aligned to the center
 # Create a table object using the
 # `mtcars` dataset and center align
 # the `drat` column
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_center(columns = vars(drat))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    cols_align_center(columns = vars(drat))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_left}},

@@ -24,15 +24,16 @@ Relabel one or more columns
 # column labels to the `mpg` and `qsec`
 # columns (the column labels will be
 # inherited from the column names)
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_label(
-    labels = col_labels(
-      mpg = md("*MPG*"),
-      qsec = "QMT, seconds"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    cols_label(
+      labels = col_labels(
+        mpg = md("*MPG*"),
+        qsec = "QMT, seconds"))
 }
 \seealso{
-\code{\link{col_labels}} as a useful helper function for processing
-column labels.
+\code{\link{col_labels}()} as a useful helper function for
+  processing column labels.
 
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},

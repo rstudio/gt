@@ -77,13 +77,14 @@ data_tbl <-
 # dataset and where the `val_usd`
 # and `val_jpy` are formatted as
 # the `USD` and `JPY` currencies
-gt(data_tbl) \%>\%
-  fmt_currency(
-    columns = vars(val_usd),
-    currency = "USD") \%>\%
-  fmt_currency(
-    columns = vars(val_jpy),
-    currency = "JPY")
+gt_tbl_1 <-
+  gt(data_tbl) \%>\%
+    fmt_currency(
+      columns = vars(val_usd),
+      currency = "USD") \%>\%
+    fmt_currency(
+      columns = vars(val_jpy),
+      currency = "JPY")
 
 # Create another tibble with larger
 # numeric values
@@ -102,19 +103,20 @@ data_tbl_lg <-
 # this time with scaled values
 # (thousands and millions with the
 # appropriate suffixes)
-gt(data_tbl_lg) \%>\%
-  fmt_currency(
-    columns = vars(val_usd_lg),
-    currency = "USD",
-    decimals = 1,
-    scale_by = 1/1000,
-    pattern = "{x}K") \%>\%
-  fmt_currency(
-    columns = vars(val_jpy_lg),
-    currency = "JPY",
-    decimals = 2,
-    scale_by = 1E-6,
-    pattern = "{x}M")
+gt_tbl_2 <-
+  gt(data_tbl_lg) \%>\%
+    fmt_currency(
+      columns = vars(val_usd_lg),
+      currency = "USD",
+      decimals = 1,
+      scale_by = 1/1000,
+      pattern = "{x}K") \%>\%
+    fmt_currency(
+      columns = vars(val_jpy_lg),
+      currency = "JPY",
+      decimals = 2,
+      scale_by = 1E-6,
+      pattern = "{x}M")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},
