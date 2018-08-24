@@ -9,10 +9,11 @@
 #' # Create a table object using the
 #' # `mtcars` dataset and align the `mpg`
 #' # column to the left
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align(
-#'     align = "left",
-#'     columns = vars(mpg))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_align(
+#'       align = "left",
+#'       columns = vars(mpg))
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
@@ -50,8 +51,9 @@ cols_align <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and align the
 #' # `disp` column to the left
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_left(columns = vars(disp))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_align_left(columns = vars(disp))
 #' @family column modification functions
 #' @export
 cols_align_left <- function(data,
@@ -80,8 +82,9 @@ cols_align_left <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and center align
 #' # the `drat` column
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_center(columns = vars(drat))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_align_center(columns = vars(drat))
 #' @family column modification functions
 #' @export
 cols_align_center <- function(data,
@@ -110,8 +113,9 @@ cols_align_center <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and align the
 #' # `qsec` column to the right
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_align_right(columns = vars(qsec))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_align_right(columns = vars(qsec))
 #' @family column modification functions
 #' @export
 cols_align_right <- function(data,
@@ -134,24 +138,25 @@ cols_align_right <- function(data,
 #' Relabel one or more columns
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param labels a named vector of column names and their labels for display of
-#' the column headers. We can use the \code{col_labels()} function to more
-#' easily specify column names and column labels, since we can also wrap the
-#' column labels with \code{md()} (to interpret text as Markdown) and
-#' \code{HTML()} (to interpret text as HTML).
+#'   the column headers. We can use the \code{col_labels()} function to more
+#'   easily specify column names and column labels, since we can also wrap the
+#'   column labels with \code{md()} (to interpret text as Markdown) and
+#'   \code{HTML()} (to interpret text as HTML).
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and apply different
 #' # column labels to the `mpg` and `qsec`
 #' # columns (the column labels will be
 #' # inherited from the column names)
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_label(
-#'     labels = col_labels(
-#'       mpg = md("*MPG*"),
-#'       qsec = "QMT, seconds"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_label(
+#'       labels = col_labels(
+#'         mpg = md("*MPG*"),
+#'         qsec = "QMT, seconds"))
 #' @family column modification functions
-#' @seealso \code{\link{col_labels}} as a useful helper function for processing
-#' column labels.
+#' @seealso \code{\link{col_labels}()} as a useful helper function for
+#'   processing column labels.
 #' @export
 cols_label <- function(data,
                        labels) {
@@ -184,10 +189,11 @@ cols_label <- function(data,
 #' # `mtcars` dataset and move the `mpg`,
 #' # `cyl`, and `disp` columns to the right
 #' # of `qsec`
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_move(
-#'     columns = vars(mpg, cyl, disp),
-#'     after = vars(qsec))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_move(
+#'       columns = vars(mpg, cyl, disp),
+#'       after = vars(qsec))
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -279,9 +285,10 @@ cols_move <- function(data,
 #' # `mtcars` dataset and move the `mpg`,
 #' # `cyl`, and `disp` columns to the start
 #' # of the column series
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_move_to_start(
-#'     columns = vars(mpg, cyl, disp))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_move_to_start(
+#'       columns = vars(mpg, cyl, disp))
 #' @family column modification functions
 #' @importFrom dplyr select everything
 #' @export
@@ -322,9 +329,10 @@ cols_move_to_start <- function(data,
 #' # `mtcars` dataset and move the `mpg`,
 #' # `cyl`, and `disp` columns to the end
 #' # of the column series
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_move_to_end(
-#'     columns = vars(mpg, cyl, disp))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_move_to_end(
+#'       columns = vars(mpg, cyl, disp))
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -366,9 +374,10 @@ cols_move_to_end <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and remove the `mpg`,
 #' # `cyl`, and `disp` columns
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_remove(
-#'     columns = vars(mpg, cyl, disp))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     cols_remove(
+#'       columns = vars(mpg, cyl, disp))
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -419,8 +428,9 @@ cols_remove <- function(data,
 #' # `iris` dataset and split any columns
 #' # that are dot separated between column
 #' # groups and column labels.
-#' gt(iris) %>%
-#'   cols_split_delim(delim = ".")
+#' gt_tbl <-
+#'  gt(iris) %>%
+#'     cols_split_delim(delim = ".")
 #' @family column modification functions
 #' @export
 cols_split_delim <- function(data,
@@ -484,11 +494,12 @@ cols_split_delim <- function(data,
 #' # and `ID` columns together (where the
 #' # `ID` number is in parentheses after
 #' # the `group` number
-#' gt(sleep) %>%
-#'   cols_merge(
-#'     col_1 = vars(group),
-#'     col_2 = vars(ID),
-#'     pattern = "{1} ({2})")
+#' gt_tbl <-
+#'   gt(sleep) %>%
+#'     cols_merge(
+#'       col_1 = vars(group),
+#'       col_2 = vars(ID),
+#'       pattern = "{1} ({2})")
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
@@ -563,10 +574,11 @@ cols_merge <- function(data,
 #' # is merged into the `value` column,
 #' # forming a single column of values
 #' # with uncertainties
-#' gt(data_tbl) %>%
-#'   cols_merge_uncert(
-#'     col_val = vars(value),
-#'     col_uncert = vars(uncert))
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     cols_merge_uncert(
+#'       col_val = vars(value),
+#'       col_uncert = vars(uncert))
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
@@ -642,10 +654,11 @@ cols_merge_uncert <- function(data,
 #' # `val_2` columns are merged together
 #' # with an em-dash between them (the
 #' # `val_1` column is retained)
-#' gt(data_tbl) %>%
-#'   cols_merge_range(
-#'     col_begin = vars(val_1),
-#'     col_end = vars(val_2))
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     cols_merge_range(
+#'       col_begin = vars(val_1),
+#'       col_end = vars(val_2))
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export

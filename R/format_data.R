@@ -32,10 +32,11 @@
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values to
 #' # two decimal places
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   fmt_number(
-#'     columns = vars(mpg, disp, drat, qsec),
-#'     decimals = 5)
+#' gt_tbl_1 <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     fmt_number(
+#'       columns = vars(mpg, disp, drat, qsec),
+#'       decimals = 5)
 #'
 #' # Create a tibble with two columns
 #' # that are both numeric
@@ -50,17 +51,18 @@
 #' # Create a gt table from `data_tbl` and
 #' # scale the numeric values in columns
 #' # `val_1` and `val_2` and apply a suffix
-#' gt(data_tbl) %>%
-#'   fmt_number(
-#'     columns = vars(val_1),
-#'     decimals = 2,
-#'     scale_by = 1E-6,
-#'     pattern = "{x}") %>%
-#'   fmt_number(
-#'     columns = vars(val_2),
-#'     decimals = 2,
-#'     scale_by = 1/1000,
-#'     pattern = "{x}K")
+#' gt_tbl_2 <-
+#'   gt(data_tbl) %>%
+#'     fmt_number(
+#'       columns = vars(val_1),
+#'       decimals = 2,
+#'       scale_by = 1E-6,
+#'       pattern = "{x}") %>%
+#'     fmt_number(
+#'       columns = vars(val_2),
+#'       decimals = 2,
+#'       scale_by = 1/1000,
+#'       pattern = "{x}K")
 #' @family data formatting functions
 #' @export
 fmt_number <- function(data,
@@ -140,10 +142,11 @@ fmt_number <- function(data,
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values in
 #' # scientific notation
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   fmt_scientific(
-#'     columns = vars(disp),
-#'     decimals = 2)
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     fmt_scientific(
+#'       columns = vars(disp),
+#'       decimals = 2)
 #' @family data formatting functions
 #' @export
 fmt_scientific <- function(data,
@@ -253,13 +256,14 @@ fmt_scientific <- function(data,
 #' # dataset and foramt the `val_1` column
 #' # as percentage values and `val_2`
 #' # as numeric values
-#' gt(data_tbl) %>%
-#'   fmt_percent(
-#'     columns = vars(val_1),
-#'     decimals = 1) %>%
-#'   fmt_number(
-#'     columns = vars(val_2),
-#'     decimals = 2)
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     fmt_percent(
+#'       columns = vars(val_1),
+#'       decimals = 1) %>%
+#'     fmt_number(
+#'       columns = vars(val_2),
+#'       decimals = 2)
 #' @family data formatting functions
 #' @export
 fmt_percent <- function(data,
@@ -371,13 +375,14 @@ fmt_percent <- function(data,
 #' # dataset and where the `val_usd`
 #' # and `val_jpy` are formatted as
 #' # the `USD` and `JPY` currencies
-#' gt(data_tbl) %>%
-#'   fmt_currency(
-#'     columns = vars(val_usd),
-#'     currency = "USD") %>%
-#'   fmt_currency(
-#'     columns = vars(val_jpy),
-#'     currency = "JPY")
+#' gt_tbl_1 <-
+#'   gt(data_tbl) %>%
+#'     fmt_currency(
+#'       columns = vars(val_usd),
+#'       currency = "USD") %>%
+#'     fmt_currency(
+#'       columns = vars(val_jpy),
+#'       currency = "JPY")
 #'
 #' # Create another tibble with larger
 #' # numeric values
@@ -396,19 +401,20 @@ fmt_percent <- function(data,
 #' # this time with scaled values
 #' # (thousands and millions with the
 #' # appropriate suffixes)
-#' gt(data_tbl_lg) %>%
-#'   fmt_currency(
-#'     columns = vars(val_usd_lg),
-#'     currency = "USD",
-#'     decimals = 1,
-#'     scale_by = 1/1000,
-#'     pattern = "{x}K") %>%
-#'   fmt_currency(
-#'     columns = vars(val_jpy_lg),
-#'     currency = "JPY",
-#'     decimals = 2,
-#'     scale_by = 1E-6,
-#'     pattern = "{x}M")
+#' gt_tbl_2 <-
+#'   gt(data_tbl_lg) %>%
+#'     fmt_currency(
+#'       columns = vars(val_usd_lg),
+#'       currency = "USD",
+#'       decimals = 1,
+#'       scale_by = 1/1000,
+#'       pattern = "{x}K") %>%
+#'     fmt_currency(
+#'       columns = vars(val_jpy_lg),
+#'       currency = "JPY",
+#'       decimals = 2,
+#'       scale_by = 1E-6,
+#'       pattern = "{x}M")
 #' @family data formatting functions
 #' @export
 fmt_currency <- function(data,
@@ -583,10 +589,11 @@ fmt_currency <- function(data,
 #' # Create a table object using this
 #' # dataset and format the `date`
 #' # column with `date_style` '2'
-#' gt(data_tbl) %>%
-#'   fmt_date(
-#'     columns = vars(date),
-#'     date_style = "2")
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     fmt_date(
+#'       columns = vars(date),
+#'       date_style = "2")
 #' @family data formatting functions
 #' @export
 fmt_date <- function(data,
@@ -636,10 +643,11 @@ fmt_date <- function(data,
 #' # Create a table object using this
 #' # dataset and format the `time`
 #' # column with `time_style` '3'
-#' gt(data_tbl) %>%
-#'   fmt_time(
-#'     columns = vars(time),
-#'     time_style = 3)
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     fmt_time(
+#'       columns = vars(time),
+#'       time_style = 3)
 #' @family data formatting functions
 #' @export
 fmt_time <- function(data,
@@ -672,6 +680,28 @@ fmt_time <- function(data,
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' library(tidyverse)
+#'
+#' # Create a tibble with a column
+#' # that contains 24-hour time strings
+#' data_tbl <-
+#'   dplyr::tribble(
+#'     ~time,
+#'     "2017-06-10 12:35:23",
+#'     "2017-07-12 15:01:34",
+#'     "2017-08-05 09:45:23",
+#'     "2017-10-23 01:32:00")
+#'
+#' # Create a table object using this
+#' # dataset and format the `time`
+#' # column with `time_style` '3'
+#' gt_tbl <-
+#'   gt(data_tbl) %>%
+#'     fmt_datetime(
+#'       columns = vars(time),
+#'       date_style = 2,
+#'       time_style = 3)
 #' @family data formatting functions
 #' @export
 fmt_datetime <- function(data,
