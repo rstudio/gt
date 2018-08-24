@@ -49,10 +49,11 @@ Format values to scientific notation
 # `mtcars` dataset and format specified
 # numeric columns to display values in
 # scientific notation
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  fmt_scientific(
-    columns = vars(disp),
-    decimals = 2)
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    fmt_scientific(
+      columns = vars(disp),
+      decimals = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

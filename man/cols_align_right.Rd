@@ -22,8 +22,9 @@ Set columns to be aligned right
 # Create a table object using the
 # `mtcars` dataset and align the
 # `qsec` column to the right
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_align_right(columns = vars(qsec))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    cols_align_right(columns = vars(qsec))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

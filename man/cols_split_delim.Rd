@@ -31,8 +31,9 @@ reference to individual columns must still be via the original column names.
 # `iris` dataset and split any columns
 # that are dot separated between column
 # groups and column labels.
-gt(iris) \%>\%
-  cols_split_delim(delim = ".")
+gt_tbl <-
+ gt(iris) \%>\%
+    cols_split_delim(delim = ".")
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

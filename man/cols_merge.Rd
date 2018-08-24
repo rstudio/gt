@@ -30,11 +30,12 @@ Merge two columns to a single column with a formatter
 # and `ID` columns together (where the
 # `ID` number is in parentheses after
 # the `group` number
-gt(sleep) \%>\%
-  cols_merge(
-    col_1 = vars(group),
-    col_2 = vars(ID),
-    pattern = "{1} ({2})")
+gt_tbl <-
+  gt(sleep) \%>\%
+    cols_merge(
+      col_1 = vars(group),
+      col_2 = vars(ID),
+      pattern = "{1} ({2})")
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

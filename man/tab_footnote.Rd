@@ -24,12 +24,13 @@ Add a footnote with a glyph attached to the targeted cells, rows, or columns.
 \examples{
 # Add a footnote that is in
 # reference to a single table cell
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_footnote(
-    footnote = "Massive hp.",
-    location = data_cells(
-      row = "Maserati Bora",
-      column = "hp"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_footnote(
+      footnote = "Massive hp.",
+      location = data_cells(
+        row = "Maserati Bora",
+        column = "hp"))
 }
 \seealso{
 [data_cells()] as a useful helper function for targeting the cell

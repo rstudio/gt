@@ -42,10 +42,11 @@ data_tbl <-
 # Create a table object using this
 # dataset and format the `date`
 # column with `date_style` '2'
-gt(data_tbl) \%>\%
-  fmt_date(
-    columns = vars(date),
-    date_style = "2")
+gt_tbl <-
+  gt(data_tbl) \%>\%
+    fmt_date(
+      columns = vars(date),
+      date_style = "2")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

@@ -25,12 +25,13 @@ Add custom styles to one or more cells
 \examples{
 # Add a style that is to be applied
 # to a single table cell
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_style(
-    style = apply_styles(bkgd_color = "steelblue"),
-    location = data_cells(
-      row = "Maserati Bora",
-      column = vars(hp)))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_style(
+      style = apply_styles(bkgd_color = "steelblue"),
+      location = data_cells(
+        row = "Maserati Bora",
+        column = vars(hp)))
 }
 \seealso{
 [apply_styles()] as a helper for defining custom styles and

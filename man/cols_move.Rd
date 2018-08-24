@@ -27,10 +27,11 @@ Move one or more columns
 # `mtcars` dataset and move the `mpg`,
 # `cyl`, and `disp` columns to the right
 # of `qsec`
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  cols_move(
-    columns = vars(mpg, cyl, disp),
-    after = vars(qsec))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    cols_move(
+      columns = vars(mpg, cyl, disp),
+      after = vars(qsec))
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align_center}},

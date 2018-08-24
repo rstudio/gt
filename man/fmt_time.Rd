@@ -38,10 +38,11 @@ data_tbl <-
 # Create a table object using this
 # dataset and format the `time`
 # column with `time_style` '3'
-gt(data_tbl) \%>\%
-  fmt_time(
-    columns = vars(time),
-    time_style = 3)
+gt_tbl <-
+  gt(data_tbl) \%>\%
+    fmt_time(
+      columns = vars(time),
+      time_style = 3)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

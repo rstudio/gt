@@ -23,10 +23,11 @@ Add a title and optional headnote to the heading part of the table.
 # Create a table object using the
 # `mtcars` dataset and add a heading
 # to describe the table
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_heading(
-    title = md("Data listing from **mtcars**"),
-    headnote = md("`mtcars` is an R dataset"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_heading(
+      title = md("Data listing from **mtcars**"),
+      headnote = md("`mtcars` is an R dataset"))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

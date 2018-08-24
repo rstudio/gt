@@ -20,9 +20,10 @@ Add a source note citation to the source note part of the table.
 \examples{
 # Add a source note that provides
 # a citation for the tabular data
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_source_note(
-    source_note = md("*Henderson and Velleman* (1981)."))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_source_note(
+      source_note = md("*Henderson and Velleman* (1981)."))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

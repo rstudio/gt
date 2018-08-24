@@ -22,9 +22,10 @@ change will be made.
 # Create a table object using the
 # `mtcars` dataset and add a caption
 # to describe what is in the stub
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_stubhead_caption(
-    caption = md("car *make* and *model*"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_stubhead_caption(
+      caption = md("car *make* and *model*"))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

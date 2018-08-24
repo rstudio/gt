@@ -74,13 +74,14 @@ data_tbl <-
 # dataset and foramt the `val_1` column
 # as percentage values and `val_2`
 # as numeric values
-gt(data_tbl) \%>\%
-  fmt_percent(
-    columns = vars(val_1),
-    decimals = 1) \%>\%
-  fmt_number(
-    columns = vars(val_2),
-    decimals = 2)
+gt_tbl <-
+  gt(data_tbl) \%>\%
+    fmt_percent(
+      columns = vars(val_1),
+      decimals = 1) \%>\%
+    fmt_number(
+      columns = vars(val_2),
+      decimals = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
