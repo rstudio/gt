@@ -52,5 +52,5 @@ compile_css <- function(data) {
       collapse = "\n")
 
   # Write the compiled CSS to disk
-  writeLines(sassr::compile_sass(text = scss_lines), "compiled.css")
+  sassr::compile_sass(text = scss_lines)
 }
