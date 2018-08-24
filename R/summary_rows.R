@@ -39,32 +39,32 @@
 #' # stub blocks based on a naming convention
 #' tbl <-
 #'   dplyr::tribble(
-#'     ~groupname, ~rowname, ~value,  ~value_2,
-#'     "A",        "1",      NA,      260.1,
-#'     "A",        "2",      184.3,   84.4,
-#'     "A",        "3",      342.3,   126.3,
-#'     "A",        "4",      234.9,   NA,
-#'     "B",        "1",      190.9,   832.5,
-#'     "B",        "2",      743.3,   281.2,
-#'     "B",        "3",      252.3,   732.5,
-#'     "B",        "4",      344.7,   NA,
-#'     "C",        "1",      197.2,   818.0,
-#'     "C",        "2",      284.3,   394.4)
+#'     ~groupname, ~rowname, ~value_1, ~value_2,
+#'     "A",        "1",      NA,       260.1,
+#'     "A",        "2",      184.3,    84.4,
+#'     "A",        "3",      342.3,    126.3,
+#'     "A",        "4",      234.9,    NA,
+#'     "B",        "1",      190.9,    832.5,
+#'     "B",        "2",      743.3,    281.2,
+#'     "B",        "3",      252.3,    732.5,
+#'     "B",        "4",      344.7,    NA,
+#'     "C",        "1",      197.2,    818.0,
+#'     "C",        "2",      284.3,    394.4)
 #'
 #' # Create a table with summary rows for the
 #' # `A` and `C` groups; the 3 summary rows
 #' # for these groups represent the mean, sum,
 #' # and standard deviation of `value`
-#' gt(tbl) %>%
-#'   summary_rows(
-#'     groups = vars(A, C),
-#'     columns = vars(value),
-#'     funs = funs(
-#'       mean(., na.rm = TRUE),
-#'       sum(., na.rm = TRUE),
-#'       sd(., na.rm = TRUE)),
-#'     labels = c("mean", "sum", "sd"))
-#' @family row addition functionsd
+#' gt_tbl <-
+#'   gt(tbl) %>%
+#'     summary_rows(
+#'       groups = c("A", "C"),
+#'       columns = vars(value_1),
+#'       funs = funs(
+#'         average = mean(., na.rm = TRUE),
+#'         total = sum(., na.rm = TRUE),
+#'         `std dev` = sd(., na.rm = TRUE)))
+#' @family row addition functions
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
