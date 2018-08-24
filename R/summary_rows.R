@@ -68,7 +68,6 @@ summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
                          funs,
-                         # labels,
                          formatter = fmt_number,
                          ...) {
 
@@ -85,25 +84,6 @@ summary_rows <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
-  # # If using the `vars()` helper, get the groups as a character vector
-  # if (!is.null(groups) && inherits(groups, "quosures")) {
-  #   groups <- groups %>% lapply(`[[`, 2) %>% as.character()
-  # }
-
-  # # If using the `vars()` helper, get the columns as a character vector
-  # if (!is.null(columns) && inherits(columns, "quosures")) {
-  #   columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  # }
-
-  # Create labels from the function names if no labels are provided
-  # if (missing(labels)) {
-  #   labels <- names(funs)
-  # } else if (is.null(labels)) {
-  #   labels <- rep("", length(funs))
-  # } else {
-  #   labels <- labels[seq(funs)]
-  # }
-
   if ("summary" %in% names(attributes(data))) {
 
     attr(data, "summary") <-
@@ -114,7 +94,6 @@ summary_rows <- function(data,
             groups = groups,
             columns = columns,
             funs = funs,
-            # labels = labels,
             formatter = formatter,
             formatter_options = formatter_options)))
 
@@ -126,7 +105,6 @@ summary_rows <- function(data,
           groups = groups,
           columns = columns,
           funs = funs,
-          # labels = labels,
           formatter = formatter,
           formatter_options = formatter_options))
   }
