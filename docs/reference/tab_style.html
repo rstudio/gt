@@ -171,12 +171,13 @@ styled.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Add a style that is to be applied</span>
 <span class='co'># to a single table cell</span>
-<span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_style</span>(
-    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='apply_styles.html'>apply_styles</a></span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>),
-    <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='data_cells.html'>data_cells</a></span>(
-      <span class='kw'>row</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>,
-      <span class='kw'>column</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>hp</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {    attr(data, "fmts_df")[data_rows[i], data_cols[i]] &lt;- paste0("::style_",         style, collapse = "")} else {    attr(data, "fmts_df")[data_rows[i], data_cols[i]] &lt;- paste0(attr(data,         "fmts_df")[data_rows[i], data_cols[i]], "::style_", style,         collapse = "")}: argument is of length zero</span></div></pre>
+<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>tab_style</span>(
+      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='apply_styles.html'>apply_styles</a></span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>),
+      <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='data_cells.html'>data_cells</a></span>(
+        <span class='kw'>row</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>,
+        <span class='kw'>column</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>hp</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

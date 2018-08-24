@@ -176,6 +176,28 @@ presets.</p></td>
   <code><a href='fmt_time.html'>fmt_time</a></code>, <code><a href='fmt.html'>fmt</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>tidyverse</span>)
+
+<span class='co'># Create a tibble with a column</span>
+<span class='co'># that contains 24-hour time strings</span>
+<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
+    ~<span class='no'>time</span>,
+    <span class='st'>"2017-06-10 12:35:23"</span>,
+    <span class='st'>"2017-07-12 15:01:34"</span>,
+    <span class='st'>"2017-08-05 09:45:23"</span>,
+    <span class='st'>"2017-10-23 01:32:00"</span>)
+
+<span class='co'># Create a table object using this</span>
+<span class='co'># dataset and format the `time`</span>
+<span class='co'># column with `time_style` '3'</span>
+<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>fmt_datetime</span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>time</span>),
+      <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+      <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -185,7 +207,9 @@ presets.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
