@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add caption text to the stubhead — tab_stubhead_caption • gt</title>
+<title>Create a gt display table output element for Shiny — gt_output • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Add caption text to the stubhead — tab_stubhead_caption" />
+<meta property="og:title" content="Create a gt display table output element for Shiny — gt_output" />
 
-<meta property="og:description" content="Add a caption to the stubhead of a table. If a stub does not exist, no
-change will be made." />
+<meta property="og:description" content="Create a gt display table output element for Shiny" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,54 +118,37 @@ change will be made." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add caption text to the stubhead</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/table_parts.R'><code>R/table_parts.R</code></a></small>
-    <div class="hidden name"><code>tab_stubhead_caption.Rd</code></div>
+    <h1>Create a gt display table output element for Shiny</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/shiny.R'><code>R/shiny.R</code></a></small>
+    <div class="hidden name"><code>gt_output.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Add a caption to the stubhead of a table. If a stub does not exist, no
-change will be made.</p>
+    <p>Create a gt display table output element for Shiny</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tab_stubhead_caption</span>(<span class='no'>data</span>, <span class='no'>caption</span>)</pre>
+    <pre class="usage"><span class='fu'>gt_output</span>(<span class='no'>outputId</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
-    </tr>
-    <tr>
-      <th>caption</th>
-      <td><p>the text to be used as the stubhead caption.</p></td>
+      <th>outputId</th>
+      <td><p>an output variable from which to read the table.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of class <code>gt_tbl</code>.</p>
+    <p>A gt table output element that can be included in a panel.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
-  <code><a href='gt.html'>gt</a></code>, <code><a href='tab_boxhead_panel.html'>tab_boxhead_panel</a></code>,
-  <code><a href='tab_footnote.html'>tab_footnote</a></code>, <code><a href='tab_heading.html'>tab_heading</a></code>,
-  <code><a href='tab_options.html'>tab_options</a></code>, <code><a href='tab_source_note.html'>tab_source_note</a></code>,
-  <code><a href='tab_stub_block.html'>tab_stub_block</a></code>, <code><a href='tab_style.html'>tab_style</a></code></p></div>
+    <div class='dont-index'><p><a href='render_gt.html'>render_gt</a>()</p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and add a caption</span>
-<span class='co'># to describe what is in the stub</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_stubhead_caption</span>(
-      <span class='kw'>caption</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"car *make* and *model*"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -176,9 +158,7 @@ change will be made.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
