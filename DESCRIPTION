@@ -27,14 +27,15 @@ Imports:
     ggplot2 (>= 3.0.0),
     glue (>= 1.2.0),
     htmltools (>= 0.3.6),
-    knitr (>= 1.20),
     magrittr (>= 1.5),
     rlang (>= 0.2.1),
     stringr (>= 1.3.1),
-    tibble (>= 1.4.2)
+    tibble (>= 1.4.2),
+    tidyr (>= 0.8.1)
 Remotes:
     rstudio/sassr
 Suggests: 
+    knitr,
     testthat,
     rmarkdown
 VignetteBuilder: knitr
