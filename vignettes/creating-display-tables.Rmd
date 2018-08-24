@@ -131,6 +131,7 @@ The **stub** is the area to the left in a table that contains **row captions**, 
 The easiest way to generate a **stub** part is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as **row captions**. To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
 
 ```{r}
+# Generate a gt table after creating a `rowname` colummn
 islands_tbl %>%
   rename(rowname = name) %>%
   gt()
@@ -139,6 +140,8 @@ islands_tbl %>%
 Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead caption**, which is label text that technically lives both in the **stub** and in the **boxhead**. Think of it as the intersection of the **stub** and **boxhead.** This operation is done with the `tab_stubhead_caption()` function:
 
 ```{r}
+# Generate a simple table with a stub and add
+# a stubhead caption
 islands_tbl %>%
   rename(rowname = name) %>%
   gt() %>%
@@ -148,8 +151,8 @@ islands_tbl %>%
 A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` is `size`. This has implications for column referencing (for instance, with the `data_cells()` helper function). To apply our table parts as before, we use the following statements:
 
 ```{r}
-# Display the `islands_tbl` data with a heading,
-# two source notes, and two footnotes
+# Display the `islands_tbl` data with a stub,
+# a heading, source notes, and footnotes
 islands_tbl %>%
   rename(rowname = name) %>%
   gt() %>%
@@ -167,6 +170,9 @@ islands_tbl %>%
 Let's take this further and add one more magic column to `islands_tbl` as a way to incorporate **stub blocks** within the **stub**. These blocks can be considered groups of rows and so it's very logical that the magic column name is `groupname`. A `groupname` column will be added to `islands_tbl` and it will consist of categories that describe the landmass type.
 
 ```{r}
+# Display the `islands_tbl` data with a stub,
+# a heading, source notes, and footnotes; group heading
+# rows are added through the `groupname` column
 islands_tbl %>%
   rename(rowname = name) %>%
   mutate(groupname = c(
@@ -185,4 +191,16 @@ islands_tbl %>%
   tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 1))
 ```
 
-Three stub groups have been made since there are three unique categories under `groupname`.
+Three **stub groups** have been made since there are three unique categories under `groupname`. Across the top of each **stub group** is the **group_heading** contained in a separate row (these cut across the field and they contain nothing but the **group heading**). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate **stub groups**.
+
+Having groups of rows in **stub blocks** is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with **summary captions** is covered in a separate article (*Creating Summary Lines*).
+
+### The Boxhead
+
+The table's **boxhead** is a required element of any table and it contains, at a minimum, **column labels**. The last example had a single **column label**: `size`. Just as in the **stub**, we can create groupings called **boxhead panels** that have one or more **spanner headings**. 
+
+The following schematic provides a model for the layout of rows within each **stub group**, and, the layout of **column labels** under **spanner headings** in the **boxhead**.
+
+```{r eval=FALSE, include=FALSE}
+#<img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/gt_stub_block_boxhead_panel.png" width=100%>
+```
