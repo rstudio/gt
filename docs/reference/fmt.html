@@ -84,7 +84,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
+    </li>
+    <li>
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
+    </li>
+    <li>
+      <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
 </li>
@@ -130,15 +136,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>the specification for which columns are to be formatted.</p></td>
+      <td><p>the column names to format.</p></td>
     </tr>
     <tr>
       <th>rows</th>
-      <td><p>an optional specification for which rows are to be formatted.</p></td>
+      <td><p>optional rows to format. Not providing any value results in all
+rows in <code>columns</code> being formatted.</p></td>
     </tr>
     <tr>
       <th>fcns</th>
@@ -155,8 +162,8 @@
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
   <code><a href='fmt_datetime.html'>fmt_datetime</a></code>, <code><a href='fmt_date.html'>fmt_date</a></code>,
   <code><a href='fmt_missing.html'>fmt_missing</a></code>, <code><a href='fmt_number.html'>fmt_number</a></code>,
-  <code><a href='fmt_percent.html'>fmt_percent</a></code>, <code><a href='fmt_scientific.html'>fmt_scientific</a></code>,
-  <code><a href='fmt_time.html'>fmt_time</a></code></p></div>
+  <code><a href='fmt_passthrough.html'>fmt_passthrough</a></code>, <code><a href='fmt_percent.html'>fmt_percent</a></code>,
+  <code><a href='fmt_scientific.html'>fmt_scientific</a></code>, <code><a href='fmt_time.html'>fmt_time</a></code></p></div>
     
 
   </div>

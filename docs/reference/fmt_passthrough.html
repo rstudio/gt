@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for defining custom styles for table cells — apply_styles • gt</title>
+<title>Format by simply passing data through — fmt_passthrough • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,16 @@
 
 
 
-<meta property="og:title" content="Helper for defining custom styles for table cells — apply_styles" />
+<meta property="og:title" content="Format by simply passing data through — fmt_passthrough" />
 
-<meta property="og:description" content="Helper for defining custom styles for table cells" />
+<meta property="og:description" content="Format by passing data through no other transformation other than: (1)
+coercing to character (as all the fmt_*() functions do), and
+(2) applying prefixed or suffixed text via the pattern argument (the
+default is to apply nothing). All of this is useful when don't want to modify
+the input data other than to decorate it within a pattern. Also, this
+function is useful when used as a formatter function in the
+summary_rows function, where the output may be text or useful as is
+(that function requires a formatter function)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,79 +125,61 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for defining custom styles for table cells</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>apply_styles.Rd</code></div>
+    <h1>Format by simply passing data through</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/format_data.R'><code>R/format_data.R</code></a></small>
+    <div class="hidden name"><code>fmt_passthrough.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for defining custom styles for table cells</p>
+    <p>Format by passing data through no other transformation other than: (1)
+coercing to <code>character</code> (as all the <code>fmt_*()</code> functions do), and
+(2) applying prefixed or suffixed text via the <code>pattern</code> argument (the
+default is to apply nothing). All of this is useful when don't want to modify
+the input data other than to decorate it within a pattern. Also, this
+function is useful when used as a <code>formatter</code> function in the
+<code>summary_rows</code> function, where the output may be text or useful as is
+(that function requires a formatter function).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>apply_styles</span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_font</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>text_indent</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_decorate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_passthrough</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bkgd_color</th>
-      <td><p>the background color of the cell.</p></td>
+      <th>data</th>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
     </tr>
     <tr>
-      <th>text_color</th>
-      <td><p>the text color.</p></td>
+      <th>columns</th>
+      <td><p>the column names to format.</p></td>
     </tr>
     <tr>
-      <th>text_font</th>
-      <td><p>the font or collection of fonts (subsequent font names are)
-used as fallbacks.</p></td>
+      <th>rows</th>
+      <td><p>optional rows to format. Not providing any value results in all
+rows in <code>columns</code> being formatted.</p></td>
     </tr>
     <tr>
-      <th>text_style</th>
-      <td><p>the text style. Can be one of either <code>"center"</code>,
-<code>"normal"</code>, <code>"italic"</code>, or <code>"oblique"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_size</th>
-      <td><p>the size of the font.</p></td>
-    </tr>
-    <tr>
-      <th>text_align</th>
-      <td><p>the text alignment. Can be one of either <code>"center"</code>,
-<code>"left"</code>, <code>"right"</code>, or <code>"justify"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_indent</th>
-      <td><p>the indentation of the text.</p></td>
-    </tr>
-    <tr>
-      <th>text_decorate</th>
-      <td><p>allows for text decoration effect to be applied. Here,
-we can use <code>"overline"</code>, <code>"line-through"</code>, or <code>"underline"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_transform</th>
-      <td><p>allows for the transformation of text. Options are
-<code>"uppercase"</code>, <code>"lowercase"</code>, or <code>"capitalize"</code>.</p></td>
+      <th>pattern</th>
+      <td><p>a formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by <code>{x}</code> and all
+other characters are taken to be string literals.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a character vector containing formatted styles.</p>
+    <p>an object of class <code>gt_tbl</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='col_labels.html'>col_labels</a></code>,
-  <code><a href='columns_with.html'>columns_with</a></code>, <code><a href='data_cells.html'>data_cells</a></code>,
-  <code><a href='funs.html'>funs</a></code>, <code><a href='html.html'>html</a></code>, <code><a href='md.html'>md</a></code>,
-  <code><a href='not_in_group.html'>not_in_group</a></code>, <code><a href='pct.html'>pct</a></code>,
-  <code><a href='px.html'>px</a></code>, <code><a href='rownames_with.html'>rownames_with</a></code>,
-  <code><a href='rows_where.html'>rows_where</a></code>, <code><a href='vars.html'>vars</a></code></p></div>
+    <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
+  <code><a href='fmt_datetime.html'>fmt_datetime</a></code>, <code><a href='fmt_date.html'>fmt_date</a></code>,
+  <code><a href='fmt_missing.html'>fmt_missing</a></code>, <code><a href='fmt_number.html'>fmt_number</a></code>,
+  <code><a href='fmt_percent.html'>fmt_percent</a></code>, <code><a href='fmt_scientific.html'>fmt_scientific</a></code>,
+  <code><a href='fmt_time.html'>fmt_time</a></code>, <code><a href='fmt.html'>fmt</a></code></p></div>
     
 
   </div>

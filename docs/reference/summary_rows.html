@@ -89,7 +89,13 @@ summary_rows()." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
+    </li>
+    <li>
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
+    </li>
+    <li>
+      <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
 </li>
@@ -134,7 +140,7 @@ a <code>gt_tbl</code> object where summary rows were added via
     </div>
 
     <pre class="usage"><span class='fu'>summary_rows</span>(<span class='no'>data</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>funs</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>sep_mark</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>dec_mark</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
+  <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,23 +171,25 @@ calls to functions with <code>.</code> as a dummy argument (e.g.,
 <code>sum(., na.rm = TRUE)</code>).</p></td>
     </tr>
     <tr>
+      <th>formatter</th>
+      <td><p>a formatter function name. These can be functions available
+in the package (e.g., <code><a href='fmt_number.html'>fmt_number</a></code>, <code>link{fmt_percent}</code>,
+etc.), or a custom function using <code><a href='fmt.html'>fmt</a>()</code>. The default function
+is <code><a href='fmt_number.html'>fmt_number</a>()</code> and its options can be accessed through
+<code>...</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>values passed to the <code>formatter</code> function, where the provided
+values are to be in the form of named vectors. For example, when using the
+default <code>formatter</code> function, <code><a href='fmt_number.html'>fmt_number</a></code>, options such as
+<code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be used.</p></td>
+    </tr>
+    <tr>
       <th>labels</th>
       <td><p>a vector of stub labels for the summary rows. The vector length
 should match the number of <code>funs</code> provided. If this is not provided then
 the labels will be generated from the input given to <code>funs</code>.</p></td>
-    </tr>
-    <tr>
-      <th>decimals</th>
-      <td><p>an option to specify the exact number of decimal places to
-use. The default number of decimal places is <code>2</code>.</p></td>
-    </tr>
-    <tr>
-      <th>sep_mark</th>
-      <td><p>the mark to use as a separator between groups of digits.</p></td>
-    </tr>
-    <tr>
-      <th>dec_mark</th>
-      <td><p>the character to use as a decimal mark.</p></td>
     </tr>
     </table>
     
@@ -221,107 +229,7 @@ use. The default number of decimal places is <code>2</code>.</p></td>
       <span class='fu'>mean</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
       <span class='fu'>sum</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
       <span class='fu'>sd</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
-    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"sum"</span>, <span class='st'>"sd"</span>))</div><div class='output co'>#&gt; &lt;!--gt table start--&gt;
-#&gt; &lt;table data-nrow='16' data-ncol='3' data-ngroup='3' class='gt_table'&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;th class='col_heading right' rowspan='1' colspan='1'&gt;&lt;/th&gt;
-#&gt; &lt;th class='col_heading center' rowspan='1' colspan='1'&gt;value&lt;/th&gt;
-#&gt; &lt;th class='col_heading center' rowspan='1' colspan='1'&gt;value_2&lt;/th&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tbody class='table_body striped'&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;td data-type='group' colspan='3' class='group_heading'&gt;A&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='1'&gt;
-#&gt; &lt;td class='stub row right'&gt;1&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;NA&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;260.1&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='2'&gt;
-#&gt; &lt;td class='stub row right'&gt;2&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;184.3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;84.4&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='3'&gt;
-#&gt; &lt;td class='stub row right'&gt;3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;342.3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;126.3&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='4'&gt;
-#&gt; &lt;td class='stub row right'&gt;4&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;234.9&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;NA&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='5'&gt;
-#&gt; &lt;td class='stub row summary_row first_summary_row right'&gt;mean&lt;/td&gt;
-#&gt; &lt;td class='row summary_row first_summary_row center'&gt;253.83&lt;/td&gt;
-#&gt; &lt;td class='row summary_row first_summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='6'&gt;
-#&gt; &lt;td class='stub row summary_row right'&gt;sum&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;761.50&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='7'&gt;
-#&gt; &lt;td class='stub row summary_row right'&gt;sd&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;80.68&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;td data-type='group' colspan='3' class='group_heading'&gt;B&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='8'&gt;
-#&gt; &lt;td class='stub row right'&gt;1&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;190.9&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;832.5&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='9'&gt;
-#&gt; &lt;td class='stub row right'&gt;2&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;743.3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;281.2&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='10'&gt;
-#&gt; &lt;td class='stub row right'&gt;3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;252.3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;732.5&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='11'&gt;
-#&gt; &lt;td class='stub row right'&gt;4&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;344.7&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;NA&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;td data-type='group' colspan='3' class='group_heading'&gt;C&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='12'&gt;
-#&gt; &lt;td class='stub row right'&gt;1&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;197.2&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;818&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='data' data-row='13'&gt;
-#&gt; &lt;td class='stub row right'&gt;2&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;284.3&lt;/td&gt;
-#&gt; &lt;td class='row center'&gt;394.4&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='14'&gt;
-#&gt; &lt;td class='stub row summary_row first_summary_row right'&gt;mean&lt;/td&gt;
-#&gt; &lt;td class='row summary_row first_summary_row center'&gt;240.75&lt;/td&gt;
-#&gt; &lt;td class='row summary_row first_summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='15'&gt;
-#&gt; &lt;td class='stub row summary_row right'&gt;sum&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;481.50&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;tr data-type='summary' data-row='16'&gt;
-#&gt; &lt;td class='stub row summary_row right'&gt;sd&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;61.59&lt;/td&gt;
-#&gt; &lt;td class='row summary_row center'&gt;&lt;/td&gt;
-#&gt; &lt;/tr&gt;
-#&gt; &lt;/tbody&gt;
-#&gt; &lt;/table&gt;
-#&gt; &lt;!--gt table end--&gt;
-#&gt; </div></pre>
+    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"sum"</span>, <span class='st'>"sd"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in integrate_summary_lines(data_attr): (list) object cannot be coerced to type 'logical'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

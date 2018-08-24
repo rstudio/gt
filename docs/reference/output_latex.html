@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for defining custom styles for table cells — apply_styles • gt</title>
+<title>Output a gt table object as LateX — output_latex • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Helper for defining custom styles for table cells — apply_styles" />
+<meta property="og:title" content="Output a gt table object as LateX — output_latex" />
 
-<meta property="og:description" content="Helper for defining custom styles for table cells" />
+<meta property="og:description" content="Take a gt_tbl table object and emit LateX." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,91 +118,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for defining custom styles for table cells</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>apply_styles.Rd</code></div>
+    <h1>Output a gt table object as LateX</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/output_latex.R'><code>R/output_latex.R</code></a></small>
+    <div class="hidden name"><code>output_latex.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for defining custom styles for table cells</p>
+    <p>Take a <code>gt_tbl</code> table object and emit LateX.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>apply_styles</span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_font</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>text_indent</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_decorate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>output_latex</span>(<span class='no'>data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bkgd_color</th>
-      <td><p>the background color of the cell.</p></td>
-    </tr>
-    <tr>
-      <th>text_color</th>
-      <td><p>the text color.</p></td>
-    </tr>
-    <tr>
-      <th>text_font</th>
-      <td><p>the font or collection of fonts (subsequent font names are)
-used as fallbacks.</p></td>
-    </tr>
-    <tr>
-      <th>text_style</th>
-      <td><p>the text style. Can be one of either <code>"center"</code>,
-<code>"normal"</code>, <code>"italic"</code>, or <code>"oblique"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_size</th>
-      <td><p>the size of the font.</p></td>
-    </tr>
-    <tr>
-      <th>text_align</th>
-      <td><p>the text alignment. Can be one of either <code>"center"</code>,
-<code>"left"</code>, <code>"right"</code>, or <code>"justify"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_indent</th>
-      <td><p>the indentation of the text.</p></td>
-    </tr>
-    <tr>
-      <th>text_decorate</th>
-      <td><p>allows for text decoration effect to be applied. Here,
-we can use <code>"overline"</code>, <code>"line-through"</code>, or <code>"underline"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>text_transform</th>
-      <td><p>allows for the transformation of text. Options are
-<code>"uppercase"</code>, <code>"lowercase"</code>, or <code>"capitalize"</code>.</p></td>
+      <th>data</th>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a character vector containing formatted styles.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='col_labels.html'>col_labels</a></code>,
-  <code><a href='columns_with.html'>columns_with</a></code>, <code><a href='data_cells.html'>data_cells</a></code>,
-  <code><a href='funs.html'>funs</a></code>, <code><a href='html.html'>html</a></code>, <code><a href='md.html'>md</a></code>,
-  <code><a href='not_in_group.html'>not_in_group</a></code>, <code><a href='pct.html'>pct</a></code>,
-  <code><a href='px.html'>px</a></code>, <code><a href='rownames_with.html'>rownames_with</a></code>,
-  <code><a href='rows_where.html'>rows_where</a></code>, <code><a href='vars.html'>vars</a></code></p></div>
+    <div class='dont-index'><p>Other table export functions: <code><a href='extract_summary.html'>extract_summary</a></code>,
+  <code><a href='write_rtf.html'>write_rtf</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Create a `gt` table using the `sleep`</span>
+<span class='co'># dataset and then write the table to</span>
+<span class='co'># an RTF file</span>
+<span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>output_latex</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
