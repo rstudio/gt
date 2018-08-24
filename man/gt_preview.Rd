@@ -26,11 +26,13 @@ Create a preview version of table. Here we can specify the first and last
 \code{n} rows for the preview table.
 }
 \examples{
-# Create a preview of the `mtcars` dataset; it
-# will be displayed in the Viewer
-gt_preview(
-  mtcars,
-  rownames_to_stub = TRUE)
+# Create a preview of the `mtcars`
+# dataset; invoking the `gt_tbl`
+# object will be display it
+gt_tbl <-
+  gt_preview(
+    mtcars,
+    rownames_to_stub = TRUE)
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt}},

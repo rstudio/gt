@@ -23,5 +23,5 @@ interactive R Markdown document.}
 A gt display table render function for use in Shiny
 }
 \seealso{
-gt_output
+\link{gt_output}()
 }
