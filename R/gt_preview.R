@@ -11,11 +11,13 @@
 #' of the table to display.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a preview of the `mtcars` dataset; it
-#' # will be displayed in the Viewer
-#' gt_preview(
-#'   mtcars,
-#'   rownames_to_stub = TRUE)
+#' # Create a preview of the `mtcars`
+#' # dataset; invoking the `gt_tbl`
+#' # object will be display it
+#' gt_tbl <-
+#'   gt_preview(
+#'     mtcars,
+#'     rownames_to_stub = TRUE)
 #' @family table-part creation/modification functions
 #' @importFrom tibble add_row
 #' @export
