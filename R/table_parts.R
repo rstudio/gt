@@ -9,10 +9,11 @@
 #' # Create a table object using the
 #' # `mtcars` dataset and add a heading
 #' # to describe the table
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_heading(
-#'     title = md("Data listing from **mtcars**"),
-#'     headnote = md("`mtcars` is an R dataset"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_heading(
+#'       title = md("Data listing from **mtcars**"),
+#'       headnote = md("`mtcars` is an R dataset"))
 #' @family table-part creation/modification functions
 #' @export
 tab_heading <- function(data,
@@ -48,9 +49,10 @@ tab_heading <- function(data,
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
 #' # to describe what is in the stub
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stubhead_caption(
-#'     caption = md("car *make* and *model*"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_stubhead_caption(
+#'       caption = md("car *make* and *model*"))
 #' @family table-part creation/modification functions
 #' @export
 tab_stubhead_caption <- function(data,
@@ -76,10 +78,11 @@ tab_stubhead_caption <- function(data,
 #' # Create a table based on `mtcars` where
 #' # there are group headings grouped inside
 #' # stub blocks
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stub_block(
-#'     group = "perimeter",
-#'     rows = c("Mazda RX4", "Mazda RX4 Wag"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_stub_block(
+#'       group = "perimeter",
+#'       rows = c("Mazda RX4", "Mazda RX4 Wag"))
 #' @family table-part creation/modification functions
 #' @export
 tab_stub_block <- function(data,
@@ -130,10 +133,11 @@ tab_stub_block <- function(data,
 #' # Create a table based on `rock` where
 #' # there are column headings grouped
 #' # under spanner headings
-#' gt(data = rock) %>%
-#'   tab_boxhead_panel(
-#'     group = "perimeter",
-#'     columns = c("peri", "shape"))
+#' gt_tbl <-
+#'   gt(data = rock) %>%
+#'     tab_boxhead_panel(
+#'       group = "perimeter",
+#'       columns = c("peri", "shape"))
 #' @family table-part creation/modification functions
 #' @export
 tab_boxhead_panel <- function(data,
@@ -170,12 +174,13 @@ tab_boxhead_panel <- function(data,
 #' @examples
 #' # Add a footnote that is in
 #' # reference to a single table cell
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_footnote(
-#'     footnote = "Massive hp.",
-#'     location = data_cells(
-#'       row = "Maserati Bora",
-#'       column = "hp"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_footnote(
+#'       footnote = "Massive hp.",
+#'       location = data_cells(
+#'         row = "Maserati Bora",
+#'         column = "hp"))
 #' @family table-part creation/modification functions
 #' @seealso [data_cells()] as a useful helper function for targeting the cell
 #' associated with the footnote.
@@ -273,9 +278,10 @@ tab_footnote <- function(data,
 #' @examples
 #' # Add a source note that provides
 #' # a citation for the tabular data
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_source_note(
-#'     source_note = md("*Henderson and Velleman* (1981)."))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_source_note(
+#'       source_note = md("*Henderson and Velleman* (1981)."))
 #' @family table-part creation/modification functions
 #' @export
 tab_source_note <- function(data,
@@ -308,12 +314,13 @@ tab_source_note <- function(data,
 #' @examples
 #' # Add a style that is to be applied
 #' # to a single table cell
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_style(
-#'     style = apply_styles(bkgd_color = "steelblue"),
-#'     location = data_cells(
-#'       row = "Maserati Bora",
-#'       column = vars(hp)))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_style(
+#'       style = apply_styles(bkgd_color = "steelblue"),
+#'       location = data_cells(
+#'         row = "Maserati Bora",
+#'         column = vars(hp)))
 #' @family table-part creation/modification functions
 #' @seealso [apply_styles()] as a helper for defining custom styles and
 #' [data_cells()] as a useful helper function for targeting the cells to be
