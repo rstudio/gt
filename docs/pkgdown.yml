@@ -2,5 +2,7 @@ pandoc: 2.2.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
+  creating-display-tables: creating-display-tables.html
   creating-summary-lines: creating-summary-lines.html
+  modifying-columns: modifying-columns.html
 

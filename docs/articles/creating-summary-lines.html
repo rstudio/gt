@@ -52,7 +52,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
+    </li>
+    <li>
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
+    </li>
+    <li>
+      <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
 </li>
@@ -76,8 +82,7 @@
 <!--/.navbar -->
 
       
-      </header><link href="creating-summary-lines_files/gt-0.1/compiled.css" rel="stylesheet">
-<div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Creating Summary Lines</h1>
@@ -93,7 +98,7 @@
 <p>Tables with summary data are quite common and naturally occur with alarming regularity. We can use <strong>gt</strong> to produce such summary components. These summary rows are automatically inserted within the relevant stub blocks, where each block is treated as a group and where each summary row is the result of a different aggregation function.</p>
 <div id="preparing-the-input-data-table" class="section level3">
 <h3 class="hasAnchor">
-<a href="#preparing-the-input-data-table" class="anchor"></a>Preparing the input data table</h3>
+<a href="#preparing-the-input-data-table" class="anchor"></a>Preparing the Input Data Table</h3>
 <p>To most easily insert the necessary summary rows, we need to ensure that some preparatory work is done. The key change to the input data table should be to have a <code>groupname</code> column present, with categorical group names for each grouping. The following example data table contains both <code>groupname</code> and <code>rowname</code> columns, along with two data columns (named <code>value_1</code> and <code>value_2</code>). Having the magic column names <code>groupname</code> and <code>rowname</code> will signal to <strong>gt</strong> that they should be used to form a table stub where <code>groupname</code> collects rows into a stub block (furnishing a group heading row above), and <code>rowname</code> provides row labels within each stub block. Here is a diagram showing the restructuring:</p>
 <p>The incoming data table for the purpose of the first example will be created using <code><a href="http://dplyr.tidyverse.org/reference/reexports.html">dplyr::tribble()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Create a table that creates a stub and stub blocks by</span></a>
@@ -111,22 +116,476 @@
 <a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="st">"B"</span>,        <span class="st">"4"</span>,      <span class="fl">344.7</span>,    <span class="fl">546.1</span>,</a>
 <a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="st">"C"</span>,        <span class="st">"1"</span>,      <span class="fl">197.2</span>,    <span class="fl">818.0</span>,</a>
 <a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="st">"C"</span>,        <span class="st">"2"</span>,      <span class="fl">284.3</span>,    <span class="fl">394.4</span>)</a></code></pre></div>
-<p>There are three groups in this data table: <code>A</code>, <code>B</code>, and <code>C</code> and summaries will be made within specified groups using the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function. There’s a lot of control in how the summaries are conducted and formatted. First of all, we can choose which groups will receive summary rows (the rows appear at the bottom of each stub block). This optional choice of groups can be made using the <code>groups</code> argument. Secondly, we can choose which columns should be included in the summary with the <code>columns</code> argument. For both arguments, we can use the <code><a href="../reference/vars.html">vars()</a></code> helper function to easily specify the groups and columns using bare names.</p>
+<p>There are three groups in this data table: <code>A</code>, <code>B</code>, and <code>C</code>. The presence of the <code>groupname</code> column will tell <strong>gt</strong> to partition the stub into three stub blocks, one for each group. This is how the <strong>gt</strong> display table appears after simply providing <code>tbl</code> to <code><a href="../reference/gt.html">gt()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Create a display table by using `tbl` as input</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="10" data-ncol="3" data-ngroup="3" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
+<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="3" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">235.6</td>
+<td class="row center">260.1</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">184.3</td>
+<td class="row center">84.4</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">342.3</td>
+<td class="row center">126.3</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">234.9</td>
+<td class="row center">83</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="5">
+<td class="stub row right">1</td>
+<td class="row center">190.9</td>
+<td class="row center">832.5</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="stub row right">2</td>
+<td class="row center">743.3</td>
+<td class="row center">281.2</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="stub row right">3</td>
+<td class="row center">252.3</td>
+<td class="row center">732.5</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="stub row right">4</td>
+<td class="row center">344.7</td>
+<td class="row center">546.1</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">C</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">1</td>
+<td class="row center">197.2</td>
+<td class="row center">818</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">2</td>
+<td class="row center">284.3</td>
+<td class="row center">394.4</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+<div id="generating-summary-rows" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generating-summary-rows" class="anchor"></a>Generating Summary Rows</h3>
+<p>Summaries by stub block can be generated by using the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function. There’s a lot of control in how the summaries are conducted and formatted. First of all, we can choose which groups will receive summary rows (the rows appear at the bottom of each stub block). This optional choice of groups can be made using the <code>groups</code> argument (providing a vector of group names). Secondly, we can choose which columns should be included in the summary with the <code>columns</code> argument (in this case, wrapping column names in <code><a href="../reference/vars.html">vars()</a></code>). If we provide nothing to <code>groups</code>, then all groups will receive summary data for the selected <code>columns</code>.</p>
 <p>To make any sort of summary, we need to use functions that will perform the aggregation. We can provide base functions such as <code>mean()</code>, <code>sum()</code>, <code>min()</code>, <code>max()</code>, and more, using the <code>funs</code> argument. It’s preferable here to use the <code><a href="../reference/funs.html">funs()</a></code> helper function to supply a list of aggregation functions. Each function provided will result in a summary row for each group.</p>
-<p>Because each function will yield a row, we need to be able to identify that row. So, each summary row will receive a row caption. We can provide our preferred names as a character vector to the <code>labels</code> argument, in the same order and quantity as in <code>funs</code>. If nothing is supplied, then <strong>gt</strong> will use the input with the <code>funs</code> argument to generate the row captions.</p>
+<p>Because each function will yield a row, we need to be able to identify that row. So, each summary row will receive a row caption. We can provide our preferred names by naming the functions within <code><a href="../reference/funs.html">funs()</a></code> (e.g, <code><a href="../reference/funs.html">funs(average = mean, total = sum, SD = sd)</a></code>). If names aren’t supplied, then <strong>gt</strong> will use the function names as the row captions.</p>
 <p>Now that the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function has been somewhat explained, let’s look at how we can get summary rows for the <code>tbl</code> table:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Create a gt table with summary rows</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">gt_summary_a &lt;-</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">groups =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(A, B),</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd),</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"mean"</span>, <span class="st">"sum"</span>, <span class="st">"sd"</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># View the HTML table</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">gt_summary_a</a></code></pre></div>
-<!--gt table start-->
-<table data-nrow="16" data-ncol="3" data-ngroup="3" class="table">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Create a gt table with summary rows for</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># `value_1` in the `A` and `B` stub blocks;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># three summary rows are made per group</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># (one for each function in `funs`)</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd))</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="16" data-ncol="3" data-ngroup="3" class="table">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">value_1</th>
@@ -224,50 +683,209 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>Here we see that summary rows were created for the <code>A</code> and <code>B</code> groups (group <code>C</code> has no summary lines in its stub block). It was specified (in <code>columns</code>) that only the <code>value_1</code> column should be evaluated and, indeed, the <code>value_2</code> column shows no values within the summary rows.</p>
-<p>There is some flexibility in how we supply functions to the <code><a href="../reference/funs.html">funs()</a></code> helper function. We can also use function names enclosed in quotes (e.g., <code><a href="../reference/funs.html">funs("mean", "sum", "sd")</a></code>) or a vector of function names (e.g., <code>funs(c("mean", "sum", "sd))</code>). This is nice if we want to build a vector of function names and perhaps pass in the same vector to <code>labels</code>. Here’s an example that creates the extact same output table as before (so we won’t show the result):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Define a vector of function names</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">function_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"mean"</span>, <span class="st">"sum"</span>, <span class="st">"sd"</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Use `function_vec` in `funs` and `labels`</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">gt_summary_b &lt;-</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="dt">groups =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(A, B),</a>
+<!--gt table end--><p>Here we see that summary rows were created for the <code>A</code> and <code>B</code> groups (group <code>C</code> has no summary lines in its stub block). It was specified in <code>columns</code> that only the <code>value_1</code> column should be evaluated and, indeed, the <code>value_2</code> column shows no values whatsoever within the summary rows.</p>
+<p>There is some flexibility in how we supply functions to the <code><a href="../reference/funs.html">funs()</a></code> helper function. We can also use function names enclosed in quotes (e.g., <code><a href="../reference/funs.html">funs("mean", "sum", "sd")</a></code>). If we have a vector of function names we can pass this directly to the <code>funs</code> without having to use the <code><a href="../reference/funs.html">funs()</a></code> helper. This is nice if we want to build a common, named vector of function names and summary captions. Here’s an example that does just that:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Define a named vector of function names</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># and summary row captions</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">funs_labels &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">average =</span> <span class="st">"mean"</span>, <span class="dt">total =</span> <span class="st">"sum"</span>, <span class="st">`</span><span class="dt">std dev</span><span class="st">`</span> =<span class="st"> "sd"</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># Use `funs_labels` in `funs`</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(function_vec),</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">    <span class="dt">labels =</span> function_vec)</a></code></pre></div>
-</div>
-<div id="formatting-the-summary-output-values" class="section level3">
-<h3 class="hasAnchor">
-<a href="#formatting-the-summary-output-values" class="anchor"></a>Formatting the summary output values</h3>
-<p>The <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function provides the following arguments for formatting the output values:</p>
-<ul>
-<li>
-<code>decimals</code>: the exact number of decimal places to use (default is <code>2</code>)</li>
-<li>
-<code>sep_mark</code>: the mark to use as a separator between groups of digits (default is <code>,</code>)</li>
-<li>
-<code>dec_mark</code>: the character to use as a decimal mark (default is <code>.</code>)</li>
-</ul>
-<p>These options are similar to what is available in the <code><a href="../reference/fmt_number.html">fmt_number()</a></code> function. We can base the formatting of the summary row values to those values that supply inputs to the summary rows. Here is an example that uses the formatting options in <code><a href="../reference/fmt_number.html">fmt_number()</a></code> and in <code><a href="../reference/summary_rows.html">summary_rows()</a></code> to provide numeric values that are formatted to 3 decimal places throughout the entire table:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Format the numeric row data to have 3 decimal</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># place and do the same for the summary row values</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">gt_summary_c &lt;-</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    <span class="dt">decimals =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">    <span class="dt">groups =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(A, B),</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(min, max, mean),</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">"minimum"</span>, <span class="st">"maximum"</span>, <span class="st">"average"</span>),</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">    <span class="dt">decimals =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">gt_summary_c</a></code></pre></div>
-<!--gt table start-->
-<table data-nrow="16" data-ncol="3" data-ngroup="3" class="table">
+<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="dt">funs =</span> funs_labels)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="19" data-ncol="3" data-ngroup="3" class="table">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">value_1</th>
@@ -279,89 +897,1015 @@
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">1</td>
-<td class="row center">235.600</td>
-<td class="row center">260.100</td>
+<td class="row center">235.6</td>
+<td class="row center">260.1</td>
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">2</td>
-<td class="row center">184.300</td>
-<td class="row center">84.400</td>
+<td class="row center">184.3</td>
+<td class="row center">84.4</td>
 </tr>
 <tr data-type="data" data-row="3">
 <td class="stub row right">3</td>
-<td class="row center">342.300</td>
-<td class="row center">126.300</td>
+<td class="row center">342.3</td>
+<td class="row center">126.3</td>
 </tr>
 <tr data-type="data" data-row="4">
 <td class="stub row right">4</td>
-<td class="row center">234.900</td>
-<td class="row center">83.000</td>
+<td class="row center">234.9</td>
+<td class="row center">83</td>
 </tr>
 <tr data-type="summary" data-row="5">
-<td class="stub row summary_row first_summary_row right">minimum</td>
-<td class="row summary_row first_summary_row center">184.300</td>
-<td class="row summary_row first_summary_row center">83.000</td>
+<td class="stub row summary_row first_summary_row right">average</td>
+<td class="row summary_row first_summary_row center">249.28</td>
+<td class="row summary_row first_summary_row center"></td>
 </tr>
 <tr data-type="summary" data-row="6">
-<td class="stub row summary_row right">maximum</td>
-<td class="row summary_row center">342.300</td>
-<td class="row summary_row center">260.100</td>
+<td class="stub row summary_row right">total</td>
+<td class="row summary_row center">997.10</td>
+<td class="row summary_row center"></td>
 </tr>
 <tr data-type="summary" data-row="7">
-<td class="stub row summary_row right">average</td>
-<td class="row summary_row center">249.275</td>
-<td class="row summary_row center">138.450</td>
+<td class="stub row summary_row right">std dev</td>
+<td class="row summary_row center">66.51</td>
+<td class="row summary_row center"></td>
 </tr>
 <tr>
 <td data-type="group" colspan="3" class="group_heading">B</td>
 </tr>
 <tr data-type="data" data-row="8">
 <td class="stub row right">1</td>
-<td class="row center">190.900</td>
-<td class="row center">832.500</td>
+<td class="row center">190.9</td>
+<td class="row center">832.5</td>
 </tr>
 <tr data-type="data" data-row="9">
 <td class="stub row right">2</td>
-<td class="row center">743.300</td>
-<td class="row center">281.200</td>
+<td class="row center">743.3</td>
+<td class="row center">281.2</td>
 </tr>
 <tr data-type="data" data-row="10">
 <td class="stub row right">3</td>
-<td class="row center">252.300</td>
-<td class="row center">732.500</td>
+<td class="row center">252.3</td>
+<td class="row center">732.5</td>
 </tr>
 <tr data-type="data" data-row="11">
 <td class="stub row right">4</td>
-<td class="row center">344.700</td>
-<td class="row center">546.100</td>
+<td class="row center">344.7</td>
+<td class="row center">546.1</td>
 </tr>
 <tr data-type="summary" data-row="12">
-<td class="stub row summary_row first_summary_row right">minimum</td>
-<td class="row summary_row first_summary_row center">190.900</td>
-<td class="row summary_row first_summary_row center">281.200</td>
+<td class="stub row summary_row first_summary_row right">average</td>
+<td class="row summary_row first_summary_row center">382.80</td>
+<td class="row summary_row first_summary_row center"></td>
 </tr>
 <tr data-type="summary" data-row="13">
-<td class="stub row summary_row right">maximum</td>
-<td class="row summary_row center">743.300</td>
-<td class="row summary_row center">832.500</td>
+<td class="stub row summary_row right">total</td>
+<td class="row summary_row center">1,531.20</td>
+<td class="row summary_row center"></td>
 </tr>
 <tr data-type="summary" data-row="14">
-<td class="stub row summary_row right">average</td>
-<td class="row summary_row center">382.800</td>
-<td class="row summary_row center">598.075</td>
+<td class="stub row summary_row right">std dev</td>
+<td class="row summary_row center">248.51</td>
+<td class="row summary_row center"></td>
 </tr>
 <tr>
 <td data-type="group" colspan="3" class="group_heading">C</td>
 </tr>
 <tr data-type="data" data-row="15">
 <td class="stub row right">1</td>
-<td class="row center">197.200</td>
-<td class="row center">818.000</td>
+<td class="row center">197.2</td>
+<td class="row center">818</td>
 </tr>
 <tr data-type="data" data-row="16">
 <td class="stub row right">2</td>
-<td class="row center">284.300</td>
-<td class="row center">394.400</td>
+<td class="row center">284.3</td>
+<td class="row center">394.4</td>
+</tr>
+<tr data-type="summary" data-row="17">
+<td class="stub row summary_row first_summary_row right">average</td>
+<td class="row summary_row first_summary_row center">240.75</td>
+<td class="row summary_row first_summary_row center"></td>
+</tr>
+<tr data-type="summary" data-row="18">
+<td class="stub row summary_row right">total</td>
+<td class="row summary_row center">481.50</td>
+<td class="row summary_row center"></td>
+</tr>
+<tr data-type="summary" data-row="19">
+<td class="stub row summary_row right">std dev</td>
+<td class="row summary_row center">61.59</td>
+<td class="row summary_row center"></td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+<div id="providing-calls-to-functions-within-funs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#providing-calls-to-functions-within-funs" class="anchor"></a>Providing Calls to Functions Within <code><a href="../reference/funs.html">funs()</a></code>
+</h3>
+<p>Sometimes we want to use functions with some parameters set. The earlier example using <code><a href="../reference/funs.html">funs(mean, sum, sd)</a></code> will break down if we have <code>NA</code> values in our data and we want to exclude those by using <code>na.rm = TRUE</code>. In this case we can provide a call to a function with <code>.</code> serving as the data values. Here is an example where we modify our <code>tbl</code> to include some <code>NA</code> values and then modify the contents of <code><a href="../reference/funs.html">funs()</a></code> as calls to functions:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Create an alternate version of the</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># `tbl` data frame that contains NAs</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">tbl_na &lt;-<span class="st"> </span>tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value_1 =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    value_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">300</span> <span class="op">~</span><span class="st"> </span><span class="ot">NA_real_</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    value_<span class="dv">1</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">300</span> <span class="op">~</span><span class="st"> </span>value_<span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value_2 =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    value_<span class="dv">2</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">600</span> <span class="op">~</span><span class="st"> </span><span class="ot">NA_real_</span>,</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">    value_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">600</span> <span class="op">~</span><span class="st"> </span>value_<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># Create summary rows from `tbl_na` within</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># groups `A` and `B` but provide the</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># aggregation functions as complete calls</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># so that we can modify the default options</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl_na) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">    <span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">      <span class="dt">average =</span> <span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">      <span class="dt">sum =</span> <span class="kw">sum</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">      <span class="st">`</span><span class="dt">std dev</span><span class="st">`</span> =<span class="st"> </span><span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)))</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="16" data-ncol="3" data-ngroup="3" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
+<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="3" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">235.6</td>
+<td class="row center">260.1</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">184.3</td>
+<td class="row center">84.4</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">NA</td>
+<td class="row center">126.3</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">234.9</td>
+<td class="row center">83</td>
+</tr>
+<tr data-type="summary" data-row="5">
+<td class="stub row summary_row first_summary_row right">average</td>
+<td class="row summary_row first_summary_row center">218.27</td>
+<td class="row summary_row first_summary_row center">138.45</td>
+</tr>
+<tr data-type="summary" data-row="6">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">654.80</td>
+<td class="row summary_row center">553.80</td>
+</tr>
+<tr data-type="summary" data-row="7">
+<td class="stub row summary_row right">std dev</td>
+<td class="row summary_row center">29.42</td>
+<td class="row summary_row center">83.55</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="stub row right">1</td>
+<td class="row center">190.9</td>
+<td class="row center">NA</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">2</td>
+<td class="row center">NA</td>
+<td class="row center">281.2</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">3</td>
+<td class="row center">252.3</td>
+<td class="row center">NA</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">4</td>
+<td class="row center">NA</td>
+<td class="row center">546.1</td>
+</tr>
+<tr data-type="summary" data-row="12">
+<td class="stub row summary_row first_summary_row right">average</td>
+<td class="row summary_row first_summary_row center">221.60</td>
+<td class="row summary_row first_summary_row center">413.65</td>
+</tr>
+<tr data-type="summary" data-row="13">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">443.20</td>
+<td class="row summary_row center">827.30</td>
+</tr>
+<tr data-type="summary" data-row="14">
+<td class="stub row summary_row right">std dev</td>
+<td class="row summary_row center">43.42</td>
+<td class="row summary_row center">187.31</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">C</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">1</td>
+<td class="row center">197.2</td>
+<td class="row center">NA</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">2</td>
+<td class="row center">284.3</td>
+<td class="row center">394.4</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>The <code><a href="../reference/funs.html">funs()</a></code> helper function is very permissive as to how the functions are defined. It is entirely valid to provide functions in the various forms shown earlier such that <code><a href="../reference/funs.html">funs(sum, mean(., na.rm), "sd")</a></code> will be correctly interpreted.</p>
+</div>
+<div id="formatting-the-summary-output-values" class="section level3">
+<h3 class="hasAnchor">
+<a href="#formatting-the-summary-output-values" class="anchor"></a>Formatting the Summary Output Values</h3>
+<p>Using <code><a href="../reference/summary_rows.html">summary_rows()</a></code> to generate a summary is, in effect, creating new data and thus we need some means to format the new summary row data. We can use the <code>formatter</code> option to supply a formatting function to handle the formatting of the summary row data. Thankfully, we have a collection of formatting functions available in the package (i.e., all of the <code>fmt_*()</code> functions). The default for <code>formatter</code> is set to <code>fmt_number</code> which is a sensible default for many scenarios. The setting of argument values for a particular formatter can be done in the <code>...</code> area of the function call.</p>
+<p>Let’s start with an example where we format the summary row data using <code>fmt_number</code> as the formatter. The <code><a href="../reference/fmt_number.html">fmt_number()</a></code> function several arguments to which we can pass values (<code>decimals</code>, <code>drop_trailing_zeros</code>, <code>negative_val</code>, <code>locale</code>, etc.). Here, we will provide <code>decimals = 3</code> and <code>drop_trailing_zeros = TRUE</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Use the formatter options in `...` to</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># provide values to `fmt_number`</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">groups =</span> <span class="st">"A"</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, min, max),</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">formatter =</span> fmt_number,</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">decimals =</span> <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="dt">drop_trailing_zeros =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="14" data-ncol="3" data-ngroup="3" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
+<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="3" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">235.6</td>
+<td class="row center">260.1</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">184.3</td>
+<td class="row center">84.4</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">342.3</td>
+<td class="row center">126.3</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">234.9</td>
+<td class="row center">83</td>
+</tr>
+<tr data-type="summary" data-row="5">
+<td class="stub row summary_row first_summary_row right">mean</td>
+<td class="row summary_row first_summary_row center">249.275</td>
+<td class="row summary_row first_summary_row center">138.45</td>
+</tr>
+<tr data-type="summary" data-row="6">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">997.1</td>
+<td class="row summary_row center">553.8</td>
+</tr>
+<tr data-type="summary" data-row="7">
+<td class="stub row summary_row right">min</td>
+<td class="row summary_row center">184.3</td>
+<td class="row summary_row center">83</td>
+</tr>
+<tr data-type="summary" data-row="8">
+<td class="stub row summary_row right">max</td>
+<td class="row summary_row center">342.3</td>
+<td class="row summary_row center">260.1</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">1</td>
+<td class="row center">190.9</td>
+<td class="row center">832.5</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">2</td>
+<td class="row center">743.3</td>
+<td class="row center">281.2</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">3</td>
+<td class="row center">252.3</td>
+<td class="row center">732.5</td>
+</tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">4</td>
+<td class="row center">344.7</td>
+<td class="row center">546.1</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">C</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">1</td>
+<td class="row center">197.2</td>
+<td class="row center">818</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">2</td>
+<td class="row center">284.3</td>
+<td class="row center">394.4</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>We can also store these values as local variables and pass them in to a separate <code><a href="../reference/fmt_number.html">fmt_number()</a></code> and then to <code><a href="../reference/summary_rows.html">summary_rows()</a></code>. This is useful for standardizing formatting parameters for different column types.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Provide common formatting parameters to a list</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># object named `formats`; the number of decimal</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># places will be `2` and the locale is "fr_FR"</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">formats &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">decimals =</span> <span class="dv">2</span>, <span class="dt">locale =</span> <span class="st">"fr_FR"</span>)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># Provide the formatting options from `formats` to</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># all row data in all columns, and, to the summary</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co"># row data</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    <span class="dt">decimals =</span> formats<span class="op">$</span>decimals,</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">    <span class="dt">locale =</span> formats<span class="op">$</span>locale) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">    <span class="dt">groups =</span> <span class="st">"A"</span>,</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, min, max),</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">    <span class="dt">formatter =</span> fmt_number,</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">    <span class="dt">decimals =</span> formats<span class="op">$</span>decimals,</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">    <span class="dt">locale =</span> formats<span class="op">$</span>locale)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="14" data-ncol="3" data-ngroup="3" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
+<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="3" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">235,60</td>
+<td class="row center">260,10</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">184,30</td>
+<td class="row center">84,40</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">342,30</td>
+<td class="row center">126,30</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">234,90</td>
+<td class="row center">83,00</td>
+</tr>
+<tr data-type="summary" data-row="5">
+<td class="stub row summary_row first_summary_row right">mean</td>
+<td class="row summary_row first_summary_row center">249,28</td>
+<td class="row summary_row first_summary_row center">138,45</td>
+</tr>
+<tr data-type="summary" data-row="6">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">997,10</td>
+<td class="row summary_row center">553,80</td>
+</tr>
+<tr data-type="summary" data-row="7">
+<td class="stub row summary_row right">min</td>
+<td class="row summary_row center">184,30</td>
+<td class="row summary_row center">83,00</td>
+</tr>
+<tr data-type="summary" data-row="8">
+<td class="stub row summary_row right">max</td>
+<td class="row summary_row center">342,30</td>
+<td class="row summary_row center">260,10</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">1</td>
+<td class="row center">190,90</td>
+<td class="row center">832,50</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">2</td>
+<td class="row center">743,30</td>
+<td class="row center">281,20</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">3</td>
+<td class="row center">252,30</td>
+<td class="row center">732,50</td>
+</tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">4</td>
+<td class="row center">344,70</td>
+<td class="row center">546,10</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">C</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">1</td>
+<td class="row center">197,20</td>
+<td class="row center">818,00</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">2</td>
+<td class="row center">284,30</td>
+<td class="row center">394,40</td>
 </tr>
 </tbody>
 </table>
@@ -369,27 +1913,230 @@
 </div>
 <div id="extracting-the-summary-data-from-the-gt-table-object" class="section level3">
 <h3 class="hasAnchor">
-<a href="#extracting-the-summary-data-from-the-gt-table-object" class="anchor"></a>Extracting the summary data from the gt table object</h3>
+<a href="#extracting-the-summary-data-from-the-gt-table-object" class="anchor"></a>Extracting the Summary Data from the gt Table Object</h3>
 <p>For a reproducible workflow, we do not want to have situtations where any data created or modified cannot be accessed. While having summarized values be created in a <strong>gt</strong> pipeline presents advantages to readability and intent of analysis, it is recognized that the output table itself is essentially ‘read only’, as the input data undergoes processing and movement to an entirely different format.</p>
 <p>However, the object created still contains data and we can obtain the summary data from a gt table object using the <code><a href="../reference/extract_summary.html">extract_summary()</a></code> function. Taking the <code>gt_summary</code> object, we get a data frame containing the summary data while preserving the correct data types:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">gt_summary_c <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>()</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt;   groupname rowname value_1 value_2</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; 1         A minimum 184.300  83.000</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 2         B minimum 190.900 281.200</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 4         A maximum 342.300 260.100</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 5         B maximum 743.300 832.500</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 7         A average 249.275 138.450</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 8         B average 382.800 598.075</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Create a gt table with summary rows and</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># assign it to `gt_object`</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">gt_object &lt;-</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd))</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># Extract the summary data from `gt_object`</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co"># to a data frame object</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">gt_object <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>()</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;   groupname rowname    value_1    value_2</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 1         A    mean  249.27500  138.45000</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 2         B    mean  382.80000  598.07500</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 3         A     sum  997.10000  553.80000</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 4         B     sum 1531.20000 2392.30000</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 5         A      sd   66.50576   83.55128</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; 6         B      sd  248.50736  242.30582</span></a></code></pre></div>
 <p>The output data frame contains the <code>groupname</code> and <code>rowname</code> columns. The <code>groupname</code> column presents the stub groups that were given in <code><a href="../reference/summary_rows.html">summary_rows()</a></code>. The <code>rowname</code> column contains the descriptive stub labels for the summary rows (recall that values are either supplied explicitly in <code><a href="../reference/summary_rows.html">summary_rows()</a></code>, or, are generated). The remaining columns are a subset of the original dataset, where only those columns that had aggregation functions applied are retained.</p>
-<p>The output data frame from <code><a href="../reference/extract_summary.html">extract_summary()</a></code> can be reintroduced to a reproducible workflow and serve as downstream inputs or undergo validation. Perhaps interestingly, the output data frame is structured in such a way that it is suitable for direct generation of a <strong>gt</strong> table with <code><a href="../reference/gt.html">gt()</a></code> (serving as a standalone summary table):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">gt_summary_c <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="dt">decimals =</span> <span class="dv">3</span>)</a></code></pre></div>
-<!--gt table start-->
-<table data-nrow="6" data-ncol="3" data-ngroup="2" class="table">
+<p>The output data frame from <code><a href="../reference/extract_summary.html">extract_summary()</a></code> can be reintroduced to a reproducible workflow and serve as downstream inputs or undergo validation. Perhaps interestingly, the output data frame is structured in such a way (i.e., has the magic <code>groupname</code> and <code>rowname</code> columns) for direct input to <code><a href="../reference/gt.html">gt()</a></code>; this can produce a new, standalone summary table where the summary rows are now data rows:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Take `gt_object`, which has summary rows,</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># extract the summary, and make a new display</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># table from that data frame</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">gt_object <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">    <span class="dt">decimals =</span> <span class="dv">3</span>)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="6" data-ncol="3" data-ngroup="2" class="table">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">value_1</th>
@@ -400,41 +2147,738 @@
 <td data-type="group" colspan="3" class="group_heading">A</td>
 </tr>
 <tr data-type="data" data-row="1">
-<td class="stub row right">minimum</td>
-<td class="row center">184.300</td>
-<td class="row center">83.000</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">maximum</td>
-<td class="row center">342.300</td>
-<td class="row center">260.100</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">average</td>
+<td class="stub row right">mean</td>
 <td class="row center">249.275</td>
 <td class="row center">138.450</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">sum</td>
+<td class="row center">997.100</td>
+<td class="row center">553.800</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">sd</td>
+<td class="row center">66.506</td>
+<td class="row center">83.551</td>
 </tr>
 <tr>
 <td data-type="group" colspan="3" class="group_heading">B</td>
 </tr>
 <tr data-type="data" data-row="4">
-<td class="stub row right">minimum</td>
-<td class="row center">190.900</td>
-<td class="row center">281.200</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">maximum</td>
-<td class="row center">743.300</td>
-<td class="row center">832.500</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">average</td>
+<td class="stub row right">mean</td>
 <td class="row center">382.800</td>
 <td class="row center">598.075</td>
+</tr>
+<tr data-type="data" data-row="5">
+<td class="stub row right">sum</td>
+<td class="row center">1,531.200</td>
+<td class="row center">2,392.300</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="stub row right">sd</td>
+<td class="row center">248.507</td>
+<td class="row center">242.306</td>
 </tr>
 </tbody>
 </table>
 <!--gt table end-->
+</div>
+<div id="providing-our-own-aggregation-functions-to-generate-summary-rows" class="section level3">
+<h3 class="hasAnchor">
+<a href="#providing-our-own-aggregation-functions-to-generate-summary-rows" class="anchor"></a>Providing Our Own Aggregation Functions to Generate Summary Rows</h3>
+<p>While many of the functions available in base R and within packages are useful as aggregate functions, we may occasionally have need to create our own custom functions. The only things to keep in mind are to ensure that a vector of values is the main input, and, a single value is returned. The return value can be most any class (e.g., <code>numeric</code>, <code>character</code>, <code>logical</code>) and it’s the <code>formatter</code> function that will handle any custom formatting while also converting to <code>character</code>.</p>
+<p>Here, we’ll define a function that takes a vector of numeric values and outputs the two highest values (sorted low to high) above a <code>threshold</code> value. The output from this function is always a formatted <code>character</code> string.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Define a function that gives the</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># highest two values above a threshold</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">agg_highest_two_above_value &lt;-<span class="st"> </span><span class="cf">function</span>(x, threshold) {</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="co"># Get sorted values above threshold value</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">  values &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">round</span>(x[x <span class="op">&gt;=</span><span class="st"> </span>threshold], <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">  <span class="co"># Return character string with 2 highest values above threshold</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  <span class="cf">if</span> (<span class="kw">length</span>(values) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">    <span class="kw">return</span>(<span class="kw">paste0</span>(<span class="st">"No values above "</span>, threshold))</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">    <span class="kw">return</span>(</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">      <span class="kw">paste</span>(</a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">        <span class="kw">formatC</span>(</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">          <span class="kw">tail</span>(</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">            <span class="kw">sort</span>(<span class="kw">round</span>(x[x <span class="op">&gt;</span><span class="st"> </span>threshold], <span class="dv">2</span>)), <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">          <span class="dt">format =</span> <span class="st">"f"</span>, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="dt">collapse =</span> <span class="st">", "</span>))</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">  }</a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co"># Let's test this function with some values</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="kw">agg_highest_two_above_value</span>(</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">  <span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">0.73</span>, <span class="fl">0.93</span>, <span class="fl">0.75</span>, <span class="fl">0.86</span>, <span class="fl">0.23</span>, <span class="fl">0.81</span>),</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">  <span class="dt">threshold =</span> <span class="fl">0.8</span>)</a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt; [1] "0.86, 0.93"</span></a></code></pre></div>
+<p>Because this is character value that’s returned, we don’t need formatting functions like <code><a href="../reference/fmt_number.html">fmt_number()</a></code>, <code><a href="../reference/fmt_percent.html">fmt_percent()</a></code>, etc. However, a useful formatter (and we do need <em>some</em> formatter) is the <code><a href="../reference/fmt_passthrough.html">fmt_passthrough()</a></code> function. Like the name suggests, it to great extent passes values through but formats as <code>character</code> (like all the <code>fmt_*()</code> function do) and it provides the option to decorate the output with a <code>pattern</code>. Let’s have a look at how the <code>agg_highest_two_above_value()</code> function can be used with the <code><a href="../reference/fmt_passthrough.html">fmt_passthrough()</a></code> formatter function.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Create a gt table with summary rows for</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co"># `value_1` &amp; `value_2`; the custom function</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co"># is being used with a threshold of `150`; the</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># `fmt_passthrough` allows for minimal</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co"># formatting of the aggregate values</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">summary_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl_na) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">      <span class="dt">high =</span> <span class="kw">agg_highest_two_above_value</span>(., <span class="dv">150</span>)),</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">    <span class="dt">formatter =</span> fmt_passthrough,</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">    <span class="dt">pattern =</span> <span class="st">"({x})"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/fmt_missing.html">fmt_missing</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16">summary_tbl</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="13" data-ncol="3" data-ngroup="3" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
+<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="3" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">235.6</td>
+<td class="row center">260.1</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">184.3</td>
+<td class="row center">84.4</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">—</td>
+<td class="row center">126.3</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">234.9</td>
+<td class="row center">83</td>
+</tr>
+<tr data-type="summary" data-row="5">
+<td class="stub row summary_row first_summary_row right">high</td>
+<td class="row summary_row first_summary_row center">(234.90, 235.60)</td>
+<td class="row summary_row first_summary_row center">(260.10)</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="stub row right">1</td>
+<td class="row center">190.9</td>
+<td class="row center">—</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="stub row right">2</td>
+<td class="row center">—</td>
+<td class="row center">281.2</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="stub row right">3</td>
+<td class="row center">252.3</td>
+<td class="row center">—</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">4</td>
+<td class="row center">—</td>
+<td class="row center">546.1</td>
+</tr>
+<tr data-type="summary" data-row="10">
+<td class="stub row summary_row first_summary_row right">high</td>
+<td class="row summary_row first_summary_row center">(190.90, 252.30)</td>
+<td class="row summary_row first_summary_row center">(281.20, 546.10)</td>
+</tr>
+<tr>
+<td data-type="group" colspan="3" class="group_heading">C</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">1</td>
+<td class="row center">197.2</td>
+<td class="row center">—</td>
+</tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">2</td>
+<td class="row center">284.3</td>
+<td class="row center">394.4</td>
+</tr>
+<tr data-type="summary" data-row="13">
+<td class="stub row summary_row first_summary_row right">high</td>
+<td class="row summary_row first_summary_row center">(197.20, 284.30)</td>
+<td class="row summary_row first_summary_row center">(394.40)</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>We can extract the summary data from the <code>summary_tbl</code> object. What we note is that, since the summary output is of a different class than the input data, extra columns are produced that place the summary output in related columns of different classes.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">summary_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>()</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt;   groupname rowname value_1 value_2    value_1_chr    value_2_chr</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; 1         A    high      NA      NA 234.90, 235.60         260.10</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; 2         B    high      NA      NA 190.90, 252.30 281.20, 546.10</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; 3         C    high      NA      NA 197.20, 284.30         394.40</span></a></code></pre></div>
+</div>
+<div id="using-different-formatters-for-different-columns" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-different-formatters-for-different-columns" class="anchor"></a>Using Different Formatters for Different Columns</h3>
+<p>Suppose we have data across columns that should be summarized in the same way (i.e., common aggregate functions) but formatted differently (e.g., decimal notation, scientific notation, percentages, etc.). For each type of formatting, we need to call <code><a href="../reference/summary_rows.html">summary_rows()</a></code>, however, we can employ certain strategies to make the code a bit more succinct while doing so.</p>
+<p>Let’s start with a new data table. This table contains <code>groupname</code> and <code>rowname</code> columns, which making using <code><a href="../reference/summary_rows.html">summary_rows()</a></code> possible, along with <code>large</code>, <code>medium</code>, and <code>small</code> data columns, all containing numeric values.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">tbl_<span class="dv">2</span> &lt;-</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">tribble</a></span>(</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">    <span class="op">~</span>groupname, <span class="op">~</span>rowname, <span class="op">~</span>large,   <span class="op">~</span>medium, <span class="op">~</span>small,</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="st">"A"</span>,        <span class="st">"1"</span>,      <span class="fl">235342.6</span>, <span class="fl">342.2</span>,   <span class="fl">0.34</span>,</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">    <span class="st">"A"</span>,        <span class="st">"2"</span>,      <span class="fl">184123.0</span>, <span class="fl">971.7</span>,   <span class="fl">0.23</span>,</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    <span class="st">"A"</span>,        <span class="st">"3"</span>,      <span class="fl">342622.3</span>, <span class="fl">392.6</span>,   <span class="fl">0.73</span>,</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">    <span class="st">"A"</span>,        <span class="st">"4"</span>,      <span class="fl">234353.9</span>, <span class="fl">684.5</span>,   <span class="fl">0.93</span>,</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    <span class="st">"B"</span>,        <span class="st">"1"</span>,      <span class="fl">190983.4</span>, <span class="fl">328.0</span>,   <span class="fl">0.35</span>,</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="st">"B"</span>,        <span class="st">"2"</span>,      <span class="fl">748250.3</span>, <span class="fl">671.3</span>,   <span class="fl">0.98</span>,</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">    <span class="st">"B"</span>,        <span class="st">"3"</span>,      <span class="fl">252781.3</span>, <span class="fl">934.2</span>,   <span class="fl">0.74</span>,</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">    <span class="st">"B"</span>,        <span class="st">"4"</span>,      <span class="fl">344030.7</span>, <span class="fl">673.3</span>,   <span class="fl">0.27</span>)</a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">tbl_<span class="dv">2</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt; # A tibble: 8 x 5</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;   groupname rowname   large medium small</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt; 1 A         1       235343.   342.  0.34</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt; 2 A         2       184123    972.  0.23</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt; 3 A         3       342622.   393.  0.73</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt; 4 A         4       234354.   684.  0.93</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt; 5 B         1       190983.   328   0.35</span></a>
+<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">#&gt; 6 B         2       748250.   671.  0.98</span></a>
+<a class="sourceLine" id="cb13-23" data-line-number="23"><span class="co">#&gt; 7 B         3       252781.   934.  0.74</span></a>
+<a class="sourceLine" id="cb13-24" data-line-number="24"><span class="co">#&gt; 8 B         4       344031.   673.  0.27</span></a></code></pre></div>
+<p>Here, we would like to apply a different format (both to the data rows and to the summary rows) across the three columns. We can store formatting options to three different list objects (<code>large_fmts</code>, <code>medium_fmts</code>, and <code>small_fmts</code>) and use the stored values in the <strong>gt</strong> pipeline.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Store formatting options in list objects</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">large_fmts &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">list</span>(<span class="dt">columns =</span> <span class="st">"large"</span>, <span class="dt">formatter =</span> fmt_scientific,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">       <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">decimals =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">medium_fmts &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw">list</span>(<span class="dt">columns =</span> <span class="st">"medium"</span>, <span class="dt">formatter =</span> fmt_number,</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">       <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">decimals =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">small_fmts &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="st">  </span><span class="kw">list</span>(<span class="dt">columns =</span> <span class="st">"small"</span>, <span class="dt">formatter =</span> fmt_percent,</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">       <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">decimals =</span> <span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co"># Format the data rows, then, create summary rows</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co"># and format summary data for consistent output in</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co"># each column</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">tbl_<span class="dv">2</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>large_fmts<span class="op">$</span>columns)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>medium_fmts<span class="op">$</span>columns)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="../reference/fmt_percent.html">fmt_percent</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>small_fmts<span class="op">$</span>columns)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb14-23" data-line-number="23">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>large_fmts<span class="op">$</span>columns),</a>
+<a class="sourceLine" id="cb14-24" data-line-number="24">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd),</a>
+<a class="sourceLine" id="cb14-25" data-line-number="25">    <span class="dt">formatter =</span> large_fmts<span class="op">$</span>formatter) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb14-27" data-line-number="27">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>medium_fmts<span class="op">$</span>columns),</a>
+<a class="sourceLine" id="cb14-28" data-line-number="28">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd),</a>
+<a class="sourceLine" id="cb14-29" data-line-number="29">    <span class="dt">formatter =</span> medium_fmts<span class="op">$</span>formatter) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
+<a class="sourceLine" id="cb14-31" data-line-number="31">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(<span class="op">!!</span>small_fmts<span class="op">$</span>columns),</a>
+<a class="sourceLine" id="cb14-32" data-line-number="32">    <span class="dt">funs =</span> <span class="kw"><a href="../reference/funs.html">funs</a></span>(mean, sum, sd),</a>
+<a class="sourceLine" id="cb14-33" data-line-number="33">    <span class="dt">formatter =</span> small_fmts<span class="op">$</span>formatter)</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="14" data-ncol="4" data-ngroup="2" class="table">
+<tr>
+<th class="col_heading right" rowspan="1" colspan="1"></th>
+<th class="col_heading center" rowspan="1" colspan="1">large</th>
+<th class="col_heading center" rowspan="1" colspan="1">medium</th>
+<th class="col_heading center" rowspan="1" colspan="1">small</th>
+</tr>
+<tbody class="table_body striped">
+<tr>
+<td data-type="group" colspan="4" class="group_heading">A</td>
+</tr>
+<tr data-type="data" data-row="1">
+<td class="stub row right">1</td>
+<td class="row center">2.35 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">342.20</td>
+<td class="row center">34.00%</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="stub row right">2</td>
+<td class="row center">1.84 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">971.70</td>
+<td class="row center">23.00%</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="stub row right">3</td>
+<td class="row center">3.43 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">392.60</td>
+<td class="row center">73.00%</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="stub row right">4</td>
+<td class="row center">2.34 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">684.50</td>
+<td class="row center">93.00%</td>
+</tr>
+<tr data-type="summary" data-row="5">
+<td class="stub row summary_row first_summary_row right">mean</td>
+<td class="row summary_row first_summary_row center">2.49 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row summary_row first_summary_row center">597.75</td>
+<td class="row summary_row first_summary_row center">55.75%</td>
+</tr>
+<tr data-type="summary" data-row="6">
+<td class="stub row summary_row right">sd</td>
+<td class="row summary_row center">6.68 × 10<sup class="gt_super">4</sup>
+</td>
+<td class="row summary_row center">291.41</td>
+<td class="row summary_row center">32.82%</td>
+</tr>
+<tr data-type="summary" data-row="7">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">9.96 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row summary_row center">2,391.00</td>
+<td class="row summary_row center">223.00%</td>
+</tr>
+<tr>
+<td data-type="group" colspan="4" class="group_heading">B</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="stub row right">1</td>
+<td class="row center">1.91 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">328.00</td>
+<td class="row center">35.00%</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">2</td>
+<td class="row center">7.48 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">671.30</td>
+<td class="row center">98.00%</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">3</td>
+<td class="row center">2.53 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">934.20</td>
+<td class="row center">74.00%</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">4</td>
+<td class="row center">3.44 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row center">673.30</td>
+<td class="row center">27.00%</td>
+</tr>
+<tr data-type="summary" data-row="12">
+<td class="stub row summary_row first_summary_row right">mean</td>
+<td class="row summary_row first_summary_row center">3.84 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row summary_row first_summary_row center">651.70</td>
+<td class="row summary_row first_summary_row center">58.50%</td>
+</tr>
+<tr data-type="summary" data-row="13">
+<td class="stub row summary_row right">sd</td>
+<td class="row summary_row center">2.51 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="row summary_row center">248.62</td>
+<td class="row summary_row center">33.39%</td>
+</tr>
+<tr data-type="summary" data-row="14">
+<td class="stub row summary_row right">sum</td>
+<td class="row summary_row center">1.54 × 10<sup class="gt_super">6</sup>
+</td>
+<td class="row summary_row center">2,606.80</td>
+<td class="row summary_row center">234.00%</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>Passing in parameters like this is useful, especially if there are larger numbers of columns. Additionally, we can store formatting parameters outside of the <code><a href="../reference/gt.html">gt()</a></code> pipeline and separate our concerns between data structuring and data formatting. The separation of styles and options into objects becomes more important if we intend to centralize formatting options for reuse.</p>
+<p>In the above example, note the use of the <code>!!</code> operator to introduce the vector of columns into <code><a href="../reference/vars.html">vars()</a></code>. This is necessary since <code><a href="../reference/vars.html">vars()</a></code> cannot accept a vector of column names without first unquoting. Secondly, even though multiple independent calls of <code><a href="../reference/summary_rows.html">summary_rows()</a></code> were made, summary data within common summary row names were ‘squashed’ together, thus avoiding the fragmentation of summary rows. If the function names provided in <code>funs</code> were to be different across columns, additional summary rows would be produced even through the types of data aggregations were functionally equivalent.</p>
 </div>
   </div>
 
