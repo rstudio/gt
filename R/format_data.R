@@ -335,8 +335,7 @@ fmt_percent <- function(data,
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x])
-          x[non_na_x] <- paste0(x[non_na_x], pre_post_txt[2])
+          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
 
           x
         }
