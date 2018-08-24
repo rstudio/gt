@@ -347,7 +347,7 @@ tab_style <- function(data,
   data_cols <- resolve_columns(data, columns)
 
   # Append the style
-  for (i in seq(data_rows)) {
+  for (i in 1:length(data_rows)) {
 
     if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {
 
