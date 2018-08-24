@@ -162,6 +162,8 @@ The package API consists of the following functions:
 - `fmt_time()` -- format values as times
 - `fmt_datetime()` -- format values as date-times
 - `fmt_missing()` -- format missing values
+- `fmt_passthrough()` -- format by simply passing data through
+- `fmt()` -- set a column format with a formatter function
 
 **Modify Columns**
 
@@ -188,9 +190,14 @@ The package API consists of the following functions:
 
 **Export Table**
 
-- `write_rtf()` -- save a gt table object as an RTF file
-- `as_raw_html()` -- get the HTML content of a gt table
-- `extract_summary()` -- extract a summary table from a gt table object
+- `write_rtf()` -- save a **gt** table object as an RTF file
+- `as_raw_html()` -- get the HTML content of a **gt** table
+- `extract_summary()` -- extract a summary table from a **gt** table object
+
+**Shiny**
+
+- `render_gt()` -- a **gt** display table render function for use in Shiny
+- `gt_output()` -- create a **gt** display table output element for Shiny
 
 ## Inner Workings
 
