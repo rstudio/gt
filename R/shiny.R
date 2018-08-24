@@ -6,7 +6,7 @@
 #' @param outputArgs A list of arguments to be passed through to the implicit
 #'   call to \code{\link{gt_output}()} when \code{render_gt} is used in an
 #'   interactive R Markdown document.
-#' @seealso gt_output
+#' @seealso \link{gt_output}()
 #' @importFrom htmltools resolveDependencies findDependencies doRenderTags
 #' @export
 render_gt <- function(expr,
@@ -42,9 +42,9 @@ render_gt <- function(expr,
 }
 
 #' Create a gt display table output element for Shiny
-#' @params outputId an output variable from which to read the table.
+#' @param outputId an output variable from which to read the table.
 #' @return A gt table output element that can be included in a panel.
-#' @seealso render_gt
+#' @seealso \link{render_gt}()
 #' @export
 gt_output <- function(outputId) {
 
