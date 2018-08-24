@@ -1,36 +1,34 @@
 #' Add summary rows using aggregation functions
 #'
-#' Add summary rows to one or more stub blocks by using the input data
-#' already provided in the \code{gt()} function alongside any suitable
-#' aggregation functions. Should we need to obtain the summary data for
-#' external purposes, the \code{\link{extract_summary}()} can be used with
-#' a \code{gt_tbl} object where summary rows were added via
+#' Add summary rows to one or more stub blocks by using the input data already
+#'   provided in the \code{gt()} function alongside any suitable
+#'   aggregation functions. Should we need to obtain the summary data for
+#'   external purposes, the \code{\link{extract_summary}()} can be used with
+#'   a \code{gt_tbl} object where summary rows were added via
 #' \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param groups the stub block groups heading names for which summary rows
-#' will be added.
+#'   will be added.
 #' @param columns the columns for which the summaries should be calculated. If
-#' nothing is provided, then the supplied aggregation functions will be applied
-#' to all columns.
-#' @param funs functions used for aggregations. This can include any of
-#' \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum}.
-#' The functions should be supplied using the \code{\link{funs}()} helper
-#' function. With \code{funs()}, we can specify the functions by use of function
-#' names (e.g., \code{"sum"}), the functions themselves (e.g., \code{sum}), or
-#' calls to functions with \code{.} as a dummy argument (e.g.,
-#' \code{sum(., na.rm = TRUE)}).
-#' @param labels a vector of stub labels for the summary rows. The vector length
-#' should match the number of \code{funs} provided. If this is not provided then
-#' the labels will be generated from the input given to \code{funs}.
-#' @param formatter a formatter function name. These can be functions available
-#' in the package (e.g., \code{\link{fmt_number}}, \code{link{fmt_percent}},
-#' etc.), or a custom function using \code{\link{fmt}()}. The default function
-#' is \code{\link{fmt_number}()} and its options can be accessed through
-#' \code{...}.
+#'   nothing is provided, then the supplied aggregation functions will be applied
+#'   to all columns.
+#' @param funs functions used for aggregations. This can include base functions
+#'   like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
+#'   \code{sum}. The functions should be supplied using the \code{\link{funs}()}
+#'   helper function. With \code{funs()}, we can specify the functions by use of
+#'   function names (e.g., \code{"sum"}), the functions themselves
+#'   (e.g., \code{sum}), or calls to functions with \code{.} as a dummy argument
+#'   (e.g., \code{sum(., na.rm = TRUE)}).
+#' @param formatter a formatter function name. These can be any of the
+#'   \code{fmt_*}functions available in the package (e.g.,
+#'   \code{\link{fmt_number}}, \code{link{fmt_percent}}, etc.), or a custom
+#'   function using \code{\link{fmt}()}. The default function is
+#'   \code{\link{fmt_number}()} and its options can be accessed through
+#'   \code{...}.
 #' @param ... values passed to the \code{formatter} function, where the provided
-#' values are to be in the form of named vectors. For example, when using the
-#' default \code{formatter} function, \code{\link{fmt_number}}, options such as
-#' \code{decimals}, \code{use_seps}, and \code{locale} can be used.
+#'   values are to be in the form of named vectors. For example, when using the
+#'   default \code{formatter} function, \code{\link{fmt_number}}, options such
+#'   as \code{decimals}, \code{use_seps}, and \code{locale} can be used.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
