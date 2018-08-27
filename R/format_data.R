@@ -1,5 +1,6 @@
 #' Format numeric values
-#' @param data a table object that is created using the \code{\link{gt}()} function.
+#' @param data a table object that is created using the \code{\link{gt}()}
+#'   function.
 #' @param columns the column names to format.
 #' @param rows optional rows to format. Not providing any value results in all
 #' rows in \code{columns} being formatted.
