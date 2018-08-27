@@ -4,7 +4,7 @@
 \alias{data_cells}
 \title{Helper for targeting multiple data cells}
 \usage{
-data_cells(columns = NULL, rows = NULL)
+data_cells(columns = NULL, rows = NULL, where = NULL)
 }
 \arguments{
 \item{columns, rows}{either a vector of column/row names, a vector of
@@ -14,6 +14,10 @@ The select helper functions are: \code{\link{starts_with}()},
 \code{\link{ends_with}()}, \code{\link{contains}()},
 \code{\link{matches}()}, \code{\link{one_of}()}, and
 \code{\link{everything}()}.}
+
+\item{where}{a conditional expression that operates across all data cells
+captured by \code{columns} and \code{rows} to further constrain the
+selection of data cells.}
 }
 \value{
 a list object of class \code{data_cells}.
