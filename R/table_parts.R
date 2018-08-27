@@ -313,8 +313,8 @@ tab_source_note <- function(data,
 #'     tab_style(
 #'       style = apply_styles(bkgd_color = "steelblue"),
 #'       location = data_cells(
-#'         rows = c("Datsun 710", "Valiant"),
-#'         columns = vars(hp)))
+#'         columns = vars(hp),
+#'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
 #' @seealso [apply_styles()] as a helper for defining custom styles and
 #' [data_cells()] as a useful helper function for targeting the cells to be
