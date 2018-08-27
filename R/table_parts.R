@@ -226,37 +226,29 @@ tab_footnote <- function(data,
     attr(data, "footnote") <- list(footnote = footnote)
   }
 
-  # Add markup to the targeted cell(s)
+  # If location is provided in a `data_cells` object
+  # we need to resolve the locations of the targeted data cells
   if (inherits(location, "data_cells")) {
 
-    row <- location$row
-    column <- location$column
+    resolved <- resolve_data_cells(data = data, object = location)
 
-    if (is.numeric(column)) {
-      data_col <- colnames(data)[column]
-    }
+    data_rows <- resolved$row
+    data_cols <- resolved$column
 
-    if (is.numeric(row)) {
-      data_row <- row
-    }
+    for (i in 1:length(data_rows)) {
 
-    if (is.character(column)) {
-      data_col <- column
-    }
+      # Append the footnote
+      if (is.na(attr(data, "foot_df")[data_rows[i], data_cols[i]])) {
+        attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
+          paste0("::foot_", index)
 
-    if (is.character(row)) {
-      data_row <- which(attr(data, "stub_df")[["rowname"]] == row)[1]
-    }
+      } else {
 
-    # Append the footnote
-    if (is.na(attr(data, "foot_df")[data_row, data_col])) {
-      attr(data, "foot_df")[data_row, data_col] <-
-        paste0("::foot_", index)
-    } else {
-      attr(data, "foot_df")[data_row, data_col] <-
-        paste0(
-          attr(data, "foot_df")[data_row, data_col],
-          "::foot_", index)
+        attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
+          paste0(
+            attr(data, "foot_df")[data_rows[i], data_cols[i]],
+            "::foot_", index)
+      }
     }
   }
 
