@@ -69,19 +69,25 @@ resolve_columns <- function(data, columns) {
 #'   \code{\link{ends_with}()}, \code{\link{contains}()},
 #'   \code{\link{matches}()}, \code{\link{one_of}()}, and
 #'   \code{\link{everything}()}.
+#' @param where a conditional expression that operates across all data cells
+#'   captured by \code{columns} and \code{rows} to further constrain the
+#'   selection of data cells.
 #' @return a list object of class \code{data_cells}.
 #' @export
 data_cells <- function(columns = NULL,
-                       rows = NULL) {
+                       rows = NULL,
+                       where = NULL) {
 
   col_expr <- rlang::enexpr(columns)
   row_expr <- rlang::enexpr(rows)
+  where <- rlang::enquo(where)
 
   # Create the `data_cells` object
   data_cells <-
     list(
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr,
+      where = where)
 
   # Apply the `data_cells` class
   attr(data_cells, "class") <- "data_cells"
@@ -107,6 +113,7 @@ resolve_data_cells <- function(data, object) {
   # object created by the `data_cells()` function
   object_columns <- object$columns
   object_rows <- object$rows
+  where <- object$where
 
   # Collect the column names and column indices
   # from `data_df`
@@ -119,12 +126,34 @@ resolve_data_cells <- function(data, object) {
   rownums <- seq(nrow(stub_df))
 
   #
-  # Resolution of columns and rows as an integer vector
+  # Resolution of columns and rows as integer vectors
   # providing the positions of the matched variables
   #
 
   resolved_columns <- resolve_vars(object_columns, colnames)
   resolved_rows <- resolve_vars(object_rows, rownames)
+
+  #
+  # Further resolution of columns and rows as integer
+  # vector by resolving the `where` clause and filtering
+  # the positions of the matched variables
+  #
+
+  if (!is.null(where)) {
+
+    data_df_rows <-
+      (data_df %>%
+         tibble::rownames_to_column() %>%
+         dplyr::filter(!!!(object$where)))[["rowname"]] %>%
+      as.numeric()
+
+    constrained <-
+      data.frame(columns = resolved_columns, rows = resolved_rows) %>%
+      dplyr::filter(rows %in% data_df_rows)
+
+    resolved_columns <- constrained$columns
+    resolved_rows <- constrained$rows
+  }
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
