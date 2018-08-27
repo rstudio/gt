@@ -10,7 +10,8 @@ fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
   placement = "left", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to format.}
 

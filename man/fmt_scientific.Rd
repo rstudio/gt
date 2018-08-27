@@ -9,7 +9,8 @@ fmt_scientific(data, columns, rows = NULL, decimals = 2,
   sep_mark = ",", dec_mark = ".", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to format.}
 
