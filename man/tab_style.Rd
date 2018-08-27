@@ -31,8 +31,8 @@ gt_tbl <-
     tab_style(
       style = apply_styles(bkgd_color = "steelblue"),
       location = data_cells(
-        rows = c("Datsun 710", "Valiant"),
-        columns = vars(hp)))
+        columns = vars(hp),
+        rows = c("Datsun 710", "Valiant")))
 }
 \seealso{
 [apply_styles()] as a helper for defining custom styles and
