@@ -40,10 +40,13 @@ Helper for defining custom styles for table cells
 }
 \seealso{
 Other helper functions: \code{\link{col_labels}},
-  \code{\link{columns_with}}, \code{\link{data_cells}},
-  \code{\link{funs}}, \code{\link{html}}, \code{\link{md}},
-  \code{\link{not_in_group}}, \code{\link{pct}},
-  \code{\link{px}}, \code{\link{rownames_with}},
-  \code{\link{rows_where}}, \code{\link{vars}}
+  \code{\link{columns_with}}, \code{\link{contains}},
+  \code{\link{ends_with}}, \code{\link{everything}},
+  \code{\link{funs}}, \code{\link{html}},
+  \code{\link{matches}}, \code{\link{md}},
+  \code{\link{not_in_group}}, \code{\link{one_of}},
+  \code{\link{pct}}, \code{\link{px}},
+  \code{\link{rownames_with}}, \code{\link{rows_where}},
+  \code{\link{starts_with}}, \code{\link{vars}}
 }
 \concept{helper functions}
