@@ -190,12 +190,6 @@ tab_footnote <- function(data,
                          footnote,
                          location) {
 
-  # Check if the target location is actually in the table
-  if (inherits(location, "data_cells") &&
-      !is_target_in_table(data = data, location = location)) {
-    return(data)
-  }
-
   # Determine if the footnote already exists;
   # if it does, get the index
   if ("footnote" %in% names(attributes(data)) &&
