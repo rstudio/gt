@@ -210,8 +210,8 @@ resolve_vars <- function(var_expr, var_names) {
           as.character(),
         .vars = var_nums %>% as.character())
 
-  } else if (inherits(var_expr, "call") &&
-             inherits(var_expr, "character")) {
+  } else if (inherits(var_expr, "character") &&
+             length(var_expr) == 1) {
 
     # Resolve vars with a character vector object
     resolved <-
