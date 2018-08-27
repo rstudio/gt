@@ -319,8 +319,8 @@ tab_source_note <- function(data,
 #'     tab_style(
 #'       style = apply_styles(bkgd_color = "steelblue"),
 #'       location = data_cells(
-#'         row = "Maserati Bora",
-#'         column = vars(hp)))
+#'         rows = c("Datsun 710", "Valiant"),
+#'         columns = vars(hp)))
 #' @family table-part creation/modification functions
 #' @seealso [apply_styles()] as a helper for defining custom styles and
 #' [data_cells()] as a useful helper function for targeting the cells to be
@@ -331,20 +331,21 @@ tab_style <- function(data,
                       style,
                       location) {
 
-  # Check if the target location is actually in the table
-  if (inherits(location, "data_cells") &&
-      !is_target_in_table(data = data, location = location)) {
-    return(data)
-  }
+  # # Check if the target location is actually in the table
+  # if (inherits(location, "data_cells") &&
+  #     !is_target_in_table(data = data, location = location)) {
+  #   return(data)
+  # }
 
+  # If location is provided in a `data_cells` object
+  # we need to resolve the locations of the targeted data cells
   if (inherits(location, "data_cells")) {
 
-    rows <- location$row
-    columns <- location$column
-  }
+    resolved <- resolve_data_cells(data = data, object = location)
 
-  data_rows <- resolve_rows(data, rows)
-  data_cols <- resolve_columns(data, columns)
+    data_rows <- resolved$row
+    data_cols <- resolved$column
+  }
 
   # Append the style
   for (i in 1:length(data_rows)) {
