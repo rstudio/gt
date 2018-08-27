@@ -7,7 +7,8 @@
 tab_stubhead_caption(data, caption)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{caption}{the text to be used as the stubhead caption.}
 }

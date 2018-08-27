@@ -10,7 +10,8 @@ fmt_number(data, columns, rows = NULL, decimals = 2,
   dec_mark = ".", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to format.}
 

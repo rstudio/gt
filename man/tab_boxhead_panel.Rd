@@ -7,7 +7,8 @@
 tab_boxhead_panel(data, group, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{group}{the name to assign to the spanner heading.}
 

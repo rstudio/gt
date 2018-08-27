@@ -7,7 +7,8 @@
 fmt_missing(data, columns, rows = NULL, missing_text = "---")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to format.}
 

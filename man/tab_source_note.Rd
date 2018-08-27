@@ -7,7 +7,8 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{source_note}{text to be used in the source note.}
 }

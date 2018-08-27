@@ -7,7 +7,8 @@
 tab_style(data, style, location)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{style}{a vector of styles to use. The \code{\link{apply_styles}()}
 helper function can be used here to more easily generate valid styles.}
@@ -30,8 +31,8 @@ gt_tbl <-
     tab_style(
       style = apply_styles(bkgd_color = "steelblue"),
       location = data_cells(
-        row = "Maserati Bora",
-        column = vars(hp)))
+        rows = c("Datsun 710", "Valiant"),
+        columns = vars(hp)))
 }
 \seealso{
 [apply_styles()] as a helper for defining custom styles and

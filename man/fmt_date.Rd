@@ -7,7 +7,8 @@
 fmt_date(data, columns, rows = NULL, date_style)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to format.}
 

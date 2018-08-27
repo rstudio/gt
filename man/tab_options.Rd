@@ -30,7 +30,8 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   row.striping.include_field = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{table.width}{the width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If

@@ -7,7 +7,8 @@
 tab_stub_block(data, group, rows, others = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{group}{the stub block group heading name.}
 
