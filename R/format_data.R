@@ -911,19 +911,56 @@ fmt_missing <- function(data,
 #' @param fcns a single formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
+#' @import rlang
+#' @importFrom tibble rownames_to_column
+#' @importFrom dplyr filter arrange
 #' @export
 fmt <- function(data,
-                columns,
-                rows = TRUE,
+                columns = NULL,
+                rows = NULL,
+                where = NULL,
                 fcns) {
 
-  # Obtain the resolved columns and rows
-  resolved <- column_row_resolution(data, columns, rows)
+  # Get the `data_df` data frame from `data`
+  data_df <- as.data.frame(data)
 
-  # Return data if there are no rows or columns to format
-  if (no_intersection(resolved)) {
-    return(data)
+  # Get the `stub_df` data frame from `data`
+  stub_df <- attr(data, "stub_df", exact = TRUE)
+
+  # Collect the column names and column indices
+  # from `data_df`
+  colnames <- names(data_df)
+
+  # Collect the rownames from `stub_df`
+  rownames <- stub_df$rowname
+
+  #
+  # Resolution of columns and rows as integer vectors
+  # providing the positions of the matched variables
+  #
+
+  resolved_columns <- resolve_vars(var_expr = columns, var_names = colnames)
+  resolved_rows <- resolve_vars(var_expr = rows, var_names = rownames)
+
+  #
+  # Further resolution of columns and rows as integer
+  # vector by resolving the `where` clause and filtering
+  # the positions of the matched variables
+  #
+
+  if (!is.null(where %>% rlang::get_expr())) {
+
+    data_df_rows <-
+      (data_df %>%
+         tibble::rownames_to_column() %>%
+         dplyr::filter(!!!(where)))[["rowname"]] %>%
+      as.numeric()
+
+    resolved_rows <- base::intersect(resolved_rows, data_df_rows)
   }
+
+  # Translate the column indices to column names
+  resolved_columns <- colnames[resolved_columns]
 
   # If a single function is supplied to `fcns` then
   # repackage that into a list as the `default` function
@@ -935,8 +972,8 @@ fmt <- function(data,
   # formatting functions for specific columns and rows
   formatter_list <- list(
     func = fcns,
-    cols = resolved$columns,
-    rows = resolved$rows)
+    cols = resolved_columns,
+    rows = resolved_rows)
 
   # Incorporate the `formatter_list` object as the next
   # list in the `formats` list of lists
