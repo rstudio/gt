@@ -77,6 +77,7 @@
 #'       scale_by = 1/1000,
 #'       pattern = "{x}K")
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_number <- function(data,
                        columns,
@@ -170,6 +171,7 @@ fmt_number <- function(data,
 #'       columns = vars(disp),
 #'       decimals = 2)
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_scientific <- function(data,
                            columns,
@@ -266,9 +268,9 @@ fmt_scientific <- function(data,
 #' Format values as a percentage
 #' @inheritParams fmt_number
 #' @param incl_space an option on whether to include a space between the value
-#' and the percent sign. The default is to not introduce a space character.
+#'   and the percent sign. The default is to not introduce a space character.
 #' @param placement the placement of the percent sign. This can be either be
-#' \code{right} (the default) or \code{left}.
+#'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
@@ -296,6 +298,7 @@ fmt_scientific <- function(data,
 #'       columns = vars(val_2),
 #'       decimals = 2)
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_percent <- function(data,
                         columns,
@@ -456,6 +459,7 @@ fmt_percent <- function(data,
 #'       scale_by = 1E-6,
 #'       pattern = "{x}M")
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_currency <- function(data,
                          columns,
@@ -644,6 +648,7 @@ fmt_currency <- function(data,
 #'       columns = vars(date),
 #'       date_style = "2")
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_date <- function(data,
                      columns,
@@ -707,6 +712,7 @@ fmt_date <- function(data,
 #'       columns = vars(time),
 #'       time_style = 3)
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_time <- function(data,
                      columns,
@@ -770,6 +776,7 @@ fmt_time <- function(data,
 #'       date_style = 2,
 #'       time_style = 3)
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_datetime <- function(data,
                          columns,
@@ -826,6 +833,7 @@ fmt_datetime <- function(data,
 #' @inheritParams fmt_number
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_passthrough <- function(data,
                             columns,
@@ -867,6 +875,7 @@ fmt_passthrough <- function(data,
 #' rendered table.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
+#' @import rlang
 #' @export
 fmt_missing <- function(data,
                         columns,
