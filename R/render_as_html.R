@@ -113,7 +113,8 @@ render_as_html <- function(data) {
     extracted <- cbind(data_attr$stub_df, data_attr$output_df)[, -2]
 
     # Replace NA values in the `:group_name:` column
-    extracted[which(is.na(extracted[, 1])), 1] <- data_attr$others_group[[1]] %||% "Others"
+    extracted[which(is.na(extracted[, 1])), 1] <-
+      data_attr$others_group[[1]] %||% "Others"
 
     if ("arrange_groups" %in% property_names) {
 
@@ -159,7 +160,8 @@ render_as_html <- function(data) {
     extracted <- cbind(data_attr$stub_df, data_attr$output_df)
 
     # Replace NA values in the `:group_name:` column
-    extracted[which(is.na(extracted[, 1])), 1] <- data_attr$others_group[[1]] %||% "Others"
+    extracted[which(is.na(extracted[, 1])), 1] <-
+      data_attr$others_group[[1]] %||% "Others"
 
     # Obtain the `ordering` object, which is a vector that specifies
     #   the order of the groups
