@@ -4,7 +4,6 @@
 #' extension \code{.rtf}.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param file a filename to use for writing out the RTF file.
-#' @importFrom rlang %||%
 #' @examples
 #' \dontrun{
 #' # Create a `gt` table using the `sleep`
@@ -14,6 +13,7 @@
 #'   write_rtf(file = "sleep.rtf")
 #' }
 #' @family table export functions
+#' @import rlang
 #' @export
 write_rtf <- function(data, file) {
 
