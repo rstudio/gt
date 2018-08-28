@@ -23,9 +23,10 @@ test_that("formatting a column of numeric data as percentage values works correc
   # output data frame; extract `output_df` and determine that
   # no change is made
   expect_true(
-    (tab %>%
-       fmt_percent(columns = "num_3", decimals = 2) %>%
-       render_formats("html"))[, 1:4] %>%
+    suppressWarnings(
+      tab %>%
+        fmt_percent(columns = "num_3", decimals = 2) %>%
+        render_formats("html"))[, 1:4] %>%
       lapply(is.na) %>% lapply(all) %>% unlist() %>% all())
 
   # Format the `num_1` column to 2 decimal places, use all
