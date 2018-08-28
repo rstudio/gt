@@ -24,7 +24,7 @@ knit_print.gt_tbl <- function(x, ...) {
   knitr::knit_print(html_tbl, ...)
 }
 
-#' @importFrom htmltools tags HTML
+#' @importFrom htmltools tags HTML tagList
 as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the HTML table
@@ -35,7 +35,7 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_css(data = x)
 
   # Attach the dependency to the HTML table
-  html_tbl <- tagList(
+  html_tbl <- htmltools::tagList(
     htmltools::tags$style(htmltools::HTML(css)),
     htmltools::HTML(html_table)
   )
