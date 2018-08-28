@@ -43,12 +43,14 @@ data_cells <- function(columns = NULL,
 #' Resolve the `data_cells` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
+#' @param object the list object created by the \code{data_cells()} function.
 #' @import rlang
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter arrange
 #' @importFrom tidyselect starts_with ends_with contains matches one_of
 #' @noRd
-resolve_data_cells <- function(data, object) {
+resolve_data_cells <- function(data,
+                               object) {
 
   # Get the `data_df` data frame from `data`
   data_df <- as.data.frame(data)
