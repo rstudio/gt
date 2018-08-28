@@ -76,6 +76,7 @@ resolve_data_cells <- function(data,
 }
 
 #' Resolve variables for rows and columns using expressions
+#' @import tidyselect
 #' @noRd
 resolve_vars <- function(var_expr, var_names) {
 
