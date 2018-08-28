@@ -26,51 +26,54 @@ NULL
 
 #' Helper for resolving colnames or rownames that start with a prefix
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name starts_with
 #' @importFrom tidyselect starts_with
 #' @usage starts_with(match, ignore.case = TRUE)
 #' @param match a string.
+#' @param ignore.case if \code{TRUE}, the default, case is ignored when
+#'   matching names.
 #' @family helper functions
 #' @export
 NULL
 
 #' Helper for resolving colnames or rownames that end with a suffix
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name ends_with
 #' @importFrom tidyselect ends_with
 #' @usage ends_with(match, ignore.case = TRUE)
 #' @param match a string.
+#' @param ignore.case if \code{TRUE}, the default, case is ignored when
+#'   matching names.
 #' @family helper functions
 #' @export
 NULL
 
 #' Helper for resolving colnames or rownames that contain a literal string
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name contains
 #' @importFrom tidyselect contains
 #' @usage contains(match, ignore.case = TRUE)
 #' @param match a string.
+#' @param ignore.case if \code{TRUE}, the default, case is ignored when
+#'   matching names.
 #' @family helper functions
 #' @export
 NULL
 
 #' Helper for resolving colnames or rownames that match a regular expression
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name matches
 #' @importFrom tidyselect matches
 #' @usage matches(match, ignore.case = TRUE)
 #' @param match a string.
+#' @param ignore.case if \code{TRUE}, the default, case is ignored when
+#'   matching names.
 #' @family helper functions
 #' @export
 NULL
 
 #' Helper for resolving colnames or rownames that are part of a set
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name one_of
 #' @importFrom tidyselect one_of
 #' @usage one_of(..., ignore.case = TRUE)
@@ -81,11 +84,9 @@ NULL
 
 #' Helper for selecting all colnames or rownames
 #'
-#' See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
 #' @name everything
 #' @importFrom tidyselect everything
 #' @usage everything()
 #' @family helper functions
 #' @export
 NULL
-
