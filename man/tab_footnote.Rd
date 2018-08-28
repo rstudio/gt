@@ -13,8 +13,8 @@ function.}
 \item{footnote}{text to be used in the footnote.}
 
 \item{location}{the cell or set of cells to be associated with the footnote.
-Supplying an object with the \code{data_cells()} helper function is a useful
-way to specify the cell that is associated with the footnote.}
+Supplying an object with the \code{\link{data_cells}()} helper function is
+a useful way to specify the cell that is associated with the footnote.}
 }
 \value{
 an object of class \code{gt_tbl}.

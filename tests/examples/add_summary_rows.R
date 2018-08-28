@@ -21,19 +21,17 @@ tbl <-
 data <-
   gt(tbl) %>%
   summary_rows(
-    groups = vars(A, C),
+    groups = c("A", "C"),
     columns = vars(value),
     funs = funs(
       mean(., na.rm = TRUE),
       sum(., na.rm = TRUE),
-      sd(., na.rm = TRUE)),
-    labels = c("mean", "sum", "sd")) %>%
+      sd(., na.rm = TRUE))) %>%
   summary_rows(
-    groups = vars(B),
+    groups = c("B"),
     columns = vars(value_2),
     funs = funs(
-      sum(., na.rm = TRUE)),
-    labels = "sum") %>%
+      sum(., na.rm = TRUE))) %>%
   fmt_missing(columns = vars(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
@@ -45,3 +43,41 @@ data
 
 # Extract the summary data frame from the table object
 data %>% extract_summary()
+
+
+# Create a table that creates a stub but
+# no stub blocks
+tbl_2 <-
+  dplyr::tribble(
+    ~groupname,  ~value,  ~value_2,
+    "A",         NA,      260.1,
+    "A",         184.3,   84.4,
+    "A",         342.3,   126.3,
+    "A",         234.9,   NA,
+    "B",         190.9,   832.5,
+    "B",         743.3,   281.2,
+    "B",         252.3,   732.5,
+    "B",         344.7,   NA,
+    "C",         197.2,   818.0,
+    "C",         284.3,   394.4)
+
+data <-
+  gt(tbl_2) %>%
+  summary_rows(
+    groups = c("A", "C"),
+    columns = vars(value),
+    funs = funs(
+      mean(., na.rm = TRUE),
+      sum(., na.rm = TRUE),
+      sd(., na.rm = TRUE))) %>%
+  summary_rows(
+    groups = c("B"),
+    columns = vars(value_2),
+    funs = funs(
+      sum(., na.rm = TRUE))) %>%
+  fmt_missing(columns = vars(value, value_2)) %>%
+  tab_options(
+    summary_row.background.color = "#FFFEEE",
+    summary_row.padding = 5,
+    stub_group.background.color = "lightblue")
+
