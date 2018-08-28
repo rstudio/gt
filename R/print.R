@@ -2,7 +2,6 @@
 #' @description This facilitates printing of the HTML table to the R console.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
-#' @importFrom htmltools tagList htmlDependency attachDependencies HTML
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
@@ -14,10 +13,9 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
 #' Knit print the table
 #' @description This facilitates printing of the HTML table within a knitr
-#' code chunk.
+#'   code chunk.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
-#' @importFrom htmltools tagList htmlDependency attachDependencies HTML
 knit_print.gt_tbl <- function(x, ...) {
 
   html_tbl <- as.tags.gt_tbl(x, ...)
@@ -26,7 +24,7 @@ knit_print.gt_tbl <- function(x, ...) {
   knitr::knit_print(html_tbl, ...)
 }
 
-#' @export
+#' @importFrom htmltools tags HTML
 as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the HTML table
