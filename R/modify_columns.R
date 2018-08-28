@@ -1,9 +1,10 @@
 #' Set the alignment of columns
-#' @param data a table object that is created using the \code{gt()} function.
+#' @param data a table object that is created using the \code{\link{gt}()}
+#'   function.
 #' @param align the alignment direction. This can either be \code{"center"},
-#' \code{"left"}, or \code{"right"}.
-#' @param columns an vector of column names for which the alignment should be
-#' applied.
+#'   \code{"left"}, or \code{"right"}.
+#' @param columns a vector of column names for which the alignment should be
+#'   applied.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -43,9 +44,7 @@ cols_align <- function(data,
 }
 
 #' Set columns to be aligned left
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param columns an vector of column names for which the left alignment should
-#' be applied.
+#' @inheritParams cols_align
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -74,9 +73,7 @@ cols_align_left <- function(data,
 }
 
 #' Set columns to be aligned to the center
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param columns an vector of column names for which the center alignment
-#' should be applied.
+#' @inheritParams cols_align
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -105,9 +102,7 @@ cols_align_center <- function(data,
 }
 
 #' Set columns to be aligned right
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param columns an vector of column names for which the right alignment should
-#' be applied.
+#' @inheritParams cols_align
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -136,12 +131,12 @@ cols_align_right <- function(data,
 }
 
 #' Relabel one or more columns
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param labels a named vector of column names and their labels for display of
-#'   the column headers. We can use the \code{col_labels()} function to more
-#'   easily specify column names and column labels, since we can also wrap the
-#'   column labels with \code{md()} (to interpret text as Markdown) and
-#'   \code{HTML()} (to interpret text as HTML).
+#'   the column headers. We can use the \code{\link{col_labels}()} function to
+#'   more easily specify column names and column labels, since we can also wrap
+#'   the column labels with \code{\link{md}()} (to interpret text as Markdown)
+#'   or \code{\link{HTML}()} (to interpret text as HTML).
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and apply different
@@ -177,12 +172,12 @@ cols_label <- function(data,
 }
 
 #' Move one or more columns
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param columns the column names to move to as a group to a different
-#' position. The order of the remaining columns will be preserved. Values
-#' provided that do not correspond to column names will be disregarded.
+#'   position. The order of the remaining columns will be preserved. Values
+#'   provided that do not correspond to column names will be disregarded.
 #' @param after a column name used to anchor the insertion of the moved columns.
-#' All of the moved columns will be placed to the right of this column.
+#'   All of the moved columns will be placed to the right of this column.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -274,11 +269,11 @@ cols_move <- function(data,
 }
 
 #' Move one or more columns to the start
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param columns the column names to move to the left-most side of the table.
-#' The order in which columns are provided will be preserved (as is the case
-#' with the remaining columns). Values provided that do not correspond to column
-#' names will be disregarded.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns). Values provided that do not correspond to
+#'   column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -318,11 +313,11 @@ cols_move_to_start <- function(data,
 }
 
 #' Move one or more columns to the end
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param columns the column names to move to the right-most side of the table.
-#' The order in which columns are provided will be preserved (as is the case
-#' with the remaining columns). Values provided that do not correspond to column
-#' names will be disregarded.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns). Values provided that do not correspond to
+#'   column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -365,10 +360,10 @@ cols_move_to_end <- function(data,
 }
 
 #' Remove one or more columns
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param columns the column names to remove from the table. The order of the
-#' remaining columns will be preserved. Values provided that do not correspond
-#' to column names will be disregarded.
+#'   remaining columns will be preserved. Values provided that do not correspond
+#'   to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -412,16 +407,17 @@ cols_remove <- function(data,
 #' Create group names and column labels via delimited column names
 #'
 #' This option will split delimited column names such that the first component
-#' is promoted to the group name (and hence will span over column labels) and
-#' subsequent components will represent the column label. Please note that
-#' reference to individual columns must still be via the original column names.
-#' @param data a table object that is created using the \code{gt()} function.
+#'   is promoted to the group name (and hence will span over column labels) and
+#'   subsequent components will represent the column label. Please note that
+#'   reference to individual columns must continue to be through the original
+#'   column names.
+#' @inheritParams cols_align
 #' @param delim the delimiter to use to split an input column name. The
-#' delimiter supplied will be autoescaped for the internal splitting procedure.
-#' The first component of the split will become the group name and the second
-#' component will be the column label.
+#'   delimiter supplied will be autoescaped for the internal splitting
+#'   procedure. The first component of the split will become the group name and
+#'   the second component will be the column label.
 #' @param columns an optional vector of column names that this operation should
-#' be limited to. The default is to consider all columns in the table.
+#'   be limited to. The default is to consider all columns in the table.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -480,13 +476,13 @@ cols_split_delim <- function(data,
 }
 
 #' Merge two columns to a single column with a formatter
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param col_1 a column that contains values for the start of the range.
 #' @param col_2 a column that contains values for the end of the range.
 #' @param pattern a formatting pattern that specifies the arrangement of the
-#' \code{col_1} and \code{col_1} values and any string literals. The
-#' \code{col_1} column is represented as \code{{1}} whereas \code{col_2} is
-#' \code{{2}}. All other characters are taken to be string literals.
+#'   \code{col_1} and \code{col_1} values and any string literals. The
+#'   \code{col_1} column is represented as \code{{1}} whereas \code{col_2} is
+#'   \code{{2}}. All other characters are taken to be string literals.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -551,7 +547,7 @@ cols_merge <- function(data,
 }
 
 #' Merge two columns to a value + uncertainty column
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param col_val a single column name that contains the base values.
 #' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
@@ -632,7 +628,7 @@ cols_merge_uncert <- function(data,
 }
 
 #' Merge two columns to a value range column
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param col_begin a column that contains values for the start of the range.
 #' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
