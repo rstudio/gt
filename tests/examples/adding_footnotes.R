@@ -22,12 +22,12 @@ html_tbl <-
   gt(data = tbl) %>%
   tab_footnote(
     footnote = md("The value for *value_2* is quite small."),
-    location = data_cells(7, 3)) %>%
+    location = data_cells(columns = vars(value_2), rows = 3)) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    location = data_cells(row = "9", column = 2)) %>%
+    location = data_cells(columns = 2, rows = 9)) %>%
   tab_footnote(
-    footnote = "this is also very small.",
-    location = data_cells(row = 4, column = 2))
+    footnote = "This is also very small.",
+    location = data_cells(columns = 2, rows = 4))
 
 html_tbl
