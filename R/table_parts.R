@@ -41,7 +41,7 @@ tab_heading <- function(data,
 #' Add caption text to the stubhead
 #'
 #' Add a caption to the stubhead of a table. If a stub does not exist, no
-#' change will be made.
+#'   change will be made.
 #' @inheritParams fmt_number
 #' @param caption the text to be used as the stubhead caption.
 #' @return an object of class \code{gt_tbl}.
@@ -67,12 +67,12 @@ tab_stubhead_caption <- function(data,
 #' Arrange a stub into blocks
 #'
 #' Set a group with a name and mappings to rows extant in the table. This
-#' creates a stub block with group headings and row captions.
+#'   creates a stub block with group headings and row captions.
 #' @inheritParams fmt_number
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block.
 #' @param others an optional group heading to use for any rows not part of a
-#' stub block.
+#'   stub block.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `mtcars` where
@@ -112,6 +112,7 @@ tab_stub_block <- function(data,
   # Insert the group into the `blocks_arrange` component
   if (!("arrange_groups" %in% names(attributes(data)))) {
     data <- blocks_arrange(data = data, groups = group)
+
   } else {
 
     attr(data, "arrange_groups")[["groups"]] <-
@@ -124,7 +125,7 @@ tab_stub_block <- function(data,
 #' Arrange a boxhead into panels
 #'
 #' Set a spanner with a name and mappings to columns extant in the table. This
-#' creates a boxhead panel with spanner headings and column headings.
+#'   creates a boxhead panel with spanner headings and column headings.
 #' @inheritParams fmt_number
 #' @param group the name to assign to the spanner heading.
 #' @param columns the columns to be components of the spanner heading.
@@ -168,8 +169,8 @@ tab_boxhead_panel <- function(data,
 #' @inheritParams fmt_number
 #' @param footnote text to be used in the footnote.
 #' @param location the cell or set of cells to be associated with the footnote.
-#' Supplying an object with the \code{data_cells()} helper function is a useful
-#' way to specify the cell that is associated with the footnote.
+#'   Supplying an object with the \code{\link{data_cells}()} helper function is
+#'   a useful way to specify the cell that is associated with the footnote.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a footnote that is in
@@ -292,10 +293,10 @@ tab_source_note <- function(data,
 #' Add custom styles to one or more cells
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The \code{\link{apply_styles}()}
-#' helper function can be used here to more easily generate valid styles.
+#'   helper function can be used here to more easily generate valid styles.
 #' @param location the cell or set of cells to be styled. Supplying an object
-#' with the \code{data_cells()} helper function is a useful way to specify the
-#' cell that is to be styled.
+#'   with the \code{\link{data_cells}()} helper function is a useful way to
+#'   specify the cell that is to be styled.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a style that is to be applied
@@ -309,8 +310,8 @@ tab_source_note <- function(data,
 #'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
 #' @seealso [apply_styles()] as a helper for defining custom styles and
-#' [data_cells()] as a useful helper function for targeting the cells to be
-#' styled.
+#'   [data_cells()] as a useful helper function for targeting the data cells to
+#'   be styled.
 #' @importFrom stats setNames
 #' @export
 tab_style <- function(data,
