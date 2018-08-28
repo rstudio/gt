@@ -4,16 +4,30 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, pattern = "{x}")
+fmt_passthrough(data, columns, rows = NULL, where = NULL,
+  pattern = "{x}")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the column names to format.}
+\item{columns}{the columns to format. Can either be a series of column names
+provided in \code{vars()}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
 
 \item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted.}
+rows in \code{columns} being formatted. Can either be a vector of row
+captions provided \code{c()}, a vector of row indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
+
+\item{where}{a conditional expression that operates across all of the rows
+captured by \code{rows} to further constrain the row selection.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
