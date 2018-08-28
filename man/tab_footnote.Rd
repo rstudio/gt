@@ -30,8 +30,8 @@ gt_tbl <-
     tab_footnote(
       footnote = "Massive hp.",
       location = data_cells(
-        row = "Maserati Bora",
-        column = "hp"))
+        columns = "hp",
+        rows = "Maserati Bora"))
 }
 \seealso{
 [data_cells()] as a useful helper function for targeting the cell
