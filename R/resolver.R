@@ -5,7 +5,6 @@
 #' @import rlang
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter arrange
-#' @importFrom tidyselect starts_with ends_with contains matches one_of
 #' @noRd
 resolve_data_cells <- function(data,
                                object) {
