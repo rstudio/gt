@@ -4,7 +4,7 @@
 \alias{fmt_percent}
 \title{Format values as a percentage}
 \usage{
-fmt_percent(data, columns, rows = NULL, decimals = 2,
+fmt_percent(data, columns, rows = NULL, where = NULL, decimals = 2,
   drop_trailing_zeros = FALSE, negative_val = "signed",
   use_seps = TRUE, pattern = "{x}", sep_mark = ",", dec_mark = ".",
   incl_space = FALSE, placement = "right", locale = NULL)
@@ -13,10 +13,23 @@ fmt_percent(data, columns, rows = NULL, decimals = 2,
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the column names to format.}
+\item{columns}{the columns to format. Can either be a series of column names
+provided in \code{vars()}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
 
 \item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted.}
+rows in \code{columns} being formatted. Can either be a vector of row
+captions provided \code{c()}, a vector of row indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
+
+\item{where}{a conditional expression that operates across all of the rows
+captured by \code{rows} to further constrain the row selection.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
