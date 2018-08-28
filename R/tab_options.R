@@ -14,7 +14,7 @@
 #'   elements: \code{heading.title}, \code{heading.headnote}, \code{boxhead},
 #'   \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 #'   as a single-length character vector with units of pixels
-#'   (e.g., \code{12px}) or as a percentage (e.g., \code{80%}). If provided as a
+#'   (e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
 #'   single-length numeric vector, it is assumed that the value is given in
 #'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 #'   functions can also be used to pass in numeric values and obtain values as
