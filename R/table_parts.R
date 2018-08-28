@@ -69,9 +69,15 @@ tab_stubhead_caption <- function(data,
 #' Set a group with a name and mappings to rows extant in the table. This
 #'   creates a stub block with group headings and row captions.
 #' @inheritParams fmt_number
-#' @inheritParams data_cells
 #' @param group the stub block group heading name.
-#' @param rows the rows to be made components of the stub block.
+#' @param rows the rows to be made components of the stub block. Can either be a
+#'   vector of row row captions provided \code{c()}, a vector of row indices, or
+#'   a helper function focused on selections. The select helper functions are:
+#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
+#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+#'   and \code{\link{everything}()}.
+#' @param where a conditional expression that operates across all of the rows
+#'   captured by \code{rows} to further constrain the row selection.
 #' @param others an option to set a default group heading for any rows not
 #'   formally placed in a stub block named by \code{group} in any call of
 #'   \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
