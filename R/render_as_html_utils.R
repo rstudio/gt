@@ -214,8 +214,8 @@ obtain_group_ordering <- function(data_attr,
 }
 
 #' Used to splice in summary lines into the final gt table
-#' @importFrom dplyr bind_rows select group_by everything ungroup
-#' @importFrom dplyr mutate mutate_if mutate_all summarize_at funs slice
+#' @importFrom dplyr bind_rows select group_by everything ungroup arrange
+#' @importFrom dplyr mutate mutate_at summarize_at funs slice filter
 #' @importFrom tidyr fill
 #' @noRd
 integrate_summary_lines <- function(data_attr) {
