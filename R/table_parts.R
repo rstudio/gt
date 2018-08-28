@@ -223,8 +223,8 @@ tab_boxhead_panel <- function(data,
 #'     tab_footnote(
 #'       footnote = "Massive hp.",
 #'       location = data_cells(
-#'         row = "Maserati Bora",
-#'         column = "hp"))
+#'         rows = "Maserati Bora",
+#'         columns = "hp"))
 #' @family table-part creation/modification functions
 #' @seealso [data_cells()] as a useful helper function for targeting the cell
 #' associated with the footnote.
