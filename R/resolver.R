@@ -145,7 +145,7 @@ resolve_data_cells <- function(data, object) {
   # the positions of the matched variables
   #
 
-  if (!is.null(where)) {
+  if (!is.null(where %>% rlang::get_expr())) {
 
     data_df_rows <-
       (data_df %>%
