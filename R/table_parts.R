@@ -71,7 +71,7 @@ tab_stubhead_caption <- function(data,
 #' @inheritParams fmt_number
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block. Can either be a
-#'   vector of row row captions provided \code{c()}, a vector of row indices, or
+#'   vector of row captions provided \code{c()}, a vector of row indices, or
 #'   a helper function focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
