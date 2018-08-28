@@ -3,7 +3,7 @@
 #' @param object the list object created by the \code{data_cells()} function.
 #' @import rlang
 #' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter arrange
+#' @importFrom dplyr filter arrange distinct
 #' @noRd
 resolve_data_cells <- function(data,
                                object) {
@@ -54,6 +54,7 @@ resolve_data_cells <- function(data,
 
     constrained <-
       data.frame(columns = resolved_columns, rows = resolved_rows) %>%
+      dplyr::distinct() %>%
       dplyr::filter(rows %in% data_df_rows)
 
     resolved_columns <- constrained$columns
@@ -63,7 +64,8 @@ resolve_data_cells <- function(data,
   # Get all possible combinations with `expand.grid()`
   expansion <-
     expand.grid(resolved_columns, resolved_rows, stringsAsFactors = FALSE) %>%
-    dplyr::arrange(Var1)
+    dplyr::arrange(Var1) %>%
+    dplyr::distinct()
 
   # Create a list object
   cells_resolved <- list(columns = expansion[[1]], rows = expansion[[2]])
