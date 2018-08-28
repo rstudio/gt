@@ -359,7 +359,7 @@ integrate_summary_lines <- function(data_attr) {
     }
   }
 
-  # Apply labels to the `summary_df`
+  # Apply labels to the `summary_df` that is stored in data_attr
   data_attr$summary_df$rowname <- labels_vector
 
   # Extract summary part of `output_df` for additional
@@ -373,13 +373,15 @@ integrate_summary_lines <- function(data_attr) {
 
   # Squash rows with common `groupname`` and `rowname`
   squashed_summary_rows <-
-    summary_part %>% arrange(groupname, rowname) %>%
+    summary_part %>%
+    dplyr::arrange(groupname, rowname) %>%
     dplyr::group_by(groupname, rowname) %>%
     tidyr::fill(dplyr::everything(), .direction = "down") %>%
     tidyr::fill(dplyr::everything(), .direction = "up") %>%
     dplyr::slice(1) %>%
     dplyr::ungroup()
 
+  # Fill NA values with empty strings
   squashed_summary_rows[is.na(squashed_summary_rows)] <- ""
 
   # Determine how many rows have been removed as a result
