@@ -10,8 +10,8 @@ test_that("formatting a column of numeric data as a number works correctly", {
                  "wednesday", "thursday", "friday"),
       char_2 = c("june", "july", "august", "september",
                  "october", "november", "december"),
-       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
-       num_2 = c(34, 74, 23, 93, 35, 76, 57),
+      num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
+      num_2 = c(34, 74, 23, 93, 35, 76, 57),
       stringsAsFactors = FALSE)
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -48,9 +48,10 @@ test_that("formatting a column of numeric data as a number works correctly", {
   # output data frame; extract `output_df` and determine that
   # no change is made
   expect_true(
-    (tab %>%
-       fmt_number(columns = "num_3", decimals = 2) %>%
-       render_formats("html"))[, 1:4] %>%
+    suppressWarnings(
+      tab %>%
+        fmt_number(columns = "num_3", decimals = 2) %>%
+        render_formats("html"))[, 1:4] %>%
       lapply(is.na) %>% lapply(all) %>% unlist() %>% all())
 
   # Format the `num_1` column to 2 decimal places, use all

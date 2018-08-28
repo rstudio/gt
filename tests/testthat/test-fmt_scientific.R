@@ -10,8 +10,8 @@ test_that("formatting a column of numeric data to scientific notation works corr
                  "wednesday", "thursday", "friday"),
       char_2 = c("june", "july", "august", "september",
                  "october", "november", "december"),
-       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 2.232, 0, -23.24),
-       num_2 = c(34, 74, 23, 93, 35, 76, 57),
+      num_1 = c(1836.23, 2763.39, 937.29, 643.00, 2.232, 0, -23.24),
+      num_2 = c(34, 74, 23, 93, 35, 76, 57),
       stringsAsFactors = FALSE)
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -48,10 +48,11 @@ test_that("formatting a column of numeric data to scientific notation works corr
   # output data frame; extract `output_df` and determine that
   # no change is made
   expect_true(
-    (tab %>%
-       fmt_scientific(columns = "num_3", decimals = 2) %>%
-       render_formats("html"))[, 1:4] %>%
-      lapply(is.na) %>% lapply(all) %>% unlist() %>% all())
+    suppressWarnings(
+      (tab %>%
+         fmt_scientific(columns = "num_3", decimals = 2) %>%
+         render_formats("html"))[, 1:4] %>%
+        lapply(is.na) %>% lapply(all) %>% unlist() %>% all()))
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` in the HTML context
@@ -116,7 +117,7 @@ test_that("formatting a column of numeric data to scientific notation works corr
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2,
-                  sep_mark = ".", dec_mark = ",") %>%
+                      sep_mark = ".", dec_mark = ",") %>%
        render_formats("html"))[["num_1"]],
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
