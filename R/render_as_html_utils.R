@@ -273,7 +273,7 @@ integrate_summary_lines <- function(data_attr) {
       agg_rows <-
         groups_data_df %>%
         dplyr::filter(groupname %in% groups) %>%
-        dplyr::select(groupname, rowname, columns) %>%
+        dplyr::select(groupname, !!!columns) %>%
         dplyr::group_by(groupname) %>%
         dplyr::summarize_at(.vars = columns, .funs = agg_funs[[j]]) %>%
         dplyr::ungroup() %>%
