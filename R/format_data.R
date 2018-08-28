@@ -1,30 +1,42 @@
 #' Format numeric values
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
-#' @param columns the column names to format.
+#' @param columns the columns to format. Can either be a series of column names
+#'   provided in \code{vars()}, a vector of column indices, or a helper function
+#'   focused on selections. The select helper functions are:
+#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
+#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+#'   and \code{\link{everything}()}.
 #' @param rows optional rows to format. Not providing any value results in all
-#' rows in \code{columns} being formatted.
+#'   rows in \code{columns} being formatted. Can either be a vector of row
+#'   captions provided \code{c()}, a vector of row indices, or a helper function
+#'   focused on selections. The select helper functions are:
+#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
+#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+#'   and \code{\link{everything}()}.
+#' @param where a conditional expression that operates across all of the rows
+#'   captured by \code{rows} to further constrain the row selection.
 #' @param decimals an option to specify the exact number of decimal places to
-#' use. The default number of decimal places is \code{2}.
+#'   use. The default number of decimal places is \code{2}.
 #' @param drop_trailing_zeros a logical value that allows for removal of
-#' trailing zeros (those redundant zeros after the decimal mark).
+#'   trailing zeros (those redundant zeros after the decimal mark).
 #' @param negative_val the formatting to use for negative values. With
-#' \code{signed} (the default), negative values will be shown with a negative
-#' sign. Using \code{parens} will show the negative value in parentheses.
+#'   \code{signed} (the default), negative values will be shown with a negative
+#'   sign. Using \code{parens} will show the negative value in parentheses.
 #' @param use_seps an option to use digit group separators. The type of digit
-#' group separator is set by \code{sep_mark} and overridden if a locale ID is
-#' provided to \code{locale}. This setting is \code{TRUE} by default.
+#'   group separator is set by \code{sep_mark} and overridden if a locale ID is
+#'   provided to \code{locale}. This setting is \code{TRUE} by default.
 #' @param scale_by a value to scale the input. The default is \code{1.0}.
 #' @param pattern a formatting pattern that allows for decoration of the
-#' formatted value. The value itself is represented by \code{{x}} and all
-#' other characters are taken to be string literals.
+#'   formatted value. The value itself is represented by \code{{x}} and all
+#'   other characters are taken to be string literals.
 #' @param sep_mark the mark to use as a separator between groups of digits.
 #' @param dec_mark the character to use as a decimal mark.
 #' @param locale an optional locale ID that can be used for formatting the value
-#' according the locale's rules. Examples include \code{"en_US"} for English
-#' (United States) and \code{"fr_FR"} for French (France). The use of a valid
-#' locale ID will override any values provided in \code{sep_mark} and
-#' \code{dec_mark}.
+#'   according the locale's rules. Examples include \code{"en_US"} for English
+#'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
+#'   locale ID will override any values provided in \code{sep_mark} and
+#'   \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' library(tidyverse)
