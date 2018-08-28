@@ -69,54 +69,91 @@ tab_stubhead_caption <- function(data,
 #' Set a group with a name and mappings to rows extant in the table. This
 #'   creates a stub block with group headings and row captions.
 #' @inheritParams fmt_number
+#' @inheritParams data_cells
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block.
-#' @param others an optional group heading to use for any rows not part of a
-#'   stub block.
+#' @param others an option to set a default group heading for any rows not
+#'   formally placed in a stub block named by \code{group} in any call of
+#'   \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
+#'   only a value to \code{others} is possible and makes explicit that the
+#'   call is meant to provide a default group heading value. If this is not
+#'   set and there are rows that haven't been placed into a stub block, then
+#'   those rows will be automatically placed into a stub block with the group
+#'   heading 'Others'.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `mtcars` where
 #' # there are group headings grouped inside
-#' # stub blocks
+#' # stub blocks; two groups are generated
+#' # here: `Mazda` and `Others`
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_stub_block(
-#'       group = "perimeter",
+#'       group = "Mazda",
 #'       rows = c("Mazda RX4", "Mazda RX4 Wag"))
 #' @family table-part creation/modification functions
+#' @import rlang
+#' @importFrom tibble rownames_to_column
+#' @importFrom dplyr filter
 #' @export
 tab_stub_block <- function(data,
-                           group,
-                           rows,
+                           group = NULL,
+                           rows = NULL,
+                           where = NULL,
                            others = NULL) {
+
+  # Capture the expression for `rows` and `where` arguments
+  row_expr <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
+
+  # Create a stub block if a `group` is provided
+  if (!is.null(group)) {
+
+    # Get the `data_df` data frame from `data`
+    data_df <- as.data.frame(data)
+
+    # Get the `stub_df` data frame from `data`
+    stub_df <- attr(data, "stub_df", exact = TRUE)
+
+    # Collect the rownames from `stub_df`
+    rownames <- stub_df$rowname
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows <- resolve_vars(var_expr = row_expr, var_names = rownames)
+
+    # Constrain the `resolved_rows` if a `where` expression is provided
+    if (!is.null(where %>% rlang::get_expr())) {
+
+      data_df_rows <-
+        (data_df %>%
+           tibble::rownames_to_column() %>%
+           dplyr::filter(!!!where))[["rowname"]] %>%
+        as.numeric()
+
+      resolved_rows <- base::intersect(resolved_rows, data_df_rows)
+    }
+
+    # Place the `group` label in the `groupname` column
+    # `stub_df`
+    attr(data, "stub_df")[resolved_rows, 1] <- process_text(group[1])
+
+    # Insert the group into the `blocks_arrange` component
+    if (!("arrange_groups" %in% names(attributes(data)))) {
+      data <- blocks_arrange(data = data, groups = process_text(group[1]))
+
+    } else {
+
+      attr(data, "arrange_groups")[["groups"]] <-
+        c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]))
+    }
+  }
 
   # Set a name for the `others` group if a
   # name is provided
   if (!is.null(others)) {
-    attr(data, "others_group") <-
-      list(others = others)
-  }
-
-  if (rows[1] == "rownames_with" && length(rows) == 2) {
-    rows <-
-      attr(data, "stub_df")$rowname[
-        which(grepl(rows[2], attr(data, "stub_df")$rowname))]
-    if (length(rows) == 0) {
-      return(data)
-    }
-  }
-
-  attr(data, "stub_df")[
-    which(attr(data, "stub_df")$rowname %in% rows), 1] <- group
-
-  # Insert the group into the `blocks_arrange` component
-  if (!("arrange_groups" %in% names(attributes(data)))) {
-    data <- blocks_arrange(data = data, groups = group)
-
-  } else {
-
-    attr(data, "arrange_groups")[["groups"]] <-
-      c(attr(data, "arrange_groups")[["groups"]], group)
+    attr(data, "others_group") <- list(others = process_text(others[1]))
   }
 
   data
