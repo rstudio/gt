@@ -11,6 +11,6 @@ knit_print.gt_tbl(x, ...)
 }
 \description{
 This facilitates printing of the HTML table within a knitr
-code chunk.
+  code chunk.
 }
 \keyword{internal}
