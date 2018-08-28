@@ -4,7 +4,8 @@
 \alias{tab_stub_block}
 \title{Arrange a stub into blocks}
 \usage{
-tab_stub_block(data, group, rows, others = NULL)
+tab_stub_block(data, group = NULL, rows = NULL, where = NULL,
+  others = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -12,10 +13,24 @@ function.}
 
 \item{group}{the stub block group heading name.}
 
-\item{rows}{the rows to be made components of the stub block.}
+\item{rows}{the rows to be made components of the stub block. Can either be a
+vector of row row captions provided \code{c()}, a vector of row indices, or
+a helper function focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
 
-\item{others}{an optional group heading to use for any rows not part of a
-stub block.}
+\item{where}{a conditional expression that operates across all of the rows
+captured by \code{rows} to further constrain the row selection.}
+
+\item{others}{an option to set a default group heading for any rows not
+formally placed in a stub block named by \code{group} in any call of
+\code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
+only a value to \code{others} is possible and makes explicit that the
+call is meant to provide a default group heading value. If this is not
+set and there are rows that haven't been placed into a stub block, then
+those rows will be automatically placed into a stub block with the group
+heading 'Others'.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -27,11 +42,12 @@ Set a group with a name and mappings to rows extant in the table. This
 \examples{
 # Create a table based on `mtcars` where
 # there are group headings grouped inside
-# stub blocks
+# stub blocks; two groups are generated
+# here: `Mazda` and `Others`
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_stub_block(
-      group = "perimeter",
+      group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag"))
 }
 \seealso{
