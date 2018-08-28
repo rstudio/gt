@@ -78,8 +78,11 @@ data_cells <- function(columns = NULL,
                        rows = NULL,
                        where = NULL) {
 
+  # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enexpr(columns)
   row_expr <- rlang::enexpr(rows)
+
+  # `enquo()`` the `where` argument value
   where <- rlang::enquo(where)
 
   # Create the `data_cells` object
