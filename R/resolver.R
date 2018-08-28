@@ -179,34 +179,3 @@ resolve_vars <- function(var_expr, var_names) {
 
   resolved
 }
-
-
-
-
-#' @noRd
-no_intersection <- function(resolved) {
-  inherits(resolved, "no_intersection")
-}
-
-#' @noRd
-is_target_in_table <- function(data, location) {
-
-  if (is.numeric(location$row) &&
-      !(location$row %in% 1:nrow(data))) {
-    return(FALSE)
-  }
-  if (is.character(location$row) &&
-      !(location$row %in% attr(data, "stub_df")[["rowname"]])) {
-    return(FALSE)
-  }
-  if (is.numeric(location$column) &&
-      !(location$column %in% 1:ncol(data))) {
-    return(FALSE)
-  }
-  if (is.character(location$column) &&
-      !(location$column %in% colnames(data))) {
-    return(FALSE)
-  } else {
-    return(TRUE)
-  }
-}
