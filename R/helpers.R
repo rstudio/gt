@@ -24,7 +24,7 @@ data_cells <- function(columns = NULL,
   col_expr <- rlang::enexpr(columns)
   row_expr <- rlang::enexpr(rows)
 
-  # `enquo()`` the `where` argument value
+  # `enquo()` the `where` argument value
   where <- rlang::enquo(where)
 
   # Create the `data_cells` object
@@ -35,7 +35,7 @@ data_cells <- function(columns = NULL,
       where = where)
 
   # Apply the `data_cells` class
-  attr(data_cells, "class") <- "data_cells"
+  class(data_cells) <- "data_cells"
 
   data_cells
 }
@@ -57,7 +57,7 @@ data_cells <- function(columns = NULL,
 md <- function(text) {
 
   # Apply the `from_markdown` class
-  attr(text, "class") <- "from_markdown"
+  class(text) <- "from_markdown"
   text
 }
 
@@ -80,7 +80,7 @@ md <- function(text) {
 html <- function(text) {
 
   # Apply the `from_markdown` class
-  attr(text, "class") <- "preserve_html"
+  class(text) <- "preserve_html"
   text
 }
 
