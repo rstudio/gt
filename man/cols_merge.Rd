@@ -7,7 +7,8 @@
 cols_merge(data, col_1, col_2, pattern = "{1} {2}")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{col_1}{a column that contains values for the start of the range.}
 
