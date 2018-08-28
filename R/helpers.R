@@ -147,19 +147,6 @@ col_labels <- function(...) {
   x %>% unlist()
 }
 
-#' Helper for collecting ungrouped rows or columns
-#' @return a character object of class \code{not_in_group}.
-#' @family helper functions
-#' @export
-not_in_group <- function() {
-
-  # Create a character object
-  x <- ":not_in_group:"
-
-  class(x) <- "not_in_group"
-  x
-}
-
 #' Helper for defining custom styles for table cells
 #' @return a character vector containing formatted styles.
 #' @param bkgd_color the background color of the cell.
