@@ -1,6 +1,5 @@
 #' Resolve the `data_cells` object once it has access to the `data` object
-#' @param data a table object that is created using the \code{\link{gt}()}
-#'   function.
+#' @param data a table object that is created using the \code{gt()} function.
 #' @param object the list object created by the \code{data_cells()} function.
 #' @import rlang
 #' @importFrom tibble rownames_to_column
