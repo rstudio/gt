@@ -82,7 +82,7 @@ rownames_with <- function(pattern) {
 #'     rows = rows_where(cyl >= 6 & vs == 1),
 #'     decimals = 3)
 #' @family helper functions
-#' @importFrom rlang enquo
+#' @import rlang
 #' @export
 rows_where <- function(conditions) {
 
