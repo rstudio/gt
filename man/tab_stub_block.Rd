@@ -22,7 +22,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Set a group with a name and mappings to rows extant in the table. This
-creates a stub block with group headings and row captions.
+  creates a stub block with group headings and row captions.
 }
 \examples{
 # Create a table based on `mtcars` where

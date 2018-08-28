@@ -17,7 +17,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Add a caption to the stubhead of a table. If a stub does not exist, no
-change will be made.
+  change will be made.
 }
 \examples{
 # Create a table object using the

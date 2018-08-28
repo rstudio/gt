@@ -14,8 +14,8 @@ function.}
 helper function can be used here to more easily generate valid styles.}
 
 \item{location}{the cell or set of cells to be styled. Supplying an object
-with the \code{data_cells()} helper function is a useful way to specify the
-cell that is to be styled.}
+with the \code{\link{data_cells}()} helper function is a useful way to
+specify the cell that is to be styled.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -36,8 +36,8 @@ gt_tbl <-
 }
 \seealso{
 [apply_styles()] as a helper for defining custom styles and
-[data_cells()] as a useful helper function for targeting the cells to be
-styled.
+  [data_cells()] as a useful helper function for targeting the data cells to
+  be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},
