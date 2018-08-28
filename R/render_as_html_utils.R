@@ -233,14 +233,14 @@ integrate_summary_lines <- function(data_attr) {
     summary_attrs <- data_attr$summary[[i]]
 
     # Resolve the groups to consider
-    if (summary_attrs$groups[1] == TRUE) {
+    if (isTRUE(summary_attrs$groups)) {
       groups <- unique(data_attr$stub_df$groupname)
     } else {
       groups <- summary_attrs$groups
     }
 
     # Resolve the columns to consider
-    if (summary_attrs$columns[1] == TRUE) {
+    if (isTRUE(summary_attrs$columns)) {
       columns <- colnames(data_attr$data_df)
     } else {
       columns <- summary_attrs$columns
