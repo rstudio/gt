@@ -206,14 +206,50 @@ tab_boxhead_panel <- function(data,
   data
 }
 
+#' Add a source note citation
+#'
+#' Add a source note citation to the source note part of the table.
+#' @inheritParams fmt_number
+#' @param source_note text to be used in the source note.
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Add a source note that provides
+#' # a citation for the tabular data
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_source_note(
+#'       source_note = md("*Henderson and Velleman* (1981)."))
+#' @family table-part creation/modification functions
+#' @export
+tab_source_note <- function(data,
+                            source_note) {
+
+  source_note <- process_text(source_note)
+
+  if ("source_note" %in% names(attributes(data))) {
+
+    attr(data, "source_note")[["source_note"]] <-
+      c(attr(data, "source_note")[["source_note"]], source_note)
+
+  } else {
+
+    attr(data, "source_note") <-
+      list(source_note = source_note)
+  }
+
+  data
+}
+
 #' Add a table footnote
 #'
 #' Add a footnote with a glyph attached to the targeted cells, rows, or columns.
 #' @inheritParams fmt_number
 #' @param footnote text to be used in the footnote.
-#' @param location the cell or set of cells to be associated with the footnote.
+#' @param locations the cell or set of cells to be associated with the footnote.
 #'   Supplying an object with the \code{\link{data_cells}()} helper function is
 #'   a useful way to specify the cell that is associated with the footnote.
+#'   Additionally, we can supply a list with multiple calls to
+#'   \code{\link{data_cells}()} if we wish to combine multiple cell selections.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a footnote that is in
@@ -222,17 +258,17 @@ tab_boxhead_panel <- function(data,
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_footnote(
 #'       footnote = "Massive hp.",
-#'       location = data_cells(
+#'       locations = data_cells(
 #'         columns = "hp",
 #'         rows = "Maserati Bora"))
 #' @family table-part creation/modification functions
-#' @seealso [data_cells()] as a useful helper function for targeting the cell
-#' associated with the footnote.
+#' @seealso [data_cells()] as a useful helper function for targeting one or
+#'   more cells associated with the footnote.
 #' @importFrom stats setNames
 #' @export
 tab_footnote <- function(data,
                          footnote,
-                         location) {
+                         locations) {
 
   # Determine if the footnote already exists;
   # if it does, get the index
@@ -270,11 +306,14 @@ tab_footnote <- function(data,
     attr(data, "footnote") <- list(footnote = footnote)
   }
 
-  # If location is provided in a `data_cells` object
-  # we need to resolve the locations of the targeted data cells
-  if (inherits(location, "data_cells")) {
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
 
-    resolved <- resolve_data_cells(data = data, object = location)
+  # Resolve the locations of the targeted data cells and append
+  # the footnotes
+  for (loc in locations) {
+
+    resolved <- resolve_data_cells(data = data, object = loc)
 
     data_rows <- resolved$row
     data_cols <- resolved$column
@@ -299,47 +338,15 @@ tab_footnote <- function(data,
   data
 }
 
-#' Add a source note citation
-#'
-#' Add a source note citation to the source note part of the table.
-#' @inheritParams fmt_number
-#' @param source_note text to be used in the source note.
-#' @return an object of class \code{gt_tbl}.
-#' @examples
-#' # Add a source note that provides
-#' # a citation for the tabular data
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_source_note(
-#'       source_note = md("*Henderson and Velleman* (1981)."))
-#' @family table-part creation/modification functions
-#' @export
-tab_source_note <- function(data,
-                            source_note) {
-
-  source_note <- process_text(source_note)
-
-  if ("source_note" %in% names(attributes(data))) {
-
-    attr(data, "source_note")[["source_note"]] <-
-      c(attr(data, "source_note")[["source_note"]], source_note)
-
-  } else {
-
-    attr(data, "source_note") <-
-      list(source_note = source_note)
-  }
-
-  data
-}
-
 #' Add custom styles to one or more cells
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The \code{\link{apply_styles}()}
 #'   helper function can be used here to more easily generate valid styles.
-#' @param location the cell or set of cells to be styled. Supplying an object
-#'   with the \code{\link{data_cells}()} helper function is a useful way to
-#'   specify the cell that is to be styled.
+#' @param locations the cell or set of cells to be associated with the footnote.
+#'   Supplying an object with the \code{\link{data_cells}()} helper function is
+#'   a useful way to specify the cell that is associated with the footnote.
+#'   Additionally, we can supply a list with multiple calls to
+#'   \code{\link{data_cells}()} if we wish to combine multiple cell selections.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a style that is to be applied
@@ -348,49 +355,46 @@ tab_source_note <- function(data,
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_style(
 #'       style = apply_styles(bkgd_color = "steelblue"),
-#'       location = data_cells(
+#'       locations = data_cells(
 #'         columns = vars(hp),
 #'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
 #' @seealso [apply_styles()] as a helper for defining custom styles and
-#'   [data_cells()] as a useful helper function for targeting the data cells to
-#'   be styled.
+#'   [data_cells()] as a useful helper function for targeting one or more data
+#'   cells to be styled.
 #' @importFrom stats setNames
 #' @export
 tab_style <- function(data,
                       style,
-                      location) {
+                      locations) {
 
-  # # Check if the target location is actually in the table
-  # if (inherits(location, "data_cells") &&
-  #     !is_target_in_table(data = data, location = location)) {
-  #   return(data)
-  # }
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
 
-  # If location is provided in a `data_cells` object
-  # we need to resolve the locations of the targeted data cells
-  if (inherits(location, "data_cells")) {
+  # Resolve the locations of the targeted data cells and append
+  # the format directives
+  for (loc in locations) {
 
-    resolved <- resolve_data_cells(data = data, object = location)
+    resolved <- resolve_data_cells(data = data, object = loc)
 
     data_rows <- resolved$row
     data_cols <- resolved$column
-  }
 
-  # Append the style
-  for (i in 1:length(data_rows)) {
+    # Append the style
+    for (i in 1:length(data_rows)) {
 
-    if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {
+      if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {
 
-      attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
-        paste0("::style_", style, collapse = "")
+        attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
+          paste0("::style_", style, collapse = "")
 
-    } else {
+      } else {
 
-      attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
-        paste0(
-          attr(data, "fmts_df")[data_rows[i], data_cols[i]],
-          "::style_", style, collapse = "")
+        attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
+          paste0(
+            attr(data, "fmts_df")[data_rows[i], data_cols[i]],
+            "::style_", style, collapse = "")
+      }
     }
   }
 
