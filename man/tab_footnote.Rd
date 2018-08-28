@@ -4,7 +4,7 @@
 \alias{tab_footnote}
 \title{Add a table footnote}
 \usage{
-tab_footnote(data, footnote, location)
+tab_footnote(data, footnote, locations)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -12,9 +12,11 @@ function.}
 
 \item{footnote}{text to be used in the footnote.}
 
-\item{location}{the cell or set of cells to be associated with the footnote.
+\item{locations}{the cell or set of cells to be associated with the footnote.
 Supplying an object with the \code{\link{data_cells}()} helper function is
-a useful way to specify the cell that is associated with the footnote.}
+a useful way to specify the cell that is associated with the footnote.
+Additionally, we can supply a list with multiple calls to
+\code{\link{data_cells}()} if we wish to combine multiple cell selections.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -29,13 +31,13 @@ gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_footnote(
       footnote = "Massive hp.",
-      location = data_cells(
+      locations = data_cells(
         columns = "hp",
         rows = "Maserati Bora"))
 }
 \seealso{
-[data_cells()] as a useful helper function for targeting the cell
-associated with the footnote.
+[data_cells()] as a useful helper function for targeting one or
+  more cells associated with the footnote.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},

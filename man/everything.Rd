@@ -7,7 +7,7 @@
 everything()
 }
 \description{
-See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
+Helper for selecting all colnames or rownames
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},

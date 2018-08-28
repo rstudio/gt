@@ -4,7 +4,7 @@
 \alias{tab_style}
 \title{Add custom styles to one or more cells}
 \usage{
-tab_style(data, style, location)
+tab_style(data, style, locations)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -13,9 +13,11 @@ function.}
 \item{style}{a vector of styles to use. The \code{\link{apply_styles}()}
 helper function can be used here to more easily generate valid styles.}
 
-\item{location}{the cell or set of cells to be styled. Supplying an object
-with the \code{\link{data_cells}()} helper function is a useful way to
-specify the cell that is to be styled.}
+\item{locations}{the cell or set of cells to be associated with the footnote.
+Supplying an object with the \code{\link{data_cells}()} helper function is
+a useful way to specify the cell that is associated with the footnote.
+Additionally, we can supply a list with multiple calls to
+\code{\link{data_cells}()} if we wish to combine multiple cell selections.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -30,14 +32,14 @@ gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_style(
       style = apply_styles(bkgd_color = "steelblue"),
-      location = data_cells(
+      locations = data_cells(
         columns = vars(hp),
         rows = c("Datsun 710", "Valiant")))
 }
 \seealso{
 [apply_styles()] as a helper for defining custom styles and
-  [data_cells()] as a useful helper function for targeting the data cells to
-  be styled.
+  [data_cells()] as a useful helper function for targeting one or more data
+  cells to be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},
