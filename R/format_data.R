@@ -81,6 +81,7 @@
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
+                       where = NULL,
                        decimals = 2,
                        drop_trailing_zeros = FALSE,
                        negative_val = "signed",
@@ -90,6 +91,13 @@ fmt_number <- function(data,
                        sep_mark = ",",
                        dec_mark = ".",
                        locale = NULL) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -111,6 +119,7 @@ fmt_number <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -165,6 +174,7 @@ fmt_number <- function(data,
 fmt_scientific <- function(data,
                            columns,
                            rows = NULL,
+                           where = NULL,
                            decimals = 2,
                            drop_trailing_zeros = FALSE,
                            scale_by = 1.0,
@@ -172,6 +182,13 @@ fmt_scientific <- function(data,
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -240,6 +257,7 @@ fmt_scientific <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         html = format_fcn_sci_notn_html,
         default = format_fcn_sci_notn_default))
@@ -282,6 +300,7 @@ fmt_scientific <- function(data,
 fmt_percent <- function(data,
                         columns,
                         rows = NULL,
+                        where = NULL,
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
                         negative_val = "signed",
@@ -292,6 +311,13 @@ fmt_percent <- function(data,
                         incl_space = FALSE,
                         placement = "right",
                         locale = NULL) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -313,6 +339,7 @@ fmt_percent <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
           # Determine which of `x` are not NA
@@ -433,6 +460,7 @@ fmt_percent <- function(data,
 fmt_currency <- function(data,
                          columns,
                          rows = NULL,
+                         where = NULL,
                          currency,
                          use_subunits = TRUE,
                          negative_val = "signed",
@@ -444,6 +472,13 @@ fmt_currency <- function(data,
                          dec_mark = ".",
                          placement = "left",
                          locale = NULL) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -494,6 +529,7 @@ fmt_currency <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -612,7 +648,15 @@ fmt_currency <- function(data,
 fmt_date <- function(data,
                      columns,
                      rows = NULL,
+                     where = NULL,
                      date_style) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
@@ -622,6 +666,7 @@ fmt_date <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -666,7 +711,15 @@ fmt_date <- function(data,
 fmt_time <- function(data,
                      columns,
                      rows = NULL,
+                     where = NULL,
                      time_style) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -676,6 +729,7 @@ fmt_time <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -720,8 +774,16 @@ fmt_time <- function(data,
 fmt_datetime <- function(data,
                          columns,
                          rows = NULL,
+                         where = NULL,
                          date_style,
                          time_style) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Transform `date_style` to `date_format`
   date_format <- get_date_format(date_style = date_style)
@@ -738,6 +800,7 @@ fmt_datetime <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -767,13 +830,22 @@ fmt_datetime <- function(data,
 fmt_passthrough <- function(data,
                             columns,
                             rows = NULL,
+                            where = NULL,
                             pattern = "{x}") {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         default = function(x) {
 
@@ -799,13 +871,22 @@ fmt_passthrough <- function(data,
 fmt_missing <- function(data,
                         columns,
                         rows = NULL,
+                        where = NULL,
                         missing_text = "---") {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  columns <- rlang::enexpr(columns)
+  rows <- rlang::enexpr(rows)
+
+  # `enquo()` the `where` argument value
+  where <- rlang::enquo(where)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
       columns = columns,
       rows = rows,
+      where = where,
       fcns = list(
         html = function(x) {
           if (missing_text == "---") {
