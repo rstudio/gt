@@ -7,7 +7,8 @@
 cols_merge_uncert(data, col_val, col_uncert)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{col_val}{a single column name that contains the base values.}
 

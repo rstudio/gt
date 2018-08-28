@@ -7,13 +7,14 @@
 cols_label(data, labels)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{labels}{a named vector of column names and their labels for display of
-the column headers. We can use the \code{col_labels()} function to more
-easily specify column names and column labels, since we can also wrap the
-column labels with \code{md()} (to interpret text as Markdown) and
-\code{HTML()} (to interpret text as HTML).}
+the column headers. We can use the \code{\link{col_labels}()} function to
+more easily specify column names and column labels, since we can also wrap
+the column labels with \code{\link{md}()} (to interpret text as Markdown)
+or \code{\link{HTML}()} (to interpret text as HTML).}
 }
 \description{
 Relabel one or more columns

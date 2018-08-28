@@ -7,12 +7,13 @@
 cols_move_to_end(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{columns}{the column names to move to the right-most side of the table.
 The order in which columns are provided will be preserved (as is the case
-with the remaining columns). Values provided that do not correspond to column
-names will be disregarded.}
+with the remaining columns). Values provided that do not correspond to
+column names will be disregarded.}
 }
 \value{
 an object of class \code{gt_tbl}.

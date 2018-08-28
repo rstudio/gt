@@ -7,10 +7,11 @@
 cols_align_center(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
-\item{columns}{an vector of column names for which the center alignment
-should be applied.}
+\item{columns}{a vector of column names for which the alignment should be
+applied.}
 }
 \value{
 an object of class \code{gt_tbl}.

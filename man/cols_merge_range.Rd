@@ -7,7 +7,8 @@
 cols_merge_range(data, col_begin, col_end)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 
 \item{col_begin}{a column that contains values for the start of the range.}
 
