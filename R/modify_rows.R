@@ -1,5 +1,5 @@
 #' Modify the ordering of the stub block groups
-#' @param data a table object that is created using the \code{gt()} function.
+#' @inheritParams cols_align
 #' @param groups a vector of stub block group heading names.
 #' @return an object of class \code{gt_tbl}.
 #' @family row modification functions
