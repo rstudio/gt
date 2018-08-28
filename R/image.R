@@ -80,10 +80,10 @@ web_image <- function(url,
 #' fa_icon_html <-
 #'   fa_icon(
 #'     name = "r-project")
+#' @import rlang
 #' @importFrom glue glue
 #' @importFrom dplyr filter pull rename
 #' @importFrom stringr str_replace
-#' @importFrom rlang UQ enquo
 #' @export
 fa_icon <- function(name,
                     height = 30,

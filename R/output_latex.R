@@ -2,9 +2,9 @@
 #'
 #' Take a \code{gt_tbl} table object and emit LateX.
 #' @param data a table object that is created using the \code{gt()} function.
+#' @import rlang
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stats setNames
-#' @importFrom rlang %||%
 #' @examples
 #' \dontrun{
 #' # Create a `gt` table using the `sleep`

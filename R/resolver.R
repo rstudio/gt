@@ -1,4 +1,4 @@
-#' @importFrom rlang UQ
+#' @import rlang
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr filter
 #' @noRd
@@ -73,6 +73,7 @@ resolve_columns <- function(data, columns) {
 #'   captured by \code{columns} and \code{rows} to further constrain the
 #'   selection of data cells.
 #' @return a list object of class \code{data_cells}.
+#' @import rlang
 #' @export
 data_cells <- function(columns = NULL,
                        rows = NULL,
@@ -101,8 +102,10 @@ data_cells <- function(columns = NULL,
 #' Resolve the `data_cells` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
+#' @import rlang
+#' @importFrom tibble rownames_to_column
+#' @importFrom dplyr filter arrange
 #' @importFrom tidyselect starts_with ends_with contains matches one_of
-#' @importFrom dplyr arrange
 #' @noRd
 resolve_data_cells <- function(data, object) {
 
@@ -270,8 +273,7 @@ resolve_vars <- function(var_expr, var_names) {
   } else if (inherits(var_expr, c("numeric", "integer"))) {
 
     # Resolve vars with a numeric vector object
-    resolved <-
-      base::intersect(var_expr, var_nums)
+    resolved <- base::intersect(var_expr, var_nums)
   }
 
   resolved
