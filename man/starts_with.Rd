@@ -8,9 +8,12 @@ starts_with(match, ignore.case = TRUE)
 }
 \arguments{
 \item{match}{a string.}
+
+\item{ignore.case}{if \code{TRUE}, the default, case is ignored when
+matching names.}
 }
 \description{
-See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
+Helper for resolving colnames or rownames that start with a prefix
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},

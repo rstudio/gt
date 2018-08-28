@@ -10,7 +10,7 @@ one_of(..., ignore.case = TRUE)
 \item{...}{one or more character vectors.}
 }
 \description{
-See \code{tidyselect::\link[tidyselect]{select_helpers}} for details.
+Helper for resolving colnames or rownames that are part of a set
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},

@@ -40,6 +40,16 @@ given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
+\item{table.font.size, heading.title.font.size, heading.headnote.font.size, boxhead.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
+elements: \code{heading.title}, \code{heading.headnote}, \code{boxhead},
+\code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
+as a single-length character vector with units of pixels
+(e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
+single-length numeric vector, it is assumed that the value is given in
+units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units.}
+
 \item{table.background.color, heading.background.color, boxhead.background.color, stub_group.background.color, summary_row.background.color, field.background.color}{background colors for the parent element \code{table} and the following
 child elements: \code{heading}, \code{boxhead}, \code{stub_group},
 \code{summary_row}, and \code{field}. A color name or a hexadecimal color
