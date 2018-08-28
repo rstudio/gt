@@ -515,3 +515,22 @@ opts_df_get <- function(opts_df, option) {
 
   opts_df[which(opts_df$parameter == option), 3]
 }
+
+#' Upgrade `data_cells()` to a list() if a single instance provided
+#' @noRd
+as_locations <- function(locations) {
+
+  if (!inherits(locations, "data_cells")) {
+
+    if (!is.list(locations) &&
+        any(!vapply(locations, inherits, logical(1), "data_cells"))) {
+      stop("The `locations` object should be a list of `data_cells()`.")
+    }
+
+  } else {
+
+    locations <- list(locations)
+  }
+
+  locations
+}
