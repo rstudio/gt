@@ -22,23 +22,18 @@ data <-
   tab_stubhead_caption(caption = "Stubhead Caption") %>%
   tab_boxhead_panel(group = "Group 1", columns = vars(col_1, col_2)) %>%
   tab_boxhead_panel(group = "Group 2", columns = vars(col_3, col_4)) %>%
-  summary_rows(
-    funs = funs(mean, sum),
-    groups = vars("2018-02-10"),
-    columns = vars(col_1, col_2),
-    decimals = 1) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    location = data_cells(row = 1, column = 1)) %>%
+    location = data_cells(columns = 1, rows = 1)) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    location = data_cells(row = 2, column = 2)) %>%
+    location = data_cells(columns = 2, rows = 2)) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    location = data_cells(row = 3, column = 3)) %>%
+    location = data_cells(columns = 3, rows = 3)) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    location = data_cells(row = 4, column = 4)) %>%
+    location = data_cells(columns = 4, rows = 4)) %>%
   tab_source_note("A source note for the table.") %>%
   tab_options(
     table.font.size = px(14),            # Entire table's font size
