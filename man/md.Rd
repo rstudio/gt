@@ -32,9 +32,9 @@ Other helper functions: \code{\link{apply_styles}},
   \code{\link{contains}}, \code{\link{ends_with}},
   \code{\link{everything}}, \code{\link{funs}},
   \code{\link{html}}, \code{\link{matches}},
-  \code{\link{not_in_group}}, \code{\link{one_of}},
-  \code{\link{pct}}, \code{\link{px}},
-  \code{\link{rownames_with}}, \code{\link{rows_where}},
-  \code{\link{starts_with}}, \code{\link{vars}}
+  \code{\link{one_of}}, \code{\link{pct}},
+  \code{\link{px}}, \code{\link{rownames_with}},
+  \code{\link{rows_where}}, \code{\link{starts_with}},
+  \code{\link{vars}}
 }
 \concept{helper functions}
