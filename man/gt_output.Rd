@@ -17,4 +17,7 @@ Create a gt display table output element for Shiny
 }
 \seealso{
 \link{render_gt}()
+
+Other Shiny functions: \code{\link{render_gt}}
 }
+\concept{Shiny functions}
