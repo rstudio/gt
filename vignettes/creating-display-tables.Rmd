@@ -154,12 +154,12 @@ gt_tbl <- gt_tbl %>%
     footnote = md("The **largest** by area."),
     location = data_cells(
       columns = vars(size),
-      where = name == !!largest)) %>%
+      rows = name == largest)) %>%
   tab_footnote(
     footnote = "The lowest by population.",
     location = data_cells(
       columns = vars(size),
-      where = name == "Antarctica"))
+      rows = name == "Antarctica"))
 
 # Show the table
 gt_tbl
@@ -220,13 +220,13 @@ gt_tbl <- gt_tbl %>%
     footnote = md("The **largest** by area."),
     location = data_cells(
       columns = vars(size),
-      rows = !!largest)
+      rows = largest)
     ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
     location = data_cells(
       columns = vars(size),
-      rows = "Antarctica"))
+      rows = contains("arc")))
 
 # Show the table
 gt_tbl

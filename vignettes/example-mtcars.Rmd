@@ -27,13 +27,13 @@ mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   tab_stub_block(
     group = "Fast Cars",
-    where = qsec < 16) %>%
+    rows = qsec < 16) %>%
   tab_stub_block(
     group = "High Gas Mileage",
-    where = mpg > 25) %>%
+    rows = mpg > 25) %>%
   tab_stub_block(
     group = "Pitiful Gas Mileage",
-    where = mpg < 12) %>%
+    rows = mpg < 12) %>%
   tab_stub_block(
     group = "The Mercs",
     rows = starts_with("Merc")) %>%
@@ -142,12 +142,12 @@ mtcars_tbl <- mtcars_tbl %>%
     footnote = md("Very low power-to-weight ratio *(<15 lb/hp)*."),
     locations = data_cells(
       columns = vars(hp),
-      where = (wt * 1000) / hp < 15)) %>%
+      rows = (wt * 1000) / hp < 15)) %>%
   tab_footnote(
     footnote = md("The *fastest* quarter mile of the **mtcars**."),
     locations = data_cells(
       columns = vars(qsec),
-      rows = !!fastest_car_qsec))
+      rows = fastest_car_qsec))
 
 # Show the table
 mtcars_tbl
