@@ -76,8 +76,6 @@ tab_stubhead_caption <- function(data,
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}.
-#' @param where a conditional expression that operates across all of the rows
-#'   captured by \code{rows} to further constrain the row selection.
 #' @param others an option to set a default group heading for any rows not
 #'   formally placed in a stub block named by \code{group} in any call of
 #'   \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
@@ -105,14 +103,10 @@ tab_stubhead_caption <- function(data,
 tab_stub_block <- function(data,
                            group = NULL,
                            rows = NULL,
-                           where = NULL,
                            others = NULL) {
 
-  # Capture the expression for `rows` and `where` arguments
-  row_expr <- rlang::enexpr(rows)
-
-  # `enquo()` the `where` argument value
-  where <- rlang::enquo(where)
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
 
   # Create a stub block if a `group` is provided
   if (!is.null(group)) {
@@ -127,19 +121,8 @@ tab_stub_block <- function(data,
     rownames <- stub_df$rowname
 
     # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows <- resolve_vars(var_expr = row_expr, var_names = rownames)
-
-    # Constrain the `resolved_rows` if a `where` expression is provided
-    if (!is.null(where %>% rlang::get_expr())) {
-
-      data_df_rows <-
-        (data_df %>%
-           tibble::rownames_to_column() %>%
-           dplyr::filter(!!!where))[["rowname"]] %>%
-        as.numeric()
-
-      resolved_rows <- base::intersect(resolved_rows, data_df_rows)
-    }
+    resolved_rows <-
+      resolve_vars(var_expr = row_expr, var_names = rownames, data_df = data_df)
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
