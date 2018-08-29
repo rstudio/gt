@@ -23,17 +23,23 @@ reference:
     - write_rtf
     - as_raw_html
     - extract_summary
+  - title: Shiny Functions
+    - render_gt
+    - gt_output
   - title: Helper Functions
     contents:
     - md
     - html
-    - columns_with
-    - rows_where
-    - rownames_with
-    - data_cells
+    - px
+    - pct
+    - apply_styles
+    - col_labels
     - vars
     - funs
-    - col_labels
-    - apply_styles
-    - pct
-    - px
+    - data_cells
+    - starts_with
+    - ends_with
+    - contains
+    - matches
+    - one_of
+    - everything
