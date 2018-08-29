@@ -10,29 +10,21 @@
 #'   \code{\link{ends_with}()}, \code{\link{contains}()},
 #'   \code{\link{matches}()}, \code{\link{one_of}()}, and
 #'   \code{\link{everything}()}.
-#' @param where a conditional expression that operates across all data cells
-#'   captured by \code{columns} and \code{rows} to further constrain the
-#'   selection of data cells.
 #' @return a list object of class \code{data_cells}.
 #' @import rlang
 #' @export
 data_cells <- function(columns = NULL,
-                       rows = NULL,
-                       where = NULL) {
+                       rows = NULL) {
 
   # Capture expressions for the `columns` and `rows` arguments
-  col_expr <- rlang::enexpr(columns)
-  row_expr <- rlang::enexpr(rows)
-
-  # `enquo()` the `where` argument value
-  where <- rlang::enquo(where)
+  col_expr <- rlang::enquo(columns)
+  row_expr <- rlang::enquo(rows)
 
   # Create the `data_cells` object
   data_cells <-
     list(
       columns = col_expr,
-      rows = row_expr,
-      where = where)
+      rows = row_expr)
 
   # Apply the `data_cells` class
   class(data_cells) <- "data_cells"
