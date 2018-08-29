@@ -130,7 +130,8 @@ tab_stub_block <- function(data,
 
     # Insert the group into the `blocks_arrange` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
-      data <- blocks_arrange(data = data, groups = process_text(group[1]))
+
+      attr(data, "arrange_groups") <- list(groups = process_text(group[1]))
 
     } else {
 
