@@ -24,6 +24,7 @@ reference:
     - as_raw_html
     - extract_summary
   - title: Shiny Functions
+    contents:
     - render_gt
     - gt_output
   - title: Helper Functions
