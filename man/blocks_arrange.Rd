@@ -10,7 +10,12 @@ blocks_arrange(data, groups)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{groups}{a vector of stub block group heading names.}
+\item{groups}{a vector of group names, or, a numeric
+vector of indices corresponding to the new ordering. Either vector must
+correspond to assigned group names or the index positions. Also, either
+vector isn't required to have all group names or index positions within it;
+any omitted values will be added to the end while preserving the original
+ordering.}
 }
 \value{
 an object of class \code{gt_tbl}.
