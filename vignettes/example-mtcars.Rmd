@@ -128,9 +128,14 @@ mtcars_tbl
 
 ```{r add_footnotes}
 
-# Determine which car has the fastest quarter mile time
+# Determine which car has the fastest quarter mile time;
+# using dplyr functions on the orginal `mtcars` dataset
+# results in obtaining a single rowname
 fastest_car_qsec <- mtcars %>% 
-  rownames_to_column() %>% arrange(qsec) %>% slice(1) %>% pull(rowname)
+  rownames_to_column() %>%
+  arrange(qsec) %>%
+  slice(1) %>%
+  pull(rowname)
 
 mtcars_tbl <- mtcars_tbl %>%
   tab_footnote(
