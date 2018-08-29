@@ -56,7 +56,11 @@ gt <- function(data,
   # place that column's data into `stub_df` and
   # remove it from `data`
   if ("rowname" %in% colnames(data)) {
+
+    # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- as.character(data[["rowname"]])
+
+    # Remove the `rowname` column from `data`
     data[["rowname"]] <- NULL
   }
 
@@ -64,7 +68,11 @@ gt <- function(data,
   # place that column's data into `stub_df` and
   # remove it from `data`
   if ("groupname" %in% colnames(data)) {
+
+    # Place the `groupname` values into `stub_df$groupname`
     stub_df[["groupname"]] <- as.character(data[["groupname"]])
+
+    # Remove the `groupname` column from `data`
     data[["groupname"]] <- NULL
   }
 
@@ -99,6 +107,16 @@ gt <- function(data,
   attr(data_tbl, "stub_df") <- stub_df
   attr(data_tbl, "fmts_df") <- empty_df
   attr(data_tbl, "foot_df") <- empty_df
+
+  # Create an `arrange_groups` list object, which contains
+  # a vector of `groupname` values in the order of first
+  # appearance in `data`; this is only done if we detect
+  # any non-NA values in the `stub_df$groupname` column
+  if (!all(is.na(stub_df[["groupname"]]))) {
+
+    attr(data_tbl, "arrange_groups") <-
+      list(groups = unique(stub_df[["groupname"]]))
+  }
 
   # Apply the default theme options data frame as an attribute
   attr(data_tbl, "opts_df") <- gt_options_default()
