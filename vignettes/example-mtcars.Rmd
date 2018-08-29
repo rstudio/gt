@@ -1,0 +1,155 @@
+---
+title: "An Example: mtcars"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Example: mtcars}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+library(gt)
+library(tidyverse)
+```
+
+
+```{r mtcars_data_frame}
+mtcars
+```
+
+
+```{r split_into_stub_blocks}
+mtcars_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) %>%
+  tab_stub_block(
+    group = "Fast Cars",
+    where = qsec < 16) %>%
+  tab_stub_block(
+    group = "High Gas Mileage",
+    where = mpg > 25) %>%
+  tab_stub_block(
+    group = "Pitiful Gas Mileage",
+    where = mpg < 12) %>%
+  tab_stub_block(
+    group = "The Mercs",
+    rows = starts_with("Merc")) %>%
+  tab_stub_block(
+    group = "Mazda",
+    rows = starts_with("Mazda")) %>%
+  tab_stub_block(
+    group = "Hornet",
+    rows = starts_with("Hornet")) %>%
+  tab_stub_block(others = "The Rest of the mtcars")
+
+# Show the table
+mtcars_tbl
+```
+
+
+```{r modify_order_of_stub_blocks}
+mtcars_tbl <- mtcars_tbl %>%
+  blocks_arrange(groups = c("High Gas Mileage", "Fast Cars"))
+
+# Show the table
+mtcars_tbl
+```
+
+
+```{r move_columns}
+mtcars_tbl <- mtcars_tbl %>%
+  cols_remove(columns = vars(vs, am, gear, drat, carb)) %>%
+  cols_move_to_start(columns = vars(hp, wt, qsec)) %>%
+  cols_move_to_end(columns = vars(disp, cyl))
+
+# Show the table
+mtcars_tbl
+```
+
+
+```{r}
+# Format the `wt` and `qsec` columns to 3 decimal
+# places; `mpg` and `disp` to 1 decimal place
+mtcars_tbl <- mtcars_tbl %>%
+  fmt_number(
+    columns = vars(wt, qsec),
+    decimals = 3
+    ) %>%
+  fmt_number(
+    columns = vars(mpg, disp),
+    decimals = 1)
+
+# Show the table
+mtcars_tbl
+```
+
+Modify the column labels. By default column labels inherit the column names from the input data table. However, we can selectively modify them and even use Markdown to style the labels. The `cols_label()` function allows for the setting of column labels. We can use the helper function `col_labels()` to set multiple column labels in a single call. Here, let's modify the `hp`, `wt`, `qsec`, `mpg`, `disp`, and `cyl` column labels to have something that is more readable. 
+
+```{r}
+mtcars_tbl <- mtcars_tbl %>%
+  cols_label(
+    labels = col_labels(
+      hp = md("*HP*"),
+      wt = "Weight",
+      qsec = "QMT, s",
+      mpg = "Miles/gallon",
+      disp = "Displacement",
+      cyl = "Cylinders"))
+
+# Show the table
+mtcars_tbl
+```
+
+The table is really looking nice. We will now add a title and a headnote with `tab_heading()`, we'll include two source notes in the footer area with `tab_source_note()`, and, that little area in the top-left (the stub heading) will get a stubhead caption through `tab_stubhead_caption()` to explain what's in the stub.
+
+```{r add_heading_footer_parts}
+
+mtcars_tbl <- mtcars_tbl %>%
+  tab_heading(
+    title = md("The **mtcars** dataset"),
+    headnote = md("[A rather famous *Motor Trend* table]")
+    ) %>%
+  tab_source_note(
+    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
+    ) %>%
+  tab_source_note(
+    source_note = md("Original Data: *Motor Trend Magazine* (1974).")
+    ) %>%
+  tab_stubhead_caption(
+    caption = md("*Car*"))
+
+# Show the table
+mtcars_tbl
+```
+
+
+```{r add_footnotes}
+
+# Determine which car has the fastest quarter mile time
+fastest_car_qsec <- mtcars %>% 
+  rownames_to_column() %>% arrange(qsec) %>% slice(1) %>% pull(rowname)
+
+mtcars_tbl <- mtcars_tbl %>%
+  tab_footnote(
+    footnote = "Great fuel economy",
+    locations = data_cells(
+      columns = vars(mpg),
+      rows = c("Toyota Corolla", "Honda Civic", "Fiat 128"))) %>%
+  tab_footnote(
+    footnote = md("Very low power-to-weight ratio *(<15 lb/hp)*."),
+    locations = data_cells(
+      columns = vars(hp),
+      where = (wt * 1000) / hp < 15)) %>%
+  tab_footnote(
+    footnote = md("The *fastest* quarter mile of the **mtcars**."),
+    locations = data_cells(
+      columns = vars(qsec),
+      rows = !!fastest_car_qsec))
+
+# Show the table
+mtcars_tbl
+```
+
