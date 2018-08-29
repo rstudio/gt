@@ -26,7 +26,8 @@ tab_cell_fmts <-
       bkgd_color = "orange",
       text_color = "white"),
     location = data_cells(
-      rows = 1, columns = vars(value, value_2)))
+      columns = vars(value, value_2),
+      rows = 1))
 
 tab_cell_fmts
 
