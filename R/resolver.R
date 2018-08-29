@@ -18,7 +18,6 @@ resolve_data_cells <- function(data,
   # object created by the `data_cells()` function
   object_columns <- object$columns
   object_rows <- object$rows
-  where <- object$where
 
   # Collect the column names and column indices
   # from `data_df`
@@ -35,31 +34,8 @@ resolve_data_cells <- function(data,
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars(object_columns, colnames)
-  resolved_rows <- resolve_vars(object_rows, rownames)
-
-  #
-  # Further resolution of columns and rows as integer
-  # vector by resolving the `where` clause and filtering
-  # the positions of the matched variables
-  #
-
-  if (!is.null(where %>% rlang::get_expr())) {
-
-    data_df_rows <-
-      (data_df %>%
-         tibble::rownames_to_column() %>%
-         dplyr::filter(!!!(object$where)))[["rowname"]] %>%
-      as.numeric()
-
-    constrained <-
-      data.frame(columns = resolved_columns, rows = resolved_rows) %>%
-      dplyr::distinct() %>%
-      dplyr::filter(rows %in% data_df_rows)
-
-    resolved_columns <- constrained$columns
-    resolved_rows <- constrained$rows
-  }
+  resolved_columns <- resolve_vars(object_columns, colnames, data_df)
+  resolved_rows <- resolve_vars(object_rows, rownames, data_df)
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
@@ -79,103 +55,31 @@ resolve_data_cells <- function(data,
 #' Resolve variables for rows and columns using expressions
 #' @import tidyselect
 #' @noRd
-resolve_vars <- function(var_expr, var_names) {
+resolve_vars <- function(var_expr, var_names, data_df) {
 
-  var_nums <- seq(var_names)
+  stopifnot(rlang::is_quosure(var_expr))
 
-  if (is.null(var_expr)) {
+  resolved <- with_vars(var_names, rlang::eval_tidy(var_expr, data_df, env = NULL))
 
-    # Resolve vars when `var_expr` is NULL
-    resolved <-
-      tidyselect::everything(vars = var_names)
+  if (is.null(resolved)) {
 
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "starts_with") {
+    resolved <- seq_along(var_names)
 
-    # Resolve vars with a `starts_with` object
-    resolved <-
-      tidyselect::starts_with(
-        match = var_expr[[2]], vars = var_names)
+  } else if (is.logical(resolved)) {
 
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "ends_with") {
+    # TODO: Warn if length(resolved) > length(var_names)
+    resolved <- which(rlang::rep_along(var_names, resolved))
 
-    # Resolve vars with a `ends_with` object
-    resolved <-
-      tidyselect::ends_with(
-        match = var_expr[[2]], vars = var_names)
+  } else if (is.character(resolved)) {
 
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "contains") {
+    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
+    resolved <- which(var_names %in% resolved)
 
-    # Resolve vars with a `contains` object
-    resolved <-
-      tidyselect::contains(
-        match = var_expr[[2]], vars = var_names)
+  } else if (is_quosures(resolved)) {
 
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "matches") {
-
-    # Resolve vars with a `matches` object
-    resolved <-
-      tidyselect::matches(
-        match = var_expr[[2]], vars = var_names)
-
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "one_of") {
-
-    # Resolve vars with a `one_of` object
-    resolved <-
-      tidyselect::one_of(var_expr[[2]], .vars = var_names)
-
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "everything") {
-
-    # Resolve vars with a `everything` object
-    resolved <-
-      tidyselect::everything(vars = var_names)
-
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == ":") {
-
-    # Resolve vars with a numeric range
-    resolved <-
-      tidyselect::one_of(
-        seq(
-          var_expr[2] %>% as.character() %>% as.numeric(),
-          var_expr[3] %>% as.character() %>% as.numeric()) %>%
-          as.character(),
-        .vars = var_nums %>% as.character())
-
-  } else if (inherits(var_expr, "character") &&
-             length(var_expr) == 1) {
-
-    # Resolve vars with a character vector object
-    resolved <-
-      tidyselect::one_of(var_expr, .vars = var_names)
-
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "c") {
-
-    # Resolve names within `c()`
-    resolved <-
-      tidyselect::one_of(
-        (var_expr %>% as.character())[-1],
-        .vars = var_names)
-
-  } else if (inherits(var_expr, "call") &&
-             (var_expr[1] %>% as.character()) == "vars") {
-
-    # Resolve vars provided within `vars()`
-    resolved <-
-      tidyselect::one_of(
-        (var_expr %>% as.character())[-1],
-        .vars = var_names)
-
-  } else if (inherits(var_expr, c("numeric", "integer"))) {
-
-    # Resolve vars with a numeric vector object
-    resolved <- base::intersect(var_expr, var_nums)
+    resolved <- vapply(resolved, function(x) as.character(quo_get_expr(x)), character(1))
+    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
+    resolved <- which(var_names %in% resolved)
   }
 
   resolved
