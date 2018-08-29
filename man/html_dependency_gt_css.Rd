@@ -2,10 +2,10 @@
 % Please edit documentation in R/htmldep.R
 \name{html_dependency_gt_css}
 \alias{html_dependency_gt_css}
-\title{An HTML dependency for the stylesheet}
+\title{An HTML dependency for the CSS stylesheet}
 \usage{
 html_dependency_gt_css()
 }
 \description{
-An HTML dependency for the stylesheet
+An HTML dependency for the CSS stylesheet
 }
