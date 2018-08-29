@@ -346,15 +346,17 @@ remove_html <- function(text) {
 #' @noRd
 #' @importFrom dplyr bind_rows tibble filter mutate case_when select
 #' @importFrom stringr str_remove str_extract str_trim str_detect
-get_css_tbl <- function(css_file = "gt.css") {
+get_css_tbl <- function(data) {
 
   raw_css_vec <-
-    readLines(system_file(file = paste0("css/", css_file)))
+    compile_css(data) %>% as.character() %>%
+    strsplit("\n") %>% unlist()
 
   ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
   ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
 
   css_tbl <- tibble()
+
   for (i in seq(ruleset_start)) {
 
     css_tbl <-
