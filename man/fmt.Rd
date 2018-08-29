@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = NULL, rows = NULL, where = NULL, fcns)
+fmt(data, columns = NULL, rows = NULL, fcns)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -24,9 +24,6 @@ focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{fcns}{a single formatting function or a named list of functions.}
 }

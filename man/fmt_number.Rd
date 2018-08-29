@@ -4,7 +4,7 @@
 \alias{fmt_number}
 \title{Format numeric values}
 \usage{
-fmt_number(data, columns, rows = NULL, where = NULL, decimals = 2,
+fmt_number(data, columns, rows = NULL, decimals = 2,
   drop_trailing_zeros = FALSE, negative_val = "signed",
   use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
   dec_mark = ".", locale = NULL)
@@ -27,9 +27,6 @@ focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
