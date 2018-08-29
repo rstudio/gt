@@ -18,7 +18,7 @@ as_raw_html <- function(data, inline_css = TRUE) {
     # Create inline styles
     html_table <-
       html_table %>%
-      inline_html_styles(css_tbl = get_css_tbl())
+      inline_html_styles(css_tbl = get_css_tbl(data))
   }
 
   html_table
