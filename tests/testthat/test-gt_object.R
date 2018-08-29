@@ -299,9 +299,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # `data_rg` dataset
   tab <- gt(data = data_rg)
 
-  # Expect that the object has 9 attributes
+  # Expect that the object has 10 attributes
   expect_equal(
-    length(attributes(tab)), 9)
+    length(attributes(tab)), 10)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -310,9 +310,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_true(
     all(
       names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df",
-          "foot_df", "opts_df", "formats")))
+        c("names", "row.names", "class",
+          "boxh_df", "stub_df", "fmts_df", "foot_df",
+          "arrange_groups", "opts_df", "formats")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
@@ -320,6 +320,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_is(attr(tab, "fmts_df"), "data.frame")
   expect_is(attr(tab, "foot_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
+  expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
 
   # Expect that the attribute objects are of the
@@ -330,6 +331,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_equal(dim(attr(tab, "foot_df")), c(10, 1))
   expect_equal(ncol(attr(tab, "opts_df")), 3)
   expect_equal(length(attr(tab, "formats")), 0)
+  expect_equal(length(attr(tab, "arrange_groups")), 1)
 
   # Expect that extracted df has one of the column
   # names in the original dataset (and doesn't
