@@ -7,6 +7,7 @@
 #'   call to \code{\link{gt_output}()} when \code{render_gt} is used in an
 #'   interactive R Markdown document.
 #' @seealso \link{gt_output}()
+#' @family Shiny functions
 #' @importFrom htmltools resolveDependencies findDependencies doRenderTags
 #' @export
 render_gt <- function(expr,
@@ -45,6 +46,7 @@ render_gt <- function(expr,
 #' @param outputId an output variable from which to read the table.
 #' @return A gt table output element that can be included in a panel.
 #' @seealso \link{render_gt}()
+#' @family Shiny functions
 #' @export
 gt_output <- function(outputId) {
 
