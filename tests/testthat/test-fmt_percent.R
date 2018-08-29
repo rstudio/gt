@@ -18,16 +18,11 @@ test_that("formatting a column of numeric data as percentage values works correc
   # `data_tbl` dataset
   tab <- gt(data = data_tbl)
 
-  # When attempting to format a column that does not exist
-  # original table object is returned with no change to the
-  # output data frame; extract `output_df` and determine that
-  # no change is made
-  expect_true(
-    suppressWarnings(
-      tab %>%
-        fmt_percent(columns = "num_3", decimals = 2) %>%
-        render_formats("html"))[, 1:4] %>%
-      lapply(is.na) %>% lapply(all) %>% unlist() %>% all())
+  # Expect an error when attempting to format a column
+  # that does not exist
+  expect_error(
+    tab %>%
+      fmt_percent(columns = "num_3", decimals = 2))
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
