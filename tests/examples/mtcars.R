@@ -42,7 +42,7 @@ mtcars_tbl <-
   fmt_number(
     columns = vars(disp, drat, wt), decimals = 2) %>% # 7
   fmt_number(
-    columns = vars(qsec, wt), decimals = 3, rows = rownames_with("Merc")) %>% # 7
+    columns = vars(qsec, wt), decimals = 3, rows = starts_with("Merc")) %>% # 7
   fmt_number(
     columns = vars(mpg), decimals = 1) %>% # 7
   tab_heading(
@@ -56,19 +56,28 @@ mtcars_tbl <-
     caption = md("*car*")) %>% # 10
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    location = data_cells(row = "Ford Pantera L", column = vars(qsec))) %>% # 11
+    location = data_cells(
+      columns = vars(qsec),
+      rows = "Ford Pantera L")) %>% # 11
   tab_footnote(
     footnote = "Massive hp.",
-    location = data_cells(row = "Ford Pantera L", column = vars(hp))) %>% # 11
+    location = data_cells(
+      columns = vars(hp),
+      rows = "Ford Pantera L")) %>% # 11
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    location = data_cells("Toyota Corolla", column = 2)) %>% # 11
+    location = data_cells(
+      columns = 2,
+      rows = "Toyota Corolla")) %>% # 11
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    location = data_cells("Merc 230", vars(qsec))) %>% # 11
+    location = data_cells(
+      columns = vars(qsec),
+      rows = "Merc 230")) %>% # 11
   cols_label(
     labels = col_labels(
-      hp = md("*HP*"), qsec = "QMT, seconds")) # 12
+      hp = md("*HP*"),
+      qsec = "QMT, seconds")) # 12
 
 # Display the table in the Viewer
 mtcars_tbl
