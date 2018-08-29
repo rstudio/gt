@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>")
 
 library(gt)
-library(dplyr)
+library(tidyverse)
 ```
 
 The **gt** package is all about making it simple to produce wonderful-looking display tables. Display tables? Well yes, we are trying to distinguish between data tables (e.g., tibbles, `data.table`s, `data.frame`s) and those tables you'd find in a web page, a journal article, or in a magazine. Such tables can likewise be called presentation tables, summary tables, or just tables really. Are you getting it? If not, here are some examples, ripped straight from the web:
@@ -46,47 +46,55 @@ islands_tbl
 
 The `islands_tbl` tibble is now suitable input for **gt**! We can pass that table to the *function* `gt()`, and we'll get a display table.
 
-```{r}
+```{r simple_gt_table}
 # Create a display table showing ten of
 # the largest islands in the world
-gt(data = islands_tbl)
+gt_tbl <- gt(data = islands_tbl)
+
+# Show the table
+gt_tbl
 ```
 
-That doesn't look too bad. Sure, it's basic but we really didn't really ask for much. We did receive a proper table *boxhead* (with column labels!) and a *field*. Also, that default striping is a nice touch. Oftentimes however, you'll want a bit more: a *title*, a *stub* (yes, you'll want to have this), *source notes*, and, sometimes, *footnotes*.
+That doesn't look too bad. Sure, it's basic but we really didn't really ask for much. We did receive a proper table *boxhead* (with column labels!) and a *field*. Also, that default striping is a nice touch. Oftentimes however, you'll want a bit more: a *title*, a *stub* (it's a good thing), *source notes*, and, sometimes, *footnotes*.
 
 ### Slightly More Complex Tables, Adhering to the Grammar of Tables
 
-Let's introduce the Grammar of Tables. It's really just a bunch of table parts that work well together and some rules about how the information held within them is architected. No big deal. Those terms provided earlier in slanted text signify the table parts. The last display table had only two parts, the boxhead and and the field, the next few will have considerably more.
+Let's introduce the Grammar of Tables. It's really just a bunch of table parts that work well together and some rules about how the information held within them is arranged. No big deal. Those terms provided earlier in slanted text signify the table parts. The last display table had only two parts, the **boxhead** and the **field**, the next few display tables will have considerably more.
 
 The way the main parts of a table (and their subparts) fit together is best shown as a schematic:
 
 ```{r eval=FALSE, include=FALSE}
 #<img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/gt_main_parts_of_a_table.png" width=100%>
 ```
-  
+
+The parts (roughly from top to bottom) are:
+
 - the **heading** (optional; with a **title** and possibly a **headnote**)
 - the **stub** (optional; contains a **stub head** and **row captions**, optionally within **stub blocks** having **group headings** and possibly **summary captions**)
 - the **boxhead** (contains **column labels**, optionally within **boxhead panels** having one or more **spanner headings**)
 - the **field** (contains *cells*, *columns*, and *rows*)
 - the **footer** (optional; possibly with **footnotes** and **source notes**)
 
-The way that we add parts like the **heading** and **footnotes** is to use the `tab_*` family of functions. The heading part is very easy to reason about so let's see how the previous table looks with a **title** and **headnote**. We add this part using the `tab_heading()` function:
+The way that we add parts like the **heading** and **footnotes** is to use the `tab_*()` family of functions. The heading part is very easy to reason about so let's see how the previous table looks with a **title** and **headnote**. We add this part using the `tab_heading()` function:
 
-```{r}
-# Display the `islands_tbl` data with a heading placed
-# above the boxhead
-gt(data = islands_tbl) %>%
+```{r table_with_heading}
+# Make a display table with the `islands_tbl`
+# table; put a heading just above the boxhead
+gt_tbl <- gt_tbl %>%
   tab_heading(
     title = "Large Landmasses of the World",
     headnote = "The top ten largest are presented")
+
+# Show the table
+gt_tbl
 ```
 
 The **heading** provides a nice opportunity to describe the data that's presented. The `headnote`, which functions as a subtitle, is an optional part of the **heading**. We may also style the `title` and `headnote` using markdown! We do this by wrapping the values passed to `title` or `headnote` with the `md()` function. Here is an example with the table data truncated for brevity:
 
-```{r}
+```{r heading_w_markdown}
 # Use markdown for the heading's `title` and `headnote` to
 # add bold and italicized characters
-gt(data = islands_tbl[1:2, ]) %>%
+gt(islands_tbl[1:2,]) %>%
   tab_heading(
     title = md("**Large Landmasses of the World**"),
     headnote = md("The *top two* largest are presented"))
@@ -97,32 +105,67 @@ A **source note** can be added to the table's **footer** through use of the `tab
 ```{r}
 # Display the `islands_tbl` data with a heading and
 # two source notes
-gt(data = islands_tbl) %>%
-  tab_heading(
-    title = md("**Large Landmasses of the World**"),
-    headnote = md("The *top ten* largest are presented")
-  ) %>%
-  tab_source_note("Source: The World Almanac and Book of Facts, 1975, page 406.") %>%
-  tab_source_note(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."))
+gt_tbl <- gt_tbl %>%
+  tab_source_note(
+    source_note = "Source: The World Almanac and Book of Facts, 1975, page 406."
+    ) %>%
+  tab_source_note(
+    source_note = md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."))
+
+# Show the table
+gt_tbl
 ```
 
-Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the `tab_footnote()` function. We'll provide a very simple example on how footnotes can be added here.
+Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `data_cells()` is used with the `location` argument to specify which cells should be the target of the footnote. The `data_cells()` helper has three arguments:
+
+- `columns` and `rows` can be supplied as (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row captions within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`).
+- `where`, in which one can supply a conditional expression (e.g., `size > 10000`) that operates across all data cells captured by columns and rows to further constrain the selection
+
+Here is a simple example on how a footnotes can be added to a table cell. Let's add a footnote that references the `North America` and `South America` cells in the `name` column:
+
+```{r table_footnote_simple}
+# Add footnotes (the same text) to two different
+# cell; data cells are targeted with `data_cells()`
+gt_tbl <- gt_tbl %>%
+  tab_footnote(
+    footnote = "The Americas.",
+    location = data_cells(
+      columns = vars(name),
+      rows = 3:4))
+
+# Show the table
+gt_tbl
+```
+
+Here is a slightly more complex example of adding footnotes that use expressions in `where` to help target cells in a column by the underlying data in `islands_tbl`. First, a set of **dplyr** statements obtains the name of the 'island' by largest landmass. This is assigned to the `largest` object and is used in the first `tab_footnote()` call that targets the cell in the `size` column that is next to a `name` value that is stored in `largest` ('Asia'). The second `tab_footnote()` is similar except we are directly supplying a `name` value in the `where` expression.
 
 ```{r}
-# Display the `islands_tbl` data with a heading,
-# two source notes, and two footnotes
-gt(data = islands_tbl) %>%
-  tab_heading(
-    title = md("**Large Landmasses of the World**"),
-    headnote = md("The *top ten* largest are presented")
-  ) %>%
-  tab_source_note("Source: The World Almanac and Book of Facts, 1975, page 406.") %>%
-  tab_source_note(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")) %>%
-  tab_footnote(footnote = md("The **largest** by area."), location = data_cells(1, 2)) %>%
-  tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 2))
+# Determine the row that contains the
+# largest landmass ('Asia')
+largest <- islands_tbl %>% 
+  arrange(desc(size)) %>%
+  slice(1) %>%
+  pull(name)
+
+# Create two additional footnotes, using the
+# `columns` and `where` arguments of `data_cells()`
+gt_tbl <- gt_tbl %>%
+  tab_footnote(
+    footnote = md("The **largest** by area."),
+    location = data_cells(
+      columns = vars(size),
+      where = name == !!largest)) %>%
+  tab_footnote(
+    footnote = "The lowest by population.",
+    location = data_cells(
+      columns = vars(size),
+      where = name == "Antarctica"))
+
+# Show the table
+gt_tbl
 ```
 
-We were able to supply the reference locations in the table by using the `data_cells()` helper function and supplying the row and column numbers. Markdown, again with `md()`, was used to style the footnote text.
+We were able to supply the reference locations in the table by using the `data_cells()` helper function and supplying the necessary row and column reference and filtering rows with `where` expression in the last two cases.
 
 ### The Stub
 
@@ -131,10 +174,18 @@ The **stub** is the area to the left in a table that contains **row captions**, 
 The easiest way to generate a **stub** part is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as **row captions**. To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
 
 ```{r}
-# Generate a gt table after creating a `rowname` colummn
-islands_tbl %>%
-  rename(rowname = name) %>%
-  gt()
+# Modify the `islands_tbl` by creating a
+# `rowname` column (`name` -> `rowname`)
+islands_tbl <- islands_tbl %>%
+  rename(rowname = name)
+
+# Create a display table showing ten of
+# the largest islands in the world; this
+# time with a stub
+gt_tbl <- gt(data = islands_tbl)
+
+# Show the table
+gt_tbl
 ```
 
 Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead caption**, which is label text that technically lives both in the **stub** and in the **boxhead**. Think of it as the intersection of the **stub** and **boxhead.** This operation is done with the `tab_stubhead_caption()` function:
@@ -142,58 +193,74 @@ Notice that the landmass names are off the the left in an unstriped area? That's
 ```{r}
 # Generate a simple table with a stub and add
 # a stubhead caption
-islands_tbl %>%
-  rename(rowname = name) %>%
-  gt() %>%
+gt_tbl <- gt_tbl %>%
   tab_stubhead_caption(caption = "landmass")
+
+# Show the table
+gt_tbl
 ```
 
-A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` is `size`. This has implications for column referencing (for instance, with the `data_cells()` helper function). To apply our table parts as before, we use the following statements:
+A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` (the only **field** column) is `size`. This has implications for column referencing (for instance, with the `data_cells()` helper function). Before, we referenced names in data cells using `where`. Now, the names are row captions and they can be referenced in the `rows` argument. To apply our table parts as before (up to and including the footnotes) we use the following statements:
 
 ```{r}
 # Display the `islands_tbl` data with a stub,
 # a heading, source notes, and footnotes
-islands_tbl %>%
-  rename(rowname = name) %>%
-  gt() %>%
-  tab_stubhead_caption(caption = "landmass") %>%
+gt_tbl <- gt_tbl %>%
   tab_heading(
-    title = md("**Large Landmasses of the World**"),
-    headnote = md("The *top ten* largest are presented")
-  ) %>%
-  tab_source_note("Source: The World Almanac and Book of Facts, 1975, page 406.") %>%
-  tab_source_note(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")) %>%
-  tab_footnote(footnote = md("The **largest** by area."), location = data_cells(1, 1)) %>%
-  tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 1))
+    title = "Large Landmasses of the World",
+    headnote = "The top ten largest are presented"
+    ) %>%
+  tab_source_note(
+    source_note = "Source: The World Almanac and Book of Facts, 1975, page 406."
+    ) %>%
+  tab_source_note(
+    source_note = md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")
+    ) %>%
+  tab_footnote(
+    footnote = md("The **largest** by area."),
+    location = data_cells(
+      columns = vars(size),
+      rows = !!largest)
+    ) %>%
+  tab_footnote(
+    footnote = "The lowest by population.",
+    location = data_cells(
+      columns = vars(size),
+      rows = "Antarctica"))
+
+# Show the table
+gt_tbl
 ```
 
-Let's take this further and add one more magic column to `islands_tbl` as a way to incorporate **stub blocks** within the **stub**. These blocks can be considered groups of rows and so it's very logical that the magic column name is `groupname`. A `groupname` column will be added to `islands_tbl` and it will consist of categories that describe the landmass type.
+Let's incorporate row groups into the display table. This divides rows into groups, creating **stub blocks**, and results in a display of **group heading** row. This can be easily done with a table containing row captions. We can make a new **stub block** with each call of the `tab_stub_block()` function. The inputs are group names in the `group` argument, and row references in the `rows` argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).
+
+Here we will create three stub blocks (with group names `continent`, `country`, and `subregion`) to have a groupings of rows.
 
 ```{r}
-# Display the `islands_tbl` data with a stub,
-# a heading, source notes, and footnotes; group heading
-# rows are added through the `groupname` column
-islands_tbl %>%
-  rename(rowname = name) %>%
-  mutate(groupname = c(
-    "continent", "continent", "continent", "continent",
-    "continent", "continent", "country", "country",
-    "subregion", "subregion")) %>%
-  gt() %>%
-  tab_stubhead_caption(caption = "landmass") %>%
-  tab_heading(
-    title = md("**Large Landmasses of the World**"),
-    headnote = md("The *top ten* largest are presented")
-  ) %>%
-  tab_source_note("Source: The World Almanac and Book of Facts, 1975, page 406.") %>%
-  tab_source_note(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")) %>%
-  tab_footnote(footnote = md("The **largest** by area."), location = data_cells(1, 1)) %>%
-  tab_footnote(footnote = md("The lowest by population."), location = data_cells(5, 1))
+# Create three stub blocks with the
+# `tab_stub_block()` function
+gt_tbl <- gt_tbl %>% 
+  tab_stub_block(
+    group = "continent",
+    rows = 1:6
+    ) %>%
+  tab_stub_block(
+    group = "country",
+    rows = c("Australia", "Greenland")
+    ) %>%
+  tab_stub_block(
+    group = "subregion",
+    rows = c("New Guinea", "Borneo"))
+
+# Show the table
+gt_tbl
 ```
 
 Three **stub groups** have been made since there are three unique categories under `groupname`. Across the top of each **stub group** is the **group_heading** contained in a separate row (these cut across the field and they contain nothing but the **group heading**). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate **stub groups**.
 
 Having groups of rows in **stub blocks** is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with **summary captions** is covered in a separate article (*Creating Summary Lines*).
+
+Another way to make group rows is to have the magic column `groupname` present in the input data table. For our above example with `islands_tbl`, a `groupname` column with the categories `continent`, `country`, and `subregion` in the appropriate rows would produce stub blocks automatically (i.e., there would be no need to use the `tab_stub_block()` statements). This strategy of supplying group names in a `groupname` column name can sometimes be advantageous since we can rely on functions such as those available in **dplyr** to generate the categories (e.g., using `case_when()` or `if_else()`).
 
 ### The Boxhead
 
@@ -204,3 +271,68 @@ The following schematic provides a model for the layout of rows within each **st
 ```{r eval=FALSE, include=FALSE}
 #<img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/gt_stub_block_boxhead_panel.png" width=100%>
 ```
+
+To better demonstrate how **boxhead panels** work and are displayed, let's use an input data table with more columns. In this case, that input table will be `airquality`. It has the following columns:
+
+- `Ozone`: mean ground-level ozone in parts per billion by volume (ppbV), measured between 13:00 and 15:00
+- `Solar.R`: solar radiation in Langley units (cal/m<sup>2</sup>), measured between 08:00 and noon
+- `Wind`: mean wind speed in miles per hour (mph)
+- `Temp`: maximum daily air temperature in degrees Fahrenheit (&deg;F)
+- `Month`, `Day`: the numeric month and day of month for the record
+
+We know that all measurements took place in 1973, so a `year` column will be added to the dataset before it is passed to `gt()`. 
+
+Let's organize the time information under a `Time` **spanner heading**, and put the other columns under a `Measurement` heading. We can do this with the `tab_boxhead_panel()` function.
+
+```{r}
+# Modify the `airquality` dataset by adding the year
+# of the measurements (1973) and limiting to 10 rows
+airquality <- airquality %>%
+  mutate(Year = 1973L) %>%
+  slice(1:10)
+  
+# Create a display table using the `airquality`
+# dataset; arrange columns into boxhead panels
+gt_tbl <- gt(data = airquality) %>%
+  tab_heading(
+    title = "New York Air Quality Measurements",
+    headnote = "Daily measurements in New York City (May 1-10, 1973)") %>%
+  tab_boxhead_panel(
+    group = "Time",
+    columns = vars(Year, Month, Day)) %>%
+  tab_boxhead_panel(
+    group = "Measurement",
+    columns = vars(Ozone, Solar.R, Wind, Temp))
+
+# Show the table
+gt_tbl
+```
+
+We can do a two more things to make this presentable:
+
+- move the `Time` columns to the beginning of the series (using `cols_move_to_start()`)
+- customize the column labels so that they are more descriptive (using `cols_label()`)
+
+Let's do both of these things in the next example.
+
+```{r}
+# Move the time-based columns to the start of
+# the column series; modify the column labels of
+# the measurement-based columns
+gt_tbl <- gt_tbl %>%
+  cols_move_to_start(
+    columns = vars(Year, Month, Day)
+    ) %>%
+  cols_label(labels = col_labels(
+    Ozone = html("Ozone,<br>ppbV"),
+    Solar.R = html("Solar R.,<br>cal/m<sup>2</sup>"),
+    Wind = html("Wind,<br>mph"),
+    Temp = html("Temp,<br>&deg;F")))
+
+# Show the table
+gt_tbl
+```
+
+Note that even though columns were moved using `cols_move_to_start()`, the **spanner headings** still spanned above the correct columns. There are a number of functions that **gt** provides to move columns, including `cols_move()`, `cols_move_to_end()`; there's even a function to remove columns: `cols_remove()`.
+
+The `cols_label()` function is paired with the `col_labels()` helper function. This allows for multiple columns to be renamed in a single use of `cols_label()`. Further to this, the helper function allows for the use of the `md()` and `html()` functions so that we can create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with `<br>`, insert a superscripted `2` (with `<sup>2</sup>`), and insert a degree symbol as an HTML entity (`&deg;`).
