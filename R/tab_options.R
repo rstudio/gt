@@ -1,7 +1,7 @@
 #' Modify the table output options
 #'
 #' Modify the options available in a table. These options are named by the
-#' components, the subcomponents, and the element that can adjusted.
+#'   components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
 #' @param table.width the width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
@@ -41,13 +41,13 @@
 #' @param field.border.bottom.style,field.border.bottom.width,field.border.bottom.color
 #'   the style, width, and color of the field's bottom border.
 #' @param row.padding,summary_row.padding the amount of padding in each row and
-#' in each summary row.
+#'   in each summary row.
 #' @param footnote.padding,sourcenote.padding the amount of padding to apply to
-#' the footnote and source note sections.
+#'   the footnote and source note sections.
 #' @param row.striping.include_stub an option for whether to include the stub
-#' when striping rows.
+#'   when striping rows.
 #' @param row.striping.include_field an option for whether to include the field
-#' when striping rows.
+#'   when striping rows.
 #' @family table-part creation/modification functions
 #' @export
 tab_options <- function(data,
