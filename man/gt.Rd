@@ -17,18 +17,20 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage.
+  before transforming the entire object to a display table. Using this
+  function is the first step in that process, and, there are a few data
+  ingest options we can consider at this stage.
 }
 \examples{
 # Create a table object using the
-# `mtcars` dataset
+# `mtcars` dataset; take the rownames
+# available in this table and use them
+# as row captions in the table stub
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE)
 
 # The resulting object can be used
-# in transformations (e.g., `tab_*()`,
+# in transformations (with `tab_*()`,
 # `fmt_*()`, `cols_*()` functions)
 gt_tbl_2 <-
   gt_tbl \%>\%

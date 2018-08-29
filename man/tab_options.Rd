@@ -87,7 +87,7 @@ when striping rows.}
 }
 \description{
 Modify the options available in a table. These options are named by the
-components, the subcomponents, and the element that can adjusted.
+  components, the subcomponents, and the element that can adjusted.
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
