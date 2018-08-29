@@ -24,4 +24,7 @@ A gt display table render function for use in Shiny
 }
 \seealso{
 \link{gt_output}()
+
+Other Shiny functions: \code{\link{gt_output}}
 }
+\concept{Shiny functions}
