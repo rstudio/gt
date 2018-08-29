@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = NULL, where = NULL, time_style)
+fmt_time(data, columns, rows = NULL, time_style)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -24,9 +24,6 @@ focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{time_style}{the time style to use. Supply a number (from \code{1} to
 \code{5}) that corresponds to the preferred time style. Use

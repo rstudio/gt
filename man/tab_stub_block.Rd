@@ -4,8 +4,7 @@
 \alias{tab_stub_block}
 \title{Arrange a stub into blocks}
 \usage{
-tab_stub_block(data, group = NULL, rows = NULL, where = NULL,
-  others = NULL)
+tab_stub_block(data, group = NULL, rows = NULL, others = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -19,9 +18,6 @@ a helper function focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{others}{an option to set a default group heading for any rows not
 formally placed in a stub block named by \code{group} in any call of

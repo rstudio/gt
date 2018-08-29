@@ -4,9 +4,9 @@
 \alias{fmt_scientific}
 \title{Format values to scientific notation}
 \usage{
-fmt_scientific(data, columns, rows = NULL, where = NULL,
-  decimals = 2, drop_trailing_zeros = FALSE, scale_by = 1,
-  pattern = "{x}", sep_mark = ",", dec_mark = ".", locale = NULL)
+fmt_scientific(data, columns, rows = NULL, decimals = 2,
+  drop_trailing_zeros = FALSE, scale_by = 1, pattern = "{x}",
+  sep_mark = ",", dec_mark = ".", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -26,9 +26,6 @@ focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}

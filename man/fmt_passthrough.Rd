@@ -4,8 +4,7 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, where = NULL,
-  pattern = "{x}")
+fmt_passthrough(data, columns, rows = NULL, pattern = "{x}")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -25,9 +24,6 @@ focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
-
-\item{where}{a conditional expression that operates across all of the rows
-captured by \code{rows} to further constrain the row selection.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
