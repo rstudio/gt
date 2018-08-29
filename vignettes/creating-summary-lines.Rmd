@@ -134,8 +134,7 @@ gt(tbl) %>%
     columns = vars(value_1, value_2),
     funs = funs(mean, sum, min, max),
     formatter = fmt_number,
-    decimals = 3,
-    drop_trailing_zeros = TRUE)
+    decimals = 3)
 ```
 
 We can also store these values as local variables and pass them in to a separate `fmt_number()` and then to `summary_rows()`. This is useful for standardizing formatting parameters for different column types.
@@ -309,15 +308,15 @@ tbl_2 %>%
   fmt_percent(columns = vars(!!small_fmts$columns)) %>%
   summary_rows(
     columns = vars(!!large_fmts$columns),
-    funs = funs(mean, sum, sd),
+    funs = funs(sum, mean, sd),
     formatter = large_fmts$formatter) %>%
   summary_rows(
     columns = vars(!!medium_fmts$columns),
-    funs = funs(mean, sum, sd),
+    funs = funs(sum, mean, sd),
     formatter = medium_fmts$formatter) %>%
   summary_rows(
     columns = vars(!!small_fmts$columns),
-    funs = funs(mean, sum, sd),
+    funs = funs(sum, mean, sd),
     formatter = small_fmts$formatter)
 ```
 
