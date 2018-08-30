@@ -165,7 +165,7 @@ cols_label <- function(data,
   }
 
   for (i in seq(labels)) {
-    attr(data, "boxh_df")[2, names(labels[i])] <- unname(labels[i][1])
+    attr(data, "boxh_df")["column_label", names(labels[i])] <- unname(labels[i][1])
   }
 
   data
@@ -465,10 +465,10 @@ cols_split_delim <- function(data,
       split_colname <- strsplit(x = all_cols[i], split = delim) %>% unlist()
 
       attr(data, "boxh_df")[
-        1, i] <- split_colname[1]
+        "group_label", i] <- split_colname[1]
 
       attr(data, "boxh_df")[
-        2, i] <- paste0(split_colname[-1], collapse = delim)
+        "column_label", i] <- paste0(split_colname[-1], collapse = delim)
     }
   }
 

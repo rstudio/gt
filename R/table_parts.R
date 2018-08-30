@@ -126,7 +126,7 @@ tab_stub_block <- function(data,
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows, 1] <- process_text(group[1])
+    attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
 
     # Insert the group into the `blocks_arrange` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
@@ -186,7 +186,7 @@ tab_boxhead_panel <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")[1, columns] <- process_text(group)
+  attr(data, "boxh_df")["group_label", columns] <- process_text(group)
   data
 }
 

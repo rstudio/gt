@@ -19,8 +19,9 @@ migrate_unformatted_to_output <- function(data,
 migrate_colnames_to_labels <- function(data_attr) {
 
   for (colname in colnames(data_attr$boxh_df)) {
-    if (is.na(data_attr$boxh_df[2, colname])) {
-      data_attr$boxh_df[2, colname] <- colname
+
+    if (is.na(data_attr$boxh_df["column_label", colname])) {
+      data_attr$boxh_df["column_label", colname] <- colname
     }
   }
 
@@ -33,8 +34,8 @@ migrate_colnames_to_labels <- function(data_attr) {
 set_default_alignments <- function(data_attr) {
 
   for (colname in colnames(data_attr$boxh_df)) {
-    if (is.na(data_attr$boxh_df[3, colname])) {
-      data_attr$boxh_df[3, colname] <- "center"
+    if (is.na(data_attr$boxh_df["column_align", colname])) {
+      data_attr$boxh_df["column_align", colname] <- "center"
     }
   }
 
@@ -68,7 +69,7 @@ are_groups_present <- function(data_attr) {
 #' @noRd
 are_spanners_present <- function(data_attr) {
 
-  if (!all(is.na((data_attr$boxh_df)[1,] %>% t() %>% as.vector()))) {
+  if (!all(is.na((data_attr$boxh_df)["group_label", ] %>% t() %>% as.vector()))) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -82,11 +83,11 @@ get_stub_components <- function(data_attr) {
   stub_components <- c()
 
   if (any(!is.na(data_attr$stub_df[["rowname"]]))) {
-    stub_components <- c(stub_components, "row_name")
+    stub_components <- c(stub_components, "rowname")
   }
 
   if (any(!is.na(data_attr$stub_df[["groupname"]]))) {
-    stub_components <- c(stub_components, "group_name")
+    stub_components <- c(stub_components, "groupname")
   }
 
   stub_components
@@ -94,17 +95,17 @@ get_stub_components <- function(data_attr) {
 
 stub_component_is_rowname <- function(stub_components) {
 
-  identical(stub_components, "row_name")
+  identical(stub_components, "rowname")
 }
 
 stub_component_is_groupname <- function(stub_components) {
 
-  identical(stub_components, "group_name")
+  identical(stub_components, "groupname")
 }
 
 stub_component_is_rowname_groupname <- function(stub_components) {
 
-  identical(stub_components, c("row_name", "group_name"))
+  identical(stub_components, c("rowname", "groupname"))
 }
 
 #' Create a data frame with the rows that the group rows
@@ -249,7 +250,9 @@ integrate_summary_lines <- function(data_attr) {
     # Combine stub with the field data in order to
     # process data by groups
     groups_data_df <-
-      cbind(data_attr$stub_df[1:nrow(data_attr$data_df), ], data_attr$data_df)
+      cbind(
+        data_attr$stub_df[1:nrow(data_attr$data_df), c("groupname", "rowname")],
+        data_attr$data_df)
 
     # Get the registered function calls
     agg_funs <- summary_attrs$funs
@@ -349,9 +352,19 @@ integrate_summary_lines <- function(data_attr) {
     summary_lines_na[] <- NA_character_
 
     data_attr$output_df <- rbind(data_attr$output_df, summary_lines_display[, -c(1:2)])
+
     data_attr$fmts_df <- rbind(data_attr$fmts_df, summary_lines_na[, -c(1:2)])
+
     data_attr$foot_df <- rbind(data_attr$foot_df, summary_lines_na[, -c(1:2)])
-    data_attr$stub_df <- rbind(data_attr$stub_df, summary_lines_display[, 1:2])
+
+    data_attr$stub_df <-
+      rbind(data_attr$stub_df,
+            cbind(
+              data.frame(
+                fmts = rep(NA_character_, nrow(summary_lines_display)),
+                foot = rep(NA_character_, nrow(summary_lines_display)),
+                stringsAsFactors = FALSE),
+              summary_lines_display[, 1:2]))
 
     for (k in seq(labels)) {
       labels_vector <-
@@ -365,8 +378,8 @@ integrate_summary_lines <- function(data_attr) {
   # Extract summary part of `output_df` for additional
   # processing of rows
   summary_part <-
-    cbind(data_attr$stub_df, data_attr$output_df) %>%
-    filter(grepl("::summary_", rowname))
+    cbind(data_attr$stub_df[c("groupname", "rowname")], data_attr$output_df) %>%
+    dplyr::filter(grepl("::summary_", rowname))
 
   # Transform `""` to NA for subsequent fill operations
   summary_part[summary_part == ""] <- NA_character_
@@ -429,17 +442,17 @@ arrange_dfs <- function(data_attr,
     extracted_reorder <-
       rbind(
         extracted_reorder,
-        subset(extracted, `:group_name:` == ordering[i]))
+        subset(extracted, groupname == ordering[i]))
 
     fmts_df_reorder <-
       rbind(
         fmts_df_reorder,
-        subset(data_attr$fmts_df, `:group_name:` == ordering[i]))
+        subset(data_attr$fmts_df, groupname == ordering[i]))
 
     foot_df_reorder <-
       rbind(
         foot_df_reorder,
-        subset(data_attr$foot_df, `:group_name:` == ordering[i]))
+        subset(data_attr$foot_df, groupname == ordering[i]))
   }
 
   rownames(extracted_reorder) <- NULL
@@ -466,7 +479,8 @@ footnotes_to_list <- function(data_attr,
 
   if (has_stub) {
 
-    dec_vec <- as.vector(t(cbind(data_attr$stub_df, data_attr$foot_df)[, -1]))
+    dec_vec <-
+      as.vector(t(cbind(data_attr$stub_df["foot"], data_attr$foot_df)))
 
   } else {
 
@@ -728,7 +742,10 @@ create_column_headings <- function(data_attr,
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
-  labels_rev <- data_attr$boxh_df[2, ] %>% unname() %>% unlist() %>% rev()
+
+  labels_rev <-
+    data_attr$boxh_df["column_label", ] %>%
+    unname() %>% unlist() %>% rev()
 
   for (i in seq(labels_rev)) {
     headings_rev[i] <- labels_rev[i]
@@ -739,14 +756,14 @@ create_column_headings <- function(data_attr,
   #   caption or nothing
   if (stub_available &&
       "stubhead_caption" %in% property_names &&
-      ":row_name:" %in% headings) {
+      "rowname" %in% headings) {
 
-    headings[which(headings == ":row_name:")] <-
+    headings[which(headings == "rowname")] <-
       data_attr$stubhead_caption[[1]]
 
-  } else if (":row_name:" %in% headings) {
+  } else if ("rowname" %in% headings) {
 
-    headings[which(headings == ":row_name:")] <- ""
+    headings[which(headings == "rowname")] <- ""
   }
 
   if (spanners_present == FALSE) {
@@ -762,7 +779,9 @@ create_column_headings <- function(data_attr,
   } else {
 
     # spanners
-    spanners <- data_attr$boxh_df[1, ] %>% unlist() %>% unname()
+    spanners <-
+      data_attr$boxh_df["group_label", ] %>%
+      unlist() %>% unname()
 
     first_set <- c()
     second_set <- c()
