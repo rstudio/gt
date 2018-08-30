@@ -18,16 +18,16 @@ tbl <-
     "2018-02-11",  "10",      55.3,      284.6)
 
 # Create a display table with footnotes
-html_tbl <-
+data <-
   gt(data = tbl) %>%
   tab_footnote(
-    footnote = md("The value for *value_2* is quite small."),
-    location = data_cells(columns = vars(value_2), rows = 3)) %>%
+    footnote = "first",
+    locations = data_cells(columns = 1, rows = 1)) %>%
+  tab_footnote(
+    footnote = "This is a very small number.",
+    locations = data_cells(columns = 2, rows = 9)) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    location = data_cells(columns = 2, rows = 9)) %>%
-  tab_footnote(
-    footnote = "This is also very small.",
-    location = data_cells(columns = 2, rows = 4))
+    locations = data_cells(columns = 2, rows = 4))
 
-html_tbl
+data
