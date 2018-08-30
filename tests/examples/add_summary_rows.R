@@ -18,7 +18,7 @@ tbl <-
     "C",        "2",      284.3,   394.4)
 
 # Create a display table with summary rows
-data <-
+summary_tbl <-
   gt(tbl) %>%
   summary_rows(
     groups = c("A", "C"),
@@ -39,10 +39,10 @@ data <-
     stub_group.background.color = "lightblue")
 
 # View the HTML table
-data
+summary_tbl
 
 # Extract the summary data frame from the table object
-data %>% extract_summary()
+summary_tbl %>% extract_summary()
 
 
 # Create a table that creates a stub but

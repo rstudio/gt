@@ -29,16 +29,16 @@ data <-
     caption = md("*car*")) %>%
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    location = data_cells(row = "Ford Pantera L", column = vars(qsec))) %>%
+    locations = data_cells(row = "Ford Pantera L", column = vars(qsec))) %>%
   tab_footnote(
     footnote = "Massive hp.",
-    location = data_cells(row = "Ford Pantera L", column = vars(hp))) %>%
+    locations = data_cells(row = "Ford Pantera L", column = vars(hp))) %>%
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    location = data_cells("Toyota Corolla", column = 2)) %>%
+    locations = data_cells("Toyota Corolla", column = 2)) %>%
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    location = data_cells("Merc 230", vars(qsec)))
+    locations = data_cells("Merc 230", vars(qsec)))
 
 # Writing to an RTF file
 data %>% write_rtf(file = "mtcars.rtf")

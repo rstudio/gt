@@ -38,7 +38,7 @@ mtcars_tbl <-
     group = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")) %>% # 5
   blocks_arrange(
-    groups = vars(Supercars, Mercs)) %>% # 6
+    groups = c("Supercars", "Mercs")) %>% # 6
   fmt_number(
     columns = vars(disp, drat, wt), decimals = 2) %>% # 7
   fmt_number(
@@ -56,22 +56,22 @@ mtcars_tbl <-
     caption = md("*car*")) %>% # 10
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    location = data_cells(
+    locations = data_cells(
       columns = vars(qsec),
       rows = "Ford Pantera L")) %>% # 11
   tab_footnote(
     footnote = "Massive hp.",
-    location = data_cells(
+    locations = data_cells(
       columns = vars(hp),
       rows = "Ford Pantera L")) %>% # 11
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    location = data_cells(
+    locations = data_cells(
       columns = 2,
       rows = "Toyota Corolla")) %>% # 11
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    location = data_cells(
+    locations = data_cells(
       columns = vars(qsec),
       rows = "Merc 230")) %>% # 11
   cols_label(
