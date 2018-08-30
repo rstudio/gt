@@ -15,13 +15,13 @@ a data frame containing summary data.
 }
 \description{
 Get a summary row data frame from a \code{gt_tbl} object where summary rows
-were added via the \code{summary_rows()} function. The output data frame
-contains the \code{groupname} and \code{rowname} columns, where
-\code{rowname} contains descriptive stub labels for the summary rows.
-The remaining columns are a subset of the original dataset, where only those
-columns that had aggregation functions applied are retained. The output data
-frame format is suitable for generating a summary table using the
-\code{\link{gt}()} function.
+  were added via the \code{summary_rows()} function. The output data frame
+  contains the \code{groupname} and \code{rowname} columns, where
+  \code{rowname} contains descriptive stub labels for the summary rows.
+  The remaining columns are a subset of the original dataset, where only
+  those columns that had aggregation functions applied are retained. The
+  output data frame format is suitable for generating a summary table using
+  the \code{\link{gt}()} function.
 }
 \seealso{
 Other table export functions: \code{\link{output_latex}},

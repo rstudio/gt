@@ -13,7 +13,7 @@ local_image(file, height = 30)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-a cell.
+  a cell.
 }
 \description{
 Add a local image inside a table with this helper function.
