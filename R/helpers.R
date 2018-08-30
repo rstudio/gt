@@ -1,61 +1,142 @@
-#' Helper for targeting multiple data cells
+#' Helpers for targeting multiple cells in different locations
 #'
-#' This function is to be used to target individual data cells through the
-#'   intersections of columns and rows. Thus, we provide targeting directives
-#'   separately for columns and for rows.
-#' @param columns,rows either a vector of column/row names, a vector of
-#'   column/rows indices, column names provided in \code{\link{vars}()}, row
-#'   captions provided in \code{c()}, or a helper function focused on
-#'   selections. The select helper functions are: \code{\link{starts_with}()},
+#' These helper functions are used to target individual cells in different
+#'   locations. The locations and the specific functions used to target cells
+#'   therein are:
+#'
+#' - \code{data_cells()}: targets data cells in the table field using
+#'   intersections of \code{columns} and \code{rows}
+#' - \code{stub_cells()}: targets row captions in the table stub using the
+#'   \code{rows} argument
+#' - \code{boxhead_cells()}: targets captions for the column headers (the
+#'   \code{columns} argument) or group spanners (the \code{groups} argument) in
+#'   the table boxhead
+#' - \code{group_cells()}: targets the group headings in the stub blocks using
+#'   the \code{groups} argument
+#' - \code{title_cells()}: targets the table title or the table headnote
+#'   depending on the value given to the \code{groups} argument
+#'   (\code{"title"} or \code{"headnote})
+#'
+#' The select helper functions are: \code{\link{starts_with}()},
 #'   \code{\link{ends_with}()}, \code{\link{contains}()},
 #'   \code{\link{matches}()}, \code{\link{one_of}()}, and
 #'   \code{\link{everything}()}.
-#' @return a list object of class \code{data_cells}.
+#'
+#' @param columns,rows,groups either a vector of names, a vector of
+#'   indices, values provided by \code{\link{vars}()}, values provided by
+#'   \code{c()}, or a select helper function.
+#' @name location_cells
+#' @return a list object of class \code{location_cells}.
 #' @import rlang
+NULL
+
+#' @rdname location_cells
 #' @export
 data_cells <- function(columns = NULL,
                        rows = NULL) {
+
+  if (missing(columns) & missing(rows)) {
+    stop("Some value(s) must provided to either `columns` and/or `rows`.")
+  }
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
   row_expr <- rlang::enquo(rows)
 
   # Create the `data_cells` object
-  data_cells <-
+  cells <-
     list(
       columns = col_expr,
       rows = row_expr)
 
   # Apply the `data_cells` class
-  class(data_cells) <- "data_cells"
+  class(cells) <- c("data_cells", "location_cells")
 
-  data_cells
+  cells
 }
 
-#' Helper for targeting stub rows
-#'
-#' This function is to be used to target individual stub row captions.
-#' @param rows either a vector of row names, a vector of rows indices, row
-#'   captions provided in \code{c()}, or a helper function focused on
-#'   selections. The select helper functions are: \code{\link{starts_with}()},
-#'   \code{\link{ends_with}()}, \code{\link{contains}()},
-#'   \code{\link{matches}()}, \code{\link{one_of}()}, and
-#'   \code{\link{everything}()}.
-#' @return a list object of class \code{stub_rows}.
-#' @import rlang
+#' @rdname location_cells
 #' @export
-stub_rows <- function(rows = NULL) {
+stub_cells <- function(rows) {
 
-  # Capture expressions for the `rows` arguments
+  # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
 
-  # Create the `stub_rows` object
-  stub_rows <- list(rows = row_expr)
+  # Create the `stub_cells` object
+  cells <- list(rows = row_expr)
 
-  # Apply the `stub_rows` class
-  class(stub_rows) <- "stub_rows"
+  # Apply the `stub_cells` class
+  class(cells) <- c("stub_cells", "location_cells")
 
-  stub_rows
+  cells
+}
+
+#' @rdname location_cells
+#' @export
+boxhead_cells <- function(columns, groups) {
+
+  if (
+    (!missing(columns) && !missing(groups)) ||
+    (missing(columns) && missing(groups))
+  ) {
+    stop("Value(s) must provided to either `columns` or `groups` but not both.")
+  }
+
+  # With input as `columns`
+  if (!missing(columns)) {
+
+    # Capture expression for the `columns` argument
+    col_expr <- rlang::enquo(columns)
+    group_expr <- NULL
+  }
+
+  # With input as `groups`
+  if (!missing(groups)) {
+
+    # Capture expression for the `groups` argument
+    col_expr <- NULL
+    group_expr <- rlang::enquo(groups)
+  }
+
+  # Create the `boxhead_cells` object
+  cells <- list(columns = col_expr, groups = group_expr)
+
+  # Apply the `boxhead_cells` class
+  class(cells) <- c("boxhead_cells", "location_cells")
+
+  cells
+}
+
+#' @rdname location_cells
+#' @export
+group_cells <- function(groups) {
+
+  # Capture expression for the `groups` argument
+  group_expr <- rlang::enquo(groups)
+
+  # Create the `group_cells` object
+  cells <- list(groups = group_expr)
+
+  # Apply the `group_cells` class
+  class(cells) <- c("group_cells", "location_cells")
+
+  cells
+}
+
+#' @rdname location_cells
+#' @export
+title_cells <- function(groups = c("title", "headnote")) {
+
+  # Capture expression for the `groups` argument
+  group_expr <- rlang::enquo(groups)
+
+  # Create the `title_cells` object
+  cells <- list(groups = group_expr)
+
+  # Apply the `title_cells` class
+  class(cells) <- c("title_cells", "location_cells")
+
+  cells
 }
 
 #' Interpret input text as Markdown-formatted text
