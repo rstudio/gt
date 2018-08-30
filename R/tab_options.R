@@ -23,7 +23,7 @@
 #'   \code{boxhead} and \code{stub_group} text element.
 #' @param summary_row.text_transform an option to apply text transformations to
 #' the label text in each summary row.
-#' @param table.background.color,heading.background.color,boxhead.background.color,stub_group.background.color,summary_row.background.color,field.background.color
+#' @param table.background.color,heading.background.color,boxhead.background.color,stub_group.background.color,summary_row.background.color
 #'   background colors for the parent element \code{table} and the following
 #'   child elements: \code{heading}, \code{boxhead}, \code{stub_group},
 #'   \code{summary_row}, and \code{field}. A color name or a hexadecimal color
@@ -89,7 +89,7 @@ tab_options <- function(data,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
                         sourcenote.padding = NULL,
-                        row.striping.include.stub = NULL,
+                        row.striping.include_stub = NULL,
                         row.striping.include_field = NULL) {
 
   # Extract the `opts_df` data frame object from `data`
@@ -434,10 +434,10 @@ tab_options <- function(data,
   }
 
   # row.striping.include.stub
-  if (!is.null(row.striping.include.stub)) {
+  if (!is.null(row.striping.include_stub)) {
 
     opts_df <- opts_df_set(
-      opts_df, "row_striping_include_stub", row.striping.include.stub)
+      opts_df, "row_striping_include_stub", row.striping.include_stub)
   }
 
   # row.striping.include_field
