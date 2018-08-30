@@ -83,7 +83,10 @@ render_as_html <- function(data) {
     # Extract the table (case of table with no stub)
     extracted <- data_attr$output_df
 
-    col_alignment <- data_attr$boxh_df[3, ] %>% unlist() %>% unname()
+    col_alignment <-
+      data_attr$boxh_df["column_align", ] %>%
+      unlist() %>% unname()
+
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
@@ -93,10 +96,14 @@ render_as_html <- function(data) {
   } else if (stub_component_is_rowname(stub_components)) {
 
     # Extract the table (case of table with a stub w/ only row names)
-    colnames(data_attr$stub_df)[2] <- ":row_name:"
-    extracted <- cbind(data_attr$stub_df, data_attr$output_df)[, -1]
+    #colnames(data_attr$stub_df["rowname"]) <- ":row_name:"
 
-    col_alignment <- c("right", data_attr$boxh_df[3, ] %>% unlist() %>% unname())
+    extracted <- cbind(data_attr$stub_df["rowname"], data_attr$output_df)
+
+    col_alignment <-
+      c("right", data_attr$boxh_df["column_align", ] %>%
+          unlist() %>% unname())
+
     groups_rows <- NULL
 
     # Extract footnote references and place them into the
@@ -106,14 +113,14 @@ render_as_html <- function(data) {
   } else if (stub_component_is_groupname(stub_components)) {
 
     # Extract the table (case of table with a stub w/ only group names)
-    colnames(data_attr$stub_df)[1] <- ":group_name:"
+    #colnames(data_attr$stub_df["groupname"]) <- ":group_name:"
 
     # Combine `:group_name:` column in stub with the output
     #   table to form `extracted`
-    extracted <- cbind(data_attr$stub_df, data_attr$output_df)[, -2]
+    extracted <- cbind(data_attr$stub_df["groupname"], data_attr$output_df)
 
     # Replace NA values in the `:group_name:` column
-    extracted[which(is.na(extracted[, 1])), 1] <-
+    extracted[which(is.na(extracted[, "groupname"])), "groupname"] <-
       data_attr$others_group[[1]] %||% "Others"
 
     if ("arrange_groups" %in% property_names) {
@@ -154,13 +161,14 @@ render_as_html <- function(data) {
   } else if (stub_component_is_rowname_groupname(stub_components)) {
 
     # Extract the table (case of table with a stub of row and group names)
-    colnames(data_attr$stub_df) <- c(":group_name:", ":row_name:")
+    #colnames(data_attr$stub_df) <- c(":group_name:", ":row_name:")
 
     # Combine stub with output table to form `extracted`
-    extracted <- cbind(data_attr$stub_df, data_attr$output_df)
+    extracted <-
+      cbind(data_attr$stub_df[c("groupname", "rowname")], data_attr$output_df)
 
-    # Replace NA values in the `:group_name:` column
-    extracted[which(is.na(extracted[, 1])), 1] <-
+    # Replace NA values in the `groupname` column
+    extracted[which(is.na(extracted[, "groupname"])), "groupname"] <-
       data_attr$others_group[[1]] %||% "Others"
 
     # Obtain the `ordering` object, which is a vector that specifies
@@ -180,7 +188,7 @@ render_as_html <- function(data) {
     #   on which rows the group rows should appear above
     groups_rows <- get_groups_rows(extracted, ordering)
 
-    # Remove the `:group_name:` column from the `extracted` data frame
+    # Remove the `groupname` column from the `extracted` data frame
     extracted <- extracted[, -1]
 
     # Define the `col_alignment` vector, which is a
@@ -188,7 +196,9 @@ render_as_html <- function(data) {
     #   the relevant columns in a table
     # Here, we are hardcoding a `right` alignment
     #   for the stub column
-    col_alignment <- c("right", data_attr$boxh_df[3, ] %>% unlist() %>% unname())
+    col_alignment <-
+      c("right", data_attr$boxh_df["column_align", ] %>%
+          unlist() %>% unname())
 
     # Extract footnote references and place them into the
     # `list_footnotes` object
@@ -234,9 +244,7 @@ render_as_html <- function(data) {
 
   row_splits_styles[is.na(row_splits_styles)] <- ""
 
-  row_splits_styles <-
-    row_splits_styles %>%
-    split_body_content(n_cols)
+  row_splits_styles <- row_splits_styles %>% split_body_content(n_cols)
 
   # Create an HTML fragment for the start of the table
   table_start <- create_table_start(groups_rows, n_rows, n_cols)
