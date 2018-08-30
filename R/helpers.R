@@ -35,15 +35,16 @@ data_cells <- function(columns = NULL,
 #' Interpret input text as Markdown-formatted text
 #' @param text the text that is understood to contain Markdown formatting.
 #' @return a character object that is tagged for a Markdown-to-HTML
-#' transformation.
+#'   transformation.
 #' @return a character object of class \code{from_markdown}.
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
 #' # that is to interpreted as Markdown
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stubhead_caption(
-#'     caption = md("car *make* and *model*"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_stubhead_caption(
+#'       caption = md("car *make* and *model*"))
 #' @family helper functions
 #' @export
 md <- function(text) {
@@ -55,18 +56,19 @@ md <- function(text) {
 
 #' Interpret input text as HTML-formatted text
 #' @param text the text that is understood to be HTML text, which is to be
-#' preserved.
+#'   preserved.
 #' @return a character object that is tagged as an HTML fragment that is not to
-#' be sanitized.
+#'   be sanitized.
 #' @return a character object of class \code{preserve_html}.
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
 #' # that is to interpreted as HTML
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   tab_stubhead_caption(
-#'     caption = html(
-#'       "car <em>make</em> and <em>model</em>"))
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     tab_stubhead_caption(
+#'       caption = html(
+#'         "car <em>make</em> and <em>model</em>"))
 #' @family helper functions
 #' @export
 html <- function(text) {
@@ -79,12 +81,12 @@ html <- function(text) {
 #' Helper for processing column labels
 #'
 #' This helper is to be used specifically within the \code{cols_label()}
-#' function as an alternative to using named vectors within that function. The
-#' advantage in using this helper is that the assigned column labels can be
-#' marked as Markdown (with the \code{md()} function) or as HTML (with the
-#' \code{html()} function).
+#'   function as an alternative to using named vectors within that function. The
+#'   advantage in using this helper is that the assigned column labels can be
+#'   marked as Markdown (with the \code{md()} function) or as HTML (with the
+#'   \code{html()} function).
 #' @param ... a series of named arguments representing the column names and
-#' values representing the column labels.
+#'   values representing the column labels.
 #' @return a named vector of column labels.
 #' @examples
 #' # Create a gt table based on the mtcars
@@ -92,7 +94,7 @@ html <- function(text) {
 #' # provide replacement names for use in the
 #' # output) with `cols_label()` and the
 #' # `col_labels()` helper function
-#' tab <-
+#' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'   cols_label(
 #'     labels = col_labels(
@@ -115,17 +117,17 @@ col_labels <- function(...) {
 #' @param bkgd_color the background color of the cell.
 #' @param text_color the text color.
 #' @param text_font the font or collection of fonts (subsequent font names are)
-#' used as fallbacks.
+#'   used as fallbacks.
 #' @param text_style the text style. Can be one of either \code{"center"},
-#' \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
+#'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
 #' @param text_size the size of the font.
 #' @param text_align the text alignment. Can be one of either \code{"center"},
-#' \code{"left"}, \code{"right"}, or \code{"justify"}.
+#'   \code{"left"}, \code{"right"}, or \code{"justify"}.
 #' @param text_indent the indentation of the text.
 #' @param text_decorate allows for text decoration effect to be applied. Here,
-#' we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
+#'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
 #' @param text_transform allows for the transformation of text. Options are
-#' \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
+#'   \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
 #' @family helper functions
 #' @export
 apply_styles <- function(bkgd_color = NULL,
@@ -194,8 +196,8 @@ apply_styles <- function(bkgd_color = NULL,
 
 #' Helper for providing a numeric value as percentage
 #' @param x the numeric value to format as a string percentage for some
-#' \code{\link{tab_options}()} arguments that can take percentage values (e.g.,
-#' \code{table.width}).
+#'   \code{\link{tab_options}()} arguments that can take percentage values
+#'   (e.g., \code{table.width}).
 #' @family helper functions
 #' @export
 pct <- function(x) {
@@ -209,8 +211,8 @@ pct <- function(x) {
 
 #' Helper for providing a numeric value as pixels value
 #' @param x the numeric value to format as a string (e.g., \code{"12px"}) for
-#' some \code{\link{tab_options}()} arguments that can take values as units of
-#' pixels (e.g., \code{table.font.size}).
+#'   some \code{\link{tab_options}()} arguments that can take values as units of
+#'   pixels (e.g., \code{table.font.size}).
 #' @family helper functions
 #' @export
 px <- function(x) {
