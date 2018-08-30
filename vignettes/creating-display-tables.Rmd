@@ -129,7 +129,7 @@ Here is a simple example on how a footnotes can be added to a table cell. Let's 
 gt_tbl <- gt_tbl %>%
   tab_footnote(
     footnote = "The Americas.",
-    location = data_cells(
+    locations = data_cells(
       columns = vars(name),
       rows = 3:4))
 
@@ -152,12 +152,12 @@ largest <- islands_tbl %>%
 gt_tbl <- gt_tbl %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    location = data_cells(
+    locations = data_cells(
       columns = vars(size),
       rows = name == largest)) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    location = data_cells(
+    locations = data_cells(
       columns = vars(size),
       rows = name == "Antarctica"))
 
@@ -218,13 +218,13 @@ gt_tbl <- gt_tbl %>%
     ) %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    location = data_cells(
+    locations = data_cells(
       columns = vars(size),
       rows = largest)
     ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    location = data_cells(
+    locations = data_cells(
       columns = vars(size),
       rows = contains("arc")))
 
