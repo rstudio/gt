@@ -33,7 +33,7 @@
 <meta property="og:title" content="Arrange a stub into blocks — tab_stub_block" />
 
 <meta property="og:description" content="Set a group with a name and mappings to rows extant in the table. This
-creates a stub block with group headings and row captions." />
+  creates a stub block with group headings and row captions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,6 +91,9 @@ creates a stub block with group headings and row captions." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -127,18 +130,19 @@ creates a stub block with group headings and row captions." />
     <div class="ref-description">
     
     <p>Set a group with a name and mappings to rows extant in the table. This
-creates a stub block with group headings and row captions.</p>
+  creates a stub block with group headings and row captions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tab_stub_block</span>(<span class='no'>data</span>, <span class='no'>group</span>, <span class='no'>rows</span>, <span class='kw'>others</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>tab_stub_block</span>(<span class='no'>data</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>others</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>group</th>
@@ -146,12 +150,23 @@ creates a stub block with group headings and row captions.</p>
     </tr>
     <tr>
       <th>rows</th>
-      <td><p>the rows to be made components of the stub block.</p></td>
+      <td><p>the rows to be made components of the stub block. Can either be a
+vector of row captions provided <code>c()</code>, a vector of row indices, or
+a helper function focused on selections. The select helper functions are:
+<code><a href='starts_with.html'>starts_with</a>()</code>, <code><a href='ends_with.html'>ends_with</a>()</code>,
+<code><a href='contains.html'>contains</a>()</code>, <code><a href='matches.html'>matches</a>()</code>, <code><a href='one_of.html'>one_of</a>()</code>,
+and <code><a href='everything.html'>everything</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>others</th>
-      <td><p>an optional group heading to use for any rows not part of a
-stub block.</p></td>
+      <td><p>an option to set a default group heading for any rows not
+formally placed in a stub block named by <code>group</code> in any call of
+<code>tab_stub_block()</code>. A separate call to <code>tab_stub_block()</code> with
+only a value to <code>others</code> is possible and makes explicit that the
+call is meant to provide a default group heading value. If this is not
+set and there are rows that haven't been placed into a stub block, then
+those rows will be automatically placed into a stub block with the group
+heading 'Others'.</p></td>
     </tr>
     </table>
     
@@ -172,11 +187,12 @@ stub block.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a table based on `mtcars` where</span>
 <span class='co'># there are group headings grouped inside</span>
-<span class='co'># stub blocks</span>
+<span class='co'># stub blocks; two groups are generated</span>
+<span class='co'># here: `Mazda` and `Others`</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>tab_stub_block</span>(
-      <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"perimeter"</span>,
+      <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"Mazda"</span>,
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Mazda RX4"</span>, <span class='st'>"Mazda RX4 Wag"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

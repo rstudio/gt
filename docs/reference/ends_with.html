@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Knit print the table — knit_print.gt_tbl • gt</title>
+<title>Helper for resolving colnames or rownames that end with a suffix — ends_with • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Knit print the table — knit_print.gt_tbl" />
+<meta property="og:title" content="Helper for resolving colnames or rownames that end with a suffix — ends_with" />
 
-<meta property="og:description" content="This facilitates printing of the HTML table within a knitr
-  code chunk." />
+<meta property="og:description" content="Helper for resolving colnames or rownames that end with a suffix" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,28 +121,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Knit print the table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/print.R'><code>R/print.R</code></a></small>
-    <div class="hidden name"><code>knit_print.gt_tbl.Rd</code></div>
+    <h1>Helper for resolving colnames or rownames that end with a suffix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/reexports.R'><code>R/reexports.R</code></a></small>
+    <div class="hidden name"><code>ends_with.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This facilitates printing of the HTML table within a knitr
-  code chunk.</p>
+    <p>Helper for resolving colnames or rownames that end with a suffix</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>knit_print.gt_tbl</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ends_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an object of class <code>gt_tbl</code>.</p></td>
+      <th>match</th>
+      <td><p>a string.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>if <code>TRUE</code>, the default, case is ignored when
+matching names.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
+  <code><a href='col_labels.html'>col_labels</a></code>, <code><a href='contains.html'>contains</a></code>,
+  <code><a href='everything.html'>everything</a></code>, <code><a href='funs.html'>funs</a></code>,
+  <code><a href='html.html'>html</a></code>, <code><a href='matches.html'>matches</a></code>,
+  <code><a href='md.html'>md</a></code>, <code><a href='one_of.html'>one_of</a></code>,
+  <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code>,
+  <code><a href='starts_with.html'>starts_with</a></code>, <code><a href='vars.html'>vars</a></code></p></div>
     
 
   </div>
@@ -151,7 +164,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

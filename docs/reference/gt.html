@@ -33,9 +33,9 @@
 <meta property="og:title" content="Create a gt table object — gt" />
 
 <meta property="og:description" content="Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage." />
+  before transforming the entire object to a display table. Using this
+  function is the first step in that process, and, there are a few data
+  ingest options we can consider at this stage." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -93,6 +93,9 @@ we can consider at this stage." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -129,9 +132,9 @@ we can consider at this stage." />
     <div class="ref-description">
     
     <p>Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage.</p>
+  before transforming the entire object to a display table. Using this
+  function is the first step in that process, and, there are a few data
+  ingest options we can consider at this stage.</p>
     
     </div>
 
@@ -168,12 +171,14 @@ table as row captions in the stub.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset</span>
+<span class='co'># `mtcars` dataset; take the rownames</span>
+<span class='co'># available in this table and use them</span>
+<span class='co'># as row captions in the table stub</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'>gt</span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># The resulting object can be used</span>
-<span class='co'># in transformations (e.g., `tab_*()`,</span>
+<span class='co'># in transformations (with `tab_*()`,</span>
 <span class='co'># `fmt_*()`, `cols_*()` functions)</span>
 <span class='no'>gt_tbl_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>gt_tbl</span> <span class='kw'>%&gt;%</span>

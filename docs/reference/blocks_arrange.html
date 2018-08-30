@@ -90,6 +90,9 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -136,11 +139,17 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>groups</th>
-      <td><p>a vector of stub block group heading names.</p></td>
+      <td><p>a vector of group names, or, a numeric
+vector of indices corresponding to the new ordering. Either vector must
+correspond to assigned group names or the index positions. Also, either
+vector isn't required to have all group names or index positions within it;
+any omitted values will be added to the end while preserving the original
+ordering.</p></td>
     </tr>
     </table>
     

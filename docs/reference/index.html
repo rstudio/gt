@@ -87,6 +87,9 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -411,6 +414,26 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-shiny-functions" class="hasAnchor"><a href="#section-shiny-functions" class="anchor"></a>Shiny Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="render_gt.html">render_gt()</a></code> </p>
+        </td>
+        <td><p>A gt display table render function for use in Shiny</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gt_output.html">gt_output()</a></code> </p>
+        </td>
+        <td><p>Create a gt display table output element for Shiny</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -430,27 +453,27 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="columns_with.html">columns_with()</a></code> </p>
+          <p><code><a href="px.html">px()</a></code> </p>
         </td>
-        <td><p>Helper for targeting multiple columns with a pattern</p></td>
+        <td><p>Helper for providing a numeric value as pixels value</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="rows_where.html">rows_where()</a></code> </p>
+          <p><code><a href="pct.html">pct()</a></code> </p>
         </td>
-        <td><p>Helper for targeting rows based on conditional data</p></td>
+        <td><p>Helper for providing a numeric value as percentage</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="rownames_with.html">rownames_with()</a></code> </p>
+          <p><code><a href="apply_styles.html">apply_styles()</a></code> </p>
         </td>
-        <td><p>Helper for targeting multiple rows with a pattern</p></td>
+        <td><p>Helper for defining custom styles for table cells</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="data_cells.html">data_cells()</a></code> </p>
+          <p><code><a href="col_labels.html">col_labels()</a></code> </p>
         </td>
-        <td><p>Helper for targeting multiple table cells</p></td>
+        <td><p>Helper for processing column labels</p></td>
       </tr><tr>
         
         <td>
@@ -466,27 +489,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="col_labels.html">col_labels()</a></code> </p>
+          <p><code><a href="data_cells.html">data_cells()</a></code> </p>
         </td>
-        <td><p>Helper for processing column labels</p></td>
+        <td><p>Helper for targeting multiple data cells</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="apply_styles.html">apply_styles()</a></code> </p>
+          <p><code><a href="one_of.html">one_of()</a></code> </p>
         </td>
-        <td><p>Helper for defining custom styles for table cells</p></td>
+        <td><p>Helper for resolving colnames or rownames that are part of a set</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="pct.html">pct()</a></code> </p>
+          <p><code><a href="everything.html">everything()</a></code> </p>
         </td>
-        <td><p>Helper for providing a numeric value as percentage</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="px.html">px()</a></code> </p>
-        </td>
-        <td><p>Helper for providing a numeric value as pixels value</p></td>
+        <td><p>Helper for selecting all colnames or rownames</p></td>
       </tr>
     </tbody>
     </table>
@@ -501,6 +518,7 @@
       <li><a href="#section-modify-rows">Modify Rows</a></li>
       <li><a href="#section-add-rows">Add Rows</a></li>
       <li><a href="#section-export-table">Export Table</a></li>
+      <li><a href="#section-shiny-functions">Shiny Functions</a></li>
       <li><a href="#section-helper-functions">Helper Functions</a></li>
     </ul>
   </div>

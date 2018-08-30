@@ -97,6 +97,9 @@ summary_rows function, where the output may be text or useful as is
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -150,16 +153,27 @@ function is useful when used as a <code>formatter</code> function in the
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>the column names to format.</p></td>
+      <td><p>the columns to format. Can either be a series of column names
+provided in <code><a href='vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+focused on selections. The select helper functions are:
+<code><a href='starts_with.html'>starts_with</a>()</code>, <code><a href='ends_with.html'>ends_with</a>()</code>,
+<code><a href='contains.html'>contains</a>()</code>, <code><a href='matches.html'>matches</a>()</code>, <code><a href='one_of.html'>one_of</a>()</code>,
+and <code><a href='everything.html'>everything</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>rows</th>
       <td><p>optional rows to format. Not providing any value results in all
-rows in <code>columns</code> being formatted.</p></td>
+rows in <code>columns</code> being formatted. Can either be a vector of row
+captions provided <code>c()</code>, a vector of row indices, or a helper function
+focused on selections. The select helper functions are:
+<code><a href='starts_with.html'>starts_with</a>()</code>, <code><a href='ends_with.html'>ends_with</a>()</code>,
+<code><a href='contains.html'>contains</a>()</code>, <code><a href='matches.html'>matches</a>()</code>, <code><a href='one_of.html'>one_of</a>()</code>,
+and <code><a href='everything.html'>everything</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>pattern</th>
