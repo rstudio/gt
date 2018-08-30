@@ -1,5 +1,6 @@
 #' An HTML dependency for the CSS stylesheet
 #' @importFrom htmltools htmlDependency
+#' @noRd
 html_dependency_gt_css <- function() {
 
   htmltools::htmlDependency(
