@@ -5,8 +5,8 @@
 #'   separately for columns and for rows.
 #' @param columns,rows either a vector of column/row names, a vector of
 #'   column/rows indices, column names provided in \code{\link{vars}()}, row
-#'   captions provided \code{c()}, or a helper function focused on selections.
-#'   The select helper functions are: \code{\link{starts_with}()},
+#'   captions provided in \code{c()}, or a helper function focused on
+#'   selections. The select helper functions are: \code{\link{starts_with}()},
 #'   \code{\link{ends_with}()}, \code{\link{contains}()},
 #'   \code{\link{matches}()}, \code{\link{one_of}()}, and
 #'   \code{\link{everything}()}.
@@ -30,6 +30,32 @@ data_cells <- function(columns = NULL,
   class(data_cells) <- "data_cells"
 
   data_cells
+}
+
+#' Helper for targeting stub rows
+#'
+#' This function is to be used to target individual stub row captions.
+#' @param rows either a vector of row names, a vector of rows indices, row
+#'   captions provided in \code{c()}, or a helper function focused on
+#'   selections. The select helper functions are: \code{\link{starts_with}()},
+#'   \code{\link{ends_with}()}, \code{\link{contains}()},
+#'   \code{\link{matches}()}, \code{\link{one_of}()}, and
+#'   \code{\link{everything}()}.
+#' @return a list object of class \code{stub_rows}.
+#' @import rlang
+#' @export
+stub_rows <- function(rows = NULL) {
+
+  # Capture expressions for the `rows` arguments
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `stub_rows` object
+  stub_rows <- list(rows = row_expr)
+
+  # Apply the `stub_rows` class
+  class(stub_rows) <- "stub_rows"
+
+  stub_rows
 }
 
 #' Interpret input text as Markdown-formatted text
