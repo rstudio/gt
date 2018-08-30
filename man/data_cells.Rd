@@ -9,8 +9,8 @@ data_cells(columns = NULL, rows = NULL)
 \arguments{
 \item{columns, rows}{either a vector of column/row names, a vector of
 column/rows indices, column names provided in \code{\link{vars}()}, row
-captions provided \code{c()}, or a helper function focused on selections.
-The select helper functions are: \code{\link{starts_with}()},
+captions provided in \code{c()}, or a helper function focused on
+selections. The select helper functions are: \code{\link{starts_with}()},
 \code{\link{ends_with}()}, \code{\link{contains}()},
 \code{\link{matches}()}, \code{\link{one_of}()}, and
 \code{\link{everything}()}.}

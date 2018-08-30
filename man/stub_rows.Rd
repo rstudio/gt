@@ -8,8 +8,8 @@ stub_rows(rows = NULL)
 }
 \arguments{
 \item{rows}{either a vector of row names, a vector of rows indices, row
-captions provided \code{c()}, or a helper function focused on selections.
-The select helper functions are: \code{\link{starts_with}()},
+captions provided in \code{c()}, or a helper function focused on
+selections. The select helper functions are: \code{\link{starts_with}()},
 \code{\link{ends_with}()}, \code{\link{contains}()},
 \code{\link{matches}()}, \code{\link{one_of}()}, and
 \code{\link{everything}()}.}
