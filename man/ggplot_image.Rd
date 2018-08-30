@@ -15,7 +15,7 @@ ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-a cell.
+  a cell.
 }
 \description{
 Add a ggplot plot inside a table with this helper function.

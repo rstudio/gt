@@ -8,8 +8,8 @@ pct(x)
 }
 \arguments{
 \item{x}{the numeric value to format as a string percentage for some
-\code{\link{tab_options}()} arguments that can take percentage values (e.g.,
-\code{table.width}).}
+\code{\link{tab_options}()} arguments that can take percentage values
+(e.g., \code{table.width}).}
 }
 \description{
 Helper for providing a numeric value as percentage

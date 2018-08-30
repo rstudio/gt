@@ -12,7 +12,7 @@ preserved.}
 }
 \value{
 a character object that is tagged as an HTML fragment that is not to
-be sanitized.
+  be sanitized.
 
 a character object of class \code{preserve_html}.
 }
@@ -23,10 +23,11 @@ Interpret input text as HTML-formatted text
 # Create a table object using the
 # `mtcars` dataset and add a caption
 # that is to interpreted as HTML
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_stubhead_caption(
-    caption = html(
-      "car <em>make</em> and <em>model</em>"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_stubhead_caption(
+      caption = html(
+        "car <em>make</em> and <em>model</em>"))
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},

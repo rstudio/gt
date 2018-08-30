@@ -13,7 +13,7 @@ web_image(url, height = 30)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-a cell.
+  a cell.
 }
 \description{
 Add a web image inside a table with this helper function.

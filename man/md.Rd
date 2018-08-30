@@ -11,7 +11,7 @@ md(text)
 }
 \value{
 a character object that is tagged for a Markdown-to-HTML
-transformation.
+  transformation.
 
 a character object of class \code{from_markdown}.
 }
@@ -22,9 +22,10 @@ Interpret input text as Markdown-formatted text
 # Create a table object using the
 # `mtcars` dataset and add a caption
 # that is to interpreted as Markdown
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  tab_stubhead_caption(
-    caption = md("car *make* and *model*"))
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    tab_stubhead_caption(
+      caption = md("car *make* and *model*"))
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},

@@ -15,7 +15,7 @@ fa_icon(name, height = 30, fill = NULL)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-a cell.
+  a cell.
 }
 \description{
 Add a FontAwesome icon inside a table with this helper function.
