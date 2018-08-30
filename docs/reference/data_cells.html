@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for targeting multiple table cells — data_cells • gt</title>
+<title>Helper for targeting multiple data cells — data_cells • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Helper for targeting multiple table cells — data_cells" />
+<meta property="og:title" content="Helper for targeting multiple data cells — data_cells" />
 
-<meta property="og:description" content="Helper for targeting multiple table cells" />
+<meta property="og:description" content="This function is to be used to target individual data cells through the
+  intersections of columns and rows. Thus, we provide targeting directives
+  separately for columns and for rows." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -90,6 +92,9 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -118,44 +123,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for targeting multiple table cells</h1>
+    <h1>Helper for targeting multiple data cells</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
     <div class="hidden name"><code>data_cells.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for targeting multiple table cells</p>
+    <p>This function is to be used to target individual data cells through the
+  intersections of columns and rows. Thus, we provide targeting directives
+  separately for columns and for rows.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>data_cells</span>(<span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>data_cells</span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>row</th>
-      <td><p>a single row or a range of rows to target.</p></td>
-    </tr>
-    <tr>
-      <th>column</th>
-      <td><p>a single column or a range of columns to target.</p></td>
+      <th>columns, rows</th>
+      <td><p>either a vector of column/row names, a vector of
+column/rows indices, column names provided in <code><a href='vars.html'>vars</a>()</code>, row
+captions provided <code>c()</code>, or a helper function focused on selections.
+The select helper functions are: <code><a href='starts_with.html'>starts_with</a>()</code>,
+<code><a href='ends_with.html'>ends_with</a>()</code>, <code><a href='contains.html'>contains</a>()</code>,
+<code><a href='matches.html'>matches</a>()</code>, <code><a href='one_of.html'>one_of</a>()</code>, and
+<code><a href='everything.html'>everything</a>()</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list object of class <code>multi_cell_target</code>.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='col_labels.html'>col_labels</a></code>, <code><a href='columns_with.html'>columns_with</a></code>,
-  <code><a href='funs.html'>funs</a></code>, <code><a href='html.html'>html</a></code>, <code><a href='md.html'>md</a></code>,
-  <code><a href='not_in_group.html'>not_in_group</a></code>, <code><a href='pct.html'>pct</a></code>,
-  <code><a href='px.html'>px</a></code>, <code><a href='rownames_with.html'>rownames_with</a></code>,
-  <code><a href='rows_where.html'>rows_where</a></code>, <code><a href='vars.html'>vars</a></code></p></div>
+    <p>a list object of class <code>data_cells</code>.</p>
     
 
   </div>
@@ -165,8 +165,6 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>

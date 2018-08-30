@@ -33,9 +33,10 @@
 <meta property="og:title" content="Create group names and column labels via delimited column names — cols_split_delim" />
 
 <meta property="og:description" content="This option will split delimited column names such that the first component
-is promoted to the group name (and hence will span over column labels) and
-subsequent components will represent the column label. Please note that
-reference to individual columns must still be via the original column names." />
+  is promoted to the group name (and hence will span over column labels) and
+  subsequent components will represent the column label. Please note that
+  reference to individual columns must continue to be through the original
+  column names." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -93,6 +94,9 @@ reference to individual columns must still be via the original column names." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -129,9 +133,10 @@ reference to individual columns must still be via the original column names." />
     <div class="ref-description">
     
     <p>This option will split delimited column names such that the first component
-is promoted to the group name (and hence will span over column labels) and
-subsequent components will represent the column label. Please note that
-reference to individual columns must still be via the original column names.</p>
+  is promoted to the group name (and hence will span over column labels) and
+  subsequent components will represent the column label. Please note that
+  reference to individual columns must continue to be through the original
+  column names.</p>
     
     </div>
 
@@ -142,14 +147,15 @@ reference to individual columns must still be via the original column names.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>delim</th>
       <td><p>the delimiter to use to split an input column name. The
-delimiter supplied will be autoescaped for the internal splitting procedure.
-The first component of the split will become the group name and the second
-component will be the column label.</p></td>
+delimiter supplied will be autoescaped for the internal splitting
+procedure. The first component of the split will become the group name and
+the second component will be the column label.</p></td>
     </tr>
     <tr>
       <th>columns</th>

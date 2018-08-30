@@ -58,6 +58,9 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -130,7 +133,10 @@
 <p>The <code>islands_tbl</code> tibble is now suitable input for <strong>gt</strong>! We can pass that table to the <em>function</em> <code><a href="../reference/gt.html">gt()</a></code>, and we’ll get a display table.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Create a display table showing ten of</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># the largest islands in the world</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -369,13 +375,14 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>That doesn’t look too bad. Sure, it’s basic but we really didn’t really ask for much. We did receive a proper table <em>boxhead</em> (with column labels!) and a <em>field</em>. Also, that default striping is a nice touch. Oftentimes however, you’ll want a bit more: a <em>title</em>, a <em>stub</em> (yes, you’ll want to have this), <em>source notes</em>, and, sometimes, <em>footnotes</em>.</p>
+<!--gt table end--><p>That doesn’t look too bad. Sure, it’s basic but we really didn’t really ask for much. We did receive a proper table <em>boxhead</em> (with column labels!) and a <em>field</em>. Also, that default striping is a nice touch. Oftentimes however, you’ll want a bit more: a <em>title</em>, a <em>stub</em> (it’s a good thing), <em>source notes</em>, and, sometimes, <em>footnotes</em>.</p>
 </div>
 <div id="slightly-more-complex-tables-adhering-to-the-grammar-of-tables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#slightly-more-complex-tables-adhering-to-the-grammar-of-tables" class="anchor"></a>Slightly More Complex Tables, Adhering to the Grammar of Tables</h3>
-<p>Let’s introduce the Grammar of Tables. It’s really just a bunch of table parts that work well together and some rules about how the information held within them is architected. No big deal. Those terms provided earlier in slanted text signify the table parts. The last display table had only two parts, the boxhead and and the field, the next few will have considerably more.</p>
+<p>Let’s introduce the Grammar of Tables. It’s really just a bunch of table parts that work well together and some rules about how the information held within them is arranged. No big deal. Those terms provided earlier in slanted text signify the table parts. The last display table had only two parts, the <strong>boxhead</strong> and the <strong>field</strong>, the next few display tables will have considerably more.</p>
 <p>The way the main parts of a table (and their subparts) fit together is best shown as a schematic:</p>
+<p>The parts (roughly from top to bottom) are:</p>
 <ul>
 <li>the <strong>heading</strong> (optional; with a <strong>title</strong> and possibly a <strong>headnote</strong>)</li>
 <li>the <strong>stub</strong> (optional; contains a <strong>stub head</strong> and <strong>row captions</strong>, optionally within <strong>stub blocks</strong> having <strong>group headings</strong> and possibly <strong>summary captions</strong>)</li>
@@ -383,13 +390,16 @@
 <li>the <strong>field</strong> (contains <em>cells</em>, <em>columns</em>, and <em>rows</em>)</li>
 <li>the <strong>footer</strong> (optional; possibly with <strong>footnotes</strong> and <strong>source notes</strong>)</li>
 </ul>
-<p>The way that we add parts like the <strong>heading</strong> and <strong>footnotes</strong> is to use the <code>tab_*</code> family of functions. The heading part is very easy to reason about so let’s see how the previous table looks with a <strong>title</strong> and <strong>headnote</strong>. We add this part using the <code><a href="../reference/tab_heading.html">tab_heading()</a></code> function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a heading placed</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># above the boxhead</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl) <span class="op">%&gt;%</span></a>
+<p>The way that we add parts like the <strong>heading</strong> and <strong>footnotes</strong> is to use the <code>tab_*()</code> family of functions. The heading part is very easy to reason about so let’s see how the previous table looks with a <strong>title</strong> and <strong>headnote</strong>. We add this part using the <code><a href="../reference/tab_heading.html">tab_heading()</a></code> function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Make a display table with the `islands_tbl`</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># table; put a heading just above the boxhead</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="st">"The top ten largest are presented"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="st">"The top ten largest are presented"</span>)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -639,7 +649,7 @@
 <!--gt table end--><p>The <strong>heading</strong> provides a nice opportunity to describe the data that’s presented. The <code>headnote</code>, which functions as a subtitle, is an optional part of the <strong>heading</strong>. We may also style the <code>title</code> and <code>headnote</code> using markdown! We do this by wrapping the values passed to <code>title</code> or <code>headnote</code> with the <code><a href="../reference/md.html">md()</a></code> function. Here is an example with the table data truncated for brevity:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Use markdown for the heading's `title` and `headnote` to</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># add bold and italicized characters</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, ]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(islands_tbl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top two* largest are presented"</span>))</a></code></pre></div>
@@ -860,13 +870,15 @@
 <!--gt table end--><p>A <strong>source note</strong> can be added to the table’s <strong>footer</strong> through use of the <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> function. It works in the same way as <code><a href="../reference/tab_heading.html">tab_heading()</a></code> (it also allows for markdown inputs) except it can be called multiple times—each invocation results in a new source note added below.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a heading and</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># two source notes</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top ten* largest are presented"</span>)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>))</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -1060,10 +1072,10 @@
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table">
 <thead>
 <tr data-type="table_headings">
-<th data-type="table_heading" class="heading title font_normal center" colspan="2"><strong>Large Landmasses of the World</strong></th>
+<th data-type="table_heading" class="heading title font_normal center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr data-type="table_headings">
-<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The <em>top ten</em> largest are presented</th>
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="col_heading center" rowspan="1" colspan="1">name</th>
@@ -1121,18 +1133,25 @@
 </tr>
 </tfoot>
 </table>
-<!--gt table end--><p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. We’ll provide a very simple example on how footnotes can be added here.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a heading,</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># two source notes, and two footnotes</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top ten* largest are presented"</span>)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The lowest by population."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">5</span>, <span class="dv">2</span>))</a></code></pre></div>
+<!--gt table end--><p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function <code><a href="../reference/data_cells.html">data_cells()</a></code> is used with the <code>location</code> argument to specify which cells should be the target of the footnote. The <code><a href="../reference/data_cells.html">data_cells()</a></code> helper has three arguments:</p>
+<ul>
+<li>
+<code>columns</code> and <code>rows</code> can be supplied as (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in <code><a href="../reference/vars.html">vars()</a></code> or row captions within <code>c()</code>, or (4) a select helper function (<code><a href="../reference/starts_with.html">starts_with()</a></code>, <code><a href="../reference/ends_with.html">ends_with()</a></code>, <code><a href="../reference/contains.html">contains()</a></code>, <code><a href="../reference/matches.html">matches()</a></code>, <code><a href="../reference/one_of.html">one_of()</a></code>, and <code><a href="../reference/everything.html">everything()</a></code>).</li>
+<li>
+<code>where</code>, in which one can supply a conditional expression (e.g., <code>size &gt; 10000</code>) that operates across all data cells captured by columns and rows to further constrain the selection</li>
+</ul>
+<p>Here is a simple example on how a footnotes can be added to a table cell. Let’s add a footnote that references the <code>North America</code> and <code>South America</code> cells in the <code>name</code> column:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Add footnotes (the same text) to two different</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># cell; data cells are targeted with `data_cells()`</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">footnote =</span> <span class="st">"The Americas."</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(name),</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">      <span class="dt">rows =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -1326,10 +1345,294 @@
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table">
 <thead>
 <tr data-type="table_headings">
-<th data-type="table_heading" class="heading title font_normal center" colspan="2"><strong>Large Landmasses of the World</strong></th>
+<th data-type="table_heading" class="heading title font_normal center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr data-type="table_headings">
-<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The <em>top ten</em> largest are presented</th>
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The top ten largest are presented</th>
+</tr>
+<tr>
+<th class="col_heading center" rowspan="1" colspan="1">name</th>
+<th class="col_heading center" rowspan="1" colspan="1">size</th>
+</tr>
+</thead>
+<tbody class="table_body striped">
+<tr data-type="data" data-row="1">
+<td class="row center" style="">Asia</td>
+<td class="row center" style="">16988</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="row center" style="">Africa</td>
+<td class="row center" style="">11506</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="row center" style="">North America<sup class="gt_super font_italic">1</sup>
+</td>
+<td class="row center" style="">9390</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="row center" style="">South America<sup class="gt_super font_italic">1</sup>
+</td>
+<td class="row center" style="">6795</td>
+</tr>
+<tr data-type="data" data-row="5">
+<td class="row center" style="">Antarctica</td>
+<td class="row center" style="">5500</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="row center" style="">Europe</td>
+<td class="row center" style="">3745</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="row center" style="">Australia</td>
+<td class="row center" style="">2968</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="row center" style="">Greenland</td>
+<td class="row center" style="">840</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="row center" style="">New Guinea</td>
+<td class="row center" style="">306</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="row center" style="">Borneo</td>
+<td class="row center" style="">280</td>
+</tr>
+</tbody>
+<tfoot data-type="source_notes">
+<tr>
+<td colspan="3" class="sourcenote">Source: The World Almanac and Book of Facts, 1975, page 406.</td>
+</tr>
+<tr>
+<td colspan="3" class="sourcenote">Reference: McNeil, D. R. (1977) <em>Interactive Data Analysis</em>. Wiley.</td>
+</tr>
+</tfoot>
+<tfoot data-type="table_footnotes"><tr data-type="table_footnote">
+<td colspan="2" class="footnote">
+<sup class="gt_super"><em>1</em></sup> The Americas.</td>
+</tr></tfoot>
+</table>
+<!--gt table end--><p>Here is a slightly more complex example of adding footnotes that use expressions in <code>where</code> to help target cells in a column by the underlying data in <code>islands_tbl</code>. First, a set of <strong>dplyr</strong> statements obtains the name of the ‘island’ by largest landmass. This is assigned to the <code>largest</code> object and is used in the first <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> call that targets the cell in the <code>size</code> column that is next to a <code>name</code> value that is stored in <code>largest</code> (‘Asia’). The second <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> is similar except we are directly supplying a <code>name</code> value in the <code>where</code> expression.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Determine the row that contains the</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># largest landmass ('Asia')</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">largest &lt;-<span class="st"> </span>islands_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(size)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">pull</span>(name)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co"># Create two additional footnotes, using the</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co"># `columns` and `where` arguments of `data_cells()`</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">    <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> </span>largest)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">    <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> "Antarctica"</span>))</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">gt_tbl</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table">
+<thead>
+<tr data-type="table_headings">
+<th data-type="table_heading" class="heading title font_normal center" colspan="2">Large Landmasses of the World</th>
+</tr>
+<tr data-type="table_headings">
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="col_heading center" rowspan="1" colspan="1">name</th>
@@ -1347,16 +1650,18 @@
 <td class="row center" style="">11506</td>
 </tr>
 <tr data-type="data" data-row="3">
-<td class="row center" style="">North America</td>
+<td class="row center" style="">North America<sup class="gt_super font_italic">2</sup>
+</td>
 <td class="row center" style="">9390</td>
 </tr>
 <tr data-type="data" data-row="4">
-<td class="row center" style="">South America</td>
+<td class="row center" style="">South America<sup class="gt_super font_italic">2</sup>
+</td>
 <td class="row center" style="">6795</td>
 </tr>
 <tr data-type="data" data-row="5">
 <td class="row center" style="">Antarctica</td>
-<td class="row center" style="">5500<sup class="gt_super font_italic">2</sup>
+<td class="row center" style="">5500<sup class="gt_super font_italic">3</sup>
 </td>
 </tr>
 <tr data-type="data" data-row="6">
@@ -1390,20 +1695,28 @@
 </tfoot>
 <tfoot data-type="table_footnotes"><tr data-type="table_footnote">
 <td colspan="2" class="footnote">
-<sup class="gt_super"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_super"><em>2</em></sup> The lowest by population.</td>
+<sup class="gt_super"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_super"><em>2</em></sup> The Americas.<br><sup class="gt_super"><em>3</em></sup> The lowest by population.</td>
 </tr></tfoot>
 </table>
-<!--gt table end--><p>We were able to supply the reference locations in the table by using the <code><a href="../reference/data_cells.html">data_cells()</a></code> helper function and supplying the row and column numbers. Markdown, again with <code><a href="../reference/md.html">md()</a></code>, was used to style the footnote text.</p>
+<!--gt table end--><p>We were able to supply the reference locations in the table by using the <code><a href="../reference/data_cells.html">data_cells()</a></code> helper function and supplying the necessary row and column reference and filtering rows with <code>where</code> expression in the last two cases.</p>
 </div>
 <div id="the-stub" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-stub" class="anchor"></a>The Stub</h3>
 <p>The <strong>stub</strong> is the area to the left in a table that contains <strong>row captions</strong>, <strong>summary captions</strong>, and <strong>group headings</strong>. Those subparts can be grouped in a sequence of <strong>stub blocks</strong>. The <strong>stub head</strong> provides a location for a caption that describes the <strong>stub</strong>. The <strong>stub</strong> is optional since there are cases where a <strong>stub</strong> wouldn’t be useful (e.g., the display tables presented above were just fine without a <strong>stub</strong>).</p>
 <p>The easiest way to generate a <strong>stub</strong> part is by having an input dataset with a column named <code>rowname</code>. This magic column will signal to <strong>gt</strong> that the data in that column should be placed in the stub as <strong>row captions</strong>. To make this work with our <code>islands_tbl</code> dataset, we’ll just change rename the column <code>name</code> to <code>rowname</code>, and then use <code><a href="../reference/gt.html">gt()</a></code> to view the table w/ stub:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Generate a gt table after creating a `rowname` colummn</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">islands_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Modify the `islands_tbl` by creating a</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># `rowname` column (`name` -&gt; `rowname`)</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">islands_tbl &lt;-<span class="st"> </span>islands_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># Create a display table showing ten of</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># the largest islands in the world; this</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co"># time with a stub</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -1643,12 +1956,13 @@
 </tbody>
 </table>
 <!--gt table end--><p>Notice that the landmass names are off the the left in an unstriped area? That’s the <strong>stub</strong>. We can apply what’s known as a <strong>stubhead caption</strong>, which is label text that technically lives both in the <strong>stub</strong> and in the <strong>boxhead</strong>. Think of it as the intersection of the <strong>stub</strong> and <strong>boxhead.</strong> This operation is done with the <code><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption()</a></code> function:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Generate a simple table with a stub and add</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># a stubhead caption</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">islands_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"landmass"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Generate a simple table with a stub and add</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># a stubhead caption</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"landmass"</span>)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -1887,21 +2201,34 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>A very important thing to note here is that the table now has one <strong>field</strong> column. Before, when there was no <strong>stub</strong>, two columns were present (with <strong>column labels</strong> <code>name</code> and <code>size</code>) but now column <code>1</code> is <code>size</code>. This has implications for column referencing (for instance, with the <code><a href="../reference/data_cells.html">data_cells()</a></code> helper function). To apply our table parts as before, we use the following statements:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a stub,</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># a heading, source notes, and footnotes</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">islands_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"landmass"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top ten* largest are presented"</span>)</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The lowest by population."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">5</span>, <span class="dv">1</span>))</a></code></pre></div>
+<!--gt table end--><p>A very important thing to note here is that the table now has one <strong>field</strong> column. Before, when there was no <strong>stub</strong>, two columns were present (with <strong>column labels</strong> <code>name</code> and <code>size</code>) but now column <code>1</code> (the only <strong>field</strong> column) is <code>size</code>. This has implications for column referencing (for instance, with the <code><a href="../reference/data_cells.html">data_cells()</a></code> helper function). Before, we referenced names in data cells using <code>where</code>. Now, the names are row captions and they can be referenced in the <code>rows</code> argument. To apply our table parts as before (up to and including the footnotes) we use the following statements:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a stub,</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># a heading, source notes, and footnotes</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="dt">headnote =</span> <span class="st">"The top ten largest are presented"</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">    <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">      <span class="dt">rows =</span> largest)</a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">    <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">      <span class="dt">rows =</span> <span class="kw"><a href="../reference/contains.html">contains</a></span>(<span class="st">"arc"</span>)))</a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb10-27" data-line-number="27">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -2095,10 +2422,10 @@
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table">
 <thead>
 <tr data-type="table_headings">
-<th data-type="table_heading" class="heading title font_normal center" colspan="2"><strong>Large Landmasses of the World</strong></th>
+<th data-type="table_heading" class="heading title font_normal center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr data-type="table_headings">
-<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The <em>top ten</em> largest are presented</th>
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1">landmass</th>
@@ -2162,26 +2489,25 @@
 <sup class="gt_super"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_super"><em>2</em></sup> The lowest by population.</td>
 </tr></tfoot>
 </table>
-<!--gt table end--><p>Let’s take this further and add one more magic column to <code>islands_tbl</code> as a way to incorporate <strong>stub blocks</strong> within the <strong>stub</strong>. These blocks can be considered groups of rows and so it’s very logical that the magic column name is <code>groupname</code>. A <code>groupname</code> column will be added to <code>islands_tbl</code> and it will consist of categories that describe the landmass type.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Display the `islands_tbl` data with a stub,</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># a heading, source notes, and footnotes; group heading</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co"># rows are added through the `groupname` column</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">islands_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">groupname =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="st">"continent"</span>, <span class="st">"continent"</span>, <span class="st">"continent"</span>, <span class="st">"continent"</span>,</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">    <span class="st">"continent"</span>, <span class="st">"continent"</span>, <span class="st">"country"</span>, <span class="st">"country"</span>,</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">    <span class="st">"subregion"</span>, <span class="st">"subregion"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"landmass"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top ten* largest are presented"</span>)</a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(<span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(<span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The lowest by population."</span>), <span class="dt">location =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(<span class="dv">5</span>, <span class="dv">1</span>))</a></code></pre></div>
+<!--gt table end--><p>Let’s incorporate row groups into the display table. This divides rows into groups, creating <strong>stub blocks</strong>, and results in a display of <strong>group heading</strong> row. This can be easily done with a table containing row captions. We can make a new <strong>stub block</strong> with each call of the <code><a href="../reference/tab_stub_block.html">tab_stub_block()</a></code> function. The inputs are group names in the <code>group</code> argument, and row references in the <code>rows</code> argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).</p>
+<p>Here we will create three stub blocks (with group names <code>continent</code>, <code>country</code>, and <code>subregion</code>) to have a groupings of rows.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Create three stub blocks with the</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co"># `tab_stub_block()` function</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="dt">group =</span> <span class="st">"continent"</span>,</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">    <span class="dt">rows =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">    <span class="dt">group =</span> <span class="st">"country"</span>,</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"Australia"</span>, <span class="st">"Greenland"</span>)</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">    <span class="dt">group =</span> <span class="st">"subregion"</span>,</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"New Guinea"</span>, <span class="st">"Borneo"</span>))</a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">gt_tbl</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -2375,10 +2701,10 @@
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="3" class="table">
 <thead>
 <tr data-type="table_headings">
-<th data-type="table_heading" class="heading title font_normal center" colspan="2"><strong>Large Landmasses of the World</strong></th>
+<th data-type="table_heading" class="heading title font_normal center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr data-type="table_headings">
-<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The <em>top ten</em> largest are presented</th>
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1">landmass</th>
@@ -2453,12 +2779,683 @@
 </table>
 <!--gt table end--><p>Three <strong>stub groups</strong> have been made since there are three unique categories under <code>groupname</code>. Across the top of each <strong>stub group</strong> is the <strong>group_heading</strong> contained in a separate row (these cut across the field and they contain nothing but the <strong>group heading</strong>). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate <strong>stub groups</strong>.</p>
 <p>Having groups of rows in <strong>stub blocks</strong> is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with <strong>summary captions</strong> is covered in a separate article (<em>Creating Summary Lines</em>).</p>
+<p>Another way to make group rows is to have the magic column <code>groupname</code> present in the input data table. For our above example with <code>islands_tbl</code>, a <code>groupname</code> column with the categories <code>continent</code>, <code>country</code>, and <code>subregion</code> in the appropriate rows would produce stub blocks automatically (i.e., there would be no need to use the <code><a href="../reference/tab_stub_block.html">tab_stub_block()</a></code> statements). This strategy of supplying group names in a <code>groupname</code> column name can sometimes be advantageous since we can rely on functions such as those available in <strong>dplyr</strong> to generate the categories (e.g., using <code>case_when()</code> or <code>if_else()</code>).</p>
 </div>
 <div id="the-boxhead" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-boxhead" class="anchor"></a>The Boxhead</h3>
 <p>The table’s <strong>boxhead</strong> is a required element of any table and it contains, at a minimum, <strong>column labels</strong>. The last example had a single <strong>column label</strong>: <code>size</code>. Just as in the <strong>stub</strong>, we can create groupings called <strong>boxhead panels</strong> that have one or more <strong>spanner headings</strong>.</p>
 <p>The following schematic provides a model for the layout of rows within each <strong>stub group</strong>, and, the layout of <strong>column labels</strong> under <strong>spanner headings</strong> in the <strong>boxhead</strong>.</p>
+<p>To better demonstrate how <strong>boxhead panels</strong> work and are displayed, let’s use an input data table with more columns. In this case, that input table will be <code>airquality</code>. It has the following columns:</p>
+<ul>
+<li>
+<code>Ozone</code>: mean ground-level ozone in parts per billion by volume (ppbV), measured between 13:00 and 15:00</li>
+<li>
+<code>Solar.R</code>: solar radiation in Langley units (cal/m<sup>2</sup>), measured between 08:00 and noon</li>
+<li>
+<code>Wind</code>: mean wind speed in miles per hour (mph)</li>
+<li>
+<code>Temp</code>: maximum daily air temperature in degrees Fahrenheit (°F)</li>
+<li>
+<code>Month</code>, <code>Day</code>: the numeric month and day of month for the record</li>
+</ul>
+<p>We know that all measurements took place in 1973, so a <code>year</code> column will be added to the dataset before it is passed to <code><a href="../reference/gt.html">gt()</a></code>.</p>
+<p>Let’s organize the time information under a <code>Time</code> <strong>spanner heading</strong>, and put the other columns under a <code>Measurement</code> heading. We can do this with the <code><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel()</a></code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Modify the `airquality` dataset by adding the year</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># of the measurements (1973) and limiting to 10 rows</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">airquality &lt;-<span class="st"> </span>airquality <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> 1973L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Create a display table using the `airquality`</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># dataset; arrange columns into boxhead panels</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> airquality) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">    <span class="dt">title =</span> <span class="st">"New York Air Quality Measurements"</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">    <span class="dt">headnote =</span> <span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">    <span class="dt">group =</span> <span class="st">"Time"</span>,</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Year, Month, Day)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">    <span class="dt">group =</span> <span class="st">"Measurement"</span>,</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Ozone, Solar.R, Wind, Temp))</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21">gt_tbl</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="10" data-ncol="7" data-ngroup="0" class="table">
+<thead>
+<tr data-type="table_headings">
+<th data-type="table_heading" class="heading title font_normal center" colspan="7">New York Air Quality Measurements</th>
+</tr>
+<tr data-type="table_headings">
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
+</tr>
+<tr>
+<th data-type="column_heading" class="col_heading column_spanner sep_right center" rowspan="1" colspan="4">Measurement</th>
+<th data-type="column_heading" class="col_heading column_spanner center" rowspan="1" colspan="3">Time</th>
+</tr>
+<tr>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Ozone</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Solar.R</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Wind</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Temp</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Month</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Day</th>
+<th data-type="column_heading" class="col_heading NA" rowspan="1" colspan="1">Year</th>
+</tr>
+</thead>
+<tbody class="table_body striped">
+<tr data-type="data" data-row="1">
+<td class="row center" style="">41</td>
+<td class="row center" style="">190</td>
+<td class="row center" style="">7.4</td>
+<td class="row center" style="">67</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">1</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="row center" style="">36</td>
+<td class="row center" style="">118</td>
+<td class="row center" style="">8</td>
+<td class="row center" style="">72</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">2</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="row center" style="">12</td>
+<td class="row center" style="">149</td>
+<td class="row center" style="">12.6</td>
+<td class="row center" style="">74</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">3</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="row center" style="">18</td>
+<td class="row center" style="">313</td>
+<td class="row center" style="">11.5</td>
+<td class="row center" style="">62</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">4</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="5">
+<td class="row center" style="">NA</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">14.3</td>
+<td class="row center" style="">56</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="row center" style="">28</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">14.9</td>
+<td class="row center" style="">66</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">6</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="row center" style="">23</td>
+<td class="row center" style="">299</td>
+<td class="row center" style="">8.6</td>
+<td class="row center" style="">65</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">7</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="row center" style="">19</td>
+<td class="row center" style="">99</td>
+<td class="row center" style="">13.8</td>
+<td class="row center" style="">59</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">8</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="row center" style="">8</td>
+<td class="row center" style="">19</td>
+<td class="row center" style="">20.1</td>
+<td class="row center" style="">61</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">9</td>
+<td class="row center" style="">1973</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="row center" style="">NA</td>
+<td class="row center" style="">194</td>
+<td class="row center" style="">8.6</td>
+<td class="row center" style="">69</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">10</td>
+<td class="row center" style="">1973</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>We can do a two more things to make this presentable:</p>
+<ul>
+<li>move the <code>Time</code> columns to the beginning of the series (using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>)</li>
+<li>customize the column labels so that they are more descriptive (using <code><a href="../reference/cols_label.html">cols_label()</a></code>)</li>
+</ul>
+<p>Let’s do both of these things in the next example.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Move the time-based columns to the start of</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># the column series; modify the column labels of</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co"># the measurement-based columns</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/cols_move_to_start.html">cols_move_to_start</a></span>(</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Year, Month, Day)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(<span class="dt">labels =</span> <span class="kw"><a href="../reference/col_labels.html">col_labels</a></span>(</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">Ozone =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">    <span class="dt">Solar.R =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Solar R.,&lt;br&gt;cal/m&lt;sup&gt;2&lt;/sup&gt;"</span>),</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">    <span class="dt">Wind =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Wind,&lt;br&gt;mph"</span>),</a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">    <span class="dt">Temp =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Temp,&lt;br&gt;&amp;deg;F"</span>)))</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15">gt_tbl</a></code></pre></div>
+<style>/* gt compiled CSS file */
+.gt_table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-collapse: collapse;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+.heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+}
+
+.title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+}
+
+.headnote {
+  color: #000000;
+  font-size: 85%;
+  /* heading.headnote.font.size */
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+}
+
+.bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+.column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* boxhead.background.color */
+  font-size: 16px;
+  /* boxhead.font.size */
+  font-weight: initial;
+  /* boxhead.font.weight */
+  padding: 10px;
+  margin: 10px;
+}
+
+/* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+.sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+.group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
+.striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+}
+
+.stub {
+  width: 10%;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+}
+
+.stub.row.right, .stub.row.left, .stub.row.center {
+  background-color: #FFFFFF;
+}
+
+.summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+.first_summary_row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+}
+
+.table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+.footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+.sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.font_normal {
+  font-weight: normal;
+}
+
+.font_bold {
+  font-weight: bold;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.gt_super {
+  font-size: 65%;
+}
+</style>
+<!--gt table start--><table data-nrow="10" data-ncol="7" data-ngroup="0" class="table">
+<thead>
+<tr data-type="table_headings">
+<th data-type="table_heading" class="heading title font_normal center" colspan="7">New York Air Quality Measurements</th>
+</tr>
+<tr data-type="table_headings">
+<th data-type="table_headnote" class="heading headnote font_normal center bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
+</tr>
+<tr>
+<th data-type="column_heading" class="col_heading column_spanner sep_right center" rowspan="1" colspan="3">Time</th>
+<th data-type="column_heading" class="col_heading column_spanner center" rowspan="1" colspan="4">Measurement</th>
+</tr>
+<tr>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Year</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Month</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Day</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Ozone,<br>ppbV</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Solar R.,<br>cal/m<sup>2</sup>
+</th>
+<th data-type="column_heading" class="col_heading center" rowspan="1" colspan="1">Wind,<br>mph</th>
+<th data-type="column_heading" class="col_heading NA" rowspan="1" colspan="1">Temp,<br>°F</th>
+</tr>
+</thead>
+<tbody class="table_body striped">
+<tr data-type="data" data-row="1">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">1</td>
+<td class="row center" style="">41</td>
+<td class="row center" style="">190</td>
+<td class="row center" style="">7.4</td>
+<td class="row center" style="">67</td>
+</tr>
+<tr data-type="data" data-row="2">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">2</td>
+<td class="row center" style="">36</td>
+<td class="row center" style="">118</td>
+<td class="row center" style="">8</td>
+<td class="row center" style="">72</td>
+</tr>
+<tr data-type="data" data-row="3">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">3</td>
+<td class="row center" style="">12</td>
+<td class="row center" style="">149</td>
+<td class="row center" style="">12.6</td>
+<td class="row center" style="">74</td>
+</tr>
+<tr data-type="data" data-row="4">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">4</td>
+<td class="row center" style="">18</td>
+<td class="row center" style="">313</td>
+<td class="row center" style="">11.5</td>
+<td class="row center" style="">62</td>
+</tr>
+<tr data-type="data" data-row="5">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">14.3</td>
+<td class="row center" style="">56</td>
+</tr>
+<tr data-type="data" data-row="6">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">6</td>
+<td class="row center" style="">28</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">14.9</td>
+<td class="row center" style="">66</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">7</td>
+<td class="row center" style="">23</td>
+<td class="row center" style="">299</td>
+<td class="row center" style="">8.6</td>
+<td class="row center" style="">65</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">8</td>
+<td class="row center" style="">19</td>
+<td class="row center" style="">99</td>
+<td class="row center" style="">13.8</td>
+<td class="row center" style="">59</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">9</td>
+<td class="row center" style="">8</td>
+<td class="row center" style="">19</td>
+<td class="row center" style="">20.1</td>
+<td class="row center" style="">61</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="row center" style="">1973</td>
+<td class="row center" style="">5</td>
+<td class="row center" style="">10</td>
+<td class="row center" style="">NA</td>
+<td class="row center" style="">194</td>
+<td class="row center" style="">8.6</td>
+<td class="row center" style="">69</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end--><p>Note that even though columns were moved using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, the <strong>spanner headings</strong> still spanned above the correct columns. There are a number of functions that <strong>gt</strong> provides to move columns, including <code><a href="../reference/cols_move.html">cols_move()</a></code>, <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>; there’s even a function to remove columns: <code><a href="../reference/cols_remove.html">cols_remove()</a></code>.</p>
+<p>The <code><a href="../reference/cols_label.html">cols_label()</a></code> function is paired with the <code><a href="../reference/col_labels.html">col_labels()</a></code> helper function. This allows for multiple columns to be renamed in a single use of <code><a href="../reference/cols_label.html">cols_label()</a></code>. Further to this, the helper function allows for the use of the <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> functions so that we can create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with <code>&lt;br&gt;</code>, insert a superscripted <code>2</code> (with <code>&lt;sup&gt;2&lt;/sup&gt;</code>), and insert a degree symbol as an HTML entity (<code>&amp;deg;</code>).</p>
 </div>
   </div>
 

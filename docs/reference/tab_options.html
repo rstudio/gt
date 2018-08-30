@@ -33,7 +33,7 @@
 <meta property="og:title" content="Modify the table output options — tab_options" />
 
 <meta property="og:description" content="Modify the options available in a table. These options are named by the
-components, the subcomponents, and the element that can adjusted." />
+  components, the subcomponents, and the element that can adjusted." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,6 +91,9 @@ components, the subcomponents, and the element that can adjusted." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -127,7 +130,7 @@ components, the subcomponents, and the element that can adjusted." />
     <div class="ref-description">
     
     <p>Modify the options available in a table. These options are named by the
-components, the subcomponents, and the element that can adjusted.</p>
+  components, the subcomponents, and the element that can adjusted.</p>
     
     </div>
 
@@ -161,7 +164,8 @@ components, the subcomponents, and the element that can adjusted.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>table.width</th>
@@ -171,6 +175,18 @@ provided as a single-length numeric vector, it is assumed that the value is
 given in units of pixels. The <code><a href='px.html'>px</a>()</code> and <code><a href='pct.html'>pct</a>()</code>
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.</p></td>
+    </tr>
+    <tr>
+      <th>table.font.size, heading.title.font.size, heading.headnote.font.size, boxhead.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size</th>
+      <td><p>font sizes for the parent text element <code>table</code> and the following child
+elements: <code>heading.title</code>, <code>heading.headnote</code>, <code>boxhead</code>,
+<code>stub_group</code>, <code>footnote</code>, and <code>sourcenote</code>. Can be specified
+as a single-length character vector with units of pixels
+(e.g., <code>12px</code>) or as a percentage (e.g., <code>80%</code>). If provided as a
+single-length numeric vector, it is assumed that the value is given in
+units of pixels. The <code><a href='px.html'>px</a>()</code> and <code><a href='pct.html'>pct</a>()</code> helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units.</p></td>
     </tr>
     <tr>
       <th>table.background.color, heading.background.color, boxhead.background.color, stub_group.background.color, summary_row.background.color, field.background.color</th>

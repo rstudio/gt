@@ -90,6 +90,9 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
+      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -129,14 +132,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>tab_style</span>(<span class='no'>data</span>, <span class='no'>style</span>, <span class='no'>location</span>)</pre>
+    <pre class="usage"><span class='fu'>tab_style</span>(<span class='no'>data</span>, <span class='no'>style</span>, <span class='no'>locations</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>style</th>
@@ -144,10 +148,12 @@
 helper function can be used here to more easily generate valid styles.</p></td>
     </tr>
     <tr>
-      <th>location</th>
-      <td><p>the cell or set of cells to be styled. Supplying an object
-with the <code><a href='data_cells.html'>data_cells()</a></code> helper function is a useful way to specify the
-cell that is to be styled.</p></td>
+      <th>locations</th>
+      <td><p>the cell or set of cells to be associated with the footnote.
+Supplying an object with the <code><a href='data_cells.html'>data_cells</a>()</code> helper function is
+a useful way to specify the cell that is associated with the footnote.
+Additionally, we can supply a list with multiple calls to
+<code><a href='data_cells.html'>data_cells</a>()</code> if we wish to combine multiple cell selections.</p></td>
     </tr>
     </table>
     
@@ -158,8 +164,8 @@ cell that is to be styled.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>[apply_styles()] as a helper for defining custom styles and
-[data_cells()] as a useful helper function for targeting the cells to be
-styled.</p>
+  [data_cells()] as a useful helper function for targeting one or more data
+  cells to be styled.</p>
 <p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
   <code><a href='gt.html'>gt</a></code>, <code><a href='tab_boxhead_panel.html'>tab_boxhead_panel</a></code>,
   <code><a href='tab_footnote.html'>tab_footnote</a></code>, <code><a href='tab_heading.html'>tab_heading</a></code>,
@@ -175,9 +181,9 @@ styled.</p>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>tab_style</span>(
       <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='apply_styles.html'>apply_styles</a></span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>),
-      <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='data_cells.html'>data_cells</a></span>(
-        <span class='kw'>row</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>,
-        <span class='kw'>column</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>hp</span>)))</div></pre>
+      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='data_cells.html'>data_cells</a></span>(
+        <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>hp</span>),
+        <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Datsun 710"</span>, <span class='st'>"Valiant"</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
