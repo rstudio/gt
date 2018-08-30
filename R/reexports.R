@@ -5,7 +5,7 @@
 #' @importFrom dplyr vars
 #' @usage vars(...)
 #' @param ... one or more column names or row labels, depending on the enclosing
-#' function. This can be provided as bare column names or row labels.
+#'   function. This can be provided as bare column names or row labels.
 #' @family helper functions
 #' @export
 NULL
@@ -17,9 +17,9 @@ NULL
 #' @importFrom dplyr funs
 #' @usage funs(...)
 #' @param ... one or more functions that can be either a function name (e.g.,
-#' \code{"mean"}), the function itself (e.g., \code{mean}), or calls to
-#' functions with \code{.} as a dummy argument (e.g.,
-#' \code{mean(., na.rm = TRUE)}).
+#'   \code{"mean"}), the function itself (e.g., \code{mean}), or calls to
+#'   functions with \code{.} as a dummy argument (e.g.,
+#'   \code{mean(., na.rm = TRUE)}).
 #' @family helper functions
 #' @export
 NULL

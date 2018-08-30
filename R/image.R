@@ -4,7 +4,7 @@
 #' @param file a path to an image file.
 #' @param height the absolute height (px) of the image in the table cell.
 #' @return a character object with an HTML fragment that can be placed inside of
-#' a cell.
+#'   a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -44,7 +44,7 @@ local_image <- function(file,
 #' @param url a url that resolves to an image file.
 #' @param height the absolute height (px) of the image in the table cell.
 #' @return a character object with an HTML fragment that can be placed inside of
-#' a cell.
+#'   a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -73,7 +73,7 @@ web_image <- function(url,
 #' @param height the absolute height (px) of the icon in the table cell.
 #' @param fill an option to change the fill color of the icon.
 #' @return a character object with an HTML fragment that can be placed inside of
-#' a cell.
+#'   a cell.
 #' @examples
 #' # Create an HTML fragment that
 #' # contains an FA icon
@@ -134,7 +134,7 @@ fa_icon <- function(name,
 #' @param file a path to an SVG file.
 #' @param height the absolute height (px) of the image in the table cell.
 #' @return a character object with an HTML fragment that can be placed inside of
-#' a cell.
+#'   a cell.
 #' @examples
 #' \dontrun{
 #' # Create an HTML fragment that
@@ -184,7 +184,7 @@ local_svg <- function(file,
 #' @param height the absolute height (px) of the image in the table cell.
 #' @param aspect_ratio the plot's final aspect ratio.
 #' @return a character object with an HTML fragment that can be placed inside of
-#' a cell.
+#'   a cell.
 #' @examples
 #' \dontrun{
 #' library(tidyverse)

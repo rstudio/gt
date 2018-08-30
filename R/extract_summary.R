@@ -1,15 +1,15 @@
 #' Extract a summary table from a gt table object
 #'
 #' Get a summary row data frame from a \code{gt_tbl} object where summary rows
-#' were added via the \code{summary_rows()} function. The output data frame
-#' contains the \code{groupname} and \code{rowname} columns, where
-#' \code{rowname} contains descriptive stub labels for the summary rows.
-#' The remaining columns are a subset of the original dataset, where only those
-#' columns that had aggregation functions applied are retained. The output data
-#' frame format is suitable for generating a summary table using the
-#' \code{\link{gt}()} function.
+#'   were added via the \code{summary_rows()} function. The output data frame
+#'   contains the \code{groupname} and \code{rowname} columns, where
+#'   \code{rowname} contains descriptive stub labels for the summary rows.
+#'   The remaining columns are a subset of the original dataset, where only
+#'   those columns that had aggregation functions applied are retained. The
+#'   output data frame format is suitable for generating a summary table using
+#'   the \code{\link{gt}()} function.
 #' @param data a table object that is created using the \code{\link{gt}()}
-#' function.
+#'   function.
 #' @return a data frame containing summary data.
 #' @family table export functions
 #' @export
@@ -40,4 +40,3 @@ extract_summary <- function(data) {
 
   data_attr$summary_df
 }
-

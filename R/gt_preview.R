@@ -1,14 +1,14 @@
 #' Preview a gt table object
 #'
 #' Create a preview version of table. Here we can specify the first and last
-#' \code{n} rows for the preview table.
+#'   \code{n} rows for the preview table.
 #' @param data a \code{data.frame} object or a tibble.
 #' @param rownames_to_stub an option to take rownames from the input \code{data}
-#' table as row captions in the stub.
+#'   table as row captions in the stub.
 #' @param top_n this value will be used as the number of rows from the top of
-#' the table to display.
+#'   the table to display.
 #' @param bottom_n the value will be used as the number of rows from the bottom
-#' of the table to display.
+#'   of the table to display.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a preview of the `mtcars`
