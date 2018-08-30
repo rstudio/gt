@@ -34,13 +34,15 @@ gt <- function(data,
                rownames_to_stub = FALSE) {
 
   # If the option to place rownames in the stub
-  # is taken, then the `stub_df` data frame will
-  # be pre-populated with rownames in the `rowname`
-  # column; otherwise, this will be an empty df
+  #   is taken, then the `stub_df` data frame will
+  #   be pre-populated with rownames in the `rowname`
+  #   column; otherwise, this will be an empty df
   if (rownames_to_stub) {
 
     stub_df <-
       data.frame(
+        fmts = rep(NA_character_, nrow(data)),
+        foot = rep(NA_character_, nrow(data)),
         groupname = NA_character_,
         rowname = rownames(data),
         stringsAsFactors = FALSE)
@@ -49,6 +51,8 @@ gt <- function(data,
 
     stub_df <-
       data.frame(
+        fmts = rep(NA_character_, nrow(data)),
+        foot = rep(NA_character_, nrow(data)),
         groupname = rep(NA_character_, nrow(data)),
         rowname = rep(NA_character_, nrow(data)),
         stringsAsFactors = FALSE)
@@ -99,9 +103,19 @@ gt <- function(data,
   # meaning and this will be used during render time
   boxh_df <-
     empty_df[c(), , drop = FALSE] %>%
+    tibble::add_row() %>%  # group format
+    tibble::add_row() %>%  # column format
+    tibble::add_row() %>%  # group footnote
+    tibble::add_row() %>%  # column footnote
     tibble::add_row() %>%  # group label
     tibble::add_row() %>%  # column label
     tibble::add_row()      # column alignment
+
+  # Assign rownames to the `boxh_df` for easier
+  # manipulation of rows
+  rownames(boxh_df) <-
+    c("group_fmts", "column_fmts", "group_foot", "column_foot",
+      "group_label", "column_label", "column_align")
 
   # Apply initialized data frames as attributes
   # within the object
