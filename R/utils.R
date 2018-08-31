@@ -522,15 +522,15 @@ opts_df_get <- function(opts_df, option) {
 #' @noRd
 as_locations <- function(locations) {
 
-  if (!inherits(locations, "data_cells")) {
+  if (!inherits(locations, "location_cells")) {
 
     if (!is.list(locations) &&
-        any(!vapply(locations, inherits, logical(1), "data_cells"))) {
-      stop("The `locations` object should be a list of `data_cells()`.")
+        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
+
+      stop("The `locations` object should be a list of `*_cells()`.",
+           .call = FALSE)
     }
-
   } else {
-
     locations <- list(locations)
   }
 
