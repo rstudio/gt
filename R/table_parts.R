@@ -296,26 +296,86 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
+    data <- set_footnote(loc, data, index)
+  }
 
-    resolved <- resolve_data_cells(data = data, object = loc)
+  data
+}
 
-    data_rows <- resolved$row
-    data_cols <- resolved$column
+set_footnote <- function(loc, data, index) {
+  UseMethod("set_footnote")
+}
 
-    for (i in 1:length(data_rows)) {
+set_footnote.data_cells <- function(loc, data, index) {
 
-      # Append the footnote
-      if (is.na(attr(data, "foot_df")[data_rows[i], data_cols[i]])) {
-        attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
-          paste0("::foot_", index)
+  resolved <- resolve_data_cells(data = data, object = loc)
 
-      } else {
+  data_cols <- resolved$columns
+  data_rows <- resolved$rows
 
-        attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
-          paste0(
-            attr(data, "foot_df")[data_rows[i], data_cols[i]],
-            "::foot_", index)
-      }
+  for (i in 1:length(data_rows)) {
+
+    # Append the footnote
+    if (is.na(attr(data, "foot_df")[data_rows[i], data_cols[i]])) {
+      attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
+        paste0("::foot_", index)
+
+    } else {
+
+      attr(data, "foot_df")[data_rows[i], data_cols[i]] <-
+        paste0(
+          attr(data, "foot_df")[data_rows[i], data_cols[i]],
+          "::foot_", index)
+    }
+  }
+
+  data
+}
+
+set_footnote.stub_cells <- function(loc, data, index) {
+
+  resolved <- resolve_stub_rows(data = data, object = loc)
+
+  stub_rows <- resolved$rows
+
+  for (i in 1:length(stub_rows)) {
+
+    # Append the footnote
+    if (is.na(attr(data, "stub_df")[stub_rows[i], "foot"])) {
+      attr(data, "stub_df")[stub_rows[i], "foot"] <-
+        paste0("::foot_", index)
+
+    } else {
+
+      attr(data, "stub_df")[stub_rows[i], "foot"] <-
+        paste0(
+          attr(data, "stub_df")[stub_rows[i], "foot"],
+          "::foot_", index)
+    }
+  }
+
+  data
+}
+
+set_footnote.boxhead_cells <- function(loc, data, index) {
+
+  resolved <- resolve_boxhead_columns(data = data, object = loc)
+
+  boxhead_columns <- resolved$columns
+
+  for (i in 1:length(boxhead_columns)) {
+
+    # Append the footnote
+    if (is.na(attr(data, "boxh_df")["column_foot", boxhead_columns[i]])) {
+      attr(data, "boxh_df")["column_foot", boxhead_columns[i]] <-
+        paste0("::foot_", index)
+
+    } else {
+
+      attr(data, "boxh_df")["column_foot", boxhead_columns[i]] <-
+        paste0(
+          attr(data, "boxh_df")["column_foot", boxhead_columns[i]],
+          "::foot_", index)
     }
   }
 
