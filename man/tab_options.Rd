@@ -26,7 +26,7 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
   summary_row.text_transform = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
-  sourcenote.padding = NULL, row.striping.include.stub = NULL,
+  sourcenote.padding = NULL, row.striping.include_stub = NULL,
   row.striping.include_field = NULL)
 }
 \arguments{
@@ -50,7 +50,7 @@ units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, boxhead.background.color, stub_group.background.color, summary_row.background.color, field.background.color}{background colors for the parent element \code{table} and the following
+\item{table.background.color, heading.background.color, boxhead.background.color, stub_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
 child elements: \code{heading}, \code{boxhead}, \code{stub_group},
 \code{summary_row}, and \code{field}. A color name or a hexadecimal color
 code should be provided.}
@@ -79,10 +79,10 @@ the label text in each summary row.}
 \item{footnote.padding, sourcenote.padding}{the amount of padding to apply to
 the footnote and source note sections.}
 
-\item{row.striping.include_field}{an option for whether to include the field
+\item{row.striping.include_stub}{an option for whether to include the stub
 when striping rows.}
 
-\item{row.striping.include_stub}{an option for whether to include the stub
+\item{row.striping.include_field}{an option for whether to include the field
 when striping rows.}
 }
 \description{
