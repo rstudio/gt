@@ -15,7 +15,7 @@
 #'   the \code{groups} argument
 #' - \code{title_cells()}: targets the table title or the table headnote
 #'   depending on the value given to the \code{groups} argument
-#'   (\code{"title"} or \code{"headnote})
+#'   (\code{"title"} or \code{"headnote"})
 #'
 #' The select helper functions are: \code{\link{starts_with}()},
 #'   \code{\link{ends_with}()}, \code{\link{contains}()},
