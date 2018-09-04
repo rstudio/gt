@@ -206,9 +206,11 @@ cols_move <- function(data,
     after <- (after %>% lapply(`[[`, 2) %>% as.character())[1]
   }
 
+  boxh_df <- attr(data, "boxh_df")
+
   # Filter the vector of column names by the
   # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(data))]
+  columns <- columns[which(columns %in% colnames(boxh_df))]
 
   if (length(columns) == 0) {
     return(data)
@@ -222,7 +224,7 @@ cols_move <- function(data,
   }
 
   # Get the remaining column names in the table
-  column_names <- base::setdiff(colnames(data), columns)
+  column_names <- base::setdiff(colnames(boxh_df), columns)
 
   # Get the column index for where the set
   # of `columns` should be inserted after
@@ -230,36 +232,12 @@ cols_move <- function(data,
 
   if (length(columns) > 0 & column_index != length(column_names)) {
 
-    data <- data %>%
-      dplyr::select(
-        column_names[1:column_index], columns,
-        column_names[(column_index + 1):length(column_names)])
-
-    attr(data, "foot_df") <- attr(data, "foot_df") %>%
-      dplyr::select(
-        column_names[1:column_index], columns,
-        column_names[(column_index + 1):length(column_names)])
-
-    attr(data, "fmts_df") <- attr(data, "fmts_df") %>%
-      dplyr::select(
-        column_names[1:column_index], columns,
-        column_names[(column_index + 1):length(column_names)])
-
     attr(data, "boxh_df") <- attr(data, "boxh_df") %>%
       dplyr::select(
         column_names[1:column_index], columns,
         column_names[(column_index + 1):length(column_names)])
 
   } else if (length(columns) > 0 & column_index == length(column_names)) {
-
-    data <- data %>%
-      dplyr::select(column_names[1:column_index], columns)
-
-    attr(data, "foot_df") <- attr(data, "foot_df") %>%
-      dplyr::select(column_names[1:column_index], columns)
-
-    attr(data, "fmts_df") <- attr(data, "fmts_df") %>%
-      dplyr::select(column_names[1:column_index], columns)
 
     attr(data, "boxh_df") <- attr(data, "boxh_df") %>%
       dplyr::select(column_names[1:column_index], columns)
@@ -295,18 +273,16 @@ cols_move_to_start <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
+  boxh_df <- attr(data, "boxh_df")
+
   # Filter the vector of column names by the
   # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(data))]
+  columns <- columns[which(columns %in% colnames(boxh_df))]
 
   if (length(columns) == 0) {
     return(data)
   }
 
-  data <- data %>% dplyr::select(columns, everything())
-
-  attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns, everything())
-  attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns, everything())
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns, everything())
 
   data
@@ -339,9 +315,11 @@ cols_move_to_end <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
+  boxh_df <- attr(data, "boxh_df")
+
   # Filter the vector of column names by the
   # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(data))]
+  columns <- columns[which(columns %in% colnames(boxh_df))]
 
   if (length(columns) == 0) {
     return(data)
@@ -350,10 +328,6 @@ cols_move_to_end <- function(data,
   # Organize a vector of column names for `dplyr::select()`
   columns <- c(base::setdiff(colnames(data), columns), columns)
 
-  data <- data %>% dplyr::select(columns)
-
-  attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns)
-  attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns)
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
 
   data
@@ -384,21 +358,19 @@ cols_remove <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
+  boxh_df <- attr(data, "boxh_df")
+
   # Filter the vector of column names by the
   # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(data))]
+  columns <- columns[which(columns %in% colnames(boxh_df))]
 
   if (length(columns) == 0) {
     return(data)
   }
 
   # Organize a vector of column names for `dplyr::select()`
-  columns <- c(base::setdiff(colnames(data), columns))
+  columns <- c(base::setdiff(colnames(boxh_df), columns))
 
-  data <- data %>% dplyr::select(columns)
-
-  attr(data, "foot_df") <- attr(data, "foot_df") %>% dplyr::select(columns)
-  attr(data, "fmts_df") <- attr(data, "fmts_df") %>% dplyr::select(columns)
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
 
   data
