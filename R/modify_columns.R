@@ -326,7 +326,7 @@ cols_move_to_end <- function(data,
   }
 
   # Organize a vector of column names for `dplyr::select()`
-  columns <- c(base::setdiff(colnames(data), columns), columns)
+  columns <- c(base::setdiff(colnames(boxh_df), columns), columns)
 
   attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
 
