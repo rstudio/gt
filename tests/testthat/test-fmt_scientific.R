@@ -26,8 +26,9 @@ test_that("formatting a column of numeric data to scientific notation works corr
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df",
-          "foot_df", "opts_df", "formats")))
+          "boxh_df", "stub_df", "fmts_df", "footnotes_df",
+          "styles_df", "rows_df", "cols_df", "arrange_groups",
+          "opts_df", "formats")))
 
   # Extract vectors from the table object for comparison
   # to the original dataset
