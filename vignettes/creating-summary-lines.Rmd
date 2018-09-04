@@ -171,16 +171,16 @@ However, the object created still contains data and we can obtain the summary da
 ```{r}
 # Create a gt table with summary rows and
 # assign it to `gt_object`
-gt_object <-
-  gt(tbl) %>%
-  summary_rows(
-    groups = c("A", "B"),
-    columns = vars(value_1, value_2),
-    funs = funs(mean, sum, sd))
-
-# Extract the summary data from `gt_object`
-# to a data frame object
-gt_object %>% extract_summary()
+# gt_object <-
+#   gt(tbl) %>%
+#   summary_rows(
+#     groups = c("A", "B"),
+#     columns = vars(value_1, value_2),
+#     funs = funs(mean, sum, sd))
+# 
+# # Extract the summary data from `gt_object`
+# # to a data frame object
+# gt_object %>% extract_summary()
 ```
 
 The output data frame contains the `groupname` and `rowname` columns. The `groupname` column presents the stub groups that were given in `summary_rows()`.  The `rowname` column contains the descriptive stub labels for the summary rows (recall that values are either supplied explicitly in `summary_rows()`, or, are generated). The remaining columns are a subset of the original dataset, where only those columns that had aggregation functions applied are retained.
@@ -191,12 +191,12 @@ The output data frame from `extract_summary()` can be reintroduced to a reproduc
 # Take `gt_object`, which has summary rows,
 # extract the summary, and make a new display
 # table from that data frame
-gt_object %>%
-  extract_summary() %>%
-  gt() %>%
-  fmt_number(
-    columns = vars(value_1, value_2),
-    decimals = 3)
+# gt_object %>%
+#   extract_summary() %>%
+#   gt() %>%
+#   fmt_number(
+#     columns = vars(value_1, value_2),
+#     decimals = 3)
 ```
 
 
@@ -257,7 +257,7 @@ summary_tbl
 We can extract the summary data from the `summary_tbl` object. What we note is that, since the summary output is of a different class than the input data, extra columns are produced that place the summary output in related columns of different classes.
 
 ```{r}
-summary_tbl %>% extract_summary()
+# summary_tbl %>% extract_summary()
 ```
 
 ### Using Different Formatters for Different Columns
