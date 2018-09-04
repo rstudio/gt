@@ -18,7 +18,7 @@ library(gt)
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>% # 1
   cols_align_right(
-    columns = vars(mpg)) %>% # 2
+    columns = vars(disp, vs)) %>% # 2
   tab_boxhead_panel(
     group = md("*group_a*"),
     columns = vars(mpg, cyl, disp, hp)) %>% # 3
@@ -63,11 +63,11 @@ mtcars_tbl <-
     footnote = "Massive hp.",
     locations = data_cells(
       columns = vars(hp),
-      rows = "Ford Pantera L")) %>% # 11
+      rows = "Maserati Bora")) %>% # 11
   tab_footnote(
     footnote = "Excellent gas mileage.",
     locations = data_cells(
-      columns = 2,
+      columns = 1,
       rows = "Toyota Corolla")) %>% # 11
   tab_footnote(
     footnote = md("Worst speed *ever*."),
