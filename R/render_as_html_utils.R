@@ -111,8 +111,9 @@ stub_component_is_rowname_groupname <- function(stub_components) {
 #' Create a data frame with the rows that the group rows
 #' should appear above
 #' @noRd
-get_groups_rows <- function(extracted,
-                            ordering) {
+get_groups_rows_df <- function(data_attr) {
+
+  ordering <- data_attr$arrange_groups[[1]]
 
   groups_rows <-
     data.frame(
@@ -121,7 +122,7 @@ get_groups_rows <- function(extracted,
       stringsAsFactors = FALSE)
 
   for (i in seq(ordering)) {
-    the_match <- match(ordering[i], extracted[, 1])
+    the_match <- match(ordering[i], data_attr$groups_df[, 1])
     groups_rows[i, 1] <- ordering[i]
     groups_rows[i, 2] <- the_match
   }
@@ -187,17 +188,13 @@ perform_col_merge <- function(data_attr) {
       data_attr$boxh_df[
         , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
 
-    data_attr$fmts_df <-
-      data_attr$fmts_df[
-        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
-
-    data_attr$foot_df <-
-      data_attr$foot_df[
-        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
-
     data_attr$output_df <-
       data_attr$output_df[
         , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+
+    data_attr$columns_df[
+      which(data_attr$columns_df == value_2_col),
+      "colnum_final"] <- NA_integer_
   }
 
   data_attr
@@ -427,6 +424,7 @@ integrate_summary_lines <- function(data_attr) {
   data_attr
 }
 
+#' @importFrom dplyr tibble
 #' @noRd
 arrange_dfs <- function(data_attr,
                         extracted,
@@ -455,6 +453,11 @@ arrange_dfs <- function(data_attr,
         subset(data_attr$foot_df, groupname == ordering[i]))
   }
 
+  rows_df_modified <-
+    dplyr::tibble(
+      rownum_start = as.integer(seq(nrow(extracted_reorder))),
+      rownum_final = as.integer(rownames(extracted_reorder)))
+
   rownames(extracted_reorder) <- NULL
   rownames(fmts_df_reorder) <- NULL
   rownames(foot_df_reorder) <- NULL
@@ -463,142 +466,313 @@ arrange_dfs <- function(data_attr,
   data_attr$foot_df <- foot_df_reorder[, -c(1:2)]
   extracted <- extracted_reorder
 
-  list(data_attr = data_attr, extracted = extracted)
+  list(
+    data_attr = data_attr,
+    extracted = extracted,
+    rows_df_modified = rows_df_modified)
 }
 
+#' @importFrom dplyr tibble
 #' @noRd
-footnotes_to_list <- function(data_attr,
-                              has_stub,
-                              list_object = NULL) {
+get_row_reorder_df <- function(data_attr) {
 
-  if (is.null(list_object)) {
-    list_ <- list()
-  } else {
-    list_ <- list_object
-  }
+  # If there are no group, there there is no reordering
+  # so just return a data frame where the starting row
+  # indices match the final row indices
+  if (length(data_attr$arrange_groups$groups) == 0) {
 
-  if (has_stub) {
-
-    dec_vec <-
-      as.vector(t(cbind(data_attr$stub_df["foot"], data_attr$foot_df)))
-
-  } else {
-
-    dec_vec <- as.vector(t(data_attr$foot_df))
-  }
-
-  for (i in seq(dec_vec)) {
-
-    match <- regmatches(dec_vec[i], gregexpr("::foot_\\d+?", dec_vec[i])) %>% unlist()
-
-    if (length(match) == 0) {
-      match <- NA_character_
-    } else {
-      match <- tidy_gsub(match, "::foot_", "")
-    }
-
-    list_$footnotes[i] <- list(match)
-  }
-
-  list_
-}
-
-#' @importFrom stats setNames
-#' @noRd
-create_footnote_component <- function(data_attr,
-                                      list_footnotes,
-                                      body_content,
-                                      n_cols) {
-
-  if (is.null(data_attr$footnote)) {
     return(
-      list(footnote_component = "",
-           body_content = body_content))
+      dplyr::tibble(
+        rownum_start = as.integer(seq(nrow(data_attr$stub_df))),
+        rownum_final = as.integer(seq(nrow(data_attr$stub_df))))
+    )
   }
 
-  glyphs_footnotes <- c()
+  stub_df <- data_attr$stub_df
 
-  for (i in seq(list_footnotes$footnotes)) {
+  groups <- data_attr$arrange_groups$groups
 
-    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
+  reordered <- stub_df[0, ]
 
-      footnote_glyph <- c()
-      footnote_indices <- list_footnotes$footnotes[[i]]
+  for (i in seq(groups)) {
 
-      for (j in seq(footnote_indices)) {
+    if (!is.na(groups[i])) {
 
-        footnote_text <-
-          data_attr$footnote[[1]][
-            which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
-          unname()
+    reordered <-
+      rbind(
+        reordered,
+        subset(stub_df, groupname %in% groups[i]))
 
-        # Check if the footnote text has been seen before
-        if (!(footnote_text %in% glyphs_footnotes)) {
-          glyphs_footnotes <-
-            c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
-        }
+    } else {
 
-        footnote_glyph <-
-          c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
-      }
-
-      body_content[i] <-
-        paste0(
-          body_content[i],
-          ifelse(grepl("</sup>$", body_content[i]), " ", ""),
-          "<sup class='gt_super font_italic'>",
-          paste(footnote_glyph, collapse = ","),
-          "</sup>")
+      reordered <-
+        rbind(
+          reordered,
+          stub_df[is.na(stub_df$groupname), ])
     }
   }
 
-  # Create the footnotes block
-  footnote_component <-
-    paste0(
-      "<tfoot data-type='table_footnotes'>\n",
-      "<tr data-type='table_footnote'>\n<td colspan='", n_cols,
-      "' class='footnote'>",
-      paste0(
-        "<sup class='gt_super'><em>", seq(glyphs_footnotes),
-        "</em></sup> ", unname(glyphs_footnotes),
-        collapse = "<br />"),
-      "</td>\n</tr>\n</tfoot>")
-
-  list(footnote_component = footnote_component,
-       body_content = body_content)
+  dplyr::tibble(
+    rownum_start = as.integer(seq(nrow(reordered))),
+    rownum_final = as.integer(rownames(reordered)))
 }
 
 #' @noRd
-create_heading_component <- function(data_attr,
-                                     n_cols) {
+#' @importFrom dplyr tibble mutate full_join rename
+get_column_reorder_df <- function(data_attr) {
 
-  if (is.null(data_attr$heading)) {
-    return("")
-  }
+  colnames_final_tbl <-
+    dplyr::tibble(colnames_final = colnames(data_attr$boxh_df)) %>%
+    dplyr::mutate(colnum_final = seq(ncol(data_attr$boxh_df)))
 
-  heading_component <-
-    paste0(
-      "<thead>\n<tr data-type='table_headings'>\n",
-      "<th data-type='table_heading' class='heading title font_normal center' colspan='",
-      n_cols, "'>", data_attr$heading$title ,"</th>\n</tr>\n")
-
-  if ("headnote" %in% names(data_attr$heading)) {
-
-    heading_component <-
-      paste0(
-        heading_component,
-        paste0(
-          "<tr data-type='table_headings'>\n",
-          "<th data-type='table_headnote' ",
-          "class='heading headnote font_normal center bottom_border' colspan='",
-          n_cols, "'>", data_attr$heading$headnote ,"</th>\n</tr>\n"))
-  }
-
-  heading_component
+  data_attr$cols_df %>%
+    dplyr::mutate(colnum_start = seq(nrow(data_attr$cols_df))) %>%
+    dplyr::full_join(
+      colnames_final_tbl, by = c("colnames_start" = "colnames_final")) %>%
+    dplyr::rename(column_names = colnames_start)
 }
 
 #' @noRd
+get_groupnames_rownames_df <- function(data_attr) {
 
+  data_attr$stub_df[data_attr$rows_df$rownum_final, c("groupname", "rowname")]
+}
+
+# Utility function to generate column numbers from column names
+#' @noRd
+colname_to_colnum <- function(data_attr, colname) {
+
+  cnames <- c()
+
+  for (i in seq(colname)) {
+    if (is.na(colname[i])) {
+      cnames <- c(cnames, NA_integer_)
+    } else {
+      cnames <- c(cnames, which(colnames(data_attr$boxh_df) == colname[i]))
+    }
+  }
+
+  cnames
+}
+
+#' @noRd
+rownum_translation <- function(data_attr, rownum_start) {
+
+  rownum_final <- c()
+
+  for (i in seq_along(rownum_start)) {
+
+    rownum_final <-
+      c(rownum_final,
+        which(as.numeric(rownames(data_attr$output_df)) == rownum_start[i]))
+  }
+
+  rownum_final
+}
+
+#' @noRd
+is_title_defined <- function(data_attr) {
+
+  !is.null(data_attr$heading$title)
+}
+
+#' @noRd
+is_headnote_defined <- function(data_attr) {
+
+  !is.null(data_attr$heading$headnote) &&
+    data_attr$heading$headnote != ""
+}
+
+#' @noRd
+get_boxhead_spanners_vec <- function(data_attr) {
+
+  boxhead_spanners <-
+    data_attr$boxh_df["group_label", ] %>% unlist() %>% unname()
+
+  boxhead_spanners[which(!is.na(boxhead_spanners))]
+}
+
+
+#' @noRd
+footnote_glyph_to_html <- function(footnote_glyph) {
+
+  paste0("<sup class='gt_super font_italic'>", footnote_glyph, "</sup>")
+}
+
+
+# body_footnotes_to_list <- function(data_attr,
+#                                    has_stub,
+#                                    list_object = NULL) {
+#
+#   if (is.null(list_object)) {
+#     list_ <- list()
+#   } else {
+#     list_ <- list_object
+#   }
+#
+#   if (has_stub) {
+#
+#     dec_vec <-
+#       as.vector(t(cbind(data_attr$stub_df["foot"], data_attr$foot_df)))
+#
+#   } else {
+#
+#     dec_vec <- as.vector(t(data_attr$foot_df))
+#   }
+#
+#   for (i in seq(dec_vec)) {
+#
+#     match <- regmatches(dec_vec[i], gregexpr("::foot_\\d+?", dec_vec[i])) %>% unlist()
+#
+#     if (length(match) == 0) {
+#       match <- NA_character_
+#     } else {
+#       match <- tidy_gsub(match, "::foot_", "")
+#     }
+#
+#     list_$footnotes[i] <- list(match)
+#   }
+#
+#   list_
+# }
+#
+#
+# boxh_footnotes_to_list <- function(data_attr,
+#                                    has_groups,
+#                                    list_object = NULL) {
+#
+#   if (is.null(list_object)) {
+#     list_ <- list()
+#   } else {
+#     list_ <- list_object
+#   }
+#
+#   if (has_groups) {
+#
+#     dec_vec <- as.vector(t(data_attr$boxh_df[c("group_foot", "column_foot"), ]))
+#
+#   } else {
+#
+#     dec_vec <- as.vector(t(data_attr$boxh_df["column_foot", ]))
+#   }
+#
+#   for (i in seq(dec_vec)) {
+#
+#     match <- regmatches(dec_vec[i], gregexpr("::foot_\\d+?", dec_vec[i])) %>% unlist()
+#
+#     if (length(match) == 0) {
+#       match <- NA_character_
+#     } else {
+#       match <- tidy_gsub(match, "::foot_", "")
+#     }
+#
+#     list_$boxh_footnotes[i] <- list(match)
+#   }
+#
+#   list_
+# }
+#
+#
+# create_footnote_component <- function(data_attr,
+#                                       list_footnotes,
+#                                       body_content,
+#                                       n_cols) {
+#
+#   # If no `footnote` object is available in `data_attr`
+#   # then return an empty `footnote_component` and the
+#   # `body_content` unchanged
+#   if (is.null(data_attr$footnote)) {
+#     return(
+#       list(footnote_component = "",
+#            body_content = body_content))
+#   }
+#
+#   # Get any of the footnotes in the boxhead
+#   data_attr$boxh_df[c("group_foot", "column_foot"), ]
+#
+#   glyphs_footnotes <- c()
+#
+#   # Process footnotes in the stub and in the field
+#   for (i in seq(list_footnotes$footnotes)) {
+#
+#     if (any(!is.na(list_footnotes$footnotes[[i]]))) {
+#
+#       footnote_glyph <- c()
+#       footnote_indices <- list_footnotes$footnotes[[i]]
+#
+#       for (j in seq(footnote_indices)) {
+#
+#         footnote_text <-
+#           data_attr$footnote[[1]][
+#             which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
+#           unname()
+#
+#         # Check if the footnote text has been seen before
+#         if (!(footnote_text %in% glyphs_footnotes)) {
+#           glyphs_footnotes <-
+#             c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
+#         }
+#
+#         footnote_glyph <-
+#           c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
+#       }
+#
+#       body_content[i] <-
+#         paste0(
+#           body_content[i],
+#           ifelse(grepl("</sup>$", body_content[i]), " ", ""),
+#           "<sup class='gt_super font_italic'>",
+#           paste(footnote_glyph, collapse = ","),
+#           "</sup>")
+#     }
+#   }
+#
+#   # Create the footnotes block
+#   footnote_component <-
+#     paste0(
+#       "<tfoot data-type='table_footnotes'>\n",
+#       "<tr data-type='table_footnote'>\n<td colspan='", n_cols,
+#       "' class='footnote'>",
+#       paste0(
+#         "<sup class='gt_super'><em>", seq(glyphs_footnotes),
+#         "</em></sup> ", unname(glyphs_footnotes),
+#         collapse = "<br />"),
+#       "</td>\n</tr>\n</tfoot>")
+#
+#   list(footnote_component = footnote_component,
+#        body_content = body_content)
+# }
+#
+#
+# create_heading_component <- function(data_attr,
+#                                      n_cols) {
+#
+#   if (is.null(data_attr$heading)) {
+#     return("")
+#   }
+#
+#   heading_component <-
+#     paste0(
+#       "<thead>\n<tr data-type='table_headings'>\n",
+#       "<th data-type='table_heading' class='heading title font_normal center' colspan='",
+#       n_cols, "'>", data_attr$heading$title ,"</th>\n</tr>\n")
+#
+#   if ("headnote" %in% names(data_attr$heading)) {
+#
+#     heading_component <-
+#       paste0(
+#         heading_component,
+#         paste0(
+#           "<tr data-type='table_headings'>\n",
+#           "<th data-type='table_headnote' ",
+#           "class='heading headnote font_normal center bottom_border' colspan='",
+#           n_cols, "'>", data_attr$heading$headnote ,"</th>\n</tr>\n"))
+#   }
+#
+#   heading_component
+# }
+
+#' @noRd
 create_source_note_rows <- function(data_attr,
                                     n_cols) {
 
@@ -623,21 +797,38 @@ split_body_content <- function(body_content,
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
+#' @importFrom dplyr mutate
 #' @noRd
 create_table_body <- function(row_splits,
                               row_splits_styles,
-                              groups_rows,
+                              groups_rows_df,
                               col_alignment,
-                              stub_available,
+                              stub_components,
                               n_rows,
                               n_cols) {
+
+
+  if (is.null(stub_components)) {
+    stub_available <- FALSE
+  } else if (stub_component_is_groupname(stub_components)) {
+    stub_available <- FALSE
+  } else {
+    stub_available <- TRUE
+  }
+
+  # Replace an NA group with an empty string
+  if (any(is.na(groups_rows_df$group))) {
+    groups_rows_df <-
+      groups_rows_df %>%
+      dplyr::mutate(group = ifelse(is.na(group), "", group))
+  }
 
   body_rows <- c()
 
   for (i in 1:n_rows) {
 
-    if (!is.null(groups_rows) &&
-        i %in% groups_rows$row) {
+    if (!is.null(groups_rows_df) &&
+        i %in% groups_rows_df$row) {
 
       # Process "group" rows
       body_rows <-
@@ -645,7 +836,7 @@ create_table_body <- function(row_splits,
           paste0(
             "<tr>\n",
             "<td data-type='group' colspan='", n_cols ,"' class='group_heading'>",
-            groups_rows[which(groups_rows$row %in% i), 1][[1]],
+            groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]],
             "</td>\n",
             "</tr>\n"))
     }
@@ -725,20 +916,12 @@ create_table_body <- function(row_splits,
 }
 
 create_column_headings <- function(data_attr,
-                                   extracted,
                                    col_alignment,
                                    stub_available,
                                    spanners_present) {
 
-  # Get the available property names
-  property_names <-
-    base::setdiff(
-      names(data_attr),
-      c("row.names", "class", "names", "boxh_df", "stub_df",
-        "fmts_df", "foot_df", "output_df", "data_df", "formats"))
-
   # Compose the HTML heading
-  headings <- names(extracted)
+  headings <- names(data_attr$output_df)
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
@@ -755,11 +938,10 @@ create_column_headings <- function(data_attr,
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      "stubhead_caption" %in% property_names &&
+      "stubhead_caption" %in% names(data_attr) &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <-
-      data_attr$stubhead_caption[[1]]
+    headings[which(headings == "rowname")] <- data_attr$stubhead_caption[[1]]
 
   } else if ("rowname" %in% headings) {
 
@@ -788,6 +970,7 @@ create_column_headings <- function(data_attr,
     headings_stack <- c()
 
     if (stub_available) {
+
       first_set <-
         c(first_set,
           paste0(
@@ -831,6 +1014,7 @@ create_column_headings <- function(data_attr,
           class <- "column_spanner"
 
           colspan <- 1L
+
           for (j in 1:length(spanners)) {
 
             if (is.na(spanners[i + j])) {
@@ -852,7 +1036,7 @@ create_column_headings <- function(data_attr,
             c(first_set,
               paste0(
                 "<th data-type='column_heading' class='col_heading ",
-                class, " ", col_alignment[-1][i],
+                class, " ", ifelse(colspan > 1, "center", col_alignment[-1][i]),
                 "' rowspan='1' colspan='",
                 colspan, "'>", spanners[i], "</th>"))
         }
@@ -878,12 +1062,12 @@ create_column_headings <- function(data_attr,
         "<tr>\n",
         first_set, "\n</tr>\n<tr>\n",
         second_set, "\n</tr>\n")
-
-    table_col_headings
   }
+
+  table_col_headings
 }
 
-create_table_start <- function(groups_rows,
+create_table_start <- function(groups_rows_df,
                                n_rows,
                                n_cols) {
 
@@ -892,11 +1076,447 @@ create_table_start <- function(groups_rows,
     "<table ",
     "data-nrow='", n_rows, "' ",
     "data-ncol='", n_cols, "' ",
-    "data-ngroup='", get_n_groups(groups_rows), "' ",
+    "data-ngroup='", get_n_groups(groups_rows_df), "' ",
     "class='gt_table'>\n")
 }
 
 create_table_end <- function() {
 
   "</table>\n<!--gt table end-->\n"
+}
+
+# Resolve footnotes
+#' @importFrom dplyr filter bind_rows mutate inner_join select arrange
+#' @importFrom tibble rownames_to_column
+#' @noRd
+resolve_footnotes <- function(data_attr,
+                              groups_rows_df) {
+
+  footnotes_tbl <- data_attr$footnotes_df
+
+  # Pare down footnotes records
+  if (nrow(footnotes_tbl) > 0) {
+
+    # Filter `footnotes_tbl` by elements preceeding the
+    # data rows (i.e., if element is not present but a footnote
+    # reference is, remove the footnote reference since it is
+    # not relevant)
+
+    # Filter by `title`
+    if (!is_title_defined(data_attr = data_attr)) {
+
+      footnotes_tbl <-
+        footnotes_tbl %>%
+        dplyr::filter(locnum != 1)
+    }
+
+    # Filter by `headnote`
+    if (!is_headnote_defined(data_attr = data_attr)) {
+
+      footnotes_tbl <-
+        footnotes_tbl %>%
+        dplyr::filter(locnum != 2)
+    }
+
+    # Filter by `grpname` in boxhead groups
+    if ("boxhead_groups" %in% footnotes_tbl[["locname"]]) {
+
+      footnotes_tbl <-
+        dplyr::bind_rows(
+          footnotes_tbl %>%
+            dplyr::filter(locname != "boxhead_groups"),
+          footnotes_tbl %>%
+            dplyr::filter(locname == "boxhead_groups") %>%
+            dplyr::filter(grpname %in% data_attr$boxhead_spanners))
+    }
+
+    # Filter by `grpname` in stub groups
+    if ("stub_groups" %in% footnotes_tbl[["locname"]]) {
+
+      footnotes_tbl <-
+        dplyr::bind_rows(
+          footnotes_tbl %>%
+            dplyr::filter(locname != "stub_groups"),
+          footnotes_tbl %>%
+            dplyr::filter(locname == "stub_groups") %>%
+            dplyr::filter(grpname %in% data_attr$arrange_groups$groups))
+    }
+
+    # Filter `footnotes_tbl` by the remaining columns
+    # in `data_attr$output_df`
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::filter(colname %in% c(NA_character_, colnames(data_attr$output_df)))
+  }
+
+  # Reorganize footnotes targeting the data rows
+  if (5 %in% footnotes_tbl[["locnum"]]) {
+
+    footnotes_tbl_not_data <-
+      footnotes_tbl %>%
+      dplyr::filter(locnum != 5 | locname == "stub_groups")
+
+    footnotes_tbl_data <-
+      footnotes_tbl %>%
+      dplyr::filter(locnum == 5 & locname != "stub_groups")
+
+    if (nrow(footnotes_tbl_data) > 0) {
+
+      # Re-map the `rownum` to the new row numbers for the
+      # data rows
+      footnotes_tbl_data <-
+        footnotes_tbl_data %>%
+        dplyr::mutate(rownum = rownum_translation(
+          data_attr = data_attr, rownum_start = rownum))
+
+      # Add a `colnum` column that's required for arranging
+      # `footnotes_tbl` in such a way that the order of footnotes
+      # moves top-to-bottom, left-to-right
+      footnotes_tbl_data <-
+        footnotes_tbl_data %>%
+        dplyr::mutate(colnum = colname_to_colnum(
+          data_attr = data_attr, colname = colname)) %>%
+        dplyr::mutate(colnum = ifelse(locname == "stub", 0, colnum))
+    }
+
+    # Re-combine `footnotes_tbl_data` with `footnotes_tbl`
+    footnotes_tbl <-
+      dplyr::bind_rows(footnotes_tbl_not_data, footnotes_tbl_data)
+
+  } else {
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::mutate(colnum = NA_integer_)
+  }
+
+  # For the stub groups, insert a `rownum` based on groups_rows_df
+  if ("stub_groups" %in% footnotes_tbl[["locname"]]) {
+
+    footnotes_tbl_not_stub_groups <-
+      footnotes_tbl %>%
+      dplyr::filter(locname != "stub_groups")
+
+    footnotes_tbl_stub_groups <-
+      footnotes_tbl %>%
+      dplyr::filter(locname == "stub_groups") %>%
+      dplyr::inner_join(groups_rows_df, by = c("grpname" = "group")) %>%
+      dplyr::mutate(rownum = row - 0.1) %>%
+      dplyr::select(-row)
+
+    # Re-combine `footnotes_tbl_not_stub_groups`
+    #   with `footnotes_tbl_stub_groups`
+    footnotes_tbl <-
+      dplyr::bind_rows(
+        footnotes_tbl_not_stub_groups, footnotes_tbl_stub_groups)
+  }
+
+  if (!("colnum" %in% colnames(footnotes_tbl))) {
+
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::mutate(colnum = NA_integer_)
+  }
+
+  # Sort the footnote occurrences
+  footnotes_tbl <-
+    footnotes_tbl %>%
+    dplyr::arrange(locnum, rownum, colnum)
+
+  # Generate a lookup table with ID'd footnote
+  # text elements (that are distinct)
+  footnote_text_tbl <-
+    footnotes_tbl %>%
+    dplyr::select(text) %>%
+    dplyr::distinct() %>%
+    tibble::rownames_to_column(var = "ft_id") %>%
+    dplyr::mutate(ft_id = as.integer(ft_id))
+
+  # Join the lookup table to `footnotes_tbl`
+  footnotes_tbl <-
+    footnotes_tbl %>%
+    dplyr::inner_join(footnote_text_tbl, by = "text")
+
+  footnotes_tbl
+}
+
+# Apply footnotes to the data rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_footnotes_to_data <- function(data_attr) {
+
+  output_df <- data_attr$output_df
+
+  # `data` location
+  footnotes_tbl_data <-
+    data_attr$footnotes_resolved %>%
+    dplyr::filter(locname %in% c("data", "stub"))
+
+  if (nrow(footnotes_tbl_data) > 0) {
+
+    if ("stub" %in% footnotes_tbl_data$locname &&
+        "rowname" %in% colnames(output_df)) {
+
+      footnotes_tbl_data[
+        which(is.na(footnotes_tbl_data$colname)), "colname"] <-
+        "rowname"
+    }
+
+    footnotes_data_glpyhs <-
+      footnotes_tbl_data %>%
+      dplyr::group_by(rownum, colnum) %>%
+      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, ft_id_coalesced) %>%
+      dplyr::distinct()
+
+    for (i in seq(nrow(footnotes_data_glpyhs))) {
+
+      text <-
+        output_df[footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]
+
+      text <- paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$ft_id_coalesced[i]))
+
+      output_df[
+        footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]] <- text
+    }
+  }
+
+  output_df
+}
+
+#' @importFrom dplyr arrange select distinct
+#' @noRd
+create_footnote_component <- function(data_attr) {
+
+  # If the `footnotes_resolved` object in `data_attr` has no
+  # rows, then return an empty footnotes component
+  if (nrow(data_attr$footnotes_resolved) == 0) {
+    return("")
+  }
+
+  footnotes_tbl <-
+    data_attr$footnotes_resolved %>%
+    dplyr::arrange(ft_id) %>%
+    dplyr::select(ft_id, text) %>%
+    dplyr::distinct()
+
+  # Create the footnotes block
+  footnote_component <-
+    paste0(
+      "<tfoot data-type='table_footnotes'>\n",
+      "<tr data-type='table_footnote'>\n<td colspan='",
+      ncol(data_attr$output_df),
+      "' class='footnote'>",
+      paste0(
+        "<sup class='gt_super'><em>", footnotes_tbl[["ft_id"]],
+        "</em></sup> ", footnotes_tbl[["text"]],
+        collapse = "<br />"),
+      "</td>\n</tr>\n</tfoot>")
+
+  footnote_component
+}
+
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+create_heading_component <- function(data_attr) {
+
+  if (is.null(data_attr$heading)) {
+    return("")
+  }
+
+  # Get the resolved footnotes
+  footnotes_tbl <- data_attr$footnotes_resolved
+
+  # Get the footnote glyphs for the title
+  if ("title" %in% footnotes_tbl$locname) {
+
+    footnote_title_glyphs <-
+      footnotes_tbl %>%
+      dplyr::filter(locname == "title") %>%
+      dplyr::group_by() %>%
+      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(ft_id_coalesced) %>%
+      dplyr::distinct()
+
+    footnote_title_glyphs <-
+      footnote_glyph_to_html(footnote_title_glyphs$ft_id_coalesced)
+
+  } else {
+    footnote_title_glyphs <- ""
+  }
+
+  # Get the footnote glyphs for the headnote
+  if ("headnote" %in% footnotes_tbl$locname) {
+
+    footnote_headnote_glyphs <-
+      footnotes_tbl %>%
+      dplyr::filter(locname == "headnote") %>%
+      dplyr::group_by() %>%
+      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(ft_id_coalesced) %>%
+      dplyr::distinct()
+
+    footnote_headnote_glyphs <-
+      footnote_glyph_to_html(footnote_headnote_glyphs$ft_id_coalesced)
+
+  } else {
+    footnote_headnote_glyphs <- ""
+  }
+
+  heading_component <-
+    paste0(
+      "<thead>\n<tr data-type='table_headings'>\n",
+      "<th data-type='table_heading' class='heading title font_normal center' colspan='",
+      ncol(data_attr$output_df), "'>",
+      data_attr$heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
+
+  if ("headnote" %in% names(data_attr$heading)) {
+
+    heading_component <-
+      paste0(
+        heading_component,
+        paste0(
+          "<tr data-type='table_headings'>\n",
+          "<th data-type='table_headnote' ",
+          "class='heading headnote font_normal center bottom_border' colspan='",
+          ncol(data_attr$output_df), "'>",
+          data_attr$heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
+  }
+
+  heading_component
+}
+
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+set_footnote_glyphs_boxhead <- function(data_attr) {
+
+  # Get the resolved footnotes
+  footnotes_tbl <- data_attr$footnotes_resolved
+
+  # Get the `boxh_df` object
+  boxh_df <- data_attr$boxh_df
+
+  # If there are any footnotes to apply to the boxhead,
+  # process them individually for the spanner groups and
+  # for the column label groups
+  if (any(c("boxhead_columns", "boxhead_groups") %in% footnotes_tbl$locname)) {
+
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::filter(locname %in% c("boxhead_columns", "boxhead_groups"))
+
+    # Filter the boxhead spanner group footnotes
+    footnotes_boxhead_group_tbl <-
+      footnotes_tbl %>%
+      dplyr::filter(!is.na(grpname))
+
+    # Filter the boxhead column label footnotes
+    footnotes_boxhead_column_tbl <-
+      footnotes_tbl %>%
+      dplyr::filter(!is.na(colname))
+
+    if (nrow(footnotes_boxhead_group_tbl) > 0) {
+
+      footnotes_boxhead_group_glyphs <-
+        footnotes_boxhead_group_tbl %>%
+        dplyr::group_by(grpname) %>%
+        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+        dplyr::ungroup() %>%
+        dplyr::select(grpname, ft_id_coalesced) %>%
+        dplyr::distinct()
+
+      for (i in seq(nrow(footnotes_boxhead_group_glyphs))) {
+
+        column_indices <-
+          which(boxh_df["group_label", ] == footnotes_boxhead_group_glyphs$grpname[i])
+
+        text <- boxh_df["group_label", column_indices] %>% unlist() %>% unname() %>% unique()
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_html(
+              footnotes_boxhead_group_glyphs$ft_id_coalesced[i]))
+
+        boxh_df["group_label", column_indices] <- text
+      }
+    }
+
+    if (nrow(footnotes_boxhead_column_tbl) > 0) {
+
+      footnotes_boxhead_column_glyphs <-
+        footnotes_boxhead_column_tbl %>%
+        dplyr::group_by(colname) %>%
+        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+        dplyr::ungroup() %>%
+        dplyr::select(colname, ft_id_coalesced) %>%
+        dplyr::distinct()
+
+      for (i in seq(nrow(footnotes_boxhead_column_glyphs))) {
+
+        text <-
+          boxh_df["column_label", footnotes_boxhead_column_glyphs$colname[i]]
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_html(
+              footnotes_boxhead_column_glyphs$ft_id_coalesced[i]))
+
+        boxh_df[
+          "column_label", footnotes_boxhead_column_glyphs$colname[i]] <- text
+      }
+    }
+  }
+
+  boxh_df
+}
+
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+set_footnote_glyphs_stub_groups <- function(data_attr,
+                                            groups_rows_df) {
+
+  # Get the resolved footnotes
+  footnotes_tbl <- data_attr$footnotes_resolved
+
+  if (!("stub_groups" %in% footnotes_tbl$locname)) {
+
+    return(groups_rows_df)
+  }
+
+  footnotes_stub_groups_tbl <-
+    footnotes_tbl %>%
+    dplyr::filter(locname == "stub_groups")
+
+    if (nrow(footnotes_stub_groups_tbl) > 0) {
+
+      footnotes_stub_groups_glyphs <-
+        footnotes_stub_groups_tbl %>%
+        dplyr::group_by(grpname) %>%
+        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+        dplyr::ungroup() %>%
+        dplyr::select(grpname, ft_id_coalesced) %>%
+        dplyr::distinct()
+
+      for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
+
+        row_index <-
+          which(groups_rows_df[, "group"] == footnotes_stub_groups_glyphs$grpname[i])
+
+        text <- groups_rows_df[row_index, "group"]
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_html(
+              footnotes_stub_groups_glyphs$ft_id_coalesced[i]))
+
+        groups_rows_df[row_index, "group"] <- text
+      }
+    }
+
+  groups_rows_df
 }
