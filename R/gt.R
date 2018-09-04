@@ -89,6 +89,36 @@ gt <- function(data,
   # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
+  # Create an empty `footnotes_df` data frame
+  footnotes_df <-
+    dplyr::tibble(
+      locname = NA_character_,
+      locnum = NA_integer_,
+      grpname = NA_character_,
+      colname = NA_character_,
+      rownum = NA_integer_,
+      text = NA_character_)[-1, ]
+
+  # Create an empty `styles_df` data frame
+  styles_df <-
+    dplyr::tibble(
+      locname = NA_character_,
+      locnum = NA_integer_,
+      grpname = NA_character_,
+      colname = NA_character_,
+      rownum = NA_integer_,
+      style = NA_character_)[-1, ]
+
+  # Create a prepopulated `rows_df` data frame
+  rows_df <-
+    dplyr::tibble(
+      rownums_start = seq(nrow(data_tbl)))
+
+  # Create a prepopulated `cols_df` data frame
+  cols_df <-
+    dplyr::tibble(
+      colnames_start = colnames(data_tbl))
+
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for
   # data frames that contain specialized formatting
@@ -101,10 +131,6 @@ gt <- function(data,
   # meaning and this will be used during render time
   boxh_df <-
     empty_df[c(), , drop = FALSE] %>%
-    tibble::add_row() %>%  # group format
-    tibble::add_row() %>%  # column format
-    tibble::add_row() %>%  # group footnote
-    tibble::add_row() %>%  # column footnote
     tibble::add_row() %>%  # group label
     tibble::add_row() %>%  # column label
     tibble::add_row()      # column alignment
@@ -112,24 +138,29 @@ gt <- function(data,
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
   rownames(boxh_df) <-
-    c("group_fmts", "column_fmts", "group_foot", "column_foot",
-      "group_label", "column_label", "column_align")
+    c("group_label", "column_label", "column_align")
 
   # Apply initialized data frames as attributes
   # within the object
   attr(data_tbl, "boxh_df") <- boxh_df
   attr(data_tbl, "stub_df") <- stub_df
   attr(data_tbl, "fmts_df") <- empty_df
-  attr(data_tbl, "foot_df") <- empty_df
+
+  attr(data_tbl, "footnotes_df") <- footnotes_df
+  attr(data_tbl, "styles_df") <- styles_df
+  attr(data_tbl, "rows_df") <- rows_df
+  attr(data_tbl, "cols_df") <- cols_df
 
   # Create an `arrange_groups` list object, which contains
   # a vector of `groupname` values in the order of first
-  # appearance in `data`; this is only done if we detect
-  # any non-NA values in the `stub_df$groupname` column
-  if (!all(is.na(stub_df[["groupname"]]))) {
-
+  # appearance in `data`; if all `groupname` values are NA,
+  # then use an empty character vector
+  if (all(!is.na(stub_df[["groupname"]]))) {
     attr(data_tbl, "arrange_groups") <-
       list(groups = unique(stub_df[["groupname"]]))
+  } else {
+    attr(data_tbl, "arrange_groups") <-
+      list(groups = character(0))
   }
 
   # Apply the default theme options data frame as an attribute
