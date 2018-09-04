@@ -8,7 +8,7 @@
 #' @noRd
 render_as_html <- function(data) {
 
-  # Preparation Work --------------------------------------------------------
+  # Preprocessing -----------------------------------------------------------
 
   # Extract all attributes from the data object into `data_attr`;
   #   this will be one of the main objects going forward
@@ -27,24 +27,52 @@ render_as_html <- function(data) {
   # Move original data frame to `data_attr$data_df`
   data_attr$data_df <- as.data.frame(data)
 
-  # Get the available property names
-  property_names <-
-    base::setdiff(
-      names(data_attr),
-      c("row.names", "class", "names", "boxh_df", "stub_df",
-        "fmts_df", "foot_df", "output_df", "data_df", "formats"))
+  # Get the reordering df for the data rows
+  data_attr$rows_df <- get_row_reorder_df(data_attr = data_attr)
 
-  # Integrate any summary lines available
-  data_attr <- integrate_summary_lines(data_attr)
+  # Get the reordering df for the data columns
+  data_attr$columns_df <- get_column_reorder_df(data_attr = data_attr)
 
-  # If a summary lines were processed, they were added to
-  #   `data_attr`; incorporate that data frame as a `data` attr
-  if ("summary_df" %in% names(data_attr)) {
-    attr(data, "summary_df") <- data_attr$summary_df
-  }
+  # Reassemble the rows and columns of
+  # `data_df` in the correct order
+  data_attr$output_df <-
+    data_attr$output_df[
+      data_attr$rows_df$rownum_final,
+      data_attr$columns_df %>%
+        dplyr::filter(!is.na(colnum_final)) %>%
+        dplyr::arrange(colnum_final) %>%
+        dplyr::pull(column_names)]
+
+  # Get a `groups_df` data frame, which is a rearranged representation
+  # of the stub `groupname` and `rowname` columns
+  data_attr$groups_df <- get_groupnames_rownames_df(data_attr = data_attr)
+
+  # Get a `boxhead_spanners` vector, which has the unique, non-NA
+  # boxhead spanner labels
+  data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr = data_attr)
+
+  # Replace NA values in the `groupname` column if there is a reserved
+  #   'Others' label for the unlabeled group
+  data_attr$groups_df[
+    which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
+    data_attr$others_group[[1]] %||% NA_character_
+
+  # Create the `groups_rows` data frame, which provides information
+  #   on which rows the group rows should appear above
+  groups_rows_df <- get_groups_rows_df(data_attr)
 
   # Perform any necessary column merge operations
   data_attr <- perform_col_merge(data_attr)
+
+  # TODO: build a list of `summary_df`
+  # Integrate any summary lines available
+  #data_attr <- integrate_summary_lines(data_attr)
+
+  # If a summary lines were processed, they were added to
+  #   `data_attr`; incorporate that data frame as a `data` attr
+  # if ("summary_df" %in% names(data_attr)) {
+  #   attr(data, "summary_df") <- data_attr$summary_df
+  # }
 
   # Apply column names to column labels for any of
   #   those column labels not explicitly set
@@ -66,13 +94,6 @@ render_as_html <- function(data) {
   # Get the available stub components, if any
   stub_components <- data_attr %>% get_stub_components()
 
-  # Create three new objects:
-  #   - `extracted` - a data frame that will provide data for the
-  #      HTML table cells
-  #   - `col_alignment` - a vector of alignment values (e.g., `center`,
-  #     `left`, `right`) that species the alignment of stub and cell values
-  #   - `groups_rows` - a data frame that species where group rows will
-  #      be inserted (is NULL except for scenario # 4, below)
   # These objects will be create within each of the following scenarios:
   #   1. table doesn't contain a stub
   #   2. table contains a stub, but it only has rownames
@@ -81,115 +102,18 @@ render_as_html <- function(data) {
   if (is.null(stub_components)) {
 
     # Extract the table (case of table with no stub)
-    extracted <- data_attr$output_df
+    # extracted <- data_attr$output_df
 
     col_alignment <-
       data_attr$boxh_df["column_align", ] %>%
       unlist() %>% unname()
 
-    groups_rows <- NULL
-
-    # Extract footnote references and place them into the
-    #   `list_footnotes` object
-    list_footnotes <- footnotes_to_list(data_attr, has_stub = FALSE)
 
   } else if (stub_component_is_rowname(stub_components)) {
 
-    # Extract the table (case of table with a stub w/ only row names)
-    #colnames(data_attr$stub_df["rowname"]) <- ":row_name:"
-
-    extracted <- cbind(data_attr$stub_df["rowname"], data_attr$output_df)
-
-    col_alignment <-
-      c("right", data_attr$boxh_df["column_align", ] %>%
-          unlist() %>% unname())
-
-    groups_rows <- NULL
-
-    # Extract footnote references and place them into the
-    #   `list_footnotes` object
-    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
-
-  } else if (stub_component_is_groupname(stub_components)) {
-
-    # Extract the table (case of table with a stub w/ only group names)
-    #colnames(data_attr$stub_df["groupname"]) <- ":group_name:"
-
-    # Combine `:group_name:` column in stub with the output
-    #   table to form `extracted`
-    extracted <- cbind(data_attr$stub_df["groupname"], data_attr$output_df)
-
-    # Replace NA values in the `:group_name:` column
-    extracted[which(is.na(extracted[, "groupname"])), "groupname"] <-
-      data_attr$others_group[[1]] %||% "Others"
-
-    if ("arrange_groups" %in% property_names) {
-
-      # Obtain the `ordering` object, which is a vector that specifies
-      #   the order of the groups
-      ordering <- obtain_group_ordering(data_attr, extracted)
-
-      # Modify the `extracted` data frame (and associated data frames
-      #   in `data_attr`) so that rows are rearranged according to
-      #   the group names available in `ordering`
-      arranged <- arrange_dfs(data_attr, extracted, ordering)
-
-      # Reassign the transformed `extracted` and `data_attr` objects
-      extracted <- arranged$extracted
-      data_attr <- arranged$data_attr
-
-    } else {
-      ordering <- obtain_group_ordering(data_attr, extracted)
-    }
-
-    # Create the `groups_rows` data frame, which provides information
-    #   on which rows the group rows should appear above
-    groups_rows <- get_groups_rows(extracted, ordering)
-
-    # Remove the `:group_name:` column from the `extracted` data frame
-    extracted <- extracted[, -1]
-
-    # Define the `col_alignment` vector, which is a
-    #   vector of column alignment values for all of
-    #   the relevant columns in a table
-    col_alignment <- data_attr$boxh_df[3, ] %>% unlist() %>% unname()
-
-    # Extract footnote references and place them into the
-    #   `list_footnotes` object
-    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
-
-  } else if (stub_component_is_rowname_groupname(stub_components)) {
-
-    # Extract the table (case of table with a stub of row and group names)
-    #colnames(data_attr$stub_df) <- c(":group_name:", ":row_name:")
-
-    # Combine stub with output table to form `extracted`
-    extracted <-
-      cbind(data_attr$stub_df[c("groupname", "rowname")], data_attr$output_df)
-
-    # Replace NA values in the `groupname` column
-    extracted[which(is.na(extracted[, "groupname"])), "groupname"] <-
-      data_attr$others_group[[1]] %||% "Others"
-
-    # Obtain the `ordering` object, which is a vector that specifies
-    #   the order of the groups
-    ordering <- obtain_group_ordering(data_attr, extracted)
-
-    # Modify the `extracted` data frame (and associated data frames
-    #   in `data_attr`) so that rows are rearranged according to
-    #   the group names available in `ordering`
-    arranged <- arrange_dfs(data_attr, extracted, ordering)
-
-    # Reassign the transformed `extracted` and `data_attr` objects
-    extracted <- arranged$extracted
-    data_attr <- arranged$data_attr
-
-    # Create the `groups_rows` data frame, which provides information
-    #   on which rows the group rows should appear above
-    groups_rows <- get_groups_rows(extracted, ordering)
-
-    # Remove the `groupname` column from the `extracted` data frame
-    extracted <- extracted[, -1]
+    # Combine reordered stub with output table
+    data_attr$output_df <-
+      cbind(data_attr$groups_df["rowname"], data_attr$output_df)
 
     # Define the `col_alignment` vector, which is a
     #   vector of column alignment values for all of
@@ -200,17 +124,57 @@ render_as_html <- function(data) {
       c("right", data_attr$boxh_df["column_align", ] %>%
           unlist() %>% unname())
 
-    # Extract footnote references and place them into the
-    # `list_footnotes` object
-    list_footnotes <- footnotes_to_list(data_attr, has_stub = TRUE)
+
+  } else if (stub_component_is_groupname(stub_components)) {
+
+    # Define the `col_alignment` vector, which is a
+    #   vector of column alignment values for all of
+    #   the relevant columns in a table
+    col_alignment <-
+      data_attr$boxh_df["column_align", ] %>%
+      unlist() %>% unname()
+
+  } else if (stub_component_is_rowname_groupname(stub_components)) {
+
+    # Combine reordered stub with output table
+    data_attr$output_df <-
+      cbind(data_attr$groups_df["rowname"], data_attr$output_df)
+
+    # Define the `col_alignment` vector, which is a
+    #   vector of column alignment values for all of
+    #   the relevant columns in a table
+    # Here, we are hardcoding a `right` alignment
+    #   for the stub column
+    col_alignment <-
+      c("right", data_attr$boxh_df["column_align", ] %>%
+          unlist() %>% unname())
   }
 
-  # Extract the body content as a vector
-  body_content <- as.vector(t(extracted))
+  # Footnotes ---------------------------------------------------------------
 
-  # Get the number of rows, columns, and cells in `extracted`
-  n_rows <- nrow(extracted)
-  n_cols <- ncol(extracted)
+  # Resolve and tidy footnotes
+  data_attr$footnotes_resolved <-
+    resolve_footnotes(
+      data_attr = data_attr,
+      groups_rows_df = groups_rows_df)
+
+  # Apply footnotes to the `data` rows
+  data_attr$output_df <- apply_footnotes_to_data(data_attr = data_attr)
+
+  # Add footnote glyphs to boxhead elements
+  data_attr$boxh_df <- set_footnote_glyphs_boxhead(data_attr = data_attr)
+
+  # Add footnote glyphs to stub group title elements
+  groups_rows_df <-
+    set_footnote_glyphs_stub_groups(
+      data_attr = data_attr, groups_rows_df = groups_rows_df)
+
+  # Extract the body content as a vector
+  body_content <- as.vector(t(data_attr$output_df))
+
+  # Get the number of rows, columns, and cells in the `output_df`
+  n_rows <- nrow(data_attr$output_df)
+  n_cols <- ncol(data_attr$output_df)
 
   # Get the number of cells in `body_content`
   n_cells <- length(body_content)
@@ -218,17 +182,12 @@ render_as_html <- function(data) {
   # Composition of HTML -----------------------------------------------------
 
   # Handle any available footnotes
-  body_footnotes <-
-    create_footnote_component(
-      data_attr, list_footnotes, body_content, n_cols)
+  footnote_component <- create_footnote_component(data_attr = data_attr)
 
-  body_content <- body_footnotes$body_content
-  footnote_component <- body_footnotes$footnote_component
+  # Create a heading and handle any available footnotes
+  heading_component <- create_heading_component(data_attr = data_attr)
 
-  # Create a heading
-  heading_component <- create_heading_component(data_attr, n_cols)
-
-  # Create the source note rows
+  # Create the source note rows and handle any available footnotes
   source_note_rows <- create_source_note_rows(data_attr, n_cols)
 
   # Split the body_content by slices of rows
@@ -247,13 +206,16 @@ render_as_html <- function(data) {
   row_splits_styles <- row_splits_styles %>% split_body_content(n_cols)
 
   # Create an HTML fragment for the start of the table
-  table_start <- create_table_start(groups_rows, n_rows, n_cols)
+  table_start <-
+    create_table_start(
+      groups_rows_df,
+      n_rows,
+      n_cols)
 
   # Create the table column headings
   table_col_headings <-
     create_column_headings(
       data_attr,
-      extracted,
       col_alignment,
       stub_available,
       spanners_present)
@@ -263,9 +225,9 @@ render_as_html <- function(data) {
     create_table_body(
       row_splits,
       row_splits_styles,
-      groups_rows,
+      groups_rows_df,
       col_alignment,
-      stub_available,
+      stub_components,
       n_rows,
       n_cols)
 
