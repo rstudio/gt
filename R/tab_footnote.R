@@ -19,7 +19,7 @@
 #'       locations = data_cells(
 #'         columns = "hp",
 #'         rows = "Maserati Bora"))
-#' @importFrom stats setNames
+#' @family table-part creation/modification functions
 #' @export
 tab_footnote <- function(data,
                            footnote,
