@@ -1,9 +1,7 @@
 #' Resolve the `data_cells` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param object the list object created by the \code{data_cells()} function.
-#' @import rlang
-#' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter arrange distinct
+#' @importFrom dplyr arrange distinct
 #' @noRd
 resolve_data_cells <- function(data,
                                object) {
@@ -48,15 +46,12 @@ resolve_data_cells <- function(data,
   cells_resolved
 }
 
-#' Resolve the `stub_rows` object once it has access to the `data` object
+#' Resolve the `stub_cells` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{stub_rows()} function.
-#' @import rlang
-#' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter arrange distinct
+#' @param object the list object created by the \code{stub_cells()} function.
 #' @noRd
-resolve_stub_rows <- function(data,
-                              object) {
+resolve_stub_cells <- function(data,
+                               object) {
 
   # Get the `data_df` data frame from `data`
   data_df <- as.data.frame(data)
@@ -79,24 +74,21 @@ resolve_stub_rows <- function(data,
   resolved_rows <- resolve_vars(object_rows, rownames, data_df)
 
   # Create a list object
-  resolved_rows <- list(rows = resolved_rows)
+  cells_resolved <- list(rows = resolved_rows)
 
-  # Apply the `stub_rows_resolved` class
-  attr(resolved_rows, "class") <- "stub_rows_resolved"
+  # Apply the `stub_cells_resolved` class
+  attr(cells_resolved, "class") <- "stub_cells_resolved"
 
-  resolved_rows
+  cells_resolved
 }
 
-#' Resolve the `boxhead_columns` object once it has access to the `data` object
+#' Resolve the `boxhead_cells` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{boxhead_columns()}
+#' @param object the list object created by the \code{boxhead_cells()}
 #'   function.
-#' @import rlang
-#' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter arrange distinct
 #' @noRd
-resolve_boxhead_columns <- function(data,
-                                    object) {
+resolve_boxhead_cells <- function(data,
+                                  object) {
 
   # Get the `data_df` data frame from `data`
   data_df <- as.data.frame(data)
@@ -116,17 +108,18 @@ resolve_boxhead_columns <- function(data,
   resolved_columns <- resolve_vars(object_columns, colnames, data_df)
 
   # Create a list object
-  resolved_columns <- list(columns = resolved_columns)
+  cells_resolved <- list(columns = resolved_columns)
 
   # Apply the `boxhead_columns_resolved` class
-  attr(resolved_columns, "class") <- "boxhead_columns_resolved"
+  attr(cells_resolved, "class") <- "boxhead_cells_resolved"
 
-  resolved_columns
+  cells_resolved
 }
 
 
 #' Resolve variables for rows and columns using expressions
 #' @import tidyselect
+#' @import rlang
 #' @noRd
 resolve_vars <- function(var_expr, var_names, data_df) {
 
