@@ -38,7 +38,7 @@ cols_align <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")[3, columns] <- align
+  attr(data, "boxh_df")["column_align", columns] <- align
 
   data
 }
@@ -67,7 +67,7 @@ cols_align_left <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")[3, columns] <- "left"
+  attr(data, "boxh_df")["column_align", columns] <- "left"
 
   data
 }
@@ -96,7 +96,7 @@ cols_align_center <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")[3, 2] <- "center"
+  attr(data, "boxh_df")["column_align", columns] <- "center"
 
   data
 }
@@ -125,7 +125,7 @@ cols_align_right <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")[3, columns] <- "right"
+  attr(data, "boxh_df")["column_align", columns] <- "right"
 
   data
 }
