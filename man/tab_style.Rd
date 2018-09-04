@@ -13,9 +13,9 @@ function.}
 \item{style}{a vector of styles to use. The \code{\link{apply_styles}()}
 helper function can be used here to more easily generate valid styles.}
 
-\item{locations}{the cell or set of cells to be associated with the footnote.
+\item{locations}{the cell or set of cells to be associated with the style
 Supplying an object with the \code{\link{data_cells}()} helper function is
-a useful way to specify the cell that is associated with the footnote.
+a useful way to specify the cell that is associated with the style.
 Additionally, we can supply a list with multiple calls to
 \code{\link{data_cells}()} if we wish to combine multiple cell selections.}
 }
