@@ -128,15 +128,30 @@ tab_stub_block <- function(data,
     # `stub_df`
     attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
 
-    # Insert the group into the `blocks_arrange` component
+    # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
 
-      attr(data, "arrange_groups") <- list(groups = process_text(group[1]))
+      if (any(is.na(attr(data, "stub_df")$groupname))) {
+
+        attr(data, "arrange_groups") <-
+          list(groups = c(process_text(group[1]), NA_character_))
+
+      } else {
+        attr(data, "arrange_groups") <- list(groups = process_text(group[1]))
+      }
 
     } else {
 
-      attr(data, "arrange_groups")[["groups"]] <-
-        c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]))
+      if (any(is.na(attr(data, "stub_df")$groupname))) {
+
+        attr(data, "arrange_groups")[["groups"]] <-
+          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]), NA_character_) %>%
+          unique()
+
+      } else {
+        attr(data, "arrange_groups")[["groups"]] <-
+          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]))
+      }
     }
   }
 
