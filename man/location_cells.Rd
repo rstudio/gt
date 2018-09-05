@@ -7,6 +7,7 @@
 \alias{group_cells}
 \alias{stub_cells}
 \alias{data_cells}
+\alias{summary_cells}
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
 title_cells(groups = c("title", "headnote"))
@@ -18,6 +19,8 @@ group_cells(groups)
 stub_cells(rows)
 
 data_cells(columns = NULL, rows = NULL)
+
+summary_cells(groups = NULL, columns = NULL, rows = NULL)
 }
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
