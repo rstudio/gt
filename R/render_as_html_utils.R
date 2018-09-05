@@ -129,6 +129,7 @@ get_groups_rows_df <- function(data_attr) {
   groups_rows <-
     data.frame(
       group = rep(NA_character_, length(ordering)),
+      group_label = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
       stringsAsFactors = FALSE)
@@ -141,6 +142,7 @@ get_groups_rows_df <- function(data_attr) {
       length(which(data_attr$groups_df[, "groupname"] == ordering[i]))
 
     groups_rows[i, "group"] <- ordering[i]
+    groups_rows[i, "group_label"] <- ordering[i]
     groups_rows[i, "row"] <- matched
     groups_rows[i, "row_end"] <- matched + count_matched - 1
   }
