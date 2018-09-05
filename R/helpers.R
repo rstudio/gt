@@ -46,7 +46,8 @@ title_cells <- function(groups = c("title", "headnote")) {
   # Create the `title_cells` object
   cells <- list(groups = group_expr)
 
-  # Apply the `title_cells` class
+  # Apply the `title_cells` and
+  # `location_cells` classes
   class(cells) <- c("title_cells", "location_cells")
 
   cells
@@ -82,7 +83,8 @@ boxhead_cells <- function(columns, groups) {
   # Create the `boxhead_cells` object
   cells <- list(columns = col_expr, groups = group_expr)
 
-  # Apply the `boxhead_cells` class
+  # Apply the `boxhead_cells` and
+  # `location_cells` classes
   class(cells) <- c("boxhead_cells", "location_cells")
 
   cells
@@ -98,7 +100,8 @@ group_cells <- function(groups) {
   # Create the `group_cells` object
   cells <- list(groups = group_expr)
 
-  # Apply the `group_cells` class
+  # Apply the `group_cells` and
+  # `location_cells` classes
   class(cells) <- c("group_cells", "location_cells")
 
   cells
@@ -114,7 +117,8 @@ stub_cells <- function(rows) {
   # Create the `stub_cells` object
   cells <- list(rows = row_expr)
 
-  # Apply the `stub_cells` class
+  # Apply the `stub_cells` and
+  # `location_cells` classes
   class(cells) <- c("stub_cells", "location_cells")
 
   cells
@@ -139,7 +143,8 @@ data_cells <- function(columns = NULL,
       columns = col_expr,
       rows = row_expr)
 
-  # Apply the `data_cells` class
+  # Apply the `data_cells` and
+  # `location_cells` classes
   class(cells) <- c("data_cells", "location_cells")
 
   cells
@@ -164,7 +169,8 @@ summary_cells <- function(groups = NULL,
       columns = col_expr,
       rows = row_expr)
 
-  # Apply the `summary_cells` class
+  # Apply the `summary_cells` and
+  # `location_cells` classes
   class(cells) <- c("summary_cells", "location_cells")
 
   cells
