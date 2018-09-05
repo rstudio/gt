@@ -5,7 +5,7 @@
 \title{Add summary rows using aggregation functions}
 \usage{
 summary_rows(data, groups = NULL, columns = NULL, funs,
-  formatter = fmt_number, ...)
+  missing_text = "---", formatter = fmt_number, ...)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
@@ -24,6 +24,9 @@ helper function. With \code{funs()}, we can specify the functions by use of
 function names (e.g., \code{"sum"}), the functions themselves
 (e.g., \code{sum}), or calls to functions with \code{.} as a dummy argument
 (e.g., \code{sum(., na.rm = TRUE)}).}
+
+\item{missing_text}{the text to be used in place of \code{NA} values in
+summary cells with no data outputs.}
 
 \item{formatter}{a formatter function name. These can be any of the
 \code{fmt_*}functions available in the package (e.g.,
