@@ -205,7 +205,7 @@ set_footnote.title_cells <- function(loc, data, footnote) {
 set_footnote.summary_cells <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1]
+  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
 
   resolved <- resolve_boxhead_cells(data = data, object = loc)
 
