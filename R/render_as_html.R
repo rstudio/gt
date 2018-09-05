@@ -52,7 +52,7 @@ render_as_html <- function(data) {
   data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr = data_attr)
 
   # Replace NA values in the `groupname` column if there is a reserved
-  #   'Others' label for the unlabeled group
+  #   label for the unlabeled group
   data_attr$groups_df[
     which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
     data_attr$others_group[[1]] %||% NA_character_
@@ -64,15 +64,8 @@ render_as_html <- function(data) {
   # Perform any necessary column merge operations
   data_attr <- perform_col_merge(data_attr)
 
-  # TODO: build a list of `summary_df`
-  # Integrate any summary lines available
-  #data_attr <- integrate_summary_lines(data_attr)
-
-  # If a summary lines were processed, they were added to
-  #   `data_attr`; incorporate that data frame as a `data` attr
-  # if ("summary_df" %in% names(data_attr)) {
-  #   attr(data, "summary_df") <- data_attr$summary_df
-  # }
+  # Create summary data frames
+  data_attr <- create_summary_dfs(data_attr)
 
   # Apply column names to column labels for any of
   #   those column labels not explicitly set
@@ -88,44 +81,17 @@ render_as_html <- function(data) {
   # Determine if there are any groups present
   groups_present <- data_attr %>% are_groups_present()
 
+  # Determine if there are any summaries present
+  summaries_present <- data_attr %>% are_summaries_present()
+
   # Determine if there are any spanners present
   spanners_present <- data_attr %>% are_spanners_present()
 
   # Get the available stub components, if any
   stub_components <- data_attr %>% get_stub_components()
 
-  # These objects will be create within each of the following scenarios:
-  #   1. table doesn't contain a stub
-  #   2. table contains a stub, but it only has rownames
-  #   3. table contains a stub, but it only has groupnames
-  #   4. table contains a stub with both rownames and groupnames
-  if (is.null(stub_components)) {
-
-    # Extract the table (case of table with no stub)
-    # extracted <- data_attr$output_df
-
-    col_alignment <-
-      data_attr$boxh_df["column_align", ] %>%
-      unlist() %>% unname()
-
-
-  } else if (stub_component_is_rowname(stub_components)) {
-
-    # Combine reordered stub with output table
-    data_attr$output_df <-
-      cbind(data_attr$groups_df["rowname"], data_attr$output_df)
-
-    # Define the `col_alignment` vector, which is a
-    #   vector of column alignment values for all of
-    #   the relevant columns in a table
-    # Here, we are hardcoding a `right` alignment
-    #   for the stub column
-    col_alignment <-
-      c("right", data_attr$boxh_df["column_align", ] %>%
-          unlist() %>% unname())
-
-
-  } else if (stub_component_is_groupname(stub_components)) {
+  if (is.null(stub_components) ||
+      stub_component_is_groupname(stub_components)) {
 
     # Define the `col_alignment` vector, which is a
     #   vector of column alignment values for all of
@@ -134,7 +100,8 @@ render_as_html <- function(data) {
       data_attr$boxh_df["column_align", ] %>%
       unlist() %>% unname()
 
-  } else if (stub_component_is_rowname_groupname(stub_components)) {
+  } else if (stub_component_is_rowname(stub_components) ||
+             stub_component_is_rowname_groupname(stub_components)) {
 
     # Combine reordered stub with output table
     data_attr$output_df <-
@@ -143,8 +110,6 @@ render_as_html <- function(data) {
     # Define the `col_alignment` vector, which is a
     #   vector of column alignment values for all of
     #   the relevant columns in a table
-    # Here, we are hardcoding a `right` alignment
-    #   for the stub column
     col_alignment <-
       c("right", data_attr$boxh_df["column_align", ] %>%
           unlist() %>% unname())
@@ -160,6 +125,9 @@ render_as_html <- function(data) {
 
   # Apply footnotes to the `data` rows
   data_attr$output_df <- apply_footnotes_to_data(data_attr = data_attr)
+
+  # Add footnote glyphs to the `summary` rows
+  summary_list <- data_attr$summary_df_display_list
 
   # Add footnote glyphs to boxhead elements
   data_attr$boxh_df <- set_footnote_glyphs_boxhead(data_attr = data_attr)
@@ -228,6 +196,7 @@ render_as_html <- function(data) {
       groups_rows_df,
       col_alignment,
       stub_components,
+      summary_list,
       n_rows,
       n_cols)
 
