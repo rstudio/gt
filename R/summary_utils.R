@@ -30,7 +30,7 @@ create_summary_dfs <- function(data_attr) {
     if (isTRUE(summary_attrs$columns)) {
       columns <- character(0)
     } else {
-      columns <- base::setdiff(colnames(data_attr$data_df), summary_attrs$columns)
+      columns <- base::setdiff(colnames(data_attr$output_df), summary_attrs$columns)
     }
 
     # Combine `groupname` with the field data in order to
@@ -48,7 +48,11 @@ create_summary_dfs <- function(data_attr) {
     # Get the labels for each of the function calls
     labels <- agg_funs %>% names()
 
-    summary_dfs <- dplyr::tibble()
+    summary_dfs <-
+      groups_data_df[0, ] %>%
+      dplyr::select(c("groupname", colnames(data_attr$output_df))) %>%
+      dplyr::mutate(rowname = NA_character_) %>%
+      dplyr::select(groupname, rowname, dplyr::everything())
 
     for (j in seq(agg_funs)) {
 
@@ -57,6 +61,7 @@ create_summary_dfs <- function(data_attr) {
         dplyr::bind_rows(
           summary_dfs,
           groups_data_df %>%
+            dplyr::select(c("groupname", colnames(data_attr$output_df))) %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
