@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interpret input text as Markdown-formatted text — md • gt</title>
+<title>Helpers for resolving column names or row labels — resolving_helpers • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,14 @@
 
 
 
-<meta property="og:title" content="Interpret input text as Markdown-formatted text — md" />
+<meta property="og:title" content="Helpers for resolving column names or row labels — resolving_helpers" />
 
-<meta property="og:description" content="Interpret input text as Markdown-formatted text" />
+<meta property="og:description" content="We can resolve one or multiple column names or row labels by using a select
+  helper function like starts_with, contains, etc., with an
+  argument like columns, rows, or groups. This works
+  inside the the location_cells helper functions, which, in
+  turn, are to be used within tab_footnote() or
+  tab_footnote() (both at the locations argument)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,62 +126,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interpret input text as Markdown-formatted text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>md.Rd</code></div>
+    <h1>Helpers for resolving column names or row labels</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/reexports.R'><code>R/reexports.R</code></a></small>
+    <div class="hidden name"><code>resolving_helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Interpret input text as Markdown-formatted text</p>
+    <p>We can resolve one or multiple column names or row labels by using a select
+  helper function like <code>starts_with</code>, <code>contains</code>, etc., with an
+  argument like <code>columns</code>, <code>rows</code>, or <code>groups</code>. This works
+  inside the the <code><a href='location_cells.html'>location_cells</a></code> helper functions, which, in
+  turn, are to be used within <code><a href='tab_footnote.html'>tab_footnote</a>()</code> or
+  <code><a href='tab_footnote.html'>tab_footnote</a>()</code> (both at the <code>locations</code> argument).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>md</span>(<span class='no'>text</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
-      <td><p>the text that is understood to contain Markdown formatting.</p></td>
+      <th>match</th>
+      <td><p>a string.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>if <code>TRUE</code>, the default, case is ignored when
+matching names.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>a character object that is tagged for a Markdown-to-HTML
-  transformation.</p>
-<p>a character object of class <code>from_markdown</code>.</p>
+    <p>The helper functions are:</p>
+<ul>
+<li><p><code>starts_with()</code>: targets the table title or the table headnote
+    depending on the value given to the <code>groups</code> argument
+    (<code>"title"</code> or <code>"headnote"</code>).</p></li>
+<li><p><code>ends_with()</code>: targets captions for the column headers (the
+    <code>columns</code> argument) or group spanners (the <code>groups</code> argument)
+    in the table boxhead.</p></li>
+<li><p><code>contains()</code>: targets the group headings in the stub blocks
+    using the <code>groups</code> argument.</p></li>
+<li><p><code>matches()</code>: targets row captions in the table stub using the
+    <code>rows</code> argument.</p></li>
+<li><p><code>one_of()</code>: targets data cells in the table field using
+    intersections of <code>columns</code> and <code>rows</code>.</p></li>
+<li><p><code>everything()</code>: targets data cells in the table field using
+    intersections of <code>columns</code> and <code>rows</code>.</p></li>
+</ul>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='col_labels.html'>col_labels</a></code>, <code><a href='funs.html'>funs</a></code>,
-  <code><a href='html.html'>html</a></code>, <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code>,
-  <code><a href='vars.html'>vars</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and add a caption</span>
-<span class='co'># that is to interpreted as Markdown</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_stubhead_caption.html'>tab_stubhead_caption</a></span>(
-      <span class='kw'>caption</span> <span class='kw'>=</span> <span class='fu'>md</span>(<span class='st'>"car *make* and *model*"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

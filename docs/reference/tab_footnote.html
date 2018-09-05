@@ -122,7 +122,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add a table footnote</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/table_parts.R'><code>R/table_parts.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/tab_footnote.R'><code>R/tab_footnote.R</code></a></small>
     <div class="hidden name"><code>tab_footnote.Rd</code></div>
     </div>
 
@@ -149,10 +149,10 @@ function.</p></td>
     <tr>
       <th>locations</th>
       <td><p>the cell or set of cells to be associated with the footnote.
-Supplying an object with the <code><a href='data_cells.html'>data_cells</a>()</code> helper function is
+Supplying an object with the <code><a href='location_cells.html'>data_cells</a>()</code> helper function is
 a useful way to specify the cell that is associated with the footnote.
 Additionally, we can supply a list with multiple calls to
-<code><a href='data_cells.html'>data_cells</a>()</code> if we wish to combine multiple cell selections.</p></td>
+<code><a href='location_cells.html'>data_cells</a>()</code> if we wish to combine multiple cell selections.</p></td>
     </tr>
     </table>
     
@@ -162,9 +162,7 @@ Additionally, we can supply a list with multiple calls to
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>[data_cells()] as a useful helper function for targeting one or
-  more cells associated with the footnote.</p>
-<p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
+    <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
   <code><a href='gt.html'>gt</a></code>, <code><a href='tab_boxhead_panel.html'>tab_boxhead_panel</a></code>,
   <code><a href='tab_heading.html'>tab_heading</a></code>, <code><a href='tab_options.html'>tab_options</a></code>,
   <code><a href='tab_source_note.html'>tab_source_note</a></code>,
@@ -180,7 +178,7 @@ Additionally, we can supply a list with multiple calls to
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>tab_footnote</span>(
       <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Massive hp."</span>,
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='data_cells.html'>data_cells</a></span>(
+      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>data_cells</a></span>(
         <span class='kw'>columns</span> <span class='kw'>=</span> <span class='st'>"hp"</span>,
         <span class='kw'>rows</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>))</div></pre>
   </div>

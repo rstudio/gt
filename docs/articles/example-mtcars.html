@@ -145,13 +145,13 @@
 <a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="dt">rows =</span> mpg <span class="op">&lt;</span><span class="st"> </span><span class="dv">12</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="dt">group =</span> <span class="st">"The Mercs"</span>,</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/starts_with.html">starts_with</a></span>(<span class="st">"Merc"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/resolving_helpers.html">starts_with</a></span>(<span class="st">"Merc"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dt">group =</span> <span class="st">"Mazda"</span>,</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/starts_with.html">starts_with</a></span>(<span class="st">"Mazda"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/resolving_helpers.html">starts_with</a></span>(<span class="st">"Mazda"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">    <span class="dt">group =</span> <span class="st">"Hornet"</span>,</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/starts_with.html">starts_with</a></span>(<span class="st">"Hornet"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">rows =</span> <span class="kw"><a href="../reference/resolving_helpers.html">starts_with</a></span>(<span class="st">"Hornet"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(<span class="dt">others =</span> <span class="st">"The Rest of the mtcars"</span>)</a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co"># Show the table</span></a>
@@ -435,10 +435,122 @@
 <td class="row center">5</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="6">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">22.8</td>
+<td class="row center">4</td>
+<td class="row center">108</td>
+<td class="row center">93</td>
+<td class="row center">3.85</td>
+<td class="row center">2.32</td>
+<td class="row center">18.61</td>
+<td class="row center">1</td>
+<td class="row center">1</td>
+<td class="row center">4</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="7">
+<td class="stub row right">Valiant</td>
+<td class="row center">18.1</td>
+<td class="row center">6</td>
+<td class="row center">225</td>
+<td class="row center">105</td>
+<td class="row center">2.76</td>
+<td class="row center">3.46</td>
+<td class="row center">20.22</td>
+<td class="row center">1</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="8">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">14.7</td>
+<td class="row center">8</td>
+<td class="row center">440</td>
+<td class="row center">230</td>
+<td class="row center">3.23</td>
+<td class="row center">5.345</td>
+<td class="row center">17.42</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="9">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">21.5</td>
+<td class="row center">4</td>
+<td class="row center">120.1</td>
+<td class="row center">97</td>
+<td class="row center">3.7</td>
+<td class="row center">2.465</td>
+<td class="row center">20.01</td>
+<td class="row center">1</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="10">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">15.5</td>
+<td class="row center">8</td>
+<td class="row center">318</td>
+<td class="row center">150</td>
+<td class="row center">2.76</td>
+<td class="row center">3.52</td>
+<td class="row center">16.87</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="11">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">15.2</td>
+<td class="row center">8</td>
+<td class="row center">304</td>
+<td class="row center">150</td>
+<td class="row center">3.15</td>
+<td class="row center">3.435</td>
+<td class="row center">17.3</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">19.2</td>
+<td class="row center">8</td>
+<td class="row center">400</td>
+<td class="row center">175</td>
+<td class="row center">3.08</td>
+<td class="row center">3.845</td>
+<td class="row center">17.05</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">21.4</td>
+<td class="row center">4</td>
+<td class="row center">121</td>
+<td class="row center">109</td>
+<td class="row center">4.11</td>
+<td class="row center">2.78</td>
+<td class="row center">18.6</td>
+<td class="row center">1</td>
+<td class="row center">1</td>
+<td class="row center">4</td>
+<td class="row center">2</td>
+</tr>
 <tr>
 <td data-type="group" colspan="12" class="group_heading">High Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="6">
+<tr data-type="data" data-row="14">
 <td class="stub row right">Fiat 128</td>
 <td class="row center">32.4</td>
 <td class="row center">4</td>
@@ -452,7 +564,7 @@
 <td class="row center">4</td>
 <td class="row center">1</td>
 </tr>
-<tr data-type="data" data-row="7">
+<tr data-type="data" data-row="15">
 <td class="stub row right">Honda Civic</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
@@ -466,7 +578,7 @@
 <td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="8">
+<tr data-type="data" data-row="16">
 <td class="stub row right">Toyota Corolla</td>
 <td class="row center">33.9</td>
 <td class="row center">4</td>
@@ -480,7 +592,7 @@
 <td class="row center">4</td>
 <td class="row center">1</td>
 </tr>
-<tr data-type="data" data-row="9">
+<tr data-type="data" data-row="17">
 <td class="stub row right">Fiat X1-9</td>
 <td class="row center">27.3</td>
 <td class="row center">4</td>
@@ -494,7 +606,7 @@
 <td class="row center">4</td>
 <td class="row center">1</td>
 </tr>
-<tr data-type="data" data-row="10">
+<tr data-type="data" data-row="18">
 <td class="stub row right">Porsche 914-2</td>
 <td class="row center">26</td>
 <td class="row center">4</td>
@@ -508,7 +620,7 @@
 <td class="row center">5</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="11">
+<tr data-type="data" data-row="19">
 <td class="stub row right">Lotus Europa</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
@@ -525,7 +637,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
@@ -539,7 +651,7 @@
 <td class="row center">3</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
@@ -556,7 +668,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">24.4</td>
 <td class="row center">4</td>
@@ -570,7 +682,7 @@
 <td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">22.8</td>
 <td class="row center">4</td>
@@ -584,7 +696,7 @@
 <td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">19.2</td>
 <td class="row center">6</td>
@@ -598,7 +710,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">17.8</td>
 <td class="row center">6</td>
@@ -612,7 +724,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">16.4</td>
 <td class="row center">8</td>
@@ -626,7 +738,7 @@
 <td class="row center">3</td>
 <td class="row center">3</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">17.3</td>
 <td class="row center">8</td>
@@ -640,7 +752,7 @@
 <td class="row center">3</td>
 <td class="row center">3</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">15.2</td>
 <td class="row center">8</td>
@@ -657,7 +769,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">21</td>
 <td class="row center">6</td>
@@ -671,7 +783,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">21</td>
 <td class="row center">6</td>
@@ -688,7 +800,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">21.4</td>
 <td class="row center">6</td>
@@ -702,7 +814,7 @@
 <td class="row center">3</td>
 <td class="row center">1</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">18.7</td>
 <td class="row center">8</td>
@@ -714,121 +826,6 @@
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr>
-<td data-type="group" colspan="12" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">22.8</td>
-<td class="row center">4</td>
-<td class="row center">108</td>
-<td class="row center">93</td>
-<td class="row center">3.85</td>
-<td class="row center">2.32</td>
-<td class="row center">18.61</td>
-<td class="row center">1</td>
-<td class="row center">1</td>
-<td class="row center">4</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">18.1</td>
-<td class="row center">6</td>
-<td class="row center">225</td>
-<td class="row center">105</td>
-<td class="row center">2.76</td>
-<td class="row center">3.46</td>
-<td class="row center">20.22</td>
-<td class="row center">1</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">14.7</td>
-<td class="row center">8</td>
-<td class="row center">440</td>
-<td class="row center">230</td>
-<td class="row center">3.23</td>
-<td class="row center">5.345</td>
-<td class="row center">17.42</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">21.5</td>
-<td class="row center">4</td>
-<td class="row center">120.1</td>
-<td class="row center">97</td>
-<td class="row center">3.7</td>
-<td class="row center">2.465</td>
-<td class="row center">20.01</td>
-<td class="row center">1</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">15.5</td>
-<td class="row center">8</td>
-<td class="row center">318</td>
-<td class="row center">150</td>
-<td class="row center">2.76</td>
-<td class="row center">3.52</td>
-<td class="row center">16.87</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">15.2</td>
-<td class="row center">8</td>
-<td class="row center">304</td>
-<td class="row center">150</td>
-<td class="row center">3.15</td>
-<td class="row center">3.435</td>
-<td class="row center">17.3</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">19.2</td>
-<td class="row center">8</td>
-<td class="row center">400</td>
-<td class="row center">175</td>
-<td class="row center">3.08</td>
-<td class="row center">3.845</td>
-<td class="row center">17.05</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">21.4</td>
-<td class="row center">4</td>
-<td class="row center">121</td>
-<td class="row center">109</td>
-<td class="row center">4.11</td>
-<td class="row center">2.78</td>
-<td class="row center">18.6</td>
-<td class="row center">1</td>
-<td class="row center">1</td>
-<td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
 </tbody>
@@ -1204,10 +1201,122 @@
 <td class="row center">5</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">22.8</td>
+<td class="row center">4</td>
+<td class="row center">108</td>
+<td class="row center">93</td>
+<td class="row center">3.85</td>
+<td class="row center">2.32</td>
+<td class="row center">18.61</td>
+<td class="row center">1</td>
+<td class="row center">1</td>
+<td class="row center">4</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">18.1</td>
+<td class="row center">6</td>
+<td class="row center">225</td>
+<td class="row center">105</td>
+<td class="row center">2.76</td>
+<td class="row center">3.46</td>
+<td class="row center">20.22</td>
+<td class="row center">1</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">14.7</td>
+<td class="row center">8</td>
+<td class="row center">440</td>
+<td class="row center">230</td>
+<td class="row center">3.23</td>
+<td class="row center">5.345</td>
+<td class="row center">17.42</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">21.5</td>
+<td class="row center">4</td>
+<td class="row center">120.1</td>
+<td class="row center">97</td>
+<td class="row center">3.7</td>
+<td class="row center">2.465</td>
+<td class="row center">20.01</td>
+<td class="row center">1</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">1</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">15.5</td>
+<td class="row center">8</td>
+<td class="row center">318</td>
+<td class="row center">150</td>
+<td class="row center">2.76</td>
+<td class="row center">3.52</td>
+<td class="row center">16.87</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">15.2</td>
+<td class="row center">8</td>
+<td class="row center">304</td>
+<td class="row center">150</td>
+<td class="row center">3.15</td>
+<td class="row center">3.435</td>
+<td class="row center">17.3</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">19.2</td>
+<td class="row center">8</td>
+<td class="row center">400</td>
+<td class="row center">175</td>
+<td class="row center">3.08</td>
+<td class="row center">3.845</td>
+<td class="row center">17.05</td>
+<td class="row center">0</td>
+<td class="row center">0</td>
+<td class="row center">3</td>
+<td class="row center">2</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">21.4</td>
+<td class="row center">4</td>
+<td class="row center">121</td>
+<td class="row center">109</td>
+<td class="row center">4.11</td>
+<td class="row center">2.78</td>
+<td class="row center">18.6</td>
+<td class="row center">1</td>
+<td class="row center">1</td>
+<td class="row center">4</td>
+<td class="row center">2</td>
+</tr>
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
@@ -1221,7 +1330,7 @@
 <td class="row center">3</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
@@ -1238,7 +1347,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">24.4</td>
 <td class="row center">4</td>
@@ -1252,7 +1361,7 @@
 <td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">22.8</td>
 <td class="row center">4</td>
@@ -1266,7 +1375,7 @@
 <td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">19.2</td>
 <td class="row center">6</td>
@@ -1280,7 +1389,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">17.8</td>
 <td class="row center">6</td>
@@ -1294,7 +1403,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">16.4</td>
 <td class="row center">8</td>
@@ -1308,7 +1417,7 @@
 <td class="row center">3</td>
 <td class="row center">3</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">17.3</td>
 <td class="row center">8</td>
@@ -1322,7 +1431,7 @@
 <td class="row center">3</td>
 <td class="row center">3</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">15.2</td>
 <td class="row center">8</td>
@@ -1339,7 +1448,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">21</td>
 <td class="row center">6</td>
@@ -1353,7 +1462,7 @@
 <td class="row center">4</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">21</td>
 <td class="row center">6</td>
@@ -1370,7 +1479,7 @@
 <tr>
 <td data-type="group" colspan="12" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">21.4</td>
 <td class="row center">6</td>
@@ -1384,7 +1493,7 @@
 <td class="row center">3</td>
 <td class="row center">1</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">18.7</td>
 <td class="row center">8</td>
@@ -1396,121 +1505,6 @@
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr>
-<td data-type="group" colspan="12" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">22.8</td>
-<td class="row center">4</td>
-<td class="row center">108</td>
-<td class="row center">93</td>
-<td class="row center">3.85</td>
-<td class="row center">2.32</td>
-<td class="row center">18.61</td>
-<td class="row center">1</td>
-<td class="row center">1</td>
-<td class="row center">4</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">18.1</td>
-<td class="row center">6</td>
-<td class="row center">225</td>
-<td class="row center">105</td>
-<td class="row center">2.76</td>
-<td class="row center">3.46</td>
-<td class="row center">20.22</td>
-<td class="row center">1</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">14.7</td>
-<td class="row center">8</td>
-<td class="row center">440</td>
-<td class="row center">230</td>
-<td class="row center">3.23</td>
-<td class="row center">5.345</td>
-<td class="row center">17.42</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">21.5</td>
-<td class="row center">4</td>
-<td class="row center">120.1</td>
-<td class="row center">97</td>
-<td class="row center">3.7</td>
-<td class="row center">2.465</td>
-<td class="row center">20.01</td>
-<td class="row center">1</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">1</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">15.5</td>
-<td class="row center">8</td>
-<td class="row center">318</td>
-<td class="row center">150</td>
-<td class="row center">2.76</td>
-<td class="row center">3.52</td>
-<td class="row center">16.87</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">15.2</td>
-<td class="row center">8</td>
-<td class="row center">304</td>
-<td class="row center">150</td>
-<td class="row center">3.15</td>
-<td class="row center">3.435</td>
-<td class="row center">17.3</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">19.2</td>
-<td class="row center">8</td>
-<td class="row center">400</td>
-<td class="row center">175</td>
-<td class="row center">3.08</td>
-<td class="row center">3.845</td>
-<td class="row center">17.05</td>
-<td class="row center">0</td>
-<td class="row center">0</td>
-<td class="row center">3</td>
-<td class="row center">2</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">21.4</td>
-<td class="row center">4</td>
-<td class="row center">121</td>
-<td class="row center">109</td>
-<td class="row center">4.11</td>
-<td class="row center">2.78</td>
-<td class="row center">18.6</td>
-<td class="row center">1</td>
-<td class="row center">1</td>
-<td class="row center">4</td>
 <td class="row center">2</td>
 </tr>
 </tbody>
@@ -1828,10 +1822,82 @@
 <td class="row center">301</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">93</td>
+<td class="row center">2.32</td>
+<td class="row center">18.61</td>
+<td class="row center">22.8</td>
+<td class="row center">108</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">105</td>
+<td class="row center">3.46</td>
+<td class="row center">20.22</td>
+<td class="row center">18.1</td>
+<td class="row center">225</td>
+<td class="row center">6</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">230</td>
+<td class="row center">5.345</td>
+<td class="row center">17.42</td>
+<td class="row center">14.7</td>
+<td class="row center">440</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">97</td>
+<td class="row center">2.465</td>
+<td class="row center">20.01</td>
+<td class="row center">21.5</td>
+<td class="row center">120.1</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">150</td>
+<td class="row center">3.52</td>
+<td class="row center">16.87</td>
+<td class="row center">15.5</td>
+<td class="row center">318</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">150</td>
+<td class="row center">3.435</td>
+<td class="row center">17.3</td>
+<td class="row center">15.2</td>
+<td class="row center">304</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">175</td>
+<td class="row center">3.845</td>
+<td class="row center">17.05</td>
+<td class="row center">19.2</td>
+<td class="row center">400</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">109</td>
+<td class="row center">2.78</td>
+<td class="row center">18.6</td>
+<td class="row center">21.4</td>
+<td class="row center">121</td>
+<td class="row center">4</td>
+</tr>
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">205</td>
 <td class="row center">5.25</td>
@@ -1840,7 +1906,7 @@
 <td class="row center">472</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">215</td>
 <td class="row center">5.424</td>
@@ -1852,7 +1918,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">62</td>
 <td class="row center">3.19</td>
@@ -1861,7 +1927,7 @@
 <td class="row center">146.7</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">95</td>
 <td class="row center">3.15</td>
@@ -1870,7 +1936,7 @@
 <td class="row center">140.8</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">123</td>
 <td class="row center">3.44</td>
@@ -1879,7 +1945,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">123</td>
 <td class="row center">3.44</td>
@@ -1888,7 +1954,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">180</td>
 <td class="row center">4.07</td>
@@ -1897,7 +1963,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">180</td>
 <td class="row center">3.73</td>
@@ -1906,7 +1972,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">180</td>
 <td class="row center">3.78</td>
@@ -1918,7 +1984,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">110</td>
 <td class="row center">2.62</td>
@@ -1927,7 +1993,7 @@
 <td class="row center">160</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">110</td>
 <td class="row center">2.875</td>
@@ -1939,7 +2005,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">110</td>
 <td class="row center">3.215</td>
@@ -1948,7 +2014,7 @@
 <td class="row center">258</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">175</td>
 <td class="row center">3.44</td>
@@ -1956,81 +2022,6 @@
 <td class="row center">18.7</td>
 <td class="row center">360</td>
 <td class="row center">8</td>
-</tr>
-<tr>
-<td data-type="group" colspan="7" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">93</td>
-<td class="row center">2.32</td>
-<td class="row center">18.61</td>
-<td class="row center">22.8</td>
-<td class="row center">108</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">105</td>
-<td class="row center">3.46</td>
-<td class="row center">20.22</td>
-<td class="row center">18.1</td>
-<td class="row center">225</td>
-<td class="row center">6</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">230</td>
-<td class="row center">5.345</td>
-<td class="row center">17.42</td>
-<td class="row center">14.7</td>
-<td class="row center">440</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">97</td>
-<td class="row center">2.465</td>
-<td class="row center">20.01</td>
-<td class="row center">21.5</td>
-<td class="row center">120.1</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">150</td>
-<td class="row center">3.52</td>
-<td class="row center">16.87</td>
-<td class="row center">15.5</td>
-<td class="row center">318</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">150</td>
-<td class="row center">3.435</td>
-<td class="row center">17.3</td>
-<td class="row center">15.2</td>
-<td class="row center">304</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">175</td>
-<td class="row center">3.845</td>
-<td class="row center">17.05</td>
-<td class="row center">19.2</td>
-<td class="row center">400</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">109</td>
-<td class="row center">2.78</td>
-<td class="row center">18.6</td>
-<td class="row center">21.4</td>
-<td class="row center">121</td>
-<td class="row center">4</td>
 </tr>
 </tbody>
 </table>
@@ -2353,10 +2344,82 @@
 <td class="row center">301.0</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">93</td>
+<td class="row center">2.320</td>
+<td class="row center">18.610</td>
+<td class="row center">22.8</td>
+<td class="row center">108.0</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">105</td>
+<td class="row center">3.460</td>
+<td class="row center">20.220</td>
+<td class="row center">18.1</td>
+<td class="row center">225.0</td>
+<td class="row center">6</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">230</td>
+<td class="row center">5.345</td>
+<td class="row center">17.420</td>
+<td class="row center">14.7</td>
+<td class="row center">440.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">97</td>
+<td class="row center">2.465</td>
+<td class="row center">20.010</td>
+<td class="row center">21.5</td>
+<td class="row center">120.1</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">150</td>
+<td class="row center">3.520</td>
+<td class="row center">16.870</td>
+<td class="row center">15.5</td>
+<td class="row center">318.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">150</td>
+<td class="row center">3.435</td>
+<td class="row center">17.300</td>
+<td class="row center">15.2</td>
+<td class="row center">304.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">175</td>
+<td class="row center">3.845</td>
+<td class="row center">17.050</td>
+<td class="row center">19.2</td>
+<td class="row center">400.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">109</td>
+<td class="row center">2.780</td>
+<td class="row center">18.600</td>
+<td class="row center">21.4</td>
+<td class="row center">121.0</td>
+<td class="row center">4</td>
+</tr>
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">205</td>
 <td class="row center">5.250</td>
@@ -2365,7 +2428,7 @@
 <td class="row center">472.0</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">215</td>
 <td class="row center">5.424</td>
@@ -2377,7 +2440,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">62</td>
 <td class="row center">3.190</td>
@@ -2386,7 +2449,7 @@
 <td class="row center">146.7</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">95</td>
 <td class="row center">3.150</td>
@@ -2395,7 +2458,7 @@
 <td class="row center">140.8</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -2404,7 +2467,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -2413,7 +2476,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">180</td>
 <td class="row center">4.070</td>
@@ -2422,7 +2485,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">180</td>
 <td class="row center">3.730</td>
@@ -2431,7 +2494,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">180</td>
 <td class="row center">3.780</td>
@@ -2443,7 +2506,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">110</td>
 <td class="row center">2.620</td>
@@ -2452,7 +2515,7 @@
 <td class="row center">160.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">110</td>
 <td class="row center">2.875</td>
@@ -2464,7 +2527,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">110</td>
 <td class="row center">3.215</td>
@@ -2473,7 +2536,7 @@
 <td class="row center">258.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">175</td>
 <td class="row center">3.440</td>
@@ -2481,81 +2544,6 @@
 <td class="row center">18.7</td>
 <td class="row center">360.0</td>
 <td class="row center">8</td>
-</tr>
-<tr>
-<td data-type="group" colspan="7" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">93</td>
-<td class="row center">2.320</td>
-<td class="row center">18.610</td>
-<td class="row center">22.8</td>
-<td class="row center">108.0</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">105</td>
-<td class="row center">3.460</td>
-<td class="row center">20.220</td>
-<td class="row center">18.1</td>
-<td class="row center">225.0</td>
-<td class="row center">6</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">230</td>
-<td class="row center">5.345</td>
-<td class="row center">17.420</td>
-<td class="row center">14.7</td>
-<td class="row center">440.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">97</td>
-<td class="row center">2.465</td>
-<td class="row center">20.010</td>
-<td class="row center">21.5</td>
-<td class="row center">120.1</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">150</td>
-<td class="row center">3.520</td>
-<td class="row center">16.870</td>
-<td class="row center">15.5</td>
-<td class="row center">318.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">150</td>
-<td class="row center">3.435</td>
-<td class="row center">17.300</td>
-<td class="row center">15.2</td>
-<td class="row center">304.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">175</td>
-<td class="row center">3.845</td>
-<td class="row center">17.050</td>
-<td class="row center">19.2</td>
-<td class="row center">400.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">109</td>
-<td class="row center">2.780</td>
-<td class="row center">18.600</td>
-<td class="row center">21.4</td>
-<td class="row center">121.0</td>
-<td class="row center">4</td>
 </tr>
 </tbody>
 </table>
@@ -2878,10 +2866,82 @@
 <td class="row center">301.0</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">93</td>
+<td class="row center">2.320</td>
+<td class="row center">18.610</td>
+<td class="row center">22.8</td>
+<td class="row center">108.0</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">105</td>
+<td class="row center">3.460</td>
+<td class="row center">20.220</td>
+<td class="row center">18.1</td>
+<td class="row center">225.0</td>
+<td class="row center">6</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">230</td>
+<td class="row center">5.345</td>
+<td class="row center">17.420</td>
+<td class="row center">14.7</td>
+<td class="row center">440.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">97</td>
+<td class="row center">2.465</td>
+<td class="row center">20.010</td>
+<td class="row center">21.5</td>
+<td class="row center">120.1</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">150</td>
+<td class="row center">3.520</td>
+<td class="row center">16.870</td>
+<td class="row center">15.5</td>
+<td class="row center">318.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">150</td>
+<td class="row center">3.435</td>
+<td class="row center">17.300</td>
+<td class="row center">15.2</td>
+<td class="row center">304.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">175</td>
+<td class="row center">3.845</td>
+<td class="row center">17.050</td>
+<td class="row center">19.2</td>
+<td class="row center">400.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">109</td>
+<td class="row center">2.780</td>
+<td class="row center">18.600</td>
+<td class="row center">21.4</td>
+<td class="row center">121.0</td>
+<td class="row center">4</td>
+</tr>
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">205</td>
 <td class="row center">5.250</td>
@@ -2890,7 +2950,7 @@
 <td class="row center">472.0</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">215</td>
 <td class="row center">5.424</td>
@@ -2902,7 +2962,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">62</td>
 <td class="row center">3.190</td>
@@ -2911,7 +2971,7 @@
 <td class="row center">146.7</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">95</td>
 <td class="row center">3.150</td>
@@ -2920,7 +2980,7 @@
 <td class="row center">140.8</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -2929,7 +2989,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -2938,7 +2998,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">180</td>
 <td class="row center">4.070</td>
@@ -2947,7 +3007,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">180</td>
 <td class="row center">3.730</td>
@@ -2956,7 +3016,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">180</td>
 <td class="row center">3.780</td>
@@ -2968,7 +3028,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">110</td>
 <td class="row center">2.620</td>
@@ -2977,7 +3037,7 @@
 <td class="row center">160.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">110</td>
 <td class="row center">2.875</td>
@@ -2989,7 +3049,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">110</td>
 <td class="row center">3.215</td>
@@ -2998,7 +3058,7 @@
 <td class="row center">258.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">175</td>
 <td class="row center">3.440</td>
@@ -3006,81 +3066,6 @@
 <td class="row center">18.7</td>
 <td class="row center">360.0</td>
 <td class="row center">8</td>
-</tr>
-<tr>
-<td data-type="group" colspan="7" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">93</td>
-<td class="row center">2.320</td>
-<td class="row center">18.610</td>
-<td class="row center">22.8</td>
-<td class="row center">108.0</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">105</td>
-<td class="row center">3.460</td>
-<td class="row center">20.220</td>
-<td class="row center">18.1</td>
-<td class="row center">225.0</td>
-<td class="row center">6</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">230</td>
-<td class="row center">5.345</td>
-<td class="row center">17.420</td>
-<td class="row center">14.7</td>
-<td class="row center">440.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">97</td>
-<td class="row center">2.465</td>
-<td class="row center">20.010</td>
-<td class="row center">21.5</td>
-<td class="row center">120.1</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">150</td>
-<td class="row center">3.520</td>
-<td class="row center">16.870</td>
-<td class="row center">15.5</td>
-<td class="row center">318.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">150</td>
-<td class="row center">3.435</td>
-<td class="row center">17.300</td>
-<td class="row center">15.2</td>
-<td class="row center">304.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">175</td>
-<td class="row center">3.845</td>
-<td class="row center">17.050</td>
-<td class="row center">19.2</td>
-<td class="row center">400.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">109</td>
-<td class="row center">2.780</td>
-<td class="row center">18.600</td>
-<td class="row center">21.4</td>
-<td class="row center">121.0</td>
-<td class="row center">4</td>
 </tr>
 </tbody>
 </table>
@@ -3416,10 +3401,82 @@
 <td class="row center">301.0</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">93</td>
+<td class="row center">2.320</td>
+<td class="row center">18.610</td>
+<td class="row center">22.8</td>
+<td class="row center">108.0</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">105</td>
+<td class="row center">3.460</td>
+<td class="row center">20.220</td>
+<td class="row center">18.1</td>
+<td class="row center">225.0</td>
+<td class="row center">6</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">230</td>
+<td class="row center">5.345</td>
+<td class="row center">17.420</td>
+<td class="row center">14.7</td>
+<td class="row center">440.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">97</td>
+<td class="row center">2.465</td>
+<td class="row center">20.010</td>
+<td class="row center">21.5</td>
+<td class="row center">120.1</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">150</td>
+<td class="row center">3.520</td>
+<td class="row center">16.870</td>
+<td class="row center">15.5</td>
+<td class="row center">318.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">150</td>
+<td class="row center">3.435</td>
+<td class="row center">17.300</td>
+<td class="row center">15.2</td>
+<td class="row center">304.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">175</td>
+<td class="row center">3.845</td>
+<td class="row center">17.050</td>
+<td class="row center">19.2</td>
+<td class="row center">400.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">109</td>
+<td class="row center">2.780</td>
+<td class="row center">18.600</td>
+<td class="row center">21.4</td>
+<td class="row center">121.0</td>
+<td class="row center">4</td>
+</tr>
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">205</td>
 <td class="row center">5.250</td>
@@ -3428,7 +3485,7 @@
 <td class="row center">472.0</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">215</td>
 <td class="row center">5.424</td>
@@ -3440,7 +3497,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">62</td>
 <td class="row center">3.190</td>
@@ -3449,7 +3506,7 @@
 <td class="row center">146.7</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">95</td>
 <td class="row center">3.150</td>
@@ -3458,7 +3515,7 @@
 <td class="row center">140.8</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -3467,7 +3524,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -3476,7 +3533,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">180</td>
 <td class="row center">4.070</td>
@@ -3485,7 +3542,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">180</td>
 <td class="row center">3.730</td>
@@ -3494,7 +3551,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">180</td>
 <td class="row center">3.780</td>
@@ -3506,7 +3563,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">110</td>
 <td class="row center">2.620</td>
@@ -3515,7 +3572,7 @@
 <td class="row center">160.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">110</td>
 <td class="row center">2.875</td>
@@ -3527,7 +3584,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">110</td>
 <td class="row center">3.215</td>
@@ -3536,7 +3593,7 @@
 <td class="row center">258.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">175</td>
 <td class="row center">3.440</td>
@@ -3544,81 +3601,6 @@
 <td class="row center">18.7</td>
 <td class="row center">360.0</td>
 <td class="row center">8</td>
-</tr>
-<tr>
-<td data-type="group" colspan="7" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">93</td>
-<td class="row center">2.320</td>
-<td class="row center">18.610</td>
-<td class="row center">22.8</td>
-<td class="row center">108.0</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">105</td>
-<td class="row center">3.460</td>
-<td class="row center">20.220</td>
-<td class="row center">18.1</td>
-<td class="row center">225.0</td>
-<td class="row center">6</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">230</td>
-<td class="row center">5.345</td>
-<td class="row center">17.420</td>
-<td class="row center">14.7</td>
-<td class="row center">440.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">97</td>
-<td class="row center">2.465</td>
-<td class="row center">20.010</td>
-<td class="row center">21.5</td>
-<td class="row center">120.1</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">150</td>
-<td class="row center">3.520</td>
-<td class="row center">16.870</td>
-<td class="row center">15.5</td>
-<td class="row center">318.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">150</td>
-<td class="row center">3.435</td>
-<td class="row center">17.300</td>
-<td class="row center">15.2</td>
-<td class="row center">304.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">175</td>
-<td class="row center">3.845</td>
-<td class="row center">17.050</td>
-<td class="row center">19.2</td>
-<td class="row center">400.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">109</td>
-<td class="row center">2.780</td>
-<td class="row center">18.600</td>
-<td class="row center">21.4</td>
-<td class="row center">121.0</td>
-<td class="row center">4</td>
 </tr>
 </tbody>
 <tfoot data-type="source_notes">
@@ -3643,17 +3625,17 @@
 <a class="sourceLine" id="cb8-11" data-line-number="11">mtcars_tbl &lt;-<span class="st"> </span>mtcars_tbl <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="dt">footnote =</span> <span class="st">"Great fuel economy"</span>,</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">data_cells</a></span>(</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(mpg),</a>
 <a class="sourceLine" id="cb8-16" data-line-number="16">      <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"Toyota Corolla"</span>, <span class="st">"Honda Civic"</span>, <span class="st">"Fiat 128"</span>))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb8-18" data-line-number="18">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Very low power-to-weight ratio *(&lt;15 lb/hp)*."</span>),</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">data_cells</a></span>(</a>
 <a class="sourceLine" id="cb8-20" data-line-number="20">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(hp),</a>
 <a class="sourceLine" id="cb8-21" data-line-number="21">      <span class="dt">rows =</span> (wt <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">/</span><span class="st"> </span>hp <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb8-23" data-line-number="23">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *fastest* quarter mile of the **mtcars**."</span>),</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/data_cells.html">data_cells</a></span>(</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">data_cells</a></span>(</a>
 <a class="sourceLine" id="cb8-25" data-line-number="25">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(qsec),</a>
 <a class="sourceLine" id="cb8-26" data-line-number="26">      <span class="dt">rows =</span> fastest_car_qsec))</a>
 <a class="sourceLine" id="cb8-27" data-line-number="27"></a>
@@ -3981,10 +3963,82 @@
 <td class="row center">301.0</td>
 <td class="row center">8</td>
 </tr>
+<tr data-type="data" data-row="12">
+<td class="stub row right">Datsun 710</td>
+<td class="row center">93</td>
+<td class="row center">2.320</td>
+<td class="row center">18.610</td>
+<td class="row center">22.8</td>
+<td class="row center">108.0</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="13">
+<td class="stub row right">Valiant</td>
+<td class="row center">105</td>
+<td class="row center">3.460</td>
+<td class="row center">20.220</td>
+<td class="row center">18.1</td>
+<td class="row center">225.0</td>
+<td class="row center">6</td>
+</tr>
+<tr data-type="data" data-row="14">
+<td class="stub row right">Chrysler Imperial</td>
+<td class="row center">230</td>
+<td class="row center">5.345</td>
+<td class="row center">17.420</td>
+<td class="row center">14.7</td>
+<td class="row center">440.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="15">
+<td class="stub row right">Toyota Corona</td>
+<td class="row center">97</td>
+<td class="row center">2.465</td>
+<td class="row center">20.010</td>
+<td class="row center">21.5</td>
+<td class="row center">120.1</td>
+<td class="row center">4</td>
+</tr>
+<tr data-type="data" data-row="16">
+<td class="stub row right">Dodge Challenger</td>
+<td class="row center">150</td>
+<td class="row center">3.520</td>
+<td class="row center">16.870</td>
+<td class="row center">15.5</td>
+<td class="row center">318.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="17">
+<td class="stub row right">AMC Javelin</td>
+<td class="row center">150</td>
+<td class="row center">3.435</td>
+<td class="row center">17.300</td>
+<td class="row center">15.2</td>
+<td class="row center">304.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="18">
+<td class="stub row right">Pontiac Firebird</td>
+<td class="row center">175</td>
+<td class="row center">3.845</td>
+<td class="row center">17.050</td>
+<td class="row center">19.2</td>
+<td class="row center">400.0</td>
+<td class="row center">8</td>
+</tr>
+<tr data-type="data" data-row="19">
+<td class="stub row right">Volvo 142E</td>
+<td class="row center">109</td>
+<td class="row center">2.780</td>
+<td class="row center">18.600</td>
+<td class="row center">21.4</td>
+<td class="row center">121.0</td>
+<td class="row center">4</td>
+</tr>
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Pitiful Gas Mileage</td>
 </tr>
-<tr data-type="data" data-row="12">
+<tr data-type="data" data-row="20">
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">205</td>
 <td class="row center">5.250</td>
@@ -3993,7 +4047,7 @@
 <td class="row center">472.0</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="13">
+<tr data-type="data" data-row="21">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">215</td>
 <td class="row center">5.424</td>
@@ -4005,7 +4059,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">The Mercs</td>
 </tr>
-<tr data-type="data" data-row="14">
+<tr data-type="data" data-row="22">
 <td class="stub row right">Merc 240D</td>
 <td class="row center">62</td>
 <td class="row center">3.190</td>
@@ -4014,7 +4068,7 @@
 <td class="row center">146.7</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="15">
+<tr data-type="data" data-row="23">
 <td class="stub row right">Merc 230</td>
 <td class="row center">95</td>
 <td class="row center">3.150</td>
@@ -4023,7 +4077,7 @@
 <td class="row center">140.8</td>
 <td class="row center">4</td>
 </tr>
-<tr data-type="data" data-row="16">
+<tr data-type="data" data-row="24">
 <td class="stub row right">Merc 280</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -4032,7 +4086,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="17">
+<tr data-type="data" data-row="25">
 <td class="stub row right">Merc 280C</td>
 <td class="row center">123</td>
 <td class="row center">3.440</td>
@@ -4041,7 +4095,7 @@
 <td class="row center">167.6</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="18">
+<tr data-type="data" data-row="26">
 <td class="stub row right">Merc 450SE</td>
 <td class="row center">180</td>
 <td class="row center">4.070</td>
@@ -4050,7 +4104,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="19">
+<tr data-type="data" data-row="27">
 <td class="stub row right">Merc 450SL</td>
 <td class="row center">180</td>
 <td class="row center">3.730</td>
@@ -4059,7 +4113,7 @@
 <td class="row center">275.8</td>
 <td class="row center">8</td>
 </tr>
-<tr data-type="data" data-row="20">
+<tr data-type="data" data-row="28">
 <td class="stub row right">Merc 450SLC</td>
 <td class="row center">180</td>
 <td class="row center">3.780</td>
@@ -4071,7 +4125,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Mazda</td>
 </tr>
-<tr data-type="data" data-row="21">
+<tr data-type="data" data-row="29">
 <td class="stub row right">Mazda RX4</td>
 <td class="row center">110</td>
 <td class="row center">2.620</td>
@@ -4080,7 +4134,7 @@
 <td class="row center">160.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="22">
+<tr data-type="data" data-row="30">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">110</td>
 <td class="row center">2.875</td>
@@ -4092,7 +4146,7 @@
 <tr>
 <td data-type="group" colspan="7" class="group_heading">Hornet</td>
 </tr>
-<tr data-type="data" data-row="23">
+<tr data-type="data" data-row="31">
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">110</td>
 <td class="row center">3.215</td>
@@ -4101,7 +4155,7 @@
 <td class="row center">258.0</td>
 <td class="row center">6</td>
 </tr>
-<tr data-type="data" data-row="24">
+<tr data-type="data" data-row="32">
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">175</td>
 <td class="row center">3.440</td>
@@ -4109,81 +4163,6 @@
 <td class="row center">18.7</td>
 <td class="row center">360.0</td>
 <td class="row center">8</td>
-</tr>
-<tr>
-<td data-type="group" colspan="7" class="group_heading">The Rest of the mtcars</td>
-</tr>
-<tr data-type="data" data-row="25">
-<td class="stub row right">Datsun 710</td>
-<td class="row center">93</td>
-<td class="row center">2.320</td>
-<td class="row center">18.610</td>
-<td class="row center">22.8</td>
-<td class="row center">108.0</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="26">
-<td class="stub row right">Valiant</td>
-<td class="row center">105</td>
-<td class="row center">3.460</td>
-<td class="row center">20.220</td>
-<td class="row center">18.1</td>
-<td class="row center">225.0</td>
-<td class="row center">6</td>
-</tr>
-<tr data-type="data" data-row="27">
-<td class="stub row right">Chrysler Imperial</td>
-<td class="row center">230</td>
-<td class="row center">5.345</td>
-<td class="row center">17.420</td>
-<td class="row center">14.7</td>
-<td class="row center">440.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="28">
-<td class="stub row right">Toyota Corona</td>
-<td class="row center">97</td>
-<td class="row center">2.465</td>
-<td class="row center">20.010</td>
-<td class="row center">21.5</td>
-<td class="row center">120.1</td>
-<td class="row center">4</td>
-</tr>
-<tr data-type="data" data-row="29">
-<td class="stub row right">Dodge Challenger</td>
-<td class="row center">150</td>
-<td class="row center">3.520</td>
-<td class="row center">16.870</td>
-<td class="row center">15.5</td>
-<td class="row center">318.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="30">
-<td class="stub row right">AMC Javelin</td>
-<td class="row center">150</td>
-<td class="row center">3.435</td>
-<td class="row center">17.300</td>
-<td class="row center">15.2</td>
-<td class="row center">304.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="31">
-<td class="stub row right">Pontiac Firebird</td>
-<td class="row center">175</td>
-<td class="row center">3.845</td>
-<td class="row center">17.050</td>
-<td class="row center">19.2</td>
-<td class="row center">400.0</td>
-<td class="row center">8</td>
-</tr>
-<tr data-type="data" data-row="32">
-<td class="stub row right">Volvo 142E</td>
-<td class="row center">109</td>
-<td class="row center">2.780</td>
-<td class="row center">18.600</td>
-<td class="row center">21.4</td>
-<td class="row center">121.0</td>
-<td class="row center">4</td>
 </tr>
 </tbody>
 <tfoot data-type="source_notes">

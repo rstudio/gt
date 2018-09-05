@@ -143,7 +143,7 @@ summary_rows()." />
     </div>
 
     <pre class="usage"><span class='fu'>summary_rows</span>(<span class='no'>data</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>funs</span>,
-  <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>missing_text</span> <span class='kw'>=</span> <span class='st'>"---"</span>, <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +172,11 @@ helper function. With <code><a href='funs.html'>funs()</a></code>, we can specif
 function names (e.g., <code>"sum"</code>), the functions themselves
 (e.g., <code>sum</code>), or calls to functions with <code>.</code> as a dummy argument
 (e.g., <code>sum(., na.rm = TRUE)</code>).</p></td>
+    </tr>
+    <tr>
+      <th>missing_text</th>
+      <td><p>the text to be used in place of <code>NA</code> values in
+summary cells with no data outputs.</p></td>
     </tr>
     <tr>
       <th>formatter</th>
