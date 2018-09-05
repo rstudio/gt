@@ -826,9 +826,11 @@ create_table_body <- function(row_splits,
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group))) {
+
     groups_rows_df <-
       groups_rows_df %>%
-      dplyr::mutate(group = ifelse(is.na(group), "", group))
+      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
+      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
 
   body_rows <- c()
@@ -844,7 +846,7 @@ create_table_body <- function(row_splits,
           paste0(
             "<tr>\n",
             "<td data-type='group' colspan='", n_cols ,"' class='group_heading'>",
-            groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]],
+            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
             "</tr>\n"))
 
@@ -859,13 +861,13 @@ create_table_body <- function(row_splits,
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
               "<td class='stub row ", col_alignment[1], "' ",
-              "style='", row_splits_styles[i][[1]][1],
-              "'>", row_splits[i][[1]][1],
+              "style='", row_splits_styles[[i]][1],
+              "'>", row_splits[[i]][1],
               "</td>"), "\n",
             paste0(
               "<td class='row ", col_alignment[-1], "' ",
-              "style='", row_splits_styles[i][[1]][-1],
-              "'>", row_splits[i][[1]][-1],
+              "style='", row_splits_styles[[i]][-1],
+              "'>", row_splits[[i]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n") %>%
             tidy_gsub(" style=''", ""))
@@ -879,8 +881,8 @@ create_table_body <- function(row_splits,
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
               "<td class='row ", col_alignment, "' ",
-              "style='", row_splits_styles[i][[1]],
-              "'>", row_splits[i][[1]],
+              "style='", row_splits_styles[[i]],
+              "'>", row_splits[[i]],
               "</td>", collapse = "\n"),
             "\n</tr>\n"))
     }
@@ -894,21 +896,20 @@ create_table_body <- function(row_splits,
         dplyr::filter(row_end == i) %>%
         dplyr::pull(group)
 
-      if (group %in% names(summary_list)) {
+      if (any(group %in% names(summary_list))) {
 
         summary_df <-
           summary_list[[which(names(summary_list) == group)]] %>%
           as.data.frame(stringsAsFactors = FALSE)
 
-        #rownames(summary_df) <- as.character(i + seq(nrow(summary_df)) / 100)
-
         body_content_summary <- as.vector(t(summary_df))
 
         row_splits_summary <-
-          split_body_content(body_content = body_content_summary, n_cols = n_cols)
+          split_body_content(
+            body_content = body_content_summary,
+            n_cols = n_cols)
 
-        # Provide CSS class for leading and non-leading
-        #   summary rows
+        # Provide CSS classes for leading and non-leading summary rows
         summary_row_classes_first <- "summary_row first_summary_row "
         summary_row_classes <- "summary_row "
 
@@ -919,18 +920,17 @@ create_table_body <- function(row_splits,
           summary_row_lines <-
             c(summary_row_lines,
               paste0(
-                "<tr data-type='summary' data-row='", i,"'>\n",
+                "<tr data-type='summary' data-group='", group, "' data-summary-row='", j,"'>\n",
                 paste0(
                   "<td class='stub row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                  col_alignment[1], "'>",
-                  tidy_gsub(row_splits_summary[j][[1]][1], "::summary_", ""),
+                  col_alignment[1], "'>", row_splits_summary[[j]][1],
                   "</td>"), "\n",
                 paste0(
                   "<td class='row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
                   col_alignment[-1], "'>",
-                  row_splits_summary[j][[1]][-1],
+                  row_splits_summary[[j]][-1],
                   "</td>", collapse = "\n"),
                 "\n</tr>\n")
             )
@@ -1122,7 +1122,7 @@ create_table_end <- function() {
 }
 
 # Resolve footnotes
-#' @importFrom dplyr filter bind_rows mutate inner_join select arrange
+#' @importFrom dplyr filter bind_rows mutate inner_join select arrange select
 #' @importFrom tibble rownames_to_column
 #' @noRd
 resolve_footnotes <- function(data_attr,
@@ -1235,7 +1235,9 @@ resolve_footnotes <- function(data_attr,
     footnotes_tbl_stub_groups <-
       footnotes_tbl %>%
       dplyr::filter(locname == "stub_groups") %>%
-      dplyr::inner_join(groups_rows_df, by = c("grpname" = "group")) %>%
+      dplyr::inner_join(
+        groups_rows_df %>% dplyr::select(-group_label),
+        by = c("grpname" = "group")) %>%
       dplyr::mutate(rownum = row - 0.1) %>%
       dplyr::select(-row, -row_end)
 
@@ -1256,7 +1258,9 @@ resolve_footnotes <- function(data_attr,
     footnotes_tbl_summary_cells <-
       footnotes_tbl %>%
       dplyr::filter(locname == "summary_cells") %>%
-      dplyr::inner_join(groups_rows_df, by = c("grpname" = "group")) %>%
+      dplyr::inner_join(
+        groups_rows_df %>% dplyr::select(-group_label),
+        by = c("grpname" = "group")) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
       dplyr::select(-row, -row_end)
 
@@ -1602,9 +1606,9 @@ set_footnote_glyphs_stub_groups <- function(data_attr,
     for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
 
       row_index <-
-        which(groups_rows_df[, "group"] == footnotes_stub_groups_glyphs$grpname[i])
+        which(groups_rows_df[, "group_label"] == footnotes_stub_groups_glyphs$grpname[i])
 
-      text <- groups_rows_df[row_index, "group"]
+      text <- groups_rows_df[row_index, "group_label"]
 
       text <-
         paste0(
@@ -1612,7 +1616,7 @@ set_footnote_glyphs_stub_groups <- function(data_attr,
           footnote_glyph_to_html(
             footnotes_stub_groups_glyphs$ft_id_coalesced[i]))
 
-      groups_rows_df[row_index, "group"] <- text
+      groups_rows_df[row_index, "group_label"] <- text
     }
   }
 
