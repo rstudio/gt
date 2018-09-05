@@ -29,18 +29,13 @@ reference:
     - gt_output
   - title: Helper Functions
     contents:
-    - md
-    - html
-    - px
-    - pct
+    - location_cells
+    - resolving_helpers
     - apply_styles
     - col_labels
     - vars
     - funs
-    - data_cells
-    - starts_with
-    - ends_with
-    - contains
-    - matches
-    - one_of
-    - everything
+    - md
+    - html
+    - px
+    - pct
