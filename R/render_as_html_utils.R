@@ -892,47 +892,50 @@ create_table_body <- function(row_splits,
         dplyr::filter(row_end == i) %>%
         dplyr::pull(group)
 
-      summary_df <-
-        summary_list[[which(names(summary_list) == group)]] %>%
-        as.data.frame(stringsAsFactors = FALSE)
+      if (group %in% names(summary_list)) {
 
-      #rownames(summary_df) <- as.character(i + seq(nrow(summary_df)) / 100)
+        summary_df <-
+          summary_list[[which(names(summary_list) == group)]] %>%
+          as.data.frame(stringsAsFactors = FALSE)
 
-      body_content_summary <- as.vector(t(summary_df))
+        #rownames(summary_df) <- as.character(i + seq(nrow(summary_df)) / 100)
 
-      row_splits_summary <-
-        split_body_content(body_content = body_content_summary, n_cols = n_cols)
+        body_content_summary <- as.vector(t(summary_df))
 
-      # Provide CSS class for leading and non-leading
-      #   summary rows
-      summary_row_classes_first <- "summary_row first_summary_row "
-      summary_row_classes <- "summary_row "
+        row_splits_summary <-
+          split_body_content(body_content = body_content_summary, n_cols = n_cols)
 
-      summary_row_lines <- c()
+        # Provide CSS class for leading and non-leading
+        #   summary rows
+        summary_row_classes_first <- "summary_row first_summary_row "
+        summary_row_classes <- "summary_row "
 
-      for (j in seq(length(row_splits_summary))) {
+        summary_row_lines <- c()
 
-        summary_row_lines <-
-          c(summary_row_lines,
-            paste0(
-              "<tr data-type='summary' data-row='", i,"'>\n",
+        for (j in seq(length(row_splits_summary))) {
+
+          summary_row_lines <-
+            c(summary_row_lines,
               paste0(
-                "<td class='stub row ",
-                ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                col_alignment[1], "'>",
-                tidy_gsub(row_splits_summary[j][[1]][1], "::summary_", ""),
-                "</td>"), "\n",
-              paste0(
-                "<td class='row ",
-                ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                col_alignment[-1], "'>",
-                row_splits_summary[j][[1]][-1],
-                "</td>", collapse = "\n"),
-              "\n</tr>\n")
-          )
+                "<tr data-type='summary' data-row='", i,"'>\n",
+                paste0(
+                  "<td class='stub row ",
+                  ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+                  col_alignment[1], "'>",
+                  tidy_gsub(row_splits_summary[j][[1]][1], "::summary_", ""),
+                  "</td>"), "\n",
+                paste0(
+                  "<td class='row ",
+                  ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+                  col_alignment[-1], "'>",
+                  row_splits_summary[j][[1]][-1],
+                  "</td>", collapse = "\n"),
+                "\n</tr>\n")
+            )
+        }
+
+        body_rows <- c(body_rows, summary_row_lines)
       }
-
-      body_rows <- c(body_rows, summary_row_lines)
     }
   }
 
