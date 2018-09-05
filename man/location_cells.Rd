@@ -2,22 +2,22 @@
 % Please edit documentation in R/helpers.R
 \name{location_cells}
 \alias{location_cells}
-\alias{data_cells}
-\alias{stub_cells}
+\alias{title_cells}
 \alias{boxhead_cells}
 \alias{group_cells}
-\alias{title_cells}
+\alias{stub_cells}
+\alias{data_cells}
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
-data_cells(columns = NULL, rows = NULL)
-
-stub_cells(rows)
+title_cells(groups = c("title", "headnote"))
 
 boxhead_cells(columns, groups)
 
 group_cells(groups)
 
-title_cells(groups = c("title", "headnote"))
+stub_cells(rows)
+
+data_cells(columns = NULL, rows = NULL)
 }
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
@@ -29,22 +29,26 @@ a list object of class \code{location_cells}.
 }
 \description{
 These helper functions are used to target individual cells in different
-  locations. The locations and the specific functions used to target cells
-  therein are:
+  locations.
 }
 \details{
-- \code{data_cells()}: targets data cells in the table field using
-  intersections of \code{columns} and \code{rows}
-- \code{stub_cells()}: targets row captions in the table stub using the
-  \code{rows} argument
-- \code{boxhead_cells()}: targets captions for the column headers (the
-  \code{columns} argument) or group spanners (the \code{groups} argument) in
-  the table boxhead
-- \code{group_cells()}: targets the group headings in the stub blocks using
-  the \code{groups} argument
-- \code{title_cells()}: targets the table title or the table headnote
-  depending on the value given to the \code{groups} argument
-  (\code{"title"} or \code{"headnote"})
+The following helper functions can be used to target cells (roughly in order
+  from the top to the bottom of a table):
+
+\itemize{
+  \item \code{title_cells()}: targets the table title or the table headnote
+    depending on the value given to the \code{groups} argument
+    (\code{"title"} or \code{"headnote"}).
+  \item \code{boxhead_cells()}: targets captions for the column headers (the
+    \code{columns} argument) or group spanners (the \code{groups} argument)
+    in the table boxhead.
+  \item \code{group_cells()}: targets the group headings in the stub blocks
+    using the \code{groups} argument.
+  \item \code{stub_cells()}: targets row captions in the table stub using the
+    \code{rows} argument.
+  \item \code{data_cells()}: targets data cells in the table field using
+    intersections of \code{columns} and \code{rows}.
+}
 
 The select helper functions are: \code{\link{starts_with}()},
   \code{\link{ends_with}()}, \code{\link{contains}()},

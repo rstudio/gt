@@ -34,11 +34,7 @@ gt_tbl <-
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
-  \code{\link{contains}}, \code{\link{ends_with}},
-  \code{\link{everything}}, \code{\link{funs}},
-  \code{\link{html}}, \code{\link{matches}},
-  \code{\link{md}}, \code{\link{one_of}},
-  \code{\link{pct}}, \code{\link{px}},
-  \code{\link{starts_with}}, \code{\link{vars}}
+  \code{\link{funs}}, \code{\link{html}}, \code{\link{md}},
+  \code{\link{pct}}, \code{\link{px}}, \code{\link{vars}}
 }
 \concept{helper functions}
