@@ -19,6 +19,8 @@
 #'   function names (e.g., \code{"sum"}), the functions themselves
 #'   (e.g., \code{sum}), or calls to functions with \code{.} as a dummy argument
 #'   (e.g., \code{sum(., na.rm = TRUE)}).
+#' @param missing_text the text to be used in place of \code{NA} values in
+#'   summary cells with no data outputs.
 #' @param formatter a formatter function name. These can be any of the
 #'   \code{fmt_*}functions available in the package (e.g.,
 #'   \code{\link{fmt_number}}, \code{link{fmt_percent}}, etc.), or a custom
@@ -68,6 +70,7 @@ summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
                          funs,
+                         missing_text = "---",
                          formatter = fmt_number,
                          ...) {
 
@@ -94,6 +97,7 @@ summary_rows <- function(data,
             groups = groups,
             columns = columns,
             funs = funs,
+            missing_text = missing_text,
             formatter = formatter,
             formatter_options = formatter_options)))
 
@@ -105,6 +109,7 @@ summary_rows <- function(data,
           groups = groups,
           columns = columns,
           funs = funs,
+          missing_text = missing_text,
           formatter = formatter,
           formatter_options = formatter_options))
   }
