@@ -65,6 +65,17 @@ are_groups_present <- function(data_attr) {
   }
 }
 
+#' Are there any processed summary dfs available?
+#' @noRd
+are_summaries_present <- function(data_attr) {
+
+  if ("summary_df_display_list" %in% names(data_attr)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
 #' Are there any spanners present?
 #' @noRd
 are_spanners_present <- function(data_attr) {
