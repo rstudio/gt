@@ -1235,13 +1235,34 @@ resolve_footnotes <- function(data_attr,
       dplyr::filter(locname == "stub_groups") %>%
       dplyr::inner_join(groups_rows_df, by = c("grpname" = "group")) %>%
       dplyr::mutate(rownum = row - 0.1) %>%
-      dplyr::select(-row)
+      dplyr::select(-row, -row_end)
 
     # Re-combine `footnotes_tbl_not_stub_groups`
     #   with `footnotes_tbl_stub_groups`
     footnotes_tbl <-
       dplyr::bind_rows(
         footnotes_tbl_not_stub_groups, footnotes_tbl_stub_groups)
+  }
+
+  # For the summary cells, insert a `rownum` based on groups_rows_df
+  if ("summary_cells" %in% footnotes_tbl[["locname"]]) {
+
+    footnotes_tbl_not_summary_cells <-
+      footnotes_tbl %>%
+      dplyr::filter(locname != "summary_cells")
+
+    footnotes_tbl_summary_cells <-
+      footnotes_tbl %>%
+      dplyr::filter(locname == "summary_cells") %>%
+      dplyr::inner_join(groups_rows_df, by = c("grpname" = "group")) %>%
+      dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
+      dplyr::select(-row, -row_end)
+
+    # Re-combine `footnotes_tbl_not_summary_cells`
+    #   with `footnotes_tbl_summary_cells`
+    footnotes_tbl <-
+      dplyr::bind_rows(
+        footnotes_tbl_not_summary_cells, footnotes_tbl_summary_cells)
   }
 
   if (!("colnum" %in% colnames(footnotes_tbl))) {
@@ -1316,6 +1337,47 @@ apply_footnotes_to_data <- function(data_attr) {
   }
 
   output_df
+}
+
+
+# Apply footnotes to the summary rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_footnotes_to_summary <- function(data_attr) {
+
+  summary_df_list <- data_attr$summary_df_display_list
+
+  if (!("summary_cells" %in% data_attr$footnotes_resolved$locname)) {
+    return(summary_df_list)
+  }
+
+  footnotes_tbl_data <-
+    data_attr$footnotes_resolved %>%
+    dplyr::filter(locname == "summary_cells")
+
+  footnotes_data_glpyhs <-
+    footnotes_tbl_data %>%
+    dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
+    dplyr::group_by(grpname, row, colnum) %>%
+    dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(grpname, colname, row, ft_id_coalesced) %>%
+    dplyr::distinct()
+
+  for (i in seq(nrow(footnotes_data_glpyhs))) {
+
+    text <-
+      summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
+        footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]]
+
+    text <-
+      paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$ft_id_coalesced[i]))
+
+    summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
+      footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]] <- text
+  }
+
+  summary_df_list
 }
 
 #' @importFrom dplyr arrange select distinct
