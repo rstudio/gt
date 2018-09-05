@@ -804,7 +804,7 @@ split_body_content <- function(body_content,
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate filter pull
 #' @noRd
 create_table_body <- function(row_splits,
                               row_splits_styles,
