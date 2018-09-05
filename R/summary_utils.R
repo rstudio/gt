@@ -1,4 +1,10 @@
 
+#' @import rlang
+#' @importFrom dplyr select mutate everything bind_rows filter group_by
+#' @importFrom dplyr summarize_all ungroup mutate_at slice mutate_all
+#' @importFrom tidyr fill
+#' @importFrom stats setNames
+#' @noRd
 create_summary_dfs <- function(data_attr) {
 
   if (is.null(data_attr$summary)) {
@@ -104,11 +110,10 @@ create_summary_dfs <- function(data_attr) {
         .vars = columns,
         .funs = function(x) {NA_character_})
 
-
     for (group in groups) {
 
       # Place data frame in separate list component by `group`
-      group_sym <- enquo(group)
+      group_sym <- rlang::enquo(group)
 
       group_summary_data_df <-
         summary_dfs_data %>%
@@ -117,15 +122,15 @@ create_summary_dfs <- function(data_attr) {
       group_summary_display_df <-
         summary_dfs_display %>%
         dplyr::filter(groupname == !!group_sym) %>%
-        mutate_all(funs(replace(., is.na(.), summary_attrs$missing_text)))
+        dplyr::mutate_all(funs(replace(., is.na(.), summary_attrs$missing_text)))
 
       summary_df_data_list <-
         c(summary_df_data_list,
-          setNames(list(group_summary_data_df), group))
+          stats::setNames(list(group_summary_data_df), group))
 
       summary_df_display_list <-
         c(summary_df_display_list,
-          setNames(list(group_summary_display_df), group))
+          stats::setNames(list(group_summary_display_df), group))
     }
   }
 
