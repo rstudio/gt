@@ -130,12 +130,19 @@ get_groups_rows_df <- function(data_attr) {
     data.frame(
       group = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
+      row_end = rep(NA_integer_, length(ordering)),
       stringsAsFactors = FALSE)
 
   for (i in seq(ordering)) {
-    the_match <- match(ordering[i], data_attr$groups_df[, 1])
-    groups_rows[i, 1] <- ordering[i]
-    groups_rows[i, 2] <- the_match
+
+    matched <- match(ordering[i], data_attr$groups_df[, "groupname"])
+
+    count_matched <-
+      length(which(data_attr$groups_df[, "groupname"] == ordering[i]))
+
+    groups_rows[i, "group"] <- ordering[i]
+    groups_rows[i, "row"] <- matched
+    groups_rows[i, "row_end"] <- matched + count_matched - 1
   }
 
   groups_rows
@@ -222,6 +229,7 @@ obtain_group_ordering <- function(data_attr,
   ordering
 }
 
+#' TODO: refactor entirely
 #' Used to splice in summary lines into the final gt table
 #' @importFrom dplyr bind_rows select group_by everything ungroup arrange
 #' @importFrom dplyr mutate mutate_at summarize_at funs slice filter
@@ -492,40 +500,26 @@ get_row_reorder_df <- function(data_attr) {
   # indices match the final row indices
   if (length(data_attr$arrange_groups$groups) == 0) {
 
+    indices <- seq_len(nrow(data_attr$stub_df))
+
     return(
       dplyr::tibble(
-        rownum_start = as.integer(seq(nrow(data_attr$stub_df))),
-        rownum_final = as.integer(seq(nrow(data_attr$stub_df))))
+        rownum_start = indices,
+        rownum_final = indices)
     )
   }
 
-  stub_df <- data_attr$stub_df
-
   groups <- data_attr$arrange_groups$groups
 
-  reordered <- stub_df[0, ]
-
-  for (i in seq(groups)) {
-
-    if (!is.na(groups[i])) {
-
-    reordered <-
-      rbind(
-        reordered,
-        subset(stub_df, groupname %in% groups[i]))
-
-    } else {
-
-      reordered <-
-        rbind(
-          reordered,
-          stub_df[is.na(stub_df$groupname), ])
-    }
-  }
+  indices <-
+    lapply(data_attr$stub_df$group, `%in%`, x = groups) %>%
+    lapply(which) %>%
+    unlist() %>%
+    order()
 
   dplyr::tibble(
-    rownum_start = as.integer(seq(nrow(reordered))),
-    rownum_final = as.integer(rownames(reordered)))
+    rownum_start = seq_along(indices),
+    rownum_final = indices)
 }
 
 #' @noRd
@@ -815,6 +809,7 @@ create_table_body <- function(row_splits,
                               groups_rows_df,
                               col_alignment,
                               stub_components,
+                              summary_list,
                               n_rows,
                               n_cols) {
 
@@ -850,69 +845,94 @@ create_table_body <- function(row_splits,
             groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]],
             "</td>\n",
             "</tr>\n"))
+
     }
 
-    if (grepl("::summary_", row_splits[i][[1]][[1]])) {
+    if (stub_available) {
 
-      # Modify the class names to use whether this is a leading
-      # summary row or not
-      if (i > 1 && !grepl("::summary_", row_splits[i - 1][[1]][[1]])) {
-        classes_summary_row <- "summary_row first_summary_row "
-      } else {
-        classes_summary_row <- "summary_row "
-      }
-
-      # Process "summary" rows
+      # Process "data" rows where a stub is present
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr data-type='summary' data-row='", i,"'>\n",
+            "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='stub row ", classes_summary_row, col_alignment[1], "'>",
-              tidy_gsub(row_splits[i][[1]][1], "::summary_", ""),
+              "<td class='stub row ", col_alignment[1], "' ",
+              "style='", row_splits_styles[i][[1]][1],
+              "'>", row_splits[i][[1]][1],
               "</td>"), "\n",
             paste0(
-              "<td class='row ", classes_summary_row, col_alignment[-1], "'>",
-              row_splits[i][[1]][-1],
+              "<td class='row ", col_alignment[-1], "' ",
+              "style='", row_splits_styles[i][[1]][-1],
+              "'>", row_splits[i][[1]][-1],
               "</td>", collapse = "\n"),
-            "\n</tr>\n"))
+            "\n</tr>\n") %>%
+            tidy_gsub(" style=''", ""))
 
     } else {
 
-      if (stub_available) {
-
-        # Process "data" rows where a stub is present
-        body_rows <-
-          c(body_rows,
+      # Process "data" rows where no stub is present
+      body_rows <-
+        c(body_rows,
+          paste0(
+            "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<tr data-type='data' data-row='", i,"'>\n",
+              "<td class='row ", col_alignment, "' ",
+              "style='", row_splits_styles[i][[1]],
+              "'>", row_splits[i][[1]],
+              "</td>", collapse = "\n"),
+            "\n</tr>\n"))
+    }
+
+    if (stub_available &&
+        !is.null(summary_list) &&
+        i %in% groups_rows_df$row_end) {
+
+      group <-
+        groups_rows_df %>%
+        dplyr::filter(row_end == i) %>%
+        dplyr::pull(group)
+
+      summary_df <-
+        summary_list[[which(names(summary_list) == group)]] %>%
+        as.data.frame(stringsAsFactors = FALSE)
+
+      #rownames(summary_df) <- as.character(i + seq(nrow(summary_df)) / 100)
+
+      body_content_summary <- as.vector(t(summary_df))
+
+      row_splits_summary <-
+        split_body_content(body_content = body_content_summary, n_cols = n_cols)
+
+      # Provide CSS class for leading and non-leading
+      #   summary rows
+      summary_row_classes_first <- "summary_row first_summary_row "
+      summary_row_classes <- "summary_row "
+
+      summary_row_lines <- c()
+
+      for (j in seq(length(row_splits_summary))) {
+
+        summary_row_lines <-
+          c(summary_row_lines,
+            paste0(
+              "<tr data-type='summary' data-row='", i,"'>\n",
               paste0(
-                "<td class='stub row ", col_alignment[1], "' ",
-                "style='", row_splits_styles[i][[1]][1],
-                "'>", row_splits[i][[1]][1],
+                "<td class='stub row ",
+                ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+                col_alignment[1], "'>",
+                tidy_gsub(row_splits_summary[j][[1]][1], "::summary_", ""),
                 "</td>"), "\n",
               paste0(
-                "<td class='row ", col_alignment[-1], "' ",
-                "style='", row_splits_styles[i][[1]][-1],
-                "'>", row_splits[i][[1]][-1],
+                "<td class='row ",
+                ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+                col_alignment[-1], "'>",
+                row_splits_summary[j][[1]][-1],
                 "</td>", collapse = "\n"),
-              "\n</tr>\n") %>%
-              tidy_gsub(" style=''", ""))
-
-      } else {
-
-        # Process "data" rows where no stub is present
-        body_rows <-
-          c(body_rows,
-            paste0(
-              "<tr data-type='data' data-row='", i,"'>\n",
-              paste0(
-                "<td class='row ", col_alignment, "' ",
-                "style='", row_splits_styles[i][[1]],
-                "'>", row_splits[i][[1]],
-                "</td>", collapse = "\n"),
-              "\n</tr>\n"))
+              "\n</tr>\n")
+          )
       }
+
+      body_rows <- c(body_rows, summary_row_lines)
     }
   }
 
@@ -1502,32 +1522,32 @@ set_footnote_glyphs_stub_groups <- function(data_attr,
     footnotes_tbl %>%
     dplyr::filter(locname == "stub_groups")
 
-    if (nrow(footnotes_stub_groups_tbl) > 0) {
+  if (nrow(footnotes_stub_groups_tbl) > 0) {
 
-      footnotes_stub_groups_glyphs <-
-        footnotes_stub_groups_tbl %>%
-        dplyr::group_by(grpname) %>%
-        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
-        dplyr::ungroup() %>%
-        dplyr::select(grpname, ft_id_coalesced) %>%
-        dplyr::distinct()
+    footnotes_stub_groups_glyphs <-
+      footnotes_stub_groups_tbl %>%
+      dplyr::group_by(grpname) %>%
+      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(grpname, ft_id_coalesced) %>%
+      dplyr::distinct()
 
-      for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
+    for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
 
-        row_index <-
-          which(groups_rows_df[, "group"] == footnotes_stub_groups_glyphs$grpname[i])
+      row_index <-
+        which(groups_rows_df[, "group"] == footnotes_stub_groups_glyphs$grpname[i])
 
-        text <- groups_rows_df[row_index, "group"]
+      text <- groups_rows_df[row_index, "group"]
 
-        text <-
-          paste0(
-            text,
-            footnote_glyph_to_html(
-              footnotes_stub_groups_glyphs$ft_id_coalesced[i]))
+      text <-
+        paste0(
+          text,
+          footnote_glyph_to_html(
+            footnotes_stub_groups_glyphs$ft_id_coalesced[i]))
 
-        groups_rows_df[row_index, "group"] <- text
-      }
+      groups_rows_df[row_index, "group"] <- text
     }
+  }
 
   groups_rows_df
 }
