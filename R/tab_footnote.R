@@ -41,6 +41,7 @@ set_footnote <- function(loc, data, footnote) {
   UseMethod("set_footnote")
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.data_cells <- function(loc, data, footnote) {
 
   resolved <- resolve_data_cells(data = data, object = loc)
@@ -67,6 +68,7 @@ set_footnote.data_cells <- function(loc, data, footnote) {
   data
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.stub_cells <- function(loc, data, footnote) {
 
   resolved <- resolve_stub_cells(data = data, object = loc)
@@ -90,6 +92,7 @@ set_footnote.stub_cells <- function(loc, data, footnote) {
   data
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.boxhead_cells <- function(loc, data, footnote) {
 
   if (!is.null(loc$columns)) {
@@ -136,6 +139,7 @@ set_footnote.boxhead_cells <- function(loc, data, footnote) {
   data
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.group_cells <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
@@ -158,6 +162,7 @@ set_footnote.group_cells <- function(loc, data, footnote) {
   data
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.title_cells <- function(loc, data, footnote) {
 
   if ((loc$groups %>% as.character())[-1] == "title") {
