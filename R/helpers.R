@@ -37,6 +37,7 @@
 NULL
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 title_cells <- function(groups = c("title", "headnote")) {
 
@@ -54,6 +55,7 @@ title_cells <- function(groups = c("title", "headnote")) {
 }
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 boxhead_cells <- function(columns, groups) {
 
@@ -91,6 +93,7 @@ boxhead_cells <- function(columns, groups) {
 }
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 group_cells <- function(groups) {
 
@@ -108,6 +111,7 @@ group_cells <- function(groups) {
 }
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 stub_cells <- function(rows) {
 
@@ -125,6 +129,7 @@ stub_cells <- function(rows) {
 }
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 data_cells <- function(columns = NULL,
                        rows = NULL) {
@@ -151,6 +156,7 @@ data_cells <- function(columns = NULL,
 }
 
 #' @rdname location_cells
+#' @import rlang
 #' @export
 summary_cells <- function(groups = NULL,
                           columns = NULL,
