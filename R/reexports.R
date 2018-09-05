@@ -1,6 +1,7 @@
 #' Helper for targeting a series of row labels or columns
 #'
 #' See \code{dplyr::\link[dplyr]{vars}} for details.
+#'
 #' @name vars
 #' @importFrom dplyr vars
 #' @usage vars(...)
@@ -24,69 +25,67 @@ NULL
 #' @export
 NULL
 
-#' Helper for resolving colnames or rownames that start with a prefix
+
+#' Helpers for resolving column names or row labels
 #'
-#' @name starts_with
+#' We can resolve one or multiple column names or row labels by using a select
+#'   helper function like \code{starts_with}, \code{contains}, etc., with an
+#'   argument like \code{columns}, \code{rows}, or \code{groups}. This works
+#'   inside the the \code{\link{location_cells}} helper functions, which, in
+#'   turn, are to be used within \code{\link{tab_footnote}()} or
+#'   \code{\link{tab_footnote}()} (both at the \code{locations} argument).
+#'
+#' The helper functions are:
+#'
+#' \itemize{
+#'   \item \code{starts_with()}: targets the table title or the table headnote
+#'     depending on the value given to the \code{groups} argument
+#'     (\code{"title"} or \code{"headnote"}).
+#'   \item \code{ends_with()}: targets captions for the column headers (the
+#'     \code{columns} argument) or group spanners (the \code{groups} argument)
+#'     in the table boxhead.
+#'   \item \code{contains()}: targets the group headings in the stub blocks
+#'     using the \code{groups} argument.
+#'   \item \code{matches()}: targets row captions in the table stub using the
+#'     \code{rows} argument.
+#'   \item \code{one_of()}: targets data cells in the table field using
+#'     intersections of \code{columns} and \code{rows}.
+#'   \item \code{everything()}: targets data cells in the table field using
+#'     intersections of \code{columns} and \code{rows}.
+#' }
+#'
+#' @param match a string.
+#' @param ignore.case if \code{TRUE}, the default, case is ignored when
+#'   matching names.
+#' @name resolving_helpers
+NULL
+
+#' @rdname resolving_helpers
 #' @importFrom tidyselect starts_with
-#' @usage starts_with(match, ignore.case = TRUE)
-#' @param match a string.
-#' @param ignore.case if \code{TRUE}, the default, case is ignored when
-#'   matching names.
-#' @family helper functions
 #' @export
-NULL
+tidyselect::starts_with
 
-#' Helper for resolving colnames or rownames that end with a suffix
-#'
-#' @name ends_with
+#' @rdname resolving_helpers
 #' @importFrom tidyselect ends_with
-#' @usage ends_with(match, ignore.case = TRUE)
-#' @param match a string.
-#' @param ignore.case if \code{TRUE}, the default, case is ignored when
-#'   matching names.
-#' @family helper functions
 #' @export
-NULL
+tidyselect::ends_with
 
-#' Helper for resolving colnames or rownames that contain a literal string
-#'
-#' @name contains
+#' @rdname resolving_helpers
 #' @importFrom tidyselect contains
-#' @usage contains(match, ignore.case = TRUE)
-#' @param match a string.
-#' @param ignore.case if \code{TRUE}, the default, case is ignored when
-#'   matching names.
-#' @family helper functions
 #' @export
-NULL
+tidyselect::contains
 
-#' Helper for resolving colnames or rownames that match a regular expression
-#'
-#' @name matches
+#' @rdname resolving_helpers
 #' @importFrom tidyselect matches
-#' @usage matches(match, ignore.case = TRUE)
-#' @param match a string.
-#' @param ignore.case if \code{TRUE}, the default, case is ignored when
-#'   matching names.
-#' @family helper functions
 #' @export
-NULL
+tidyselect::matches
 
-#' Helper for resolving colnames or rownames that are part of a set
-#'
-#' @name one_of
+#' @rdname resolving_helpers
 #' @importFrom tidyselect one_of
-#' @usage one_of(..., ignore.case = TRUE)
-#' @param ... one or more character vectors.
-#' @family helper functions
 #' @export
-NULL
+tidyselect::one_of
 
-#' Helper for selecting all colnames or rownames
-#'
-#' @name everything
+#' @rdname resolving_helpers
 #' @importFrom tidyselect everything
-#' @usage everything()
-#' @family helper functions
 #' @export
-NULL
+tidyselect::everything
