@@ -28,10 +28,10 @@ render_as_html <- function(data) {
   data_attr$data_df <- as.data.frame(data)
 
   # Get the reordering df for the data rows
-  data_attr$rows_df <- get_row_reorder_df(data_attr = data_attr)
+  data_attr$rows_df <- get_row_reorder_df(data_attr)
 
   # Get the reordering df for the data columns
-  data_attr$columns_df <- get_column_reorder_df(data_attr = data_attr)
+  data_attr$columns_df <- get_column_reorder_df(data_attr)
 
   # Reassemble the rows and columns of
   # `data_df` in the correct order
@@ -45,11 +45,11 @@ render_as_html <- function(data) {
 
   # Get a `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
-  data_attr$groups_df <- get_groupnames_rownames_df(data_attr = data_attr)
+  data_attr$groups_df <- get_groupnames_rownames_df(data_attr)
 
   # Get a `boxhead_spanners` vector, which has the unique, non-NA
   # boxhead spanner labels
-  data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr = data_attr)
+  data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr)
 
   # Replace NA values in the `groupname` column if there is a reserved
   #   label for the unlabeled group
@@ -124,18 +124,18 @@ render_as_html <- function(data) {
       groups_rows_df = groups_rows_df)
 
   # Apply footnotes to the `data` rows
-  data_attr$output_df <- apply_footnotes_to_data(data_attr = data_attr)
+  data_attr$output_df <- apply_footnotes_to_data(data_attr)
 
   # Add footnote glyphs to the `summary` rows
-  summary_list <- data_attr$summary_df_display_list
+  summary_list <- apply_footnotes_to_summary(data_attr)
 
   # Add footnote glyphs to boxhead elements
-  data_attr$boxh_df <- set_footnote_glyphs_boxhead(data_attr = data_attr)
+  data_attr$boxh_df <- set_footnote_glyphs_boxhead(data_attr)
 
   # Add footnote glyphs to stub group title elements
   groups_rows_df <-
     set_footnote_glyphs_stub_groups(
-      data_attr = data_attr, groups_rows_df = groups_rows_df)
+      data_attr, groups_rows_df = groups_rows_df)
 
   # Extract the body content as a vector
   body_content <- as.vector(t(data_attr$output_df))
@@ -150,10 +150,10 @@ render_as_html <- function(data) {
   # Composition of HTML -----------------------------------------------------
 
   # Handle any available footnotes
-  footnote_component <- create_footnote_component(data_attr = data_attr)
+  footnote_component <- create_footnote_component(data_attr)
 
   # Create a heading and handle any available footnotes
-  heading_component <- create_heading_component(data_attr = data_attr)
+  heading_component <- create_heading_component(data_attr)
 
   # Create the source note rows and handle any available footnotes
   source_note_rows <- create_source_note_rows(data_attr, n_cols)
