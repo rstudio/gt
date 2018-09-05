@@ -201,6 +201,35 @@ set_footnote.title_cells <- function(loc, data, footnote) {
   data
 }
 
+#' @importFrom dplyr bind_rows tibble distinct
+set_footnote.summary_cells <- function(loc, data, footnote) {
+
+  groups <- (loc$groups %>% as.character())[-1]
+  rows <- (loc$rows %>% as.character())[-1]
+
+  resolved <- resolve_boxhead_cells(data = data, object = loc)
+
+  cols <- resolved$columns
+
+  colnames <- colnames(as.data.frame(data))[cols]
+
+  footnotes_df <-
+    dplyr::bind_rows(
+      attr(data, "footnotes_df", exact = TRUE),
+      dplyr::tibble(
+        locname = "summary_cells",
+        locnum = 5,
+        grpname = groups,
+        colname = colnames,
+        rownum = rows,
+        text = footnote)) %>%
+    dplyr::distinct()
+
+  attr(data, "footnotes_df") <- footnotes_df
+
+  data
+}
+
 #' @export
 get_footnotes_tbl <- function(data) {
 
