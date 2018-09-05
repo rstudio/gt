@@ -19,6 +19,9 @@
 #'     \code{rows} argument.
 #'   \item \code{data_cells()}: targets data cells in the table field using
 #'     intersections of \code{columns} and \code{rows}.
+#'   \item \code{summary_cells()}: targets summary cells in the table field
+#'     using the \code{groups} argument and intersections of \code{columns}
+#'     and \code{rows}.
 #' }
 #'
 #' The select helper functions are: \code{\link{starts_with}()},
