@@ -27,6 +27,8 @@ render_as_html <- function(data) {
   # Move original data frame to `data_attr$data_df`
   data_attr$data_df <- as.data.frame(data)
 
+  # TODO: Don't use `data_attr` as inputs or outputs
+
   # Get the reordering df for the data rows
   data_attr$rows_df <- get_row_reorder_df(data_attr)
 
@@ -53,9 +55,12 @@ render_as_html <- function(data) {
 
   # Replace NA values in the `groupname` column if there is a reserved
   #   label for the unlabeled group
-  data_attr$groups_df[
-    which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
-    data_attr$others_group[[1]] %||% NA_character_
+  if (!is.null(data_attr$others_group[[1]])) {
+
+    data_attr$groups_df[
+      which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
+      data_attr$others_group[[1]]
+  }
 
   # Create the `groups_rows` data frame, which provides information
   #   on which rows the group rows should appear above
@@ -73,7 +78,7 @@ render_as_html <- function(data) {
   #   that haven't had alignment explicitly set
   data_attr <- data_attr %>%
     migrate_colnames_to_labels() %>%
-    set_default_alignments()
+    set_default_alignments() # TODO: consider default alignments based on content
 
   # Determine if there is a populated stub
   stub_available <- data_attr %>% is_stub_available()
@@ -90,18 +95,16 @@ render_as_html <- function(data) {
   # Get the available stub components, if any
   stub_components <- data_attr %>% get_stub_components()
 
-  if (is.null(stub_components) ||
-      stub_component_is_groupname(stub_components)) {
 
-    # Define the `col_alignment` vector, which is a
-    #   vector of column alignment values for all of
-    #   the relevant columns in a table
-    col_alignment <-
-      data_attr$boxh_df["column_align", ] %>%
-      unlist() %>% unname()
+  # Define the `col_alignment` vector, which is a
+  #   vector of column alignment values for all of
+  #   the relevant columns in a table
+  col_alignment <-
+    data_attr$boxh_df["column_align", ] %>%
+    unlist() %>% unname()
 
-  } else if (stub_component_is_rowname(stub_components) ||
-             stub_component_is_rowname_groupname(stub_components)) {
+  if (stub_component_is_rowname(stub_components) ||
+      stub_component_is_rowname_groupname(stub_components)) {
 
     # Combine reordered stub with output table
     data_attr$output_df <-
@@ -110,9 +113,7 @@ render_as_html <- function(data) {
     # Define the `col_alignment` vector, which is a
     #   vector of column alignment values for all of
     #   the relevant columns in a table
-    col_alignment <-
-      c("right", data_attr$boxh_df["column_align", ] %>%
-          unlist() %>% unname())
+    col_alignment <- c("right", col_alignment)
   }
 
   # Footnotes ---------------------------------------------------------------
