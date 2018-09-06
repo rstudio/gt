@@ -1,5 +1,5 @@
 #' @import sassr
-compile_css <- function(data) {
+compile_scss <- function(data) {
 
   # Obtain the options table from `data`
   gt_options_tbl <- attr(data, "opts_df", exact = TRUE)
@@ -52,5 +52,6 @@ compile_css <- function(data) {
       collapse = "\n")
 
   # Write the compiled CSS to disk
+  #sass::sass(scss_lines)
   sassr::compile_sass(text = scss_lines)
 }

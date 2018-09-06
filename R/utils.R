@@ -349,8 +349,10 @@ remove_html <- function(text) {
 get_css_tbl <- function(data) {
 
   raw_css_vec <-
-    compile_css(data) %>% as.character() %>%
-    strsplit("\n") %>% unlist()
+    compile_scss(data) %>%
+    as.character() %>%
+    strsplit("\n") %>%
+    unlist()
 
   ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
   ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
