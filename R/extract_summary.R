@@ -12,6 +12,8 @@
 #'   function.
 #' @return a data frame containing summary data.
 #' @family table export functions
+#' @import rlang
+#' @importFrom dplyr filter arrange pull
 #' @export
 extract_summary <- function(data) {
 
@@ -21,6 +23,8 @@ extract_summary <- function(data) {
   if (is.null(data_attr$summary)) {
     stop("There is no summary data frame to extract.", call. = FALSE)
   }
+
+  data_attr <- attributes(data)
 
   # Create `output_df` with rendered values
   data_attr$output_df <- render_formats(data, context = "html")
@@ -35,8 +39,45 @@ extract_summary <- function(data) {
   # Move original data frame to `data_attr$data_df`
   data_attr$data_df <- as.data.frame(data)
 
-  # Integrate any summary lines available
-  data_attr <- integrate_summary_lines(data_attr)
+  # Get the reordering df for the data rows
+  data_attr$rows_df <- get_row_reorder_df(data_attr)
 
-  data_attr$summary_df
+  # Get the reordering df for the data columns
+  data_attr$columns_df <- get_column_reorder_df(data_attr)
+
+  # Reassemble the rows and columns of
+  # `data_df` in the correct order
+  data_attr$output_df <-
+    data_attr$output_df[
+      data_attr$rows_df$rownum_final,
+      data_attr$columns_df %>%
+        dplyr::filter(!is.na(colnum_final)) %>%
+        dplyr::arrange(colnum_final) %>%
+        dplyr::pull(column_names)]
+
+  # Get a `groups_df` data frame, which is a rearranged representation
+  # of the stub `groupname` and `rowname` columns
+  data_attr$groups_df <- get_groupnames_rownames_df(data_attr)
+
+  # Get a `boxhead_spanners` vector, which has the unique, non-NA
+  # boxhead spanner labels
+  data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr)
+
+  # Replace NA values in the `groupname` column if there is a reserved
+  #   label for the unlabeled group
+  data_attr$groups_df[
+    which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
+    data_attr$others_group[[1]] %||% NA_character_
+
+  # Create the `groups_rows` data frame, which provides information
+  #   on which rows the group rows should appear above
+  groups_rows_df <- get_groups_rows_df(data_attr)
+
+  # Perform any necessary column merge operations
+  data_attr <- perform_col_merge(data_attr)
+
+  # Create summary data frames
+  data_attr <- create_summary_dfs(data_attr)
+
+  data_attr$summary_df_data_list
 }
