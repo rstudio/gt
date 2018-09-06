@@ -32,7 +32,7 @@ as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the SCSS lines, compile, and write the CSS
   # to disk as `compiled.css`
-  css <- compile_css(data = x)
+  css <- compile_scss(data = x)
 
   # Attach the dependency to the HTML table
   html_tbl <- htmltools::tagList(
