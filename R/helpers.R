@@ -66,6 +66,7 @@ boxhead_cells <- function(columns, groups) {
     stop("Value(s) must provided to either `columns` or `groups` but not both.")
   }
 
+
   # With input as `columns`
   if (!missing(columns)) {
 
@@ -83,13 +84,9 @@ boxhead_cells <- function(columns, groups) {
   }
 
   # Create the `boxhead_cells` object
-  cells <- list(columns = col_expr, groups = group_expr)
-
-  # Apply the `boxhead_cells` and
-  # `location_cells` classes
-  class(cells) <- c("boxhead_cells", "location_cells")
-
-  cells
+  structure(
+    list(columns = col_expr, groups = group_expr),
+    class = c("boxhead_cells", "location_cells"))
 }
 
 #' @rdname location_cells
