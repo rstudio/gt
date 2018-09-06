@@ -238,7 +238,7 @@ get_row_reorder_df <- function(data_attr) {
     )
   }
 
-  groups <- data_attr$arrange_groups$groups
+  groups <- data_attr$arrange_groups$groups # try using match to shorten this
 
   indices <-
     lapply(data_attr$stub_df$group, `%in%`, x = groups) %>%
@@ -697,7 +697,7 @@ resolve_footnotes <- function(data_attr,
 
       footnotes_tbl <-
         footnotes_tbl %>%
-        dplyr::filter(locnum != 1)
+        dplyr::filter(locname != "title")
     }
 
     # Filter by `headnote`
@@ -705,19 +705,15 @@ resolve_footnotes <- function(data_attr,
 
       footnotes_tbl <-
         footnotes_tbl %>%
-        dplyr::filter(locnum != 2)
+        dplyr::filter(locname != "headnote")
     }
 
     # Filter by `grpname` in boxhead groups
-    if ("boxhead_groups" %in% footnotes_tbl[["locname"]]) {
+    if ("boxhead_groups" %in% footnotes_tbl[["locname"]]) { # remove conditional
 
       footnotes_tbl <-
-        dplyr::bind_rows(
-          footnotes_tbl %>%
-            dplyr::filter(locname != "boxhead_groups"),
-          footnotes_tbl %>%
-            dplyr::filter(locname == "boxhead_groups") %>%
-            dplyr::filter(grpname %in% data_attr$boxhead_spanners))
+        footnotes_tbl %>%
+        dplyr::filter(locname != "boxhead_groups" | grpname %in% data_attr$boxhead_spanners)
     }
 
     # Filter by `grpname` in stub groups
@@ -730,6 +726,10 @@ resolve_footnotes <- function(data_attr,
           footnotes_tbl %>%
             dplyr::filter(locname == "stub_groups") %>%
             dplyr::filter(grpname %in% data_attr$arrange_groups$groups))
+
+      # footnotes_tbl <-
+      #   footnotes_tbl %>%
+      #   dplyr::filter(locname != "boxhead_groups" | grpname %in% data_attr$boxhead_spanners)
     }
 
     # Filter `footnotes_tbl` by the remaining columns
