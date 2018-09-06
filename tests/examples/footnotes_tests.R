@@ -75,4 +75,4 @@ data <-
     footnote = md("The *Wag* is short for *Wagon*."),
     locations = stub_cells(rows = "Mazda RX4 Wag"))
 
-data %>% str()
+data
