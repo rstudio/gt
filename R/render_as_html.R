@@ -17,12 +17,20 @@ render_as_html <- function(data) {
   # Create `output_df` with rendered values
   data_attr$output_df <- render_formats(data, context = "html")
 
+  # DEBUG: output df with rendered values
+  print("DEBUG: output df with rendered values")
+  print(data_attr$output_df)
+
   # Move input data cells to `output_df` that didn't have
   #   any rendering applied during `render_formats()`
   data_attr$output_df <-
     migrate_unformatted_to_output(
       data = data,
       output_df = data_attr$output_df)
+
+  # DEBUG: output df with rendered values + default values
+  print("DEBUG: output df with rendered values + default values")
+  print(data_attr$output_df)
 
   # Move original data frame to `data_attr$data_df`
   data_attr$data_df <- as.data.frame(data)
@@ -44,6 +52,10 @@ render_as_html <- function(data) {
         dplyr::filter(!is.na(colnum_final)) %>%
         dplyr::arrange(colnum_final) %>%
         dplyr::pull(column_names)]
+
+  # DEBUG: output df with modified row and column order
+  print("DEBUG: output df with modified row and column order")
+  print(data_attr$output_df)
 
   # Get a `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
@@ -95,7 +107,6 @@ render_as_html <- function(data) {
   # Get the available stub components, if any
   stub_components <- data_attr %>% get_stub_components()
 
-
   # Define the `col_alignment` vector, which is a
   #   vector of column alignment values for all of
   #   the relevant columns in a table
@@ -126,6 +137,10 @@ render_as_html <- function(data) {
 
   # Apply footnotes to the `data` rows
   data_attr$output_df <- apply_footnotes_to_data(data_attr)
+
+  # DEBUG: output df with footnotes applied to data
+  print("DEBUG: output df with footnotes applied to data")
+  print(data_attr$output_df)
 
   # Add footnote glyphs to the `summary` rows
   summary_list <- apply_footnotes_to_summary(data_attr)
