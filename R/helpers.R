@@ -128,12 +128,10 @@ stub_cells <- function(rows) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-data_cells <- function(columns = NULL,
-                       rows = NULL) {
-
-  if (missing(columns) & missing(rows)) {
-    stop("Some value(s) must provided to either `columns` and/or `rows`.")
-  }
+data_cells <- function(columns = NULL, # set default to TRUE
+                       rows = NULL# set default to TRUE
+                       #TODO: groups = NULL
+                       ) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
@@ -315,7 +313,7 @@ apply_styles <- function(bkgd_color = NULL,
   if (!is.null(text_align)) {
 
     if (text_align %in% c("center", "left", "right", "justify")) {
-    styles <- c(styles, paste0("text-align:", text_align, ";"))
+      styles <- c(styles, paste0("text-align:", text_align, ";"))
     }
   }
 
