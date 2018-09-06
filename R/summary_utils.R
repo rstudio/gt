@@ -1,4 +1,3 @@
-
 #' @import rlang
 #' @importFrom dplyr select mutate everything bind_rows filter group_by
 #' @importFrom dplyr summarize_all ungroup mutate_at slice mutate_all
@@ -54,11 +53,8 @@ create_summary_dfs <- function(data_attr) {
     # Get the labels for each of the function calls
     labels <- agg_funs %>% names()
 
-    summary_dfs <-
-      groups_data_df[0, ] %>%
-      dplyr::select(c("groupname", colnames(data_attr$output_df))) %>%
-      dplyr::mutate(rowname = NA_character_) %>%
-      dplyr::select(groupname, rowname, dplyr::everything())
+    # Initialize an empty tibble to bind to
+    summary_dfs <- dplyr::tibble()
 
     for (j in seq(agg_funs)) {
 
