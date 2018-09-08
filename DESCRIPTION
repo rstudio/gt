@@ -35,7 +35,7 @@ Imports:
     tidyr (>= 0.8.1),
     tidyselect (>= 0.2.4)
 Remotes:
-    rstudio/sassr
+    rstudio/sass
 Suggests: 
     knitr,
     testthat,
