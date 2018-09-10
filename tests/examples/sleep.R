@@ -7,7 +7,7 @@ html_table <-
   fmt_scientific(columns = vars(extra)) %>%
   tab_footnote(
     footnote = "This is a footnote",
-    locations = data_cells(columns = 1, rows = 1))
+    locations = cells_data(columns = 1, rows = 1))
 
 # Display the table in the Viewer
 html_table
