@@ -7,19 +7,19 @@
 #'   from the top to the bottom of a table):
 #'
 #' \itemize{
-#'   \item \code{title_cells()}: targets the table title or the table headnote
+#'   \item \code{cells_title()}: targets the table title or the table headnote
 #'     depending on the value given to the \code{groups} argument
 #'     (\code{"title"} or \code{"headnote"}).
-#'   \item \code{boxhead_cells()}: targets captions for the column headers (the
+#'   \item \code{cells_boxhead()}: targets captions for the column headers (the
 #'     \code{columns} argument) or group spanners (the \code{groups} argument)
 #'     in the table boxhead.
-#'   \item \code{group_cells()}: targets the group headings in the stub blocks
+#'   \item \code{cells_group()}: targets the group headings in the stub blocks
 #'     using the \code{groups} argument.
-#'   \item \code{stub_cells()}: targets row captions in the table stub using the
+#'   \item \code{cells_stub()}: targets row captions in the table stub using the
 #'     \code{rows} argument.
-#'   \item \code{data_cells()}: targets data cells in the table field using
+#'   \item \code{cells_data()}: targets data cells in the table field using
 #'     intersections of \code{columns} and \code{rows}.
-#'   \item \code{summary_cells()}: targets summary cells in the table field
+#'   \item \code{cells_summary()}: targets summary cells in the table field
 #'     using the \code{groups} argument and intersections of \code{columns}
 #'     and \code{rows}.
 #' }
@@ -39,17 +39,17 @@ NULL
 #' @rdname location_cells
 #' @import rlang
 #' @export
-title_cells <- function(groups = c("title", "headnote")) {
+cells_title <- function(groups = c("title", "headnote")) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
 
-  # Create the `title_cells` object
+  # Create the `cells_title` object
   cells <- list(groups = group_expr)
 
-  # Apply the `title_cells` and
+  # Apply the `cells_title` and
   # `location_cells` classes
-  class(cells) <- c("title_cells", "location_cells")
+  class(cells) <- c("cells_title", "location_cells")
 
   cells
 }
@@ -57,7 +57,7 @@ title_cells <- function(groups = c("title", "headnote")) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-boxhead_cells <- function(columns, groups) {
+cells_boxhead <- function(columns, groups) {
 
   if (
     (!missing(columns) && !missing(groups)) ||
@@ -83,26 +83,25 @@ boxhead_cells <- function(columns, groups) {
     group_expr <- rlang::enquo(groups)
   }
 
-  # Create the `boxhead_cells` object
+  # Create the `cells_boxhead` object
   structure(
     list(columns = col_expr, groups = group_expr),
-    class = c("boxhead_cells", "location_cells"))
+    class = c("cells_boxhead", "location_cells"))
 }
 
 #' @rdname location_cells
 #' @import rlang
 #' @export
-group_cells <- function(groups) {
+cells_group <- function(groups) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
 
-  # Create the `group_cells` object
+  # Create the `cells_group` object
   cells <- list(groups = group_expr)
 
-  # Apply the `group_cells` and
-  # `location_cells` classes
-  class(cells) <- c("group_cells", "location_cells")
+  # Apply the `cells_group` and `location_cells` classes
+  class(cells) <- c("cells_group", "location_cells")
 
   cells
 }
@@ -110,17 +109,16 @@ group_cells <- function(groups) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-stub_cells <- function(rows) {
+cells_stub <- function(rows) {
 
   # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
 
-  # Create the `stub_cells` object
+  # Create the `cells_stub` object
   cells <- list(rows = row_expr)
 
-  # Apply the `stub_cells` and
-  # `location_cells` classes
-  class(cells) <- c("stub_cells", "location_cells")
+  # Apply the `cells_stub` and `location_cells` classes
+  class(cells) <- c("cells_stub", "location_cells")
 
   cells
 }
@@ -128,7 +126,7 @@ stub_cells <- function(rows) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-data_cells <- function(columns = NULL, # set default to TRUE
+cells_data <- function(columns = NULL, # set default to TRUE
                        rows = NULL# set default to TRUE
                        #TODO: groups = NULL
                        ) {
@@ -137,15 +135,14 @@ data_cells <- function(columns = NULL, # set default to TRUE
   col_expr <- rlang::enquo(columns)
   row_expr <- rlang::enquo(rows)
 
-  # Create the `data_cells` object
+  # Create the `cells_data` object
   cells <-
     list(
       columns = col_expr,
       rows = row_expr)
 
-  # Apply the `data_cells` and
-  # `location_cells` classes
-  class(cells) <- c("data_cells", "location_cells")
+  # Apply the `cells_data` and `location_cells` classes
+  class(cells) <- c("cells_data", "location_cells")
 
   cells
 }
@@ -153,7 +150,7 @@ data_cells <- function(columns = NULL, # set default to TRUE
 #' @rdname location_cells
 #' @import rlang
 #' @export
-summary_cells <- function(groups = NULL,
+cells_summary <- function(groups = NULL,
                           columns = NULL,
                           rows = NULL) {
 
@@ -163,16 +160,15 @@ summary_cells <- function(groups = NULL,
   col_expr <- rlang::enquo(columns)
   row_expr <- rlang::enquo(rows)
 
-  # Create the `summary_cells` object
+  # Create the `cells_summary` object
   cells <-
     list(
       groups = group_expr,
       columns = col_expr,
       rows = row_expr)
 
-  # Apply the `summary_cells` and
-  # `location_cells` classes
-  class(cells) <- c("summary_cells", "location_cells")
+  # Apply the `cells_summary` and `location_cells` classes
+  class(cells) <- c("cells_summary", "location_cells")
 
   cells
 }

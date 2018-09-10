@@ -4,10 +4,10 @@
 #' @inheritParams fmt_number
 #' @param footnote text to be used in the footnote.
 #' @param locations the cell or set of cells to be associated with the footnote.
-#'   Supplying an object with the \code{\link{data_cells}()} helper function is
+#'   Supplying an object with the \code{\link{cells_data}()} helper function is
 #'   a useful way to specify the cell that is associated with the footnote.
 #'   Additionally, we can supply a list with multiple calls to
-#'   \code{\link{data_cells}()} if we wish to combine multiple cell selections.
+#'   \code{\link{cells_data}()} if we wish to combine multiple cell selections.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a footnote that is in
@@ -16,14 +16,14 @@
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_footnote(
 #'       footnote = "Massive hp.",
-#'       locations = data_cells(
+#'       locations = cells_data(
 #'         columns = "hp",
 #'         rows = "Maserati Bora"))
 #' @family table-part creation/modification functions
 #' @export
 tab_footnote <- function(data,
-                           footnote,
-                           locations) {
+                         footnote,
+                         locations) {
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
@@ -42,9 +42,9 @@ set_footnote <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.data_cells <- function(loc, data, footnote) {
+set_footnote.cells_data <- function(loc, data, footnote) {
 
-  resolved <- resolve_data_cells(data = data, object = loc)
+  resolved <- resolve_cells_data(data = data, object = loc)
 
   cols <- resolved$columns
   rows <- resolved$rows
@@ -69,9 +69,9 @@ set_footnote.data_cells <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.stub_cells <- function(loc, data, footnote) {
+set_footnote.cells_stub <- function(loc, data, footnote) {
 
-  resolved <- resolve_stub_cells(data = data, object = loc)
+  resolved <- resolve_cells_stub(data = data, object = loc)
 
   rows <- resolved$rows
 
@@ -93,11 +93,11 @@ set_footnote.stub_cells <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.boxhead_cells <- function(loc, data, footnote) {
+set_footnote.cells_boxhead <- function(loc, data, footnote) {
 
   if (!is.null(loc$columns)) {
 
-    resolved <- resolve_boxhead_cells(data = data, object = loc)
+    resolved <- resolve_cells_boxhead(data = data, object = loc)
 
     cols <- resolved$columns
 
@@ -140,7 +140,7 @@ set_footnote.boxhead_cells <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.group_cells <- function(loc, data, footnote) {
+set_footnote.cells_group <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
 
@@ -163,7 +163,7 @@ set_footnote.group_cells <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.title_cells <- function(loc, data, footnote) {
+set_footnote.cells_title <- function(loc, data, footnote) {
 
   if ((loc$groups %>% as.character())[-1] == "title") {
 
@@ -202,12 +202,12 @@ set_footnote.title_cells <- function(loc, data, footnote) {
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
-set_footnote.summary_cells <- function(loc, data, footnote) {
+set_footnote.cells_summary <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
   rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
 
-  resolved <- resolve_boxhead_cells(data = data, object = loc)
+  resolved <- resolve_cells_boxhead(data = data, object = loc)
 
   cols <- resolved$columns
 

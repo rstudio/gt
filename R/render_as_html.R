@@ -17,20 +17,12 @@ render_as_html <- function(data) {
   # Create `output_df` with rendered values
   data_attr$output_df <- render_formats(data, context = "html")
 
-  # DEBUG: output df with rendered values
-  print("DEBUG: output df with rendered values")
-  print(data_attr$output_df)
-
   # Move input data cells to `output_df` that didn't have
   #   any rendering applied during `render_formats()`
   data_attr$output_df <-
     migrate_unformatted_to_output(
       data = data,
       output_df = data_attr$output_df)
-
-  # DEBUG: output df with rendered values + default values
-  print("DEBUG: output df with rendered values + default values")
-  print(data_attr$output_df)
 
   # Move original data frame to `data_attr$data_df`
   data_attr$data_df <- as.data.frame(data)
@@ -53,10 +45,6 @@ render_as_html <- function(data) {
         dplyr::arrange(colnum_final) %>%
         dplyr::pull(column_names)]
 
-  # DEBUG: output df with modified row and column order
-  print("DEBUG: output df with modified row and column order")
-  print(data_attr$output_df)
-
   # Get a `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
   data_attr$groups_df <- get_groupnames_rownames_df(data_attr)
@@ -77,6 +65,13 @@ render_as_html <- function(data) {
   # Create the `groups_rows` data frame, which provides information
   #   on which rows the group rows should appear above
   groups_rows_df <- get_groups_rows_df(data_attr)
+
+  # data_attr <- replace_output_at_location(
+  #   loc = cells_data(columns = vars(carb, mpg), rows = hp > 100),
+  #   data_attr = data_attr,
+  #   func = function(x) {
+  #     paste0("<b>", x, "</b>")
+  #   })
 
   # Perform any necessary column merge operations
   data_attr <- perform_col_merge(data_attr)
@@ -138,10 +133,6 @@ render_as_html <- function(data) {
   # Apply footnotes to the `data` rows
   data_attr$output_df <- apply_footnotes_to_data(data_attr)
 
-  # DEBUG: output df with footnotes applied to data
-  print("DEBUG: output df with footnotes applied to data")
-  print(data_attr$output_df)
-
   # Add footnote glyphs to the `summary` rows
   summary_list <- apply_footnotes_to_summary(data_attr)
 
@@ -165,15 +156,6 @@ render_as_html <- function(data) {
 
   # Composition of HTML -----------------------------------------------------
 
-  # Handle any available footnotes
-  footnote_component <- create_footnote_component(data_attr)
-
-  # Create a heading and handle any available footnotes
-  heading_component <- create_heading_component(data_attr)
-
-  # Create the source note rows and handle any available footnotes
-  source_note_rows <- create_source_note_rows(data_attr, n_cols)
-
   # Split the body_content by slices of rows
   row_splits <- split_body_content(body_content, n_cols)
 
@@ -196,6 +178,9 @@ render_as_html <- function(data) {
       n_rows,
       n_cols)
 
+  # Create a heading and handle any available footnotes
+  heading_component <- create_heading_component(data_attr)
+
   # Create the table column headings
   table_col_headings <-
     create_column_headings(
@@ -215,6 +200,12 @@ render_as_html <- function(data) {
       summary_list,
       n_rows,
       n_cols)
+
+  # Create the source note rows and handle any available footnotes
+  source_note_rows <- create_source_note_rows(data_attr, n_cols)
+
+  # Handle any available footnotes
+  footnote_component <- create_footnote_component(data_attr)
 
   # Create an HTML fragment for the end of the table
   table_end <- create_table_end()
