@@ -1,9 +1,9 @@
-#' Resolve the `data_cells` object once it has access to the `data` object
+#' Resolve the `cells_data` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{data_cells()} function.
+#' @param object the list object created by the \code{cells_data()} function.
 #' @importFrom dplyr arrange distinct
 #' @noRd
-resolve_data_cells <- function(data,
+resolve_cells_data <- function(data,
                                object) {
 
   # Get the `data_df` data frame from `data`
@@ -13,7 +13,7 @@ resolve_data_cells <- function(data,
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
   # Obtain the `columns` and `rows` components of
-  # object created by the `data_cells()` function
+  # object created by the `cells_data()` function
   object_columns <- object$columns
   object_rows <- object$rows
 
@@ -46,11 +46,11 @@ resolve_data_cells <- function(data,
   cells_resolved
 }
 
-#' Resolve the `stub_cells` object once it has access to the `data` object
+#' Resolve the `cells_stub` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param object the list object created by the \code{stub_cells()} function.
 #' @noRd
-resolve_stub_cells <- function(data,
+resolve_cells_stub <- function(data,
                                object) {
 
   # Get the `data_df` data frame from `data`
@@ -60,7 +60,7 @@ resolve_stub_cells <- function(data,
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
   # Obtain the `columns` and `rows` components of
-  # object created by the `data_cells()` function
+  # object created by the `cells_stub()` function
   object_rows <- object$rows
 
   # Collect the rownames from `stub_df`
@@ -82,12 +82,12 @@ resolve_stub_cells <- function(data,
   cells_resolved
 }
 
-#' Resolve the `boxhead_cells` object once it has access to the `data` object
+#' Resolve the `cells_boxhead` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param object the list object created by the \code{boxhead_cells()}
 #'   function.
 #' @noRd
-resolve_boxhead_cells <- function(data,
+resolve_cells_boxhead <- function(data,
                                   object) {
 
   # Get the `data_df` data frame from `data`
