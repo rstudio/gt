@@ -135,7 +135,6 @@ resolve_vars <- function(var_expr, var_names, data_df) {
 
   } else if (is.logical(resolved)) {
 
-    # TODO: Warn if length(resolved) > length(var_names)
     resolved <- which(rlang::rep_along(var_names, resolved))
 
   } else if (is.character(resolved)) {
