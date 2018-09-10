@@ -22,18 +22,18 @@ data <-
   gt(data = tbl) %>%
   tab_footnote(
     footnote = "first data cell",
-    locations = data_cells(columns = 1, rows = 1)) %>%
+    locations = cells_data(columns = 1, rows = 1)) %>%
   tab_footnote(
     footnote = "stub cell.",
-    locations = stub_cells(rows = 1)) %>%
+    locations = cells_stub(rows = 1)) %>%
   tab_footnote(
     footnote = md("`value_1` is the second column of values."),
-    locations = boxhead_cells(columns = vars(value_1))) %>%
+    locations = cells_boxhead(columns = vars(value_1))) %>%
   tab_footnote(
     footnote = "This is a very small number.",
-    locations = data_cells(columns = 2, rows = 9)) %>%
+    locations = cells_data(columns = 2, rows = 9)) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = data_cells(columns = 2, rows = 4))
+    locations = cells_data(columns = 2, rows = 4))
 
 data
