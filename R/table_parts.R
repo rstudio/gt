@@ -261,7 +261,7 @@ tab_source_note <- function(data,
 #'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
 #' @seealso \code{\link{apply_styles}()} as a helper for defining custom styles
-#'   and \code{\link{data_cells}()} as a useful helper function for targeting
+#'   and \code{\link{cells_data}()} as a useful helper function for targeting
 #'   one or more data cells to be styled.
 #' @importFrom stats setNames
 #' @export
