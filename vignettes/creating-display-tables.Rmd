@@ -116,10 +116,7 @@ gt_tbl <- gt_tbl %>%
 gt_tbl
 ```
 
-Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `data_cells()` is used with the `location` argument to specify which cells should be the target of the footnote. The `data_cells()` helper has three arguments:
-
-- `columns` and `rows` can be supplied as (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row captions within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`).
-- `where`, in which one can supply a conditional expression (e.g., `size > 10000`) that operates across all data cells captured by columns and rows to further constrain the selection
+Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `cells_data()` is used with the `location` argument to specify which cells should be the target of the footnote. The `cells_data()` helper has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row captions within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`).
 
 Here is a simple example on how a footnotes can be added to a table cell. Let's add a footnote that references the `North America` and `South America` cells in the `name` column:
 
@@ -129,7 +126,7 @@ Here is a simple example on how a footnotes can be added to a table cell. Let's 
 gt_tbl <- gt_tbl %>%
   tab_footnote(
     footnote = "The Americas.",
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(name),
       rows = 3:4))
 
@@ -152,12 +149,12 @@ largest <- islands_tbl %>%
 gt_tbl <- gt_tbl %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(size),
       rows = name == largest)) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(size),
       rows = name == "Antarctica"))
 
@@ -165,7 +162,7 @@ gt_tbl <- gt_tbl %>%
 gt_tbl
 ```
 
-We were able to supply the reference locations in the table by using the `data_cells()` helper function and supplying the necessary row and column reference and filtering rows with `where` expression in the last two cases.
+We were able to supply the reference locations in the table by using the `cells_data()` helper function and supplying the necessary row and column reference and filtering rows with `where` expression in the last two cases.
 
 ### The Stub
 
@@ -200,7 +197,7 @@ gt_tbl <- gt_tbl %>%
 gt_tbl
 ```
 
-A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` (the only **field** column) is `size`. This has implications for column referencing (for instance, with the `data_cells()` helper function). Before, we referenced names in data cells using `where`. Now, the names are row captions and they can be referenced in the `rows` argument. To apply our table parts as before (up to and including the footnotes) we use the following statements:
+A very important thing to note here is that the table now has one **field** column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column `1` (the only **field** column) is `size`. This has implications for column referencing (for instance, with the `cells_data()` helper function). Before, we referenced names in data cells using `where`. Now, the names are row captions and they can be referenced in the `rows` argument. To apply our table parts as before (up to and including the footnotes) we use the following statements:
 
 ```{r}
 # Display the `islands_tbl` data with a stub,
@@ -218,13 +215,13 @@ gt_tbl <- gt_tbl %>%
     ) %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(size),
       rows = largest)
     ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(size),
       rows = contains("arc")))
 

@@ -140,17 +140,17 @@ fastest_car_qsec <- mtcars %>%
 mtcars_tbl <- mtcars_tbl %>%
   tab_footnote(
     footnote = "Great fuel economy",
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(mpg),
       rows = c("Toyota Corolla", "Honda Civic", "Fiat 128"))) %>%
   tab_footnote(
     footnote = md("Very low power-to-weight ratio *(<15 lb/hp)*."),
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(hp),
       rows = (wt * 1000) / hp < 15)) %>%
   tab_footnote(
     footnote = md("The *fastest* quarter mile of the **mtcars**."),
-    locations = data_cells(
+    locations = cells_data(
       columns = vars(qsec),
       rows = fastest_car_qsec))
 
