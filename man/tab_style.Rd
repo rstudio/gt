@@ -38,7 +38,7 @@ gt_tbl <-
 }
 \seealso{
 \code{\link{apply_styles}()} as a helper for defining custom styles
-  and \code{\link{data_cells}()} as a useful helper function for targeting
+  and \code{\link{cells_data}()} as a useful helper function for targeting
   one or more data cells to be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
