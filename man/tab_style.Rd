@@ -14,10 +14,10 @@ function.}
 helper function can be used here to more easily generate valid styles.}
 
 \item{locations}{the cell or set of cells to be associated with the style
-Supplying an object with the \code{\link{data_cells}()} helper function is
+Supplying an object with the \code{\link{cells_data}()} helper function is
 a useful way to specify the cell that is associated with the style.
 Additionally, we can supply a list with multiple calls to
-\code{\link{data_cells}()} if we wish to combine multiple cell selections.}
+\code{\link{cells_data}()} if we wish to combine multiple cell selections.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -32,14 +32,14 @@ gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_style(
       style = apply_styles(bkgd_color = "steelblue"),
-      locations = data_cells(
+      locations = cells_data(
         columns = vars(hp),
         rows = c("Datsun 710", "Valiant")))
 }
 \seealso{
-[apply_styles()] as a helper for defining custom styles and
-  [data_cells()] as a useful helper function for targeting one or more data
-  cells to be styled.
+\code{\link{apply_styles}()} as a helper for defining custom styles
+  and \code{\link{data_cells}()} as a useful helper function for targeting
+  one or more data cells to be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},
