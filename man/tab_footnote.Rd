@@ -13,10 +13,10 @@ function.}
 \item{footnote}{text to be used in the footnote.}
 
 \item{locations}{the cell or set of cells to be associated with the footnote.
-Supplying an object with the \code{\link{data_cells}()} helper function is
+Supplying an object with the \code{\link{cells_data}()} helper function is
 a useful way to specify the cell that is associated with the footnote.
 Additionally, we can supply a list with multiple calls to
-\code{\link{data_cells}()} if we wish to combine multiple cell selections.}
+\code{\link{cells_data}()} if we wish to combine multiple cell selections.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -31,7 +31,7 @@ gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_footnote(
       footnote = "Massive hp.",
-      locations = data_cells(
+      locations = cells_data(
         columns = "hp",
         rows = "Maserati Bora"))
 }

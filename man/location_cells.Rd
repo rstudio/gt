@@ -2,25 +2,25 @@
 % Please edit documentation in R/helpers.R
 \name{location_cells}
 \alias{location_cells}
-\alias{title_cells}
-\alias{boxhead_cells}
-\alias{group_cells}
-\alias{stub_cells}
-\alias{data_cells}
-\alias{summary_cells}
+\alias{cells_title}
+\alias{cells_boxhead}
+\alias{cells_group}
+\alias{cells_stub}
+\alias{cells_data}
+\alias{cells_summary}
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
-title_cells(groups = c("title", "headnote"))
+cells_title(groups = c("title", "headnote"))
 
-boxhead_cells(columns, groups)
+cells_boxhead(columns, groups)
 
-group_cells(groups)
+cells_group(groups)
 
-stub_cells(rows)
+cells_stub(rows)
 
-data_cells(columns = NULL, rows = NULL)
+cells_data(columns = NULL, rows = NULL)
 
-summary_cells(groups = NULL, columns = NULL, rows = NULL)
+cells_summary(groups = NULL, columns = NULL, rows = NULL)
 }
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
@@ -39,19 +39,19 @@ The following helper functions can be used to target cells (roughly in order
   from the top to the bottom of a table):
 
 \itemize{
-  \item \code{title_cells()}: targets the table title or the table headnote
+  \item \code{cells_title()}: targets the table title or the table headnote
     depending on the value given to the \code{groups} argument
     (\code{"title"} or \code{"headnote"}).
-  \item \code{boxhead_cells()}: targets captions for the column headers (the
+  \item \code{cells_boxhead()}: targets captions for the column headers (the
     \code{columns} argument) or group spanners (the \code{groups} argument)
     in the table boxhead.
-  \item \code{group_cells()}: targets the group headings in the stub blocks
+  \item \code{cells_group()}: targets the group headings in the stub blocks
     using the \code{groups} argument.
-  \item \code{stub_cells()}: targets row captions in the table stub using the
+  \item \code{cells_stub()}: targets row captions in the table stub using the
     \code{rows} argument.
-  \item \code{data_cells()}: targets data cells in the table field using
+  \item \code{cells_data()}: targets data cells in the table field using
     intersections of \code{columns} and \code{rows}.
-  \item \code{summary_cells()}: targets summary cells in the table field
+  \item \code{cells_summary()}: targets summary cells in the table field
     using the \code{groups} argument and intersections of \code{columns}
     and \code{rows}.
 }
