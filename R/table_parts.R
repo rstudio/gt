@@ -244,10 +244,10 @@ tab_source_note <- function(data,
 #' @param style a vector of styles to use. The \code{\link{apply_styles}()}
 #'   helper function can be used here to more easily generate valid styles.
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying an object with the \code{\link{data_cells}()} helper function is
+#'   Supplying an object with the \code{\link{cells_data}()} helper function is
 #'   a useful way to specify the cell that is associated with the style.
 #'   Additionally, we can supply a list with multiple calls to
-#'   \code{\link{data_cells}()} if we wish to combine multiple cell selections.
+#'   \code{\link{cells_data}()} if we wish to combine multiple cell selections.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a style that is to be applied
@@ -256,13 +256,13 @@ tab_source_note <- function(data,
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_style(
 #'       style = apply_styles(bkgd_color = "steelblue"),
-#'       locations = data_cells(
+#'       locations = cells_data(
 #'         columns = vars(hp),
 #'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
-#' @seealso [apply_styles()] as a helper for defining custom styles and
-#'   [data_cells()] as a useful helper function for targeting one or more data
-#'   cells to be styled.
+#' @seealso \code{\link{apply_styles}()} as a helper for defining custom styles
+#'   and \code{\link{data_cells}()} as a useful helper function for targeting
+#'   one or more data cells to be styled.
 #' @importFrom stats setNames
 #' @export
 tab_style <- function(data,
@@ -276,7 +276,7 @@ tab_style <- function(data,
   # the format directives
   for (loc in locations) {
 
-    resolved <- resolve_data_cells(data = data, object = loc)
+    resolved <- resolve_cells_data(data = data, object = loc)
 
     data_rows <- resolved$row
     data_cols <- resolved$column

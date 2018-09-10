@@ -31,7 +31,7 @@ replace_output_at_location <- function(loc, data_attr, func = identity) {
 }
 
 
-resolve_location.data_cells <- function(loc, data_attr) {
+resolve_location.cells_data <- function(loc, data_attr) {
 
   data_df <- data_attr[["data_df"]]
 
@@ -52,7 +52,7 @@ resolve_location.data_cells <- function(loc, data_attr) {
   loc
 }
 
-to_output_location.data_cells <- function(loc, data_attr) {
+to_output_location.cells_data <- function(loc, data_attr) {
 
   loc <- resolve_location(loc, data_attr)
   columns_df <- get_column_reorder_df(data_attr)
@@ -68,7 +68,7 @@ to_output_location.data_cells <- function(loc, data_attr) {
   loc
 }
 
-replace_output_at_location.data_cells <- function(loc,
+replace_output_at_location.cells_data <- function(loc,
                                                   data_attr,
                                                   func = identity) {
 
