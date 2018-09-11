@@ -7,12 +7,21 @@
 #' @family table export functions
 #' @noRd
 render_as_html <- function(data) {
+  checkmate::assert_class(data, "gt_tbl")
 
   # Preprocessing -----------------------------------------------------------
 
   # Extract all attributes from the data object into `data_attr`;
   #   this will be one of the main objects going forward
   data_attr <- attributes(data)
+
+  # Check the names of objects in `data_attr`
+  checkmate::assert_names(
+    x = names(data_attr),
+    must.include = c(
+      "names", "row.names", "class", "boxh_df", "stub_df",
+      "footnotes_df", "styles_df", "rows_df", "cols_df",
+      "arrange_groups", "opts_df", "formats"))
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
@@ -22,9 +31,6 @@ render_as_html <- function(data) {
 
   # Get the `stub_df` data frame
   stub_df <- data_attr$stub_df
-
-  # Get the `fmts_df` data frame
-  fmts_df <- data_attr$fmts_df
 
   # Get the `opts_df` data frame
   opts_df <- data_attr$opts_df
@@ -138,6 +144,7 @@ render_as_html <- function(data) {
   #   on which rows the group rows should appear above
   groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
 
+  # TODO: text_transform
   # data_attr <- replace_output_at_location(
   #   loc = cells_data(columns = vars(carb, mpg), rows = hp > 100),
   #   data_attr = data_attr,
