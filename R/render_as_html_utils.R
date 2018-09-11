@@ -419,22 +419,6 @@ create_table_body <- function(row_splits_body,
 
     if (stub_available) {
 
-      create_style_attrs <- function(style_values) {
-
-        style_rules <- c()
-
-        for (style in style_values) {
-
-          if (is.na(style)) {
-            style_rules <- c(style_rules, "")
-          } else {
-            style_rules <- c(style_rules, paste0(" style='", style, "'"))
-          }
-        }
-
-        style_rules
-      }
-
       # Process "data" rows where a stub is present
       body_rows <-
         c(body_rows,
@@ -1012,6 +996,7 @@ create_footnote_component <- function(footnotes_resolved,
 #' @noRd
 create_heading_component <- function(heading,
                                      footnotes_resolved,
+                                     styles_resolved,
                                      n_cols) {
 
   if (length(heading) == 0) {
@@ -1020,6 +1005,9 @@ create_heading_component <- function(heading,
 
   # Get the resolved footnotes
   footnotes_tbl <- footnotes_resolved
+
+  # Get the resolved styles
+  styles_tbl <- styles_resolved
 
   # Get the footnote glyphs for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -1038,6 +1026,23 @@ create_heading_component <- function(heading,
 
   } else {
     footnote_title_glyphs <- ""
+  }
+
+  # Get the style attrs for the title
+  if ("title" %in% styles_tbl$locname) {
+
+    title_style_attrs <-
+      styles_tbl %>%
+      dplyr::filter(locname == "title") %>%
+      dplyr::group_by(rownum, colnum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct() %>%
+      dplyr::pull(styles_appended)
+
+  } else {
+    title_style_attrs <- NA_character_
   }
 
   # Get the footnote glyphs for the headnote
@@ -1059,11 +1064,28 @@ create_heading_component <- function(heading,
     footnote_headnote_glyphs <- ""
   }
 
+  # Get the style attrs for the headnote
+  if ("headnote" %in% styles_tbl$locname) {
+
+    headnote_style_attrs <-
+      styles_tbl %>%
+      dplyr::filter(locname == "headnote") %>%
+      dplyr::group_by(rownum, colnum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct() %>%
+      dplyr::pull(styles_appended)
+
+  } else {
+    headnote_style_attrs <- NA_character_
+  }
+
   heading_component <-
     paste0(
       "<thead>\n<tr data-type='table_headings'>\n",
       "<th data-type='table_heading' class='heading title font_normal center' colspan='",
-      n_cols, "'>",
+      n_cols, "'", create_style_attrs(title_style_attrs), ">",
       heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
 
   if ("headnote" %in% names(heading)) {
@@ -1075,7 +1097,7 @@ create_heading_component <- function(heading,
           "<tr data-type='table_headings'>\n",
           "<th data-type='table_headnote' ",
           "class='heading headnote font_normal center bottom_border' colspan='",
-          n_cols, "'>",
+          n_cols, "'", create_style_attrs(headnote_style_attrs), ">",
           heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
   }
 
@@ -1261,4 +1283,21 @@ apply_styles_to_output <- function(output_df,
 
   # Split `body_styles` by slices of rows
   split_body_content(body_content = body_styles, n_cols)
+}
+
+
+create_style_attrs <- function(style_values) {
+
+  style_rules <- c()
+
+  for (style in style_values) {
+
+    if (is.na(style)) {
+      style_rules <- c(style_rules, "")
+    } else {
+      style_rules <- c(style_rules, paste0(" style='", style, "'"))
+    }
+  }
+
+  style_rules
 }
