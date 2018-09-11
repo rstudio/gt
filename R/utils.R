@@ -296,33 +296,32 @@ get_pre_post_txt <- function(pattern) {
 
 #' Render any formatting directives
 #' @noRd
-render_formats <- function(data,
+render_formats <- function(output_df,
+                           data_df,
+                           formats,
                            context) {
-
-  output_df <- data %>% as.data.frame(stringsAsFactors = FALSE)
-  output_df[] <- NA_character_
 
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(attr(data, "formats")))  {
+  for (i in seq(formats))  {
 
     # Determine if the formatter has a function relevant
     # to the context; if not, use the `default` function
     # (which should always be present)
-    if (context %in% names(attr(data, "formats")[[i]]$func)) {
+    if (context %in% names(formats[[i]]$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
-    for (col in attr(data, "formats")[[i]][["cols"]]) {
+    for (col in formats[[i]][["cols"]]) {
 
       # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data)) {
+      if (col %in% colnames(data_df)) {
 
-        output_df[[col]][attr(data, "formats")[[i]]$rows] <-
-          attr(data, "formats")[[i]]$func[[eval_func]](
-            data[[col]][attr(data, "formats")[[i]]$rows])
+        output_df[[col]][formats[[i]]$rows] <-
+          formats[[i]]$func[[eval_func]](
+            data_df[[col]][formats[[i]]$rows])
       }
     }
   }

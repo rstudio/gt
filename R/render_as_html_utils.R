@@ -1,13 +1,13 @@
 #' Move input data cells to `output_df` that didn't have any rendering applied
 #' during `render_formats()`
 #' @noRd
-migrate_unformatted_to_output <- function(data,
+migrate_unformatted_to_output <- function(data_df,
                                           output_df) {
 
   for (colname in colnames(output_df)) {
 
     row_index <- is.na(output_df[[colname]])
-    output_df[[colname]][row_index] <- as.character(data[[colname]][row_index])
+    output_df[[colname]][row_index] <- as.character(data_df[[colname]][row_index])
   }
 
   output_df
@@ -16,49 +16,61 @@ migrate_unformatted_to_output <- function(data,
 #' Apply column names to column labels for any of those column labels not
 #' explicitly set
 #' @noRd
-migrate_colnames_to_labels <- function(data_attr) {
+migrate_colnames_to_labels <- function(boxh_df) {
 
-  for (colname in colnames(data_attr$boxh_df)) {
+  for (colname in colnames(boxh_df)) {
 
-    if (is.na(data_attr$boxh_df["column_label", colname])) {
-      data_attr$boxh_df["column_label", colname] <- colname
+    if (is.na(boxh_df["column_label", colname])) {
+      boxh_df["column_label", colname] <- colname
     }
   }
 
-  data_attr
+  boxh_df
 }
 
 #' Assign center alignment for all columns that haven't had alignment
 #' explicitly set
 #' @noRd
-set_default_alignments <- function(data_attr) {
+set_default_alignments <- function(boxh_df) {
 
-  for (colname in colnames(data_attr$boxh_df)) {
-    if (is.na(data_attr$boxh_df["column_align", colname])) {
-      data_attr$boxh_df["column_align", colname] <- "center"
+  for (colname in colnames(boxh_df)) {
+    if (is.na(boxh_df["column_align", colname])) {
+      boxh_df["column_align", colname] <- "center"
     }
   }
 
-  data_attr
+  boxh_df
 }
 
 #' Is there any defined elements of a stub present?
 #' @noRd
-is_stub_available <- function(data_attr) {
+is_stub_available <- function(stub_df) {
 
-  if (!all(is.na((data_attr$stub_df)[["rowname"]])) ||
-      !all(is.na((data_attr$stub_df)[["groupname"]]))) {
+  if (!all(is.na((stub_df)[["rowname"]])) ||
+      !all(is.na((stub_df)[["groupname"]]))) {
     return(TRUE)
   } else {
     return(FALSE)
   }
 }
 
+#' @noRd
+is_title_defined <- function(heading) {
+
+  length(heading) > 0 && !is.null(heading$title)
+}
+
+#' @noRd
+is_headnote_defined <- function(heading) {
+
+  length(heading) > 0 && !is.null(heading$headnote) && heading$headnote != ""
+}
+
 #' Is there any group names defined in the stub?
 #' @noRd
-are_groups_present <- function(data_attr) {
+are_groups_present <- function(stub_df) {
 
-  if (!all(is.na((data_attr$stub_df)[["groupname"]]))) {
+  if (!all(is.na((stub_df)[["groupname"]]))) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -67,20 +79,20 @@ are_groups_present <- function(data_attr) {
 
 #' Are there any processed summary dfs available?
 #' @noRd
-are_summaries_present <- function(data_attr) {
+are_summaries_present <- function(list_of_summaries) {
 
-  if ("summary_df_display_list" %in% names(data_attr)) {
-    return(TRUE)
-  } else {
+  if (length(list_of_summaries) == 0) {
     return(FALSE)
+  } else {
+    return(TRUE)
   }
 }
 
 #' Are there any spanners present?
 #' @noRd
-are_spanners_present <- function(data_attr) {
+are_spanners_present <- function(boxh_df) {
 
-  if (!all(is.na((data_attr$boxh_df)["group_label", ] %>% t() %>% as.vector()))) {
+  if (!all(is.na((boxh_df)["group_label", ] %>% t() %>% as.vector()))) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -89,15 +101,15 @@ are_spanners_present <- function(data_attr) {
 
 #' Get the stub components that are available
 #' @noRd
-get_stub_components <- function(data_attr) {
+get_stub_components <- function(stub_df) {
 
   stub_components <- c()
 
-  if (any(!is.na(data_attr$stub_df[["rowname"]]))) {
+  if (any(!is.na(stub_df[["rowname"]]))) {
     stub_components <- c(stub_components, "rowname")
   }
 
-  if (any(!is.na(data_attr$stub_df[["groupname"]]))) {
+  if (any(!is.na(stub_df[["groupname"]]))) {
     stub_components <- c(stub_components, "groupname")
   }
 
@@ -122,11 +134,12 @@ stub_component_is_rowname_groupname <- function(stub_components) {
 #' Create a data frame with the rows that the group rows
 #' should appear above
 #' @noRd
-get_groups_rows_df <- function(data_attr) {
+get_groups_rows_df <- function(arrange_groups,
+                               groups_df) {
 
-  ordering <- data_attr$arrange_groups[[1]]
+  ordering <- arrange_groups[[1]]
 
-  groups_rows <-
+  groups_rows_df <-
     data.frame(
       group = rep(NA_character_, length(ordering)),
       group_label = rep(NA_character_, length(ordering)),
@@ -136,18 +149,17 @@ get_groups_rows_df <- function(data_attr) {
 
   for (i in seq(ordering)) {
 
-    matched <- match(ordering[i], data_attr$groups_df[, "groupname"])
+    matched <- match(ordering[i], groups_df[, "groupname"])
 
-    count_matched <-
-      length(which(data_attr$groups_df[, "groupname"] == ordering[i]))
+    count_matched <- length(which(groups_df[, "groupname"] == ordering[i]))
 
-    groups_rows[i, "group"] <- ordering[i]
-    groups_rows[i, "group_label"] <- ordering[i]
-    groups_rows[i, "row"] <- matched
-    groups_rows[i, "row_end"] <- matched + count_matched - 1
+    groups_rows_df[i, "group"] <- ordering[i]
+    groups_rows_df[i, "group_label"] <- ordering[i]
+    groups_rows_df[i, "row"] <- matched
+    groups_rows_df[i, "row_end"] <- matched + count_matched - 1
   }
 
-  groups_rows
+  groups_rows_df
 }
 
 #' Get the number of stub groups in the table
@@ -163,29 +175,38 @@ get_n_groups <- function(groups_rows) {
 
 #' Used to merge two columns together in the final gt table
 #' @noRd
-perform_col_merge <- function(data_attr) {
+perform_col_merge <- function(col_merge,
+                              data_df,
+                              output_df,
+                              boxh_df,
+                              columns_df) {
 
-  if (is.null(data_attr$col_merge)) {
-    return(data_attr)
+  if (length(col_merge) == 0) {
+    return(
+      list(
+        output_df = output_df,
+        boxh_df = boxh_df,
+        columns_df = columns_df)
+    )
   }
 
-  for (i in seq(data_attr$col_merge[[1]])) {
+  for (i in seq(col_merge[[1]])) {
 
-    pattern <- data_attr$col_merge[["pattern"]][i]
-    value_1_col <- data_attr$col_merge[["col_1"]][i] %>% unname()
-    value_2_col <- data_attr$col_merge[["col_1"]][i] %>% names()
+    pattern <- col_merge[["pattern"]][i]
+    value_1_col <- col_merge[["col_1"]][i] %>% unname()
+    value_2_col <- col_merge[["col_1"]][i] %>% names()
 
     values_1 <-
-      data_attr$output_df[, which(colnames(data_attr$output_df) == value_1_col)]
+      output_df[, which(colnames(output_df) == value_1_col)]
 
     values_2 <-
-      data_attr$output_df[, which(colnames(data_attr$output_df) == value_2_col)]
+      output_df[, which(colnames(output_df) == value_2_col)]
 
     values_1_data <-
-      data_attr$data_df[, which(colnames(data_attr$data_df) == value_1_col)]
+      data_df[, which(colnames(data_df) == value_1_col)]
 
     values_2_data <-
-      data_attr$data_df[, which(colnames(data_attr$data_df) == value_2_col)]
+      data_df[, which(colnames(data_df) == value_2_col)]
 
     for (j in seq(values_1)) {
 
@@ -200,36 +221,35 @@ perform_col_merge <- function(data_attr) {
       }
     }
 
-    data_attr$output_df[
-      , which(colnames(data_attr$output_df) == value_1_col)] <- values_1
+    output_df[, which(colnames(output_df) == value_1_col)] <- values_1
 
     # Remove the second column across key dfs
-    data_attr$boxh_df <-
-      data_attr$boxh_df[
-        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+    boxh_df <-
+      boxh_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
 
-    data_attr$output_df <-
-      data_attr$output_df[
-        , -which(colnames(data_attr$output_df) == value_2_col), drop = FALSE]
+    output_df <-
+      output_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
 
-    data_attr$columns_df[
-      which(data_attr$columns_df == value_2_col),
-      "colnum_final"] <- NA_integer_
+    columns_df[which(columns_df == value_2_col), "colnum_final"] <- NA_integer_
   }
 
-  data_attr
+  list(
+    output_df = output_df,
+    boxh_df = boxh_df,
+    columns_df = columns_df)
 }
 
 #' @importFrom dplyr tibble
 #' @noRd
-get_row_reorder_df <- function(data_attr) {
+get_row_reorder_df <- function(arrange_groups,
+                               stub_df) {
 
   # If there are no group, there there is no reordering
   # so just return a data frame where the starting row
   # indices match the final row indices
-  if (length(data_attr$arrange_groups$groups) == 0) {
+  if (length(arrange_groups$groups) == 0) {
 
-    indices <- seq_len(nrow(data_attr$stub_df))
+    indices <- seq_len(nrow(stub_df))
 
     return(
       dplyr::tibble(
@@ -238,10 +258,10 @@ get_row_reorder_df <- function(data_attr) {
     )
   }
 
-  groups <- data_attr$arrange_groups$groups # try using match to shorten this
+  groups <- arrange_groups$groups # try using match to shorten this
 
   indices <-
-    lapply(data_attr$stub_df$group, `%in%`, x = groups) %>%
+    lapply(stub_df$group, `%in%`, x = groups) %>%
     lapply(which) %>%
     unlist() %>%
     order()
@@ -253,28 +273,31 @@ get_row_reorder_df <- function(data_attr) {
 
 #' @noRd
 #' @importFrom dplyr tibble mutate full_join rename
-get_column_reorder_df <- function(data_attr) {
+get_column_reorder_df <- function(cols_df,
+                                  boxh_df) {
 
   colnames_final_tbl <-
-    dplyr::tibble(colnames_final = colnames(data_attr$boxh_df)) %>%
-    dplyr::mutate(colnum_final = seq(ncol(data_attr$boxh_df)))
+    dplyr::tibble(colnames_final = colnames(boxh_df)) %>%
+    dplyr::mutate(colnum_final = seq(ncol(boxh_df)))
 
-  data_attr$cols_df %>%
-    dplyr::mutate(colnum_start = seq(nrow(data_attr$cols_df))) %>%
+  cols_df %>%
+    dplyr::mutate(colnum_start = seq(nrow(cols_df))) %>%
     dplyr::full_join(
       colnames_final_tbl, by = c("colnames_start" = "colnames_final")) %>%
     dplyr::rename(column_names = colnames_start)
 }
 
 #' @noRd
-get_groupnames_rownames_df <- function(data_attr) {
+get_groupnames_rownames_df <- function(stub_df,
+                                       rows_df) {
 
-  data_attr$stub_df[data_attr$rows_df$rownum_final, c("groupname", "rowname")]
+  stub_df[rows_df$rownum_final, c("groupname", "rowname")]
 }
 
 # Utility function to generate column numbers from column names
 #' @noRd
-colname_to_colnum <- function(data_attr, colname) {
+colname_to_colnum <- function(boxh_df,
+                              colname) {
 
   cnames <- c()
 
@@ -282,7 +305,7 @@ colname_to_colnum <- function(data_attr, colname) {
     if (is.na(colname[i])) {
       cnames <- c(cnames, NA_integer_)
     } else {
-      cnames <- c(cnames, which(colnames(data_attr$boxh_df) == colname[i]))
+      cnames <- c(cnames, which(colnames(boxh_df) == colname[i]))
     }
   }
 
@@ -290,7 +313,8 @@ colname_to_colnum <- function(data_attr, colname) {
 }
 
 #' @noRd
-rownum_translation <- function(data_attr, rownum_start) {
+rownum_translation <- function(output_df,
+                               rownum_start) {
 
   rownum_final <- c()
 
@@ -298,30 +322,17 @@ rownum_translation <- function(data_attr, rownum_start) {
 
     rownum_final <-
       c(rownum_final,
-        which(as.numeric(rownames(data_attr$output_df)) == rownum_start[i]))
+        which(as.numeric(rownames(output_df)) == rownum_start[i]))
   }
 
   rownum_final
 }
 
 #' @noRd
-is_title_defined <- function(data_attr) {
-
-  !is.null(data_attr$heading$title)
-}
-
-#' @noRd
-is_headnote_defined <- function(data_attr) {
-
-  !is.null(data_attr$heading$headnote) &&
-    data_attr$heading$headnote != ""
-}
-
-#' @noRd
-get_boxhead_spanners_vec <- function(data_attr) {
+get_boxhead_spanners_vec <- function(boxh_df) {
 
   boxhead_spanners <-
-    data_attr$boxh_df["group_label", ] %>% unlist() %>% unname()
+    boxh_df["group_label", ] %>% unlist() %>% unname()
 
   boxhead_spanners[which(!is.na(boxhead_spanners))]
 }
@@ -334,10 +345,10 @@ footnote_glyph_to_html <- function(footnote_glyph) {
 }
 
 #' @noRd
-create_source_note_rows <- function(data_attr,
+create_source_note_rows <- function(source_note,
                                     n_cols) {
 
-  if (is.null(data_attr$source_note)) {
+  if (length(source_note) == 0) {
     return("")
   }
 
@@ -345,7 +356,7 @@ create_source_note_rows <- function(data_attr,
     "<tfoot data-type='source_notes'>\n",
     paste0(
       "<tr>\n<td colspan='", n_cols + 1 ,
-      "' class='sourcenote'>", data_attr$source_note[[1]],
+      "' class='sourcenote'>", source_note$source_note,
       "</td>\n</tr>\n",
       collapse = ""),
     "</tfoot>\n")
@@ -360,12 +371,13 @@ split_body_content <- function(body_content,
 
 #' @importFrom dplyr mutate filter pull
 #' @noRd
-create_table_body <- function(row_splits,
+create_table_body <- function(row_splits_body,
                               row_splits_styles,
                               groups_rows_df,
                               col_alignment,
                               stub_components,
-                              summary_list,
+                              summaries_present,
+                              list_of_summaries,
                               n_rows,
                               n_cols) {
 
@@ -416,12 +428,12 @@ create_table_body <- function(row_splits,
             paste0(
               "<td class='stub row ", col_alignment[1], "' ",
               "style='", row_splits_styles[[i]][1],
-              "'>", row_splits[[i]][1],
+              "'>", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
               "<td class='row ", col_alignment[-1], "' ",
               "style='", row_splits_styles[[i]][-1],
-              "'>", row_splits[[i]][-1],
+              "'>", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n") %>%
             tidy_gsub(" style=''", ""))
@@ -436,13 +448,12 @@ create_table_body <- function(row_splits,
             paste0(
               "<td class='row ", col_alignment, "' ",
               "style='", row_splits_styles[[i]],
-              "'>", row_splits[[i]],
+              "'>", row_splits_body[[i]],
               "</td>", collapse = "\n"),
             "\n</tr>\n"))
     }
 
-    if (stub_available &&
-        !is.null(summary_list) &&
+    if (stub_available && summaries_present &&
         i %in% groups_rows_df$row_end) {
 
       group <-
@@ -450,10 +461,11 @@ create_table_body <- function(row_splits,
         dplyr::filter(row_end == i) %>%
         dplyr::pull(group)
 
-      if (any(group %in% names(summary_list))) {
+      if (any(group %in% names(list_of_summaries$summary_df_display_list))) {
 
         summary_df <-
-          summary_list[[which(names(summary_list) == group)]] %>%
+          list_of_summaries$summary_df_display_list[[
+            which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
           as.data.frame(stringsAsFactors = FALSE)
 
         body_content_summary <- as.vector(t(summary_df))
@@ -474,7 +486,8 @@ create_table_body <- function(row_splits,
           summary_row_lines <-
             c(summary_row_lines,
               paste0(
-                "<tr data-type='summary' data-group='", group, "' data-summary-row='", j,"'>\n",
+                "<tr data-type='summary' data-group='", group,
+                "' data-summary-row='", j,"'>\n",
                 paste0(
                   "<td class='stub row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
@@ -505,19 +518,21 @@ create_table_body <- function(row_splits,
     "</tbody>\n")
 }
 
-create_column_headings <- function(data_attr,
-                                   col_alignment,
+create_column_headings <- function(boxh_df,
+                                   output_df,
                                    stub_available,
-                                   spanners_present) {
+                                   spanners_present,
+                                   stubhead_caption,
+                                   col_alignment) {
 
   # Compose the HTML heading
-  headings <- names(data_attr$output_df)
+  headings <- names(output_df)
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
 
   labels_rev <-
-    data_attr$boxh_df["column_label", ] %>%
+    boxh_df["column_label", ] %>%
     unname() %>% unlist() %>% rev()
 
   for (i in seq(labels_rev)) {
@@ -528,10 +543,10 @@ create_column_headings <- function(data_attr,
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      "stubhead_caption" %in% names(data_attr) &&
+      length(stubhead_caption) > 0 &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <- data_attr$stubhead_caption[[1]]
+    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
 
   } else if ("rowname" %in% headings) {
 
@@ -552,8 +567,9 @@ create_column_headings <- function(data_attr,
 
     # spanners
     spanners <-
-      data_attr$boxh_df["group_label", ] %>%
-      unlist() %>% unname()
+      boxh_df["group_label", ] %>%
+      unlist() %>%
+      unname()
 
     first_set <- c()
     second_set <- c()
@@ -679,10 +695,16 @@ create_table_end <- function() {
 #' @importFrom dplyr filter bind_rows mutate inner_join select arrange select
 #' @importFrom tibble rownames_to_column
 #' @noRd
-resolve_footnotes <- function(data_attr,
-                              groups_rows_df) {
+resolve_footnotes <- function(footnotes_df,
+                              output_df,
+                              boxh_df,
+                              groups_rows_df,
+                              arrange_groups,
+                              boxhead_spanners,
+                              title_defined,
+                              headnote_defined) {
 
-  footnotes_tbl <- data_attr$footnotes_df
+  footnotes_tbl <- footnotes_df
 
   # Pare down footnotes records
   if (nrow(footnotes_tbl) > 0) {
@@ -693,7 +715,7 @@ resolve_footnotes <- function(data_attr,
     # not relevant)
 
     # Filter by `title`
-    if (!is_title_defined(data_attr = data_attr)) {
+    if (title_defined == FALSE) {
 
       footnotes_tbl <-
         footnotes_tbl %>%
@@ -701,7 +723,7 @@ resolve_footnotes <- function(data_attr,
     }
 
     # Filter by `headnote`
-    if (!is_headnote_defined(data_attr = data_attr)) {
+    if (headnote_defined == FALSE) {
 
       footnotes_tbl <-
         footnotes_tbl %>%
@@ -713,7 +735,7 @@ resolve_footnotes <- function(data_attr,
 
       footnotes_tbl <-
         footnotes_tbl %>%
-        dplyr::filter(locname != "boxhead_groups" | grpname %in% data_attr$boxhead_spanners)
+        dplyr::filter(locname != "boxhead_groups" | grpname %in% boxhead_spanners)
     }
 
     # Filter by `grpname` in stub groups
@@ -725,18 +747,13 @@ resolve_footnotes <- function(data_attr,
             dplyr::filter(locname != "stub_groups"),
           footnotes_tbl %>%
             dplyr::filter(locname == "stub_groups") %>%
-            dplyr::filter(grpname %in% data_attr$arrange_groups$groups))
-
-      # footnotes_tbl <-
-      #   footnotes_tbl %>%
-      #   dplyr::filter(locname != "boxhead_groups" | grpname %in% data_attr$boxhead_spanners)
+            dplyr::filter(grpname %in% arrange_groups$groups))
     }
 
-    # Filter `footnotes_tbl` by the remaining columns
-    # in `data_attr$output_df`
+    # Filter `footnotes_tbl` by the remaining columns in `output_df`
     footnotes_tbl <-
       footnotes_tbl %>%
-      dplyr::filter(colname %in% c(NA_character_, colnames(data_attr$output_df)))
+      dplyr::filter(colname %in% c(NA_character_, colnames(output_df)))
   }
 
   # Reorganize footnotes targeting the data rows
@@ -757,7 +774,7 @@ resolve_footnotes <- function(data_attr,
       footnotes_tbl_data <-
         footnotes_tbl_data %>%
         dplyr::mutate(rownum = rownum_translation(
-          data_attr = data_attr, rownum_start = rownum))
+          output_df, rownum_start = rownum))
 
       # Add a `colnum` column that's required for arranging
       # `footnotes_tbl` in such a way that the order of footnotes
@@ -765,7 +782,7 @@ resolve_footnotes <- function(data_attr,
       footnotes_tbl_data <-
         footnotes_tbl_data %>%
         dplyr::mutate(colnum = colname_to_colnum(
-          data_attr = data_attr, colname = colname)) %>%
+          boxh_df = boxh_df, colname = colname)) %>%
         dplyr::mutate(colnum = ifelse(locname == "stub", 0, colnum))
     }
 
@@ -857,13 +874,12 @@ resolve_footnotes <- function(data_attr,
 # Apply footnotes to the data rows
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-apply_footnotes_to_data <- function(data_attr) {
-
-  output_df <- data_attr$output_df
+apply_footnotes_to_output <- function(output_df,
+                                      footnotes_resolved) {
 
   # `data` location
   footnotes_tbl_data <-
-    data_attr$footnotes_resolved %>%
+    footnotes_resolved %>%
     dplyr::filter(locname %in% c("data", "stub"))
 
   if (nrow(footnotes_tbl_data) > 0) {
@@ -903,16 +919,17 @@ apply_footnotes_to_data <- function(data_attr) {
 # Apply footnotes to the summary rows
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-apply_footnotes_to_summary <- function(data_attr) {
+apply_footnotes_to_summary <- function(list_of_summaries,
+                                       footnotes_resolved) {
 
-  summary_df_list <- data_attr$summary_df_display_list
+  summary_df_list <- list_of_summaries$summary_df_display_list
 
-  if (!("summary_cells" %in% data_attr$footnotes_resolved$locname)) {
-    return(summary_df_list)
+  if (!("summary_cells" %in% footnotes_resolved$locname)) {
+    return(list_of_summaries)
   }
 
   footnotes_tbl_data <-
-    data_attr$footnotes_resolved %>%
+    footnotes_resolved %>%
     dplyr::filter(locname == "summary_cells")
 
   footnotes_data_glpyhs <-
@@ -937,21 +954,24 @@ apply_footnotes_to_summary <- function(data_attr) {
       footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]] <- text
   }
 
-  summary_df_list
+  list_of_summaries$summary_df_display_list <- summary_df_list
+
+  list_of_summaries
 }
 
 #' @importFrom dplyr arrange select distinct
 #' @noRd
-create_footnote_component <- function(data_attr) {
+create_footnote_component <- function(footnotes_resolved,
+                                      n_cols) {
 
-  # If the `footnotes_resolved` object in `data_attr` has no
+  # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component
-  if (nrow(data_attr$footnotes_resolved) == 0) {
+  if (nrow(footnotes_resolved) == 0) {
     return("")
   }
 
   footnotes_tbl <-
-    data_attr$footnotes_resolved %>%
+    footnotes_resolved %>%
     dplyr::arrange(ft_id) %>%
     dplyr::select(ft_id, text) %>%
     dplyr::distinct()
@@ -961,7 +981,7 @@ create_footnote_component <- function(data_attr) {
     paste0(
       "<tfoot data-type='table_footnotes'>\n",
       "<tr data-type='table_footnote'>\n<td colspan='",
-      ncol(data_attr$output_df),
+      n_cols,
       "' class='footnote'>",
       paste0(
         "<sup class='gt_super'><em>", footnotes_tbl[["ft_id"]],
@@ -974,14 +994,16 @@ create_footnote_component <- function(data_attr) {
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-create_heading_component <- function(data_attr) {
+create_heading_component <- function(heading,
+                                     footnotes_resolved,
+                                     n_cols) {
 
-  if (is.null(data_attr$heading)) {
+  if (length(heading) == 0) {
     return("")
   }
 
   # Get the resolved footnotes
-  footnotes_tbl <- data_attr$footnotes_resolved
+  footnotes_tbl <- footnotes_resolved
 
   # Get the footnote glyphs for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -1025,10 +1047,10 @@ create_heading_component <- function(data_attr) {
     paste0(
       "<thead>\n<tr data-type='table_headings'>\n",
       "<th data-type='table_heading' class='heading title font_normal center' colspan='",
-      ncol(data_attr$output_df), "'>",
-      data_attr$heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
+      n_cols, "'>",
+      heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
 
-  if ("headnote" %in% names(data_attr$heading)) {
+  if ("headnote" %in% names(heading)) {
 
     heading_component <-
       paste0(
@@ -1037,8 +1059,8 @@ create_heading_component <- function(data_attr) {
           "<tr data-type='table_headings'>\n",
           "<th data-type='table_headnote' ",
           "class='heading headnote font_normal center bottom_border' colspan='",
-          ncol(data_attr$output_df), "'>",
-          data_attr$heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
+          n_cols, "'>",
+          heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
   }
 
   heading_component
@@ -1046,13 +1068,14 @@ create_heading_component <- function(data_attr) {
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-set_footnote_glyphs_boxhead <- function(data_attr) {
+set_footnote_glyphs_boxhead <- function(footnotes_resolved,
+                                        boxh_df) {
 
   # Get the resolved footnotes
-  footnotes_tbl <- data_attr$footnotes_resolved
+  footnotes_tbl <- footnotes_resolved
 
   # Get the `boxh_df` object
-  boxh_df <- data_attr$boxh_df
+  boxh_df <- boxh_df
 
   # If there are any footnotes to apply to the boxhead,
   # process them individually for the spanner groups and
@@ -1132,11 +1155,11 @@ set_footnote_glyphs_boxhead <- function(data_attr) {
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-set_footnote_glyphs_stub_groups <- function(data_attr,
+set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
                                             groups_rows_df) {
 
   # Get the resolved footnotes
-  footnotes_tbl <- data_attr$footnotes_resolved
+  footnotes_tbl <- footnotes_resolved
 
   if (!("stub_groups" %in% footnotes_tbl$locname)) {
 

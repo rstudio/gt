@@ -4,18 +4,21 @@
 #' @importFrom tidyr fill
 #' @importFrom stats setNames
 #' @noRd
-create_summary_dfs <- function(data_attr) {
+create_summary_dfs <- function(summary_list,
+                               data_df,
+                               stub_df,
+                               output_df) {
 
-  if (is.null(data_attr$summary)) {
-    return(data_attr)
+  if (length(summary_list) == 0) {
+    return(list())
   }
 
   summary_df_display_list <- list()
   summary_df_data_list <- list()
 
-  for (i in seq(data_attr$summary)) {
+  for (i in seq(summary_list)) {
 
-    summary_attrs <- data_attr$summary[[i]]
+    summary_attrs <- summary_list[[i]]
 
     # Resolve the `missing_text`
     if (summary_attrs$missing_text == "---") {
@@ -26,7 +29,7 @@ create_summary_dfs <- function(data_attr) {
 
     # Resolve the groups to consider
     if (isTRUE(summary_attrs$groups)) {
-      groups <- unique(data_attr$stub_df$groupname)
+      groups <- unique(stub_df$groupname)
     } else {
       groups <- summary_attrs$groups
     }
@@ -35,17 +38,17 @@ create_summary_dfs <- function(data_attr) {
     if (isTRUE(summary_attrs$columns)) {
       columns <- character(0)
     } else {
-      columns <- base::setdiff(colnames(data_attr$output_df), summary_attrs$columns)
+      columns <- base::setdiff(colnames(output_df), summary_attrs$columns)
     }
 
     # Combine `groupname` with the field data in order to
     # process data by groups
     groups_data_df <-
       cbind(
-        data_attr$stub_df[
-          seq(nrow(data_attr$stub_df)),
+        stub_df[
+          seq(nrow(stub_df)),
           c("groupname", "rowname")],
-        data_attr$data_df)[, -2]
+        data_df)[, -2]
 
     # Get the registered function calls
     agg_funs <- summary_attrs$funs
@@ -63,7 +66,7 @@ create_summary_dfs <- function(data_attr) {
         dplyr::bind_rows(
           summary_dfs,
           groups_data_df %>%
-            dplyr::select(c("groupname", colnames(data_attr$output_df))) %>%
+            dplyr::select(c("groupname", colnames(output_df))) %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
@@ -157,8 +160,7 @@ create_summary_dfs <- function(data_attr) {
         match(arrangement, summary_df_display_list[[i]]$rowname), ]
   }
 
-  data_attr$summary_df_data_list <- summary_df_data_list
-  data_attr$summary_df_display_list <- summary_df_display_list
-
-  data_attr
+  list(
+    summary_df_data_list = summary_df_data_list,
+    summary_df_display_list = summary_df_display_list)
 }
