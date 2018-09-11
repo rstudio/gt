@@ -258,7 +258,8 @@ render_as_html <- function(data) {
 
   # Create a heading and handle any available footnotes
   heading_component <-
-    create_heading_component(heading, footnotes_resolved, n_cols)
+    create_heading_component(
+      heading, footnotes_resolved, styles_resolved, n_cols)
 
   # Create the table column headings
   table_col_headings <-
