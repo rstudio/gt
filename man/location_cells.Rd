@@ -25,35 +25,43 @@ cells_summary(groups = NULL, columns = NULL, rows = NULL)
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
 indices, values provided by \code{\link{vars}()}, values provided by
-\code{c()}, or a select helper function.}
+\code{c()}, or a select helper function (see Details for information on
+these functions).}
 }
 \value{
 a list object of class \code{location_cells}.
 }
 \description{
 These helper functions are used to target individual cells in different
-  locations.
+locations.
 }
 \details{
 The following helper functions can be used to target cells (roughly in order
-  from the top to the bottom of a table):
+from the top to the bottom of a table):
 
 \itemize{
-  \item \code{cells_title()}: targets the table title or the table headnote
-    depending on the value given to the \code{groups} argument
-    (\code{"title"} or \code{"headnote"}).
-  \item \code{cells_boxhead()}: targets captions for the column headers (the
-    \code{columns} argument) or group spanners (the \code{groups} argument)
-    in the table boxhead.
-  \item \code{cells_group()}: targets the group headings in the stub blocks
-    using the \code{groups} argument.
-  \item \code{cells_stub()}: targets row captions in the table stub using the
-    \code{rows} argument.
-  \item \code{cells_data()}: targets data cells in the table field using
-    intersections of \code{columns} and \code{rows}.
-  \item \code{cells_summary()}: targets summary cells in the table field
-    using the \code{groups} argument and intersections of \code{columns}
-    and \code{rows}.
+
+\item \code{cells_title()}: targets the table title or the table headnote
+depending on the value given to the \code{groups} argument (\code{"title"} or
+\code{"headnote"}).
+
+\item \code{cells_boxhead()}: targets captions for the column headers (the
+\code{columns} argument) or group spanners (the \code{groups} argument) in
+the table boxhead.
+
+\item \code{cells_group()}: targets the group headings in the stub blocks
+using the \code{groups} argument.
+
+\item \code{cells_stub()}: targets row captions in the table stub using the
+\code{rows} argument.
+
+\item \code{cells_data()}: targets data cells in the table field using
+intersections of \code{columns} and \code{rows}.
+
+\item \code{cells_summary()}: targets summary cells in the table field using
+the \code{groups} argument and intersections of \code{columns} and
+\code{rows}.
+
 }
 
 The select helper functions are: \code{\link{starts_with}()},
