@@ -1,19 +1,13 @@
 #' Extract a summary table from a gt table object
 #'
-#' Get a summary row data frame from a \code{gt_tbl} object where summary rows
-#'   were added via the \code{summary_rows()} function. The output data frame
-#'   contains the \code{groupname} and \code{rowname} columns, where
-#'   \code{rowname} contains descriptive stub labels for the summary rows.
-#'   The remaining columns are a subset of the original dataset, where only
-#'   those columns that had aggregation functions applied are retained. The
-#'   output data frame format is suitable for generating a summary table using
-#'   the \code{\link{gt}()} function.
+#' Get a list of summary row data frames from a \code{gt_tbl} object where
+#' summary rows were added via the \code{\link{summary_rows}()} function. The
+#' output data frames contain the \code{groupname} and \code{rowname} columns,
+#' whereby \code{rowname} contains descriptive stub labels for the summary rows.
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
-#' @return a data frame containing summary data.
+#' @return a list of data frames containing summary data.
 #' @family table export functions
-#' @import rlang
-#' @importFrom dplyr filter arrange pull
 #' @export
 extract_summary <- function(data) {
 
@@ -24,60 +18,79 @@ extract_summary <- function(data) {
     stop("There is no summary data frame to extract.", call. = FALSE)
   }
 
-  data_attr <- attributes(data)
+  # Move original data frame to `data_df`
+  data_df <- as.data.frame(data)
+
+  # Get the `boxh_df` data frame
+  boxh_df <- data_attr$boxh_df
+
+  # Get the `stub_df` data frame
+  stub_df <- data_attr$stub_df
+
+  # Get the `rows_df` data frame
+  rows_df <- data_attr$rows_df
+
+  # Get the `cols_df` data frame
+  cols_df <- data_attr$cols_df
+
+  # Get the `formats` list
+  formats <- data_attr$formats
+
+  # Get the `arrange_groups` vector
+  arrange_groups <- data_attr$arrange_groups
+
+  # Get the `others_group` vector
+  others_group <- get_optional_vector(data_attr$others_group[[1]])
+
+  # Get the `col_merge` object
+  col_merge <- get_optional_list(data_attr$col_merge)
+
+  # Get the `summary_list` object
+  summary_list <- get_optional_list(data_attr$summary)
+
+  # Initialize `output_df`
+  output_df <- initialize_output_df(data_df)
 
   # Create `output_df` with rendered values
-  data_attr$output_df <- render_formats(data, context = "html")
+  output_df <- render_formats(output_df, data_df, formats, context = "html")
 
   # Move input data cells to `output_df` that didn't have
   #   any rendering applied during `render_formats()`
-  data_attr$output_df <-
-    migrate_unformatted_to_output(
-      data = data,
-      output_df = data_attr$output_df)
+  output_df <- migrate_unformatted_to_output(data_df, output_df)
 
-  # Move original data frame to `data_attr$data_df`
-  data_attr$data_df <- as.data.frame(data)
+  # Get the reordering df (`rows_df`) for the data rows
+  rows_df <- get_row_reorder_df(arrange_groups, stub_df)
 
-  # Get the reordering df for the data rows
-  data_attr$rows_df <- get_row_reorder_df(data_attr)
+  # Get the `columns_df` data frame for the data columns
+  columns_df <- get_column_reorder_df(cols_df, boxh_df)
 
-  # Get the reordering df for the data columns
-  data_attr$columns_df <- get_column_reorder_df(data_attr)
+  # Reassemble the rows and columns of `data_df` in the correct order
+  output_df <- reassemble_output_df(output_df, rows_df, columns_df)
 
-  # Reassemble the rows and columns of
-  # `data_df` in the correct order
-  data_attr$output_df <-
-    data_attr$output_df[
-      data_attr$rows_df$rownum_final,
-      data_attr$columns_df %>%
-        dplyr::filter(!is.na(colnum_final)) %>%
-        dplyr::arrange(colnum_final) %>%
-        dplyr::pull(column_names)]
-
-  # Get a `groups_df` data frame, which is a rearranged representation
+  # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
-  data_attr$groups_df <- get_groupnames_rownames_df(data_attr)
-
-  # Get a `boxhead_spanners` vector, which has the unique, non-NA
-  # boxhead spanner labels
-  data_attr$boxhead_spanners <- get_boxhead_spanners_vec(data_attr)
+  groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
 
   # Replace NA values in the `groupname` column if there is a reserved
   #   label for the unlabeled group
-  data_attr$groups_df[
-    which(is.na(data_attr$groups_df[, "groupname"])), "groupname"] <-
-    data_attr$others_group[[1]] %||% NA_character_
+  groups_df[which(is.na(groups_df[, "groupname"])), "groupname"] <- others_group
 
-  # Create the `groups_rows` data frame, which provides information
+  # Create the `groups_rows_df` data frame, which provides information
   #   on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(data_attr)
+  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
 
   # Perform any necessary column merge operations
-  data_attr <- perform_col_merge(data_attr)
+  col_merge_output <-
+    perform_col_merge(col_merge, data_df, output_df, boxh_df, columns_df)
 
-  # Create summary data frames
-  data_attr <- create_summary_dfs(data_attr)
+  # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
+  output_df <- col_merge_output$output_df
+  boxh_df <- col_merge_output$boxh_df
+  columns_df <- col_merge_output$columns_df
 
-  data_attr$summary_df_data_list
+  # Create the `list_of_summaries` list of lists
+  list_of_summaries <-
+    create_summary_dfs(summary_list, data_df, stub_df, output_df)
+
+  list_of_summaries$summary_df_data_list
 }
