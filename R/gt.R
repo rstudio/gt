@@ -134,7 +134,6 @@ gt <- function(data,
   # within the object
   attr(data_tbl, "boxh_df") <- boxh_df
   attr(data_tbl, "stub_df") <- stub_df
-  attr(data_tbl, "fmts_df") <- empty_df
 
   attr(data_tbl, "footnotes_df") <- footnotes_df
   attr(data_tbl, "styles_df") <- styles_df
