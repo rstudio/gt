@@ -22,6 +22,7 @@ RoxygenNote: 6.1.0
 Depends:
     R (>= 3.2.0)
 Imports: 
+    checkmate (>= 1.8.5),
     commonmark (>= 1.5),
     dplyr (>= 0.7.6),
     ggplot2 (>= 3.0.0),
