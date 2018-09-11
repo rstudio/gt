@@ -69,6 +69,8 @@ create_style_attrs <- function(style_values) {
   style_rules
 }
 
+# Taking the `body_content` vector, split into list components with one
+# item per row in the output table
 split_body_content <- function(body_content,
                                n_cols) {
 
@@ -122,6 +124,7 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
+# Create the opening HTML element of a table
 create_table_start <- function(groups_rows_df,
                                n_rows,
                                n_cols) {
@@ -135,6 +138,9 @@ create_table_start <- function(groups_rows_df,
     "class='gt_table'>\n")
 }
 
+# Create the heading component of a table, which contains the heading and
+# possibly a headnote; if there are no heading components defined this
+# function will return an empty string
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 create_heading_component <- function(heading,
