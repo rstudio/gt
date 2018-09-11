@@ -55,54 +55,22 @@ render_as_html <- function(data) {
   arrange_groups <- data_attr$arrange_groups
 
   # Get the `others_group` vector
-  if (!is.null(data_attr$others_group[[1]])) {
-    others_group <- others_group[[1]]
-  } else {
-    others_group <- NA_character_
-  }
+  others_group <- get_optional_vector(data_attr$others_group[[1]])
 
   # Get the `heading` object
-  if (!is.null(data_attr$heading)) {
-    heading <- data_attr$heading
-  } else {
-    heading <- list()
-  }
+  heading <- get_optional_list(data_attr$heading)
 
   # Get the `stubhead_caption` object
-  if (!is.null(data_attr$stubhead_caption)) {
-    stubhead_caption <- data_attr$stubhead_caption
-  } else {
-    stubhead_caption <- list()
-  }
+  stubhead_caption <- get_optional_list(data_attr$stubhead_caption)
 
   # Get the `source_note` object
-  if (!is.null(data_attr$source_note)) {
-    source_note <- data_attr$source_note
-  } else {
-    source_note <- list()
-  }
+  source_note <- get_optional_list(data_attr$source_note)
 
   # Get the `col_merge` object
-  if (!is.null(data_attr$col_merge)) {
-    col_merge <- data_attr$col_merge
-  } else {
-    col_merge <- list()
-  }
+  col_merge <- get_optional_list(data_attr$col_merge)
 
   # Get the `summary_list` object
-  if (!is.null(data_attr$summary)) {
-    summary_list <- data_attr$summary
-  } else {
-    summary_list <- list()
-  }
-
-  # Initialize `output_df`
-  initialize_output_df <- function(data_df) {
-
-    output_df <- data_df
-    output_df[] <- NA_character_
-    output_df
-  }
+  summary_list <- get_optional_list(data_attr$summary)
 
   # Initialize `output_df`
   output_df <- initialize_output_df(data_df)
@@ -121,13 +89,7 @@ render_as_html <- function(data) {
   columns_df <- get_column_reorder_df(cols_df, boxh_df)
 
   # Reassemble the rows and columns of `data_df` in the correct order
-  output_df <-
-    output_df[
-      rows_df$rownum_final,
-      columns_df %>%
-        dplyr::filter(!is.na(colnum_final)) %>%
-        dplyr::arrange(colnum_final) %>%
-        dplyr::pull(column_names)]
+  output_df <- reassemble_output_df(output_df, rows_df, columns_df)
 
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
@@ -166,18 +128,17 @@ render_as_html <- function(data) {
   list_of_summaries <-
     create_summary_dfs(summary_list, data_df, stub_df, output_df)
 
-  # Apply column names to column labels for any of
-  #   those column labels not explicitly set
-  # Assign center alignment for all columns
-  #   that haven't had alignment explicitly set
+  # Apply column names to column labels for any of those column labels not
+  # explicitly set
   boxh_df <- migrate_colnames_to_labels(boxh_df)
-  boxh_df <- set_default_alignments(boxh_df) # TODO: consider default alignments based on content
+
+  # Assign center alignment for all columns that haven't had alignment
+  # explicitly set
+  # TODO: consider default alignments based on content
+  boxh_df <- set_default_alignments(boxh_df)
 
   # Determine if there is a populated stub
   stub_available <- is_stub_available(stub_df)
-
-  # Determine if there are any groups present
-  groups_present <- are_groups_present(stub_df)
 
   # Determine if the title has been defined
   title_defined <- is_title_defined(heading)
@@ -213,6 +174,10 @@ render_as_html <- function(data) {
     col_alignment <- c("right", col_alignment)
   }
 
+  # Get the number of rows, columns, and cells in the `output_df`
+  n_rows <- nrow(output_df)
+  n_cols <- ncol(output_df)
+
   # Footnotes ---------------------------------------------------------------
 
   # Resolve and tidy footnotes
@@ -222,42 +187,42 @@ render_as_html <- function(data) {
       groups_rows_df, arrange_groups, boxhead_spanners, title_defined,
       headnote_defined, footnotes_df = footnotes_df, styles_df = NULL)
 
-  # Apply footnotes to the `data` rows
-  output_df <- apply_footnotes_to_output(output_df, footnotes_resolved)
-
-  # Add footnote glyphs to the `summary` rows
-  list_of_summaries <-
-    apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
-
   # Add footnote glyphs to boxhead elements
   boxh_df <-
     set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df)
+
+  # Add footnote glyphs to the `data` rows
+  output_df <-
+    apply_footnotes_to_output(output_df, footnotes_resolved)
 
   # Add footnote glyphs to stub group title elements
   groups_rows_df <-
     set_footnote_glyphs_stub_groups(footnotes_resolved, groups_rows_df)
 
-  # Extraction to composable parts ------------------------------------------
+  # Add footnote glyphs to the `summary` rows
+  list_of_summaries <-
+    apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
 
-  # Extract the body content as a vector
+  # Custom styles -----------------------------------------------------------
+
+  # Resolve the styles table
+  styles_resolved <-
+    resolve_footnotes_styles(
+      output_df, boxh_df, groups_rows_df, arrange_groups,
+      boxhead_spanners, title_defined, headnote_defined,
+      footnotes_df = NULL, styles_df = styles_df)
+
+  # Extraction of body content as a vector ----------------------------------
+
   body_content <- as.vector(t(output_df))
-
-  # Get the number of rows, columns, and cells in the `output_df`
-  n_rows <- nrow(output_df)
-  n_cols <- ncol(output_df)
 
   # Composition of HTML -----------------------------------------------------
 
   # Split `body_content` by slices of rows
   row_splits_body <- split_body_content(body_content, n_cols)
 
-  # Resolve the styles table
-  styles_resolved <-
-    resolve_footnotes_styles(output_df, boxh_df,
-      groups_rows_df, arrange_groups, boxhead_spanners, title_defined,
-      headnote_defined, footnotes_df = NULL, styles_df = styles_df)
-
-  # Apply styles to the `data` rows
+  # Get styles for the data rows and split in the same fashion as
+  # for the content of the data rows
   row_splits_styles <-
     apply_styles_to_output(output_df, styles_resolved, n_cols)
 
