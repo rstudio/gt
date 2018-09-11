@@ -415,10 +415,25 @@ create_table_body <- function(row_splits_body,
             groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
             "</tr>\n"))
-
     }
 
     if (stub_available) {
+
+      create_style_attrs <- function(style_values) {
+
+        style_rules <- c()
+
+        for (style in style_values) {
+
+          if (is.na(style)) {
+            style_rules <- c(style_rules, "")
+          } else {
+            style_rules <- c(style_rules, paste0(" style='", style, "'"))
+          }
+        }
+
+        style_rules
+      }
 
       # Process "data" rows where a stub is present
       body_rows <-
@@ -426,17 +441,18 @@ create_table_body <- function(row_splits_body,
           paste0(
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='stub row ", col_alignment[1], "' ",
-              "style='", row_splits_styles[[i]][1],
-              "'>", row_splits_body[[i]][1],
+              "<td class='stub row ", col_alignment[1], "'",
+              create_style_attrs(row_splits_styles[[i]][1]),
+              ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
-              "<td class='row ", col_alignment[-1], "' ",
-              "style='", row_splits_styles[[i]][-1],
-              "'>", row_splits_body[[i]][-1],
+              "<td class='row ", col_alignment[-1], "'",
+              create_style_attrs(row_splits_styles[[i]][-1]),
+              ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n") %>%
-            tidy_gsub(" style=''", ""))
+            tidy_gsub(" style=''", "")
+          )
 
     } else {
 
@@ -446,9 +462,9 @@ create_table_body <- function(row_splits_body,
           paste0(
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='row ", col_alignment, "' ",
-              "style='", row_splits_styles[[i]],
-              "'>", row_splits_body[[i]],
+              "<td class='row ", col_alignment, "'",
+              create_style_attrs(row_splits_styles[[i]]),
+              ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
             "\n</tr>\n"))
     }
@@ -860,8 +876,8 @@ resolve_footnotes <- function(footnotes_df,
     footnotes_tbl %>%
     dplyr::select(text) %>%
     dplyr::distinct() %>%
-    tibble::rownames_to_column(var = "ft_id") %>%
-    dplyr::mutate(ft_id = as.integer(ft_id))
+    tibble::rownames_to_column(var = "fs_id") %>%
+    dplyr::mutate(fs_id = as.integer(fs_id))
 
   # Join the lookup table to `footnotes_tbl`
   footnotes_tbl <-
@@ -895,9 +911,9 @@ apply_footnotes_to_output <- function(output_df,
     footnotes_data_glpyhs <-
       footnotes_tbl_data %>%
       dplyr::group_by(rownum, colnum) %>%
-      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(colname, rownum, ft_id_coalesced) %>%
+      dplyr::select(colname, rownum, fs_id_coalesced) %>%
       dplyr::distinct()
 
     for (i in seq(nrow(footnotes_data_glpyhs))) {
@@ -905,7 +921,7 @@ apply_footnotes_to_output <- function(output_df,
       text <-
         output_df[footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]
 
-      text <- paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$ft_id_coalesced[i]))
+      text <- paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
 
       output_df[
         footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]] <- text
@@ -936,9 +952,9 @@ apply_footnotes_to_summary <- function(list_of_summaries,
     footnotes_tbl_data %>%
     dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
     dplyr::group_by(grpname, row, colnum) %>%
-    dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+    dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
     dplyr::ungroup() %>%
-    dplyr::select(grpname, colname, row, ft_id_coalesced) %>%
+    dplyr::select(grpname, colname, row, fs_id_coalesced) %>%
     dplyr::distinct()
 
   for (i in seq(nrow(footnotes_data_glpyhs))) {
@@ -948,7 +964,7 @@ apply_footnotes_to_summary <- function(list_of_summaries,
         footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]]
 
     text <-
-      paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$ft_id_coalesced[i]))
+      paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
 
     summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
       footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]] <- text
@@ -972,8 +988,8 @@ create_footnote_component <- function(footnotes_resolved,
 
   footnotes_tbl <-
     footnotes_resolved %>%
-    dplyr::arrange(ft_id) %>%
-    dplyr::select(ft_id, text) %>%
+    dplyr::arrange(fs_id) %>%
+    dplyr::select(fs_id, text) %>%
     dplyr::distinct()
 
   # Create the footnotes block
@@ -984,7 +1000,7 @@ create_footnote_component <- function(footnotes_resolved,
       n_cols,
       "' class='footnote'>",
       paste0(
-        "<sup class='gt_super'><em>", footnotes_tbl[["ft_id"]],
+        "<sup class='gt_super'><em>", footnotes_tbl[["fs_id"]],
         "</em></sup> ", footnotes_tbl[["text"]],
         collapse = "<br />"),
       "</td>\n</tr>\n</tfoot>")
@@ -1012,13 +1028,13 @@ create_heading_component <- function(heading,
       footnotes_tbl %>%
       dplyr::filter(locname == "title") %>%
       dplyr::group_by() %>%
-      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(ft_id_coalesced) %>%
+      dplyr::select(fs_id_coalesced) %>%
       dplyr::distinct()
 
     footnote_title_glyphs <-
-      footnote_glyph_to_html(footnote_title_glyphs$ft_id_coalesced)
+      footnote_glyph_to_html(footnote_title_glyphs$fs_id_coalesced)
 
   } else {
     footnote_title_glyphs <- ""
@@ -1031,13 +1047,13 @@ create_heading_component <- function(heading,
       footnotes_tbl %>%
       dplyr::filter(locname == "headnote") %>%
       dplyr::group_by() %>%
-      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(ft_id_coalesced) %>%
+      dplyr::select(fs_id_coalesced) %>%
       dplyr::distinct()
 
     footnote_headnote_glyphs <-
-      footnote_glyph_to_html(footnote_headnote_glyphs$ft_id_coalesced)
+      footnote_glyph_to_html(footnote_headnote_glyphs$fs_id_coalesced)
 
   } else {
     footnote_headnote_glyphs <- ""
@@ -1101,9 +1117,9 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
       footnotes_boxhead_group_glyphs <-
         footnotes_boxhead_group_tbl %>%
         dplyr::group_by(grpname) %>%
-        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+        dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
-        dplyr::select(grpname, ft_id_coalesced) %>%
+        dplyr::select(grpname, fs_id_coalesced) %>%
         dplyr::distinct()
 
       for (i in seq(nrow(footnotes_boxhead_group_glyphs))) {
@@ -1117,7 +1133,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_html(
-              footnotes_boxhead_group_glyphs$ft_id_coalesced[i]))
+              footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
 
         boxh_df["group_label", column_indices] <- text
       }
@@ -1128,9 +1144,9 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
       footnotes_boxhead_column_glyphs <-
         footnotes_boxhead_column_tbl %>%
         dplyr::group_by(colname) %>%
-        dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+        dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
-        dplyr::select(colname, ft_id_coalesced) %>%
+        dplyr::select(colname, fs_id_coalesced) %>%
         dplyr::distinct()
 
       for (i in seq(nrow(footnotes_boxhead_column_glyphs))) {
@@ -1142,7 +1158,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_html(
-              footnotes_boxhead_column_glyphs$ft_id_coalesced[i]))
+              footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
 
         boxh_df[
           "column_label", footnotes_boxhead_column_glyphs$colname[i]] <- text
@@ -1175,9 +1191,9 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
     footnotes_stub_groups_glyphs <-
       footnotes_stub_groups_tbl %>%
       dplyr::group_by(grpname) %>%
-      dplyr::mutate(ft_id_coalesced = paste(ft_id, collapse = ",")) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(grpname, ft_id_coalesced) %>%
+      dplyr::select(grpname, fs_id_coalesced) %>%
       dplyr::distinct()
 
     for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
@@ -1191,11 +1207,58 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
         paste0(
           text,
           footnote_glyph_to_html(
-            footnotes_stub_groups_glyphs$ft_id_coalesced[i]))
+            footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
 
       groups_rows_df[row_index, "group_label"] <- text
     }
   }
 
   groups_rows_df
+}
+
+# Apply footnotes to the data rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_styles_to_output <- function(output_df,
+                                   styles_resolved,
+                                   n_cols) {
+
+  styles_output_df <- output_df
+  styles_output_df[] <- NA_character_
+
+  # `data` location
+  styles_tbl_data <-
+    styles_resolved %>%
+    dplyr::filter(locname %in% c("data", "stub"))
+
+  if (nrow(styles_tbl_data) > 0) {
+
+    if ("stub" %in% styles_tbl_data$locname &&
+        "rowname" %in% colnames(output_df)) {
+
+      styles_tbl_data[
+        which(is.na(styles_tbl_data$colname)), "colname"] <- "rowname"
+    }
+
+    styles_data <-
+      styles_tbl_data %>%
+      dplyr::group_by(rownum, colnum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct()
+
+    for (i in seq(nrow(styles_data))) {
+
+      styles_output_df[
+        styles_data$rownum[i], styles_data$colname[i]] <-
+        styles_data$styles_appended[i]
+    }
+  }
+
+  # Extract `body_styles` as a vector
+  body_styles <- as.vector(t(styles_output_df))
+
+  # Split `body_styles` by slices of rows
+  split_body_content(body_content = body_styles, n_cols)
 }

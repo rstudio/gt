@@ -209,9 +209,10 @@ render_as_html <- function(data) {
 
   # Resolve and tidy footnotes
   footnotes_resolved <-
-    resolve_footnotes(
-      footnotes_df, output_df, boxh_df, groups_rows_df, arrange_groups,
-      boxhead_spanners, title_defined, headnote_defined)
+    resolve_footnotes_styles(
+      output_df, boxh_df,
+      groups_rows_df, arrange_groups, boxhead_spanners, title_defined,
+      headnote_defined, footnotes_df = footnotes_df, styles_df = NULL)
 
   # Apply footnotes to the `data` rows
   output_df <- apply_footnotes_to_output(output_df, footnotes_resolved)
@@ -228,10 +229,6 @@ render_as_html <- function(data) {
   groups_rows_df <-
     set_footnote_glyphs_stub_groups(footnotes_resolved, groups_rows_df)
 
-  # Custom cell styles ------------------------------------------------------
-
-
-
   # Extraction to composable parts ------------------------------------------
 
   # Extract the body content as a vector
@@ -243,22 +240,18 @@ render_as_html <- function(data) {
 
   # Composition of HTML -----------------------------------------------------
 
-  # Split the body_content by slices of rows
+  # Split `body_content` by slices of rows
   row_splits_body <- split_body_content(body_content, n_cols)
 
-  # Split any custom style attributes
-  # TODO: Don't use fmts_df for this, use the pattern based on footnotes
-  row_splits_styles <-
-    as.vector(
-      t(
-        cbind(data.frame(empty = rep(NA_character_, n_rows)),
-              data_attr$fmts_df))) %>%
-    tidy_gsub("::style_", "")
+  # Resolve the styles table
+  styles_resolved <-
+    resolve_footnotes_styles(output_df, boxh_df,
+      groups_rows_df, arrange_groups, boxhead_spanners, title_defined,
+      headnote_defined, footnotes_df = NULL, styles_df = styles_df)
 
-  row_splits_styles[is.na(row_splits_styles)] <- ""
-
+  # Apply styles to the `data` rows
   row_splits_styles <-
-    split_body_content(body_content = row_splits_styles, n_cols)
+    apply_styles_to_output(output_df, styles_resolved, n_cols)
 
   # Create an HTML fragment for the start of the table
   table_start <- create_table_start(groups_rows_df, n_rows, n_cols)
