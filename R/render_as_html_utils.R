@@ -253,13 +253,14 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-create_column_headings <- function(boxh_df,
-                                   output_df,
-                                   stub_available,
-                                   spanners_present,
-                                   styles_resolved,
-                                   stubhead_caption,
-                                   col_alignment) {
+# Create the body component of a table
+create_boxhead_component <- function(boxh_df,
+                                     output_df,
+                                     stub_available,
+                                     spanners_present,
+                                     styles_resolved,
+                                     stubhead_caption,
+                                     col_alignment) {
 
   # Get the style attrs for the boxhead group (spanner) headings
   if ("boxhead_groups" %in% styles_resolved$locname) {
@@ -444,15 +445,15 @@ create_column_headings <- function(boxh_df,
 
 #' @importFrom dplyr mutate filter pull
 #' @noRd
-create_table_body <- function(row_splits_body,
-                              row_splits_styles,
-                              groups_rows_df,
-                              col_alignment,
-                              stub_components,
-                              summaries_present,
-                              list_of_summaries,
-                              n_rows,
-                              n_cols) {
+create_body_component <- function(row_splits_body,
+                                  row_splits_styles,
+                                  groups_rows_df,
+                                  col_alignment,
+                                  stub_components,
+                                  summaries_present,
+                                  list_of_summaries,
+                                  n_rows,
+                                  n_cols) {
 
 
   if (is.null(stub_components)) {
