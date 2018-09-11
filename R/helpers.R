@@ -332,7 +332,7 @@ apply_styles <- function(bkgd_color = NULL,
     }
   }
 
-  styles
+  paste(styles, collapse = "")
 }
 
 #' Helper for providing a numeric value as percentage
