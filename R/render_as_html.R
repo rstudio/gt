@@ -4,6 +4,7 @@
 #' @param data a table object that is created using the \code{gt()} function.
 #' @return a character object with an HTML table
 #' @import rlang
+#' @import checkmate
 #' @family table export functions
 #' @noRd
 render_as_html <- function(data) {
