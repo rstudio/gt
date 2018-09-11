@@ -294,41 +294,6 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
-#' Render any formatting directives
-#' @noRd
-render_formats <- function(output_df,
-                           data_df,
-                           formats,
-                           context) {
-
-  # Render input data to output data where formatting
-  # is specified
-  for (i in seq(formats))  {
-
-    # Determine if the formatter has a function relevant
-    # to the context; if not, use the `default` function
-    # (which should always be present)
-    if (context %in% names(formats[[i]]$func)) {
-      eval_func <- context
-    } else {
-      eval_func <- "default"
-    }
-
-    for (col in formats[[i]][["cols"]]) {
-
-      # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_df)) {
-
-        output_df[[col]][formats[[i]]$rows] <-
-          formats[[i]]$func[[eval_func]](
-            data_df[[col]][formats[[i]]$rows])
-      }
-    }
-  }
-
-  output_df
-}
-
 #' A wrapper for `system.file()`
 #' @noRd
 system_file <- function(file) {
