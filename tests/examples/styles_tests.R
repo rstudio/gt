@@ -33,8 +33,11 @@ data <-
     locations = cells_summary(
       groups = "Mazdas", columns = "hp", rows = 1)) %>%
   tab_style(
-    style = apply_styles(bkgd_color = "blue"),
+    style = apply_styles(bkgd_color = "lightgreen"),
     locations = cells_boxhead(groups = "gear_carb_cyl")) %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "pink"),
+    locations = cells_boxhead(columns = vars(hp))) %>%
   tab_style(
     style = apply_styles(bkgd_color = "steelblue", text_color = "white"),
     locations = cells_stub(rows = "Merc 240D")) %>%
