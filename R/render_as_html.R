@@ -229,20 +229,20 @@ render_as_html <- function(data) {
   # Create an HTML fragment for the start of the table
   table_start <- create_table_start(groups_rows_df, n_rows, n_cols)
 
-  # Create a heading and handle any available footnotes
+  # Create a heading component of the table and handle any available footnotes
   heading_component <-
     create_heading_component(
       heading, footnotes_resolved, styles_resolved, n_cols)
 
-  # Create the table column headings
-  table_col_headings <-
-    create_column_headings(
+  # Create the boxhead component of the table
+  boxhead_component <-
+    create_boxhead_component(
       boxh_df, output_df, stub_available, spanners_present,
       styles_resolved, stubhead_caption, col_alignment)
 
-  # Create the table body
-  table_body <-
-    create_table_body(
+  # Create the body component of the table
+  body_component <-
+    create_body_component(
       row_splits_body, row_splits_styles, groups_rows_df, col_alignment,
       stub_components, summaries_present, list_of_summaries, n_rows, n_cols)
 
@@ -260,8 +260,8 @@ render_as_html <- function(data) {
     paste0(
       table_start,
       heading_component,
-      table_col_headings,
-      table_body,
+      boxhead_component,
+      body_component,
       source_note_rows,
       footnote_component,
       table_end,
