@@ -265,7 +265,7 @@ render_as_html <- function(data) {
   table_col_headings <-
     create_column_headings(
       boxh_df, output_df, stub_available, spanners_present,
-      stubhead_caption, col_alignment)
+      styles_resolved, stubhead_caption, col_alignment)
 
   # Create the table body
   table_body <-
