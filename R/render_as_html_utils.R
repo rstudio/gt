@@ -518,12 +518,86 @@ create_table_body <- function(row_splits_body,
     "</tbody>\n")
 }
 
+#' @importFrom dplyr filter pull
+#' @noRd
+get_spanner_style <- function(spanner_style_attrs,
+                              group_name) {
+
+  if (group_name %in% spanner_style_attrs$grpname) {
+
+    return(
+      paste0(
+        " style='",
+        spanner_style_attrs %>%
+          dplyr::filter(grpname == group_name) %>%
+          dplyr::pull(styles_appended), "'")
+    )
+  } else {
+    return("")
+  }
+}
+
+#' @importFrom dplyr filter pull
+#' @noRd
+get_column_style <- function(column_style_attrs,
+                             column_name) {
+
+  if (column_name %in% column_style_attrs$colname) {
+
+    return(
+      paste0(
+        " style='",
+        column_style_attrs %>%
+          dplyr::filter(colname == column_name) %>%
+          dplyr::pull(styles_appended), "'")
+    )
+  } else {
+    return("")
+  }
+}
+
 create_column_headings <- function(boxh_df,
                                    output_df,
                                    stub_available,
                                    spanners_present,
+                                   styles_resolved,
                                    stubhead_caption,
                                    col_alignment) {
+
+  # Get the resolved styles
+  styles_tbl <- styles_resolved
+
+  # Get the style attrs for the boxhead group (spanner) headings
+  if ("boxhead_groups" %in% styles_tbl$locname) {
+
+    spanner_style_attrs <-
+      styles_tbl %>%
+      dplyr::filter(locname == "boxhead_groups") %>%
+      dplyr::group_by(grpname) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(grpname, styles_appended) %>%
+      dplyr::distinct()
+
+  } else {
+    spanner_style_attrs <- tibble()
+  }
+
+  # Get the style attrs for the boxhead group (spanner) headings
+  if ("boxhead_columns" %in% styles_tbl$locname) {
+
+    column_style_attrs <-
+      styles_tbl %>%
+      dplyr::filter(locname == "boxhead_columns") %>%
+      dplyr::group_by(colname) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, styles_appended) %>%
+      dplyr::distinct()
+
+  } else {
+    column_style_attrs <- tibble()
+  }
 
   # Compose the HTML heading
   headings <- names(output_df)
@@ -582,8 +656,9 @@ create_column_headings <- function(boxh_df,
           paste0(
             "<th data-type='column_heading' ",
             "class='col_heading ", col_alignment[1],
-            "' rowspan='2' colspan='1'>",
-            headings[1], "</th>"))
+            "' rowspan='2' colspan='1'",
+            get_column_style(column_style_attrs, column_name = headings[1]),
+            ">", headings[1], "</th>"))
 
       headings <- headings[-1]
     }
@@ -596,8 +671,9 @@ create_column_headings <- function(boxh_df,
           c(first_set,
             paste0(
               "<th data-type='column_heading' ",
-              "class='col_heading center' rowspan='2' colspan='1'>",
-              headings[i], "</th>"))
+              "class='col_heading center' rowspan='2' colspan='1'",
+              get_column_style(column_style_attrs, column_name = headings[i]),
+              ">", headings[i], "</th>"))
 
         headings_stack <- c(headings_stack, headings[i])
 
@@ -643,8 +719,9 @@ create_column_headings <- function(boxh_df,
               paste0(
                 "<th data-type='column_heading' class='col_heading ",
                 class, " ", ifelse(colspan > 1, "center", col_alignment[-1][i]),
-                "' rowspan='1' colspan='",
-                colspan, "'>", spanners[i], "</th>"))
+                "' rowspan='1' colspan='", colspan, "'",
+                get_spanner_style(spanner_style_attrs, group_name = spanners[i]),
+                ">", spanners[i], "</th>"))
         }
       }
     }
