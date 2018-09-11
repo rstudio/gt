@@ -41,7 +41,6 @@ set_footnote <- function(loc, data, footnote) {
   UseMethod("set_footnote")
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_data <- function(loc, data, footnote) {
 
   resolved <- resolve_cells_data(data = data, object = loc)
@@ -51,48 +50,32 @@ set_footnote.cells_data <- function(loc, data, footnote) {
 
   colnames <- colnames(as.data.frame(data))[cols]
 
-  footnotes_df <-
-    dplyr::bind_rows(
-      attr(data, "footnotes_df", exact = TRUE),
-      dplyr::tibble(
-        locname = "data",
-        locnum = 5,
-        grpname = NA_character_,
-        colname = colnames,
-        rownum = rows,
-        text = footnote)) %>%
-    dplyr::distinct()
-
-  attr(data, "footnotes_df") <- footnotes_df
+  attr(data, "footnotes_df") <-
+    add_location_row(
+      data, df_type = "footnotes_df",
+      locname = "data", locnum = 5,
+      grpname = NA_character_, colname = colnames,
+      rownum = rows, text = footnote)
 
   data
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_stub <- function(loc, data, footnote) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
   rows <- resolved$rows
 
-  footnotes_df <-
-    dplyr::bind_rows(
-      attr(data, "footnotes_df", exact = TRUE),
-      dplyr::tibble(
-        locname = "stub",
-        locnum = 5,
-        grpname = NA_character_,
-        colname = NA_character_,
-        rownum = rows,
-        text = footnote)) %>%
-    dplyr::distinct()
-
-  attr(data, "footnotes_df") <- footnotes_df
+  attr(data, "footnotes_df") <-
+    add_location_row(
+      data, df_type = "footnotes_df",
+      locname = "stub", locnum = 5,
+      grpname = NA_character_, colname = NA_character_,
+      rownum = rows, text = footnote)
 
   data
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_boxhead <- function(loc, data, footnote) {
 
   if (!is.null(loc$columns)) {
@@ -103,105 +86,66 @@ set_footnote.cells_boxhead <- function(loc, data, footnote) {
 
     colnames <- colnames(as.data.frame(data))[cols]
 
-    footnotes_df <-
-      dplyr::bind_rows(
-        attr(data, "footnotes_df", exact = TRUE),
-        dplyr::tibble(
-          locname = "boxhead_columns",
-          locnum = 4,
-          grpname = NA_character_,
-          colname = colnames,
-          rownum = NA_character_,
-          text = footnote)) %>%
-      dplyr::distinct()
-
-    attr(data, "footnotes_df") <- footnotes_df
+    attr(data, "footnotes_df") <-
+      add_location_row(
+        data, df_type = "footnotes_df",
+        locname = "boxhead_columns", locnum = 4,
+        grpname = NA_character_, colname = colnames,
+        rownum = NA_character_, text = footnote)
 
   } else if (!is.null(loc$groups)) {
 
     groups <- (loc$groups %>% as.character())[-1]
 
-    footnotes_df <-
-      dplyr::bind_rows(
-        attr(data, "footnotes_df", exact = TRUE),
-        dplyr::tibble(
-          locname = "boxhead_groups",
-          locnum = 3,
-          grpname = groups,
-          colname = NA_character_,
-          rownum = NA_character_,
-          text = footnote)) %>%
-      dplyr::distinct()
-
-    attr(data, "footnotes_df") <- footnotes_df
+    attr(data, "footnotes_df") <-
+      add_location_row(
+        data, df_type = "footnotes_df",
+        locname = "boxhead_groups", locnum = 3,
+        grpname = groups, colname = NA_character_,
+        rownum = NA_character_, text = footnote)
   }
 
   data
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_group <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
 
-  footnotes_df <-
-    dplyr::bind_rows(
-      attr(data, "footnotes_df", exact = TRUE),
-      dplyr::tibble(
-        locname = "stub_groups",
-        locnum = 5,
-        grpname = groups,
-        colname = NA_character_,
-        rownum = NA_character_,
-        text = footnote)) %>%
-    dplyr::distinct()
-
-  attr(data, "footnotes_df") <- footnotes_df
-
+  attr(data, "footnotes_df") <-
+    add_location_row(
+      data, df_type = "footnotes_df",
+      locname = "stub_groups", locnum = 5,
+      grpname = groups, colname = NA_character_,
+      rownum = NA_character_, text = footnote)
 
   data
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_title <- function(loc, data, footnote) {
 
   if ((loc$groups %>% as.character())[-1] == "title") {
 
-    footnotes_df <-
-      dplyr::bind_rows(
-        attr(data, "footnotes_df", exact = TRUE),
-        dplyr::tibble(
-          locname = "title",
-          locnum = 1,
-          grpname = NA_character_,
-          colname = NA_character_,
-          rownum = NA_character_,
-          text = footnote)) %>%
-      dplyr::distinct()
-
-    attr(data, "footnotes_df") <- footnotes_df
+    attr(data, "footnotes_df") <-
+      add_location_row(
+        data, df_type = "footnotes_df",
+        locname = "title", locnum = 1,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, text = footnote)
 
   } else if ((loc$groups %>% as.character())[-1] == "headnote") {
 
-    footnotes_df <-
-      dplyr::bind_rows(
-        attr(data, "footnotes_df", exact = TRUE),
-        dplyr::tibble(
-          locname = "headnote",
-          locnum = 2,
-          grpname = NA_character_,
-          colname = NA_character_,
-          rownum = NA_character_,
-          text = footnote)) %>%
-      dplyr::distinct()
-
-    attr(data, "footnotes_df") <- footnotes_df
+    attr(data, "footnotes_df") <-
+      add_location_row(
+        data, df_type = "footnotes_df",
+        locname = "headnote", locnum = 2,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, text = footnote)
   }
 
   data
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
 set_footnote.cells_summary <- function(loc, data, footnote) {
 
   groups <- (loc$groups %>% as.character())[-1]
@@ -213,21 +157,34 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
 
   colnames <- colnames(as.data.frame(data))[cols]
 
-  footnotes_df <-
-    dplyr::bind_rows(
-      attr(data, "footnotes_df", exact = TRUE),
-      dplyr::tibble(
-        locname = "summary_cells",
-        locnum = 5,
-        grpname = groups,
-        colname = colnames,
-        rownum = rows,
-        text = footnote)) %>%
-    dplyr::distinct()
-
-  attr(data, "footnotes_df") <- footnotes_df
+  attr(data, "footnotes_df") <-
+    add_location_row(
+      data, df_type = "footnotes_df",
+      locname = "summary_cells", locnum = 5,
+      grpname = groups, colname = colnames,
+      rownum = rows, text = footnote)
 
   data
+}
+
+#' @importFrom dplyr bind_rows tibble distinct
+#' @noRd
+add_location_row <- function(data,
+                             df_type,
+                             locname,
+                             locnum,
+                             grpname,
+                             colname,
+                             rownum,
+                             text) {
+
+  dplyr::bind_rows(
+    attr(data, df_type, exact = TRUE),
+    dplyr::tibble(
+      locname = locname, locnum = locnum,
+      grpname = grpname, colname = colname,
+      rownum = rownum, text = text)) %>%
+    dplyr::distinct()
 }
 
 #' @export
