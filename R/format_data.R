@@ -444,14 +444,41 @@ fmt_percent <- function(data,
 }
 
 #' Format values as currencies
+#'
+#' With numeric values in a gt table, we can perform currency-based formatting.
+#' This function supports both automatic formatting with a three-letter currency
+#' code and numeric formatting facilitated through the use of a locale ID.
+#'
+#' The targeted numeric values are rendered with the following options:
+#' \itemize{
+#' \item currency symbol placement -- the currency symbol can be placed before
+#' or after the values
+#' \item decimals/subunits -- choice of the number of decimal places, and a
+#' choice of the decimal symbol, and an option on whether to include or exclude
+#' the currency subunits (decimal portion)
+#' \item negative values -- choice of a negative sign or parentheses for values
+#' less than zero
+#' \item digit grouping separators -- options to enable/disable and a choice of
+#' separator symbol
+#' \item scaling -- we can choose to scale targeted values by a multiplier value
+#' \item pattern -- option to use a text pattern for decoration of the formatted
+#' currency values
+#' \item locale-based formatting -- providing a locale ID will result in
+#' currency formatting specific to the chosen locale
+#' }
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
 #' @inheritParams fmt_number
 #' @param currency the currency to use for the numeric value. This is to be
 #' supplied as a 3-letter currency code. Examples include \code{"USD"} for
 #' U.S. Dollars and \code{"EUR"} for the Euro currency.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #' value should be displayed.
-#' @param decimals an option to specify the exact number of decimal places to
-#' use for the currency's subunits.
 #' @param placement the placement of the currency symbol. This can be either be
 #' \code{left} (the default) or \code{right}.
 #' @return an object of class \code{gt_tbl}.
@@ -666,8 +693,33 @@ fmt_currency <- function(data,
 
 #' Format values as dates
 #'
-#' See \code{\link{info_date_style}()} for a useful reference on
-#' \code{date_style}.
+#' Format input date values that are character-based and expressed according to
+#' the ISO 8601 date format (\code{YYYY-MM-DD}). Once the appropriate data cells
+#' are targeted with \code{columns} (and, optionally, \code{rows}), we can
+#' simply apply a preset date style to format the dates.
+#'
+#' The following date styles are available for simpler formatting of ISO dates
+#' (all using the input date of \code{2000-02-29} in the example output dates):
+#'
+#' \enumerate{
+#' \item iso: \code{2000-02-29}
+#' \item wday_month_day_year: \code{Tuesday, February 29, 2000}
+#' \item wd_m_day_year: \code{Tue, Feb 29, 2000}
+#' \item wday_day_month_year: \code{Tuesday 29 February 2000}
+#' \item month_day_year: \code{February 29, 2000}
+#' \item m_day_year: \code{Feb 29, 2000}
+#' \item day_m_year: \code{29 Feb 2000}
+#' \item day_month_year: \code{29 February 2000}
+#' \item day_month: \code{29 February}
+#' \item year: \code{2000}
+#' \item month: \code{February}
+#' \item day: \code{29}
+#' \item year.mn.day: \code{2000/02/29}
+#' \item y.mn.day: \code{0/02/29}
+#' }
+#'
+#' We can use the \code{\link{info_date_style}()} function for a useful
+#' reference on all of the possible inputs to \code{date_style}.
 #'
 #' @inheritParams fmt_number
 #' @param date_style the date style to use. Supply a number (from \code{1} to
@@ -690,12 +742,12 @@ fmt_currency <- function(data,
 #'
 #' # Create a table object using this
 #' # dataset and format the `date`
-#' # column with `date_style` '2'
+#' # column with the `date_style` of `2`
 #' gt_tbl <-
 #'   gt(data_tbl) %>%
 #'     fmt_date(
 #'       columns = vars(date),
-#'       date_style = "2")
+#'       date_style = 2)
 #' @family data formatting functions
 #' @import rlang
 #' @export
