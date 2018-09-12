@@ -41,7 +41,6 @@ gt <- function(data,
 
     stub_df <-
       data.frame(
-        fmts = rep(NA_character_, nrow(data)),
         groupname = NA_character_,
         rowname = rownames(data),
         stringsAsFactors = FALSE)
@@ -50,7 +49,6 @@ gt <- function(data,
 
     stub_df <-
       data.frame(
-        fmts = rep(NA_character_, nrow(data)),
         groupname = rep(NA_character_, nrow(data)),
         rowname = rep(NA_character_, nrow(data)),
         stringsAsFactors = FALSE)
