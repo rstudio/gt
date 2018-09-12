@@ -186,15 +186,3 @@ add_location_row <- function(data,
       rownum = rownum, text = text)) %>%
     dplyr::distinct()
 }
-
-#' @export
-get_footnotes_tbl <- function(data) {
-
-  attr(data, "footnotes_df")
-}
-
-#' @export
-get_rows_tbl <- function(data) {
-
-  attr(data, "rows_df")
-}
