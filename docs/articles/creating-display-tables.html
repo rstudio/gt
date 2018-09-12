@@ -2474,7 +2474,8 @@
 <tbody class="table_body striped">
 <tr data-type="data" data-row="1">
 <td class="stub row right">Asia</td>
-<td class="row center">16988</td>
+<td class="row center">16988<sup class="gt_footnote_glyph">1</sup>
+</td>
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">Africa</td>
@@ -2490,7 +2491,8 @@
 </tr>
 <tr data-type="data" data-row="5">
 <td class="stub row right">Antarctica</td>
-<td class="row center">5500</td>
+<td class="row center">5500<sup class="gt_footnote_glyph">2</sup>
+</td>
 </tr>
 <tr data-type="data" data-row="6">
 <td class="stub row right">Europe</td>
@@ -2521,6 +2523,10 @@
 <td colspan="3" class="sourcenote">Reference: McNeil, D. R. (1977) <em>Interactive Data Analysis</em>. Wiley.</td>
 </tr>
 </tfoot>
+<tfoot data-type="table_footnotes"><tr data-type="table_footnote">
+<td colspan="2" class="footnote">
+<sup class="gt_footnote_glyph"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_footnote_glyph"><em>2</em></sup> The lowest by population.</td>
+</tr></tfoot>
 </table>
 <!--gt table end--><p>Let’s incorporate row groups into the display table. This divides rows into groups, creating <strong>stub blocks</strong>, and results in a display of <strong>group heading</strong> row. This can be easily done with a table containing row captions. We can make a new <strong>stub block</strong> with each call of the <code><a href="../reference/tab_stub_block.html">tab_stub_block()</a></code> function. The inputs are group names in the <code>group</code> argument, and row references in the <code>rows</code> argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).</p>
 <p>Here we will create three stub blocks (with group names <code>continent</code>, <code>country</code>, and <code>subregion</code>) to have a groupings of rows.</p>
@@ -2755,7 +2761,8 @@
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">Asia</td>
-<td class="row center">16988</td>
+<td class="row center">16988<sup class="gt_footnote_glyph">1</sup>
+</td>
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">Africa</td>
@@ -2771,7 +2778,8 @@
 </tr>
 <tr data-type="data" data-row="5">
 <td class="stub row right">Antarctica</td>
-<td class="row center">5500</td>
+<td class="row center">5500<sup class="gt_footnote_glyph">2</sup>
+</td>
 </tr>
 <tr data-type="data" data-row="6">
 <td class="stub row right">Europe</td>
@@ -2808,6 +2816,10 @@
 <td colspan="3" class="sourcenote">Reference: McNeil, D. R. (1977) <em>Interactive Data Analysis</em>. Wiley.</td>
 </tr>
 </tfoot>
+<tfoot data-type="table_footnotes"><tr data-type="table_footnote">
+<td colspan="2" class="footnote">
+<sup class="gt_footnote_glyph"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_footnote_glyph"><em>2</em></sup> The lowest by population.</td>
+</tr></tfoot>
 </table>
 <!--gt table end--><p>Three <strong>stub groups</strong> have been made since there are three unique categories under <code>groupname</code>. Across the top of each <strong>stub group</strong> is the <strong>group_heading</strong> contained in a separate row (these cut across the field and they contain nothing but the <strong>group heading</strong>). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate <strong>stub groups</strong>.</p>
 <p>Having groups of rows in <strong>stub blocks</strong> is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with <strong>summary captions</strong> is covered in a separate article (<em>Creating Summary Lines</em>).</p>
