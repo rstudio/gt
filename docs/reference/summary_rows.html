@@ -33,11 +33,10 @@
 <meta property="og:title" content="Add summary rows using aggregation functions — summary_rows" />
 
 <meta property="og:description" content="Add summary rows to one or more stub blocks by using the input data already
-  provided in the gt() function alongside any suitable
-  aggregation functions. Should we need to obtain the summary data for
-  external purposes, the extract_summary() can be used with
-  a gt_tbl object where summary rows were added via
-summary_rows()." />
+provided in the gt() function alongside any suitable
+aggregation functions. Should we need to obtain the summary data for external
+purposes, the extract_summary() can be used with a
+gt_tbl object where summary rows were added via summary_rows()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -98,6 +97,9 @@ summary_rows()." />
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
+      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -134,11 +136,10 @@ summary_rows()." />
     <div class="ref-description">
     
     <p>Add summary rows to one or more stub blocks by using the input data already
-  provided in the <code><a href='gt.html'>gt()</a></code> function alongside any suitable
-  aggregation functions. Should we need to obtain the summary data for
-  external purposes, the <code><a href='extract_summary.html'>extract_summary</a>()</code> can be used with
-  a <code>gt_tbl</code> object where summary rows were added via
-<code>summary_rows()</code>.</p>
+provided in the <code><a href='gt.html'>gt</a>()</code> function alongside any suitable
+aggregation functions. Should we need to obtain the summary data for external
+purposes, the <code><a href='extract_summary.html'>extract_summary</a>()</code> can be used with a
+<code>gt_tbl</code> object where summary rows were added via <code>summary_rows()</code>.</p>
     
     </div>
 
@@ -171,7 +172,9 @@ like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>,
 helper function. With <code><a href='funs.html'>funs()</a></code>, we can specify the functions by use of
 function names (e.g., <code>"sum"</code>), the functions themselves
 (e.g., <code>sum</code>), or calls to functions with <code>.</code> as a dummy argument
-(e.g., <code>sum(., na.rm = TRUE)</code>).</p></td>
+(e.g., <code>sum(., na.rm = TRUE)</code>). By using named arguments, the names
+will serve as row labels for the corresponding summary rows (otherwise the
+labels will be derived from the function names).</p></td>
     </tr>
     <tr>
       <th>missing_text</th>
@@ -181,8 +184,8 @@ summary cells with no data outputs.</p></td>
     <tr>
       <th>formatter</th>
       <td><p>a formatter function name. These can be any of the
-<code>fmt_*</code>functions available in the package (e.g.,
-<code><a href='fmt_number.html'>fmt_number</a></code>, <code>link{fmt_percent}</code>, etc.), or a custom
+<code>fmt_*()</code>functions available in the package (e.g.,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>, <code>link{fmt_percent}()</code>, etc.), or a custom
 function using <code><a href='fmt.html'>fmt</a>()</code>. The default function is
 <code><a href='fmt_number.html'>fmt_number</a>()</code> and its options can be accessed through
 <code>...</code>.</p></td>
@@ -191,7 +194,7 @@ function using <code><a href='fmt.html'>fmt</a>()</code>. The default function i
       <th>...</th>
       <td><p>values passed to the <code>formatter</code> function, where the provided
 values are to be in the form of named vectors. For example, when using the
-default <code>formatter</code> function, <code><a href='fmt_number.html'>fmt_number</a></code>, options such
+default <code>formatter</code> function, <code><a href='fmt_number.html'>fmt_number</a>()</code>, options such
 as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be used.</p></td>
     </tr>
     </table>
