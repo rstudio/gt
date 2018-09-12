@@ -35,8 +35,34 @@ presets.}
 an object of class \code{gt_tbl}.
 }
 \description{
-See \code{\link{info_date_style}()} for a useful reference on
-\code{date_style}.
+Format input date values that are character-based and expressed according to
+the ISO 8601 date format (\code{YYYY-MM-DD}). Once the appropriate data cells
+are targeted with \code{columns} (and, optionally, \code{rows}), we can
+simply apply a preset date style to format the dates.
+}
+\details{
+The following date styles are available for simpler formatting of ISO dates
+(all using the input date of \code{2000-02-29} in the example output dates):
+
+\enumerate{
+\item iso: \code{2000-02-29}
+\item wday_month_day_year: \code{Tuesday, February 29, 2000}
+\item wd_m_day_year: \code{Tue, Feb 29, 2000}
+\item wday_day_month_year: \code{Tuesday 29 February 2000}
+\item month_day_year: \code{February 29, 2000}
+\item m_day_year: \code{Feb 29, 2000}
+\item day_m_year: \code{29 Feb 2000}
+\item day_month_year: \code{29 February 2000}
+\item day_month: \code{29 February}
+\item year: \code{2000}
+\item month: \code{February}
+\item day: \code{29}
+\item year.mn.day: \code{2000/02/29}
+\item y.mn.day: \code{0/02/29}
+}
+
+We can use the \code{\link{info_date_style}()} function for a useful
+reference on all of the possible inputs to \code{date_style}.
 }
 \examples{
 library(tidyverse)
@@ -53,12 +79,12 @@ data_tbl <-
 
 # Create a table object using this
 # dataset and format the `date`
-# column with `date_style` '2'
+# column with the `date_style` of `2`
 gt_tbl <-
   gt(data_tbl) \%>\%
     fmt_date(
       columns = vars(date),
-      date_style = "2")
+      date_style = 2)
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

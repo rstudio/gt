@@ -41,7 +41,7 @@ value should be displayed.}
 sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
-use for the currency's subunits.}
+use. The default number of decimal places is \code{2}.}
 
 \item{use_seps}{an option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -70,7 +70,35 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-Format values as currencies
+With numeric values in a gt table, we can perform currency-based formatting.
+This function supports both automatic formatting with a three-letter currency
+code and numeric formatting facilitated through the use of a locale ID.
+}
+\details{
+The targeted numeric values are rendered with the following options:
+\itemize{
+\item currency symbol placement -- the currency symbol can be placed before
+or after the values
+\item decimals/subunits -- choice of the number of decimal places, and a
+choice of the decimal symbol, and an option on whether to include or exclude
+the currency subunits (decimal portion)
+\item negative values -- choice of a negative sign or parentheses for values
+less than zero
+\item digit grouping separators -- options to enable/disable and a choice of
+separator symbol
+\item scaling -- we can choose to scale targeted values by a multiplier value
+\item pattern -- option to use a text pattern for decoration of the formatted
+currency values
+\item locale-based formatting -- providing a locale ID will result in
+currency formatting specific to the chosen locale
+}
+
+Targeting of values is done through \code{columns} and additionally by
+\code{rows} (if nothing is provided for \code{rows} then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the \code{rows} argument. See the Arguments section for more
+information on this.
 }
 \examples{
 library(tidyverse)
