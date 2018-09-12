@@ -10,7 +10,6 @@ knit_print.gt_tbl(x, ...)
 \item{x}{an object of class \code{gt_tbl}.}
 }
 \description{
-This facilitates printing of the HTML table within a knitr
-  code chunk.
+This facilitates printing of the HTML table within a knitr code chunk.
 }
 \keyword{internal}

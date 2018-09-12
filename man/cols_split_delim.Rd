@@ -23,10 +23,10 @@ an object of class \code{gt_tbl}.
 }
 \description{
 This option will split delimited column names such that the first component
-  is promoted to the group name (and hence will span over column labels) and
-  subsequent components will represent the column label. Please note that
-  reference to individual columns must continue to be through the original
-  column names.
+is promoted to the group name (and hence will span over column labels) and
+subsequent components will represent the column label. Please note that
+reference to individual columns must continue to be through the original
+column names.
 }
 \examples{
 # Create a table object using the

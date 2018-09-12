@@ -30,7 +30,7 @@ Merge two columns to a single column with a formatter
 # `sleep` dataset and merge the `group`
 # and `ID` columns together (where the
 # `ID` number is in parentheses after
-# the `group` number
+# the `group` number)
 gt_tbl <-
   gt(sleep) \%>\%
     cols_merge(

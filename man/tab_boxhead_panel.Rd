@@ -19,7 +19,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Set a spanner with a name and mappings to columns extant in the table. This
-  creates a boxhead panel with spanner headings and column headings.
+creates a boxhead panel with spanner headings and column headings.
 }
 \examples{
 # Create a table based on `rock` where
