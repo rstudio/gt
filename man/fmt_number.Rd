@@ -26,7 +26,8 @@ captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+and \code{\link{everything}()}. We can also use expressions to filter down
+to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
@@ -62,7 +63,29 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-Format numeric values
+With numeric values in a gt table, we can perform number-based formatting so
+that the targeted values are rendered with the following options:
+\itemize{
+\item decimals -- choice of the number of decimal places, option to drop
+trailing zeros, and a choice of the decimal symbol
+\item negative values -- choice of a negative sign or parentheses for values
+less than zero
+\item digit grouping separators -- options to enable/disable and a choice of
+separator symbol
+\item scaling -- we can choose to scale targeted values by a multiplier value
+\item pattern -- option to use a text pattern for decoration of the formatted
+values
+\item locale-based formatting -- providing a locale ID will result in number
+formatting specific to the chosen locale
+}
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by
+\code{rows} (if nothing is provided for \code{rows} then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the \code{rows} argument. See the Arguments section for more
+information on this.
 }
 \examples{
 library(tidyverse)

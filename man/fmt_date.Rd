@@ -23,7 +23,8 @@ captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+and \code{\link{everything}()}. We can also use expressions to filter down
+to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{date_style}{the date style to use. Supply a number (from \code{1} to
 \code{14}) that corresponds to the preferred date style. Use
