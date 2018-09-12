@@ -32,8 +32,10 @@
 
 <meta property="og:title" content="Format values as dates — fmt_date" />
 
-<meta property="og:description" content="See info_date_style() for a useful reference on
-date_style." />
+<meta property="og:description" content="Format input date values that are character-based and expressed according to
+the ISO 8601 date format (YYYY-MM-DD). Once the appropriate data cells
+are targeted with columns (and, optionally, rows), we can
+simply apply a preset date style to format the dates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,8 +131,10 @@ date_style." />
 
     <div class="ref-description">
     
-    <p>See <code><a href='info_date_style.html'>info_date_style</a>()</code> for a useful reference on
-<code>date_style</code>.</p>
+    <p>Format input date values that are character-based and expressed according to
+the ISO 8601 date format (<code>YYYY-MM-DD</code>). Once the appropriate data cells
+are targeted with <code>columns</code> (and, optionally, <code>rows</code>), we can
+simply apply a preset date style to format the dates.</p>
     
     </div>
 
@@ -177,6 +181,29 @@ presets.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The following date styles are available for simpler formatting of ISO dates
+(all using the input date of <code>2000-02-29</code> in the example output dates):</p>
+<ol>
+<li><p>iso: <code>2000-02-29</code></p></li>
+<li><p>wday_month_day_year: <code>Tuesday, February 29, 2000</code></p></li>
+<li><p>wd_m_day_year: <code>Tue, Feb 29, 2000</code></p></li>
+<li><p>wday_day_month_year: <code>Tuesday 29 February 2000</code></p></li>
+<li><p>month_day_year: <code>February 29, 2000</code></p></li>
+<li><p>m_day_year: <code>Feb 29, 2000</code></p></li>
+<li><p>day_m_year: <code>29 Feb 2000</code></p></li>
+<li><p>day_month_year: <code>29 February 2000</code></p></li>
+<li><p>day_month: <code>29 February</code></p></li>
+<li><p>year: <code>2000</code></p></li>
+<li><p>month: <code>February</code></p></li>
+<li><p>day: <code>29</code></p></li>
+<li><p>year.mn.day: <code>2000/02/29</code></p></li>
+<li><p>y.mn.day: <code>0/02/29</code></p></li>
+</ol>
+    <p>We can use the <code><a href='info_date_style.html'>info_date_style</a>()</code> function for a useful
+reference on all of the possible inputs to <code>date_style</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -201,12 +228,12 @@ presets.</p></td>
 
 <span class='co'># Create a table object using this</span>
 <span class='co'># dataset and format the `date`</span>
-<span class='co'># column with `date_style` '2'</span>
+<span class='co'># column with the `date_style` of `2`</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>fmt_date</span>(
       <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>date</span>),
-      <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='st'>"2"</span>)</div></pre>
+      <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -214,6 +241,8 @@ presets.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

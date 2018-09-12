@@ -32,7 +32,9 @@
 
 <meta property="og:title" content="Format values as currencies — fmt_currency" />
 
-<meta property="og:description" content="Format values as currencies" />
+<meta property="og:description" content="With numeric values in a gt table, we can perform currency-based formatting.
+This function supports both automatic formatting with a three-letter currency
+code and numeric formatting facilitated through the use of a locale ID." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,7 +130,9 @@
 
     <div class="ref-description">
     
-    <p>Format values as currencies</p>
+    <p>With numeric values in a gt table, we can perform currency-based formatting.
+This function supports both automatic formatting with a three-letter currency
+code and numeric formatting facilitated through the use of a locale ID.</p>
     
     </div>
 
@@ -185,7 +189,7 @@ sign. Using <code>parens</code> will show the negative value in parentheses.</p>
     <tr>
       <th>decimals</th>
       <td><p>an option to specify the exact number of decimal places to
-use for the currency's subunits.</p></td>
+use. The default number of decimal places is <code>2</code>.</p></td>
     </tr>
     <tr>
       <th>use_seps</th>
@@ -229,6 +233,31 @@ locale ID will override any values provided in <code>sep_mark</code> and
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The targeted numeric values are rendered with the following options:</p><ul>
+<li><p>currency symbol placement -- the currency symbol can be placed before
+or after the values</p></li>
+<li><p>decimals/subunits -- choice of the number of decimal places, and a
+choice of the decimal symbol, and an option on whether to include or exclude
+the currency subunits (decimal portion)</p></li>
+<li><p>negative values -- choice of a negative sign or parentheses for values
+less than zero</p></li>
+<li><p>digit grouping separators -- options to enable/disable and a choice of
+separator symbol</p></li>
+<li><p>scaling -- we can choose to scale targeted values by a multiplier value</p></li>
+<li><p>pattern -- option to use a text pattern for decoration of the formatted
+currency values</p></li>
+<li><p>locale-based formatting -- providing a locale ID will result in
+currency formatting specific to the chosen locale</p></li>
+</ul>
+    <p>Targeting of values is done through <code>columns</code> and additionally by
+<code>rows</code> (if nothing is provided for <code>rows</code> then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the <code>rows</code> argument. See the Arguments section for more
+information on this.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -303,6 +332,8 @@ locale ID will override any values provided in <code>sep_mark</code> and
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
