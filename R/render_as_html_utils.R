@@ -135,7 +135,7 @@ create_table_start <- function(groups_rows_df,
     "data-nrow='", n_rows, "' ",
     "data-ncol='", n_cols, "' ",
     "data-ngroup='", get_n_groups(groups_rows_df), "' ",
-    "class='gt_table'>\n")
+    "class='gt_table' style='display:table;'>\n")
 }
 
 # Create the heading component of a table, which contains the heading and
