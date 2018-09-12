@@ -2,7 +2,7 @@
 # Transform a footnote glyph to an HTML representation as a superscript
 footnote_glyph_to_html <- function(footnote_glyph) {
 
-  paste0("<sup class='gt_super font_italic'>", footnote_glyph, "</sup>")
+  paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
 # Get the number of stub groups in the table
@@ -634,7 +634,7 @@ create_footnote_component <- function(footnotes_resolved,
       n_cols,
       "' class='footnote'>",
       paste0(
-        "<sup class='gt_super'><em>", footnotes_tbl[["fs_id"]],
+        "<sup class='gt_footnote_glyph'><em>", footnotes_tbl[["fs_id"]],
         "</em></sup> ", footnotes_tbl[["text"]],
         collapse = "<br />"),
       "</td>\n</tr>\n</tfoot>")
