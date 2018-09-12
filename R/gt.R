@@ -28,7 +28,6 @@
 #'   cols_align_right(
 #'     columns = vars(mpg, cyl, disp))
 #' @family table-part creation/modification functions
-#' @importFrom tibble add_row
 #' @export
 gt <- function(data,
                rownames_to_stub = FALSE) {
@@ -117,11 +116,8 @@ gt <- function(data,
   # Create a data frame that represents the table's
   # boxhead (`boxh_df`); each row has a special
   # meaning and this will be used during render time
-  boxh_df <-
-    empty_df[c(), , drop = FALSE] %>%
-    tibble::add_row() %>%  # group label
-    tibble::add_row() %>%  # column label
-    tibble::add_row()      # column alignment
+  boxh_df <- empty_df[c(), , drop = FALSE]
+  boxh_df[1:3, ] = list(NA_character_)
 
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
