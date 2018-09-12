@@ -5,9 +5,9 @@ test_that("a gt table object contains the correct components", {
   # Create a `gt_tbl` object with `gt()`
   tab <- gt(data = iris)
 
-  # Expect that the object has 13 attributes
+  # Expect that the object has 12 attributes
   expect_equal(
-    length(attributes(tab)), 13)
+    length(attributes(tab)), 12)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -17,14 +17,17 @@ test_that("a gt table object contains the correct components", {
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df", "footnotes_df",
-          "styles_df", "rows_df", "cols_df", "arrange_groups",
-          "opts_df", "formats")))
+          "boxh_df", "stub_df", "footnotes_df", "styles_df",
+          "rows_df", "cols_df", "arrange_groups", "opts_df",
+          "formats")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
   expect_is(attr(tab, "stub_df"), "data.frame")
-  expect_is(attr(tab, "fmts_df"), "data.frame")
+  expect_is(attr(tab, "footnotes_df"), "data.frame")
+  expect_is(attr(tab, "styles_df"), "data.frame")
+  expect_is(attr(tab, "rows_df"), "data.frame")
+  expect_is(attr(tab, "cols_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
   expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
@@ -33,7 +36,10 @@ test_that("a gt table object contains the correct components", {
   # correct dimensions
   expect_equal(dim(attr(tab, "boxh_df")), c(3, 5))
   expect_equal(dim(attr(tab, "stub_df")), c(150, 3))
-  expect_equal(dim(attr(tab, "fmts_df")), c(150, 5))
+  expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "rows_df")), c(150, 1))
+  expect_equal(dim(attr(tab, "cols_df")), c(5, 1))
   expect_equal(ncol(attr(tab, "opts_df")), 3)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
@@ -77,12 +83,6 @@ test_that("a gt table object contains the correct components", {
   expect_equal(
     colnames(attr(tab, "boxh_df")),
     colnames(iris))
-
-  # Expect that the column names of the `fmts_df` object
-  # are the same as those of the original dataset
-  expect_equal(
-    colnames(attr(tab, "fmts_df")),
-    colnames(iris))
 })
 
 test_that("a gt table can be made to use the rownames of a data frame", {
@@ -91,9 +91,9 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   # data frame's row names as row names in the stub
   tab <- gt(data = mtcars, rownames_to_stub = TRUE)
 
-  # Expect that the object has 13 attributes
+  # Expect that the object has 12 attributes
   expect_equal(
-    length(attributes(tab)), 13)
+    length(attributes(tab)), 12)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -103,14 +103,17 @@ test_that("a gt table can be made to use the rownames of a data frame", {
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df", "footnotes_df",
-          "styles_df", "rows_df", "cols_df", "arrange_groups",
-          "opts_df", "formats")))
+          "boxh_df", "stub_df", "footnotes_df", "styles_df",
+          "rows_df", "cols_df", "arrange_groups", "opts_df",
+          "formats")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
   expect_is(attr(tab, "stub_df"), "data.frame")
-  expect_is(attr(tab, "fmts_df"), "data.frame")
+  expect_is(attr(tab, "footnotes_df"), "data.frame")
+  expect_is(attr(tab, "styles_df"), "data.frame")
+  expect_is(attr(tab, "rows_df"), "data.frame")
+  expect_is(attr(tab, "cols_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
   expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
@@ -119,7 +122,10 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   # correct dimensions
   expect_equal(dim(attr(tab, "boxh_df")), c(3, 11))
   expect_equal(dim(attr(tab, "stub_df")), c(32, 3))
-  expect_equal(dim(attr(tab, "fmts_df")), c(32, 11))
+  expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "rows_df")), c(32, 1))
+  expect_equal(dim(attr(tab, "cols_df")), c(11, 1))
   expect_equal(ncol(attr(tab, "opts_df")), 3)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
@@ -164,12 +170,6 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   expect_equal(
     colnames(attr(tab, "boxh_df")),
     colnames(mtcars))
-
-  # Expect that the column names of the `fmts_df` object
-  # are the same as those of the original dataset
-  expect_equal(
-    colnames(attr(tab, "fmts_df")),
-    colnames(mtcars))
 })
 
 test_that("a gt table can be made with the stub partially or fully populated", {
@@ -186,9 +186,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # `data_r` dataset
   tab <- gt(data = data_r)
 
-  # Expect that the object has 13 attributes
+  # Expect that the object has 12 attributes
   expect_equal(
-    length(attributes(tab)), 13)
+    length(attributes(tab)), 12)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -198,14 +198,17 @@ test_that("a gt table can be made with the stub partially or fully populated", {
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df", "footnotes_df",
-          "styles_df", "rows_df", "cols_df", "arrange_groups",
-          "opts_df", "formats")))
+          "boxh_df", "stub_df", "footnotes_df", "styles_df",
+          "rows_df", "cols_df", "arrange_groups", "opts_df",
+          "formats")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
   expect_is(attr(tab, "stub_df"), "data.frame")
-  expect_is(attr(tab, "fmts_df"), "data.frame")
+  expect_is(attr(tab, "footnotes_df"), "data.frame")
+  expect_is(attr(tab, "styles_df"), "data.frame")
+  expect_is(attr(tab, "rows_df"), "data.frame")
+  expect_is(attr(tab, "cols_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
   expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
@@ -214,7 +217,10 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # correct dimensions
   expect_equal(dim(attr(tab, "boxh_df")), c(3, 1))
   expect_equal(dim(attr(tab, "stub_df")), c(10, 3))
-  expect_equal(dim(attr(tab, "fmts_df")), c(10, 1))
+  expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "rows_df")), c(10, 1))
+  expect_equal(dim(attr(tab, "cols_df")), c(1, 1))
   expect_equal(ncol(attr(tab, "opts_df")), 3)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
@@ -263,13 +269,6 @@ test_that("a gt table can be made with the stub partially or fully populated", {
     colnames(attr(tab, "boxh_df")),
     "value")
 
-  # Expect that `fmts_df` has one of the column
-  # names in the original dataset (and doesn't
-  # contain `rowname`)
-  expect_equal(
-    colnames(attr(tab, "fmts_df")),
-    "value")
-
   # Create an input data frame with a `rowname` column,
   # a `groupname` column, and a `value` column
   data_rg <-
@@ -283,9 +282,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # `data_rg` dataset
   tab <- gt(data = data_rg)
 
-  # Expect that the object has 13 attributes
+  # Expect that the object has 12 attributes
   expect_equal(
-    length(attributes(tab)), 13)
+    length(attributes(tab)), 12)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -295,14 +294,17 @@ test_that("a gt table can be made with the stub partially or fully populated", {
     all(
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
-          "boxh_df", "stub_df", "fmts_df", "footnotes_df",
-          "styles_df", "rows_df", "cols_df", "arrange_groups",
-          "opts_df", "formats")))
+          "boxh_df", "stub_df", "footnotes_df", "styles_df",
+          "rows_df", "cols_df", "arrange_groups", "opts_df",
+          "formats")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
   expect_is(attr(tab, "stub_df"), "data.frame")
-  expect_is(attr(tab, "fmts_df"), "data.frame")
+  expect_is(attr(tab, "footnotes_df"), "data.frame")
+  expect_is(attr(tab, "styles_df"), "data.frame")
+  expect_is(attr(tab, "rows_df"), "data.frame")
+  expect_is(attr(tab, "cols_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
   expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
@@ -311,7 +313,10 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # correct dimensions
   expect_equal(dim(attr(tab, "boxh_df")), c(3, 1))
   expect_equal(dim(attr(tab, "stub_df")), c(10, 3))
-  expect_equal(dim(attr(tab, "fmts_df")), c(10, 1))
+  expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
+  expect_equal(dim(attr(tab, "rows_df")), c(10, 1))
+  expect_equal(dim(attr(tab, "cols_df")), c(1, 1))
   expect_equal(ncol(attr(tab, "opts_df")), 3)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
@@ -360,12 +365,5 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # contain `rowname` or `groupname`)
   expect_equal(
     colnames(attr(tab, "boxh_df")),
-    "value")
-
-  # Expect that `fmts_df` has one of the column
-  # names in the original dataset (and doesn't
-  # contain `rowname` or `groupname`)
-  expect_equal(
-    colnames(attr(tab, "fmts_df")),
     "value")
 })
