@@ -23,7 +23,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Create a preview version of table. Here we can specify the first and last
-  \code{n} rows for the preview table.
+\code{n} rows for the preview table.
 }
 \examples{
 # Create a preview of the `mtcars`
