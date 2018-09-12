@@ -77,6 +77,23 @@ gt <- function(data,
     data[["groupname"]] <- NULL
   }
 
+  # If `data` is a `grouped_df` then create groups from the
+  # group columns; note that this will overwrite any values
+  # already in `stub_df$groupname`
+  if (inherits(data, c("grouped_df", "tbl_df", "tbl", "data.frame"))) {
+
+    group_cols <- attr(data, "vars", exact = TRUE)
+    group_cols <- base::intersect(group_cols, colnames(data))
+
+    group_labels <- apply(data[, group_cols], 1, paste, collapse = "-")
+
+    # Place the `group_labels` values into `stub_df$groupname`
+    stub_df[["groupname"]] <- group_labels
+
+    # Remove all columns in `group_cols` from `data`
+    data[, which(colnames(data) %in% group_cols)] <- NULL
+  }
+
   # Take the input data and convert to a
   # data frame
   data_tbl <-
