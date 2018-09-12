@@ -61,9 +61,6 @@
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
-      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
-    </li>
-    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -329,6 +326,11 @@
 .gt_super {
   font-size: 65%;
 }
+
+.gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
 </style>
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table" style="display:table;">
 <tr>
@@ -592,6 +594,11 @@
 .gt_super {
   font-size: 65%;
 }
+
+.gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
 </style>
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table" style="display:table;">
 <thead>
@@ -845,6 +852,11 @@
 .gt_super {
   font-size: 65%;
 }
+
+.gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
 </style>
 <!--gt table start--><table data-nrow="2" data-ncol="2" data-ngroup="0" class="table" style="display:table;">
 <thead>
@@ -1069,6 +1081,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -1338,6 +1355,11 @@
 .gt_super {
   font-size: 65%;
 }
+
+.gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
 </style>
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table" style="display:table;">
 <thead>
@@ -1362,12 +1384,12 @@
 <td class="row center">11506</td>
 </tr>
 <tr data-type="data" data-row="3">
-<td class="row center">North America<sup class="gt_super font_italic">1</sup>
+<td class="row center">North America<sup class="gt_footnote_glyph">1</sup>
 </td>
 <td class="row center">9390</td>
 </tr>
 <tr data-type="data" data-row="4">
-<td class="row center">South America<sup class="gt_super font_italic">1</sup>
+<td class="row center">South America<sup class="gt_footnote_glyph">1</sup>
 </td>
 <td class="row center">6795</td>
 </tr>
@@ -1406,7 +1428,7 @@
 </tfoot>
 <tfoot data-type="table_footnotes"><tr data-type="table_footnote">
 <td colspan="2" class="footnote">
-<sup class="gt_super"><em>1</em></sup> The Americas.</td>
+<sup class="gt_footnote_glyph"><em>1</em></sup> The Americas.</td>
 </tr></tfoot>
 </table>
 <!--gt table end--><p>Here is a slightly more complex example of adding footnotes that use expressions in <code>where</code> to help target cells in a column by the underlying data in <code>islands_tbl</code>. First, a set of <strong>dplyr</strong> statements obtains the name of the ‘island’ by largest landmass. This is assigned to the <code>largest</code> object and is used in the first <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> call that targets the cell in the <code>size</code> column that is next to a <code>name</code> value that is stored in <code>largest</code> (‘Asia’). The second <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> is similar except we are directly supplying a <code>name</code> value in the <code>where</code> expression.</p>
@@ -1622,6 +1644,11 @@
 .gt_super {
   font-size: 65%;
 }
+
+.gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
 </style>
 <!--gt table start--><table data-nrow="10" data-ncol="2" data-ngroup="0" class="table" style="display:table;">
 <thead>
@@ -1639,7 +1666,7 @@
 <tbody class="table_body striped">
 <tr data-type="data" data-row="1">
 <td class="row center">Asia</td>
-<td class="row center">16988<sup class="gt_super font_italic">1</sup>
+<td class="row center">16988<sup class="gt_footnote_glyph">1</sup>
 </td>
 </tr>
 <tr data-type="data" data-row="2">
@@ -1647,18 +1674,18 @@
 <td class="row center">11506</td>
 </tr>
 <tr data-type="data" data-row="3">
-<td class="row center">North America<sup class="gt_super font_italic">2</sup>
+<td class="row center">North America<sup class="gt_footnote_glyph">2</sup>
 </td>
 <td class="row center">9390</td>
 </tr>
 <tr data-type="data" data-row="4">
-<td class="row center">South America<sup class="gt_super font_italic">2</sup>
+<td class="row center">South America<sup class="gt_footnote_glyph">2</sup>
 </td>
 <td class="row center">6795</td>
 </tr>
 <tr data-type="data" data-row="5">
 <td class="row center">Antarctica</td>
-<td class="row center">5500<sup class="gt_super font_italic">3</sup>
+<td class="row center">5500<sup class="gt_footnote_glyph">3</sup>
 </td>
 </tr>
 <tr data-type="data" data-row="6">
@@ -1692,7 +1719,7 @@
 </tfoot>
 <tfoot data-type="table_footnotes"><tr data-type="table_footnote">
 <td colspan="2" class="footnote">
-<sup class="gt_super"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_super"><em>2</em></sup> The Americas.<br><sup class="gt_super"><em>3</em></sup> The lowest by population.</td>
+<sup class="gt_footnote_glyph"><em>1</em></sup> The <strong>largest</strong> by area.<br><sup class="gt_footnote_glyph"><em>2</em></sup> The Americas.<br><sup class="gt_footnote_glyph"><em>3</em></sup> The lowest by population.</td>
 </tr></tfoot>
 </table>
 <!--gt table end--><p>We were able to supply the reference locations in the table by using the <code><a href="../reference/location_cells.html">cells_data()</a></code> helper function and supplying the necessary row and column reference and filtering rows with <code>where</code> expression in the last two cases.</p>
@@ -1901,6 +1928,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -2147,6 +2179,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -2413,6 +2450,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -2686,6 +2728,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -2994,6 +3041,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
@@ -3320,6 +3372,11 @@
 }
 
 .gt_super {
+  font-size: 65%;
+}
+
+.gt_footnote_glyph {
+  font-style: italic;
   font-size: 65%;
 }
 </style>
