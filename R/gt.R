@@ -80,7 +80,7 @@ gt <- function(data,
   # If `data` is a `grouped_df` then create groups from the
   # group columns; note that this will overwrite any values
   # already in `stub_df$groupname`
-  if (inherits(data, c("grouped_df", "tbl_df", "tbl", "data.frame"))) {
+  if (inherits(data, "grouped_df")) {
 
     group_cols <- attr(data, "vars", exact = TRUE)
     group_cols <- base::intersect(group_cols, colnames(data))
