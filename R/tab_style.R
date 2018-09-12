@@ -37,28 +37,6 @@ tab_style <- function(data,
     data <- set_style(loc, data, style)
   }
 
-  # resolved <- resolve_cells_data(data = data, object = loc)
-  #
-  # data_rows <- resolved$row
-  # data_cols <- resolved$column
-  #
-  # # Append the style
-  # for (i in 1:length(data_rows)) {
-  #
-  #   if (is.na(attr(data, "fmts_df")[data_rows[i], data_cols[i]])) {
-  #
-  #     attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
-  #       paste0("::style_", style, collapse = "")
-  #
-  #   } else {
-  #
-  #     attr(data, "fmts_df")[data_rows[i], data_cols[i]] <-
-  #       paste0(
-  #         attr(data, "fmts_df")[data_rows[i], data_cols[i]],
-  #         "::style_", style, collapse = "")
-  #   }
-  # }
-
   data
 }
 
