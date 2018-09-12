@@ -34,7 +34,6 @@ rownum_translation <- function(output_df,
   rownum_final
 }
 
-
 # Common render pipeline functions ----------------------------------------
 
 # If a vector is found (perhaps within a list) simply return the vector;
@@ -100,7 +99,6 @@ render_formats <- function(output_df,
 
   output_df
 }
-
 
 # Testable version of the `render_formats()` function
 render_formats_test <- function(data,
@@ -931,7 +929,6 @@ apply_footnotes_to_output <- function(output_df,
 
   output_df
 }
-
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
