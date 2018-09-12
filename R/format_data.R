@@ -1,4 +1,28 @@
 #' Format numeric values
+#'
+#' With numeric values in a gt table, we can perform number-based formatting so
+#' that the targeted values are rendered with the following options:
+#' \itemize{
+#' \item decimals -- choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' \item negative values -- choice of a negative sign or parentheses for values
+#' less than zero
+#' \item digit grouping separators -- options to enable/disable and a choice of
+#' separator symbol
+#' \item scaling -- we can choose to scale targeted values by a multiplier value
+#' \item pattern -- option to use a text pattern for decoration of the formatted
+#' values
+#' \item locale-based formatting -- providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#' }
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
+#'
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
 #' @param columns the columns to format. Can either be a series of column names
@@ -13,7 +37,8 @@
 #'   focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-#'   and \code{\link{everything}()}.
+#'   and \code{\link{everything}()}. We can also use expressions to filter down
+#'   to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).
 #' @param decimals an option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is \code{2}.
 #' @param drop_trailing_zeros a logical value that allows for removal of
@@ -151,6 +176,26 @@ fmt_number <- function(data,
 }
 
 #' Format values to scientific notation
+#'
+#' With numeric values in a gt table, we can perform formatting so that the
+#' targeted values are rendered in scientific notation. Furthermore, there is
+#' fine control with the following options:
+#' \itemize{
+#' \item decimals -- choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' \item scaling -- we can choose to scale targeted values by a multiplier value
+#' \item pattern -- option to use a text pattern for decoration of the formatted
+#' values
+#' \item locale-based formatting -- providing a locale ID will result in
+#' formatting specific to the chosen locale
+#' }
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
 #' @inheritParams fmt_number
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -254,6 +299,32 @@ fmt_scientific <- function(data,
 }
 
 #' Format values as a percentage
+#'
+#' With numeric values in a gt table, we can perform percentage-based
+#' formatting. The targeted values are scaled by \code{100} and are rendered
+#' with the following options:
+#' \itemize{
+#' \item percent sign placement -- the percent sign can be placed after or
+#' before the values and a space can be inserted between the symbol and the
+#' value.
+#' \item decimals -- choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' \item negative values -- choice of a negative sign or parentheses for values
+#' less than zero
+#' \item digit grouping separators -- options to enable/disable and a choice of
+#' separator symbol
+#' \item pattern -- option to use a text pattern for decoration of the formatted
+#' values
+#' \item locale-based formatting -- providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#' }
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
 #' @inheritParams fmt_number
 #' @param incl_space an option on whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
