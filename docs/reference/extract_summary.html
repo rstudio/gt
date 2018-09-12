@@ -32,14 +32,10 @@
 
 <meta property="og:title" content="Extract a summary table from a gt table object — extract_summary" />
 
-<meta property="og:description" content="Get a summary row data frame from a gt_tbl object where summary rows
-  were added via the summary_rows() function. The output data frame
-  contains the groupname and rowname columns, where
-  rowname contains descriptive stub labels for the summary rows.
-  The remaining columns are a subset of the original dataset, where only
-  those columns that had aggregation functions applied are retained. The
-  output data frame format is suitable for generating a summary table using
-  the gt() function." />
+<meta property="og:description" content="Get a list of summary row data frames from a gt_tbl object where
+summary rows were added via the summary_rows() function. The
+output data frames contain the groupname and rowname columns,
+whereby rowname contains descriptive stub labels for the summary rows." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,6 +96,9 @@
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
+      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -135,14 +134,10 @@
 
     <div class="ref-description">
     
-    <p>Get a summary row data frame from a <code>gt_tbl</code> object where summary rows
-  were added via the <code><a href='summary_rows.html'>summary_rows()</a></code> function. The output data frame
-  contains the <code>groupname</code> and <code>rowname</code> columns, where
-  <code>rowname</code> contains descriptive stub labels for the summary rows.
-  The remaining columns are a subset of the original dataset, where only
-  those columns that had aggregation functions applied are retained. The
-  output data frame format is suitable for generating a summary table using
-  the <code><a href='gt.html'>gt</a>()</code> function.</p>
+    <p>Get a list of summary row data frames from a <code>gt_tbl</code> object where
+summary rows were added via the <code><a href='summary_rows.html'>summary_rows</a>()</code> function. The
+output data frames contain the <code>groupname</code> and <code>rowname</code> columns,
+whereby <code>rowname</code> contains descriptive stub labels for the summary rows.</p>
     
     </div>
 
@@ -160,7 +155,7 @@ function.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame containing summary data.</p>
+    <p>a list of data frames containing summary data.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

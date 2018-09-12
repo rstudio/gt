@@ -33,7 +33,7 @@
 <meta property="og:title" content="Helpers for targeting multiple cells in different locations — location_cells" />
 
 <meta property="og:description" content="These helper functions are used to target individual cells in different
-  locations." />
+locations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,6 +94,9 @@
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
+      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -130,19 +133,21 @@
     <div class="ref-description">
     
     <p>These helper functions are used to target individual cells in different
-  locations.</p>
+locations.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>title_cells</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"title"</span>, <span class='st'>"headnote"</span>))
+    <pre class="usage"><span class='fu'>cells_title</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"title"</span>, <span class='st'>"headnote"</span>))
 
-<span class='fu'>boxhead_cells</span>(<span class='no'>columns</span>, <span class='no'>groups</span>)
+<span class='fu'>cells_boxhead</span>(<span class='no'>columns</span>, <span class='no'>groups</span>)
 
-<span class='fu'>group_cells</span>(<span class='no'>groups</span>)
+<span class='fu'>cells_group</span>(<span class='no'>groups</span>)
 
-<span class='fu'>stub_cells</span>(<span class='no'>rows</span>)
+<span class='fu'>cells_stub</span>(<span class='no'>rows</span>)
 
-<span class='fu'>data_cells</span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>cells_data</span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>cells_summary</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,7 +156,8 @@
       <th>columns, rows, groups</th>
       <td><p>either a vector of names, a vector of
 indices, values provided by <code><a href='vars.html'>vars</a>()</code>, values provided by
-<code>c()</code>, or a select helper function.</p></td>
+<code>c()</code>, or a select helper function (see Details for information on
+these functions).</p></td>
     </tr>
     </table>
     
@@ -162,20 +168,23 @@ indices, values provided by <code><a href='vars.html'>vars</a>()</code>, values 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The following helper functions can be used to target cells (roughly in order
-  from the top to the bottom of a table):</p>
+from the top to the bottom of a table):</p>
 <ul>
-<li><p><code>title_cells()</code>: targets the table title or the table headnote
-    depending on the value given to the <code>groups</code> argument
-    (<code>"title"</code> or <code>"headnote"</code>).</p></li>
-<li><p><code>boxhead_cells()</code>: targets captions for the column headers (the
-    <code>columns</code> argument) or group spanners (the <code>groups</code> argument)
-    in the table boxhead.</p></li>
-<li><p><code>group_cells()</code>: targets the group headings in the stub blocks
-    using the <code>groups</code> argument.</p></li>
-<li><p><code>stub_cells()</code>: targets row captions in the table stub using the
-    <code>rows</code> argument.</p></li>
-<li><p><code>data_cells()</code>: targets data cells in the table field using
-    intersections of <code>columns</code> and <code>rows</code>.</p></li>
+<li><p><code>cells_title()</code>: targets the table title or the table headnote
+depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
+<code>"headnote"</code>).</p></li>
+<li><p><code>cells_boxhead()</code>: targets captions for the column headers (the
+<code>columns</code> argument) or group spanners (the <code>groups</code> argument) in
+the table boxhead.</p></li>
+<li><p><code>cells_group()</code>: targets the group headings in the stub blocks
+using the <code>groups</code> argument.</p></li>
+<li><p><code>cells_stub()</code>: targets row captions in the table stub using the
+<code>rows</code> argument.</p></li>
+<li><p><code>cells_data()</code>: targets data cells in the table field using
+intersections of <code>columns</code> and <code>rows</code>.</p></li>
+<li><p><code>cells_summary()</code>: targets summary cells in the table field using
+the <code>groups</code> argument and intersections of <code>columns</code> and
+<code>rows</code>.</p></li>
 </ul>
     <p>The select helper functions are: <code><a href='resolving_helpers.html'>starts_with</a>()</code>,
   <code><a href='resolving_helpers.html'>ends_with</a>()</code>, <code><a href='resolving_helpers.html'>contains</a>()</code>,

@@ -93,6 +93,9 @@
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
+      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -149,10 +152,10 @@ function.</p></td>
     <tr>
       <th>locations</th>
       <td><p>the cell or set of cells to be associated with the footnote.
-Supplying an object with the <code><a href='location_cells.html'>data_cells</a>()</code> helper function is
+Supplying an object with the <code><a href='location_cells.html'>cells_data</a>()</code> helper function is
 a useful way to specify the cell that is associated with the footnote.
 Additionally, we can supply a list with multiple calls to
-<code><a href='location_cells.html'>data_cells</a>()</code> if we wish to combine multiple cell selections.</p></td>
+<code><a href='location_cells.html'>cells_data</a>()</code> if we wish to combine multiple cell selections.</p></td>
     </tr>
     </table>
     
@@ -178,7 +181,7 @@ Additionally, we can supply a list with multiple calls to
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>tab_footnote</span>(
       <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Massive hp."</span>,
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>data_cells</a></span>(
+      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
         <span class='kw'>columns</span> <span class='kw'>=</span> <span class='st'>"hp"</span>,
         <span class='kw'>rows</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>))</div></pre>
   </div>

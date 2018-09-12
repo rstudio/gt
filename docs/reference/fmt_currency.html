@@ -93,6 +93,9 @@
       <a href="../articles/example-mtcars.html">An Example: mtcars</a>
     </li>
     <li>
+      <a href="../articles/extractable-html-tables.html">Extractable HTML Tables</a>
+    </li>
+    <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
     </li>
   </ul>
@@ -162,7 +165,8 @@ captions provided <code>c()</code>, a vector of row indices, or a helper functio
 focused on selections. The select helper functions are:
 <code><a href='resolving_helpers.html'>starts_with</a>()</code>, <code><a href='resolving_helpers.html'>ends_with</a>()</code>,
 <code><a href='resolving_helpers.html'>contains</a>()</code>, <code><a href='resolving_helpers.html'>matches</a>()</code>, <code><a href='resolving_helpers.html'>one_of</a>()</code>,
-and <code><a href='resolving_helpers.html'>everything</a>()</code>.</p></td>
+and <code><a href='resolving_helpers.html'>everything</a>()</code>. We can also use expressions to filter down
+to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></td>
     </tr>
     <tr>
       <th>currency</th>
