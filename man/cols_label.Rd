@@ -14,7 +14,7 @@ function.}
 the column headers. We can use the \code{\link{col_labels}()} function to
 more easily specify column names and column labels, since we can also wrap
 the column labels with \code{\link{md}()} (to interpret text as Markdown)
-or \code{\link{HTML}()} (to interpret text as HTML).}
+or \code{\link{html}()} (to interpret text as HTML).}
 }
 \description{
 Relabel one or more columns

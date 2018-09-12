@@ -36,7 +36,7 @@ plot_object <-
 # contains an the ggplot as an
 # embedded plot that's 100px high
 plot_html <-
-  plot \%>\%
+  plot_object \%>\%
   ggplot_image(
     height = 200)
 
