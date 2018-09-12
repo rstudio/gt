@@ -209,7 +209,9 @@ get_column_reorder_df <- function(cols_df,
 
 # Function to reassemble the rows and columns of the `output_df`
 # in a revised order
-reassemble_output_df <- function(output_df, rows_df, columns_df) {
+reassemble_output_df <- function(output_df,
+                                 rows_df,
+                                 columns_df) {
 
   rows <- rows_df$rownum_final
 
@@ -217,7 +219,7 @@ reassemble_output_df <- function(output_df, rows_df, columns_df) {
     subset(columns_df, !is.na(colnum_final))[
       order(subset(columns_df, !is.na(colnum_final))$colnum_final), ]$column_names
 
-  output_df[rows, cols]
+  output_df[rows, cols, drop = FALSE]
 }
 
 # Function to obtain a reordered version of `stub_df`
