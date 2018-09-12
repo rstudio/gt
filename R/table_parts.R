@@ -40,8 +40,8 @@ tab_heading <- function(data,
 
 #' Add caption text to the stubhead
 #'
-#' Add a caption to the stubhead of a table. If a stub does not exist, no
-#'   change will be made.
+#' Add a caption to the stubhead of a table. If a stub does not exist, no change
+#' will be made.
 #' @inheritParams fmt_number
 #' @param caption the text to be used as the stubhead caption.
 #' @return an object of class \code{gt_tbl}.
@@ -67,7 +67,7 @@ tab_stubhead_caption <- function(data,
 #' Arrange a stub into blocks
 #'
 #' Set a group with a name and mappings to rows extant in the table. This
-#'   creates a stub block with group headings and row captions.
+#' creates a stub block with group headings and row captions.
 #' @inheritParams fmt_number
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block. Can either be a
@@ -97,8 +97,6 @@ tab_stubhead_caption <- function(data,
 #'       rows = c("Mazda RX4", "Mazda RX4 Wag"))
 #' @family table-part creation/modification functions
 #' @import rlang
-#' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter
 #' @export
 tab_stub_block <- function(data,
                            group = NULL,
@@ -167,7 +165,7 @@ tab_stub_block <- function(data,
 #' Arrange a boxhead into panels
 #'
 #' Set a spanner with a name and mappings to columns extant in the table. This
-#'   creates a boxhead panel with spanner headings and column headings.
+#' creates a boxhead panel with spanner headings and column headings.
 #' @inheritParams fmt_number
 #' @param group the name to assign to the spanner heading.
 #' @param columns the columns to be components of the spanner heading.

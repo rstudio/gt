@@ -1,7 +1,7 @@
 #' Modify the table output options
 #'
 #' Modify the options available in a table. These options are named by the
-#'   components, the subcomponents, and the element that can adjusted.
+#' components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
 #' @param table.width the width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If

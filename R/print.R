@@ -1,5 +1,6 @@
 #' Print the table
-#' @description This facilitates printing of the HTML table to the R console.
+#'
+#' This facilitates printing of the HTML table to the R console.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 #' @export
@@ -12,8 +13,8 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 }
 
 #' Knit print the table
-#' @description This facilitates printing of the HTML table within a knitr
-#'   code chunk.
+#'
+#' This facilitates printing of the HTML table within a knitr code chunk.
 #' @param x an object of class \code{gt_tbl}.
 #' @keywords internal
 knit_print.gt_tbl <- function(x, ...) {

@@ -136,7 +136,7 @@ cols_align_right <- function(data,
 #'   the column headers. We can use the \code{\link{col_labels}()} function to
 #'   more easily specify column names and column labels, since we can also wrap
 #'   the column labels with \code{\link{md}()} (to interpret text as Markdown)
-#'   or \code{\link{HTML}()} (to interpret text as HTML).
+#'   or \code{\link{html}()} (to interpret text as HTML).
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and apply different
@@ -379,10 +379,10 @@ cols_remove <- function(data,
 #' Create group names and column labels via delimited column names
 #'
 #' This option will split delimited column names such that the first component
-#'   is promoted to the group name (and hence will span over column labels) and
-#'   subsequent components will represent the column label. Please note that
-#'   reference to individual columns must continue to be through the original
-#'   column names.
+#' is promoted to the group name (and hence will span over column labels) and
+#' subsequent components will represent the column label. Please note that
+#' reference to individual columns must continue to be through the original
+#' column names.
 #' @inheritParams cols_align
 #' @param delim the delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
@@ -461,7 +461,7 @@ cols_split_delim <- function(data,
 #' # `sleep` dataset and merge the `group`
 #' # and `ID` columns together (where the
 #' # `ID` number is in parentheses after
-#' # the `group` number
+#' # the `group` number)
 #' gt_tbl <-
 #'   gt(sleep) %>%
 #'     cols_merge(
