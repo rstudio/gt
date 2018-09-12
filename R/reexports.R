@@ -25,7 +25,6 @@ NULL
 #' @export
 NULL
 
-
 #' Helpers for resolving column names or row labels
 #'
 #' We can resolve one or multiple column names or row labels by using a select

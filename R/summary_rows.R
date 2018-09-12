@@ -1,11 +1,10 @@
 #' Add summary rows using aggregation functions
 #'
 #' Add summary rows to one or more stub blocks by using the input data already
-#'   provided in the \code{gt()} function alongside any suitable
-#'   aggregation functions. Should we need to obtain the summary data for
-#'   external purposes, the \code{\link{extract_summary}()} can be used with
-#'   a \code{gt_tbl} object where summary rows were added via
-#' \code{summary_rows()}.
+#' provided in the \code{\link{gt}()} function alongside any suitable
+#' aggregation functions. Should we need to obtain the summary data for external
+#' purposes, the \code{\link{extract_summary}()} can be used with a
+#' \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @param groups the stub block groups heading names for which summary rows
 #'   will be added.
@@ -18,18 +17,20 @@
 #'   helper function. With \code{funs()}, we can specify the functions by use of
 #'   function names (e.g., \code{"sum"}), the functions themselves
 #'   (e.g., \code{sum}), or calls to functions with \code{.} as a dummy argument
-#'   (e.g., \code{sum(., na.rm = TRUE)}).
+#'   (e.g., \code{sum(., na.rm = TRUE)}). By using named arguments, the names
+#'   will serve as row labels for the corresponding summary rows (otherwise the
+#'   labels will be derived from the function names).
 #' @param missing_text the text to be used in place of \code{NA} values in
 #'   summary cells with no data outputs.
 #' @param formatter a formatter function name. These can be any of the
-#'   \code{fmt_*}functions available in the package (e.g.,
-#'   \code{\link{fmt_number}}, \code{link{fmt_percent}}, etc.), or a custom
+#'   \code{fmt_*()}functions available in the package (e.g.,
+#'   \code{\link{fmt_number}()}, \code{link{fmt_percent}()}, etc.), or a custom
 #'   function using \code{\link{fmt}()}. The default function is
 #'   \code{\link{fmt_number}()} and its options can be accessed through
 #'   \code{...}.
 #' @param ... values passed to the \code{formatter} function, where the provided
 #'   values are to be in the form of named vectors. For example, when using the
-#'   default \code{formatter} function, \code{\link{fmt_number}}, options such
+#'   default \code{formatter} function, \code{\link{fmt_number}()}, options such
 #'   as \code{decimals}, \code{use_seps}, and \code{locale} can be used.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
