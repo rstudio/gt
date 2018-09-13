@@ -117,7 +117,11 @@ cells_group <- function(groups) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_stub <- function(rows) {
+cells_stub <- function(rows = NULL) {
+
+  if (is.null(rows)) {
+    rows <- TRUE
+  }
 
   # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
