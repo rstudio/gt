@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for processing column labels — col_labels • gt</title>
+<title>gt: Build Presentation-Ready Tables Using the Grammar of Tables — gt-package • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,13 @@
 
 
 
-<meta property="og:title" content="Helper for processing column labels — col_labels" />
+<meta property="og:title" content="gt: Build Presentation-Ready Tables Using the Grammar of Tables — gt-package" />
 
-<meta property="og:description" content="This helper is to be used specifically within the cols_label()
-function as an alternative to using named vectors within that function. The
-advantage in using this helper is that the assigned column labels can be
-marked as Markdown (with the md() function) or as HTML (with the
-html() function)." />
+<meta property="og:description" content="Build table output from tabular data using the Grammar of Tables
+    ethos. With this layering approach, we aim to construct presentation
+    tables with a clear separation of concerns: you don't have to decide how
+    the tabular data gets transformed and structured whilst also worrying
+    about aesthetics." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,67 +125,47 @@ html() function)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for processing column labels</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>col_labels.Rd</code></div>
+    <h1>gt: Build Presentation-Ready Tables Using the Grammar of Tables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/gt-package.R'><code>R/gt-package.R</code></a></small>
+    <div class="hidden name"><code>gt-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This helper is to be used specifically within the <code><a href='cols_label.html'>cols_label()</a></code>
-function as an alternative to using named vectors within that function. The
-advantage in using this helper is that the assigned column labels can be
-marked as Markdown (with the <code><a href='md.html'>md()</a></code> function) or as HTML (with the
-<code><a href='html.html'>html()</a></code> function).</p>
+    <p>Build table output from tabular data using the Grammar of Tables
+    ethos. With this layering approach, we aim to construct presentation
+    tables with a clear separation of concerns: you don't have to decide how
+    the tabular data gets transformed and structured whilst also worrying
+    about aesthetics.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>col_labels</span>(<span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>...</th>
-      <td><p>a series of named arguments representing the column names and
-values representing the column labels.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a named vector of column labels.</p>
-    
+        
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='funs.html'>funs</a></code>, <code><a href='html.html'>html</a></code>, <code><a href='md.html'>md</a></code>,
-  <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code>, <code><a href='vars.html'>vars</a></code></p></div>
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/rstudio/gt'>https://github.com/rstudio/gt</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/rstudio/gt/issues'>https://github.com/rstudio/gt/issues</a></p></li>
+</ul></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a gt table based on the mtcars</span>
-<span class='co'># dataset; label some of the columns (i.e.,</span>
-<span class='co'># provide replacement names for use in the</span>
-<span class='co'># output) with `cols_label()` and the</span>
-<span class='co'># `col_labels()` helper function</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
-    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>col_labels</span>(
-      <span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*HP*"</span>), <span class='kw'>qsec</span> <span class='kw'>=</span> <span class='st'>"QMT, seconds"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
+
+    <h2>Author</h2>
+    
+<strong>Maintainer</strong>: Richard Iannone <a href='mailto:rich@rstudio.com'>rich@rstudio.com</a> (0000-0003-3925-190X)
+
+Other contributors:
+<ul>
+<li><p>RStudio [copyright holder, funder]</p></li>
+</ul>
+
 
   </div>
 </div>
