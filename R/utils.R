@@ -1,4 +1,4 @@
-#' Create a tibble containing date formats
+# Create a tibble containing date formats
 #' @importFrom dplyr tribble
 #' @noRd
 date_formats <- function() {
@@ -21,7 +21,7 @@ date_formats <- function() {
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
 
-#' Create a tibble containing time formats
+# Create a tibble containing time formats
 #' @importFrom dplyr tribble
 #' @noRd
 time_formats <- function() {
@@ -35,7 +35,7 @@ time_formats <- function() {
     "5",	          "h_p",        "%I %P")
 }
 
-#' Transform `date_style` to `date_format`
+# Transform `date_style` to `date_format`
 #' @importFrom dplyr filter pull
 #' @noRd
 get_date_format <- function(date_style) {
@@ -59,7 +59,7 @@ get_date_format <- function(date_style) {
   }
 }
 
-#' Transform `time_style` to `time_format`
+# Transform `time_style` to `time_format`
 #' @importFrom dplyr filter pull
 #' @noRd
 get_time_format <- function(time_style) {
@@ -83,7 +83,7 @@ get_time_format <- function(time_style) {
   }
 }
 
-#' Determine if a provided `currency` type is valid
+# Determine if a provided `currency` type is valid
 #' @noRd
 is_currency_valid <- function(currency) {
 
@@ -94,7 +94,7 @@ is_currency_valid <- function(currency) {
     TRUE, FALSE)
 }
 
-#' Transform `currency` to currency string
+# Transform `currency` to currency string
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_str <- function(currency,
@@ -149,7 +149,7 @@ get_currency_str <- function(currency,
   }
 }
 
-#' Transform `currency` to a currency exponent
+# Transform `currency` to a currency exponent
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_exponent <- function(currency) {
@@ -179,7 +179,7 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-#' Get the `sep_mark` value from a locale
+# Get the `sep_mark` value from a locale
 #' @noRd
 get_locale_sep_mark <- function(locale) {
 
@@ -193,7 +193,7 @@ get_locale_sep_mark <- function(locale) {
   sep_mark
 }
 
-#' Get the `dec_mark` value from a locale
+# Get the `dec_mark` value from a locale
 #' @noRd
 get_locale_dec_mark <- function(locale) {
 
@@ -205,15 +205,11 @@ get_locale_dec_mark <- function(locale) {
   dec_mark
 }
 
-#' Process input text
-#'
-#' This processes input text based on the class. If incoming text has the class
-#' \code{from_markdown} (applied by the \code{md()} helper function), then the
-#' text will be sanitized and transformed to HTML from Markdown. If the incoming
-#' text has the class \code{preserve_html} (applied by \code{html()} helper
-#' function), then the text will be seen as HTML and it won't undergo
-#' sanitization.
-#' @param text the text to be sanitized.
+# This function processes input text based on the class; if incoming text has
+# the class `from_markdown` (applied by the `md()` helper function), then the
+# text will be sanitized and transformed to HTML from Markdown. If the incoming
+# text has the class `preserve_html` (applied by `html()` helper function), then
+# the text will be seen as HTML and it won't undergo sanitization
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
@@ -247,8 +243,7 @@ process_text <- function(text) {
   }
 }
 
-#' Get prepending and appending text based on a simple pattern
-#' @noRd
+# Get prepending and appending text based on a simple pattern
 get_pre_post_txt <- function(pattern) {
 
   prefix <- strsplit(pattern, "\\{x\\}")[[1]][1]
@@ -260,22 +255,21 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
-#' A wrapper for `system.file()`
-#' @noRd
+# This function is a conveient wrapper for `system.file()` where the `package`
+# refers to this package
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
 
-#' Remove HTML tags from input text
-#' @noRd
+# This function removes entire HTML tags from input text
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
 }
 
-#' Transform a CSS stylesheet to a tibble
-#' @noRd
+# This function transforms a CSS stylesheet to a tibble representation
 #' @importFrom dplyr bind_rows tibble filter mutate case_when select
 #' @importFrom stringr str_remove str_extract str_trim str_detect
+#' @noRd
 get_css_tbl <- function(data) {
 
   raw_css_vec <-
@@ -320,14 +314,10 @@ get_css_tbl <- function(data) {
   css_tbl
 }
 
-#' Create an inlined style block from a CSS tibble
-#' @noRd
-#' @param class_names the literal class names used within
-#' an HTML class attribute.
-#' @param css_tbl a CSS tibble that can be created using the
-#' \code{get_css_tbl} function.
+# Create an inlined style block from a CSS tibble
 #' @importFrom dplyr filter select distinct mutate pull
 #' @importFrom stringr str_split
+#' @noRd
 create_inline_styles <- function(class_names, css_tbl) {
 
   class_names <-
@@ -347,9 +337,9 @@ create_inline_styles <- function(class_names, css_tbl) {
     "\"")
 }
 
-#' Create an inlined style block from a CSS tibble
-#' @noRd
+# Create an inlined style block from a CSS tibble
 #' @importFrom stringr str_extract str_replace
+#' @noRd
 inline_html_styles <- function(html, css_tbl) {
 
   repeat {
@@ -390,8 +380,7 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
-#' Obtain a line number from a vector of HTML lines by use of a pattern
-#' @noRd
+# Obtain a line number from a vector of HTML lines by use of a pattern
 get_html_line <- function(html_lines, pattern) {
 
   lines <- grepl(pattern, html_lines)
@@ -403,39 +392,14 @@ get_html_line <- function(html_lines, pattern) {
   }
 }
 
-#' Wrapper for `gsub()` that uses default argument values
-#' and rearranges first three arguments for better pipelining
-#' @noRd
+# This function is wrapper for `gsub()` that uses default argument values and
+# rearranges first three arguments for better pipelining
 tidy_gsub <- function(x, pattern, replacement) {
 
   gsub(pattern, replacement, x)
 }
 
-#' A simple function that takes column classes and returns
-#' a vector of shortened class names
-#' @noRd
-class_shortener <- function(x) {
-
-  short_classes <- c()
-
-  for (i in seq(x)) {
-
-    short_classes <- c(
-      short_classes,
-      switch(
-        x[i],
-        numeric = "dbl",
-        integer = "int",
-        character = "chr",
-        logical = "lgl")
-    )
-  }
-
-  short_classes
-}
-
-#' Options setter for the `opts_df` data frame
-#' @noRd
+# Options setter for the `opts_df` data frame
 opts_df_set <- function(opts_df, option, value) {
 
   opts_df[which(opts_df$parameter == option), 3] <- value
@@ -443,15 +407,13 @@ opts_df_set <- function(opts_df, option, value) {
   opts_df
 }
 
-#' Options getter for the `opts_df` data frame
-#' @noRd
+# Options getter for the `opts_df` data frame
 opts_df_get <- function(opts_df, option) {
 
   opts_df[which(opts_df$parameter == option), 3]
 }
 
-#' Upgrade `cells_*()` to a list() if a single instance provided
-#' @noRd
+# Upgrade `cells_*()` to a list() if a single instance provided
 as_locations <- function(locations) {
 
   if (!inherits(locations, "location_cells")) {
@@ -459,7 +421,7 @@ as_locations <- function(locations) {
     if (!is.list(locations) &&
         any(!vapply(locations, inherits, logical(1), "location_cells"))) {
 
-      stop("The `locations` object should be a list of `*_cells()`.",
+      stop("The `locations` object should be a list of `cells_*()`.",
            .call = FALSE)
     }
   } else {
