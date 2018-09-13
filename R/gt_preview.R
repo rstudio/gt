@@ -49,13 +49,18 @@ gt_preview <- function(data,
   # and tail plus an ellipsis row
   if (nrow(data) > (top_n + bottom_n)) {
 
+    has_ellipsis_row <- TRUE
+    ellipsis_row <- top_n + 1
+
+    between_rownums <- c(6, 9)
+
     data <-
       rbind(
         data[seq(top_n), ],
         rep("", ncol(data)),
         data[(nrow(data) + 1 - rev(seq(bottom_n))), ])
 
-    rownames(data)[top_n + 1] <- ""
+    rownames(data)[top_n + 1] <- paste(between_rownums, collapse = "..")
   }
 
   # If we elect to include row numbers, then place the row
@@ -67,5 +72,45 @@ gt_preview <- function(data,
         data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
   }
 
-  gt(data, rownames_to_stub = FALSE)
+  # Render as a gt table
+  gt_tbl <- gt(data, rownames_to_stub = FALSE)
+
+  # Use a fixed-width font for the rownums, if they are included
+  if (incl_rownums) {
+
+    gt_tbl <- gt_tbl %>%
+      tab_style(
+        style = "font-family:Courier;",
+        locations = cells_stub())
+  }
+
+  # Add styling of ellipsis row, if it is present
+  if (has_ellipsis_row) {
+
+    gt_tbl <- gt_tbl %>%
+      tab_style(
+        style = apply_styles(bkgd_color = "#E4E4E4"),
+        locations = cells_data(rows = ellipsis_row)) %>%
+      tab_style(
+        style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
+        locations = cells_data(rows = ellipsis_row))
+
+    if (incl_rownums) {
+
+      gt_tbl <- gt_tbl %>%
+        tab_style(
+          style = apply_styles(bkgd_color = "#E4E4E4", text_size = "12px"),
+          locations = cells_stub(rows = ellipsis_row)) %>%
+        tab_style(
+          style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
+          locations = cells_stub(rows = ellipsis_row))
+    } else {
+      gt_tbl <- gt_tbl %>%
+        tab_style(
+          style = "padding-top:8px;padding-bottom:8px;",
+          locations = cells_data(rows = ellipsis_row))
+    }
+  }
+
+  gt_tbl
 }
