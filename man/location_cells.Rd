@@ -16,7 +16,7 @@ cells_boxhead(columns, groups)
 
 cells_group(groups)
 
-cells_stub(rows)
+cells_stub(rows = NULL)
 
 cells_data(columns = NULL, rows = NULL)
 
