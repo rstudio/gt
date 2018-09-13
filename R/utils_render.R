@@ -933,6 +933,7 @@ apply_footnotes_to_output <- function(output_df,
 }
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @importFrom htmltools htmlEscape
 #' @noRd
 set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
                                             groups_rows_df) {
@@ -964,7 +965,7 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
       row_index <-
         which(groups_rows_df[, "group_label"] == footnotes_stub_groups_glyphs$grpname[i])
 
-      text <- groups_rows_df[row_index, "group_label"]
+      text <- htmltools::htmlEscape(groups_rows_df[row_index, "group_label"])
 
       text <-
         paste0(
