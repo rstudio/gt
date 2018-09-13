@@ -212,7 +212,7 @@ md <- function(text) {
 #'   preserved.
 #' @return a character object that is tagged as an HTML fragment that is not to
 #'   be sanitized.
-#' @return a character object of class \code{preserve_html}.
+#' @return a character object of class \code{html}.
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and add a caption
@@ -226,18 +226,28 @@ md <- function(text) {
 #' @export
 html <- function(text) {
 
-  # Apply the `from_markdown` class
-  class(text) <- "preserve_html"
+  # Apply the `html` attr and class
+  attr(text, "html") <- TRUE
+  class(text) <- c("html", "character")
   text
+}
+
+is.html <- function(x) {
+
+  if (inherits(x, "html")) {
+    isTRUE(attr(x, "html"))
+  } else {
+    FALSE
+  }
 }
 
 #' Helper for processing column labels
 #'
 #' This helper is to be used specifically within the \code{cols_label()}
-#'   function as an alternative to using named vectors within that function. The
-#'   advantage in using this helper is that the assigned column labels can be
-#'   marked as Markdown (with the \code{md()} function) or as HTML (with the
-#'   \code{html()} function).
+#' function as an alternative to using named vectors within that function. The
+#' advantage in using this helper is that the assigned column labels can be
+#' marked as Markdown (with the \code{md()} function) or as HTML (with the
+#' \code{html()} function).
 #' @param ... a series of named arguments representing the column names and
 #'   values representing the column labels.
 #' @return a named vector of column labels.
