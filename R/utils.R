@@ -227,7 +227,7 @@ process_text <- function(text) {
 
     return(text)
 
-  } else if (inherits(text, "preserve_html")) {
+  } else if (is.html(text)) {
 
     text <- text %>% as.character()
 
