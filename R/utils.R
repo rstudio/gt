@@ -208,7 +208,7 @@ get_locale_dec_mark <- function(locale) {
 # This function processes input text based on the class; if incoming text has
 # the class `from_markdown` (applied by the `md()` helper function), then the
 # text will be sanitized and transformed to HTML from Markdown. If the incoming
-# text has the class `preserve_html` (applied by `html()` helper function), then
+# text has the class `html` (applied by `html()` helper function), then
 # the text will be seen as HTML and it won't undergo sanitization
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
