@@ -52,10 +52,10 @@ gt_preview <- function(data,
     data <-
       rbind(
         data[seq(top_n), ],
-        rep("...", ncol(data)),
+        rep("", ncol(data)),
         data[(nrow(data) + 1 - rev(seq(bottom_n))), ])
 
-    rownames(data)[top_n + 1] <- "..."
+    rownames(data)[top_n + 1] <- ""
   }
 
   # If we elect to include row numbers, then place the row
@@ -67,5 +67,5 @@ gt_preview <- function(data,
         data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
   }
 
-  gt(data, rownames_to_stub = rownames_to_stub)
+  gt(data, rownames_to_stub = FALSE)
 }
