@@ -4,19 +4,21 @@
 \alias{gt_preview}
 \title{Preview a gt table object}
 \usage{
-gt_preview(data, rownames_to_stub = FALSE, top_n = 5, bottom_n = 1)
+gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
 \arguments{
 \item{data}{a \code{data.frame} object or a tibble.}
 
-\item{rownames_to_stub}{an option to take rownames from the input \code{data}
-table as row captions in the stub.}
-
 \item{top_n}{this value will be used as the number of rows from the top of
-the table to display.}
+the table to display. The default, \code{5}, will show the first five rows
+of the table.}
 
 \item{bottom_n}{the value will be used as the number of rows from the bottom
-of the table to display.}
+of the table to display. The default, \code{1}, will show the final row of
+the table.}
+
+\item{incl_rownums}{an option to include the row numbers for \code{data} in
+the table stub.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -28,11 +30,8 @@ Create a preview version of table. Here we can specify the first and last
 \examples{
 # Create a preview of the `mtcars`
 # dataset; invoking the `gt_tbl`
-# object will be display it
-gt_tbl <-
-  gt_preview(
-    mtcars,
-    rownames_to_stub = TRUE)
+# object will display it
+gt_tbl <- gt_preview(mtcars)
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt}},
