@@ -21,24 +21,6 @@ date_formats <- function() {
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
 
-#' Create a vector of date format names
-#' @noRd
-date_format_names <- function() {
-  c("iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year",
-    "month_day_year", "m_day_year", "day_m_year", "day_month_year",
-    "day_month", "year", "month", "day", "year.mn.day", "y.mn.day")
-}
-
-#' Determine if `date_style` has a valid value
-#' @noRd
-is_date_style_valid <- function(date_style) {
-
-  ifelse(
-    as.character(date_style) %in% as.character(1:14) |
-      as.character(date_style) %in% date_format_names(),
-    TRUE, FALSE)
-}
-
 #' Create a tibble containing time formats
 #' @importFrom dplyr tribble
 #' @noRd
@@ -51,22 +33,6 @@ time_formats <- function() {
     "3",	          "hms_p",      "%I:%M:%S %P",
     "4",	          "hm_p",       "%I:%M %P",
     "5",	          "h_p",        "%I %P")
-}
-
-#' Create a vector of time format names
-#' @noRd
-time_format_names <- function() {
-  c("hms", "hm", "hms_p", "hm_p", "h_p")
-}
-
-#' Determine if `time_style` has a valid value
-#' @noRd
-is_time_style_valid <- function(time_style) {
-
-  ifelse(
-    as.character(time_style) %in% as.character(1:5) |
-      as.character(time_style) %in% time_format_names(),
-    TRUE, FALSE)
 }
 
 #' Transform `date_style` to `date_format`
