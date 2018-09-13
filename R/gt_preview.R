@@ -27,6 +27,10 @@ gt_preview <- function(data,
   # Convert the table to a data frame
   data <- as.data.frame(data, stringsAsFactors = FALSE)
 
+  # Convert factor columns to character columns
+  factor_cols <- sapply(data, is.factor)
+  data[factor_cols] <- lapply(data[factor_cols], as.character)
+
   # Reset the rownames in `data`
   rownames(data) <- NULL
 
@@ -60,8 +64,7 @@ gt_preview <- function(data,
   if (incl_rownums) {
     data <-
       cbind(
-        data.frame(rowname = rownames(data), stringsAsFactors = FALSE),
-        data)
+        data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
   }
 
   gt(data, rownames_to_stub = rownames_to_stub)
