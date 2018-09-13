@@ -85,7 +85,14 @@ gt <- function(data,
     group_cols <- attr(data, "vars", exact = TRUE)
     group_cols <- base::intersect(group_cols, colnames(data))
 
-    group_labels <- apply(data[, group_cols], 1, paste, collapse = "-")
+    group_labels <-
+      apply(
+        data[, group_cols],
+        1,
+        paste,
+        collapse = getOption(
+          "gt.stub_group.sep",
+          gt_default_options$gt.stub_group.sep))
 
     # Place the `group_labels` values into `stub_df$groupname`
     stub_df[["groupname"]] <- group_labels
