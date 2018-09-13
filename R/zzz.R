@@ -44,4 +44,29 @@ globalVariables(
     "value"
     )
   )
+
+#' The gt package options.
+#'
+#' @section Package options:
+#'
+#' gt uses the following \code{\link{options}} to configure behaviour:
+#'
+#' \itemize{
+#'   \item \code{gt.stub_group.sep}: a separator
+#'
+#' }
+#' @name gt-options
+NULL
+
+gt_default_options <- list(
+  gt.stub_group.sep = " - "
+)
+
+.onLoad <- function(libname, pkgname) {
+  op <- options()
+  toset <- !(names(gt_default_options) %in% names(op))
+  if (any(toset)) options(gt_default_options[toset])
+
+  invisible()
+}
 #nocov end
