@@ -10,7 +10,9 @@ tab_source_note(data, source_note)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{source_note}{text to be used in the source note.}
+\item{source_note}{text to be used in the source note. We can optionally use
+the \code{\link{md}()} and \code{\link{html}()} functions to style the text
+as Markdown or to retain HTML elements in the text.}
 }
 \value{
 an object of class \code{gt_tbl}.

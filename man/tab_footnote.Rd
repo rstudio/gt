@@ -10,13 +10,22 @@ tab_footnote(data, footnote, locations)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{footnote}{text to be used in the footnote.}
+\item{footnote}{the text to be used in the footnote. We can optionally use
+the \code{\link{md}()} and \code{\link{html}()} functions to style the text
+as Markdown or to retain HTML elements in the footnote text.}
 
 \item{locations}{the cell or set of cells to be associated with the footnote.
-Supplying an object with the \code{\link{cells_data}()} helper function is
-a useful way to specify the cell that is associated with the footnote.
-Additionally, we can supply a list with multiple calls to
-\code{\link{cells_data}()} if we wish to combine multiple cell selections.}
+Supplying any of the \code{cells_*()} helper functions is a useful way to
+target the location cells that are associated with the footnote text. These
+helper functions are: \code{\link{cells_title}()},
+\code{\link{cells_boxhead}()}, \code{\link{cells_group}()},
+\code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
+\code{\link{cells_summary}()}. Please see the help article
+\link{location_cells} for more information on how these helper functions
+can be used. Additionally, we can enclose several \code{cells_*()} calls
+within a \code{list()} if we wish to link the footnote text to different
+types of locations (e.g., cell data values, stub group headings, the table
+title, etc.).}
 }
 \value{
 an object of class \code{gt_tbl}.
