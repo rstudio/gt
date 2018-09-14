@@ -36,28 +36,6 @@ rownum_translation <- function(output_df,
 
 # Common render pipeline functions ----------------------------------------
 
-# If a vector is found (perhaps within a list) simply return the vector;
-# otherwise return NA
-get_optional_vector <- function(object) {
-
-  if (!is.null(object)) {
-    return(object)
-  } else {
-    return(NA_character_)
-  }
-}
-
-# If a list is found (perhaps within another list) simply return that list;
-# otherwise return an empty list
-get_optional_list <- function(object) {
-
-  if (!is.null(object)) {
-    return(object)
-  } else {
-    return(list())
-  }
-}
-
 # Initialize `output_df`
 initialize_output_df <- function(data_df) {
 
