@@ -276,7 +276,11 @@ col_labels <- function(...) {
 }
 
 #' Helper for defining custom styles for table cells
-#' @return a character vector containing formatted styles.
+#'
+#' This helper function is to be used with the \code{\link{tab_style}()}
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. We can also define several styles with a single call of
+#' \code{apply_styles} and \code{\link{tab_style}()} will reliably process that.
 #' @param bkgd_color the background color of the cell.
 #' @param text_color the text color.
 #' @param text_font the font or collection of fonts (subsequent font names are)
@@ -291,6 +295,7 @@ col_labels <- function(...) {
 #'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
 #' @param text_transform allows for the transformation of text. Options are
 #'   \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
+#' @return a character vector containing formatted styles.
 #' @family helper functions
 #' @export
 apply_styles <- function(bkgd_color = NULL,
