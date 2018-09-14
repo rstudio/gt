@@ -10,9 +10,11 @@ tab_heading(data, title, headnote = NULL)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{title}{text to be used in the table title.}
-
-\item{headnote}{optional text to be used as the table's headnote.}
+\item{title, headnote}{text to be used in the table title and, optionally, for
+the table headnote (a line of text below the table title which is somewhat
+smaller in size). We can optionally use the \code{\link{md}()} and
+\code{\link{html}()} functions to style the text as Markdown or to retain
+HTML elements in the text.}
 }
 \value{
 an object of class \code{gt_tbl}.

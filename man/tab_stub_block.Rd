@@ -13,8 +13,8 @@ function.}
 \item{group}{the stub block group heading name.}
 
 \item{rows}{the rows to be made components of the stub block. Can either be a
-vector of row captions provided \code{c()}, a vector of row indices, or
-a helper function focused on selections. The select helper functions are:
+vector of row captions provided \code{c()}, a vector of row indices, or a
+helper function focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
@@ -22,11 +22,11 @@ and \code{\link{everything}()}.}
 \item{others}{an option to set a default group heading for any rows not
 formally placed in a stub block named by \code{group} in any call of
 \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
-only a value to \code{others} is possible and makes explicit that the
-call is meant to provide a default group heading value. If this is not
-set and there are rows that haven't been placed into a stub block, then
-those rows will be automatically placed into a stub block with the group
-heading 'Others'.}
+only a value to \code{others} is possible and makes explicit that the call
+is meant to provide a default group heading value. If this is not set and
+there are rows that haven't been placed into a stub block (where one or
+more stub blocks exist), then those rows will be automatically placed into
+a stub block without a title.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -39,7 +39,8 @@ creates a stub block with group headings and row captions.
 # Create a table based on `mtcars` where
 # there are group headings grouped inside
 # stub blocks; two groups are generated
-# here: `Mazda` and `Others`
+# here: `Mazda` and `NA` (a group without)
+# a title
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     tab_stub_block(

@@ -10,7 +10,9 @@ tab_stubhead_caption(data, caption)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{caption}{the text to be used as the stubhead caption.}
+\item{caption}{the text to be used as the stubhead caption. We can optionally
+use the \code{\link{md}()} and \code{\link{html}()} functions to style the
+text as Markdown or to retain HTML elements in the text.}
 }
 \value{
 an object of class \code{gt_tbl}.
