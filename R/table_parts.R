@@ -2,8 +2,11 @@
 #'
 #' Add a title and optional headnote to the heading part of the table.
 #' @inheritParams fmt_number
-#' @param title text to be used in the table title.
-#' @param headnote optional text to be used as the table's headnote.
+#' @param title,headnote text to be used in the table title and, optionally, for
+#'   the table headnote (a line of text below the table title which is somewhat
+#'   smaller in size). We can optionally use the \code{\link{md}()} and
+#'   \code{\link{html}()} functions to style the text as Markdown or to retain
+#'   HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -43,7 +46,9 @@ tab_heading <- function(data,
 #' Add a caption to the stubhead of a table. If a stub does not exist, no change
 #' will be made.
 #' @inheritParams fmt_number
-#' @param caption the text to be used as the stubhead caption.
+#' @param caption the text to be used as the stubhead caption. We can optionally
+#'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
+#'   text as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -71,25 +76,26 @@ tab_stubhead_caption <- function(data,
 #' @inheritParams fmt_number
 #' @param group the stub block group heading name.
 #' @param rows the rows to be made components of the stub block. Can either be a
-#'   vector of row captions provided \code{c()}, a vector of row indices, or
-#'   a helper function focused on selections. The select helper functions are:
+#'   vector of row captions provided \code{c()}, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}.
 #' @param others an option to set a default group heading for any rows not
 #'   formally placed in a stub block named by \code{group} in any call of
 #'   \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
-#'   only a value to \code{others} is possible and makes explicit that the
-#'   call is meant to provide a default group heading value. If this is not
-#'   set and there are rows that haven't been placed into a stub block, then
-#'   those rows will be automatically placed into a stub block with the group
-#'   heading 'Others'.
+#'   only a value to \code{others} is possible and makes explicit that the call
+#'   is meant to provide a default group heading value. If this is not set and
+#'   there are rows that haven't been placed into a stub block (where one or
+#'   more stub blocks exist), then those rows will be automatically placed into
+#'   a stub block without a title.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `mtcars` where
 #' # there are group headings grouped inside
 #' # stub blocks; two groups are generated
-#' # here: `Mazda` and `Others`
+#' # here: `Mazda` and `NA` (a group without)
+#' # a title
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_stub_block(
@@ -207,7 +213,9 @@ tab_boxhead_panel <- function(data,
 #'
 #' Add a source note citation to the source note part of the table.
 #' @inheritParams fmt_number
-#' @param source_note text to be used in the source note.
+#' @param source_note text to be used in the source note. We can optionally use
+#'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text
+#'   as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Add a source note that provides
