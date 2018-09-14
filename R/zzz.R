@@ -30,6 +30,28 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 #' @importFrom utils globalVariables
 globalVariables(
   c(
+    ".",
+    "are_groups_present",
+    "arrange_dfs",
+    "colname",
+    "colnames_start",
+    "colnum",
+    "colnum_final",
+    "footnotes_to_list",
+    "fs_id",
+    "fs_id_coalesced",
+    "get_groups_rows",
+    "group_label",
+    "grpname",
+    "integrate_summary_lines",
+    "locname",
+    "locnum",
+    "missing_text",
+    "obtain_group_ordering",
+    "row_end",
+    "rownum",
+    "styles_appended",
+    "text",
     "Var1",
     "base_locale_id",
     "dec_sep",
@@ -62,11 +84,11 @@ gt_default_options <- list(
   gt.stub_group.sep = " - "
 )
 
-.onLoad <- function(libname, pkgname) {
-  op <- options()
-  toset <- !(names(gt_default_options) %in% names(op))
-  if (any(toset)) options(gt_default_options[toset])
-
-  invisible()
-}
+# .onLoad <- function(libname, pkgname) {
+#   op <- options()
+#   toset <- !(names(gt_default_options) %in% names(op))
+#   if (any(toset)) options(gt_default_options[toset])
+#
+#   invisible()
+# }
 #nocov end
