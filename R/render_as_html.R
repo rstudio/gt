@@ -55,22 +55,22 @@ render_as_html <- function(data) {
   arrange_groups <- data_attr$arrange_groups
 
   # Get the `others_group` vector
-  others_group <- get_optional_vector(data_attr$others_group[[1]])
+  others_group <- data_attr$others_group[[1]] %||% NA_character_
 
   # Get the `heading` object
-  heading <- get_optional_list(data_attr$heading)
+  heading <- data_attr$heading
 
   # Get the `stubhead_caption` object
-  stubhead_caption <- get_optional_list(data_attr$stubhead_caption)
+  stubhead_caption <- data_attr$stubhead_caption
 
   # Get the `source_note` object
-  source_note <- get_optional_list(data_attr$source_note)
+  source_note <- data_attr$source_note
 
   # Get the `col_merge` object
-  col_merge <- get_optional_list(data_attr$col_merge)
+  col_merge <- data_attr$col_merge
 
   # Get the `summary_list` object
-  summary_list <- get_optional_list(data_attr$summary)
+  summary_list <- data_attr$summary
 
   # Initialize `output_df`
   output_df <- initialize_output_df(data_df)
