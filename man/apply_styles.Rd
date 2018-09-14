@@ -36,7 +36,10 @@ we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 a character vector containing formatted styles.
 }
 \description{
-Helper for defining custom styles for table cells
+This helper function is to be used with the \code{\link{tab_style}()}
+function, which itself allows for the setting of custom styles to one or more
+cells. We can also define several styles with a single call of
+\code{apply_styles} and \code{\link{tab_style}()} will reliably process that.
 }
 \seealso{
 Other helper functions: \code{\link{col_labels}},
