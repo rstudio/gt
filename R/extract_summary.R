@@ -40,13 +40,13 @@ extract_summary <- function(data) {
   arrange_groups <- data_attr$arrange_groups
 
   # Get the `others_group` vector
-  others_group <- get_optional_vector(data_attr$others_group[[1]])
+  others_group <- data_attr$others_group[[1]] %||% NA_character_
 
   # Get the `col_merge` object
-  col_merge <- get_optional_list(data_attr$col_merge)
+  col_merge <- data_attr$col_merge
 
   # Get the `summary_list` object
-  summary_list <- get_optional_list(data_attr$summary)
+  summary_list <- data_attr$summary
 
   # Initialize `output_df`
   output_df <- initialize_output_df(data_df)
@@ -73,7 +73,7 @@ extract_summary <- function(data) {
 
   # Replace NA values in the `groupname` column if there is a reserved
   #   label for the unlabeled group
-  groups_df[which(is.na(groups_df[, "groupname"])), "groupname"] <- others_group
+  groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
 
   # Create the `groups_rows_df` data frame, which provides information
   #   on which rows the group rows should appear above
