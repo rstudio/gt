@@ -124,6 +124,54 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
+
+# Apply footnotes to the data rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_styles_to_summary_output <- function(summary_df,
+                                           styles_resolved,
+                                           group,
+                                           n_cols) {
+
+  styles_summary_df <- summary_df
+  styles_summary_df[] <- NA_character_
+
+
+  styles_tbl_summary <-
+    styles_resolved %>%
+    dplyr::filter(locname == "summary_cells") %>%
+    dplyr::filter(grpname == group)
+
+  if (nrow(styles_tbl_summary) > 0) {
+
+    styles_summary <-
+      styles_tbl_summary %>%
+      dplyr::group_by(grpname, colname, rownum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct() %>%
+      dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
+      dplyr::select(colname, row, styles_appended)
+
+
+    for (i in seq(nrow(styles_summary))) {
+
+      styles_summary_df[
+        styles_summary$row[i], styles_summary$colname[i]] <-
+        styles_summary$styles_appended[i]
+    }
+  }
+
+  # Extract `summary_styles` as a vector
+  summary_styles <- as.vector(t(styles_summary_df))
+
+  # Split `summary_styles` by slices of rows
+  split_body_content(body_content = summary_styles, n_cols)
+}
+
+
+
 # Create the opening HTML element of a table
 create_table_start <- function(groups_rows_df,
                                n_rows,
