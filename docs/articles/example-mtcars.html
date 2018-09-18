@@ -52,6 +52,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+    </li>
+    <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
     </li>
     <li>
@@ -62,6 +65,9 @@
     </li>
     <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
+    </li>
+    <li>
+      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
     </li>
   </ul>
 </li>
@@ -155,7 +161,11 @@
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(<span class="dt">others =</span> <span class="st">"The Rest of the mtcars"</span>)</a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb2-24" data-line-number="24">mtcars_tbl</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -177,6 +187,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -185,14 +196,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -839,7 +856,11 @@
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/blocks_arrange.html">blocks_arrange</a></span>(<span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"High Gas Mileage"</span>, <span class="st">"Fast Cars"</span>))</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb3-5" data-line-number="5">mtcars_tbl</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -861,6 +882,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -869,14 +891,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -1525,7 +1553,11 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/cols_move_to_end.html">cols_move_to_end</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(disp, cyl))</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb4-7" data-line-number="7">mtcars_tbl</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -1547,6 +1579,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -1555,14 +1588,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -2052,7 +2091,11 @@
 <a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="dt">decimals =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb5-13" data-line-number="13">mtcars_tbl</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -2074,6 +2117,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -2082,14 +2126,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -2579,7 +2629,11 @@
 <a class="sourceLine" id="cb6-9" data-line-number="9">      <span class="dt">cyl =</span> <span class="st">"Cylinders"</span>))</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb6-12" data-line-number="12">mtcars_tbl</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -2601,6 +2655,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -2609,14 +2664,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -3111,7 +3172,11 @@
 <a class="sourceLine" id="cb7-14" data-line-number="14">    <span class="dt">caption =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"*Car*"</span>))</a>
 <a class="sourceLine" id="cb7-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb7-17" data-line-number="17">mtcars_tbl</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -3133,6 +3198,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -3141,14 +3207,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
@@ -3670,7 +3742,11 @@
 <a class="sourceLine" id="cb8-26" data-line-number="26">      <span class="dt">rows =</span> fastest_car_qsec))</a>
 <a class="sourceLine" id="cb8-27" data-line-number="27"></a>
 <a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29">mtcars_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb8-29" data-line-number="29">mtcars_tbl</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -3692,6 +3768,7 @@
 .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
+  border-bottom-color: #FFFFFF;
 }
 
 .title {
@@ -3700,14 +3777,20 @@
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
 }
 
 .bottom_border {
