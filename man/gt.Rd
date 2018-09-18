@@ -11,8 +11,18 @@ gt(data, rowname_col = "rowname", groupname_col = "groupname",
 \arguments{
 \item{data}{a \code{data.frame} object or a tibble.}
 
+\item{rowname_col}{the column name in the input \code{data} table to use as
+row captions to be placed in the display table stub.}
+
+\item{groupname_col}{the column name in the input \code{data} table to use as
+group labels for generation of stub row groups.}
+
 \item{rownames_to_stub}{an option to take rownames from the input \code{data}
-table as row captions in the stub.}
+table as row captions in the display table stub.}
+
+\item{stub_group.sep}{the separator to use between consecutive group names
+(a possibility when providing \code{data} as a \code{grouped_df} with
+multiple groups) in the displayed stub row group label.}
 }
 \value{
 an object of class \code{gt_tbl}.
