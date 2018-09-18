@@ -5,9 +5,9 @@ test_that("a gt table object contains the correct components", {
   # Create a `gt_tbl` object with `gt()`
   tab <- gt(data = iris)
 
-  # Expect that the object has 12 attributes
+  # Expect that the object has 14 attributes
   expect_equal(
-    length(attributes(tab)), 12)
+    length(attributes(tab)), 14)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -18,8 +18,8 @@ test_that("a gt table object contains the correct components", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "arrange_groups", "opts_df",
-          "formats")))
+          "rows_df", "cols_df", "arrange_groups", "data_df",
+          "opts_df", "formats", "transforms")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
@@ -91,9 +91,9 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   # data frame's row names as row names in the stub
   tab <- gt(data = mtcars, rownames_to_stub = TRUE)
 
-  # Expect that the object has 12 attributes
+  # Expect that the object has 14 attributes
   expect_equal(
-    length(attributes(tab)), 12)
+    length(attributes(tab)), 14)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -104,8 +104,8 @@ test_that("a gt table can be made to use the rownames of a data frame", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "arrange_groups", "opts_df",
-          "formats")))
+          "rows_df", "cols_df", "arrange_groups", "data_df",
+          "opts_df", "formats", "transforms")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
@@ -186,9 +186,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # `data_r` dataset
   tab <- gt(data = data_r)
 
-  # Expect that the object has 12 attributes
+  # Expect that the object has 14 attributes
   expect_equal(
-    length(attributes(tab)), 12)
+    length(attributes(tab)), 14)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -199,8 +199,8 @@ test_that("a gt table can be made with the stub partially or fully populated", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "arrange_groups", "opts_df",
-          "formats")))
+          "rows_df", "cols_df", "arrange_groups", "data_df",
+          "opts_df", "formats", "transforms")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
@@ -282,9 +282,9 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # `data_rg` dataset
   tab <- gt(data = data_rg)
 
-  # Expect that the object has 12 attributes
+  # Expect that the object has 14 attributes
   expect_equal(
-    length(attributes(tab)), 12)
+    length(attributes(tab)), 14)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -295,8 +295,8 @@ test_that("a gt table can be made with the stub partially or fully populated", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "arrange_groups", "opts_df",
-          "formats")))
+          "rows_df", "cols_df", "arrange_groups", "data_df",
+          "opts_df", "formats", "transforms")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
