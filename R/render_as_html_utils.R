@@ -360,13 +360,23 @@ create_boxhead_component <- function(boxh_df,
 
   if (spanners_present == FALSE) {
 
+    table_col_headings <- c()
+
+    for (i in seq(headings)) {
+      table_col_headings <-
+        c(table_col_headings,
+          paste0(
+            "<th class='col_heading ", col_alignment[i],
+            "' rowspan='1' colspan='1'",
+            get_column_style(
+              column_style_attrs,
+              column_name = headings[i]),
+            ">", headings[i], "</th>")
+        )
+    }
+
     table_col_headings <-
-      paste0(
-        "<tr>\n",
-        paste0(
-          "<th class='col_heading ", col_alignment, "' rowspan='1' colspan='1'>",
-          headings, "</th>", collapse = "\n"),
-        "\n</tr>\n")
+      paste0("<tr>\n", paste0(table_col_headings, collapse = "\n"), "\n</tr>\n")
 
   } else {
 
@@ -401,8 +411,9 @@ create_boxhead_component <- function(boxh_df,
             paste0(
               "<th data-type='column_heading' ",
               "class='col_heading center' rowspan='2' colspan='1'",
-              get_column_style(column_style_attrs, column_name = headings[i]),
-              ">", headings[i], "</th>"))
+              get_column_style(column_style_attrs, column_name = colnames(boxh_df)[i]),
+              ">", headings[i], "</th>")
+          )
 
         headings_stack <- c(headings_stack, headings[i])
 
@@ -449,8 +460,11 @@ create_boxhead_component <- function(boxh_df,
                 "<th data-type='column_heading' class='col_heading ",
                 class, " ", ifelse(colspan > 1, "center", col_alignment[-1][i]),
                 "' rowspan='1' colspan='", colspan, "'",
-                get_spanner_style(spanner_style_attrs, group_name = spanners[i]),
-                ">", spanners[i], "</th>"))
+                get_spanner_style(
+                  spanner_style_attrs,
+                  group_name = spanners[i]),
+                ">", spanners[i], "</th>")
+            )
         }
       }
     }
@@ -459,21 +473,42 @@ create_boxhead_component <- function(boxh_df,
 
     remaining_headings <- headings[!(headings %in% headings_stack)]
 
+    remaining_headings_indices <- which(remaining_headings %in% headings)
+
     col_alignment <- col_alignment[-1][!(headings %in% headings_stack)]
 
-    second_set <-
-      paste0(
-        "<th data-type='column_heading' class='col_heading ",
-        col_alignment, "' rowspan='1' colspan='1'>",
-        remaining_headings, "</th>",
-        collapse = "\n")
+    if (length(remaining_headings) > 0) {
 
-    # Create the `table_col_headings` HTML component
-    table_col_headings <-
-      paste0(
-        "<tr>\n",
-        first_set, "\n</tr>\n<tr>\n",
-        second_set, "\n</tr>\n")
+      second_set <- c()
+
+      for (j in seq(remaining_headings)) {
+
+        second_set <-
+          c(second_set,
+            paste0(
+              "<th data-type='column_heading' class='col_heading ",
+              col_alignment[j], "' rowspan='1' colspan='1'",
+              get_column_style(
+                column_style_attrs,
+                column_name = colnames(boxh_df)[remaining_headings_indices[j]]),
+              ">", remaining_headings[j], "</th>")
+          )
+      }
+
+      second_set <- paste(second_set, collapse = "\n")
+
+      # Create the `table_col_headings` HTML component
+      table_col_headings <-
+        paste0(
+          "<tr>\n",
+          first_set, "\n</tr>\n<tr>\n",
+          second_set, "\n</tr>\n")
+
+    } else {
+
+      # Create the `table_col_headings` HTML component
+      table_col_headings <- paste0("<tr>\n", first_set, "\n</tr>\n")
+    }
   }
 
   table_col_headings
@@ -483,6 +518,7 @@ create_boxhead_component <- function(boxh_df,
 #' @noRd
 create_body_component <- function(row_splits_body,
                                   row_splits_styles,
+                                  styles_resolved,
                                   groups_rows_df,
                                   col_alignment,
                                   stub_components,
@@ -571,12 +607,15 @@ create_body_component <- function(row_splits_body,
         dplyr::filter(row_end == i) %>%
         dplyr::pull(group)
 
-      if (any(group %in% names(list_of_summaries$summary_df_display_list))) {
+      if (group %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
           list_of_summaries$summary_df_display_list[[
             which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
           as.data.frame(stringsAsFactors = FALSE)
+
+        row_splits_summary_styles <-
+          apply_styles_to_summary_output(summary_df, styles_resolved, group, n_cols)
 
         body_content_summary <- as.vector(t(summary_df))
 
@@ -601,12 +640,15 @@ create_body_component <- function(row_splits_body,
                 paste0(
                   "<td class='stub row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                  col_alignment[1], "'>", row_splits_summary[[j]][1],
+                  col_alignment[1], "'",
+                  create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
+                  row_splits_summary[[j]][1],
                   "</td>"), "\n",
                 paste0(
                   "<td class='row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                  col_alignment[-1], "'>",
+                  col_alignment[-1], "'",
+                  create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
                   row_splits_summary[[j]][-1],
                   "</td>", collapse = "\n"),
                 "\n</tr>\n")
