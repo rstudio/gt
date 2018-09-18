@@ -557,7 +557,11 @@ create_body_component <- function(row_splits_body,
         c(body_rows,
           paste0(
             "<tr>\n",
-            "<td data-type='group' colspan='", n_cols ,"' class='group_heading'>",
+            "<td data-type='group' colspan='", n_cols ,
+            "' class='",
+            ifelse(
+              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] != "",
+              "group_heading", "empty_group_heading"), "'>",
             groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
             "</tr>\n"))
