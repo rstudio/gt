@@ -30,6 +30,8 @@
 #' @family table-part creation/modification functions
 #' @export
 gt <- function(data,
+               rowname_col = "rowname",
+               groupname_col = "groupname",
                rownames_to_stub = FALSE,
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
@@ -57,25 +59,13 @@ gt <- function(data,
   # If `rowname` is a column available in `data`,
   # place that column's data into `stub_df` and
   # remove it from `data`
-  if ("rowname" %in% colnames(data)) {
+  if (rowname_col %in% colnames(data)) {
 
     # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- as.character(data[["rowname"]])
+    stub_df[["rowname"]] <- as.character(data[[rowname_col]])
 
     # Remove the `rowname` column from `data`
-    data[["rowname"]] <- NULL
-  }
-
-  # If `groupname` is a column available in `data`,
-  # place that column's data into `stub_df` and
-  # remove it from `data`
-  if ("groupname" %in% colnames(data)) {
-
-    # Place the `groupname` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- as.character(data[["groupname"]])
-
-    # Remove the `groupname` column from `data`
-    data[["groupname"]] <- NULL
+    data[[rowname_col]] <- NULL
   }
 
   # If `data` is a `grouped_df` then create groups from the
@@ -94,12 +84,23 @@ gt <- function(data,
 
     # Remove all columns in `group_cols` from `data`
     data[, which(colnames(data) %in% group_cols)] <- NULL
+
+  } else if (groupname_col %in% colnames(data)) {
+
+    # If `groupname` is a column available in `data`,
+    # place that column's data into `stub_df` and
+    # remove it from `data`
+
+    # Place the `groupname` values into `stub_df$groupname`
+    stub_df[["groupname"]] <- as.character(data[[groupname_col]])
+
+    # Remove the `groupname` column from `data`
+    data[[groupname_col]] <- NULL
   }
 
   # Take the input data and convert to a
   # data frame
-  data_tbl <-
-    data %>%
+  data_tbl <- data %>%
     as.data.frame(stringsAsFactors = FALSE)
 
   # Reset the rownames in the `data_tbl` df
