@@ -42,6 +42,16 @@
 #'   the style, width, and color of the field's bottom border.
 #' @param row.padding,summary_row.padding the amount of padding in each row and
 #'   in each summary row.
+#' @param footnote.sep the separating characters between adjacent footnotes in
+#'   the footnotes section. The default value produces a linebreak.
+#' @param footnote.glyph the set of sequential figures or characters used to
+#'   identify the footnotes. We can either supply the keyword \code{"numbers"}
+#'   (the default, indicating that we want numeric glyphs), the keywords
+#'   \code{"letters"} or \code{"LETTERS"} (indicating that we want letters as
+#'   glyphs, either lowercase or uppercase), or, a vector of character values
+#'   representing the series of glyphs. A series of glyphs is recycled when its
+#'   usage goes beyond the length of the set. At each cycle, the glyphs are
+#'   simply combined (e.g., \code{*} -> \code{**} -> \code{***}).
 #' @param footnote.padding,sourcenote.padding the amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub an option for whether to include the stub
@@ -85,6 +95,8 @@ tab_options <- function(data,
                         summary_row.background.color = NULL,
                         summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
+                        footnote.sep = NULL,
+                        footnote.glyph = NULL,
                         footnote.font.size = NULL,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
@@ -102,8 +114,7 @@ tab_options <- function(data,
       table.font.size <- paste0(table.font.size, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "table_font_size", table.font.size)
+    opts_df <- opts_df_set(opts_df, "table_font_size", table.font.size)
   }
 
   # table.background.color
@@ -120,8 +131,7 @@ tab_options <- function(data,
       table.width <- paste0(table.width, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "table_width", table.width)
+    opts_df <- opts_df_set(opts_df, "table_width", table.width)
   }
 
   # table.border.top.style
@@ -217,15 +227,13 @@ tab_options <- function(data,
       boxhead.font.size <- paste0(boxhead.font.size, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "boxhead_font_size", boxhead.font.size)
+    opts_df <- opts_df_set(opts_df, "boxhead_font_size", boxhead.font.size)
   }
 
   # boxhead.font.weight
   if (!is.null(boxhead.font.weight)) {
 
-    opts_df <- opts_df_set(
-      opts_df, "boxhead_font_weight", boxhead.font.weight)
+    opts_df <- opts_df_set(opts_df, "boxhead_font_weight", boxhead.font.weight)
   }
 
   # stub_group.background.color
@@ -360,8 +368,7 @@ tab_options <- function(data,
       row.padding <- paste0(row.padding, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "row_padding", row.padding)
+    opts_df <- opts_df_set(opts_df, "row_padding", row.padding)
   }
 
   # summary_row.background.color
@@ -378,8 +385,7 @@ tab_options <- function(data,
       summary_row.padding <- paste0(summary_row.padding, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "summary_row_padding", summary_row.padding)
+    opts_df <- opts_df_set(opts_df, "summary_row_padding", summary_row.padding)
   }
 
   # summary_row.text_transform
@@ -389,6 +395,18 @@ tab_options <- function(data,
       opts_df, "summary_row_text_transform", summary_row.text_transform)
   }
 
+  # footnote.sep
+  if (!is.null(footnote.sep)) {
+
+    opts_df <- opts_df_set(opts_df, "footnote_sep", footnote.sep)
+  }
+
+  # footnote.glyph
+  if (!is.null(footnote.glyph)) {
+
+    opts_df <- opts_df_set(opts_df, "footnote_glyph", footnote.glyph)
+  }
+
   # footnote.font.size
   if (!is.null(footnote.font.size)) {
 
@@ -396,8 +414,7 @@ tab_options <- function(data,
       footnote.font.size <- paste0(footnote.font.size, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "footnote_font_size", footnote.font.size)
+    opts_df <- opts_df_set(opts_df, "footnote_font_size", footnote.font.size)
   }
 
   # footnote.padding
@@ -407,8 +424,7 @@ tab_options <- function(data,
       footnote.padding <- paste0(footnote.padding, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "footnote_padding", footnote.padding)
+    opts_df <- opts_df_set(opts_df, "footnote_padding", footnote.padding)
   }
 
   # sourcenote.font.size
@@ -429,8 +445,7 @@ tab_options <- function(data,
       sourcenote.padding <- paste0(sourcenote.padding, "px")
     }
 
-    opts_df <- opts_df_set(
-      opts_df, "sourcenote_padding", sourcenote.padding)
+    opts_df <- opts_df_set(opts_df, "sourcenote_padding", sourcenote.padding)
   }
 
   # row.striping.include.stub
