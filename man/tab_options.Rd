@@ -24,7 +24,8 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   field.border.bottom.style = NULL, field.border.bottom.width = NULL,
   field.border.bottom.color = NULL, row.padding = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
-  summary_row.text_transform = NULL, footnote.font.size = NULL,
+  summary_row.text_transform = NULL, footnote.sep = NULL,
+  footnote.glyph = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
   sourcenote.padding = NULL, row.striping.include_stub = NULL,
   row.striping.include_field = NULL)
@@ -75,6 +76,18 @@ in each summary row.}
 
 \item{summary_row.text_transform}{an option to apply text transformations to
 the label text in each summary row.}
+
+\item{footnote.sep}{the separating characters between adjacent footnotes in
+the footnotes section. The default value produces a linebreak.}
+
+\item{footnote.glyph}{the set of sequential figures or characters used to
+identify the footnotes. We can either supply the keyword \code{"numbers"}
+(the default, indicating that we want numeric glyphs), the keywords
+\code{"letters"} or \code{"LETTERS"} (indicating that we want letters as
+glyphs, either lowercase or uppercase), or, a vector of character values
+representing the series of glyphs. A series of glyphs is recycled when its
+usage goes beyond the length of the set. At each cycle, the glyphs are
+simply combined (e.g., \code{*} -> \code{**} -> \code{***}).}
 
 \item{footnote.padding, sourcenote.padding}{the amount of padding to apply to
 the footnote and source note sections.}

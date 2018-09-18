@@ -4,7 +4,8 @@
 \alias{gt}
 \title{Create a gt table object}
 \usage{
-gt(data, rownames_to_stub = FALSE,
+gt(data, rowname_col = "rowname", groupname_col = "groupname",
+  rownames_to_stub = FALSE,
   stub_group.sep = getOption("gt.stub_group.sep", " - "))
 }
 \arguments{
