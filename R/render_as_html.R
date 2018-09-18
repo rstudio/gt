@@ -108,16 +108,34 @@ render_as_html <- function(data) {
 
   # Create the `groups_rows_df` data frame, which provides information
   #   on which rows the group rows should appear above
-  # TODO: fix index on row_end (mistake with NA group)
   groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
 
+  # Apply column names to column labels for any of those column labels not
+  # explicitly set
+  boxh_df <- migrate_colnames_to_labels(boxh_df)
+
+  # Assign center alignment for all columns that haven't had alignment
+  # explicitly set
+  # TODO: consider default alignments based on content
+  boxh_df <- set_default_alignments(boxh_df)
+
+  data_attr$boxh_df <- boxh_df
+  data_attr$stub_df <- stub_df
+  data_attr$cols_df <- cols_df
+  data_attr$data_df <- data_df
+  data_attr$arrange_groups <- arrange_groups
+  data_attr$output_df <- output_df
+
   # TODO: text_transform
-  # data_attr <- replace_output_at_location(
-  #   loc = cells_data(columns = vars(carb, mpg), rows = hp > 100),
-  #   data_attr = data_attr,
-  #   func = function(x) {
-  #     paste0("<b>", x, "</b>")
-  #   })
+  for (transform in transforms) {
+    data_attr <- text_transform_at_location(
+      loc = transform$resolved,
+      data_attr = data_attr,
+      func = transform$func)
+  }
+
+  output_df <- data_attr$output_df
+  boxh_df <- data_attr$boxh_df
 
   # Perform any necessary column merge operations
   col_merge_output <-
@@ -131,15 +149,6 @@ render_as_html <- function(data) {
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
     create_summary_dfs(summary_list, data_df, stub_df, output_df)
-
-  # Apply column names to column labels for any of those column labels not
-  # explicitly set
-  boxh_df <- migrate_colnames_to_labels(boxh_df)
-
-  # Assign center alignment for all columns that haven't had alignment
-  # explicitly set
-  # TODO: consider default alignments based on content
-  boxh_df <- set_default_alignments(boxh_df)
 
   # Determine if there is a populated stub
   stub_available <- is_stub_available(stub_df)
