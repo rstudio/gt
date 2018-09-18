@@ -20,18 +20,25 @@
 
 .heading {
   background-color: $heading_background_color; /* heading.background.color */
+  border-bottom-color: $table_background_color;
 }
 
 .title {
   color: font-color($heading_background_color);
   font-size: $heading_title_font_size; /* heading.title.font.size */
   padding-top: 4px; /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: $table_background_color;
+  border-bottom-width: 0;
 }
 
 .headnote {
   color: font-color($heading_background_color);
   font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
+  padding-top: 1px;
   padding-bottom: 4px; /* heading.bottom.padding */
+  border-top-color: $table_background_color;
+  border-top-width: 0;
 }
 
 .bottom_border {
