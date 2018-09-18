@@ -84,6 +84,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+    </li>
+    <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
     </li>
     <li>
@@ -94,6 +97,9 @@
     </li>
     <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
+    </li>
+    <li>
+      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
     </li>
   </ul>
 </li>
@@ -144,15 +150,24 @@ function.</p></td>
     </tr>
     <tr>
       <th>footnote</th>
-      <td><p>text to be used in the footnote.</p></td>
+      <td><p>the text to be used in the footnote. We can optionally use
+the <code><a href='md.html'>md</a>()</code> and <code><a href='html.html'>html</a>()</code> functions to style the text
+as Markdown or to retain HTML elements in the footnote text.</p></td>
     </tr>
     <tr>
       <th>locations</th>
       <td><p>the cell or set of cells to be associated with the footnote.
-Supplying an object with the <code><a href='location_cells.html'>cells_data</a>()</code> helper function is
-a useful way to specify the cell that is associated with the footnote.
-Additionally, we can supply a list with multiple calls to
-<code><a href='location_cells.html'>cells_data</a>()</code> if we wish to combine multiple cell selections.</p></td>
+Supplying any of the <code>cells_*()</code> helper functions is a useful way to
+target the location cells that are associated with the footnote text. These
+helper functions are: <code><a href='location_cells.html'>cells_title</a>()</code>,
+<code><a href='location_cells.html'>cells_boxhead</a>()</code>, <code><a href='location_cells.html'>cells_group</a>()</code>,
+<code><a href='location_cells.html'>cells_stub</a>()</code>, <code><a href='location_cells.html'>cells_data</a>()</code>, and
+<code><a href='location_cells.html'>cells_summary</a>()</code>. Please see the help article
+<a href='location_cells.html'>location_cells</a> for more information on how these helper functions
+can be used. Additionally, we can enclose several <code>cells_*()</code> calls
+within a <code>list()</code> if we wish to link the footnote text to different
+types of locations (e.g., cell data values, stub group headings, the table
+title, etc.).</p></td>
     </tr>
     </table>
     

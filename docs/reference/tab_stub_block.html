@@ -85,6 +85,9 @@ creates a stub block with group headings and row captions." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+    </li>
+    <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
     </li>
     <li>
@@ -95,6 +98,9 @@ creates a stub block with group headings and row captions." />
     </li>
     <li>
       <a href="../articles/modifying-columns.html">Modifying Columns</a>
+    </li>
+    <li>
+      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
     </li>
   </ul>
 </li>
@@ -151,8 +157,8 @@ function.</p></td>
     <tr>
       <th>rows</th>
       <td><p>the rows to be made components of the stub block. Can either be a
-vector of row captions provided <code>c()</code>, a vector of row indices, or
-a helper function focused on selections. The select helper functions are:
+vector of row captions provided <code>c()</code>, a vector of row indices, or a
+helper function focused on selections. The select helper functions are:
 <code><a href='resolving_helpers.html'>starts_with</a>()</code>, <code><a href='resolving_helpers.html'>ends_with</a>()</code>,
 <code><a href='resolving_helpers.html'>contains</a>()</code>, <code><a href='resolving_helpers.html'>matches</a>()</code>, <code><a href='resolving_helpers.html'>one_of</a>()</code>,
 and <code><a href='resolving_helpers.html'>everything</a>()</code>.</p></td>
@@ -162,11 +168,11 @@ and <code><a href='resolving_helpers.html'>everything</a>()</code>.</p></td>
       <td><p>an option to set a default group heading for any rows not
 formally placed in a stub block named by <code>group</code> in any call of
 <code>tab_stub_block()</code>. A separate call to <code>tab_stub_block()</code> with
-only a value to <code>others</code> is possible and makes explicit that the
-call is meant to provide a default group heading value. If this is not
-set and there are rows that haven't been placed into a stub block, then
-those rows will be automatically placed into a stub block with the group
-heading 'Others'.</p></td>
+only a value to <code>others</code> is possible and makes explicit that the call
+is meant to provide a default group heading value. If this is not set and
+there are rows that haven't been placed into a stub block (where one or
+more stub blocks exist), then those rows will be automatically placed into
+a stub block without a title.</p></td>
     </tr>
     </table>
     
@@ -188,7 +194,8 @@ heading 'Others'.</p></td>
     <pre class="examples"><div class='input'><span class='co'># Create a table based on `mtcars` where</span>
 <span class='co'># there are group headings grouped inside</span>
 <span class='co'># stub blocks; two groups are generated</span>
-<span class='co'># here: `Mazda` and `Others`</span>
+<span class='co'># here: `Mazda` and `NA` (a group without)</span>
+<span class='co'># a title</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>tab_stub_block</span>(
