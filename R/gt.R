@@ -157,7 +157,7 @@ gt <- function(data,
   # a vector of `groupname` values in the order of first
   # appearance in `data`; if all `groupname` values are NA,
   # then use an empty character vector
-  if (all(!is.na(stub_df[["groupname"]]))) {
+  if (any(!is.na(stub_df[["groupname"]]))) {
     attr(data_tbl, "arrange_groups") <-
       list(groups = unique(stub_df[["groupname"]]))
   } else {
@@ -165,11 +165,16 @@ gt <- function(data,
       list(groups = character(0))
   }
 
+  attr(data_tbl, "data_df") <- data
+
   # Apply the default theme options data frame as an attribute
   attr(data_tbl, "opts_df") <- gt_options_default()
 
   # Apply an empty `formats` list as an attribute
   attr(data_tbl, "formats") <- list()
+
+  # Apply an empty `transforms` list as an attribute
+  attr(data_tbl, "transforms") <- list()
 
   # Apply the `gt_tbl` class to the object while
   # also keeping the `data.frame` class
