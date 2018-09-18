@@ -247,8 +247,9 @@ render_as_html <- function(data) {
   # Create the body component of the table
   body_component <-
     create_body_component(
-      row_splits_body, row_splits_styles, groups_rows_df, col_alignment,
-      stub_components, summaries_present, list_of_summaries, n_rows, n_cols)
+      row_splits_body, row_splits_styles, styles_resolved,
+      groups_rows_df, col_alignment, stub_components, summaries_present,
+      list_of_summaries, n_rows, n_cols)
 
   # Create the source note rows and handle any available footnotes
   source_note_rows <- create_source_note_rows(source_note, n_cols)
