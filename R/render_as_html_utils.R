@@ -311,36 +311,24 @@ create_boxhead_component <- function(boxh_df,
                                      col_alignment) {
 
   # Get the style attrs for the boxhead group (spanner) headings
-  if ("boxhead_groups" %in% styles_resolved$locname) {
-
-    spanner_style_attrs <-
-      styles_resolved %>%
-      dplyr::filter(locname == "boxhead_groups") %>%
-      dplyr::group_by(grpname) %>%
-      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
-      dplyr::ungroup() %>%
-      dplyr::select(grpname, styles_appended) %>%
-      dplyr::distinct()
-
-  } else {
-    spanner_style_attrs <- styles_resolved
-  }
+  spanner_style_attrs <-
+    styles_resolved %>%
+    dplyr::filter(locname == "boxhead_groups") %>%
+    dplyr::group_by(grpname) %>%
+    dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(grpname, styles_appended) %>%
+    dplyr::distinct()
 
   # Get the style attrs for the boxhead group (spanner) headings
-  if ("boxhead_columns" %in% styles_resolved$locname) {
-
-    column_style_attrs <-
-      styles_resolved %>%
-      dplyr::filter(locname == "boxhead_columns") %>%
-      dplyr::group_by(colname) %>%
-      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
-      dplyr::ungroup() %>%
-      dplyr::select(colname, styles_appended) %>%
-      dplyr::distinct()
-
-  } else {
-    column_style_attrs <- styles_resolved
-  }
+  column_style_attrs <-
+    styles_resolved %>%
+    dplyr::filter(locname == "boxhead_columns") %>%
+    dplyr::group_by(colname) %>%
+    dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(colname, styles_appended) %>%
+    dplyr::distinct()
 
   # Compose the HTML heading
   headings <- names(output_df)
