@@ -23,10 +23,6 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-.onLoad <- function(...) {
-  register_s3_method("knitr", "knit_print", "gt_tbl")
-}
-
 #' @importFrom utils globalVariables
 globalVariables(
   c(
@@ -84,11 +80,14 @@ gt_default_options <- list(
   gt.stub_group.sep = " - "
 )
 
-# .onLoad <- function(libname, pkgname) {
-#   op <- options()
-#   toset <- !(names(gt_default_options) %in% names(op))
-#   if (any(toset)) options(gt_default_options[toset])
-#
-#   invisible()
-# }
+.onLoad <- function(libname, pkgname, ...) {
+
+  register_s3_method("knitr", "knit_print", "gt_tbl")
+
+  op <- options()
+  toset <- !(names(gt_default_options) %in% names(op))
+  if (any(toset)) options(gt_default_options[toset])
+
+  invisible()
+}
 #nocov end
