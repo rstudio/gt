@@ -233,14 +233,17 @@ get_groups_rows_df <- function(arrange_groups,
 
   for (i in seq(ordering)) {
 
-    matched <- match(ordering[i], groups_df[, "groupname"])
+    #matched <- match(ordering[i], groups_df[, "groupname"])
 
-    count_matched <- length(which(groups_df[, "groupname"] == ordering[i]))
+    if (!is.na(ordering[i])) {
+      rows_matched <- which(groups_df[, "groupname"] == ordering[i])
+    } else {
+      rows_matched <- which(is.na(groups_df[, "groupname"]))
+    }
 
-    groups_rows_df[i, "group"] <- ordering[i]
-    groups_rows_df[i, "group_label"] <- ordering[i]
-    groups_rows_df[i, "row"] <- matched
-    groups_rows_df[i, "row_end"] <- matched + count_matched - 1
+    groups_rows_df[i, "group"] <- groups_rows_df[i, "group_label"] <- ordering[i]
+    groups_rows_df[i, "row"] <- min(rows_matched)
+    groups_rows_df[i, "row_end"] <- max(rows_matched)
   }
 
   groups_rows_df
