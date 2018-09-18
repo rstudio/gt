@@ -51,6 +51,9 @@ render_as_html <- function(data) {
   # Get the `formats` list
   formats <- data_attr$formats
 
+  # Get the `transforms` list
+  transforms <- data_attr$transforms
+
   # Get the `arrange_groups` vector
   arrange_groups <- data_attr$arrange_groups
 
