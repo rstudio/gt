@@ -430,3 +430,29 @@ as_locations <- function(locations) {
 
   locations
 }
+
+footnote_glyphs <- function(x,
+                            glyphs) {
+
+  if (identical(glyphs, "numbers")) {
+    return(as.character(x))
+  }
+
+  if (identical(glyphs, "LETTERS")) {
+    glyphs <- LETTERS
+  }
+
+  if (identical(glyphs, "letters")) {
+    glyphs <- letters
+  }
+
+  glyphs_rep <- floor((x - 1) / length(glyphs)) + 1
+
+  glyphs_val <- glyphs[(x - 1) %% length(glyphs) + 1]
+
+  mapply(
+    glyphs_val, glyphs_rep,
+    FUN = function(val_i, rep_i) {
+      paste(rep(val_i, rep_i), collapse = "")}
+    ) %>% unname()
+}
