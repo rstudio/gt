@@ -404,6 +404,8 @@ tab_options <- function(data,
   # footnote.glyph
   if (!is.null(footnote.glyph)) {
 
+    footnote.glyph <- paste0(footnote.glyph, collapse = ",")
+
     opts_df <- opts_df_set(opts_df, "footnote_glyph", footnote.glyph)
   }
 

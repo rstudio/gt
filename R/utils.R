@@ -434,6 +434,8 @@ as_locations <- function(locations) {
 footnote_glyphs <- function(x,
                             glyphs) {
 
+  glyphs <- strsplit(glyphs, ",") %>% unlist()
+
   if (identical(glyphs, "numbers")) {
     return(as.character(x))
   }
