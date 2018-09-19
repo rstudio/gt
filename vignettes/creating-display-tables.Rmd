@@ -13,16 +13,16 @@ knitr::opts_chunk$set(
   comment = "#>")
 
 library(gt)
-library(tidyverse)
+library(dplyr)
 ```
 
 The **gt** package is all about making it simple to produce wonderful-looking display tables. Display tables? Well yes, we are trying to distinguish between data tables (e.g., tibbles, `data.table`s, `data.frame`s) and those tables you'd find in a web page, a journal article, or in a magazine. Such tables can likewise be called presentation tables, summary tables, or just tables really. Are you getting it? If not, here are some examples, ripped straight from the web:
 
 ```{r eval=FALSE, include=FALSE}
-#<img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/tables_from_the_web.png" width=100%>
+# <img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/tables_from_the_web.png" width=100%>
 ```
 
-Think of them as more like output only, seldom to be used as input ever again, full of annotations, full of the goodness that only **gt** can help you deliver. So, bring us your data table and leave with a display table. Read on and find out how.
+Think of them as more like output only, seldom to be used as input ever again, full of annotations, full of the goodness that only **gt** can help you deliver. So, bring your own data table and leave with a display table.
 
 ### Very Simple Tables
 
