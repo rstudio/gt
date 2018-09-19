@@ -160,7 +160,8 @@ components, the subcomponents, and the element that can adjusted.</p>
   <span class='kw'>field.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>field.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>row.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>summary_row.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>summary_row.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>footnote.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>summary_row.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>footnote.sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>footnote.glyph</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>footnote.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>footnote.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sourcenote.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sourcenote.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>row.striping.include_stub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>row.striping.include_field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -239,6 +240,22 @@ in each summary row.</p></td>
       <th>summary_row.text_transform</th>
       <td><p>an option to apply text transformations to
 the label text in each summary row.</p></td>
+    </tr>
+    <tr>
+      <th>footnote.sep</th>
+      <td><p>the separating characters between adjacent footnotes in
+the footnotes section. The default value produces a linebreak.</p></td>
+    </tr>
+    <tr>
+      <th>footnote.glyph</th>
+      <td><p>the set of sequential figures or characters used to
+identify the footnotes. We can either supply the keyword <code>"numbers"</code>
+(the default, indicating that we want numeric glyphs), the keywords
+<code>"letters"</code> or <code>"LETTERS"</code> (indicating that we want letters as
+glyphs, either lowercase or uppercase), or, a vector of character values
+representing the series of glyphs. A series of glyphs is recycled when its
+usage goes beyond the length of the set. At each cycle, the glyphs are
+simply combined (e.g., <code>*</code> -&gt; <code>**</code> -&gt; <code>***</code>).</p></td>
     </tr>
     <tr>
       <th>footnote.padding, sourcenote.padding</th>
