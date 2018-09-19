@@ -1,0 +1,27 @@
+---
+title: "Setting gt Table Options"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Setting gt Table Options}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+library(gt)
+library(dplyr)
+```
+
+There are lots of ways to customize the appearance of a gt table. These options are accessible through the `tab_options()` function. 
+
+```{r eval=FALSE, include=FALSE}
+#<img src="https://raw.githubusercontent.com/rstudio/gt/master/vignettes/images/tables_from_the_web.png" width=100%>
+```
+
+Let's make a table that has all of the customizable components:
+
+
