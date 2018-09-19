@@ -691,7 +691,7 @@ create_source_note_rows <- function(source_note,
     "</tfoot>\n")
 }
 
-#' @importFrom dplyr arrange select distinct
+#' @importFrom dplyr select distinct
 #' @noRd
 create_footnote_component <- function(footnotes_resolved,
                                       n_cols) {
@@ -704,7 +704,6 @@ create_footnote_component <- function(footnotes_resolved,
 
   footnotes_tbl <-
     footnotes_resolved %>%
-    dplyr::arrange(fs_id) %>%
     dplyr::select(fs_id, text) %>%
     dplyr::distinct()
 
