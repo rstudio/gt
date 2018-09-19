@@ -226,12 +226,9 @@
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_style.html">tab_style</a></span>(</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">style =</span> <span class="kw">paste0</span>(<span class="kw"><a href="../reference/apply_styles.html">apply_styles</a></span>(<span class="dt">text_align =</span> <span class="st">"left"</span>, <span class="dt">text_indent =</span> <span class="dv">5</span>), <span class="st">"padding-bottom:20px"</span>),</a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_title</a></span>(<span class="dt">groups =</span> <span class="st">"title"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_style.html">tab_style</a></span>(</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">    <span class="dt">style =</span> <span class="kw"><a href="../reference/apply_styles.html">apply_styles</a></span>(<span class="dt">bkgd_color =</span> <span class="st">"pink"</span>),</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_boxhead</a></span>(<span class="dt">columns =</span> <span class="st">"Apple"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/tab_options.html">tab_options</a></span>(<span class="dt">heading.border.bottom.width =</span> <span class="kw"><a href="../reference/px.html">px</a></span>(<span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">data</a></code></pre></div>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_options.html">tab_options</a></span>(<span class="dt">heading.border.bottom.width =</span> <span class="kw"><a href="../reference/px.html">px</a></span>(<span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">data</a></code></pre></div>
 <style>/* gt compiled CSS file */
 .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -336,6 +333,29 @@
   /* stub_group.border.bottom.color */
 }
 
+.empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+}
+
 .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
@@ -368,7 +388,7 @@
 
 .first_summary_row {
   border-top-style: solid;
-  border-top-width: 1px;
+  border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
@@ -444,7 +464,7 @@
 </tr>
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"><strong>Company</strong></th>
-<th class="col_heading center" rowspan="1" colspan="1" style="background-color:pink;">Apple</th>
+<th class="col_heading center" rowspan="1" colspan="1">Apple</th>
 <th class="col_heading center" rowspan="1" colspan="1">Google</th>
 <th class="col_heading center" rowspan="1" colspan="1">Microsoft</th>
 <th class="col_heading center" rowspan="1" colspan="1">Intel</th>
@@ -456,7 +476,7 @@
 </thead>
 <tbody class="table_body striped">
 <tr>
-<td data-type="group" colspan="9" class="group_heading"></td>
+<td data-type="group" colspan="9" class="empty_group_heading"></td>
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">revenue_bn</td>

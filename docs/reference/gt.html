@@ -144,7 +144,8 @@ we can consider at this stage.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>gt</span>(<span class='no'>data</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>gt</span>(<span class='no'>data</span>, <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"rowname"</span>, <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"groupname"</span>,
+  <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>stub_group.sep</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"gt.stub_group.sep"</span>, <span class='st'>" - "</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -155,9 +156,25 @@ we can consider at this stage.</p>
       <td><p>a <code>data.frame</code> object or a tibble.</p></td>
     </tr>
     <tr>
+      <th>rowname_col</th>
+      <td><p>the column name in the input <code>data</code> table to use as
+row captions to be placed in the display table stub.</p></td>
+    </tr>
+    <tr>
+      <th>groupname_col</th>
+      <td><p>the column name in the input <code>data</code> table to use as
+group labels for generation of stub row groups.</p></td>
+    </tr>
+    <tr>
       <th>rownames_to_stub</th>
       <td><p>an option to take rownames from the input <code>data</code>
-table as row captions in the stub.</p></td>
+table as row captions in the display table stub.</p></td>
+    </tr>
+    <tr>
+      <th>stub_group.sep</th>
+      <td><p>the separator to use between consecutive group names
+(a possibility when providing <code>data</code> as a <code>grouped_df</code> with
+multiple groups) in the displayed stub row group label.</p></td>
     </tr>
     </table>
     
