@@ -103,6 +103,10 @@ gt <- function(data,
 
     # Remove the `groupname` column from `data`
     data[[groupname_col]] <- NULL
+
+  } else if (missing(groupname_col)) {
+
+    stop("The `groupname_col` is missing.", call. = FALSE)
   }
 
   # Take the input data and convert to a
