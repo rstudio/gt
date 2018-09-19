@@ -196,9 +196,9 @@ render_as_html <- function(data) {
   # Resolve and tidy footnotes
   footnotes_resolved <-
     resolve_footnotes_styles(
-      output_df, boxh_df,
-      groups_rows_df, arrange_groups, boxhead_spanners, title_defined,
-      headnote_defined, footnotes_df = footnotes_df, styles_df = NULL)
+      output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
+      boxhead_spanners, title_defined, headnote_defined,
+      footnotes_df = footnotes_df, styles_df = NULL)
 
   # Add footnote glyphs to boxhead elements
   boxh_df <-
