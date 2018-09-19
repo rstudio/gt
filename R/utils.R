@@ -402,7 +402,7 @@ tidy_gsub <- function(x, pattern, replacement) {
 # Options setter for the `opts_df` data frame
 opts_df_set <- function(opts_df, option, value) {
 
-  opts_df[which(opts_df$parameter == option), 3] <- value
+  opts_df[which(opts_df$parameter == option), "value"] <- value
 
   opts_df
 }
@@ -410,7 +410,7 @@ opts_df_set <- function(opts_df, option, value) {
 # Options getter for the `opts_df` data frame
 opts_df_get <- function(opts_df, option) {
 
-  opts_df[which(opts_df$parameter == option), 3]
+  opts_df[which(opts_df$parameter == option), "value"]
 }
 
 # Upgrade `cells_*()` to a list() if a single instance provided
