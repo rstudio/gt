@@ -691,9 +691,10 @@ create_source_note_rows <- function(source_note,
     "</tfoot>\n")
 }
 
-#' @importFrom dplyr select distinct
+#' @importFrom dplyr select distinct filter pull
 #' @noRd
 create_footnote_component <- function(footnotes_resolved,
+                                      opts_df,
                                       n_cols) {
 
   # If the `footnotes_resolved` object has no
@@ -707,6 +708,11 @@ create_footnote_component <- function(footnotes_resolved,
     dplyr::select(fs_id, text) %>%
     dplyr::distinct()
 
+  # Get the separator option from `opts_df`
+  separator <- opts_df %>%
+    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::pull(value)
+
   # Create the footnotes block
   footnote_component <-
     paste0(
@@ -717,7 +723,7 @@ create_footnote_component <- function(footnotes_resolved,
       paste0(
         "<sup class='gt_footnote_glyph'><em>", footnotes_tbl[["fs_id"]],
         "</em></sup> ", footnotes_tbl[["text"]],
-        collapse = "<br />"),
+        collapse = separator),
       "</td>\n</tr>\n</tfoot>")
 
   footnote_component

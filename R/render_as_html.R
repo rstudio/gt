@@ -264,7 +264,8 @@ render_as_html <- function(data) {
   source_note_rows <- create_source_note_rows(source_note, n_cols)
 
   # Handle any available footnotes
-  footnote_component <- create_footnote_component(footnotes_resolved, n_cols)
+  footnote_component <-
+    create_footnote_component(footnotes_resolved, opts_df, n_cols)
 
   # Create an HTML fragment for the end of the table
   table_end <- create_table_end()
