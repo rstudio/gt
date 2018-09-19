@@ -16,12 +16,21 @@ data <-
   cols_merge_range(col_begin = "disp", col_end = "drat") %>%
   tab_heading(title = "Title", headnote = "Headnote") %>%
   tab_source_note(source_note = "this is a source note") %>%
+  cols_label(labels = col_labels(cyl = md("*cyls*"))) %>%
   summary_rows(
-    groups = c("Mazdas"),
+    groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),
     funs = funs(
       mean(., na.rm = TRUE),
       sum(., na.rm = TRUE))) %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "lightgray"),
+    locations = list(
+      cells_boxhead(columns = TRUE),
+      cells_stub(rows = TRUE))) %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "steelblue", text_color = "white"),
+    locations = cells_stub(rows = "Merc 240D")) %>%
   tab_style(
     style = apply_styles(text_align = "left"),
     locations = cells_title(groups = "title")) %>%
@@ -29,29 +38,23 @@ data <-
     style = apply_styles(text_align = "left"),
     locations = cells_title(groups = "headnote")) %>%
   tab_style(
-    style = apply_styles(bkgd_color = "green"),
+    style = apply_styles(bkgd_color = "green", text_color = "white"),
     locations = cells_summary(
-      groups = "Mazdas", columns = "hp", rows = 1)) %>%
+      groups = "Mercs", columns = "hp", rows = 2)) %>%
   tab_style(
     style = apply_styles(bkgd_color = "lightgreen"),
     locations = cells_boxhead(groups = "gear_carb_cyl")) %>%
   tab_style(
-    style = apply_styles(bkgd_color = "pink"),
-    locations = cells_boxhead(columns = vars(hp))) %>%
+    style = apply_styles(bkgd_color = "turquoise"),
+    locations = cells_boxhead(columns = "gear")) %>%
   tab_style(
-    style = apply_styles(bkgd_color = "steelblue", text_color = "white"),
-    locations = cells_stub(rows = "Merc 240D")) %>%
+    style = apply_styles(bkgd_color = "pink"),
+    locations = cells_boxhead(columns = "hp")) %>%
   tab_style(
     style = apply_styles(bkgd_color = "lightgray", text_style = "italic"),
     locations = cells_data(columns = "hp", rows = "Datsun 710")) %>%
   tab_style(
     style = apply_styles(bkgd_color = "yellow"),
-    locations = cells_data(columns = "disp", rows = "Mazda RX4")) %>%
-  tab_style(
-    style = apply_styles(bkgd_color = "gray"),
-    locations = cells_boxhead(columns = "cyl")) %>%
-  tab_style(
-    style = apply_styles(bkgd_color = "turquoise"),
-    locations = cells_boxhead(columns = "gear"))
+    locations = cells_data(columns = "disp", rows = "Mazda RX4"))
 
 data
