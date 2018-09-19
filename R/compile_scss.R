@@ -2,8 +2,8 @@
 #' @noRd
 compile_scss <- function(data) {
 
-  # Obtain the options table from `data`
-  gt_options_tbl <- attr(data, "opts_df", exact = TRUE)
+  # Obtain the SCSS options table from `data`
+  gt_options_tbl <- attr(data, "opts_df", exact = TRUE) %>% subset(scss)
 
   # Perform NA replacements for background colors
   if (is.na(opts_df_get(gt_options_tbl, "heading_background_color"))) {
