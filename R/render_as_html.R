@@ -221,7 +221,7 @@ render_as_html <- function(data) {
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
-      output_df, boxh_df, groups_rows_df, arrange_groups,
+      output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       boxhead_spanners, title_defined, headnote_defined,
       footnotes_df = NULL, styles_df = styles_df)
 
