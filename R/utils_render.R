@@ -779,6 +779,19 @@ resolve_footnotes_styles <- function(output_df,
     tbl %>%
     dplyr::inner_join(lookup_tbl, by = "text")
 
+  # Get the glyph option from `opts_df`
+  glyphs <-
+    (attr(data, "opts_df", exact = TRUE) %>%
+       subset(parameter == "footnote_glyph"))[["value"]]
+
+  # Modify `fs_id` to contain the glyphs we need
+  tbl <-
+    tbl %>%
+    dplyr::mutate(
+      fs_id = footnote_glyphs(
+        x = fs_id,
+        glyphs = glyphs))
+
   tbl
 }
 
