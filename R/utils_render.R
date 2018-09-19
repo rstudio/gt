@@ -600,12 +600,13 @@ stub_component_is_rowname_groupname <- function(stub_components) {
 }
 
 # Resolve footnotes or styles
-#' @importFrom dplyr filter bind_rows mutate inner_join select arrange select
+#' @importFrom dplyr filter bind_rows mutate inner_join select arrange pull
 #' @importFrom tibble rownames_to_column
 #' @noRd
 resolve_footnotes_styles <- function(output_df,
                                      boxh_df,
                                      groups_rows_df,
+                                     opts_df,
                                      arrange_groups,
                                      boxhead_spanners,
                                      title_defined,
@@ -629,24 +630,21 @@ resolve_footnotes_styles <- function(output_df,
     # Filter by `title`
     if (title_defined == FALSE) {
 
-      tbl <-
-        tbl %>%
+      tbl <- tbl %>%
         dplyr::filter(locname != "title")
     }
 
     # Filter by `headnote`
     if (headnote_defined == FALSE) {
 
-      tbl <-
-        tbl %>%
+      tbl <- tbl %>%
         dplyr::filter(locname != "headnote")
     }
 
     # Filter by `grpname` in boxhead groups
     if ("boxhead_groups" %in% tbl[["locname"]]) { # remove conditional
 
-      tbl <-
-        tbl %>%
+      tbl <- tbl %>%
         dplyr::filter(locname != "boxhead_groups" | grpname %in% boxhead_spanners)
     }
 
@@ -663,59 +661,50 @@ resolve_footnotes_styles <- function(output_df,
     }
 
     # Filter `tbl` by the remaining columns in `output_df`
-    tbl <-
-      tbl %>%
+    tbl <- tbl %>%
       dplyr::filter(colname %in% c(NA_character_, colnames(output_df)))
   }
 
   # Reorganize records that target the data rows
   if (5 %in% tbl[["locnum"]]) {
 
-    tbl_not_data <-
-      tbl %>%
+    tbl_not_data <- tbl %>%
       dplyr::filter(locnum != 5 | locname == "stub_groups")
 
-    tbl_data <-
-      tbl %>%
+    tbl_data <- tbl %>%
       dplyr::filter(locnum == 5 & locname != "stub_groups")
 
     if (nrow(tbl_data) > 0) {
 
       # Re-map the `rownum` to the new row numbers for the
       # data rows
-      tbl_data <-
-        tbl_data %>%
+      tbl_data <- tbl_data %>%
         dplyr::mutate(rownum = rownum_translation(
           output_df, rownum_start = rownum))
 
       # Add a `colnum` column that's required for arranging `tbl` in such a way
       # that the order of records moves from top-to-bottom, left-to-right
-      tbl_data <-
-        tbl_data %>%
+      tbl_data <- tbl_data %>%
         dplyr::mutate(colnum = colname_to_colnum(
           boxh_df = boxh_df, colname = colname)) %>%
         dplyr::mutate(colnum = ifelse(locname == "stub", 0, colnum))
     }
 
     # Re-combine `tbl_data` with `tbl`
-    tbl <-
-      dplyr::bind_rows(tbl_not_data, tbl_data)
+    tbl <- dplyr::bind_rows(tbl_not_data, tbl_data)
 
   } else {
-    tbl <-
-      tbl %>%
+    tbl <- tbl %>%
       dplyr::mutate(colnum = NA_integer_)
   }
 
   # For the stub groups, insert a `rownum` based on groups_rows_df
   if ("stub_groups" %in% tbl[["locname"]]) {
 
-    tbl_not_stub_groups <-
-      tbl %>%
+    tbl_not_stub_groups <- tbl %>%
       dplyr::filter(locname != "stub_groups")
 
-    tbl_stub_groups <-
-      tbl %>%
+    tbl_stub_groups <- tbl %>%
       dplyr::filter(locname == "stub_groups") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
@@ -733,12 +722,10 @@ resolve_footnotes_styles <- function(output_df,
   # For the summary cells, insert a `rownum` based on groups_rows_df
   if ("summary_cells" %in% tbl[["locname"]]) {
 
-    tbl_not_summary_cells <-
-      tbl %>%
+    tbl_not_summary_cells <- tbl %>%
       dplyr::filter(locname != "summary_cells")
 
-    tbl_summary_cells <-
-      tbl %>%
+    tbl_summary_cells <- tbl %>%
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
@@ -755,42 +742,40 @@ resolve_footnotes_styles <- function(output_df,
 
   if (!("colnum" %in% colnames(tbl))) {
 
-    tbl <-
-      tbl %>%
+    tbl <- tbl %>%
       dplyr::mutate(colnum = NA_integer_)
   }
 
   # Sort the table rows
-  tbl <-
-    tbl %>%
+  tbl <- tbl %>%
     dplyr::arrange(locnum, rownum, colnum)
 
   # Generate a lookup table with ID'd footnote
   # text elements (that are distinct)
-  lookup_tbl <-
-    tbl %>%
+  lookup_tbl <- tbl %>%
     dplyr::select(text) %>%
     dplyr::distinct() %>%
     tibble::rownames_to_column(var = "fs_id") %>%
     dplyr::mutate(fs_id = as.integer(fs_id))
 
   # Join the lookup table to `tbl`
-  tbl <-
-    tbl %>%
+  tbl <- tbl %>%
     dplyr::inner_join(lookup_tbl, by = "text")
 
-  # Get the glyph option from `opts_df`
-  glyphs <-
-    (attr(data, "opts_df", exact = TRUE) %>%
-       subset(parameter == "footnote_glyph"))[["value"]]
+  if (nrow(tbl) > 0) {
 
-  # Modify `fs_id` to contain the glyphs we need
-  tbl <-
-    tbl %>%
-    dplyr::mutate(
-      fs_id = footnote_glyphs(
-        x = fs_id,
-        glyphs = glyphs))
+    # Get the glyph option from `opts_df`
+    glyphs <- opts_df %>%
+      dplyr::filter(parameter == "footnote_glyph") %>%
+      dplyr::pull(value)
+
+    # Modify `fs_id` to contain the glyphs we need
+    tbl <- tbl %>%
+      dplyr::mutate(
+        fs_id = footnote_glyphs(
+          x = fs_id,
+          glyphs = glyphs))
+  }
 
   tbl
 }
@@ -840,7 +825,9 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
         column_indices <-
           which(boxh_df["group_label", ] == footnotes_boxhead_group_glyphs$grpname[i])
 
-        text <- boxh_df["group_label", column_indices] %>% unlist() %>% unname() %>% unique()
+        text <-
+          boxh_df["group_label", column_indices] %>%
+          unlist() %>% unname() %>% unique()
 
         text <-
           paste0(
