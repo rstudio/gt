@@ -40,7 +40,7 @@ test_that("a gt table object contains the correct components", {
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(150, 1))
   expect_equal(dim(attr(tab, "cols_df")), c(5, 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 3)
+  expect_equal(ncol(attr(tab, "opts_df")), 4)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 
@@ -126,7 +126,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(32, 1))
   expect_equal(dim(attr(tab, "cols_df")), c(11, 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 3)
+  expect_equal(ncol(attr(tab, "opts_df")), 4)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 
@@ -221,7 +221,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(10, 1))
   expect_equal(dim(attr(tab, "cols_df")), c(1, 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 3)
+  expect_equal(ncol(attr(tab, "opts_df")), 4)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 
@@ -317,7 +317,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(10, 1))
   expect_equal(dim(attr(tab, "cols_df")), c(1, 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 3)
+  expect_equal(ncol(attr(tab, "opts_df")), 4)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 
