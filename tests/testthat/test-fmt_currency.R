@@ -50,6 +50,11 @@ test_that("formatting a column of numeric data as currency values works correctl
     tab %>%
       fmt_currency(columns = "num_3", currency = "USD"))
 
+  # Expect an error when using a locale that does not exist
+  expect_error(
+    tab %>%
+      fmt_currency(columns = "num_2", decimals = 2, locale = "aa_bb"))
+
   # Format the `num_1` column as USD, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
@@ -115,6 +120,16 @@ test_that("formatting a column of numeric data as currency values works correctl
        render_formats_test("html"))[["num_1"]],
     c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "($23.24)"))
 
+  # Format the `num_1` column as USD, apply parentheses to all negative
+  # values, use all other defaults; apply the default context, extract
+  # `output_df`, and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1", currency = "USD", negative_val = "parens") %>%
+       render_formats_test("default"))[["num_1"]],
+    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "($23.24)"))
+
   # Format the `num_1` column as USD to 4 decimal places, scale all values by
   # 1/1000, use all other defaults; extract `output_df` and compare
   # to expected values
@@ -170,6 +185,17 @@ test_that("formatting a column of numeric data as currency values works correctl
     c("1.836,23 kr.", "2.763,39 kr.", "937,29 kr.", "643,00 kr.",
       "212,23 kr.", "0,00 kr.", "-23,24 kr."))
 
+  # Format the `num_1` column as DKK, apply the `da_DK` locale and use all
+  # other defaults; use the default context, extract `output_df`, and
+  # compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1", currency = "DKK", locale = "da_DK") %>%
+       render_formats_test("default"))[["num_1"]],
+    c("kr.1.836,23", "kr.2.763,39", "kr.937,29", "kr.643,00",
+      "kr.212,23", "kr.0,00", "kr.-23,24"))
+
   # Format the `num_1` column as EUR, apply the `de_AT` locale and use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
@@ -179,6 +205,17 @@ test_that("formatting a column of numeric data as currency values works correctl
        render_formats_test("html"))[["num_1"]],
     c("&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
       "&#8364;212,23", "&#8364;0,00", "&#8364;-23,24"))
+
+  # Format the `num_1` column as EUR, apply the `de_AT` locale and use all
+  # other defaults; use the default context, extract `output_df`, and
+  # compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1", currency = "EUR", locale = "de_AT") %>%
+       render_formats_test("default"))[["num_1"]],
+    c("EUR1 836,23", "EUR2 763,39", "EUR937,29", "EUR643,00",
+      "EUR212,23", "EUR0,00", "EUR-23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
