@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a table that creates a stub and
 # stub blocks based on a naming convention

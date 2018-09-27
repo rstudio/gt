@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a presentation table based on `morley`
 # Michelson Speed of Light Data

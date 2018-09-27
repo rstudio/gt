@@ -1,4 +1,3 @@
-library(tidyverse)
 library(gt)
 
 # Create a table with rownames and four columns of values

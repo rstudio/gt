@@ -1,5 +1,4 @@
 library(gt)
-library(blastula)
 
 # Create an HTML table that is suitable for
 # emailing; this requires `as_raw_html()` to

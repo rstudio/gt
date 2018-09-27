@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 data <-
   gt(mtcars[, 1:7], rownames_to_stub = TRUE) %>%

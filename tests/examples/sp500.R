@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 data <-
   readr::read_csv(
