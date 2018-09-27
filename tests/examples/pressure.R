@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a presentation table based on `pressure`
 # Vapor Pressure of Mercury as a Function of Temperature

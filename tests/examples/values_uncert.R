@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a table with values and uncertainties
 tbl <-

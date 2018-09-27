@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a table with rownames and five columns of
 # values

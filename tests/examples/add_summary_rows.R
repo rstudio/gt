@@ -1,5 +1,4 @@
 library(gt)
-library(tidyverse)
 
 # Create a table that creates a stub and
 # stub blocks based on a naming convention
@@ -29,8 +28,7 @@ data <-
   tab_footnote(
     footnote = "Note for Summary A.",
     locations = cells_summary(
-      groups = "A", columns = 1, rows = 1)
-  ) %>%
+      groups = "A", columns = 1, rows = 1)) %>%
   tab_footnote(
     footnote = "Note for Summary C.",
     locations = cells_summary(
@@ -65,6 +63,4 @@ data
 
 # Extract the summary data frame from the table object
 data %>% extract_summary()
-
-
 
