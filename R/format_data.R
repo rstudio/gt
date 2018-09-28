@@ -549,6 +549,7 @@ fmt_currency <- function(data,
                          sep_mark = ",",
                          dec_mark = ".",
                          placement = "left",
+                         incl_space = FALSE,
                          locale = NULL) {
 
   # Capture expressions for the `columns` and `rows` arguments
@@ -623,9 +624,11 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(currency_str, x[non_na_x])
+            x[non_na_x] <- paste0(
+              currency_str, ifelse(incl_space, " ", ""), x[non_na_x])
           } else {
-            x[non_na_x] <- paste0(x[non_na_x], currency_str)
+            x[non_na_x] <- paste0(
+              x[non_na_x], ifelse(incl_space, " ", ""), currency_str)
           }
 
           # Handle negative values
@@ -661,9 +664,11 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(currency_str_html, x[non_na_x])
+            x[non_na_x] <- paste0(
+              currency_str_html, ifelse(incl_space, " ", ""), x[non_na_x])
           } else {
-            x[non_na_x] <- paste0(x[non_na_x], currency_str_html)
+            x[non_na_x] <- paste0(
+              x[non_na_x], ifelse(incl_space, " ", ""), currency_str_html)
           }
 
           # Handle negative values
@@ -680,7 +685,6 @@ fmt_currency <- function(data,
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
           x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-
           x
         }))
 }
