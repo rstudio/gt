@@ -471,12 +471,14 @@ fmt_percent <- function(data,
 #' information on this.
 #' @inheritParams fmt_number
 #' @param currency the currency to use for the numeric value. This is to be
-#' supplied as a 3-letter currency code. Examples include \code{"USD"} for
-#' U.S. Dollars and \code{"EUR"} for the Euro currency.
+#'   supplied as a 3-letter currency code. Examples include \code{"USD"} for
+#'   U.S. Dollars and \code{"EUR"} for the Euro currency.
 #' @param use_subunits an option for whether the subunits portion of a currency
-#' value should be displayed.
+#'   value should be displayed.
 #' @param placement the placement of the currency symbol. This can be either be
-#' \code{left} (the default) or \code{right}.
+#'   \code{left} (the default) or \code{right}.
+#' @param incl_space an option on whether to include a space between the value
+#'   and the curerncy symbol. The default is to not introduce a space character.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a tibble with two columns
