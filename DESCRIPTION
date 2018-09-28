@@ -37,8 +37,10 @@ Imports:
     tidyselect (>= 0.2.4)
 Remotes:
     rstudio/sass
-Suggests: 
+Suggests:
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    rvest,
+    shiny
 VignetteBuilder: knitr
