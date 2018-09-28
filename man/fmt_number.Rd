@@ -88,8 +88,6 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-library(tidyverse)
-
 # Create a table object using the
 # `mtcars` dataset and format specified
 # numeric columns to display values to

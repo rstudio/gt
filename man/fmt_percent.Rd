@@ -95,8 +95,6 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with two columns
 # that are both numeric
 data_tbl <-
