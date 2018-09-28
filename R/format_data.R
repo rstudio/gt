@@ -566,19 +566,17 @@ fmt_currency <- function(data,
   }
 
   # Return data if `currency` does not have a valid value
-  if (!is_currency_valid(currency = currency)) {
+  if (!is_currency_valid(currency)) {
 
     message("The value supplied for `currency` is not valid.")
     return(data)
   }
 
   # Get the currency string for the HTML context
-  currency_str_html <-
-    get_currency_str(currency = currency)
+  currency_str_html <- get_currency_str(currency)
 
   # Get the currency string for the non-HTML context
-  currency_str <-
-    get_currency_str(currency = currency, fallback_to_code = TRUE)
+  currency_str <- get_currency_str(currency, fallback_to_code = TRUE)
 
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
