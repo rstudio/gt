@@ -637,7 +637,7 @@ fmt_currency <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
           }
 
           # Handle formatting of pattern
@@ -677,7 +677,7 @@ fmt_currency <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
           }
 
           # Handle formatting of pattern
