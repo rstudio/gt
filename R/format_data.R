@@ -62,8 +62,6 @@
 #'   \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a table object using the
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values to
@@ -332,8 +330,6 @@ fmt_scientific <- function(data,
 #'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns
 #' # that are both numeric
 #' data_tbl <-
@@ -483,8 +479,6 @@ fmt_percent <- function(data,
 #' \code{left} (the default) or \code{right}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns
 #' # that are both numeric
 #' data_tbl <-
@@ -728,8 +722,6 @@ fmt_currency <- function(data,
 #' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
 #' # that contains dates
 #' data_tbl <-
@@ -787,8 +779,6 @@ fmt_date <- function(data,
 #' \code{\link{info_time_style}()} to see the different numbered and named time
 #' presets.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
 #' # that contains 24-hour time strings
 #' data_tbl <-
@@ -845,8 +835,6 @@ fmt_time <- function(data,
 #' @inheritParams fmt_time
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
 #' # that contains 24-hour time strings
 #' data_tbl <-
