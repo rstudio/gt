@@ -609,6 +609,9 @@ fmt_currency <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Determine which of `x` are not NA and also negative
+          negative_x <- x < 0 & !is.na(x)
+
           # Format all non-NA x values
           x[non_na_x] <-
             formatC(
@@ -632,9 +635,6 @@ fmt_currency <- function(data,
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
             # Apply parentheses to the formatted value and remove
             # the minus sign
             x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
@@ -649,6 +649,9 @@ fmt_currency <- function(data,
 
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
+
+          # Determine which of `x` are not NA and also negative
+          negative_x <- x < 0 & !is.na(x)
 
           x[non_na_x] <-
             formatC(
@@ -671,9 +674,6 @@ fmt_currency <- function(data,
 
           # Handle negative values
           if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
