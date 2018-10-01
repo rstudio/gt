@@ -524,8 +524,6 @@ cols_merge <- function(data,
 #' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns;
 #' # both are numeric but the `uncert`
 #' # column contains uncertainty values
@@ -605,8 +603,6 @@ cols_merge_uncert <- function(data,
 #' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns
 #' # that are both numeric
 #' data_tbl <-
