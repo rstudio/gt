@@ -65,8 +65,6 @@ We can use the \code{\link{info_date_style}()} function for a useful
 reference on all of the possible inputs to \code{date_style}.
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with a column
 # that contains dates
 data_tbl <-
@@ -79,7 +77,7 @@ data_tbl <-
 
 # Create a table object using this
 # dataset and format the `date`
-# column with the `date_style` of `2`
+# column with a `date_style` of `2`
 gt_tbl <-
   gt(data_tbl) \%>\%
     fmt_date(

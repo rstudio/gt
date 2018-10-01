@@ -43,25 +43,24 @@ an object of class \code{gt_tbl}.
 Format values as date-times
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with a column
-# that contains 24-hour time strings
+# that contains date-time strings
 data_tbl <-
   dplyr::tribble(
-    ~time,
+    ~datetime,
     "2017-06-10 12:35:23",
     "2017-07-12 15:01:34",
     "2017-08-05 09:45:23",
     "2017-10-23 01:32:00")
 
 # Create a table object using this
-# dataset and format the `time`
-# column with `time_style` '3'
+# dataset and format the `datetime`
+# column with a `date_style` of
+# `2` and a `time_style` of `3`
 gt_tbl <-
   gt(data_tbl) \%>\%
     fmt_datetime(
-      columns = vars(time),
+      columns = vars(datetime),
       date_style = 2,
       time_style = 3)
 }
