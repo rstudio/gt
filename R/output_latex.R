@@ -30,7 +30,7 @@ output_latex <- function(data) {
   #   any rendering applied during `render_formats()`
   data_attr$output_df <-
     migrate_unformatted_to_output(
-      data = data,
+      data_df = data,
       output_df = data_attr$output_df)
 
   # Move original data frame to `data_attr$data_df`
