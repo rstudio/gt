@@ -380,18 +380,6 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
-# Obtain a line number from a vector of HTML lines by use of a pattern
-get_html_line <- function(html_lines, pattern) {
-
-  lines <- grepl(pattern, html_lines)
-
-  if (all(lines == FALSE)) {
-    return(NA_integer_)
-  } else {
-    return(which(lines))
-  }
-}
-
 # This function is wrapper for `gsub()` that uses default argument values and
 # rearranges first three arguments for better pipelining
 tidy_gsub <- function(x, pattern, replacement) {
