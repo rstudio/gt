@@ -34,8 +34,6 @@
 #'   as \code{decimals}, \code{use_seps}, and \code{locale} can be used.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a table that creates a stub and
 #' # stub blocks based on a naming convention
 #' tbl <-
