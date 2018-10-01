@@ -281,7 +281,7 @@ create_heading_component <- function(heading,
   heading_component <-
     paste0(
       "<thead>\n<tr data-type='table_headings'>\n",
-      "<th data-type='table_heading' class='heading title font_normal center' colspan='",
+      "<th data-type='table_title' class='heading title font_normal center' colspan='",
       n_cols, "'", create_style_attrs(title_style_attrs), ">",
       heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
 
@@ -366,7 +366,8 @@ create_boxhead_component <- function(boxh_df,
       table_col_headings <-
         c(table_col_headings,
           paste0(
-            "<th class='col_heading ", col_alignment[i],
+            "<th data-type='column_heading' class='col_heading ",
+            col_alignment[i],
             "' rowspan='1' colspan='1'",
             get_column_style(
               column_style_attrs,
@@ -376,7 +377,9 @@ create_boxhead_component <- function(boxh_df,
     }
 
     table_col_headings <-
-      paste0("<tr>\n", paste0(table_col_headings, collapse = "\n"), "\n</tr>\n")
+      paste0(
+        "<tr data-type='table_boxhead'>\n",
+        paste0(table_col_headings, collapse = "\n"), "\n</tr>\n")
 
   } else {
 
@@ -536,6 +539,14 @@ create_body_component <- function(row_splits_body,
     stub_available <- TRUE
   }
 
+  # Get the sequence of column numbers in the data field
+  column_series <- seq(n_cols)
+
+  # If there is a stub, remove the last element in the series
+  if (stub_available) {
+    column_series <- column_series[-length(column_series)]
+  }
+
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group))) {
 
@@ -556,8 +567,8 @@ create_body_component <- function(row_splits_body,
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr>\n",
-            "<td data-type='group' colspan='", n_cols ,
+            "<tr data-type='group_heading_row'>\n",
+            "<td data-type='group_heading' colspan='", n_cols ,
             "' class='",
             ifelse(
               groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] != "",
@@ -575,12 +586,15 @@ create_body_component <- function(row_splits_body,
           paste0(
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='stub row ", col_alignment[1], "'",
+              "<td data-type='data' data-row='", i, "' data-column='0' ",
+              "class='stub row ", col_alignment[1], "'",
               create_style_attrs(row_splits_styles[[i]][1]),
               ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
-              "<td class='row ", col_alignment[-1], "'",
+              "<td data-type='data' data-row='", i, "' ",
+              "data-column='", column_series, "' ",
+              "class='row ", col_alignment[-1], "'",
               create_style_attrs(row_splits_styles[[i]][-1]),
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
@@ -596,7 +610,9 @@ create_body_component <- function(row_splits_body,
           paste0(
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
-              "<td class='row ", col_alignment, "'",
+              "<td data-type='data' data-row='", i, "' ",
+              "data-column='", column_series, "' ",
+              "class='row ", col_alignment, "'",
               create_style_attrs(row_splits_styles[[i]]),
               ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
@@ -684,7 +700,8 @@ create_source_note_rows <- function(source_note,
   paste0(
     "<tfoot data-type='source_notes'>\n",
     paste0(
-      "<tr>\n<td colspan='", n_cols + 1 ,
+      "<tr data-type='source_note_row'>\n",
+      "<td data-type='source_note' colspan='", n_cols + 1 ,
       "' class='sourcenote'>", source_note$source_note,
       "</td>\n</tr>\n",
       collapse = ""),
