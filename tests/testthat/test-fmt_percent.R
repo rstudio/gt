@@ -24,6 +24,11 @@ test_that("formatting a column of numeric data as percentage values works correc
     tab %>%
       fmt_percent(columns = "num_3", decimals = 2))
 
+  # Expect an error when using a locale that does not exist
+  expect_error(
+    tab %>%
+      fmt_percent(columns = "num_2", decimals = 2, locale = "aa_bb"))
+
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
