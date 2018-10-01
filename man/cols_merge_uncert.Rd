@@ -21,8 +21,6 @@ an object of class \code{gt_tbl}.
 Merge two columns to a value + uncertainty column
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with two columns;
 # both are numeric but the `uncert`
 # column contains uncertainty values

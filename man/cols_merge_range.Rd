@@ -21,8 +21,6 @@ an object of class \code{gt_tbl}.
 Merge two columns to a value range column
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with two columns
 # that are both numeric
 data_tbl <-
