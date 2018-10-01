@@ -1,9 +1,4 @@
-# Get a file's extension
-get_file_ext <- function(file) {
-
-  pos <- regexpr("\\.([[:alnum:]]+)$", file)
-  ifelse(pos > -1L, substring(file, pos + 1L), "")
-}
+#nocov start
 
 # Encode a raw string to a Base64 string
 encode_base64 <- function(raw) {
@@ -41,6 +36,14 @@ encode_base64 <- function(raw) {
     }
   }
   paste(res[!is.na(res)], collapse = "")
+}
+#nocov end
+
+# Get a file's extension
+get_file_ext <- function(file) {
+
+  pos <- regexpr("\\.([[:alnum:]]+)$", file)
+  ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
 # Helper to set the MIME type
