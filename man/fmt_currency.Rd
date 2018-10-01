@@ -7,7 +7,7 @@
 fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
   negative_val = "signed", decimals = NULL, use_seps = TRUE,
   scale_by = 1, pattern = "{x}", sep_mark = ",", dec_mark = ".",
-  placement = "left", locale = NULL)
+  placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -60,6 +60,9 @@ other characters are taken to be string literals.}
 \item{placement}{the placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
 
+\item{incl_space}{an option on whether to include a space between the value
+and the curerncy symbol. The default is to not introduce a space character.}
+
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
@@ -101,8 +104,6 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-library(tidyverse)
-
 # Create a tibble with two columns
 # that are both numeric
 data_tbl <-
