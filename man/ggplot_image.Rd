@@ -22,7 +22,7 @@ Add a ggplot plot inside a table with this helper function.
 }
 \examples{
 \dontrun{
-library(tidyverse)
+library(ggplot2)
 
 # Create a ggplot plot
 plot_object <-

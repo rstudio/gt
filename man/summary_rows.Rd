@@ -53,8 +53,6 @@ purposes, the \code{\link{extract_summary}()} can be used with a
 \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 }
 \examples{
-library(tidyverse)
-
 # Create a table that creates a stub and
 # stub blocks based on a naming convention
 tbl <-
