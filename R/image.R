@@ -187,7 +187,7 @@ local_svg <- function(file,
 #'   a cell.
 #' @examples
 #' \dontrun{
-#' library(tidyverse)
+#' library(ggplot2)
 #'
 #' # Create a ggplot plot
 #' plot_object <-
