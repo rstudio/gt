@@ -354,7 +354,7 @@ apply_styles <- function(bkgd_color = NULL,
 
   if (!is.null(text_transform)) {
 
-    if (text_decorate %in% c("uppercase", "lowercase", "capitalize")) {
+    if (text_transform %in% c("uppercase", "lowercase", "capitalize")) {
       styles <- c(styles, paste0("text-transform:", text_transform, ";"))
     }
   }
