@@ -15,6 +15,8 @@ render_gt <- function(expr,
                       quoted = FALSE,
                       outputArgs = list()) {
 
+  check_shiny()
+
   func <-
     shiny::installExprFunction(
       expr, "func", eval.env = env, quoted = quoted)
@@ -50,5 +52,16 @@ render_gt <- function(expr,
 #' @export
 gt_output <- function(outputId) {
 
+  check_shiny()
+
   shiny::htmlOutput(outputId)
+}
+
+check_shiny <- function() {
+
+  if (!requireNamespace("shiny", quietly = TRUE)) {
+
+    stop("Please install the shiny package before using this function\n\n\t",
+         "install.packages(\"shiny\")", call. = FALSE)
+  }
 }
