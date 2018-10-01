@@ -231,6 +231,7 @@ ggplot_image <- function(plot_object,
     width = 5 * aspect_ratio,
     height = 5)
 
+  # Waiting for file to be written on async filesystems
   Sys.sleep(1)
 
   image_html <-
