@@ -180,6 +180,7 @@ get_currency_exponent <- function(currency) {
 }
 
 # Get the `sep_mark` value from a locale
+#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_sep_mark <- function(locale) {
 
@@ -194,6 +195,7 @@ get_locale_sep_mark <- function(locale) {
 }
 
 # Get the `dec_mark` value from a locale
+#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_dec_mark <- function(locale) {
 
