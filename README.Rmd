@@ -23,7 +23,8 @@ library(tidyverse)
 
 <p align="center">[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![Travis build status](https://travis-ci.org/rstudio/gt.svg?branch=master)](https://travis-ci.org/rstudio/gt)</p>
+[![Travis build status](https://travis-ci.org/rstudio/gt.svg?branch=master)](https://travis-ci.org/rstudio/gt)
+[![Coverage status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)</p>
 
 The **gt** package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don't have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.
 
@@ -99,6 +100,29 @@ mtcars_tbl <-
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")) %>% # 6
   tab_source_note(
     source_note = "Original Data from Motor Trend Magazine (1974).") # 6
+```
+
+```{r echo=FALSE}
+table_html <-
+  gt(mtcars[1:6, ], rownames_to_stub = TRUE) %>% 
+  fmt_number(
+    columns = vars(mpg, disp, drat, qsec),
+    decimals = 1
+    ) %>%
+  fmt_number(
+    columns = vars(wt),
+    decimals = 3
+    ) %>%
+  tab_stubhead_caption(caption = "car model") %>%
+  tab_heading(
+    title = md("Excerpt from the **mtcars** dataset"),
+    headnote = md("[A rather famous *Motor Trend* table]")
+    ) %>%
+  tab_source_note(
+    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")) %>%
+  tab_source_note(
+    source_note = "Original Data from Motor Trend Magazine (1974).") %>%
+  as_raw_html(inline_css = TRUE)
 ```
 
 Invoking the object interactively displays it in the Viewer. In R Markdown chunks, the object becomes an HTML table.

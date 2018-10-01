@@ -14,6 +14,8 @@
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
 [![Travis build
 status](https://travis-ci.org/rstudio/gt.svg?branch=master)](https://travis-ci.org/rstudio/gt)
+[![Coverage
+status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 
 </p>
 
