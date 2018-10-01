@@ -138,7 +138,7 @@ get_currency_str <- function(currency,
 
       currency_symbol <-
         currencies %>%
-        dplyr::filter(curr_code == currency) %>%
+        dplyr::filter(curr_number == currency) %>%
         dplyr::pull(curr_code)
     }
 
