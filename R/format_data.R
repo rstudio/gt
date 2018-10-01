@@ -62,8 +62,6 @@
 #'   \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a table object using the
 #' # `mtcars` dataset and format specified
 #' # numeric columns to display values to
@@ -332,8 +330,6 @@ fmt_scientific <- function(data,
 #'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns
 #' # that are both numeric
 #' data_tbl <-
@@ -475,16 +471,16 @@ fmt_percent <- function(data,
 #' information on this.
 #' @inheritParams fmt_number
 #' @param currency the currency to use for the numeric value. This is to be
-#' supplied as a 3-letter currency code. Examples include \code{"USD"} for
-#' U.S. Dollars and \code{"EUR"} for the Euro currency.
+#'   supplied as a 3-letter currency code. Examples include \code{"USD"} for
+#'   U.S. Dollars and \code{"EUR"} for the Euro currency.
 #' @param use_subunits an option for whether the subunits portion of a currency
-#' value should be displayed.
+#'   value should be displayed.
 #' @param placement the placement of the currency symbol. This can be either be
-#' \code{left} (the default) or \code{right}.
+#'   \code{left} (the default) or \code{right}.
+#' @param incl_space an option on whether to include a space between the value
+#'   and the curerncy symbol. The default is to not introduce a space character.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with two columns
 #' # that are both numeric
 #' data_tbl <-
@@ -555,6 +551,7 @@ fmt_currency <- function(data,
                          sep_mark = ",",
                          dec_mark = ".",
                          placement = "left",
+                         incl_space = FALSE,
                          locale = NULL) {
 
   # Capture expressions for the `columns` and `rows` arguments
@@ -571,19 +568,17 @@ fmt_currency <- function(data,
   }
 
   # Return data if `currency` does not have a valid value
-  if (!is_currency_valid(currency = currency)) {
+  if (!is_currency_valid(currency)) {
 
     message("The value supplied for `currency` is not valid.")
     return(data)
   }
 
   # Get the currency string for the HTML context
-  currency_str_html <-
-    get_currency_str(currency = currency)
+  currency_str_html <- get_currency_str(currency)
 
   # Get the currency string for the non-HTML context
-  currency_str <-
-    get_currency_str(currency = currency, fallback_to_code = TRUE)
+  currency_str <- get_currency_str(currency, fallback_to_code = TRUE)
 
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
@@ -616,6 +611,9 @@ fmt_currency <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Determine which of `x` are not NA and also negative
+          negative_x <- x < 0 & !is.na(x)
+
           # Format all non-NA x values
           x[non_na_x] <-
             formatC(
@@ -629,20 +627,19 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(currency_str, x[non_na_x])
+            x[non_na_x] <- paste0(
+              currency_str, ifelse(incl_space, " ", ""), x[non_na_x])
           } else {
-            x[non_na_x] <- paste0(x[non_na_x], currency_str)
+            x[non_na_x] <- paste0(
+              x[non_na_x], ifelse(incl_space, " ", ""), currency_str)
           }
 
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
           }
 
           # Handle formatting of pattern
@@ -654,6 +651,9 @@ fmt_currency <- function(data,
 
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
+
+          # Determine which of `x` are not NA and also negative
+          negative_x <- x < 0 & !is.na(x)
 
           x[non_na_x] <-
             formatC(
@@ -667,26 +667,24 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(currency_str_html, x[non_na_x])
+            x[non_na_x] <- paste0(
+              currency_str_html, ifelse(incl_space, " ", ""), x[non_na_x])
           } else {
-            x[non_na_x] <- paste0(x[non_na_x], currency_str_html)
+            x[non_na_x] <- paste0(
+              x[non_na_x], ifelse(incl_space, " ", ""), currency_str_html)
           }
 
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
           x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-
           x
         }))
 }
@@ -728,8 +726,6 @@ fmt_currency <- function(data,
 #' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
 #' # that contains dates
 #' data_tbl <-
@@ -742,7 +738,7 @@ fmt_currency <- function(data,
 #'
 #' # Create a table object using this
 #' # dataset and format the `date`
-#' # column with the `date_style` of `2`
+#' # column with a `date_style` of `2`
 #' gt_tbl <-
 #'   gt(data_tbl) %>%
 #'     fmt_date(
@@ -787,8 +783,6 @@ fmt_date <- function(data,
 #' \code{\link{info_time_style}()} to see the different numbered and named time
 #' presets.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
 #' # that contains 24-hour time strings
 #' data_tbl <-
@@ -801,7 +795,7 @@ fmt_date <- function(data,
 #'
 #' # Create a table object using this
 #' # dataset and format the `time`
-#' # column with `time_style` '3'
+#' # column with a  `time_style` of `3`
 #' gt_tbl <-
 #'   gt(data_tbl) %>%
 #'     fmt_time(
@@ -845,25 +839,24 @@ fmt_time <- function(data,
 #' @inheritParams fmt_time
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' library(tidyverse)
-#'
 #' # Create a tibble with a column
-#' # that contains 24-hour time strings
+#' # that contains date-time strings
 #' data_tbl <-
 #'   dplyr::tribble(
-#'     ~time,
+#'     ~datetime,
 #'     "2017-06-10 12:35:23",
 #'     "2017-07-12 15:01:34",
 #'     "2017-08-05 09:45:23",
 #'     "2017-10-23 01:32:00")
 #'
 #' # Create a table object using this
-#' # dataset and format the `time`
-#' # column with `time_style` '3'
+#' # dataset and format the `datetime`
+#' # column with a `date_style` of
+#' # `2` and a `time_style` of `3`
 #' gt_tbl <-
 #'   gt(data_tbl) %>%
 #'     fmt_datetime(
-#'       columns = vars(time),
+#'       columns = vars(datetime),
 #'       date_style = 2,
 #'       time_style = 3)
 #' @family data formatting functions
