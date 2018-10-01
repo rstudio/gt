@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+    <defs></defs>
+    <g id="test_image" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.100000001">
+        <rect id="rect_13" fill="#F0DC00" x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_12" fill="#DCF014" transform="translate(100.000000, 100.000000) rotate(15.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_11" fill="#C80028" transform="translate(100.000000, 100.000000) rotate(30.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_10" fill="#B4143C" transform="translate(100.000000, 100.000000) rotate(45.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_09" fill="#A02850" transform="translate(100.000000, 100.000000) rotate(60.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_08" fill="#8C3C64" transform="translate(100.000000, 100.000000) rotate(75.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_07" fill="#785078" transform="translate(100.000000, 100.000000) rotate(90.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_06" fill="#64648C" transform="translate(100.000000, 100.000000) rotate(105.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_05" fill="#5078A0" transform="translate(100.000000, 100.000000) rotate(120.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_04" fill="#3C8CB4" transform="translate(100.000000, 100.000000) rotate(135.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_03" fill="#28A0C8" transform="translate(100.000000, 100.000000) rotate(150.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_02" fill="#14B4DC" transform="translate(100.000000, 100.000000) rotate(165.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+        <rect id="rect_01" fill="#00C8F0" transform="translate(100.000000, 100.000000) rotate(180.000000) translate(-100.000000, -100.000000) " x="35" y="35" width="130" height="130"></rect>
+    </g>
+</svg>
