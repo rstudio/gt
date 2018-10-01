@@ -257,11 +257,15 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+#nocov start
+
 # This function is a conveient wrapper for `system.file()` where the `package`
 # refers to this package
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
+
+#nocov end
 
 # This function removes entire HTML tags from input text
 remove_html <- function(text) {
