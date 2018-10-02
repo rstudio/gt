@@ -67,7 +67,11 @@ cols_align_left <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")["column_align", columns] <- "left"
+  for (column in columns) {
+    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
+      attr(data, "boxh_df")["column_align", columns] <- "left"
+    }
+  }
 
   data
 }
@@ -96,7 +100,11 @@ cols_align_center <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")["column_align", columns] <- "center"
+  for (column in columns) {
+    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
+      attr(data, "boxh_df")["column_align", columns] <- "center"
+    }
+  }
 
   data
 }
@@ -125,7 +133,11 @@ cols_align_right <- function(data,
     return(data)
   }
 
-  attr(data, "boxh_df")["column_align", columns] <- "right"
+  for (column in columns) {
+    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
+      attr(data, "boxh_df")["column_align", columns] <- "right"
+    }
+  }
 
   data
 }
