@@ -217,7 +217,7 @@ The package API consists of the following functions:
   - `cols_move()` – move one or more columns
   - `cols_move_to_start()` – move one or more columns to the start
   - `cols_move_to_end()` – move one or more columns to the end
-  - `cols_remove()` – remove one or more columns
+  - `cols_hide()` – hide one or more columns
   - `cols_label()` – relabel one or more columns
   - `cols_split_delim()` – create group names and column labels via
     delimited column names
