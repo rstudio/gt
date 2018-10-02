@@ -1,4 +1,4 @@
-#' @import sassr
+#' @import sass
 #' @noRd
 compile_scss <- function(data) {
 
