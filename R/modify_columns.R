@@ -21,26 +21,18 @@ cols_align <- function(data,
                        align = "center",
                        columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  # Filter the vector of column names by the
-  # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(data))]
-
   if (!(align %in% c("left", "center", "right"))) {
-    return(data)
+    stop("The `align` type must be either `left`, `center`, or `right`.",
+         call. = FALSE)
   }
 
-  if (length(columns) == 0) {
-    return(data)
+  if (align == "left") {
+    data %>% cols_align_left(columns)
+  } else if (align == "right") {
+    data %>% cols_align_right(columns)
+  } else {
+    data %>% cols_align_center(columns)
   }
-
-  attr(data, "boxh_df")["column_align", columns] <- align
-
-  data
 }
 
 #' Set columns to be aligned left
