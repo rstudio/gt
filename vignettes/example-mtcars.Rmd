@@ -17,145 +17,330 @@ library(dplyr)
 library(tibble)
 ```
 
+Let's make a display table using the `mtcars`. We all know `mtcars`, it's great, it's familiar. Here it is: 
 
 ```{r mtcars_data_frame}
+# This is `mtcars`
 mtcars
 ```
 
+Let's suppose we'd like to make a display table from this dataset. Our set of requirements includes:
 
-```{r split_into_stub_blocks}
-mtcars_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) %>%
-  tab_stub_block(
-    group = "Fast Cars",
-    rows = qsec < 16) %>%
-  tab_stub_block(
-    group = "High Gas Mileage",
-    rows = mpg > 25) %>%
-  tab_stub_block(
-    group = "Pitiful Gas Mileage",
-    rows = mpg < 12) %>%
-  tab_stub_block(
-    group = "The Mercs",
-    rows = starts_with("Merc")) %>%
-  tab_stub_block(
-    group = "Mazda",
-    rows = starts_with("Mazda")) %>%
-  tab_stub_block(
-    group = "Hornet",
-    rows = starts_with("Hornet")) %>%
-  tab_stub_block(others = "The Rest of the mtcars")
+1. putting the cars into characteristic groups (arbitrary criteria here... let's try to have fun)
+2. we'll remove some of the variables (`vs`, `am`, `gear`, `carb`)
+3. for the remaining variables, put them into categories
+4. format the values with decimals to use consistent numbers of decimal places
+5. let's summarize some of the variables in each group (`wt`, `drat`, `hp`, `qsec`, `mpg`, `disp`)
+6. give the table a title and a subtitle (or, *headnote*)
+7. footnotes: point out some of the more interesting data points
+    a. the car with the best gas mileage
+    b. the car with the fastest quarter mile time
+    c. the most sluggish car
+    d. the car with the outrageous horsepower
+8. placing a citation for the dataset at the bottom of the table
+9. style some cells:
+    a. the top 5 cars for gas mileage in green
+    b. the bottom 5 cars for gas mileage in red
+10. renaming the columns so that they present better
 
-# Show the table
-mtcars_tbl
+### Requirement 1. Row Groups
+
+Let's use **dplyr** to create a categorical column called `groupname`. We can simply use `mutate()` with `case_when()` to generate these labels. The `select()` statement to put the `rowname` and `groupname` variables to the left is entirely optional.
+
+```{r dplyr_mtcars}
+# Include rownames (the names of the cars) and create
+# a `groupname` column with categoricals
+mtcars_g <- mtcars %>%
+  tibble::rownames_to_column() %>%
+  dplyr::mutate(groupname = case_when(
+    qsec < 16 ~ "Fast Cars",
+    mpg > 25 ~ "High Gas Mileage",
+    mpg < 12 ~ "Pitiful Gas Mileage",
+    grepl("Merc", rowname) ~ "The Mercs",
+    grepl("Mazda", rowname) ~ "Mazdas",
+    TRUE ~ "The Rest of the Cars")) %>%
+  dplyr::select(rowname, groupname, everything())
+
+# Display the tibble
+mtcars_g
 ```
 
+The `rowname` and `groupname` columns are magic columns. They tell **gt** that a stub should be created and filled with row labels, and, stub groups should be implemented. Let's look at how the **gt** table looks with this type of structuring.
 
-```{r modify_order_of_stub_blocks}
-mtcars_tbl <- mtcars_tbl %>%
-  blocks_arrange(groups = c("High Gas Mileage", "Fast Cars"))
-
-# Show the table
-mtcars_tbl
-```
-
-
-```{r move_columns}
-mtcars_tbl <- mtcars_tbl %>%
-  cols_remove(columns = vars(vs, am, gear, drat, carb)) %>%
-  cols_move_to_start(columns = vars(hp, wt, qsec)) %>%
-  cols_move_to_end(columns = vars(disp, cyl))
+```{r gt_function}
+tab <- gt(mtcars_g)
 
 # Show the table
-mtcars_tbl
+tab
 ```
 
+Getting the row groups in the right order can be done by using factor levels for the `groupname` variable.
 
-```{r}
-# Format the `wt` and `qsec` columns to 3 decimal
-# places; `mpg` and `disp` to 1 decimal place
-mtcars_tbl <- mtcars_tbl %>%
+```{r groupname_col}
+# Define our preferred order of row groups in a vector
+order_car_groups <- 
+  c("Fast Cars", "High Gas Mileage", "Pitiful Gas Mileage",
+    "The Mercs", "Mazdas", "The Rest of the Cars")
+
+# Reorder the table rows by our specific ordering of groups and
+# also by descending `qsec`
+mtcars_g <- mtcars_g %>%
+  dplyr::arrange(factor(groupname, levels = order_car_groups), desc(qsec))
+
+# Create a new `tab` table object 
+tab <- gt(mtcars_g)
+
+# Show the table
+tab
+```
+
+### Requirement 2. Remove Some Variables
+
+Let's hide some of the variables (`drat`, `vs`, `am`, `gear`, `carb`). We use the `cols_hide()` function to hide columns. The same end result might also have been achieved by using `mtcars %>% select(-c(drat, vs, am, gear, carb))`, before introducing the table to `gt()`. Why this function then? Sometimes you'll need variables for conditional statements within **gt** but won't want to display them in the end.
+
+Aside from hiding columns, let's *move* some of them. Again, this could be done with `dplyr::select()` but there are options here in **gt** via the `cols_move_to_start()` and `cols_move_to_end()` functions.
+
+```{r cols_hide_move}
+# Use a few `cols_*()` functions to remove and move columns 
+tab <- tab %>%
+  cols_hide(columns = vars(vs, am, gear, carb)) %>%
+  cols_move_to_start(columns = vars(wt, drat, cyl)) %>%
+  cols_move_to_end(columns = vars(hp, qsec, mpg, disp))
+
+# Show the table
+tab
+```
+
+### Requirement 3. Put Variables Into Groups
+
+It's sometimes useful to arrange variables/columns into groups by using spanner headings. This can be done in **gt** by using the `tab_boxhead_panel()` function. It takes the `group` and `columns` arguments; the `group` is the spanner heading and the `columns` are those columns that belong in this group. The grouping can be referred to as a boxhead panel.
+
+Here, we'll put the `wt`, `drat`, and `cyl` columns into the `Properties` panel, and the remaining columns will be part of the `Performance` panel. The spanner headings can be styled with Markdown by using the `md()` helper.
+
+```{r tab_boxhead_panel}
+# Put the first three columns in a boxhead panel with
+# the title 'Properties'; the remaining columns are part
+# of a panel named 'Performance'
+tab <- tab %>%
+  tab_boxhead_panel(
+    group = md("*Properties*"),
+    columns = vars(wt, drat, cyl)) %>%
+  tab_boxhead_panel(
+    group = md("*Performance*"),
+    columns = vars(hp, qsec, mpg, disp))
+
+# Show the table
+tab
+```
+
+### Requirement 4. Format Numeric Values for Consistency
+
+There are a number of formatter functions, all with the general naming convention `fmt*()`. The various formatters are convenient for applying formats to numeric or character values in the table's field. Here, we will simply use `fmt_number()` on specific columns where we want the number of decimal places to be `3` or `1`. We're not supplying anything for the `rows` argument and this means we want to apply the formatting to entire columns of data.
+
+```{r fmt_number}
+# Format the `wt`, `qsec`, and `drat` columns to
+# 3 decimal places; `mpg` and `disp` to 1 decimal place
+tab <- tab %>%
   fmt_number(
-    columns = vars(wt, qsec),
-    decimals = 3
-    ) %>%
+    columns = vars(wt, qsec, drat),
+    decimals = 3) %>%
   fmt_number(
     columns = vars(mpg, disp),
     decimals = 1)
 
 # Show the table
-mtcars_tbl
+tab
 ```
 
-Modify the column labels. By default column labels inherit the column names from the input data table. However, we can selectively modify them and even use Markdown to style the labels. The `cols_label()` function allows for the setting of column labels. We can use the helper function `col_labels()` to set multiple column labels in a single call. Here, let's modify the `hp`, `wt`, `qsec`, `mpg`, `disp`, and `cyl` column labels to have something that is more readable. 
+### Requirement 5. Summarize Variables in Each Group
 
-```{r}
-mtcars_tbl <- mtcars_tbl %>%
-  cols_label(
-    labels = col_labels(
-      hp = md("*HP*"),
-      wt = "Weight",
-      qsec = "QMT, s",
-      mpg = "Miles/gallon",
-      disp = "Displacement",
-      cyl = "Cylinders"))
+Summaries are useful and, currently in **gt**, they work when data is available in groups. The `summary_rows()` function builds the summary rows and places them at the bottom of each row group. The first argument is `groups` which allows for groupwise creation of summary rows. Because we are not supplying anything in `groups`, the summary lines will be made for each group.
+
+We can choose which columns will have summary data computed (here it makes less sense to include `cyl`) in the optional `columns` argument. The `funs` argument takes a `funs()` statement to define the summary rows. All the rules for `dplyr::funs()` applies here, so check the documentation at `?dplyr::funs()` for more information. Finally, we can specify a *formatter* and that formatter's arguments/values so that we have a chance to format the output summary values in the way we prefer them to look.
+
+```{r summary_rows}
+# Create summary rows with `summary_rows`; this is across
+# all groups, focused on 6 of 7 columns, using 3 summarizing
+# functions (we supply summary row labels then the function),
+# and, we add a `formatter` function so that the summary
+# values are formatted to 1 decimal place
+tab <- tab %>%
+  summary_rows(
+    columns = vars(wt, drat, hp, qsec, mpg, disp),
+    funs = funs(
+      Average = mean,
+      Max = max,
+      Min = min),
+    formatter = fmt_number,
+    decimals = 1)
 
 # Show the table
-mtcars_tbl
+tab
 ```
 
-The table is really looking nice. We will now add a title and a headnote with `tab_heading()`, we'll include two source notes in the footer area with `tab_source_note()`, and, that little area in the top-left (the stub heading) will get a stubhead caption through `tab_stubhead_caption()` to explain what's in the stub.
+We can recover the summary data from the `tab` object. Use the `extract_summary()` function to get a list a data frames. The data frame names are the group names, and each df has `groupname` and `rowname` column that help to identify the groups and the summary row captions. 
 
-```{r add_heading_footer_parts}
+```{r extract_summary}
+# Get the summary data for the `Mazdas` group
+extract_summary(tab)$Mazdas
+```
 
-mtcars_tbl <- mtcars_tbl %>%
+### Requirement 6. Table Title and Headnote
+
+The `tab_heading()` function allows us to place a table title and, optionally, a headnote at the top of the display table. 
+
+```{r tab_heading}
+# Add a table title and headnote; we can use Markdown
+# with the `md()` helper function
+tab <- tab %>%
   tab_heading(
     title = md("The **mtcars** dataset"),
-    headnote = md("[A rather famous *Motor Trend* table]")
-    ) %>%
-  tab_source_note(
-    source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
-    ) %>%
-  tab_source_note(
-    source_note = md("Original Data: *Motor Trend Magazine* (1974).")
-    ) %>%
-  tab_stubhead_caption(
-    caption = md("*Car*"))
+    headnote = "A closer look at these legendary cars.")
 
 # Show the table
-mtcars_tbl
+tab
 ```
 
+### Requirement 7. Add Interesting Footnotes
 
-```{r add_footnotes}
+Our specific requirements our footnoting endeavor are to get a single footnote for:
 
-# Determine which car has the fastest quarter mile time;
-# using dplyr functions on the orginal `mtcars` dataset
-# results in obtaining a single rowname
-fastest_car_qsec <- mtcars %>% 
-  rownames_to_column() %>%
-  arrange(qsec) %>%
-  slice(1) %>%
-  pull(rowname)
+    a. the car with the best gas mileage
+    b. the car with the fastest quarter mile time
+    c. the most sluggish car
+    d. the car with the outrageous horsepower
 
-mtcars_tbl <- mtcars_tbl %>%
+To more reproducibility identify which car each of these refers to, we can go back to `dplyr`ing the `mtcars` dataset and get the car names. Once that's done, each note can be added with `tab_footnote()`.
+
+The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the glyph should be attached. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). While each has their own interface for targeting cells, help is available at `?gt::location_cells`.
+
+What `cells_data` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices).
+
+```{r tab_footnote}
+# Obtain single rows of bests or worsts from
+# the relevant categories
+
+# Car with the best gas mileage
+best_gas_mileage <- mtcars %>% 
+  rownames_to_column() %>% arrange(desc(mpg)) %>%
+  slice(1) %>% pull(rowname)
+
+# Car with the fastest quarter mile time
+fastest_car <- mtcars %>% 
+  rownames_to_column() %>% arrange(qsec) %>%
+  slice(1) %>% pull(rowname)
+
+# Car with the slowest quarter mile time
+slowest_car <- mtcars %>% 
+  rownames_to_column() %>% arrange(desc(qsec)) %>%
+  slice(1) %>% pull(rowname)
+
+# Car with the highest horsepower
+highest_hp <- mtcars %>% 
+  rownames_to_column() %>% arrange(desc(hp)) %>%
+  slice(1) %>% pull(rowname)
+
+# Add footnotes (the order we do it in doesn't matter)
+tab <- tab %>%
   tab_footnote(
     footnote = "Great fuel economy",
     locations = cells_data(
       columns = vars(mpg),
-      rows = c("Toyota Corolla", "Honda Civic", "Fiat 128"))) %>%
-  tab_footnote(
-    footnote = md("Very low power-to-weight ratio *(<15 lb/hp)*."),
-    locations = cells_data(
-      columns = vars(hp),
-      rows = (wt * 1000) / hp < 15)) %>%
+      rows = best_gas_mileage)) %>%
   tab_footnote(
     footnote = md("The *fastest* quarter mile of the **mtcars**."),
     locations = cells_data(
       columns = vars(qsec),
-      rows = fastest_car_qsec))
-
+      rows = fastest_car)) %>%
+  tab_footnote(
+    footnote = "This car is slow.",
+    locations = cells_data(
+      columns = vars(qsec),
+      rows = slowest_car)) %>%
+  tab_footnote(
+    footnote = md("The highest **HP**."),
+    locations = cells_data(
+      columns = vars(hp),
+      rows = highest_hp))
+  
 # Show the table
-mtcars_tbl
+tab
 ```
 
+### Requirement 8. Source Citation
+
+A *source note* can be added below the display table using the `tab_source_note()` function. We can even add multiple source notes with multiple calls of that function. Here, we just copied the **Source** citation from `?mtcars` and used Markdown (with `md()`) to apply the same citation styling.
+
+```{r tab_source_note}
+# Add a source note to the bottom of the table; this
+# appears below the footnotes
+tab <- tab %>%
+  tab_source_note(
+    source_note = md(paste0(
+      "Source: ",
+      "Henderson and Velleman (1981), Building multiple regression models interactively. ",
+      "*Biometrics*, **37**, 391–411.")))
+
+# Show the table
+tab
+```
+
+### Requirement 9. Cell Styling
+
+Here we are going to apply styles to specific cells. This is done with `tab_style()` and the interface is similar to that of `tab_footnote()`. There are two arguments `style` and `locations` and it's preferable to supply values with the helper functions `apply_styles()` and `cells_*()`, respectively.  
+
+For our `mtcars` table, we need to style specific cells in this way:
+
+    a. the top 5 cars for gas mileage in green
+    b. the bottom 5 cars for gas mileage in red
+
+```{r tab_style}
+# Use dplyr statements to get vectors of rownames;
+# the style will white text on either a `forestgreen`
+# or a `red` background
+tab <- tab %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "forestgreen", text_color = "white"),
+    locations = cells_data(
+      columns = vars(mpg),
+      rows = mtcars %>%
+        tibble::rownames_to_column() %>%
+        arrange(desc(mpg)) %>%
+        slice(1:5) %>%
+        pull(rowname))) %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "red", text_color = "white"),
+    locations = cells_data(
+      columns = vars(mpg),
+      rows = mtcars %>%
+        tibble::rownames_to_column() %>%
+        arrange(mpg) %>%
+        slice(1:5) %>%
+        pull(rowname)))
+
+# Show the table
+tab
+```
+
+### Requirement 10. Renaming the Columns (Applying Column Labels)
+
+We can modify the column labels. By default column labels inherit the column names from the input data table. However, we can selectively modify them and even use Markdown to style the labels. The `cols_label()` function allows for the setting of column labels. We can use the helper function `col_labels()` to set multiple column labels in a single call. Here, let's modify the `hp`, `wt`, `qsec`, `mpg`, `disp`, and `cyl` column labels to have something that is more readable. 
+
+```{r cols_label}
+# Apply more readable column labels with `cols_label()`
+tab <- tab %>%
+  cols_label(
+    labels = col_labels(
+      wt = "Weight",
+      drat = "Rear Axle Ratio",
+      cyl = "Cylinders",
+      hp = md("*HP*"),
+      qsec = "QMT, s",
+      mpg = "Miles/Gallon",
+      disp = "Displacement"))
+
+# Show the table
+tab
+```
+
+This is it. All requirements have been fulfilled. That table can be used in a lot of different places like R Markdown, Shiny, email messages... wherever they accept HTML.
