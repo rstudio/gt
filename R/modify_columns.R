@@ -21,115 +21,31 @@ cols_align <- function(data,
                        align = "center",
                        columns) {
 
+  # Stop if the value provided for `align` is not `left`, `center`,
+  # or `right`
   if (!(align %in% c("left", "center", "right"))) {
+
     stop("The `align` type must be either `left`, `center`, or `right`.",
          call. = FALSE)
   }
 
-  if (align == "left") {
-    data %>% cols_align_left(columns)
-  } else if (align == "right") {
-    data %>% cols_align_right(columns)
-  } else {
-    data %>% cols_align_center(columns)
-  }
-}
-
-#' Set columns to be aligned left
-#' @inheritParams cols_align
-#' @return an object of class \code{gt_tbl}.
-#' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and align the
-#' # `disp` column to the left
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_align_left(columns = vars(disp))
-#' @family column modification functions
-#' @export
-cols_align_left <- function(data,
-                            columns) {
-
-  # If using the `vars()` helper, get the columns as a character vector
+  # If using the `vars()` helper, get `columns` as a character vector
   if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+    columns <- columns %>%
+      lapply(`[[`, 2) %>%
+      as.character()
   }
 
-  if (length(columns) == 0) {
-    return(data)
+  # Stop if any column names in `columns` doesn't exist
+  # in the table boxhead
+  if (any(!(columns %in% colnames(attr(data, "boxh_df", exact = TRUE))))) {
+
+    stop("All `columns` must exist in the table boxhead.",
+         call. = FALSE)
   }
 
-  for (column in columns) {
-    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
-      attr(data, "boxh_df")["column_align", columns] <- "left"
-    }
-  }
-
-  data
-}
-
-#' Set columns to be aligned to the center
-#' @inheritParams cols_align
-#' @return an object of class \code{gt_tbl}.
-#' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and center align
-#' # the `drat` column
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_align_center(columns = vars(drat))
-#' @family column modification functions
-#' @export
-cols_align_center <- function(data,
-                              columns) {
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  if (length(columns) == 0) {
-    return(data)
-  }
-
-  for (column in columns) {
-    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
-      attr(data, "boxh_df")["column_align", columns] <- "center"
-    }
-  }
-
-  data
-}
-
-#' Set columns to be aligned right
-#' @inheritParams cols_align
-#' @return an object of class \code{gt_tbl}.
-#' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and align the
-#' # `qsec` column to the right
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_align_right(columns = vars(qsec))
-#' @family column modification functions
-#' @export
-cols_align_right <- function(data,
-                             columns) {
-
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
-
-  if (length(columns) == 0) {
-    return(data)
-  }
-
-  for (column in columns) {
-    if (column %in% colnames(attr(data, "boxh_df", exact = TRUE))) {
-      attr(data, "boxh_df")["column_align", columns] <- "right"
-    }
-  }
+  # Set the alignment value to all boxhead columns in `columns`
+  attr(data, "boxh_df")["column_align", columns] <- align
 
   data
 }
