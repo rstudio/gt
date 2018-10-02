@@ -165,15 +165,15 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>library</span>(<span class='no'>tidyverse</span>)
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 
 <span class='co'># Create a ggplot plot</span>
 <span class='no'>plot_object</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>ggplot</span>(
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
-    <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>hp</span>,
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>hp</span>,
         <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>wt</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='no'>mpg</span>)) +
-  <span class='fu'>geom_point</span>()
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></span>()
 
 <span class='co'># Create an HTML fragment that</span>
 <span class='co'># contains an the ggplot as an</span>
