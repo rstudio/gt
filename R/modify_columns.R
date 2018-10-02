@@ -333,25 +333,25 @@ cols_move_to_end <- function(data,
   data
 }
 
-#' Remove one or more columns
+#' Hide one or more columns
 #' @inheritParams cols_align
-#' @param columns the column names to remove from the table. The order of the
-#'   remaining columns will be preserved. Values provided that do not correspond
-#'   to column names will be disregarded.
+#' @param columns the column names to hide from the output display table. The
+#'   order of the remaining columns will be preserved. Values provided that do
+#'   not correspond to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and remove the `mpg`,
+#' # `mtcars` dataset and hide the `mpg`,
 #' # `cyl`, and `disp` columns
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_remove(
+#'     cols_hide(
 #'       columns = vars(mpg, cyl, disp))
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
-cols_remove <- function(data,
-                        columns) {
+cols_hide <- function(data,
+                      columns) {
 
   # If using the `vars()` helper, get the columns as a character vector
   if (inherits(columns, "quosures")) {
