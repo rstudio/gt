@@ -18,16 +18,11 @@
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
-                       align = "center",
+                       align = c("left", "center", "right"),
                        columns) {
 
-  # Stop if the value provided for `align` is not `left`, `center`,
-  # or `right`
-  if (!(align %in% c("left", "center", "right"))) {
-
-    stop("The `align` type must be either `left`, `center`, or `right`.",
-         call. = FALSE)
-  }
+  # Get the `align` value, this stops the function if there is no match
+  align <- match.arg(align)
 
   # If using the `vars()` helper, get `columns` as a character vector
   if (inherits(columns, "quosures")) {
