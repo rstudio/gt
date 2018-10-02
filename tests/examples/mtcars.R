@@ -27,7 +27,7 @@ mtcars_tbl <-
     columns = vars(drat, wt, qsec, vs, am, gear, carb)) %>% # 3
   cols_move_to_start(columns = vars(hp)) %>% # 4
   cols_move_to_end(columns = vars(am, gear)) %>% # 4
-  cols_remove(columns = vars(carb)) %>% # 4
+  cols_hide(columns = vars(carb)) %>% # 4
   cols_move(columns = vars(wt, carb, qsec), after = vars(gear)) %>% # 4
   tab_stub_block(
     group = "Mercs",

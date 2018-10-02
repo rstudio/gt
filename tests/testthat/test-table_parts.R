@@ -275,8 +275,8 @@ test_that("a gt table contains custom styles at the correct locations", {
     gt(mtcars, rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
     tab_stubhead_caption("cars") %>%
-    cols_remove(columns = "mpg") %>%
-    cols_remove(columns = "vs") %>%
+    cols_hide(columns = "mpg") %>%
+    cols_hide(columns = "vs") %>%
     tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
     tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
     tab_boxhead_panel(group = "gear_carb_cyl", columns = vars(gear, carb, cyl)) %>%
