@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge two columns to a value range column — cols_merge_range • gt</title>
+<title>Hide one or more columns — cols_hide • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Merge two columns to a value range column — cols_merge_range" />
+<meta property="og:title" content="Hide one or more columns — cols_hide" />
 
-<meta property="og:description" content="Merge two columns to a value range column" />
+<meta property="og:description" content="Hide one or more columns" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,18 +127,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge two columns to a value range column</h1>
+    <h1>Hide one or more columns</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/modify_columns.R'><code>R/modify_columns.R</code></a></small>
-    <div class="hidden name"><code>cols_merge_range.Rd</code></div>
+    <div class="hidden name"><code>cols_hide.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Merge two columns to a value range column</p>
+    <p>Hide one or more columns</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cols_merge_range</span>(<span class='no'>data</span>, <span class='no'>col_begin</span>, <span class='no'>col_end</span>)</pre>
+    <pre class="usage"><span class='fu'>cols_hide</span>(<span class='no'>data</span>, <span class='no'>columns</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,12 +149,10 @@
 function.</p></td>
     </tr>
     <tr>
-      <th>col_begin</th>
-      <td><p>a column that contains values for the start of the range.</p></td>
-    </tr>
-    <tr>
-      <th>col_end</th>
-      <td><p>a column that contains values for the end of the range.</p></td>
+      <th>columns</th>
+      <td><p>the column names to hide from the output display table. The
+order of the remaining columns will be preserved. Values provided that do
+not correspond to column names will be disregarded.</p></td>
     </tr>
     </table>
     
@@ -167,7 +165,7 @@ function.</p></td>
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align_center.html'>cols_align_center</a></code>,
   <code><a href='cols_align_left.html'>cols_align_left</a></code>,
   <code><a href='cols_align_right.html'>cols_align_right</a></code>, <code><a href='cols_align.html'>cols_align</a></code>,
-  <code><a href='cols_hide.html'>cols_hide</a></code>, <code><a href='cols_label.html'>cols_label</a></code>,
+  <code><a href='cols_label.html'>cols_label</a></code>, <code><a href='cols_merge_range.html'>cols_merge_range</a></code>,
   <code><a href='cols_merge_uncert.html'>cols_merge_uncert</a></code>,
   <code><a href='cols_merge.html'>cols_merge</a></code>, <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
   <code><a href='cols_move_to_start.html'>cols_move_to_start</a></code>,
@@ -175,26 +173,13 @@ function.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_1</span>, ~<span class='no'>val_2</span>,
-    <span class='fl'>1.6</span>,    <span class='fl'>2.6</span>,
-    <span class='fl'>1.9</span>,    <span class='fl'>3.3</span>,
-    <span class='fl'>2.6</span>,    <span class='fl'>3.8</span>,
-    <span class='fl'>2.1</span>,    <span class='fl'>4.2</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset where the `val_1` and</span>
-<span class='co'># `val_2` columns are merged together</span>
-<span class='co'># with an em-dash between them (the</span>
-<span class='co'># `val_1` column is retained)</span>
+    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
+<span class='co'># `mtcars` dataset and hide the `mpg`,</span>
+<span class='co'># `cyl`, and `disp` columns</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_merge_range</span>(
-      <span class='kw'>col_begin</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_1</span>),
-      <span class='kw'>col_end</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_2</span>))</div></pre>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>cols_hide</span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg</span>, <span class='no'>cyl</span>, <span class='no'>disp</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

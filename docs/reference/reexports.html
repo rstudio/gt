@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge two columns to a value range column — cols_merge_range • gt</title>
+<title>Objects exported from other packages — reexports • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,15 @@
 
 
 
-<meta property="og:title" content="Merge two columns to a value range column — cols_merge_range" />
+<meta property="og:title" content="Objects exported from other packages — reexports" />
 
-<meta property="og:description" content="Merge two columns to a value range column" />
+<meta property="og:description" content="These objects are imported from other packages. Follow the links
+below to see their documentation.
+
+  dplyrvars, funs" />
+
+<meta property="og:description" content="tidyselectstarts_with, ends_with, contains, matches, one_of, everything
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,86 +133,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge two columns to a value range column</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/modify_columns.R'><code>R/modify_columns.R</code></a></small>
-    <div class="hidden name"><code>cols_merge_range.Rd</code></div>
+    <h1>Objects exported from other packages</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/reexports.R'><code>R/reexports.R</code></a></small>
+    <div class="hidden name"><code>reexports.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Merge two columns to a value range column</p>
+    <p>These objects are imported from other packages. Follow the links
+below to see their documentation.</p>
+<dl class='dl-horizontal'>
+  <dt>dplyr</dt><dd><p><code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs</a></code></p></dd>
+
+    <dt>tidyselect</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a></code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>everything</a></code></p></dd>
+</dl>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cols_merge_range</span>(<span class='no'>data</span>, <span class='no'>col_begin</span>, <span class='no'>col_end</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
-function.</p></td>
-    </tr>
-    <tr>
-      <th>col_begin</th>
-      <td><p>a column that contains values for the start of the range.</p></td>
-    </tr>
-    <tr>
-      <th>col_end</th>
-      <td><p>a column that contains values for the end of the range.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
 
-    <p>an object of class <code>gt_tbl</code>.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align_center.html'>cols_align_center</a></code>,
-  <code><a href='cols_align_left.html'>cols_align_left</a></code>,
-  <code><a href='cols_align_right.html'>cols_align_right</a></code>, <code><a href='cols_align.html'>cols_align</a></code>,
-  <code><a href='cols_hide.html'>cols_hide</a></code>, <code><a href='cols_label.html'>cols_label</a></code>,
-  <code><a href='cols_merge_uncert.html'>cols_merge_uncert</a></code>,
-  <code><a href='cols_merge.html'>cols_merge</a></code>, <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
-  <code><a href='cols_move_to_start.html'>cols_move_to_start</a></code>,
-  <code><a href='cols_move.html'>cols_move</a></code>, <code><a href='cols_split_delim.html'>cols_split_delim</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_1</span>, ~<span class='no'>val_2</span>,
-    <span class='fl'>1.6</span>,    <span class='fl'>2.6</span>,
-    <span class='fl'>1.9</span>,    <span class='fl'>3.3</span>,
-    <span class='fl'>2.6</span>,    <span class='fl'>3.8</span>,
-    <span class='fl'>2.1</span>,    <span class='fl'>4.2</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset where the `val_1` and</span>
-<span class='co'># `val_2` columns are merged together</span>
-<span class='co'># with an em-dash between them (the</span>
-<span class='co'># `val_1` column is retained)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_merge_range</span>(
-      <span class='kw'>col_begin</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_1</span>),
-      <span class='kw'>col_end</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_2</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

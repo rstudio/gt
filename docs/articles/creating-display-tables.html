@@ -1279,7 +1279,7 @@
 </tr>
 </tfoot>
 </table>
-<!--gt table end--><p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function <code><a href="../reference/location_cells.html">cells_data()</a></code> is used with the <code>location</code> argument to specify which cells should be the target of the footnote. The <code><a href="../reference/location_cells.html">cells_data()</a></code> helper has the two arguments <code>columns</code> and <code>rows</code>. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in <code><a href="../reference/vars.html">vars()</a></code> or row captions within <code>c()</code>, or (4) a select helper function (<code><a href="../reference/resolving_helpers.html">starts_with()</a></code>, <code><a href="../reference/resolving_helpers.html">ends_with()</a></code>, <code><a href="../reference/resolving_helpers.html">contains()</a></code>, <code><a href="../reference/resolving_helpers.html">matches()</a></code>, <code><a href="../reference/resolving_helpers.html">one_of()</a></code>, and <code><a href="../reference/resolving_helpers.html">everything()</a></code>).</p>
+<!--gt table end--><p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function <code><a href="../reference/location_cells.html">cells_data()</a></code> is used with the <code>location</code> argument to specify which cells should be the target of the footnote. The <code><a href="../reference/location_cells.html">cells_data()</a></code> helper has the two arguments <code>columns</code> and <code>rows</code>. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in <code><a href="http://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> or row captions within <code>c()</code>, or (4) a select helper function (<code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">starts_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">ends_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">matches()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">one_of()</a></code>, and <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">everything()</a></code>).</p>
 <p>Here is a simple example on how a footnotes can be added to a table cell. Let’s add a footnote that references the <code>North America</code> and <code>South America</code> cells in the <code>name</code> column:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Add footnotes (the same text) to two different</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># cell; data cells are targeted with `data_cells()`</span></a>
@@ -1287,7 +1287,7 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">footnote =</span> <span class="st">"The Americas."</span>,</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(name),</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(name),</a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">      <span class="dt">rows =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>))</a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co"># Show the table</span></a>
@@ -1601,12 +1601,12 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
 <a class="sourceLine" id="cb7-15" data-line-number="15">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> </span>largest)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb7-17" data-line-number="17">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
 <a class="sourceLine" id="cb7-18" data-line-number="18">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
 <a class="sourceLine" id="cb7-20" data-line-number="20">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> "Antarctica"</span>))</a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co"># Show the table</span></a>
@@ -2498,14 +2498,14 @@
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb10-15" data-line-number="15">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
 <a class="sourceLine" id="cb10-16" data-line-number="16">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb10-17" data-line-number="17">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
 <a class="sourceLine" id="cb10-18" data-line-number="18">      <span class="dt">rows =</span> largest)</a>
 <a class="sourceLine" id="cb10-19" data-line-number="19">    ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb10-21" data-line-number="21">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
 <a class="sourceLine" id="cb10-22" data-line-number="22">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb10-23" data-line-number="23">      <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(size),</a>
-<a class="sourceLine" id="cb10-24" data-line-number="24">      <span class="dt">rows =</span> <span class="kw"><a href="../reference/resolving_helpers.html">contains</a></span>(<span class="st">"arc"</span>)))</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">      <span class="dt">rows =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains</a></span>(<span class="st">"arc"</span>)))</a>
 <a class="sourceLine" id="cb10-25" data-line-number="25"></a>
 <a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb10-27" data-line-number="27">gt_tbl</a></code></pre></div>
@@ -3169,10 +3169,10 @@
 <a class="sourceLine" id="cb12-12" data-line-number="12">    <span class="dt">headnote =</span> <span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
 <a class="sourceLine" id="cb12-14" data-line-number="14">    <span class="dt">group =</span> <span class="st">"Time"</span>,</a>
-<a class="sourceLine" id="cb12-15" data-line-number="15">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Year, Month, Day)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
 <a class="sourceLine" id="cb12-17" data-line-number="17">    <span class="dt">group =</span> <span class="st">"Measurement"</span>,</a>
-<a class="sourceLine" id="cb12-18" data-line-number="18">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Ozone, Solar.R, Wind, Temp))</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Ozone, Solar.R, Wind, Temp))</a>
 <a class="sourceLine" id="cb12-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb12-21" data-line-number="21">gt_tbl</a></code></pre></div>
@@ -3527,7 +3527,7 @@
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co"># the measurement-based columns</span></a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/cols_move_to_start.html">cols_move_to_start</a></span>(</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="../reference/vars.html">vars</a></span>(Year, Month, Day)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">    ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(<span class="dt">labels =</span> <span class="kw"><a href="../reference/col_labels.html">col_labels</a></span>(</a>
 <a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="dt">Ozone =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</a>
@@ -3878,7 +3878,7 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>Note that even though columns were moved using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, the <strong>spanner headings</strong> still spanned above the correct columns. There are a number of functions that <strong>gt</strong> provides to move columns, including <code><a href="../reference/cols_move.html">cols_move()</a></code>, <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>; there’s even a function to remove columns: <code><a href="../reference/cols_remove.html">cols_remove()</a></code>.</p>
+<!--gt table end--><p>Note that even though columns were moved using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, the <strong>spanner headings</strong> still spanned above the correct columns. There are a number of functions that <strong>gt</strong> provides to move columns, including <code><a href="../reference/cols_move.html">cols_move()</a></code>, <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>; there’s even a function to hide columns: <code><a href="../reference/cols_hide.html">cols_hide()</a></code>.</p>
 <p>The <code><a href="../reference/cols_label.html">cols_label()</a></code> function is paired with the <code><a href="../reference/col_labels.html">col_labels()</a></code> helper function. This allows for multiple columns to be renamed in a single use of <code><a href="../reference/cols_label.html">cols_label()</a></code>. Further to this, the helper function allows for the use of the <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> functions so that we can create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with <code>&lt;br&gt;</code>, insert a superscripted <code>2</code> (with <code>&lt;sup&gt;2&lt;/sup&gt;</code>), and insert a degree symbol as an HTML entity (<code>&amp;deg;</code>).</p>
 </div>
   </div>

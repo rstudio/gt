@@ -105,7 +105,7 @@
 <p align="center">
 <img src="reference/figures/gt_logo_1x.png" height="500px"></p>
 <p align="center">
-<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a> <a href="https://travis-ci.org/rstudio/gt"><img src="https://travis-ci.org/rstudio/gt.svg?branch=master" alt="Travis build status"></a>
+<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a> <a href="https://travis-ci.org/rstudio/gt"><img src="https://travis-ci.org/rstudio/gt.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a>
 </p>
 <p>The <strong>gt</strong> package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don’t have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.</p>
 <p>Let’s identify the underlying components of a table and understand their roles. The model for the constituent parts of a table can be explained in part by the following schematic:</p>
@@ -158,11 +158,11 @@ understand as the nature of the material will permit.</code></pre>
 <a class="sourceLine" id="cb2-9" data-line-number="9">mtcars_tbl &lt;-</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="reference/gt.html">gt</a></span>(mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, ], <span class="dt">rownames_to_stub =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="dt">columns =</span> <span class="kw"><a href="reference/vars.html">vars</a></span>(mpg, disp, drat, qsec),</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg, disp, drat, qsec),</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="dt">decimals =</span> <span class="dv">1</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 2</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dt">columns =</span> <span class="kw"><a href="reference/vars.html">vars</a></span>(wt),</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(wt),</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dt">decimals =</span> <span class="dv">3</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 3</span></a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"car model"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 4</span></a>
@@ -188,9 +188,9 @@ understand as the nature of the material will permit.</code></pre>
 <a class="sourceLine" id="cb3-9" data-line-number="9">iris_tbl &lt;-</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="reference/gt.html">gt</a></span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, ]) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="reference/cols_split_delim.html">cols_split_delim</a></span>(<span class="dt">delim =</span> <span class="st">"."</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 2</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="reference/cols_move_to_start.html">cols_move_to_start</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="reference/vars.html">vars</a></span>(Species)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 3</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="reference/cols_move_to_start.html">cols_move_to_start</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Species)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 3</span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">    <span class="dt">columns =</span> <span class="kw"><a href="reference/vars.html">vars</a></span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),</a>
 <a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="dt">decimals =</span> <span class="dv">1</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 4</span></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="reference/tab_heading.html">tab_heading</a></span>(</a>
@@ -268,7 +268,7 @@ understand as the nature of the material will permit.</code></pre>
 <li>
 <code><a href="reference/cols_move_to_end.html">cols_move_to_end()</a></code> – move one or more columns to the end</li>
 <li>
-<code><a href="reference/cols_remove.html">cols_remove()</a></code> – remove one or more columns</li>
+<code>cols_remove()</code> – remove one or more columns</li>
 <li>
 <code><a href="reference/cols_label.html">cols_label()</a></code> – relabel one or more columns</li>
 <li>

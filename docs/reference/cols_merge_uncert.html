@@ -167,17 +167,15 @@ function.</p></td>
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align_center.html'>cols_align_center</a></code>,
   <code><a href='cols_align_left.html'>cols_align_left</a></code>,
   <code><a href='cols_align_right.html'>cols_align_right</a></code>, <code><a href='cols_align.html'>cols_align</a></code>,
-  <code><a href='cols_label.html'>cols_label</a></code>, <code><a href='cols_merge_range.html'>cols_merge_range</a></code>,
-  <code><a href='cols_merge.html'>cols_merge</a></code>, <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
+  <code><a href='cols_hide.html'>cols_hide</a></code>, <code><a href='cols_label.html'>cols_label</a></code>,
+  <code><a href='cols_merge_range.html'>cols_merge_range</a></code>, <code><a href='cols_merge.html'>cols_merge</a></code>,
+  <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
   <code><a href='cols_move_to_start.html'>cols_move_to_start</a></code>,
-  <code><a href='cols_move.html'>cols_move</a></code>, <code><a href='cols_remove.html'>cols_remove</a></code>,
-  <code><a href='cols_split_delim.html'>cols_split_delim</a></code></p></div>
+  <code><a href='cols_move.html'>cols_move</a></code>, <code><a href='cols_split_delim.html'>cols_split_delim</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>tidyverse</span>)
-
-<span class='co'># Create a tibble with two columns;</span>
+    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns;</span>
 <span class='co'># both are numeric but the `uncert`</span>
 <span class='co'># column contains uncertainty values</span>
 <span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
@@ -196,8 +194,8 @@ function.</p></td>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>cols_merge_uncert</span>(
-      <span class='kw'>col_val</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>value</span>),
-      <span class='kw'>col_uncert</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>uncert</span>))</div></pre>
+      <span class='kw'>col_val</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>value</span>),
+      <span class='kw'>col_uncert</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>uncert</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
