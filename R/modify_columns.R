@@ -39,6 +39,12 @@ cols_align <- function(data,
   }
 
   # Stop if any column names in `columns` doesn't exist
+  # If `columns` is NULL or `TRUE` then `columns` becomes a vector
+  # of all columns available in the boxhead
+  if (is.null(columns) || isTRUE(columns)) {
+    columns <- colnames(attr(data, "boxh_df", exact = TRUE))
+  }
+
   # in the table boxhead
   if (any(!(columns %in% colnames(attr(data, "boxh_df", exact = TRUE))))) {
 
