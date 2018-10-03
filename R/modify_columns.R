@@ -18,8 +18,8 @@
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
-                       columns) {
                        align = c("auto", "left", "center", "right"),
+                       columns = NULL) {
 
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
