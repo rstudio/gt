@@ -62,6 +62,27 @@ test_that("the function `cols_align()` works as expected", {
     rvest::html_text() %>%
     expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "drat")))
 
+  # Create a `tbl_html` object with `gt()`; columns `1` (`mpg`),
+  # `2` (`cyl`), and `3` (`disp`) are aligned right
+  tbl_html <-
+    gt(data = mtcars_short) %>%
+    cols_align(align = "right", columns = 1:3) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the columns with class `col_heading right`
+  # are those columns that were aligned right
+  tbl_html %>%
+    rvest::html_nodes("[class='col_heading right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mpg", "cyl", "disp"))
+
+  # Expect that all other columns are center-aligned
+  tbl_html %>%
+    rvest::html_nodes("[class='col_heading center']") %>%
+    rvest::html_text() %>%
+    expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "disp")))
+
   # Expect that supplying an `align` value that is not `left`, `center`,
   # or `right` will result in an error
   expect_error(
@@ -73,6 +94,12 @@ test_that("the function `cols_align()` works as expected", {
   expect_error(
     gt(data = mtcars_short) %>%
       cols_align(align = "right", columns = vars(car)))
+
+  # Expect that supplying any column index that doesn't exist in the
+  # table will result in an error
+  expect_error(
+    gt(data = mtcars_short) %>%
+      cols_align(align = "right", columns = c(1, 20)))
 
   # Create a `tbl_html` object with `gt()`; align all
   # columns to the left
