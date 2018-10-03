@@ -52,6 +52,30 @@ cols_align <- function(data,
          call. = FALSE)
   }
 
+  if (align == "auto") {
+
+    # Obtain a vector of column classes for each of the column
+    # names
+    col_classes <-
+      lapply(
+        attr(data, "data_df", exact = TRUE)[columns], class) %>%
+      lapply(`[[`, 1) %>%
+      unlist()
+
+    # Get a vector of `align` values based on the column classes
+    align <- sapply(
+      col_classes, switch,
+      "character" = "left",
+      "Date" = "left",
+      "POSIXct" = "left",
+      "logical" = "center",
+      "factor" = "center",
+      "list" = "center",
+      "numeric" = "right",
+      "integer" = "right") %>%
+      unname()
+  }
+
   # Set the alignment value to all boxhead columns in `columns`
   attr(data, "boxh_df")["column_align", columns] <- align
 
