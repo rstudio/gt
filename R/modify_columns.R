@@ -1,10 +1,17 @@
 #' Set the alignment of columns
 #' @param data a table object that is created using the \code{\link{gt}()}
-#'   function.
-#' @param align the alignment direction. This can either be \code{"center"},
-#'   \code{"left"}, or \code{"right"}.
-#' @param columns a vector of column names for which the alignment should be
-#'   applied.
+#' function.
+#' @param align the alignment type. This can be any of \code{"center"},
+#'   \code{"left"}, or \code{"right"} for center-, left-, or center-alignment.
+#'   Alternatively, the \code{"auto"} option (the default), will automatically
+#'   align values in columns according to the data type (i.e., column class). In
+#'   this way, left-alignment is applied to columns of class \code{character},
+#'   \code{Date}, or \code{POSIXct}; center-alignment is for columns of class
+#'   \code{logical}, \code{factor}, or \code{list}; and right-aligned is for the
+#'   \code{numeric} and \code{integer} columns.
+#' @param columns an optional vector of column names for which the alignment
+#'   should be applied. If nothing is supplied, or if \code{columns} is
+#'   \code{TRUE}), then the alignment affects all columns.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
