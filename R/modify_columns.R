@@ -38,6 +38,25 @@ cols_align <- function(data,
       as.character()
   }
 
+  # If a numeric vector is supplied to `columns`, transform to a
+  # vector of column names
+  if (!is.null(columns) &&
+      inherits(columns, "numeric") || inherits(columns, "integer")) {
+
+    # Get a vector of column numbers
+    colnums <- unique(floor(columns))
+
+    # Stop function if any of the column numbers are not in the
+    # range of column indices for `data_df` (the original dataset)
+    if (!all(colnums %in% 1:ncol(attr(data, "data_df", exact = TRUE)))) {
+      stop("All column indices provided in `columns` must exist in `data`.",
+           call. = FALSE)
+    }
+
+    # Get a vector of column names (`columns`) from `colnums`
+    columns <- colnames(attr(data, "data_df", exact = TRUE))[colnums]
+  }
+
   # If `columns` is NULL or `TRUE` then `columns` becomes a vector
   # of all columns available in the boxhead
   if (is.null(columns) || isTRUE(columns)) {
