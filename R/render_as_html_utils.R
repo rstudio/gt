@@ -280,8 +280,8 @@ create_heading_component <- function(heading,
 
   heading_component <-
     paste0(
-      "<thead>\n<tr data-type='table_headings'>\n",
-      "<th data-type='table_title' class='heading title font_normal center' colspan='",
+      "<thead>\n<tr>\n",
+      "<th class='gt_heading gt_title gt_font_normal gt_center' colspan='",
       n_cols, "'", create_style_attrs(title_style_attrs), ">",
       heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
 
@@ -291,9 +291,9 @@ create_heading_component <- function(heading,
       paste0(
         heading_component,
         paste0(
-          "<tr data-type='table_headings'>\n",
-          "<th data-type='table_headnote' ",
-          "class='heading headnote font_normal center bottom_border' colspan='",
+          "<tr>\n",
+          "<th ",
+          "class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border' colspan='",
           n_cols, "'", create_style_attrs(headnote_style_attrs), ">",
           heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
   }
@@ -363,11 +363,12 @@ create_boxhead_component <- function(boxh_df,
     table_col_headings <- c()
 
     for (i in seq(headings)) {
+
       table_col_headings <-
         c(table_col_headings,
           paste0(
-            "<th data-type='column_heading' class='col_heading ",
-            col_alignment[i],
+            "<th class='gt_col_heading ",
+            paste0("gt_", col_alignment[i]),
             "' rowspan='1' colspan='1'",
             get_column_style(
               column_style_attrs,
@@ -378,7 +379,7 @@ create_boxhead_component <- function(boxh_df,
 
     table_col_headings <-
       paste0(
-        "<tr data-type='table_boxhead'>\n",
+        "<tr>\n",
         paste0(table_col_headings, collapse = "\n"), "\n</tr>\n")
 
   } else {
@@ -396,8 +397,7 @@ create_boxhead_component <- function(boxh_df,
       first_set <-
         c(first_set,
           paste0(
-            "<th data-type='column_heading' ",
-            "class='col_heading ", col_alignment[1],
+            "<th class='gt_col_heading ", paste0("gt_", col_alignment[1]),
             "' rowspan='2' colspan='1'",
             get_column_style(column_style_attrs, column_name = headings[1]),
             ">", headings[1], "</th>"))
@@ -412,9 +412,10 @@ create_boxhead_component <- function(boxh_df,
         first_set <-
           c(first_set,
             paste0(
-              "<th data-type='column_heading' ",
-              "class='col_heading center' rowspan='2' colspan='1'",
-              get_column_style(column_style_attrs, column_name = colnames(boxh_df)[i]),
+              "<th class='gt_col_heading gt_center' rowspan='2' colspan='1'",
+              get_column_style(
+                column_style_attrs,
+                column_name = colnames(boxh_df)[i]),
               ">", headings[i], "</th>")
           )
 
@@ -436,7 +437,7 @@ create_boxhead_component <- function(boxh_df,
 
         if (!same_spanner) {
 
-          class <- "column_spanner"
+          class <- "gt_column_spanner"
 
           colspan <- 1L
 
@@ -454,14 +455,17 @@ create_boxhead_component <- function(boxh_df,
           }
 
           if (spanner_adjacent) {
-            class <- paste0(class, " sep_right")
+            class <- paste0(class, " gt_sep_right")
           }
 
           first_set <-
             c(first_set,
               paste0(
-                "<th data-type='column_heading' class='col_heading ",
-                class, " ", ifelse(colspan > 1, "center", col_alignment[-1][i]),
+                "<th class='gt_col_heading ",
+                class, " ",
+                ifelse(
+                  colspan > 1, "gt_center",
+                  paste0("gt_", col_alignment[-1][i])),
                 "' rowspan='1' colspan='", colspan, "'",
                 get_spanner_style(
                   spanner_style_attrs,
@@ -489,8 +493,8 @@ create_boxhead_component <- function(boxh_df,
         second_set <-
           c(second_set,
             paste0(
-              "<th data-type='column_heading' class='col_heading ",
-              col_alignment[j], "' rowspan='1' colspan='1'",
+              "<th class='gt_col_heading ",
+              paste0("gt_", col_alignment[j]), "' rowspan='1' colspan='1'",
               get_column_style(
                 column_style_attrs,
                 column_name = colnames(boxh_df)[remaining_headings_indices[j]]),
@@ -567,12 +571,12 @@ create_body_component <- function(row_splits_body,
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr data-type='group_heading_row'>\n",
-            "<td data-type='group_heading' colspan='", n_cols ,
-            "' class='",
+            "<tr class='gt_group_heading_row'>\n",
+            "<td colspan='", n_cols, "' ",
+            "class='",
             ifelse(
-              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] != "",
-              "group_heading", "empty_group_heading"), "'>",
+              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] == "",
+              "gt_empty_group_heading", "gt_group_heading"), "'>",
             groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
             "</tr>\n"))
@@ -587,14 +591,14 @@ create_body_component <- function(row_splits_body,
             "<tr data-type='data' data-row='", i,"'>\n",
             paste0(
               "<td data-type='data' data-row='", i, "' data-column='0' ",
-              "class='stub row ", col_alignment[1], "'",
+              "class='gt_row gt_stub gt_", col_alignment[1], "'",
               create_style_attrs(row_splits_styles[[i]][1]),
               ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
               "<td data-type='data' data-row='", i, "' ",
               "data-column='", column_series, "' ",
-              "class='row ", col_alignment[-1], "'",
+              "class='gt_row gt_", col_alignment[-1], "'",
               create_style_attrs(row_splits_styles[[i]][-1]),
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
@@ -612,7 +616,7 @@ create_body_component <- function(row_splits_body,
             paste0(
               "<td data-type='data' data-row='", i, "' ",
               "data-column='", column_series, "' ",
-              "class='row ", col_alignment, "'",
+              "class='gt_row gt_", col_alignment, "'",
               create_style_attrs(row_splits_styles[[i]]),
               ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
@@ -645,8 +649,8 @@ create_body_component <- function(row_splits_body,
             n_cols = n_cols)
 
         # Provide CSS classes for leading and non-leading summary rows
-        summary_row_classes_first <- "summary_row first_summary_row "
-        summary_row_classes <- "summary_row "
+        summary_row_classes_first <- "gt_summary_row gt_first_summary_row "
+        summary_row_classes <- "gt_summary_row "
 
         summary_row_lines <- c()
 
@@ -658,16 +662,16 @@ create_body_component <- function(row_splits_body,
                 "<tr data-type='summary' data-group='", group,
                 "' data-summary-row='", j,"'>\n",
                 paste0(
-                  "<td class='stub row ",
+                  "<td class='gt_stub gt_row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                  col_alignment[1], "'",
+                  "gt_", col_alignment[1], "'",
                   create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
                   row_splits_summary[[j]][1],
                   "</td>"), "\n",
                 paste0(
-                  "<td class='row ",
+                  "<td class='gt_row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
-                  col_alignment[-1], "'",
+                  "gt_", col_alignment[-1], "'",
                   create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
                   row_splits_summary[[j]][-1],
                   "</td>", collapse = "\n"),
@@ -685,7 +689,7 @@ create_body_component <- function(row_splits_body,
 
   # Create the `table_body` HTML component
   paste0(
-    "<tbody class='table_body striped'>\n",
+    "<tbody class='gt_table_body gt_striped'>\n",
     body_rows,
     "</tbody>\n")
 }
@@ -698,11 +702,11 @@ create_source_note_rows <- function(source_note,
   }
 
   paste0(
-    "<tfoot data-type='source_notes'>\n",
+    "<tfoot>\n",
     paste0(
-      "<tr data-type='source_note_row'>\n",
-      "<td data-type='source_note' colspan='", n_cols + 1 ,
-      "' class='sourcenote'>", source_note$source_note,
+      "<tr>\n",
+      "<td colspan='", n_cols + 1 ,
+      "' class='gt_sourcenote'>", source_note$source_note,
       "</td>\n</tr>\n",
       collapse = ""),
     "</tfoot>\n")
@@ -733,10 +737,9 @@ create_footnote_component <- function(footnotes_resolved,
   # Create the footnotes block
   footnote_component <-
     paste0(
-      "<tfoot data-type='table_footnotes'>\n",
-      "<tr data-type='table_footnote'>\n<td colspan='",
-      n_cols,
-      "' class='footnote'>",
+      "<tfoot>\n",
+      "<tr>\n<td colspan='", n_cols, "' ",
+      "class='gt_footnote'>",
       paste0(
         "<sup class='gt_footnote_glyph'><em>", footnotes_tbl[["fs_id"]],
         "</em></sup> ", footnotes_tbl[["text"]],
