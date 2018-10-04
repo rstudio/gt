@@ -278,8 +278,10 @@ remove_html <- function(text) {
 #' @noRd
 get_css_tbl <- function(data) {
 
+  id <- "id"
+
   raw_css_vec <-
-    compile_scss(data) %>%
+    compile_scss(data, id) %>%
     as.character() %>%
     strsplit("\n") %>%
     unlist()
