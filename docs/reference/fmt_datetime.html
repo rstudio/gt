@@ -151,11 +151,11 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
-<code><a href='resolving_helpers.html'>starts_with</a>()</code>, <code><a href='resolving_helpers.html'>ends_with</a>()</code>,
-<code><a href='resolving_helpers.html'>contains</a>()</code>, <code><a href='resolving_helpers.html'>matches</a>()</code>, <code><a href='resolving_helpers.html'>one_of</a>()</code>,
-and <code><a href='resolving_helpers.html'>everything</a>()</code>.</p></td>
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
+and <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>everything</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>rows</th>
@@ -163,9 +163,9 @@ and <code><a href='resolving_helpers.html'>everything</a>()</code>.</p></td>
 rows in <code>columns</code> being formatted. Can either be a vector of row
 captions provided <code>c()</code>, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
-<code><a href='resolving_helpers.html'>starts_with</a>()</code>, <code><a href='resolving_helpers.html'>ends_with</a>()</code>,
-<code><a href='resolving_helpers.html'>contains</a>()</code>, <code><a href='resolving_helpers.html'>matches</a>()</code>, <code><a href='resolving_helpers.html'>one_of</a>()</code>,
-and <code><a href='resolving_helpers.html'>everything</a>()</code>. We can also use expressions to filter down
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
+<code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
+and <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>everything</a>()</code>. We can also use expressions to filter down
 to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></td>
     </tr>
     <tr>
@@ -198,25 +198,24 @@ presets.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>tidyverse</span>)
-
-<span class='co'># Create a tibble with a column</span>
-<span class='co'># that contains 24-hour time strings</span>
+    <pre class="examples"><div class='input'><span class='co'># Create a tibble with a column</span>
+<span class='co'># that contains date-time strings</span>
 <span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>time</span>,
+    ~<span class='no'>datetime</span>,
     <span class='st'>"2017-06-10 12:35:23"</span>,
     <span class='st'>"2017-07-12 15:01:34"</span>,
     <span class='st'>"2017-08-05 09:45:23"</span>,
     <span class='st'>"2017-10-23 01:32:00"</span>)
 
 <span class='co'># Create a table object using this</span>
-<span class='co'># dataset and format the `time`</span>
-<span class='co'># column with `time_style` '3'</span>
+<span class='co'># dataset and format the `datetime`</span>
+<span class='co'># column with a `date_style` of</span>
+<span class='co'># `2` and a `time_style` of `3`</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>fmt_datetime</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>time</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>datetime</span>),
       <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>,
       <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div></pre>
   </div>

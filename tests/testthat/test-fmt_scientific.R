@@ -50,6 +50,11 @@ test_that("formatting a column of numeric data to scientific notation works corr
     tab %>%
       fmt_scientific(columns = "num_3", decimals = 2))
 
+  # Expect an error when using a locale that does not exist
+  expect_error(
+    tab %>%
+      fmt_scientific(columns = "num_2", decimals = 2, locale = "aa_bb"))
+
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` in the HTML context
   # and compare to expected values

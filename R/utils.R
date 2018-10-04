@@ -138,7 +138,7 @@ get_currency_str <- function(currency,
 
       currency_symbol <-
         currencies %>%
-        dplyr::filter(curr_code == currency) %>%
+        dplyr::filter(curr_number == currency) %>%
         dplyr::pull(curr_code)
     }
 
@@ -180,6 +180,7 @@ get_currency_exponent <- function(currency) {
 }
 
 # Get the `sep_mark` value from a locale
+#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_sep_mark <- function(locale) {
 
@@ -194,6 +195,7 @@ get_locale_sep_mark <- function(locale) {
 }
 
 # Get the `dec_mark` value from a locale
+#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_dec_mark <- function(locale) {
 
@@ -255,11 +257,15 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+#nocov start
+
 # This function is a conveient wrapper for `system.file()` where the `package`
 # refers to this package
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
+
+#nocov end
 
 # This function removes entire HTML tags from input text
 remove_html <- function(text) {
@@ -272,8 +278,10 @@ remove_html <- function(text) {
 #' @noRd
 get_css_tbl <- function(data) {
 
+  id <- "id"
+
   raw_css_vec <-
-    compile_scss(data) %>%
+    compile_scss(data, id) %>%
     as.character() %>%
     strsplit("\n") %>%
     unlist()
@@ -378,18 +386,6 @@ split_scientific_notn <- function(x_str) {
   exp_part <- exp_parts %>% vapply(`[[`, character(1), 2) %>% as.numeric()
 
   list(num = num_part, exp = exp_part)
-}
-
-# Obtain a line number from a vector of HTML lines by use of a pattern
-get_html_line <- function(html_lines, pattern) {
-
-  lines <- grepl(pattern, html_lines)
-
-  if (all(lines == FALSE)) {
-    return(NA_integer_)
-  } else {
-    return(which(lines))
-  }
 }
 
 # This function is wrapper for `gsub()` that uses default argument values and

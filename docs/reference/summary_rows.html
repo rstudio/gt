@@ -171,8 +171,8 @@ to all columns.</p></td>
       <th>funs</th>
       <td><p>functions used for aggregations. This can include base functions
 like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>, <code>sd</code>, or
-<code>sum</code>. The functions should be supplied using the <code><a href='funs.html'>funs</a>()</code>
-helper function. With <code><a href='funs.html'>funs()</a></code>, we can specify the functions by use of
+<code>sum</code>. The functions should be supplied using the <code><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs</a>()</code>
+helper function. With <code><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs()</a></code>, we can specify the functions by use of
 function names (e.g., <code>"sum"</code>), the functions themselves
 (e.g., <code>sum</code>), or calls to functions with <code>.</code> as a dummy argument
 (e.g., <code>sum(., na.rm = TRUE)</code>). By using named arguments, the names
@@ -208,9 +208,7 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>tidyverse</span>)
-
-<span class='co'># Create a table that creates a stub and</span>
+    <pre class="examples"><div class='input'><span class='co'># Create a table that creates a stub and</span>
 <span class='co'># stub blocks based on a naming convention</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
@@ -234,8 +232,8 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>summary_rows</span>(
       <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"A"</span>, <span class='st'>"C"</span>),
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='vars.html'>vars</a></span>(<span class='no'>value_1</span>),
-      <span class='kw'>funs</span> <span class='kw'>=</span> <span class='fu'><a href='funs.html'>funs</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>value_1</span>),
+      <span class='kw'>funs</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs</a></span>(
         <span class='kw'>average</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
         <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
         <span class='kw'>`std dev`</span> <span class='kw'>=</span> <span class='fu'>sd</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div></pre>

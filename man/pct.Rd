@@ -16,8 +16,7 @@ Helper for providing a numeric value as percentage
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
-  \code{\link{col_labels}}, \code{\link{funs}},
-  \code{\link{html}}, \code{\link{md}}, \code{\link{px}},
-  \code{\link{vars}}
+  \code{\link{col_labels}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{px}}
 }
 \concept{helper functions}

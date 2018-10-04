@@ -330,6 +330,6 @@ gt_tbl <- gt_tbl %>%
 gt_tbl
 ```
 
-Note that even though columns were moved using `cols_move_to_start()`, the **spanner headings** still spanned above the correct columns. There are a number of functions that **gt** provides to move columns, including `cols_move()`, `cols_move_to_end()`; there's even a function to remove columns: `cols_remove()`.
+Note that even though columns were moved using `cols_move_to_start()`, the **spanner headings** still spanned above the correct columns. There are a number of functions that **gt** provides to move columns, including `cols_move()`, `cols_move_to_end()`; there's even a function to hide columns: `cols_hide()`.
 
 The `cols_label()` function is paired with the `col_labels()` helper function. This allows for multiple columns to be renamed in a single use of `cols_label()`. Further to this, the helper function allows for the use of the `md()` and `html()` functions so that we can create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with `<br>`, insert a superscripted `2` (with `<sup>2</sup>`), and insert a degree symbol as an HTML entity (`&deg;`).
