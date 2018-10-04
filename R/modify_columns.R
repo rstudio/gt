@@ -91,7 +91,8 @@ cols_align <- function(data,
       "factor" = "center",
       "list" = "center",
       "numeric" = "right",
-      "integer" = "right") %>%
+      "integer" = "right",
+      "center") %>%
       unname()
   }
 
