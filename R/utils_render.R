@@ -129,7 +129,27 @@ migrate_unformatted_to_output <- function(data_df,
   for (colname in colnames(output_df)) {
 
     row_index <- is.na(output_df[[colname]])
-    output_df[[colname]][row_index] <- as.character(data_df[[colname]][row_index])
+
+    if (inherits(data_df[[colname]], "list")) {
+
+      # Use `lapply()` so that all values could be treated independently
+      output_df[[colname]][row_index] <-
+        lapply(
+          data_df[[colname]][row_index],
+          function(x) {
+            x %>%
+              format(drop0trailing = FALSE) %>%
+              tidy_gsub("\\s+$", "") %>%
+              paste(collapse = ", ")
+          }
+        )
+
+    } else {
+
+      # No `lapply()` used: all values will be treated cohesively
+      output_df[[colname]][row_index] <-
+        format(data_df[[colname]][row_index], drop0trailing = FALSE)
+    }
   }
 
   output_df
