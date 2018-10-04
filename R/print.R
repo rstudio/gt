@@ -31,14 +31,16 @@ as.tags.gt_tbl <- function(x, ...) {
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
-  # Generate the SCSS lines, compile, and write the CSS
-  # to disk as `compiled.css`
-  css <- compile_scss(data = x)
+  # Create a random `id` tag
+  id <- paste(sample(letters, 10, 10), collapse = "")
+
+  # Compile the SCSS as CSS
+  css <- compile_scss(data = x, id = id)
 
   # Attach the dependency to the HTML table
   html_tbl <- htmltools::tagList(
     htmltools::tags$style(htmltools::HTML(css)),
-    htmltools::HTML(html_table)
+    tags$div(id = id, htmltools::HTML(html_table))
   )
 
   html_tbl
