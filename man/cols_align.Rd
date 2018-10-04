@@ -4,17 +4,25 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = "center", columns)
+cols_align(data, align = c("auto", "left", "center", "right"),
+  columns = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{align}{the alignment direction. This can either be \code{"center"},
-\code{"left"}, or \code{"right"}.}
+\item{align}{the alignment type. This can be any of \code{"center"},
+\code{"left"}, or \code{"right"} for center-, left-, or center-alignment.
+Alternatively, the \code{"auto"} option (the default), will automatically
+align values in columns according to the data type (i.e., column class). In
+this way, left-alignment is applied to columns of class \code{character},
+\code{Date}, or \code{POSIXct}; center-alignment is for columns of class
+\code{logical}, \code{factor}, or \code{list}; and right-aligned is for the
+\code{numeric} and \code{integer} columns.}
 
-\item{columns}{a vector of column names for which the alignment should be
-applied.}
+\item{columns}{an optional vector of column names for which the alignment
+should be applied. If nothing is supplied, or if \code{columns} is
+\code{TRUE}), then the alignment affects all columns.}
 }
 \value{
 an object of class \code{gt_tbl}.
