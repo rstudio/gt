@@ -73,8 +73,6 @@ html {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
 .gt_sep_right {
   border-right: 5px solid #{$boxhead_background_color};
 }
