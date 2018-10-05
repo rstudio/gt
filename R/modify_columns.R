@@ -26,50 +26,21 @@
 #' @export
 cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
-                       columns = NULL) {
+                       columns = TRUE) {
 
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
-  # If using the `vars()` helper, get `columns` as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>%
-      lapply(`[[`, 2) %>%
-      as.character()
-  }
+  data_df <- as.data.frame(data)
+  colnames <- colnames(data_df)
 
-  # If a numeric vector is supplied to `columns`, transform to a
-  # vector of column names
-  if (!is.null(columns) &&
-      inherits(columns, "numeric") || inherits(columns, "integer")) {
+  columns <- enquo(columns)
 
-    # Get a vector of column numbers
-    colnums <- unique(floor(columns))
+  resolved_columns <-
+    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
 
-    # Stop function if any of the column numbers are not in the
-    # range of column indices for `data_df` (the original dataset)
-    if (!all(colnums %in% 1:ncol(attr(data, "data_df", exact = TRUE)))) {
-      stop("All column indices provided in `columns` must exist in `data`.",
-           call. = FALSE)
-    }
-
-    # Get a vector of column names (`columns`) from `colnums`
-    columns <- colnames(attr(data, "data_df", exact = TRUE))[colnums]
-  }
-
-  # If `columns` is NULL or `TRUE` then `columns` becomes a vector
-  # of all columns available in the boxhead
-  if (is.null(columns) || isTRUE(columns)) {
-    columns <- colnames(attr(data, "boxh_df", exact = TRUE))
-  }
-
-  # Stop if any column names in `columns` don't exist
-  # in the table boxhead
-  if (any(!(columns %in% colnames(attr(data, "boxh_df", exact = TRUE))))) {
-
-    stop("All `columns` must exist in the table boxhead.",
-         call. = FALSE)
-  }
+  # Translate the column indices to column names
+  resolved_columns <- colnames[resolved_columns]
 
   if (align == "auto") {
 
@@ -77,7 +48,7 @@ cols_align <- function(data,
     # names
     col_classes <-
       lapply(
-        attr(data, "data_df", exact = TRUE)[columns], class) %>%
+        attr(data, "data_df", exact = TRUE)[resolved_columns], class) %>%
       lapply(`[[`, 1) %>%
       unlist()
 
@@ -97,18 +68,17 @@ cols_align <- function(data,
   }
 
   # Set the alignment value to all boxhead columns in `columns`
-  attr(data, "boxh_df")["column_align", columns] <- align
+  attr(data, "boxh_df")["column_align", resolved_columns] <- align
 
   data
 }
 
 #' Relabel one or more columns
 #' @inheritParams cols_align
-#' @param labels a named vector of column names and their labels for display of
-#'   the column headers. We can use the \code{\link{col_labels}()} function to
-#'   more easily specify column names and column labels, since we can also wrap
-#'   the column labels with \code{\link{md}()} (to interpret text as Markdown)
-#'   or \code{\link{html}()} (to interpret text as HTML).
+#' @param ... one or more named arguments of column names from the input `data`
+#'   table along with their labels for display as the column labels. We can
+#'   optionally wrap the column labels with \code{\link{md}()} (to interpret
+#'   text as Markdown) or \code{\link{html}()} (to interpret text as HTML).
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and apply different
@@ -118,27 +88,57 @@ cols_align <- function(data,
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     cols_label(
-#'       labels = col_labels(
-#'         mpg = md("*MPG*"),
-#'         qsec = "QMT, seconds"))
+#'       mpg = md("*MPG*"),
+#'       qsec = "QMT, seconds")
 #' @family column modification functions
-#' @seealso \code{\link{col_labels}()} as a useful helper function for
-#'   processing column labels.
+#' @import rlang
 #' @export
 cols_label <- function(data,
-                       labels) {
+                       ...,
+                       .list = list2(...)) {
 
-  # Filter the vector of column names by the
-  # column names actually in the input df
-  labels <- labels[which(names(labels) %in% colnames(data))]
+  # Collect a named list of column labels
+  labels_list <- .list
 
-  if (length(labels) == 0) {
+  # If nothing is provided, return `data` unchanged
+  if (length(labels_list) == 0) {
     return(data)
   }
 
-  for (i in seq(labels)) {
-    attr(data, "boxh_df")["column_label", names(labels[i])] <- unname(labels[i][1])
+  # Test for names being NULL
+  if (is.null(names(labels_list))) {
+    stop("Named arguments are required for `cols_label()`.", call. = FALSE)
   }
+
+  # Test for any missing names
+  if (any(names(labels_list) == "")) {
+    stop("All arguments to `cols_label()` must be named.", call. = FALSE)
+  }
+
+  # Use the `process_text()` function on each of the list elements
+  labels_vector <- sapply(labels_list, process_text)
+
+  # Extract the `boxh_df` df from `data`
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  # Extract the `data_df` df from `data`
+  data_df <- as.data.frame(data)
+
+  # Stop function if any of the column names specified are not in `data_df`
+  if (!all(names(labels_vector) %in% colnames(data_df))) {
+    stop("All column names provided must exist in `data_df`.")
+  }
+
+  # Filter the vector of labels by the column names actually in `boxh_df`
+  labels_vector <- labels_vector[names(labels_vector) %in% colnames(boxh_df)]
+
+  # If no labels remain after filtering, return the data
+  if (length(labels_vector) == 0) {
+    return(data)
+  }
+
+  attr(data, "boxh_df")["column_label", names(labels_vector)] <-
+    as.character(unname(labels_vector))
 
   data
 }
