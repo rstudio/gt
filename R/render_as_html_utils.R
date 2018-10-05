@@ -163,17 +163,9 @@ apply_styles_to_summary_output <- function(summary_df,
 
 
 # Create the opening HTML element of a table
-create_table_start <- function(groups_rows_df,
-                               n_rows,
-                               n_cols) {
+create_table_start <- function(groups_rows_df) {
 
-  paste0(
-    "<!--gt table start-->\n",
-    "<table ",
-    "data-nrow='", n_rows, "' ",
-    "data-ncol='", n_cols, "' ",
-    "data-ngroup='", get_n_groups(groups_rows_df), "' ",
-    "class='gt_table' style='display:table;'>\n")
+  "<!--gt table start-->\n<table class='gt_table' style='display:table;'>\n"
 }
 
 # Create the heading component of a table, which contains the heading and
@@ -578,17 +570,14 @@ create_body_component <- function(row_splits_body,
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr data-type='data' data-row='", i,"'>\n",
+            "<tr>\n",
             paste0(
-              "<td data-type='data' data-row='", i, "' data-column='0' ",
-              "class='gt_row gt_stub gt_", col_alignment[1], "'",
+              "<td class='gt_row gt_stub gt_", col_alignment[1], "'",
               create_style_attrs(row_splits_styles[[i]][1]),
               ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
-              "<td data-type='data' data-row='", i, "' ",
-              "data-column='", column_series, "' ",
-              "class='gt_row gt_", col_alignment[-1], "'",
+              "<td class='gt_row gt_", col_alignment[-1], "'",
               create_style_attrs(row_splits_styles[[i]][-1]),
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
@@ -602,11 +591,9 @@ create_body_component <- function(row_splits_body,
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr data-type='data' data-row='", i,"'>\n",
+            "<tr>\n",
             paste0(
-              "<td data-type='data' data-row='", i, "' ",
-              "data-column='", column_series, "' ",
-              "class='gt_row gt_", col_alignment, "'",
+              "<td class='gt_row gt_", col_alignment, "'",
               create_style_attrs(row_splits_styles[[i]]),
               ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
@@ -649,8 +636,7 @@ create_body_component <- function(row_splits_body,
           summary_row_lines <-
             c(summary_row_lines,
               paste0(
-                "<tr data-type='summary' data-group='", group,
-                "' data-summary-row='", j,"'>\n",
+                "<tr>\n",
                 paste0(
                   "<td class='gt_stub gt_row ",
                   ifelse(j == 1, summary_row_classes_first, summary_row_classes),
