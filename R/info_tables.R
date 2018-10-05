@@ -27,7 +27,7 @@ info_date_style <- function() {
     fmt_date(columns = vars(date), rows = 13, date_style = 13) %>%
     fmt_date(columns = vars(date), rows = 14, date_style = 14) %>%
     tab_boxhead_panel(group = "Date Formats", columns = c("Number", "Name")) %>%
-    cols_label(labels = c("date" = "Formatted Date")) %>%
+    cols_label(date = "Formatted Date") %>%
     tab_heading(
       title = "Preset Date Formats",
       headnote = md("Usable in the `fmt_date()` and `fmt_datetime()` functions"))
@@ -50,7 +50,7 @@ info_time_style <- function() {
     fmt_time(columns = vars(time), rows = 4, time_style = 4) %>%
     fmt_time(columns = vars(time), rows = 5, time_style = 5) %>%
     tab_boxhead_panel(group = "Time Formats", columns = c("Number", "Name")) %>%
-    cols_label(labels = c("time" = "Formatted Time")) %>%
+    cols_label(time = "Formatted Time") %>%
     tab_heading(
       title = "Preset Time Formats",
       headnote = md("Usable in the `fmt_time()` and `fmt_datetime()` functions"))
