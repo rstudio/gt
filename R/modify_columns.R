@@ -148,10 +148,11 @@ cols_align_right <- function(data,
 #'       mpg = md("*MPG*"),
 #'       qsec = "QMT, seconds")
 #' @family column modification functions
+#' @import rlang
 #' @export
 cols_label <- function(data,
                        ...,
-                       .list = list(...)) {
+                       .list = list2(...)) {
 
   # Collect a named list of column labels
   labels_list <- .list
@@ -162,7 +163,7 @@ cols_label <- function(data,
   # Extract the `boxh_df` df from `data`
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
 
-  # Extract the `boxh_df` df from `data`
+  # Extract the `data_df` df from `data`
   data_df <- as.data.frame(data)
 
   # Stop function if any of the column names specified are not in `data_df`
