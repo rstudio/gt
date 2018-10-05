@@ -5,16 +5,6 @@ footnote_glyph_to_html <- function(footnote_glyph) {
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
-# Get the number of stub groups in the table
-get_n_groups <- function(groups_rows) {
-
-  if (!is.null(groups_rows)) {
-    return(nrow(groups_rows))
-  } else {
-    return(0)
-  }
-}
-
 #' @importFrom dplyr filter pull
 #' @noRd
 get_spanner_style <- function(spanner_style_attrs,
