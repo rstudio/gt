@@ -1016,6 +1016,9 @@ fmt <- function(data,
   # providing the positions of the matched variables
   #
 
+  columns <- rlang::enquo(columns)
+  rows <- rlang::enquo(rows)
+
   resolved_columns <-
     resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
 
