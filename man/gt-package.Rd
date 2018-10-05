@@ -23,6 +23,12 @@ Useful links:
 \author{
 \strong{Maintainer}: Richard Iannone \email{rich@rstudio.com} (0000-0003-3925-190X)
 
+Authors:
+\itemize{
+  \item Joe Cheng \email{joe@rstudio.com}
+  \item Barret Schloerke \email{barret@rstudio.com} (0000-0001-9986-114X)
+}
+
 Other contributors:
 \itemize{
   \item RStudio [copyright holder, funder]
