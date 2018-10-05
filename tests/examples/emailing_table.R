@@ -7,7 +7,7 @@ library(gt)
 html_tbl <-
   gt(data = airquality) %>%
   cols_move_to_start(columns = vars(Month, Day)) %>%
-  cols_label(labels = col_labels(Solar.R = html("Solar<br>Radiation"))) %>%
+  cols_label(Solar.R = html("Solar<br>Radiation")) %>%
   fmt_number(
     columns = vars(Wind),
     decimals = 2

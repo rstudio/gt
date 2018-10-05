@@ -31,9 +31,16 @@ gt_tbl <-
       qsec = "QMT, seconds")
 }
 \seealso{
+<<<<<<< HEAD
+\code{\link{col_labels}()} as a useful helper function for
+  processing column labels.
+
+Other column modification functions: \code{\link{cols_align}},
+=======
 Other column modification functions: \code{\link{cols_align_center}},
   \code{\link{cols_align_left}},
   \code{\link{cols_align_right}}, \code{\link{cols_align}},
+>>>>>>> master
   \code{\link{cols_hide}}, \code{\link{cols_merge_range}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},

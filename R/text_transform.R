@@ -1,3 +1,5 @@
+#' Text transform TODO: finish documenting
+#' @noRd
 #' @export
 text_transform <- function(data,
                            locations,

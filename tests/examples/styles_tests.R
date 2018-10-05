@@ -16,7 +16,7 @@ data <-
   cols_merge_range(col_begin = "disp", col_end = "drat") %>%
   tab_heading(title = "Title", headnote = "Headnote") %>%
   tab_source_note(source_note = "this is a source note") %>%
-  cols_label(labels = col_labels(cyl = md("*cyls*"))) %>%
+  cols_label(cyl = md("*cyls*")) %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),

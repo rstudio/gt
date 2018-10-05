@@ -43,9 +43,7 @@ gt_tbl <-
       col_end = vars(val_2))
 }
 \seealso{
-Other column modification functions: \code{\link{cols_align_center}},
-  \code{\link{cols_align_left}},
-  \code{\link{cols_align_right}}, \code{\link{cols_align}},
+Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_hide}}, \code{\link{cols_label}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
