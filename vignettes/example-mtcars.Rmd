@@ -330,14 +330,13 @@ We can modify the column labels. By default column labels inherit the column nam
 # Apply more readable column labels with `cols_label()`
 tab <- tab %>%
   cols_label(
-    labels = col_labels(
       wt = "Weight",
       drat = "Rear Axle Ratio",
       cyl = "Cylinders",
       hp = md("*HP*"),
       qsec = "QMT, s",
       mpg = "Miles/Gallon",
-      disp = "Displacement"))
+      disp = "Displacement")
 
 # Show the table
 tab

@@ -4,17 +4,16 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(data, labels)
+cols_label(data, ...)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{labels}{a named vector of column names and their labels for display of
-the column headers. We can use the \code{\link{col_labels}()} function to
-more easily specify column names and column labels, since we can also wrap
-the column labels with \code{\link{md}()} (to interpret text as Markdown)
-or \code{\link{html}()} (to interpret text as HTML).}
+\item{...}{one or more named arguments of column names from the input `data`
+table along with their labels for display as the column labels. We can
+optionally wrap the column labels with \code{\link{md}()} (to interpret
+text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
 }
 \description{
 Relabel one or more columns
@@ -28,15 +27,20 @@ Relabel one or more columns
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
     cols_label(
-      labels = col_labels(
-        mpg = md("*MPG*"),
-        qsec = "QMT, seconds"))
+      mpg = md("*MPG*"),
+      qsec = "QMT, seconds")
 }
 \seealso{
+<<<<<<< HEAD
 \code{\link{col_labels}()} as a useful helper function for
   processing column labels.
 
 Other column modification functions: \code{\link{cols_align}},
+=======
+Other column modification functions: \code{\link{cols_align_center}},
+  \code{\link{cols_align_left}},
+  \code{\link{cols_align_right}}, \code{\link{cols_align}},
+>>>>>>> master
   \code{\link{cols_hide}}, \code{\link{cols_merge_range}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},

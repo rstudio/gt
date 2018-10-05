@@ -251,17 +251,21 @@
 <a class="sourceLine" id="cb2-80" data-line-number="80"><span class="co">#&gt; 31 14.60  0  1    5    8</span></a>
 <a class="sourceLine" id="cb2-81" data-line-number="81"><span class="co">#&gt; 32 18.60  1  1    4    2</span></a></code></pre></div>
 <p>The <code>rowname</code> and <code>groupname</code> columns are magic columns. They tell <strong>gt</strong> that a stub should be created and filled with row labels, and, stub groups should be implemented. Let’s look at how the <strong>gt</strong> table looks with this type of structuring.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(mtcars_g)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(mtcars_g) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tab_options.html">tab_options</a></span>(<span class="dt">table.background.color =</span> <span class="st">"red"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#apzechyjjy {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#apzechyjjy .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
-  color: #000000;
+  color: #ffffff;
   font-size: 16px;
-  background-color: #FFFFFF;
+  background-color: red;
   /* table.background.color */
   width: 100%;
   /* table.width */
@@ -273,35 +277,35 @@
   /* table.border.top.color */
 }
 
-.heading {
-  background-color: #FFFFFF;
+#apzechyjjy .heading {
+  background-color: red;
   /* heading.background.color */
-  border-bottom-color: #FFFFFF;
+  border-bottom-color: red;
 }
 
-.title {
-  color: #000000;
+#apzechyjjy .title {
+  color: #ffffff;
   font-size: 125%;
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
   padding-bottom: 1px;
-  border-bottom-color: #FFFFFF;
+  border-bottom-color: red;
   border-bottom-width: 0;
 }
 
-.headnote {
-  color: #000000;
+#apzechyjjy .headnote {
+  color: #ffffff;
   font-size: 85%;
   /* heading.headnote.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
-  border-top-color: #FFFFFF;
+  border-top-color: red;
   border-top-width: 0;
 }
 
-.bottom_border {
+#apzechyjjy .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -310,7 +314,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#apzechyjjy .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -318,9 +322,9 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
-  color: #000000;
-  background-color: #FFFFFF;
+#apzechyjjy .col_heading {
+  color: #ffffff;
+  background-color: red;
   /* boxhead.background.color */
   font-size: 16px;
   /* boxhead.font.size */
@@ -330,16 +334,14 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
-  border-right: 5px solid #FFFFFF;
+#apzechyjjy .sep_right {
+  border-right: 5px solid red;
 }
 
-.group_heading {
+#apzechyjjy .group_heading {
   padding: 8px;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: #ffffff;
+  background-color: red;
   /* stub_group.background.color */
   font-size: 16px;
   /* stub_group.font.size */
@@ -359,10 +361,10 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#apzechyjjy .empty_group_heading {
   padding: 0.5px;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: #ffffff;
+  background-color: red;
   /* stub_group.background.color */
   font-size: 16px;
   /* stub_group.font.size */
@@ -382,29 +384,29 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
-  background-color: #f2f2f2;
+#apzechyjjy .striped tr:nth-child(even) {
+  background-color: #e60000;
 }
 
-.row {
+#apzechyjjy .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#apzechyjjy .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
-  background-color: #FFFFFF;
+#apzechyjjy .stub.row.right, #apzechyjjy .stub.row.left, #apzechyjjy .stub.row.center {
+  background-color: red;
 }
 
-.summary_row {
-  background-color: #FFFFFF;
+#apzechyjjy .summary_row {
+  background-color: red;
   /* summary_row.background.color */
   padding: 6px;
   /* summary_row.padding */
@@ -412,13 +414,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#apzechyjjy .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#apzechyjjy .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -433,54 +435,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#apzechyjjy .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#apzechyjjy .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#apzechyjjy .center {
   text-align: center;
 }
 
-.left {
+#apzechyjjy .left {
   text-align: left;
 }
 
-.right {
+#apzechyjjy .right {
   text-align: right;
 }
 
-.font_normal {
+#apzechyjjy .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#apzechyjjy .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#apzechyjjy .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#apzechyjjy .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#apzechyjjy .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="12" data-ngroup="6" class="table" style="display:table;">
+<div id="apzechyjjy">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="12" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">mpg</th>
@@ -501,12 +505,12 @@
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">Mazda RX4</td>
-<td class="row center">21</td>
+<td class="row center">21.0</td>
 <td class="row center">6</td>
-<td class="row center">160</td>
+<td class="row center">160.0</td>
 <td class="row center">110</td>
-<td class="row center">3.9</td>
-<td class="row center">2.62</td>
+<td class="row center">3.90</td>
+<td class="row center">2.620</td>
 <td class="row center">16.46</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
@@ -515,11 +519,11 @@
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">Mazda RX4 Wag</td>
-<td class="row center">21</td>
+<td class="row center">21.0</td>
 <td class="row center">6</td>
-<td class="row center">160</td>
+<td class="row center">160.0</td>
 <td class="row center">110</td>
-<td class="row center">3.9</td>
+<td class="row center">3.90</td>
 <td class="row center">2.875</td>
 <td class="row center">17.02</td>
 <td class="row center">0</td>
@@ -534,10 +538,10 @@
 <td class="stub row right">Datsun 710</td>
 <td class="row center">22.8</td>
 <td class="row center">4</td>
-<td class="row center">108</td>
-<td class="row center">93</td>
+<td class="row center">108.0</td>
+<td class="row center"> 93</td>
 <td class="row center">3.85</td>
-<td class="row center">2.32</td>
+<td class="row center">2.320</td>
 <td class="row center">18.61</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
@@ -548,7 +552,7 @@
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">21.4</td>
 <td class="row center">6</td>
-<td class="row center">258</td>
+<td class="row center">258.0</td>
 <td class="row center">110</td>
 <td class="row center">3.08</td>
 <td class="row center">3.215</td>
@@ -562,10 +566,10 @@
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">18.7</td>
 <td class="row center">8</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 <td class="row center">175</td>
 <td class="row center">3.15</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">17.02</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -576,10 +580,10 @@
 <td class="stub row right">Valiant</td>
 <td class="row center">18.1</td>
 <td class="row center">6</td>
-<td class="row center">225</td>
+<td class="row center">225.0</td>
 <td class="row center">105</td>
 <td class="row center">2.76</td>
-<td class="row center">3.46</td>
+<td class="row center">3.460</td>
 <td class="row center">20.22</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
@@ -590,7 +594,7 @@
 <td class="stub row right">Chrysler Imperial</td>
 <td class="row center">14.7</td>
 <td class="row center">8</td>
-<td class="row center">440</td>
+<td class="row center">440.0</td>
 <td class="row center">230</td>
 <td class="row center">3.23</td>
 <td class="row center">5.345</td>
@@ -605,8 +609,8 @@
 <td class="row center">21.5</td>
 <td class="row center">4</td>
 <td class="row center">120.1</td>
-<td class="row center">97</td>
-<td class="row center">3.7</td>
+<td class="row center"> 97</td>
+<td class="row center">3.70</td>
 <td class="row center">2.465</td>
 <td class="row center">20.01</td>
 <td class="row center">1</td>
@@ -618,10 +622,10 @@
 <td class="stub row right">Dodge Challenger</td>
 <td class="row center">15.5</td>
 <td class="row center">8</td>
-<td class="row center">318</td>
+<td class="row center">318.0</td>
 <td class="row center">150</td>
 <td class="row center">2.76</td>
-<td class="row center">3.52</td>
+<td class="row center">3.520</td>
 <td class="row center">16.87</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -632,11 +636,11 @@
 <td class="stub row right">AMC Javelin</td>
 <td class="row center">15.2</td>
 <td class="row center">8</td>
-<td class="row center">304</td>
+<td class="row center">304.0</td>
 <td class="row center">150</td>
 <td class="row center">3.15</td>
 <td class="row center">3.435</td>
-<td class="row center">17.3</td>
+<td class="row center">17.30</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -646,7 +650,7 @@
 <td class="stub row right">Pontiac Firebird</td>
 <td class="row center">19.2</td>
 <td class="row center">8</td>
-<td class="row center">400</td>
+<td class="row center">400.0</td>
 <td class="row center">175</td>
 <td class="row center">3.08</td>
 <td class="row center">3.845</td>
@@ -660,11 +664,11 @@
 <td class="stub row right">Volvo 142E</td>
 <td class="row center">21.4</td>
 <td class="row center">4</td>
-<td class="row center">121</td>
+<td class="row center">121.0</td>
 <td class="row center">109</td>
 <td class="row center">4.11</td>
-<td class="row center">2.78</td>
-<td class="row center">18.6</td>
+<td class="row center">2.780</td>
+<td class="row center">18.60</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -677,10 +681,10 @@
 <td class="stub row right">Duster 360</td>
 <td class="row center">14.3</td>
 <td class="row center">8</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 <td class="row center">245</td>
 <td class="row center">3.21</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">15.84</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -691,10 +695,10 @@
 <td class="stub row right">Camaro Z28</td>
 <td class="row center">13.3</td>
 <td class="row center">8</td>
-<td class="row center">350</td>
+<td class="row center">350.0</td>
 <td class="row center">245</td>
 <td class="row center">3.73</td>
-<td class="row center">3.84</td>
+<td class="row center">3.840</td>
 <td class="row center">15.41</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -705,11 +709,11 @@
 <td class="stub row right">Ford Pantera L</td>
 <td class="row center">15.8</td>
 <td class="row center">8</td>
-<td class="row center">351</td>
+<td class="row center">351.0</td>
 <td class="row center">264</td>
 <td class="row center">4.22</td>
-<td class="row center">3.17</td>
-<td class="row center">14.5</td>
+<td class="row center">3.170</td>
+<td class="row center">14.50</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -719,11 +723,11 @@
 <td class="stub row right">Ferrari Dino</td>
 <td class="row center">19.7</td>
 <td class="row center">6</td>
-<td class="row center">145</td>
+<td class="row center">145.0</td>
 <td class="row center">175</td>
 <td class="row center">3.62</td>
-<td class="row center">2.77</td>
-<td class="row center">15.5</td>
+<td class="row center">2.770</td>
+<td class="row center">15.50</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -731,13 +735,13 @@
 </tr>
 <tr data-type="data" data-row="17">
 <td class="stub row right">Maserati Bora</td>
-<td class="row center">15</td>
+<td class="row center">15.0</td>
 <td class="row center">8</td>
-<td class="row center">301</td>
+<td class="row center">301.0</td>
 <td class="row center">335</td>
 <td class="row center">3.54</td>
-<td class="row center">3.57</td>
-<td class="row center">14.6</td>
+<td class="row center">3.570</td>
+<td class="row center">14.60</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -751,10 +755,10 @@
 <td class="row center">24.4</td>
 <td class="row center">4</td>
 <td class="row center">146.7</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">3.69</td>
-<td class="row center">3.19</td>
-<td class="row center">20</td>
+<td class="row center">3.190</td>
+<td class="row center">20.00</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -765,10 +769,10 @@
 <td class="row center">22.8</td>
 <td class="row center">4</td>
 <td class="row center">140.8</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">3.92</td>
-<td class="row center">3.15</td>
-<td class="row center">22.9</td>
+<td class="row center">3.150</td>
+<td class="row center">22.90</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -781,8 +785,8 @@
 <td class="row center">167.6</td>
 <td class="row center">123</td>
 <td class="row center">3.92</td>
-<td class="row center">3.44</td>
-<td class="row center">18.3</td>
+<td class="row center">3.440</td>
+<td class="row center">18.30</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -795,8 +799,8 @@
 <td class="row center">167.6</td>
 <td class="row center">123</td>
 <td class="row center">3.92</td>
-<td class="row center">3.44</td>
-<td class="row center">18.9</td>
+<td class="row center">3.440</td>
+<td class="row center">18.90</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -809,8 +813,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">4.07</td>
-<td class="row center">17.4</td>
+<td class="row center">4.070</td>
+<td class="row center">17.40</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -823,8 +827,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">3.73</td>
-<td class="row center">17.6</td>
+<td class="row center">3.730</td>
+<td class="row center">17.60</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -837,8 +841,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">3.78</td>
-<td class="row center">18</td>
+<td class="row center">3.780</td>
+<td class="row center">18.00</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -851,10 +855,10 @@
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
-<td class="row center">472</td>
+<td class="row center">472.0</td>
 <td class="row center">205</td>
 <td class="row center">2.93</td>
-<td class="row center">5.25</td>
+<td class="row center">5.250</td>
 <td class="row center">17.98</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -865,9 +869,9 @@
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
-<td class="row center">460</td>
+<td class="row center">460.0</td>
 <td class="row center">215</td>
-<td class="row center">3</td>
+<td class="row center">3.00</td>
 <td class="row center">5.424</td>
 <td class="row center">17.82</td>
 <td class="row center">0</td>
@@ -882,10 +886,10 @@
 <td class="stub row right">Fiat 128</td>
 <td class="row center">32.4</td>
 <td class="row center">4</td>
-<td class="row center">78.7</td>
-<td class="row center">66</td>
+<td class="row center"> 78.7</td>
+<td class="row center"> 66</td>
 <td class="row center">4.08</td>
-<td class="row center">2.2</td>
+<td class="row center">2.200</td>
 <td class="row center">19.47</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
@@ -896,8 +900,8 @@
 <td class="stub row right">Honda Civic</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
-<td class="row center">75.7</td>
-<td class="row center">52</td>
+<td class="row center"> 75.7</td>
+<td class="row center"> 52</td>
 <td class="row center">4.93</td>
 <td class="row center">1.615</td>
 <td class="row center">18.52</td>
@@ -910,11 +914,11 @@
 <td class="stub row right">Toyota Corolla</td>
 <td class="row center">33.9</td>
 <td class="row center">4</td>
-<td class="row center">71.1</td>
-<td class="row center">65</td>
+<td class="row center"> 71.1</td>
+<td class="row center"> 65</td>
 <td class="row center">4.22</td>
 <td class="row center">1.835</td>
-<td class="row center">19.9</td>
+<td class="row center">19.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -924,11 +928,11 @@
 <td class="stub row right">Fiat X1-9</td>
 <td class="row center">27.3</td>
 <td class="row center">4</td>
-<td class="row center">79</td>
-<td class="row center">66</td>
+<td class="row center"> 79.0</td>
+<td class="row center"> 66</td>
 <td class="row center">4.08</td>
 <td class="row center">1.935</td>
-<td class="row center">18.9</td>
+<td class="row center">18.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -936,13 +940,13 @@
 </tr>
 <tr data-type="data" data-row="31">
 <td class="stub row right">Porsche 914-2</td>
-<td class="row center">26</td>
+<td class="row center">26.0</td>
 <td class="row center">4</td>
 <td class="row center">120.3</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">4.43</td>
-<td class="row center">2.14</td>
-<td class="row center">16.7</td>
+<td class="row center">2.140</td>
+<td class="row center">16.70</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -952,11 +956,11 @@
 <td class="stub row right">Lotus Europa</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
-<td class="row center">95.1</td>
+<td class="row center"> 95.1</td>
 <td class="row center">113</td>
 <td class="row center">3.77</td>
 <td class="row center">1.513</td>
-<td class="row center">16.9</td>
+<td class="row center">16.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -964,7 +968,9 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>Getting the row groups in the right order can be done by using factor levels for the <code>groupname</code> variable.</p>
+<!--gt table end-->
+</div>
+<p>Getting the row groups in the right order can be done by using factor levels for the <code>groupname</code> variable.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Define our preferred order of row groups in a vector</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">order_car_groups &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">c</span>(<span class="st">"Fast Cars"</span>, <span class="st">"High Gas Mileage"</span>, <span class="st">"Pitiful Gas Mileage"</span>,</a>
@@ -980,8 +986,12 @@
 <a class="sourceLine" id="cb4-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#wyeanlviqt {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#wyeanlviqt .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -998,13 +1008,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#wyeanlviqt .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#wyeanlviqt .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1015,7 +1025,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#wyeanlviqt .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -1026,7 +1036,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#wyeanlviqt .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1035,7 +1045,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#wyeanlviqt .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1043,7 +1053,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#wyeanlviqt .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1055,13 +1065,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#wyeanlviqt .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#wyeanlviqt .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1084,7 +1092,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#wyeanlviqt .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1107,28 +1115,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#wyeanlviqt .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#wyeanlviqt .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#wyeanlviqt .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#wyeanlviqt .stub.row.right, #wyeanlviqt .stub.row.left, #wyeanlviqt .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#wyeanlviqt .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1137,13 +1145,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#wyeanlviqt .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#wyeanlviqt .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1158,54 +1166,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#wyeanlviqt .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#wyeanlviqt .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#wyeanlviqt .center {
   text-align: center;
 }
 
-.left {
+#wyeanlviqt .left {
   text-align: left;
 }
 
-.right {
+#wyeanlviqt .right {
   text-align: right;
 }
 
-.font_normal {
+#wyeanlviqt .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#wyeanlviqt .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#wyeanlviqt .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#wyeanlviqt .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#wyeanlviqt .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="12" data-ngroup="6" class="table" style="display:table;">
+<div id="wyeanlviqt">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="12" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">mpg</th>
@@ -1228,10 +1238,10 @@
 <td class="stub row right">Duster 360</td>
 <td class="row center">14.3</td>
 <td class="row center">8</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 <td class="row center">245</td>
 <td class="row center">3.21</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">15.84</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -1242,11 +1252,11 @@
 <td class="stub row right">Ferrari Dino</td>
 <td class="row center">19.7</td>
 <td class="row center">6</td>
-<td class="row center">145</td>
+<td class="row center">145.0</td>
 <td class="row center">175</td>
 <td class="row center">3.62</td>
-<td class="row center">2.77</td>
-<td class="row center">15.5</td>
+<td class="row center">2.770</td>
+<td class="row center">15.50</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -1256,10 +1266,10 @@
 <td class="stub row right">Camaro Z28</td>
 <td class="row center">13.3</td>
 <td class="row center">8</td>
-<td class="row center">350</td>
+<td class="row center">350.0</td>
 <td class="row center">245</td>
 <td class="row center">3.73</td>
-<td class="row center">3.84</td>
+<td class="row center">3.840</td>
 <td class="row center">15.41</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -1268,13 +1278,13 @@
 </tr>
 <tr data-type="data" data-row="4">
 <td class="stub row right">Maserati Bora</td>
-<td class="row center">15</td>
+<td class="row center">15.0</td>
 <td class="row center">8</td>
-<td class="row center">301</td>
+<td class="row center">301.0</td>
 <td class="row center">335</td>
 <td class="row center">3.54</td>
-<td class="row center">3.57</td>
-<td class="row center">14.6</td>
+<td class="row center">3.570</td>
+<td class="row center">14.60</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -1284,11 +1294,11 @@
 <td class="stub row right">Ford Pantera L</td>
 <td class="row center">15.8</td>
 <td class="row center">8</td>
-<td class="row center">351</td>
+<td class="row center">351.0</td>
 <td class="row center">264</td>
 <td class="row center">4.22</td>
-<td class="row center">3.17</td>
-<td class="row center">14.5</td>
+<td class="row center">3.170</td>
+<td class="row center">14.50</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -1301,11 +1311,11 @@
 <td class="stub row right">Toyota Corolla</td>
 <td class="row center">33.9</td>
 <td class="row center">4</td>
-<td class="row center">71.1</td>
-<td class="row center">65</td>
+<td class="row center"> 71.1</td>
+<td class="row center"> 65</td>
 <td class="row center">4.22</td>
 <td class="row center">1.835</td>
-<td class="row center">19.9</td>
+<td class="row center">19.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -1315,10 +1325,10 @@
 <td class="stub row right">Fiat 128</td>
 <td class="row center">32.4</td>
 <td class="row center">4</td>
-<td class="row center">78.7</td>
-<td class="row center">66</td>
+<td class="row center"> 78.7</td>
+<td class="row center"> 66</td>
 <td class="row center">4.08</td>
-<td class="row center">2.2</td>
+<td class="row center">2.200</td>
 <td class="row center">19.47</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
@@ -1329,11 +1339,11 @@
 <td class="stub row right">Fiat X1-9</td>
 <td class="row center">27.3</td>
 <td class="row center">4</td>
-<td class="row center">79</td>
-<td class="row center">66</td>
+<td class="row center"> 79.0</td>
+<td class="row center"> 66</td>
 <td class="row center">4.08</td>
 <td class="row center">1.935</td>
-<td class="row center">18.9</td>
+<td class="row center">18.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -1343,8 +1353,8 @@
 <td class="stub row right">Honda Civic</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
-<td class="row center">75.7</td>
-<td class="row center">52</td>
+<td class="row center"> 75.7</td>
+<td class="row center"> 52</td>
 <td class="row center">4.93</td>
 <td class="row center">1.615</td>
 <td class="row center">18.52</td>
@@ -1357,11 +1367,11 @@
 <td class="stub row right">Lotus Europa</td>
 <td class="row center">30.4</td>
 <td class="row center">4</td>
-<td class="row center">95.1</td>
+<td class="row center"> 95.1</td>
 <td class="row center">113</td>
 <td class="row center">3.77</td>
 <td class="row center">1.513</td>
-<td class="row center">16.9</td>
+<td class="row center">16.90</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -1369,13 +1379,13 @@
 </tr>
 <tr data-type="data" data-row="11">
 <td class="stub row right">Porsche 914-2</td>
-<td class="row center">26</td>
+<td class="row center">26.0</td>
 <td class="row center">4</td>
 <td class="row center">120.3</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">4.43</td>
-<td class="row center">2.14</td>
-<td class="row center">16.7</td>
+<td class="row center">2.140</td>
+<td class="row center">16.70</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
 <td class="row center">5</td>
@@ -1388,10 +1398,10 @@
 <td class="stub row right">Cadillac Fleetwood</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
-<td class="row center">472</td>
+<td class="row center">472.0</td>
 <td class="row center">205</td>
 <td class="row center">2.93</td>
-<td class="row center">5.25</td>
+<td class="row center">5.250</td>
 <td class="row center">17.98</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -1402,9 +1412,9 @@
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">10.4</td>
 <td class="row center">8</td>
-<td class="row center">460</td>
+<td class="row center">460.0</td>
 <td class="row center">215</td>
-<td class="row center">3</td>
+<td class="row center">3.00</td>
 <td class="row center">5.424</td>
 <td class="row center">17.82</td>
 <td class="row center">0</td>
@@ -1420,10 +1430,10 @@
 <td class="row center">22.8</td>
 <td class="row center">4</td>
 <td class="row center">140.8</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">3.92</td>
-<td class="row center">3.15</td>
-<td class="row center">22.9</td>
+<td class="row center">3.150</td>
+<td class="row center">22.90</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -1434,10 +1444,10 @@
 <td class="row center">24.4</td>
 <td class="row center">4</td>
 <td class="row center">146.7</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">3.69</td>
-<td class="row center">3.19</td>
-<td class="row center">20</td>
+<td class="row center">3.190</td>
+<td class="row center">20.00</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -1450,8 +1460,8 @@
 <td class="row center">167.6</td>
 <td class="row center">123</td>
 <td class="row center">3.92</td>
-<td class="row center">3.44</td>
-<td class="row center">18.9</td>
+<td class="row center">3.440</td>
+<td class="row center">18.90</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -1464,8 +1474,8 @@
 <td class="row center">167.6</td>
 <td class="row center">123</td>
 <td class="row center">3.92</td>
-<td class="row center">3.44</td>
-<td class="row center">18.3</td>
+<td class="row center">3.440</td>
+<td class="row center">18.30</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
 <td class="row center">4</td>
@@ -1478,8 +1488,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">3.78</td>
-<td class="row center">18</td>
+<td class="row center">3.780</td>
+<td class="row center">18.00</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -1492,8 +1502,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">3.73</td>
-<td class="row center">17.6</td>
+<td class="row center">3.730</td>
+<td class="row center">17.60</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -1506,8 +1516,8 @@
 <td class="row center">275.8</td>
 <td class="row center">180</td>
 <td class="row center">3.07</td>
-<td class="row center">4.07</td>
-<td class="row center">17.4</td>
+<td class="row center">4.070</td>
+<td class="row center">17.40</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -1518,11 +1528,11 @@
 </tr>
 <tr data-type="data" data-row="21">
 <td class="stub row right">Mazda RX4 Wag</td>
-<td class="row center">21</td>
+<td class="row center">21.0</td>
 <td class="row center">6</td>
-<td class="row center">160</td>
+<td class="row center">160.0</td>
 <td class="row center">110</td>
-<td class="row center">3.9</td>
+<td class="row center">3.90</td>
 <td class="row center">2.875</td>
 <td class="row center">17.02</td>
 <td class="row center">0</td>
@@ -1532,12 +1542,12 @@
 </tr>
 <tr data-type="data" data-row="22">
 <td class="stub row right">Mazda RX4</td>
-<td class="row center">21</td>
+<td class="row center">21.0</td>
 <td class="row center">6</td>
-<td class="row center">160</td>
+<td class="row center">160.0</td>
 <td class="row center">110</td>
-<td class="row center">3.9</td>
-<td class="row center">2.62</td>
+<td class="row center">3.90</td>
+<td class="row center">2.620</td>
 <td class="row center">16.46</td>
 <td class="row center">0</td>
 <td class="row center">1</td>
@@ -1551,10 +1561,10 @@
 <td class="stub row right">Valiant</td>
 <td class="row center">18.1</td>
 <td class="row center">6</td>
-<td class="row center">225</td>
+<td class="row center">225.0</td>
 <td class="row center">105</td>
 <td class="row center">2.76</td>
-<td class="row center">3.46</td>
+<td class="row center">3.460</td>
 <td class="row center">20.22</td>
 <td class="row center">1</td>
 <td class="row center">0</td>
@@ -1566,8 +1576,8 @@
 <td class="row center">21.5</td>
 <td class="row center">4</td>
 <td class="row center">120.1</td>
-<td class="row center">97</td>
-<td class="row center">3.7</td>
+<td class="row center"> 97</td>
+<td class="row center">3.70</td>
 <td class="row center">2.465</td>
 <td class="row center">20.01</td>
 <td class="row center">1</td>
@@ -1579,7 +1589,7 @@
 <td class="stub row right">Hornet 4 Drive</td>
 <td class="row center">21.4</td>
 <td class="row center">6</td>
-<td class="row center">258</td>
+<td class="row center">258.0</td>
 <td class="row center">110</td>
 <td class="row center">3.08</td>
 <td class="row center">3.215</td>
@@ -1593,10 +1603,10 @@
 <td class="stub row right">Datsun 710</td>
 <td class="row center">22.8</td>
 <td class="row center">4</td>
-<td class="row center">108</td>
-<td class="row center">93</td>
+<td class="row center">108.0</td>
+<td class="row center"> 93</td>
 <td class="row center">3.85</td>
-<td class="row center">2.32</td>
+<td class="row center">2.320</td>
 <td class="row center">18.61</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
@@ -1607,11 +1617,11 @@
 <td class="stub row right">Volvo 142E</td>
 <td class="row center">21.4</td>
 <td class="row center">4</td>
-<td class="row center">121</td>
+<td class="row center">121.0</td>
 <td class="row center">109</td>
 <td class="row center">4.11</td>
-<td class="row center">2.78</td>
-<td class="row center">18.6</td>
+<td class="row center">2.780</td>
+<td class="row center">18.60</td>
 <td class="row center">1</td>
 <td class="row center">1</td>
 <td class="row center">4</td>
@@ -1621,7 +1631,7 @@
 <td class="stub row right">Chrysler Imperial</td>
 <td class="row center">14.7</td>
 <td class="row center">8</td>
-<td class="row center">440</td>
+<td class="row center">440.0</td>
 <td class="row center">230</td>
 <td class="row center">3.23</td>
 <td class="row center">5.345</td>
@@ -1635,11 +1645,11 @@
 <td class="stub row right">AMC Javelin</td>
 <td class="row center">15.2</td>
 <td class="row center">8</td>
-<td class="row center">304</td>
+<td class="row center">304.0</td>
 <td class="row center">150</td>
 <td class="row center">3.15</td>
 <td class="row center">3.435</td>
-<td class="row center">17.3</td>
+<td class="row center">17.30</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
 <td class="row center">3</td>
@@ -1649,7 +1659,7 @@
 <td class="stub row right">Pontiac Firebird</td>
 <td class="row center">19.2</td>
 <td class="row center">8</td>
-<td class="row center">400</td>
+<td class="row center">400.0</td>
 <td class="row center">175</td>
 <td class="row center">3.08</td>
 <td class="row center">3.845</td>
@@ -1663,10 +1673,10 @@
 <td class="stub row right">Hornet Sportabout</td>
 <td class="row center">18.7</td>
 <td class="row center">8</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 <td class="row center">175</td>
 <td class="row center">3.15</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">17.02</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -1677,10 +1687,10 @@
 <td class="stub row right">Dodge Challenger</td>
 <td class="row center">15.5</td>
 <td class="row center">8</td>
-<td class="row center">318</td>
+<td class="row center">318.0</td>
 <td class="row center">150</td>
 <td class="row center">2.76</td>
-<td class="row center">3.52</td>
+<td class="row center">3.520</td>
 <td class="row center">16.87</td>
 <td class="row center">0</td>
 <td class="row center">0</td>
@@ -1690,6 +1700,7 @@
 </tbody>
 </table>
 <!--gt table end-->
+</div>
 </div>
 <div id="requirement-2--remove-some-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -1704,8 +1715,12 @@
 <a class="sourceLine" id="cb5-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#spddhtvkoh {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#spddhtvkoh .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -1722,13 +1737,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#spddhtvkoh .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#spddhtvkoh .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1739,7 +1754,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#spddhtvkoh .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -1750,7 +1765,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#spddhtvkoh .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1759,7 +1774,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#spddhtvkoh .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1767,7 +1782,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#spddhtvkoh .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1779,13 +1794,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#spddhtvkoh .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#spddhtvkoh .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1808,7 +1821,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#spddhtvkoh .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1831,28 +1844,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#spddhtvkoh .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#spddhtvkoh .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#spddhtvkoh .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#spddhtvkoh .stub.row.right, #spddhtvkoh .stub.row.left, #spddhtvkoh .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#spddhtvkoh .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1861,13 +1874,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#spddhtvkoh .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#spddhtvkoh .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1882,54 +1895,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#spddhtvkoh .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#spddhtvkoh .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#spddhtvkoh .center {
   text-align: center;
 }
 
-.left {
+#spddhtvkoh .left {
   text-align: left;
 }
 
-.right {
+#spddhtvkoh .right {
   text-align: right;
 }
 
-.font_normal {
+#spddhtvkoh .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#spddhtvkoh .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#spddhtvkoh .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#spddhtvkoh .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#spddhtvkoh .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="spddhtvkoh">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th class="col_heading right" rowspan="1" colspan="1"></th>
 <th class="col_heading center" rowspan="1" colspan="1">wt</th>
@@ -1946,53 +1961,53 @@
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">Duster 360</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">3.21</td>
 <td class="row center">8</td>
 <td class="row center">245</td>
 <td class="row center">15.84</td>
 <td class="row center">14.3</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">Ferrari Dino</td>
-<td class="row center">2.77</td>
+<td class="row center">2.770</td>
 <td class="row center">3.62</td>
 <td class="row center">6</td>
 <td class="row center">175</td>
-<td class="row center">15.5</td>
+<td class="row center">15.50</td>
 <td class="row center">19.7</td>
-<td class="row center">145</td>
+<td class="row center">145.0</td>
 </tr>
 <tr data-type="data" data-row="3">
 <td class="stub row right">Camaro Z28</td>
-<td class="row center">3.84</td>
+<td class="row center">3.840</td>
 <td class="row center">3.73</td>
 <td class="row center">8</td>
 <td class="row center">245</td>
 <td class="row center">15.41</td>
 <td class="row center">13.3</td>
-<td class="row center">350</td>
+<td class="row center">350.0</td>
 </tr>
 <tr data-type="data" data-row="4">
 <td class="stub row right">Maserati Bora</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">3.54</td>
 <td class="row center">8</td>
 <td class="row center">335</td>
-<td class="row center">14.6</td>
-<td class="row center">15</td>
-<td class="row center">301</td>
+<td class="row center">14.60</td>
+<td class="row center">15.0</td>
+<td class="row center">301.0</td>
 </tr>
 <tr data-type="data" data-row="5">
 <td class="stub row right">Ford Pantera L</td>
-<td class="row center">3.17</td>
+<td class="row center">3.170</td>
 <td class="row center">4.22</td>
 <td class="row center">8</td>
 <td class="row center">264</td>
-<td class="row center">14.5</td>
+<td class="row center">14.50</td>
 <td class="row center">15.8</td>
-<td class="row center">351</td>
+<td class="row center">351.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">High Gas Mileage</td>
@@ -2002,40 +2017,40 @@
 <td class="row center">1.835</td>
 <td class="row center">4.22</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
-<td class="row center">19.9</td>
+<td class="row center"> 65</td>
+<td class="row center">19.90</td>
 <td class="row center">33.9</td>
-<td class="row center">71.1</td>
+<td class="row center"> 71.1</td>
 </tr>
 <tr data-type="data" data-row="7">
 <td class="stub row right">Fiat 128</td>
-<td class="row center">2.2</td>
+<td class="row center">2.200</td>
 <td class="row center">4.08</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.47</td>
 <td class="row center">32.4</td>
-<td class="row center">78.7</td>
+<td class="row center"> 78.7</td>
 </tr>
 <tr data-type="data" data-row="8">
 <td class="stub row right">Fiat X1-9</td>
 <td class="row center">1.935</td>
 <td class="row center">4.08</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
-<td class="row center">18.9</td>
+<td class="row center"> 66</td>
+<td class="row center">18.90</td>
 <td class="row center">27.3</td>
-<td class="row center">79</td>
+<td class="row center"> 79.0</td>
 </tr>
 <tr data-type="data" data-row="9">
 <td class="stub row right">Honda Civic</td>
 <td class="row center">1.615</td>
 <td class="row center">4.93</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.52</td>
 <td class="row center">30.4</td>
-<td class="row center">75.7</td>
+<td class="row center"> 75.7</td>
 </tr>
 <tr data-type="data" data-row="10">
 <td class="stub row right">Lotus Europa</td>
@@ -2043,18 +2058,18 @@
 <td class="row center">3.77</td>
 <td class="row center">4</td>
 <td class="row center">113</td>
-<td class="row center">16.9</td>
+<td class="row center">16.90</td>
 <td class="row center">30.4</td>
-<td class="row center">95.1</td>
+<td class="row center"> 95.1</td>
 </tr>
 <tr data-type="data" data-row="11">
 <td class="stub row right">Porsche 914-2</td>
-<td class="row center">2.14</td>
+<td class="row center">2.140</td>
 <td class="row center">4.43</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
-<td class="row center">16.7</td>
-<td class="row center">26</td>
+<td class="row center"> 91</td>
+<td class="row center">16.70</td>
+<td class="row center">26.0</td>
 <td class="row center">120.3</td>
 </tr>
 <tr>
@@ -2062,94 +2077,94 @@
 </tr>
 <tr data-type="data" data-row="12">
 <td class="stub row right">Cadillac Fleetwood</td>
-<td class="row center">5.25</td>
+<td class="row center">5.250</td>
 <td class="row center">2.93</td>
 <td class="row center">8</td>
 <td class="row center">205</td>
 <td class="row center">17.98</td>
 <td class="row center">10.4</td>
-<td class="row center">472</td>
+<td class="row center">472.0</td>
 </tr>
 <tr data-type="data" data-row="13">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">5.424</td>
-<td class="row center">3</td>
+<td class="row center">3.00</td>
 <td class="row center">8</td>
 <td class="row center">215</td>
 <td class="row center">17.82</td>
 <td class="row center">10.4</td>
-<td class="row center">460</td>
+<td class="row center">460.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">The Mercs</td>
 </tr>
 <tr data-type="data" data-row="14">
 <td class="stub row right">Merc 230</td>
-<td class="row center">3.15</td>
+<td class="row center">3.150</td>
 <td class="row center">3.92</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
-<td class="row center">22.9</td>
+<td class="row center"> 95</td>
+<td class="row center">22.90</td>
 <td class="row center">22.8</td>
 <td class="row center">140.8</td>
 </tr>
 <tr data-type="data" data-row="15">
 <td class="stub row right">Merc 240D</td>
-<td class="row center">3.19</td>
+<td class="row center">3.190</td>
 <td class="row center">3.69</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
-<td class="row center">20</td>
+<td class="row center"> 62</td>
+<td class="row center">20.00</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
 </tr>
 <tr data-type="data" data-row="16">
 <td class="stub row right">Merc 280C</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.92</td>
 <td class="row center">6</td>
 <td class="row center">123</td>
-<td class="row center">18.9</td>
+<td class="row center">18.90</td>
 <td class="row center">17.8</td>
 <td class="row center">167.6</td>
 </tr>
 <tr data-type="data" data-row="17">
 <td class="stub row right">Merc 280</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.92</td>
 <td class="row center">6</td>
 <td class="row center">123</td>
-<td class="row center">18.3</td>
+<td class="row center">18.30</td>
 <td class="row center">19.2</td>
 <td class="row center">167.6</td>
 </tr>
 <tr data-type="data" data-row="18">
 <td class="stub row right">Merc 450SLC</td>
-<td class="row center">3.78</td>
+<td class="row center">3.780</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">18</td>
+<td class="row center">18.00</td>
 <td class="row center">15.2</td>
 <td class="row center">275.8</td>
 </tr>
 <tr data-type="data" data-row="19">
 <td class="stub row right">Merc 450SL</td>
-<td class="row center">3.73</td>
+<td class="row center">3.730</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">17.6</td>
+<td class="row center">17.60</td>
 <td class="row center">17.3</td>
 <td class="row center">275.8</td>
 </tr>
 <tr data-type="data" data-row="20">
 <td class="stub row right">Merc 450SE</td>
-<td class="row center">4.07</td>
+<td class="row center">4.070</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">17.4</td>
+<td class="row center">17.40</td>
 <td class="row center">16.4</td>
 <td class="row center">275.8</td>
 </tr>
@@ -2159,42 +2174,42 @@
 <tr data-type="data" data-row="21">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">2.875</td>
-<td class="row center">3.9</td>
+<td class="row center">3.90</td>
 <td class="row center">6</td>
 <td class="row center">110</td>
 <td class="row center">17.02</td>
-<td class="row center">21</td>
-<td class="row center">160</td>
+<td class="row center">21.0</td>
+<td class="row center">160.0</td>
 </tr>
 <tr data-type="data" data-row="22">
 <td class="stub row right">Mazda RX4</td>
-<td class="row center">2.62</td>
-<td class="row center">3.9</td>
+<td class="row center">2.620</td>
+<td class="row center">3.90</td>
 <td class="row center">6</td>
 <td class="row center">110</td>
 <td class="row center">16.46</td>
-<td class="row center">21</td>
-<td class="row center">160</td>
+<td class="row center">21.0</td>
+<td class="row center">160.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">The Rest of the Cars</td>
 </tr>
 <tr data-type="data" data-row="23">
 <td class="stub row right">Valiant</td>
-<td class="row center">3.46</td>
+<td class="row center">3.460</td>
 <td class="row center">2.76</td>
 <td class="row center">6</td>
 <td class="row center">105</td>
 <td class="row center">20.22</td>
 <td class="row center">18.1</td>
-<td class="row center">225</td>
+<td class="row center">225.0</td>
 </tr>
 <tr data-type="data" data-row="24">
 <td class="stub row right">Toyota Corona</td>
 <td class="row center">2.465</td>
-<td class="row center">3.7</td>
+<td class="row center">3.70</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.01</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -2207,27 +2222,27 @@
 <td class="row center">110</td>
 <td class="row center">19.44</td>
 <td class="row center">21.4</td>
-<td class="row center">258</td>
+<td class="row center">258.0</td>
 </tr>
 <tr data-type="data" data-row="26">
 <td class="stub row right">Datsun 710</td>
-<td class="row center">2.32</td>
+<td class="row center">2.320</td>
 <td class="row center">3.85</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.61</td>
 <td class="row center">22.8</td>
-<td class="row center">108</td>
+<td class="row center">108.0</td>
 </tr>
 <tr data-type="data" data-row="27">
 <td class="stub row right">Volvo 142E</td>
-<td class="row center">2.78</td>
+<td class="row center">2.780</td>
 <td class="row center">4.11</td>
 <td class="row center">4</td>
 <td class="row center">109</td>
-<td class="row center">18.6</td>
+<td class="row center">18.60</td>
 <td class="row center">21.4</td>
-<td class="row center">121</td>
+<td class="row center">121.0</td>
 </tr>
 <tr data-type="data" data-row="28">
 <td class="stub row right">Chrysler Imperial</td>
@@ -2237,7 +2252,7 @@
 <td class="row center">230</td>
 <td class="row center">17.42</td>
 <td class="row center">14.7</td>
-<td class="row center">440</td>
+<td class="row center">440.0</td>
 </tr>
 <tr data-type="data" data-row="29">
 <td class="stub row right">AMC Javelin</td>
@@ -2245,9 +2260,9 @@
 <td class="row center">3.15</td>
 <td class="row center">8</td>
 <td class="row center">150</td>
-<td class="row center">17.3</td>
+<td class="row center">17.30</td>
 <td class="row center">15.2</td>
-<td class="row center">304</td>
+<td class="row center">304.0</td>
 </tr>
 <tr data-type="data" data-row="30">
 <td class="stub row right">Pontiac Firebird</td>
@@ -2257,31 +2272,32 @@
 <td class="row center">175</td>
 <td class="row center">17.05</td>
 <td class="row center">19.2</td>
-<td class="row center">400</td>
+<td class="row center">400.0</td>
 </tr>
 <tr data-type="data" data-row="31">
 <td class="stub row right">Hornet Sportabout</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.15</td>
 <td class="row center">8</td>
 <td class="row center">175</td>
 <td class="row center">17.02</td>
 <td class="row center">18.7</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 </tr>
 <tr data-type="data" data-row="32">
 <td class="stub row right">Dodge Challenger</td>
-<td class="row center">3.52</td>
+<td class="row center">3.520</td>
 <td class="row center">2.76</td>
 <td class="row center">8</td>
 <td class="row center">150</td>
 <td class="row center">16.87</td>
 <td class="row center">15.5</td>
-<td class="row center">318</td>
+<td class="row center">318.0</td>
 </tr>
 </tbody>
 </table>
 <!--gt table end-->
+</div>
 </div>
 <div id="requirement-3--put-variables-into-groups" class="section level3">
 <h3 class="hasAnchor">
@@ -2301,8 +2317,12 @@
 <a class="sourceLine" id="cb6-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb6-13" data-line-number="13">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#sqhxwtaeag {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#sqhxwtaeag .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -2319,13 +2339,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#sqhxwtaeag .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#sqhxwtaeag .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2336,7 +2356,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#sqhxwtaeag .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -2347,7 +2367,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#sqhxwtaeag .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2356,7 +2376,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#sqhxwtaeag .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2364,7 +2384,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#sqhxwtaeag .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2376,13 +2396,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#sqhxwtaeag .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#sqhxwtaeag .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2405,7 +2423,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#sqhxwtaeag .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2428,28 +2446,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#sqhxwtaeag .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#sqhxwtaeag .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#sqhxwtaeag .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#sqhxwtaeag .stub.row.right, #sqhxwtaeag .stub.row.left, #sqhxwtaeag .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#sqhxwtaeag .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2458,13 +2476,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#sqhxwtaeag .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#sqhxwtaeag .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2479,54 +2497,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#sqhxwtaeag .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#sqhxwtaeag .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#sqhxwtaeag .center {
   text-align: center;
 }
 
-.left {
+#sqhxwtaeag .left {
   text-align: left;
 }
 
-.right {
+#sqhxwtaeag .right {
   text-align: right;
 }
 
-.font_normal {
+#sqhxwtaeag .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#sqhxwtaeag .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#sqhxwtaeag .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#sqhxwtaeag .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#sqhxwtaeag .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="sqhxwtaeag">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th data-type="column_heading" class="col_heading right" rowspan="2" colspan="1"></th>
 <th data-type="column_heading" class="col_heading column_spanner sep_right center" rowspan="1" colspan="3"><em>Properties</em></th>
@@ -2547,53 +2567,53 @@
 </tr>
 <tr data-type="data" data-row="1">
 <td class="stub row right">Duster 360</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">3.21</td>
 <td class="row center">8</td>
 <td class="row center">245</td>
 <td class="row center">15.84</td>
 <td class="row center">14.3</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 </tr>
 <tr data-type="data" data-row="2">
 <td class="stub row right">Ferrari Dino</td>
-<td class="row center">2.77</td>
+<td class="row center">2.770</td>
 <td class="row center">3.62</td>
 <td class="row center">6</td>
 <td class="row center">175</td>
-<td class="row center">15.5</td>
+<td class="row center">15.50</td>
 <td class="row center">19.7</td>
-<td class="row center">145</td>
+<td class="row center">145.0</td>
 </tr>
 <tr data-type="data" data-row="3">
 <td class="stub row right">Camaro Z28</td>
-<td class="row center">3.84</td>
+<td class="row center">3.840</td>
 <td class="row center">3.73</td>
 <td class="row center">8</td>
 <td class="row center">245</td>
 <td class="row center">15.41</td>
 <td class="row center">13.3</td>
-<td class="row center">350</td>
+<td class="row center">350.0</td>
 </tr>
 <tr data-type="data" data-row="4">
 <td class="stub row right">Maserati Bora</td>
-<td class="row center">3.57</td>
+<td class="row center">3.570</td>
 <td class="row center">3.54</td>
 <td class="row center">8</td>
 <td class="row center">335</td>
-<td class="row center">14.6</td>
-<td class="row center">15</td>
-<td class="row center">301</td>
+<td class="row center">14.60</td>
+<td class="row center">15.0</td>
+<td class="row center">301.0</td>
 </tr>
 <tr data-type="data" data-row="5">
 <td class="stub row right">Ford Pantera L</td>
-<td class="row center">3.17</td>
+<td class="row center">3.170</td>
 <td class="row center">4.22</td>
 <td class="row center">8</td>
 <td class="row center">264</td>
-<td class="row center">14.5</td>
+<td class="row center">14.50</td>
 <td class="row center">15.8</td>
-<td class="row center">351</td>
+<td class="row center">351.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">High Gas Mileage</td>
@@ -2603,40 +2623,40 @@
 <td class="row center">1.835</td>
 <td class="row center">4.22</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
-<td class="row center">19.9</td>
+<td class="row center"> 65</td>
+<td class="row center">19.90</td>
 <td class="row center">33.9</td>
-<td class="row center">71.1</td>
+<td class="row center"> 71.1</td>
 </tr>
 <tr data-type="data" data-row="7">
 <td class="stub row right">Fiat 128</td>
-<td class="row center">2.2</td>
+<td class="row center">2.200</td>
 <td class="row center">4.08</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.47</td>
 <td class="row center">32.4</td>
-<td class="row center">78.7</td>
+<td class="row center"> 78.7</td>
 </tr>
 <tr data-type="data" data-row="8">
 <td class="stub row right">Fiat X1-9</td>
 <td class="row center">1.935</td>
 <td class="row center">4.08</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
-<td class="row center">18.9</td>
+<td class="row center"> 66</td>
+<td class="row center">18.90</td>
 <td class="row center">27.3</td>
-<td class="row center">79</td>
+<td class="row center"> 79.0</td>
 </tr>
 <tr data-type="data" data-row="9">
 <td class="stub row right">Honda Civic</td>
 <td class="row center">1.615</td>
 <td class="row center">4.93</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.52</td>
 <td class="row center">30.4</td>
-<td class="row center">75.7</td>
+<td class="row center"> 75.7</td>
 </tr>
 <tr data-type="data" data-row="10">
 <td class="stub row right">Lotus Europa</td>
@@ -2644,18 +2664,18 @@
 <td class="row center">3.77</td>
 <td class="row center">4</td>
 <td class="row center">113</td>
-<td class="row center">16.9</td>
+<td class="row center">16.90</td>
 <td class="row center">30.4</td>
-<td class="row center">95.1</td>
+<td class="row center"> 95.1</td>
 </tr>
 <tr data-type="data" data-row="11">
 <td class="stub row right">Porsche 914-2</td>
-<td class="row center">2.14</td>
+<td class="row center">2.140</td>
 <td class="row center">4.43</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
-<td class="row center">16.7</td>
-<td class="row center">26</td>
+<td class="row center"> 91</td>
+<td class="row center">16.70</td>
+<td class="row center">26.0</td>
 <td class="row center">120.3</td>
 </tr>
 <tr>
@@ -2663,94 +2683,94 @@
 </tr>
 <tr data-type="data" data-row="12">
 <td class="stub row right">Cadillac Fleetwood</td>
-<td class="row center">5.25</td>
+<td class="row center">5.250</td>
 <td class="row center">2.93</td>
 <td class="row center">8</td>
 <td class="row center">205</td>
 <td class="row center">17.98</td>
 <td class="row center">10.4</td>
-<td class="row center">472</td>
+<td class="row center">472.0</td>
 </tr>
 <tr data-type="data" data-row="13">
 <td class="stub row right">Lincoln Continental</td>
 <td class="row center">5.424</td>
-<td class="row center">3</td>
+<td class="row center">3.00</td>
 <td class="row center">8</td>
 <td class="row center">215</td>
 <td class="row center">17.82</td>
 <td class="row center">10.4</td>
-<td class="row center">460</td>
+<td class="row center">460.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">The Mercs</td>
 </tr>
 <tr data-type="data" data-row="14">
 <td class="stub row right">Merc 230</td>
-<td class="row center">3.15</td>
+<td class="row center">3.150</td>
 <td class="row center">3.92</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
-<td class="row center">22.9</td>
+<td class="row center"> 95</td>
+<td class="row center">22.90</td>
 <td class="row center">22.8</td>
 <td class="row center">140.8</td>
 </tr>
 <tr data-type="data" data-row="15">
 <td class="stub row right">Merc 240D</td>
-<td class="row center">3.19</td>
+<td class="row center">3.190</td>
 <td class="row center">3.69</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
-<td class="row center">20</td>
+<td class="row center"> 62</td>
+<td class="row center">20.00</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
 </tr>
 <tr data-type="data" data-row="16">
 <td class="stub row right">Merc 280C</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.92</td>
 <td class="row center">6</td>
 <td class="row center">123</td>
-<td class="row center">18.9</td>
+<td class="row center">18.90</td>
 <td class="row center">17.8</td>
 <td class="row center">167.6</td>
 </tr>
 <tr data-type="data" data-row="17">
 <td class="stub row right">Merc 280</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.92</td>
 <td class="row center">6</td>
 <td class="row center">123</td>
-<td class="row center">18.3</td>
+<td class="row center">18.30</td>
 <td class="row center">19.2</td>
 <td class="row center">167.6</td>
 </tr>
 <tr data-type="data" data-row="18">
 <td class="stub row right">Merc 450SLC</td>
-<td class="row center">3.78</td>
+<td class="row center">3.780</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">18</td>
+<td class="row center">18.00</td>
 <td class="row center">15.2</td>
 <td class="row center">275.8</td>
 </tr>
 <tr data-type="data" data-row="19">
 <td class="stub row right">Merc 450SL</td>
-<td class="row center">3.73</td>
+<td class="row center">3.730</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">17.6</td>
+<td class="row center">17.60</td>
 <td class="row center">17.3</td>
 <td class="row center">275.8</td>
 </tr>
 <tr data-type="data" data-row="20">
 <td class="stub row right">Merc 450SE</td>
-<td class="row center">4.07</td>
+<td class="row center">4.070</td>
 <td class="row center">3.07</td>
 <td class="row center">8</td>
 <td class="row center">180</td>
-<td class="row center">17.4</td>
+<td class="row center">17.40</td>
 <td class="row center">16.4</td>
 <td class="row center">275.8</td>
 </tr>
@@ -2760,42 +2780,42 @@
 <tr data-type="data" data-row="21">
 <td class="stub row right">Mazda RX4 Wag</td>
 <td class="row center">2.875</td>
-<td class="row center">3.9</td>
+<td class="row center">3.90</td>
 <td class="row center">6</td>
 <td class="row center">110</td>
 <td class="row center">17.02</td>
-<td class="row center">21</td>
-<td class="row center">160</td>
+<td class="row center">21.0</td>
+<td class="row center">160.0</td>
 </tr>
 <tr data-type="data" data-row="22">
 <td class="stub row right">Mazda RX4</td>
-<td class="row center">2.62</td>
-<td class="row center">3.9</td>
+<td class="row center">2.620</td>
+<td class="row center">3.90</td>
 <td class="row center">6</td>
 <td class="row center">110</td>
 <td class="row center">16.46</td>
-<td class="row center">21</td>
-<td class="row center">160</td>
+<td class="row center">21.0</td>
+<td class="row center">160.0</td>
 </tr>
 <tr>
 <td data-type="group" colspan="8" class="group_heading">The Rest of the Cars</td>
 </tr>
 <tr data-type="data" data-row="23">
 <td class="stub row right">Valiant</td>
-<td class="row center">3.46</td>
+<td class="row center">3.460</td>
 <td class="row center">2.76</td>
 <td class="row center">6</td>
 <td class="row center">105</td>
 <td class="row center">20.22</td>
 <td class="row center">18.1</td>
-<td class="row center">225</td>
+<td class="row center">225.0</td>
 </tr>
 <tr data-type="data" data-row="24">
 <td class="stub row right">Toyota Corona</td>
 <td class="row center">2.465</td>
-<td class="row center">3.7</td>
+<td class="row center">3.70</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.01</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -2808,27 +2828,27 @@
 <td class="row center">110</td>
 <td class="row center">19.44</td>
 <td class="row center">21.4</td>
-<td class="row center">258</td>
+<td class="row center">258.0</td>
 </tr>
 <tr data-type="data" data-row="26">
 <td class="stub row right">Datsun 710</td>
-<td class="row center">2.32</td>
+<td class="row center">2.320</td>
 <td class="row center">3.85</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.61</td>
 <td class="row center">22.8</td>
-<td class="row center">108</td>
+<td class="row center">108.0</td>
 </tr>
 <tr data-type="data" data-row="27">
 <td class="stub row right">Volvo 142E</td>
-<td class="row center">2.78</td>
+<td class="row center">2.780</td>
 <td class="row center">4.11</td>
 <td class="row center">4</td>
 <td class="row center">109</td>
-<td class="row center">18.6</td>
+<td class="row center">18.60</td>
 <td class="row center">21.4</td>
-<td class="row center">121</td>
+<td class="row center">121.0</td>
 </tr>
 <tr data-type="data" data-row="28">
 <td class="stub row right">Chrysler Imperial</td>
@@ -2838,7 +2858,7 @@
 <td class="row center">230</td>
 <td class="row center">17.42</td>
 <td class="row center">14.7</td>
-<td class="row center">440</td>
+<td class="row center">440.0</td>
 </tr>
 <tr data-type="data" data-row="29">
 <td class="stub row right">AMC Javelin</td>
@@ -2846,9 +2866,9 @@
 <td class="row center">3.15</td>
 <td class="row center">8</td>
 <td class="row center">150</td>
-<td class="row center">17.3</td>
+<td class="row center">17.30</td>
 <td class="row center">15.2</td>
-<td class="row center">304</td>
+<td class="row center">304.0</td>
 </tr>
 <tr data-type="data" data-row="30">
 <td class="stub row right">Pontiac Firebird</td>
@@ -2858,31 +2878,32 @@
 <td class="row center">175</td>
 <td class="row center">17.05</td>
 <td class="row center">19.2</td>
-<td class="row center">400</td>
+<td class="row center">400.0</td>
 </tr>
 <tr data-type="data" data-row="31">
 <td class="stub row right">Hornet Sportabout</td>
-<td class="row center">3.44</td>
+<td class="row center">3.440</td>
 <td class="row center">3.15</td>
 <td class="row center">8</td>
 <td class="row center">175</td>
 <td class="row center">17.02</td>
 <td class="row center">18.7</td>
-<td class="row center">360</td>
+<td class="row center">360.0</td>
 </tr>
 <tr data-type="data" data-row="32">
 <td class="stub row right">Dodge Challenger</td>
-<td class="row center">3.52</td>
+<td class="row center">3.520</td>
 <td class="row center">2.76</td>
 <td class="row center">8</td>
 <td class="row center">150</td>
 <td class="row center">16.87</td>
 <td class="row center">15.5</td>
-<td class="row center">318</td>
+<td class="row center">318.0</td>
 </tr>
 </tbody>
 </table>
 <!--gt table end-->
+</div>
 </div>
 <div id="requirement-4--format-numeric-values-for-consistency" class="section level3">
 <h3 class="hasAnchor">
@@ -2900,8 +2921,12 @@
 <a class="sourceLine" id="cb7-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#cklmygoqve {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#cklmygoqve .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -2918,13 +2943,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#cklmygoqve .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#cklmygoqve .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2935,7 +2960,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#cklmygoqve .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -2946,7 +2971,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#cklmygoqve .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2955,7 +2980,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#cklmygoqve .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2963,7 +2988,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#cklmygoqve .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2975,13 +3000,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#cklmygoqve .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#cklmygoqve .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3004,7 +3027,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#cklmygoqve .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3027,28 +3050,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#cklmygoqve .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#cklmygoqve .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#cklmygoqve .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#cklmygoqve .stub.row.right, #cklmygoqve .stub.row.left, #cklmygoqve .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#cklmygoqve .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3057,13 +3080,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#cklmygoqve .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#cklmygoqve .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3078,54 +3101,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#cklmygoqve .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#cklmygoqve .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#cklmygoqve .center {
   text-align: center;
 }
 
-.left {
+#cklmygoqve .left {
   text-align: left;
 }
 
-.right {
+#cklmygoqve .right {
   text-align: right;
 }
 
-.font_normal {
+#cklmygoqve .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#cklmygoqve .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#cklmygoqve .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#cklmygoqve .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#cklmygoqve .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="cklmygoqve">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th data-type="column_heading" class="col_heading right" rowspan="2" colspan="1"></th>
 <th data-type="column_heading" class="col_heading column_spanner sep_right center" rowspan="1" colspan="3"><em>Properties</em></th>
@@ -3202,7 +3227,7 @@
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center">33.9</td>
 <td class="row center">71.1</td>
@@ -3212,7 +3237,7 @@
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center">32.4</td>
 <td class="row center">78.7</td>
@@ -3222,7 +3247,7 @@
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center">27.3</td>
 <td class="row center">79.0</td>
@@ -3232,7 +3257,7 @@
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center">30.4</td>
 <td class="row center">75.7</td>
@@ -3252,7 +3277,7 @@
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -3288,7 +3313,7 @@
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900</td>
 <td class="row center">22.8</td>
 <td class="row center">140.8</td>
@@ -3298,7 +3323,7 @@
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -3394,7 +3419,7 @@
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -3414,7 +3439,7 @@
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -3483,6 +3508,7 @@
 </table>
 <!--gt table end-->
 </div>
+</div>
 <div id="requirement-5--summarize-variables-in-each-group" class="section level3">
 <h3 class="hasAnchor">
 <a href="#requirement-5--summarize-variables-in-each-group" class="anchor"></a>Requirement 5. Summarize Variables in Each Group</h3>
@@ -3505,8 +3531,12 @@
 <a class="sourceLine" id="cb8-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#cetbmwtxzc {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#cetbmwtxzc .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -3523,13 +3553,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#cetbmwtxzc .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#cetbmwtxzc .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3540,7 +3570,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#cetbmwtxzc .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -3551,7 +3581,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#cetbmwtxzc .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3560,7 +3590,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#cetbmwtxzc .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3568,7 +3598,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#cetbmwtxzc .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -3580,13 +3610,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#cetbmwtxzc .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#cetbmwtxzc .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3609,7 +3637,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#cetbmwtxzc .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3632,28 +3660,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#cetbmwtxzc .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#cetbmwtxzc .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#cetbmwtxzc .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#cetbmwtxzc .stub.row.right, #cetbmwtxzc .stub.row.left, #cetbmwtxzc .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#cetbmwtxzc .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3662,13 +3690,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#cetbmwtxzc .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#cetbmwtxzc .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3683,54 +3711,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#cetbmwtxzc .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#cetbmwtxzc .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#cetbmwtxzc .center {
   text-align: center;
 }
 
-.left {
+#cetbmwtxzc .left {
   text-align: left;
 }
 
-.right {
+#cetbmwtxzc .right {
   text-align: right;
 }
 
-.font_normal {
+#cetbmwtxzc .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#cetbmwtxzc .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#cetbmwtxzc .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#cetbmwtxzc .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#cetbmwtxzc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="cetbmwtxzc">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <tr>
 <th data-type="column_heading" class="col_heading right" rowspan="2" colspan="1"></th>
 <th data-type="column_heading" class="col_heading column_spanner sep_right center" rowspan="1" colspan="3"><em>Properties</em></th>
@@ -3837,7 +3867,7 @@
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center">33.9</td>
 <td class="row center">71.1</td>
@@ -3847,7 +3877,7 @@
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center">32.4</td>
 <td class="row center">78.7</td>
@@ -3857,7 +3887,7 @@
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center">27.3</td>
 <td class="row center">79.0</td>
@@ -3867,7 +3897,7 @@
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center">30.4</td>
 <td class="row center">75.7</td>
@@ -3887,7 +3917,7 @@
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -3983,7 +4013,7 @@
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900</td>
 <td class="row center">22.8</td>
 <td class="row center">140.8</td>
@@ -3993,7 +4023,7 @@
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -4149,7 +4179,7 @@
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -4169,7 +4199,7 @@
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -4266,7 +4296,9 @@
 </tr>
 </tbody>
 </table>
-<!--gt table end--><p>We can recover the summary data from the <code>tab</code> object. Use the <code><a href="../reference/extract_summary.html">extract_summary()</a></code> function to get a list a data frames. The data frame names are the group names, and each df has <code>groupname</code> and <code>rowname</code> column that help to identify the groups and the summary row captions.</p>
+<!--gt table end-->
+</div>
+<p>We can recover the summary data from the <code>tab</code> object. Use the <code><a href="../reference/extract_summary.html">extract_summary()</a></code> function to get a list a data frames. The data frame names are the group names, and each df has <code>groupname</code> and <code>rowname</code> column that help to identify the groups and the summary row captions.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Get the summary data for the `Mazdas` group</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/extract_summary.html">extract_summary</a></span>(tab)<span class="op">$</span>Mazdas</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; # A tibble: 3 x 9</span></a>
@@ -4289,8 +4321,12 @@
 <a class="sourceLine" id="cb10-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#gpzphvnewx {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#gpzphvnewx .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -4307,13 +4343,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#gpzphvnewx .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#gpzphvnewx .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -4324,7 +4360,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#gpzphvnewx .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -4335,7 +4371,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#gpzphvnewx .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -4344,7 +4380,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#gpzphvnewx .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -4352,7 +4388,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#gpzphvnewx .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -4364,13 +4400,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#gpzphvnewx .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#gpzphvnewx .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4393,7 +4427,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#gpzphvnewx .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4416,28 +4450,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#gpzphvnewx .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#gpzphvnewx .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#gpzphvnewx .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#gpzphvnewx .stub.row.right, #gpzphvnewx .stub.row.left, #gpzphvnewx .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#gpzphvnewx .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -4446,13 +4480,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#gpzphvnewx .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#gpzphvnewx .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -4467,54 +4501,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#gpzphvnewx .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#gpzphvnewx .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#gpzphvnewx .center {
   text-align: center;
 }
 
-.left {
+#gpzphvnewx .left {
   text-align: left;
 }
 
-.right {
+#gpzphvnewx .right {
   text-align: right;
 }
 
-.font_normal {
+#gpzphvnewx .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#gpzphvnewx .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#gpzphvnewx .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#gpzphvnewx .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#gpzphvnewx .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="gpzphvnewx">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="8">The <strong>mtcars</strong> dataset</th>
@@ -4629,7 +4665,7 @@
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center">33.9</td>
 <td class="row center">71.1</td>
@@ -4639,7 +4675,7 @@
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center">32.4</td>
 <td class="row center">78.7</td>
@@ -4649,7 +4685,7 @@
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center">27.3</td>
 <td class="row center">79.0</td>
@@ -4659,7 +4695,7 @@
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center">30.4</td>
 <td class="row center">75.7</td>
@@ -4679,7 +4715,7 @@
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -4775,7 +4811,7 @@
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900</td>
 <td class="row center">22.8</td>
 <td class="row center">140.8</td>
@@ -4785,7 +4821,7 @@
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -4941,7 +4977,7 @@
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -4961,7 +4997,7 @@
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -5060,6 +5096,7 @@
 </table>
 <!--gt table end-->
 </div>
+</div>
 <div id="requirement-7--add-interesting-footnotes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#requirement-7--add-interesting-footnotes" class="anchor"></a>Requirement 7. Add Interesting Footnotes</h3>
@@ -5119,8 +5156,12 @@ d. the car with the outrageous horsepower</code></pre>
 <a class="sourceLine" id="cb12-46" data-line-number="46">  </a>
 <a class="sourceLine" id="cb12-47" data-line-number="47"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb12-48" data-line-number="48">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#ffkrkmrduy {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#ffkrkmrduy .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -5137,13 +5178,13 @@ d. the car with the outrageous horsepower</code></pre>
   /* table.border.top.color */
 }
 
-.heading {
+#ffkrkmrduy .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#ffkrkmrduy .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -5154,7 +5195,7 @@ d. the car with the outrageous horsepower</code></pre>
   border-bottom-width: 0;
 }
 
-.headnote {
+#ffkrkmrduy .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -5165,7 +5206,7 @@ d. the car with the outrageous horsepower</code></pre>
   border-top-width: 0;
 }
 
-.bottom_border {
+#ffkrkmrduy .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -5174,7 +5215,7 @@ d. the car with the outrageous horsepower</code></pre>
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#ffkrkmrduy .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -5182,7 +5223,7 @@ d. the car with the outrageous horsepower</code></pre>
   padding-bottom: 4px;
 }
 
-.col_heading {
+#ffkrkmrduy .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -5194,13 +5235,11 @@ d. the car with the outrageous horsepower</code></pre>
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#ffkrkmrduy .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#ffkrkmrduy .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -5223,7 +5262,7 @@ d. the car with the outrageous horsepower</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#ffkrkmrduy .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -5246,28 +5285,28 @@ d. the car with the outrageous horsepower</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#ffkrkmrduy .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#ffkrkmrduy .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#ffkrkmrduy .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#ffkrkmrduy .stub.row.right, #ffkrkmrduy .stub.row.left, #ffkrkmrduy .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#ffkrkmrduy .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -5276,13 +5315,13 @@ d. the car with the outrageous horsepower</code></pre>
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#ffkrkmrduy .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#ffkrkmrduy .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -5297,54 +5336,56 @@ d. the car with the outrageous horsepower</code></pre>
   /* field.border.bottom.color */
 }
 
-.footnote {
+#ffkrkmrduy .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#ffkrkmrduy .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#ffkrkmrduy .center {
   text-align: center;
 }
 
-.left {
+#ffkrkmrduy .left {
   text-align: left;
 }
 
-.right {
+#ffkrkmrduy .right {
   text-align: right;
 }
 
-.font_normal {
+#ffkrkmrduy .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#ffkrkmrduy .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#ffkrkmrduy .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#ffkrkmrduy .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#ffkrkmrduy .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="ffkrkmrduy">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="8">The <strong>mtcars</strong> dataset</th>
@@ -5461,7 +5502,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center">33.9<sup class="gt_footnote_glyph">3</sup>
 </td>
@@ -5472,7 +5513,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center">32.4</td>
 <td class="row center">78.7</td>
@@ -5482,7 +5523,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center">27.3</td>
 <td class="row center">79.0</td>
@@ -5492,7 +5533,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center">30.4</td>
 <td class="row center">75.7</td>
@@ -5512,7 +5553,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -5608,7 +5649,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900<sup class="gt_footnote_glyph">4</sup>
 </td>
 <td class="row center">22.8</td>
@@ -5619,7 +5660,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -5775,7 +5816,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -5795,7 +5836,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -5898,6 +5939,7 @@ d. the car with the outrageous horsepower</code></pre>
 </table>
 <!--gt table end-->
 </div>
+</div>
 <div id="requirement-8--source-citation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#requirement-8--source-citation" class="anchor"></a>Requirement 8. Source Citation</h3>
@@ -5913,8 +5955,12 @@ d. the car with the outrageous horsepower</code></pre>
 <a class="sourceLine" id="cb13-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#tmjoiktuqg {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#tmjoiktuqg .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -5931,13 +5977,13 @@ d. the car with the outrageous horsepower</code></pre>
   /* table.border.top.color */
 }
 
-.heading {
+#tmjoiktuqg .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#tmjoiktuqg .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -5948,7 +5994,7 @@ d. the car with the outrageous horsepower</code></pre>
   border-bottom-width: 0;
 }
 
-.headnote {
+#tmjoiktuqg .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -5959,7 +6005,7 @@ d. the car with the outrageous horsepower</code></pre>
   border-top-width: 0;
 }
 
-.bottom_border {
+#tmjoiktuqg .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -5968,7 +6014,7 @@ d. the car with the outrageous horsepower</code></pre>
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#tmjoiktuqg .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -5976,7 +6022,7 @@ d. the car with the outrageous horsepower</code></pre>
   padding-bottom: 4px;
 }
 
-.col_heading {
+#tmjoiktuqg .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -5988,13 +6034,11 @@ d. the car with the outrageous horsepower</code></pre>
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#tmjoiktuqg .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#tmjoiktuqg .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -6017,7 +6061,7 @@ d. the car with the outrageous horsepower</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#tmjoiktuqg .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -6040,28 +6084,28 @@ d. the car with the outrageous horsepower</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#tmjoiktuqg .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#tmjoiktuqg .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#tmjoiktuqg .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#tmjoiktuqg .stub.row.right, #tmjoiktuqg .stub.row.left, #tmjoiktuqg .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#tmjoiktuqg .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -6070,13 +6114,13 @@ d. the car with the outrageous horsepower</code></pre>
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#tmjoiktuqg .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#tmjoiktuqg .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -6091,54 +6135,56 @@ d. the car with the outrageous horsepower</code></pre>
   /* field.border.bottom.color */
 }
 
-.footnote {
+#tmjoiktuqg .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#tmjoiktuqg .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#tmjoiktuqg .center {
   text-align: center;
 }
 
-.left {
+#tmjoiktuqg .left {
   text-align: left;
 }
 
-.right {
+#tmjoiktuqg .right {
   text-align: right;
 }
 
-.font_normal {
+#tmjoiktuqg .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#tmjoiktuqg .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#tmjoiktuqg .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#tmjoiktuqg .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#tmjoiktuqg .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="tmjoiktuqg">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="8">The <strong>mtcars</strong> dataset</th>
@@ -6255,7 +6301,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center">33.9<sup class="gt_footnote_glyph">3</sup>
 </td>
@@ -6266,7 +6312,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center">32.4</td>
 <td class="row center">78.7</td>
@@ -6276,7 +6322,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center">27.3</td>
 <td class="row center">79.0</td>
@@ -6286,7 +6332,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center">30.4</td>
 <td class="row center">75.7</td>
@@ -6306,7 +6352,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -6402,7 +6448,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900<sup class="gt_footnote_glyph">4</sup>
 </td>
 <td class="row center">22.8</td>
@@ -6413,7 +6459,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -6569,7 +6615,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -6589,7 +6635,7 @@ d. the car with the outrageous horsepower</code></pre>
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -6695,6 +6741,7 @@ d. the car with the outrageous horsepower</code></pre>
 </table>
 <!--gt table end-->
 </div>
+</div>
 <div id="requirement-9--cell-styling" class="section level3">
 <h3 class="hasAnchor">
 <a href="#requirement-9--cell-styling" class="anchor"></a>Requirement 9. Cell Styling</h3>
@@ -6727,8 +6774,12 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <a class="sourceLine" id="cb15-23" data-line-number="23"></a>
 <a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb15-25" data-line-number="25">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#vwthqpmpcq {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#vwthqpmpcq .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -6745,13 +6796,13 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* table.border.top.color */
 }
 
-.heading {
+#vwthqpmpcq .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#vwthqpmpcq .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -6762,7 +6813,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   border-bottom-width: 0;
 }
 
-.headnote {
+#vwthqpmpcq .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -6773,7 +6824,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   border-top-width: 0;
 }
 
-.bottom_border {
+#vwthqpmpcq .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -6782,7 +6833,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#vwthqpmpcq .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -6790,7 +6841,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   padding-bottom: 4px;
 }
 
-.col_heading {
+#vwthqpmpcq .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -6802,13 +6853,11 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#vwthqpmpcq .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#vwthqpmpcq .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -6831,7 +6880,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#vwthqpmpcq .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -6854,28 +6903,28 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#vwthqpmpcq .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#vwthqpmpcq .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#vwthqpmpcq .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#vwthqpmpcq .stub.row.right, #vwthqpmpcq .stub.row.left, #vwthqpmpcq .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#vwthqpmpcq .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -6884,13 +6933,13 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#vwthqpmpcq .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#vwthqpmpcq .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -6905,54 +6954,56 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* field.border.bottom.color */
 }
 
-.footnote {
+#vwthqpmpcq .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#vwthqpmpcq .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#vwthqpmpcq .center {
   text-align: center;
 }
 
-.left {
+#vwthqpmpcq .left {
   text-align: left;
 }
 
-.right {
+#vwthqpmpcq .right {
   text-align: right;
 }
 
-.font_normal {
+#vwthqpmpcq .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#vwthqpmpcq .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#vwthqpmpcq .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#vwthqpmpcq .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#vwthqpmpcq .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="vwthqpmpcq">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="8">The <strong>mtcars</strong> dataset</th>
@@ -7069,7 +7120,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center" style="background-color:forestgreen;color:white;">33.9<sup class="gt_footnote_glyph">3</sup>
 </td>
@@ -7080,7 +7131,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center" style="background-color:forestgreen;color:white;">32.4</td>
 <td class="row center">78.7</td>
@@ -7090,7 +7141,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center" style="background-color:forestgreen;color:white;">27.3</td>
 <td class="row center">79.0</td>
@@ -7100,7 +7151,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center" style="background-color:forestgreen;color:white;">30.4</td>
 <td class="row center">75.7</td>
@@ -7120,7 +7171,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -7216,7 +7267,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900<sup class="gt_footnote_glyph">4</sup>
 </td>
 <td class="row center">22.8</td>
@@ -7227,7 +7278,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -7383,7 +7434,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -7403,7 +7454,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -7509,6 +7560,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 </table>
 <!--gt table end-->
 </div>
+</div>
 <div id="requirement-10--renaming-the-columns-applying-column-labels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#requirement-10--renaming-the-columns-applying-column-labels" class="anchor"></a>Requirement 10. Renaming the Columns (Applying Column Labels)</h3>
@@ -7523,17 +7575,21 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <a class="sourceLine" id="cb16-8" data-line-number="8">      <span class="dt">hp =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"*HP*"</span>),</a>
 <a class="sourceLine" id="cb16-9" data-line-number="9">      <span class="dt">qsec =</span> <span class="st">"QMT, s"</span>,</a>
 <a class="sourceLine" id="cb16-10" data-line-number="10">      <span class="dt">mpg =</span> <span class="st">"Miles/Gallon"</span>,</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">      <span class="dt">disp =</span> <span class="st">"Displacement"</span>))</a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">      <span class="dt">disp =</span> <span class="st">"Displacement"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tab_options.html">tab_options</a></span>(<span class="dt">table.background.color =</span> <span class="st">"red"</span>)</a>
 <a class="sourceLine" id="cb16-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co"># Show the table</span></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14">tab</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#ssueyhjvyd {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#ssueyhjvyd .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
-  color: #000000;
+  color: #ffffff;
   font-size: 16px;
-  background-color: #FFFFFF;
+  background-color: red;
   /* table.background.color */
   width: 100%;
   /* table.width */
@@ -7545,35 +7601,35 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* table.border.top.color */
 }
 
-.heading {
-  background-color: #FFFFFF;
+#ssueyhjvyd .heading {
+  background-color: red;
   /* heading.background.color */
-  border-bottom-color: #FFFFFF;
+  border-bottom-color: red;
 }
 
-.title {
-  color: #000000;
+#ssueyhjvyd .title {
+  color: #ffffff;
   font-size: 125%;
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
   padding-bottom: 1px;
-  border-bottom-color: #FFFFFF;
+  border-bottom-color: red;
   border-bottom-width: 0;
 }
 
-.headnote {
-  color: #000000;
+#ssueyhjvyd .headnote {
+  color: #ffffff;
   font-size: 85%;
   /* heading.headnote.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
-  border-top-color: #FFFFFF;
+  border-top-color: red;
   border-top-width: 0;
 }
 
-.bottom_border {
+#ssueyhjvyd .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -7582,7 +7638,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#ssueyhjvyd .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -7590,9 +7646,9 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   padding-bottom: 4px;
 }
 
-.col_heading {
-  color: #000000;
-  background-color: #FFFFFF;
+#ssueyhjvyd .col_heading {
+  color: #ffffff;
+  background-color: red;
   /* boxhead.background.color */
   font-size: 16px;
   /* boxhead.font.size */
@@ -7602,16 +7658,14 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
-  border-right: 5px solid #FFFFFF;
+#ssueyhjvyd .sep_right {
+  border-right: 5px solid red;
 }
 
-.group_heading {
+#ssueyhjvyd .group_heading {
   padding: 8px;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: #ffffff;
+  background-color: red;
   /* stub_group.background.color */
   font-size: 16px;
   /* stub_group.font.size */
@@ -7631,10 +7685,10 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#ssueyhjvyd .empty_group_heading {
   padding: 0.5px;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: #ffffff;
+  background-color: red;
   /* stub_group.background.color */
   font-size: 16px;
   /* stub_group.font.size */
@@ -7654,29 +7708,29 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
-  background-color: #f2f2f2;
+#ssueyhjvyd .striped tr:nth-child(even) {
+  background-color: #e60000;
 }
 
-.row {
+#ssueyhjvyd .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#ssueyhjvyd .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
-  background-color: #FFFFFF;
+#ssueyhjvyd .stub.row.right, #ssueyhjvyd .stub.row.left, #ssueyhjvyd .stub.row.center {
+  background-color: red;
 }
 
-.summary_row {
-  background-color: #FFFFFF;
+#ssueyhjvyd .summary_row {
+  background-color: red;
   /* summary_row.background.color */
   padding: 6px;
   /* summary_row.padding */
@@ -7684,13 +7738,13 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#ssueyhjvyd .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#ssueyhjvyd .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -7705,54 +7759,56 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
   /* field.border.bottom.color */
 }
 
-.footnote {
+#ssueyhjvyd .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#ssueyhjvyd .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#ssueyhjvyd .center {
   text-align: center;
 }
 
-.left {
+#ssueyhjvyd .left {
   text-align: left;
 }
 
-.right {
+#ssueyhjvyd .right {
   text-align: right;
 }
 
-.font_normal {
+#ssueyhjvyd .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#ssueyhjvyd .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#ssueyhjvyd .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#ssueyhjvyd .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#ssueyhjvyd .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
+<div id="ssueyhjvyd">
+<!--gt table start-->
+<table data-nrow="32" data-ncol="8" data-ngroup="6" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="8">The <strong>mtcars</strong> dataset</th>
@@ -7869,7 +7925,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.835</td>
 <td class="row center">4.220</td>
 <td class="row center">4</td>
-<td class="row center">65</td>
+<td class="row center"> 65</td>
 <td class="row center">19.900</td>
 <td class="row center" style="background-color:forestgreen;color:white;">33.9<sup class="gt_footnote_glyph">3</sup>
 </td>
@@ -7880,7 +7936,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.200</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">19.470</td>
 <td class="row center" style="background-color:forestgreen;color:white;">32.4</td>
 <td class="row center">78.7</td>
@@ -7890,7 +7946,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.935</td>
 <td class="row center">4.080</td>
 <td class="row center">4</td>
-<td class="row center">66</td>
+<td class="row center"> 66</td>
 <td class="row center">18.900</td>
 <td class="row center" style="background-color:forestgreen;color:white;">27.3</td>
 <td class="row center">79.0</td>
@@ -7900,7 +7956,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">1.615</td>
 <td class="row center">4.930</td>
 <td class="row center">4</td>
-<td class="row center">52</td>
+<td class="row center"> 52</td>
 <td class="row center">18.520</td>
 <td class="row center" style="background-color:forestgreen;color:white;">30.4</td>
 <td class="row center">75.7</td>
@@ -7920,7 +7976,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.140</td>
 <td class="row center">4.430</td>
 <td class="row center">4</td>
-<td class="row center">91</td>
+<td class="row center"> 91</td>
 <td class="row center">16.700</td>
 <td class="row center">26.0</td>
 <td class="row center">120.3</td>
@@ -8016,7 +8072,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">3.150</td>
 <td class="row center">3.920</td>
 <td class="row center">4</td>
-<td class="row center">95</td>
+<td class="row center"> 95</td>
 <td class="row center">22.900<sup class="gt_footnote_glyph">4</sup>
 </td>
 <td class="row center">22.8</td>
@@ -8027,7 +8083,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">3.190</td>
 <td class="row center">3.690</td>
 <td class="row center">4</td>
-<td class="row center">62</td>
+<td class="row center"> 62</td>
 <td class="row center">20.000</td>
 <td class="row center">24.4</td>
 <td class="row center">146.7</td>
@@ -8183,7 +8239,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.465</td>
 <td class="row center">3.700</td>
 <td class="row center">4</td>
-<td class="row center">97</td>
+<td class="row center"> 97</td>
 <td class="row center">20.010</td>
 <td class="row center">21.5</td>
 <td class="row center">120.1</td>
@@ -8203,7 +8259,7 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <td class="row center">2.320</td>
 <td class="row center">3.850</td>
 <td class="row center">4</td>
-<td class="row center">93</td>
+<td class="row center"> 93</td>
 <td class="row center">18.610</td>
 <td class="row center">22.8</td>
 <td class="row center">108.0</td>
@@ -8307,7 +8363,9 @@ b. the bottom 5 cars for gas mileage in red</code></pre>
 <sup class="gt_footnote_glyph"><em>1</em></sup> The highest <strong>HP</strong>.<br><sup class="gt_footnote_glyph"><em>2</em></sup> The <em>fastest</em> quarter mile of the <strong>mtcars</strong>.<br><sup class="gt_footnote_glyph"><em>3</em></sup> Great fuel economy<br><sup class="gt_footnote_glyph"><em>4</em></sup> This car is slow.</td>
 </tr></tfoot>
 </table>
-<!--gt table end--><p>This is it. All requirements have been fulfilled. That table can be used in a lot of different places like R Markdown, Shiny, email messages… wherever they accept HTML.</p>
+<!--gt table end-->
+</div>
+<p>This is it. All requirements have been fulfilled. That table can be used in a lot of different places like R Markdown, Shiny, email messages… wherever they accept HTML.</p>
 </div>
   </div>
 

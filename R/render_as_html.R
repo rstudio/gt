@@ -240,7 +240,7 @@ render_as_html <- function(data) {
     apply_styles_to_output(output_df, styles_resolved, n_cols)
 
   # Create an HTML fragment for the start of the table
-  table_start <- create_table_start(groups_rows_df, n_rows, n_cols)
+  table_start <- create_table_start()
 
   # Create a heading component of the table and handle any available footnotes
   heading_component <-

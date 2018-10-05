@@ -75,9 +75,8 @@ mtcars_tbl <-
       columns = vars(qsec),
       rows = "Merc 230")) %>% # 11
   cols_label(
-    labels = col_labels(
       hp = md("*HP*"),
-      qsec = "QMT, seconds")) # 12
+      qsec = "QMT, seconds") # 12
 
 # Display the table in the Viewer
 mtcars_tbl

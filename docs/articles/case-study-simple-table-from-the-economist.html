@@ -229,8 +229,12 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_options.html">tab_options</a></span>(<span class="dt">heading.border.bottom.width =</span> <span class="kw"><a href="../reference/px.html">px</a></span>(<span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">data</a></code></pre></div>
-<style>/* gt compiled CSS file */
-.gt_table {
+<style>#cmdipsyfbi {
+  /* this is used to create a gutter between adjacent column spanners;
+   the color should match that of .heading's background-color */
+}
+
+#cmdipsyfbi .gt_table {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: #000000;
@@ -247,13 +251,13 @@
   /* table.border.top.color */
 }
 
-.heading {
+#cmdipsyfbi .heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-.title {
+#cmdipsyfbi .title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -264,7 +268,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+#cmdipsyfbi .headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -275,7 +279,7 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+#cmdipsyfbi .bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 0px;
@@ -284,7 +288,7 @@
   /* heading.border.bottom.color */
 }
 
-.column_spanner {
+#cmdipsyfbi .column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -292,7 +296,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+#cmdipsyfbi .col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -304,13 +308,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+#cmdipsyfbi .sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-.group_heading {
+#cmdipsyfbi .group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -333,7 +335,7 @@
   /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+#cmdipsyfbi .empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -356,28 +358,28 @@
   /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+#cmdipsyfbi .striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.row {
+#cmdipsyfbi .row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-.stub {
+#cmdipsyfbi .stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
+#cmdipsyfbi .stub.row.right, #cmdipsyfbi .stub.row.left, #cmdipsyfbi .stub.row.center {
   background-color: #FFFFFF;
 }
 
-.summary_row {
+#cmdipsyfbi .summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -386,13 +388,13 @@
   /* summary_row.text_transform */
 }
 
-.first_summary_row {
+#cmdipsyfbi .first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+#cmdipsyfbi .table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -407,54 +409,56 @@
   /* field.border.bottom.color */
 }
 
-.footnote {
+#cmdipsyfbi .footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-.sourcenote {
+#cmdipsyfbi .sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-.center {
+#cmdipsyfbi .center {
   text-align: center;
 }
 
-.left {
+#cmdipsyfbi .left {
   text-align: left;
 }
 
-.right {
+#cmdipsyfbi .right {
   text-align: right;
 }
 
-.font_normal {
+#cmdipsyfbi .font_normal {
   font-weight: normal;
 }
 
-.font_bold {
+#cmdipsyfbi .font_bold {
   font-weight: bold;
 }
 
-.font_italic {
+#cmdipsyfbi .font_italic {
   font-style: italic;
 }
 
-.gt_super {
+#cmdipsyfbi .gt_super {
   font-size: 65%;
 }
 
-.gt_footnote_glyph {
+#cmdipsyfbi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<!--gt table start--><table data-nrow="13" data-ncol="9" data-ngroup="2" class="table" style="display:table;">
+<div id="cmdipsyfbi">
+<!--gt table start-->
+<table data-nrow="13" data-ncol="9" data-ngroup="2" class="table" style="display:table;">
 <thead>
 <tr data-type="table_headings">
 <th data-type="table_heading" class="heading title font_normal center" colspan="9" style="text-align:left;text-indent:5;padding-bottom:20px"><strong>Tech giants invade each other's turf</strong></th>
@@ -628,6 +632,7 @@
 </table>
 <!--gt table end-->
 </div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
       </div>

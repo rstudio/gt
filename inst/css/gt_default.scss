@@ -1,4 +1,9 @@
 
+$heading_background_color: $table_background_color !default;
+$boxhead_background_color: $table_background_color !default;
+$stub_group_background_color: $table_background_color !default;
+$summary_row_background_color: $table_background_color !default;
+
 @function font-color($color) {
   @return if(
     red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114 > 186,
@@ -6,8 +11,12 @@
   );
 }
 
+html {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+##{$element_id} {
+
 .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
   border-collapse: collapse;
   color: font-color($table_background_color);
   font-size: $table_font_size;
@@ -18,12 +27,12 @@
   border-top-color: $table_border_top_color; /* table.border.top.color */
 }
 
-.heading {
+.gt_heading {
   background-color: $heading_background_color; /* heading.background.color */
   border-bottom-color: $table_background_color;
 }
 
-.title {
+.gt_title {
   color: font-color($heading_background_color);
   font-size: $heading_title_font_size; /* heading.title.font.size */
   padding-top: 4px; /* heading.top.padding */
@@ -32,7 +41,7 @@
   border-bottom-width: 0;
 }
 
-.headnote {
+.gt_headnote {
   color: font-color($heading_background_color);
   font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
   padding-top: 1px;
@@ -41,13 +50,13 @@
   border-top-width: 0;
 }
 
-.bottom_border {
+.gt_bottom_border {
   border-bottom-style: $heading_border_bottom_style; /* heading.border.bottom.style */
   border-bottom-width: $heading_border_bottom_width; /* heading.border.bottom.width */
   border-bottom-color: $heading_border_bottom_color; /* heading.border.bottom.color */
 }
 
-.column_spanner {
+.gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -55,7 +64,7 @@
   padding-bottom: 4px;
 }
 
-.col_heading {
+.gt_col_heading {
   color: font-color($boxhead_background_color);
   background-color: $boxhead_background_color; /* boxhead.background.color */
   font-size: $boxhead_font_size; /* boxhead.font.size */
@@ -64,13 +73,11 @@
   margin: 10px;
 }
 
-/* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
-.sep_right {
+.gt_sep_right {
   border-right: 5px solid #{$boxhead_background_color};
 }
 
-.group_heading {
+.gt_group_heading {
   padding: 8px;
   color: font-color($stub_group_background_color);
   background-color: $stub_group_background_color; /* stub_group.background.color */
@@ -84,7 +91,7 @@
   border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
 }
 
-.empty_group_heading {
+.gt_empty_group_heading {
   padding: 0.5px;
   color: font-color($stub_group_background_color);
   background-color: $stub_group_background_color; /* stub_group.background.color */
@@ -98,39 +105,38 @@
   border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
 }
 
-.striped tr:nth-child(even) {
+.gt_striped tr:nth-child(even) {
    background-color: darken($table_background_color, 5%);
 }
 
-.row {
+.gt_row {
   padding: $row_padding; /* row.padding */
   margin: 10px;
 }
 
-.stub {
+.gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
+  &.gt_row {
+    background-color: $table_background_color;
+  }
 }
 
-.stub.row.right, .stub.row.left, .stub.row.center {
-  background-color: $table_background_color;
-}
-
-.summary_row {
+.gt_summary_row {
   background-color: $summary_row_background_color; /* summary_row.background.color */
   padding: $summary_row_padding; /* summary_row.padding */
   text-transform: $summary_row_text_transform; /* summary_row.text_transform */
 }
 
-.first_summary_row {
+.gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-.table_body {
+.gt_table_body {
   border-top-style: $field_border_top_style; /* field.border.top.style */
   border-top-width: $field_border_top_width; /* field.border.top.width */
   border-top-color: $field_border_top_color; /* field.border.top.color */
@@ -139,37 +145,37 @@
   border-bottom-color: $field_border_bottom_color; /* field.border.bottom.color */
 }
 
-.footnote {
+.gt_footnote {
   font-size: $footnote_font_size; /* footnote.font.size */
   padding: $footnote_padding; /* footnote.padding */
 }
 
-.sourcenote {
+.gt_sourcenote {
   font-size: $sourcenote_font_size; /* sourcenote.font.size */
   padding: $sourcenote_padding; /* sourcenote.padding */
 }
 
-.center {
+.gt_center {
   text-align:center;
 }
 
-.left {
+.gt_left {
   text-align:left;
 }
 
-.right {
+.gt_right {
   text-align:right;
 }
 
-.font_normal {
+.gt_font_normal {
   font-weight:normal;
 }
 
-.font_bold {
+.gt_font_bold {
   font-weight:bold;
 }
 
-.font_italic {
+.gt_font_italic {
   font-style:italic;
 }
 
@@ -180,4 +186,6 @@
 .gt_footnote_glyph {
   font-style:italic;
   font-size:65%;
+}
+
 }

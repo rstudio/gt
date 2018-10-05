@@ -44,23 +44,29 @@ gt_preview <- function(data,
     colnames(data)[which(colnames(data) == "groupname")] <- ".groupname"
   }
 
+  # Determine whether an ellipsis row is to be included
+  has_ellipsis_row <- ifelse(nrow(data) > (top_n + bottom_n), TRUE, FALSE)
+
   # If a preview table (head and tail) is requested,
   # then modify `data_tbl` to only include the head
   # and tail plus an ellipsis row
-  if (nrow(data) > (top_n + bottom_n)) {
+  if (has_ellipsis_row) {
 
-    has_ellipsis_row <- TRUE
     ellipsis_row <- top_n + 1
 
-    between_rownums <- c(6, 9)
+    # Prepare a rowname label that represents the hidden row numbers
+    between_rownums <- c(ellipsis_row, nrow(data) - bottom_n)
 
+    # Modify the `data` so that only the `top_n` and `bottom_n` rows
+    # are retained (with an empty row between these row groups)
     data <-
       rbind(
         data[seq(top_n), ],
         rep("", ncol(data)),
         data[(nrow(data) + 1 - rev(seq(bottom_n))), ])
 
-    rownames(data)[top_n + 1] <- paste(between_rownums, collapse = "..")
+    # Relabel the rowname for the ellipsis row
+    rownames(data)[ellipsis_row] <- paste(between_rownums, collapse = "..")
   }
 
   # If we elect to include row numbers, then place the row
@@ -104,7 +110,9 @@ gt_preview <- function(data,
         tab_style(
           style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
           locations = cells_stub(rows = ellipsis_row))
+
     } else {
+
       gt_tbl <- gt_tbl %>%
         tab_style(
           style = "padding-top:8px;padding-bottom:8px;",
