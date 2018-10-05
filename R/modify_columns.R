@@ -157,6 +157,21 @@ cols_label <- function(data,
   # Collect a named list of column labels
   labels_list <- .list
 
+  # If nothing is provided, return `data` unchanged
+  if (length(labels_list) == 0) {
+    return(data)
+  }
+
+  # Test for names being NULL
+  if (is.null(names(labels_list))) {
+    stop("Named arguments are required for `cols_label()`.", call. = FALSE)
+  }
+
+  # Test for any missing names
+  if (any(names(labels_list) == "")) {
+    stop("All arguments to `cols_label()` must be named.", call. = FALSE)
+  }
+
   # Use the `process_text()` function on each of the list elements
   labels_vector <- sapply(labels_list, process_text)
 
