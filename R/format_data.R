@@ -113,10 +113,6 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
-
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
     sep_mark <- get_locale_sep_mark(locale = locale)
@@ -219,10 +215,6 @@ fmt_scientific <- function(data,
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
-
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -368,10 +360,6 @@ fmt_percent <- function(data,
                         incl_space = FALSE,
                         placement = "right",
                         locale = NULL) {
-
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -553,10 +541,6 @@ fmt_currency <- function(data,
                          placement = "left",
                          incl_space = FALSE,
                          locale = NULL) {
-
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Use locale-based marks if a locale ID is provided
   if (!is.null(locale) && locale %in% locales$base_locale_id) {
@@ -752,10 +736,6 @@ fmt_date <- function(data,
                      rows = NULL,
                      date_style) {
 
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
-
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
@@ -808,10 +788,6 @@ fmt_time <- function(data,
                      columns,
                      rows = NULL,
                      time_style) {
-
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -868,10 +844,6 @@ fmt_datetime <- function(data,
                          date_style,
                          time_style) {
 
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
-
   # Transform `date_style` to `date_format`
   date_format <- get_date_format(date_style = date_style)
 
@@ -919,10 +891,6 @@ fmt_passthrough <- function(data,
                             rows = NULL,
                             pattern = "{x}") {
 
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
@@ -955,10 +923,6 @@ fmt_missing <- function(data,
                         columns,
                         rows = NULL,
                         missing_text = "---") {
-
-  # Capture expressions for the `columns` and `rows` arguments
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
