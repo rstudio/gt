@@ -241,40 +241,6 @@ is.html <- function(x) {
   }
 }
 
-#' Helper for processing column labels
-#'
-#' This helper is to be used specifically within the \code{cols_label()}
-#' function as an alternative to using named vectors within that function. The
-#' advantage in using this helper is that the assigned column labels can be
-#' marked as Markdown (with the \code{md()} function) or as HTML (with the
-#' \code{html()} function).
-#' @param ... a series of named arguments representing the column names and
-#'   values representing the column labels.
-#' @return a named vector of column labels.
-#' @examples
-#' # Create a gt table based on the mtcars
-#' # dataset; label some of the columns (i.e.,
-#' # provide replacement names for use in the
-#' # output) with `cols_label()` and the
-#' # `col_labels()` helper function
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   cols_label(
-#'     labels = col_labels(
-#'       hp = md("*HP*"), qsec = "QMT, seconds"))
-#' @family helper functions
-#' @export
-col_labels <- function(...) {
-
-  x <- list(...)
-
-  for (i in seq(x)) {
-    x[[i]] <- x[[i]] %>% process_text()
-  }
-
-  x %>% unlist()
-}
-
 #' Helper for defining custom styles for table cells
 #'
 #' This helper function is to be used with the \code{\link{tab_style}()}

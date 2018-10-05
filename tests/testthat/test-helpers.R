@@ -300,34 +300,6 @@ test_that("the the `px()` helper function works properly", {
     px(x = "50"))
 })
 
-test_that("the the `col_labels()` helper function works properly", {
-
-  # Create a gt table from the `mtcars` dataset and apply new
-  # labels to the `hp` and `qsec` columns
-  gt_tbl <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
-    cols_label(
-      labels = col_labels(
-        hp = md("*HP*"), qsec = "QMT, seconds"))
-
-  # Extract the internal `boxh_df` data frame
-  boxh_df <- attr(gt_tbl, "boxh_df", exact = TRUE)
-
-  # Expect specific, non-NA values for `column_label` in the `hp`
-  # and `qsec` columns
-  boxh_df["column_label", "hp"] %>%
-    expect_equal("<em>HP</em>")
-
-  boxh_df["column_label", "qsec"] %>%
-    expect_equal("QMT, seconds")
-
-  # Expect all other `column_label` values to be NA
-  is.na(boxh_df["column_label", base::setdiff(colnames(mtcars), c("hp", "qsec"))] %>%
-    unlist()) %>%
-    all() %>%
-    expect_true()
-})
-
 test_that("the the `apply_styles()` helper function works properly", {
 
   # Create a properly-formatted style string using the `apply_styles()` function

@@ -29,7 +29,6 @@ gt_tbl <-
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
-  \code{\link{col_labels}}, \code{\link{html}},
-  \code{\link{pct}}, \code{\link{px}}
+  \code{\link{html}}, \code{\link{pct}}, \code{\link{px}}
 }
 \concept{helper functions}
