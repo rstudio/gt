@@ -150,10 +150,11 @@ cols_align_right <- function(data,
 #' @family column modification functions
 #' @export
 cols_label <- function(data,
-                       ...) {
+                       ...,
+                       .list = list(...)) {
 
   # Collect a named list of column labels
-  labels_list <- list(...)
+  labels_list <- .list
 
   # Use the `process_text()` function on each of the list elements
   labels_vector <- sapply(labels_list, process_text)
