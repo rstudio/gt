@@ -31,34 +31,13 @@ test_that("the function `cols_align()` works as expected", {
   # Expect that the columns with class `col_heading left`
   # are those columns that were aligned left
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(c("mpg", "cyl", "drat"))
 
-  # Expect that all other columns are center-aligned
+  # Expect that all other columns are right-aligned
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading center']") %>%
-    rvest::html_text() %>%
-    expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "drat")))
-
-  # Create a `tbl_html` object with `gt()`; the `mpg`,
-  # `cyl`, and `drat` columns are aligned right
-  tbl_html <-
-    gt(data = mtcars_short) %>%
-    cols_align(align = "right", columns = vars(mpg, cyl, drat)) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the columns with class `col_heading right`
-  # are those columns that were aligned right
-  tbl_html %>%
-    rvest::html_nodes("[class='col_heading right']") %>%
-    rvest::html_text() %>%
-    expect_equal(c("mpg", "cyl", "drat"))
-
-  # Expect that all other columns are center-aligned
-  tbl_html %>%
-    rvest::html_nodes("[class='col_heading center']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "drat")))
 
@@ -66,20 +45,20 @@ test_that("the function `cols_align()` works as expected", {
   # `2` (`cyl`), and `3` (`disp`) are aligned right
   tbl_html <-
     gt(data = mtcars_short) %>%
-    cols_align(align = "right", columns = 1:3) %>%
+    cols_align(align = "left", columns = 1:3) %>%
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the columns with class `col_heading right`
-  # are those columns that were aligned right
+  # Expect that the columns with class `gt_col_heading gt_left`
+  # are those columns that were aligned left
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(c("mpg", "cyl", "disp"))
 
-  # Expect that all other columns are center-aligned
+  # Expect that all other columns are right-aligned
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading center']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "disp")))
 
@@ -112,7 +91,7 @@ test_that("the function `cols_align()` works as expected", {
   # Expect that the columns with class `col_heading left`
   # includes all columns in `mtcars_short`
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
 
@@ -127,7 +106,7 @@ test_that("the function `cols_align()` works as expected", {
   # Expect that the columns with class `col_heading left`
   # includes all columns in `mtcars_short`
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
 
@@ -142,36 +121,7 @@ test_that("the function `cols_align()` works as expected", {
   # Expect that the `Date` column is left-formatted because
   # the column is of the `character` class
   tbl_html %>%
-    rvest::html_nodes("[class='col_heading left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_left']") %>%
     rvest::html_text() %>%
     expect_equal("Date")
-
-  # Expect that the all other columns are right-formatted because
-  # those columns are of the `numeric` class
-  tbl_html %>%
-    rvest::html_nodes("[class='col_heading right']") %>%
-    rvest::html_text() %>%
-    expect_equal(base::setdiff(colnames(sp500), "Date"))
-
-  # Create a `tbl_html` object with the `sp500` data
-  # frame and `auto`-align just the `Low` and `Close` columns
-  tbl_html <-
-    gt(data = sp500) %>%
-    cols_align(align = "auto", columns = vars(Low, Close)) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the `Low` and `Close` columns are right-formatted because
-  # these columns are of the `numeric` class
-  tbl_html %>%
-    rvest::html_nodes("[class='col_heading right']") %>%
-    rvest::html_text() %>%
-    expect_equal(c("Low", "Close"))
-
-  # Expect that all other columns are center-formatted because
-  # that is the default alignment
-  tbl_html %>%
-    rvest::html_nodes("[class='col_heading center']") %>%
-    rvest::html_text() %>%
-    expect_equal(base::setdiff(colnames(sp500), c("Low", "Close")))
 })
