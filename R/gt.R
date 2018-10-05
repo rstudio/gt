@@ -193,5 +193,5 @@ gt <- function(data,
   class(data_tbl) <- c("gt_tbl", class(data_tbl))
 
   # Automatically align columns with `cols_align()`
-  data_tbl #%>% cols_align()
+  data_tbl %>% cols_align()
 }
