@@ -19,30 +19,12 @@ selection_value <- function(html, key) {
     rvest::html_attr(key)
 }
 
-# Gets the HTML attr value from a single `data-` key
-data_selection_value <- function(html, data_key) {
-
-  selection_value(html, key = paste0("data-", data_key))
-}
-
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
 
   html %>%
     rvest::html_nodes(selection) %>%
     rvest::html_text()
-}
-
-# Gets the inner HTML text from a single `data-` key
-data_selection_text <- function(html, data_key, selection) {
-
-  selection_text(html, paste0("[data-", data_key, "='", selection, "']"))
-}
-
-# Gets the inner HTML text from a single `data-type` value
-type_selection_text <- function(html, selection) {
-
-  data_selection_text(html, data_key = "type", selection = selection)
 }
 
 test_that("a gt table contains the expected heading components", {
@@ -60,7 +42,7 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
     expect_equal("test heading")
 
   # Expect that the `table_headnote` content is an empty string
@@ -69,15 +51,15 @@ test_that("a gt table contains the expected heading components", {
     expect_equal("")
 
   # Expect that the maximum number of rows is `5`
-  tbl_html %>%
-    data_selection_value(data_key = "row") %>%
-    as.integer() %>% max() %>%
+  (tbl_html %>%
+      selection_text("[class='gt_row gt_center']") %>%
+      length()/ncol(mtcars_short)) %>%
     expect_equal(5)
 
   # Expect that the maximum number of columns is `11`
-  tbl_html %>%
-    data_selection_value(data_key = "column") %>%
-    as.integer() %>% max() %>%
+  (tbl_html %>%
+      selection_text("[class='gt_row gt_center']") %>%
+      length()/nrow(mtcars_short)) %>%
     expect_equal(11)
 
   # Create a `gt_tbl` object with `gt()`; this table
@@ -335,29 +317,19 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color:yellow;']") %>%
-    rvest::html_attr(name = "data-row") %>%
-    expect_equal("1")
-
-  tbl_html %>%
-    rvest::html_nodes("[style='background-color:yellow;']") %>%
-    rvest::html_attr(name = "data-column") %>%
-    expect_equal("4")
+    rvest::html_text("[class='gt_row gt_center']") %>%
+    expect_equal("160.0 — 3.90")
 
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color:lightgray;font-style:italic;']") %>%
-    rvest::html_attr(name = "data-row") %>%
-    expect_equal("10")
-
-  tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;font-style:italic;']") %>%
-    rvest::html_attr(name = "data-column") %>%
-    expect_equal("5")
+    rvest::html_text("[class='gt_row gt_center']") %>%
+    expect_equal(" 93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color:green;color:white;']") %>%
-    rvest::html_text() %>%
+    rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
     expect_equal("943.00")
 
   # Expect that some boxhead cells (e.g., `disp`, `wt`, etc.) are
@@ -369,7 +341,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that most stub cells are styled with a lightgrey background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;'][data-type='data'][data-column='0']") %>%
+    rvest::html_nodes("[class='gt_row gt_stub gt_right'][style='background-color:lightgray;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)
