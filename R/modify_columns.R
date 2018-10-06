@@ -128,7 +128,7 @@ cols_label <- function(data,
 
   # Stop function if any of the column names specified are not in `data_df`
   if (!all(names(labels_vector) %in% colnames(data_df))) {
-    stop("All column names provided must exist in `data_df`.")
+    stop("All columns names provided must exist in the input `data` table.")
   }
 
   # Filter the vector of labels by the column names actually in `boxh_df`
