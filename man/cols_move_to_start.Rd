@@ -12,8 +12,7 @@ function.}
 
 \item{columns}{the column names to move to the left-most side of the table.
 The order in which columns are provided will be preserved (as is the case
-with the remaining columns). Values provided that do not correspond to
-column names will be disregarded.}
+with the remaining columns).}
 }
 \value{
 an object of class \code{gt_tbl}.
