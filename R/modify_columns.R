@@ -177,24 +177,39 @@ cols_move <- function(data,
 
   # If using the `vars()` helper, get the `after` column as a character vector
   if (inherits(after, "quosures")) {
-    after <- (after %>% lapply(`[[`, 2) %>% as.character())[1]
+    after <- (after %>% lapply(`[[`, 2) %>% as.character())
   }
 
-  boxh_df <- attr(data, "boxh_df")
+  # Extract the internal `boxh_df` table
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  # Extract the `data_df` df from `data`
+  data_df <- as.data.frame(data)
+
+  # Stop function if `after` contains multiple columns
+  if (length(after) > 1) {
+    stop("Only one column name should be supplied to `after`.",
+         call. = FALSE)
+  }
+
+  # Stop function if `after` doesn't exist in `data_df`
+  if (!(after %in% colnames(data_df))) {
+    stop("The column supplied to `after` doesn't exist in the input `data` table.",
+         call. = FALSE)
+  }
+
+  # Stop function if any of the `columns` doesn't exist in `data_df`
+  if (!all(columns %in% colnames(data_df))) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
+  }
 
   # Filter the vector of column names by the
-  # column names actually in the input df
+  # column names actually in `boxh_df`
   columns <- columns[which(columns %in% colnames(boxh_df))]
 
   if (length(columns) == 0) {
     return(data)
-  }
-
-  # Ensure that only the last element of `after` is
-  # retained in the case that multiple columns are
-  # provided
-  if (length(after) > 1) {
-    after <- after[length(after)]
   }
 
   # Get the remaining column names in the table
@@ -247,7 +262,17 @@ cols_move_to_start <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
-  boxh_df <- attr(data, "boxh_df")
+  # Extract the internal `boxh_df` table
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  # Extract the `data_df` df from `data`
+  data_df <- as.data.frame(data)
+
+  # Stop function if any of the `columns` doesn't exist in `data_df`
+  if (!all(columns %in% colnames(data_df))) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
+  }
 
   # Filter the vector of column names by the
   # column names actually in the input df
@@ -266,8 +291,7 @@ cols_move_to_start <- function(data,
 #' @inheritParams cols_align
 #' @param columns the column names to move to the right-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns). Values provided that do not correspond to
-#'   column names will be disregarded.
+#'   with the remaining columns).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
@@ -289,7 +313,17 @@ cols_move_to_end <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
-  boxh_df <- attr(data, "boxh_df")
+  # Extract the internal `boxh_df` table
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  # Extract the `data_df` df from `data`
+  data_df <- as.data.frame(data)
+
+  # Stop function if any of the `columns` doesn't exist in `data_df`
+  if (!all(columns %in% colnames(data_df))) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
+  }
 
   # Filter the vector of column names by the
   # column names actually in the input df
