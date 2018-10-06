@@ -148,8 +148,7 @@ cols_label <- function(data,
 #' Move one or more columns
 #' @inheritParams cols_align
 #' @param columns the column names to move to as a group to a different
-#'   position. The order of the remaining columns will be preserved. Values
-#'   provided that do not correspond to column names will be disregarded.
+#'   position. The order of the remaining columns will be preserved.
 #' @param after a column name used to anchor the insertion of the moved columns.
 #'   All of the moved columns will be placed to the right of this column.
 #' @return an object of class \code{gt_tbl}.
@@ -239,8 +238,7 @@ cols_move <- function(data,
 #' @inheritParams cols_align
 #' @param columns the column names to move to the left-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns). Values provided that do not correspond to
-#'   column names will be disregarded.
+#'   with the remaining columns).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
