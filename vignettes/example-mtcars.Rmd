@@ -324,7 +324,7 @@ tab
 
 ### Requirement 10. Renaming the Columns (Applying Column Labels)
 
-We can modify the column labels. By default column labels inherit the column names from the input data table. However, we can selectively modify them and even use Markdown to style the labels. The `cols_label()` function allows for the setting of column labels. We can use the helper function `col_labels()` to set multiple column labels in a single call. Here, let's modify the `hp`, `wt`, `qsec`, `mpg`, `disp`, and `cyl` column labels to have something that is more readable. 
+We can modify the column labels. By default column labels inherit the column names from the input data table. However, we can selectively modify them and even use Markdown to style the labels. The `cols_label()` function allows for the setting of column labels. Here, let's modify the `hp`, `wt`, `qsec`, `mpg`, `disp`, and `cyl` column labels to have something that is more readable. 
 
 ```{r cols_label}
 # Apply more readable column labels with `cols_label()`

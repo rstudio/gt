@@ -17,4 +17,4 @@ library(dplyr)
 ```
 
 
-The column names are formally called **column labels**. This distinguishes these entities from their former role as columns names in a data table. The default behavior in the transition from data table to display table is to inherit the **column labels** from the column names. However, we can explicitly set the label text for any of the **column labels** with the `col_labels()` function.
+The column names are formally called **column labels**. This distinguishes these entities from their former role as columns names in a data table. The default behavior in the transition from data table to display table is to inherit the **column labels** from the column names. 

@@ -320,11 +320,11 @@ gt_tbl <- gt_tbl %>%
   cols_move_to_start(
     columns = vars(Year, Month, Day)
     ) %>%
-  cols_label(labels = col_labels(
+  cols_label(
     Ozone = html("Ozone,<br>ppbV"),
     Solar.R = html("Solar R.,<br>cal/m<sup>2</sup>"),
     Wind = html("Wind,<br>mph"),
-    Temp = html("Temp,<br>&deg;F")))
+    Temp = html("Temp,<br>&deg;F"))
 
 # Show the table
 gt_tbl
@@ -332,4 +332,4 @@ gt_tbl
 
 Note that even though columns were moved using `cols_move_to_start()`, the **spanner headings** still spanned above the correct columns. There are a number of functions that **gt** provides to move columns, including `cols_move()`, `cols_move_to_end()`; there's even a function to hide columns: `cols_hide()`.
 
-The `cols_label()` function is paired with the `col_labels()` helper function. This allows for multiple columns to be renamed in a single use of `cols_label()`. Further to this, the helper function allows for the use of the `md()` and `html()` functions so that we can create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with `<br>`, insert a superscripted `2` (with `<sup>2</sup>`), and insert a degree symbol as an HTML entity (`&deg;`).
+Multiple columns can be renamed in a single use of `cols_label()`. Further to this, the helper functions `md()` and `html()` can be used to create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with `<br>`, insert a superscripted `2` (with `<sup>2</sup>`), and insert a degree symbol as an HTML entity (`&deg;`).
