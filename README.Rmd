@@ -192,9 +192,7 @@ The package API consists of the following functions:
 
 **Modify Columns**
 
-- `cols_align_left()` -- use left alignment
-- `cols_align_center()` -- use center alignment
-- `cols_align_right()` -- use right alignment
+- `cols_align()` -- set the alignment of columns
 - `cols_move()` -- move one or more columns
 - `cols_move_to_start()` -- move one or more columns to the start
 - `cols_move_to_end()` -- move one or more columns to the end
