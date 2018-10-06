@@ -9,6 +9,7 @@ reference:
   - title: Format Data
     contents:
     - starts_with("fmt")
+    - text_transform
   - title: Modify Columns
     contents:
     - starts_with("cols")
