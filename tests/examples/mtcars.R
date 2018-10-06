@@ -17,7 +17,8 @@ library(gt)
 # 12 - column heading labels are provided (i.e., display names)
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>% # 1
-  cols_align_right(
+  cols_align(
+    align = "right",
     columns = vars(disp, vs)) %>% # 2
   tab_boxhead_panel(
     group = md("*group_a*"),
