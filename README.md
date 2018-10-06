@@ -198,6 +198,7 @@ The package API consists of the following functions:
 
 **Format Data**
 
+  - `fmt()` – set a column format with a formatter function
   - `fmt_number()` – format numeric values
   - `fmt_scientific()` – format values to scientific notation
   - `fmt_percent()` – format values as a percentage
@@ -207,7 +208,8 @@ The package API consists of the following functions:
   - `fmt_datetime()` – format values as date-times
   - `fmt_missing()` – format missing values
   - `fmt_passthrough()` – format by simply passing data through
-  - `fmt()` – set a column format with a formatter function
+  - `text_transform()` – perform targeted text transformation with a
+    function
 
 **Modify Columns**
 
