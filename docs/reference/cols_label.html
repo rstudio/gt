@@ -138,7 +138,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>cols_label</span>(<span class='no'>data</span>, <span class='no'>labels</span>)</pre>
+    <pre class="usage"><span class='fu'>cols_label</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>.list</span> <span class='kw'>=</span> <span class='fu'>list2</span>(<span class='no'>...</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,20 +149,17 @@
 function.</p></td>
     </tr>
     <tr>
-      <th>labels</th>
-      <td><p>a named vector of column names and their labels for display of
-the column headers. We can use the <code><a href='col_labels.html'>col_labels</a>()</code> function to
-more easily specify column names and column labels, since we can also wrap
-the column labels with <code><a href='md.html'>md</a>()</code> (to interpret text as Markdown)
-or <code><a href='html.html'>html</a>()</code> (to interpret text as HTML).</p></td>
+      <th>...</th>
+      <td><p>one or more named arguments of column names from the input `data`
+table along with their labels for display as the column labels. We can
+optionally wrap the column labels with <code><a href='md.html'>md</a>()</code> (to interpret
+text as Markdown) or <code><a href='html.html'>html</a>()</code> (to interpret text as HTML).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='col_labels.html'>col_labels</a>()</code> as a useful helper function for
-  processing column labels.</p>
-<p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
+    <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
   <code><a href='cols_hide.html'>cols_hide</a></code>, <code><a href='cols_merge_range.html'>cols_merge_range</a></code>,
   <code><a href='cols_merge_uncert.html'>cols_merge_uncert</a></code>,
   <code><a href='cols_merge.html'>cols_merge</a></code>, <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
@@ -179,9 +176,8 @@ or <code><a href='html.html'>html</a>()</code> (to interpret text as HTML).</p><
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>cols_label</span>(
-      <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='col_labels.html'>col_labels</a></span>(
-        <span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*MPG*"</span>),
-        <span class='kw'>qsec</span> <span class='kw'>=</span> <span class='st'>"QMT, seconds"</span>))</div></pre>
+      <span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*MPG*"</span>),
+      <span class='kw'>qsec</span> <span class='kw'>=</span> <span class='st'>"QMT, seconds"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -198,7 +194,7 @@ or <code><a href='html.html'>html</a>()</code> (to interpret text as HTML).</p><
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, <a href='https://www.rstudio.com'><img src='https://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href='https://www.rstudio.com'><img src='https://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
 </div>
 
 <div class="pkgdown">

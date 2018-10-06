@@ -138,7 +138,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>cols_align</span>(<span class='no'>data</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"center"</span>, <span class='no'>columns</span>)</pre>
+    <pre class="usage"><span class='fu'>cols_align</span>(<span class='no'>data</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"auto"</span>, <span class='st'>"left"</span>, <span class='st'>"center"</span>, <span class='st'>"right"</span>),
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,13 +151,20 @@ function.</p></td>
     </tr>
     <tr>
       <th>align</th>
-      <td><p>the alignment direction. This can either be <code>"center"</code>,
-<code>"left"</code>, or <code>"right"</code>.</p></td>
+      <td><p>the alignment type. This can be any of <code>"center"</code>,
+<code>"left"</code>, or <code>"right"</code> for center-, left-, or center-alignment.
+Alternatively, the <code>"auto"</code> option (the default), will automatically
+align values in columns according to the data type (i.e., column class). In
+this way, left-alignment is applied to columns of class <code>character</code>,
+<code>Date</code>, or <code>POSIXct</code>; center-alignment is for columns of class
+<code>logical</code>, <code>factor</code>, or <code>list</code>; and right-aligned is for the
+<code>numeric</code> and <code>integer</code> columns.</p></td>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>a vector of column names for which the alignment should be
-applied.</p></td>
+      <td><p>an optional vector of column names for which the alignment
+should be applied. If nothing is supplied, or if <code>columns</code> is
+<code>TRUE</code>), then the alignment affects all columns.</p></td>
     </tr>
     </table>
     
@@ -201,7 +209,7 @@ applied.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, <a href='https://www.rstudio.com'><img src='https://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href='https://www.rstudio.com'><img src='https://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
 </div>
 
 <div class="pkgdown">
