@@ -79,6 +79,8 @@ cols_align <- function(data,
 #'   table along with their labels for display as the column labels. We can
 #'   optionally wrap the column labels with \code{\link{md}()} (to interpret
 #'   text as Markdown) or \code{\link{html}()} (to interpret text as HTML).
+#' @param .list allows for the use of a list as an input alternative to
+#'   \code{...}.
 #' @examples
 #' # Create a table object using the
 #' # `mtcars` dataset and apply different
