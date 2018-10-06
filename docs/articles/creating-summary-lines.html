@@ -128,13 +128,11 @@
 <p>There are three groups in this data table: <code>A</code>, <code>B</code>, and <code>C</code>. The presence of the <code>groupname</code> column will tell <strong>gt</strong> to partition the stub into three stub blocks, one for each group. This is how the <strong>gt</strong> display table appears after simply providing <code>tbl</code> to <code><a href="../reference/gt.html">gt()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Create a display table by using `tbl` as input</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/gt.html">gt</a></span>(tbl)</a></code></pre></div>
-<style>#juqjraqlfq {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#juqjraqlfq .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#ngacvlibpi .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -150,13 +148,13 @@
   /* table.border.top.color */
 }
 
-#juqjraqlfq .heading {
+#ngacvlibpi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#juqjraqlfq .title {
+#ngacvlibpi .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -167,7 +165,7 @@
   border-bottom-width: 0;
 }
 
-#juqjraqlfq .headnote {
+#ngacvlibpi .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -178,7 +176,7 @@
   border-top-width: 0;
 }
 
-#juqjraqlfq .bottom_border {
+#ngacvlibpi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -187,7 +185,7 @@
   /* heading.border.bottom.color */
 }
 
-#juqjraqlfq .column_spanner {
+#ngacvlibpi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -195,7 +193,7 @@
   padding-bottom: 4px;
 }
 
-#juqjraqlfq .col_heading {
+#ngacvlibpi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -207,11 +205,11 @@
   margin: 10px;
 }
 
-#juqjraqlfq .sep_right {
+#ngacvlibpi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#juqjraqlfq .group_heading {
+#ngacvlibpi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -234,7 +232,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#juqjraqlfq .empty_group_heading {
+#ngacvlibpi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -257,28 +255,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#juqjraqlfq .striped tr:nth-child(even) {
+#ngacvlibpi .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#juqjraqlfq .row {
+#ngacvlibpi .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#juqjraqlfq .stub {
+#ngacvlibpi .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#juqjraqlfq .stub.row.right, #juqjraqlfq .stub.row.left, #juqjraqlfq .stub.row.center {
+#ngacvlibpi .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#juqjraqlfq .summary_row {
+#ngacvlibpi .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -287,13 +285,13 @@
   /* summary_row.text_transform */
 }
 
-#juqjraqlfq .first_summary_row {
+#ngacvlibpi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#juqjraqlfq .table_body {
+#ngacvlibpi .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -308,120 +306,120 @@
   /* field.border.bottom.color */
 }
 
-#juqjraqlfq .footnote {
+#ngacvlibpi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#juqjraqlfq .sourcenote {
+#ngacvlibpi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#juqjraqlfq .center {
+#ngacvlibpi .gt_center {
   text-align: center;
 }
 
-#juqjraqlfq .left {
+#ngacvlibpi .gt_left {
   text-align: left;
 }
 
-#juqjraqlfq .right {
+#ngacvlibpi .gt_right {
   text-align: right;
 }
 
-#juqjraqlfq .font_normal {
+#ngacvlibpi .gt_font_normal {
   font-weight: normal;
 }
 
-#juqjraqlfq .font_bold {
+#ngacvlibpi .gt_font_bold {
   font-weight: bold;
 }
 
-#juqjraqlfq .font_italic {
+#ngacvlibpi .gt_font_italic {
   font-style: italic;
 }
 
-#juqjraqlfq .gt_super {
+#ngacvlibpi .gt_super {
   font-size: 65%;
 }
 
-#juqjraqlfq .gt_footnote_glyph {
+#ngacvlibpi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="juqjraqlfq">
+<div id="ngacvlibpi">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center"> 84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">342.3</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center"> 83.0</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">832.5</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">743.3</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">732.5</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">344.7</td>
-<td class="row center">546.1</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right"> 84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">818.0</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">342.3</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right"> 83.0</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">832.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">743.3</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">732.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">344.7</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">818.0</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
 </tr>
 </tbody>
 </table>
@@ -444,13 +442,11 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(value_<span class="dv">1</span>),</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">funs =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/funs.html">funs</a></span>(mean, sum, sd))</a></code></pre></div>
-<style>#lixxsmgemx {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#lixxsmgemx .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#obcczlwamc .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -466,13 +462,13 @@
   /* table.border.top.color */
 }
 
-#lixxsmgemx .heading {
+#obcczlwamc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#lixxsmgemx .title {
+#obcczlwamc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -483,7 +479,7 @@
   border-bottom-width: 0;
 }
 
-#lixxsmgemx .headnote {
+#obcczlwamc .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -494,7 +490,7 @@
   border-top-width: 0;
 }
 
-#lixxsmgemx .bottom_border {
+#obcczlwamc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -503,7 +499,7 @@
   /* heading.border.bottom.color */
 }
 
-#lixxsmgemx .column_spanner {
+#obcczlwamc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -511,7 +507,7 @@
   padding-bottom: 4px;
 }
 
-#lixxsmgemx .col_heading {
+#obcczlwamc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -523,11 +519,11 @@
   margin: 10px;
 }
 
-#lixxsmgemx .sep_right {
+#obcczlwamc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#lixxsmgemx .group_heading {
+#obcczlwamc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -550,7 +546,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#lixxsmgemx .empty_group_heading {
+#obcczlwamc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -573,28 +569,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#lixxsmgemx .striped tr:nth-child(even) {
+#obcczlwamc .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#lixxsmgemx .row {
+#obcczlwamc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#lixxsmgemx .stub {
+#obcczlwamc .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#lixxsmgemx .stub.row.right, #lixxsmgemx .stub.row.left, #lixxsmgemx .stub.row.center {
+#obcczlwamc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#lixxsmgemx .summary_row {
+#obcczlwamc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -603,13 +599,13 @@
   /* summary_row.text_transform */
 }
 
-#lixxsmgemx .first_summary_row {
+#obcczlwamc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#lixxsmgemx .table_body {
+#obcczlwamc .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -624,150 +620,150 @@
   /* field.border.bottom.color */
 }
 
-#lixxsmgemx .footnote {
+#obcczlwamc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#lixxsmgemx .sourcenote {
+#obcczlwamc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#lixxsmgemx .center {
+#obcczlwamc .gt_center {
   text-align: center;
 }
 
-#lixxsmgemx .left {
+#obcczlwamc .gt_left {
   text-align: left;
 }
 
-#lixxsmgemx .right {
+#obcczlwamc .gt_right {
   text-align: right;
 }
 
-#lixxsmgemx .font_normal {
+#obcczlwamc .gt_font_normal {
   font-weight: normal;
 }
 
-#lixxsmgemx .font_bold {
+#obcczlwamc .gt_font_bold {
   font-weight: bold;
 }
 
-#lixxsmgemx .font_italic {
+#obcczlwamc .gt_font_italic {
   font-style: italic;
 }
 
-#lixxsmgemx .gt_super {
+#obcczlwamc .gt_super {
   font-size: 65%;
 }
 
-#lixxsmgemx .gt_footnote_glyph {
+#obcczlwamc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="lixxsmgemx">
+<div id="obcczlwamc">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center"> 84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">342.3</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center"> 83.0</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">mean</td>
-<td class="row summary_row first_summary_row center">249.28</td>
-<td class="row summary_row first_summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">997.10</td>
-<td class="row summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">sd</td>
-<td class="row summary_row center">66.51</td>
-<td class="row summary_row center">—</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">832.5</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">743.3</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">732.5</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">344.7</td>
-<td class="row center">546.1</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">mean</td>
-<td class="row summary_row first_summary_row center">382.80</td>
-<td class="row summary_row first_summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">1,531.20</td>
-<td class="row summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="3">
-<td class="stub row summary_row right">sd</td>
-<td class="row summary_row center">248.51</td>
-<td class="row summary_row center">—</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right"> 84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">818.0</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">342.3</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right"> 83.0</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">249.28</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">997.10</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sd</td>
+<td class="gt_row gt_summary_row gt_right">66.51</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">832.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">743.3</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">732.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">344.7</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">382.80</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">1,531.20</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sd</td>
+<td class="gt_row gt_summary_row gt_right">248.51</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">818.0</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
 </tr>
 </tbody>
 </table>
@@ -785,13 +781,11 @@
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/summary_rows.html">summary_rows</a></span>(</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(value_<span class="dv">1</span>),</a>
 <a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="dt">funs =</span> funs_labels)</a></code></pre></div>
-<style>#upwilgcdny {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#upwilgcdny .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#pqvcdiebyi .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -807,13 +801,13 @@
   /* table.border.top.color */
 }
 
-#upwilgcdny .heading {
+#pqvcdiebyi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#upwilgcdny .title {
+#pqvcdiebyi .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -824,7 +818,7 @@
   border-bottom-width: 0;
 }
 
-#upwilgcdny .headnote {
+#pqvcdiebyi .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -835,7 +829,7 @@
   border-top-width: 0;
 }
 
-#upwilgcdny .bottom_border {
+#pqvcdiebyi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -844,7 +838,7 @@
   /* heading.border.bottom.color */
 }
 
-#upwilgcdny .column_spanner {
+#pqvcdiebyi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -852,7 +846,7 @@
   padding-bottom: 4px;
 }
 
-#upwilgcdny .col_heading {
+#pqvcdiebyi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -864,11 +858,11 @@
   margin: 10px;
 }
 
-#upwilgcdny .sep_right {
+#pqvcdiebyi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#upwilgcdny .group_heading {
+#pqvcdiebyi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -891,7 +885,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#upwilgcdny .empty_group_heading {
+#pqvcdiebyi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -914,28 +908,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#upwilgcdny .striped tr:nth-child(even) {
+#pqvcdiebyi .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#upwilgcdny .row {
+#pqvcdiebyi .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#upwilgcdny .stub {
+#pqvcdiebyi .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#upwilgcdny .stub.row.right, #upwilgcdny .stub.row.left, #upwilgcdny .stub.row.center {
+#pqvcdiebyi .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#upwilgcdny .summary_row {
+#pqvcdiebyi .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -944,13 +938,13 @@
   /* summary_row.text_transform */
 }
 
-#upwilgcdny .first_summary_row {
+#pqvcdiebyi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#upwilgcdny .table_body {
+#pqvcdiebyi .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -965,165 +959,165 @@
   /* field.border.bottom.color */
 }
 
-#upwilgcdny .footnote {
+#pqvcdiebyi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#upwilgcdny .sourcenote {
+#pqvcdiebyi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#upwilgcdny .center {
+#pqvcdiebyi .gt_center {
   text-align: center;
 }
 
-#upwilgcdny .left {
+#pqvcdiebyi .gt_left {
   text-align: left;
 }
 
-#upwilgcdny .right {
+#pqvcdiebyi .gt_right {
   text-align: right;
 }
 
-#upwilgcdny .font_normal {
+#pqvcdiebyi .gt_font_normal {
   font-weight: normal;
 }
 
-#upwilgcdny .font_bold {
+#pqvcdiebyi .gt_font_bold {
   font-weight: bold;
 }
 
-#upwilgcdny .font_italic {
+#pqvcdiebyi .gt_font_italic {
   font-style: italic;
 }
 
-#upwilgcdny .gt_super {
+#pqvcdiebyi .gt_super {
   font-size: 65%;
 }
 
-#upwilgcdny .gt_footnote_glyph {
+#pqvcdiebyi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="upwilgcdny">
+<div id="pqvcdiebyi">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center"> 84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">342.3</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center"> 83.0</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">average</td>
-<td class="row summary_row first_summary_row center">249.28</td>
-<td class="row summary_row first_summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">total</td>
-<td class="row summary_row center">997.10</td>
-<td class="row summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">std dev</td>
-<td class="row summary_row center">66.51</td>
-<td class="row summary_row center">—</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">832.5</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">743.3</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">732.5</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">344.7</td>
-<td class="row center">546.1</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">average</td>
-<td class="row summary_row first_summary_row center">382.80</td>
-<td class="row summary_row first_summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="2">
-<td class="stub row summary_row right">total</td>
-<td class="row summary_row center">1,531.20</td>
-<td class="row summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="3">
-<td class="stub row summary_row right">std dev</td>
-<td class="row summary_row center">248.51</td>
-<td class="row summary_row center">—</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right"> 84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">818.0</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">342.3</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right"> 83.0</td>
 </tr>
-<tr data-type="summary" data-group="C" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">average</td>
-<td class="row summary_row first_summary_row center">240.75</td>
-<td class="row summary_row first_summary_row center">—</td>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">average</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">249.28</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
 </tr>
-<tr data-type="summary" data-group="C" data-summary-row="2">
-<td class="stub row summary_row right">total</td>
-<td class="row summary_row center">481.50</td>
-<td class="row summary_row center">—</td>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">total</td>
+<td class="gt_row gt_summary_row gt_right">997.10</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
 </tr>
-<tr data-type="summary" data-group="C" data-summary-row="3">
-<td class="stub row summary_row right">std dev</td>
-<td class="row summary_row center">61.59</td>
-<td class="row summary_row center">—</td>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">std dev</td>
+<td class="gt_row gt_summary_row gt_right">66.51</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">832.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">743.3</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">732.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">344.7</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">average</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">382.80</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">total</td>
+<td class="gt_row gt_summary_row gt_right">1,531.20</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">std dev</td>
+<td class="gt_row gt_summary_row gt_right">248.51</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">818.0</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">average</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">240.75</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">total</td>
+<td class="gt_row gt_summary_row gt_right">481.50</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">std dev</td>
+<td class="gt_row gt_summary_row gt_right">61.59</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
 </tr>
 </tbody>
 </table>
@@ -1157,13 +1151,11 @@
 <a class="sourceLine" id="cb5-20" data-line-number="20">      <span class="dt">average =</span> <span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
 <a class="sourceLine" id="cb5-21" data-line-number="21">      <span class="dt">sum =</span> <span class="kw">sum</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
 <a class="sourceLine" id="cb5-22" data-line-number="22">      <span class="st">`</span><span class="dt">std dev</span><span class="st">`</span> =<span class="st"> </span><span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)))</a></code></pre></div>
-<style>#kjknpxsbft {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#kjknpxsbft .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#akkekvntmr .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -1179,13 +1171,13 @@
   /* table.border.top.color */
 }
 
-#kjknpxsbft .heading {
+#akkekvntmr .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#kjknpxsbft .title {
+#akkekvntmr .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1196,7 +1188,7 @@
   border-bottom-width: 0;
 }
 
-#kjknpxsbft .headnote {
+#akkekvntmr .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -1207,7 +1199,7 @@
   border-top-width: 0;
 }
 
-#kjknpxsbft .bottom_border {
+#akkekvntmr .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1216,7 +1208,7 @@
   /* heading.border.bottom.color */
 }
 
-#kjknpxsbft .column_spanner {
+#akkekvntmr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1224,7 +1216,7 @@
   padding-bottom: 4px;
 }
 
-#kjknpxsbft .col_heading {
+#akkekvntmr .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1236,11 +1228,11 @@
   margin: 10px;
 }
 
-#kjknpxsbft .sep_right {
+#akkekvntmr .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#kjknpxsbft .group_heading {
+#akkekvntmr .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1263,7 +1255,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#kjknpxsbft .empty_group_heading {
+#akkekvntmr .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1286,28 +1278,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#kjknpxsbft .striped tr:nth-child(even) {
+#akkekvntmr .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#kjknpxsbft .row {
+#akkekvntmr .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#kjknpxsbft .stub {
+#akkekvntmr .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#kjknpxsbft .stub.row.right, #kjknpxsbft .stub.row.left, #kjknpxsbft .stub.row.center {
+#akkekvntmr .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#kjknpxsbft .summary_row {
+#akkekvntmr .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1316,13 +1308,13 @@
   /* summary_row.text_transform */
 }
 
-#kjknpxsbft .first_summary_row {
+#akkekvntmr .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#kjknpxsbft .table_body {
+#akkekvntmr .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1337,150 +1329,150 @@
   /* field.border.bottom.color */
 }
 
-#kjknpxsbft .footnote {
+#akkekvntmr .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#kjknpxsbft .sourcenote {
+#akkekvntmr .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#kjknpxsbft .center {
+#akkekvntmr .gt_center {
   text-align: center;
 }
 
-#kjknpxsbft .left {
+#akkekvntmr .gt_left {
   text-align: left;
 }
 
-#kjknpxsbft .right {
+#akkekvntmr .gt_right {
   text-align: right;
 }
 
-#kjknpxsbft .font_normal {
+#akkekvntmr .gt_font_normal {
   font-weight: normal;
 }
 
-#kjknpxsbft .font_bold {
+#akkekvntmr .gt_font_bold {
   font-weight: bold;
 }
 
-#kjknpxsbft .font_italic {
+#akkekvntmr .gt_font_italic {
   font-style: italic;
 }
 
-#kjknpxsbft .gt_super {
+#akkekvntmr .gt_super {
   font-size: 65%;
 }
 
-#kjknpxsbft .gt_footnote_glyph {
+#akkekvntmr .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="kjknpxsbft">
+<div id="akkekvntmr">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center"> 84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">   NA</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center"> 83.0</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">average</td>
-<td class="row summary_row first_summary_row center">218.27</td>
-<td class="row summary_row first_summary_row center">138.45</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">654.80</td>
-<td class="row summary_row center">553.80</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">std dev</td>
-<td class="row summary_row center">29.42</td>
-<td class="row summary_row center">83.55</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">   NA</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">   NA</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">   NA</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">   NA</td>
-<td class="row center">546.1</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">average</td>
-<td class="row summary_row first_summary_row center">221.60</td>
-<td class="row summary_row first_summary_row center">413.65</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">443.20</td>
-<td class="row summary_row center">827.30</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="3">
-<td class="stub row summary_row right">std dev</td>
-<td class="row summary_row center">43.42</td>
-<td class="row summary_row center">187.31</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right"> 84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">   NA</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">   NA</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right"> 83.0</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">average</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">218.27</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">138.45</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">654.80</td>
+<td class="gt_row gt_summary_row gt_right">553.80</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">std dev</td>
+<td class="gt_row gt_summary_row gt_right">29.42</td>
+<td class="gt_row gt_summary_row gt_right">83.55</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">   NA</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">   NA</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">   NA</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">   NA</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">average</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">221.60</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">413.65</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">443.20</td>
+<td class="gt_row gt_summary_row gt_right">827.30</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">std dev</td>
+<td class="gt_row gt_summary_row gt_right">43.42</td>
+<td class="gt_row gt_summary_row gt_right">187.31</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">   NA</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
 </tr>
 </tbody>
 </table>
@@ -1502,13 +1494,11 @@
 <a class="sourceLine" id="cb6-7" data-line-number="7">    <span class="dt">funs =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/funs.html">funs</a></span>(mean, sum, min, max),</a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">formatter =</span> fmt_number,</a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">decimals =</span> <span class="dv">3</span>)</a></code></pre></div>
-<style>#vxiopgtfkw {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#vxiopgtfkw .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#ntjcxuicrz .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -1524,13 +1514,13 @@
   /* table.border.top.color */
 }
 
-#vxiopgtfkw .heading {
+#ntjcxuicrz .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#vxiopgtfkw .title {
+#ntjcxuicrz .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1541,7 +1531,7 @@
   border-bottom-width: 0;
 }
 
-#vxiopgtfkw .headnote {
+#ntjcxuicrz .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -1552,7 +1542,7 @@
   border-top-width: 0;
 }
 
-#vxiopgtfkw .bottom_border {
+#ntjcxuicrz .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1561,7 +1551,7 @@
   /* heading.border.bottom.color */
 }
 
-#vxiopgtfkw .column_spanner {
+#ntjcxuicrz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1569,7 +1559,7 @@
   padding-bottom: 4px;
 }
 
-#vxiopgtfkw .col_heading {
+#ntjcxuicrz .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1581,11 +1571,11 @@
   margin: 10px;
 }
 
-#vxiopgtfkw .sep_right {
+#ntjcxuicrz .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#vxiopgtfkw .group_heading {
+#ntjcxuicrz .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1608,7 +1598,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#vxiopgtfkw .empty_group_heading {
+#ntjcxuicrz .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1631,28 +1621,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#vxiopgtfkw .striped tr:nth-child(even) {
+#ntjcxuicrz .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#vxiopgtfkw .row {
+#ntjcxuicrz .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#vxiopgtfkw .stub {
+#ntjcxuicrz .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#vxiopgtfkw .stub.row.right, #vxiopgtfkw .stub.row.left, #vxiopgtfkw .stub.row.center {
+#ntjcxuicrz .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#vxiopgtfkw .summary_row {
+#ntjcxuicrz .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1661,13 +1651,13 @@
   /* summary_row.text_transform */
 }
 
-#vxiopgtfkw .first_summary_row {
+#ntjcxuicrz .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#vxiopgtfkw .table_body {
+#ntjcxuicrz .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1682,140 +1672,140 @@
   /* field.border.bottom.color */
 }
 
-#vxiopgtfkw .footnote {
+#ntjcxuicrz .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#vxiopgtfkw .sourcenote {
+#ntjcxuicrz .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#vxiopgtfkw .center {
+#ntjcxuicrz .gt_center {
   text-align: center;
 }
 
-#vxiopgtfkw .left {
+#ntjcxuicrz .gt_left {
   text-align: left;
 }
 
-#vxiopgtfkw .right {
+#ntjcxuicrz .gt_right {
   text-align: right;
 }
 
-#vxiopgtfkw .font_normal {
+#ntjcxuicrz .gt_font_normal {
   font-weight: normal;
 }
 
-#vxiopgtfkw .font_bold {
+#ntjcxuicrz .gt_font_bold {
   font-weight: bold;
 }
 
-#vxiopgtfkw .font_italic {
+#ntjcxuicrz .gt_font_italic {
   font-style: italic;
 }
 
-#vxiopgtfkw .gt_super {
+#ntjcxuicrz .gt_super {
   font-size: 65%;
 }
 
-#vxiopgtfkw .gt_footnote_glyph {
+#ntjcxuicrz .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="vxiopgtfkw">
+<div id="ntjcxuicrz">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center"> 84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">342.3</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center"> 83.0</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">mean</td>
-<td class="row summary_row first_summary_row center">249.275</td>
-<td class="row summary_row first_summary_row center">138.450</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">997.100</td>
-<td class="row summary_row center">553.800</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">min</td>
-<td class="row summary_row center">184.300</td>
-<td class="row summary_row center">83.000</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="4">
-<td class="stub row summary_row right">max</td>
-<td class="row summary_row center">342.300</td>
-<td class="row summary_row center">260.100</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">832.5</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">743.3</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">732.5</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">344.7</td>
-<td class="row center">546.1</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right"> 84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">818.0</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">342.3</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right"> 83.0</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">249.275</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">138.450</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">997.100</td>
+<td class="gt_row gt_summary_row gt_right">553.800</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">min</td>
+<td class="gt_row gt_summary_row gt_right">184.300</td>
+<td class="gt_row gt_summary_row gt_right">83.000</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">max</td>
+<td class="gt_row gt_summary_row gt_right">342.300</td>
+<td class="gt_row gt_summary_row gt_right">260.100</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">832.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">743.3</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">732.5</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">344.7</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">818.0</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
 </tr>
 </tbody>
 </table>
@@ -1842,13 +1832,11 @@
 <a class="sourceLine" id="cb7-18" data-line-number="18">    <span class="dt">formatter =</span> fmt_number,</a>
 <a class="sourceLine" id="cb7-19" data-line-number="19">    <span class="dt">decimals =</span> formats<span class="op">$</span>decimals,</a>
 <a class="sourceLine" id="cb7-20" data-line-number="20">    <span class="dt">locale =</span> formats<span class="op">$</span>locale)</a></code></pre></div>
-<style>#biqriyoand {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#biqriyoand .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#oxxulxbaya .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -1864,13 +1852,13 @@
   /* table.border.top.color */
 }
 
-#biqriyoand .heading {
+#oxxulxbaya .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#biqriyoand .title {
+#oxxulxbaya .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1881,7 +1869,7 @@
   border-bottom-width: 0;
 }
 
-#biqriyoand .headnote {
+#oxxulxbaya .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -1892,7 +1880,7 @@
   border-top-width: 0;
 }
 
-#biqriyoand .bottom_border {
+#oxxulxbaya .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1901,7 +1889,7 @@
   /* heading.border.bottom.color */
 }
 
-#biqriyoand .column_spanner {
+#oxxulxbaya .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1909,7 +1897,7 @@
   padding-bottom: 4px;
 }
 
-#biqriyoand .col_heading {
+#oxxulxbaya .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1921,11 +1909,11 @@
   margin: 10px;
 }
 
-#biqriyoand .sep_right {
+#oxxulxbaya .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#biqriyoand .group_heading {
+#oxxulxbaya .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1948,7 +1936,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#biqriyoand .empty_group_heading {
+#oxxulxbaya .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1971,28 +1959,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#biqriyoand .striped tr:nth-child(even) {
+#oxxulxbaya .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#biqriyoand .row {
+#oxxulxbaya .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#biqriyoand .stub {
+#oxxulxbaya .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#biqriyoand .stub.row.right, #biqriyoand .stub.row.left, #biqriyoand .stub.row.center {
+#oxxulxbaya .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#biqriyoand .summary_row {
+#oxxulxbaya .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2001,13 +1989,13 @@
   /* summary_row.text_transform */
 }
 
-#biqriyoand .first_summary_row {
+#oxxulxbaya .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#biqriyoand .table_body {
+#oxxulxbaya .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2022,140 +2010,140 @@
   /* field.border.bottom.color */
 }
 
-#biqriyoand .footnote {
+#oxxulxbaya .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#biqriyoand .sourcenote {
+#oxxulxbaya .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#biqriyoand .center {
+#oxxulxbaya .gt_center {
   text-align: center;
 }
 
-#biqriyoand .left {
+#oxxulxbaya .gt_left {
   text-align: left;
 }
 
-#biqriyoand .right {
+#oxxulxbaya .gt_right {
   text-align: right;
 }
 
-#biqriyoand .font_normal {
+#oxxulxbaya .gt_font_normal {
   font-weight: normal;
 }
 
-#biqriyoand .font_bold {
+#oxxulxbaya .gt_font_bold {
   font-weight: bold;
 }
 
-#biqriyoand .font_italic {
+#oxxulxbaya .gt_font_italic {
   font-style: italic;
 }
 
-#biqriyoand .gt_super {
+#oxxulxbaya .gt_super {
   font-size: 65%;
 }
 
-#biqriyoand .gt_footnote_glyph {
+#oxxulxbaya .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="biqriyoand">
+<div id="oxxulxbaya">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235,60</td>
-<td class="row center">260,10</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184,30</td>
-<td class="row center">84,40</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">342,30</td>
-<td class="row center">126,30</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234,90</td>
-<td class="row center">83,00</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">mean</td>
-<td class="row summary_row first_summary_row center">249,28</td>
-<td class="row summary_row first_summary_row center">138,45</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">sum</td>
-<td class="row summary_row center">997,10</td>
-<td class="row summary_row center">553,80</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">min</td>
-<td class="row summary_row center">184,30</td>
-<td class="row summary_row center">83,00</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="4">
-<td class="stub row summary_row right">max</td>
-<td class="row summary_row center">342,30</td>
-<td class="row summary_row center">260,10</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190,90</td>
-<td class="row center">832,50</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">743,30</td>
-<td class="row center">281,20</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252,30</td>
-<td class="row center">732,50</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">344,70</td>
-<td class="row center">546,10</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235,60</td>
+<td class="gt_row gt_right">260,10</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184,30</td>
+<td class="gt_row gt_right">84,40</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197,20</td>
-<td class="row center">818,00</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">342,30</td>
+<td class="gt_row gt_right">126,30</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284,30</td>
-<td class="row center">394,40</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234,90</td>
+<td class="gt_row gt_right">83,00</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">249,28</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">138,45</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_right">997,10</td>
+<td class="gt_row gt_summary_row gt_right">553,80</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">min</td>
+<td class="gt_row gt_summary_row gt_right">184,30</td>
+<td class="gt_row gt_summary_row gt_right">83,00</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">max</td>
+<td class="gt_row gt_summary_row gt_right">342,30</td>
+<td class="gt_row gt_summary_row gt_right">260,10</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190,90</td>
+<td class="gt_row gt_right">832,50</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">743,30</td>
+<td class="gt_row gt_right">281,20</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252,30</td>
+<td class="gt_row gt_right">732,50</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">344,70</td>
+<td class="gt_row gt_right">546,10</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197,20</td>
+<td class="gt_row gt_right">818,00</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284,30</td>
+<td class="gt_row gt_right">394,40</td>
 </tr>
 </tbody>
 </table>
@@ -2210,13 +2198,11 @@
 <a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/fmt_number.html">fmt_number</a></span>(</a>
 <a class="sourceLine" id="cb12-8" data-line-number="8">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>),</a>
 <a class="sourceLine" id="cb12-9" data-line-number="9">    <span class="dt">decimals =</span> <span class="dv">3</span>)</a></code></pre></div>
-<style>#rbpmigbnuo {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#rbpmigbnuo .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#skndbsxhur .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -2232,13 +2218,13 @@
   /* table.border.top.color */
 }
 
-#rbpmigbnuo .heading {
+#skndbsxhur .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#rbpmigbnuo .title {
+#skndbsxhur .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2249,7 +2235,7 @@
   border-bottom-width: 0;
 }
 
-#rbpmigbnuo .headnote {
+#skndbsxhur .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -2260,7 +2246,7 @@
   border-top-width: 0;
 }
 
-#rbpmigbnuo .bottom_border {
+#skndbsxhur .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2269,7 +2255,7 @@
   /* heading.border.bottom.color */
 }
 
-#rbpmigbnuo .column_spanner {
+#skndbsxhur .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2277,7 +2263,7 @@
   padding-bottom: 4px;
 }
 
-#rbpmigbnuo .col_heading {
+#skndbsxhur .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2289,11 +2275,11 @@
   margin: 10px;
 }
 
-#rbpmigbnuo .sep_right {
+#skndbsxhur .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#rbpmigbnuo .group_heading {
+#skndbsxhur .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2316,7 +2302,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#rbpmigbnuo .empty_group_heading {
+#skndbsxhur .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2339,28 +2325,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#rbpmigbnuo .striped tr:nth-child(even) {
+#skndbsxhur .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#rbpmigbnuo .row {
+#skndbsxhur .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#rbpmigbnuo .stub {
+#skndbsxhur .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#rbpmigbnuo .stub.row.right, #rbpmigbnuo .stub.row.left, #rbpmigbnuo .stub.row.center {
+#skndbsxhur .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#rbpmigbnuo .summary_row {
+#skndbsxhur .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2369,13 +2355,13 @@
   /* summary_row.text_transform */
 }
 
-#rbpmigbnuo .first_summary_row {
+#skndbsxhur .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#rbpmigbnuo .table_body {
+#skndbsxhur .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2390,97 +2376,97 @@
   /* field.border.bottom.color */
 }
 
-#rbpmigbnuo .footnote {
+#skndbsxhur .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#rbpmigbnuo .sourcenote {
+#skndbsxhur .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#rbpmigbnuo .center {
+#skndbsxhur .gt_center {
   text-align: center;
 }
 
-#rbpmigbnuo .left {
+#skndbsxhur .gt_left {
   text-align: left;
 }
 
-#rbpmigbnuo .right {
+#skndbsxhur .gt_right {
   text-align: right;
 }
 
-#rbpmigbnuo .font_normal {
+#skndbsxhur .gt_font_normal {
   font-weight: normal;
 }
 
-#rbpmigbnuo .font_bold {
+#skndbsxhur .gt_font_bold {
   font-weight: bold;
 }
 
-#rbpmigbnuo .font_italic {
+#skndbsxhur .gt_font_italic {
   font-style: italic;
 }
 
-#rbpmigbnuo .gt_super {
+#skndbsxhur .gt_super {
   font-size: 65%;
 }
 
-#rbpmigbnuo .gt_footnote_glyph {
+#skndbsxhur .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rbpmigbnuo">
+<div id="skndbsxhur">
 <!--gt table start-->
-<table data-nrow="6" data-ncol="3" data-ngroup="2" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">mean</td>
-<td class="row center">249.275</td>
-<td class="row center">138.450</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">sum</td>
-<td class="row center">997.100</td>
-<td class="row center">553.800</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">sd</td>
-<td class="row center">66.506</td>
-<td class="row center">83.551</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
+<td class="gt_row gt_stub gt_right">mean</td>
+<td class="gt_row gt_right">249.275</td>
+<td class="gt_row gt_right">138.450</td>
 </tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">mean</td>
-<td class="row center">382.800</td>
-<td class="row center">598.075</td>
+<tr>
+<td class="gt_row gt_stub gt_right">sum</td>
+<td class="gt_row gt_right">997.100</td>
+<td class="gt_row gt_right">553.800</td>
 </tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">sum</td>
-<td class="row center">1,531.200</td>
-<td class="row center">2,392.300</td>
+<tr>
+<td class="gt_row gt_stub gt_right">sd</td>
+<td class="gt_row gt_right">66.506</td>
+<td class="gt_row gt_right">83.551</td>
 </tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">sd</td>
-<td class="row center">248.507</td>
-<td class="row center">242.306</td>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">mean</td>
+<td class="gt_row gt_right">382.800</td>
+<td class="gt_row gt_right">598.075</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">sum</td>
+<td class="gt_row gt_right">1,531.200</td>
+<td class="gt_row gt_right">2,392.300</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">sd</td>
+<td class="gt_row gt_right">248.507</td>
+<td class="gt_row gt_right">242.306</td>
 </tr>
 </tbody>
 </table>
@@ -2534,13 +2520,11 @@
 <a class="sourceLine" id="cb14-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/fmt_missing.html">fmt_missing</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(value_<span class="dv">1</span>, value_<span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb14-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">summary_tbl</a></code></pre></div>
-<style>#tfflbuejep {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#tfflbuejep .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#pmcpythsgy .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -2556,13 +2540,13 @@
   /* table.border.top.color */
 }
 
-#tfflbuejep .heading {
+#pmcpythsgy .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#tfflbuejep .title {
+#pmcpythsgy .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2573,7 +2557,7 @@
   border-bottom-width: 0;
 }
 
-#tfflbuejep .headnote {
+#pmcpythsgy .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -2584,7 +2568,7 @@
   border-top-width: 0;
 }
 
-#tfflbuejep .bottom_border {
+#pmcpythsgy .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2593,7 +2577,7 @@
   /* heading.border.bottom.color */
 }
 
-#tfflbuejep .column_spanner {
+#pmcpythsgy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2601,7 +2585,7 @@
   padding-bottom: 4px;
 }
 
-#tfflbuejep .col_heading {
+#pmcpythsgy .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2613,11 +2597,11 @@
   margin: 10px;
 }
 
-#tfflbuejep .sep_right {
+#pmcpythsgy .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#tfflbuejep .group_heading {
+#pmcpythsgy .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2640,7 +2624,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#tfflbuejep .empty_group_heading {
+#pmcpythsgy .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2663,28 +2647,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#tfflbuejep .striped tr:nth-child(even) {
+#pmcpythsgy .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#tfflbuejep .row {
+#pmcpythsgy .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#tfflbuejep .stub {
+#pmcpythsgy .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#tfflbuejep .stub.row.right, #tfflbuejep .stub.row.left, #tfflbuejep .stub.row.center {
+#pmcpythsgy .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#tfflbuejep .summary_row {
+#pmcpythsgy .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2693,13 +2677,13 @@
   /* summary_row.text_transform */
 }
 
-#tfflbuejep .first_summary_row {
+#pmcpythsgy .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#tfflbuejep .table_body {
+#pmcpythsgy .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2714,135 +2698,135 @@
   /* field.border.bottom.color */
 }
 
-#tfflbuejep .footnote {
+#pmcpythsgy .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#tfflbuejep .sourcenote {
+#pmcpythsgy .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#tfflbuejep .center {
+#pmcpythsgy .gt_center {
   text-align: center;
 }
 
-#tfflbuejep .left {
+#pmcpythsgy .gt_left {
   text-align: left;
 }
 
-#tfflbuejep .right {
+#pmcpythsgy .gt_right {
   text-align: right;
 }
 
-#tfflbuejep .font_normal {
+#pmcpythsgy .gt_font_normal {
   font-weight: normal;
 }
 
-#tfflbuejep .font_bold {
+#pmcpythsgy .gt_font_bold {
   font-weight: bold;
 }
 
-#tfflbuejep .font_italic {
+#pmcpythsgy .gt_font_italic {
   font-style: italic;
 }
 
-#tfflbuejep .gt_super {
+#pmcpythsgy .gt_super {
   font-size: 65%;
 }
 
-#tfflbuejep .gt_footnote_glyph {
+#pmcpythsgy .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tfflbuejep">
+<div id="pmcpythsgy">
 <!--gt table start-->
-<table data-nrow="10" data-ncol="3" data-ngroup="3" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">value_1</th>
-<th class="col_heading center" rowspan="1" colspan="1">value_2</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_1</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">value_2</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="3" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">235.6</td>
-<td class="row center">260.1</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">184.3</td>
-<td class="row center">84.4</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">—</td>
-<td class="row center">126.3</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">234.9</td>
-<td class="row center">83</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">high</td>
-<td class="row summary_row first_summary_row center">(234.90, 235.60)</td>
-<td class="row summary_row first_summary_row center">(260.10)</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">190.9</td>
-<td class="row center">—</td>
-</tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">—</td>
-<td class="row center">281.2</td>
-</tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">252.3</td>
-<td class="row center">—</td>
-</tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">—</td>
-<td class="row center">546.1</td>
-</tr>
-<tr data-type="summary" data-group="B" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">high</td>
-<td class="row summary_row first_summary_row center">(190.90, 252.30)</td>
-<td class="row summary_row first_summary_row center">(281.20, 546.10)</td>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">235.6</td>
+<td class="gt_row gt_right">260.1</td>
 </tr>
 <tr>
-<td data-type="group" colspan="3" class="group_heading">C</td>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">184.3</td>
+<td class="gt_row gt_right">84.4</td>
 </tr>
-<tr data-type="data" data-row="9">
-<td class="stub row right">1</td>
-<td class="row center">197.2</td>
-<td class="row center">—</td>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">—</td>
+<td class="gt_row gt_right">126.3</td>
 </tr>
-<tr data-type="data" data-row="10">
-<td class="stub row right">2</td>
-<td class="row center">284.3</td>
-<td class="row center">394.4</td>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">234.9</td>
+<td class="gt_row gt_right">83</td>
 </tr>
-<tr data-type="summary" data-group="C" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">high</td>
-<td class="row summary_row first_summary_row center">(197.20, 284.30)</td>
-<td class="row summary_row first_summary_row center">(394.40)</td>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">high</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(234.90, 235.60)</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(260.10)</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">190.9</td>
+<td class="gt_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">—</td>
+<td class="gt_row gt_right">281.2</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">252.3</td>
+<td class="gt_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">—</td>
+<td class="gt_row gt_right">546.1</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">high</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(190.90, 252.30)</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(281.20, 546.10)</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="3" class="gt_group_heading">C</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">197.2</td>
+<td class="gt_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">284.3</td>
+<td class="gt_row gt_right">394.4</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">high</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(197.20, 284.30)</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">(394.40)</td>
 </tr>
 </tbody>
 </table>
@@ -2930,13 +2914,11 @@
 <a class="sourceLine" id="cb17-31" data-line-number="31">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">!!</span>small_fmts<span class="op">$</span>columns),</a>
 <a class="sourceLine" id="cb17-32" data-line-number="32">    <span class="dt">funs =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/funs.html">funs</a></span>(sum, mean, sd),</a>
 <a class="sourceLine" id="cb17-33" data-line-number="33">    <span class="dt">formatter =</span> small_fmts<span class="op">$</span>formatter)</a></code></pre></div>
-<style>#fctulmiiui {
-  /* this is used to create a gutter between adjacent column spanners;
-   the color should match that of .heading's background-color */
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#fctulmiiui .gt_table {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+#jhqpyvrhtj .gt_table {
   border-collapse: collapse;
   color: #000000;
   font-size: 16px;
@@ -2952,13 +2934,13 @@
   /* table.border.top.color */
 }
 
-#fctulmiiui .heading {
+#jhqpyvrhtj .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#fctulmiiui .title {
+#jhqpyvrhtj .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2969,7 +2951,7 @@
   border-bottom-width: 0;
 }
 
-#fctulmiiui .headnote {
+#jhqpyvrhtj .gt_headnote {
   color: #000000;
   font-size: 85%;
   /* heading.headnote.font.size */
@@ -2980,7 +2962,7 @@
   border-top-width: 0;
 }
 
-#fctulmiiui .bottom_border {
+#jhqpyvrhtj .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2989,7 +2971,7 @@
   /* heading.border.bottom.color */
 }
 
-#fctulmiiui .column_spanner {
+#jhqpyvrhtj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2997,7 +2979,7 @@
   padding-bottom: 4px;
 }
 
-#fctulmiiui .col_heading {
+#jhqpyvrhtj .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -3009,11 +2991,11 @@
   margin: 10px;
 }
 
-#fctulmiiui .sep_right {
+#jhqpyvrhtj .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#fctulmiiui .group_heading {
+#jhqpyvrhtj .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3036,7 +3018,7 @@
   /* stub_group.border.bottom.color */
 }
 
-#fctulmiiui .empty_group_heading {
+#jhqpyvrhtj .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3059,28 +3041,28 @@
   /* stub_group.border.bottom.color */
 }
 
-#fctulmiiui .striped tr:nth-child(even) {
+#jhqpyvrhtj .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#fctulmiiui .row {
+#jhqpyvrhtj .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#fctulmiiui .stub {
+#jhqpyvrhtj .gt_stub {
   width: 10%;
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
 }
 
-#fctulmiiui .stub.row.right, #fctulmiiui .stub.row.left, #fctulmiiui .stub.row.center {
+#jhqpyvrhtj .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#fctulmiiui .summary_row {
+#jhqpyvrhtj .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3089,13 +3071,13 @@
   /* summary_row.text_transform */
 }
 
-#fctulmiiui .first_summary_row {
+#jhqpyvrhtj .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#fctulmiiui .table_body {
+#jhqpyvrhtj .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3110,166 +3092,166 @@
   /* field.border.bottom.color */
 }
 
-#fctulmiiui .footnote {
+#jhqpyvrhtj .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#fctulmiiui .sourcenote {
+#jhqpyvrhtj .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#fctulmiiui .center {
+#jhqpyvrhtj .gt_center {
   text-align: center;
 }
 
-#fctulmiiui .left {
+#jhqpyvrhtj .gt_left {
   text-align: left;
 }
 
-#fctulmiiui .right {
+#jhqpyvrhtj .gt_right {
   text-align: right;
 }
 
-#fctulmiiui .font_normal {
+#jhqpyvrhtj .gt_font_normal {
   font-weight: normal;
 }
 
-#fctulmiiui .font_bold {
+#jhqpyvrhtj .gt_font_bold {
   font-weight: bold;
 }
 
-#fctulmiiui .font_italic {
+#jhqpyvrhtj .gt_font_italic {
   font-style: italic;
 }
 
-#fctulmiiui .gt_super {
+#jhqpyvrhtj .gt_super {
   font-size: 65%;
 }
 
-#fctulmiiui .gt_footnote_glyph {
+#jhqpyvrhtj .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="fctulmiiui">
+<div id="jhqpyvrhtj">
 <!--gt table start-->
-<table data-nrow="8" data-ncol="4" data-ngroup="2" class="table" style="display:table;">
+<table class="table" style="display:table;">
 <tr>
-<th class="col_heading right" rowspan="1" colspan="1"></th>
-<th class="col_heading center" rowspan="1" colspan="1">large</th>
-<th class="col_heading center" rowspan="1" colspan="1">medium</th>
-<th class="col_heading center" rowspan="1" colspan="1">small</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1"></th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">large</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">medium</th>
+<th class="gt_col_heading gt_right" rowspan="1" colspan="1">small</th>
 </tr>
-<tbody class="table_body striped">
-<tr>
-<td data-type="group" colspan="4" class="group_heading">A</td>
-</tr>
-<tr data-type="data" data-row="1">
-<td class="stub row right">1</td>
-<td class="row center">2.35 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row center">342.20</td>
-<td class="row center">34.00%</td>
-</tr>
-<tr data-type="data" data-row="2">
-<td class="stub row right">2</td>
-<td class="row center">1.84 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row center">971.70</td>
-<td class="row center">23.00%</td>
-</tr>
-<tr data-type="data" data-row="3">
-<td class="stub row right">3</td>
-<td class="row center">3.43 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row center">392.60</td>
-<td class="row center">73.00%</td>
-</tr>
-<tr data-type="data" data-row="4">
-<td class="stub row right">4</td>
-<td class="row center">2.34 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row center">684.50</td>
-<td class="row center">93.00%</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">sum</td>
-<td class="row summary_row first_summary_row center">9.96 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row summary_row first_summary_row center">—</td>
-<td class="row summary_row first_summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="2">
-<td class="stub row summary_row right">mean</td>
-<td class="row summary_row center">2.49 × 10<sup class="gt_super">5</sup>
-</td>
-<td class="row summary_row center">—</td>
-<td class="row summary_row center">—</td>
-</tr>
-<tr data-type="summary" data-group="A" data-summary-row="3">
-<td class="stub row summary_row right">sd</td>
-<td class="row summary_row center">6.68 × 10<sup class="gt_super">4</sup>
-</td>
-<td class="row summary_row center">—</td>
-<td class="row summary_row center">—</td>
+<tbody class="gt_table_body gt_striped">
+<tr class="gt_group_heading_row">
+<td colspan="4" class="gt_group_heading">A</td>
 </tr>
 <tr>
-<td data-type="group" colspan="4" class="group_heading">B</td>
-</tr>
-<tr data-type="data" data-row="5">
-<td class="stub row right">1</td>
-<td class="row center">1.91 × 10<sup class="gt_super">5</sup>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">2.35 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row center">328.00</td>
-<td class="row center">35.00%</td>
+<td class="gt_row gt_right">342.20</td>
+<td class="gt_row gt_right">34.00%</td>
 </tr>
-<tr data-type="data" data-row="6">
-<td class="stub row right">2</td>
-<td class="row center">7.48 × 10<sup class="gt_super">5</sup>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">1.84 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row center">671.30</td>
-<td class="row center">98.00%</td>
+<td class="gt_row gt_right">971.70</td>
+<td class="gt_row gt_right">23.00%</td>
 </tr>
-<tr data-type="data" data-row="7">
-<td class="stub row right">3</td>
-<td class="row center">2.53 × 10<sup class="gt_super">5</sup>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">3.43 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row center">934.20</td>
-<td class="row center">74.00%</td>
+<td class="gt_row gt_right">392.60</td>
+<td class="gt_row gt_right">73.00%</td>
 </tr>
-<tr data-type="data" data-row="8">
-<td class="stub row right">4</td>
-<td class="row center">3.44 × 10<sup class="gt_super">5</sup>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">2.34 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row center">673.30</td>
-<td class="row center">27.00%</td>
+<td class="gt_row gt_right">684.50</td>
+<td class="gt_row gt_right">93.00%</td>
 </tr>
-<tr data-type="summary" data-group="B" data-summary-row="1">
-<td class="stub row summary_row first_summary_row right">sum</td>
-<td class="row summary_row first_summary_row center">1.54 × 10<sup class="gt_super">6</sup>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">9.96 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row summary_row first_summary_row center">—</td>
-<td class="row summary_row first_summary_row center">—</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
 </tr>
-<tr data-type="summary" data-group="B" data-summary-row="2">
-<td class="stub row summary_row right">mean</td>
-<td class="row summary_row center">3.84 × 10<sup class="gt_super">5</sup>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_right">2.49 × 10<sup class="gt_super">5</sup>
 </td>
-<td class="row summary_row center">—</td>
-<td class="row summary_row center">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
 </tr>
-<tr data-type="summary" data-group="B" data-summary-row="3">
-<td class="stub row summary_row right">sd</td>
-<td class="row summary_row center">2.51 × 10<sup class="gt_super">5</sup>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sd</td>
+<td class="gt_row gt_summary_row gt_right">6.68 × 10<sup class="gt_super">4</sup>
 </td>
-<td class="row summary_row center">—</td>
-<td class="row summary_row center">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr class="gt_group_heading_row">
+<td colspan="4" class="gt_group_heading">B</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">1</td>
+<td class="gt_row gt_right">1.91 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_right">328.00</td>
+<td class="gt_row gt_right">35.00%</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">2</td>
+<td class="gt_row gt_right">7.48 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_right">671.30</td>
+<td class="gt_row gt_right">98.00%</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">3</td>
+<td class="gt_row gt_right">2.53 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_right">934.20</td>
+<td class="gt_row gt_right">74.00%</td>
+</tr>
+<tr>
+<td class="gt_row gt_stub gt_right">4</td>
+<td class="gt_row gt_right">3.44 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_right">673.30</td>
+<td class="gt_row gt_right">27.00%</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_first_summary_row gt_right">sum</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">1.54 × 10<sup class="gt_super">6</sup>
+</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_first_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">mean</td>
+<td class="gt_row gt_summary_row gt_right">3.84 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+</tr>
+<tr>
+<td class="gt_stub gt_row gt_summary_row gt_right">sd</td>
+<td class="gt_row gt_summary_row gt_right">2.51 × 10<sup class="gt_super">5</sup>
+</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
+<td class="gt_row gt_summary_row gt_right">—</td>
 </tr>
 </tbody>
 </table>
@@ -3287,7 +3269,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Richard Iannone, <a href="https://www.rstudio.com"><img src="https://tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p>
+  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com"><img src="https://tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p>
 </div>
 
 <div class="pkgdown">
