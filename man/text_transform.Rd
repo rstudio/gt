@@ -37,7 +37,7 @@ gt_tbl <-
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         ifelse(x > 20,
-               paste(x, emo::ji(keyword = "happy")),
-               paste(x, emo::ji(keyword = "sad")))
+               paste(x, "(good)"),
+               paste(x, "(worse)"))
       })
 }
