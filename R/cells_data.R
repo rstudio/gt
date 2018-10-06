@@ -48,7 +48,7 @@ to_output_location.cells_data <- function(loc, data_attr) {
 
 text_transform_at_location.cells_data <- function(loc,
                                                   data_attr,
-                                                  func = identity) {
+                                                  fn = identity) {
 
   loc <- to_output_location(loc, data_attr)
   output_df <- data_attr[["output_df"]]
@@ -57,7 +57,7 @@ text_transform_at_location.cells_data <- function(loc,
   for (col in loc$colnames) {
 
     if (col %in% colnames(output_df)) {
-      output_df[[col]][loc$rows] <- func(output_df[[col]][loc$rows])
+      output_df[[col]][loc$rows] <- fn(output_df[[col]][loc$rows])
     }
   }
 
