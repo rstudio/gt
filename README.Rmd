@@ -23,7 +23,7 @@ library(tidyverse)
 
 <p align="center">[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![Travis build status](https://travis-ci.org/rstudio/gt.svg?branch=master)](https://travis-ci.org/rstudio/gt)
+[![Travis build status](https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&branch=master)](https://travis-ci.com/rstudio/gt)
 [![Coverage status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)</p>
 
 The **gt** package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don't have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.
