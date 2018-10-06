@@ -82,7 +82,7 @@ render_as_html <- function(data) {
   output_df <- render_formats(output_df, data_df, formats, context = "html")
 
   # Move input data cells to `output_df` that didn't have
-  #   any rendering applied during `render_formats()`
+  # any rendering applied during `render_formats()`
   output_df <- migrate_unformatted_to_output(data_df, output_df)
 
   # Get the reordering df (`rows_df`) for the data rows
@@ -103,20 +103,19 @@ render_as_html <- function(data) {
   boxhead_spanners <- get_boxhead_spanners_vec(boxh_df)
 
   # Replace NA values in the `groupname` column if there is a reserved
-  #   label for the unlabeled group
+  # label for the unlabeled group
   groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
 
   # Create the `groups_rows_df` data frame, which provides information
-  #   on which rows the group rows should appear above
+  # on which rows the group rows should appear above
   groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
 
   # Apply column names to column labels for any of those column labels not
   # explicitly set
   boxh_df <- migrate_colnames_to_labels(boxh_df)
 
-  # Assign center alignment for all columns that haven't had alignment
+  # Assign default alignment for all columns that haven't had alignment
   # explicitly set
-  # TODO: consider default alignments based on content
   boxh_df <- set_default_alignments(boxh_df)
 
   data_attr$boxh_df <- boxh_df
@@ -126,12 +125,12 @@ render_as_html <- function(data) {
   data_attr$arrange_groups <- arrange_groups
   data_attr$output_df <- output_df
 
-  # TODO: text_transform
+  # Text transformation
   for (transform in transforms) {
     data_attr <- text_transform_at_location(
       loc = transform$resolved,
       data_attr = data_attr,
-      func = transform$func)
+      fn = transform$fn)
   }
 
   output_df <- data_attr$output_df
