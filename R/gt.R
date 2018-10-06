@@ -32,8 +32,7 @@
 #'   fmt_number(
 #'     columns = vars(drat, wt, qsec),
 #'     decimals = 1) %>%
-#'   cols_align_right(
-#'     columns = vars(mpg, cyl, disp))
+#'   cols_label(hp = "HP")
 #' @family table-part creation/modification functions
 #' @export
 gt <- function(data,
