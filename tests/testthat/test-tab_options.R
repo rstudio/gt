@@ -78,6 +78,24 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "14px"))
 
+  # Modify the `table.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(table.font.size = 14)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("16px", "14px"))
+
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("16px", "14px"))
+
   # Modify the `table.background.color`
   tbl_html <- data %>% tab_options(table.background.color = "yellow")
 
@@ -98,6 +116,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("100%", "50%"))
 
+  # Modify the `table.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table.width = 500)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("100%", "500px"))
+
   # Modify the `table.border.top.style`
   tbl_html <- data %>% tab_options(table.border.top.style = "dashed")
 
@@ -110,6 +138,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Modify the `table.border.top.width`
   tbl_html <- data %>% tab_options(table.border.top.width = px(3))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_border_top_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_border_top_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `table.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table.border.top.width = 3)
 
   # Compare before and after values
   c(opts_df_1 %>%
@@ -148,8 +186,28 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "heading_title_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("125%", "18px"))
 
+  # Modify the `heading.title.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(heading.title.font.size = 18)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "heading_title_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "heading_title_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("125%", "18px"))
+
   # Modify the `heading.headnote.font.size`
   tbl_html <- data %>% tab_options(heading.headnote.font.size = px(14))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("85%", "14px"))
+
+  # Modify the `heading.headnote.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(heading.headnote.font.size = 14)
 
   # Compare before and after values
   c(opts_df_1 %>%
@@ -178,6 +236,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "heading_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
+  # Modify the `heading.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(heading.border.bottom.width = 5)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "heading_border_bottom_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "heading_border_bottom_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "5px"))
+
   # Modify the `heading.border.bottom.color`
   tbl_html <- data %>% tab_options(heading.border.bottom.color = "purple")
 
@@ -190,6 +258,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Modify the `boxhead.font.size`
   tbl_html <- data %>% tab_options(boxhead.font.size = px(18))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "boxhead_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "boxhead_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("16px", "18px"))
+
+  # Modify the `boxhead.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(boxhead.font.size = 18)
 
   # Compare before and after values
   c(opts_df_1 %>%
@@ -238,6 +316,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "18px"))
 
+  # Modify the `stub_group.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(stub_group.font.size = 18)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("16px", "18px"))
+
   # Modify the `stub_group.font.weight`
   tbl_html <- data %>% tab_options(stub_group.font.weight = "800")
 
@@ -260,6 +348,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Modify the `stub_group.border.top.width`
   tbl_html <- data %>% tab_options(stub_group.border.top.width = px(5))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `stub_group.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(stub_group.border.top.width = 5)
 
   # Compare before and after values
   c(opts_df_1 %>%
@@ -298,6 +396,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "4px"))
 
+  # Modify the `stub_group.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(stub_group.border.bottom.width = 4)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "4px"))
+
   # Modify the `stub_group.border.bottom.color`
   tbl_html <- data %>% tab_options(stub_group.border.bottom.color = "orange")
 
@@ -320,6 +428,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Modify the `field.border.top.width`
   tbl_html <- data %>% tab_options(field.border.top.width = px(5))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `field.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(field.border.top.width = 5)
 
   # Compare before and after values
   c(opts_df_1 %>%
@@ -358,6 +476,16 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
+  # Modify the `field.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(field.border.bottom.width = 5)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("2px", "5px"))
+
   # Modify the `field.border.bottom.color`
   tbl_html <- data %>% tab_options(field.border.bottom.color = "red")
 
@@ -378,16 +506,190 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value)) %>%
     expect_equal(c("10px", "8px"))
 
+  # Modify the `row.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(row.padding = 8)
 
-  # summary_row.background.color = "pink"
-  # summary_row.padding = px(3)
-  # summary_row.text_transform = "lowercase"
-  # footnote.font.size = px(12)
-  # footnote.padding = px(3)
-  # sourcenote.font.size = px(12)
-  # sourcenote.padding = px(3)
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("10px", "8px"))
 
+  # Modify the `summary_row.background.color`
+  tbl_html <- data %>% tab_options(summary_row.background.color = "pink")
 
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "summary_row_background_color") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "summary_row_background_color") %>% dplyr::pull(value)) %>%
+    expect_equal(c(NA_character_, "pink"))
 
+  # Modify the `summary_row.padding`
+  tbl_html <- data %>% tab_options(summary_row.padding = px(4))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("6px", "4px"))
+
+  # Modify the `summary_row.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(summary_row.padding = 4)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("6px", "4px"))
+
+  # Modify the `summary_row.text_transform`
+  tbl_html <- data %>% tab_options(summary_row.text_transform = "lowercase")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "summary_row_text_transform") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "summary_row_text_transform") %>% dplyr::pull(value)) %>%
+    expect_equal(c("inherit", "lowercase"))
+
+  # Modify the `footnote.font.size`
+  tbl_html <- data %>% tab_options(footnote.font.size = px(12))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("90%", "12px"))
+
+  # Modify the `footnote.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(footnote.font.size = 12)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("90%", "12px"))
+
+  # Modify the `footnote.padding`
+  tbl_html <- data %>% tab_options(footnote.padding = px(3))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("4px", "3px"))
+
+  # Modify the `footnote.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(footnote.padding = 3)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("4px", "3px"))
+
+  # Modify the `sourcenote.font.size`
+  tbl_html <- data %>% tab_options(sourcenote.font.size = px(12))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "sourcenote_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "sourcenote_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("90%", "12px"))
+
+  # Modify the `sourcenote.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(sourcenote.font.size = 12)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "sourcenote_font_size") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "sourcenote_font_size") %>% dplyr::pull(value)) %>%
+    expect_equal(c("90%", "12px"))
+
+  # Modify the `sourcenote.padding`
+  tbl_html <- data %>% tab_options(sourcenote.padding = px(3))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "sourcenote_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "sourcenote_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("4px", "3px"))
+
+  # Modify the `sourcenote.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(sourcenote.padding = 3)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "sourcenote_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "sourcenote_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("4px", "3px"))
+
+  # Modify the `row.striping.include_stub` option
+  tbl_html <- data %>% tab_options(row.striping.include_stub = FALSE)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value)) %>%
+    expect_equal(c("TRUE", "FALSE"))
+
+  # Modify the `row.striping.include_field` option
+  tbl_html <- data %>% tab_options(row.striping.include_field = FALSE)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "row_striping_include_field") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "row_striping_include_field") %>% dplyr::pull(value)) %>%
+    expect_equal(c("TRUE", "FALSE"))
+
+  # Modify the `footnote.glyph` option
+  tbl_html <- data %>% tab_options(footnote.glyph = "LETTERS")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_glyph") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_glyph") %>% dplyr::pull(value)) %>%
+    expect_equal(c("numbers", "LETTERS"))
+
+  # Modify the `footnote.sep` option
+  tbl_html <- data %>% tab_options(footnote.sep = " ")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "footnote_sep") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "footnote_sep") %>% dplyr::pull(value)) %>%
+    expect_equal(c("<br />", " "))
 })
 
+test_that("the `opts_df` getter/setter both function properly", {
+
+  # Obtain a local copy of the internal `opts_df` table
+  opts_df <- attr(data, "opts_df", exact = TRUE)
+
+  # Get a value
+  opts_df %>%
+    opts_df_get(option = "footnote_font_size") %>%
+    expect_equal("90%")
+
+  # Set a value, then immediately get it
+  opts_df %>%
+    opts_df_set(option = "footnote_font_size", value = "60%") %>%
+    opts_df_get(option = "footnote_font_size") %>%
+    expect_equal("60%")
+})
