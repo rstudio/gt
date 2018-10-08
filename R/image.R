@@ -132,3 +132,22 @@ ggplot_image <- function(plot_object,
 
   image_html
 }
+
+#' Generate a path to a test image
+#'
+#' Two test images are available within the \code{gt} package. Both contain the
+#' same imagery (sized at 200px by 200px) but one is a PNG file while the other
+#' is an SVG file.
+#' @param type the type of the image. Can either be \code{png} (the default) or
+#'   \code{svg}.
+#' @export
+test_image <- function(type = c("png", "svg")) {
+
+  type <- match.arg(type)
+
+  if (type == "png") {
+    system_file(file = "graphics/test_image.png")
+  } else {
+    system_file(file = "graphics/test_image.svg")
+  }
+}
