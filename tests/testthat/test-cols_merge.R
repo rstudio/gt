@@ -38,7 +38,7 @@ test_that("the function `cols_merge()` works as expected", {
         col_2 = "wt",
         pattern = "{1} ({2})")
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ({2})")
 
@@ -59,7 +59,7 @@ test_that("the function `cols_merge()` works as expected", {
       col_2 = vars(wt),
       pattern = "{1} ({2})")
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ({2})")
 
@@ -84,7 +84,7 @@ test_that("the function `cols_merge()` works as expected", {
       col_2 = vars(carb),
       pattern = "{1}-{2}")
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
     expect_equal("{1} ({2})")
 
@@ -121,7 +121,7 @@ test_that("the function `cols_merge_uncert()` works as expected", {
       col_val = "col_1",
       col_uncert = "col_2")
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ± {2}")
 
@@ -141,7 +141,7 @@ test_that("the function `cols_merge_uncert()` works as expected", {
       col_val = vars(col_1),
       col_uncert = vars(col_2))
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ± {2}")
 
@@ -164,7 +164,7 @@ test_that("the function `cols_merge_uncert()` works as expected", {
       col_val = vars(col_3),
       col_uncert = vars(col_4))
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
     expect_equal("{1} ± {2}")
 
@@ -201,7 +201,7 @@ test_that("the function `cols_merge_range` works as expected", {
       col_begin = "col_1",
       col_end = "col_2")
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} — {2}")
 
@@ -221,7 +221,7 @@ test_that("the function `cols_merge_range` works as expected", {
       col_begin = vars(col_1),
       col_end = vars(col_2))
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} — {2}")
 
@@ -244,7 +244,7 @@ test_that("the function `cols_merge_range` works as expected", {
       col_begin = vars(col_3),
       col_end = vars(col_4))
 
-  # Expect a that merging statements are stored in `col_merge`
+  # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
     expect_equal("{1} — {2}")
 
