@@ -319,7 +319,7 @@ create_boxhead_component <- function(boxh_df,
     dplyr::select(colname, styles_appended) %>%
     dplyr::distinct()
 
-  # Compose the HTML heading
+  # Compose the headings
   headings <- names(output_df)
 
   # Merge the heading labels
