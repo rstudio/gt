@@ -1,14 +1,13 @@
 #' @importFrom stats setNames
 #' @noRd
-create_footnote_component_rtf <- function(data_attr,
-                                          list_footnotes,
-                                          body_content,
-                                          n_cols) {
+create_footnote_component_rtf <- function(footnotes_resolved,
+                                          opts_df,
+                                          body_content) {
 
-  if (is.null(data_attr$footnote)) {
-    return(
-      list(footnote_component = "",
-           body_content = body_content))
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_resolved) == 0) {
+    return("")
   }
 
   glyphs_footnotes <- c()
