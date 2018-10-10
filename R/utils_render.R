@@ -865,6 +865,14 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
               text,
               footnote_glyph_to_rtf(
                 footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+
+        } else if (output == "latex") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_latex(
+                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
         }
 
         boxh_df["group_label", column_indices] <- text
@@ -900,6 +908,14 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_rtf(
+                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+
+        } else if (output == "latex") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_latex(
                 footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
         }
 
@@ -957,6 +973,12 @@ apply_footnotes_to_output <- function(output_df,
 
         text <-
           paste0(text, footnote_glyph_to_rtf(
+            footnotes_data_glpyhs$fs_id_coalesced[i]))
+
+      } else if (output == "latex") {
+
+        text <-
+          paste0(text, footnote_glyph_to_latex(
             footnotes_data_glpyhs$fs_id_coalesced[i]))
       }
 
@@ -1018,6 +1040,14 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_rtf(
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+
+      } else if (output == "latex") {
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_latex(
               footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
       }
 
