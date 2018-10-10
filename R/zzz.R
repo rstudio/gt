@@ -33,6 +33,7 @@ globalVariables(
     "colnames_start",
     "colnum",
     "colnum_final",
+    "data_attr",
     "footnotes_to_list",
     "fs_id",
     "fs_id_coalesced",
