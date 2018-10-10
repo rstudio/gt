@@ -72,26 +72,37 @@ latex_group_row <- function(group_name,
 latex_head <- function() {
 
   paste0(
+    "\\captionsetup[table]{labelformat=empty}\n",
     "\\begin{table}[h]\n",
+    "\\begin{minipage}{\\linewidth}\n",
     collapse = "")
+}
+
+#' @noRd
+latex_bottom_table <- function() {
+  "\\bottomrule\n"
 }
 
 #' @noRd
 latex_tail <- function() {
 
   paste0(
-    "\\bottomrule\n",
     "\\end{tabular}\n",
     "\\end{minipage}\n",
-    "\\end{table}\n",
     collapse = "")
+}
+
+#' @noRd
+latex_end_table <- function() {
+
+  "\\end{table}\n"
 }
 
 #' @noRd
 latex_tabular <- function(col_alignment) {
 
   paste0(
-    "\\begin{minipage}{\\linewidth}\n",
+    #"\\begin{minipage}{\\linewidth}\n",
     "\\centering",
     "\\begin{tabular}{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
