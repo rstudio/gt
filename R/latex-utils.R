@@ -116,6 +116,7 @@ latex_title <- function(title) {
   paste0("\\caption{", title, "}\n")
 }
 
+#' @noRd
 latex_heading_row <- function(content) {
 
   paste0(
