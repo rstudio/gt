@@ -56,6 +56,19 @@ latex_body_row <- function(content,
 }
 
 #' @noRd
+latex_group_row <- function(group_name,
+                            top_border = TRUE,
+                            bottom_border = TRUE) {
+
+  paste0(
+    ifelse(top_border, "\\midrule\n", ""),
+    "\\multicolumn{1}{l}{", group_name,
+    "} \\\\ \n",
+    ifelse(bottom_border, "\\midrule\n", ""),
+    collapse = "")
+}
+
+#' @noRd
 latex_head <- function() {
 
   paste0(
