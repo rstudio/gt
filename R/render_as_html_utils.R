@@ -182,8 +182,9 @@ create_table_start <- function(groups_rows_df) {
 #' @noRd
 create_heading_component <- function(heading,
                                      footnotes_resolved,
-                                     styles_resolved,
-                                     n_cols) {
+                                     styles_resolved = NULL,
+                                     n_cols,
+                                     output = "html") {
 
   if (length(heading) == 0) {
     return("")
@@ -192,8 +193,11 @@ create_heading_component <- function(heading,
   # Get the resolved footnotes
   footnotes_tbl <- footnotes_resolved
 
-  # Get the resolved styles
-  styles_tbl <- styles_resolved
+  if (output == "html") {
+
+    # Get the resolved styles
+    styles_tbl <- styles_resolved
+  }
 
   # Get the footnote glyphs for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -207,15 +211,24 @@ create_heading_component <- function(heading,
       dplyr::select(fs_id_coalesced) %>%
       dplyr::distinct()
 
-    footnote_title_glyphs <-
-      footnote_glyph_to_html(footnote_title_glyphs$fs_id_coalesced)
+    if (output == "html") {
+
+      footnote_title_glyphs <-
+        footnote_glyph_to_html(footnote_title_glyphs$fs_id_coalesced)
+
+    } else if (output == "rtf") {
+
+      footnote_title_glyphs <-
+        footnote_glyph_to_rtf(footnote_title_glyphs$fs_id_coalesced)
+    }
 
   } else {
     footnote_title_glyphs <- ""
   }
 
   # Get the style attrs for the title
-  if ("title" %in% styles_tbl$locname) {
+  if (output == "html" &&
+      "title" %in% styles_tbl$locname) {
 
     title_style_attrs <-
       styles_tbl %>%
@@ -243,15 +256,25 @@ create_heading_component <- function(heading,
       dplyr::select(fs_id_coalesced) %>%
       dplyr::distinct()
 
-    footnote_headnote_glyphs <-
-      footnote_glyph_to_html(footnote_headnote_glyphs$fs_id_coalesced)
+
+    if (output == "html") {
+
+      footnote_headnote_glyphs <-
+        footnote_glyph_to_html(footnote_headnote_glyphs$fs_id_coalesced)
+
+    } else if (output == "rtf") {
+
+      footnote_headnote_glyphs <-
+        footnote_glyph_to_rtf(footnote_headnote_glyphs$fs_id_coalesced)
+    }
 
   } else {
     footnote_headnote_glyphs <- ""
   }
 
   # Get the style attrs for the headnote
-  if ("headnote" %in% styles_tbl$locname) {
+  if (output == "html" &&
+      "headnote" %in% styles_tbl$locname) {
 
     headnote_style_attrs <-
       styles_tbl %>%
@@ -267,24 +290,46 @@ create_heading_component <- function(heading,
     headnote_style_attrs <- NA_character_
   }
 
-  heading_component <-
-    paste0(
-      "<thead>\n<tr>\n",
-      "<th class='gt_heading gt_title gt_font_normal gt_center' colspan='",
-      n_cols, "'", create_style_attrs(title_style_attrs), ">",
-      heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
-
-  if ("headnote" %in% names(heading)) {
+  if (output == "html") {
 
     heading_component <-
       paste0(
-        heading_component,
+        "<thead>\n<tr>\n",
+        "<th class='gt_heading gt_title gt_font_normal gt_center' colspan='",
+        n_cols, "'", create_style_attrs(title_style_attrs), ">",
+        heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
+
+    if ("headnote" %in% names(heading)) {
+
+      heading_component <-
         paste0(
-          "<tr>\n",
-          "<th ",
-          "class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border' colspan='",
-          n_cols, "'", create_style_attrs(headnote_style_attrs), ">",
-          heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
+          heading_component,
+          paste0(
+            "<tr>\n",
+            "<th ",
+            "class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border' colspan='",
+            n_cols, "'", create_style_attrs(headnote_style_attrs), ">",
+            heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
+    }
+  }
+
+  if (output == "rtf") {
+
+    if ("headnote" %in% names(heading)) {
+
+      heading_component <-
+        rtf_title_headnote(
+          title = paste0(remove_html(heading$title), footnote_title_glyphs),
+          headnote = paste0(remove_html(heading$headnote), footnote_headnote_glyphs),
+          n_cols = n_cols)
+
+    } else {
+
+      heading_component <-
+        rtf_title(
+          title = paste0(remove_html(data_attr$heading), footnote_title_glyphs),
+          n_cols = n_cols)
+    }
   }
 
   heading_component
