@@ -102,7 +102,6 @@ latex_end_table <- function() {
 latex_tabular <- function(col_alignment) {
 
   paste0(
-    #"\\begin{minipage}{\\linewidth}\n",
     "\\centering",
     "\\begin{tabular}{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
