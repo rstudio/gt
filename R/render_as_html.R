@@ -223,8 +223,6 @@ render_as_html <- function(data) {
   list_of_summaries <-
     apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
 
-  # Custom styles -----------------------------------------------------------
-
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
@@ -232,14 +230,15 @@ render_as_html <- function(data) {
       boxhead_spanners, title_defined, headnote_defined,
       footnotes_df = NULL, styles_df = styles_df)
 
-  # Extraction of body content as a vector ----------------------------------
-
+  # Extraction of body content as a vector
   body_content <- as.vector(t(output_df))
-
-  # Composition of HTML -----------------------------------------------------
 
   # Split `body_content` by slices of rows
   row_splits_body <- split_body_content(body_content, n_cols)
+
+
+
+  # Composition of HTML -----------------------------------------------------
 
   # Get styles for the data rows and split in the same fashion as
   # for the content of the data rows
