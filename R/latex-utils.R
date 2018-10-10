@@ -1,49 +1,42 @@
 #' @importFrom stats setNames
 #' @noRd
-create_footnote_component_latex <- function(data_attr,
-                                            list_footnotes,
-                                            body_content,
-                                            n_cols) {
+create_footnote_component_latex <- function(footnotes_resolved,
+                                            opts_df) {
 
-  if (is.null(data_attr$footnote)) {
-    return(
-      list(footnote_component = "",
-           body_content = body_content))
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_resolved) == 0) {
+    return("")
   }
 
-  glyphs_footnotes <- c()
+  footnotes_tbl <-
+    footnotes_resolved %>%
+    dplyr::select(fs_id, text) %>%
+    dplyr::distinct()
 
-  for (i in seq(list_footnotes$footnotes)) {
+  # Get the separator option from `opts_df`
+  separator <- opts_df %>%
+    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::pull(value)
 
-    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
+  # Convert common HTML tags/entities to plaintext
+  separator <-
+    separator %>%
+    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("&nbsp;", " ")
 
-      footnote_glyph <- c()
-      footnote_indices <- list_footnotes$footnotes[[i]]
+  # Create the footnotes block
+  footnote_component <-
+    paste0(
+      "\\begin{minipage}{\\linewidth}\n",
+      paste0(
+        footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
+        footnotes_tbl[["text"]] %>%
+          remove_html() %>%
+          tidy_gsub("_", "\\\\_"),  " \\\\ \n", collapse = ""),
+      "\\end{minipage}\n", collapse = "")
 
-      for (j in seq(footnote_indices)) {
-
-        footnote_text <-
-          data_attr$footnote[[1]][
-            which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
-          unname()
-
-        # Check if the footnote text has been seen before
-        if (!(footnote_text %in% glyphs_footnotes)) {
-          glyphs_footnotes <-
-            c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
-        }
-
-        footnote_glyph <-
-          c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
-      }
-
-      body_content[i] <-
-        paste0(body_content[i], " (", paste(footnote_glyph, collapse = ","), ")")
-    }
-  }
-
-
-  body_content
+  footnote_component
 }
 
 #' @noRd
