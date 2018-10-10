@@ -5,6 +5,13 @@ footnote_glyph_to_html <- function(footnote_glyph) {
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
+# Transform a footnote glyph to an RTF representation as a superscript
+footnote_glyph_to_rtf <- function(footnote_glyph) {
+
+  paste0(
+    "{\\super \\i ", footnote_glyph, "}")
+}
+
 #' @importFrom dplyr filter pull
 #' @noRd
 get_spanner_style <- function(spanner_style_attrs,
