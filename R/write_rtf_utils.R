@@ -51,7 +51,7 @@ rtf_head <- function() {
   paste0(
     "{\\rtf1\\ansi\\ansicpg1252\\cocoartf1561\\cocoasubrtf400\n",
     "{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}\n",
-    "{\\colortbl;\\red255\\green255\\blue255;\\red0\\green0\\blue0;\\red76\\green76\\blue76;\\red0\\green0\\blue0;\n",
+    "{\\colortbl;\\red255\\green255\\blue255;\n",
     "}\n",
     "{\\*\\expandedcolortbl;;\\cssrgb\\c0\\c0\\c0;\\cssrgb\\c37036\\c37036\\c37036;\\csgray\\c0\\c0;\n",
     "}\n",
