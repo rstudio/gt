@@ -10,49 +10,34 @@ create_footnote_component_rtf <- function(footnotes_resolved,
     return("")
   }
 
-  glyphs_footnotes <- c()
+  footnotes_tbl <-
+    footnotes_resolved %>%
+    dplyr::select(fs_id, text) %>%
+    dplyr::distinct()
 
-  for (i in seq(list_footnotes$footnotes)) {
+  # Get the separator option from `opts_df`
+  separator <- opts_df %>%
+    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::pull(value)
 
-    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
-
-      footnote_glyph <- c()
-      footnote_indices <- list_footnotes$footnotes[[i]]
-
-      for (j in seq(footnote_indices)) {
-
-        footnote_text <-
-          data_attr$footnote[[1]][
-            which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
-          unname()
-
-        # Check if the footnote text has been seen before
-        if (!(footnote_text %in% glyphs_footnotes)) {
-          glyphs_footnotes <-
-            c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
-        }
-
-        footnote_glyph <-
-          c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
-      }
-
-      body_content[i] <-
-        paste0(body_content[i], " (", paste(footnote_glyph, collapse = ","), ")")
-    }
-  }
+  # Convert common HTML tags/entities to plaintext
+  separator <-
+    separator %>%
+    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("&nbsp;", " ")
 
   # Create the footnotes block
   footnote_component <-
     paste0(
       "\\pard\\pardeftab720\\sl288\\slmult1\\partightenfactor0\n",
       paste0(
-        "\\f2\\i\\fs14\\fsmilli7333 \\cf2 \\super \\strokec2 ", seq(glyphs_footnotes),
-        "\\f0\\i0\\fs22 \\cf2 \\nosupersub \\strokec2  ",
-        unname(glyphs_footnotes) %>% remove_html(), "\\",
-        collapse = "\n"), "\n")
+        # "\\f2\\i\\fs14\\fsmilli7333 \\super \\strokec2 ", footnotes_tbl[["fs_id"]],
+        # "\\f0\\i0\\fs22 \\nosupersub \\strokec2 ",
+        footnote_glyph_to_rtf(footnotes_tbl[["fs_id"]]),
+        footnotes_tbl[["text"]] %>% remove_html(), "\\",
+        collapse = separator), "\n")
 
-  list(footnote_component = footnote_component,
-       body_content = body_content)
+  footnote_component
 }
 
 #' @noRd
