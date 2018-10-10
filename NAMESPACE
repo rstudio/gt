@@ -3,6 +3,7 @@
 S3method(print,gt_tbl)
 export("%>%")
 export(apply_styles)
+export(as_latex)
 export(as_raw_html)
 export(as_rtf)
 export(blocks_arrange)
