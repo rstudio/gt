@@ -1,6 +1,6 @@
 
-# Utility function to generate column numbers from column names
-#   Used in: `resolve_footnotes_styles()`
+# Utility function to generate column numbers from column names;
+# used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(boxh_df,
                               colname) {
 
@@ -17,8 +17,8 @@ colname_to_colnum <- function(boxh_df,
   cnames
 }
 
-# Utility function to generate finalized row numbers
-#   Used in: `resolve_footnotes_styles()`
+# Utility function to generate finalized row numbers;
+# used in: `resolve_footnotes_styles()`
 rownum_translation <- function(output_df,
                                rownum_start) {
 
