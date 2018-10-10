@@ -55,7 +55,8 @@ rtf_head <- function() {
     "}\n",
     "{\\*\\expandedcolortbl;;\\cssrgb\\c0\\c0\\c0;\\cssrgb\\c37036\\c37036\\c37036;\\csgray\\c0\\c0;\n",
     "}\n",
-    "\\deftab20\n\n", collapse = "")
+    "\\deftab20\n",
+    "\\cf0\n", collapse = "")
 }
 
 #' @noRd
