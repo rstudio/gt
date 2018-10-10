@@ -803,7 +803,8 @@ resolve_footnotes_styles <- function(output_df,
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 set_footnote_glyphs_boxhead <- function(footnotes_resolved,
-                                        boxh_df) {
+                                        boxh_df,
+                                        output = "html") {
 
   # Get the resolved footnotes
   footnotes_tbl <- footnotes_resolved
@@ -849,11 +850,22 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
           boxh_df["group_label", column_indices] %>%
           unlist() %>% unname() %>% unique()
 
-        text <-
-          paste0(
-            text,
-            footnote_glyph_to_html(
-              footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+        if (output == "html") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_html(
+                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+
+        } else if (output == "rtf") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_rtf(
+                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+        }
 
         boxh_df["group_label", column_indices] <- text
       }
@@ -874,11 +886,22 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
         text <-
           boxh_df["column_label", footnotes_boxhead_column_glyphs$colname[i]]
 
-        text <-
-          paste0(
-            text,
-            footnote_glyph_to_html(
-              footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+        if (output == "html") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_html(
+                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+
+        } else if (output == "rtf") {
+
+          text <-
+            paste0(
+              text,
+              footnote_glyph_to_rtf(
+                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+        }
 
         boxh_df[
           "column_label", footnotes_boxhead_column_glyphs$colname[i]] <- text
@@ -893,7 +916,8 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_footnotes_to_output <- function(output_df,
-                                      footnotes_resolved) {
+                                      footnotes_resolved,
+                                      output = "html") {
 
   # `data` location
   footnotes_tbl_data <-
@@ -923,7 +947,18 @@ apply_footnotes_to_output <- function(output_df,
       text <-
         output_df[footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]
 
-      text <- paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
+      if (output == "html") {
+
+        text <-
+          paste0(text, footnote_glyph_to_html(
+            footnotes_data_glpyhs$fs_id_coalesced[i]))
+
+      } else if (output == "rtf") {
+
+        text <-
+          paste0(text, footnote_glyph_to_rtf(
+            footnotes_data_glpyhs$fs_id_coalesced[i]))
+      }
 
       output_df[
         footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]] <- text
@@ -937,7 +972,8 @@ apply_footnotes_to_output <- function(output_df,
 #' @importFrom htmltools htmlEscape
 #' @noRd
 set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
-                                            groups_rows_df) {
+                                            groups_rows_df,
+                                            output = "html") {
 
   # Get the resolved footnotes
   footnotes_tbl <- footnotes_resolved
@@ -968,11 +1004,22 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
 
       text <- htmltools::htmlEscape(groups_rows_df[row_index, "group_label"])
 
-      text <-
-        paste0(
-          text,
-          footnote_glyph_to_html(
-            footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+      if (output == "html") {
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_html(
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+
+      } else if (output == "rtf") {
+
+        text <-
+          paste0(
+            text,
+            footnote_glyph_to_rtf(
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+      }
 
       groups_rows_df[row_index, "group_label"] <- text
     }
