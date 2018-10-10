@@ -251,7 +251,7 @@ render_as_html <- function(data) {
   # Create a heading component of the table and handle any available footnotes
   heading_component <-
     create_heading_component(
-      heading, footnotes_resolved, styles_resolved, n_cols)
+      heading, footnotes_resolved, styles_resolved, n_cols, output = "html")
 
   # Create the boxhead component of the table
   boxhead_component <-
