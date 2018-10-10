@@ -102,13 +102,21 @@ render_as_html <- function(data) {
   # boxhead spanner labels
   boxhead_spanners <- get_boxhead_spanners_vec(boxh_df)
 
+  # Create the `groups_rows_df` data frame, which provides information
+  # on which rows the group rows should appear above
+  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
   groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
 
-  # Create the `groups_rows_df` data frame, which provides information
-  # on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+  # Replace NA values in the `group` and `group_label` columns of
+  # `group_rows_df`
+  if (!is.na(others_group)) {
+    groups_rows_df[
+      is.na(groups_rows_df[, "group"]),
+      c("group", "group_label")] <- others_group
+  }
 
   # Apply column names to column labels for any of those column labels not
   # explicitly set
