@@ -245,6 +245,23 @@ process_text <- function(text) {
   }
 }
 
+unescape_html <- function(text) {
+
+  text %>%
+    tidy_gsub("&lt;", "<") %>%
+    tidy_gsub("&gt;", ">") %>%
+    tidy_gsub("&amp;", "&")
+}
+
+escape_latex <- function(text) {
+
+  text %>%
+    tidy_gsub("\\\\", "\\\\textbackslash") %>%
+    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
+    tidy_gsub("~", "\\\\textasciitilde") %>%
+    tidy_gsub("\\^", "\\\\textasciicircum")
+}
+
 # Get prepending and appending text based on a simple pattern
 get_pre_post_txt <- function(pattern) {
 
@@ -278,10 +295,8 @@ remove_html <- function(text) {
 #' @noRd
 get_css_tbl <- function(data) {
 
-  id <- "id"
-
   raw_css_vec <-
-    compile_scss(data, id) %>%
+    compile_scss(data) %>%
     as.character() %>%
     strsplit("\n") %>%
     unlist()
@@ -289,7 +304,7 @@ get_css_tbl <- function(data) {
   ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
   ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
 
-  css_tbl <- tibble()
+  css_tbl <- dplyr::tibble()
 
   for (i in seq(ruleset_start)) {
 
@@ -312,8 +327,9 @@ get_css_tbl <- function(data) {
       )
   }
 
-  css_tbl <- css_tbl %>%
-    dplyr::mutate(type = case_when(
+  css_tbl <-
+    css_tbl %>%
+    dplyr::mutate(type = dplyr::case_when(
       stringr::str_detect(selector, "^[a-z]") ~ "element",
       stringr::str_detect(selector, "^#") ~ "id",
       stringr::str_detect(selector, "^\\.") ~ "class")) %>%
