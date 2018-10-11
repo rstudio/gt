@@ -32,8 +32,8 @@ create_footnote_component_latex <- function(footnotes_resolved,
       paste0(
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>%
-          remove_html() %>%
-          tidy_gsub("_", "\\\\_"),  " \\\\ \n", collapse = ""),
+          unescape_html() %>%
+          escape_latex(), " \\\\ \n", collapse = ""),
       "\\end{minipage}\n", collapse = "")
 
   footnote_component
