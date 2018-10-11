@@ -273,9 +273,6 @@ as_latex <- function(data) {
     headings[which(headings == "rowname")] <- ""
   }
 
-  # Remove any HTML tags from `headings`
-  headings <- remove_html(headings)
-
   table_col_headings <-
     paste0(latex_heading_row(content = headings), collapse = "")
 
@@ -283,9 +280,6 @@ as_latex <- function(data) {
 
     # spanners
     spanners <- boxh_df[1, ] %>% t() %>% as.vector()
-
-    # Remove any HTML tags from `spanners`
-    spanners <- remove_html(spanners)
 
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
