@@ -349,12 +349,16 @@ create_heading_component <- function(heading,
     }
   }
 
+
+  # TODO: rename remove_html() to unescape_html()
+  # TODO: create and use function escape_latex()
+
   if (output == "latex") {
 
     heading_component <-
       paste0(
         "\\caption{",
-        paste0(remove_html(heading$title), footnote_title_glyphs),
+        paste0(escape_latex(unescape_html(heading$title)), footnote_title_glyphs),
         "}\n")
 
     if ("headnote" %in% names(heading)) {
@@ -364,7 +368,7 @@ create_heading_component <- function(heading,
           heading_component,
           paste0(
             "\\caption{\\scriptsize ",
-            paste0(remove_html(heading$headnote), footnote_headnote_glyphs),
+            paste0(escape_latex(unescape_html(heading$headnote)), footnote_headnote_glyphs),
             "}\n"))
     }
   }
