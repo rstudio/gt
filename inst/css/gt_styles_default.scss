@@ -1,0 +1,175 @@
+@mixin gt_styles() {
+
+  .gt_table {
+    border-collapse: collapse;
+    color: font-color($table_background_color);
+    font-size: $table_font_size;
+    background-color: $table_background_color; /* table.background.color */
+    width: $table_width; /* table.width */
+    border-top-style: $table_border_top_style; /* table.border.top.style */
+    border-top-width: $table_border_top_width; /* table.border.top.width */
+    border-top-color: $table_border_top_color; /* table.border.top.color */
+  }
+
+  .gt_heading {
+    background-color: $heading_background_color; /* heading.background.color */
+    border-bottom-color: $table_background_color;
+  }
+
+  .gt_title {
+    color: font-color($heading_background_color);
+    font-size: $heading_title_font_size; /* heading.title.font.size */
+    padding-top: 4px; /* heading.top.padding */
+    padding-bottom: 1px;
+    border-bottom-color: $table_background_color;
+    border-bottom-width: 0;
+  }
+
+  .gt_headnote {
+    color: font-color($heading_background_color);
+    font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
+    padding-top: 1px;
+    padding-bottom: 4px; /* heading.bottom.padding */
+    border-top-color: $table_background_color;
+    border-top-width: 0;
+  }
+
+  .gt_bottom_border {
+    border-bottom-style: $heading_border_bottom_style; /* heading.border.bottom.style */
+    border-bottom-width: $heading_border_bottom_width; /* heading.border.bottom.width */
+    border-bottom-color: $heading_border_bottom_color; /* heading.border.bottom.color */
+  }
+
+  .gt_column_spanner {
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #A8A8A8;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .gt_col_heading {
+    color: font-color($boxhead_background_color);
+    background-color: $boxhead_background_color; /* boxhead.background.color */
+    font-size: $boxhead_font_size; /* boxhead.font.size */
+    font-weight: $boxhead_font_weight; /* boxhead.font.weight */
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .gt_sep_right {
+    border-right: 5px solid #{$boxhead_background_color};
+  }
+
+  .gt_group_heading {
+    padding: 8px;
+    color: font-color($stub_group_background_color);
+    background-color: $stub_group_background_color; /* stub_group.background.color */
+    font-size: $stub_group_font_size; /* stub_group.font.size */
+    font-weight: $stub_group_font_weight; /* stub_group.font.weight */
+    border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
+    border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
+    border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
+    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom  .style */
+    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom  .width */
+    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom  .color */
+  }
+
+  .gt_empty_group_heading {
+    padding: 0.5px;
+    color: font-color($stub_group_background_color);
+    background-color: $stub_group_background_color; /* stub_group.background.color */
+    font-size: $stub_group_font_size; /* stub_group.font.size */
+    font-weight: $stub_group_font_weight; /* stub_group.font.weight */
+    border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
+    border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
+    border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
+    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom  .style */
+    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom  .width */
+    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom  .color */
+  }
+
+  .gt_striped tr:nth-child(even) {
+     background-color: darken($table_background_color, 5%);
+  }
+
+  .gt_row {
+    padding: $row_padding; /* row.padding */
+    margin: 10px;
+  }
+
+  .gt_stub {
+    width: 10%;
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-right-color: #A8A8A8;
+    &.gt_row {
+      background-color: $table_background_color;
+    }
+  }
+
+  .gt_summary_row {
+    background-color: $summary_row_background_color; /* summary_row.background.color */
+    padding: $summary_row_padding; /* summary_row.padding */
+    text-transform: $summary_row_text_transform; /* summary_row.text_transform */
+  }
+
+  .gt_first_summary_row {
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: #A8A8A8;
+  }
+
+  .gt_table_body {
+    border-top-style: $field_border_top_style; /* field.border.top.style */
+    border-top-width: $field_border_top_width; /* field.border.top.width */
+    border-top-color: $field_border_top_color; /* field.border.top.color */
+    border-bottom-style: $field_border_bottom_style; /* field.border.bottom.style */
+    border-bottom-width: $field_border_bottom_width; /* field.border.bottom.width */
+    border-bottom-color: $field_border_bottom_color; /* field.border.bottom.color */
+  }
+
+  .gt_footnote {
+    font-size: $footnote_font_size; /* footnote.font.size */
+    padding: $footnote_padding; /* footnote.padding */
+  }
+
+  .gt_sourcenote {
+    font-size: $sourcenote_font_size; /* sourcenote.font.size */
+    padding: $sourcenote_padding; /* sourcenote.padding */
+  }
+
+  .gt_center {
+    text-align:center;
+  }
+
+  .gt_left {
+    text-align:left;
+  }
+
+  .gt_right {
+    text-align:right;
+  }
+
+  .gt_font_normal {
+    font-weight:normal;
+  }
+
+  .gt_font_bold {
+    font-weight:bold;
+  }
+
+  .gt_font_italic {
+    font-style:italic;
+  }
+
+  .gt_super {
+    font-size:65%;
+  }
+
+  .gt_footnote_glyph {
+    font-style:italic;
+    font-size:65%;
+  }
+
+}
