@@ -1,64 +1,48 @@
 #' @importFrom stats setNames
 #' @noRd
-create_footnote_component_rtf <- function(data_attr,
-                                          list_footnotes,
-                                          body_content,
-                                          n_cols) {
+create_footnote_component_rtf <- function(footnotes_resolved,
+                                          opts_df,
+                                          body_content) {
 
-  if (is.null(data_attr$footnote)) {
-    return(
-      list(footnote_component = "",
-           body_content = body_content))
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_resolved) == 0) {
+    return("")
   }
 
-  glyphs_footnotes <- c()
+  footnotes_tbl <-
+    footnotes_resolved %>%
+    dplyr::select(fs_id, text) %>%
+    dplyr::distinct()
 
-  for (i in seq(list_footnotes$footnotes)) {
+  # Get the separator option from `opts_df`
+  separator <- opts_df %>%
+    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::pull(value)
 
-    if (any(!is.na(list_footnotes$footnotes[[i]]))) {
-
-      footnote_glyph <- c()
-      footnote_indices <- list_footnotes$footnotes[[i]]
-
-      for (j in seq(footnote_indices)) {
-
-        footnote_text <-
-          data_attr$footnote[[1]][
-            which(names(data_attr$footnote[[1]]) == footnote_indices[j])] %>%
-          unname()
-
-        # Check if the footnote text has been seen before
-        if (!(footnote_text %in% glyphs_footnotes)) {
-          glyphs_footnotes <-
-            c(glyphs_footnotes, stats::setNames(footnote_text, footnote_indices[j]))
-        }
-
-        footnote_glyph <-
-          c(footnote_glyph, unname(which(glyphs_footnotes == footnote_text)))
-      }
-
-      body_content[i] <-
-        paste0(body_content[i], " (", paste(footnote_glyph, collapse = ","), ")")
-    }
-  }
+  # Convert common HTML tags/entities to plaintext
+  separator <-
+    separator %>%
+    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("&nbsp;", " ")
 
   # Create the footnotes block
   footnote_component <-
     paste0(
       "\\pard\\pardeftab720\\sl288\\slmult1\\partightenfactor0\n",
       paste0(
-        "\\f2\\i\\fs14\\fsmilli7333 \\cf2 \\super \\strokec2 ", seq(glyphs_footnotes),
-        "\\f0\\i0\\fs22 \\cf2 \\nosupersub \\strokec2  ",
-        unname(glyphs_footnotes) %>% remove_html(), "\\",
-        collapse = "\n"), "\n")
+        # "\\f2\\i\\fs14\\fsmilli7333 \\super \\strokec2 ", footnotes_tbl[["fs_id"]],
+        # "\\f0\\i0\\fs22 \\nosupersub \\strokec2 ",
+        footnote_glyph_to_rtf(footnotes_tbl[["fs_id"]]),
+        footnotes_tbl[["text"]] %>% remove_html(), "\\",
+        collapse = separator), "\n")
 
-  list(footnote_component = footnote_component,
-       body_content = body_content)
+  footnote_component
 }
 
 #' @noRd
 col_width_twips <- function() {
-  1080L
+  935L
 }
 
 #' @noRd
@@ -67,11 +51,12 @@ rtf_head <- function() {
   paste0(
     "{\\rtf1\\ansi\\ansicpg1252\\cocoartf1561\\cocoasubrtf400\n",
     "{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}\n",
-    "{\\colortbl;\\red255\\green255\\blue255;\\red0\\green0\\blue0;\\red76\\green76\\blue76;\\red0\\green0\\blue0;\n",
+    "{\\colortbl;\\red255\\green255\\blue255;\n",
     "}\n",
     "{\\*\\expandedcolortbl;;\\cssrgb\\c0\\c0\\c0;\\cssrgb\\c37036\\c37036\\c37036;\\csgray\\c0\\c0;\n",
     "}\n",
-    "\\deftab20\n\n", collapse = "")
+    "\\deftab20\n",
+    "\\cf0\n", collapse = "")
 }
 
 #' @noRd
@@ -84,18 +69,18 @@ rtf_title_headnote <- function(title, headnote, n_cols) {
     paste0("\\clmgf \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt100 \\gaph\\cellx", twips[1], "\n"),
     paste0("\\clmrg \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt100 \\gaph\\cellx", twips[2:length(twips)], "\n", collapse = ""),
     "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-    "\\f0\\fs36 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
+    "\\f0\\fs36 \\expnd0\\expndtw0\\kerning0\n",
     paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", title, "\n"),
-    "\\fs24 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n",
+    "\\fs24  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n",
     paste0(rep("\\pard\\intbl\\itap1\\cell\n", n_cols - 1), collapse = ""),
     "\\row\n\n",
     "\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil\n",
     paste0("\\clmgf \\clvertalc \\clshdrawnil \\clheight240 \\clbrdrt\\brdrnil \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadb100 \\gaph\\cellx", twips[1], "\n"),
     paste0("\\clmrg \\clvertalc \\clshdrawnil \\clheight240 \\clbrdrt\\brdrnil \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadb100 \\gaph\\cellx", twips[2:length(twips)], "\n", collapse = ""),
     "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n\n",
-    "\\fs20 \\cf2 \\expnd0\\expndtw0\\kerning0",
+    "\\fs20 \\expnd0\\expndtw0\\kerning0",
     paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", headnote, "\n"),
-    "\\fs28 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell",
+    "\\fs28  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell",
     paste0(rep("\\pard\\intbl\\itap1\\cell\n", n_cols - 1), collapse = ""),
     "\\row")
 }
@@ -110,9 +95,9 @@ rtf_title <- function(title, n_cols) {
     paste0("\\clmgf \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt100 \\clpadb100 \\gaph\\cellx", twips[1], "\n"),
     paste0("\\clmrg \\clvertalb \\clshdrawnil \\clheight340 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt100 \\clpadb100 \\gaph\\cellx", twips[2:length(twips)], "\n", collapse = ""),
     "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-    "\\f0\\fs36 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
+    "\\f0\\fs36 \\expnd0\\expndtw0\\kerning0\n",
     paste0("\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", title, "\n"),
-    "\\fs24 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n",
+    "\\fs24  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n",
     paste0(rep("\\pard\\intbl\\itap1\\cell\n", n_cols - 1), collapse = ""),
     "\\row\n\n")
 }
@@ -168,8 +153,8 @@ rtf_heading_group_row <- function(spanners_lengths,
         c(output,
           "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
           ifelse(i == 1, "\\f0\\fs24\n", ""),
-          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+          "\\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
 
     } else if (lengths[i] > 1 && !(values[i] %in% headings)) {
 
@@ -180,8 +165,8 @@ rtf_heading_group_row <- function(spanners_lengths,
             c(output,
               "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
               ifelse(i == 1, "\\f0\\fs24\n", ""),
-              "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-              "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+              "\\expnd0\\expndtw0\\kerning0\n",
+              "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
         }
 
         if (j != 1) {
@@ -195,8 +180,8 @@ rtf_heading_group_row <- function(spanners_lengths,
         c(output,
           "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
           ifelse(i == 1, "\\f0\\fs24\n", ""),
-          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+          "\\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", values[i], "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
     }
   }
 
@@ -251,16 +236,16 @@ rtf_heading_group_row <- function(spanners_lengths,
       output_b <-
         c(output_b,
           "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", headings[i], "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
+          "\\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", headings[i], "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n")
 
     } else if (headings[i] != spanners[i] && sum(spanners == spanners[i]) == 1) {
 
       output_b <-
         c(output_b,
           "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-          "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", headings[i], "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cf2 \\expnd0\\expndtw0\\kerning0\n",
+          "\\expnd0\\expndtw0\\kerning0\n",
+          "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", headings[i], "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\expnd0\\expndtw0\\kerning0\n",
           "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\cell\n")
     }
   }
@@ -282,8 +267,8 @@ rtf_heading_row <- function(content) {
       paste0("\\clvertalc \\clshdrawnil \\clheight520 \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw40\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\gaph\\cellx", twips, "\n", collapse = ""),
       paste0(
         "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-        "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-        "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
+        "\\expnd0\\expndtw0\\kerning0\n",
+        "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, " \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
       collapse = ""),
     " \\row")
 }
@@ -303,8 +288,8 @@ rtf_body_row <- function(content,
           paste0("\\clvertalc \\clshdrawnil \\clbrdrt\\brdrnil \\clbrdrl\\brdrnil \\clbrdrb\\brdrnil \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt50 \\clpadb50 \\gaph\\cellx", twips, "\n", collapse = ""),
           paste0(
             "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
+            "\\expnd0\\expndtw0\\kerning0\n",
+            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content, " \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
           collapse = ""),
         " \\row"))
 
@@ -317,8 +302,8 @@ rtf_body_row <- function(content,
           paste0("\\clvertalc \\clshdrawnil \\clbrdrt\\brdrs\\brdrw40\\brdrcf3 \\clbrdrl\\brdrnil \\clbrdrb\\brdrs\\brdrw10\\brdrcf3 \\clbrdrr\\brdrnil \\clpadl100 \\clpadr100 \\clpadt50 \\clpadb50 \\gaph\\cellx", twips, "\n", collapse = ""),
           paste0(
             "\\pard\\intbl\\itap1\\pardeftab20\\ql\\partightenfactor0\n",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", content, "\\b0 \\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
+            "\\expnd0\\expndtw0\\kerning0\n",
+            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\b ", content, "\\b0  \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n", collapse = ""),
           collapse = ""),
         " \\row"))
   }
@@ -341,16 +326,16 @@ rtf_last_body_row <- function(content) {
         c(output,
           paste0(
             "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n"))
+            "\\expnd0\\expndtw0\\kerning0\n",
+            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], " \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\cell\n"))
 
     } else {
       output <-
         c(output,
           paste0(
             "\\pard\\intbl\\itap1\\pardeftab20\\qc\\partightenfactor0\n",
-            "\\cf2 \\expnd0\\expndtw0\\kerning0\n",
-            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], "\\cf0 \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0\\cf2 \\expnd0\\expndtw0\\kerning0\n",
+            "\\expnd0\\expndtw0\\kerning0\n",
+            "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 ", content[i], " \\kerning1\\expnd0\\expndtw0 \\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0\\expnd0\\expndtw0\\kerning0\n",
             "\\up0 \\nosupersub \\ulnone \\outl0\\strokewidth0 \\strokec2 \\cell \\lastrow\\row"))
     }
   }
