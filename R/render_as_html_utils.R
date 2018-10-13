@@ -12,6 +12,13 @@ footnote_glyph_to_rtf <- function(footnote_glyph) {
     "{\\super \\i ", footnote_glyph, "}")
 }
 
+# Transform a footnote glyph to a Latex representation as a superscript
+footnote_glyph_to_latex <- function(footnote_glyph) {
+
+  paste0(
+    "\\textsuperscript{", footnote_glyph, "}")
+}
+
 #' @importFrom dplyr filter pull
 #' @noRd
 get_spanner_style <- function(spanner_style_attrs,
@@ -220,6 +227,11 @@ create_heading_component <- function(heading,
 
       footnote_title_glyphs <-
         footnote_glyph_to_rtf(footnote_title_glyphs$fs_id_coalesced)
+
+    } else if (output == "latex") {
+
+      footnote_title_glyphs <-
+        footnote_glyph_to_latex(footnote_title_glyphs$fs_id_coalesced)
     }
 
   } else {
@@ -266,6 +278,11 @@ create_heading_component <- function(heading,
 
       footnote_headnote_glyphs <-
         footnote_glyph_to_rtf(footnote_headnote_glyphs$fs_id_coalesced)
+
+    } else if (output == "latex") {
+
+      footnote_headnote_glyphs <-
+        footnote_glyph_to_latex(footnote_headnote_glyphs$fs_id_coalesced)
     }
 
   } else {
@@ -327,8 +344,32 @@ create_heading_component <- function(heading,
 
       heading_component <-
         rtf_title(
-          title = paste0(remove_html(data_attr$heading), footnote_title_glyphs),
+          title = paste0(remove_html(heading$heading), footnote_title_glyphs),
           n_cols = n_cols)
+    }
+  }
+
+
+  # TODO: rename remove_html() to unescape_html()
+  # TODO: create and use function escape_latex()
+
+  if (output == "latex") {
+
+    heading_component <-
+      paste0(
+        "\\caption{",
+        paste0(escape_latex(unescape_html(heading$title)), footnote_title_glyphs),
+        "}\n")
+
+    if ("headnote" %in% names(heading)) {
+
+      heading_component <-
+        paste0(
+          heading_component,
+          paste0(
+            "\\caption{\\scriptsize ",
+            paste0(escape_latex(unescape_html(heading$headnote)), footnote_headnote_glyphs),
+            "}\n"))
     }
   }
 
