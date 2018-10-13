@@ -397,13 +397,13 @@ test_that("the `inline_html_styles()` util fcn works as expected", {
   inlined_html <-
     inline_html_styles(html, css_tbl = css_tbl)
 
-  # expect_true(
-  #   grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;border-collapse:collapse;color:#000000;font-size:16px;background-color:#FFFFFF;width:100%;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
-  # )
-  #
-  # expect_true(
-  #   grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;padding:10px;margin:10px;text-align:right;\"", inlined_html)
-  # )
+  expect_true(
+    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;border-collapse:collapse;color:#000000;font-size:16px;background-color:#FFFFFF;width:100%;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+  )
+
+  expect_true(
+    grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;padding:10px;margin:10px;text-align:right;\"", inlined_html)
+  )
 })
 
 test_that("the `as_locations()` util fcn works as expected", {
