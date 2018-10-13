@@ -20,6 +20,7 @@ output data frames contain the \code{groupname} and \code{rowname} columns,
 whereby \code{rowname} contains descriptive stub labels for the summary rows.
 }
 \seealso{
-Other table export functions: \code{\link{as_latex}}
+Other table export functions: \code{\link{as_latex}},
+  \code{\link{as_rtf}}
 }
 \concept{table export functions}
