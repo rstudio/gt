@@ -1,11 +1,12 @@
 library(gt)
 
-# Create an HTML table that is suitable for
+# Create HTML tables that are suitable for
 # emailing; this requires `as_raw_html()` to
 # generate inline CSS styles, which are essential
 # (i.e., they won't be stripped away)
-html_tbl <-
-  gt(data = airquality) %>%
+
+html_tbl_1 <-
+  gt(data = airquality[1:3, ]) %>%
   cols_move_to_start(columns = vars(Month, Day)) %>%
   cols_label(Solar.R = html("Solar<br>Radiation")) %>%
   fmt_number(
@@ -19,16 +20,24 @@ html_tbl <-
   fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp)) %>%
   as_raw_html(inline_css = TRUE)
 
+html_tbl_2 <-
+  gt(mtcars[1:3, ], rownames_to_stub = TRUE) %>%
+  tab_options(
+    table.width = "200px") %>%
+  as_raw_html(inline_css = TRUE)
+
 # Create an email message using the
 # `compose_email()` function from the
 # blastula package
 email <-
-  compose_email(
+  blastula::compose_email(
     body = "
   Hello,
 
   This is an email generated and sent \\
-  using the `blastula` R package.
+  using the **blastula** R package. For more \\
+  information on that package, please visit \\
+  https://github.com/rich-iannone/blastula
 
   We can use Markdown formatting \\
   to **embolden** text or to add \\
@@ -37,12 +46,18 @@ email <-
   Here is a `gt` table based on the \\
   `airquality` dataset:
 
-  {html_tbl}
+  {html_tbl_1}
+
+  Here is a `gt` table based on the \\
+  `mtcars` dataset:
+
+  {html_tbl_2}
+
   "
 )
 
 # Preview the email in the RStudio Viewer
-email %>% preview_email()
+email %>% blastula::preview_email()
 
 # Create a credentials file for sending
 # this message through Gmail
