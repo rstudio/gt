@@ -102,6 +102,14 @@ when striping rows.}
 Modify the options available in a table. These options are named by the
 components, the subcomponents, and the element that can adjusted.
 }
+\examples{
+# Create a table object using the
+# `mtcars` dataset and set the width
+# of the table to 300px
+gt_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+  tab_options(table.width = "900px")
+}
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_boxhead_panel}},
