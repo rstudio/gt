@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Move one or more columns — cols_move • gt</title>
+<title>Save a gt table object as an RTF file — as_rtf • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Move one or more columns — cols_move" />
+<meta property="og:title" content="Save a gt table object as an RTF file — as_rtf" />
 
-<meta property="og:description" content="Move one or more columns" />
+<meta property="og:description" content="Take a gt_tbl table object and render it to an RTF file with the
+extension .rtf." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,72 +128,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Move one or more columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/modify_columns.R'><code>R/modify_columns.R</code></a></small>
-    <div class="hidden name"><code>cols_move.Rd</code></div>
+    <h1>Save a gt table object as an RTF file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/as_rtf.R'><code>R/as_rtf.R</code></a></small>
+    <div class="hidden name"><code>as_rtf.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Move one or more columns</p>
+    <p>Take a <code>gt_tbl</code> table object and render it to an RTF file with the
+extension <code>.rtf</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cols_move</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='no'>after</span>)</pre>
+    <pre class="usage"><span class='fu'>as_rtf</span>(<span class='no'>data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
-function.</p></td>
-    </tr>
-    <tr>
-      <th>columns</th>
-      <td><p>the column names to move to as a group to a different
-position. The order of the remaining columns will be preserved.</p></td>
-    </tr>
-    <tr>
-      <th>after</th>
-      <td><p>a column name used to anchor the insertion of the moved columns.
-All of the moved columns will be placed to the right of this column.</p></td>
+      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an object of class <code>gt_tbl</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
-  <code><a href='cols_hide.html'>cols_hide</a></code>, <code><a href='cols_label.html'>cols_label</a></code>,
-  <code><a href='cols_merge_range.html'>cols_merge_range</a></code>,
-  <code><a href='cols_merge_uncert.html'>cols_merge_uncert</a></code>,
-  <code><a href='cols_merge.html'>cols_merge</a></code>, <code><a href='cols_move_to_end.html'>cols_move_to_end</a></code>,
-  <code><a href='cols_move_to_start.html'>cols_move_to_start</a></code>,
-  <code><a href='cols_split_delim.html'>cols_split_delim</a></code></p></div>
+    <div class='dont-index'><p>Other table export functions: <code><a href='as_latex.html'>as_latex</a></code>,
+  <code><a href='extract_summary.html'>extract_summary</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and move the `mpg`,</span>
-<span class='co'># `cyl`, and `disp` columns to the right</span>
-<span class='co'># of `qsec`</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_move</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg</span>, <span class='no'>cyl</span>, <span class='no'>disp</span>),
-      <span class='kw'>after</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>qsec</span>))</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Create a `gt` table using the `sleep`</span>
+<span class='co'># dataset and then output the table to</span>
+<span class='co'># a raw RTF object</span>
+<span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as_rtf</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"sleep.rtf"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
