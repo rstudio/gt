@@ -2,9 +2,9 @@
 % Please edit documentation in R/zzz.R
 \name{gt-options}
 \alias{gt-options}
-\title{The gt package options.}
+\title{gt package options}
 \description{
-The gt package options.
+gt package options
 }
 \section{Package options}{
 
