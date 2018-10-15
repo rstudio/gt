@@ -105,7 +105,7 @@
 <p align="center">
 <img src="reference/figures/gt_logo_1x.png" height="500px"></p>
 <p align="center">
-<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a> <a href="https://travis-ci.org/rstudio/gt"><img src="https://travis-ci.org/rstudio/gt.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a>
+<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a> <a href="https://travis-ci.com/rstudio/gt"><img src="https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&amp;branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a>
 </p>
 <p>The <strong>gt</strong> package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don’t have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.</p>
 <p>Let’s identify the underlying components of a table and understand their roles. The model for the constituent parts of a table can be explained in part by the following schematic:</p>
@@ -233,6 +233,8 @@ understand as the nature of the material will permit.</code></pre>
 <p><strong>Format Data</strong></p>
 <ul>
 <li>
+<code><a href="reference/fmt.html">fmt()</a></code> – set a column format with a formatter function</li>
+<li>
 <code><a href="reference/fmt_number.html">fmt_number()</a></code> – format numeric values</li>
 <li>
 <code><a href="reference/fmt_scientific.html">fmt_scientific()</a></code> – format values to scientific notation</li>
@@ -251,16 +253,12 @@ understand as the nature of the material will permit.</code></pre>
 <li>
 <code><a href="reference/fmt_passthrough.html">fmt_passthrough()</a></code> – format by simply passing data through</li>
 <li>
-<code><a href="reference/fmt.html">fmt()</a></code> – set a column format with a formatter function</li>
+<code><a href="reference/text_transform.html">text_transform()</a></code> – perform targeted text transformation with a function</li>
 </ul>
 <p><strong>Modify Columns</strong></p>
 <ul>
 <li>
-<code>cols_align_left()</code> – use left alignment</li>
-<li>
-<code>cols_align_center()</code> – use center alignment</li>
-<li>
-<code>cols_align_right()</code> – use right alignment</li>
+<code><a href="reference/cols_align.html">cols_align()</a></code> – set the alignment of columns</li>
 <li>
 <code><a href="reference/cols_move.html">cols_move()</a></code> – move one or more columns</li>
 <li>
@@ -293,7 +291,7 @@ understand as the nature of the material will permit.</code></pre>
 <p><strong>Export Table</strong></p>
 <ul>
 <li>
-<code><a href="reference/write_rtf.html">write_rtf()</a></code> – save a <strong>gt</strong> table object as an RTF file</li>
+<code>write_rtf()</code> – save a <strong>gt</strong> table object as an RTF file</li>
 <li>
 <code><a href="reference/as_raw_html.html">as_raw_html()</a></code> – get the HTML content of a <strong>gt</strong> table</li>
 <li>
