@@ -245,6 +245,8 @@ process_text <- function(text) {
   }
 }
 
+# Find common HTML entities resulting from HTML escaping and
+# restore them back to ascii characters
 unescape_html <- function(text) {
 
   text %>%
@@ -253,6 +255,8 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
+# Find ascii characters with special meaning in Latex and
+# escape them with various strategies
 escape_latex <- function(text) {
 
   text %>%
