@@ -58,6 +58,13 @@
 #'   when striping rows.
 #' @param row.striping.include_field an option for whether to include the field
 #'   when striping rows.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and set the width
+#' # of the table to 300px
+#' gt_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   tab_options(table.width = "900px")
 #' @family table-part creation/modification functions
 #' @export
 tab_options <- function(data,
