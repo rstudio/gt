@@ -66,7 +66,7 @@ globalVariables(
     )
   )
 
-#' The gt package options.
+#' gt package options
 #'
 #' @section Package options:
 #'
