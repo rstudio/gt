@@ -17,7 +17,7 @@ Take a \code{gt_tbl} table object and emit LateX.
 # Create a `gt` table using the `sleep`
 # dataset and output as Latex
 gt(data = sleep) \%>\%
-  output_latex()
+  as_latex()
 }
 }
 \seealso{
