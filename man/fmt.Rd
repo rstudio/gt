@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = NULL, rows = NULL, fcns)
+fmt(data, columns = NULL, rows = NULL, fns)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -26,7 +26,7 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{fcns}{a single formatting function or a named list of functions.}
+\item{fns}{a single formatting function or a named list of functions.}
 }
 \value{
 an object of class \code{gt_tbl}.
