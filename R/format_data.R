@@ -957,11 +957,12 @@ fmt_missing <- function(data,
 #' # `mtcars` dataset and format the `wt`
 #' # column data with a custom formatter
 #' # function within a `fmt()` call
-#' gt(mtcars, rownames_to_stub = TRUE) %>%
-#'   fmt(columns = vars(wt),
-#'       fns = function(x){
-#'         x * 1000
-#'       })
+#' data_tbl <-
+#'   gt(mtcars, rownames_to_stub = TRUE) %>%
+#'     fmt(columns = vars(wt),
+#'         fns = function(x){
+#'           x * 1000
+#'         })
 #' @family data formatting functions
 #' @import rlang
 #' @importFrom tibble rownames_to_column
