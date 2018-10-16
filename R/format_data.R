@@ -273,10 +273,15 @@ fmt_scientific <- function(data,
     exp_start_str = " x 10(",
     exp_end_str = ")")
 
-  # Create the html formatting function for scientific notation
+  # Create the HTML formatting function for scientific notation
   format_fcn_sci_notn_html <- format_fcn_sci_notn_factory(
     exp_start_str = " &times; 10<sup class='gt_super'>",
     exp_end_str = "</sup>")
+
+  # Create the Latex formatting function for scientific notation
+  format_fcn_sci_notn_latex <- format_fcn_sci_notn_factory(
+    exp_start_str = "$ \\times 10^{",
+    exp_end_str = "}$")
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -285,7 +290,8 @@ fmt_scientific <- function(data,
       rows = rows,
       fns = list(
         html = format_fcn_sci_notn_html,
-        default = format_fcn_sci_notn_default))
+        default = format_fcn_sci_notn_default,
+        latex = format_fcn_sci_notn_latex))
 }
 
 #' Format values as a percentage
