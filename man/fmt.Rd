@@ -39,11 +39,12 @@ Set a column format with a formatter function
 # `mtcars` dataset and format the `wt`
 # column data with a custom formatter
 # function within a `fmt()` call
-gt(mtcars, rownames_to_stub = TRUE) \%>\%
-  fmt(columns = vars(wt),
-      fns = function(x){
-        x * 1000
-      })
+data_tbl <-
+  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+    fmt(columns = vars(wt),
+        fns = function(x){
+          x * 1000
+        })
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
