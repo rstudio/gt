@@ -10,7 +10,7 @@
 render_as_html <- function(data) {
 
   # Build all table data objects through a common pipeline
-  built_data <- data %>% build_data()
+  built_data <- data %>% build_data(context = "html")
 
   # Use HTML-specific builders to generate the HTML table code
   with(built_data, {
