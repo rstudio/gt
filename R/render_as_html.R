@@ -15,10 +15,39 @@ render_as_html <- function(data) {
 
     # Composition of HTML -----------------------------------------------------
 
+    # Add footnote glyphs to boxhead elements
+    boxh_df <-
+      set_footnote_glyphs_boxhead(
+        footnotes_resolved, boxh_df, output = "html")
+
+    # Add footnote glyphs to the `data` rows
+    output_df <-
+      apply_footnotes_to_output(
+        output_df, footnotes_resolved, output = "html")
+
+    # Add footnote glyphs to the stub group cells
+    groups_rows_df <-
+      set_footnote_glyphs_stub_groups(
+        footnotes_resolved, groups_rows_df, output = "html")
+
+    # Add footnote glyphs to the `summary` cells
+    list_of_summaries <-
+      apply_footnotes_to_summary(
+        list_of_summaries, footnotes_resolved)
+
     # Get styles for the data rows and split in the same fashion as
     # for the content of the data rows
     row_splits_styles <-
-      apply_styles_to_output(output_df, styles_resolved, n_cols)
+      apply_styles_to_output(
+        output_df, styles_resolved, n_cols)
+
+    # Extraction of body content as a vector
+    body_content <- as.vector(t(output_df))
+
+    # Split `body_content` by slices of rows
+    row_splits_body <-
+      split_body_content(
+        body_content, n_cols)
 
     # Create an HTML fragment for the start of the table
     table_start <- create_table_start()
