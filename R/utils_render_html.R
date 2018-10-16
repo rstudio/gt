@@ -349,10 +349,6 @@ create_heading_component <- function(heading,
     }
   }
 
-
-  # TODO: rename remove_html() to unescape_html()
-  # TODO: create and use function escape_latex()
-
   if (output == "latex") {
 
     heading_component <-
