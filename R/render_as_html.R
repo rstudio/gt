@@ -9,8 +9,10 @@
 #' @noRd
 render_as_html <- function(data) {
 
+  # Build all table data objects through a common pipeline
   built_data <- data %>% build_data()
 
+  # Use HTML-specific builders to generate the HTML table code
   with(built_data, {
 
     # Composition of HTML -----------------------------------------------------
