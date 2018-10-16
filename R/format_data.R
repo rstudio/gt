@@ -133,7 +133,7 @@ fmt_number <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           # Determine which of `x` are not NA
@@ -283,7 +283,7 @@ fmt_scientific <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         html = format_fcn_sci_notn_html,
         default = format_fcn_sci_notn_default))
 }
@@ -381,7 +381,7 @@ fmt_percent <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
@@ -589,7 +589,7 @@ fmt_currency <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           # Determine which of `x` are not NA
@@ -744,7 +744,7 @@ fmt_date <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
@@ -797,7 +797,7 @@ fmt_time <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
@@ -859,7 +859,7 @@ fmt_datetime <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
@@ -896,7 +896,7 @@ fmt_passthrough <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         default = function(x) {
 
           # Handle formatting of pattern
@@ -929,7 +929,7 @@ fmt_missing <- function(data,
   fmt(data = data,
       columns = columns,
       rows = rows,
-      fcns = list(
+      fns = list(
         html = function(x) {
           if (missing_text == "---") {
             missing_text <- "\u2014"
@@ -950,8 +950,18 @@ fmt_missing <- function(data,
 
 #' Set a column format with a formatter function
 #' @inheritParams fmt_number
-#' @param fcns a single formatting function or a named list of functions.
+#' @param fns a single formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a table object using the
+#' # `mtcars` dataset and format the `wt`
+#' # column data with a custom formatter
+#' # function within a `fmt()` call
+#' gt(mtcars, rownames_to_stub = TRUE) %>%
+#'   fmt(columns = vars(wt),
+#'       fns = function(x){
+#'         x * 1000
+#'       })
 #' @family data formatting functions
 #' @import rlang
 #' @importFrom tibble rownames_to_column
@@ -960,7 +970,7 @@ fmt_missing <- function(data,
 fmt <- function(data,
                 columns = NULL,
                 rows = NULL,
-                fcns) {
+                fns) {
 
   # Get the `data_df` data frame from `data`
   data_df <- as.data.frame(data)
@@ -992,16 +1002,16 @@ fmt <- function(data,
   # Translate the column indices to column names
   resolved_columns <- colnames[resolved_columns]
 
-  # If a single function is supplied to `fcns` then
+  # If a single function is supplied to `fns` then
   # repackage that into a list as the `default` function
-  if (is.function(fcns)) {
-    fcns <- list(default = fcns)
+  if (is.function(fns)) {
+    fns <- list(default = fns)
   }
 
   # Create the `formatter_list`, which is a bundle of
   # formatting functions for specific columns and rows
   formatter_list <- list(
-    func = fcns,
+    func = fns,
     cols = resolved_columns,
     rows = resolved_rows)
 
