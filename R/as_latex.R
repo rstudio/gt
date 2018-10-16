@@ -22,7 +22,6 @@ as_latex <- function(data) {
   # Use Latex-specific builders to generate the Latex table code
   with(built_data, {
 
-
     # Add footnote glyphs to boxhead elements
     boxh_df <-
       set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df, output = "latex")
@@ -57,90 +56,13 @@ as_latex <- function(data) {
         heading, footnotes_resolved, n_cols = n_cols, output = "latex")
 
     # Create a Latex fragment for the tabular statement
-    tabular_start <- latex_tabular(col_alignment = col_alignment)
+    tabular_start <- latex_tabular(col_alignment)
 
-    # Get the headings
-    headings <- names(output_df)
-
-    # Merge the heading labels
-    headings_rev <- headings %>% rev()
-    labels_rev <- boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
-
-    for (i in seq(labels_rev)) {
-      headings_rev[i] <- labels_rev[i]
-    }
-    headings <- rev(headings_rev)
-
-    # If `stub_available` == TRUE, then replace with a set stubhead
-    #   caption or nothing
-    if (stub_available &&
-        length(stubhead_caption) > 0 &&
-        "rowname" %in% headings) {
-
-      headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
-
-    } else if ("rowname" %in% headings) {
-
-      headings[which(headings == "rowname")] <- ""
-    }
-
-    table_col_headings <-
-      paste0(latex_heading_row(content = headings), collapse = "")
-
-    if (spanners_present) {
-
-      # spanners
-      spanners <- boxh_df[1, ] %>% t() %>% as.vector()
-
-      if (stub_available) {
-        spanners <- c(NA_character_, spanners)
-      }
-
-      for (i in seq(spanners)) {
-        if (is.na(spanners[i])) {
-          spanners[i] <- headings[i]
-        }
-      }
-
-      spanners_lengths <- rle(spanners)
-
-      multicol <- c()
-      cmidrule <- c()
-
-      for (i in seq(spanners_lengths$lengths)) {
-
-        if (spanners_lengths$lengths[i] > 1) {
-
-          multicol <-
-            c(multicol,
-              paste0(
-                "\\multicolumn{", spanners_lengths$lengths[i],
-                "}{c}{",
-                spanners_lengths$values[i] %>% tidy_gsub("_", "\\\\_"),
-                "}"))
-
-          cmidrule <-
-            c(cmidrule,
-              paste0(
-                "\\cmidrule{",
-                sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
-                "-",
-                sum(spanners_lengths$lengths[1:i]),
-                "}"))
-
-        } else {
-          multicol <- c(multicol, " & ")
-        }
-
-      }
-
-      multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
-      cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
-
-      boxhead_component <- paste(multicol, cmidrule, collapse = "")
-    } else {
-      boxhead_component <- ""
-    }
+    # Create the boxhead component of the table
+    boxhead_component <-
+      create_boxhead_component_latex(
+        boxh_df, output_df, stub_available, spanners_present,
+        stubhead_caption)
 
     body_rows <- c()
     for (i in 1:n_rows) {
@@ -249,7 +171,6 @@ as_latex <- function(data) {
         heading_component,
         tabular_start,
         boxhead_component,
-        table_col_headings,
         body_component,
         table_bottom,
         table_end,
