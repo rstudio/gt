@@ -191,7 +191,7 @@ build_data <- function(data) {
   n_rows <- nrow(output_df)
   n_cols <- ncol(output_df)
 
-  # Footnotes ---------------------------------------------------------------
+  # Resolution of footnotes and styles --------------------------------------
 
   # Resolve and tidy footnotes
   footnotes_resolved <-
@@ -200,34 +200,12 @@ build_data <- function(data) {
       boxhead_spanners, title_defined, headnote_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
-  # Add footnote glyphs to boxhead elements
-  boxh_df <-
-    set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df)
-
-  # Add footnote glyphs to the `data` rows
-  output_df <-
-    apply_footnotes_to_output(output_df, footnotes_resolved)
-
-  # Add footnote glyphs to stub group title elements
-  groups_rows_df <-
-    set_footnote_glyphs_stub_groups(footnotes_resolved, groups_rows_df)
-
-  # Add footnote glyphs to the `summary` rows
-  list_of_summaries <-
-    apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
-
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       boxhead_spanners, title_defined, headnote_defined,
       footnotes_df = NULL, styles_df = styles_df)
-
-  # Extraction of body content as a vector
-  body_content <- as.vector(t(output_df))
-
-  # Split `body_content` by slices of rows
-  row_splits_body <- split_body_content(body_content, n_cols)
 
   list(
     data_df = data_df,
@@ -258,8 +236,6 @@ build_data <- function(data) {
     summary_list = summary_list,
     footnotes_resolved = footnotes_resolved,
     styles_resolved = styles_resolved,
-    body_content = body_content,
-    row_splits_body = row_splits_body,
     stub_available = stub_available,
     title_defined = title_defined,
     headnote_defined = headnote_defined,
