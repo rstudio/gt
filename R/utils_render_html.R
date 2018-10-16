@@ -353,7 +353,7 @@ create_heading_component <- function(heading,
 
     heading_component <-
       paste0(
-        "\\caption{",
+        "\\vspace*{-5mm}\\caption{",
         paste0(escape_latex(unescape_html(heading$title)), footnote_title_glyphs),
         "}\n")
 
@@ -363,7 +363,7 @@ create_heading_component <- function(heading,
         paste0(
           heading_component,
           paste0(
-            "\\caption{\\scriptsize ",
+            "\\vspace*{-4mm}\\caption{\\scriptsize ",
             paste0(escape_latex(unescape_html(heading$headnote)), footnote_headnote_glyphs),
             "}\n"))
     }
