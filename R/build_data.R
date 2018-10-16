@@ -1,7 +1,7 @@
 # Build common table components from a `gt_tbl` object
 #' @import rlang
 #' @noRd
-build_data <- function(data) {
+build_data <- function(data, context) {
 
   checkmate::assert_class(data, "gt_tbl")
 
@@ -72,7 +72,7 @@ build_data <- function(data) {
   output_df <- initialize_output_df(data_df)
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(output_df, data_df, formats, context = "html")
+  output_df <- render_formats(output_df, data_df, formats, context = context)
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
