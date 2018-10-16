@@ -17,7 +17,7 @@
 as_latex <- function(data) {
 
   # Build all table data objects through a common pipeline
-  built_data <- data %>% build_data(context = "default")
+  built_data <- data %>% build_data(context = "latex")
 
   # Use Latex-specific builders to generate the Latex table code
   with(built_data, {
