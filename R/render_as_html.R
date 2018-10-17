@@ -61,29 +61,29 @@ render_as_html <- function(data) {
 
     # Create the boxhead component of the table
     boxhead_component <-
-      create_boxhead_component(
+      create_boxhead_component_h(
         boxh_df, output_df, stub_available, spanners_present,
         styles_resolved, stubhead_caption, col_alignment)
 
     # Create the body component of the table
     body_component <-
-      create_body_component(
+      create_body_component_h(
         row_splits_body, row_splits_styles, styles_resolved,
         groups_rows_df, col_alignment, stub_components, summaries_present,
         list_of_summaries, n_rows, n_cols)
 
     # Create the source note rows and handle any available footnotes
     source_note_component <-
-      create_source_note_component(
+      create_source_note_component_h(
         source_note, n_cols)
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component(
+      create_footnote_component_h(
         footnotes_resolved, opts_df, n_cols)
 
     # Create an HTML fragment for the end of the table
-    table_end <- create_table_end()
+    table_end <- create_table_end_h()
 
     # Compose the HTML table
     html_table <-
