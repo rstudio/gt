@@ -5,45 +5,65 @@ footnote_glyph_to_latex <- function(footnote_glyph) {
     "\\textsuperscript{", footnote_glyph, "}")
 }
 
-#' @importFrom stats setNames
 #' @noRd
-create_footnote_component_l <- function(footnotes_resolved,
-                                        opts_df) {
+latex_body_row <- function(content,
+                           type) {
 
-  # If the `footnotes_resolved` object has no
-  # rows, then return an empty footnotes component
-  if (nrow(footnotes_resolved) == 0) {
-    return("")
+  if (type == "row") {
+
+    return(
+      paste(paste(content, collapse = " & "), "\\\\ \n"))
+
+  } else if (type == "group") {
+
+    return(
+      paste(paste(content, collapse = " & "), "\\\\ \n"))
   }
+}
 
-  footnotes_tbl <-
-    footnotes_resolved %>%
-    dplyr::select(fs_id, text) %>%
-    dplyr::distinct()
+#' @noRd
+latex_heading_row <- function(content) {
 
-  # Get the separator option from `opts_df`
-  separator <- opts_df %>%
-    dplyr::filter(parameter == "footnote_sep") %>%
-    dplyr::pull(value)
+  paste0(
+    paste(paste(content, collapse = " & "), "\\\\ \n"),
+    "\\midrule\n",
+    collapse = "")
+}
 
-  # Convert common HTML tags/entities to plaintext
-  separator <-
-    separator %>%
-    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
-    tidy_gsub("&nbsp;", " ")
+#' @noRd
+latex_group_row <- function(group_name,
+                            top_border = TRUE,
+                            bottom_border = TRUE) {
 
-  # Create the footnotes block
-  footnote_component <-
-    paste0(
-      "\\begin{minipage}{\\linewidth}\n",
-      paste0(
-        footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
-        footnotes_tbl[["text"]] %>%
-          unescape_html() %>%
-          escape_latex(), " \\\\ \n", collapse = ""),
-      "\\end{minipage}\n", collapse = "")
+  paste0(
+    ifelse(top_border, "\\midrule\n", ""),
+    "\\multicolumn{1}{l}{", group_name,
+    "} \\\\ \n",
+    ifelse(bottom_border, "\\midrule\n", ""),
+    collapse = "")
+}
 
-  footnote_component
+#' @noRd
+create_table_start_l <- function() {
+
+  paste0(
+    "\\captionsetup[table]{labelformat=empty}\n",
+    "\\begin{table}[h]\n",
+    "\\begin{minipage}{\\linewidth}\n",
+    collapse = "")
+}
+
+#' @noRd
+create_tabular_start_l <- function(col_alignment) {
+
+  paste0(
+    "\\centering",
+    "\\vspace*{-3mm}",
+    "\\begin{tabular}{",
+    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+    "}\n",
+    "\\toprule\n",
+    collapse = "")
 }
 
 #' @noRd
@@ -243,6 +263,57 @@ create_body_component_l <- function(row_splits,
 }
 
 #' @noRd
+create_tabular_end_l <- function() {
+
+  paste0(
+    "\\bottomrule\n",
+    "\\end{tabular}\n",
+    "\\end{minipage}\n",
+    collapse = "")
+}
+
+#' @importFrom stats setNames
+#' @noRd
+create_footnote_component_l <- function(footnotes_resolved,
+                                        opts_df) {
+
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_resolved) == 0) {
+    return("")
+  }
+
+  footnotes_tbl <-
+    footnotes_resolved %>%
+    dplyr::select(fs_id, text) %>%
+    dplyr::distinct()
+
+  # Get the separator option from `opts_df`
+  separator <- opts_df %>%
+    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::pull(value)
+
+  # Convert common HTML tags/entities to plaintext
+  separator <-
+    separator %>%
+    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("&nbsp;", " ")
+
+  # Create the footnotes block
+  footnote_component <-
+    paste0(
+      "\\begin{minipage}{\\linewidth}\n",
+      paste0(
+        footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
+        footnotes_tbl[["text"]] %>%
+          unescape_html() %>%
+          escape_latex(), " \\\\ \n", collapse = ""),
+      "\\end{minipage}\n", collapse = "")
+
+  footnote_component
+}
+
+#' @noRd
 create_source_note_component_l <- function(source_note) {
 
   if (length(source_note) != 0) {
@@ -260,88 +331,7 @@ create_source_note_component_l <- function(source_note) {
 }
 
 #' @noRd
-latex_body_row <- function(content,
-                           type) {
-
-  if (type == "row") {
-
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
-
-  } else if (type == "group") {
-
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
-  }
-}
-
-#' @noRd
-latex_group_row <- function(group_name,
-                            top_border = TRUE,
-                            bottom_border = TRUE) {
-
-  paste0(
-    ifelse(top_border, "\\midrule\n", ""),
-    "\\multicolumn{1}{l}{", group_name,
-    "} \\\\ \n",
-    ifelse(bottom_border, "\\midrule\n", ""),
-    collapse = "")
-}
-
-#' @noRd
-latex_head <- function() {
-
-  paste0(
-    "\\captionsetup[table]{labelformat=empty}\n",
-    "\\begin{table}[h]\n",
-    "\\begin{minipage}{\\linewidth}\n",
-    collapse = "")
-}
-
-#' @noRd
-latex_bottom_table <- function() {
-  "\\bottomrule\n"
-}
-
-#' @noRd
-latex_tail <- function() {
-
-  paste0(
-    "\\end{tabular}\n",
-    "\\end{minipage}\n",
-    collapse = "")
-}
-
-#' @noRd
-latex_end_table <- function() {
+create_table_end_l <- function() {
 
   "\\end{table}\n"
-}
-
-#' @noRd
-latex_tabular <- function(col_alignment) {
-
-  paste0(
-    "\\centering",
-    "\\vspace*{-3mm}",
-    "\\begin{tabular}{",
-    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
-    "}\n",
-    "\\toprule\n",
-    collapse = "")
-}
-
-#' @noRd
-latex_title <- function(title) {
-
-  paste0("\\caption{", title, "}\n")
-}
-
-#' @noRd
-latex_heading_row <- function(content) {
-
-  paste0(
-    paste(paste(content, collapse = " & "), "\\\\ \n"),
-    "\\midrule\n",
-    collapse = "")
 }
