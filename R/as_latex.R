@@ -48,15 +48,16 @@ as_latex <- function(data) {
     row_splits <- split(body_content, ceiling(seq_along(body_content)/n_cols))
 
     # Create a Latex fragment for the start of the table
-    table_start <- latex_head()
+    table_start <- create_table_start_l()
 
-    # Create a heading component of the table and handle any available footnotes
+    # Create the heading component of the table
     heading_component <-
       create_heading_component(
         heading, footnotes_resolved, n_cols = n_cols, output = "latex")
 
-    # Create a Latex fragment for the tabular statement
-    tabular_start <- latex_tabular(col_alignment)
+    # Create a Latex fragment for the beginning tabular statement
+    tabular_start <-
+      create_tabular_start_l(col_alignment)
 
     # Create the boxhead component of the table
     boxhead_component <-
@@ -70,20 +71,20 @@ as_latex <- function(data) {
         row_splits, groups_rows_df, col_alignment, stub_available,
         summaries_present, list_of_summaries, n_rows, n_cols)
 
-    # Create the source note component of the table
-    source_note_component <-
-      create_source_note_component_l(source_note)
+    # Create a Latex fragment for the ending tabular statement
+    tabular_end <- create_tabular_end_l()
 
     # Create the footnote component of the table
     footnote_component <-
       create_footnote_component_l(
         footnotes_resolved, opts_df)
 
-    table_bottom <- latex_bottom_table()
+    # Create the source note component of the table
+    source_note_component <-
+      create_source_note_component_l(source_note)
 
-    table_end <- latex_tail()
-
-    end_table <- latex_end_table()
+    # Create the closing Latex element of a table
+    table_end <- create_table_end_l()
 
     # Compose the Latex table
     latex_table <-
@@ -93,11 +94,10 @@ as_latex <- function(data) {
         tabular_start,
         boxhead_component,
         body_component,
-        table_bottom,
-        table_end,
+        tabular_end,
         footnote_component,
         source_note_component,
-        end_table,
+        table_end,
         collapse = "") %>%
       knitr::asis_output() %>%
       knitr::knit_print()
