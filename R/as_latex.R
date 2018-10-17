@@ -70,21 +70,14 @@ as_latex <- function(data) {
         row_splits, groups_rows_df, col_alignment, stub_available,
         summaries_present, list_of_summaries, n_rows, n_cols)
 
-    # Create the source note rows and handle any available footnotes
-    if (length(source_note) != 0) {
-
-      # Create a source note
-      source_note_rows <-
-        paste0(
-          data_attr$source_note %>% as.character(), "\\\\ \n",
-          collapse = "")
-    } else {
-      source_note_rows <- ""
-    }
+    # Create the source note component of the table
+    source_note_component <-
+      create_source_note_component_l(source_note)
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component_latex(footnotes_resolved, opts_df)
+      create_footnote_component_latex(
+        footnotes_resolved, opts_df)
 
     table_bottom <- latex_bottom_table()
 
@@ -103,7 +96,7 @@ as_latex <- function(data) {
         table_bottom,
         table_end,
         footnote_component,
-        source_note_rows,
+        source_note_component,
         end_table,
         collapse = "") %>%
       knitr::asis_output() %>%
