@@ -82,7 +82,7 @@ as_latex <- function(data) {
       source_note_rows <- ""
     }
 
-    # Handle any available footnotes
+    # Create the footnote component of the table
     footnote_component <-
       create_footnote_component_latex(footnotes_resolved, opts_df)
 
