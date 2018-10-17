@@ -21,7 +21,8 @@ reference:
     - summary_rows
   - title: Export Table
     contents:
-    - write_rtf
+    - as_latex
+    - as_rtf
     - as_raw_html
     - extract_summary
   - title: Shiny Functions
