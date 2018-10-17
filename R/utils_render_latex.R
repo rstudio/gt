@@ -1,3 +1,10 @@
+# Transform a footnote glyph to a Latex representation as a superscript
+footnote_glyph_to_latex <- function(footnote_glyph) {
+
+  paste0(
+    "\\textsuperscript{", footnote_glyph, "}")
+}
+
 #' @importFrom stats setNames
 #' @noRd
 create_footnote_component_latex <- function(footnotes_resolved,

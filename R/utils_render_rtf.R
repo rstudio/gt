@@ -1,3 +1,11 @@
+# Transform a footnote glyph to an RTF representation as a superscript
+footnote_glyph_to_rtf <- function(footnote_glyph) {
+
+  paste0(
+    "{\\super \\i ", footnote_glyph, "}")
+}
+
+
 #' @importFrom stats setNames
 #' @noRd
 create_footnote_component_rtf <- function(footnotes_resolved,
