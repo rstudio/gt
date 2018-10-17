@@ -159,7 +159,7 @@ apply_styles_to_summary_output <- function(summary_df,
 }
 
 # Create the opening HTML element of a table
-create_table_start <- function(groups_rows_df) {
+create_table_start_h <- function(groups_rows_df) {
 
   "<!--gt table start-->\n<table class='gt_table' style='display:table;'>\n"
 }
