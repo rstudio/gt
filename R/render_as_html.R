@@ -73,11 +73,14 @@ render_as_html <- function(data) {
         list_of_summaries, n_rows, n_cols)
 
     # Create the source note rows and handle any available footnotes
-    source_note_rows <- create_source_note_rows(source_note, n_cols)
+    source_note_component <-
+      create_source_note_component(
+        source_note, n_cols)
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component(footnotes_resolved, opts_df, n_cols)
+      create_footnote_component(
+        footnotes_resolved, opts_df, n_cols)
 
     # Create an HTML fragment for the end of the table
     table_end <- create_table_end()
@@ -89,11 +92,10 @@ render_as_html <- function(data) {
         heading_component,
         boxhead_component,
         body_component,
-        source_note_rows,
+        source_note_component,
         footnote_component,
         table_end,
         collapse = "")
-
 
     html_table
   })
