@@ -64,81 +64,11 @@ as_latex <- function(data) {
         boxh_df, output_df, stub_available, spanners_present,
         stubhead_caption)
 
-    body_rows <- c()
-    for (i in 1:n_rows) {
-
-      # Process group rows
-      if (!is.null(groups_rows_df) &&
-          i %in% groups_rows_df$row) {
-
-        if (i == 1) {
-
-          body_rows <-
-            c(body_rows,
-              latex_group_row(
-                groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]],
-                top_border = FALSE))
-
-        } else if (i == n_rows) {
-
-          body_rows <-
-            c(body_rows,
-              latex_group_row(
-                groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]],
-                bottom_border = FALSE))
-
-        } else {
-
-          body_rows <-
-            c(body_rows,
-              latex_group_row(
-                groups_rows_df[which(groups_rows_df$row %in% i), 1][[1]]))
-        }
-      }
-
-      # Process "data" rows
-      body_rows <-
-        c(body_rows, latex_body_row(row_splits[[i]], type = "row"))
-
-      # Process summary rows
-      if (stub_available && summaries_present &&
-          i %in% groups_rows_df$row_end) {
-
-        group <-
-          groups_rows_df %>%
-          dplyr::filter(row_end == i) %>%
-          dplyr::pull(group)
-
-        if (group %in% names(list_of_summaries$summary_df_display_list)) {
-
-          summary_df <-
-            list_of_summaries$summary_df_display_list[[
-              which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
-            as.data.frame(stringsAsFactors = FALSE)
-
-          body_content_summary <-
-            as.vector(t(summary_df)) %>%
-            tidy_gsub("\u2014", "-")
-
-          row_splits_summary <-
-            split_body_content(
-              body_content = body_content_summary,
-              n_cols = n_cols)
-
-          for (j in seq(length(row_splits_summary))) {
-
-            if (j == 1) {
-              body_rows <- c(body_rows, "\\midrule \n")
-            }
-
-            body_rows <-
-              c(body_rows, latex_body_row(row_splits_summary[[j]], type = "row"))
-          }
-        }
-      }
-    }
-
-    body_component <- paste0(body_rows, collapse = "")
+    # Create the body component of the table
+    body_component <-
+      create_body_component_latex(
+        row_splits, groups_rows_df, col_alignment, stub_available,
+        summaries_present, list_of_summaries, n_rows, n_cols)
 
     # Create the source note rows and handle any available footnotes
     if (length(source_note) != 0) {
@@ -151,8 +81,6 @@ as_latex <- function(data) {
     } else {
       source_note_rows <- ""
     }
-
-    # footnote_component <- ""
 
     # Handle any available footnotes
     footnote_component <-
