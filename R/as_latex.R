@@ -42,7 +42,7 @@ as_latex <- function(data) {
     # Extraction of body content as a vector ----------------------------------
     body_content <- as.vector(t(output_df))
 
-    # Composition of LateX ----------------------------------------------------
+    # Composition of Latex ----------------------------------------------------
 
     # Split `body_content` by slices of rows
     row_splits <- split(body_content, ceiling(seq_along(body_content)/n_cols))
@@ -60,13 +60,13 @@ as_latex <- function(data) {
 
     # Create the boxhead component of the table
     boxhead_component <-
-      create_boxhead_component_latex(
+      create_boxhead_component_l(
         boxh_df, output_df, stub_available, spanners_present,
         stubhead_caption)
 
     # Create the body component of the table
     body_component <-
-      create_body_component_latex(
+      create_body_component_l(
         row_splits, groups_rows_df, col_alignment, stub_available,
         summaries_present, list_of_summaries, n_rows, n_cols)
 
@@ -76,7 +76,7 @@ as_latex <- function(data) {
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component_latex(
+      create_footnote_component_l(
         footnotes_resolved, opts_df)
 
     table_bottom <- latex_bottom_table()
