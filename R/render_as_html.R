@@ -54,7 +54,7 @@ render_as_html <- function(data) {
     # Create an HTML fragment for the start of the table
     table_start <- create_table_start_h()
 
-    # Create a heading component of the table and handle any available footnotes
+    # Create the heading component of the table
     heading_component <-
       create_heading_component(
         heading, footnotes_resolved, styles_resolved, n_cols, output = "html")
