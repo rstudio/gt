@@ -39,3 +39,13 @@ reference:
     - html
     - px
     - pct
+  - title: Images
+    contents:
+    - web_image
+    - local_image
+    - ggplot_image
+    - test_image
+  - title: Helpful Information
+    contents:
+    - info_date_style
+    - info_time_style
