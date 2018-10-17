@@ -243,6 +243,23 @@ create_body_component_latex <- function(row_splits,
 }
 
 #' @noRd
+create_source_note_component_l <- function(source_note) {
+
+  if (length(source_note) != 0) {
+
+    # Create a source note
+    source_note_rows <-
+      paste0(
+        source_note %>% as.character(), "\\\\ \n",
+        collapse = "")
+  } else {
+    source_note_rows <- ""
+  }
+
+  source_note_rows
+}
+
+#' @noRd
 latex_body_row <- function(content,
                            type) {
 
