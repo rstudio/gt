@@ -75,7 +75,7 @@ render_as_html <- function(data) {
     # Create the source note rows and handle any available footnotes
     source_note_rows <- create_source_note_rows(source_note, n_cols)
 
-    # Handle any available footnotes
+    # Create the footnote component of the table
     footnote_component <-
       create_footnote_component(footnotes_resolved, opts_df, n_cols)
 
