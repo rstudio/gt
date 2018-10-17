@@ -1,22 +1,7 @@
-
 # Transform a footnote glyph to an HTML representation as a superscript
 footnote_glyph_to_html <- function(footnote_glyph) {
 
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
-}
-
-# Transform a footnote glyph to an RTF representation as a superscript
-footnote_glyph_to_rtf <- function(footnote_glyph) {
-
-  paste0(
-    "{\\super \\i ", footnote_glyph, "}")
-}
-
-# Transform a footnote glyph to a Latex representation as a superscript
-footnote_glyph_to_latex <- function(footnote_glyph) {
-
-  paste0(
-    "\\textsuperscript{", footnote_glyph, "}")
 }
 
 #' @importFrom dplyr filter pull
@@ -128,7 +113,6 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
-
 # Apply footnotes to the data rows
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
@@ -173,8 +157,6 @@ apply_styles_to_summary_output <- function(summary_df,
   # Split `summary_styles` by slices of rows
   split_body_content(body_content = summary_styles, n_cols)
 }
-
-
 
 # Create the opening HTML element of a table
 create_table_start <- function(groups_rows_df) {
