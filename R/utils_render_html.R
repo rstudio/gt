@@ -759,8 +759,8 @@ create_body_component <- function(row_splits_body,
     "</tbody>\n")
 }
 
-create_source_note_rows <- function(source_note,
-                                    n_cols) {
+create_source_note_component <- function(source_note,
+                                        n_cols) {
 
   if (length(source_note) == 0) {
     return("")
