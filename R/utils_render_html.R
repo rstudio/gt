@@ -355,13 +355,13 @@ create_heading_component <- function(heading,
 }
 
 # Create the body component of a table
-create_boxhead_component <- function(boxh_df,
-                                     output_df,
-                                     stub_available,
-                                     spanners_present,
-                                     styles_resolved,
-                                     stubhead_caption,
-                                     col_alignment) {
+create_boxhead_component_h <- function(boxh_df,
+                                       output_df,
+                                       stub_available,
+                                       spanners_present,
+                                       styles_resolved,
+                                       stubhead_caption,
+                                       col_alignment) {
 
   # Get the style attrs for the boxhead group (spanner) headings
   spanner_style_attrs <-
@@ -576,16 +576,16 @@ create_boxhead_component <- function(boxh_df,
 
 #' @importFrom dplyr mutate filter pull
 #' @noRd
-create_body_component <- function(row_splits_body,
-                                  row_splits_styles,
-                                  styles_resolved,
-                                  groups_rows_df,
-                                  col_alignment,
-                                  stub_components,
-                                  summaries_present,
-                                  list_of_summaries,
-                                  n_rows,
-                                  n_cols) {
+create_body_component_h <- function(row_splits_body,
+                                    row_splits_styles,
+                                    styles_resolved,
+                                    groups_rows_df,
+                                    col_alignment,
+                                    stub_components,
+                                    summaries_present,
+                                    list_of_summaries,
+                                    n_rows,
+                                    n_cols) {
 
 
   if (is.null(stub_components)) {
@@ -741,8 +741,8 @@ create_body_component <- function(row_splits_body,
     "</tbody>\n")
 }
 
-create_source_note_component <- function(source_note,
-                                        n_cols) {
+create_source_note_component_h <- function(source_note,
+                                           n_cols) {
 
   if (length(source_note) == 0) {
     return("")
@@ -761,9 +761,9 @@ create_source_note_component <- function(source_note,
 
 #' @importFrom dplyr select distinct filter pull
 #' @noRd
-create_footnote_component <- function(footnotes_resolved,
-                                      opts_df,
-                                      n_cols) {
+create_footnote_component_h <- function(footnotes_resolved,
+                                        opts_df,
+                                        n_cols) {
 
   # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component
@@ -797,7 +797,7 @@ create_footnote_component <- function(footnotes_resolved,
 }
 
 # Create the closing HTML element of a table
-create_table_end <- function() {
+create_table_end_h <- function() {
 
   "</table>\n<!--gt table end-->\n"
 }
