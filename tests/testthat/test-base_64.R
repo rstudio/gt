@@ -1,6 +1,6 @@
-context("Testing of Base64 functions")
+context("Ensuring that the Base64 functions work as expected")
 
-test_that("the Base64 functions work correctly", {
+test_that("the `get_file_ext()` function works correctly", {
 
   # Expect that filenames with various extensions are
   # work with `get_file_ext()` to return the file extension
@@ -10,11 +10,17 @@ test_that("the Base64 functions work correctly", {
   get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
   get_file_ext(file = "file.png") %>% expect_equal("png")
   get_file_ext(file = "file.gif") %>% expect_equal("gif")
+})
+
+test_that("the `get_mime_type()` function works correctly", {
 
   # Expect that the `get_mime_type()` function returns
   # a mime-type string for svg and jpg files
   get_mime_type(file = "file.svg") %>% expect_equal("image/svg+xml")
   get_mime_type(file = "file.jpg") %>% expect_equal("image/jpeg")
+})
+
+test_that("the `get_image_uri()` function works correctly", {
 
   # Expect that the image URI string based on a PNG test image
   # matches a known good image URI created from that image

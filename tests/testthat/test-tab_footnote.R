@@ -1,4 +1,4 @@
-context("Ensuring that the addition of footnotes is correct")
+context("Ensuring that the `tab_footnote()` function works as expected")
 
 # Create a table from `mtcars` that has all the different components
 data <-
@@ -45,7 +45,7 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
-test_that("a gt table can store the correct footnote statements", {
+test_that("the `tab_footnote()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

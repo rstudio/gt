@@ -1,4 +1,4 @@
-context("Ensuring that the `cols_align*()` work as expected")
+context("Ensuring that the `cols_align*()` functions work as expected")
 
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
@@ -15,7 +15,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the function `cols_align()` works as expected", {
+test_that("the `cols_align()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

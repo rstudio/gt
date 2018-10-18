@@ -24,7 +24,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the function `cols_merge()` works as expected", {
+test_that("the function `cols_merge()` works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -108,7 +108,7 @@ test_that("the function `cols_merge()` works as expected", {
     expect_equal("gear")
 })
 
-test_that("the function `cols_merge_uncert()` works as expected", {
+test_that("the `cols_merge_uncert()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -188,7 +188,7 @@ test_that("the function `cols_merge_uncert()` works as expected", {
     expect_equal("col_3")
 })
 
-test_that("the function `cols_merge_range` works as expected", {
+test_that("the `cols_merge_range()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

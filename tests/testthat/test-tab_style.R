@@ -1,4 +1,4 @@
-context("Ensuring that the addition of styles is correct")
+context("Ensuring that the `tab_style()` function works as expected")
 
 # Create a table from `mtcars` that has all the different components
 data <-
@@ -375,4 +375,3 @@ test_that("a gt table can store the correct style statements", {
       "data", "5", NA_character_, "hp", "1",
       "background-color:yellow;"))
 })
-

@@ -1,6 +1,6 @@
-context("test-fmt_scientific.R")
+context("Ensuring that the `fmt_scientific()` function works as expected")
 
-test_that("formatting a column of numeric data to scientific notation works correctly", {
+test_that("the `fmt_scientific()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

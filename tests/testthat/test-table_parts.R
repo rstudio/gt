@@ -1,4 +1,4 @@
-context("Ensuring that the creation of tab components is correct")
+context("Ensuring that the creation of tab components works as expected")
 
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]

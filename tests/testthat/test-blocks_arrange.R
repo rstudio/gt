@@ -1,6 +1,6 @@
-context("Testing of the `blocks_arrange()` function")
+context("Ensuring that the `blocks_arrange()` function works as expected")
 
-test_that("the `blocks_arrange()` function works properly", {
+test_that("the `blocks_arrange()` function works correctly", {
 
   # Create a table with group names, rownames, and four columns of values
   tbl <-

@@ -1,6 +1,6 @@
-context("test-fmt_percent.R")
+context("Ensuring that the `fmt_percent()` function works as expected")
 
-test_that("formatting a column of numeric data as percentage values works correctly", {
+test_that("the `fmt_percent()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

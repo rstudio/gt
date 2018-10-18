@@ -1,6 +1,6 @@
-context("Testing of the `gt_preview()` function")
+context("Ensuring that the `gt_preview()` function works as expected")
 
-test_that("the the `gt_preview()` function works properly", {
+test_that("the `gt_preview()` function works correctly", {
 
   # Create a basic preview of the `mtcars` dataset
   gt_tbl <- gt_preview(mtcars)
