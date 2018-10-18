@@ -393,7 +393,12 @@ create_summary_dfs <- function(summary_list,
     agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
 
     # Get the labels for each of the function calls
-    labels <- agg_funs %>% names()
+    labels <-
+      summary_attrs$fns %>%
+      as.character() %>%
+      tidy_gsub("^~", "") %>%
+      tidy_gsub("(.*)\\(.*", "\\1") %>%
+      make.names(unique = TRUE)
 
     # Initialize an empty tibble to bind to
     summary_dfs <- dplyr::tibble()
