@@ -465,7 +465,7 @@ create_summary_dfs <- function(summary_list,
       group_summary_display_df <-
         summary_dfs_display %>%
         dplyr::filter(groupname == !!group_sym) %>%
-        dplyr::mutate_all(funs(replace(., is.na(.), summary_attrs$missing_text)))
+        replace(is.na(.), summary_attrs$missing_text)
 
       summary_df_data_list <-
         c(summary_df_data_list,
