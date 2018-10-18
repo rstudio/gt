@@ -9,7 +9,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the function `cols_move()` works as expected", {
+test_that("the `cols_move()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -102,7 +102,7 @@ test_that("the function `cols_move()` works as expected", {
       cols_move(columns = vars(mpg, cyls, disp), after = vars(wt)))
 })
 
-test_that("the function `cols_move_to_start()` works as expected", {
+test_that("the `cols_move_to_start()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -161,7 +161,7 @@ test_that("the function `cols_move_to_start()` works as expected", {
       cols_move_to_start(columns = vars(mpg, cyls, disp)))
 })
 
-test_that("the function `cols_move_to_end()` works as expected", {
+test_that("the `cols_move_to_end()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

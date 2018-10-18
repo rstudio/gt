@@ -1,6 +1,6 @@
-context("Testing of internal utility functions")
+context("Ensuring that the common utility functions work as expected")
 
-test_that("the `date_formats()` util fcn works as expected", {
+test_that("the `date_formats()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
   # information table with certain classes
@@ -42,7 +42,7 @@ test_that("the `time_formats()` util fcn works as expected", {
     c("format_number", "format_name", "format_code"))
 })
 
-test_that("the `get_date_format()` util fcn works as expected", {
+test_that("the `get_date_format()` function works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
@@ -63,7 +63,7 @@ test_that("the `get_date_format()` util fcn works as expected", {
         "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"))
 })
 
-test_that("the `get_time_format()` util fcn works as expected", {
+test_that("the `get_time_format()` function works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
@@ -80,7 +80,7 @@ test_that("the `get_time_format()` util fcn works as expected", {
       c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
 })
 
-test_that("the `is_currency_valid()` util fcn works as expected", {
+test_that("the `is_currency_valid()` function works correctly", {
 
   # Expect that specific currency names supplied to
   # `is_currency_valid()` will all return TRUE
@@ -130,7 +130,7 @@ test_that("the `is_currency_valid()` util fcn works as expected", {
     expect_false()
 })
 
-test_that("the `get_currency_str()` util fcn works as expected", {
+test_that("the `get_currency_str()` function works correctly", {
 
   # Expect that various currency codes (3-letter)
   # return a currency symbol
@@ -221,7 +221,7 @@ test_that("the `get_currency_str()` util fcn works as expected", {
     expect_true()
 })
 
-test_that("the `get_currency_exponent()` util fcn works as expected", {
+test_that("the `get_currency_exponent()` function works correctly", {
 
   # Expect that various currency codes (3-letter)
   # return a currency exponent
@@ -260,7 +260,7 @@ test_that("the `get_currency_exponent()` util fcn works as expected", {
     expect_equal(rep(0, 7))
 })
 
-test_that("the `get_locale_sep_mark()` util fcn works as expected", {
+test_that("the `get_locale_sep_mark()` function works correctly", {
 
   # Expect that `get_locale_sep_mark()` will return
   # different group separator symbols with specific locale IDs
@@ -270,7 +270,7 @@ test_that("the `get_locale_sep_mark()` util fcn works as expected", {
     expect_equal(c(" ", " ", ",", " ", " ", " ", ",", "."))
 })
 
-test_that("the `get_locale_dec_mark()` util fcn works as expected", {
+test_that("the `get_locale_dec_mark()` function works correctly", {
 
   # Expect that `get_locale_dec_mark()` will return
   # different decimal separator symbols with specific locale IDs
@@ -280,7 +280,7 @@ test_that("the `get_locale_dec_mark()` util fcn works as expected", {
     expect_equal(c(",", ",", ".", ",", ",", ",", ".", ","))
 })
 
-test_that("the `process_text()` util fcn works as expected", {
+test_that("the `process_text()` function works correctly", {
 
   # Create the `simple_text` variable, which is text
   # with the class `character`
@@ -320,7 +320,7 @@ test_that("the `process_text()` util fcn works as expected", {
   process_text(text = html_text) %>% expect_is(c("html", "character"))
 })
 
-test_that("the `get_pre_post_txt()` util fcn works as expected", {
+test_that("the `get_pre_post_txt()` function works correctly", {
 
   # Expect that various patterns will yield the expected
   # length-2 character vectors
@@ -337,7 +337,7 @@ test_that("the `get_pre_post_txt()` util fcn works as expected", {
     expect_equal(c("", "...."))
 })
 
-test_that("the `remove_html()` util fcn works as expected", {
+test_that("the `remove_html()` function works correctly", {
 
   # Create the `html_text_1` variable, which is HTML text
   # with the `character` class
@@ -370,7 +370,7 @@ test_that("the `remove_html()` util fcn works as expected", {
     expect_equal(remove_html(html_text_1))
 })
 
-test_that("the `get_css_tbl()` util fcn works as expected", {
+test_that("the `get_css_tbl()` function works correctly", {
 
   # Get a CSS table from a gt table based on the
   # `mtcars` dataset
@@ -387,7 +387,7 @@ test_that("the `get_css_tbl()` util fcn works as expected", {
     expect_equal(c("selector", "type", "property", "value"))
 })
 
-test_that("the `inline_html_styles()` util fcn works as expected", {
+test_that("the `inline_html_styles()` function works correctly", {
 
   data <- gt(mtcars, rownames_to_stub = TRUE)
 
@@ -406,7 +406,7 @@ test_that("the `inline_html_styles()` util fcn works as expected", {
   )
 })
 
-test_that("the `as_locations()` util fcn works as expected", {
+test_that("the `as_locations()` function works correctly", {
 
   # Define `locations` as a `cells_data` object
   locations <-
@@ -439,7 +439,7 @@ test_that("the `as_locations()` util fcn works as expected", {
     as_locations(locations))
 })
 
-test_that("the `footnote_glyphs()` util fcn works as expected", {
+test_that("the `footnote_glyphs()` function works correctly", {
 
   footnote_glyphs(
     x = 1:10,

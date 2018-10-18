@@ -1,6 +1,6 @@
-context("formatting of dates, times, and date-times")
+context("Ensuring that the formatting of dates and times works as expected")
 
-test_that("formatting a column of ISO dates works correctly", {
+test_that("the `fmt_date()` function works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains dates as character values
@@ -132,7 +132,7 @@ test_that("formatting a column of ISO dates works correctly", {
     c("17/10/15", "13/02/22", "14/09/22", "18/01/10"))
 })
 
-test_that("formatting a column of times works correctly", {
+test_that("the `fmt_time()` function works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains times as character values
@@ -204,7 +204,7 @@ test_that("formatting a column of times works correctly", {
     c("12 PM", "3 PM", "9 AM", "1 AM"))
 })
 
-test_that("formatting a column of date-times works correctly", {
+test_that("the `fmt_datetime()` function works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains date-times as character values

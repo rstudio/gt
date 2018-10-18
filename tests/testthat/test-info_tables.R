@@ -1,6 +1,6 @@
-context("Information Tables")
+context("Ensuring that the information-providing functions work as expected")
 
-test_that("getting the information tables works as expected", {
+test_that("the `info_date_style()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
   # information table with certain classes
@@ -15,6 +15,9 @@ test_that("getting the information tables works as expected", {
       as.data.frame() %>%
       dim(),
     c(14, 3))
+})
+
+test_that("the `info_time_style()` function works correctly", {
 
   # Expect that the `info_time_style()` function produces an
   # information table with certain classes

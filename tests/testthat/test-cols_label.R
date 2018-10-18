@@ -39,7 +39,7 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
-test_that("the function `cols_label()` works as expected", {
+test_that("the function `cols_label()` works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

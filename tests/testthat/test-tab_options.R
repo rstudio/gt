@@ -1,4 +1,4 @@
-context("Ensuring that the modification of table options is correct")
+context("Ensuring that the `tab_options()` function works as expected")
 
 # Create a table with rownames and four columns of values
 tbl <-

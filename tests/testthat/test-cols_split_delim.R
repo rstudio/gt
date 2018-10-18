@@ -1,4 +1,4 @@
-context("Ensuring that the `cols_split_delim()` function work as expected")
+context("Ensuring that the `cols_split_delim()` function works as expected")
 
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]
@@ -9,7 +9,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the function `cols_split_delim()` works as expected", {
+test_that("the `cols_split_delim()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

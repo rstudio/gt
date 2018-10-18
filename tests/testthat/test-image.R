@@ -1,6 +1,6 @@
-context("Testing of image-based functions")
+context("Ensuring that the image-based functions work as expected")
 
-test_that("the `test_image()` function provides a path to a test image", {
+test_that("the `test_image()` function works correctly", {
 
   # Expect that the `test_image()` function returns paths for
   # either a PNG or SVG test image
@@ -11,7 +11,7 @@ test_that("the `test_image()` function provides a path to a test image", {
     expect_match(".*/test_image.svg")
 })
 
-test_that("The `local_image()` function creates an HTML fragment", {
+test_that("the `local_image()` function works correctly", {
 
   # Expect that the `local_image()` function returns an image tag
   # with the PNG encoded within a `src` attr
@@ -56,7 +56,7 @@ test_that("The `local_image()` function creates an HTML fragment", {
     expect_match("<img cid=.*?test_image.svg. src=.data:image.svg.xml;base64.*?")
 })
 
-test_that("The `web_image()` function creates an HTML fragment", {
+test_that("the `web_image()` function works correctly", {
 
   url <- "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Googlelogo.png/320px-Googlelogo.png"
 

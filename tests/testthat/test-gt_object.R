@@ -1,10 +1,9 @@
-context("test-gt_object.R")
+context("Ensuring that the `gt()` function works as expected")
 
 expect_tab_colnames <- function(tab,
                                 df,
                                 rowname = "NA",
                                 groupname_is_na = TRUE) {
-
 
   if (rowname == "NA") {
 
@@ -84,7 +83,6 @@ expect_tab <- function(tab,
   final_df <- df
 
   if (has_rownames) {
-
     final_df$rowname <- NULL
   }
 

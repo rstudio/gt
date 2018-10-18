@@ -1,6 +1,6 @@
-context("formatting of values with `fmt_passthrough()`")
+context("Ensuring that the `fmt_passthrough()` function works as expected")
 
-test_that("formatting column values `as.character()` works correctly", {
+test_that("the `fmt_passthrough()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -92,4 +92,3 @@ test_that("formatting column values `as.character()` works correctly", {
        render_formats_test(context = "default"))[["num_2"]],
     c("34%", NA, "23%", NA, "35%", NA, NA))
 })
-

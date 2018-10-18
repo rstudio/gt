@@ -1,6 +1,6 @@
-context("test-fmt_number.R")
+context("Ensuring that the `fmt_number()` function works as expected")
 
-test_that("formatting a column of numeric data as a number works correctly", {
+test_that("the `fmt_number()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
