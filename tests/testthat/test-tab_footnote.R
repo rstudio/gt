@@ -17,9 +17,9 @@ data <-
   summary_rows(
     groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),
-    funs = funs(
-      mean(., na.rm = TRUE),
-      sum(., na.rm = TRUE)))
+    fns = list(
+      ~mean(., na.rm = TRUE),
+      ~sum(., na.rm = TRUE)))
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
