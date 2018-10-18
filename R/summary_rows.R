@@ -6,19 +6,20 @@
 #' purposes, the \code{\link{extract_summary}()} can be used with a
 #' \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param groups the stub block groups heading names for which summary rows
-#'   will be added.
+#' @param groups the stub block groups heading names for which summary rows will
+#'   be added.
 #' @param columns the columns for which the summaries should be calculated. If
-#'   nothing is provided, then the supplied aggregation functions will be applied
-#'   to all columns.
-#' @param funs functions used for aggregations. This can include base functions
+#'   nothing is provided, then the supplied aggregation functions will be
+#'   applied to all columns.
+#' @param fns functions used for aggregations. This can include base functions
 #'   like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
-#'   \code{sum}. The functions should be supplied using the \code{\link{funs}()}
-#'   helper function. With \code{funs()}, we can specify the functions by use of
-#'   function names (e.g., \code{"sum"}), the functions themselves
-#'   (e.g., \code{sum}), or calls to functions with \code{.} as a dummy argument
-#'   (e.g., \code{sum(., na.rm = TRUE)}). By using named arguments, the names
-#'   will serve as row labels for the corresponding summary rows (otherwise the
+#'   \code{sum} or any other user-defined aggregation function. The function(s)
+#'   should be supplied within a \code{list()}. Within that list, we can specify
+#'   the functions by use of function names (e.g., \code{"sum"}), the functions
+#'   themselves (e.g., \code{sum}), or one-sided R formulas by prefacing with a
+#'   \code{~} where \code{.} serves as the data to be summarized (e.g.,
+#'   \code{sum(., na.rm = TRUE)}). By using named arguments, the names will
+#'   serve as row labels for the corresponding summary rows (otherwise the
 #'   labels will be derived from the function names).
 #' @param missing_text the text to be used in place of \code{NA} values in
 #'   summary cells with no data outputs.
