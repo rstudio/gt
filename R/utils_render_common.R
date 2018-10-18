@@ -390,7 +390,7 @@ create_summary_dfs <- function(summary_list,
         data_df)[, -2]
 
     # Get the registered function calls
-    agg_funs <- summary_attrs$funs
+    agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
 
     # Get the labels for each of the function calls
     labels <- agg_funs %>% names()
