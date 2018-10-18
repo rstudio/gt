@@ -59,10 +59,10 @@
 #'     summary_rows(
 #'       groups = c("A", "C"),
 #'       columns = vars(value_1),
-#'       funs = funs(
-#'         average = mean(., na.rm = TRUE),
-#'         total = sum(., na.rm = TRUE),
-#'         `std dev` = sd(., na.rm = TRUE)))
+#'       fns = list(
+#'         average = ~mean(., na.rm = TRUE),
+#'         total = ~sum(., na.rm = TRUE),
+#'         `std dev` = ~sd(., na.rm = TRUE)))
 #' @family row addition functions
 #' @export
 summary_rows <- function(data,
