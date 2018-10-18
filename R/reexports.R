@@ -2,10 +2,6 @@
 #' @export
 dplyr::vars
 
-#' @importFrom dplyr funs
-#' @export
-dplyr::funs
-
 #' @importFrom tidyselect starts_with
 #' @export
 tidyselect::starts_with
