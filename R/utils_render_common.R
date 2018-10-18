@@ -339,7 +339,7 @@ perform_col_merge <- function(col_merge,
 # provide `display` and `data` versions of the summaries, named by group
 #' @import rlang
 #' @importFrom dplyr select mutate everything bind_rows filter group_by
-#' @importFrom dplyr summarize_all ungroup mutate_at slice mutate_all
+#' @importFrom dplyr summarize_all ungroup mutate_at slice
 #' @importFrom tidyr fill
 #' @importFrom stats setNames
 #' @noRd
