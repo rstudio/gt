@@ -68,7 +68,7 @@
 summary_rows <- function(data,
                          groups = NULL,
                          columns = NULL,
-                         funs,
+                         fns,
                          missing_text = "---",
                          formatter = fmt_number,
                          ...) {
@@ -95,7 +95,7 @@ summary_rows <- function(data,
           list(
             groups = groups,
             columns = columns,
-            funs = funs,
+            fns = fns,
             missing_text = missing_text,
             formatter = formatter,
             formatter_options = formatter_options)))
@@ -107,7 +107,7 @@ summary_rows <- function(data,
         list(
           groups = groups,
           columns = columns,
-          funs = funs,
+          fns = fns,
           missing_text = missing_text,
           formatter = formatter,
           formatter_options = formatter_options))
