@@ -392,13 +392,30 @@ create_summary_dfs <- function(summary_list,
     # Get the registered function calls
     agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
 
+    # Get the names if any were provided
+    labels <- names(summary_attrs$fns)
+
+    # If names weren't provided at all, handle the NULL case by
+    # creating a vector of NAs that will be replaced later with
+    # derived names
+    if (is.null(labels)) {
+      labels <- rep(NA_character_, length(summary_attrs$fns))
+    }
+
+    # If one or more names not provided then replace the empty
+    # string with NA
+    labels[labels == ""] <- NA_character_
+
     # Get the labels for each of the function calls
-    labels <-
+    derived_labels <-
       summary_attrs$fns %>%
       as.character() %>%
       tidy_gsub("^~", "") %>%
       tidy_gsub("(.*)\\(.*", "\\1") %>%
       make.names(unique = TRUE)
+
+    # Replace missing labels with derived labels
+    labels[is.na(labels)] <- derived_labels[is.na(labels)]
 
     # Initialize an empty tibble to bind to
     summary_dfs <- dplyr::tibble()
