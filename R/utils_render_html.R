@@ -391,11 +391,12 @@ create_boxhead_component_h <- function(boxh_df,
 
   labels_rev <-
     boxh_df["column_label", ] %>%
-    unname() %>% unlist() %>% rev()
+    unname() %>%
+    unlist() %>%
+    rev()
 
-  for (i in seq(labels_rev)) {
-    headings_rev[i] <- labels_rev[i]
-  }
+  headings_rev[seq(labels_rev)] <- labels_rev
+
   headings <- rev(headings_rev)
 
   # If `stub_available` == TRUE, then replace with a set stubhead

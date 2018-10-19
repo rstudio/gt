@@ -4,12 +4,11 @@ colname_to_colnum <- function(boxh_df,
                               colname) {
 
   cnames <- c()
-
-  for (i in seq(colname)) {
-    if (is.na(colname[i])) {
+  for (col in colname) {
+    if (is.na(col)) {
       cnames <- c(cnames, NA_integer_)
     } else {
-      cnames <- c(cnames, which(colnames(boxh_df) == colname[i]))
+      cnames <- c(cnames, which(colnames(boxh_df) == col))
     }
   }
 
@@ -22,12 +21,10 @@ rownum_translation <- function(output_df,
                                rownum_start) {
 
   rownum_final <- c()
-
-  for (i in seq_along(rownum_start)) {
-
+  for (rownum_s in rownum_start) {
     rownum_final <-
       c(rownum_final,
-        which(as.numeric(rownames(output_df)) == rownum_start[i]))
+        which(as.numeric(rownames(output_df)) == rownum_s))
   }
 
   rownum_final
@@ -49,25 +46,24 @@ render_formats <- function(output_df,
 
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(formats))  {
+  for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
     # to the context; if not, use the `default` function
     # (which should always be present)
-    if (context %in% names(formats[[i]]$func)) {
+    if (context %in% names(fmt$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
-    for (col in formats[[i]][["cols"]]) {
+    for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
       if (col %in% colnames(data_df)) {
 
-        output_df[[col]][formats[[i]]$rows] <-
-          formats[[i]]$func[[eval_func]](
-            data_df[[col]][formats[[i]]$rows])
+        output_df[[col]][fmt$rows] <-
+          fmt$func[[eval_func]](data_df[[col]][fmt$rows])
       }
     }
   }
@@ -92,25 +88,24 @@ render_formats_test <- function(data,
 
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(formats))  {
+  for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
     # to the context; if not, use the `default` function
     # (which should always be present)
-    if (context %in% names(formats[[i]]$func)) {
+    if (context %in% names(fmt$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
-    for (col in formats[[i]][["cols"]]) {
+    for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
       if (col %in% colnames(data_df)) {
 
-        output_df[[col]][formats[[i]]$rows] <-
-          formats[[i]]$func[[eval_func]](
-            data_df[[col]][formats[[i]]$rows])
+        output_df[[col]][fmt$rows] <-
+          fmt$func[[eval_func]](data_df[[col]][fmt$rows])
       }
     }
   }
@@ -249,8 +244,6 @@ get_groups_rows_df <- function(arrange_groups,
       stringsAsFactors = FALSE)
 
   for (i in seq(ordering)) {
-
-    #matched <- match(ordering[i], groups_df[, "groupname"])
 
     if (!is.na(ordering[i])) {
       rows_matched <- which(groups_df[, "groupname"] == ordering[i])

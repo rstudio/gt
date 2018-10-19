@@ -79,11 +79,16 @@ create_boxhead_component_l <- function(boxh_df,
 
   # Merge the heading labels
   headings_rev <- headings %>% rev()
-  labels_rev <- boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
 
-  for (i in seq(labels_rev)) {
-    headings_rev[i] <- labels_rev[i]
-  }
+  labels_rev <-
+    boxh_df["column_label", ] %>%
+    unname() %>%
+    t() %>%
+    as.vector() %>%
+    rev()
+
+  headings_rev[seq(labels_rev)] <- labels_rev
+
   headings <- rev(headings_rev)
 
   # If `stub_available` == TRUE, then replace with a set stubhead
@@ -111,10 +116,9 @@ create_boxhead_component_l <- function(boxh_df,
       spanners <- c(NA_character_, spanners)
     }
 
-    for (i in seq(spanners)) {
-      if (is.na(spanners[i])) {
-        spanners[i] <- headings[i]
-      }
+    spanners_is_na <- is.na(spanners)
+    if (any(spanners_is_na)) {
+      spanners[spanners_is_na] <- headings[spanners_is_na]
     }
 
     spanners_lengths <- rle(spanners)
@@ -122,32 +126,39 @@ create_boxhead_component_l <- function(boxh_df,
     multicol <- c()
     cmidrule <- c()
 
-    for (i in seq(spanners_lengths$lengths)) {
+    multicol <-
+      mapply(spanners_lengths$length, spanners_lengths$values,
+             FUN = function(spanners_length, spanners_value) {
 
-      if (spanners_lengths$lengths[i] > 1) {
+               if (spanners_length > 1) {
 
-        multicol <-
-          c(multicol,
-            paste0(
-              "\\multicolumn{", spanners_lengths$lengths[i],
-              "}{c}{",
-              spanners_lengths$values[i] %>% tidy_gsub("_", "\\\\_"),
-              "}"))
+                 paste0(
+                   "\\multicolumn{", spanners_length,
+                   "}{c}{",
+                   spanners_value %>% tidy_gsub("_", "\\\\_"),
+                   "}")
 
-        cmidrule <-
-          c(cmidrule,
-            paste0(
-              "\\cmidrule{",
-              sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
-              "-",
-              sum(spanners_lengths$lengths[1:i]),
-              "}"))
+               } else {
+                 " & "
+               }
+             })
 
-      } else {
-        multicol <- c(multicol, " & ")
-      }
+    #
+    # The `unlist()` removes NULL values before `paste0()`
+    cmidrule <-
+      mapply(spanners_lengths$length, cumsum(spanners_lengths$length),
+             FUN = function(spanners_length, spanners_length_sum) {
 
-    }
+               if (spanners_length > 1) {
+
+                 paste0(
+                   "\\cmidrule{",
+                   spanners_length_sum - spanners_length + 1,
+                   "-",
+                   spanners_length_sum,
+                   "}")
+               }
+             }) %>% unlist()
 
     multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
     cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
@@ -185,79 +196,74 @@ create_body_component_l <- function(row_splits,
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
 
-  body_rows <- c()
-  for (i in 1:n_rows) {
+  body_rows <-
+    mapply(row_splits, seq(row_splits), FUN = function(row_split_i, i) {
 
-    # Process group rows
-    if (!is.null(groups_rows_df) &&
-        i %in% groups_rows_df$row) {
+      body_rows <- c()
 
-      if (i == 1) {
+      # Process group rows
+      if (!is.null(groups_rows_df) && i %in% groups_rows_df$row) {
 
-        body_rows <-
-          c(body_rows,
-            latex_group_row(
-              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
-              top_border = FALSE))
+        group_label_i <-
+          groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
 
-      } else if (i == n_rows) {
-
-        body_rows <-
-          c(body_rows,
-            latex_group_row(
-              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
-              bottom_border = FALSE))
-
-      } else {
-
-        body_rows <-
-          c(body_rows,
-            latex_group_row(
-              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]))
-      }
-    }
-
-    # Process "data" rows
-    body_rows <-
-      c(body_rows, latex_body_row(row_splits[[i]], type = "row"))
-
-    # Process summary rows
-    if (stub_available && summaries_present &&
-        i %in% groups_rows_df$row_end) {
-
-      group <-
-        groups_rows_df %>%
-        dplyr::filter(row_end == i) %>%
-        dplyr::pull(group)
-
-      if (group %in% names(list_of_summaries$summary_df_display_list)) {
-
-        summary_df <-
-          list_of_summaries$summary_df_display_list[[
-            which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
-          as.data.frame(stringsAsFactors = FALSE)
-
-        body_content_summary <-
-          as.vector(t(summary_df)) %>%
-          tidy_gsub("\u2014", "-")
-
-        row_splits_summary <-
-          split_body_content(
-            body_content = body_content_summary,
-            n_cols = n_cols)
-
-        for (j in seq(length(row_splits_summary))) {
-
-          if (j == 1) {
-            body_rows <- c(body_rows, "\\midrule \n")
-          }
+        if (i == 1) {
 
           body_rows <-
-            c(body_rows, latex_body_row(row_splits_summary[[j]], type = "row"))
+            c(body_rows,latex_group_row(group_label_i, top_border = FALSE))
+
+        } else if (i == n_rows) {
+
+          body_rows <-
+            c(body_rows, latex_group_row(group_label_i, bottom_border = FALSE))
+
+        } else {
+
+          body_rows <- c(body_rows, latex_group_row(group_label_i))
         }
       }
-    }
-  }
+
+      # Process data rows
+      body_rows <- c(body_rows, latex_body_row(row_split_i, type = "row"))
+
+      # Process summary rows
+      if (stub_available && summaries_present &&
+          i %in% groups_rows_df$row_end) {
+
+        group <-
+          groups_rows_df %>%
+          dplyr::filter(row_end == i) %>%
+          dplyr::pull(group)
+
+        if (group %in% names(list_of_summaries$summary_df_display_list)) {
+
+          summary_df <-
+            list_of_summaries$summary_df_display_list[[group]] %>%
+            as.data.frame(stringsAsFactors = FALSE)
+
+          body_content_summary <-
+            as.vector(t(summary_df)) %>%
+            tidy_gsub("\u2014", "-")
+
+          row_splits_summary <-
+            split_body_content(
+              body_content = body_content_summary,
+              n_cols = n_cols)
+
+          if (length(row_splits_summary) > 1) {
+
+            body_rows <- c(body_rows, "\\midrule \n")
+
+            body_rows <-
+              c(body_rows,
+                vapply(row_splits_summary, latex_body_row, character(1), type = "row"))
+          }
+        }
+      }
+
+      body_rows
+    }) %>%
+    unlist()
 
   paste0(body_rows, collapse = "")
 }
