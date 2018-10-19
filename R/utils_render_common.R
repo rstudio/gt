@@ -481,8 +481,7 @@ create_summary_dfs <- function(summary_list,
 
       group_summary_display_df <-
         summary_dfs_display %>%
-        dplyr::filter(groupname == !!group_sym) %>%
-        replace(is.na(.), summary_attrs$missing_text)
+        dplyr::filter(groupname == !!group_sym)
 
       summary_df_data_list <-
         c(summary_df_data_list,
@@ -518,7 +517,8 @@ create_summary_dfs <- function(summary_list,
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]]$rowname), ]
+        match(arrangement, summary_df_display_list[[i]]$rowname), ] %>%
+      replace(is.na(.), summary_attrs$missing_text)
   }
 
   list(
