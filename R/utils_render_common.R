@@ -393,7 +393,7 @@ create_summary_dfs <- function(summary_list,
     agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
 
     # Get the names if any were provided
-    labels <- names(summary_attrs$fns)
+    labels <- names(summary_attrs$fns) %>% process_text()
 
     # If names weren't provided at all, handle the NULL case by
     # creating a vector of NAs that will be replaced later with
