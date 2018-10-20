@@ -409,9 +409,9 @@ create_summary_dfs <- function(summary_list,
     # Get the labels for each of the function calls
     derived_labels <-
       summary_attrs$fns %>%
-      as.character() %>%
-      tidy_gsub("^~", "") %>%
-      tidy_gsub("(.*)\\(.*", "\\1") %>%
+      lapply(derive_summary_label) %>%
+      unlist() %>%
+      unname() %>%
       make.names(unique = TRUE)
 
     # Replace missing labels with derived labels
