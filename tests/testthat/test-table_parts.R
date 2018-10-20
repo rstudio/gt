@@ -272,9 +272,9 @@ test_that("a gt table contains custom styles at the correct locations", {
     summary_rows(
       groups = c("Mazdas", "Mercs"),
       columns = vars(hp, wt, qsec),
-      funs = funs(
-        mean(., na.rm = TRUE),
-        sum(., na.rm = TRUE))) %>%
+      fns = list(
+        ~mean(., na.rm = TRUE),
+        ~sum(., na.rm = TRUE))) %>%
     tab_style(
       style = apply_styles(bkgd_color = "lightgray"),
       locations = list(

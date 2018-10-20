@@ -21,10 +21,10 @@ data <-
   summary_rows(
     groups = c("A", "C"),
     columns = vars(value),
-    funs = funs(
-      mean(., na.rm = TRUE),
-      sum(., na.rm = TRUE),
-      sd(., na.rm = TRUE))) %>%
+    funs = list(
+      ~mean(., na.rm = TRUE),
+      ~sum(., na.rm = TRUE),
+      ~sd(., na.rm = TRUE))) %>%
   tab_footnote(
     footnote = "Note for Summary A.",
     locations = cells_summary(
