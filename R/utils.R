@@ -278,6 +278,21 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+# Derive a label based on a formula or a function name
+#' @import rlang
+#' @noRd
+derive_summary_label <- function(fn) {
+
+  if (inherits(fn, "formula")) {
+
+    (fn %>% rlang::f_rhs())[[1]] %>%
+      as.character()
+
+  } else {
+    fn %>% as.character()
+  }
+}
+
 #nocov start
 
 # This function is a conveient wrapper for `system.file()` where the `package`
