@@ -156,7 +156,7 @@ tab
 
 Summaries are useful and, currently in **gt**, they work when data is available in groups. The `summary_rows()` function builds the summary rows and places them at the bottom of each row group. The first argument is `groups` which allows for groupwise creation of summary rows. Because we are not supplying anything in `groups`, the summary lines will be made for each group.
 
-We can choose which columns will have summary data computed (here it makes less sense to include `cyl`) in the optional `columns` argument. The `funs` argument takes a `funs()` statement to define the summary rows. All the rules for `dplyr::funs()` applies here, so check the documentation at `?dplyr::funs()` for more information. Finally, we can specify a *formatter* and that formatter's arguments/values so that we have a chance to format the output summary values in the way we prefer them to look.
+We can choose which columns will have summary data computed (here it makes less sense to include `cyl`) in the optional `columns` argument. The `fns` argument can take one or more aggregation functions, preferably within a `c()` or `list()` statement. In the example below, we are providing the names of functions in quotes. This is great if we want to use the default parameters in the given functions. Alternatively, we can specify functions as R formulas (e.g., `~mean(., na.rm = TRUE)`) where the `.` stands in for the data to be aggregated. If we use named arguments within the `c()` or `list()`, they will serve as summary caption labels (otherwise **gt** will generate names based on the functions). Finally, we can specify a *formatter* and that formatter's arguments/values so that we have a chance to format the output summary values in the way we prefer them to look.
 
 ```{r summary_rows}
 # Create summary rows with `summary_rows`; this is across
@@ -167,10 +167,10 @@ We can choose which columns will have summary data computed (here it makes less 
 tab <- tab %>%
   summary_rows(
     columns = vars(wt, drat, hp, qsec, mpg, disp),
-    funs = funs(
-      Average = mean,
-      Max = max,
-      Min = min),
+    fns = list(
+      Average = "mean",
+      Max = "max",
+      Min = "min"),
     formatter = fmt_number,
     decimals = 1)
 

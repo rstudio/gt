@@ -25,10 +25,10 @@ test_that("the `summary_rows()` function works correctly", {
     summary_rows(
       groups = c("A", "C"),
       columns = vars(value_1),
-      funs = funs(
-        average = mean(., na.rm = TRUE),
-        total = sum(., na.rm = TRUE),
-        `std dev` = sd(., na.rm = TRUE)))
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)))
 
   # Extract the internal `summary` object
   summary <- attr(gt_tbl, "summary", exact = TRUE)
@@ -43,7 +43,7 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "funs", "missing_text",
+      c("groups", "columns", "fns", "missing_text",
         "formatter", "formatter_options"))
 
   # Expect the `groups` provided in `summary[[1]]$groups`
@@ -54,14 +54,14 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[1]]$columns %>%
     expect_equal("value_1")
 
-  # Expect that `summary[[1]]$funs` is a `fun_list` object
-  summary[[1]]$funs %>%
-    expect_is("fun_list")
+  # Expect that `summary[[1]]$fns` is a `fun_list` object
+  summary[[1]]$fns %>%
+    expect_is("list")
 
-  # Expect that the components of `summary[[1]]$funs` are quosures
-  summary[[1]]$funs$average %>% expect_is("quosure")
-  summary[[1]]$funs$total %>% expect_is("quosure")
-  summary[[1]]$funs$`std dev` %>% expect_is("quosure")
+  # Expect that the components of `summary[[1]]$fns` are quosures
+  summary[[1]]$fns$average %>% expect_is("formula")
+  summary[[1]]$fns$total %>% expect_is("formula")
+  summary[[1]]$fns$`std dev` %>% expect_is("formula")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>%
@@ -82,10 +82,10 @@ test_that("the `summary_rows()` function works correctly", {
     gt(tbl) %>%
     summary_rows(
       columns = vars(value_1),
-      funs = funs(
-        average = mean(., na.rm = TRUE),
-        total = sum(., na.rm = TRUE),
-        `std dev` = sd(., na.rm = TRUE)))
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)))
 
   # Extract the internal `summary` object
   summary <- attr(gt_tbl, "summary", exact = TRUE)
@@ -100,7 +100,7 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "funs", "missing_text",
+      c("groups", "columns", "fns", "missing_text",
         "formatter", "formatter_options"))
 
   # Expect that `summary[[1]]$groups` is TRUE
@@ -111,14 +111,14 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[1]]$columns %>%
     expect_equal("value_1")
 
-  # Expect that `summary[[1]]$funs` is a `fun_list` object
-  summary[[1]]$funs %>%
-    expect_is("fun_list")
+  # Expect that `summary[[1]]$fns` is a `fun_list` object
+  summary[[1]]$fns %>%
+    expect_is("list")
 
-  # Expect that the components of `summary[[1]]$funs` are quosures
-  summary[[1]]$funs$average %>% expect_is("quosure")
-  summary[[1]]$funs$total %>% expect_is("quosure")
-  summary[[1]]$funs$`std dev` %>% expect_is("quosure")
+  # Expect that the components of `summary[[1]]$fns` are quosures
+  summary[[1]]$fns$average %>% expect_is("formula")
+  summary[[1]]$fns$total %>% expect_is("formula")
+  summary[[1]]$fns$`std dev` %>% expect_is("formula")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>%
@@ -138,14 +138,14 @@ test_that("the `summary_rows()` function works correctly", {
     gt(tbl) %>%
     summary_rows(
       columns = vars(value_1, value_2),
-      funs = funs(
-        average = mean(., na.rm = TRUE),
-        total = sum(., na.rm = TRUE),
-        `std dev` = sd(., na.rm = TRUE))) %>%
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE))) %>%
     summary_rows(
       columns = vars(value_1, value_2),
-      funs = funs(
-        max = max(., na.rm = TRUE)))
+      fns = list(
+        max = ~max(., na.rm = TRUE)))
 
   # Extract the internal `summary` object
   summary <- attr(gt_tbl, "summary", exact = TRUE)
@@ -160,13 +160,13 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "funs", "missing_text",
+      c("groups", "columns", "fns", "missing_text",
         "formatter", "formatter_options"))
 
   summary[[2]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "funs", "missing_text",
+      c("groups", "columns", "fns", "missing_text",
         "formatter", "formatter_options"))
 
   # Expect that `summary[[1|2]]$groups` is TRUE
@@ -183,18 +183,18 @@ test_that("the `summary_rows()` function works correctly", {
   summary[[2]]$columns %>%
     expect_equal(c("value_1", "value_2"))
 
-  # Expect that `summary[[1|2]]$funs` is a `fun_list` object
-  summary[[1]]$funs %>%
-    expect_is("fun_list")
+  # Expect that `summary[[1|2]]$fns` is a `fun_list` object
+  summary[[1]]$fns %>%
+    expect_is("list")
 
-  summary[[2]]$funs %>%
-    expect_is("fun_list")
+  summary[[2]]$fns %>%
+    expect_is("list")
 
-  # Expect that the components of `summary[[1|2]]$funs` are quosures
-  summary[[1]]$funs$average %>% expect_is("quosure")
-  summary[[1]]$funs$total %>% expect_is("quosure")
-  summary[[1]]$funs$`std dev` %>% expect_is("quosure")
-  summary[[2]]$funs$max %>% expect_is("quosure")
+  # Expect that the components of `summary[[1|2]]$fns` are quosures
+  summary[[1]]$fns$average %>% expect_is("formula")
+  summary[[1]]$fns$total %>% expect_is("formula")
+  summary[[1]]$fns$`std dev` %>% expect_is("formula")
+  summary[[2]]$fns$max %>% expect_is("formula")
 
   # Expect that `summary[[1|2]]$missing_text` has a specific value
   summary[[1]]$missing_text %>%
@@ -225,10 +225,10 @@ test_that("the `summary_rows()` function works correctly", {
     summary_rows(
       groups = c("A", "C"),
       columns = vars(value_1),
-      funs = funs(
-        average = mean(., na.rm = TRUE),
-        total = sum(., na.rm = TRUE),
-        `std dev` = sd(., na.rm = TRUE)))
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)))
 
   # Extract the summary data from `gt_tbl`
   summaries <- extract_summary(gt_tbl)

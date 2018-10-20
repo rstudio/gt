@@ -4,7 +4,6 @@
 \name{reexports}
 \alias{reexports}
 \alias{vars}
-\alias{funs}
 \alias{starts_with}
 \alias{ends_with}
 \alias{contains}
@@ -18,7 +17,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{vars}}, \code{\link[dplyr]{funs}}}
+  \item{dplyr}{\code{\link[dplyr]{vars}}}
 
   \item{tidyselect}{\code{\link[tidyselect]{starts_with}}, \code{\link[tidyselect]{ends_with}}, \code{\link[tidyselect]{contains}}, \code{\link[tidyselect]{matches}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{everything}}}
 }}
