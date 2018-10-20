@@ -395,10 +395,10 @@ create_summary_dfs <- function(summary_list,
     # Get the names if any were provided
     labels <- names(summary_attrs$fns) %>% process_text()
 
-    # If names weren't provided at all, handle the NULL case by
+    # If names weren't provided at all, handle this case by
     # creating a vector of NAs that will be replaced later with
     # derived names
-    if (is.null(labels)) {
+    if (length(labels) < 1) {
       labels <- rep(NA_character_, length(summary_attrs$fns))
     }
 
