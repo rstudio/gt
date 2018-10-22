@@ -1,6 +1,8 @@
 library(gt)
 
-# Create a table with rownames and four columns of values
+# Create a table with options applied to every type of table part
+
+# Input table
 tbl <-
   dplyr::tribble(
     ~groupname,    ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
@@ -15,7 +17,8 @@ tbl <-
     "2018-02-11",  "9",       105.4,  729.8,  962.4,  336.4,
     "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2)
 
-data <-
+# Create a display table
+many_options_tbl <-
   gt(tbl) %>%
   tab_heading(title = "The Title", headnote = "The Headnote") %>%
   tab_stubhead_caption(caption = "Stubhead Caption") %>%
@@ -75,4 +78,4 @@ data <-
     sourcenote.padding = px(3)                 # padding of the source note block
   )
 
-data
+many_options_tbl

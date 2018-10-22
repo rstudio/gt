@@ -1,7 +1,8 @@
 library(gt)
 
-# Create a table with rownames and two columns of
-# values
+# Create a table with footnotes in various cell types
+
+# Input table
 tbl <-
   dplyr::tribble(
     ~date,        ~rowname,  ~value_1,  ~value_2,
@@ -16,23 +17,23 @@ tbl <-
     "2018-02-11", "9",        5.2,      197.2,
     "2018-02-11", "10",      55.3,      284.6)
 
-# Create a display table with footnotes
-data <-
+# Create a display table
+footnotes_tbl <-
   gt(data = tbl) %>%
   tab_footnote(
-    footnote = "first data cell",
+    footnote = "First data cell.",
     locations = cells_data(columns = 1, rows = 1)) %>%
   tab_footnote(
-    footnote = "stub cell.",
+    footnote = "A stub cell.",
     locations = cells_stub(rows = 1)) %>%
   tab_footnote(
     footnote = md("`value_1` is the second column of values."),
     locations = cells_boxhead(columns = vars(value_1))) %>%
   tab_footnote(
-    footnote = "This is a very small number.",
+    footnote = "This is an even smaller number.",
     locations = cells_data(columns = 2, rows = 9)) %>%
   tab_footnote(
     footnote = "This is a small number.",
     locations = cells_data(columns = 2, rows = 4))
 
-data
+footnotes_tbl
