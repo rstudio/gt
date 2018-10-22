@@ -332,7 +332,7 @@ perform_col_merge <- function(col_merge,
 # provide `display` and `data` versions of the summaries, named by group
 #' @import rlang
 #' @importFrom dplyr select mutate everything bind_rows filter group_by
-#' @importFrom dplyr summarize_all ungroup mutate_at slice mutate_all
+#' @importFrom dplyr summarize_all ungroup mutate_at slice
 #' @importFrom tidyr fill
 #' @importFrom stats setNames
 #' @noRd
@@ -383,10 +383,32 @@ create_summary_dfs <- function(summary_list,
         data_df)[, -2]
 
     # Get the registered function calls
-    agg_funs <- summary_attrs$funs
+    agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
+
+    # Get the names if any were provided
+    labels <- names(summary_attrs$fns) %>% process_text()
+
+    # If names weren't provided at all, handle this case by
+    # creating a vector of NAs that will be replaced later with
+    # derived names
+    if (length(labels) < 1) {
+      labels <- rep(NA_character_, length(summary_attrs$fns))
+    }
+
+    # If one or more names not provided then replace the empty
+    # string with NA
+    labels[labels == ""] <- NA_character_
 
     # Get the labels for each of the function calls
-    labels <- agg_funs %>% names()
+    derived_labels <-
+      summary_attrs$fns %>%
+      lapply(derive_summary_label) %>%
+      unlist() %>%
+      unname() %>%
+      make.names(unique = TRUE)
+
+    # Replace missing labels with derived labels
+    labels[is.na(labels)] <- derived_labels[is.na(labels)]
 
     # Initialize an empty tibble to bind to
     summary_dfs <- dplyr::tibble()
@@ -452,8 +474,7 @@ create_summary_dfs <- function(summary_list,
 
       group_summary_display_df <-
         summary_dfs_display %>%
-        dplyr::filter(groupname == !!group_sym) %>%
-        dplyr::mutate_all(funs(replace(., is.na(.), summary_attrs$missing_text)))
+        dplyr::filter(groupname == !!group_sym)
 
       summary_df_data_list <-
         c(summary_df_data_list,
@@ -489,7 +510,8 @@ create_summary_dfs <- function(summary_list,
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]]$rowname), ]
+        match(arrangement, summary_df_display_list[[i]]$rowname), ] %>%
+      replace(is.na(.), summary_attrs$missing_text)
   }
 
   list(
