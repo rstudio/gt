@@ -1,15 +1,13 @@
 library(gt)
 
-# Create a presentation table based on `pressure`
-# Vapor Pressure of Mercury as a Function of Temperature
+# Create a display table based on `pressure` Vapor Pressure of
+# Mercury as a Function of Temperature
 
-# 1 - we take the `datasets::pressure` data.frame
-# 2 - we are formatting numbers in the `pressure` column to scientific notation
 pressure_tbl <-
-  gt(data = pressure) %>% # 1
+  gt(data = pressure) %>%
   fmt_scientific(
     columns = vars(pressure),
-    decimals = 2) # 2
+    decimals = 2)
 
 # Display the table in the Viewer
 pressure_tbl

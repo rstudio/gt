@@ -1,7 +1,7 @@
 library(gt)
 
-# Create a presentation table based on `iris`
-# Edgar Anderson's Iris Data
+# Create a display table based on `iris` Edgar Anderson's Iris Data
+
 iris_tbl <-
   gt(data = iris) %>%
   cols_split_delim(delim = ".") %>%

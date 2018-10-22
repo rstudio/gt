@@ -1,7 +1,8 @@
 library(gt)
 
-# Create a table that creates a stub and
-# stub blocks based on a naming convention
+# Create a table that has a stubhead caption
+
+# Input table
 tbl <-
   dplyr::tribble(
     ~groupname, ~rowname, ~value_1, ~value_2,
@@ -17,8 +18,8 @@ tbl <-
     "C",        "2",      284.6,    394.4)
 
 # Create a display table
-tab_autostub <-
+sh_caption_tbl <-
   gt(data = tbl) %>%
   tab_stubhead_caption(caption = "groups")
 
-tab_autostub
+sh_caption_tbl

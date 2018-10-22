@@ -1,7 +1,8 @@
 library(gt)
 
-# Create a table that creates a stub and
-# stub blocks based on a naming convention
+# Create a display table where individual table cells are styled
+
+# Input table
 tbl <-
   dplyr::tribble(
     ~groupname, ~rowname, ~value,  ~value_2,
@@ -12,13 +13,10 @@ tbl <-
     "B",        "1",      190.9,   832.5,
     "B",        "2",      743.3,   281.2,
     "B",        "3",      252.3,   732.5,
-    "B",        "4",      344.7,   281.2,
-    "C",        "1",      197.2,   818.0,
-    "C",        "2",      284.3,   394.4)
+    "B",        "4",      344.7,   281.2)
 
-# Create a display table where individual table
-# cells are styled
-tab_cell_fmts <-
+# Create a display table
+cell_styles_tbl <-
   gt(tbl) %>%
   tab_style(
     style = apply_styles(
@@ -26,7 +24,11 @@ tab_cell_fmts <-
       text_color = "white"),
     locations = cells_data(
       columns = vars(value, value_2),
-      rows = 1))
+      rows = 1)) %>%
+  tab_style(
+    style = apply_styles(
+      text_size = px(28)),
+    locations = cells_boxhead(
+      columns = c("value", "value_2")))
 
-tab_cell_fmts
-
+cell_styles_tbl

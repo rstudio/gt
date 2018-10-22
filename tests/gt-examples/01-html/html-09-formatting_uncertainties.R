@@ -1,6 +1,8 @@
 library(gt)
 
 # Create a table with values and uncertainties
+
+# Input table
 tbl <-
   dplyr::tribble(
     ~value_1, ~uncertainty, ~value_2, ~uncertainty_2,
@@ -9,8 +11,8 @@ tbl <-
     0.639,    NA_real_,     0.21,     0.10,
     NA_real_, 0.17,         0.74,     0.15)
 
-# Create a table
-tab <-
+# Create a display table with uncertainties
+uncert_tbl <-
   gt(data = tbl) %>%
   cols_merge_uncert(
     col_val = vars(value_1),
@@ -23,5 +25,4 @@ tab <-
     decimals = 2) %>%
   fmt_missing(columns = vars(value_1, value_2))
 
-# Display the table in the Viewer
-tab
+uncert_tbl
