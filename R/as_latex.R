@@ -22,6 +22,9 @@ as_latex <- function(data) {
   # Use Latex-specific builders to generate the Latex table code
   with(built_data, {
 
+    # Transform group and column labels in `boxh_df`
+    boxh_df <- transform_boxh_labels_l(boxh_df)
+
     # Add footnote glyphs to boxhead elements
     boxh_df <-
       set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df, output = "latex")
