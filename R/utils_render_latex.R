@@ -207,20 +207,12 @@ create_body_component_l <- function(row_splits,
         group_label_i <-
           groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
 
-        if (i == 1) {
 
-          body_rows <-
-            c(body_rows,latex_group_row(group_label_i, top_border = FALSE))
-
-        } else if (i == n_rows) {
-
-          body_rows <-
-            c(body_rows, latex_group_row(group_label_i, bottom_border = FALSE))
-
-        } else {
-
-          body_rows <- c(body_rows, latex_group_row(group_label_i))
-        }
+        body_rows <-
+          c(body_rows,
+            latex_group_row(
+              groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
+              top_border = i != 1, bottom_border = i != n_rows))
       }
 
       # Process data rows
