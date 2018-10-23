@@ -83,6 +83,7 @@ create_tabular_start_l <- function(col_alignment) {
     collapse = "")
 }
 
+#' @import rlang
 #' @noRd
 create_boxhead_component_l <- function(boxh_df,
                                        output_df,
@@ -92,28 +93,18 @@ create_boxhead_component_l <- function(boxh_df,
                                        col_alignment) {
 
   # Get the headings
-  headings <- names(output_df)
-
-  # Merge the heading labels
-  headings_rev <- headings %>% rev()
-  labels_rev <- boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
-
-  for (i in seq(labels_rev)) {
-    headings_rev[i] <- labels_rev[i]
-  }
-  headings <- rev(headings_rev)
+  headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0 &&
-      "rowname" %in% headings) {
+      length(stubhead_caption) > 0) {
 
-    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
+    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
 
-  } else if ("rowname" %in% headings) {
+  } else if (stub_available) {
 
-    headings[which(headings == "rowname")] <- ""
+    headings <- rlang::prepend(headings, "")
   }
 
   table_col_headings <-
@@ -121,17 +112,15 @@ create_boxhead_component_l <- function(boxh_df,
 
   if (spanners_present) {
 
-    # spanners
-    spanners <- boxh_df[1, ] %>% t() %>% as.vector()
+    # Get vector of group labels (spanners)
+    spanners <- boxh_df["group_label", ] %>% unlist() %>% unname()
+
+    # Promote column labels to the group level wherever the
+    # spanner label is NA
+    spanners[is.na(spanners)] <- headings[is.na(spanners)]
 
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
-    }
-
-    for (i in seq(spanners)) {
-      if (is.na(spanners[i])) {
-        spanners[i] <- headings[i]
-      }
     }
 
     spanners_lengths <- rle(spanners)
@@ -143,13 +132,18 @@ create_boxhead_component_l <- function(boxh_df,
 
       if (spanners_lengths$lengths[i] > 1) {
 
+        if (length(multicol) > 0 &&
+            grepl("\\\\multicolumn", multicol[length(multicol)])) {
+          multicol <- c(multicol, "& ")
+        }
+
         multicol <-
           c(multicol,
             paste0(
               "\\multicolumn{", spanners_lengths$lengths[i],
               "}{c}{",
-              spanners_lengths$values[i] %>% tidy_gsub("_", "\\\\_"),
-              "}"))
+              spanners_lengths$values[i],
+              "} "))
 
         cmidrule <-
           c(cmidrule,
@@ -161,7 +155,7 @@ create_boxhead_component_l <- function(boxh_df,
               "}"))
 
       } else {
-        multicol <- c(multicol, " & ")
+        multicol <- c(multicol, "& ")
       }
 
     }
