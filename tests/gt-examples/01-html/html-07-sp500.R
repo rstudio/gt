@@ -1,6 +1,6 @@
 library(gt)
 
-data <-
+sp500_tbl <-
   readr::read_csv(
     system.file("extdata", "sp500.csv", package = "gt"),
     col_types = "cddddd") %>%
@@ -19,4 +19,4 @@ data <-
     scale_by = 1E-9,
     pattern = "{x}B")
 
-data
+sp500_tbl

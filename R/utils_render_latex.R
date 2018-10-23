@@ -5,6 +5,23 @@ footnote_glyph_to_latex <- function(footnote_glyph) {
     "\\textsuperscript{", footnote_glyph, "}")
 }
 
+transform_boxh_labels_l <- function(boxh_df) {
+
+  text_group <-
+    boxh_df["group_label", ] %>% unlist() %>% unname() %>%
+    markdown_to_latex()
+
+  boxh_df["group_label", ] <- text_group
+
+  text_column <-
+    boxh_df["column_label", ] %>% unlist() %>% unname() %>%
+    markdown_to_latex()
+
+  boxh_df["column_label", ] <- text_column
+
+  boxh_df
+}
+
 #' @noRd
 latex_body_row <- function(content,
                            type) {
@@ -66,6 +83,7 @@ create_tabular_start_l <- function(col_alignment) {
     collapse = "")
 }
 
+#' @import rlang
 #' @noRd
 create_boxhead_component_l <- function(boxh_df,
                                        output_df,
@@ -75,33 +93,18 @@ create_boxhead_component_l <- function(boxh_df,
                                        col_alignment) {
 
   # Get the headings
-  headings <- names(output_df)
-
-  # Merge the heading labels
-  headings_rev <- headings %>% rev()
-
-  labels_rev <-
-    boxh_df["column_label", ] %>%
-    unname() %>%
-    t() %>%
-    as.vector() %>%
-    rev()
-
-  headings_rev[seq(labels_rev)] <- labels_rev
-
-  headings <- rev(headings_rev)
+  headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0 &&
-      "rowname" %in% headings) {
+      length(stubhead_caption) > 0) {
 
-    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
+    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
 
-  } else if ("rowname" %in% headings) {
+  } else if (stub_available) {
 
-    headings[which(headings == "rowname")] <- ""
+    headings <- rlang::prepend(headings, "")
   }
 
   table_col_headings <-
@@ -109,16 +112,15 @@ create_boxhead_component_l <- function(boxh_df,
 
   if (spanners_present) {
 
-    # spanners
-    spanners <- boxh_df[1, ] %>% t() %>% as.vector()
+    # Get vector of group labels (spanners)
+    spanners <- boxh_df["group_label", ] %>% unlist() %>% unname()
+
+    # Promote column labels to the group level wherever the
+    # spanner label is NA
+    spanners[is.na(spanners)] <- headings[is.na(spanners)]
 
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
-    }
-
-    spanners_is_na <- is.na(spanners)
-    if (any(spanners_is_na)) {
-      spanners[spanners_is_na] <- headings[spanners_is_na]
     }
 
     spanners_lengths <- rle(spanners)
@@ -126,39 +128,37 @@ create_boxhead_component_l <- function(boxh_df,
     multicol <- c()
     cmidrule <- c()
 
-    multicol <-
-      mapply(spanners_lengths$length, spanners_lengths$values,
-             FUN = function(spanners_length, spanners_value) {
+    for (i in seq(spanners_lengths$lengths)) {
 
-               if (spanners_length > 1) {
+      if (spanners_lengths$lengths[i] > 1) {
 
-                 paste0(
-                   "\\multicolumn{", spanners_length,
-                   "}{c}{",
-                   spanners_value %>% tidy_gsub("_", "\\\\_"),
-                   "}")
+        if (length(multicol) > 0 &&
+            grepl("\\\\multicolumn", multicol[length(multicol)])) {
+          multicol <- c(multicol, "& ")
+        }
 
-               } else {
-                 " & "
-               }
-             })
+        multicol <-
+          c(multicol,
+            paste0(
+              "\\multicolumn{", spanners_lengths$lengths[i],
+              "}{c}{",
+              spanners_lengths$values[i],
+              "} "))
 
-    #
-    # The `unlist()` removes NULL values before `paste0()`
-    cmidrule <-
-      mapply(spanners_lengths$length, cumsum(spanners_lengths$length),
-             FUN = function(spanners_length, spanners_length_sum) {
+        cmidrule <-
+          c(cmidrule,
+            paste0(
+              "\\cmidrule{",
+              sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
+              "-",
+              sum(spanners_lengths$lengths[1:i]),
+              "}"))
 
-               if (spanners_length > 1) {
+      } else {
+        multicol <- c(multicol, "& ")
+      }
 
-                 paste0(
-                   "\\cmidrule{",
-                   spanners_length_sum - spanners_length + 1,
-                   "-",
-                   spanners_length_sum,
-                   "}")
-               }
-             }) %>% unlist()
+    }
 
     multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
     cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
@@ -299,10 +299,10 @@ create_footnote_component_l <- function(footnotes_resolved,
     dplyr::filter(parameter == "footnote_sep") %>%
     dplyr::pull(value)
 
-  # Convert common HTML tags/entities to plaintext
+  # Convert an HTML break tag to a Latex line break
   separator <-
     separator %>%
-    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("<br\\s*?(/|)>", "\\newline") %>%
     tidy_gsub("&nbsp;", " ")
 
   # Create the footnotes block
@@ -313,7 +313,7 @@ create_footnote_component_l <- function(footnotes_resolved,
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>%
           unescape_html() %>%
-          escape_latex(), " \\\\ \n", collapse = ""),
+          markdown_to_latex(), " \\\\ \n", collapse = ""),
       "\\end{minipage}\n", collapse = "")
 
   footnote_component

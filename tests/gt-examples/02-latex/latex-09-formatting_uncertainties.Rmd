@@ -1,6 +1,23 @@
-library(gt)
+---
+title: "latex-09-formatting_uncertainties"
+header-includes:
+   - \usepackage{booktabs, caption}
+output: pdf_document
+---
 
-# Create a table with values and uncertainties
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(gt)
+library(tidyverse)
+```
+
+Create a table with values and uncertainties.
+
+**This doesn't work**
+
+```{r}
+# Input table
 tbl <-
   dplyr::tribble(
     ~value_1, ~uncertainty, ~value_2, ~uncertainty_2,
@@ -8,10 +25,11 @@ tbl <-
     0.983,    0.13,         NA_real_, NA_real_,
     0.639,    NA_real_,     0.21,     0.10,
     NA_real_, 0.17,         0.74,     0.15)
+```
 
-# Create a table
-tab <-
-  gt(data = tbl) %>%
+
+```{r}
+gt(data = tbl) %>%
   cols_merge_uncert(
     col_val = vars(value_1),
     col_uncert = vars(uncertainty)) %>%
@@ -21,7 +39,6 @@ tab <-
   fmt_number(
     columns = vars(value_1, value_2),
     decimals = 2) %>%
-  fmt_missing(columns = vars(value_1, value_2))
-
-# Display the table in the Viewer
-tab
+  fmt_missing(columns = vars(value_1, value_2)) %>%
+  as_latex()
+```

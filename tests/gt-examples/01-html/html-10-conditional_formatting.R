@@ -1,6 +1,8 @@
 library(gt)
 
-data <-
+# Create a table where rows are formatted conditionally
+
+conditional_tbl <-
   readr::read_csv(
     system.file("extdata", "sp500.csv", package = "gt"),
     col_types = "cddddd") %>%
@@ -20,4 +22,4 @@ data <-
     rows = Date > "2016-02-20",
     currency = "USD")
 
-data
+conditional_tbl
