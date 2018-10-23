@@ -304,10 +304,10 @@ create_footnote_component_l <- function(footnotes_resolved,
     dplyr::filter(parameter == "footnote_sep") %>%
     dplyr::pull(value)
 
-  # Convert common HTML tags/entities to plaintext
+  # Convert an HTML break tag to a Latex line break
   separator <-
     separator %>%
-    tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+    tidy_gsub("<br\\s*?(/|)>", "\\newline") %>%
     tidy_gsub("&nbsp;", " ")
 
   # Create the footnotes block
@@ -318,7 +318,7 @@ create_footnote_component_l <- function(footnotes_resolved,
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>%
           unescape_html() %>%
-          escape_latex(), " \\\\ \n", collapse = ""),
+          markdown_to_latex(), " \\\\ \n", collapse = ""),
       "\\end{minipage}\n", collapse = "")
 
   footnote_component
