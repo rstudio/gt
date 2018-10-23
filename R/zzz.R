@@ -80,7 +80,8 @@ globalVariables(
 NULL
 
 gt_default_options <- list(
-  gt.stub_group.sep = " - "
+  gt.stub_group.sep = " - ",
+  gt.html_tag_check = TRUE
 )
 
 .onLoad <- function(libname, pkgname, ...) {
