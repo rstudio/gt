@@ -5,6 +5,23 @@ footnote_glyph_to_latex <- function(footnote_glyph) {
     "\\textsuperscript{", footnote_glyph, "}")
 }
 
+transform_boxh_labels_l <- function(boxh_df) {
+
+  text_group <-
+    boxh_df["group_label", ] %>% unlist() %>% unname() %>%
+    markdown_to_latex()
+
+  boxh_df["group_label", ] <- text_group
+
+  text_column <-
+    boxh_df["column_label", ] %>% unlist() %>% unname() %>%
+    markdown_to_latex()
+
+  boxh_df["column_label", ] <- text_column
+
+  boxh_df
+}
+
 #' @noRd
 latex_body_row <- function(content,
                            type) {
