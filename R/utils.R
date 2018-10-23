@@ -255,15 +255,27 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
-# Find ascii characters with special meaning in Latex and
-# escape them with various strategies
-escape_latex <- function(text) {
+# Transform Markdown text to Latex; also escapes ASCII
+# characters with special meaning in Latex
+#' @importFrom commonmark markdown_latex
+#' @noRd
+markdown_to_latex <- function(text) {
 
-  text %>%
-    tidy_gsub("\\\\", "\\\\textbackslash") %>%
-    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
-    tidy_gsub("~", "\\\\textasciitilde") %>%
-    tidy_gsub("\\^", "\\\\textasciicircum")
+  # Vectorize `commonmark::markdown_latex` and modify output
+  # behavior to passthrough NAs
+  lapply(text, function(x) {
+
+    x <- x %>%
+      tidy_gsub("(<strong>|</strong>)", "**") %>%
+      tidy_gsub("(<em>|</em>)", "*")
+
+    ifelse(
+      !is.na(x),
+      commonmark::markdown_latex(x) %>% tidy_gsub("\\n", ""),
+      NA_character_)}
+    ) %>%
+    unlist() %>%
+    unname()
 }
 
 # Get prepending and appending text based on a simple pattern
