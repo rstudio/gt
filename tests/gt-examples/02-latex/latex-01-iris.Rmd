@@ -13,8 +13,6 @@ library(gt)
 
 Create a display table based on `iris` Edgar Anderson's Iris Data.
 
-**The Markdown formatting in the title and headnote don't translate to Latex**
-
 ```{r}
 gt(data = iris) %>%
   cols_split_delim(delim = ".") %>%
