@@ -505,5 +505,5 @@ footnote_glyphs <- function(x,
     glyphs_val, glyphs_rep,
     FUN = function(val_i, rep_i) {
       paste(rep(val_i, rep_i), collapse = "")}
-    ) %>% unname()
+  ) %>% unname()
 }
