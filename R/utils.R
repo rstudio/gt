@@ -265,15 +265,21 @@ markdown_to_latex <- function(text) {
   # behavior to passthrough NAs
   lapply(text, function(x) {
 
-    x <- x %>%
-      tidy_gsub("(<strong>|</strong>)", "**") %>%
-      tidy_gsub("(<em>|</em>)", "*")
+    if (is.na(x)) {
+      return(NA_character_)
+    }
 
-    ifelse(
-      !is.na(x),
-      commonmark::markdown_latex(x) %>% tidy_gsub("\\n", ""),
-      NA_character_)}
-    ) %>%
+    if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
+
+      if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+        warning("HTML tags found, and they will be removed.\n",
+                " * set `options(gt.html_tag_check = FALSE)` to disable this check",
+                call. = FALSE)
+      }
+    }
+
+    commonmark::markdown_latex(x) %>% tidy_gsub("\\n", "")
+  }) %>%
     unlist() %>%
     unname()
 }
