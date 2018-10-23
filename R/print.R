@@ -12,6 +12,11 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
   print(html_tbl, browse = view, ...)
 }
 
+knitr_is_rtf_output <- function() {
+
+  "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
 #' Knit print the table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
