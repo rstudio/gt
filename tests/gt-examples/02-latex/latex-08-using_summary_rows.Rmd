@@ -56,8 +56,6 @@ Create a display table with summary rows.
 
 Create a second display table with summary rows.
 
-***NOTE: `fmt_missing()` for Latex should yield `---` instead of `-` ***
-
 ```{r}
 gt(tbl) %>%
   summary_rows(
