@@ -14,8 +14,6 @@ library(tidyverse)
 
 Create a display table with summary rows.
 
-**This doesn't work**
-
 ```{r}
 # Input table
 tbl <-
@@ -53,8 +51,7 @@ Create a display table with summary rows.
 #   # tab_footnote(
 #   #   footnote = "Note for Summary C.",
 #   #   locations = cells_summary(
-#   #     groups = "C", columns = 1, rows = 1)) %>%
-#   as_latex()
+#   #     groups = "C", columns = 1, rows = 1))
 ```
 
 Create a second display table with summary rows.
@@ -75,6 +72,5 @@ gt(tbl) %>%
     columns = vars(value_2),
     fns = list(
       ~sum(., na.rm = TRUE))) %>%
-  fmt_missing(columns = vars(value, value_2)) %>%
-  as_latex()
+  fmt_missing(columns = vars(value, value_2))
 ```

@@ -12,6 +12,11 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
   print(html_tbl, browse = view, ...)
 }
 
+knitr_is_rtf_output <- function() {
+
+  "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
 #' Knit print the table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
@@ -19,10 +24,17 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 #' @keywords internal
 knit_print.gt_tbl <- function(x, ...) {
 
-  html_tbl <- as.tags.gt_tbl(x, ...)
+  if (knitr_is_rtf_output()) {
+    x <- as_rtf(x)
+  } else if (knitr::is_latex_output()) {
+    x <- as_latex(x)
+  } else {
+    # Default to HTML output
+    x <- as.tags.gt_tbl(x, ...)
+  }
 
   # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(html_tbl, ...)
+  knitr::knit_print(x, ...)
 }
 
 #' @importFrom htmltools tags HTML tagList
