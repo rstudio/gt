@@ -2,7 +2,8 @@
 title: "latex-01-iris"
 header-includes:
    - \usepackage{booktabs, caption}
-output: pdf_document
+output:
+  - pdf_document
 ---
   
 ```{r setup, include=FALSE}
@@ -24,6 +25,5 @@ gt(data = iris) %>%
     title = md("The **iris** dataset"),
     headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>%
   tab_source_note(
-    source_note = md("The data were collected by *Anderson* (1935).")) %>%
-  as_latex()
+    source_note = md("The data were collected by *Anderson* (1935)."))
 ```

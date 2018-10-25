@@ -25,7 +25,6 @@ tbl <-
 ```
 
 
-
 ```{r}
 # Create a display table
 tbl %>%
@@ -34,6 +33,5 @@ tbl %>%
     group = "v_1_2", columns =  c("v_1", "v_2")) %>%
   tab_boxhead_panel(
     group = "v_4_5", columns = c("v_4", "v_5")) %>%
-  cols_move_to_start("v_3") %>%
-  as_latex()
+  cols_move_to_start("v_3")
 ```

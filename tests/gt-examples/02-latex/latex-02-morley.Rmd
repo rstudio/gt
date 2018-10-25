@@ -19,6 +19,5 @@ gt(data = morley %>% dplyr::mutate(Speed = as.numeric(Speed))) %>%
     columns = vars(Speed),
     decimals = 0,
     sep_mark = ",") %>%
-  cols_align(align = "left", columns = vars(Run, Speed)) %>%
-  as_latex()
+  cols_align(align = "left", columns = vars(Run, Speed))
 ```

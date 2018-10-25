@@ -14,7 +14,9 @@ library(gt)
 Create a display table based on `mtcars` (Motor Trend Car Road Test).
 
 **If more than one source note this doesn't render properly**
+
 **Stubhead caption retains HTML**
+
 **Source notes retain HTML**
 
 ```{r}
@@ -79,6 +81,5 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
       rows = "Merc 230")) %>%
   cols_label(
     hp = md("*HP*"),
-    qsec = "QMT, seconds") %>%
-  as_latex()
+    qsec = "QMT, seconds")
 ```

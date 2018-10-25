@@ -30,6 +30,5 @@ readr::read_csv(
     columns = vars(Volume),
     decimals = 3,
     scale_by = 1E-9,
-    pattern = "{x}B") %>%
-  as_latex()
+    pattern = "{x}B")
 ```
