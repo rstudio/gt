@@ -83,6 +83,7 @@ create_tabular_start_l <- function(col_alignment) {
     collapse = "")
 }
 
+# Create the boxhead component of a table
 #' @import rlang
 #' @noRd
 create_boxhead_component_l <- function(boxh_df,
