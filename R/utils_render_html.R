@@ -354,7 +354,10 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-# Create the body component of a table
+# Create the boxhead component of a table
+#' @import rlang
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
 create_boxhead_component_h <- function(boxh_df,
                                        output_df,
                                        stub_available,
@@ -383,32 +386,19 @@ create_boxhead_component_h <- function(boxh_df,
     dplyr::select(colname, styles_appended) %>%
     dplyr::distinct()
 
-  # Compose the headings
-  headings <- names(output_df)
-
-  # Merge the heading labels
-  headings_rev <- headings %>% rev()
-
-  labels_rev <-
-    boxh_df["column_label", ] %>%
-    unname() %>% unlist() %>% rev()
-
-  for (i in seq(labels_rev)) {
-    headings_rev[i] <- labels_rev[i]
-  }
-  headings <- rev(headings_rev)
+  # Get the headings
+  headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0 &&
-      "rowname" %in% headings) {
+      length(stubhead_caption) > 0) {
 
-    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
+    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
 
-  } else if ("rowname" %in% headings) {
+  } else if (stub_available) {
 
-    headings[which(headings == "rowname")] <- ""
+    headings <- rlang::prepend(headings, "")
   }
 
   if (spanners_present == FALSE) {
