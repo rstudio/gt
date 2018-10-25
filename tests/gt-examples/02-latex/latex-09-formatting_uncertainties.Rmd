@@ -14,8 +14,6 @@ library(tidyverse)
 
 Create a table with values and uncertainties.
 
-**This doesn't work**
-
 ```{r}
 # Input table
 tbl <-
@@ -39,6 +37,5 @@ gt(data = tbl) %>%
   fmt_number(
     columns = vars(value_1, value_2),
     decimals = 2) %>%
-  fmt_missing(columns = vars(value_1, value_2)) %>%
-  as_latex()
+  fmt_missing(columns = vars(value_1, value_2))
 ```

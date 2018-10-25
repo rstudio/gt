@@ -14,8 +14,6 @@ library(tidyverse)
 
 Create a table that has a stubhead caption.
 
-**This doesn't work**
-
 ```{r}
 # Input table
 tbl <-
@@ -33,9 +31,9 @@ tbl <-
     "C",        "2",      284.6,    394.4)
 ```
 
+
 ```{r}
 # Create a display table
 gt(data = tbl) %>%
-  tab_stubhead_caption(caption = "groups") %>%
-  as_latex()
+  tab_stubhead_caption(caption = "groups")
 ```

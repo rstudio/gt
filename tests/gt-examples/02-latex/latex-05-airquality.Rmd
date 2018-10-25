@@ -22,6 +22,5 @@ gt(data = airquality) %>%
   tab_boxhead_panel(
     group = "Measurement Period",
     columns = vars(Month, Day)) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp)) %>%
-  as_latex()
+  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
 ```

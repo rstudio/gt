@@ -34,6 +34,5 @@ readr::read_csv(
   fmt_currency(
     columns = vars(High, Low, Close),
     rows = Date > "2016-02-20",
-    currency = "USD") %>%
-  as_latex()
+    currency = "USD")
 ```

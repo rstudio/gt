@@ -31,6 +31,7 @@ tbl <-
     "2018-02-11", "10",      55.3,      284.6)
 ```
 
+
 ```{r}
 # Create a display table
 gt(data = tbl) %>%
@@ -48,6 +49,5 @@ gt(data = tbl) %>%
     locations = cells_data(columns = 2, rows = 9)) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = 2, rows = 4)) %>%
-  as_latex()
+    locations = cells_data(columns = 2, rows = 4))
 ```
