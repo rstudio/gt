@@ -507,8 +507,7 @@ set_default_alignments <- function(boxh_df) {
 # Function to determine if there are any defined elements of a stub present
 is_stub_available <- function(stub_df) {
 
-  if (!all(is.na((stub_df)[["rowname"]])) ||
-      !all(is.na((stub_df)[["groupname"]]))) {
+  if (!all(is.na((stub_df)[["rowname"]]))) {
     return(TRUE)
   } else {
     return(FALSE)
