@@ -4,12 +4,11 @@ colname_to_colnum <- function(boxh_df,
                               colname) {
 
   cnames <- c()
-
-  for (i in seq(colname)) {
-    if (is.na(colname[i])) {
+  for (col in colname) {
+    if (is.na(col)) {
       cnames <- c(cnames, NA_integer_)
     } else {
-      cnames <- c(cnames, which(colnames(boxh_df) == colname[i]))
+      cnames <- c(cnames, which(colnames(boxh_df) == col))
     }
   }
 
@@ -22,12 +21,10 @@ rownum_translation <- function(output_df,
                                rownum_start) {
 
   rownum_final <- c()
-
-  for (i in seq_along(rownum_start)) {
-
+  for (rownum_s in rownum_start) {
     rownum_final <-
       c(rownum_final,
-        which(as.numeric(rownames(output_df)) == rownum_start[i]))
+        which(as.numeric(rownames(output_df)) == rownum_s))
   }
 
   rownum_final
@@ -49,68 +46,24 @@ render_formats <- function(output_df,
 
   # Render input data to output data where formatting
   # is specified
-  for (i in seq(formats))  {
+  for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
     # to the context; if not, use the `default` function
     # (which should always be present)
-    if (context %in% names(formats[[i]]$func)) {
+    if (context %in% names(fmt$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
-    for (col in formats[[i]][["cols"]]) {
+    for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
       if (col %in% colnames(data_df)) {
 
-        output_df[[col]][formats[[i]]$rows] <-
-          formats[[i]]$func[[eval_func]](
-            data_df[[col]][formats[[i]]$rows])
-      }
-    }
-  }
-
-  output_df
-}
-
-# Testable version of the `render_formats()` function
-render_formats_test <- function(data,
-                                context) {
-
-  data_attr <- attributes(data)
-
-  # Move original data frame to `data_df`
-  data_df <- as.data.frame(data)
-
-  # Initialize `output_df`
-  output_df <- initialize_output_df(data_df)
-
-  # Get the `formats` list
-  formats <- data_attr$formats
-
-  # Render input data to output data where formatting
-  # is specified
-  for (i in seq(formats))  {
-
-    # Determine if the formatter has a function relevant
-    # to the context; if not, use the `default` function
-    # (which should always be present)
-    if (context %in% names(formats[[i]]$func)) {
-      eval_func <- context
-    } else {
-      eval_func <- "default"
-    }
-
-    for (col in formats[[i]][["cols"]]) {
-
-      # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_df)) {
-
-        output_df[[col]][formats[[i]]$rows] <-
-          formats[[i]]$func[[eval_func]](
-            data_df[[col]][formats[[i]]$rows])
+        output_df[[col]][fmt$rows] <-
+          fmt$func[[eval_func]](data_df[[col]][fmt$rows])
       }
     }
   }
@@ -249,8 +202,6 @@ get_groups_rows_df <- function(arrange_groups,
       stringsAsFactors = FALSE)
 
   for (i in seq(ordering)) {
-
-    #matched <- match(ordering[i], groups_df[, "groupname"])
 
     if (!is.na(ordering[i])) {
       rows_matched <- which(groups_df[, "groupname"] == ordering[i])
@@ -556,8 +507,7 @@ set_default_alignments <- function(boxh_df) {
 # Function to determine if there are any defined elements of a stub present
 is_stub_available <- function(stub_df) {
 
-  if (!all(is.na((stub_df)[["rowname"]])) ||
-      !all(is.na((stub_df)[["groupname"]]))) {
+  if (!all(is.na((stub_df)[["rowname"]]))) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -636,4 +586,109 @@ stub_component_is_groupname <- function(stub_components) {
 stub_component_is_rowname_groupname <- function(stub_components) {
 
   identical(stub_components, c("rowname", "groupname"))
+}
+
+# Function to build a vector of `group` rows in the table field
+create_group_rows <- function(n_rows,
+                              groups_rows_df,
+                              context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (!(x %in% groups_rows_df$row)) {
+      return("")
+    }
+
+    if (context == "latex") {
+
+      latex_group_row(
+        group_name = groups_rows_df[
+          which(groups_rows_df$row %in% x), "group_label"][[1]],
+        top_border = x != 1, bottom_border = x != n_rows)
+    }
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
+# Function to build a vector of `data` rows in the table field
+create_data_rows <- function(n_rows,
+                             row_splits,
+                             context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (context == "latex") {
+
+      latex_body_row(content = row_splits[[x]], type = "row")
+    }
+
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
+# Function to build a vector of `summary` rows in the table field
+create_summary_rows <- function(n_rows,
+                                list_of_summaries,
+                                groups_rows_df,
+                                stub_available,
+                                summaries_present,
+                                context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (!stub_available ||
+        !summaries_present ||
+        !(x %in% groups_rows_df$row_end)) {
+      return("")
+    }
+
+    group <-
+      groups_rows_df %>%
+      dplyr::filter(row_end == x) %>%
+      dplyr::pull(group)
+
+    if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
+      return("")
+    }
+
+    summary_df <-
+      list_of_summaries$summary_df_display_list[[group]] %>%
+      as.data.frame(stringsAsFactors = FALSE)
+
+    body_content_summary <-
+      as.vector(t(summary_df))
+
+    if (context == "latex") {
+      body_content_summary <- body_content_summary %>%
+        tidy_gsub("\u2014", "---")
+    }
+
+    row_splits_summary <-
+      split_body_content(
+        body_content = body_content_summary,
+        n_cols = n_cols)
+
+    if (length(row_splits_summary) > 0) {
+
+      if (context == "latex") {
+
+        top_line <- "\\midrule \n"
+
+        s_rows <-
+          paste(
+            vapply(
+              row_splits_summary, latex_body_row, character(1), type = "row"),
+            collapse = "")
+
+        s_rows <- paste0(top_line, s_rows)
+      }
+
+    } else {
+      s_rows <- ""
+    }
+  }) %>%
+    unlist() %>%
+    unname()
 }
