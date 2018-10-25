@@ -588,3 +588,108 @@ stub_component_is_rowname_groupname <- function(stub_components) {
 
   identical(stub_components, c("rowname", "groupname"))
 }
+
+# Function to build a vector of `group` rows in the table field
+create_group_rows <- function(n_rows,
+                              groups_rows_df,
+                              context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (!(x %in% groups_rows_df$row)) {
+      return("")
+    }
+
+    if (context == "latex") {
+
+      latex_group_row(
+        group_name = groups_rows_df[
+          which(groups_rows_df$row %in% x), "group_label"][[1]],
+        top_border = x != 1, bottom_border = x != n_rows)
+    }
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
+# Function to build a vector of `data` rows in the table field
+create_data_rows <- function(n_rows,
+                             row_splits,
+                             context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (context == "latex") {
+
+      latex_body_row(content = row_splits[[x]], type = "row")
+    }
+
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
+# Function to build a vector of `summary` rows in the table field
+create_summary_rows <- function(n_rows,
+                                list_of_summaries,
+                                groups_rows_df,
+                                stub_available,
+                                summaries_present,
+                                context = "latex") {
+
+  lapply(seq(n_rows), function(x) {
+
+    if (!stub_available ||
+        !summaries_present ||
+        !(x %in% groups_rows_df$row_end)) {
+      return("")
+    }
+
+    group <-
+      groups_rows_df %>%
+      dplyr::filter(row_end == x) %>%
+      dplyr::pull(group)
+
+    if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
+      return("")
+    }
+
+    summary_df <-
+      list_of_summaries$summary_df_display_list[[group]] %>%
+      as.data.frame(stringsAsFactors = FALSE)
+
+    body_content_summary <-
+      as.vector(t(summary_df))
+
+    if (context == "latex") {
+      body_content_summary <- body_content_summary %>%
+        tidy_gsub("\u2014", "---")
+    }
+
+    row_splits_summary <-
+      split_body_content(
+        body_content = body_content_summary,
+        n_cols = n_cols)
+
+    if (length(row_splits_summary) > 0) {
+
+      if (context == "latex") {
+
+        top_line <- "\\midrule \n"
+
+        s_rows <-
+          paste(
+            vapply(
+              row_splits_summary, latex_body_row, character(1), type = "row"),
+            collapse = "")
+
+        s_rows <- paste0(top_line, s_rows)
+      }
+
+    } else {
+      s_rows <- ""
+    }
+  }) %>%
+    unlist() %>%
+    unname()
+}
