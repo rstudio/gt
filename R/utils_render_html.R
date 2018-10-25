@@ -383,33 +383,19 @@ create_boxhead_component_h <- function(boxh_df,
     dplyr::select(colname, styles_appended) %>%
     dplyr::distinct()
 
-  # Compose the headings
-  headings <- names(output_df)
-
-  # Merge the heading labels
-  headings_rev <- headings %>% rev()
-
-  labels_rev <-
-    boxh_df["column_label", ] %>%
-    unname() %>%
-    unlist() %>%
-    rev()
-
-  headings_rev[seq(labels_rev)] <- labels_rev
-
-  headings <- rev(headings_rev)
+  # Get the headings
+  headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0 &&
-      "rowname" %in% headings) {
+      length(stubhead_caption) > 0) {
 
-    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
+    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
 
-  } else if ("rowname" %in% headings) {
+  } else if (stub_available) {
 
-    headings[which(headings == "rowname")] <- ""
+    headings <- rlang::prepend(headings, "")
   }
 
   if (spanners_present == FALSE) {
