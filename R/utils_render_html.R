@@ -354,7 +354,10 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-# Create the body component of a table
+# Create the boxhead component of a table
+#' @import rlang
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
 create_boxhead_component_h <- function(boxh_df,
                                        output_df,
                                        stub_available,
