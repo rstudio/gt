@@ -20,6 +20,10 @@ build_data <- function(data, context) {
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
 
+  #
+  # Obtain initial data frame objects from `data_attr`
+  #
+
   # Get the `boxh_df` data frame
   boxh_df <- data_attr$boxh_df
 
@@ -40,6 +44,10 @@ build_data <- function(data, context) {
 
   # Get the `cols_df` data frame
   cols_df <- data_attr$cols_df
+
+  #
+  # Obtain initial data frame objects from `data_attr`
+  #
 
   # Get the `formats` list
   formats <- data_attr$formats
