@@ -1,6 +1,22 @@
 #' Set background data cell colors using provided colors
-#' @export
+#' @inheritParams fmt_number
+#' @param column the column wherein changes to cell data background colors
+#'   should occur.
+#' @param values the cell values to which the background \code{colors} should be
+#'   applied. The length of \code{values} must match that of \code{colors} since
+#'   they are considered to be one-to-one mappings of value to color for the
+#'   target \code{column}.
+#' @param colors a vector of colors to use for each of the provided
+#'   \code{values}. Each color value provided must either be a color name (in
+#'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
+#'   strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param alpha a fixed alpha transparency value that will be applied to all of
+#'   the \code{colors} provided.
+#' @param na_color the default color for any unmapped data cells in the target
+#'   \code{column}.
+#' @return an object of class \code{gt_tbl}.
 #' @import checkmate
+#' @export
 bg_color_fill_manual <- function(data,
                                  column,
                                  values,
@@ -48,9 +64,17 @@ bg_color_fill_manual <- function(data,
 }
 
 #' Set background data cell colors using provided colors and breaks
-#' @export
+#' @inheritParams fmt_number
+#' @inheritParams bg_color_fill_manual
+#' @param breaks numeric breaks that represent the transition points between the
+#'   colors provided in \code{colors}.
+#' @param colors a vector of colors interpolate between according to the value
+#'   provided in \code{breaks}. Each color value provided must either be a color
+#'   name (in the set of colors provided by \code{grDevices::colors()}) or
+#'   hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @import checkmate
 #' @importFrom scales cscale
+#' @export
 bg_color_gradient_n <- function(data,
                                 column,
                                 breaks,
