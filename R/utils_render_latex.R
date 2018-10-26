@@ -197,7 +197,6 @@ create_body_component_l <- function(row_splits,
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
 
-
   group_rows <-
     create_group_rows(
       n_rows, groups_rows_df, context = "latex")
@@ -269,6 +268,8 @@ create_footnote_component_l <- function(footnotes_resolved,
 create_source_note_component_l <- function(source_note) {
 
   if (length(source_note) != 0) {
+
+    source_note <- source_note[[1]]
 
     # Create a source note
     source_note_rows <-
