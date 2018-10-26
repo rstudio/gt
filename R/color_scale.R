@@ -1,4 +1,3 @@
-
 #' Set background data cell colors using provided colors
 #' @export
 #' @import checkmate
@@ -8,17 +7,20 @@ bg_color_fill_manual <- function(data,
                                  colors,
                                  na_color = "darkgrey") {
 
+  # Perform check for `values`
   checkmate::assert_vector(
     values, min.len = 1, any.missing = FALSE,
     null.ok = FALSE, unique = TRUE)
 
+  # Perform check for `colors`
   checkmate::assert_character(
     colors, min.len = 1, len = length(values),
     any.missing = FALSE, null.ok = FALSE)
 
-  # TODO: convert colors to hexadecimal (e.g., R color names)
-  # TODO: ensure that alpha == TRUE when calling `col2rgb()`
+  # Pass all colors provided to `color_alpha()` to
+  # get hexadecimal colors with hex transparency
 
+  # Get the data values from the `column` chosen
   data_df <- attr(data, "data_df")
 
   data_vals <- data_df[[column]]
@@ -53,17 +55,20 @@ bg_color_gradient_n <- function(data,
                                 colors,
                                 na_color = "darkgrey") {
 
+  # Perform check for `breaks`
   checkmate::assert_numeric(
     breaks, min.len = 2, any.missing = FALSE,
     null.ok = FALSE, unique = TRUE)
 
+  # Perform check for `colors`
   checkmate::assert_character(
     colors, min.len = 1, len = length(breaks),
     any.missing = FALSE, null.ok = FALSE)
 
-  # TODO: convert colors to hexadecimal (e.g., R color names)
-  # TODO: ensure that alpha == TRUE when calling `col2rgb()`
+  # Pass all colors provided to `color_alpha()` to
+  # get hexadecimal colors with hex transparency
 
+  # Get the data values from the `column` chosen
   data_df <- attr(data, "data_df")
 
   break_order <- order(breaks)
@@ -73,7 +78,6 @@ bg_color_gradient_n <- function(data,
 
   data_vals <- data_df[[column]]
 
-  # Create color map
   for (i in seq_along(data_vals)) {
 
     data_val <- data_vals[i]
@@ -105,6 +109,7 @@ bg_color_gradient_n <- function(data,
 }
 
 
+# Apply color scale styles to the gt table data
 scale_apply_styles <- function(data,
                                column,
                                styles,
@@ -136,6 +141,8 @@ scale_apply_styles <- function(data,
   data
 }
 
+# Transform X11 and hexadecimal colors to a hexadecimal
+# format that includes hex transparency
 
 
 
