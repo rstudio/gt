@@ -7,6 +7,27 @@
 bg_color_gradient_n(data, column, breaks, colors, alpha = 1,
   na_color = "darkgrey")
 }
+\arguments{
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
+
+\item{column}{the column wherein changes to cell data background colors
+should occur.}
+
+\item{breaks}{numeric breaks that represent the transition points between the
+colors provided in \code{colors}.}
+
+\item{colors}{a vector of colors interpolate between according to the value
+provided in \code{breaks}. Each color value provided must either be a color
+name (in the set of colors provided by \code{grDevices::colors()}) or
+hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+
+\item{alpha}{a fixed alpha transparency value that will be applied to all of
+the \code{colors} provided.}
+
+\item{na_color}{the default color for any unmapped data cells in the target
+\code{column}.}
+}
 \description{
 Set background data cell colors using provided colors and breaks
 }
