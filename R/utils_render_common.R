@@ -630,6 +630,7 @@ create_data_rows <- function(n_rows,
 
 # Function to build a vector of `summary` rows in the table field
 create_summary_rows <- function(n_rows,
+                                n_cols,
                                 list_of_summaries,
                                 groups_rows_df,
                                 stub_available,
