@@ -50,6 +50,7 @@ bg_color_fill_manual <- function(data,
 #' Set background data cell colors using provided colors and breaks
 #' @export
 #' @import checkmate
+#' @importFrom scales cscale
 bg_color_gradient_n <- function(data,
                                 column,
                                 breaks,
@@ -145,6 +146,7 @@ scale_apply_styles <- function(data,
 
 # Transform X11 and hexadecimal colors to a hexadecimal
 # format that includes hex transparency
+#' @importFrom grDevices rgb col2rgb
 color_alpha <- function(colors,
                         alpha = 1) {
 
