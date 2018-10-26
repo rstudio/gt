@@ -23,14 +23,9 @@ tab_heading <- function(data,
                         title,
                         headnote = NULL) {
 
-  # Process the `title` text
-  title <- process_text(title)
-
-  # Process the `headnote` text
+  # Handle the optional `headnote` text
   if (is.null(headnote)) {
     headnote <- ""
-  } else {
-    headnote <- process_text(headnote)
   }
 
   attr(data, "heading") <-
@@ -64,7 +59,7 @@ tab_stubhead_caption <- function(data,
                                  caption) {
 
   attr(data, "stubhead_caption") <-
-    list(stubhead_caption = process_text(caption))
+    list(stubhead_caption = caption)
 
   data
 }
@@ -229,17 +224,16 @@ tab_boxhead_panel <- function(data,
 tab_source_note <- function(data,
                             source_note) {
 
-  source_note <- process_text(source_note)
-
   if ("source_note" %in% names(attributes(data))) {
 
-    attr(data, "source_note")[["source_note"]] <-
-      c(attr(data, "source_note")[["source_note"]], source_note)
+    attr(data, "source_note") <-
+      c(attr(data, "source_note"),
+        list(source_note))
 
   } else {
 
     attr(data, "source_note") <-
-      list(source_note = source_note)
+      list(source_note)
   }
 
   data
