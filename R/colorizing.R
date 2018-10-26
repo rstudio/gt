@@ -155,12 +155,12 @@ color_alpha <- function(colors,
          call. = FALSE)
   }
 
-  color <- col2rgb(col = colors)
+  colors <- grDevices::col2rgb(col = colors)
 
-  rgb(
-    red = color[1, ],
-    green = color[2, ],
-    blue = color[3, ],
+  grDevices::rgb(
+    red = colors[1, ],
+    green = colors[2, ],
+    blue = colors[3, ],
     alpha = 255 * alpha,
     maxColorValue = 255)
 }
