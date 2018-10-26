@@ -278,7 +278,13 @@ markdown_to_latex <- function(text) {
       }
     }
 
-    commonmark::markdown_latex(x) %>% tidy_gsub("\\n", "")
+    # TODO: ensure that `tidy_gsub()` replaces end-of-string
+    commonmark::markdown_latex(x) %>% tidy_gsub("\\n$", "")
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
 # Transform Markdown text to plain text
 #' @importFrom commonmark markdown_text
 #' @noRd
@@ -301,7 +307,7 @@ markdown_to_text <- function(text) {
       }
     }
 
-    commonmark::markdown_text(x) %>% tidy_gsub("\\n", "")
+    commonmark::markdown_text(x) %>% tidy_gsub("\\n$", "")
   }) %>%
     unlist() %>%
     unname()
