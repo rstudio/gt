@@ -279,6 +279,29 @@ markdown_to_latex <- function(text) {
     }
 
     commonmark::markdown_latex(x) %>% tidy_gsub("\\n", "")
+# Transform Markdown text to plain text
+#' @importFrom commonmark markdown_text
+#' @noRd
+markdown_to_text <- function(text) {
+
+  # Vectorize `commonmark::markdown_text` and modify output
+  # behavior to passthrough NAs
+  lapply(text, function(x) {
+
+    if (is.na(x)) {
+      return(NA_character_)
+    }
+
+    if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
+
+      if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+        warning("HTML tags found, and they will be removed.\n",
+                " * set `options(gt.html_tag_check = FALSE)` to disable this check",
+                call. = FALSE)
+      }
+    }
+
+    commonmark::markdown_text(x) %>% tidy_gsub("\\n", "")
   }) %>%
     unlist() %>%
     unname()
