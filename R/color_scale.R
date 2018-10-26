@@ -5,6 +5,7 @@ bg_color_fill_manual <- function(data,
                                  column,
                                  values,
                                  colors,
+                                 alpha = 1,
                                  na_color = "darkgrey") {
 
   # Perform check for `values`
@@ -19,13 +20,13 @@ bg_color_fill_manual <- function(data,
 
   # Pass all colors provided to `color_alpha()` to
   # get hexadecimal colors with hex transparency
+  colors <- color_alpha(colors, alpha = alpha)
+  na_color <- color_alpha(colors = na_color, alpha = alpha)
 
   # Get the data values from the `column` chosen
   data_df <- attr(data, "data_df")
-
   data_vals <- data_df[[column]]
 
-  # Create color map
   for (i in seq_along(data_vals)) {
 
     data_val <- data_vals[i]
@@ -53,6 +54,7 @@ bg_color_gradient_n <- function(data,
                                 column,
                                 breaks,
                                 colors,
+                                alpha = 1,
                                 na_color = "darkgrey") {
 
   # Perform check for `breaks`
@@ -67,16 +69,17 @@ bg_color_gradient_n <- function(data,
 
   # Pass all colors provided to `color_alpha()` to
   # get hexadecimal colors with hex transparency
+  colors <- color_alpha(colors, alpha = alpha)
+  na_color <- color_alpha(colors = na_color, alpha = alpha)
 
   # Get the data values from the `column` chosen
   data_df <- attr(data, "data_df")
+  data_vals <- data_df[[column]]
 
   break_order <- order(breaks)
 
   breaks <- breaks[break_order]
   colors <- colors[break_order]
-
-  data_vals <- data_df[[column]]
 
   for (i in seq_along(data_vals)) {
 
@@ -107,7 +110,6 @@ bg_color_gradient_n <- function(data,
 
   data
 }
-
 
 # Apply color scale styles to the gt table data
 scale_apply_styles <- function(data,
