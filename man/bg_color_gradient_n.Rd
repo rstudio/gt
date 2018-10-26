@@ -4,7 +4,8 @@
 \alias{bg_color_gradient_n}
 \title{Set background data cell colors using provided colors and breaks}
 \usage{
-bg_color_gradient_n(data, column, breaks, colors, na_color = "darkgrey")
+bg_color_gradient_n(data, column, breaks, colors, alpha = 1,
+  na_color = "darkgrey")
 }
 \description{
 Set background data cell colors using provided colors and breaks
