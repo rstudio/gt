@@ -143,7 +143,20 @@ scale_apply_styles <- function(data,
 
 # Transform X11 and hexadecimal colors to a hexadecimal
 # format that includes hex transparency
+color_alpha <- function(colors,
+                        alpha = 1) {
 
+  if (!is.numeric(alpha) || alpha > 1 || alpha < 0) {
+    stop("The value for `alpha` must be a number between `0` and `1`.",
+         call. = FALSE)
+  }
 
+  color <- col2rgb(col = colors)
 
-
+  rgb(
+    red = color[1, ],
+    green = color[2, ],
+    blue = color[3, ],
+    alpha = 255 * alpha,
+    maxColorValue = 255)
+}
