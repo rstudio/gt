@@ -130,13 +130,14 @@ tab_stub_block <- function(data,
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
 
-      if (any(is.na(attr(data, "stub_df")$groupname))) {
+      if (any(is.na(attr(data, "stub_df", exact = TRUE)$groupname))) {
 
         attr(data, "arrange_groups") <-
           list(groups = c(process_text(group[1]), NA_character_))
 
       } else {
-        attr(data, "arrange_groups") <- list(groups = process_text(group[1]))
+        attr(data, "arrange_groups") <-
+          list(groups = process_text(group[1]))
       }
 
     } else {
@@ -144,12 +145,14 @@ tab_stub_block <- function(data,
       if (any(is.na(attr(data, "stub_df")$groupname))) {
 
         attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]), NA_character_) %>%
+          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
+            process_text(group[1]), NA_character_) %>%
           unique()
 
       } else {
         attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]))
+          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
+            process_text(group[1]))
       }
     }
   }
@@ -227,7 +230,7 @@ tab_source_note <- function(data,
   if ("source_note" %in% names(attributes(data))) {
 
     attr(data, "source_note") <-
-      c(attr(data, "source_note"),
+      c(attr(data, "source_note", exact = TRUE),
         list(source_note))
 
   } else {
