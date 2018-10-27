@@ -61,42 +61,6 @@ build_data <- function(data, context) {
   # Get the `others_group` vector
   others_group <- data_attr$others_group[[1]] %||% NA_character_
 
-  # Process the `heading` object
-  process_heading <- function(heading, context) {
-
-    if (!is.null(heading)) {
-      title <- heading$title %>% process_text(context)
-      headnote <- heading$headnote %>% process_text(context)
-
-      return(list(title = title, headnote = headnote))
-    }
-  }
-
-  # Process the `stubhead_caption` object
-  process_stubhead_caption <- function(caption, context) {
-
-    if (!is.null(caption)) {
-      stubhead_caption <- caption$stubhead_caption %>% process_text(context)
-
-      return(list(stubhead_caption = stubhead_caption))
-    }
-  }
-
-  # Process the `source_note` object
-  process_source_notes <- function(source_note, context) {
-
-    if (!is.null(source_note)) {
-
-      source_notes <- c()
-      for (sn in source_note) {
-
-        source_notes <- c(source_notes, process_text(sn, context))
-      }
-
-      return(list(source_note = source_notes))
-    }
-  }
-
   # Get and process the `heading` object
   heading <- data_attr$heading %>% process_heading(context)
 
