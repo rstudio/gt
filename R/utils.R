@@ -216,32 +216,88 @@ get_locale_dec_mark <- function(locale) {
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
 #' @noRd
-process_text <- function(text) {
+process_text <- function(text, context = "html") {
 
-  if (inherits(text, "from_markdown")) {
+  if (context == "html") {
 
-    text <-
-      text %>%
-      as.character() %>%
-      htmltools::htmlEscape() %>%
-      commonmark::markdown_html() %>%
-      stringr::str_replace_all("^<p>|</p>|\n", "")
+    # Text processing for HTML output
 
-    return(text)
+    if (inherits(text, "from_markdown")) {
 
-  } else if (is.html(text)) {
+      text <-
+        text %>%
+        as.character() %>%
+        htmltools::htmlEscape() %>%
+        commonmark::markdown_html() %>%
+        stringr::str_replace_all("^<p>|</p>|\n", "")
 
-    text <- text %>% as.character()
+      return(text)
 
-    return(text)
+    } else if (is.html(text)) {
 
+      text <- text %>% as.character()
+
+      return(text)
+
+    } else {
+
+      text <- text %>%
+        as.character() %>%
+        htmltools::htmlEscape()
+
+      return(text)
+    }
+  } else if (context == "latex") {
+
+    # Text processing for Latex output
+
+    if (inherits(text, "from_markdown")) {
+
+      text <- text %>%
+        markdown_to_latex()
+
+      return(text)
+
+    } else if (is.html(text)) {
+
+      text <- text %>% as.character()
+
+      return(text)
+
+    } else {
+
+      text <- text %>%
+        as.character() %>%
+        htmltools::htmlEscape()
+
+      return(text)
+    }
   } else {
 
-    text <- text %>%
-      as.character() %>%
-      htmltools::htmlEscape()
+    # Text processing in the default case
 
-    return(text)
+    if (inherits(text, "from_markdown")) {
+
+      text <- text %>%
+        markdown_to_text()
+
+      return(text)
+
+    } else if (is.html(text)) {
+
+      text <- text %>% as.character()
+
+      return(text)
+
+    } else {
+
+      text <- text %>%
+        as.character() %>%
+        htmltools::htmlEscape()
+
+      return(text)
+    }
+
   }
 }
 
@@ -278,7 +334,35 @@ markdown_to_latex <- function(text) {
       }
     }
 
-    commonmark::markdown_latex(x) %>% tidy_gsub("\\n", "")
+    commonmark::markdown_latex(x) %>% tidy_gsub("\\n$", "")
+  }) %>%
+    unlist() %>%
+    unname()
+}
+
+# Transform Markdown text to plain text
+#' @importFrom commonmark markdown_text
+#' @noRd
+markdown_to_text <- function(text) {
+
+  # Vectorize `commonmark::markdown_text` and modify output
+  # behavior to passthrough NAs
+  lapply(text, function(x) {
+
+    if (is.na(x)) {
+      return(NA_character_)
+    }
+
+    if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
+
+      if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+        warning("HTML tags found, and they will be removed.\n",
+                " * set `options(gt.html_tag_check = FALSE)` to disable this check",
+                call. = FALSE)
+      }
+    }
+
+    commonmark::markdown_text(x) %>% tidy_gsub("\\n$", "")
   }) %>%
     unlist() %>%
     unname()

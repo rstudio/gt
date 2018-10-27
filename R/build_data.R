@@ -20,6 +20,10 @@ build_data <- function(data, context) {
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
 
+  #
+  # Obtain initial data frame objects from `data_attr`
+  #
+
   # Get the `boxh_df` data frame
   boxh_df <- data_attr$boxh_df
 
@@ -41,6 +45,10 @@ build_data <- function(data, context) {
   # Get the `cols_df` data frame
   cols_df <- data_attr$cols_df
 
+  #
+  # Obtain initial data frame objects from `data_attr`
+  #
+
   # Get the `formats` list
   formats <- data_attr$formats
 
@@ -53,14 +61,14 @@ build_data <- function(data, context) {
   # Get the `others_group` vector
   others_group <- data_attr$others_group[[1]] %||% NA_character_
 
-  # Get the `heading` object
-  heading <- data_attr$heading
+  # Get and process the `heading` object
+  heading <- data_attr$heading %>% process_heading(context)
 
-  # Get the `stubhead_caption` object
-  stubhead_caption <- data_attr$stubhead_caption
+  # Get and process the `stubhead_caption` object
+  stubhead_caption <- data_attr$stubhead_caption %>% process_stubhead_caption(context)
 
-  # Get the `source_note` object
-  source_note <- data_attr$source_note
+  # Get and process the `source_note` object
+  source_note <- data_attr$source_note %>% process_source_notes(context)
 
   # Get the `col_merge` object
   col_merge <- data_attr$col_merge
