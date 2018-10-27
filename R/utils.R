@@ -334,7 +334,6 @@ markdown_to_latex <- function(text) {
       }
     }
 
-    # TODO: ensure that `tidy_gsub()` replaces end-of-string
     commonmark::markdown_latex(x) %>% tidy_gsub("\\n$", "")
   }) %>%
     unlist() %>%
