@@ -6,6 +6,31 @@
 #'   \code{values}. Each color value provided must either be a color name (in
 #'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
 #'   strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @import rlang
+#' @export
+cols_color_scale <- function(data,
+                             column,
+                             colors) {
+
+  data_df <- attr(data, "data_df", exact = TRUE)
+
+  colors <- rlang::enquo(colors)
+  colors <- rlang::eval_tidy(colors, data_df)
+
+  for (i in seq_len(nrow(data_df))) {
+
+    color <- colors[i]
+
+    data <-
+      scale_apply_styles(
+        data,
+        column,
+        styles = list(list(bkgd_color = color)), rows_i = i)
+  }
+
+  data
+}
+
 #' @param alpha a fixed alpha transparency value that will be applied to all of
 #'   the \code{colors} provided.
 #' @param na_color the default color for any unmapped data cells in the target
