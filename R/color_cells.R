@@ -1,11 +1,7 @@
-#' Set background data cell colors using provided colors
+#' Set data cell colors using a helper function
 #' @inheritParams fmt_number
-#' @param column the column wherein changes to cell data background colors
+#' @param column the columns wherein changes to cell data colors
 #'   should occur.
-#' @param values the cell values to which the background \code{colors} should be
-#'   applied. The length of \code{values} must match that of \code{colors} since
-#'   they are considered to be one-to-one mappings of value to color for the
-#'   target \code{column}.
 #' @param colors a vector of colors to use for each of the provided
 #'   \code{values}. Each color value provided must either be a color name (in
 #'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
