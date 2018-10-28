@@ -17,12 +17,12 @@
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @export
-bg_color_fill_manual <- function(data,
-                                 column,
-                                 values,
-                                 colors,
-                                 alpha = 1,
-                                 na_color = "darkgrey") {
+cols_color_manual <- function(data,
+                              column,
+                              values,
+                              colors,
+                              alpha = 1,
+                              na_color = "darkgrey") {
 
   # Perform check for `values`
   checkmate::assert_vector(
@@ -76,12 +76,12 @@ bg_color_fill_manual <- function(data,
 #' @import checkmate
 #' @importFrom scales cscale
 #' @export
-bg_color_gradient_n <- function(data,
-                                column,
-                                breaks,
-                                colors,
-                                alpha = 1,
-                                na_color = "darkgrey") {
+cols_color_gradient_n <- function(data,
+                                  column,
+                                  colors,
+                                  breaks,
+                                  alpha = 1,
+                                  na_color = "darkgrey") {
 
   # Perform check for `breaks`
   checkmate::assert_numeric(
