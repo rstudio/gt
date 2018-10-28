@@ -63,9 +63,9 @@ cols_color_manual <- function(data,
   data
 }
 
-#' Set background data cell colors using provided colors and breaks
+#' Set data cell colors as a gradient with provided colors and breaks
 #' @inheritParams fmt_number
-#' @inheritParams bg_color_fill_manual
+#' @inheritParams cols_color_scale
 #' @param breaks numeric breaks that represent the transition points between the
 #'   colors provided in \code{colors}.
 #' @param colors a vector of colors interpolate between according to the value
