@@ -119,7 +119,8 @@ cols_color_gradient_n <- function(data,
       color <- colors[length(colors)]
     } else {
 
-      break_pos <- which(breaks[-length(breaks)] < data_val & breaks[-1] >= data_val)[1]
+      break_pos <-
+        which(breaks[-length(breaks)] < data_val & breaks[-1] >= data_val)[1]
 
       color <-
         scales::cscale(
@@ -131,7 +132,8 @@ cols_color_gradient_n <- function(data,
 
     data <-
       scale_apply_styles(
-        data, column, styles = list(list(bkgd_color = color)), rows_i = i)
+        data, column,
+        styles = list(list(bkgd_color = color)), rows_i = i)
   }
 
   data
