@@ -180,7 +180,7 @@ color_numeric <- function(palette,
                           na_color = "#808080") {
 
   if (missing(palette)) {
-    palette <- scales::viridis_pal()(n)
+    palette <- scales::viridis_pal()(10)
   }
 
   scales::col_numeric(
