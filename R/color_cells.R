@@ -275,6 +275,7 @@ cols_color_manual <- function(data,
                               column,
                               values,
                               colors,
+                              apply_to = "bkgd",
                               alpha = 1,
                               na_color = "darkgrey") {
 
