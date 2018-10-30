@@ -310,9 +310,18 @@ cols_color_manual <- function(data,
       color <- na_color
     }
 
-    data <-
-      scale_apply_styles(
-        data, column, styles = list(list(bkgd_color = color)), rows_i = i)
+    if (apply_to == "bkgd") {
+
+      data <-
+        scale_apply_styles(
+          data, column, styles = list(list(bkgd_color = color)), rows_i = i)
+
+    } else if (apply_to == "text") {
+
+      data <-
+        scale_apply_styles(
+          data, column, styles = list(list(text_color = color)), rows_i = i)
+    }
   }
 
   data
