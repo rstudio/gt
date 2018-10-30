@@ -530,6 +530,6 @@ text_color_for_bkgd <- function(colors_vec,
     t() %>%
     dplyr::as_tibble() %>%
     dplyr::mutate(yiq = ((red * 299) + (green * 587) + (blue * 114)) / 1000) %>%
-    dplyr::mutate(text_col = ifelse(yiq >= yiq_contrasted_threshold, light, dark)) %>%
+    dplyr::mutate(text_col = ifelse(yiq >= yiq_contrasted_threshold, dark, light)) %>%
     dplyr::pull(text_col)
 }
