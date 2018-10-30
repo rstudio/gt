@@ -1,6 +1,6 @@
 #' Set data cell colors using a helper function
 #' @inheritParams fmt_number
-#' @param column the columns wherein changes to cell data colors
+#' @param columns the columns wherein changes to cell data colors
 #'   should occur.
 #' @param colors a vector of colors to use for each of the provided
 #'   \code{values}. Each color value provided must either be a color name (in
@@ -9,17 +9,102 @@
 #' @import rlang
 #' @export
 cols_color_scale <- function(data,
-                             column,
+                             columns,
                              colors) {
 
   data_df <- attr(data, "data_df", exact = TRUE)
 
-  colors <- rlang::enquo(colors)
-  colors <- rlang::eval_tidy(colors, data_df)
+  if (!inherits(colors, "list")) {
+    colors <- list(colors)
+  }
 
-  for (i in seq_len(nrow(data_df))) {
+  if (!inherits(columns, "list")) {
+    columns <- list(columns)
+  }
 
-    color <- colors[i]
+  # The `colors` and `columns` lists should be of equal length; stop the function
+  # if this isn't the case
+  if (length(colors) != length(columns)) {
+    stop("The lengths of `colors` and `columns` should be equal to each other.",
+         call. = FALSE)
+  }
+
+  for (i in seq(colors)) {
+
+    columns_i <- columns[[i]]
+    colors_i <- colors[[i]]
+
+    # If `columns_i` inherits from `quosures` (which any bare column names enclosed
+    # `vars()` will), extract the column names as a vector
+    if (inherits(columns_i, "quosures")) {
+
+      columns_i <-
+        lapply(columns_i, function(x) {
+          rlang::get_expr(x) %>% as.character()
+        }) %>%
+        unlist() %>%
+        unname()
+    }
+
+    if (inherits(colors_i, "character")) {
+
+      # TODO: verify that the colors are valid
+
+
+      for (j in seq(columns_i)) {
+
+        # Obtain the column name
+        column_ij <- columns_i[j]
+
+        # Get a unique set of data values for this column
+        data_vals_j <- data_df[[column_ij]] %>% unique()
+
+        # Stop function if number of colors supplied is less than the
+        # number of unique data values
+        if (length(colors_i) < length(data_vals_j)) {
+          stop("The number of `colors` supplied (", length(colors_i), ") is less than ",
+               "the number of unique data values in column `", column_ij, "` (",
+               length(data_vals_j), ").", call. = FALSE)
+        }
+
+        # Trim vector of colors to match the length of the unique values
+        colors_i <- colors_i[seq(length(data_vals_j))]
+
+        # Apply color values to each of the data cells in the column
+        data <-
+          cols_color_manual(
+            data,
+            column = column_ij,
+            values = data_vals_j,
+            colors = colors_i,
+            alpha = 1,
+            na_color = "#808080")
+      }
+
+    } else {
+
+      color_fn <- rlang::enquo(colors_i)
+      color_fn <- rlang::eval_tidy(color_fn, data_df)
+
+      for (j in seq(columns_i)) {
+
+        column_ij <- columns_i[j]
+
+        data_vals_j <- data_df[[column_ij]]
+
+        for (k in seq(data_vals_j)) {
+
+          color <- color_fn(data_vals_j[k])
+
+          data <-
+            scale_apply_styles(
+              data,
+              column = column_ij,
+              styles = list(list(bkgd_color = color)), rows_i = k)
+        }
+      }
+
+    }
 
     data <-
       scale_apply_styles(
