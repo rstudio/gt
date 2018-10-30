@@ -1,11 +1,13 @@
 #' Set data cell colors using a helper function
 #' @inheritParams fmt_number
-#' @param columns the columns wherein changes to cell data colors
-#'   should occur.
+#' @param columns the columns wherein changes to cell data colors should occur.
 #' @param colors a vector of colors to use for each of the provided
 #'   \code{values}. Each color value provided must either be a color name (in
 #'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
 #'   strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param handle_text an option to handle the coloring of cell data text to
+#'   achieve optimal text-to-background color contrast. By default, this is set
+#'   to \code{TRUE}.
 #' @import rlang
 #' @export
 cols_color_scale <- function(data,
@@ -264,6 +266,9 @@ color_factor <- function(palette,
 #'   applied. The length of \code{values} must match that of \code{colors} since
 #'   they are considered to be one-to-one mappings of value to color for the
 #'   target \code{column}.
+#' @param apply_to which style element should the colors be applied to? Options
+#'   are the cell background (the default, given as \code{bkgd}) or the cell
+#'   text (\code{text}).
 #' @param alpha a fixed alpha transparency value that will be applied to all of
 #'   the \code{colors} provided.
 #' @param na_color the default color for any unmapped data cells in the target
