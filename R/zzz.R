@@ -46,6 +46,7 @@ globalVariables(
     "locname",
     "locnum",
     "missing_text",
+    "n",
     "n_cols",
     "obtain_group_ordering",
     "red",
