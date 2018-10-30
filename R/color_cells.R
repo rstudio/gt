@@ -80,8 +80,30 @@ cols_color_scale <- function(data,
             colors = colors_i,
             alpha = 1,
             na_color = "#808080")
-      }
 
+        # If the `handle_text` option is TRUE then the coloring
+        # of text will be modified to achieve the highest contrast
+        # possible
+        if (handle_text) {
+
+          # Apply the `text_color_for_bkgd()` function to the
+          # vector of background color values to obtain a
+          # vector of suitable text colors
+          colors_i <- text_color_for_bkgd(colors_i)
+
+          # Apply color values to the text of each
+          # of the data cells in the column
+          data <-
+            cols_color_manual(
+              data,
+              column = column_ij,
+              values = data_vals_j,
+              colors = colors_i,
+              apply_to = "text",
+              alpha = 1,
+              na_color = "black")
+        }
+      }
     } else {
 
       color_fn <- rlang::enquo(colors_i)
@@ -95,18 +117,37 @@ cols_color_scale <- function(data,
 
         for (k in seq(data_vals_j)) {
 
+          # Apply the colorizing function to the data value
+          # to obtain a cell color
           color <- color_fn(data_vals_j[k])
 
+          # Apply color value to the background of the cell
           data <-
             scale_apply_styles(
               data,
               column = column_ij,
               styles = list(list(bkgd_color = color)), rows_i = k)
+
+          # If the `handle_text` option is TRUE then the coloring
+          # of text will be modified to achieve the highest contrast
+          # possible
+          if (handle_text) {
+
+            # Apply the `text_color_for_bkgd()` function to
+            # the background color value to obtain a suitable
+            # text color
+            color_text <- text_color_for_bkgd(color)
+
+            # Apply color value to the text of the cell
+            data <-
+              scale_apply_styles(
+                data,
+                column = column_ij,
+                styles = list(list(text_color = color_text)), rows_i = k)
+          }
         }
       }
-
     }
-
   }
 
   data
