@@ -263,6 +263,7 @@ color_factor <- function(palette,
 #' Set data cell colors using an explicit mapping of colors/values
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
+#' @param column the column wherein changes to cell data color should occur.
 #' @param values the cell values to which the background \code{colors} should be
 #'   applied. The length of \code{values} must match that of \code{colors} since
 #'   they are considered to be one-to-one mappings of value to color for the
@@ -336,12 +337,13 @@ cols_color_manual <- function(data,
 #' Set data cell colors as a gradient with provided colors and breaks
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
-#' @param breaks numeric breaks that represent the transition points between the
-#'   colors provided in \code{colors}.
+#' @inheritParams cols_color_manual
 #' @param colors a vector of colors interpolate between according to the value
 #'   provided in \code{breaks}. Each color value provided must either be a color
 #'   name (in the set of colors provided by \code{grDevices::colors()}) or
 #'   hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param breaks numeric breaks that represent the transition points between the
+#'   colors provided in \code{colors}.
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @importFrom scales cscale
