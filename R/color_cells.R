@@ -106,11 +106,6 @@ cols_color_scale <- function(data,
 
     }
 
-    data <-
-      scale_apply_styles(
-        data,
-        column,
-        styles = list(list(bkgd_color = color)), rows_i = i)
   }
 
   data
