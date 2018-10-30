@@ -4,13 +4,13 @@
 \alias{cols_color_scale}
 \title{Set data cell colors using a helper function}
 \usage{
-cols_color_scale(data, column, colors)
+cols_color_scale(data, columns, colors)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{column}{the columns wherein changes to cell data colors
+\item{columns}{the columns wherein changes to cell data colors
 should occur.}
 
 \item{colors}{a vector of colors to use for each of the provided

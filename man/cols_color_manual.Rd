@@ -11,9 +11,6 @@ cols_color_manual(data, column, values, colors, alpha = 1,
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{column}{the columns wherein changes to cell data colors
-should occur.}
-
 \item{values}{the cell values to which the background \code{colors} should be
 applied. The length of \code{values} must match that of \code{colors} since
 they are considered to be one-to-one mappings of value to color for the

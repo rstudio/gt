@@ -11,9 +11,6 @@ cols_color_gradient_n(data, column, colors, breaks, alpha = 1,
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{column}{the columns wherein changes to cell data colors
-should occur.}
-
 \item{colors}{a vector of colors interpolate between according to the value
 provided in \code{breaks}. Each color value provided must either be a color
 name (in the set of colors provided by \code{grDevices::colors()}) or
