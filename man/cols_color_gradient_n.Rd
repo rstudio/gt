@@ -11,6 +11,8 @@ cols_color_gradient_n(data, column, colors, breaks, alpha = 1,
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
+\item{column}{the column wherein changes to cell data color should occur.}
+
 \item{colors}{a vector of colors interpolate between according to the value
 provided in \code{breaks}. Each color value provided must either be a color
 name (in the set of colors provided by \code{grDevices::colors()}) or
@@ -18,6 +20,12 @@ hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{breaks}{numeric breaks that represent the transition points between the
 colors provided in \code{colors}.}
+
+\item{alpha}{a fixed alpha transparency value that will be applied to all of
+the \code{colors} provided.}
+
+\item{na_color}{the default color for any unmapped data cells in the target
+\code{column}.}
 }
 \value{
 an object of class \code{gt_tbl}.
