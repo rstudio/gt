@@ -6,6 +6,11 @@
 \usage{
 lighten_palette(colors, factor = 1.5)
 }
+\arguments{
+\item{colors}{a vector of colors that is to be lightened.}
+
+\item{factor}{the factor to which the colors will be lightened.}
+}
 \description{
 Lighten a palette of colors by a fixed factor
 }

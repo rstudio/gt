@@ -6,6 +6,11 @@
 \usage{
 darken_palette(colors, factor = 1.5)
 }
+\arguments{
+\item{colors}{a vector of colors that is to be darkened.}
+
+\item{factor}{the factor to which the colors will be darkened.}
+}
 \description{
 Darken a palette of colors by a fixed factor
 }

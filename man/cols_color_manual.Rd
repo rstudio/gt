@@ -4,8 +4,8 @@
 \alias{cols_color_manual}
 \title{Set data cell colors using an explicit mapping of colors/values}
 \usage{
-cols_color_manual(data, column, values, colors, alpha = 1,
-  na_color = "darkgrey")
+cols_color_manual(data, column, values, colors, apply_to = "bkgd",
+  alpha = 1, na_color = "darkgrey")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -20,6 +20,10 @@ target \code{column}.}
 \code{values}. Each color value provided must either be a color name (in
 the set of colors provided by \code{grDevices::colors()}) or hexadecimal
 strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+
+\item{apply_to}{which style element should the colors be applied to? Options
+are the cell background (the default, given as \code{bkgd}) or the cell
+text (\code{text}).}
 
 \item{alpha}{a fixed alpha transparency value that will be applied to all of
 the \code{colors} provided.}

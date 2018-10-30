@@ -4,19 +4,22 @@
 \alias{cols_color_scale}
 \title{Set data cell colors using a helper function}
 \usage{
-cols_color_scale(data, columns, colors)
+cols_color_scale(data, columns, colors, handle_text = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns wherein changes to cell data colors
-should occur.}
+\item{columns}{the columns wherein changes to cell data colors should occur.}
 
 \item{colors}{a vector of colors to use for each of the provided
 \code{values}. Each color value provided must either be a color name (in
 the set of colors provided by \code{grDevices::colors()}) or hexadecimal
 strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+
+\item{handle_text}{an option to handle the coloring of cell data text to
+achieve optimal text-to-background color contrast. By default, this is set
+to \code{TRUE}.}
 }
 \description{
 Set data cell colors using a helper function
