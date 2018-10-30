@@ -73,7 +73,8 @@ cols_color_scale <- function(data,
         # Trim vector of colors to match the length of the unique values
         colors_i <- colors_i[seq(length(data_vals_j))]
 
-        # Apply color values to each of the data cells in the column
+        # Apply color values to the background of
+        # each of the data cells in the column
         data <-
           cols_color_manual(
             data,
