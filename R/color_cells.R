@@ -10,7 +10,8 @@
 #' @export
 cols_color_scale <- function(data,
                              columns,
-                             colors) {
+                             colors,
+                             handle_text = TRUE) {
 
   data_df <- attr(data, "data_df", exact = TRUE)
 
