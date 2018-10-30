@@ -458,3 +458,21 @@ darken_palette <- function(colors,
   colors_dark
 }
 
+# Function for determining the best `light` and `dark` colors to appear above a
+# background color
+#' @importFrom grDevices col2rgb
+#' @importFrom dplyr as_tibble mutate pull
+#' @noRd
+text_color_for_bkgd <- function(colors_vec,
+                                light = "#FFFFFFFF",
+                                dark = "#000000FF") {
+
+  yiq_contrasted_threshold <- 128
+
+  grDevices::col2rgb(colors_vec) %>%
+    t() %>%
+    dplyr::as_tibble() %>%
+    dplyr::mutate(yiq = ((red * 299) + (green * 587) + (blue * 114)) / 1000) %>%
+    dplyr::mutate(text_col = ifelse(yiq >= yiq_contrasted_threshold, light, dark)) %>%
+    dplyr::pull(text_col)
+}
