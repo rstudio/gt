@@ -189,6 +189,32 @@ color_numeric <- function(palette,
     na.color = na_color)
 }
 
+#' Colorizing helper function that colors according to factor levels
+#' @param palette the colors or color function that values will be mapped to.
+#' @param domain the possible values that should be mapped.
+#' @param levels levels
+#' @param ordered ordered
+#' @param na_color the default color for cells where data isn't mapped.
+#' @importFrom scales viridis_pal col_factor
+#' @export
+color_factor <- function(palette,
+                         domain = NULL,
+                         levels = NULL,
+                         ordered = FALSE,
+                         na_color = "#808080") {
+
+  if (missing(palette)) {
+    palette <- scales::viridis_pal()(10)
+  }
+
+  scales::col_factor(
+    palette = palette,
+    domain = domain,
+    levels = levels,
+    ordered = ordered,
+    na.color = na_color)
+}
+
 #' Set data cell colors using an explicit mapping of colors/values
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
