@@ -46,8 +46,11 @@ build_data <- function(data, context) {
   cols_df <- data_attr$cols_df
 
   #
-  # Obtain initial data frame objects from `data_attr`
+  # Obtain initial list objects from `data_attr`
   #
+
+  # Get the `col_labels` list
+  col_labels <- data_attr$col_labels
 
   # Get the `formats` list
   formats <- data_attr$formats
