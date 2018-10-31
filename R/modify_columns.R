@@ -415,36 +415,30 @@ cols_split_delim <- function(data,
   # Get all of the columns in the dataset
   all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
 
-  # Get the column names in the dataset
-  colnames <- colnames(attr(data, "boxh_df", exact = TRUE))
-
   # If using the `vars()` helper, get the columns as a character vector
   if (inherits(columns, "quosures")) {
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
   if (!is.null(columns)) {
-    colnames <- base::intersect(colnames, columns)
+    colnames <- base::intersect(all_cols, columns)
+  } else {
+    colnames <- all_cols
   }
 
   if (length(colnames) == 0) {
     return(data)
   }
 
-  colnames_indices <-
-    which(colnames(attr(data, "boxh_df", exact = TRUE)) %in% colnames)
+  for (i in seq(colnames)) {
 
-  for (i in colnames_indices) {
+    if (grepl(paste0("[^.]", delim, "[^.]"), colnames[i])) {
 
-    if (grepl(paste0("[^.]", delim, "[^.]"), all_cols[i])) {
+      split_colname <- strsplit(colnames[i], delim) %>% unlist()
 
-      split_colname <- strsplit(x = all_cols[i], split = delim) %>% unlist()
+      attr(data, "boxh_df")["group_label", i] <- split_colname[1]
 
-      attr(data, "boxh_df")[
-        "group_label", i] <- split_colname[1]
-
-      attr(data, "boxh_df")[
-        "column_label", i] <- paste0(split_colname[-1], collapse = delim)
+      attr(data, "col_labels")[[colnames[i]]] <- split_colname[2]
     }
   }
 
