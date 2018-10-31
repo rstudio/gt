@@ -479,12 +479,27 @@ create_summary_dfs <- function(summary_list,
 
 # Apply column names to column labels for any of those column labels not
 # explicitly set
-migrate_colnames_to_labels <- function(boxh_df) {
+# migrate_colnames_to_labels <- function(boxh_df) {
+#
+#   for (colname in colnames(boxh_df)) {
+#
+#     if (is.na(boxh_df["column_label", colname])) {
+#       boxh_df["column_label", colname] <- colname
+#     }
+#   }
+#
+#   boxh_df
+# }
 
-  for (colname in colnames(boxh_df)) {
+migrate_colnames_to_labels <- function(boxh_df,
+                                       col_labels,
+                                       context) {
 
-    if (is.na(boxh_df["column_label", colname])) {
-      boxh_df["column_label", colname] <- colname
+  for (i in seq(col_labels)) {
+
+    if (names(col_labels)[i] %in% colnames(boxh_df)) {
+      boxh_df["column_label", names(col_labels)[i]] <-
+        process_text(text = col_labels[[names(col_labels)[i]]], context)
     }
   }
 
