@@ -105,6 +105,16 @@ build_data <- function(data, context) {
   # of the stub `groupname` and `rowname` columns
   groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
 
+  # Process column labels and migrate those to `boxh_df`
+  boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
+
+  # Process group labels and migrate those to `boxh_df`
+  boxh_df <- migrate_grpnames_to_labels(boxh_df, grp_labels, context)
+
+  # Assign default alignment for all columns that haven't had alignment
+  # explicitly set
+  boxh_df <- set_default_alignments(boxh_df)
+
   # Get a `boxhead_spanners` vector, which has the unique, non-NA
   # boxhead spanner labels
   boxhead_spanners <- get_boxhead_spanners_vec(boxh_df)
@@ -124,13 +134,6 @@ build_data <- function(data, context) {
       is.na(groups_rows_df[, "group"]),
       c("group", "group_label")] <- others_group
   }
-
-  # Process column labels and migrate those to `boxh_df`
-  boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
-
-  # Assign default alignment for all columns that haven't had alignment
-  # explicitly set
-  boxh_df <- set_default_alignments(boxh_df)
 
   data_attr$boxh_df <- boxh_df
   data_attr$stub_df <- stub_df
