@@ -4,10 +4,10 @@
 \alias{html}
 \title{Interpret input text as HTML-formatted text}
 \usage{
-html(text)
+html(text, ...)
 }
 \arguments{
-\item{text}{the text that is understood to be HTML text, which is to be
+\item{text, ...}{the text that is understood to be HTML text, which is to be
 preserved.}
 }
 \value{
