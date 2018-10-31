@@ -164,6 +164,16 @@ gt <- function(data,
   attr(data_tbl, "rows_df") <- rows_df
   attr(data_tbl, "cols_df") <- cols_df
 
+  # Create a prepopulated `col_labels` list object, which
+  # contains names of all the columns which can be all be
+  # modified later
+  col_labels <- vector("list", length(colnames(data_tbl)))
+  for (i in seq(colnames(data_tbl))) {
+    col_labels[[i]] <- colnames(data_tbl)[i]
+    names(col_labels)[[i]] <- colnames(data_tbl)[i]
+  }
+  attr(data_tbl, "col_labels") <- col_labels
+
   # Create an `arrange_groups` list object, which contains
   # a vector of `groupname` values in the order of first
   # appearance in `data`; if all `groupname` values are NA,
