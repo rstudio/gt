@@ -436,7 +436,7 @@ cols_split_delim <- function(data,
 
       split_colname <- strsplit(colnames[i], delim) %>% unlist()
 
-      attr(data, "boxh_df")["group_label", i] <- split_colname[1]
+      attr(data, "grp_labels")[[colnames[i]]] <- split_colname[1]
 
       attr(data, "col_labels")[[colnames[i]]] <- split_colname[2]
     }
