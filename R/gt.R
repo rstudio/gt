@@ -186,6 +186,7 @@ gt <- function(data,
       list(groups = character(0))
   }
 
+  # Apply the input data table as an attribute
   attr(data_tbl, "data_df") <- data
 
   # Apply the default theme options data frame as an attribute
