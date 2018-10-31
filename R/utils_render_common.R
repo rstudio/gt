@@ -74,7 +74,8 @@ render_formats <- function(output_df,
 # Move input data cells to `output_df` that didn't have any rendering applied
 # during the `render_formats()` call
 migrate_unformatted_to_output <- function(data_df,
-                                          output_df) {
+                                          output_df,
+                                          context) {
 
   for (colname in colnames(output_df)) {
 
@@ -90,6 +91,7 @@ migrate_unformatted_to_output <- function(data_df,
             x %>%
               format(drop0trailing = FALSE) %>%
               tidy_gsub("\\s+$", "") %>%
+              process_text(context) %>%
               paste(collapse = ", ")
           }
         )
@@ -98,7 +100,8 @@ migrate_unformatted_to_output <- function(data_df,
 
       # No `lapply()` used: all values will be treated cohesively
       output_df[[colname]][row_index] <-
-        format(data_df[[colname]][row_index], drop0trailing = FALSE)
+        format(data_df[[colname]][row_index], drop0trailing = FALSE) %>%
+        process_text(context)
     }
   }
 
