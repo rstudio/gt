@@ -122,9 +122,8 @@ build_data <- function(data, context) {
       c("group", "group_label")] <- others_group
   }
 
-  # Apply column names to column labels for any of those column labels not
-  # explicitly set
-  boxh_df <- migrate_colnames_to_labels(boxh_df)
+  # Process column labels and migrate those to `boxh_df`
+  boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
 
   # Assign default alignment for all columns that haven't had alignment
   # explicitly set
