@@ -103,10 +103,7 @@ gt <- function(data,
     # Remove the `groupname` column from `data`
     data[[groupname_col]] <- NULL
 
-  } #else if (missing(groupname_col)) {
-#
-#     stop("The `groupname_col` is missing.", call. = FALSE)
-#   }
+  }
 
   # Take the input data and convert to a
   # data frame
@@ -158,7 +155,6 @@ gt <- function(data,
   # within the object
   attr(data_tbl, "boxh_df") <- boxh_df
   attr(data_tbl, "stub_df") <- stub_df
-
   attr(data_tbl, "footnotes_df") <- footnotes_df
   attr(data_tbl, "styles_df") <- styles_df
   attr(data_tbl, "rows_df") <- rows_df
