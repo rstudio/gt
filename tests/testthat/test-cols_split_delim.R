@@ -27,8 +27,8 @@ test_that("the `cols_split_delim()` function works correctly", {
     expect_equal(
       c("Length", "Width", "Length", "Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  attr(tbl_html, "grp_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(
@@ -70,8 +70,8 @@ test_that("the `cols_split_delim()` function works correctly", {
     expect_equal(
       c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  attr(tbl_html, "grp_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(
@@ -113,8 +113,8 @@ test_that("the `cols_split_delim()` function works correctly", {
     expect_equal(
       c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  attr(tbl_html, "grp_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(

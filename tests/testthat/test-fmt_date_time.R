@@ -21,8 +21,8 @@ test_that("the `fmt_date()` function works correctly", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "arrange_groups",
-          "data_df", "opts_df", "formats", "transforms")))
+          "rows_df", "cols_df", "col_labels", "grp_labels",
+          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -153,8 +153,8 @@ test_that("the `fmt_time()` function works correctly", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "arrange_groups",
-          "data_df", "opts_df", "formats", "transforms")))
+          "rows_df", "cols_df", "col_labels", "grp_labels",
+          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -228,8 +228,8 @@ test_that("the `fmt_datetime()` function works correctly", {
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "arrange_groups",
-          "data_df", "opts_df", "formats", "transforms")))
+          "rows_df", "cols_df", "col_labels", "grp_labels",
+          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
