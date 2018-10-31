@@ -477,20 +477,6 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
-# Apply column names to column labels for any of those column labels not
-# explicitly set
-# migrate_colnames_to_labels <- function(boxh_df) {
-#
-#   for (colname in colnames(boxh_df)) {
-#
-#     if (is.na(boxh_df["column_label", colname])) {
-#       boxh_df["column_label", colname] <- colname
-#     }
-#   }
-#
-#   boxh_df
-# }
-
 migrate_colnames_to_labels <- function(boxh_df,
                                        col_labels,
                                        context) {
