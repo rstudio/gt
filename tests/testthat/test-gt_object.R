@@ -50,9 +50,9 @@ expect_tab <- function(tab,
                        has_rownames = FALSE,
                        has_groupnames = FALSE) {
 
-  # Expect that the object has 14 attributes
+  # Expect that the object has 15 attributes
   expect_equal(
-    length(attributes(tab)), 14)
+    length(attributes(tab)), 15)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -63,8 +63,8 @@ expect_tab <- function(tab,
       names(attributes(tab)) %in%
         c("names", "class", "row.names",
           "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "arrange_groups", "data_df",
-          "opts_df", "formats", "transforms")))
+          "rows_df", "cols_df", "col_labels", "arrange_groups",
+          "data_df", "opts_df", "formats", "transforms")))
 
   # Expect that the attribute obejcts are of certain classes
   expect_is(attr(tab, "boxh_df"), "data.frame")
@@ -74,6 +74,7 @@ expect_tab <- function(tab,
   expect_is(attr(tab, "rows_df"), "data.frame")
   expect_is(attr(tab, "cols_df"), "data.frame")
   expect_is(attr(tab, "opts_df"), "data.frame")
+  expect_is(attr(tab, "col_labels"), "list")
   expect_is(attr(tab, "arrange_groups"), "list")
   expect_is(attr(tab, "formats"), "list")
 

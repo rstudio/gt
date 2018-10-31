@@ -20,12 +20,12 @@ test_that("the `cols_split_delim()` function works correctly", {
     gt(iris_short) %>%
     cols_split_delim(delim = ".")
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
+  # Expect a particular ordering of column labels in `col_labels`
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("Length", "Width", "Length", "Width", NA_character_))
+      c("Length", "Width", "Length", "Width", "Species"))
 
   # Expect a particular ordering of grouping labels in the internal `boxh_df`
   attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
@@ -63,12 +63,12 @@ test_that("the `cols_split_delim()` function works correctly", {
       delim = ".",
       columns = c("Sepal.Length", "Sepal.Width"))
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
+  # Expect a particular ordering of column labels in `col_labels`
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("Length", "Width", NA_character_, NA_character_, NA_character_))
+      c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
   # Expect a particular ordering of grouping labels in the internal `boxh_df`
   attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
@@ -106,12 +106,12 @@ test_that("the `cols_split_delim()` function works correctly", {
       delim = ".",
       columns = vars(Sepal.Length, Sepal.Width))
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
+  # Expect a particular ordering of column labels in `col_labels`
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("Length", "Width", NA_character_, NA_character_, NA_character_))
+      c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
   # Expect a particular ordering of grouping labels in the internal `boxh_df`
   attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%

@@ -53,10 +53,11 @@ test_that("the function `cols_label()` works correctly", {
       col_3 = "col_c",
       col_4 = "col_d")
 
-  # Expect that the values for the column labels are set correctly
-  # in `boxh_df`'s `column_label` row
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>% unname() %>%
+  # Expect that the values for the column labels are set
+  # correctly in `col_labels`
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
+    unlist() %>%
+    unname() %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect that the column labels are set in the table boxhead
@@ -71,11 +72,12 @@ test_that("the function `cols_label()` works correctly", {
   tbl_html <- gt(tbl) %>%
     cols_label()
 
-  # Expect NA values for the column labels (no setting) in
-  # `boxh_df`'s `column_label` row
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>% unname() %>%
-    expect_equal(rep(NA_character_, 4))
+  # Expect the original column names for `tbl` as values for
+  # the column labels
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
+    unlist() %>%
+    unname() %>%
+    expect_equal(colnames(tbl))
 
   # Expect that the column labels are set as the column names
   # in the table boxhead
@@ -95,10 +97,11 @@ test_that("the function `cols_label()` works correctly", {
         col_3 = "col_c",
         col_4 = "col_d"))
 
-  # Expect that the values for the column labels are set correctly
-  # in `boxh_df`'s `column_label` row
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>% unname() %>%
+  # Expect that the values for the column labels are set
+  # correctly in `col_labels`
+  attr(tbl_html, "col_labels", exact = TRUE) %>%
+    unlist() %>%
+    unname() %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect that the column labels are set in the table boxhead
