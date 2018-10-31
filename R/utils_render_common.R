@@ -477,7 +477,7 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
-# Process text of finalized column labels and migrate the\
+# Process text of finalized column labels and migrate the
 # processed text to `boxh_df`
 migrate_colnames_to_labels <- function(boxh_df,
                                        col_labels,
@@ -488,6 +488,23 @@ migrate_colnames_to_labels <- function(boxh_df,
     if (names(col_labels)[i] %in% colnames(boxh_df)) {
       boxh_df["column_label", names(col_labels)[i]] <-
         process_text(text = col_labels[[names(col_labels)[i]]], context)
+    }
+  }
+
+  boxh_df
+}
+
+# Process text of finalized column group labels and migrate the
+# processed text to `boxh_df`
+migrate_grpnames_to_labels <- function(boxh_df,
+                                       grp_labels,
+                                       context) {
+
+  for (i in seq(grp_labels)) {
+
+    if (names(grp_labels)[i] %in% colnames(boxh_df)) {
+      boxh_df["group_label", names(grp_labels)[i]] <-
+        process_text(text = grp_labels[[names(grp_labels)[i]]], context)
     }
   }
 
