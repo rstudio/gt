@@ -208,7 +208,7 @@ md <- function(text) {
 }
 
 #' Interpret input text as HTML-formatted text
-#' @param text the text that is understood to be HTML text, which is to be
+#' @param text,... the text that is understood to be HTML text, which is to be
 #'   preserved.
 #' @return a character object that is tagged as an HTML fragment that is not to
 #'   be sanitized.
@@ -223,13 +223,11 @@ md <- function(text) {
 #'       caption = html(
 #'         "car <em>make</em> and <em>model</em>"))
 #' @family helper functions
+#' @importFrom htmltools HTML
 #' @export
-html <- function(text) {
+html <- function(text, ...) {
 
-  # Apply the `html` attr and class
-  attr(text, "html") <- TRUE
-  class(text) <- c("html", "character")
-  text
+  htmltools::HTML(text, ...)
 }
 
 is.html <- function(x) {
