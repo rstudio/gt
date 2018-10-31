@@ -216,7 +216,14 @@ get_locale_dec_mark <- function(locale) {
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
 #' @noRd
-process_text <- function(text, context = "html") {
+process_text <- function(text,
+                         context = "html") {
+
+  # If text is marked `AsIs` (by using `I()`) then just
+  # return the text unchanged
+  if (inherits(text, "AsIs")) {
+    return(text)
+  }
 
   if (context == "html") {
 
@@ -297,7 +304,6 @@ process_text <- function(text, context = "html") {
 
       return(text)
     }
-
   }
 }
 
