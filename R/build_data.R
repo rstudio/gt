@@ -52,6 +52,9 @@ build_data <- function(data, context) {
   # Get the `col_labels` list
   col_labels <- data_attr$col_labels
 
+  # Get the `grp_labels` list
+  grp_labels <- data_attr$grp_labels
+
   # Get the `formats` list
   formats <- data_attr$formats
 
