@@ -45,7 +45,7 @@ as_latex <- function(data) {
     # Composition of Latex ----------------------------------------------------
 
     # Split `body_content` by slices of rows
-    row_splits <- split(body_content, ceiling(seq_along(body_content)/n_cols))
+    row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a Latex fragment for the start of the table
     table_start <- create_table_start_l()
