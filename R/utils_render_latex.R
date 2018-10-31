@@ -5,17 +5,6 @@ footnote_glyph_to_latex <- function(footnote_glyph) {
     "\\textsuperscript{", footnote_glyph, "}")
 }
 
-transform_boxh_labels_l <- function(boxh_df) {
-
-  text_group <-
-    boxh_df["group_label", ] %>% unlist() %>% unname() %>%
-    markdown_to_latex()
-
-  boxh_df["group_label", ] <- text_group
-
-  boxh_df
-}
-
 #' @noRd
 latex_body_row <- function(content,
                            type) {
@@ -143,7 +132,7 @@ create_boxhead_component_l <- function(boxh_df,
         cmidrule <-
           c(cmidrule,
             paste0(
-              "\\cmidrule{",
+              "\\cmidrule(lr){",
               sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
               "-",
               sum(spanners_lengths$lengths[1:i]),
