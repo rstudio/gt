@@ -15,7 +15,7 @@ build_data <- function(data, context) {
     must.include = c(
       "names", "row.names", "class", "boxh_df", "stub_df",
       "footnotes_df", "styles_df", "rows_df", "cols_df",
-      "arrange_groups", "opts_df", "formats"))
+      "col_labels", "arrange_groups", "opts_df", "formats"))
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
