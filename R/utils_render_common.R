@@ -477,6 +477,8 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
+# Process text of finalized column labels and migrate the\
+# processed text to `boxh_df`
 migrate_colnames_to_labels <- function(boxh_df,
                                        col_labels,
                                        context) {
