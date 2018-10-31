@@ -273,9 +273,7 @@ process_text <- function(text,
 
     } else {
 
-      text <- text %>%
-        as.character() %>%
-        htmltools::htmlEscape()
+      text <- text %>% text_to_latex()
 
       return(text)
     }
