@@ -160,24 +160,24 @@ gt <- function(data,
   attr(data_tbl, "rows_df") <- rows_df
   attr(data_tbl, "cols_df") <- cols_df
 
+  data_tbl_colnames <- colnames(data_tbl)
+
   # Create a prepopulated `col_labels` list object, which
   # contains names of all the columns which can be all be
   # modified later
-  col_labels <- vector("list", length(colnames(data_tbl)))
-  for (i in seq(colnames(data_tbl))) {
-    col_labels[[i]] <- colnames(data_tbl)[i]
-    names(col_labels)[[i]] <- colnames(data_tbl)[i]
-  }
+  col_labels <- data_tbl_colnames
+  names(col_labels) <- data_tbl_colnames
+  col_labels <- as.list(col_labels)
+
   attr(data_tbl, "col_labels") <- col_labels
 
   # Create a prepopulated `grp_labels` list object, which
   # contains names of all the column groups which can be all be
   # modified later
-  grp_labels <- vector("list", length(colnames(data_tbl)))
-  for (i in seq(colnames(data_tbl))) {
-    grp_labels[[i]] <- NA_character_
-    names(grp_labels)[[i]] <- colnames(data_tbl)[i]
-  }
+  grp_labels <- rep(NA_character_, length(colnames(data_tbl)))
+  names(grp_labels) <- data_tbl_colnames
+  grp_labels <- as.list(grp_labels)
+
   attr(data_tbl, "grp_labels") <- grp_labels
 
   # Create an `arrange_groups` list object, which contains
