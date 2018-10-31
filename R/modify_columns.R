@@ -117,30 +117,28 @@ cols_label <- function(data,
     stop("All arguments to `cols_label()` must be named.", call. = FALSE)
   }
 
-  # Use the `process_text()` function on each of the list elements
-  labels_vector <- sapply(labels_list, process_text)
+  # Extract the `col_labels` list from `data`
+  col_labels <- attr(data, "col_labels", exact = TRUE)
 
-  # Extract the `boxh_df` df from `data`
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
-
-  # Extract the `data_df` df from `data`
-  data_df <- as.data.frame(data)
-
-  # Stop function if any of the column names specified are not in `data_df`
-  if (!all(names(labels_vector) %in% colnames(data_df))) {
+  # Stop function if any of the column names specified are not in `cols_labels`
+  if (!all(names(labels_list) %in% names(col_labels))) {
     stop("All columns names provided must exist in the input `data` table.")
   }
 
-  # Filter the vector of labels by the column names actually in `boxh_df`
-  labels_vector <- labels_vector[names(labels_vector) %in% colnames(boxh_df)]
+  # Filter the list of labels by the names in `col_labels`
+  labels_list <- labels_list[names(labels_list) %in% names(col_labels)]
 
   # If no labels remain after filtering, return the data
-  if (length(labels_vector) == 0) {
+  if (length(labels_list) == 0) {
     return(data)
   }
 
-  attr(data, "boxh_df")["column_label", names(labels_vector)] <-
-    as.character(unname(labels_vector))
+  for (i in seq(labels_list)) {
+    col_labels[[names(labels_list[i])]] <- labels_list[[i]]
+  }
+
+  # Set the `col_labels` attr with the `col_labels` object
+  attr(data, "col_labels") <- col_labels
 
   data
 }
