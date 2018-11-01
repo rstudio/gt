@@ -9,7 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
 ```
 
 
