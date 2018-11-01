@@ -14,8 +14,6 @@ library(tidyverse)
 
 Create a table where rows are formatted conditionally.
 
-**This doesn't work (there's a tidyeval issue)**
-
 ```{r}
 readr::read_csv(
   system.file("extdata", "sp500.csv", package = "gt"),
