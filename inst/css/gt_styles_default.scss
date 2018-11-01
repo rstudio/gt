@@ -2,6 +2,8 @@
 
   .gt_table {
     border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
     color: font-color($table_background_color);
     font-size: $table_font_size;
     background-color: $table_background_color; /* table.background.color */
