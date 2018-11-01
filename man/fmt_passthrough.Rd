@@ -4,7 +4,8 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, pattern = "{x}")
+fmt_passthrough(data, columns, rows = NULL, escape = TRUE,
+  pattern = "{x}")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
