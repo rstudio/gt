@@ -958,6 +958,7 @@ fmt_datetime <- function(data,
 fmt_passthrough <- function(data,
                             columns,
                             rows = NULL,
+                            escape = TRUE,
                             pattern = "{x}") {
 
   # Capture expression in `rows`
@@ -969,6 +970,30 @@ fmt_passthrough <- function(data,
       columns = columns,
       rows = !!rows,
       fns = list(
+        html = function(x) {
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+
+          if (escape) {
+            x <- x %>% process_text(context = "html")
+          }
+
+          x
+        },
+        latex = function(x) {
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+
+          if (escape) {
+            x <- x %>% process_text(context = "latex")
+          }
+
+          x
+        },
         default = function(x) {
 
           # Handle formatting of pattern
