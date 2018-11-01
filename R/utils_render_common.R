@@ -486,11 +486,11 @@ migrate_colnames_to_labels <- function(boxh_df,
                                        col_labels,
                                        context) {
 
-  for (i in seq(col_labels)) {
+  for (col_label_name in names(col_labels)) {
 
-    if (names(col_labels)[i] %in% colnames(boxh_df)) {
-      boxh_df["column_label", names(col_labels)[i]] <-
-        process_text(text = col_labels[[names(col_labels)[i]]], context)
+    if (col_label_name %in% colnames(boxh_df)) {
+      boxh_df["column_label", col_label_name] <-
+        process_text(col_labels[[col_label_name]], context)
     }
   }
 
@@ -503,11 +503,11 @@ migrate_grpnames_to_labels <- function(boxh_df,
                                        grp_labels,
                                        context) {
 
-  for (i in seq(grp_labels)) {
+  for (grp_label_name in names(grp_labels)) {
 
-    if (names(grp_labels)[i] %in% colnames(boxh_df)) {
-      boxh_df["group_label", names(grp_labels)[i]] <-
-        process_text(text = grp_labels[[names(grp_labels)[i]]], context)
+    if (grp_label_name %in% colnames(boxh_df)) {
+      boxh_df["group_label", grp_label_name] <-
+        process_text(grp_labels[[grp_label_name]], context)
     }
   }
 

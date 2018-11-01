@@ -188,6 +188,8 @@ tab_stub_block <- function(data,
 tab_boxhead_panel <- function(data,
                               group,
                               columns) {
+  checkmate::assert_character(
+    group, len = 1, any.missing = FALSE, null.ok = FALSE)
 
   # If using the `vars()` helper, get the columns as a character vector
   if (inherits(columns, "quosures")) {
@@ -205,9 +207,7 @@ tab_boxhead_panel <- function(data,
   # Extract the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- group
-  }
+  grp_labels[columns] <- group
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels

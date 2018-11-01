@@ -133,9 +133,7 @@ cols_label <- function(data,
     return(data)
   }
 
-  for (i in seq(labels_list)) {
-    col_labels[[names(labels_list[i])]] <- labels_list[[i]]
-  }
+  col_labels[names(labels_list)] <- labels_list
 
   # Set the `col_labels` attr with the `col_labels` object
   attr(data, "col_labels") <- col_labels
@@ -430,16 +428,17 @@ cols_split_delim <- function(data,
     return(data)
   }
 
-  for (i in seq(colnames)) {
+  colnames_has_delim <- grepl(paste0("[^.]", delim, "[^.]"), colnames)
 
-    if (grepl(paste0("[^.]", delim, "[^.]"), colnames[i])) {
+  if (any(colnames_has_delim)) {
 
-      split_colname <- strsplit(colnames[i], delim) %>% unlist()
+    split_colnames <- strsplit(colnames[colnames_has_delim], delim)
 
-      attr(data, "grp_labels")[[colnames[i]]] <- split_colname[1]
+    attr(data, "grp_labels")[colnames[colnames_has_delim]] <-
+      vapply(split_colnames, `[[`, character(1), 1)
 
-      attr(data, "col_labels")[[colnames[i]]] <- split_colname[2]
-    }
+    attr(data, "col_labels")[colnames[colnames_has_delim]] <-
+      vapply(split_colnames, `[[`, character(1), 2)
   }
 
   data
