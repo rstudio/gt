@@ -99,7 +99,7 @@ test_that("a gt table contains the expected stubhead caption", {
   # Expect that the `the mtcars` content appears first in
   # the `data-type='column_heading'` series
   (tbl_html %>%
-      selection_text("[class='gt_col_heading gt_right']"))[1] %>%
+      selection_text("[class='gt_col_heading gt_left']"))[1] %>%
     expect_equal("the mtcars")
 })
 
@@ -341,7 +341,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that most stub cells are styled with a lightgrey background
   tbl_html %>%
-    rvest::html_nodes("[class='gt_row gt_stub gt_right'][style='background-color:lightgray;']") %>%
+    rvest::html_nodes("[class='gt_row gt_stub gt_left'][style='background-color:lightgray;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)
