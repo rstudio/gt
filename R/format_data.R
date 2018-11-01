@@ -1098,3 +1098,15 @@ fmt <- function(data,
 
   data
 }
+
+# Transform plain text to Latex, which escapes ASCII
+# characters with special meaning in Latex
+#' @export
+escape_latex <- function(text) {
+
+  text %>%
+    tidy_gsub("\\\\", "\\\\textbackslash ") %>%
+    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
+    tidy_gsub("~", "\\\\textasciitilde ") %>%
+    tidy_gsub("\\^", "\\\\textasciicircum ")
+}
