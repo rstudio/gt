@@ -31,6 +31,7 @@ gt_tbl <-
 }
 \seealso{
 Other helper functions: \code{\link{apply_styles}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+  \code{\link{escape_latex}}, \code{\link{md}},
+  \code{\link{pct}}, \code{\link{px}}
 }
 \concept{helper functions}
