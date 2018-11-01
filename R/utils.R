@@ -344,20 +344,6 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
-
-# Transform plain text to Latex, which escapes ASCII
-# characters with special meaning in Latex
-#' @noRd
-text_to_latex <- function(text) {
-
-  text %>%
-    tidy_gsub("\\\\", "\\\\textbackslash") %>%
-    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
-    tidy_gsub("~", "\\\\textasciitilde") %>%
-    tidy_gsub("\\^", "\\\\textasciicircum")
-}
-
-
 # Transform Markdown text to plain text
 #' @importFrom commonmark markdown_text
 #' @noRd
