@@ -355,3 +355,21 @@ px <- function(x) {
 
   paste0(x, "px")
 }
+
+#' Perform Latex escaping
+#'
+#' Text may contain several characters with special meanings in Latex. This
+#' function will transform a character vector so that it is safe to use within
+#' Latex tables.
+#' @param text a character vector containing the text that is to be
+#'   Latex-escaped.
+#' @family helper functions
+#' @export
+escape_latex <- function(text) {
+
+  text %>%
+    tidy_gsub("\\\\", "\\\\textbackslash ") %>%
+    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
+    tidy_gsub("~", "\\\\textasciitilde ") %>%
+    tidy_gsub("\\^", "\\\\textasciicircum ")
+}
