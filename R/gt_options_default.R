@@ -4,7 +4,7 @@ gt_options_default <- function() {
     ~parameter,                           ~scss, ~category,             ~value,
     "table_font_size",                    TRUE,  "table",               "16px",
     "table_background_color",             TRUE,  "table",               "#FFFFFF",
-    "table_width",                        TRUE,  "table",               "100%",
+    "table_width",                        TRUE,  "table",               "auto",
     "table_border_top_style",             TRUE,  "table",               "solid",
     "table_border_top_width",             TRUE,  "table",               "2px",
     "table_border_top_color",             TRUE,  "table",               "#A8A8A8",
