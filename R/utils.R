@@ -273,7 +273,7 @@ process_text <- function(text,
 
     } else {
 
-      text <- text %>% text_to_latex()
+      text <- text %>% escape_latex()
 
       return(text)
     }
