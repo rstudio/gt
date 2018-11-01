@@ -951,6 +951,12 @@ fmt_datetime <- function(data,
 #' \code{summary_rows} function, where the output may be text or useful as is
 #' (that function requires a formatter function).
 #' @inheritParams fmt_number
+#' @param escape an option to escape text according to the final output format
+#'   of the table. For example, if a Latex table is to be generated then Latex
+#'   escaping would be performed during rendering. By default this is set to
+#'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
+#'   Latex-formatted text should be passed through to the output Latex table
+#'   unchanged.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
 #' @import rlang
