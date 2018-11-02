@@ -204,13 +204,8 @@ tab_boxhead_panel <- function(data,
     return(data)
   }
 
-  # Extract the `grp_labels` list from `data`
-  grp_labels <- attr(data, "grp_labels", exact = TRUE)
-
-  grp_labels[columns] <- group
-
   # Set the `grp_labels` attr with the `grp_labels` object
-  attr(data, "grp_labels") <- grp_labels
+  attr(data, "grp_labels")[columns] <- group
 
   data
 }
