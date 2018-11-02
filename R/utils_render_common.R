@@ -480,45 +480,40 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
+migrate_labels <- function(row_val) {
+  function(
+    boxh_df,
+    labels,
+    context) {
+
+    for (label_name in names(grp_labels)) {
+
+      if (grp_label_name %in% colnames(boxh_df)) {
+        boxh_df[row_val, grp_label_name] <-
+          process_text(grp_labels[[grp_label_name]], context)
+      }
+    }
+
+    boxh_df
+  }
+}
+
 # Process text of finalized column labels and migrate the
 # processed text to `boxh_df`
-migrate_colnames_to_labels <- function(boxh_df,
-                                       col_labels,
-                                       context) {
-
-  for (col_label_name in names(col_labels)) {
-
-    if (col_label_name %in% colnames(boxh_df)) {
-      boxh_df["column_label", col_label_name] <-
-        process_text(col_labels[[col_label_name]], context)
-    }
-  }
-
-  boxh_df
-}
+migrate_colnames_to_labels <- migrate_labels("column_label")
 
 # Process text of finalized column group labels and migrate the
 # processed text to `boxh_df`
-migrate_grpnames_to_labels <- function(boxh_df,
-                                       grp_labels,
-                                       context) {
+migrate_grpnames_to_labels <- migrate_labels("group_label")
 
-  for (grp_label_name in names(grp_labels)) {
 
-    if (grp_label_name %in% colnames(boxh_df)) {
-      boxh_df["group_label", grp_label_name] <-
-        process_text(grp_labels[[grp_label_name]], context)
-    }
-  }
-
-  boxh_df
-}
 
 # Assign center alignment for all columns that haven't had alignment
 # explicitly set
 set_default_alignments <- function(boxh_df) {
 
   for (colname in colnames(boxh_df)) {
+
     if (is.na(boxh_df["column_align", colname])) {
       boxh_df["column_align", colname] <- "center"
     }
