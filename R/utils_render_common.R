@@ -486,11 +486,11 @@ migrate_labels <- function(row_val) {
     labels,
     context) {
 
-    for (label_name in names(grp_labels)) {
+    for (label_name in names(labels)) {
 
-      if (grp_label_name %in% colnames(boxh_df)) {
-        boxh_df[row_val, grp_label_name] <-
-          process_text(grp_labels[[grp_label_name]], context)
+      if (label_name %in% colnames(boxh_df)) {
+        boxh_df[row_val, label_name] <-
+          process_text(labels[[label_name]], context)
       }
     }
 
