@@ -49,22 +49,23 @@ expect_tab <- function(tab,
                        has_groupnames = FALSE) {
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, "gt_tbl")
+  expect_s3_class(tab, "data.frame")
 
-  # Expect that the object has 16 attributes
+  # Expect that the object has a certain number of attributes
   expect_gt_attr_length(tab)
 
   # Expect certain named attributes
   expect_gt_attr_names(tab)
 
   # Expect that the attribute obejcts are of certain classes
-  expect_is(attr(tab, "boxh_df"), "data.frame")
-  expect_is(attr(tab, "stub_df"), "data.frame")
-  expect_is(attr(tab, "footnotes_df"), "data.frame")
-  expect_is(attr(tab, "styles_df"), "data.frame")
-  expect_is(attr(tab, "rows_df"), "data.frame")
-  expect_is(attr(tab, "cols_df"), "data.frame")
-  expect_is(attr(tab, "opts_df"), "data.frame")
+  expect_s3_class(attr(tab, "boxh_df"), "data.frame")
+  expect_s3_class(attr(tab, "stub_df"), "data.frame")
+  expect_s3_class(attr(tab, "footnotes_df"), "data.frame")
+  expect_s3_class(attr(tab, "styles_df"), "data.frame")
+  expect_s3_class(attr(tab, "rows_df"), "data.frame")
+  expect_s3_class(attr(tab, "cols_df"), "data.frame")
+  expect_s3_class(attr(tab, "opts_df"), "data.frame")
   expect_type(attr(tab, "col_labels"), "list")
   expect_type(attr(tab, "grp_labels"), "list")
   expect_type(attr(tab, "arrange_groups"), "list")
