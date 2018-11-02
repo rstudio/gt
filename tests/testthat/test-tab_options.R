@@ -114,7 +114,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("100%", "50%"))
+    expect_equal(c("auto", "50%"))
 
   # Modify the `table.width` option using just a numeric value
   tbl_html <- data %>% tab_options(table.width = 500)
@@ -124,7 +124,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("100%", "500px"))
+    expect_equal(c("auto", "500px"))
 
   # Modify the `table.border.top.style`
   tbl_html <- data %>% tab_options(table.border.top.style = "dashed")

@@ -380,7 +380,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(93, 4))
+  css_tbl %>% dim() %>% expect_equal(c(95, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -398,7 +398,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     inline_html_styles(html, css_tbl = css_tbl)
 
   expect_true(
-    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;border-collapse:collapse;color:#000000;font-size:16px;background-color:#FFFFFF;width:100%;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
   )
 
   expect_true(
