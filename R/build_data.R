@@ -15,7 +15,8 @@ build_data <- function(data, context) {
     must.include = c(
       "names", "row.names", "class", "boxh_df", "stub_df",
       "footnotes_df", "styles_df", "rows_df", "cols_df",
-      "arrange_groups", "opts_df", "formats"))
+      "col_labels", "grp_labels", "arrange_groups", "opts_df",
+      "formats", "transforms"))
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
@@ -46,8 +47,14 @@ build_data <- function(data, context) {
   cols_df <- data_attr$cols_df
 
   #
-  # Obtain initial data frame objects from `data_attr`
+  # Obtain initial list objects from `data_attr`
   #
+
+  # Get the `col_labels` list
+  col_labels <- data_attr$col_labels
+
+  # Get the `grp_labels` list
+  grp_labels <- data_attr$grp_labels
 
   # Get the `formats` list
   formats <- data_attr$formats
@@ -80,11 +87,11 @@ build_data <- function(data, context) {
   output_df <- initialize_output_df(data_df)
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(output_df, data_df, formats, context = context)
+  output_df <- render_formats(output_df, data_df, formats, context)
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
-  output_df <- migrate_unformatted_to_output(data_df, output_df)
+  output_df <- migrate_unformatted_to_output(data_df, output_df, context)
 
   # Get the reordering df (`rows_df`) for the data rows
   rows_df <- get_row_reorder_df(arrange_groups, stub_df)
@@ -98,6 +105,16 @@ build_data <- function(data, context) {
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
   groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
+
+  # Process column labels and migrate those to `boxh_df`
+  boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
+
+  # Process group labels and migrate those to `boxh_df`
+  boxh_df <- migrate_grpnames_to_labels(boxh_df, grp_labels, context)
+
+  # Assign default alignment for all columns that haven't had alignment
+  # explicitly set
+  boxh_df <- set_default_alignments(boxh_df)
 
   # Get a `boxhead_spanners` vector, which has the unique, non-NA
   # boxhead spanner labels
@@ -118,14 +135,6 @@ build_data <- function(data, context) {
       is.na(groups_rows_df[, "group"]),
       c("group", "group_label")] <- others_group
   }
-
-  # Apply column names to column labels for any of those column labels not
-  # explicitly set
-  boxh_df <- migrate_colnames_to_labels(boxh_df)
-
-  # Assign default alignment for all columns that haven't had alignment
-  # explicitly set
-  boxh_df <- set_default_alignments(boxh_df)
 
   data_attr$boxh_df <- boxh_df
   data_attr$stub_df <- stub_df
