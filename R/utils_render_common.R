@@ -74,7 +74,8 @@ render_formats <- function(output_df,
 # Move input data cells to `output_df` that didn't have any rendering applied
 # during the `render_formats()` call
 migrate_unformatted_to_output <- function(data_df,
-                                          output_df) {
+                                          output_df,
+                                          context) {
 
   for (colname in colnames(output_df)) {
 
@@ -90,6 +91,7 @@ migrate_unformatted_to_output <- function(data_df,
             x %>%
               format(drop0trailing = FALSE) %>%
               tidy_gsub("\\s+$", "") %>%
+              process_text(context) %>%
               paste(collapse = ", ")
           }
         )
@@ -98,7 +100,8 @@ migrate_unformatted_to_output <- function(data_df,
 
       # No `lapply()` used: all values will be treated cohesively
       output_df[[colname]][row_index] <-
-        format(data_df[[colname]][row_index], drop0trailing = FALSE)
+        format(data_df[[colname]][row_index], drop0trailing = FALSE) %>%
+        process_text(context)
     }
   }
 
@@ -477,14 +480,34 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
-# Apply column names to column labels for any of those column labels not
-# explicitly set
-migrate_colnames_to_labels <- function(boxh_df) {
+# Process text of finalized column labels and migrate the
+# processed text to `boxh_df`
+migrate_colnames_to_labels <- function(boxh_df,
+                                       col_labels,
+                                       context) {
 
-  for (colname in colnames(boxh_df)) {
+  for (col_label_name in names(col_labels)) {
 
-    if (is.na(boxh_df["column_label", colname])) {
-      boxh_df["column_label", colname] <- colname
+    if (col_label_name %in% colnames(boxh_df)) {
+      boxh_df["column_label", col_label_name] <-
+        process_text(col_labels[[col_label_name]], context)
+    }
+  }
+
+  boxh_df
+}
+
+# Process text of finalized column group labels and migrate the
+# processed text to `boxh_df`
+migrate_grpnames_to_labels <- function(boxh_df,
+                                       grp_labels,
+                                       context) {
+
+  for (grp_label_name in names(grp_labels)) {
+
+    if (grp_label_name %in% colnames(boxh_df)) {
+      boxh_df["group_label", grp_label_name] <-
+        process_text(grp_labels[[grp_label_name]], context)
     }
   }
 

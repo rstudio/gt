@@ -42,7 +42,8 @@ cells. We can also define several styles with a single call of
 \code{apply_styles} and \code{\link{tab_style}()} will reliably process that.
 }
 \seealso{
-Other helper functions: \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+Other helper functions: \code{\link{escape_latex}},
+  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
+  \code{\link{px}}
 }
 \concept{helper functions}

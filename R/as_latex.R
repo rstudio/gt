@@ -22,9 +22,6 @@ as_latex <- function(data) {
   # Use Latex-specific builders to generate the Latex table code
   with(built_data, {
 
-    # Transform group and column labels in `boxh_df`
-    boxh_df <- transform_boxh_labels_l(boxh_df)
-
     # Add footnote glyphs to boxhead elements
     boxh_df <-
       set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df, output = "latex")
@@ -48,7 +45,7 @@ as_latex <- function(data) {
     # Composition of Latex ----------------------------------------------------
 
     # Split `body_content` by slices of rows
-    row_splits <- split(body_content, ceiling(seq_along(body_content)/n_cols))
+    row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a Latex fragment for the start of the table
     table_start <- create_table_start_l()
