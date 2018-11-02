@@ -52,9 +52,6 @@ expect_tab <- function(tab,
   expect_s3_class(tab, "gt_tbl")
   expect_s3_class(tab, "data.frame")
 
-  # Expect that the object has a certain number of attributes
-  expect_gt_attr_length(tab)
-
   # Expect certain named attributes
   expect_gt_attr_names(tab)
 
