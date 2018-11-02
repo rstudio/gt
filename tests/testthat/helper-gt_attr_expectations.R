@@ -143,13 +143,8 @@ gt_attr_names <- function() {
 
 expect_gt_attr_names <- function(object) {
 
-  (names(attributes(object)) %in% gt_attr_names()) %>%
-    all() %>%
-    expect_true()
-}
-
-expect_gt_attr_length <- function(object) {
-
-  length(attributes(object)) %>%
-    expect_equal(length(gt_attr_names()))
+  expect_equal(
+    sort(names(attributes(object))),
+    sort(gt_attr_names())
+  )
 }
