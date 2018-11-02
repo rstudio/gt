@@ -46,5 +46,6 @@ Suggests:
     testthat,
     rmarkdown,
     rvest,
-    shiny
+    shiny,
+    xml2
 VignetteBuilder: knitr
