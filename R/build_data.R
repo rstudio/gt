@@ -201,7 +201,7 @@ build_data <- function(data, context) {
     # Define the `col_alignment` vector, which is a
     #   vector of column alignment values for all of
     #   the relevant columns in a table
-    col_alignment <- c("right", col_alignment)
+    col_alignment <- c("left", col_alignment)
   }
 
   # Get the number of rows, columns, and cells in the `output_df`

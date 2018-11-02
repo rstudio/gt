@@ -19,7 +19,7 @@ tbl <-
     "C",        "2",      284.3,   394.4)
 
 # Create a display table with summary rows
-summary_tbl_1 <-
+summary_tbl <-
   gt(tbl) %>%
   summary_rows(
     groups = c("A", "C"),
@@ -35,32 +35,13 @@ summary_tbl_1 <-
   tab_footnote(
     footnote = "Note for Summary C.",
     locations = cells_summary(
-      groups = "C", columns = 1, rows = 1))
-
-summary_tbl_1
-
-# Create a second display table with summary rows
-summary_tbl_2 <-
-  gt(tbl) %>%
-  summary_rows(
-    groups = c("A", "C"),
-    columns = vars(value),
-    fn = list(
-      ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE),
-      ~sd(., na.rm = TRUE))) %>%
-  summary_rows(
-    groups = c("B"),
-    columns = vars(value_2),
-    fns = list(
-      ~sum(., na.rm = TRUE))) %>%
+      groups = "C", columns = 1, rows = 1)) %>%
   fmt_missing(columns = vars(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
-    summary_row.padding = 5,
     stub_group.background.color = "lightblue")
 
-summary_tbl_2
+summary_tbl
 
 # Extract the summary data frame from the table object
-summary_tbl_2 %>% extract_summary()
+summary_tbl %>% extract_summary()
