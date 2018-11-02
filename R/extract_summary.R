@@ -56,7 +56,7 @@ extract_summary <- function(data) {
 
   # Move input data cells to `output_df` that didn't have
   #   any rendering applied during `render_formats()`
-  output_df <- migrate_unformatted_to_output(data_df, output_df)
+  output_df <- migrate_unformatted_to_output(data_df, output_df, context = "html")
 
   # Get the reordering df (`rows_df`) for the data rows
   rows_df <- get_row_reorder_df(arrange_groups, stub_df)

@@ -1,4 +1,4 @@
-context("Ensuring that the `fmt_number()` function works as expected")
+context("Latex -- Ensuring that the `fmt_number()` function works as expected")
 
 test_that("the `fmt_number()` function works correctly", {
 
@@ -14,61 +14,24 @@ test_that("the `fmt_number()` function works correctly", {
       num_2 = c(34, 74, 23, 93, 35, 76, 57),
       stringsAsFactors = FALSE)
 
-  # Create a `gt_tbl` object with `gt()` and the
+  # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
-
-  # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # Expect certain named attributes
-  expect_true(
-    all(
-      names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "grp_labels",
-          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
-
-  # Extract vectors from the table object for comparison
-  # to the original dataset
-  char_1 <- (tab %>% as.data.frame())[["char_1"]]
-  char_2 <- (tab %>% as.data.frame())[["char_2"]]
-  num_1 <- (tab %>% as.data.frame())[["num_1"]]
-  num_2 <- (tab %>% as.data.frame())[["num_2"]]
-
-  # Expect the extracted values to match those of the
-  # original dataset
-  expect_equal(data_tbl$char_1, char_1)
-  expect_equal(data_tbl$char_2, char_2)
-  expect_equal(data_tbl$num_1, num_1)
-  expect_equal(data_tbl$num_2, num_2)
-
-  # Expect an error when attempting to format a column
-  # that does not exist
-  expect_error(
-    tab %>%
-      fmt_number(columns = "num_3", decimals = 2))
-
-  # Expect an error when using a locale that does not exist
-  expect_error(
-    tab %>%
-      fmt_number(columns = "num_2", decimals = 2, locale = "aa_bb"))
+  tbl_latex <- gt(data = data_tbl)
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2) %>%
-       render_formats_test(context = "html"))[["num_1"]],
+       render_formats_test(context = "latex"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "-23.24"))
 
   # Format the `num_1` column to 5 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 5) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1,836.23000", "2,763.39000", "937.29000", "643.00000",
       "212.23200", "0.00000", "-23.24000"))
 
@@ -76,65 +39,65 @@ test_that("the `fmt_number()` function works correctly", {
   # zeros, use all other defaults; extract `output_df` and compare to
   # expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2,
                   drop_trailing_zeros = TRUE) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643", "212.23", "0", "-23.24"))
 
   # Format the `num_1` column to 2 decimal places, don't use digit
   # grouping separators, use all other defaults; extract `output_df`
   # and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, use_seps = FALSE) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1836.23", "2763.39", "937.29", "643.00", "212.23", "0.00", "-23.24"))
 
   # Format the `num_1` column to 2 decimal places, use a single space
   # character as digit grouping separators, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, sep_mark = " ") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1 836.23", "2 763.39", "937.29", "643.00", "212.23", "0.00", "-23.24"))
 
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2,
                   sep_mark = ".", dec_mark = ",") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "-23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply parentheses to
   # all negative values, use all other defaults; extract `output_df` and
   # compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, negative_val = "parens") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "(23.24)"))
 
   # Format the `num_1` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1.8362", "2.7634", "0.9373", "0.6430", "0.2122", "0.0000", "-0.0232"))
 
   # Format the `num_1` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("a 1,836.23 b", "a 2,763.39 b", "a 937.29 b", "a 643.00 b",
       "a 212.23 b", "a 0.00 b", "a -23.24 b"))
 
@@ -142,10 +105,10 @@ test_that("the `fmt_number()` function works correctly", {
   # by 1/1000 and append a `K` character to the resultant values, use
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 4,
                   scale_by = 1/1000, pattern = "{x}K") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1.8362K", "2.7634K", "0.9373K", "0.6430K",
       "0.2122K", "0.0000K", "-0.0232K"))
 
@@ -153,44 +116,44 @@ test_that("the `fmt_number()` function works correctly", {
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, locale = "en_US") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "-23.24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `da_DK`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, locale = "da_DK") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "-23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `de_AT`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, locale = "de_AT") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "-23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, locale = "et_EE") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "-23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
   expect_equal(
-    (tab %>%
+    (tbl_latex %>%
        fmt_number(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("latex"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "-23,24"))
 })
