@@ -4,6 +4,14 @@ language: R
 sudo: false
 cache: packages
 
+jobs:
+  include:
+  - r: release
+  - r: devel
+  - r: 3.4
+  - r: 3.3
+  - r: 3.2
+
 r_binary_packages:
   - covr
 
