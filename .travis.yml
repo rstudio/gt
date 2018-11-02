@@ -6,11 +6,13 @@ cache: packages
 
 jobs:
   include:
+  - r: oldrel
   - r: release
   - r: devel
-  - r: 3.4
-  - r: 3.3
-  - r: 3.2
+  - os: osx
+  - r: release
+  - os: windows
+  - r: release
 
 r_binary_packages:
   - covr
