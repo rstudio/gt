@@ -1,7 +1,5 @@
 ---
 title: "latex-13-adding_footnotes"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 

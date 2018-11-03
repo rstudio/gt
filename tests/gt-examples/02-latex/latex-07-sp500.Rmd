@@ -1,7 +1,5 @@
 ---
 title: "latex-07-sp500"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 

@@ -1,7 +1,5 @@
 ---
 title: "latex-06-mtcars"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 
