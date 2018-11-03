@@ -83,7 +83,8 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c(NA, NA, "93,729.00%", "64,300.00%", "21,223.20%", "0.00%", "-2,324.00%"))
+    c(NA, NA, "93,729.00\\%", "64,300.00\\%", "21,223.20\\%",
+      "0.00\\%", "-2,324.00\\%"))
 
   expect_equal(
     (tbl_latex %>%
@@ -92,7 +93,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("3,400.00%", rep(NA, 6)))
+    c("3,400.00\\%", rep(NA, 6)))
 })
 
 test_that("the `fmt_currency()` function works with conditional `rows`", {
