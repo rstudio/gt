@@ -93,11 +93,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "stub", "5", NA_character_, NA_character_, "8",
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("stub", "5", NA_character_, NA_character_, "8",
       "background-color:steelblue;color:white;"))
 
   # Apply left-alignment to the table title
@@ -115,11 +113,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "title", "1", NA_character_, NA_character_, NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("title", "1", NA_character_, NA_character_, NA_character_,
       "text-align:left;"))
 
   # Apply left-alignment to the table headnote
@@ -137,11 +133,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "headnote", "2", NA_character_, NA_character_, NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("headnote", "2", NA_character_, NA_character_, NA_character_,
       "text-align:left;"))
 
   # Apply a green background with white text to a single cell in
@@ -161,11 +155,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "summary_cells", "5", "Mercs", "hp", "2",
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("summary_cells", "5", "Mercs", "hp", "2",
       "background-color:green;color:white;"))
 
   # Apply a `yellow` background to the `Mazdas` stub group cell
@@ -183,11 +175,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "stub_groups", "5", "Mazdas", NA_character_, NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("stub_groups", "5", "Mazdas", NA_character_, NA_character_,
       "background-color:yellow;"))
 
   # Apply a `lightgreen` background to the `gear_carb_cyl`
@@ -206,11 +196,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "boxhead_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("boxhead_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
       "background-color:lightgreen;"))
 
   # Apply a `turquoise` background to a single column label
@@ -228,11 +216,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "boxhead_columns", "4", NA_character_, "gear", NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("boxhead_columns", "4", NA_character_, "gear", NA_character_,
       "background-color:turquoise;"))
 
   # Apply a `turquoise` background to a single column label
@@ -250,11 +236,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "boxhead_columns", "4", NA_character_, "hp", NA_character_,
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("boxhead_columns", "4", NA_character_, "hp", NA_character_,
       "background-color:pink;"))
 
   # Apply a `lightgray` background to five rows of a single column
@@ -308,11 +292,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "data", "5", NA_character_, "disp", "1",
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("data", "5", NA_character_, "disp", "1",
       "background-color:yellow;"))
 
   # Expect an error in `tab_style` when a value for `rows` isn't
@@ -339,11 +321,9 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for each of the columns in the
   # single-row `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(c(
-      "data", "5", NA_character_, "disp", "1",
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("data", "5", NA_character_, "disp", "1",
       "background-color:yellow;"))
 
   # Apply a `yellow` background a single data cell; this time, use `vars()`
