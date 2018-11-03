@@ -1,7 +1,5 @@
 ---
 title: "latex-02-morley"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
   

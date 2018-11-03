@@ -1,7 +1,5 @@
 ---
 title: "latex-11-adding_a_stubhead_caption"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 

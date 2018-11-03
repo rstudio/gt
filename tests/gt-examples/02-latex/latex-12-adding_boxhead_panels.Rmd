@@ -1,7 +1,5 @@
 ---
 title: "latex-12-adding_boxhead_panels"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 

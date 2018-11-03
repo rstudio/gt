@@ -1,7 +1,5 @@
 ---
 title: "latex-08-using_summary_rows"
-header-includes:
-   - \usepackage{booktabs, caption}
 output: pdf_document
 ---
 
