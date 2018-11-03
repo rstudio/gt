@@ -11,8 +11,6 @@ jobs:
   - r: devel
   - os: osx
     r: release
-  - os: windows
-    r: release
 
 r_binary_packages:
   - covr
