@@ -86,6 +86,18 @@ as_latex <- function(data) {
     # Create the closing Latex element of a table
     table_end <- create_table_end_l()
 
+    # If the `rmarkdown` package is available, use the
+    # `latex_dependency()` function to load latex packages
+    # without requiring the user to do so
+    if (requireNamespace("rmarkdown", quietly = TRUE)) {
+      latex_packages <-
+        list(
+          rmarkdown::latex_dependency("booktabs"),
+          rmarkdown::latex_dependency("caption"))
+    } else {
+      latex_packages <- NULL
+    }
+
     # Compose the Latex table
     latex_table <-
       paste0(
@@ -99,7 +111,7 @@ as_latex <- function(data) {
         source_note_component,
         table_end,
         collapse = "") %>%
-      knitr::asis_output() %>%
+      knitr::asis_output(meta = latex_packages) %>%
       knitr::knit_print()
 
     latex_table
