@@ -464,58 +464,17 @@ color_alpha <- function(colors,
     maxColorValue = 255)
 }
 
-#' Lighten a palette of colors by a fixed factor
-#' @param colors a vector of colors that is to be lightened.
-#' @param factor the factor to which the colors will be lightened.
-#' @importFrom grDevices rgb
 #' @export
-lighten_palette <- function(colors,
-                            factor = 1.5){
 
-  colors_light <- c()
 
-  for (color in colors) {
 
-    colors_light <-
-      c(
-        colors_light,
-        grDevices::rgb(
-          t(
-            as.matrix(
-              apply(grDevices::col2rgb(color) * factor,
-                    1,
-                    function(x) if (x > 255) 255 else x))),
-          maxColorValue = 255)
-      )
-  }
-  colors_light
 }
 
-#' Darken a palette of colors by a fixed factor
-#' @param colors a vector of colors that is to be darkened.
-#' @param factor the factor to which the colors will be darkened.
-#' @importFrom grDevices rgb
-#' @export
-darken_palette <- function(colors,
-                           factor = 1.5){
 
-  colors_dark <- c()
 
   for (color in colors) {
 
-    colors_dark <-
-      c(
-        colors_dark,
-        grDevices::rgb(
-          t(
-            as.matrix(
-              apply(grDevices::col2rgb(color) / factor,
-                    1,
-                    function(x) if (x > 255) 255 else x))),
-          maxColorValue = 255)
-      )
   }
-  colors_dark
 }
 
 # Function for determining the best `light` and `dark` colors to appear above a
