@@ -464,10 +464,55 @@ color_alpha <- function(colors,
     maxColorValue = 255)
 }
 
+#' Adjust the luminance for a palette of colors
+#' @param colors a vector of colors that will undergo an adjustment in
+#'   luminance.
+#' @param steps a positive or negative factor by which the luminance will be
+#'   adjusted. Must be a number between \code{-2.0} and \code{2.0}.
+#' @importFrom grDevices col2rgb convertColor hcl
 #' @export
+adjust_luminance <- function(colors,
+                             steps) {
 
+  # Stop if steps is beyond an acceptable range
+  if (steps > 2.0 | steps < -2.0) {
+    stop("The value provided for `steps` (", steps, ") must be between `-2.0` and `+2.0`.",
+         call. = FALSE)
+  }
 
+  # Get a matrix of values in the RGB color space
+  rgb_matrix <- t(grDevices::col2rgb(colors)) / 255
 
+  # Obtain the alpha values
+  alpha <- get_alpha_vec(colors)
+
+  # Get a matrix of values in the Luv color space
+  luv_matrix <- grDevices::convertColor(rgb_matrix, "sRGB", "Luv")
+
+  # Apply calculations to obtain values in the HCL color space
+  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
+  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
+  l <- luv_matrix[, "L"]
+
+  # Scale luminance to occupy [0, 1]
+  y <- l / 100.
+
+  # Obtain `x` positions of luminance values along a sigmoid function
+  x <- log(-(y / (y - 1)))
+
+  # Calculate new luminance values based on a fixed step-change in `x`
+  y_2 <- 1 / (1 + exp(-(x + steps)))
+
+  # Rescale new luminance values to [0, 100]
+  l <- y_2 * 100.
+
+  # Obtain hexadecimal colors from the modified HCL color values
+  hcl_colors <- grDevices::hcl(h, c, l, alpha = NULL)
+
+  # Apply alpha values to the hexadecimal colors
+  hcl_colors <- paste0(hcl_colors, alpha)
+
+  hcl_colors
 }
 
 
