@@ -13,7 +13,7 @@
 cols_color_scale <- function(data,
                              columns,
                              colors,
-                             handle_text = TRUE) {
+                             autocolor_text = TRUE) {
 
   data_df <- attr(data, "data_df", exact = TRUE)
 
