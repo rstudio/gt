@@ -5,9 +5,10 @@
 #'   \code{values}. Each color value provided must either be a color name (in
 #'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
 #'   strings in the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param handle_text an option to handle the coloring of cell data text to
-#'   achieve optimal text-to-background color contrast. By default, this is set
-#'   to \code{TRUE}.
+#' @param autocolor_text an option to let gt modify the coloring of text within
+#'   cells undergoing background coloring. This will in some cases yield more
+#'   optimal text-to-background color contrast. By default, this is set to
+#'   \code{TRUE}.
 #' @import rlang
 #' @export
 cols_color_scale <- function(data,
