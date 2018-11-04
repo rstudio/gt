@@ -515,11 +515,23 @@ adjust_luminance <- function(colors,
   hcl_colors
 }
 
+# Extract a vector of alpha values for a vector of colors
+get_alpha_vec <- function(colors) {
 
+  alpha <- c()
 
   for (color in colors) {
 
+    if (grepl("^#[0-9A-Fa-f]{6}$", color)) {
+      alpha <- c(alpha, "FF")
+    } else if (grepl("^#[0-9A-Fa-f]{8}$", color)) {
+      alpha <- c(alpha, toupper(sub(".*(..)$", "\\1", color)))
+    } else {
+      alpha <- c(alpha, "FF")
+    }
   }
+
+  alpha
 }
 
 # Function for determining the best `light` and `dark` colors to appear above a
