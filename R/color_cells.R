@@ -18,141 +18,114 @@ cols_color_scale <- function(data,
 
   data_df <- attr(data, "data_df", exact = TRUE)
 
-  if (!inherits(colors, "list")) {
-    colors <- list(colors)
+  # If `columns` inherits from `quosures` (which any bare column names enclosed
+  # `vars()` will), extract the column names as a vector
+  if (inherits(columns, "quosures")) {
+
+    columns <-
+      lapply(columns, function(x) {
+        rlang::get_expr(x) %>% as.character()
+      }) %>%
+      unlist() %>%
+      unname()
   }
 
-  if (!inherits(columns, "list")) {
-    columns <- list(columns)
-  }
+  if (inherits(colors, "character")) {
 
-  # The `colors` and `columns` lists should be of equal length; stop the function
-  # if this isn't the case
-  if (length(colors) != length(columns)) {
-    stop("The lengths of `colors` and `columns` should be equal to each other.",
-         call. = FALSE)
-  }
+    for (column in columns) {
 
-  for (i in seq(colors)) {
+      # Get a unique set of data values for this column
+      data_vals_j <- data_df[[column]] %>% unique()
 
-    columns_i <- columns[[i]]
-    colors_i <- colors[[i]]
+      # Stop function if number of colors supplied is less than the
+      # number of unique data values
+      if (length(colors) < length(data_vals_j)) {
+        stop("The number of `colors` supplied (", length(colors), ") is less than ",
+             "the number of unique data values in column `", column, "` (",
+             length(data_vals_j), ").", call. = FALSE)
+      }
 
-    # If `columns_i` inherits from `quosures` (which any bare column names enclosed
-    # `vars()` will), extract the column names as a vector
-    if (inherits(columns_i, "quosures")) {
+      # Trim vector of colors to match the length of the unique values
+      colors <- colors[seq(length(data_vals_j))]
 
-      columns_i <-
-        lapply(columns_i, function(x) {
-          rlang::get_expr(x) %>% as.character()
-        }) %>%
-        unlist() %>%
-        unname()
-    }
+      # Apply color values to the background of
+      # each of the data cells in the column
+      data <-
+        cols_color_manual(
+          data,
+          column = column,
+          values = data_vals_j,
+          colors = colors,
+          alpha = 1,
+          na_color = "#808080")
 
-    if (inherits(colors_i, "character")) {
+      # If the `autocolor_text` option is TRUE then the coloring
+      # of text will be modified to achieve the highest contrast
+      # possible
+      if (autocolor_text) {
 
-      # TODO: verify that the colors are valid
+        # Apply the `ideal_fgnd_color()` function to the
+        # vector of background color values to obtain a
+        # vector of suitable text colors
+        colors <- ideal_fgnd_color(colors)
 
-
-      for (j in seq(columns_i)) {
-
-        # Obtain the column name
-        column_ij <- columns_i[j]
-
-        # Get a unique set of data values for this column
-        data_vals_j <- data_df[[column_ij]] %>% unique()
-
-        # Stop function if number of colors supplied is less than the
-        # number of unique data values
-        if (length(colors_i) < length(data_vals_j)) {
-          stop("The number of `colors` supplied (", length(colors_i), ") is less than ",
-               "the number of unique data values in column `", column_ij, "` (",
-               length(data_vals_j), ").", call. = FALSE)
-        }
-
-        # Trim vector of colors to match the length of the unique values
-        colors_i <- colors_i[seq(length(data_vals_j))]
-
-        # Apply color values to the background of
-        # each of the data cells in the column
+        # Apply color values to the text of each
+        # of the data cells in the column
         data <-
           cols_color_manual(
             data,
-            column = column_ij,
+            column = column,
             values = data_vals_j,
-            colors = colors_i,
+            colors = colors,
+            apply_to = "text",
             alpha = 1,
-            na_color = "#808080")
+            na_color = "black")
+      }
+    }
 
-        # If the `handle_text` option is TRUE then the coloring
+  } else {
+
+    color_fn <- rlang::enquo(colors)
+    color_fn <- rlang::eval_tidy(color_fn, data_df)
+
+    for (column in columns) {
+
+      data_vals_j <- data_df[[column]]
+
+      for (k in seq(data_vals_j)) {
+
+        # Apply the colorizing function to the data value
+        # to obtain a cell color
+        color <- color_fn(data_vals_j[k])
+
+        # Apply color value to the background of the cell
+        data <-
+          scale_apply_styles(
+            data,
+            column = column,
+            styles = list(list(bkgd_color = color)), rows_i = k)
+
+        # If the `autocolor_text` option is TRUE then the coloring
         # of text will be modified to achieve the highest contrast
         # possible
-        if (handle_text) {
+        if (autocolor_text) {
 
-          # Apply the `text_color_for_bkgd()` function to the
-          # vector of background color values to obtain a
-          # vector of suitable text colors
-          colors_i <- text_color_for_bkgd(colors_i)
+          # Apply the `ideal_fgnd_color()` function to
+          # the background color value to obtain a suitable
+          # text color
+          color_text <- ideal_fgnd_color(color)
 
-          # Apply color values to the text of each
-          # of the data cells in the column
-          data <-
-            cols_color_manual(
-              data,
-              column = column_ij,
-              values = data_vals_j,
-              colors = colors_i,
-              apply_to = "text",
-              alpha = 1,
-              na_color = "black")
-        }
-      }
-    } else {
-
-      color_fn <- rlang::enquo(colors_i)
-      color_fn <- rlang::eval_tidy(color_fn, data_df)
-
-      for (j in seq(columns_i)) {
-
-        column_ij <- columns_i[j]
-
-        data_vals_j <- data_df[[column_ij]]
-
-        for (k in seq(data_vals_j)) {
-
-          # Apply the colorizing function to the data value
-          # to obtain a cell color
-          color <- color_fn(data_vals_j[k])
-
-          # Apply color value to the background of the cell
+          # Apply color value to the text of the cell
           data <-
             scale_apply_styles(
               data,
-              column = column_ij,
-              styles = list(list(bkgd_color = color)), rows_i = k)
-
-          # If the `handle_text` option is TRUE then the coloring
-          # of text will be modified to achieve the highest contrast
-          # possible
-          if (handle_text) {
-
-            # Apply the `text_color_for_bkgd()` function to
-            # the background color value to obtain a suitable
-            # text color
-            color_text <- text_color_for_bkgd(color)
-
-            # Apply color value to the text of the cell
-            data <-
-              scale_apply_styles(
-                data,
-                column = column_ij,
-                styles = list(list(text_color = color_text)), rows_i = k)
-          }
+              column = column,
+              styles = list(list(text_color = color_text)), rows_i = k)
         }
       }
     }
   }
+
 
   data
 }
