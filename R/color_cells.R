@@ -177,7 +177,7 @@ color_bin <- function(palette,
                       na_color = "#808080") {
 
   if (missing(palette)) {
-    palette <- scales::viridis_pal()(n)
+    palette <- scales::viridis_pal()(bins)
   }
 
   scales::col_bin(
