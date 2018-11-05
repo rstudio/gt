@@ -4,6 +4,14 @@ language: R
 sudo: false
 cache: packages
 
+jobs:
+  include:
+  - r: oldrel
+  - r: release
+  - r: devel
+  - os: osx
+    r: release
+
 r_binary_packages:
   - covr
 
