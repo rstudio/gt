@@ -252,12 +252,13 @@ color_factor <- function(palette,
 #' @import checkmate
 #' @export
 cols_color_manual <- function(data,
-                              column,
+                              columns,
                               values,
                               colors,
                               apply_to = "bkgd",
                               alpha = NULL,
                               na_color = "#808080",
+                              autocolor_text = TRUE) {
 
   # Perform check for `values`
   checkmate::assert_vector(
@@ -269,37 +270,77 @@ cols_color_manual <- function(data,
     colors, min.len = 1, len = length(values),
     any.missing = FALSE, null.ok = FALSE)
 
+  # Extract `data_df` from the gt object
+  data_df <- attr(data, "data_df", exact = TRUE)
 
+  # If `columns` inherits from `quosures` (which any bare column names enclosed
+  # `vars()` will), extract the column names as a vector
+  if (inherits(columns, "quosures")) {
 
-  for (i in seq_along(data_vals)) {
+    columns <-
+      lapply(columns, function(x) {
+        rlang::get_expr(x) %>% as.character()
+      }) %>%
+      unlist() %>%
+      unname()
+  }
 
-    data_val <- data_vals[i]
   # Optionally pass all colors provided to `color_alpha()` to
   # apply a common transparency values to the set
   if (!is.null(alpha)) {
 
-    values_pos <- which(values == data_val)
     colors <- color_alpha(colors, alpha = alpha)
     na_color <- color_alpha(colors = na_color, alpha = alpha)
   }
 
-    if (length(values_pos) > 0) {
-      color <- colors[values_pos]
-    } else {
-      color <- na_color
-    }
+  for (column in columns) {
 
-    if (apply_to == "bkgd") {
+    # Get the data values from the column
+    data_vals <- data_df[[column]]
 
-      data <-
-        scale_apply_styles(
-          data, column, styles = list(list(bkgd_color = color)), rows_i = i)
+    for (i in seq_along(data_vals)) {
 
-    } else if (apply_to == "text") {
+      data_val <- data_vals[i]
 
-      data <-
-        scale_apply_styles(
-          data, column, styles = list(list(text_color = color)), rows_i = i)
+      values_pos <- which(values == data_val)
+
+      if (length(values_pos) > 0) {
+        color <- colors[values_pos]
+      } else {
+        color <- na_color
+      }
+
+      if (apply_to == "bkgd") {
+
+        data <-
+          scale_apply_styles(
+            data, column,
+            styles = list(list(bkgd_color = color)),
+            rows_i = i)
+
+        if (autocolor_text) {
+
+          # Apply the `ideal_fgnd_color()` function to the single
+          # background color value to obtain a suitable text color
+          color <- ideal_fgnd_color(color)
+
+          # Apply the color value to the text of the
+          # target data cell
+          data <-
+            scale_apply_styles(
+              data, column,
+              styles = list(list(text_color = color)),
+              rows_i = i)
+        }
+
+      } else if (apply_to == "text") {
+
+        data <-
+          scale_apply_styles(
+            data, column,
+            styles = list(list(text_color = color)),
+            rows_i = i)
+      }
     }
   }
 
