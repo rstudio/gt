@@ -32,7 +32,7 @@ string in the form of "#RRGGBB" or "#RRGGBBAA".}
 to all of the \code{colors} provided.}
 
 \item{na_color}{the default color for any unmapped data cells in the target
-\code{column}.}
+\code{columns}.}
 
 \item{apply_to}{which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{bkgd}) or the cell

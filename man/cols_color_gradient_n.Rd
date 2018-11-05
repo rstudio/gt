@@ -5,7 +5,7 @@
 \title{Set data cell colors as a gradient with provided colors and breaks}
 \usage{
 cols_color_gradient_n(data, columns, colors, breaks, alpha = NULL,
-  na_color = "#808080")
+  na_color = "#808080", apply_to = "bkgd", autocolor_text = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -27,10 +27,22 @@ a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 colors provided in \code{colors}.}
 
 \item{alpha}{an optional, fixed alpha transparency value that will be applied
-to all of the \code{colors} provided.}
+to all of the \code{colors} provided if they are provided as a vector of
+colors. If using a colorizing helper function for \code{colors} then this
+option is ignored (each of the colorizing helper functions has its own
+\code{alpha} argument).}
 
 \item{na_color}{the default color for any unmapped data cells in the target
-\code{column}.}
+\code{columns}.}
+
+\item{apply_to}{which style element should the colors be applied to? Options
+include the cell background (the default, given as \code{bkgd}) or the cell
+text (\code{text}).}
+
+\item{autocolor_text}{an option to let gt modify the coloring of text within
+cells undergoing background coloring. This will in some cases yield more
+optimal text-to-background color contrast. By default, this is set to
+\code{TRUE}.}
 }
 \value{
 an object of class \code{gt_tbl}.
