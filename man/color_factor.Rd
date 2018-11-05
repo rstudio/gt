@@ -12,11 +12,18 @@ color_factor(palette, domain = NULL, levels = NULL, ordered = FALSE,
 
 \item{domain}{the possible values that should be mapped.}
 
-\item{levels}{levels}
+\item{levels}{provides a means to specify levels differently. If this is
+provided then the \code{domain} argument is ignored.}
 
-\item{ordered}{ordered}
+\item{ordered}{if set to \code{TRUE} and the \code{domain} needs to be
+coerced to a factor, treat it as already in the correct order. The default
+value for this is \code{FALSE}.}
 
 \item{na_color}{the default color for cells where data isn't mapped.}
+}
+\value{
+a function that maps cell data to colors in a palette (for use in
+  \code{\link{cols_color_scale}()}).
 }
 \description{
 Colorizing helper function that colors according to factor levels

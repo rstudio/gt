@@ -21,6 +21,10 @@ specified number of \code{bins}. By default, this is set to \code{TRUE}.}
 
 \item{na_color}{the default color for cells where data isn't mapped.}
 }
+\value{
+a function that maps cell data to colors in a palette (for use in
+  \code{\link{cols_color_scale}()}).
+}
 \description{
 Colorizing helper function that colors by bin membership
 }
