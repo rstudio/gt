@@ -361,6 +361,7 @@ cols_color_manual <- function(data,
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @importFrom scales cscale
+#' @importFrom scales cscale seq_gradient_pal
 #' @export
 cols_color_gradient_n <- function(data,
                                   columns,
