@@ -280,7 +280,7 @@ color_factor <- function(palette,
 #' @param alpha an optional, fixed alpha transparency value that will be applied
 #'   to all of the \code{colors} provided.
 #' @param na_color the default color for any unmapped data cells in the target
-#'   \code{column}.
+#'   \code{columns}.
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @export
@@ -390,8 +390,6 @@ cols_color_manual <- function(data,
 #'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param breaks numeric breaks that represent the transition points between the
 #'   colors provided in \code{colors}.
-#' @param alpha an optional, fixed alpha transparency value that will be applied
-#'   to all of the \code{colors} provided.
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @importFrom scales cscale seq_gradient_pal
