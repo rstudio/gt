@@ -3,7 +3,7 @@
 \docType{data}
 \name{countrypops}
 \alias{countrypops}
-\title{Yearly populations of countries from 1960 to 2017 (Wide Format)}
+\title{Yearly populations of countries from 1960 to 2017}
 \format{A tibble with 12470 rows and 5 variables:
 \describe{
   \item{country_name}{Name of the country}
@@ -19,11 +19,12 @@
 countrypops
 }
 \description{
-A dataset that presents yearly populations of countries. The
-country identifiers include the English country names, and the 2- and
-3-letter ISO 3166-1 country codes. Each row contains a \code{population}
-value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
-for \code{populations} indicate the non-existence of the country during
-that year.
+A dataset that presents yearly, total populations of countries. Total
+population is based on counts of all residents regardless of legal status or
+citizenship. Country identifiers include the English-language country names,
+and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
+\code{population} value for a given \code{year} (from 1960 to 2017). Any
+\code{NA} values for \code{populations} indicate the non-existence of the
+country during that year.
 }
 \keyword{datasets}
