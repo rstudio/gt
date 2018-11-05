@@ -27,6 +27,8 @@
 cols_color_scale <- function(data,
                              columns,
                              colors,
+                             alpha = NULL,
+                             apply_to = "bkgd",
                              autocolor_text = TRUE) {
 
   # Extract `data_df` from the gt object
@@ -62,21 +64,22 @@ cols_color_scale <- function(data,
       # Trim vector of colors to match the length of the unique values
       colors <- colors[seq(length(data_vals_j))]
 
-      # Apply color values to the background of
-      # each of the data cells in the column
+      # Apply color values to the correct element
+      # of each of the data cells in the column
       data <-
         cols_color_manual(
           data,
           columns = column,
           values = data_vals_j,
           colors = colors,
-          alpha = 1,
+          apply_to = apply_to,
+          alpha = alpha,
           na_color = "#808080")
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (autocolor_text) {
+      if (apply_to == "bkgd" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to the
         # vector of background color values to obtain a
@@ -92,7 +95,7 @@ cols_color_scale <- function(data,
             values = data_vals_j,
             colors = colors,
             apply_to = "text",
-            alpha = 1,
+            alpha = NULL,
             na_color = "#808080")
       }
     }
@@ -112,17 +115,29 @@ cols_color_scale <- function(data,
         # to obtain a cell color
         color <- color_fn(data_vals_j[k])
 
-        # Apply color value to the background of the cell
-        data <-
-          scale_apply_styles(
-            data,
-            column = column,
-            styles = list(list(bkgd_color = color)), rows_i = k)
+        if (apply_to == "bkgd") {
+
+          # Apply color value to the background of the cell
+          data <-
+            scale_apply_styles(
+              data,
+              column = column,
+              styles = list(list(bkgd_color = color)), rows_i = k)
+
+        } else if (apply_to == "text") {
+
+          # Apply color value to the text within the cell
+          data <-
+            scale_apply_styles(
+              data,
+              column = column,
+              styles = list(list(text_color = color)), rows_i = k)
+        }
 
         # If the `autocolor_text` option is TRUE then the coloring
         # of text will be modified to achieve the highest contrast
         # possible
-        if (autocolor_text) {
+        if (apply_to == "bkgd" & autocolor_text) {
 
           # Apply the `ideal_fgnd_color()` function to
           # the background color value to obtain a suitable
@@ -139,7 +154,6 @@ cols_color_scale <- function(data,
       }
     }
   }
-
 
   data
 }
@@ -274,9 +288,9 @@ cols_color_manual <- function(data,
                               columns,
                               values,
                               colors,
-                              apply_to = "bkgd",
                               alpha = NULL,
                               na_color = "#808080",
+                              apply_to = "bkgd",
                               autocolor_text = TRUE) {
 
   # Perform check for `values`
