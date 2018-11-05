@@ -2,7 +2,7 @@
 % Please edit documentation in R/color_cells.R
 \name{cols_color_manual}
 \alias{cols_color_manual}
-\title{Set data cell colors using an explicit mapping of colors/values}
+\title{Set data cell colors with an explicit mapping of colors to values}
 \usage{
 cols_color_manual(data, columns, values, colors, apply_to = "bkgd",
   alpha = NULL, na_color = "#808080", autocolor_text = TRUE)
@@ -18,15 +18,15 @@ focused on selections. The select helper functions are:
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{values}{the cell values to which the colors should be
-applied. The length of \code{values} must match that of \code{colors} since
-they are considered to be one-to-one mappings of value to color for the
-target \code{column}.}
+\item{values}{the cell values to which the colors should be applied. The
+length of \code{values} must match that of \code{colors} since they are
+considered to be one-to-one mappings of value to color for the target
+\code{column}.}
 
-\item{colors}{a vector of colors to use for each of the provided
+\item{colors}{a vector of colors for mapping to the values provided in
 \code{values}. Each color value provided must either be a color name (in
-the set of colors provided by \code{grDevices::colors()}) or hexadecimal
-strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+the set of colors provided by \code{grDevices::colors()}) or a hexadecimal
+string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{apply_to}{which style element should the colors be applied to? Options
 are the cell background (the default, given as \code{bkgd}) or the cell
@@ -47,5 +47,5 @@ optimal text-to-background color contrast. By default, this is set to
 an object of class \code{gt_tbl}.
 }
 \description{
-Set data cell colors using an explicit mapping of colors/values
+Set data cell colors with an explicit mapping of colors to values
 }

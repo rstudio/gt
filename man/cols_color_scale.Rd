@@ -2,7 +2,7 @@
 % Please edit documentation in R/color_cells.R
 \name{cols_color_scale}
 \alias{cols_color_scale}
-\title{Set data cell colors using a helper function}
+\title{Set data cell colors using a palette or a colorizing helper function}
 \usage{
 cols_color_scale(data, columns, colors, autocolor_text = TRUE)
 }
@@ -12,10 +12,15 @@ function.}
 
 \item{columns}{the columns wherein changes to cell data colors should occur.}
 
-\item{colors}{a vector of colors to use for each of the provided
-\code{values}. Each color value provided must either be a color name (in
-the set of colors provided by \code{grDevices::colors()}) or hexadecimal
-strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{either a colorizing helper function or a vector of colors to
+use for each distinct value in each of the provided \code{columns}. The
+colorizing helper functions are: \code{\link{color_quantile}()},
+\code{\link{color_bin}()}, \code{\link{color_numeric}()}, and
+\code{\link{color_factor}()}. Details for the helper functions are provided
+in their respective help files. If providing a vector of colors as a
+palette, each color value provided must either be a color name (in the set
+of colors provided by \code{grDevices::colors()}) or hexadecimal strings in
+the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{autocolor_text}{an option to let gt modify the coloring of text within
 cells undergoing background coloring. This will in some cases yield more
@@ -23,5 +28,5 @@ optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
 }
 \description{
-Set data cell colors using a helper function
+Set data cell colors using a palette or a colorizing helper function
 }

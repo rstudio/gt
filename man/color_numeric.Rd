@@ -16,3 +16,9 @@ color_numeric(palette, domain = NULL, na_color = "#808080")
 \description{
 Colorizing helper function that linearly colors continuous data
 }
+\seealso{
+Other colorizing helper functions: \code{\link{adjust_luminance}},
+  \code{\link{color_bin}}, \code{\link{color_factor}},
+  \code{\link{color_quantile}}
+}
+\concept{colorizing helper functions}

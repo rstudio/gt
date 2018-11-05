@@ -24,3 +24,9 @@ specified number of \code{bins}. By default, this is set to \code{TRUE}.}
 \description{
 Colorizing helper function that colors by bin membership
 }
+\seealso{
+Other colorizing helper functions: \code{\link{adjust_luminance}},
+  \code{\link{color_factor}}, \code{\link{color_numeric}},
+  \code{\link{color_quantile}}
+}
+\concept{colorizing helper functions}

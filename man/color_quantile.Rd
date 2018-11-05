@@ -8,13 +8,13 @@ color_quantile(palette, domain = NULL, n = 4, probs = seq(0, 1,
   length.out = n + 1), na_color = "#808080")
 }
 \arguments{
-\item{palette}{the colors or color function that values will be mapped to.}
+\item{palette}{the colors that values will be mapped to.}
 
-\item{domain}{the possible values that should be mapped.}
+\item{domain}{the possible range of values that should be mapped to colors.}
 
 \item{n}{the number of equally-sized quantiles to use for color binning. The
 \code{probs} argument can be used in lieu of \code{n} for more control over
-quartiles.}
+the quantiles.}
 
 \item{probs}{a numeric vector of probabilities. If provided, \code{n} is
 ignored.}
@@ -24,3 +24,9 @@ ignored.}
 \description{
 Colorizing helper function that colors by quantile
 }
+\seealso{
+Other colorizing helper functions: \code{\link{adjust_luminance}},
+  \code{\link{color_bin}}, \code{\link{color_factor}},
+  \code{\link{color_numeric}}
+}
+\concept{colorizing helper functions}

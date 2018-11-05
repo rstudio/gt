@@ -21,3 +21,9 @@ color_factor(palette, domain = NULL, levels = NULL, ordered = FALSE,
 \description{
 Colorizing helper function that colors according to factor levels
 }
+\seealso{
+Other colorizing helper functions: \code{\link{adjust_luminance}},
+  \code{\link{color_bin}}, \code{\link{color_numeric}},
+  \code{\link{color_quantile}}
+}
+\concept{colorizing helper functions}
