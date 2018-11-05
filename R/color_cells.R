@@ -10,6 +10,14 @@
 #'   palette, each color value provided must either be a color name (in the set
 #'   of colors provided by \code{grDevices::colors()}) or hexadecimal strings in
 #'   the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param alpha an optional, fixed alpha transparency value that will be applied
+#'   to all of the \code{colors} provided if they are provided as a vector of
+#'   colors. If using a colorizing helper function for \code{colors} then this
+#'   option is ignored (each of the colorizing helper functions has its own
+#'   \code{alpha} argument).
+#' @param apply_to which style element should the colors be applied to? Options
+#'   include the cell background (the default, given as \code{bkgd}) or the cell
+#'   text (\code{text}).
 #' @param autocolor_text an option to let gt modify the coloring of text within
 #'   cells undergoing background coloring. This will in some cases yield more
 #'   optimal text-to-background color contrast. By default, this is set to
@@ -255,11 +263,8 @@ color_factor <- function(palette,
 #'   \code{values}. Each color value provided must either be a color name (in
 #'   the set of colors provided by \code{grDevices::colors()}) or a hexadecimal
 #'   string in the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param apply_to which style element should the colors be applied to? Options
-#'   are the cell background (the default, given as \code{bkgd}) or the cell
-#'   text (\code{text}).
-#' @param alpha a fixed alpha transparency value that will be applied to all of
-#'   the \code{colors} provided.
+#' @param alpha an optional, fixed alpha transparency value that will be applied
+#'   to all of the \code{colors} provided.
 #' @param na_color the default color for any unmapped data cells in the target
 #'   \code{column}.
 #' @return an object of class \code{gt_tbl}.
@@ -371,6 +376,8 @@ cols_color_manual <- function(data,
 #'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param breaks numeric breaks that represent the transition points between the
 #'   colors provided in \code{colors}.
+#' @param alpha an optional, fixed alpha transparency value that will be applied
+#'   to all of the \code{colors} provided.
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
 #' @importFrom scales cscale seq_gradient_pal
