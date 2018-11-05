@@ -1,10 +1,15 @@
-#' Set data cell colors using a helper function
+#' Set data cell colors using a palette or a colorizing helper function
 #' @inheritParams fmt_number
 #' @param columns the columns wherein changes to cell data colors should occur.
-#' @param colors a vector of colors to use for each of the provided
-#'   \code{values}. Each color value provided must either be a color name (in
-#'   the set of colors provided by \code{grDevices::colors()}) or hexadecimal
-#'   strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param colors either a colorizing helper function or a vector of colors to
+#'   use for each distinct value in each of the provided \code{columns}. The
+#'   colorizing helper functions are: \code{\link{color_quantile}()},
+#'   \code{\link{color_bin}()}, \code{\link{color_numeric}()}, and
+#'   \code{\link{color_factor}()}. Details for the helper functions are provided
+#'   in their respective help files. If providing a vector of colors as a
+#'   palette, each color value provided must either be a color name (in the set
+#'   of colors provided by \code{grDevices::colors()}) or hexadecimal strings in
+#'   the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param autocolor_text an option to let gt modify the coloring of text within
 #'   cells undergoing background coloring. This will in some cases yield more
 #'   optimal text-to-background color contrast. By default, this is set to
@@ -132,14 +137,15 @@ cols_color_scale <- function(data,
 }
 
 #' Colorizing helper function that colors by quantile
-#' @param palette the colors or color function that values will be mapped to.
-#' @param domain the possible values that should be mapped.
+#' @param palette the colors that values will be mapped to.
+#' @param domain the possible range of values that should be mapped to colors.
 #' @param n the number of equally-sized quantiles to use for color binning. The
 #'   \code{probs} argument can be used in lieu of \code{n} for more control over
-#'   quartiles.
+#'   the quantiles.
 #' @param probs a numeric vector of probabilities. If provided, \code{n} is
 #'   ignored.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_quantile
 #' @export
 color_quantile <- function(palette,
@@ -169,6 +175,7 @@ color_quantile <- function(palette,
 #' @param pretty an option for whether to create pretty breaks based on the
 #'   specified number of \code{bins}. By default, this is set to \code{TRUE}.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_bin
 #' @export
 color_bin <- function(palette,
@@ -193,6 +200,7 @@ color_bin <- function(palette,
 #' @param palette the colors or color function that values will be mapped to.
 #' @param domain the possible values that should be mapped.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_numeric
 #' @export
 color_numeric <- function(palette,
@@ -215,6 +223,7 @@ color_numeric <- function(palette,
 #' @param levels levels
 #' @param ordered ordered
 #' @param na_color the default color for cells where data isn't mapped.
+#' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_factor
 #' @export
 color_factor <- function(palette,
@@ -235,13 +244,17 @@ color_factor <- function(palette,
     na.color = na_color)
 }
 
-#' Set data cell colors using an explicit mapping of colors/values
+#' Set data cell colors with an explicit mapping of colors to values
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
-#' @param values the cell values to which the colors should be
-#'   applied. The length of \code{values} must match that of \code{colors} since
-#'   they are considered to be one-to-one mappings of value to color for the
-#'   target \code{column}.
+#' @param values the cell values to which the colors should be applied. The
+#'   length of \code{values} must match that of \code{colors} since they are
+#'   considered to be one-to-one mappings of value to color for the target
+#'   \code{column}.
+#' @param colors a vector of colors for mapping to the values provided in
+#'   \code{values}. Each color value provided must either be a color name (in
+#'   the set of colors provided by \code{grDevices::colors()}) or a hexadecimal
+#'   string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param apply_to which style element should the colors be applied to? Options
 #'   are the cell background (the default, given as \code{bkgd}) or the cell
 #'   text (\code{text}).
@@ -360,7 +373,6 @@ cols_color_manual <- function(data,
 #'   colors provided in \code{colors}.
 #' @return an object of class \code{gt_tbl}.
 #' @import checkmate
-#' @importFrom scales cscale
 #' @importFrom scales cscale seq_gradient_pal
 #' @export
 cols_color_gradient_n <- function(data,
@@ -505,6 +517,7 @@ color_alpha <- function(colors,
 #'   luminance.
 #' @param steps a positive or negative factor by which the luminance will be
 #'   adjusted. Must be a number between \code{-2.0} and \code{2.0}.
+#' @family colorizing helper functions
 #' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
