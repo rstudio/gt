@@ -4,8 +4,8 @@
 \alias{cols_color_manual}
 \title{Set data cell colors with an explicit mapping of colors to values}
 \usage{
-cols_color_manual(data, columns, values, colors, apply_to = "bkgd",
-  alpha = NULL, na_color = "#808080", autocolor_text = TRUE)
+cols_color_manual(data, columns, values, colors, alpha = NULL,
+  na_color = "#808080", apply_to = "bkgd", autocolor_text = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -28,15 +28,15 @@ considered to be one-to-one mappings of value to color for the target
 the set of colors provided by \code{grDevices::colors()}) or a hexadecimal
 string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
-\item{apply_to}{which style element should the colors be applied to? Options
-are the cell background (the default, given as \code{bkgd}) or the cell
-text (\code{text}).}
-
-\item{alpha}{a fixed alpha transparency value that will be applied to all of
-the \code{colors} provided.}
+\item{alpha}{an optional, fixed alpha transparency value that will be applied
+to all of the \code{colors} provided.}
 
 \item{na_color}{the default color for any unmapped data cells in the target
 \code{column}.}
+
+\item{apply_to}{which style element should the colors be applied to? Options
+include the cell background (the default, given as \code{bkgd}) or the cell
+text (\code{text}).}
 
 \item{autocolor_text}{an option to let gt modify the coloring of text within
 cells undergoing background coloring. This will in some cases yield more

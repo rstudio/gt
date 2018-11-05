@@ -4,7 +4,8 @@
 \alias{cols_color_scale}
 \title{Set data cell colors using a palette or a colorizing helper function}
 \usage{
-cols_color_scale(data, columns, colors, autocolor_text = TRUE)
+cols_color_scale(data, columns, colors, alpha = NULL,
+  apply_to = "bkgd", autocolor_text = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -21,6 +22,16 @@ in their respective help files. If providing a vector of colors as a
 palette, each color value provided must either be a color name (in the set
 of colors provided by \code{grDevices::colors()}) or hexadecimal strings in
 the form of "#RRGGBB" or "#RRGGBBAA".}
+
+\item{alpha}{an optional, fixed alpha transparency value that will be applied
+to all of the \code{colors} provided if they are provided as a vector of
+colors. If using a colorizing helper function for \code{colors} then this
+option is ignored (each of the colorizing helper functions has its own
+\code{alpha} argument).}
+
+\item{apply_to}{which style element should the colors be applied to? Options
+include the cell background (the default, given as \code{bkgd}) or the cell
+text (\code{text}).}
 
 \item{autocolor_text}{an option to let gt modify the coloring of text within
 cells undergoing background coloring. This will in some cases yield more

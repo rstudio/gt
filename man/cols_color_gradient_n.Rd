@@ -26,8 +26,8 @@ a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 \item{breaks}{numeric breaks that represent the transition points between the
 colors provided in \code{colors}.}
 
-\item{alpha}{a fixed alpha transparency value that will be applied to all of
-the \code{colors} provided.}
+\item{alpha}{an optional, fixed alpha transparency value that will be applied
+to all of the \code{colors} provided.}
 
 \item{na_color}{the default color for any unmapped data cells in the target
 \code{column}.}
