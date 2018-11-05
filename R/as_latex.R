@@ -111,8 +111,7 @@ as_latex <- function(data) {
         source_note_component,
         table_end,
         collapse = "") %>%
-      knitr::asis_output(meta = latex_packages) %>%
-      knitr::knit_print()
+      knitr::asis_output(meta = latex_packages)
 
     latex_table
   })
