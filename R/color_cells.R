@@ -580,7 +580,6 @@ color_alpha <- function(colors,
 #'   luminance.
 #' @param steps a positive or negative factor by which the luminance will be
 #'   adjusted. Must be a number between \code{-2.0} and \code{2.0}.
-#' @family colorizing helper functions
 #' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
