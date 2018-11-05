@@ -321,7 +321,7 @@ cols_color_manual <- function(data,
 #' @importFrom scales cscale
 #' @export
 cols_color_gradient_n <- function(data,
-                                  column,
+                                  columns,
                                   colors,
                                   breaks,
                                   alpha = NULL,
@@ -337,49 +337,67 @@ cols_color_gradient_n <- function(data,
     colors, min.len = 1, len = length(breaks),
     any.missing = FALSE, null.ok = FALSE)
 
+  # Extract `data_df` from the gt object
+  data_df <- attr(data, "data_df", exact = TRUE)
 
-  # Get the data values from the `column` chosen
-  data_df <- attr(data, "data_df")
-  data_vals <- data_df[[column]]
+  # If `columns` inherits from `quosures` (which any bare column names enclosed
+  # `vars()` will), extract the column names as a vector
+  if (inherits(columns, "quosures")) {
 
-  break_order <- order(breaks)
+    columns <-
+      lapply(columns, function(x) {
+        rlang::get_expr(x) %>% as.character()
+      }) %>%
+      unlist() %>%
+      unname()
+  }
+
   # Optionally pass all colors provided to `color_alpha()` to
   # apply a common transparency values to the set
   if (!is.null(alpha)) {
 
-  breaks <- breaks[break_order]
-  colors <- colors[break_order]
     colors <- color_alpha(colors, alpha = alpha)
     na_color <- color_alpha(colors = na_color, alpha = alpha)
   }
 
-  for (i in seq_along(data_vals)) {
+  for (column in columns) {
 
-    data_val <- data_vals[i]
+    # Get the data values from the `column` chosen
+    data_vals <- data_df[[column]]
 
-    if (is.na(data_val)) {
-      color <- na_color
-    } else if (data_val <= breaks[1]) {
-      color <- colors[1]
-    } else if (data_val >= breaks[length(breaks)]) {
-      color <- colors[length(colors)]
-    } else {
+    break_order <- order(breaks)
 
-      break_pos <-
-        which(breaks[-length(breaks)] < data_val & breaks[-1] >= data_val)[1]
+    breaks <- breaks[break_order]
+    colors <- colors[break_order]
 
-      color <-
-        scales::cscale(
-          x = c(data_val, breaks[break_pos], breaks[break_pos + 1]),
-          palette = scales::seq_gradient_pal(
-            colors[break_pos],
-            colors[break_pos + 1]))[1]
+    for (i in seq_along(data_vals)) {
+
+      data_val <- data_vals[i]
+
+      if (is.na(data_val)) {
+        color <- na_color
+      } else if (data_val <= breaks[1]) {
+        color <- colors[1]
+      } else if (data_val >= breaks[length(breaks)]) {
+        color <- colors[length(colors)]
+      } else {
+
+        break_pos <-
+          which(breaks[-length(breaks)] < data_val & breaks[-1] >= data_val)[1]
+
+        color <-
+          scales::cscale(
+            x = c(data_val, breaks[break_pos], breaks[break_pos + 1]),
+            palette = scales::seq_gradient_pal(
+              colors[break_pos],
+              colors[break_pos + 1]))[1]
+      }
+
+      data <-
+        scale_apply_styles(
+          data, column,
+          styles = list(list(bkgd_color = color)), rows_i = i)
     }
-
-    data <-
-      scale_apply_styles(
-        data, column,
-        styles = list(list(bkgd_color = color)), rows_i = i)
   }
 
   data
