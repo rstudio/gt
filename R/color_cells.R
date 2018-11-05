@@ -250,8 +250,11 @@ color_numeric <- function(palette,
 #' Colorizing helper function that colors according to factor levels
 #' @param palette the colors or color function that values will be mapped to.
 #' @param domain the possible values that should be mapped.
-#' @param levels levels
-#' @param ordered ordered
+#' @param levels provides a means to specify levels differently. If this is
+#'   provided then the \code{domain} argument is ignored.
+#' @param ordered if set to \code{TRUE} and the \code{domain} needs to be
+#'   coerced to a factor, treat it as already in the correct order. The default
+#'   value for this is \code{FALSE}.
 #' @param na_color the default color for cells where data isn't mapped.
 #' @return a function that maps cell data to colors in a palette (for use in
 #'   \code{\link{cols_color_scale}()}).
