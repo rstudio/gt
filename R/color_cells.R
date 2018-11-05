@@ -237,8 +237,7 @@ color_factor <- function(palette,
 #' Set data cell colors using an explicit mapping of colors/values
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
-#' @param column the column wherein changes to cell data color should occur.
-#' @param values the cell values to which the background \code{colors} should be
+#' @param values the cell values to which the colors should be
 #'   applied. The length of \code{values} must match that of \code{colors} since
 #'   they are considered to be one-to-one mappings of value to color for the
 #'   target \code{column}.
@@ -312,10 +311,10 @@ cols_color_manual <- function(data,
 #' @inheritParams fmt_number
 #' @inheritParams cols_color_scale
 #' @inheritParams cols_color_manual
-#' @param colors a vector of colors interpolate between according to the value
+#' @param colors a vector of colors for interpolation according to the values
 #'   provided in \code{breaks}. Each color value provided must either be a color
 #'   name (in the set of colors provided by \code{grDevices::colors()}) or
-#'   hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param breaks numeric breaks that represent the transition points between the
 #'   colors provided in \code{colors}.
 #' @return an object of class \code{gt_tbl}.
@@ -417,7 +416,7 @@ scale_apply_styles <- function(data,
   data
 }
 
-# Transform X11 and hexadecimal colors to a hexadecimal
+# Transform named and hexadecimal colors to a hexadecimal
 # format that includes hex transparency
 #' @importFrom grDevices rgb col2rgb
 color_alpha <- function(colors,
