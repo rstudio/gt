@@ -439,7 +439,8 @@ cols_color_gradient_n <- function(data,
       data <-
         scale_apply_styles(
           data, column,
-          styles = list(list(bkgd_color = color)), rows_i = i)
+          styles = list(list(bkgd_color = color)),
+          rows_i = i)
     }
   }
 
