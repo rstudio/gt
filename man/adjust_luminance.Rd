@@ -16,9 +16,3 @@ adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
 \description{
 Adjust the luminance for a palette of colors
 }
-\seealso{
-Other colorizing helper functions: \code{\link{color_bin}},
-  \code{\link{color_factor}}, \code{\link{color_numeric}},
-  \code{\link{color_quantile}}
-}
-\concept{colorizing helper functions}
