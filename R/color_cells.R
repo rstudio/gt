@@ -59,7 +59,7 @@ cols_color_scale <- function(data,
       data <-
         cols_color_manual(
           data,
-          column = column,
+          columns = column,
           values = data_vals_j,
           colors = colors,
           alpha = 1,
@@ -80,7 +80,7 @@ cols_color_scale <- function(data,
         data <-
           cols_color_manual(
             data,
-            column = column,
+            columns = column,
             values = data_vals_j,
             colors = colors,
             apply_to = "text",
