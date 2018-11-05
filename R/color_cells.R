@@ -16,6 +16,7 @@ cols_color_scale <- function(data,
                              colors,
                              autocolor_text = TRUE) {
 
+  # Extract `data_df` from the gt object
   data_df <- attr(data, "data_df", exact = TRUE)
 
   # If `columns` inherits from `quosures` (which any bare column names enclosed
