@@ -169,6 +169,8 @@ cols_color_scale <- function(data,
 #' @param probs a numeric vector of probabilities. If provided, \code{n} is
 #'   ignored.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @return a function that maps cell data to colors in a palette (for use in
+#'   \code{\link{cols_color_scale}()}).
 #' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_quantile
 #' @export
@@ -199,6 +201,8 @@ color_quantile <- function(palette,
 #' @param pretty an option for whether to create pretty breaks based on the
 #'   specified number of \code{bins}. By default, this is set to \code{TRUE}.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @return a function that maps cell data to colors in a palette (for use in
+#'   \code{\link{cols_color_scale}()}).
 #' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_bin
 #' @export
@@ -224,6 +228,8 @@ color_bin <- function(palette,
 #' @param palette the colors or color function that values will be mapped to.
 #' @param domain the possible values that should be mapped.
 #' @param na_color the default color for cells where data isn't mapped.
+#' @return a function that maps cell data to colors in a palette (for use in
+#'   \code{\link{cols_color_scale}()}).
 #' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_numeric
 #' @export
@@ -247,6 +253,8 @@ color_numeric <- function(palette,
 #' @param levels levels
 #' @param ordered ordered
 #' @param na_color the default color for cells where data isn't mapped.
+#' @return a function that maps cell data to colors in a palette (for use in
+#'   \code{\link{cols_color_scale}()}).
 #' @family colorizing helper functions
 #' @importFrom scales viridis_pal col_factor
 #' @export
