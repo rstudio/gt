@@ -38,6 +38,20 @@ cells undergoing background coloring. This will in some cases yield more
 optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Set data cell colors using a palette or a colorizing helper function
 }
+\seealso{
+Other column modification functions: \code{\link{cols_align}},
+  \code{\link{cols_color_gradient_n}},
+  \code{\link{cols_color_manual}}, \code{\link{cols_hide}},
+  \code{\link{cols_label}}, \code{\link{cols_merge_range}},
+  \code{\link{cols_merge_uncert}},
+  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+}
+\concept{column modification functions}

@@ -41,7 +41,9 @@ gt_tbl <-
       columns = vars(mpg))
 }
 \seealso{
-Other column modification functions: \code{\link{cols_hide}},
+Other column modification functions: \code{\link{cols_color_gradient_n}},
+  \code{\link{cols_color_manual}},
+  \code{\link{cols_color_scale}}, \code{\link{cols_hide}},
   \code{\link{cols_label}}, \code{\link{cols_merge_range}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},

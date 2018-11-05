@@ -50,3 +50,14 @@ an object of class \code{gt_tbl}.
 \description{
 Set data cell colors as a gradient with provided colors and breaks
 }
+\seealso{
+Other column modification functions: \code{\link{cols_align}},
+  \code{\link{cols_color_manual}},
+  \code{\link{cols_color_scale}}, \code{\link{cols_hide}},
+  \code{\link{cols_label}}, \code{\link{cols_merge_range}},
+  \code{\link{cols_merge_uncert}},
+  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+}
+\concept{column modification functions}
