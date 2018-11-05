@@ -79,7 +79,7 @@ cols_color_scale <- function(data,
             colors = colors,
             apply_to = "text",
             alpha = 1,
-            na_color = "black")
+            na_color = "#808080")
       }
     }
 
@@ -258,7 +258,7 @@ cols_color_manual <- function(data,
                               colors,
                               apply_to = "bkgd",
                               alpha = 1,
-                              na_color = "darkgrey") {
+                              na_color = "#808080",
 
   # Perform check for `values`
   checkmate::assert_vector(
@@ -327,7 +327,7 @@ cols_color_gradient_n <- function(data,
                                   colors,
                                   breaks,
                                   alpha = 1,
-                                  na_color = "darkgrey") {
+                                  na_color = "#808080") {
 
   # Perform check for `breaks`
   checkmate::assert_numeric(
