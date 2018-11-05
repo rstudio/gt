@@ -22,6 +22,8 @@
 #'   cells undergoing background coloring. This will in some cases yield more
 #'   optimal text-to-background color contrast. By default, this is set to
 #'   \code{TRUE}.
+#' @return an object of class \code{gt_tbl}.
+#' @family column modification functions
 #' @import rlang
 #' @export
 cols_color_scale <- function(data,
@@ -282,6 +284,7 @@ color_factor <- function(palette,
 #' @param na_color the default color for any unmapped data cells in the target
 #'   \code{columns}.
 #' @return an object of class \code{gt_tbl}.
+#' @family column modification functions
 #' @import checkmate
 #' @export
 cols_color_manual <- function(data,
@@ -391,6 +394,7 @@ cols_color_manual <- function(data,
 #' @param breaks numeric breaks that represent the transition points between the
 #'   colors provided in \code{colors}.
 #' @return an object of class \code{gt_tbl}.
+#' @family column modification functions
 #' @import checkmate
 #' @importFrom scales cscale seq_gradient_pal
 #' @export
