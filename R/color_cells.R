@@ -256,7 +256,7 @@ cols_color_manual <- function(data,
                               values,
                               colors,
                               apply_to = "bkgd",
-                              alpha = 1,
+                              alpha = NULL,
                               na_color = "#808080",
 
   # Perform check for `values`
@@ -269,20 +269,19 @@ cols_color_manual <- function(data,
     colors, min.len = 1, len = length(values),
     any.missing = FALSE, null.ok = FALSE)
 
-  # Pass all colors provided to `color_alpha()` to
-  # get hexadecimal colors with hex transparency
-  colors <- color_alpha(colors, alpha = alpha)
-  na_color <- color_alpha(colors = na_color, alpha = alpha)
 
-  # Get the data values from the `column` chosen
-  data_df <- attr(data, "data_df")
-  data_vals <- data_df[[column]]
 
   for (i in seq_along(data_vals)) {
 
     data_val <- data_vals[i]
+  # Optionally pass all colors provided to `color_alpha()` to
+  # apply a common transparency values to the set
+  if (!is.null(alpha)) {
 
     values_pos <- which(values == data_val)
+    colors <- color_alpha(colors, alpha = alpha)
+    na_color <- color_alpha(colors = na_color, alpha = alpha)
+  }
 
     if (length(values_pos) > 0) {
       color <- colors[values_pos]
@@ -325,7 +324,7 @@ cols_color_gradient_n <- function(data,
                                   column,
                                   colors,
                                   breaks,
-                                  alpha = 1,
+                                  alpha = NULL,
                                   na_color = "#808080") {
 
   # Perform check for `breaks`
@@ -338,19 +337,21 @@ cols_color_gradient_n <- function(data,
     colors, min.len = 1, len = length(breaks),
     any.missing = FALSE, null.ok = FALSE)
 
-  # Pass all colors provided to `color_alpha()` to
-  # get hexadecimal colors with hex transparency
-  colors <- color_alpha(colors, alpha = alpha)
-  na_color <- color_alpha(colors = na_color, alpha = alpha)
 
   # Get the data values from the `column` chosen
   data_df <- attr(data, "data_df")
   data_vals <- data_df[[column]]
 
   break_order <- order(breaks)
+  # Optionally pass all colors provided to `color_alpha()` to
+  # apply a common transparency values to the set
+  if (!is.null(alpha)) {
 
   breaks <- breaks[break_order]
   colors <- colors[break_order]
+    colors <- color_alpha(colors, alpha = alpha)
+    na_color <- color_alpha(colors = na_color, alpha = alpha)
+  }
 
   for (i in seq_along(data_vals)) {
 
