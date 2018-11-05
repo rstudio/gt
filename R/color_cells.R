@@ -52,6 +52,7 @@ cols_color_scale <- function(data,
 
     for (column in columns) {
 
+        colors_col <- col_numeric(colors, NULL)
       # Get a unique set of data values for this column
       data_vals_j <- data_df[[column]] %>% unique()
 
@@ -160,124 +161,124 @@ cols_color_scale <- function(data,
   data
 }
 
-#' Colorizing helper function that colors by quantile
-#' @param palette the colors that values will be mapped to.
-#' @param domain the possible range of values that should be mapped to colors.
-#' @param n the number of equally-sized quantiles to use for color binning. The
-#'   \code{probs} argument can be used in lieu of \code{n} for more control over
-#'   the quantiles.
-#' @param probs a numeric vector of probabilities. If provided, \code{n} is
-#'   ignored.
-#' @param na_color the default color for cells where data isn't mapped.
-#' @return a function that maps cell data to colors in a palette (for use in
-#'   \code{\link{cols_color_scale}()}).
-#' @family colorizing helper functions
-#' @importFrom scales viridis_pal col_quantile
-#' @export
-color_quantile <- function(palette,
-                           domain = NULL,
-                           n = 4,
-                           probs = seq(0, 1, length.out = n + 1),
-                           na_color = "#808080") {
-
-  if (missing(palette)) {
-    palette <- scales::viridis_pal()(n)
-  }
-
-  scales::col_quantile(
-    palette = palette,
-    domain = domain,
-    n = n,
-    probs = probs,
-    na.color = na_color)
-}
-
-#' Colorizing helper function that colors by bin membership
-#' @param palette the colors or color function that values will be mapped to.
-#' @param domain the possible values that should be mapped.
-#' @param bins either a numeric vector of two or more unique cut points, or, a
-#'   single number (>= 2) giving the number of intervals into which the
-#'   \code{domain} values are to be cut.
-#' @param pretty an option for whether to create pretty breaks based on the
-#'   specified number of \code{bins}. By default, this is set to \code{TRUE}.
-#' @param na_color the default color for cells where data isn't mapped.
-#' @return a function that maps cell data to colors in a palette (for use in
-#'   \code{\link{cols_color_scale}()}).
-#' @family colorizing helper functions
-#' @importFrom scales viridis_pal col_bin
-#' @export
-color_bin <- function(palette,
-                      domain = NULL,
-                      bins = 7,
-                      pretty = TRUE,
-                      na_color = "#808080") {
-
-  if (missing(palette)) {
-    palette <- scales::viridis_pal()(bins)
-  }
-
-  scales::col_bin(
-    palette = palette,
-    domain = domain,
-    bins = bins,
-    pretty = pretty,
-    na.color = na_color)
-}
-
-#' Colorizing helper function that linearly colors continuous data
-#' @param palette the colors or color function that values will be mapped to.
-#' @param domain the possible values that should be mapped.
-#' @param na_color the default color for cells where data isn't mapped.
-#' @return a function that maps cell data to colors in a palette (for use in
-#'   \code{\link{cols_color_scale}()}).
-#' @family colorizing helper functions
-#' @importFrom scales viridis_pal col_numeric
-#' @export
-color_numeric <- function(palette,
-                          domain = NULL,
-                          na_color = "#808080") {
-
-  if (missing(palette)) {
-    palette <- scales::viridis_pal()(10)
-  }
-
-  scales::col_numeric(
-    palette = palette,
-    domain = domain,
-    na.color = na_color)
-}
-
-#' Colorizing helper function that colors according to factor levels
-#' @param palette the colors or color function that values will be mapped to.
-#' @param domain the possible values that should be mapped.
-#' @param levels provides a means to specify levels differently. If this is
-#'   provided then the \code{domain} argument is ignored.
-#' @param ordered if set to \code{TRUE} and the \code{domain} needs to be
-#'   coerced to a factor, treat it as already in the correct order. The default
-#'   value for this is \code{FALSE}.
-#' @param na_color the default color for cells where data isn't mapped.
-#' @return a function that maps cell data to colors in a palette (for use in
-#'   \code{\link{cols_color_scale}()}).
-#' @family colorizing helper functions
-#' @importFrom scales viridis_pal col_factor
-#' @export
-color_factor <- function(palette,
-                         domain = NULL,
-                         levels = NULL,
-                         ordered = FALSE,
-                         na_color = "#808080") {
-
-  if (missing(palette)) {
-    palette <- scales::viridis_pal()(10)
-  }
-
-  scales::col_factor(
-    palette = palette,
-    domain = domain,
-    levels = levels,
-    ordered = ordered,
-    na.color = na_color)
-}
+# #' Colorizing helper function that colors by quantile
+# #' @param palette the colors that values will be mapped to.
+# #' @param domain the possible range of values that should be mapped to colors.
+# #' @param n the number of equally-sized quantiles to use for color binning. The
+# #'   \code{probs} argument can be used in lieu of \code{n} for more control over
+# #'   the quantiles.
+# #' @param probs a numeric vector of probabilities. If provided, \code{n} is
+# #'   ignored.
+# #' @param na_color the default color for cells where data isn't mapped.
+# #' @return a function that maps cell data to colors in a palette (for use in
+# #'   \code{\link{cols_color_scale}()}).
+# #' @family colorizing helper functions
+# #' @importFrom scales viridis_pal col_quantile
+# #' @export
+# color_quantile <- function(palette,
+#                            domain,
+#                            n = 4,
+#                            probs = seq(0, 1, length.out = n + 1),
+#                            na_color = "#808080") {
+#
+#   if (missing(palette)) {
+#     palette <- scales::viridis_pal()(n)
+#   }
+#
+#   scales::col_quantile(
+#     palette = palette,
+#     domain = domain,
+#     n = n,
+#     probs = probs,
+#     na.color = na_color)
+# }
+#
+# #' Colorizing helper function that colors by bin membership
+# #' @param palette the colors or color function that values will be mapped to.
+# #' @param domain the possible values that should be mapped.
+# #' @param bins either a numeric vector of two or more unique cut points, or, a
+# #'   single number (>= 2) giving the number of intervals into which the
+# #'   \code{domain} values are to be cut.
+# #' @param pretty an option for whether to create pretty breaks based on the
+# #'   specified number of \code{bins}. By default, this is set to \code{TRUE}.
+# #' @param na_color the default color for cells where data isn't mapped.
+# #' @return a function that maps cell data to colors in a palette (for use in
+# #'   \code{\link{cols_color_scale}()}).
+# #' @family colorizing helper functions
+# #' @importFrom scales viridis_pal col_bin
+# #' @export
+# color_bin <- function(palette,
+#                       domain,
+#                       bins = 7,
+#                       pretty = TRUE,
+#                       na_color = "#808080") {
+#
+#   if (missing(palette)) {
+#     palette <- scales::viridis_pal()(bins)
+#   }
+#
+#   scales::col_bin(
+#     palette = palette,
+#     domain = domain,
+#     bins = bins,
+#     pretty = pretty,
+#     na.color = na_color)
+# }
+#
+# #' Colorizing helper function that linearly colors continuous data
+# #' @param palette the colors or color function that values will be mapped to.
+# #' @param domain the possible values that should be mapped.
+# #' @param na_color the default color for cells where data isn't mapped.
+# #' @return a function that maps cell data to colors in a palette (for use in
+# #'   \code{\link{cols_color_scale}()}).
+# #' @family colorizing helper functions
+# #' @importFrom scales viridis_pal col_numeric
+# #' @export
+# color_numeric <- function(palette,
+#                           domain,
+#                           na_color = "#808080") {
+#
+#   if (missing(palette)) {
+#     palette <- scales::viridis_pal()(10)
+#   }
+#
+#   scales::col_numeric(
+#     palette = palette,
+#     domain = domain,
+#     na.color = na_color)
+# }
+#
+# #' Colorizing helper function that colors according to factor levels
+# #' @param palette the colors or color function that values will be mapped to.
+# #' @param domain the possible values that should be mapped.
+# #' @param levels provides a means to specify levels differently. If this is
+# #'   provided then the \code{domain} argument is ignored.
+# #' @param ordered if set to \code{TRUE} and the \code{domain} needs to be
+# #'   coerced to a factor, treat it as already in the correct order. The default
+# #'   value for this is \code{FALSE}.
+# #' @param na_color the default color for cells where data isn't mapped.
+# #' @return a function that maps cell data to colors in a palette (for use in
+# #'   \code{\link{cols_color_scale}()}).
+# #' @family colorizing helper functions
+# #' @importFrom scales viridis_pal col_factor
+# #' @export
+# color_factor <- function(palette,
+#                          domain,
+#                          levels = NULL,
+#                          ordered = FALSE,
+#                          na_color = "#808080") {
+#
+#   if (missing(palette)) {
+#     palette <- scales::viridis_pal()(10)
+#   }
+#
+#   scales::col_factor(
+#     palette = palette,
+#     domain = domain,
+#     levels = levels,
+#     ordered = ordered,
+#     na.color = na_color)
+# }
 
 #' Set data cell colors with an explicit mapping of colors to values
 #' @inheritParams fmt_number
