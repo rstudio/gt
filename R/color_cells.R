@@ -399,7 +399,9 @@ cols_color_gradient_n <- function(data,
                                   colors,
                                   breaks,
                                   alpha = NULL,
-                                  na_color = "#808080") {
+                                  na_color = "#808080",
+                                  apply_to = "bkgd",
+                                  autocolor_text = TRUE) {
 
   # Perform check for `breaks`
   checkmate::assert_numeric(
@@ -467,11 +469,37 @@ cols_color_gradient_n <- function(data,
               colors[break_pos + 1]))[1]
       }
 
-      data <-
-        scale_apply_styles(
-          data, column,
-          styles = list(list(bkgd_color = color)),
-          rows_i = i)
+      if (apply_to == "bkgd") {
+
+        data <-
+          scale_apply_styles(
+            data, column,
+            styles = list(list(bkgd_color = color)),
+            rows_i = i)
+
+        if (autocolor_text) {
+
+          # Apply the `ideal_fgnd_color()` function to the single
+          # background color value to obtain a suitable text color
+          color <- ideal_fgnd_color(color)
+
+          # Apply the color value to the text of the
+          # target data cell
+          data <-
+            scale_apply_styles(
+              data, column,
+              styles = list(list(text_color = color)),
+              rows_i = i)
+        }
+
+      } else if (apply_to == "text") {
+
+        data <-
+          scale_apply_styles(
+            data, column,
+            styles = list(list(text_color = color)),
+            rows_i = i)
+      }
     }
   }
 
