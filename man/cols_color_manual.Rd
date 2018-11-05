@@ -4,16 +4,21 @@
 \alias{cols_color_manual}
 \title{Set data cell colors using an explicit mapping of colors/values}
 \usage{
-cols_color_manual(data, column, values, colors, apply_to = "bkgd",
-  alpha = 1, na_color = "darkgrey")
+cols_color_manual(data, columns, values, colors, apply_to = "bkgd",
+  alpha = NULL, na_color = "#808080", autocolor_text = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{column}{the column wherein changes to cell data color should occur.}
+\item{columns}{the columns to format. Can either be a series of column names
+provided in \code{vars()}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
 
-\item{values}{the cell values to which the background \code{colors} should be
+\item{values}{the cell values to which the colors should be
 applied. The length of \code{values} must match that of \code{colors} since
 they are considered to be one-to-one mappings of value to color for the
 target \code{column}.}
@@ -32,6 +37,11 @@ the \code{colors} provided.}
 
 \item{na_color}{the default color for any unmapped data cells in the target
 \code{column}.}
+
+\item{autocolor_text}{an option to let gt modify the coloring of text within
+cells undergoing background coloring. This will in some cases yield more
+optimal text-to-background color contrast. By default, this is set to
+\code{TRUE}.}
 }
 \value{
 an object of class \code{gt_tbl}.

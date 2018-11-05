@@ -4,19 +4,24 @@
 \alias{cols_color_gradient_n}
 \title{Set data cell colors as a gradient with provided colors and breaks}
 \usage{
-cols_color_gradient_n(data, column, colors, breaks, alpha = 1,
-  na_color = "darkgrey")
+cols_color_gradient_n(data, columns, colors, breaks, alpha = NULL,
+  na_color = "#808080")
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{column}{the column wherein changes to cell data color should occur.}
+\item{columns}{the columns to format. Can either be a series of column names
+provided in \code{vars()}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are:
+\code{\link{starts_with}()}, \code{\link{ends_with}()},
+\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
+and \code{\link{everything}()}.}
 
-\item{colors}{a vector of colors interpolate between according to the value
+\item{colors}{a vector of colors for interpolation according to the values
 provided in \code{breaks}. Each color value provided must either be a color
 name (in the set of colors provided by \code{grDevices::colors()}) or
-hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{breaks}{numeric breaks that represent the transition points between the
 colors provided in \code{colors}.}
