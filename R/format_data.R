@@ -397,7 +397,51 @@ fmt_percent <- function(data,
       columns = columns,
       rows = !!rows,
       fns = list(
+        latex = function(x) {
+
+          # Determine which of `x` are not NA
+          non_na_x <- !is.na(x)
+
+          # Format all non-NA x values
+          x[non_na_x] <-
+            formatC(
+              x = x[non_na_x] * 100.0,
+              digits = decimals,
+              mode = "double",
+              big.mark = sep_mark,
+              decimal.mark = dec_mark,
+              format = "f",
+              drop0trailing = drop_trailing_zeros)
+
+          if (placement == "right") {
+            x[non_na_x] <- paste0(
+              x[non_na_x],
+              ifelse(incl_space, " \\%", "\\%"))
+          } else {
+            x[non_na_x] <- paste0(
+              ifelse(incl_space, "\\% ", "\\%"),
+              x[non_na_x])
+          }
+
+          # Handle negative values
+          if (negative_val == "parens") {
+
+            # Determine which of `x` are not NA and also negative
+            negative_x <- x < 0 & !is.na(x)
+
+            # Apply parentheses to the formatted value and remove
+            # the minus sign
+            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+          }
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
+
+          x
+        },
         default = function(x) {
+
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
