@@ -39,9 +39,9 @@ option is ignored (each of the colorizing helper functions has its own
 include the cell background (the default, given as \code{bkgd}) or the cell
 text (\code{text}).}
 
-\item{autocolor_text}{an option to let gt modify the coloring of text within
-cells undergoing background coloring. This will in some cases yield more
-optimal text-to-background color contrast. By default, this is set to
+\item{autocolor_text}{an option to let \code{gt} modify the coloring of text
+within cells undergoing background coloring. This will in some cases yield
+more optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
 }
 \value{
