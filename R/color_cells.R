@@ -1,15 +1,14 @@
 #' Set data cell colors using a palette or a colorizing helper function
 #' @inheritParams fmt_number
 #' @param columns the columns wherein changes to cell data colors should occur.
-#' @param colors either a colorizing helper function or a vector of colors to
-#'   use for each distinct value in each of the provided \code{columns}. The
-#'   colorizing helper functions are: \code{\link{color_quantile}()},
-#'   \code{\link{color_bin}()}, \code{\link{color_numeric}()}, and
-#'   \code{\link{color_factor}()}. Details for the helper functions are provided
-#'   in their respective help files. If providing a vector of colors as a
-#'   palette, each color value provided must either be a color name (in the set
-#'   of colors provided by \code{grDevices::colors()}) or hexadecimal strings in
-#'   the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param colors either a color mapping function from the \code{scales} package
+#'   or a vector of colors to use for each distinct value or level in each of
+#'   the provided \code{columns}. The color mapping functions are:
+#'   \code{col_quantile()}, \code{col_bin()}, \code{col_numeric()}, and
+#'   \code{col_factor()}. If providing a vector of colors as a palette, each
+#'   color value provided must either be a color name (in the set of colors
+#'   provided by \code{grDevices::colors()}) or hexadecimal strings in the form
+#'   of "#RRGGBB" or "#RRGGBBAA".
 #' @param alpha an optional, fixed alpha transparency value that will be applied
 #'   to all of the \code{colors} provided if they are provided as a vector of
 #'   colors. If using a colorizing helper function for \code{colors} then this
@@ -18,9 +17,9 @@
 #' @param apply_to which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as \code{bkgd}) or the cell
 #'   text (\code{text}).
-#' @param autocolor_text an option to let gt modify the coloring of text within
-#'   cells undergoing background coloring. This will in some cases yield more
-#'   optimal text-to-background color contrast. By default, this is set to
+#' @param autocolor_text an option to let \code{gt} modify the coloring of text
+#'   within cells undergoing background coloring. This will in some cases yield
+#'   more optimal text-to-background color contrast. By default, this is set to
 #'   \code{TRUE}.
 #' @return an object of class \code{gt_tbl}.
 #' @family column modification functions
