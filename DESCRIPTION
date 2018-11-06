@@ -1,12 +1,11 @@
 Type: Package
 Package: gt
 Version: 0.1.0
-Title: Build Presentation-Ready Tables Using the Grammar of Tables
-Description: Build table output from tabular data using the Grammar of Tables
-    ethos. With this layering approach, we aim to construct presentation
-    tables with a clear separation of concerns: you don't have to decide how
-    the tabular data gets transformed and structured whilst also worrying
-    about aesthetics.
+Title: Easily Create Presentation-Ready Display Tables
+Description: Build display tables from tabular data using with an easy-to-use
+    API. With its progressive approach, we can construct display tables with a
+    clear separation of concerns: you don't have to decide how the tabular data
+    gets transformed and structured whilst also worrying about aesthetics.
 Authors@R: c(
     person("Richard", "Iannone", , "rich@rstudio.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
