@@ -44,25 +44,13 @@ latex_group_row <- function(group_name,
 }
 
 #' @noRd
-create_table_start_l <- function() {
+create_table_start_l <- function(col_alignment) {
 
   paste0(
-    "\\captionsetup[table]{labelformat=empty}\n",
-    "\\begin{table}[h]\n",
-    "\\begin{minipage}{\\linewidth}\n",
-    collapse = "")
-}
-
-#' @noRd
-create_tabular_start_l <- function(col_alignment) {
-
-  paste0(
-    "\\centering",
-    "\\vspace*{-3mm}",
-    "\\begin{tabular}{",
+    "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
+    "\\begin{longtable}{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
     "}\n",
-    "\\toprule\n",
     collapse = "")
 }
 
