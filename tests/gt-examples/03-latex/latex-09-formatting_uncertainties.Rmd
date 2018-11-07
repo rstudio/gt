@@ -1,13 +1,14 @@
 ---
 title: "latex-09-formatting_uncertainties"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
+library(dplyr)
 ```
 
 Create a table with values and uncertainties.

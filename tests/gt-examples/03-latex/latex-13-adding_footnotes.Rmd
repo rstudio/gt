@@ -1,13 +1,14 @@
 ---
 title: "latex-13-adding_footnotes"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
+library(dplyr)
 ```
 
 Create a table with footnotes in various cell types.

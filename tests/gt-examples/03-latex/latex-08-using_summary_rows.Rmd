@@ -1,13 +1,14 @@
 ---
 title: "latex-08-using_summary_rows"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
+library(dplyr)
 ```
 
 Create a display table with summary rows.
