@@ -185,12 +185,11 @@ create_body_component_l <- function(row_splits,
 }
 
 #' @noRd
-create_tabular_end_l <- function() {
+create_table_end_l <- function() {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{tabular}\n",
-    "\\end{minipage}\n",
+    "\\end{longtable}\n",
     collapse = "")
 }
 
@@ -224,6 +223,7 @@ create_footnote_component_l <- function(footnotes_resolved,
   # Create the footnotes block
   footnote_component <-
     paste0(
+      "\\vspace{-5mm}\n",
       "\\begin{minipage}{\\linewidth}\n",
       paste0(
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
@@ -238,24 +238,21 @@ create_footnote_component_l <- function(footnotes_resolved,
 #' @noRd
 create_source_note_component_l <- function(source_note) {
 
-  if (length(source_note) != 0) {
-
-    source_note <- source_note[[1]]
-
-    # Create a source note
-    source_note_rows <-
-      paste0(
-        source_note %>% as.character(), "\\\\ \n",
-        collapse = "")
-  } else {
-    source_note_rows <- ""
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (length(source_note) == 0) {
+    return("")
   }
 
-  source_note_rows
-}
+  source_note <- source_note[[1]]
 
-#' @noRd
-create_table_end_l <- function() {
+  # Create the source notes block
+  source_note_component <-
+    paste0(
+      "\\begin{minipage}{\\linewidth}\n",
+      paste0(
+        source_note %>% as.character(), "\\\\ \n", collapse = ""),
+      "\\end{minipage}\n", collapse = "")
 
-  "\\end{table}\n"
+  source_note_component
 }
