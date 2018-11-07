@@ -142,7 +142,7 @@ create_boxhead_component_l <- function(boxh_df,
     table_col_spanners <- ""
   }
 
-  paste0(table_col_spanners, table_col_headings)
+  paste0("\\toprule\n", table_col_spanners, table_col_headings)
 }
 
 #' @importFrom dplyr mutate filter pull
