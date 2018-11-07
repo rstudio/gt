@@ -1,0 +1,22 @@
+---
+title: "html-04-sleep"
+output:
+  - html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(gt)
+```
+
+Create a display table based on `sleep` Student's Sleep Data
+
+
+```{r}
+gt(data = sleep) %>%
+  fmt_scientific(columns = vars(extra)) %>%
+  tab_footnote(
+    footnote = "This is a footnote",
+    locations = cells_data(columns = 1, rows = c(2, 3, 4)))
+```
