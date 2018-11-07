@@ -92,6 +92,7 @@ as_latex <- function(data) {
     if (requireNamespace("rmarkdown", quietly = TRUE)) {
       latex_packages <-
         list(
+          rmarkdown::latex_dependency("longtable"),
           rmarkdown::latex_dependency("booktabs"),
           rmarkdown::latex_dependency("caption"))
     } else {
