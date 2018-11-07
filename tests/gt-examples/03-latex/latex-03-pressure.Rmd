@@ -1,6 +1,7 @@
 ---
 title: "latex-03-pressure"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}

@@ -1,6 +1,7 @@
 ---
 title: "latex-06-mtcars"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}

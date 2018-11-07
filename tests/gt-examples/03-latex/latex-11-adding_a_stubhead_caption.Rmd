@@ -1,13 +1,14 @@
 ---
 title: "latex-11-adding_a_stubhead_caption"
-output: pdf_document
+output: 
+  - pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
+library(dplyr)
 ```
 
 Create a table that has a stubhead caption.
