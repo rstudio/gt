@@ -8,6 +8,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
+library(dplyr)
 ```
 
 Create a display table based on `morley` Michelson Speed of Light Data
