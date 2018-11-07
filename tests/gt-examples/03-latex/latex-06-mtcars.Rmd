@@ -53,7 +53,7 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   tab_stubhead_caption(
     caption = md("*car*")) %>%
   tab_footnote(
-    footnote = md("*Really* fast quarter mile."),
+    footnote = "*Really* fast quarter mile.",
     locations = cells_data(
       columns = vars(qsec),
       rows = "Ford Pantera L")) %>%
@@ -68,7 +68,7 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
       columns = 1,
       rows = "Toyota Corolla")) %>%
   tab_footnote(
-    footnote = md("Worst speed *ever*."),
+    footnote = "Worst speed ever.",
     locations = cells_data(
       columns = vars(qsec),
       rows = "Merc 230")) %>%

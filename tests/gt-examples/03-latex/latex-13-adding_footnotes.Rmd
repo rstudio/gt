@@ -41,7 +41,7 @@ gt(data = tbl) %>%
     footnote = "A stub cell.",
     locations = cells_stub(rows = 1)) %>%
   tab_footnote(
-    footnote = md("`value_1` is the second column of values."),
+    footnote = "value_1 is the second column of values.",
     locations = cells_boxhead(columns = vars(value_1))) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
