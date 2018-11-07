@@ -103,14 +103,13 @@ as_latex <- function(data) {
     latex_table <-
       paste0(
         table_start,
-        heading_component,
         tabular_start,
+        heading_component,
         boxhead_component,
         body_component,
         tabular_end,
         footnote_component,
         source_note_component,
-        table_end,
         collapse = "") %>%
       knitr::asis_output(meta = latex_packages)
 
