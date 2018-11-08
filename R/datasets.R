@@ -53,3 +53,37 @@
 #' @source Various pages within \url{https://www.edmunds.com}.
 "gtcars"
 
+#' A year of pizza sales from a pizza place
+#'
+#' A synthetic dataset that describes pizza sales for a pizza place
+#' somewhere in the US. While the contents are artificial, the
+#' ingredients used to make the pizzas are far from it. There are 32
+#' different pizzas that fall into 4 different categories: \code{classic}
+#' (classic pizzas: 'You probably had one like it before, but never like
+#' this!'), \code{chicken} (pizzas with chicken as a major ingredient: 'Try
+#' the Southwest Chicken Pizza! You'll love it!'), \code{supreme} (pizzas
+#' that try a little harder: 'My Soppressata pizza uses only the finest
+#' salami from my personal salumist!'), and, \code{veggie} (pizzas without
+#' any meats whatsoever: 'My Five Cheese pizza has so many cheeses, I can
+#' only offer it in Large Size!').
+#'
+#' @format A tibble with 49574 rows and 7 variables:
+#' \describe{
+#'   \item{id}{The ID for the order, which consists of one or more pizzas
+#'   at a give \code{date} and \code{time}}
+#'   \item{date}{A character representation of the \code{order} date,
+#'   expressed in the ISO 8601 date format (YYYY-MM-DD)}
+#'   \item{date}{A character representation of the \code{order} time,
+#'   expressed as a 24-hour time the ISO 8601 extended time format
+#'   (hh:mm:ss)}
+#'   \item{name}{The short name for the pizza}
+#'   \item{size}{The size of the pizza, which can either be \code{S},
+#'   \code{M}, \code{L}, \code{XL} (rare!), or \code{XXL} (even rarer!);
+#'   most pizzas are available in the \code{S}, \code{M}, and \code{L} sizes
+#'   but exceptions apply}
+#'   \item{type}{The category or type of pizza, which can either be
+#'   \code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
+#'   \item{price}{The price of the pizza and the amount that it sold for
+#'   (in USD)}
+#' }
+"pizzaplace"
