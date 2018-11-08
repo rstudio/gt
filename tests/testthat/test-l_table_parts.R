@@ -14,8 +14,8 @@ test_that("a gt table contains the expected heading components", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*vspace\\*\\{-5mm\\}.caption\\{test heading\\}",
-      ".*vspace\\*\\{-4mm\\}.caption\\{.scriptsize \\}",
+      ".*.large test heading",
+      ".*.small",
       ".*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
@@ -32,8 +32,8 @@ test_that("a gt table contains the expected heading components", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*vspace\\*\\{-5mm\\}.caption\\{test heading\\}",
-      ".*vspace\\*\\{-4mm\\}.caption\\{.scriptsize test headnote\\}",
+      ".*.large test heading",
+      ".*.small test headnote",
       ".*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
@@ -135,8 +135,9 @@ test_that("a gt table contains the expected source note", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*end\\{minipage\\}",
+      ".*begin\\{minipage\\}",
       ".*emph\\{Henderson and Velleman\\} \\(1981\\)\\.",
+      ".*end\\{minipage\\}",
       ".*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
@@ -155,9 +156,10 @@ test_that("a gt table contains the expected source note", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*end\\{minipage\\}",
+      ".*begin\\{minipage\\}",
       ".*emph\\{Henderson and Velleman\\} \\(1981\\)\\.",
       ".*This was in Motor Trend magazine, hence the `mt`.",
+      ".*end\\{minipage\\}",
       ".*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%

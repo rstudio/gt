@@ -335,9 +335,8 @@ create_heading_component <- function(heading,
 
     heading_component <-
       paste0(
-        "\\vspace*{-5mm}\\caption{",
-        paste0(heading$title, footnote_title_glyphs),
-        "}\n")
+        "\\caption*{\n",
+        "\\large ", paste0(heading$title, footnote_title_glyphs), "\\\\ \n")
 
     if ("headnote" %in% names(heading)) {
 
@@ -345,10 +344,10 @@ create_heading_component <- function(heading,
         paste0(
           heading_component,
           paste0(
-            "\\vspace*{-4mm}\\caption{\\scriptsize ",
-            paste0(heading$headnote, footnote_headnote_glyphs),
-            "}\n"))
+            "\\small ", paste0(heading$headnote, footnote_headnote_glyphs), "\\\\ \n"))
     }
+
+    heading_component <- paste0(heading_component, "} \\\\ \n")
   }
 
   heading_component
