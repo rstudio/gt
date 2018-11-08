@@ -19,3 +19,37 @@
 #'
 #' @source \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
 "countrypops"
+
+#' Deluxe automobiles from the 2014-2017 period
+#'
+#' Expensive and fast cars. Not your father's \code{mtcars}. Each row describes
+#' a car of a certain make, model, year, and trim. Basic specifications such as
+#' horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
+#' characteristics are provided. The country of origin for the car manufacturer
+#' is also given.
+#'
+#' @format A tibble with 47 rows and 15 variables:
+#' \describe{
+#'   \item{mfr}{The name of the car manufacturer}
+#'   \item{model}{The car's model name}
+#'   \item{year}{The car's model year}
+#'   \item{trim}{A short description of the car model's trim}
+#'   \item{bdy_style}{An identifier of the car's body style, which is either
+#'   \code{coupe}, \code{convertible}, \code{sedan}, or \code{hatchback}}
+#'   \item{hp,hp_rpm}{The car's horsepower and the associated RPM level}
+#'   \item{trq,trq_rpm}{The car's torque and the associated RPM level}
+#'   \item{mpg_c,mpg_h}{The miles per gallon fuel efficiency rating for city
+#'   and highway driving}
+#'   \item{drivetrain}{The car's drivetrain which, for this dataset is either
+#'   \code{rwd} (Rear Wheel Drive) or \code{awd} (All Wheel Drive)}
+#'   \item{trsmn}{The codified transmission type, where the number part is
+#'   the number of gears; the car could have automatic transmission
+#'   (\code{a}), manual transmission (\code{m}), an option to switch between
+#'   both types (\code{am}), or, direct drive (\code{dd})}
+#'   \item{ctry_origin}{The country name for where the vehicle manufacturer
+#'   is headquartered}
+#' }
+#'
+#' @source Various pages within \url{https://www.edmunds.com}.
+"gtcars"
+
