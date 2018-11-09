@@ -89,6 +89,27 @@
 #' @source Various pages within \url{https://www.edmunds.com}.
 "gtcars"
 
+#' Daily data for Standard & Poor's (S&P) 500 Index from 1950 to 2015
+#'
+#' This dataset provides daily price indicators for the S&P 500 index
+#' from the beginning of 1950 to the end of 2015. The index includes 500
+#' leading companies and captures about 80% coverage of available market
+#' capitalization.
+#'
+#' @format A tibble with 16607 rows and 7 variables:
+#' \describe{
+#'   \item{date}{The date expressed as \code{Date} values}
+#'   \item{open,high,low,close}{The day's opening, high, low, and closing
+#'   prices in USD; the \code{close} price is adjusted for splits}
+#'   \item{volume}{the number of trades for the given \code{date}}
+#'   \item{adj_close}{The clse price adjusted for both dividends and splits}
+#' }
+#'
+#' @source Data collected from \url{https://finance.yahoo.com/quote/%5EGSPC/history/}.
+"sp500"
+
+# https://finance.yahoo.com/quote/%5EGSPC/history/
+
 #' A year of pizza sales from a pizza place
 #'
 #' A synthetic dataset that describes pizza sales for a pizza place
