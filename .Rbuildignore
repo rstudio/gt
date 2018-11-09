@@ -1,3 +1,4 @@
+^data-raw$
 ^codecov\.yml$
 ^\.travis\.yml$
 ^docs$
