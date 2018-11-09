@@ -72,9 +72,9 @@
 #'   \item{trim}{A short description of the car model's trim}
 #'   \item{bdy_style}{An identifier of the car's body style, which is either
 #'   \code{coupe}, \code{convertible}, \code{sedan}, or \code{hatchback}}
-#'   \item{hp,hp_rpm}{The car's horsepower and the associated RPM level}
-#'   \item{trq,trq_rpm}{The car's torque and the associated RPM level}
-#'   \item{mpg_c,mpg_h}{The miles per gallon fuel efficiency rating for city
+#'   \item{hp, hp_rpm}{The car's horsepower and the associated RPM level}
+#'   \item{trq, trq_rpm}{The car's torque and the associated RPM level}
+#'   \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
 #'   and highway driving}
 #'   \item{drivetrain}{The car's drivetrain which, for this dataset is either
 #'   \code{rwd} (Rear Wheel Drive) or \code{awd} (All Wheel Drive)}
