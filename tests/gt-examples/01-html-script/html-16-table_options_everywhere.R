@@ -40,7 +40,7 @@ many_options_tbl <-
   tab_options(
     table.font.size = px(14),            # Entire table's font size
     table.background.color = NULL,       # Entire table's background color
-    table.width = pct(100),              # Entire table's width
+    table.width = px(360),              # Entire table's width
     table.border.top.style = "solid",    # Top line of table - style
     table.border.top.width = px(3),      # Top line of table - width
     table.border.top.color = "orange",   # Top line of table - color

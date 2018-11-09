@@ -1,14 +1,15 @@
 ---
-title: "latex-07-sp500"
-output: pdf_document
+title: "html-07-sp500"
+output:
+  - html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
+library(readr)
 ```
-
 
 ```{r}
 readr::read_csv(

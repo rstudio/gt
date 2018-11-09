@@ -1,6 +1,7 @@
 ---
-title: "latex-06-mtcars"
-output: pdf_document
+title: "html-06-mtcars"
+output:
+  - html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -9,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(gt)
 ```
 
-Create a display table based on `mtcars` (Motor Trend Car Road Test).
+Create a display table based on `mtcars`; Motor Trend Car Road Tests
 
 ```{r}
 gt(mtcars, rownames_to_stub = TRUE) %>%

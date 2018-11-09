@@ -1,0 +1,19 @@
+---
+title: "latex-14-adding_images"
+output: 
+  - pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(gt)
+library(dplyr)
+```
+
+Create a table with an inserted image.
+
+```{r}
+gt(dplyr::tibble(a = paste0("\\includegraphics[width=0.5 in]{", test_image(), "}"))) %>%
+  fmt_passthrough(columns = "a", escape = FALSE)
+```

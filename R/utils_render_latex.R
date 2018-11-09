@@ -44,25 +44,13 @@ latex_group_row <- function(group_name,
 }
 
 #' @noRd
-create_table_start_l <- function() {
+create_table_start_l <- function(col_alignment) {
 
   paste0(
-    "\\captionsetup[table]{labelformat=empty}\n",
-    "\\begin{table}[h]\n",
-    "\\begin{minipage}{\\linewidth}\n",
-    collapse = "")
-}
-
-#' @noRd
-create_tabular_start_l <- function(col_alignment) {
-
-  paste0(
-    "\\centering",
-    "\\vspace*{-3mm}",
-    "\\begin{tabular}{",
+    "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
+    "\\begin{longtable}{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
     "}\n",
-    "\\toprule\n",
     collapse = "")
 }
 
@@ -154,7 +142,7 @@ create_boxhead_component_l <- function(boxh_df,
     table_col_spanners <- ""
   }
 
-  paste0(table_col_spanners, table_col_headings)
+  paste0("\\toprule\n", table_col_spanners, table_col_headings)
 }
 
 #' @importFrom dplyr mutate filter pull
@@ -197,12 +185,11 @@ create_body_component_l <- function(row_splits,
 }
 
 #' @noRd
-create_tabular_end_l <- function() {
+create_table_end_l <- function() {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{tabular}\n",
-    "\\end{minipage}\n",
+    "\\end{longtable}\n",
     collapse = "")
 }
 
@@ -236,6 +223,7 @@ create_footnote_component_l <- function(footnotes_resolved,
   # Create the footnotes block
   footnote_component <-
     paste0(
+      "\\vspace{-5mm}\n",
       "\\begin{minipage}{\\linewidth}\n",
       paste0(
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
@@ -250,24 +238,21 @@ create_footnote_component_l <- function(footnotes_resolved,
 #' @noRd
 create_source_note_component_l <- function(source_note) {
 
-  if (length(source_note) != 0) {
-
-    source_note <- source_note[[1]]
-
-    # Create a source note
-    source_note_rows <-
-      paste0(
-        source_note %>% as.character(), "\\\\ \n",
-        collapse = "")
-  } else {
-    source_note_rows <- ""
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (length(source_note) == 0) {
+    return("")
   }
 
-  source_note_rows
-}
+  source_note <- source_note[[1]]
 
-#' @noRd
-create_table_end_l <- function() {
+  # Create the source notes block
+  source_note_component <-
+    paste0(
+      "\\begin{minipage}{\\linewidth}\n",
+      paste0(
+        source_note %>% as.character(), "\\\\ \n", collapse = ""),
+      "\\end{minipage}\n", collapse = "")
 
-  "\\end{table}\n"
+  source_note_component
 }

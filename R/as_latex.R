@@ -48,16 +48,12 @@ as_latex <- function(data) {
     row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a Latex fragment for the start of the table
-    table_start <- create_table_start_l()
+    table_start <- create_table_start_l(col_alignment)
 
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
         heading, footnotes_resolved, n_cols = n_cols, output = "latex")
-
-    # Create a Latex fragment for the beginning tabular statement
-    tabular_start <-
-      create_tabular_start_l(col_alignment)
 
     # Create the boxhead component of the table
     boxhead_component <-
@@ -72,7 +68,7 @@ as_latex <- function(data) {
         summaries_present, list_of_summaries, n_rows, n_cols)
 
     # Create a Latex fragment for the ending tabular statement
-    tabular_end <- create_tabular_end_l()
+    table_end <- create_table_end_l()
 
     # Create the footnote component of the table
     footnote_component <-
@@ -83,24 +79,31 @@ as_latex <- function(data) {
     source_note_component <-
       create_source_note_component_l(source_note)
 
-    # Create the closing Latex element of a table
-    table_end <- create_table_end_l()
+    # If the `rmarkdown` package is available, use the
+    # `latex_dependency()` function to load latex packages
+    # without requiring the user to do so
+    if (requireNamespace("rmarkdown", quietly = TRUE)) {
+      latex_packages <-
+        list(
+          rmarkdown::latex_dependency("longtable"),
+          rmarkdown::latex_dependency("booktabs"),
+          rmarkdown::latex_dependency("caption"))
+    } else {
+      latex_packages <- NULL
+    }
 
     # Compose the Latex table
     latex_table <-
       paste0(
         table_start,
         heading_component,
-        tabular_start,
         boxhead_component,
         body_component,
-        tabular_end,
+        table_end,
         footnote_component,
         source_note_component,
-        table_end,
         collapse = "") %>%
-      knitr::asis_output() %>%
-      knitr::knit_print()
+      knitr::asis_output(meta = latex_packages)
 
     latex_table
   })

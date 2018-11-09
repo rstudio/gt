@@ -1,0 +1,20 @@
+---
+title: "latex-03-pressure"
+output: 
+  - pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(gt)
+```
+
+Create a display table based on `pressure` (Vapor Pressure of Mercury as a Function of Temperature).
+
+```{r}
+gt(data = pressure) %>%
+  fmt_scientific(
+    columns = vars(pressure),
+    decimals = 2)
+```

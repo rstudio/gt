@@ -9,7 +9,6 @@ sp500 <-
     system.file("extdata", "sp500.csv", package = "gt"),
     stringsAsFactors = FALSE)
 
-
 test_that("the `cols_align()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,
@@ -20,7 +19,7 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{tabular\\}\\{llrrlrrrrrr\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{llrrlrrrrrr\\}.*", tbl_latex) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; columns `1` (`mpg`),
@@ -31,7 +30,7 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{tabular\\}\\{lllrrrrrrrr\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{lllrrrrrrrr\\}.*", tbl_latex) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; align all
@@ -42,7 +41,7 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{tabular\\}\\{lllllllllll\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{lllllllllll\\}.*", tbl_latex) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; align all
@@ -53,7 +52,7 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{tabular\\}\\{lllllllllll\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{lllllllllll\\}.*", tbl_latex) %>%
     expect_true()
 
   # Create a `tbl_latex` object with the `sp500` data
@@ -64,6 +63,6 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{tabular\\}\\{lrrrrr\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{lrrrrr\\}.*", tbl_latex) %>%
     expect_true()
 })

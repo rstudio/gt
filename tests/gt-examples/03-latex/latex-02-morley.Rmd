@@ -1,12 +1,14 @@
 ---
 title: "latex-02-morley"
-output: pdf_document
+output: 
+  - pdf_document
 ---
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
+library(dplyr)
 ```
 
 Create a display table based on `morley` Michelson Speed of Light Data

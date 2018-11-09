@@ -1,16 +1,17 @@
 ---
-title: "latex-10-conditional_formatting"
-output: pdf_document
+title: "html-10-conditional_formatting"
+output:
+  - html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(gt)
-library(tidyverse)
+library(readr)
 ```
 
-Create a table where rows are formatted conditionally.
+Create a table where rows are formatted conditionally
 
 ```{r}
 readr::read_csv(
