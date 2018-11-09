@@ -15,6 +15,18 @@ cache:
 
 # Adapt as necessary starting from here
 
+environment:
+  global:
+    USE_RTOOLS: true
+
+  matrix:
+    - R_VERSION: release
+      arch: x64
+      GCC_PATH: mingw_64
+    - R_VERSION: devel
+      R_ARCH: x64
+      GCC_PATH: mingw_64
+
 build_script:
   - travis-tool.sh install_deps
 
