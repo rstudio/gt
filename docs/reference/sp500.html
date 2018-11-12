@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>Daily S&amp;P 500 Index data from 1950 to 2015 — sp500 • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,12 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="Daily S&amp;P 500 Index data from 1950 to 2015 — sp500" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="This dataset provides daily price indicators for the S&amp;amp;P 500 index
+from the beginning of 1950 to the end of 2015. The index includes 500
+leading companies and captures about 80
+capitalization." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,44 +130,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <h1>Daily S&amp;P 500 Index data from 1950 to 2015</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>sp500.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>This dataset provides daily price indicators for the S&amp;P 500 index
+from the beginning of 1950 to the end of 2015. The index includes 500
+leading companies and captures about 80<!-- % coverage of available market -->
+capitalization.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='no'>sp500</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <p>A tibble with 16607 rows and 7 variables:</p><dl class='dl-horizontal'>
+  <dt>date</dt><dd><p>The date expressed as <code>Date</code> values</p></dd>
+  <dt>open, high, low, close</dt><dd><p>The day's opening, high, low, and closing
+  prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
+  <dt>volume</dt><dd><p>the number of trades for the given <code>date</code></p></dd>
+  <dt>adj_close</dt><dd><p>The close price adjusted for both dividends and splits</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Data collected from <a href='https://finance.yahoo.com/quote/%5EGSPC/history/'>https://finance.yahoo.com/quote/%5EGSPC/history/</a>.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
           </ul>
 
   </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>A year of pizza sales from a pizza place — pizzaplace • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,19 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="A year of pizza sales from a pizza place — pizzaplace" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="A synthetic dataset that describes pizza sales for a pizza place
+somewhere in the US. While the contents are artificial, the
+ingredients used to make the pizzas are far from it. There are 32
+different pizzas that fall into 4 different categories: classic
+(classic pizzas: 'You probably had one like it before, but never like
+this!'), chicken (pizzas with chicken as a major ingredient: 'Try
+the Southwest Chicken Pizza! You'll love it!'), supreme (pizzas
+that try a little harder: 'My Soppressata pizza uses only the finest
+salami from my personal salumist!'), and, veggie (pizzas without
+any meats whatsoever: 'My Five Cheese pizza has so many cheeses, I can
+only offer it in Large Size!')." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,44 +137,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <h1>A year of pizza sales from a pizza place</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>pizzaplace.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>A synthetic dataset that describes pizza sales for a pizza place
+somewhere in the US. While the contents are artificial, the
+ingredients used to make the pizzas are far from it. There are 32
+different pizzas that fall into 4 different categories: <code>classic</code>
+(classic pizzas: 'You probably had one like it before, but never like
+this!'), <code>chicken</code> (pizzas with chicken as a major ingredient: 'Try
+the Southwest Chicken Pizza! You'll love it!'), <code>supreme</code> (pizzas
+that try a little harder: 'My Soppressata pizza uses only the finest
+salami from my personal salumist!'), and, <code>veggie</code> (pizzas without
+any meats whatsoever: 'My Five Cheese pizza has so many cheeses, I can
+only offer it in Large Size!').</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='no'>pizzaplace</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <p>A tibble with 49574 rows and 7 variables:</p><dl class='dl-horizontal'>
+  <dt>id</dt><dd><p>The ID for the order, which consists of one or more pizzas
+  at a give <code>date</code> and <code>time</code></p></dd>
+  <dt>date</dt><dd><p>A character representation of the <code>order</code> date,
+  expressed in the ISO 8601 date format (YYYY-MM-DD)</p></dd>
+  <dt>date</dt><dd><p>A character representation of the <code>order</code> time,
+  expressed as a 24-hour time the ISO 8601 extended time format
+  (hh:mm:ss)</p></dd>
+  <dt>name</dt><dd><p>The short name for the pizza</p></dd>
+  <dt>size</dt><dd><p>The size of the pizza, which can either be <code>S</code>,
+  <code>M</code>, <code>L</code>, <code>XL</code> (rare!), or <code>XXL</code> (even rarer!);
+  most pizzas are available in the <code>S</code>, <code>M</code>, and <code>L</code> sizes
+  but exceptions apply</p></dd>
+  <dt>type</dt><dd><p>The category or type of pizza, which can either be
+  <code>classic</code>, <code>chicken</code>, <code>supreme</code>, or <code>veggie</code></p></dd>
+  <dt>price</dt><dd><p>The price of the pizza and the amount that it sold for
+  (in USD)</p></dd>
+</dl>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#format">Format</a></li>
           </ul>
 
   </div>
