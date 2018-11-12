@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>Perform Latex escaping — escape_latex • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="Perform Latex escaping — escape_latex" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="Text may contain several characters with special meanings in Latex. This
+function will transform a character vector so that it is safe to use within
+Latex tables." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,35 +129,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
+    <h1>Perform Latex escaping</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <div class="hidden name"><code>escape_latex.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>Text may contain several characters with special meanings in Latex. This
+function will transform a character vector so that it is safe to use within
+Latex tables.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>escape_latex</span>(<span class='no'>text</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
+      <th>text</th>
+      <td><p>a character vector containing the text that is to be
+Latex-escaped.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+  <code><a href='html.html'>html</a></code>, <code><a href='md.html'>md</a></code>, <code><a href='pct.html'>pct</a></code>,
+  <code><a href='px.html'>px</a></code></p></div>
     
 
   </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>Yearly populations of countries from 1960 to 2017 — countrypops • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,15 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="Yearly populations of countries from 1960 to 2017 — countrypops" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="A dataset that presents yearly, total populations of countries. Total
+population is based on counts of all residents regardless of legal status or
+citizenship. Country identifiers include the English-language country names,
+and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
+population value for a given year (from 1960 to 2017). Any
+NA values for populations indicate the non-existence of the
+country during that year." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,44 +133,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <h1>Yearly populations of countries from 1960 to 2017</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>countrypops.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>A dataset that presents yearly, total populations of countries. Total
+population is based on counts of all residents regardless of legal status or
+citizenship. Country identifiers include the English-language country names,
+and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
+<code>population</code> value for a given <code>year</code> (from 1960 to 2017). Any
+<code>NA</code> values for <code>populations</code> indicate the non-existence of the
+country during that year.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='no'>countrypops</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <p>A tibble with 12470 rows and 5 variables:</p><dl class='dl-horizontal'>
+  <dt>country_name</dt><dd><p>Name of the country</p></dd>
+  <dt>country_code_2</dt><dd><p>The 2-letter ISO 3166-1 country code</p></dd>
+  <dt>country_code_3</dt><dd><p>The 3-letter ISO 3166-1 country code</p></dd>
+  <dt>year</dt><dd><p>The year for the population estimate</p></dd>
+  <dt>population</dt><dd><p>The population estimate, midway through the year</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='https://data.worldbank.org/indicator/SP.POP.TOTL'>https://data.worldbank.org/indicator/SP.POP.TOTL</a></p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
           </ul>
 
   </div>

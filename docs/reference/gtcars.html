@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>Deluxe automobiles from the 2014-2017 period — gtcars • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,13 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="Deluxe automobiles from the 2014-2017 period — gtcars" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="Expensive and fast cars. Not your father's mtcars. Each row describes
+a car of a certain make, model, year, and trim. Basic specifications such as
+horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
+characteristics are provided. The country of origin for the car manufacturer
+is also given." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,44 +131,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <h1>Deluxe automobiles from the 2014-2017 period</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>gtcars.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>Expensive and fast cars. Not your father's <code>mtcars</code>. Each row describes
+a car of a certain make, model, year, and trim. Basic specifications such as
+horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
+characteristics are provided. The country of origin for the car manufacturer
+is also given.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='no'>gtcars</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <p>A tibble with 47 rows and 15 variables:</p><dl class='dl-horizontal'>
+  <dt>mfr</dt><dd><p>The name of the car manufacturer</p></dd>
+  <dt>model</dt><dd><p>The car's model name</p></dd>
+  <dt>year</dt><dd><p>The car's model year</p></dd>
+  <dt>trim</dt><dd><p>A short description of the car model's trim</p></dd>
+  <dt>bdy_style</dt><dd><p>An identifier of the car's body style, which is either
+  <code>coupe</code>, <code>convertible</code>, <code>sedan</code>, or <code>hatchback</code></p></dd>
+  <dt>hp, hp_rpm</dt><dd><p>The car's horsepower and the associated RPM level</p></dd>
+  <dt>trq, trq_rpm</dt><dd><p>The car's torque and the associated RPM level</p></dd>
+  <dt>mpg_c, mpg_h</dt><dd><p>The miles per gallon fuel efficiency rating for city
+  and highway driving</p></dd>
+  <dt>drivetrain</dt><dd><p>The car's drivetrain which, for this dataset is either
+  <code>rwd</code> (Rear Wheel Drive) or <code>awd</code> (All Wheel Drive)</p></dd>
+  <dt>trsmn</dt><dd><p>The codified transmission type, where the number part is
+  the number of gears; the car could have automatic transmission
+  (<code>a</code>), manual transmission (<code>m</code>), an option to switch between
+  both types (<code>am</code>), or, direct drive (<code>dd</code>)</p></dd>
+  <dt>ctry_origin</dt><dd><p>The country name for where the vehicle manufacturer
+  is headquartered</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Various pages within <a href='https://www.edmunds.com'>https://www.edmunds.com</a>.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
           </ul>
 
   </div>

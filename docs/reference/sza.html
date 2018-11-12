@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as percentage — pct • gt</title>
+<title>Twice hourly solar zenith angles by month and by latitude — sza • gt</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,13 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as percentage — pct" />
+<meta property="og:title" content="Twice hourly solar zenith angles by month and by latitude — sza" />
 
-<meta property="og:description" content="Helper for providing a numeric value as percentage" />
+<meta property="og:description" content="This dataset contains solar zenith angles (in degrees, with the range of
+0-90) every half hour from 04:00 to 12:00, true solar time. This set of
+values is calculated on the first of every month for 4 different northern
+hemisphere latitudes. For determination of afternoon values, the presented
+tabulated values are symmetric about noon." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,44 +131,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>pct.Rd</code></div>
+    <h1>Twice hourly solar zenith angles by month and by latitude</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>sza.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as percentage</p>
+    <p>This dataset contains solar zenith angles (in degrees, with the range of
+0-90) every half hour from 04:00 to 12:00, true solar time. This set of
+values is calculated on the first of every month for 4 different northern
+hemisphere latitudes. For determination of afternoon values, the presented
+tabulated values are symmetric about noon.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pct</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string percentage for some
-<code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take percentage values
-(e.g., <code>table.width</code>).</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='no'>sza</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <p>A tibble with 816 rows and 4 variables:</p><dl class='dl-horizontal'>
+  <dt>latitude</dt><dd><p>The latitude in decimal degrees for the observations</p></dd>
+  <dt>month</dt><dd><p>The measurement month; all calculations where conducted
+  for the first day of each month</p></dd>
+  <dt>tst</dt><dd><p>The true solar time at the given <code>latitude</code> and date
+  (first of <code>month</code>) for which the solar zenith angle is calculated</p></dd>
+  <dt>sza</dt><dd><p>The solar zenith angle in degrees, where <code>NA</code>s
+  indicate that sunrise hadn't yet occurred by the <code>tst</code> value</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
+Photochemistry Applications (Peterson, 1976), available at:
+<a href='https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt'>https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt</a>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The solar zenith angle (SZA) is one measure that helps to describe the
+sun's path across the sky. It's defined as the angle of the sun relative
+to a line perpendicular to the earth's surface. It is useful to calculate
+the SZA in relation to the true solar time. True solar time relates to
+the position of the sun with respect to the observer, which is different
+depending on the exact longitude. For example, two hours before the sun
+crosses the meridian (the highest point it would reach that day)
+corresponds to a true solar time of 10 a.m. The SZA has a strong
+dependence on the observer's latitude. For example, at a latitude of 50
+deg N at the start of January, the noontime SZA is 73.0 but a different
+observer at 20 deg N would measure the noontime SZA to be 43.0 degrees.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
