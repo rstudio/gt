@@ -34,11 +34,11 @@ reference:
     - location_cells
     - apply_styles
     - vars
-    - funs
     - md
     - html
     - px
     - pct
+    - escape_latex
   - title: Images
     contents:
     - web_image
@@ -49,3 +49,10 @@ reference:
     contents:
     - info_date_style
     - info_time_style
+  - title: Datasets
+    contents:
+    - countrypops
+    - sza
+    - gtcars
+    - sp500
+    - pizzaplace
