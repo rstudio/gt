@@ -39,14 +39,14 @@ activity_by_market <-
   tribble(
     ~company, ~procs, ~comps, ~neteqm, ~mobdev, ~sw,
     ~apps, ~webservs, ~ol_ads, ~cloud, ~itservs,
-    "Apple",     3,  1,  NA, 1,  1,  1,  2,  3,  NA, NA,
-    "Google",    NA, 3,  NA, 3,  1,  NA, 1,  1,  1,  NA,
-    "Microsoft", NA, NA, NA, 3,  1,  1,  1,  1,  1,  2,
-    "Intel",     1,  NA, NA, NA, 1,  NA, NA, NA, NA, NA,
-    "HP",        NA, 1,  1,  1,  1,  NA, 3,  NA, 2,  1,
-    "IBM",       1,  1,  2,  NA, 1,  3,  3,  NA, 1,  1,
-    "Oracle",    1,  1,  3,  NA, 1,  1,  2,  NA, NA, 2,
-    "Cisco",     1,  2,  1,  3,  NA, NA, 1,  NA, NA, 1)
+    "Apple",     3L,  1L,  NA,  1L,  1L,  1L,  2L,  3L,  NA,  NA,
+    "Google",    NA,  3L,  NA,  3L,  1L,  NA,  1L,  1L,  1L,  NA,
+    "Microsoft", NA,  NA,  NA,  3L,  1L,  1L,  1L,  1L,  1L,  2L,
+    "Intel",     1L,  NA,  NA,  NA,  1L,  NA,  NA,  NA,  NA,  NA,
+    "HP",        NA,  1L,  1L,  1L,  1L,  NA,  3L,  NA,  2L,  1L,
+    "IBM",       1L,  1L,  2L,  NA,  1L,  3L,  3L,  NA,  1L,  1L,
+    "Oracle",    1L,  1L,  3L,  NA,  1L,  1L,  2L,  NA,  NA,  2L,
+    "Cisco",     1L,  2L,  1L,  3L,  NA,  NA,  1L,  NA,  NA,  1L,)
 
 activity_by_market
 ```
@@ -56,6 +56,14 @@ activity_by_market
 order_companies <- c("Apple", "Google", "Microsoft", "Intel", "HP", "IBM", "Oracle", "Cisco")
 order_fundamentals <- c("revenue_bn", "net_income_bn", "employees")
 order_markets <- c("procs", "comps", "neteqm", "mobdev", "sw", "apps", "webservs", "ol_ads", "cloud", "itservs")
+
+row_captions <-
+  c(revenue_bn = "Revenue, 2009, $bn", net_income_bn = "Net income, 2009, $bn",
+    employees = "Employees, latest", procs = "Processors", comps = "Computers",
+    neteqm = "Network equipment", mobdev = "Mobile devices", sw = "Software",
+    apps = "Applications", webservs = "Web-based services",
+    ol_ads = "Online advertising", cloud = "Cloud Computing",
+    itservs = "IT services/consulting")
 ```
 
 
@@ -87,7 +95,10 @@ activity_by_market_w
 ```{r}
 combined_tibble <- 
   bind_rows(company_fundamentals_w, activity_by_market_w) %>%
-  rename(rowname = metric)
+  rename(rowname = metric) %>%
+  mutate(groupname = ifelse(!is.na(groupname), "Amount of activity in each market", groupname))
+  
+combined_tibble$rowname <- row_captions
 
 combined_tibble
 ```
@@ -96,14 +107,24 @@ combined_tibble
 ```{r}
 data <-
   gt(data = combined_tibble) %>%
+  cols_align("center") %>%
   tab_stubhead_caption(md("**Company**")) %>%
   fmt_missing(columns = TRUE, missing_text = " ") %>%
-  fmt_number(columns = TRUE, rows = "employees", decimals = 0) %>%
   fmt_number(columns = TRUE, rows = c(1, 2), decimals = 1) %>%
+  fmt_number(columns = TRUE, rows = 3, decimals = 0) %>%
   tab_heading(title = md("**Tech giants invade each other's turf**")) %>%
   tab_style(
     style = paste0(apply_styles(text_align = "left", text_indent = 5), "padding-bottom:20px"),
-    locations = cells_title(groups = "title")) %>%
+    locations = cells_title(groups = "title")
+    ) %>%
+  tab_style(
+    style = apply_styles(text_weight = "bold"),
+    locations = cells_boxhead(columns = TRUE)
+    ) %>%
+  tab_style(
+    style = apply_styles(text_stretch = "ultra-condensed"),
+    locations = cells_stub(rows = TRUE)
+    ) %>%
   tab_options(heading.border.bottom.width = px(0))
 
 data
