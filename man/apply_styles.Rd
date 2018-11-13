@@ -5,8 +5,9 @@
 \title{Helper for defining custom styles for table cells}
 \usage{
 apply_styles(bkgd_color = NULL, text_color = NULL, text_font = NULL,
-  text_style = NULL, text_size = NULL, text_align = NULL,
-  text_indent = NULL, text_decorate = NULL, text_transform = NULL)
+  text_size = NULL, text_align = NULL, text_style = NULL,
+  text_weight = NULL, text_stretch = NULL, text_indent = NULL,
+  text_decorate = NULL, text_transform = NULL)
 }
 \arguments{
 \item{bkgd_color}{the background color of the cell.}
@@ -16,13 +17,27 @@ apply_styles(bkgd_color = NULL, text_color = NULL, text_font = NULL,
 \item{text_font}{the font or collection of fonts (subsequent font names are)
 used as fallbacks.}
 
-\item{text_style}{the text style. Can be one of either \code{"center"},
-\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
-
-\item{text_size}{the size of the font.}
+\item{text_size}{the size of the font. Can either}
 
 \item{text_align}{the text alignment. Can be one of either \code{"center"},
 \code{"left"}, \code{"right"}, or \code{"justify"}.}
+
+\item{text_style}{the text style. Can be one of either \code{"center"},
+\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+
+\item{text_weight}{the weight of the font. Can be a text-based keyword such
+as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
+numeric value between \code{1} and \code{1000}, inclusive. Note that only
+variable fonts may support the numeric mapping of weight.}
+
+\item{text_stretch}{allows for text to either be condensed or expanded. We
+can use the following text-based keywords to describe the degree of
+condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
+\code{condensed}, \code{semi-condensed}, \code{normal},
+\code{semi-expanded}, \code{expanded}, \code{extra-expanded}, and
+\code{ultra-expanded}. Alternatively, we can supply percentage values from
+\code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
+allowed.}
 
 \item{text_indent}{the indentation of the text.}
 
