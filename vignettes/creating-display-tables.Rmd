@@ -42,7 +42,9 @@ islands_tbl <-
 islands_tbl
 ```
 
-The `islands_tbl` tibble is now suitable input for **gt**. As a side note, we could have easily generated a data frame instead as perfectly valid input data for **gt**. If we pass that table to the *function* `gt()`, we'll get a display table as output.
+Given that `islands_tbl` is a tibble, we now have a suitable input for **gt**. 
+
+The main entry point into the **gt** API is the `gt()` function. If we pass `islands_tbl` to the *function* `gt()`, we'll get a display table as output. As a side note, we could have easily generated a data frame instead as perfectly valid input data for **gt**.
 
 ```{r simple_gt_table}
 # Create a display table showing ten of
