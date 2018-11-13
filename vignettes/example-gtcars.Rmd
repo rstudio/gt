@@ -1,8 +1,8 @@
 ---
-title: "An Example: gtcars"
+title: "Case Study: gtcars"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{An Example: gtcars}
+  %\VignetteIndexEntry{Case Study: gtcars}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -390,4 +390,3 @@ tab
 ```
 
 This is it. The final table looks pretty good and conveys the additional information we planned for. That table can be used in a lot of different places like R Markdown, Shiny, email messages... wherever HTML is accepted.
-
