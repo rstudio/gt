@@ -249,11 +249,23 @@ is.html <- function(x) {
 #' @param text_color the text color.
 #' @param text_font the font or collection of fonts (subsequent font names are)
 #'   used as fallbacks.
+#' @param text_size the size of the font. Can either
 #' @param text_style the text style. Can be one of either \code{"center"},
 #'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
-#' @param text_size the size of the font.
+#' @param text_weight the weight of the font. Can be a text-based keyword such
+#'   as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
+#'   numeric value between \code{1} and \code{1000}, inclusive. Note that only
+#'   variable fonts may support the numeric mapping of weight.
 #' @param text_align the text alignment. Can be one of either \code{"center"},
 #'   \code{"left"}, \code{"right"}, or \code{"justify"}.
+#' @param text_stretch allows for text to either be condensed or expanded. We
+#'   can use the following text-based keywords to describe the degree of
+#'   condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
+#'   \code{condensed}, \code{semi-condensed}, \code{normal},
+#'   \code{semi-expanded}, \code{expanded}, \code{extra-expanded}, and
+#'   \code{ultra-expanded}. Alternatively, we can supply percentage values from
+#'   \code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
+#'   allowed.
 #' @param text_indent the indentation of the text.
 #' @param text_decorate allows for text decoration effect to be applied. Here,
 #'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
@@ -265,9 +277,11 @@ is.html <- function(x) {
 apply_styles <- function(bkgd_color = NULL,
                          text_color = NULL,
                          text_font = NULL,
-                         text_style = NULL,
                          text_size = NULL,
                          text_align = NULL,
+                         text_style = NULL,
+                         text_weight = NULL,
+                         text_stretch = NULL,
                          text_indent = NULL,
                          text_decorate = NULL,
                          text_transform = NULL) {
@@ -286,6 +300,17 @@ apply_styles <- function(bkgd_color = NULL,
     styles <- c(styles, paste0("font-family:", text_font, ";"))
   }
 
+  if (!is.null(text_size)) {
+    styles <- c(styles, paste0("font-size:", text_size, ";"))
+  }
+
+  if (!is.null(text_align)) {
+
+    if (text_align %in% c("center", "left", "right", "justify")) {
+      styles <- c(styles, paste0("text-align:", text_align, ";"))
+    }
+  }
+
   if (!is.null(text_style)) {
 
     if (text_style %in% c("normal", "italic", "oblique")) {
@@ -293,8 +318,18 @@ apply_styles <- function(bkgd_color = NULL,
     }
   }
 
-  if (!is.null(text_size)) {
-    styles <- c(styles, paste0("font-size:", text_size, ";"))
+  if (!is.null(text_weight)) {
+    if (text_weight %in% c("normal", "bold", "lighter", "bolder") ||
+        text_weight >= 1 & text_weight <= 1000)
+    styles <- c(styles, paste0("font-weight:", text_weight, ";"))
+  }
+
+  if (!is.null(text_stretch)) {
+    if (text_stretch %in% c(
+      "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal",
+      "semi-expanded", "expanded", "extra-expanded", "ultra-expanded") ||
+        text_stretch >= 0 & text_stretch <= 200)
+      styles <- c(styles, paste0("font-stretch:", text_stretch, ";"))
   }
 
   if (!is.null(text_align)) {
