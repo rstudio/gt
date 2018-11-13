@@ -17,6 +17,8 @@ library(dplyr)
 library(tibble)
 ```
 
+<p align="center"><img src="images/gtcars.png" width=50%></p>
+
 Let's make a display table using the `gtcars`. We all know `mtcars`... what is `gtcars`? It's basically a modernised `mtcars` for the **gt** age. Welcome to the limit. 
 
 ```{r gtcars_data_frame}
