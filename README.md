@@ -49,71 +49,47 @@ boxhead, the stub, summary rows, and footnotes.
 You decide which table parts you need for the task at hand with a API
 that is both straightforward yet powerful.
 
-**Create/Modify Table Components**
+-----
 
-  - `gt()` – create a **gt** table object
-  - `gt_preview()` – preview a **gt** table object
-  - `tab_heading()` – add a table heading
-  - `tab_stubhead_caption()` – add caption text to the stubhead
-  - `tab_stub_block()` – arrange a table stub into blocks
-  - `tab_boxhead_panel()` – arrange a boxhead into panels
-  - `tab_footnote()` – add one or more footnotes
-  - `tab_source_note()` – add a source note citation
-  - `tab_style()` – add custom styles to one or more cells
-  - `tab_options()` – modify the table output options
+-----
 
-**Format Data**
+<p align="center">
 
-  - `fmt()` – set a column format with a formatter function
-  - `fmt_number()` – format numeric values
-  - `fmt_scientific()` – format values to scientific notation
-  - `fmt_percent()` – format values as a percentage
-  - `fmt_currency()` – format values as currencies
-  - `fmt_date()` – format values as dates
-  - `fmt_time()` – format values as times
-  - `fmt_datetime()` – format values as date-times
-  - `fmt_missing()` – format missing values
-  - `fmt_passthrough()` – format by simply passing data through
-  - `text_transform()` – perform targeted text transformation with a
-    function
+<img src="man/figures/create_table.png">
 
-**Modify Columns**
+</p>
 
-  - `cols_align()` – set the alignment of columns
-  - `cols_move()` – move one or more columns
-  - `cols_move_to_start()` – move one or more columns to the start
-  - `cols_move_to_end()` – move one or more columns to the end
-  - `cols_hide()` – hide one or more columns
-  - `cols_label()` – relabel one or more columns
-  - `cols_split_delim()` – create group names and column labels via
-    delimited column names
-  - `cols_merge()` – merge two columns to a single column with a
-    formatter
-  - `cols_merge_uncert()` – merge two columns to a value + uncertainty
-    column
-  - `cols_merge_range()` – merge two columns to a value range column
+<p align="center">
 
-**Modify Rows**
+<img src="man/figures/modify_parts.png">
 
-  - `blocks_arrange()` – modify the ordering of the stub block groups
+</p>
 
-**Add Rows**
+<p align="center">
 
-  - `summary_rows()` – add summary rows using aggregation functions
+<img src="man/figures/format_data.png">
 
-**Export Table**
+</p>
 
-  - `write_rtf()` – save a **gt** table object as an RTF file
-  - `as_raw_html()` – get the HTML content of a **gt** table
-  - `extract_summary()` – extract a summary table from a **gt** table
-    object
+<p align="center">
 
-**Shiny**
+<img src="man/figures/modify_columns.png">
 
-  - `render_gt()` – a **gt** display table render function for use in
-    Shiny
-  - `gt_output()` – create a **gt** display table output element for
-    Shiny
+</p>
+
+<p align="center">
+
+<img src="man/figures/modify_add_rows.png">
+
+</p>
+
+<p align="center">
+
+<img src="man/figures/export_table.png">
+
+</p>
+
+-----
 
 ## Code of Conduct
 
