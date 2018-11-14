@@ -43,5 +43,5 @@ test_that("the the `apply_styles()` helper function works correctly", {
 
   # Expect that the generated string matches the correct output string
   styles_vec %>%
-    expect_equal("background-color:yellow;color:green;font-family:Courier;font-style:normal;font-size:12px;text-align:right;text-indent:5px;text-decoration:line-through;text-transform:uppercase;")
+    expect_equal("background-color:yellow;color:green;font-family:Courier;font-size:12px;text-align:right;font-style:normal;text-indent:5px;text-decoration:line-through;text-transform:uppercase;")
 })
