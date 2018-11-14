@@ -332,13 +332,6 @@ apply_styles <- function(bkgd_color = NULL,
       styles <- c(styles, paste0("font-stretch:", text_stretch, ";"))
   }
 
-  if (!is.null(text_align)) {
-
-    if (text_align %in% c("center", "left", "right", "justify")) {
-      styles <- c(styles, paste0("text-align:", text_align, ";"))
-    }
-  }
-
   if (!is.null(text_indent)) {
     styles <- c(styles, paste0("text-indent:", text_indent, ";"))
   }
