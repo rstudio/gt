@@ -4,7 +4,8 @@ development:
 reference:
   - title: Create/Modify Table Parts
     contents:
-    - starts_with("gt")
+    - gt
+    - gt_preview
     - starts_with("tab")
   - title: Format Data
     contents:
