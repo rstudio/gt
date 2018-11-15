@@ -28,17 +28,17 @@
 #' hemisphere latitudes. For determination of afternoon values, the presented
 #' tabulated values are symmetric about noon.
 #'
-#' The solar zenith angle (SZA) is one measure that helps to describe the
-#' sun's path across the sky. It's defined as the angle of the sun relative
-#' to a line perpendicular to the earth's surface. It is useful to calculate
-#' the SZA in relation to the true solar time. True solar time relates to
-#' the position of the sun with respect to the observer, which is different
-#' depending on the exact longitude. For example, two hours before the sun
-#' crosses the meridian (the highest point it would reach that day)
-#' corresponds to a true solar time of 10 a.m. The SZA has a strong
-#' dependence on the observer's latitude. For example, at a latitude of 50
-#' deg N at the start of January, the noontime SZA is 73.0 but a different
-#' observer at 20 deg N would measure the noontime SZA to be 43.0 degrees.
+#' The solar zenith angle (SZA) is one measure that helps to describe the sun's
+#' path across the sky. It's defined as the angle of the sun relative to a line
+#' perpendicular to the earth's surface. It is useful to calculate the SZA in
+#' relation to the true solar time. True solar time relates to the position of
+#' the sun with respect to the observer, which is different depending on the
+#' exact longitude. For example, two hours before the sun crosses the meridian
+#' (the highest point it would reach that day) corresponds to a true solar time
+#' of 10 a.m. The SZA has a strong dependence on the observer's latitude. For
+#' example, at a latitude of 50 deg N at the start of January, the noontime SZA
+#' is 73.0 but a different observer at 20 deg N would measure the noontime SZA
+#' to be 43.0 degrees.
 #'
 #' @format A tibble with 816 rows and 4 variables:
 #' \describe{
@@ -91,10 +91,9 @@
 
 #' Daily S&P 500 Index data from 1950 to 2015
 #'
-#' This dataset provides daily price indicators for the S&P 500 index
-#' from the beginning of 1950 to the end of 2015. The index includes 500
-#' leading companies and captures about 80% coverage of available market
-#' capitalization.
+#' This dataset provides daily price indicators for the S&P 500 index from the
+#' beginning of 1950 to the end of 2015. The index includes 500 leading
+#' companies and captures about 80% coverage of available market capitalization.
 #'
 #' @format A tibble with 16607 rows and 7 variables:
 #' \describe{
@@ -110,17 +109,16 @@
 
 #' A year of pizza sales from a pizza place
 #'
-#' A synthetic dataset that describes pizza sales for a pizza place
-#' somewhere in the US. While the contents are artificial, the
-#' ingredients used to make the pizzas are far from it. There are 32
-#' different pizzas that fall into 4 different categories: \code{classic}
-#' (classic pizzas: 'You probably had one like it before, but never like
-#' this!'), \code{chicken} (pizzas with chicken as a major ingredient: 'Try
-#' the Southwest Chicken Pizza! You'll love it!'), \code{supreme} (pizzas
-#' that try a little harder: 'My Soppressata pizza uses only the finest
-#' salami from my personal salumist!'), and, \code{veggie} (pizzas without
-#' any meats whatsoever: 'My Five Cheese pizza has so many cheeses, I can
-#' only offer it in Large Size!').
+#' A synthetic dataset that describes pizza sales for a pizza place somewhere in
+#' the US. While the contents are artificial, the ingredients used to make the
+#' pizzas are far from it. There are 32 different pizzas that fall into 4
+#' different categories: \code{classic} (classic pizzas: 'You probably had one
+#' like it before, but never like this!'), \code{chicken} (pizzas with chicken
+#' as a major ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'),
+#' \code{supreme} (pizzas that try a little harder: 'My Soppressata pizza uses
+#' only the finest salami from my personal salumist!'), and, \code{veggie}
+#' (pizzas without any meats whatsoever: 'My Five Cheese pizza has so many
+#' cheeses, I can only offer it in Large Size!').
 #'
 #' @format A tibble with 49574 rows and 7 variables:
 #' \describe{
