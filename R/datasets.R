@@ -28,17 +28,17 @@
 #' hemisphere latitudes. For determination of afternoon values, the presented
 #' tabulated values are symmetric about noon.
 #'
-#' The solar zenith angle (SZA) is one measure that helps to describe the
-#' sun's path across the sky. It's defined as the angle of the sun relative
-#' to a line perpendicular to the earth's surface. It is useful to calculate
-#' the SZA in relation to the true solar time. True solar time relates to
-#' the position of the sun with respect to the observer, which is different
-#' depending on the exact longitude. For example, two hours before the sun
-#' crosses the meridian (the highest point it would reach that day)
-#' corresponds to a true solar time of 10 a.m. The SZA has a strong
-#' dependence on the observer's latitude. For example, at a latitude of 50
-#' deg N at the start of January, the noontime SZA is 73.0 but a different
-#' observer at 20 deg N would measure the noontime SZA to be 43.0 degrees.
+#' The solar zenith angle (SZA) is one measure that helps to describe the sun's
+#' path across the sky. It's defined as the angle of the sun relative to a line
+#' perpendicular to the earth's surface. It is useful to calculate the SZA in
+#' relation to the true solar time. True solar time relates to the position of
+#' the sun with respect to the observer, which is different depending on the
+#' exact longitude. For example, two hours before the sun crosses the meridian
+#' (the highest point it would reach that day) corresponds to a true solar time
+#' of 10 a.m. The SZA has a strong dependence on the observer's latitude. For
+#' example, at a latitude of 50 deg N at the start of January, the noontime SZA
+#' is 73.0 but a different observer at 20 deg N would measure the noontime SZA
+#' to be 43.0 degrees.
 #'
 #' @format A tibble with 816 rows and 4 variables:
 #' \describe{
@@ -91,10 +91,9 @@
 
 #' Daily S&P 500 Index data from 1950 to 2015
 #'
-#' This dataset provides daily price indicators for the S&P 500 index
-#' from the beginning of 1950 to the end of 2015. The index includes 500
-#' leading companies and captures about 80% coverage of available market
-#' capitalization.
+#' This dataset provides daily price indicators for the S&P 500 index from the
+#' beginning of 1950 to the end of 2015. The index includes 500 leading
+#' companies and captures about 80% coverage of available market capitalization.
 #'
 #' @format A tibble with 16607 rows and 7 variables:
 #' \describe{
@@ -110,17 +109,16 @@
 
 #' A year of pizza sales from a pizza place
 #'
-#' A synthetic dataset that describes pizza sales for a pizza place
-#' somewhere in the US. While the contents are artificial, the
-#' ingredients used to make the pizzas are far from it. There are 32
-#' different pizzas that fall into 4 different categories: \code{classic}
-#' (classic pizzas: 'You probably had one like it before, but never like
-#' this!'), \code{chicken} (pizzas with chicken as a major ingredient: 'Try
-#' the Southwest Chicken Pizza! You'll love it!'), \code{supreme} (pizzas
-#' that try a little harder: 'My Soppressata pizza uses only the finest
-#' salami from my personal salumist!'), and, \code{veggie} (pizzas without
-#' any meats whatsoever: 'My Five Cheese pizza has so many cheeses, I can
-#' only offer it in Large Size!').
+#' A synthetic dataset that describes pizza sales for a pizza place somewhere in
+#' the US. While the contents are artificial, the ingredients used to make the
+#' pizzas are far from it. There are 32 different pizzas that fall into 4
+#' different categories: \code{classic} (classic pizzas: 'You probably had one
+#' like it before, but never like this!'), \code{chicken} (pizzas with chicken
+#' as a major ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'),
+#' \code{supreme} (pizzas that try a little harder: 'My Soppressata pizza uses
+#' only the finest salami from my personal salumist!'), and, \code{veggie}
+#' (pizzas without any meats whatsoever: 'My Five Cheese pizza has so many
+#' cheeses, I can only offer it in Large Size!').
 #'
 #' @format A tibble with 49574 rows and 7 variables:
 #' \describe{
@@ -142,3 +140,34 @@
 #'   (in USD)}
 #' }
 "pizzaplace"
+
+#' A toy example tibble for testing with gt: exibble
+#'
+#' This tibble contains data of a few different classes, which makes it
+#' well-suited for quick experimentation with the functions in this package. It
+#' contains only eight rows with numeric, character, and factor columns. The
+#' last 4 rows contain \code{NA} values in the majority of the tibbles's columns
+#' (1 missing value per column). The \code{date}, \code{time}, and
+#' \code{datetime} columns are character-based dates/times in the familiar ISO
+#' 8601 format. The \code{row} and \code{group} columns provide for unique
+#' rownames and two groups (\code{grp_a} and \code{grp_b}) for experimenting
+#' with the \code{\link{gt}()} function's \code{rowname_col} and
+#' \code{groupname_col} arguments.
+#'
+#' @format A tibble with 8 rows and 9 variables:
+#' \describe{
+#'   \item{num}{a numeric column ordered with increasingly larger values}
+#'   \item{char}{a character column composed of names of fruits from \code{a} to
+#'   \code{h}}
+#'   \item{fctr}{a factor column with numbers from 1 to 8, written out}
+#'   \item{date, time, datetime}{character columns with dates, times, and
+#'   datetimes}
+#'   \item{currency}{a numeric column that is useful for testing currency-based
+#'   formatting}
+#'   \item{row}{a character column in the format \code{row_X} which can be
+#'   useful for testing with row captions in a table stub}
+#'   \item{group}{a character column with four \code{grp_a} values and four
+#'   \code{grp_b} values which can be useful for testing tables that contain
+#'   row groups}
+#' }
+"exibble"
