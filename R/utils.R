@@ -452,6 +452,9 @@ get_css_tbl <- function(data) {
       )
   }
 
+  # Add a column that has the selector type for each row
+  # For anything other than a class selector, the class type
+  # will entered as NA
   css_tbl <-
     css_tbl %>%
     dplyr::mutate(type = dplyr::case_when(
