@@ -415,7 +415,7 @@ remove_html <- function(text) {
 }
 
 # This function transforms a CSS stylesheet to a tibble representation
-#' @importFrom dplyr bind_rows tibble filter mutate case_when select
+#' @importFrom dplyr bind_rows tibble filter mutate case_when select pull
 #' @importFrom stringr str_remove str_extract str_trim str_detect
 #' @noRd
 get_css_tbl <- function(data) {
