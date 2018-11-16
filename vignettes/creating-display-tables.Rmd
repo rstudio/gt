@@ -63,7 +63,7 @@ The package makes it relatively easy to add parts so that the resulting display 
 
 The way the main parts of a table (and their subparts) fit together is best shown as a schematic:
 
-<img src="images/gt_main_parts_of_a_table.png" width=100%>
+<p align="center"><img src="../man/figures/gt_parts_of_a_table.png" width=100%></p>
 
 The parts (roughly from top to bottom) are:
 
