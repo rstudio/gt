@@ -389,7 +389,8 @@ test_that("the `get_css_tbl()` function works correctly", {
 
 test_that("the `inline_html_styles()` function works correctly", {
 
-  data <- gt(mtcars, rownames_to_stub = TRUE)
+  # Create a simple gt table from `mtcars`
+  data <- gt(mtcars)
 
   css_tbl <- data %>% get_css_tbl()
   html <- data %>% as_raw_html()
