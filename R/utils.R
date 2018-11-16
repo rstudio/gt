@@ -467,7 +467,9 @@ get_css_tbl <- function(data) {
 #' @importFrom dplyr filter select distinct mutate pull
 #' @importFrom stringr str_split
 #' @noRd
-create_inline_styles <- function(class_names, css_tbl) {
+create_inline_styles <- function(class_names,
+                                 css_tbl,
+                                 extra_style = "") {
 
   class_names <-
     class_names %>%
@@ -483,6 +485,7 @@ create_inline_styles <- function(class_names, css_tbl) {
       dplyr::mutate(property_value = paste0(property, ":", value, ";")) %>%
       dplyr::pull(property_value) %>%
       paste(collapse = ""),
+    extra_style,
     "\"")
 }
 
