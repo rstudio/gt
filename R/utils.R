@@ -455,9 +455,8 @@ get_css_tbl <- function(data) {
   css_tbl <-
     css_tbl %>%
     dplyr::mutate(type = dplyr::case_when(
-      stringr::str_detect(selector, "^[a-z]") ~ "element",
-      stringr::str_detect(selector, "^#") ~ "id",
-      stringr::str_detect(selector, "^\\.") ~ "class")) %>%
+      stringr::str_detect(selector, "^\\.") ~ "class",
+      !stringr::str_detect(selector, "^\\.") ~ NA_character_)) %>%
     dplyr::select(selector, type, property, value)
 
   css_tbl
