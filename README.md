@@ -32,7 +32,7 @@ that is both straightforward yet powerful.
 
 <p align="center">
 
-<img src="man/figures/gt_functions.png">
+<img src="man/figures/gt_functions.svg">
 
 </p>
 
