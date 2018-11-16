@@ -20,36 +20,15 @@ status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https:/
 </p>
 
 With the **gt** package, anyone can make wonderful-looking tables using
-the **R** programming language.
-
------
-
------
-
-<img src="man/figures/gt_tables.png">
-
------
-
------
-
-The **gt** philosophy: we can construct a wide variety of useful tables
-with a cohesive set of table parts. These include the table heading, the
-boxhead, the stub, summary rows, and footnotes.
-
------
-
------
+the **R** programming language. The **gt** philosophy: we can construct
+a wide variety of useful tables with a cohesive set of table parts.
+These include the table heading, the boxhead, the stub, summary rows,
+and footnotes.
 
 <img src="man/figures/gt_parts_of_a_table.png">
 
------
-
------
-
 You decide which table parts you need for the task at hand with a API
 that is both straightforward yet powerful.
-
------
 
 -----
 
@@ -90,6 +69,8 @@ that is both straightforward yet powerful.
 </p>
 
 -----
+
+<img src="man/figures/gt_tables.png">
 
 ## Code of Conduct
 
