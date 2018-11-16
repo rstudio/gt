@@ -489,31 +489,68 @@ create_inline_styles <- function(class_names,
     "\"")
 }
 
-# Create an inlined style block from a CSS tibble
-#' @importFrom stringr str_extract str_replace
+# Transform HTML to inlined HTML using a CSS tibble
+#' @importFrom stringr str_extract str_replace str_match
 #' @noRd
 inline_html_styles <- function(html, css_tbl) {
 
+  cls_sty_pattern <- "class=\\'(.*?)\\'\\s+style=\\\"(.*?)\\\""
+
   repeat {
-    if (grepl("class=\\'(.*?)\\'", html)) {
 
-      class_names <-
-        html %>%
-        stringr::str_extract(
-          pattern = "class=\\'(.*?)\\'") %>%
-        stringr::str_extract("(?<=\\').*(?=\\')")
+    matching_css_style <-
+      html %>%
+      stringr::str_extract(
+        pattern = cls_sty_pattern)
 
-      inline_styles <-
-        create_inline_styles(
-          class_names = class_names, css_tbl)
-
-      html <- html %>%
-        str_replace(
-          pattern = "class=\\'(.*?)\\'",
-          replacement = inline_styles)
-    } else {
+    if (is.na(matching_css_style)) {
       break
     }
+
+    class_names <-
+      matching_css_style %>%
+      stringr::str_extract("(?<=\\').*(?=\\')")
+
+    existing_style <-
+      matching_css_style %>%
+      stringr::str_match(
+        pattern = "style=\\\"(.*?)\\\"") %>%
+      magrittr::extract(1, 2)
+
+    inline_styles <-
+      create_inline_styles(
+        class_names = class_names, css_tbl, extra_style = existing_style)
+
+    html <-
+      html %>%
+      stringr::str_replace(
+        pattern = cls_sty_pattern,
+        replacement = inline_styles)
+  }
+
+  cls_pattern <- "class=\\'(.*?)\\'"
+
+  repeat {
+
+    class_names <-
+      html %>%
+      stringr::str_extract(
+        pattern = cls_pattern) %>%
+      stringr::str_extract("(?<=\\').*(?=\\')")
+
+    if (is.na(class_names)) {
+      break
+    }
+
+    inline_styles <-
+      create_inline_styles(
+        class_names = class_names, css_tbl)
+
+    html <-
+      html %>%
+      stringr::str_replace(
+        pattern = cls_pattern,
+        replacement = inline_styles)
   }
 
   html
