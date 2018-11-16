@@ -392,12 +392,16 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Create a simple gt table from `mtcars`
   data <- gt(mtcars)
 
+  # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
   html <- data %>% as_raw_html()
 
+  # Get the inlined HTML using `inline_html_styles()`
   inlined_html <-
     inline_html_styles(html, css_tbl = css_tbl)
 
+  # Expect that certain portions of `inlined_html` have
+  # inlined CSS rules
   expect_true(
     grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
   )
