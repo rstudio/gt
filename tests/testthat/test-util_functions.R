@@ -405,6 +405,26 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;padding:10px;margin:10px;text-align:right;\"", inlined_html)
   )
+
+  # Augment the gt table with custom styles
+  data <-
+    data %>%
+    tab_style(
+      style = "font-size:10px;", locations = cells_data(columns = TRUE))
+
+  # Get the CSS tibble and the raw HTML
+  css_tbl <- data %>% get_css_tbl()
+  html <- data %>% as_raw_html()
+
+  # Get the inlined HTML using `inline_html_styles()`
+  inlined_html <-
+    inline_html_styles(html, css_tbl = css_tbl)
+
+  # Expect that the style rule from `tab_style` is a listed value along with
+  # the inlined rules derived from the CSS classes
+  expect_true(
+    grepl("style=\"padding:10px;margin:10px;text-align:right;font-size:10px;\"", inlined_html)
+  )
 })
 
 test_that("the `as_locations()` function works correctly", {
