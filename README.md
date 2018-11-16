@@ -30,41 +30,9 @@ and footnotes.
 You decide which table parts you need for the task at hand with a API
 that is both straightforward yet powerful.
 
------
-
 <p align="center">
 
-<img src="man/figures/create_table.png">
-
-</p>
-
-<p align="center">
-
-<img src="man/figures/modify_parts.png">
-
-</p>
-
-<p align="center">
-
-<img src="man/figures/format_data.png">
-
-</p>
-
-<p align="center">
-
-<img src="man/figures/modify_columns.png">
-
-</p>
-
-<p align="center">
-
-<img src="man/figures/modify_add_rows.png">
-
-</p>
-
-<p align="center">
-
-<img src="man/figures/export_table.png">
+<img src="man/figures/gt_functions.png">
 
 </p>
 
