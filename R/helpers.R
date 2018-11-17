@@ -244,7 +244,7 @@ is.html <- function(x) {
 #' This helper function is to be used with the \code{\link{tab_style}()}
 #' function, which itself allows for the setting of custom styles to one or more
 #' cells. We can also define several styles with a single call of
-#' \code{apply_styles} and \code{\link{tab_style}()} will reliably process that.
+#' \code{cells_styles} and \code{\link{tab_style}()} will reliably process that.
 #' @param bkgd_color the background color of the cell.
 #' @param text_color the text color.
 #' @param text_font the font or collection of fonts (subsequent font names are)
@@ -274,7 +274,7 @@ is.html <- function(x) {
 #' @return a character vector containing formatted styles.
 #' @family helper functions
 #' @export
-apply_styles <- function(bkgd_color = NULL,
+cells_styles <- function(bkgd_color = NULL,
                          text_color = NULL,
                          text_font = NULL,
                          text_size = NULL,
