@@ -32,7 +32,7 @@ reference:
   - title: Helper Functions
     contents:
     - location_cells
-    - apply_styles
+    - cells_styles
     - vars
     - funs
     - md
