@@ -97,6 +97,7 @@ sza %>%
   filter(!is.na(sza)) %>%
   spread(key = "tst", value = sza) %>%
   gt(rowname_col = "month") %>%
+  fmt_number(columns = TRUE, decimals = 2) %>%
   fmt_missing(columns = TRUE, missing_text = "") %>%
   cols_hide(columns = vars(latitude)) %>%
   tab_stubhead_caption(caption = html("month<br>(20&deg;N)")) %>%
