@@ -13,10 +13,10 @@ get_spanner_style <- function(spanner_style_attrs,
 
     return(
       paste0(
-        " style='",
+        " style=\"",
         spanner_style_attrs %>%
           dplyr::filter(grpname == group_name) %>%
-          dplyr::pull(styles_appended), "'")
+          dplyr::pull(styles_appended), "\"")
     )
   } else {
     return("")
@@ -32,10 +32,10 @@ get_column_style <- function(column_style_attrs,
 
     return(
       paste0(
-        " style='",
+        " style=\"",
         column_style_attrs %>%
           dplyr::filter(colname == column_name) %>%
-          dplyr::pull(styles_appended), "'")
+          dplyr::pull(styles_appended), "\"")
     )
   } else {
     return("")
@@ -51,7 +51,7 @@ create_style_attrs <- function(style_values) {
     if (is.na(style)) {
       style_rules <- c(style_rules, "")
     } else {
-      style_rules <- c(style_rules, paste0(" style='", style, "'"))
+      style_rules <- c(style_rules, paste0(" style=\"", style, "\""))
     }
   }
 
@@ -642,7 +642,7 @@ create_body_component_h <- function(row_splits_body,
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
             "\n</tr>\n") %>%
-            tidy_gsub(" style=''", "")
+            tidy_gsub(" style=\"\"", "")
         )
 
     } else {
