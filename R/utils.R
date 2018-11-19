@@ -462,15 +462,11 @@ get_css_tbl <- function(data) {
       !stringr::str_detect(selector, "^\\.") ~ NA_character_)) %>%
     dplyr::select(selector, type, property, value)
 
-  #nocov start
-
   # Stop function if any NA values found while inspecting the
   # selector names (e.g., not determined to be class selectors)
   if (any(is.na(css_tbl %>% dplyr::pull(type)))) {
     stop("All selectors must be class selectors", call. = FALSE)
   }
-
-  #nocov end
 
   css_tbl
 }
