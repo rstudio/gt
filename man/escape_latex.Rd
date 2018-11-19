@@ -16,7 +16,7 @@ function will transform a character vector so that it is safe to use within
 Latex tables.
 }
 \seealso{
-Other helper functions: \code{\link{apply_styles}},
+Other helper functions: \code{\link{cells_styles}},
   \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
   \code{\link{px}}
 }

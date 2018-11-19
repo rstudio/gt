@@ -95,7 +95,7 @@ gt_preview <- function(data,
 
     gt_tbl <- gt_tbl %>%
       tab_style(
-        style = apply_styles(bkgd_color = "#E4E4E4"),
+        style = cells_styles(bkgd_color = "#E4E4E4"),
         locations = cells_data(rows = ellipsis_row)) %>%
       tab_style(
         style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
@@ -105,7 +105,7 @@ gt_preview <- function(data,
 
       gt_tbl <- gt_tbl %>%
         tab_style(
-          style = apply_styles(bkgd_color = "#E4E4E4", text_size = "12px"),
+          style = cells_styles(bkgd_color = "#E4E4E4", text_size = "12px"),
           locations = cells_stub(rows = ellipsis_row)) %>%
         tab_style(
           style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",

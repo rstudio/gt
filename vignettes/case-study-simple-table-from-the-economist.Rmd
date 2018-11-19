@@ -102,7 +102,7 @@ data <-
   fmt_number(columns = TRUE, rows = c(1, 2), decimals = 1) %>%
   tab_heading(title = md("**Tech giants invade each other's turf**")) %>%
   tab_style(
-    style = paste0(apply_styles(text_align = "left", text_indent = 5), "padding-bottom:20px"),
+    style = paste0(cells_styles(text_align = "left", text_indent = 5), "padding-bottom:20px"),
     locations = cells_title(groups = "title")) %>%
   tab_options(heading.border.bottom.width = px(0))
 

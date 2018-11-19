@@ -26,11 +26,11 @@ test_that("the the `px()` helper function works correctly", {
     px(x = "50"))
 })
 
-test_that("the the `apply_styles()` helper function works correctly", {
+test_that("the the `cells_styles()` helper function works correctly", {
 
   # Create a properly-formatted style string using the `apply_styles()` function
   styles_vec <-
-    apply_styles(
+    cells_styles(
       bkgd_color = "yellow",
       text_color = "green",
       text_font = "Courier",
@@ -43,5 +43,5 @@ test_that("the the `apply_styles()` helper function works correctly", {
 
   # Expect that the generated string matches the correct output string
   styles_vec %>%
-    expect_equal("background-color:yellow;color:green;font-family:Courier;font-style:normal;font-size:12px;text-align:right;text-indent:5px;text-decoration:line-through;text-transform:uppercase;")
+    expect_equal("background-color:yellow;color:green;font-family:Courier;font-size:12px;text-align:right;font-style:normal;text-indent:5px;text-decoration:line-through;text-transform:uppercase;")
 })

@@ -28,7 +28,7 @@ gt_tbl <-
       caption = md("car *make* and *model*"))
 }
 \seealso{
-Other helper functions: \code{\link{apply_styles}},
+Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}}, \code{\link{html}},
   \code{\link{pct}}, \code{\link{px}}
 }
