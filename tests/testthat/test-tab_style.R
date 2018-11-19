@@ -55,7 +55,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "lightgray"),
+      style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
         cells_boxhead(columns = TRUE),
         cells_stub(rows = TRUE)))
@@ -80,7 +80,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(
+      style = cells_styles(
         bkgd_color = "steelblue",
         text_color = "white"),
       locations = cells_stub(rows = "Merc 240D"))
@@ -102,7 +102,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(text_align = "left"),
+      style = cells_styles(text_align = "left"),
       locations = cells_title(groups = "title"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -122,7 +122,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(text_align = "left"),
+      style = cells_styles(text_align = "left"),
       locations = cells_title(groups = "headnote"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -143,7 +143,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "green", text_color = "white"),
+      style = cells_styles(bkgd_color = "green", text_color = "white"),
       locations = cells_summary(
         groups = "Mercs", columns = "hp", rows = 2))
 
@@ -164,7 +164,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "yellow"),
+      style = cells_styles(bkgd_color = "yellow"),
       locations = cells_group(groups = "Mazdas"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -185,7 +185,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "lightgreen"),
+      style = cells_styles(bkgd_color = "lightgreen"),
       locations = cells_boxhead(groups = "gear_carb_cyl"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -205,7 +205,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "turquoise"),
+      style = cells_styles(bkgd_color = "turquoise"),
       locations = cells_boxhead(columns = "gear"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -225,7 +225,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "pink"),
+      style = cells_styles(bkgd_color = "pink"),
       locations = cells_boxhead(columns = "hp"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -245,7 +245,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "lightgray", text_style = "italic"),
+      style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
       locations = cells_data(columns = "hp", rows = 1:5))
 
   # Expect that the internal `styles_df` data frame will have five rows
@@ -281,7 +281,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "yellow"),
+      style = cells_styles(bkgd_color = "yellow"),
       locations = cells_data(columns = "disp", rows = "Mazda RX4"))
 
   # Expect that the internal `styles_df` data frame will have
@@ -302,7 +302,7 @@ test_that("a gt table can store the correct style statements", {
   expect_error(
     data %>%
       tab_style(
-        style = apply_styles(bkgd_color = "yellow"),
+        style = cells_styles(bkgd_color = "yellow"),
         locations = cells_data(columns = "disp", rows = "Mazda RX7")))
 
   # Apply a `yellow` background a single data cell; this time, use `vars()`
@@ -310,7 +310,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "yellow"),
+      style = cells_styles(bkgd_color = "yellow"),
       locations = cells_data(columns = "disp", rows = vars(`Mazda RX4`)))
 
   # Expect that the internal `styles_df` data frame will have
@@ -331,7 +331,7 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = apply_styles(bkgd_color = "yellow"),
+      style = cells_styles(bkgd_color = "yellow"),
       locations = cells_data(columns = vars(disp, hp), rows = "Mazda RX4"))
 
   # Expect that the internal `styles_df` data frame will have two rows

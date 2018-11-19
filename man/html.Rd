@@ -30,7 +30,7 @@ gt_tbl <-
         "car <em>make</em> and <em>model</em>"))
 }
 \seealso{
-Other helper functions: \code{\link{apply_styles}},
+Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}}, \code{\link{md}},
   \code{\link{pct}}, \code{\link{px}}
 }
