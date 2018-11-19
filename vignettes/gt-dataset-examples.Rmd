@@ -1,0 +1,199 @@
+---
+title: "gt Dataset Examples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gt Dataset Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+library(gt)
+library(dplyr)
+library(tidyr)
+```
+
+The **gt** package comes with six built-in datasets for experimenting with the API. They are called `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each of them has different subject matter, all of them allow us to quickly produce useful examples with reusable idioms. 
+
+<img src="images/countrypops.svg" width=30%><img src="images/sza.svg" width=30%><img src="images/gtcars.svg" width=30%>
+
+<img src="images/sp500.svg" width=30%><img src="images/pizzaplace.svg" width=30%><img src="images/exibble.svg" width=30%>
+
+All of the datasets are tibbles and they range from quite large in size (nearly 50,000 rows: `pizzaplace`) to very, very small (`exibble`, an example tibble of 8 rows). The very large datasets contain row counts which are probably impractical as display tables but they provide opportunities for preprocessing through tidyverse tools like **dplyr** and **tidyr** upstream of **gt**. Indeed in many **gt** workflows, there will be preparation work like this where the creation of the input table and any salient information (e.g., metadata for footnotes) will be done alongside the preparation of the display table.
+
+Here, we'll show minimal examples of tables that can be created with each of these datasets. The hope is that this collection of examples will inspire the creation of much more interesting display tables with **gt**.
+
+### The `countrypops` dataset
+
+This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the World Bank, where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country for each year, where `NA` values indicate that a country did not exist in a particular year.
+
+The table that we'll create from `countrypops` will meet these requirements:
+
+1. we will use countries from Oceania
+2. countries in different regions of Oceania will be grouped together
+3. populations will be given for the 1995, 2005, and 2015 years only, and they will appear as separate columns with a spanner group column stating that these columns refer to population values
+4. Population figures will be formatted to contain commas
+5. a title will be provided
+
+```{r countrypops}
+
+oceania <- 
+  dplyr::tribble(
+    ~country_code_2, ~region,
+    "AU", "Australasia",
+    "NZ", "Australasia",
+    "FJ", "Melanesia",
+    "NC", "Melanesia",
+    "PG", "Melanesia",
+    "SB", "Melanesia",
+    "VU", "Melanesia",
+    "FM", "Micronesia",
+    "GU", "Micronesia",
+    "KI", "Micronesia",
+    "MH", "Micronesia",
+    "MP", "Micronesia",
+    "NR", "Micronesia",
+    "PW", "Micronesia",
+    "AS", "Polynesia",
+    "PF", "Polynesia",
+    "WS", "Polynesia",
+    "TO", "Polynesia",
+    "TV", "Polynesia",
+  )
+
+countrypops %>%
+  dplyr::inner_join(oceania, by = "country_code_2") %>%
+  dplyr::filter(year %in% c(1995, 2005, 2015)) %>%
+  tidyr::spread(key = year, value = population) %>%
+  dplyr::arrange(region, desc(`2015`)) %>%
+  dplyr::select(-starts_with("country_code")) %>%
+  gt(rowname_col = "country_name", groupname_col = "region") %>%
+  tab_boxhead_panel(
+    group = "Total Population",
+    columns = c("1995", "2005", "2015")
+    ) %>%
+  fmt_number(columns = TRUE, decimals = 0, use_seps = TRUE) %>%
+  tab_heading("Populations of Oceania's Countries in 1995, 2005, and 2015")
+```
+
+
+### The `sza` dataset
+
+Describe the dataset
+
+The table that we'll create from `sza` will meet these requirements:
+
+1. aaa
+2. bbb
+
+```{r sza}
+
+sza %>%
+  filter(latitude == 20) %>%
+  filter(!is.na(sza)) %>%
+  spread(key = "tst", value = sza) %>%
+  gt(rowname_col = "month") %>%
+  fmt_missing(columns = TRUE, missing_text = "") %>%
+  cols_hide(columns = vars(latitude)) %>%
+  tab_stubhead_caption(caption = html("month<br>(20&deg;N)")) %>%
+  tab_heading(paste0("Solar Zenith Angles ", emo::ji("sun"))) %>%
+  tab_options(
+    boxhead.font.size = "small",
+    table.font.size = "smaller",
+    row.padding = px(3))
+```
+
+
+### The `gtcars` dataset
+
+Describe the dataset
+
+The table that we'll create from `gtcars` will meet these requirements:
+
+1. aaa
+2. bbb
+
+```{r gtcars}
+
+```
+
+
+### The `sp500` dataset
+
+Describe the dataset
+
+The table that we'll create from `sp500` will meet these requirements:
+
+1. aaa
+2. bbb
+
+
+```{r sp500}
+sp500 %>%
+  dplyr::filter(date >= "2015-12-01") %>%
+  dplyr::filter(date <= "2015-12-15") %>%
+  dplyr::arrange(date) %>%
+  dplyr::select(-adj_close) %>%
+  dplyr::mutate(date = as.character(date)) %>%
+  gt() %>%
+  cols_label(
+    date = "Date", open = "Open", high = "High", low = "Low", close = "Close",
+    volume = "Volume"
+  ) %>%
+  fmt_date(columns = vars(date), date_style = 7) %>%
+  fmt_currency(columns = vars(open, high, low, close), currency = "USD") %>%
+  fmt_number(columns = vars(volume), scale_by = 1 / 1E9, pattern = "{x}B") %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "lightgreen"),
+    locations = cells_data(rows = close > open)) %>%
+  tab_style(
+    style = apply_styles(bkgd_color = "#B20000", text_color = "white"),
+    locations = cells_data(rows = open > close)) %>%
+  tab_heading(title = "S&P 500", headnote = "2015-12-01 to 2015-12-15")
+```
+
+### The `pizzaplace` dataset
+
+Describe the dataset
+
+The table that we'll create from `pizzaplace` will meet these requirements:
+
+1. aaa
+2. bbb
+
+```{r}
+pizzaplace %>%
+  group_by(type, size) %>%
+  summarize(
+    `Pizzas Sold` = n(),
+    Income = sum(price)) %>%
+  gt(rowname_col = "size") %>%
+  fmt_number(
+    columns = "Pizzas Sold",
+    decimals = 0,
+    use_seps = TRUE) %>%
+  fmt_currency(
+    columns = vars(Income),
+    currency = "USD") %>%
+  summary_rows(
+    groups = TRUE,
+    columns = "Pizzas Sold",
+    fns = c(TOTAL = "sum"),
+    formatter = fmt_number,
+    decimals = 0,
+    use_seps = TRUE) %>%
+  summary_rows(
+    groups = TRUE,
+    columns = "Income",
+    fns = c(TOTAL = "sum"),
+    formatter = fmt_currency,
+    currency = "USD") %>%
+  tab_options(
+    summary_row.background.color = "lightgreen",
+    stub_group.background.color = "beige")
+```
+
