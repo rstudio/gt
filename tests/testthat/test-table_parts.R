@@ -113,8 +113,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peri` and `shape` column labels
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = c("peri", "shape")) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -131,8 +131,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # the `vars()` helper to define the columns)
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peri, shape)) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -148,8 +148,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peris` and `shapes` column labels (which don't exist)
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peris, shapes)) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -263,7 +263,10 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_hide(columns = "vs") %>%
     tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
     tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
-    tab_boxhead_panel(group = "gear_carb_cyl", columns = vars(gear, carb, cyl)) %>%
+    tab_spanner(
+      label = "gear_carb_cyl",
+      columns = vars(gear, carb, cyl)
+    ) %>%
     blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
     cols_merge_range(col_begin = "disp", col_end = "drat") %>%
     tab_heading(title = "Title", headnote = "Headnote") %>%
@@ -274,43 +277,55 @@ test_that("a gt table contains custom styles at the correct locations", {
       columns = vars(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))) %>%
+        ~sum(., na.rm = TRUE))
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
         cells_boxhead(columns = TRUE),
-        cells_stub(rows = TRUE))) %>%
+        cells_stub(rows = TRUE))
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "steelblue", text_color = "white"),
-      locations = cells_stub(rows = "Merc 240D")) %>%
+      locations = cells_stub(rows = "Merc 240D")
+    ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "title")) %>%
+      locations = cells_title(groups = "title")
+    ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "headnote")) %>%
+      locations = cells_title(groups = "headnote")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "green", text_color = "white"),
       locations = cells_summary(
-        groups = "Mercs", columns = "hp", rows = 2)) %>%
+        groups = "Mercs", columns = "hp", rows = 2)
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_boxhead(groups = "gear_carb_cyl")) %>%
+      locations = cells_boxhead(groups = "gear_carb_cyl")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_boxhead(columns = "gear")) %>%
+      locations = cells_boxhead(columns = "gear")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "pink"),
-      locations = cells_boxhead(columns = "hp")) %>%
+      locations = cells_boxhead(columns = "hp")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
-      locations = cells_data(columns = "hp", rows = "Datsun 710")) %>%
+      locations = cells_data(columns = "hp", rows = "Datsun 710")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")) %>%
+      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "red", text_color = "white"),
-      locations = cells_group(groups = "Mazdas")) %>%
+      locations = cells_group(groups = "Mazdas")
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
 

@@ -9,10 +9,12 @@ airquality_tbl <-
   cols_label(Solar.R = html("Solar<br>Radiation")) %>%
   fmt_number(
     columns = vars(Wind),
-    decimals = 2) %>%
-  tab_boxhead_panel(
-    group = "Measurement Period",
-    columns = vars(Month, Day)) %>%
+    decimals = 2
+  ) %>%
+  tab_spanner(
+    label = "Measurement Period",
+    columns = vars(Month, Day)
+  ) %>%
   fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
 
 # Display the table in the Viewer

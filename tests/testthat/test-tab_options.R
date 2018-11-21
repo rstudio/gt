@@ -18,22 +18,35 @@ tbl <-
 # Create a table from `tbl` that has all the different components
 data <-
   gt(tbl) %>%
-  tab_heading(title = "The Title", headnote = "The Headnote") %>%
+  tab_heading(
+    title = "The Title",
+    headnote = "The Headnote"
+  ) %>%
   tab_stubhead_label(label = "Stubhead Caption") %>%
-  tab_boxhead_panel(group = "Group 1", columns = vars(col_1, col_2)) %>%
-  tab_boxhead_panel(group = "Group 2", columns = vars(col_3, col_4)) %>%
+  tab_spanner(
+    label = "Group 1",
+    columns = vars(col_1, col_2)
+  ) %>%
+  tab_spanner(
+    label = "Group 2",
+    columns = vars(col_3, col_4)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_data(columns = 1, rows = 1)) %>%
+    locations = cells_data(columns = 1, rows = 1)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_data(columns = 2, rows = 2)) %>%
+    locations = cells_data(columns = 2, rows = 2)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_data(columns = 3, rows = 3)) %>%
+    locations = cells_data(columns = 3, rows = 3)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_data(columns = 4, rows = 4)) %>%
+    locations = cells_data(columns = 4, rows = 4)
+  ) %>%
   tab_source_note("A source note for the table.")
 
 # Extract the internal `opts_df` table so that comparisons can be made

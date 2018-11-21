@@ -9,7 +9,10 @@ data <-
   cols_hide(columns = "vs") %>%
   tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
   tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
-  tab_boxhead_panel(group = "gear_carb_cyl", columns = vars(gear, carb, cyl)) %>%
+  tab_spanner(
+    label = "gear_carb_cyl",
+    columns = vars(gear, carb, cyl)
+  ) %>%
   blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(col_begin = "disp", col_end = "drat") %>%
   tab_heading(title = "Title", headnote = "Headnote") %>%
@@ -19,7 +22,8 @@ data <-
     columns = vars(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE)))
+      ~sum(., na.rm = TRUE))
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {

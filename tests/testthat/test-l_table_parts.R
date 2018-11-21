@@ -66,8 +66,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peri` and `shape` column labels
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = c("peri", "shape"))
 
   # Expect a characteristic pattern
@@ -87,8 +87,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # the `vars()` helper to define the columns)
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peri, shape))
 
   # Expect a characteristic pattern
@@ -107,8 +107,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peris` and `shapes` column labels (which don't exist)
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peris, shapes))
 
   # Expect a characteristic pattern

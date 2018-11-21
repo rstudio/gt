@@ -166,10 +166,11 @@ tab_stub_block <- function(data,
   data
 }
 
-#' Arrange a boxhead into panels
+#' Add a spanner column label
 #'
-#' Set a spanner with a name and mappings to columns extant in the table. This
-#' creates a boxhead panel with spanner headings and column headings.
+#' Set a spanner column label by mapping it to columns already in the table.
+#' This label that is placed above one or more column labels, spanning the width
+#' of those columns.
 #' @inheritParams fmt_number
 #' @param group the name to assign to the spanner heading.
 #' @param columns the columns to be components of the spanner heading.
@@ -177,19 +178,19 @@ tab_stub_block <- function(data,
 #' @examples
 #' # Create a table based on `rock` where
 #' # there are column headings grouped
-#' # under spanner headings
+#' # under a spanner column label
 #' gt_tbl <-
 #'   gt(data = rock) %>%
-#'     tab_boxhead_panel(
+#'     tab_spanner(
 #'       group = "perimeter",
 #'       columns = c("peri", "shape"))
 #' @family table-part creation/modification functions
 #' @export
-tab_boxhead_panel <- function(data,
-                              group,
-                              columns) {
+tab_spanner <- function(data,
+                        label,
+                        columns) {
   checkmate::assert_character(
-    group, len = 1, any.missing = FALSE, null.ok = FALSE)
+    label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
   # If using the `vars()` helper, get the columns as a character vector
   if (inherits(columns, "quosures")) {
@@ -207,7 +208,7 @@ tab_boxhead_panel <- function(data,
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
   for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- group
+    grp_labels[[columns[i]]] <- label
   }
 
   # Set the `grp_labels` attr with the `grp_labels` object
