@@ -41,13 +41,13 @@ test_that("a gt table contains the expected heading components", {
 
 })
 
-test_that("a gt table contains the expected stubhead caption", {
+test_that("a gt table contains the expected stubhead label", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a stub and a stubhead caption
   tbl_latex <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_caption("the mtcars")
+    tab_stubhead_label(label = "the mtcars")
 
   # Expect a characteristic pattern
   grepl(

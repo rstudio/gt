@@ -63,7 +63,7 @@ render_as_html <- function(data) {
     boxhead_component <-
       create_boxhead_component_h(
         boxh_df, output_df, stub_available, spanners_present,
-        styles_resolved, stubhead_caption, col_alignment)
+        styles_resolved, stubhead_label, col_alignment)
 
     # Create the body component of the table
     body_component <-

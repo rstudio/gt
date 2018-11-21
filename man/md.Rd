@@ -24,8 +24,8 @@ Interpret input text as Markdown-formatted text
 # that is to interpreted as Markdown
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_stubhead_caption(
-      caption = md("car *make* and *model*"))
+    tab_stubhead_label(
+      label = md("car *make* and *model*"))
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},

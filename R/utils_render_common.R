@@ -618,12 +618,12 @@ process_heading <- function(heading, context) {
 }
 
 # Process the `stubhead_caption` object
-process_stubhead_caption <- function(caption, context) {
+process_stubhead_label <- function(caption, context) {
 
   if (!is.null(caption)) {
-    stubhead_caption <- caption$stubhead_caption %>% process_text(context)
+    stubhead_label <- caption$stubhead_label %>% process_text(context)
 
-    return(list(stubhead_caption = stubhead_caption))
+    return(list(stubhead_label = stubhead_label))
   }
 }
 

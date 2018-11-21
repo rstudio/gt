@@ -36,30 +36,30 @@ tab_heading <- function(data,
   data
 }
 
-#' Add caption text to the stubhead
+#' Add label text to the stubhead
 #'
-#' Add a caption to the stubhead of a table. If a stub does not exist, no change
+#' Add a label to the stubhead of a table. If a stub does not exist, no change
 #' will be made.
 #' @inheritParams fmt_number
-#' @param caption the text to be used as the stubhead caption. We can optionally
+#' @param label the text to be used as the stubhead label We can optionally
 #'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
 #'   text as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and add a caption
-#' # to describe what is in the stub
+#' # `mtcars` dataset and add a stubhead
+#' # label to describe what is in the stub
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stubhead_caption(
-#'       caption = md("car *make* and *model*"))
+#'     tab_stubhead_label(
+#'       label = md("car *make* and *model*"))
 #' @family table-part creation/modification functions
 #' @export
-tab_stubhead_caption <- function(data,
-                                 caption) {
+tab_stubhead_label <- function(data,
+                               label) {
 
-  attr(data, "stubhead_caption") <-
-    list(stubhead_caption = caption)
+  attr(data, "stubhead_label") <-
+    list(stubhead_label = label)
 
   data
 }

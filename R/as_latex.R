@@ -59,7 +59,7 @@ as_latex <- function(data) {
     boxhead_component <-
       create_boxhead_component_l(
         boxh_df, output_df, stub_available, spanners_present,
-        stubhead_caption)
+        stubhead_label)
 
     # Create the body component of the table
     body_component <-

@@ -83,16 +83,16 @@ test_that("a gt table contains the expected heading components", {
     expect_equal("test headnote")
 })
 
-test_that("a gt table contains the expected stubhead caption", {
+test_that("a gt table contains the expected stubhead label", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a stub and a stubhead caption
+  # contains a stub and a stubhead label
   tbl_html <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_caption("the mtcars") %>%
+    tab_stubhead_label(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -258,7 +258,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
-    tab_stubhead_caption("cars") %>%
+    tab_stubhead_label(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%

@@ -196,8 +196,8 @@ cells_summary <- function(groups = NULL,
 #' # that is to interpreted as Markdown
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stubhead_caption(
-#'       caption = md("car *make* and *model*"))
+#'     tab_stubhead_label(
+#'       label = md("car *make* and *model*"))
 #' @family helper functions
 #' @export
 md <- function(text) {
@@ -219,8 +219,8 @@ md <- function(text) {
 #' # that is to interpreted as HTML
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stubhead_caption(
-#'       caption = html(
+#'     tab_stubhead_label(
+#'       label = html(
 #'         "car <em>make</em> and <em>model</em>"))
 #' @family helper functions
 #' @importFrom htmltools HTML

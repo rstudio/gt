@@ -34,7 +34,7 @@ tbl <-
 # Create a display table
 gt(tbl) %>%
   tab_heading(title = "The Title", headnote = "The Headnote") %>%
-  tab_stubhead_caption(caption = "Stubhead Caption") %>%
+  tab_stubhead_label(label = "Stubhead Label") %>%
   tab_boxhead_panel(group = "Group 1", columns = vars(col_1, col_2)) %>%
   tab_boxhead_panel(group = "Group 2", columns = vars(col_3, col_4)) %>%
   tab_footnote(

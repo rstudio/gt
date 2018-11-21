@@ -40,8 +40,7 @@ mtcars_tbl <-
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")) %>%
   tab_source_note(
     source_note = md("Original Data: *Motor Trend Magazine* (1974).")) %>%
-  tab_stubhead_caption(
-    caption = md("*car*")) %>%
+  tab_stubhead_label(label = md("*car*")) %>%
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
     locations = cells_data(

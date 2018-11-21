@@ -4,7 +4,7 @@ context("Ensuring that the `tab_style()` function works as expected")
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_caption("cars") %>%
+  tab_stubhead_label(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
