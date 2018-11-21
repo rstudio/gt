@@ -211,9 +211,10 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # contains a stub blocks in a specified order
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -230,12 +231,14 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # will specify a particular ordering
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mercs",
-      rows = contains("Merc")) %>%
-    tab_stub_block(
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
     blocks_arrange(groups = c(NA, "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -261,15 +264,27 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_stubhead_label(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
-    tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
-    tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
+    tab_row_group(
+      group = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      group = "Mazdas",
+      rows = contains("Mazda")
+    ) %>%
     tab_spanner(
       label = "gear_carb_cyl",
       columns = vars(gear, carb, cyl)
     ) %>%
     blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
-    cols_merge_range(col_begin = "disp", col_end = "drat") %>%
-    tab_heading(title = "Title", headnote = "Headnote") %>%
+    cols_merge_range(
+      col_begin = "disp",
+      col_end = "drat"
+    ) %>%
+    tab_heading(
+      title = "Title",
+      headnote = "Headnote"
+    ) %>%
     tab_source_note(source_note = "this is a source note") %>%
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(

@@ -22,13 +22,13 @@ mtcars_tbl <-
   cols_move(
     columns = vars(wt, carb, qsec),
     after = vars(gear)) %>%
-  tab_stub_block(
+  tab_row_group(
     group = "Mercs",
     rows = c(
       "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
       "Merc 450SE", "Merc 450SL", "Merc 450SLC")
   ) %>%
-  tab_stub_block(
+  tab_row_group(
     group = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
   ) %>%

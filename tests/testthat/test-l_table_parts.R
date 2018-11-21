@@ -172,9 +172,10 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # contains a stub blocks in a specified order
   tbl_latex <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag"))
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    )
 
   # Expect a characteristic pattern
   grepl(
@@ -199,12 +200,14 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # will specify a particular ordering
   tbl_latex <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mercs",
-      rows = contains("Merc")) %>%
-    tab_stub_block(
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
     blocks_arrange(groups = c(NA, "Mazda", "Mercs"))
 
   # Expect a characteristic pattern

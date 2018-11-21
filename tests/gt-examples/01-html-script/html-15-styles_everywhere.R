@@ -8,11 +8,11 @@ many_styles_tbl <-
   tab_stubhead_label(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
-  tab_stub_block(
+  tab_row_group(
     group = "Mercs",
     rows = contains("Merc")
   ) %>%
-  tab_stub_block(
+  tab_row_group(
     group = "Mazdas",
     rows = contains("Mazda")
   ) %>%
