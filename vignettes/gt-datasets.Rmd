@@ -1,8 +1,8 @@
 ---
-title: "gt Dataset Examples"
+title: "gt Datasets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{gt Dataset Examples}
+  %\VignetteIndexEntry{gt Datasets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,7 @@ library(dplyr)
 library(tidyr)
 ```
 
-The **gt** package comes with six built-in datasets for experimenting with the API. They are called `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each of them has different subject matter, all of them allow us to quickly produce useful examples with reusable idioms. 
+The **gt** package comes with six built-in datasets for experimenting with the API. They are called `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each of them has different subject matter, all of them allow us to quickly produce examples with reusable idioms. 
 
 <img src="images/countrypops.svg" width=30%><img src="images/sza.svg" width=30%><img src="images/gtcars.svg" width=30%>
 
