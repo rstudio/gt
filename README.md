@@ -3,7 +3,7 @@
 
 <p align="center">
 
-<img src="man/figures/gt_logo_1x.png" height="500px">
+<img src="man/figures/gt_hex_logo.svg" height="500px">
 
 </p>
 
