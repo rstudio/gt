@@ -18,7 +18,7 @@ library(gt)
 library(tidyverse)
 ```
 
-<p align="center"><img src="man/figures/gt_logo_1x.png" height="500px"></p>
+<p align="center"><img src="man/figures/gt_hex_logo.svg" height="500px"></p>
 
 <p align="center">[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
