@@ -8,9 +8,9 @@
 #'
 #' \itemize{
 #'
-#' \item \code{cells_title()}: targets the table title or the table headnote
+#' \item \code{cells_title()}: targets the table title or the table subtitle
 #' depending on the value given to the \code{groups} argument (\code{"title"} or
-#' \code{"headnote"}).
+#' \code{"subtitle"}).
 #'
 #' \item \code{cells_boxhead()}: targets captions for the column headers (the
 #' \code{columns} argument) or group spanners (the \code{groups} argument) in
@@ -47,7 +47,7 @@ NULL
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_title <- function(groups = c("title", "headnote")) {
+cells_title <- function(groups = c("title", "subtitle")) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)

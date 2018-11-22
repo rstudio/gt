@@ -9,9 +9,9 @@
 #'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 #'   helper functions can also be used to pass in numeric values and obtain
 #'   values as pixel or percent units.
-#' @param table.font.size,heading.title.font.size,heading.headnote.font.size,boxhead.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,boxhead.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
 #'   font sizes for the parent text element \code{table} and the following child
-#'   elements: \code{heading.title}, \code{heading.headnote}, \code{boxhead},
+#'   elements: \code{heading.title}, \code{heading.subtitle}, \code{boxhead},
 #'   \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 #'   as a single-length character vector with units of pixels
 #'   (e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
@@ -76,7 +76,7 @@ tab_options <- function(data,
                         table.border.top.color = NULL,
                         heading.background.color = NULL,
                         heading.title.font.size = NULL,
-                        heading.headnote.font.size = NULL,
+                        heading.subtitle.font.size = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
@@ -184,15 +184,15 @@ tab_options <- function(data,
       opts_df, "heading_title_font_size", heading.title.font.size)
   }
 
-  # heading.headnote.font.size
-  if (!is.null(heading.headnote.font.size)) {
+  # heading.subtitle.font.size
+  if (!is.null(heading.subtitle.font.size)) {
 
-    if (is.numeric(heading.headnote.font.size)) {
-      heading.headnote.font.size <- paste0(heading.headnote.font.size, "px")
+    if (is.numeric(heading.subtitle.font.size)) {
+      heading.subtitle.font.size <- paste0(heading.subtitle.font.size, "px")
     }
 
     opts_df <- opts_df_set(
-      opts_df, "heading_headnote_font_size", heading.headnote.font.size)
+      opts_df, "heading_subtitle_font_size", heading.subtitle.font.size)
   }
 
   # heading.border.bottom.style

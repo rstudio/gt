@@ -36,7 +36,7 @@ test_that("a gt table contains the expected heading components", {
   # contains a title
   tbl_html <-
     gt(data = mtcars_short) %>%
-    tab_heading(title = "test heading") %>%
+    tab_header(title = "test heading") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -45,9 +45,9 @@ test_that("a gt table contains the expected heading components", {
     selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
     expect_equal("test heading")
 
-  # Expect that the `table_headnote` content is an empty string
+  # Expect that the `table_subtitle` content is an empty string
   tbl_html %>%
-    selection_text("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
     expect_equal("")
 
   # Expect that the maximum number of rows is `5`
@@ -63,24 +63,24 @@ test_that("a gt table contains the expected heading components", {
     expect_equal(11)
 
   # Create a `gt_tbl` object with `gt()`; this table
-  # contains a title and a headnote
+  # contains a title and a subtitle
   tbl_html <-
     gt(data = mtcars_short) %>%
-    tab_heading(
-      title = "test heading",
-      headnote = "test headnote") %>%
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle") %>%
     render_as_html() %>%
     xml2::read_html()
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
     selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
-    expect_equal("test heading")
+    expect_equal("test title")
 
-  # Expect that the `table_heading` content is 'test headnote'
+  # Expect that the `table_heading` content is 'test subtitle'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border']") %>%
-    expect_equal("test headnote")
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    expect_equal("test subtitle")
 })
 
 test_that("a gt table contains the expected stubhead label", {
@@ -281,9 +281,9 @@ test_that("a gt table contains custom styles at the correct locations", {
       col_begin = "disp",
       col_end = "drat"
     ) %>%
-    tab_heading(
+    tab_header(
       title = "Title",
-      headnote = "Headnote"
+      subtitle = "Subtitle"
     ) %>%
     tab_source_note(source_note = "this is a source note") %>%
     cols_label(cyl = md("*cyls*")) %>%
@@ -310,7 +310,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "headnote")
+      locations = cells_title(groups = "subtitle")
     ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "green", text_color = "white"),
@@ -409,9 +409,9 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text() %>%
     expect_equal("Title")
 
-  # Expect that the table headnote is formatted to the left
+  # Expect that the table subtitle is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border'][style='text-align:left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border'][style='text-align:left;']") %>%
     rvest::html_text() %>%
-    expect_equal("Headnote")
+    expect_equal("Subtitle")
 })

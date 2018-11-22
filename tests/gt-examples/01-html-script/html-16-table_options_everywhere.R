@@ -20,9 +20,9 @@ tbl <-
 # Create a display table
 many_options_tbl <-
   gt(tbl) %>%
-  tab_heading(
+  tab_header(
     title = "The Title",
-    headnote = "The Headnote"
+    subtitle = "The Subtitle"
   ) %>%
   tab_stubhead_label(label = "Stubhead Label") %>%
   tab_spanner(
@@ -59,7 +59,7 @@ many_options_tbl <-
     table.border.top.color = "orange",   # Top line of table - color
     heading.background.color = "lightblue",   # Heading background color
     heading.title.font.size = px(18),    # Title of heading font size
-    heading.headnote.font.size = px(14), # Headnote font size
+    heading.subtitle.font.size = px(14), # Subtitle font size
     heading.border.bottom.style = "solid",     # Bottom line of heading - style
     heading.border.bottom.width = px(5),       # Bottom line of heading - width
     heading.border.bottom.color = "purple",    # Bottom line of heading - color

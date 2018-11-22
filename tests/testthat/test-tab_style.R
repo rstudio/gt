@@ -24,9 +24,9 @@ data <-
     col_begin = "disp",
     col_end = "drat"
   ) %>%
-  tab_heading(
+  tab_header(
     title = "Title",
-    headnote = "Headnote"
+    subtitle = "Subtitle"
   ) %>%
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
@@ -134,12 +134,12 @@ test_that("a gt table can store the correct style statements", {
     c("title", "1", NA_character_, NA_character_, NA_character_,
       "text-align:left;"))
 
-  # Apply left-alignment to the table headnote
+  # Apply left-alignment to the table subtitle
   tbl_html <-
     data %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "headnote"))
+      locations = cells_title(groups = "subtitle"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -151,7 +151,7 @@ test_that("a gt table can store the correct style statements", {
   # single-row `styles_df` data frame
   expect_attr_equal(
     tbl_html, "styles_df",
-    c("headnote", "2", NA_character_, NA_character_, NA_character_,
+    c("subtitle", "2", NA_character_, NA_character_, NA_character_,
       "text-align:left;"))
 
   # Apply a green background with white text to a single cell in

@@ -25,9 +25,9 @@ many_styles_tbl <-
     col_begin = "disp",
     col_end = "drat"
   ) %>%
-  tab_heading(
+  tab_header(
     title = "Title",
-    headnote = "Headnote"
+    subtitle = "Subtitle"
   ) %>%
   tab_source_note(source_note = "this is a source note") %>%
   cols_label(cyl = md("*cyls*")) %>%
@@ -54,7 +54,7 @@ many_styles_tbl <-
   ) %>%
   tab_style(
     style = cells_styles(text_align = "left"),
-    locations = cells_title(groups = "headnote")
+    locations = cells_title(groups = "subtitle")
   ) %>%
   tab_style(
     style = cells_styles(bkgd_color = "green", text_color = "white"),

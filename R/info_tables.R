@@ -28,9 +28,9 @@ info_date_style <- function() {
     fmt_date(columns = vars(date), rows = 14, date_style = 14) %>%
     tab_spanner(label = "Date Formats", columns = c("Number", "Name")) %>%
     cols_label(date = "Formatted Date") %>%
-    tab_heading(
+    tab_header(
       title = "Preset Date Formats",
-      headnote = md("Usable in the `fmt_date()` and `fmt_datetime()` functions"))
+      subtitle = md("Usable in the `fmt_date()` and `fmt_datetime()` functions"))
 }
 
 #' View a table with info on time styles
@@ -51,7 +51,7 @@ info_time_style <- function() {
     fmt_time(columns = vars(time), rows = 5, time_style = 5) %>%
     tab_spanner(label = "Time Formats", columns = c("Number", "Name")) %>%
     cols_label(time = "Formatted Time") %>%
-    tab_heading(
+    tab_header(
       title = "Preset Time Formats",
-      headnote = md("Usable in the `fmt_time()` and `fmt_datetime()` functions"))
+      subtitle = md("Usable in the `fmt_time()` and `fmt_datetime()` functions"))
 }

@@ -538,10 +538,10 @@ is_title_defined <- function(heading) {
   length(heading) > 0 && !is.null(heading$title)
 }
 
-# Function to determine if a headnote element has been defined
-is_headnote_defined <- function(heading) {
+# Function to determine if a subtitle element has been defined
+is_subtitle_defined <- function(heading) {
 
-  length(heading) > 0 && !is.null(heading$headnote) && heading$headnote != ""
+  length(heading) > 0 && !is.null(heading$subtitle) && heading$subtitle != ""
 }
 
 # Function to determine if the `list_of_summaries` object contains
@@ -611,9 +611,9 @@ process_heading <- function(heading, context) {
 
   if (!is.null(heading)) {
     title <- heading$title %>% process_text(context)
-    headnote <- heading$headnote %>% process_text(context)
+    subtitle <- heading$subtitle %>% process_text(context)
 
-    return(list(title = title, headnote = headnote))
+    return(list(title = title, subtitle = subtitle))
   }
 }
 

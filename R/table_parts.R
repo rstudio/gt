@@ -1,37 +1,36 @@
-#' Add a table heading
+#' Add a table header
 #'
-#' Add a title and optional headnote to the heading part of the table.
+#' Add a table header part with a table title and optional subtitle.
 #' @inheritParams fmt_number
-#' @param title,headnote text to be used in the table title and, optionally, for
-#'   the table headnote (a line of text below the table title which is somewhat
-#'   smaller in size). We can optionally use the \code{\link{md}()} and
+#' @param title,subtitle text to be used in the table title and, optionally, for
+#'   the table subtitle. We can optionally use the \code{\link{md}()} and
 #'   \code{\link{html}()} functions to style the text as Markdown or to retain
 #'   HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and add a heading
-#' # to describe the table
+#' # `mtcars` dataset and add a header
+#' # part to contain a title and subtitle
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_heading(
+#'     tab_header(
 #'       title = md("Data listing from **mtcars**"),
-#'       headnote = md("`mtcars` is an R dataset"))
+#'       subtitle = md("`mtcars` is an R dataset"))
 #' @family table-part creation/modification functions
 #' @export
-tab_heading <- function(data,
-                        title,
-                        headnote = NULL) {
+tab_header <- function(data,
+                       title,
+                       subtitle = NULL) {
 
-  # Handle the optional `headnote` text
-  if (is.null(headnote)) {
-    headnote <- ""
+  # Handle the optional `subtitle` text
+  if (is.null(subtitle)) {
+    subtitle <- ""
   }
 
   attr(data, "heading") <-
     list(
       title = title,
-      headnote = headnote)
+      subtitle = subtitle)
 
   data
 }

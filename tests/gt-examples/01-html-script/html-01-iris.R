@@ -9,9 +9,9 @@ iris_tbl <-
   fmt_number(
     columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1) %>%
-  tab_heading(
+  tab_header(
     title = md("The **iris** dataset"),
-    headnote = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>%
+    subtitle = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")) %>%
   tab_source_note(
     source_note = md("The data were collected by *Anderson* (1935)."))
 

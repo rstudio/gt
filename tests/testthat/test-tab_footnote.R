@@ -24,9 +24,9 @@ data <-
     col_begin = "disp",
     col_end = "drat"
   ) %>%
-  tab_heading(
+  tab_header(
     title = "Title",
-    headnote = "Headnote"
+    subtitle = "Subtitle"
   ) %>%
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
@@ -130,12 +130,12 @@ test_that("the `tab_footnote()` function works correctly", {
     c("title", "1", NA_character_, NA_character_, NA_character_,
       "Title footnote."))
 
-  # Apply a footnote to the table headnote
+  # Apply a footnote to the table subtitle
   tbl_html <-
     data %>%
     tab_footnote(
-      footnote = "Headnote footnote.",
-      locations = cells_title(groups = "headnote"))
+      footnote = "Subtitle footnote.",
+      locations = cells_title(groups = "subtitle"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -147,8 +147,8 @@ test_that("the `tab_footnote()` function works correctly", {
   # single-row `footnotes_df` data frame
   expect_attr_equal(
     tbl_html, "footnotes_df",
-    c("headnote", "2", NA_character_, NA_character_, NA_character_,
-      "Headnote footnote."))
+    c("subtitle", "2", NA_character_, NA_character_, NA_character_,
+      "Subtitle footnote."))
 
   # Apply a footnote to a single cell in a group summary section
   tbl_html <-
@@ -322,4 +322,3 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(c(
       "data", "5", NA_character_, "hp", "1", "A footnote."))
 })
-

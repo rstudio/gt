@@ -46,15 +46,16 @@ gt_tbl <-
 # `fmt_*()`, `cols_*()` functions)
 gt_tbl_2 <-
   gt_tbl \%>\%
-  tab_heading(title = "mtcars") \%>\%
+  tab_header(title = "mtcars") \%>\%
   fmt_number(
     columns = vars(drat, wt, qsec),
-    decimals = 1) \%>\%
+    decimals = 1
+  ) \%>\%
   cols_label(hp = "HP")
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
-  \code{\link{tab_footnote}}, \code{\link{tab_heading}},
+  \code{\link{tab_footnote}}, \code{\link{tab_header}},
   \code{\link{tab_options}}, \code{\link{tab_row_group}},
   \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
   \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}

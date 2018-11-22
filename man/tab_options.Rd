@@ -8,7 +8,7 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
-  heading.headnote.font.size = NULL,
+  heading.subtitle.font.size = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
   heading.border.bottom.color = NULL, boxhead.background.color = NULL,
@@ -41,8 +41,8 @@ given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
-\item{table.font.size, heading.title.font.size, heading.headnote.font.size, boxhead.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
-elements: \code{heading.title}, \code{heading.headnote}, \code{boxhead},
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, boxhead.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
+elements: \code{heading.title}, \code{heading.subtitle}, \code{boxhead},
 \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 as a single-length character vector with units of pixels
 (e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
@@ -113,7 +113,7 @@ gt_tbl <-
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_footnote}},
-  \code{\link{tab_heading}}, \code{\link{tab_row_group}},
+  \code{\link{tab_header}}, \code{\link{tab_row_group}},
   \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
   \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}
 }

@@ -48,9 +48,9 @@ mtcars_tbl <-
     columns = vars(mpg),
     decimals = 1
   ) %>%
-  tab_heading(
+  tab_header(
     title = md("The **mtcars** dataset"),
-    headnote = md("[A rather famous *Motor Trend* table]")
+    subtitle = md("[A rather famous *Motor Trend* table]")
   ) %>%
   tab_source_note(
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")

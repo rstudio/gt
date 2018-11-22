@@ -136,12 +136,12 @@ set_style.cells_title <- function(loc, data, style) {
         grpname = NA_character_, colname = NA_character_,
         rownum = NA_character_, text = style)
 
-  } else if ((loc$groups %>% as.character())[-1] == "headnote") {
+  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
     attr(data, "styles_df") <-
       add_location_row(
         data, df_type = "styles_df",
-        locname = "headnote", locnum = 2,
+        locname = "subtitle", locnum = 2,
         grpname = NA_character_, colname = NA_character_,
         rownum = NA_character_, text = style)
   }
