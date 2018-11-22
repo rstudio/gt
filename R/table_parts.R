@@ -63,7 +63,7 @@ tab_stubhead_label <- function(data,
   data
 }
 
-#' Create a row group
+#' Add a row group
 #'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
