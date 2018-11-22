@@ -2,7 +2,7 @@
 % Please edit documentation in R/table_parts.R
 \name{tab_row_group}
 \alias{tab_row_group}
-\title{Create a row group}
+\title{Add a row group}
 \usage{
 tab_row_group(data, group = NULL, rows = NULL, others = NULL)
 }
