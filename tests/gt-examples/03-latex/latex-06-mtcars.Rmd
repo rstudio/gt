@@ -40,7 +40,7 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
     group = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
   ) %>%
-  blocks_arrange(groups = c("Supercars", "Mercs")) %>%
+  row_group_order(groups = c("Supercars", "Mercs")) %>%
   fmt_number(
     columns = vars(disp, drat, wt),
     decimals = 2

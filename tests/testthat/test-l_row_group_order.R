@@ -1,6 +1,6 @@
-context("Latex -- Ensuring that the `blocks_arrange()` function works as expected")
+context("Latex -- Ensuring that the `row_group_order()` function works as expected")
 
-test_that("the `blocks_arrange()` function works correctly", {
+test_that("the `row_group_order()` function works correctly", {
 
   # Create a table with group names, rownames, and four columns of values
   tbl <-
@@ -21,7 +21,7 @@ test_that("the `blocks_arrange()` function works correctly", {
   # latter calendar date first
   tbl_latex <-
     gt(tbl) %>%
-    blocks_arrange(groups = c("2018-02-11", "2018-02-10"))
+    row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect a characteristic pattern
   grepl(
@@ -36,7 +36,7 @@ test_that("the `blocks_arrange()` function works correctly", {
   # latter calendar date first using group indices
   tbl_latex <-
     gt(tbl) %>%
-    blocks_arrange(groups = c(2, 1))
+    row_group_order(groups = c(2, 1))
 
   # Expect a characteristic pattern
   grepl(

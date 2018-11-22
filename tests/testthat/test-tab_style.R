@@ -19,7 +19,7 @@ data <-
     label = "gear_carb_cyl",
     columns = vars(gear, carb, cyl)
   ) %>%
-  blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
+  row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(
     col_begin = "disp",
     col_end = "drat"

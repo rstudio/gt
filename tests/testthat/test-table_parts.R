@@ -227,7 +227,7 @@ test_that("a gt table contains the correct placement of stub blocks", {
     expect_equal(c("Mazda", ""))
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a three stub blocks and the use of `blocks_arrange()`
+  # contains a three stub blocks and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -239,7 +239,7 @@ test_that("a gt table contains the correct placement of stub blocks", {
       group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
-    blocks_arrange(groups = c(NA, "Mazda", "Mercs")) %>%
+    row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -276,7 +276,7 @@ test_that("a gt table contains custom styles at the correct locations", {
       label = "gear_carb_cyl",
       columns = vars(gear, carb, cyl)
     ) %>%
-    blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
+    row_group_order(groups = c("Mazdas", "Mercs")) %>%
     cols_merge_range(
       col_begin = "disp",
       col_end = "drat"
