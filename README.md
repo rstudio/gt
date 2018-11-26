@@ -63,13 +63,8 @@ Code of Conduct
 <h6 align="center">
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md).
-
-</h6>
-
-<h6 align="center">
-
-By participating in this project you agree to abide by its terms.
+Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
+agree to abide by its terms.
 
 </h6>
 
