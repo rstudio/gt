@@ -22,8 +22,8 @@ status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https:/
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
 a wide variety of useful tables with a cohesive set of table parts.
-These include the table heading, the boxhead, the stub, summary rows,
-and footnotes.
+These include the *table header*, the *stub*, the *stub head*, the
+*column labels*, the *table body*, and the *table footer*.
 
 <p align="center">
 
@@ -31,8 +31,16 @@ and footnotes.
 
 </p>
 
-You decide which table parts you need for the task at hand with a API
-that is both straightforward yet powerful.
+It all begins with preprocessed **table data** (be it a tibble or a data
+frame). You decide how to compose your **gt table** with the elements
+you need for the task at hand. Output can either be in the form of
+**HTML**, **LaTeX**, or **RTF**. All work beautifully inside **R
+Markdown** documents.
+
+The **gt** API is designed to be both straightforward yet powerful. The
+emphasis is on simple functions for the everyday display table needs.
+However, should you need more customizability, there are options to make
+that possible.
 
 <p align="center">
 
@@ -44,12 +52,28 @@ that is both straightforward yet powerful.
 
 <img src="man/figures/gt_tables.png">
 
-## Code of Conduct
+<h5 align="center">
+
+Code of Conduct
+
+</h5>
+
+<h6 align="center">
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
 to abide by its terms.
 
-## License
+</h6>
+
+<h5 align="center">
+
+License
+
+</h5>
+
+<h6 align="center">
 
 MIT © RStudio, Inc.
+
+</h6>
