@@ -17,19 +17,49 @@ library(dplyr)
 library(tidyr)
 ```
 
-The **gt** package comes with six built-in datasets for experimenting with the API. They are called `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each of them has different subject matter, all of them allow us to quickly produce examples with reusable idioms. 
+The **gt** package comes with six built-in datasets for experimenting with the **gt** API: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each dataset has different subject matter, all of them will be used to develop examples with consistent syntax.
 
 <img src="images/countrypops.svg" width=30%><img src="images/sza.svg" width=30%><img src="images/gtcars.svg" width=30%>
 
 <img src="images/sp500.svg" width=30%><img src="images/pizzaplace.svg" width=30%><img src="images/exibble.svg" width=30%>
 
-All of the datasets are tibbles and they range from quite large in size (nearly 50,000 rows: `pizzaplace`) to very, very small (`exibble`, an example tibble of 8 rows). The very large datasets contain row counts which are probably impractical as display tables but they provide opportunities for preprocessing through tidyverse tools like **dplyr** and **tidyr** upstream of **gt**. Indeed in many **gt** workflows, there will be preparation work like this where the creation of the input table and any salient information (e.g., metadata for footnotes) will be done alongside the preparation of the display table.
+Each dataset is stored as a tibble, ranging from very small (like `exibble`, an example tibble of 8 rows) to quite large in size (e.g., at nearly 50,000 rows: `pizzaplace`). Larger are typically impractical as display tables but they provide opportunities for preprocessing through tidyverse tools like **dplyr** and **tidyr** upstream of **gt**. 
 
-Here, we'll show minimal examples of tables that can be created with each of these datasets. The hope is that this collection of examples will inspire the creation of much more interesting display tables with **gt**.
+In many **gt** workflows, there will be preparation work like this where the creation of the input table and any salient information (e.g., metadata for footnotes) will be done alongside the preparation of the display table.
 
-### The `countrypops` dataset
+Next, we'll show minimal examples of tables that can be created with each of these datasets. The hope is that this collection of examples will inspire the creation of much more interesting display tables with **gt**.
 
-This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the World Bank, where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country for each year, where `NA` values indicate that a country did not exist in a particular year.
+### `countrypops`
+
+This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the [World Bank](https://data.worldbank.org/indicator/SP.POP.TOTL), where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country in a given year, where `NA` values indicate that a country did not exist for that particular year.
+
+The `countrypops` dataset is a tibble with 12,470 rows and 5 variables. Here are explanations for each of the variables: 
+
+```{r countrypops_make_data_dictionary, echo=FALSE}
+countrypops_ddtab <-
+  dplyr::tribble(
+    ~Column,          ~Type,  ~Description,
+    "country_name",   "chr", "Name of the country",
+    "country_code_2", "chr", "The 2-letter ISO 3166-1 country code",
+    "country_code_3", "chr", "The 3-letter ISO 3166-1 country code",
+    "year",           "int", "The year for the population estimate",
+    "population",     "int", "The population estimate, midway through the year",
+  ) %>%
+  gt() %>%
+  tab_style(
+    style = apply_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(row.padding = "5px")
+```
+
+```{r countrypops_ddtab, echo = FALSE}
+countrypops_ddtab
+```
+
+#### A `countrypops` Example
 
 The table that we'll create from `countrypops` will meet these requirements:
 
@@ -78,11 +108,35 @@ countrypops %>%
   )
 ```
 
-### The `sza` dataset
+### `sza`
 
 The solar zenith angle is one measure of the solar position. It can be thought of as 'height' of the sun in relation to an observer. A solar zenith angle of 0&deg; indicates that the sun is directly overhead (a different solar angle, the *solar altitude angle*, is 90&deg; in this instance). With the sun at the horizontal (e.g., during sunrise/sunset) we observe the solar zenith angle to be around 90&deg; (there is the matter of atmospheric refraction). During nighttime, solar zenith angles in the range of 90&ndash;180 are possible (again, depending on the location of the observer).
 
-The `sza` dataset has calculated values for the solar zenith angles every 30 minutes from 04:00 to 12:00 (true solar time). Temporally, these calculations are for the 1st of every month of the year. Spatially, the observer is located at somewhere along latitudes 20&deg;N, 30&deg;N, 40&deg;N, and 50&deg;N (because we are using true solar time, the longitude is unimportant). This is quite an extensive topic, and more information can be found by using `?sza` in the R console or by visiting [this page](https://en.wikipedia.org/wiki/Solar_zenith_angle). 
+The `sza` dataset has calculated values for the solar zenith angles every 30 minutes from 04:00 to 12:00 (true solar time). Temporally, these calculations are for the 1st of every month of the year. Spatially, the observer is located at somewhere along latitudes 20&deg;N, 30&deg;N, 40&deg;N, and 50&deg;N (because we are using true solar time, the longitude is unimportant). This is quite an extensive topic, and more information can be found by using `?sza` in the R console or by visiting [this page](https://en.wikipedia.org/wiki/Solar_zenith_angle).
+
+```{r sza_make_data_dictionary, echo=FALSE}
+sza_ddtab <-
+  dplyr::tribble(
+    ~Column,      ~Type,  ~Description,
+    "latitude",   "dbl", "The latitude in decimal degrees for the observations",
+    "month",      "fct", "The measurement month; all calculations where conducted for the first day of each month",
+    "tst",        "chr", "The true solar time at the given latitude and date (first of month) for which the solar zenith angle is calculated",
+    "sza",        "dbl", "The solar zenith angle in degrees, where NAs indicate that sunrise hadn't yet occurred by the tst value",
+  ) %>%
+  gt() %>%
+  tab_style(
+    style = apply_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(row.padding = "5px")
+```
+
+```{r sza_ddtab, echo = FALSE}
+sza_ddtab
+```
+
 
 The table that we'll create from `sza` will meet these requirements:
 
@@ -116,7 +170,7 @@ sza %>%
   )
 ```
 
-### The `gtcars` dataset
+### `gtcars`
 
 The `gtcars` dataset takes off where `mtcars` left off. It contains 47 cars from the 2014-2017 model years. Many of the `gtcars` vehicles are grand tourers. Indeed, many of these provide the ability to cross an entire continent at speed and in comfort yet, when it's called for, they will allow you to experience driving thrills. The chassis and suspension are in most cases top-notch and supply superb handling and roadholding on all routes one would conceivably encounter during the grand touring experience. The two plus two (2 + 2) seating configuration is smartly designed to deliver comfort for a driver and passenger, adequate space for luggage, and have room to spare.
 
@@ -172,7 +226,7 @@ gtcars %>%
   )
 ```
 
-### The `sp500` dataset
+### `sp500`
 
 The S&P 500 is an capitalization-weighted index of about 500 leading companies (where bigger companies have more influence within the index) that have common stock listed in either the NYSE or NASDAQ markets. The companies chosen are intended to provide representation of the U.S. economy. This index is a managed list (managed by S&P Dow Jones Indices LLC) with occasional changes of the constituent companies based on their performance and changes in the economy.
 
@@ -242,7 +296,7 @@ sp500 %>%
   )
 ```
 
-### The `pizzaplace` dataset
+### `pizzaplace`
 
 The `pizzaplace` dataset is unusual to say the least. How could someone sell XL- and XXL-sized pizzas of only a single type whilst all the other pizzas must adhere to the S-M-L paradigm? Is it real? What is the nature of reality? (While I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
 
@@ -297,7 +351,7 @@ pizzaplace %>%
   )
 ```
 
-### The `exibble` dataset
+### `exibble`
 
 The example tibble that's useful for **gt** is called `exibble`. It's 8 rows, has clear ordering of data, and the columns contain data that can be tested with the various **gt** formatter functions (`fmt*()`).
 
@@ -342,6 +396,4 @@ exibble %>%
     row.padding = px(3)
   )
 ```
-
-
 
