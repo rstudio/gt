@@ -20,22 +20,35 @@ tbl <-
 # Create a display table
 many_options_tbl <-
   gt(tbl) %>%
-  tab_heading(title = "The Title", headnote = "The Headnote") %>%
-  tab_stubhead_caption(caption = "Stubhead Caption") %>%
-  tab_boxhead_panel(group = "Group 1", columns = vars(col_1, col_2)) %>%
-  tab_boxhead_panel(group = "Group 2", columns = vars(col_3, col_4)) %>%
+  tab_header(
+    title = "The Title",
+    subtitle = "The Subtitle"
+  ) %>%
+  tab_stubhead_label(label = "Stubhead Label") %>%
+  tab_spanner(
+    label = "Group 1",
+    columns = vars(col_1, col_2)
+  ) %>%
+  tab_spanner(
+    label = "Group 2",
+    columns = vars(col_3, col_4)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_data(columns = 1, rows = 1)) %>%
+    locations = cells_data(columns = 1, rows = 1)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_data(columns = 2, rows = 2)) %>%
+    locations = cells_data(columns = 2, rows = 2)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_data(columns = 3, rows = 3)) %>%
+    locations = cells_data(columns = 3, rows = 3)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_data(columns = 4, rows = 4)) %>%
+    locations = cells_data(columns = 4, rows = 4)
+  ) %>%
   tab_source_note("A source note for the table.") %>%
   tab_options(
     table.font.size = px(14),            # Entire table's font size
@@ -46,7 +59,7 @@ many_options_tbl <-
     table.border.top.color = "orange",   # Top line of table - color
     heading.background.color = "lightblue",   # Heading background color
     heading.title.font.size = px(18),    # Title of heading font size
-    heading.headnote.font.size = px(14), # Headnote font size
+    heading.subtitle.font.size = px(14), # Subtitle font size
     heading.border.bottom.style = "solid",     # Bottom line of heading - style
     heading.border.bottom.width = px(5),       # Bottom line of heading - width
     heading.border.bottom.color = "purple",    # Bottom line of heading - color

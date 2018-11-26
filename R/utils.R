@@ -415,7 +415,7 @@ remove_html <- function(text) {
 }
 
 # This function transforms a CSS stylesheet to a tibble representation
-#' @importFrom dplyr bind_rows tibble filter mutate case_when select
+#' @importFrom dplyr bind_rows tibble filter mutate case_when select pull
 #' @importFrom stringr str_remove str_extract str_trim str_detect
 #' @noRd
 get_css_tbl <- function(data) {
@@ -452,13 +452,21 @@ get_css_tbl <- function(data) {
       )
   }
 
+  # Add a column that has the selector type for each row
+  # For anything other than a class selector, the class type
+  # will entered as NA
   css_tbl <-
     css_tbl %>%
     dplyr::mutate(type = dplyr::case_when(
-      stringr::str_detect(selector, "^[a-z]") ~ "element",
-      stringr::str_detect(selector, "^#") ~ "id",
-      stringr::str_detect(selector, "^\\.") ~ "class")) %>%
+      stringr::str_detect(selector, "^\\.") ~ "class",
+      !stringr::str_detect(selector, "^\\.") ~ NA_character_)) %>%
     dplyr::select(selector, type, property, value)
+
+  # Stop function if any NA values found while inspecting the
+  # selector names (e.g., not determined to be class selectors)
+  if (any(is.na(css_tbl %>% dplyr::pull(type)))) {
+    stop("All selectors must be class selectors", call. = FALSE)
+  }
 
   css_tbl
 }
@@ -467,7 +475,9 @@ get_css_tbl <- function(data) {
 #' @importFrom dplyr filter select distinct mutate pull
 #' @importFrom stringr str_split
 #' @noRd
-create_inline_styles <- function(class_names, css_tbl) {
+create_inline_styles <- function(class_names,
+                                 css_tbl,
+                                 extra_style = "") {
 
   class_names <-
     class_names %>%
@@ -483,34 +493,72 @@ create_inline_styles <- function(class_names, css_tbl) {
       dplyr::mutate(property_value = paste0(property, ":", value, ";")) %>%
       dplyr::pull(property_value) %>%
       paste(collapse = ""),
+    extra_style,
     "\"")
 }
 
-# Create an inlined style block from a CSS tibble
-#' @importFrom stringr str_extract str_replace
+# Transform HTML to inlined HTML using a CSS tibble
+#' @importFrom stringr str_extract str_replace str_match
 #' @noRd
 inline_html_styles <- function(html, css_tbl) {
 
+  cls_sty_pattern <- "class=\\'(.*?)\\'\\s+style=\\\"(.*?)\\\""
+
   repeat {
-    if (grepl("class=\\'(.*?)\\'", html)) {
 
-      class_names <-
-        html %>%
-        stringr::str_extract(
-          pattern = "class=\\'(.*?)\\'") %>%
-        stringr::str_extract("(?<=\\').*(?=\\')")
+    matching_css_style <-
+      html %>%
+      stringr::str_extract(
+        pattern = cls_sty_pattern)
 
-      inline_styles <-
-        create_inline_styles(
-          class_names = class_names, css_tbl)
-
-      html <- html %>%
-        str_replace(
-          pattern = "class=\\'(.*?)\\'",
-          replacement = inline_styles)
-    } else {
+    if (is.na(matching_css_style)) {
       break
     }
+
+    class_names <-
+      matching_css_style %>%
+      stringr::str_extract("(?<=\\').*(?=\\')")
+
+    existing_style <-
+      matching_css_style %>%
+      stringr::str_match(
+        pattern = "style=\\\"(.*?)\\\"") %>%
+      magrittr::extract(1, 2)
+
+    inline_styles <-
+      create_inline_styles(
+        class_names = class_names, css_tbl, extra_style = existing_style)
+
+    html <-
+      html %>%
+      stringr::str_replace(
+        pattern = cls_sty_pattern,
+        replacement = inline_styles)
+  }
+
+  cls_pattern <- "class=\\'(.*?)\\'"
+
+  repeat {
+
+    class_names <-
+      html %>%
+      stringr::str_extract(
+        pattern = cls_pattern) %>%
+      stringr::str_extract("(?<=\\').*(?=\\')")
+
+    if (is.na(class_names)) {
+      break
+    }
+
+    inline_styles <-
+      create_inline_styles(
+        class_names = class_names, css_tbl)
+
+    html <-
+      html %>%
+      stringr::str_replace(
+        pattern = cls_pattern,
+        replacement = inline_styles)
   }
 
   html

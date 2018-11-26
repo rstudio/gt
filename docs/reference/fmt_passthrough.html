@@ -152,7 +152,8 @@ function is useful when used as a <code>formatter</code> function in the
     
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_passthrough</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_passthrough</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>escape</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,6 +182,15 @@ focused on selections. The select helper functions are:
 <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
 and <code><a href='http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>everything</a>()</code>. We can also use expressions to filter down
 to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></td>
+    </tr>
+    <tr>
+      <th>escape</th>
+      <td><p>an option to escape text according to the final output format
+of the table. For example, if a Latex table is to be generated then Latex
+escaping would be performed during rendering. By default this is set to
+<code>TRUE</code> and setting to <code>FALSE</code> is useful in the case where
+Latex-formatted text should be passed through to the output Latex table
+unchanged.</p></td>
     </tr>
     <tr>
       <th>pattern</th>

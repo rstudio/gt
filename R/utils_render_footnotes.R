@@ -9,7 +9,7 @@ resolve_footnotes_styles <- function(output_df,
                                      arrange_groups,
                                      boxhead_spanners,
                                      title_defined,
-                                     headnote_defined,
+                                     subtitle_defined,
                                      footnotes_df = NULL,
                                      styles_df = NULL) {
 
@@ -33,11 +33,11 @@ resolve_footnotes_styles <- function(output_df,
         dplyr::filter(locname != "title")
     }
 
-    # Filter by `headnote`
-    if (headnote_defined == FALSE) {
+    # Filter by `subtitle`
+    if (subtitle_defined == FALSE) {
 
       tbl <- tbl %>%
-        dplyr::filter(locname != "headnote")
+        dplyr::filter(locname != "subtitle")
     }
 
     # Filter by `grpname` in boxhead groups

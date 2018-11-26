@@ -19,9 +19,8 @@ Data collected from \url{https://finance.yahoo.com/quote/\%5EGSPC/history/}.
 sp500
 }
 \description{
-This dataset provides daily price indicators for the S&P 500 index
-from the beginning of 1950 to the end of 2015. The index includes 500
-leading companies and captures about 80% coverage of available market
-capitalization.
+This dataset provides daily price indicators for the S&P 500 index from the
+beginning of 1950 to the end of 2015. The index includes 500 leading
+companies and captures about 80% coverage of available market capitalization.
 }
 \keyword{datasets}

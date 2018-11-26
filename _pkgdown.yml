@@ -4,7 +4,8 @@ development:
 reference:
   - title: Create/Modify Table Parts
     contents:
-    - starts_with("gt")
+    - gt
+    - gt_preview
     - starts_with("tab")
   - title: Format Data
     contents:
@@ -32,13 +33,13 @@ reference:
   - title: Helper Functions
     contents:
     - location_cells
-    - apply_styles
+    - cells_styles
     - vars
-    - funs
     - md
     - html
     - px
     - pct
+    - escape_latex
   - title: Images
     contents:
     - web_image
@@ -49,3 +50,10 @@ reference:
     contents:
     - info_date_style
     - info_time_style
+  - title: Datasets
+    contents:
+    - countrypops
+    - sza
+    - gtcars
+    - sp500
+    - pizzaplace

@@ -19,14 +19,14 @@ tbl <-
 cell_styles_tbl <-
   gt(tbl) %>%
   tab_style(
-    style = apply_styles(
+    style = cells_styles(
       bkgd_color = "orange",
       text_color = "white"),
     locations = cells_data(
       columns = vars(value, value_2),
       rows = 1)) %>%
   tab_style(
-    style = apply_styles(
+    style = cells_styles(
       text_size = px(28)),
     locations = cells_boxhead(
       columns = c("value", "value_2")))

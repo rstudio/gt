@@ -10,7 +10,7 @@ gt_options_default <- function() {
     "table_border_top_color",             TRUE,  "table",               "#A8A8A8",
     "heading_background_color",           TRUE,  "heading",             NA_character_,
     "heading_title_font_size",            TRUE,  "heading",             "125%",
-    "heading_headnote_font_size",         TRUE,  "heading",             "85%",
+    "heading_subtitle_font_size",         TRUE,  "heading",             "85%",
     "heading_border_bottom_style",        TRUE,  "heading",             "solid",
     "heading_border_bottom_width",        TRUE,  "heading",             "2px",
     "heading_border_bottom_color",        TRUE,  "heading",             "#A8A8A8",

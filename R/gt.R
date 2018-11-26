@@ -28,10 +28,11 @@
 #' # `fmt_*()`, `cols_*()` functions)
 #' gt_tbl_2 <-
 #'   gt_tbl %>%
-#'   tab_heading(title = "mtcars") %>%
+#'   tab_header(title = "mtcars") %>%
 #'   fmt_number(
 #'     columns = vars(drat, wt, qsec),
-#'     decimals = 1) %>%
+#'     decimals = 1
+#'   ) %>%
 #'   cols_label(hp = "HP")
 #' @family table-part creation/modification functions
 #' @export
