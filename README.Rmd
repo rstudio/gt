@@ -39,11 +39,15 @@ The **gt** API is designed to be both straightforward yet powerful. The emphasis
 
 <img src="man/figures/gt_tables.png">
 
-<h5 align="center">Code of Conduct</h5>
+***
 
-<h6 align="center">Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.</h6>
+<h4 align="center">Code of Conduct</h4>
 
-<h5 align="center">License</h5>
+<h6 align="center">Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).</h6>
+
+<h6 align="center">By participating in this project you agree to abide by its terms.</h6>
+
+<h4 align="center">License</h4>
 
 <h6 align="center">MIT &copy; RStudio, Inc.</h6>
 
