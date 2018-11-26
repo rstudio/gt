@@ -52,25 +52,32 @@ that possible.
 
 <img src="man/figures/gt_tables.png">
 
-<h5 align="center">
+-----
+
+<h4 align="center">
 
 Code of Conduct
 
-</h5>
+</h4>
 
 <h6 align="center">
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
-to abide by its terms.
+Conduct](CODE_OF_CONDUCT.md).
 
 </h6>
 
-<h5 align="center">
+<h6 align="center">
+
+By participating in this project you agree to abide by its terms.
+
+</h6>
+
+<h4 align="center">
 
 License
 
-</h5>
+</h4>
 
 <h6 align="center">
 
