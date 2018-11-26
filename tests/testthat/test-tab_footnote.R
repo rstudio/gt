@@ -4,22 +4,38 @@ context("Ensuring that the `tab_footnote()` function works as expected")
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_caption("cars") %>%
+  tab_stubhead_label(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
-  tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
-  tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
-  tab_boxhead_panel(group = "gear_carb_cyl", columns = vars(gear, carb, cyl)) %>%
-  blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
-  cols_merge_range(col_begin = "disp", col_end = "drat") %>%
-  tab_heading(title = "Title", headnote = "Headnote") %>%
+  tab_row_group(
+    group = "Mercs",
+    rows = contains("Merc")
+  ) %>%
+  tab_row_group(
+    group = "Mazdas",
+    rows = contains("Mazda")
+  ) %>%
+  tab_spanner(
+    label = "gear_carb_cyl",
+    columns = vars(gear, carb, cyl)
+  ) %>%
+  row_group_order(groups = c("Mazdas", "Mercs")) %>%
+  cols_merge_range(
+    col_begin = "disp",
+    col_end = "drat"
+  ) %>%
+  tab_header(
+    title = "Title",
+    subtitle = "Subtitle"
+  ) %>%
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE)))
+      ~sum(., na.rm = TRUE))
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
@@ -114,12 +130,12 @@ test_that("the `tab_footnote()` function works correctly", {
     c("title", "1", NA_character_, NA_character_, NA_character_,
       "Title footnote."))
 
-  # Apply a footnote to the table headnote
+  # Apply a footnote to the table subtitle
   tbl_html <-
     data %>%
     tab_footnote(
-      footnote = "Headnote footnote.",
-      locations = cells_title(groups = "headnote"))
+      footnote = "Subtitle footnote.",
+      locations = cells_title(groups = "subtitle"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -131,8 +147,8 @@ test_that("the `tab_footnote()` function works correctly", {
   # single-row `footnotes_df` data frame
   expect_attr_equal(
     tbl_html, "footnotes_df",
-    c("headnote", "2", NA_character_, NA_character_, NA_character_,
-      "Headnote footnote."))
+    c("subtitle", "2", NA_character_, NA_character_, NA_character_,
+      "Subtitle footnote."))
 
   # Apply a footnote to a single cell in a group summary section
   tbl_html <-
@@ -306,4 +322,3 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(c(
       "data", "5", NA_character_, "hp", "1", "A footnote."))
 })
-

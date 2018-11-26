@@ -1,6 +1,6 @@
-context("Ensuring that the `blocks_arrange()` function works as expected")
+context("Ensuring that the `row_group_order()` function works as expected")
 
-test_that("the `blocks_arrange()` function works correctly", {
+test_that("the `row_group_order()` function works correctly", {
 
   # Create a table with group names, rownames, and four columns of values
   tbl <-
@@ -21,7 +21,7 @@ test_that("the `blocks_arrange()` function works correctly", {
   # latter calendar date first
   html_tbl <-
     gt(tbl) %>%
-    blocks_arrange(groups = c("2018-02-11", "2018-02-10"))
+    row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect that the internal vector `arrange_groups` has the
   # groups in the order specified
@@ -32,7 +32,7 @@ test_that("the `blocks_arrange()` function works correctly", {
   # latter calendar date first using group indices
   html_tbl <-
     gt(tbl) %>%
-    blocks_arrange(groups = c(2, 1))
+    row_group_order(groups = c(2, 1))
 
   # Expect that the internal vector `arrange_groups` has the
   # groups in the order specified
@@ -43,15 +43,15 @@ test_that("the `blocks_arrange()` function works correctly", {
   # numeric vector
   expect_error(
     gt(tbl) %>%
-      blocks_arrange(groups = c(TRUE, FALSE)))
+      row_group_order(groups = c(TRUE, FALSE)))
 
   # Expect that any value in `groups` that doesn't correspond
   # to a group name or valid index will result in an error
   expect_error(
     gt(tbl) %>%
-      blocks_arrange(groups = c("2018-02-13", "2018-02-10")))
+      row_group_order(groups = c("2018-02-13", "2018-02-10")))
 
   expect_error(
     gt(tbl) %>%
-      blocks_arrange(groups = c(3, 1)))
+      row_group_order(groups = c(3, 1)))
 })
