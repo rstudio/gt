@@ -47,12 +47,16 @@ countrypops_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = apply_styles(text_font = "Courier"),
+    style = cells_styles(text_font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
   ) %>%
-  tab_options(row.padding = "5px")
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
 ```
 
 ```{r countrypops_ddtab, echo = FALSE}
@@ -77,7 +81,7 @@ Melanesia <- c("NC", "PG", "SB", "VU")
 Micronesia <- c("FM", "GU", "KI", "MH", "MP", "NR", "PW")
 Polynesia <- c("PF", "WS", "TO", "TV")
 
-# Create a gt table based on a proprocessed `countrypops`
+# Create a gt table based on a preprocessed `countrypops`
 countrypops %>%
   dplyr::filter(country_code_2 %in% c(
     Australasia, Melanesia, Micronesia, Polynesia)
@@ -96,9 +100,9 @@ countrypops %>%
     rowname_col = "country_name",
     groupname_col = "region"
   ) %>%
-  tab_heading("Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
-  tab_boxhead_panel(
-    group = "Total Population",
+  tab_header(title = "Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
+  tab_spanner(
+    label = "Total Population",
     columns = c("1995", "2005", "2015")
   ) %>%
   fmt_number(
@@ -114,6 +118,8 @@ The solar zenith angle is one measure of the solar position. It can be thought o
 
 The `sza` dataset has calculated values for the solar zenith angles every 30 minutes from 04:00 to 12:00 (true solar time). Temporally, these calculations are for the 1st of every month of the year. Spatially, the observer is located at somewhere along latitudes 20&deg;N, 30&deg;N, 40&deg;N, and 50&deg;N (because we are using true solar time, the longitude is unimportant). This is quite an extensive topic, and more information can be found by using `?sza` in the R console or by visiting [this page](https://en.wikipedia.org/wiki/Solar_zenith_angle).
 
+The `sza` dataset is a tibble with 816 rows and 4 variables. Here are explanations for each of the variables: 
+
 ```{r sza_make_data_dictionary, echo=FALSE}
 sza_ddtab <-
   dplyr::tribble(
@@ -125,18 +131,23 @@ sza_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = apply_styles(text_font = "Courier"),
+    style = cells_styles(text_font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
   ) %>%
-  tab_options(row.padding = "5px")
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
 ```
 
 ```{r sza_ddtab, echo = FALSE}
 sza_ddtab
 ```
 
+#### An `sza` Example
 
 The table that we'll create from `sza` will meet these requirements:
 
@@ -150,7 +161,7 @@ The table that we'll create from `sza` will meet these requirements:
 8. to fit the large amount of data in a smaller area, use some table options to reduce text size and row padding
 
 ```{r sza}
-
+# Create a gt table based on a preprocessed `sza`
 sza %>%
   dplyr::filter(latitude == 20) %>%
   dplyr::select(-latitude) %>%
@@ -161,8 +172,8 @@ sza %>%
     columns = TRUE,
     missing_text = ""
   ) %>%
-  tab_stubhead_caption(caption = html("month<br>(20&deg;N)")) %>%
-  tab_heading(html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
+  tab_stubhead_label(label = html("month<br>(20&deg;N)")) %>%
+  tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(
     boxhead.font.size = "smaller",
     table.font.size = "smaller",
@@ -173,6 +184,44 @@ sza %>%
 ### `gtcars`
 
 The `gtcars` dataset takes off where `mtcars` left off. It contains 47 cars from the 2014-2017 model years. Many of the `gtcars` vehicles are grand tourers. Indeed, many of these provide the ability to cross an entire continent at speed and in comfort yet, when it's called for, they will allow you to experience driving thrills. The chassis and suspension are in most cases top-notch and supply superb handling and roadholding on all routes one would conceivably encounter during the grand touring experience. The two plus two (2 + 2) seating configuration is smartly designed to deliver comfort for a driver and passenger, adequate space for luggage, and have room to spare.
+
+The `gtcars` dataset is a tibble with 47 rows and 15 variables. Here are explanations for each of the variables: 
+
+```{r gtcars_make_data_dictionary, echo=FALSE}
+gtcars_ddtab <-
+  dplyr::tribble(
+    ~Column,      ~Type,  ~Description,
+    "mfr",       "chr", "The name of the car manufacturer",
+    "model",     "chr", "The car's model name",
+    "year",      "int", "The car's model year",
+    "trim",      "chr", "A short description of the car model's trim",
+    "bdy_style", "chr", "An identifier of the car's body style, which is either coupe, convertible,     sedan, or hatchback",
+    "hp, hp_rpm", "int", "The car's horsepower and the associated RPM level",
+    "trq, trq_rpm", "int", "The car's torque and the associated RPM level",
+    "mpg_c, mpg_h", "int", "The miles per gallon fuel efficiency rating for city and highway driving",
+    "drivetrain", "chr", "The car's drivetrain which, for this dataset is either rwd (Rear Wheel Drive)     or awd (All Wheel Drive)",
+    "trsmn",     "chr", "The codified transmission type, where the number part is the number of gears; the car could have automatic transmission (a), manual transmission (m), an option to switch between both types (am), or, direct drive (dd)",
+    "ctry_origin", "chr", "The country name for where the vehicle manufacturer is headquartered",
+  ) %>%
+  gt() %>%
+  tab_style(
+    style = cells_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
+```
+
+```{r gtcars_ddtab, echo = FALSE}
+gtcars_ddtab
+```
+
+#### A `gtcars` Example
 
 The table that we'll create from `gtcars` will meet these requirements:
 
@@ -187,7 +236,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 9. Add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote glyphs are lowercase letters 
 
 ```{r gtcars}
-
+# Create a gt table based on a preprocessed `gtcars`
 gtcars %>%
   dplyr::filter(ctry_origin == "Germany") %>%
   dplyr::group_by(mfr) %>%
@@ -195,7 +244,7 @@ gtcars %>%
   dplyr::ungroup() %>%
   dplyr::select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
-  tab_heading(title = "Select German Automobiles") %>%
+  tab_header(title = "Select German Automobiles") %>%
   cols_merge(
     col_1 = "mfr",
     col_2 = "model"
@@ -228,9 +277,38 @@ gtcars %>%
 
 ### `sp500`
 
-The S&P 500 is an capitalization-weighted index of about 500 leading companies (where bigger companies have more influence within the index) that have common stock listed in either the NYSE or NASDAQ markets. The companies chosen are intended to provide representation of the U.S. economy. This index is a managed list (managed by S&P Dow Jones Indices LLC) with occasional changes of the constituent companies based on their performance and changes in the economy.
+The S&P 500 is a capitalization-weighted index of about 500 leading companies (where bigger companies have more influence within the index) that have common stock listed in either the NYSE or NASDAQ markets. The companies chosen are intended to provide representation of the U.S. economy. This index is a managed list (managed by S&P Dow Jones Indices LLC) with occasional changes of the constituent companies based on their performance and changes in the economy.
 
-There is daily S&P 500 data available in the `sp500` dataset, with daily indicators (price statistics, `volume`, etc.) from 1950 to 2015, inclusive.
+There is daily S&P 500 data available in the `sp500` dataset, with daily indicators (price statistics, `volume`, etc.) from 1950 to 2015, inclusive. There are 16,607 rows in the dataset, and 7 variables:
+
+```{r sp500_make_data_dictionary, echo=FALSE}
+sp500_ddtab <-
+  dplyr::tribble(
+    ~Column,     ~Type,  ~Description,
+    "date",      "date", "The date expressed as `Date` values",
+    "open, high, low, close", "dbl", "The day's opening, high, low, and closing prices in USD; the close price is adjusted for splits",
+    "volume",    "dbl", "The number of trades for the given `date`",
+    "adj_close", "dbl", "The close price adjusted for both dividends and splits",
+  ) %>%
+  gt() %>%
+  tab_style(
+    style = cells_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
+```
+
+```{r sp500_ddtab, echo = FALSE}
+sp500_ddtab
+```
+
+#### An `sp500` Example
 
 The table that we'll create from `sp500` will meet these requirements:
 
@@ -244,7 +322,6 @@ The table that we'll create from `sp500` will meet these requirements:
 8. up- and down-pointing triangles (in green and red) will be added alongside the `close` price as appropriate
 
 ```{r sp500}
-
 # Define the start and end dates for the data range
 start_date <- "2010-06-01"
 end_date <- "2010-06-15"
@@ -255,15 +332,15 @@ end_date <- "2010-06-15"
 up_arrow <- "<span style=\"color:green\">&#9650;</span>"
 down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 
-# Create a gt table based on a proprocessed `sp500`
+# Create a gt table based on a preprocessed `sp500`
 sp500 %>%
   dplyr::filter(date >= start_date & date <= end_date) %>%
   dplyr::select(-adj_close) %>%
   dplyr::mutate(date = as.character(date)) %>%
   gt() %>%
-  tab_heading(
+  tab_header(
     title = "S&P 500",
-    headnote = glue::glue("{start_date} to {end_date}")
+    subtitle = glue::glue("{start_date} to {end_date}")
   ) %>%
   fmt_date(
     columns = vars(date),
@@ -298,9 +375,43 @@ sp500 %>%
 
 ### `pizzaplace`
 
-The `pizzaplace` dataset is unusual to say the least. How could someone sell XL- and XXL-sized pizzas of only a single type whilst all the other pizzas must adhere to the S-M-L paradigm? Is it real? What is the nature of reality? (While I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
+The `pizzaplace` dataset is unusual to say the least. Why is it that the The Greek pizza comes in XL and XXL sizes whilst (almost) all the other pizzas must adhere to the S-M-L paradigm? Also, is any of this real? And, what is the nature of reality? (While I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
 
 We have the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
+
+Let's learn more about how this fascinating dataset is structured: 
+
+```{r pizzaplace_make_data_dictionary, echo=FALSE}
+pizzaplace_ddtab <-
+  dplyr::tribble(
+    ~Column,      ~Type,  ~Description,
+    "id", "chr", "The ID for the order, which consists of one or more pizzas at a given `date` and `time`",
+    "date", "chr", "A character representation of the order `date`, expressed in the ISO 8601 date format (YYYY-MM-DD)",
+    "time", "chr", "A character representation of the order time, expressed as a 24-hour time the ISO 8601 extended time format (hh:mm:ss)",
+    "name", "chr", "The short name for the pizza",
+    "size", "chr", "The size of the pizza, which can either be S, M, L, XL (rare!), or XXL (even rarer!); most pizzas are available in the S, M, and L sizes but exceptions apply",
+    "type", "chr", "The category or type of pizza, which can either be `classic`, `chicken`, `supreme`, or `veggie`",
+    "price", "dbl", "The price of the pizza and the amount that it sold for (in USD)",
+) %>%
+  gt() %>%
+  tab_style(
+    style = cells_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
+```
+
+```{r pizzaplace_ddtab, echo = FALSE}
+pizzaplace_ddtab
+```
+
+#### A `pizzaplace` Example
 
 Let's make a reporting table from the `pizzaplace` dataset with these requirements:
 
@@ -312,7 +423,7 @@ Let's make a reporting table from the `pizzaplace` dataset with these requiremen
 6. color the stub group rows and summary cells to add a little pizazz
 
 ```{r pizzaplace}
-# Create a gt table based on a proprocessed `pizzaplace`
+# Create a gt table based on a preprocessed `pizzaplace`
 pizzaplace %>%
   dplyr::group_by(type, size) %>%
   dplyr::summarize(
@@ -320,7 +431,7 @@ pizzaplace %>%
     income = sum(price)
   ) %>%
   gt(rowname_col = "size") %>%
-  tab_heading(title = "Pizzas Sold in 2015") %>%
+  tab_header(title = "Pizzas Sold in 2015") %>%
   fmt_number(
     columns = vars(sold),
     decimals = 0,
@@ -353,9 +464,43 @@ pizzaplace %>%
 
 ### `exibble`
 
-The example tibble that's useful for **gt** is called `exibble`. It's 8 rows, has clear ordering of data, and the columns contain data that can be tested with the various **gt** formatter functions (`fmt*()`).
+The example tibble that's useful for **gt** is called `exibble`. It's 8 rows, has clear ordering of data, and the columns contain data that can be tested with the various **gt** formatter functions (`fmt*()`). Here is a table describing the columns of `exibble`:
 
-Let's test as many formatter functions as possible with `exibble` while also using row captions and row groups.
+```{r exibble_make_data_dictionary, echo=FALSE}
+exibble_ddtab <-
+  dplyr::tribble(
+    ~Column,      ~Type,  ~Description,
+    "num",        "dbl", "A numeric column ordered with increasingly larger values",
+    "char",       "chr", "A character column composed of names of fruits from a to h",
+    "fctr",       "fct", "A factor column with numbers from 1 to 8, written out",
+    "date, time, datetime", "chr", "Character columns with dates, times, and datetimes",
+    "currency",   "dbl", "A numeric column that is useful for testing currency-based formatting
+
+",
+    "row",        "chr", "A character column in the format `row_X` which can be useful for testing with row label in a table stub",
+    "group",      "chr", "A character column with four `grp_a` values and four `grp_b` values which can be useful for testing tables that contain row groups",
+  ) %>%
+  gt() %>%
+  tab_style(
+    style = cells_styles(text_font = "Courier"),
+    locations = list(
+      cells_data(columns = "Column"),
+      cells_data(columns = "Type"))
+  ) %>%
+  tab_options(
+    table.width = pct(80),
+    table.font.size = "smaller",
+    boxhead.font.size = "small"
+  )
+```
+
+```{r exibble_ddtab, echo = FALSE}
+exibble_ddtab
+```
+
+#### An `exibble` Example
+
+Let's test as many formatter functions as possible with `exibble` while also using row labels and row groups (furnished by the `row` and `group` columns). We'll format `num` to display numbers with 2 decimal places. The dates in `date` will be formatted with `date_style` `6` (the `m_day_year` style, use `info_date_style()` to learn about all of them). The 24-h time values in `time` will use `time_style` `4` (`hm_p`, more info at `info_time_style()`). Datetimes as in `datetime` column can be formatted with the `fmt_datetime()` function (which uses the `date_style` and `time_style` arguments). The column `currency` will be formatted as a currency with `fmt_currency` and we'll consider these values to be euros (`currency = "EUR"`).
 
 ```{r exibble, eval=FALSE}
 # Create a gt table based on `exibble`
@@ -366,12 +511,7 @@ exibble %>%
   ) %>%
   fmt_number(
     columns = vars(num),
-    rows = 1:4,
     decimals = 2) %>%
-  fmt_scientific(
-    columns = vars(num),
-    rows = c(5, 7, 8)
-  ) %>%
   fmt_date(
     columns = vars(date),
     date_style = 6
@@ -391,7 +531,7 @@ exibble %>%
   ) %>%
   tab_options(
     boxhead.font.size = "small",
-    table.font.size = "smaller",
+    table.font.size = "small",
     stub_group.font.size = "small",
     row.padding = px(3)
   )
