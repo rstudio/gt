@@ -1,19 +1,7 @@
----
-title: "latex-11-adding_a_stubhead_caption"
-output: 
-  - pdf_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
-library(dplyr)
-```
 
-Create a table that has a stubhead caption.
+# Create a table that has a stubhead label
 
-```{r}
 # Input table
 tbl <-
   dplyr::tribble(
@@ -28,11 +16,10 @@ tbl <-
     "B",        "4",      344.7,    281.2,
     "C",        "1",      197.2,    818.0,
     "C",        "2",      284.6,    394.4)
-```
 
-
-```{r}
 # Create a display table
-gt(data = tbl) %>%
-  tab_stubhead_caption(caption = "groups")
-```
+sh_caption_tbl <-
+  gt(data = tbl) %>%
+  tab_stubhead_label(label = "groups")
+
+sh_caption_tbl

@@ -71,8 +71,8 @@ build_data <- function(data, context) {
   # Get and process the `heading` object
   heading <- data_attr$heading %>% process_heading(context)
 
-  # Get and process the `stubhead_caption` object
-  stubhead_caption <- data_attr$stubhead_caption %>% process_stubhead_caption(context)
+  # Get and process the `stubhead_label` object
+  stubhead_label <- data_attr$stubhead_label %>% process_stubhead_label(context)
 
   # Get and process the `source_note` object
   source_note <- data_attr$source_note %>% process_source_notes(context)
@@ -173,8 +173,8 @@ build_data <- function(data, context) {
   # Determine if the title has been defined
   title_defined <- is_title_defined(heading)
 
-  # Determine if a headnote has been defined
-  headnote_defined <- is_headnote_defined(heading)
+  # Determine if a subtitle has been defined
+  subtitle_defined <- is_subtitle_defined(heading)
 
   # Determine if there are any summaries present
   summaries_present <- are_summaries_present(list_of_summaries)
@@ -214,14 +214,14 @@ build_data <- function(data, context) {
   footnotes_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, headnote_defined,
+      boxhead_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, headnote_defined,
+      boxhead_spanners, title_defined, subtitle_defined,
       footnotes_df = NULL, styles_df = styles_df)
 
   list(
@@ -244,7 +244,7 @@ build_data <- function(data, context) {
     heading = heading,
     boxhead_spanners = boxhead_spanners,
     source_note = source_note,
-    stubhead_caption = stubhead_caption,
+    stubhead_label = stubhead_label,
     stub_components = stub_components,
     col_alignment = col_alignment,
     col_merge = col_merge,
@@ -255,7 +255,7 @@ build_data <- function(data, context) {
     styles_resolved = styles_resolved,
     stub_available = stub_available,
     title_defined = title_defined,
-    headnote_defined = headnote_defined,
+    subtitle_defined = subtitle_defined,
     spanners_present = spanners_present,
     summaries_present = summaries_present,
     n_rows = n_rows,

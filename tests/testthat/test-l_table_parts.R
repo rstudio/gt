@@ -9,12 +9,12 @@ test_that("a gt table contains the expected heading components", {
   # contains a title
   tbl_latex <-
     gt(data = mtcars_short) %>%
-    tab_heading(title = "test heading")
+    tab_header(title = "test title")
 
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*.large test heading",
+      ".*.large test title",
       ".*.small",
       ".*"),
     tbl_latex %>%
@@ -22,18 +22,18 @@ test_that("a gt table contains the expected heading components", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
-  # contains a title and a headnote
+  # contains a title and a subtitle
   tbl_latex <-
     gt(data = mtcars_short) %>%
-    tab_heading(
-      title = "test heading",
-      headnote = "test headnote")
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle")
 
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*.large test heading",
-      ".*.small test headnote",
+      ".*.large test title",
+      ".*.small test subtitle",
       ".*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
@@ -41,13 +41,13 @@ test_that("a gt table contains the expected heading components", {
 
 })
 
-test_that("a gt table contains the expected stubhead caption", {
+test_that("a gt table contains the expected stubhead label", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a stub and a stubhead caption
   tbl_latex <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_caption("the mtcars")
+    tab_stubhead_label(label = "the mtcars")
 
   # Expect a characteristic pattern
   grepl(
@@ -66,8 +66,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peri` and `shape` column labels
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = c("peri", "shape"))
 
   # Expect a characteristic pattern
@@ -87,8 +87,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # the `vars()` helper to define the columns)
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peri, shape))
 
   # Expect a characteristic pattern
@@ -107,8 +107,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peris` and `shapes` column labels (which don't exist)
   tbl_latex <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peris, shapes))
 
   # Expect a characteristic pattern
@@ -172,9 +172,10 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # contains a stub blocks in a specified order
   tbl_latex <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag"))
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    )
 
   # Expect a characteristic pattern
   grepl(
@@ -195,17 +196,19 @@ test_that("a gt table contains the correct placement of stub blocks", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
-  # contains a three stub blocks and the use of `blocks_arrange()`
+  # contains a three stub blocks and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_latex <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mercs",
-      rows = contains("Merc")) %>%
-    tab_stub_block(
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
-    blocks_arrange(groups = c(NA, "Mazda", "Mercs"))
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c(NA, "Mazda", "Mercs"))
 
   # Expect a characteristic pattern
   grepl(

@@ -27,9 +27,9 @@
     border-bottom-width: 0;
   }
 
-  .gt_headnote {
+  .gt_subtitle {
     color: font-color($heading_background_color);
-    font-size: $heading_headnote_font_size; /* heading.headnote.font.size */
+    font-size: $heading_subtitle_font_size; /* heading.subtitle.font.size */
     padding-top: 1px;
     padding-bottom: 4px; /* heading.bottom.padding */
     border-top-color: $table_background_color;

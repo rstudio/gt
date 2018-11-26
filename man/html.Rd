@@ -25,8 +25,8 @@ Interpret input text as HTML-formatted text
 # that is to interpreted as HTML
 gt_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_stubhead_caption(
-      caption = html(
+    tab_stubhead_label(
+      label = html(
         "car <em>make</em> and <em>model</em>"))
 }
 \seealso{

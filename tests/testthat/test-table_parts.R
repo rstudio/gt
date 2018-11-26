@@ -36,7 +36,7 @@ test_that("a gt table contains the expected heading components", {
   # contains a title
   tbl_html <-
     gt(data = mtcars_short) %>%
-    tab_heading(title = "test heading") %>%
+    tab_header(title = "test heading") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -45,9 +45,9 @@ test_that("a gt table contains the expected heading components", {
     selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
     expect_equal("test heading")
 
-  # Expect that the `table_headnote` content is an empty string
+  # Expect that the `table_subtitle` content is an empty string
   tbl_html %>%
-    selection_text("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
     expect_equal("")
 
   # Expect that the maximum number of rows is `5`
@@ -63,36 +63,36 @@ test_that("a gt table contains the expected heading components", {
     expect_equal(11)
 
   # Create a `gt_tbl` object with `gt()`; this table
-  # contains a title and a headnote
+  # contains a title and a subtitle
   tbl_html <-
     gt(data = mtcars_short) %>%
-    tab_heading(
-      title = "test heading",
-      headnote = "test headnote") %>%
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle") %>%
     render_as_html() %>%
     xml2::read_html()
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
     selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
-    expect_equal("test heading")
+    expect_equal("test title")
 
-  # Expect that the `table_heading` content is 'test headnote'
+  # Expect that the `table_heading` content is 'test subtitle'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border']") %>%
-    expect_equal("test headnote")
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    expect_equal("test subtitle")
 })
 
-test_that("a gt table contains the expected stubhead caption", {
+test_that("a gt table contains the expected stubhead label", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a stub and a stubhead caption
+  # contains a stub and a stubhead label
   tbl_html <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_caption("the mtcars") %>%
+    tab_stubhead_label(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -113,8 +113,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peri` and `shape` column labels
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = c("peri", "shape")) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -131,8 +131,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # the `vars()` helper to define the columns)
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peri, shape)) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -148,8 +148,8 @@ test_that("a gt table contains the expected boxhead panel headings", {
   # `peris` and `shapes` column labels (which don't exist)
   tbl_html <-
     gt(data = rock) %>%
-    tab_boxhead_panel(
-      group = "perimeter",
+    tab_spanner(
+      label = "perimeter",
       columns = vars(peris, shapes)) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -211,9 +211,10 @@ test_that("a gt table contains the correct placement of stub blocks", {
   # contains a stub blocks in a specified order
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -226,17 +227,19 @@ test_that("a gt table contains the correct placement of stub blocks", {
     expect_equal(c("Mazda", ""))
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a three stub blocks and the use of `blocks_arrange()`
+  # contains a three stub blocks and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
-    tab_stub_block(
+    tab_row_group(
       group = "Mercs",
-      rows = contains("Merc")) %>%
-    tab_stub_block(
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
       group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag")) %>%
-    blocks_arrange(groups = c(NA, "Mazda", "Mercs")) %>%
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -258,15 +261,30 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
-    tab_stubhead_caption("cars") %>%
+    tab_stubhead_label(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
-    tab_stub_block(group = "Mercs", rows = contains("Merc")) %>%
-    tab_stub_block(group = "Mazdas", rows = contains("Mazda")) %>%
-    tab_boxhead_panel(group = "gear_carb_cyl", columns = vars(gear, carb, cyl)) %>%
-    blocks_arrange(groups = c("Mazdas", "Mercs")) %>%
-    cols_merge_range(col_begin = "disp", col_end = "drat") %>%
-    tab_heading(title = "Title", headnote = "Headnote") %>%
+    tab_row_group(
+      group = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      group = "Mazdas",
+      rows = contains("Mazda")
+    ) %>%
+    tab_spanner(
+      label = "gear_carb_cyl",
+      columns = vars(gear, carb, cyl)
+    ) %>%
+    row_group_order(groups = c("Mazdas", "Mercs")) %>%
+    cols_merge_range(
+      col_begin = "disp",
+      col_end = "drat"
+    ) %>%
+    tab_header(
+      title = "Title",
+      subtitle = "Subtitle"
+    ) %>%
     tab_source_note(source_note = "this is a source note") %>%
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(
@@ -274,43 +292,55 @@ test_that("a gt table contains custom styles at the correct locations", {
       columns = vars(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))) %>%
+        ~sum(., na.rm = TRUE))
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
         cells_boxhead(columns = TRUE),
-        cells_stub(rows = TRUE))) %>%
+        cells_stub(rows = TRUE))
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "steelblue", text_color = "white"),
-      locations = cells_stub(rows = "Merc 240D")) %>%
+      locations = cells_stub(rows = "Merc 240D")
+    ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "title")) %>%
+      locations = cells_title(groups = "title")
+    ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "headnote")) %>%
+      locations = cells_title(groups = "subtitle")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "green", text_color = "white"),
       locations = cells_summary(
-        groups = "Mercs", columns = "hp", rows = 2)) %>%
+        groups = "Mercs", columns = "hp", rows = 2)
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_boxhead(groups = "gear_carb_cyl")) %>%
+      locations = cells_boxhead(groups = "gear_carb_cyl")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_boxhead(columns = "gear")) %>%
+      locations = cells_boxhead(columns = "gear")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "pink"),
-      locations = cells_boxhead(columns = "hp")) %>%
+      locations = cells_boxhead(columns = "hp")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
-      locations = cells_data(columns = "hp", rows = "Datsun 710")) %>%
+      locations = cells_data(columns = "hp", rows = "Datsun 710")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")) %>%
+      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+    ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "red", text_color = "white"),
-      locations = cells_group(groups = "Mazdas")) %>%
+      locations = cells_group(groups = "Mazdas")
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -379,9 +409,9 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text() %>%
     expect_equal("Title")
 
-  # Expect that the table headnote is formatted to the left
+  # Expect that the table subtitle is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border'][style='text-align:left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border'][style='text-align:left;']") %>%
     rvest::html_text() %>%
-    expect_equal("Headnote")
+    expect_equal("Subtitle")
 })

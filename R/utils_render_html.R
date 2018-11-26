@@ -165,7 +165,7 @@ create_table_start_h <- function(groups_rows_df) {
 }
 
 # Create the heading component of a table, which contains the heading and
-# possibly a headnote; if there are no heading components defined this
+# possibly a subtitle; if there are no heading components defined this
 # function will return an empty string
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
@@ -238,12 +238,12 @@ create_heading_component <- function(heading,
     title_style_attrs <- NA_character_
   }
 
-  # Get the footnote glyphs for the headnote
-  if ("headnote" %in% footnotes_tbl$locname) {
+  # Get the footnote glyphs for the subtitle
+  if ("subtitle" %in% footnotes_tbl$locname) {
 
-    footnote_headnote_glyphs <-
+    footnote_subtitle_glyphs <-
       footnotes_tbl %>%
-      dplyr::filter(locname == "headnote") %>%
+      dplyr::filter(locname == "subtitle") %>%
       dplyr::group_by() %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
@@ -253,31 +253,31 @@ create_heading_component <- function(heading,
 
     if (output == "html") {
 
-      footnote_headnote_glyphs <-
-        footnote_glyph_to_html(footnote_headnote_glyphs$fs_id_coalesced)
+      footnote_subtitle_glyphs <-
+        footnote_glyph_to_html(footnote_subtitle_glyphs$fs_id_coalesced)
 
     } else if (output == "rtf") {
 
-      footnote_headnote_glyphs <-
-        footnote_glyph_to_rtf(footnote_headnote_glyphs$fs_id_coalesced)
+      footnote_subtitle_glyphs <-
+        footnote_glyph_to_rtf(footnote_subtitle_glyphs$fs_id_coalesced)
 
     } else if (output == "latex") {
 
-      footnote_headnote_glyphs <-
-        footnote_glyph_to_latex(footnote_headnote_glyphs$fs_id_coalesced)
+      footnote_subtitle_glyphs <-
+        footnote_glyph_to_latex(footnote_subtitle_glyphs$fs_id_coalesced)
     }
 
   } else {
-    footnote_headnote_glyphs <- ""
+    footnote_subtitle_glyphs <- ""
   }
 
-  # Get the style attrs for the headnote
+  # Get the style attrs for the subtitle
   if (output == "html" &&
-      "headnote" %in% styles_tbl$locname) {
+      "subtitle" %in% styles_tbl$locname) {
 
-    headnote_style_attrs <-
+    subtitle_style_attrs <-
       styles_tbl %>%
-      dplyr::filter(locname == "headnote") %>%
+      dplyr::filter(locname == "subtitle") %>%
       dplyr::group_by(rownum, colnum) %>%
       dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
       dplyr::ungroup() %>%
@@ -286,7 +286,7 @@ create_heading_component <- function(heading,
       dplyr::pull(styles_appended)
 
   } else {
-    headnote_style_attrs <- NA_character_
+    subtitle_style_attrs <- NA_character_
   }
 
   if (output == "html") {
@@ -298,7 +298,7 @@ create_heading_component <- function(heading,
         n_cols, "'", create_style_attrs(title_style_attrs), ">",
         heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
 
-    if ("headnote" %in% names(heading)) {
+    if ("subtitle" %in% names(heading)) {
 
       heading_component <-
         paste0(
@@ -306,20 +306,20 @@ create_heading_component <- function(heading,
           paste0(
             "<tr>\n",
             "<th ",
-            "class='gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border' colspan='",
-            n_cols, "'", create_style_attrs(headnote_style_attrs), ">",
-            heading$headnote, footnote_headnote_glyphs, "</th>\n</tr>\n"))
+            "class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' colspan='",
+            n_cols, "'", create_style_attrs(subtitle_style_attrs), ">",
+            heading$subtitle, footnote_subtitle_glyphs, "</th>\n</tr>\n"))
     }
   }
 
   if (output == "rtf") {
 
-    if ("headnote" %in% names(heading)) {
+    if ("subtitle" %in% names(heading)) {
 
       heading_component <-
-        rtf_title_headnote(
+        rtf_title_subtitle(
           title = paste0(remove_html(heading$title), footnote_title_glyphs),
-          headnote = paste0(remove_html(heading$headnote), footnote_headnote_glyphs),
+          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_glyphs),
           n_cols = n_cols)
 
     } else {
@@ -338,13 +338,13 @@ create_heading_component <- function(heading,
         "\\caption*{\n",
         "\\large ", paste0(heading$title, footnote_title_glyphs), "\\\\ \n")
 
-    if ("headnote" %in% names(heading)) {
+    if ("subtitle" %in% names(heading)) {
 
       heading_component <-
         paste0(
           heading_component,
           paste0(
-            "\\small ", paste0(heading$headnote, footnote_headnote_glyphs), "\\\\ \n"))
+            "\\small ", paste0(heading$subtitle, footnote_subtitle_glyphs), "\\\\ \n"))
     }
 
     heading_component <- paste0(heading_component, "} \\\\ \n")
@@ -362,7 +362,7 @@ create_boxhead_component_h <- function(boxh_df,
                                        stub_available,
                                        spanners_present,
                                        styles_resolved,
-                                       stubhead_caption,
+                                       stubhead_label,
                                        col_alignment) {
 
   # Get the style attrs for the boxhead group (spanner) headings
@@ -391,9 +391,9 @@ create_boxhead_component_h <- function(boxh_df,
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0) {
+      length(stubhead_label) > 0) {
 
-    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
+    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
 
   } else if (stub_available) {
 

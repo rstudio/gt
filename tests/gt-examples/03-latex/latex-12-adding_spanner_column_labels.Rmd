@@ -28,9 +28,13 @@ tbl <-
 # Create a display table
 tbl %>%
   gt() %>%
-  tab_boxhead_panel(
-    group = "v_1_2", columns =  c("v_1", "v_2")) %>%
-  tab_boxhead_panel(
-    group = "v_4_5", columns = c("v_4", "v_5")) %>%
-  cols_move_to_start("v_3")
+  tab_spanner(
+    label = "v_1_2",
+    columns =  c("v_1", "v_2")
+  ) %>%
+  tab_spanner(
+    label = "v_4_5",
+    columns = c("v_4", "v_5")
+  ) %>%
+  cols_move_to_start(columns = "v_3")
 ```
