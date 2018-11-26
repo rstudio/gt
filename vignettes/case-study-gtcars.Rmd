@@ -93,7 +93,7 @@ gtcars_8 %>%
   gt()
 ```
 
-The last variation is to combine the manufacturer name with the model name, using those combined strings as row captions for the table. This is just a little more **dplyr** where we can use `dplyr::mutate()` to make a new `car` column followed by `dplyr::select()` where we remove the `mfr` and `model` columns. When introducing the tibble to the `gt()` function, we can now use the `rowname_col` argument to specify a column that will serve as row captions (which is the newly made `car` column).
+The last variation is to combine the manufacturer name with the model name, using those combined strings as row labels for the table. This is just a little more **dplyr** where we can use `dplyr::mutate()` to make a new `car` column followed by `dplyr::select()` where we remove the `mfr` and `model` columns. When introducing the tibble to the `gt()` function, we can now use the `rowname_col` argument to specify a column that will serve as row labels (which is the newly made `car` column).
 
 ```{r factor_gtcars_rownames}
 # Reorder the table rows by our specific ordering of groups
@@ -134,20 +134,19 @@ tab
 
 ### Putting Columns Into Groups
 
-It's sometimes useful to arrange variables/columns into groups by using spanner headings. This can be done in **gt** by using the `tab_boxhead_panel()` function. It takes the `group` and `columns` arguments; the `group` is the spanner heading and the `columns` are those columns that belong in this group. The grouping can be referred to as a boxhead panel.
+It's sometimes useful to arrange variables/columns into groups by using spanner headings. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; the `label` is the spanner column label and the `columns` are those columns that belong in this group.
 
-Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns into the `Performance` panel, and the remaining columns won't be part of any panel. This single spanner heading is styled with Markdown by using the `md()` helper.
+Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns under the `Performance` spanner column, and the remaining columns won't be grouped together. This single spanner column label is styled with Markdown by using the `md()` helper.
 
-```{r tab_boxhead_panel}
-# Put the first three columns in a boxhead panel with
-# the title 'Properties'; the remaining columns are part
-# of a panel named 'Performance'
+```{r tab_spanner}
+# Put the first three columns under a spanner column with
+# the label 'Performance'
 tab <- 
   tab %>%
-  tab_boxhead_panel(
-    group = md("*Performance*"),
+  tab_spanner(
+    label = md("*Performance*"),
     columns = vars(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
-    )
+  )
 
 # Show the table
 tab
@@ -166,8 +165,9 @@ The `cols_merge()` uses a `col_1` column and a `col_2` column. Once combined, th
 Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column name (the default label). The `cols_label()` function makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
 
 ```{r merge_columns_pattern}
-# Perform three column merges to better present MPG, HP, and torque
-# Relabel all the remaining columns for a nicer-looking boxhead
+# Perform three column merges to better present
+# MPG, HP, and torque; relabel all the remaining
+# columns for a nicer-looking presentation
 tab <- 
   tab %>%
   cols_merge(
@@ -222,7 +222,7 @@ tab
 
 We can change the alignment of data in columns with `cols_align()`. For our table, let's center-align the `mpg_c`, `hp`, and `trq` columns. All other columns will maintain their default alignments.
 
-It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `apply_styles()` helper function, which contains arguments for all the styles that are supported (use `?apply_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_data` and then supply our target columns to the `columns` argument.
+It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cells_styles()` helper function, which contains arguments for all the styles that are supported (use `?cells_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_data` and then supply our target columns to the `columns` argument.
 
 ```{r align_style}
 tab <- 
@@ -232,7 +232,7 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = apply_styles(text_size = px(12)),
+    style = cells_styles(text_size = px(12)),
     locations = cells_data(columns = vars(trim, trsmn, mpg_c, hp, trq))
   )
 
@@ -269,18 +269,18 @@ tab <-
 tab
 ```
 
-### Table Title and Headnote
+### Table Header: Title and Subtitle 
 
-The `tab_heading()` function allows us to place a table title and, optionally, a headnote at the top of the display table. It's generally a good idea to have both in a table, where the headnote provides additional information (though that isn't quite the case in our example below).
+The `tab_header()` function allows us to place a table title and, optionally, a subtitle at the top of the display table. It's generally a good idea to have both in a table, where the subtitle provides additional information (though that isn't quite the case in our example below).
 
-```{r tab_heading}
-# Add a table title and headnote; we can use Markdown
+```{r tab_header}
+# Add a table title and subtitle; we can use Markdown
 # with the `md()` helper function
 tab <- 
   tab %>%
-  tab_heading(
+  tab_header(
     title = md("The Cars of **gtcars**"),
-    headnote = "These are some fine automobiles"
+    subtitle = "These are some fine automobiles"
   )
 
 # Show the table
@@ -356,8 +356,8 @@ tab <-
     columns = vars(trsmn, mpg_c, mpg_h),
     after = vars(trim)
   ) %>%
-  tab_boxhead_panel(
-    group = md("*Performance*"),
+  tab_spanner(
+    label = md("*Performance*"),
     columns = vars(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
   ) %>%
   cols_merge(
@@ -394,7 +394,7 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = apply_styles(text_size = px(12)),
+    style = cells_styles(text_size = px(12)),
     locations = cells_data(columns = vars(trim, trsmn, mpg_c, hp, trq))
   ) %>%
   text_transform(
@@ -414,9 +414,9 @@ tab <-
       paste(speed, " Speed<br><em>", type, "</em>")
     }
   ) %>%
-  tab_heading(
+  tab_header(
     title = md("The Cars of **gtcars**"),
-    headnote = "These are some fine automobiles"
+    subtitle = "These are some fine automobiles"
   ) %>%
   tab_source_note(
     source_note = md(
