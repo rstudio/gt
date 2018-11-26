@@ -51,7 +51,7 @@ Let's make a display table from this dataset. In doing so we'll fulfil the follo
 2. removing some of the columns that we don't want to present
 3. incorporating some columns into a column group
 4. formatting the currency data and using a monospaced font for easier reading of that data
-5. giving the table a title and a subtitle (or, *headnote*)
+5. giving the table a title and a subtitle
 6. adding footnotes to draw attention to some of the more interesting data points and to explain some of the more unusual aspects of the data
 7. placing a citation for the dataset at the bottom of the table
 8. transforming the transmission (`trsmn`) codes so that they are readable and understandable
@@ -134,7 +134,7 @@ tab
 
 ### Putting Columns Into Groups
 
-It's sometimes useful to arrange variables/columns into groups by using spanner headings. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; the `label` is the spanner column label and the `columns` are those columns that belong in this group.
+It's sometimes useful to arrange variables/columns into groups by using spanner column labels. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; the `label` is the spanner column label and the `columns` are those columns that belong in this group.
 
 Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns under the `Performance` spanner column, and the remaining columns won't be grouped together. This single spanner column label is styled with Markdown by using the `md()` helper.
 

@@ -154,9 +154,9 @@ The table that we'll create from `sza` will meet these requirements:
 1. we will filter the data to just use the 20&deg;N data and remove the `latitude` column
 2. `NA` values from `sza` column are to be removed
 3. we will reshape the table so that columns of `tst` (true solar time) contain angles in degrees (from the `sza` column)
-4. the **gt** table will have the `month`s as row captions in the stub
+4. the **gt** table will have the `month`s as row labels in the stub
 5. missing values will be replaced with an empty string (so that those cells are blank)
-6. a stubhead caption will state what's inside the stubs (months, at 20&deg;N)
+6. a stubhead label will state what's inside the stubs (months, at 20&deg;N)
 7. the table will have a heading decorated with the HTML *Black Sun with Rays* (&#x2600;) symbol
 8. to fit the large amount of data in a smaller area, use some table options to reduce text size and row padding
 
@@ -314,7 +314,7 @@ The table that we'll create from `sp500` will meet these requirements:
 
 1. only data from `2010-06-01` to `2010-06-15` will be used 
 2. the adjusted close `adj_close` column won't be included
-3. a title and headnote will be added to describe the contents of the table
+3. a title and subtitle will be added to describe the contents of the table
 4. the column labels will be put in title case
 5. the `date` column will be formatted with `fmt_date()`
 6. the price columns will be formatted with `fmt_currency()`
@@ -416,7 +416,7 @@ pizzaplace_ddtab
 Let's make a reporting table from the `pizzaplace` dataset with these requirements:
 
 1. obtain the total sale numbers and revenue from each `size` of pizza from each category (`type`)
-2. create a gt table where each row represents a combination of `size`-`type` (`size` is a row caption and `type` is a stub group) 
+2. create a gt table where each row represents a combination of `size`-`type` (`size` provides the row labels and `type` forms the row groups) 
 3. add a title to explain the contents of the table
 4. format the numeric and currency values with `fmt_number()` and `fmt_currency()`
 5. add a summary for each grouping that provides total sell counts and revenue amounts 
