@@ -1,16 +1,16 @@
-#' Modify the ordering of the stub block groups
+#' Modify the ordering of any row groups
 #' @inheritParams cols_align
-#' @param groups a vector of group names, or, a numeric
-#'   vector of indices corresponding to the new ordering. Either vector must
-#'   correspond to assigned group names or the index positions. Also, either
-#'   vector isn't required to have all group names or index positions within it;
-#'   any omitted values will be added to the end while preserving the original
-#'   ordering.
+#' @param groups a vector of row group names, or, a numeric vector of indices
+#'   corresponding to the new ordering. Either vector must correspond to
+#'   assigned group names or the index positions. Also, either type of vector is
+#'   not required to have all of the row group names or available index
+#'   positions within it; any omitted values will be added to the end while
+#'   preserving the original ordering.
 #' @return an object of class \code{gt_tbl}.
 #' @family row modification functions
 #' @export
-blocks_arrange <- function(data,
-                           groups) {
+row_group_order <- function(data,
+                            groups) {
 
   # Stop function if `groups` is not a `character` or
   #   `numeric` object
@@ -57,8 +57,7 @@ blocks_arrange <- function(data,
     groups <- arrange_groups[group_indices]
   }
 
-  # Create and store a list of stub block
-  #   groups in the intended ordering
+  # Create and store a list of row groups in the intended ordering
   attr(data, "arrange_groups") <- list(groups = groups)
 
   data

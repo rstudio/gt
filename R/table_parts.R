@@ -1,118 +1,112 @@
-#' Add a table heading
+#' Add a table header
 #'
-#' Add a title and optional headnote to the heading part of the table.
+#' Add a table header part with a table title and optional subtitle.
 #' @inheritParams fmt_number
-#' @param title,headnote text to be used in the table title and, optionally, for
-#'   the table headnote (a line of text below the table title which is somewhat
-#'   smaller in size). We can optionally use the \code{\link{md}()} and
+#' @param title,subtitle text to be used in the table title and, optionally, for
+#'   the table subtitle. We can optionally use the \code{\link{md}()} and
 #'   \code{\link{html}()} functions to style the text as Markdown or to retain
 #'   HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and add a heading
-#' # to describe the table
+#' # `mtcars` dataset and add a header
+#' # part to contain a title and subtitle
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_heading(
+#'     tab_header(
 #'       title = md("Data listing from **mtcars**"),
-#'       headnote = md("`mtcars` is an R dataset"))
+#'       subtitle = md("`mtcars` is an R dataset"))
 #' @family table-part creation/modification functions
 #' @export
-tab_heading <- function(data,
-                        title,
-                        headnote = NULL) {
+tab_header <- function(data,
+                       title,
+                       subtitle = NULL) {
 
-  # Process the `title` text
-  title <- process_text(title)
-
-  # Process the `headnote` text
-  if (is.null(headnote)) {
-    headnote <- ""
-  } else {
-    headnote <- process_text(headnote)
+  # Handle the optional `subtitle` text
+  if (is.null(subtitle)) {
+    subtitle <- ""
   }
 
   attr(data, "heading") <-
     list(
       title = title,
-      headnote = headnote)
+      subtitle = subtitle)
 
   data
 }
 
-#' Add caption text to the stubhead
+#' Add label text to the stubhead
 #'
-#' Add a caption to the stubhead of a table. If a stub does not exist, no change
+#' Add a label to the stubhead of a table. If a stub does not exist, no change
 #' will be made.
 #' @inheritParams fmt_number
-#' @param caption the text to be used as the stubhead caption. We can optionally
+#' @param label the text to be used as the stubhead label We can optionally
 #'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
 #'   text as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table object using the
-#' # `mtcars` dataset and add a caption
-#' # to describe what is in the stub
+#' # `mtcars` dataset and add a stubhead
+#' # label to describe what is in the stub
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stubhead_caption(
-#'       caption = md("car *make* and *model*"))
+#'     tab_stubhead_label(
+#'       label = md("car *make* and *model*"))
 #' @family table-part creation/modification functions
 #' @export
-tab_stubhead_caption <- function(data,
-                                 caption) {
+tab_stubhead_label <- function(data,
+                               label) {
 
-  attr(data, "stubhead_caption") <-
-    list(stubhead_caption = process_text(caption))
+  attr(data, "stubhead_label") <-
+    list(stubhead_label = label)
 
   data
 }
 
-#' Arrange a stub into blocks
+#' Add a row group
 #'
-#' Set a group with a name and mappings to rows extant in the table. This
-#' creates a stub block with group headings and row captions.
+#' Create a row group with a collection of rows. This requires specification of
+#' the rows to be included, either by supplying row labels, row indices, or
+#' through use of a select helper function like \code{starts_with()}.
 #' @inheritParams fmt_number
-#' @param group the stub block group heading name.
-#' @param rows the rows to be made components of the stub block. Can either be a
+#' @param group the name of the row group. This text will also serve as the row
+#'   group label.
+#' @param rows the rows to be made components of the row group. Can either be a
 #'   vector of row captions provided \code{c()}, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}.
-#' @param others an option to set a default group heading for any rows not
-#'   formally placed in a stub block named by \code{group} in any call of
-#'   \code{tab_stub_block()}. A separate call to \code{tab_stub_block()} with
-#'   only a value to \code{others} is possible and makes explicit that the call
-#'   is meant to provide a default group heading value. If this is not set and
-#'   there are rows that haven't been placed into a stub block (where one or
-#'   more stub blocks exist), then those rows will be automatically placed into
-#'   a stub block without a title.
+#' @param others an option to set a default row group label for any rows not
+#'   formally placed in a row group named by \code{group} in any call of
+#'   \code{tab_row_group()}. A separate call to \code{tab_row_group()} with only
+#'   a value to \code{others} is possible and makes explicit that the call is
+#'   meant to provide a default row group label. If this is not set and
+#'   there are rows that haven't been placed into a row group (where one or
+#'   more row groups already exist), those rows will be automatically placed into
+#'   a row group without a label.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table based on `mtcars` where
-#' # there are group headings grouped inside
-#' # stub blocks; two groups are generated
-#' # here: `Mazda` and `NA` (a group without)
-#' # a title
+#' # Create a table based on `mtcars` and
+#' # add two row groups with the labels:
+#' # `Mazda` and `NA` (group without a title)
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stub_block(
+#'     tab_row_group(
 #'       group = "Mazda",
 #'       rows = c("Mazda RX4", "Mazda RX4 Wag"))
 #' @family table-part creation/modification functions
 #' @import rlang
 #' @export
-tab_stub_block <- function(data,
-                           group = NULL,
-                           rows = NULL,
-                           others = NULL) {
+tab_row_group <- function(data,
+                          group = NULL,
+                          rows = NULL,
+                          others = NULL) {
 
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
-  # Create a stub block if a `group` is provided
+  # Create a row group if a `group` is provided
   if (!is.null(group)) {
 
     # Get the `data_df` data frame from `data`
@@ -135,13 +129,14 @@ tab_stub_block <- function(data,
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
 
-      if (any(is.na(attr(data, "stub_df")$groupname))) {
+      if (any(is.na(attr(data, "stub_df", exact = TRUE)$groupname))) {
 
         attr(data, "arrange_groups") <-
           list(groups = c(process_text(group[1]), NA_character_))
 
       } else {
-        attr(data, "arrange_groups") <- list(groups = process_text(group[1]))
+        attr(data, "arrange_groups") <-
+          list(groups = process_text(group[1]))
       }
 
     } else {
@@ -149,12 +144,14 @@ tab_stub_block <- function(data,
       if (any(is.na(attr(data, "stub_df")$groupname))) {
 
         attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]), NA_character_) %>%
+          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
+            process_text(group[1]), NA_character_) %>%
           unique()
 
       } else {
         attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups")[["groups"]], process_text(group[1]))
+          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
+            process_text(group[1]))
       }
     }
   }
@@ -168,28 +165,31 @@ tab_stub_block <- function(data,
   data
 }
 
-#' Arrange a boxhead into panels
+#' Add a spanner column label
 #'
-#' Set a spanner with a name and mappings to columns extant in the table. This
-#' creates a boxhead panel with spanner headings and column headings.
+#' Set a spanner column label by mapping it to columns already in the table.
+#' This label is placed above one or more columnd, spanning the width of those
+#' columns.
 #' @inheritParams fmt_number
-#' @param group the name to assign to the spanner heading.
+#' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `rock` where
-#' # there are column headings grouped
-#' # under spanner headings
+#' # there are columns grouped under a
+#' # common spanner column label
 #' gt_tbl <-
 #'   gt(data = rock) %>%
-#'     tab_boxhead_panel(
-#'       group = "perimeter",
-#'       columns = c("peri", "shape"))
+#'     tab_spanner(
+#'       label = "perimeter",
+#'       columns = vars(peri, shape))
 #' @family table-part creation/modification functions
 #' @export
-tab_boxhead_panel <- function(data,
-                              group,
-                              columns) {
+tab_spanner <- function(data,
+                        label,
+                        columns) {
+  checkmate::assert_character(
+    label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
   # If using the `vars()` helper, get the columns as a character vector
   if (inherits(columns, "quosures")) {
@@ -198,14 +198,21 @@ tab_boxhead_panel <- function(data,
 
   # Filter the vector of column names by the
   # column names actually in `input_df`
-  columns <-
-    columns[which(columns %in% colnames(data))]
+  columns <- columns[which(columns %in% colnames(data))]
 
   if (length(columns) == 0) {
     return(data)
   }
 
-  attr(data, "boxh_df")["group_label", columns] <- process_text(group)
+  grp_labels <- attr(data, "grp_labels", exact = TRUE)
+
+  for (i in seq(columns)) {
+    grp_labels[[columns[i]]] <- label
+  }
+
+  # Set the `grp_labels` attr with the `grp_labels` object
+  attr(data, "grp_labels") <- grp_labels
+
   data
 }
 
@@ -229,17 +236,16 @@ tab_boxhead_panel <- function(data,
 tab_source_note <- function(data,
                             source_note) {
 
-  source_note <- process_text(source_note)
-
   if ("source_note" %in% names(attributes(data))) {
 
-    attr(data, "source_note")[["source_note"]] <-
-      c(attr(data, "source_note")[["source_note"]], source_note)
+    attr(data, "source_note") <-
+      c(attr(data, "source_note", exact = TRUE),
+        list(source_note))
 
   } else {
 
     attr(data, "source_note") <-
-      list(source_note = source_note)
+      list(source_note)
   }
 
   data

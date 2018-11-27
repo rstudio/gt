@@ -15,7 +15,8 @@ pixels (e.g., \code{table.font.size}).}
 Helper for providing a numeric value as pixels value
 }
 \seealso{
-Other helper functions: \code{\link{apply_styles}},
-  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}}
+Other helper functions: \code{\link{cells_styles}},
+  \code{\link{escape_latex}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{pct}}
 }
 \concept{helper functions}

@@ -84,7 +84,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -93,13 +93,7 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -138,13 +132,13 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>html</span>(<span class='no'>text</span>)</pre>
+    <pre class="usage"><span class='fu'>html</span>(<span class='no'>text</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
+      <th>text, ...</th>
       <td><p>the text that is understood to be HTML text, which is to be
 preserved.</p></td>
     </tr>
@@ -158,8 +152,9 @@ preserved.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other helper functions: <code><a href='apply_styles.html'>apply_styles</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code></p></div>
+    <div class='dont-index'><p>Other helper functions: <code><a href='cells_styles.html'>cells_styles</a></code>,
+  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='md.html'>md</a></code>,
+  <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -168,8 +163,8 @@ preserved.</p></td>
 <span class='co'># that is to interpreted as HTML</span>
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_stubhead_caption.html'>tab_stubhead_caption</a></span>(
-      <span class='kw'>caption</span> <span class='kw'>=</span> <span class='fu'>html</span>(
+    <span class='fu'><a href='tab_stubhead_label.html'>tab_stubhead_label</a></span>(
+      <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>html</span>(
         <span class='st'>"car &lt;em&gt;make&lt;/em&gt; and &lt;em&gt;model&lt;/em&gt;"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

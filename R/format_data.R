@@ -128,11 +128,14 @@ fmt_number <- function(data,
     sep_mark <- ""
   }
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         default = function(x) {
 
@@ -283,11 +286,14 @@ fmt_scientific <- function(data,
     exp_start_str = "$ \\times 10^{",
     exp_end_str = "}$")
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         html = format_fcn_sci_notn_html,
         default = format_fcn_sci_notn_default,
@@ -382,13 +388,60 @@ fmt_percent <- function(data,
     sep_mark <- ""
   }
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
+        latex = function(x) {
+
+          # Determine which of `x` are not NA
+          non_na_x <- !is.na(x)
+
+          # Format all non-NA x values
+          x[non_na_x] <-
+            formatC(
+              x = x[non_na_x] * 100.0,
+              digits = decimals,
+              mode = "double",
+              big.mark = sep_mark,
+              decimal.mark = dec_mark,
+              format = "f",
+              drop0trailing = drop_trailing_zeros)
+
+          if (placement == "right") {
+            x[non_na_x] <- paste0(
+              x[non_na_x],
+              ifelse(incl_space, " \\%", "\\%"))
+          } else {
+            x[non_na_x] <- paste0(
+              ifelse(incl_space, "\\% ", "\\%"),
+              x[non_na_x])
+          }
+
+          # Handle negative values
+          if (negative_val == "parens") {
+
+            # Determine which of `x` are not NA and also negative
+            negative_x <- x < 0 & !is.na(x)
+
+            # Apply parentheses to the formatted value and remove
+            # the minus sign
+            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+          }
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
+
+          x
+        },
         default = function(x) {
+
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
@@ -590,11 +643,14 @@ fmt_currency <- function(data,
     sep_mark <- ""
   }
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         default = function(x) {
 
@@ -787,11 +843,14 @@ fmt_date <- function(data,
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         default = function(x) {
 
@@ -840,11 +899,14 @@ fmt_time <- function(data,
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         default = function(x) {
 
@@ -902,11 +964,14 @@ fmt_datetime <- function(data,
   date_time_format_str <-
     paste0(date_format, " ", time_format)
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         default = function(x) {
 
@@ -930,6 +995,12 @@ fmt_datetime <- function(data,
 #' \code{summary_rows} function, where the output may be text or useful as is
 #' (that function requires a formatter function).
 #' @inheritParams fmt_number
+#' @param escape an option to escape text according to the final output format
+#'   of the table. For example, if a Latex table is to be generated then Latex
+#'   escaping would be performed during rendering. By default this is set to
+#'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
+#'   Latex-formatted text should be passed through to the output Latex table
+#'   unchanged.
 #' @return an object of class \code{gt_tbl}.
 #' @family data formatting functions
 #' @import rlang
@@ -937,14 +1008,42 @@ fmt_datetime <- function(data,
 fmt_passthrough <- function(data,
                             columns,
                             rows = NULL,
+                            escape = TRUE,
                             pattern = "{x}") {
+
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
+        html = function(x) {
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+
+          if (escape) {
+            x <- x %>% process_text(context = "html")
+          }
+
+          x
+        },
+        latex = function(x) {
+
+          # Handle formatting of pattern
+          pre_post_txt <- get_pre_post_txt(pattern)
+          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+
+          if (escape) {
+            x <- x %>% process_text(context = "latex")
+          }
+
+          x
+        },
         default = function(x) {
 
           # Handle formatting of pattern
@@ -972,11 +1071,14 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
       columns = columns,
-      rows = rows,
+      rows = !!rows,
       fns = list(
         html = function(x) {
           if (missing_text == "---") {

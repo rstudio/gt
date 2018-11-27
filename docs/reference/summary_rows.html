@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Add summary rows using aggregation functions — summary_rows" />
 
-<meta property="og:description" content="Add summary rows to one or more stub blocks by using the input data already
+<meta property="og:description" content="Add summary rows to one or more row groups by using the input data already
 provided in the gt() function alongside any suitable
 aggregation functions. Should we need to obtain the summary data for external
 purposes, the extract_summary() can be used with a
@@ -88,7 +88,7 @@ gt_tbl object where summary rows were added via summary_rows()." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -97,13 +97,7 @@ gt_tbl object where summary rows were added via summary_rows()." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -138,7 +132,7 @@ gt_tbl object where summary rows were added via summary_rows()." />
 
     <div class="ref-description">
     
-    <p>Add summary rows to one or more stub blocks by using the input data already
+    <p>Add summary rows to one or more row groups by using the input data already
 provided in the <code><a href='gt.html'>gt</a>()</code> function alongside any suitable
 aggregation functions. Should we need to obtain the summary data for external
 purposes, the <code><a href='extract_summary.html'>extract_summary</a>()</code> can be used with a
@@ -146,7 +140,7 @@ purposes, the <code><a href='extract_summary.html'>extract_summary</a>()</code> 
     
     </div>
 
-    <pre class="usage"><span class='fu'>summary_rows</span>(<span class='no'>data</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>funs</span>,
+    <pre class="usage"><span class='fu'>summary_rows</span>(<span class='no'>data</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>fns</span>,
   <span class='kw'>missing_text</span> <span class='kw'>=</span> <span class='st'>"---"</span>, <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,25 +152,26 @@ purposes, the <code><a href='extract_summary.html'>extract_summary</a>()</code> 
     </tr>
     <tr>
       <th>groups</th>
-      <td><p>the stub block groups heading names for which summary rows
-will be added.</p></td>
+      <td><p>the row groups labels that identify which summary rows will be
+added.</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>the columns for which the summaries should be calculated. If
-nothing is provided, then the supplied aggregation functions will be applied
-to all columns.</p></td>
+nothing is provided, then the supplied aggregation functions will be
+applied to all columns.</p></td>
     </tr>
     <tr>
-      <th>funs</th>
+      <th>fns</th>
       <td><p>functions used for aggregations. This can include base functions
 like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>, <code>sd</code>, or
-<code>sum</code>. The functions should be supplied using the <code><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs</a>()</code>
-helper function. With <code><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs()</a></code>, we can specify the functions by use of
-function names (e.g., <code>"sum"</code>), the functions themselves
-(e.g., <code>sum</code>), or calls to functions with <code>.</code> as a dummy argument
-(e.g., <code>sum(., na.rm = TRUE)</code>). By using named arguments, the names
-will serve as row labels for the corresponding summary rows (otherwise the
+<code>sum</code> or any other user-defined aggregation function. The function(s)
+should be supplied within a <code>list()</code>. Within that list, we can specify
+the functions by use of function names (e.g., <code>"sum"</code>), the functions
+themselves (e.g., <code>sum</code>), or one-sided R formulas by prefacing with a
+<code>~</code> where <code>.</code> serves as the data to be summarized (e.g.,
+<code>sum(., na.rm = TRUE)</code>). By using named arguments, the names will
+serve as row labels for the corresponding summary rows (otherwise the
 labels will be derived from the function names).</p></td>
     </tr>
     <tr>
@@ -209,7 +204,8 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a table that creates a stub and</span>
-<span class='co'># stub blocks based on a naming convention</span>
+<span class='co'># row groups based on the presence of the</span>
+<span class='co'># magic column names `groupname` &amp; `rowname`</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
     ~<span class='no'>groupname</span>, ~<span class='no'>rowname</span>, ~<span class='no'>value_1</span>, ~<span class='no'>value_2</span>,
@@ -233,10 +229,10 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
     <span class='fu'>summary_rows</span>(
       <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"A"</span>, <span class='st'>"C"</span>),
       <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>value_1</span>),
-      <span class='kw'>funs</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/funs.html'>funs</a></span>(
-        <span class='kw'>average</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-        <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-        <span class='kw'>`std dev`</span> <span class='kw'>=</span> <span class='fu'>sd</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div></pre>
+      <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'>list</span>(
+        <span class='kw'>average</span> <span class='kw'>=</span> ~<span class='fu'>mean</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+        <span class='kw'>total</span> <span class='kw'>=</span> ~<span class='fu'>sum</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+        <span class='kw'>`std dev`</span> <span class='kw'>=</span> ~<span class='fu'>sd</span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

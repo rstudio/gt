@@ -85,7 +85,7 @@ locations." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -94,13 +94,7 @@ locations." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -140,7 +134,7 @@ locations.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cells_title</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"title"</span>, <span class='st'>"headnote"</span>))
+    <pre class="usage"><span class='fu'>cells_title</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"title"</span>, <span class='st'>"subtitle"</span>))
 
 <span class='fu'>cells_boxhead</span>(<span class='no'>columns</span>, <span class='no'>groups</span>)
 
@@ -173,15 +167,15 @@ these functions).</p></td>
     <p>The following helper functions can be used to target cells (roughly in order
 from the top to the bottom of a table):</p>
 <ul>
-<li><p><code>cells_title()</code>: targets the table title or the table headnote
+<li><p><code>cells_title()</code>: targets the table title or the table subtitle
 depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
-<code>"headnote"</code>).</p></li>
+<code>"subtitle"</code>).</p></li>
 <li><p><code>cells_boxhead()</code>: targets captions for the column headers (the
-<code>columns</code> argument) or group spanners (the <code>groups</code> argument) in
-the table boxhead.</p></li>
-<li><p><code>cells_group()</code>: targets the group headings in the stub blocks
-using the <code>groups</code> argument.</p></li>
-<li><p><code>cells_stub()</code>: targets row captions in the table stub using the
+<code>columns</code> argument) or spanner column labels (the <code>groups</code>
+argument) in the table's column labels part.</p></li>
+<li><p><code>cells_group()</code>: targets the row group labels in any available
+row groups using the <code>groups</code> argument.</p></li>
+<li><p><code>cells_stub()</code>: targets row labels in the table stub using the
 <code>rows</code> argument.</p></li>
 <li><p><code>cells_data()</code>: targets data cells in the table field using
 intersections of <code>columns</code> and <code>rows</code>.</p></li>
