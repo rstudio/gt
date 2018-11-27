@@ -2,6 +2,7 @@
 
 S3method(print,gt_tbl)
 export("%>%")
+export(adjust_luminance)
 export(as_latex)
 export(as_raw_html)
 export(as_rtf)
