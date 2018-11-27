@@ -16,11 +16,11 @@ function.}
 \item{colors}{either a color mapping function from the \code{scales} package
 or a vector of colors to use for each distinct value or level in each of
 the provided \code{columns}. The color mapping functions are:
-\code{col_quantile()}, \code{col_bin()}, \code{col_numeric()}, and
-\code{col_factor()}. If providing a vector of colors as a palette, each
-color value provided must either be a color name (in the set of colors
-provided by \code{grDevices::colors()}) or hexadecimal strings in the form
-of "#RRGGBB" or "#RRGGBBAA".}
+\code{scales::col_quantile()}, \code{scales::col_bin()},
+\code{scales::col_numeric()}, and \code{scales::col_factor()}. If providing
+a vector of colors as a palette, each color value provided must either be a
+color name (in the set of colors provided by \code{grDevices::colors()}) or
+hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{alpha}{an optional, fixed alpha transparency value that will be applied
 to all of the \code{colors} provided if they are provided as a vector of
@@ -43,13 +43,4 @@ an object of class \code{gt_tbl}.
 \description{
 Set data cell colors using a palette or a colorizing helper function
 }
-\seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
-}
-\concept{column modification functions}
+\concept{data cell modification}
