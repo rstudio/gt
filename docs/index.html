@@ -55,7 +55,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="articles/creating-display-tables.html">Creating Display Tables</a>
@@ -64,13 +64,7 @@
       <a href="articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -102,225 +96,32 @@
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <p align="center">
-<img src="reference/figures/gt_logo_1x.png" height="500px"></p>
+<img src="reference/figures/gt_hex_logo.svg" height="500px"></p>
 <p align="center">
 <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a> <a href="https://travis-ci.com/rstudio/gt"><img src="https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&amp;branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a>
 </p>
-<p>The <strong>gt</strong> package allows anyone to easily create display tables from tabular data. The building of such tables can be performed with a clear separation of concerns: you don’t have to decide how the tabular data gets transformed and structured while also worrying about aesthetics.</p>
-<p>Let’s identify the underlying components of a table and understand their roles. The model for the constituent parts of a table can be explained in part by the following schematic:</p>
-<p><img src="reference/figures/gt_parts_of_a_table.png"></p>
-<p>The main parts of a table (and their subparts) are:</p>
-<ul>
-<li>the <strong>heading</strong> (optional; with a <strong>title</strong> and possibly a <strong>headnote</strong>)</li>
-<li>the <strong>stub</strong> (optional; contains a <strong>stub head</strong> and <strong>row captions</strong>, optionally within <strong>stub blocks</strong> having <strong>group headings</strong> and possibly <strong>summary captions</strong>)</li>
-<li>the <strong>boxhead</strong> (contains <strong>column labels</strong>, optionally within <strong>boxhead panels</strong> having one or more <strong>spanner headings</strong>)</li>
-<li>the <strong>field</strong> (contains <em>cells</em>, <em>columns</em>, and <em>rows</em>)</li>
-<li>the <strong>footer</strong> (optional; possibly with <strong>footnotes</strong> and <strong>source notes</strong>)</li>
-</ul>
-<p>The <strong>heading</strong> part contains the table title and the optional headnote subpart. A table heading is often overlooked but it really shouldn’t be.</p>
-<p>The <strong>stub</strong> is the area to the left in a table that contains <strong>row captions</strong>, <strong>summary captions</strong>, and <strong>group headings</strong>. Those subparts can be grouped in a sequence of <strong>stub blocks</strong>. The <strong>stub head</strong> provides a location for a caption that describes the <strong>stub</strong>. The <strong>stub</strong> is optional since there are cases where a <strong>stub</strong> wouldn’t be useful.</p>
-<p>The <strong>boxhead</strong> is the table part that contains the <strong>column labels</strong>, which can themselves be supplemented by <strong>spanner headings</strong> that are placed above. Groupings of <strong>spanner headings</strong> and <strong>column labels</strong> can be contained in one or more <strong>boxhead panels</strong>.</p>
-<p>The <strong>field</strong> is located below the <strong>boxhead</strong> and to the right of the <strong>stub</strong>. It is composed of <em>cells</em>, where vertical and horizontal collections are termed <em>columns</em> and <em>rows</em>.</p>
-<p>The <strong>footnotes</strong> component within the <strong>footer</strong> can contain explanatory statements targeted to one or more cells. This is done by affixing reference symbols to points of reference.</p>
-<p>The <strong>source notes</strong> component of the <strong>footer</strong> is for provision of citation information for the presented data. As it is commonly seen, the citation is preceeded by the word <code>Source</code>.</p>
-<p>The formalized table parts fit together well and can be used effectively for the vast majority of the tables that one may create. However, this structuring is meant to be flexible and not at all rigid. We put forward two main considerations for tabular presentation:</p>
-<ol style="list-style-type: decimal">
-<li><p>use common sense when planning a table</p></li>
-<li><p>imagine the viewing of the table from the standpoint of the user</p></li>
-</ol>
-<p>When taking these considerations to heart, we may naturally arrive to an overarching design objective:</p>
-<pre><code>The single objective is to make the display table as easy to read and to 
-understand as the nature of the material will permit.</code></pre>
-<div id="examples-of-display-table-creation-using-gt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#examples-of-display-table-creation-using-gt" class="anchor"></a>Examples of Display Table Creation using <strong>gt</strong>
-</h2>
-<p>The <code>mtcars</code> dataset can be suitably transformed into a display table (for sake of brevity, we’ll use just the first 6 rows). We can use the <code><a href="reference/gt.html">gt()</a></code> function to initiate the process (providing <code>mtcars</code> to the <code>data</code> argument), creating a table object. The <code>mtcars</code> dataset has car names as rownames, so we will expose those in a column with the <code>rownames_to_stub = TRUE</code> option After that, a few functions can be used to refine the display table:</p>
-<ul>
-<li>
-<code><a href="reference/fmt_number.html">fmt_number()</a></code>: allows us to format numbers with some exactness</li>
-<li>
-<code><a href="reference/tab_stubhead_caption.html">tab_stubhead_caption()</a></code>: adds a caption to the stubhead (the box in the top-left of the table)</li>
-<li>
-<code><a href="reference/tab_heading.html">tab_heading()</a></code>: an opportunity to add a title and optionally a headnote</li>
-<li>
-<code><a href="reference/tab_source_note.html">tab_source_note()</a></code>: a note that states the source of the presented data</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># 1 - we take the first six rows of `datasets::mtcars` data.frame</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># 2 - we are formatting numbers in 4 columns to have 1 decimal place</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co"># 3 - we are formatting numbers in the `wt` column to have 3 decimal places</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co"># 4 - the dataset has rownames so they've been moved to the stub;</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#     here, we supply a stubhead caption</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co"># 5 - a heading is added, both parts are interpreted as Markdown</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co"># 6 - two source notes are added, the first is interpreted as Markdown</span></a>
-<a class="sourceLine" id="cb2-9" title="9">mtcars_tbl &lt;-</a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw"><a href="reference/gt.html">gt</a></span>(mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, ], <span class="dt">rownames_to_stub =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb2-12" title="12">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg, disp, drat, qsec),</a>
-<a class="sourceLine" id="cb2-13" title="13">    <span class="dt">decimals =</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-14" title="14">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 2</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb2-16" title="16">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(wt),</a>
-<a class="sourceLine" id="cb2-17" title="17">    <span class="dt">decimals =</span> <span class="dv">3</span></a>
-<a class="sourceLine" id="cb2-18" title="18">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 3</span></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw"><a href="reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"car model"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 4</span></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="st">  </span><span class="kw"><a href="reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb2-21" title="21">    <span class="dt">title =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"Excerpt from the **mtcars** dataset"</span>),</a>
-<a class="sourceLine" id="cb2-22" title="22">    <span class="dt">headnote =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"[A rather famous *Motor Trend* table]"</span>)</a>
-<a class="sourceLine" id="cb2-23" title="23">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 5</span></a>
-<a class="sourceLine" id="cb2-24" title="24"><span class="st">  </span><span class="kw"><a href="reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb2-25" title="25">    <span class="dt">source_note =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"Main Source of Data: *Henderson and Velleman* (1981)."</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 6</span></a>
-<a class="sourceLine" id="cb2-26" title="26"><span class="st">  </span><span class="kw"><a href="reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb2-27" title="27">    <span class="dt">source_note =</span> <span class="st">"Original Data from Motor Trend Magazine (1974)."</span>) <span class="co"># 6</span></a></code></pre></div>
-<p>Invoking the object interactively displays it in the Viewer. In R Markdown chunks, the object becomes an HTML table.</p>
-<p><img src="reference/figures/mtcars.png"></p>
-<p>Let’s build another table using another well-known dataset. In this table, we embrace the naming convention provided in the <strong>iris</strong> dataset’s column names. Having columns in dot notation (such as <code>Sepal.Length</code> and <code>Petal.Width</code>) provide a means to specify heading levels as <code>&lt;spanner_heading&gt;.&lt;column_heading&gt;</code>. So long as we follow this column-name pattern, we can use the <code><a href="reference/cols_split_delim.html">cols_split_delim()</a></code> function to parse and expand the given column names into one or more boxhead panels with group and column headings.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co"># 1 - we take the `datasets::iris` data.frame</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 2 - the dot-notation column naming format (i.e., `[heading].[caption]`)</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#     can be used to create group headings to add structure</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3 - the `Species` column is moved to the start of the column series</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4 - we are formatting numbers in the named columns to have 1 decimal place</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5 - a heading is added</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6 - a source note is added</span></a>
-<a class="sourceLine" id="cb3-9" title="9">iris_tbl &lt;-</a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw"><a href="reference/gt.html">gt</a></span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, ]) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw"><a href="reference/cols_split_delim.html">cols_split_delim</a></span>(<span class="dt">delim =</span> <span class="st">"."</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 2</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw"><a href="reference/cols_move_to_start.html">cols_move_to_start</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Species)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 3</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw"><a href="reference/fmt_number.html">fmt_number</a></span>(</a>
-<a class="sourceLine" id="cb3-14" title="14">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),</a>
-<a class="sourceLine" id="cb3-15" title="15">    <span class="dt">decimals =</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-16" title="16">    ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 4</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw"><a href="reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb3-18" title="18">    <span class="dt">title =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"The **iris** dataset"</span>),</a>
-<a class="sourceLine" id="cb3-19" title="19">    <span class="dt">headnote =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"[All about *Iris setosa*, *versicolor*, and *virginica*]"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 5</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="st">  </span><span class="kw"><a href="reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb3-21" title="21">    <span class="dt">source_note =</span> <span class="kw"><a href="reference/md.html">md</a></span>(<span class="st">"The data were collected by *Anderson* (1935)."</span>)) <span class="co"># 6</span></a></code></pre></div>
-<p>This is how the table appears:</p>
-<p><img src="reference/figures/iris.png"></p>
-</div>
-<div id="package-api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-api" class="anchor"></a>Package API</h2>
-<p>The package API consists of the following functions:</p>
-<p><strong>Create/Modify Table Parts</strong></p>
-<ul>
-<li>
-<code><a href="reference/gt.html">gt()</a></code> – create a <strong>gt</strong> table object</li>
-<li>
-<code><a href="reference/gt_preview.html">gt_preview()</a></code> – preview a <strong>gt</strong> table object</li>
-<li>
-<code><a href="reference/tab_heading.html">tab_heading()</a></code> – add a table heading</li>
-<li>
-<code>tab_stub()</code> – add a stub to a table</li>
-<li>
-<code><a href="reference/tab_stubhead_caption.html">tab_stubhead_caption()</a></code> – add caption text to the stubhead</li>
-<li>
-<code><a href="reference/tab_stub_block.html">tab_stub_block()</a></code> – arrange a table stub into blocks</li>
-<li>
-<code><a href="reference/tab_boxhead_panel.html">tab_boxhead_panel()</a></code> – arrange a boxhead into panels</li>
-<li>
-<code><a href="reference/tab_footnote.html">tab_footnote()</a></code> – add one or more footnotes</li>
-<li>
-<code><a href="reference/tab_source_note.html">tab_source_note()</a></code> – add a source note citation</li>
-<li>
-<code><a href="reference/tab_style.html">tab_style()</a></code> – add custom styles to one or more cells</li>
-<li>
-<code><a href="reference/tab_options.html">tab_options()</a></code> – modify the table output options</li>
-</ul>
-<p><strong>Format Data</strong></p>
-<ul>
-<li>
-<code><a href="reference/fmt.html">fmt()</a></code> – set a column format with a formatter function</li>
-<li>
-<code><a href="reference/fmt_number.html">fmt_number()</a></code> – format numeric values</li>
-<li>
-<code><a href="reference/fmt_scientific.html">fmt_scientific()</a></code> – format values to scientific notation</li>
-<li>
-<code><a href="reference/fmt_percent.html">fmt_percent()</a></code> – format values as a percentage</li>
-<li>
-<code><a href="reference/fmt_currency.html">fmt_currency()</a></code> – format values as currencies</li>
-<li>
-<code><a href="reference/fmt_date.html">fmt_date()</a></code> – format values as dates</li>
-<li>
-<code><a href="reference/fmt_time.html">fmt_time()</a></code> – format values as times</li>
-<li>
-<code><a href="reference/fmt_datetime.html">fmt_datetime()</a></code> – format values as date-times</li>
-<li>
-<code><a href="reference/fmt_missing.html">fmt_missing()</a></code> – format missing values</li>
-<li>
-<code><a href="reference/fmt_passthrough.html">fmt_passthrough()</a></code> – format by simply passing data through</li>
-<li>
-<code><a href="reference/text_transform.html">text_transform()</a></code> – perform targeted text transformation with a function</li>
-</ul>
-<p><strong>Modify Columns</strong></p>
-<ul>
-<li>
-<code><a href="reference/cols_align.html">cols_align()</a></code> – set the alignment of columns</li>
-<li>
-<code><a href="reference/cols_move.html">cols_move()</a></code> – move one or more columns</li>
-<li>
-<code><a href="reference/cols_move_to_start.html">cols_move_to_start()</a></code> – move one or more columns to the start</li>
-<li>
-<code><a href="reference/cols_move_to_end.html">cols_move_to_end()</a></code> – move one or more columns to the end</li>
-<li>
-<code><a href="reference/cols_hide.html">cols_hide()</a></code> – hide one or more columns</li>
-<li>
-<code><a href="reference/cols_label.html">cols_label()</a></code> – relabel one or more columns</li>
-<li>
-<code><a href="reference/cols_split_delim.html">cols_split_delim()</a></code> – create group names and column labels via delimited column names</li>
-<li>
-<code><a href="reference/cols_merge.html">cols_merge()</a></code> – merge two columns to a single column with a formatter</li>
-<li>
-<code><a href="reference/cols_merge_uncert.html">cols_merge_uncert()</a></code> – merge two columns to a value + uncertainty column</li>
-<li>
-<code><a href="reference/cols_merge_range.html">cols_merge_range()</a></code> – merge two columns to a value range column</li>
-</ul>
-<p><strong>Modify Rows</strong></p>
-<ul>
-<li>
-<code><a href="reference/blocks_arrange.html">blocks_arrange()</a></code> – modify the ordering of the stub block groups</li>
-</ul>
-<p><strong>Add Rows</strong></p>
-<ul>
-<li>
-<code><a href="reference/summary_rows.html">summary_rows()</a></code> – add summary rows using aggregation functions</li>
-</ul>
-<p><strong>Export Table</strong></p>
-<ul>
-<li>
-<code>write_rtf()</code> – save a <strong>gt</strong> table object as an RTF file</li>
-<li>
-<code><a href="reference/as_raw_html.html">as_raw_html()</a></code> – get the HTML content of a <strong>gt</strong> table</li>
-<li>
-<code><a href="reference/extract_summary.html">extract_summary()</a></code> – extract a summary table from a <strong>gt</strong> table object</li>
-</ul>
-<p><strong>Shiny</strong></p>
-<ul>
-<li>
-<code><a href="reference/render_gt.html">render_gt()</a></code> – a <strong>gt</strong> display table render function for use in Shiny</li>
-<li>
-<code><a href="reference/gt_output.html">gt_output()</a></code> – create a <strong>gt</strong> display table output element for Shiny</li>
-</ul>
-</div>
-<div id="inner-workings" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inner-workings" class="anchor"></a>Inner Workings</h2>
-<p>For those interested in the package design itself and especially how the <strong>gt</strong> functions relate to each other, here is a graph showing just that:</p>
-<p><img src="reference/figures/gt_function_graph.png"></p>
-<p>The green nodes represent those functions that are exported. The relative sizing of nodes is scaled the number of package functions called by each (no matter whether the function is exported or not). Each edge represents the relationship <code>called_in</code>.</p>
-</div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that this project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
-</div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
-<p>MIT © RStudio, Inc.</p>
-</div>
+<p>With the <strong>gt</strong> package, anyone can make wonderful-looking tables using the <strong>R</strong> programming language. The <strong>gt</strong> philosophy: we can construct a wide variety of useful tables with a cohesive set of table parts. These include the <em>table header</em>, the <em>stub</em>, the <em>stub head</em>, the <em>column labels</em>, the <em>table body</em>, and the <em>table footer</em>.</p>
+<p align="center">
+<img src="reference/figures/gt_parts_of_a_table.svg" width="800px"></p>
+<p>It all begins with preprocessed <strong>table data</strong> (be it a tibble or a data frame). You decide how to compose your <strong>gt table</strong> with the elements you need for the task at hand. Output can either be in the form of <strong>HTML</strong>, <strong>LaTeX</strong>, or <strong>RTF</strong>. All work beautifully inside <strong>R Markdown</strong> documents.</p>
+<p>The <strong>gt</strong> API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. However, should you need more customizability, there are options to make that possible.</p>
+<p align="center">
+<img src="reference/figures/gt_functions.svg" width="800px"></p>
+<hr>
+<p><img src="reference/figures/gt_tables.png"></p>
+<hr>
+<h4 align="center">
+Code of Conduct
+</h4>
+<h6 align="center">
+Please note that this project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>.<br>By participating in this project you agree to abide by its terms.
+</h6>
+<h4 align="center">
+License
+</h4>
+<h6 align="center">
+MIT © RStudio, Inc.
+</h6>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
