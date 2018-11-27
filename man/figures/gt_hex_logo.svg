@@ -87,19 +87,19 @@
             <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-20" points="4.50904293 312.267773 318.154923 490.267773 318.154923 509.113178 4.50904293 331.113178"></polygon>
+        <polygon id="path-20" points="4.50904293 308.267773 318.154923 486.267773 318.154923 505.113178 4.50904293 327.113178"></polygon>
         <filter x="-0.6%" y="-1.5%" width="102.6%" height="103.0%" filterUnits="objectBoundingBox" id="filter-21">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-22" points="4.50904293 336.941649 318.165457 515.941649 318.165457 534.796158 4.50904293 355.796158"></polygon>
+        <polygon id="path-22" points="4.50904293 332.941649 318.165457 511.941649 318.165457 530.796158 4.50904293 351.796158"></polygon>
         <filter x="-0.6%" y="-1.5%" width="102.6%" height="103.0%" filterUnits="objectBoundingBox" id="filter-23">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-24" points="224.380362 375.090862 318.145924 322.090862 318.145924 419.717232 224.380362 472.717232"></polygon>
+        <polygon id="path-24" points="224.380362 371.090862 318.145924 318.090862 318.145924 415.717232 224.380362 468.717232"></polygon>
         <filter x="-6.4%" y="-2.0%" width="108.5%" height="104.0%" filterUnits="objectBoundingBox" id="filter-25">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="-3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
@@ -109,25 +109,25 @@
             <stop stop-color="#E9C63A" offset="0%"></stop>
             <stop stop-color="#DFA62F" offset="100%"></stop>
         </linearGradient>
-        <polygon id="path-27" points="4.50730737 61.5262593 318.163721 238.526259 318.163721 257.37044 4.50730737 80.3704399"></polygon>
+        <polygon id="path-27" points="4.50730737 57.5262593 318.163721 234.526259 318.163721 253.37044 4.50730737 76.3704399"></polygon>
         <filter x="-0.6%" y="-1.5%" width="102.6%" height="103.1%" filterUnits="objectBoundingBox" id="filter-28">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-29" points="4.50730737 87.2015104 318.163721 264.20151 318.163721 283.081768 4.50730737 106.081768"></polygon>
+        <polygon id="path-29" points="4.50730737 83.2015104 318.163721 260.20151 318.163721 279.081768 4.50730737 102.081768"></polygon>
         <filter x="-0.6%" y="-1.5%" width="102.6%" height="103.1%" filterUnits="objectBoundingBox" id="filter-30">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-31" points="224.501384 264.621166 318.03336 317.621166 318.03336 340.61919 224.501384 287.61919"></polygon>
+        <polygon id="path-31" points="224.501384 260.621166 318.03336 313.621166 318.03336 336.61919 224.501384 283.61919"></polygon>
         <filter x="-2.1%" y="-3.9%" width="108.6%" height="107.9%" filterUnits="objectBoundingBox" id="filter-32">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-33" points="5.08027384 238.325199 211.002626 122.325199 211.002626 185.65001 5.08027384 301.65001"></polygon>
+        <polygon id="path-33" points="5.08027384 234.325199 211.002626 118.325199 211.002626 181.65001 5.08027384 297.65001"></polygon>
         <filter x="-2.9%" y="-1.7%" width="103.9%" height="103.3%" filterUnits="objectBoundingBox" id="filter-34">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="-3" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
@@ -153,7 +153,7 @@
             <stop stop-color="#E9E9E9" stop-opacity="0" offset="41.0774075%"></stop>
             <stop stop-color="#E9E9E9" offset="100%"></stop>
         </linearGradient>
-        <path d="M0.333118745,48.9241986 L325.939296,232.24182" id="path-39"></path>
+        <path d="M0.333118745,44.9241986 L325.939296,228.24182" id="path-39"></path>
         <filter x="-2.3%" y="-3.0%" width="104.6%" height="108.2%" filterUnits="objectBoundingBox" id="filter-40">
             <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
             <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
@@ -272,9 +272,9 @@
                     <use fill="#000000" fill-rule="evenodd" xlink:href="#path-18"></use>
                 </g>
             </g>
-            <g id="Group" transform="translate(541.750993, 512.975841) scale(-1, 1) translate(-541.750993, -512.975841) translate(355.250993, 240.475841)">
-                <polygon id="Rectangle-3-Copy-3" fill="#C3E5FF" points="0.0457166694 187.457323 219.659613 311.444283 219.66155 424.393742 0.0457166694 300.398012"></polygon>
-                <polygon id="Rectangle-5" fill="#E9E9E9" transform="translate(163.107417, 422.389007) scale(-1, 1) translate(-163.107417, -422.389007) " points="0.049807083 484.405283 326.165027 300.405283 326.165027 360.372731 0.049807083 544.372731"></polygon>
+            <g id="Group" transform="translate(541.750993, 514.975841) scale(-1, 1) translate(-541.750993, -514.975841) translate(355.250993, 244.475841)">
+                <polygon id="Rectangle-3-Copy-3" fill="#C3E5FF" points="0.0457166694 183.457323 219.659613 307.444283 219.66155 420.393742 0.0457166694 296.398012"></polygon>
+                <polygon id="Rectangle-5" fill="#E9E9E9" transform="translate(163.107417, 418.389007) scale(-1, 1) translate(-163.107417, -418.389007) " points="0.049807083 480.405283 326.165027 296.405283 326.165027 356.372731 0.049807083 540.372731"></polygon>
                 <g id="Rectangle-3-Copy-6">
                     <use fill="black" fill-opacity="1" filter="url(#filter-21)" xlink:href="#path-20"></use>
                     <use fill="#DBECCB" fill-rule="evenodd" xlink:href="#path-20"></use>
@@ -283,12 +283,12 @@
                     <use fill="black" fill-opacity="1" filter="url(#filter-23)" xlink:href="#path-22"></use>
                     <use fill="#F4E1A8" fill-rule="evenodd" xlink:href="#path-22"></use>
                 </g>
-                <polygon id="Rectangle-3-Copy-9" fill="#DDF292" points="219.657581 311.245829 326.149496 371.245829 326.149496 484.414279 219.657581 424.414279"></polygon>
-                <g id="Rectangle-4-Copy-8" transform="translate(271.263143, 397.404047) scale(-1, 1) translate(-271.263143, -397.404047) ">
+                <polygon id="Rectangle-3-Copy-9" fill="#DDF292" points="219.657581 307.245829 326.149496 367.245829 326.149496 480.414279 219.657581 420.414279"></polygon>
+                <g id="Rectangle-4-Copy-8" transform="translate(271.263143, 393.404047) scale(-1, 1) translate(-271.263143, -393.404047) ">
                     <use fill="black" fill-opacity="1" filter="url(#filter-25)" xlink:href="#path-24"></use>
                     <use fill="#FCFFCA" fill-rule="evenodd" xlink:href="#path-24"></use>
                 </g>
-                <polygon id="Rectangle-3" fill="url(#linearGradient-26)" points="0.00426377644 48.8337836 326.173423 231.833784 326.173423 292.607805 0.00426377644 109.607805"></polygon>
+                <polygon id="Rectangle-3" fill="url(#linearGradient-26)" points="0.00426377644 44.8337836 326.173423 227.833784 326.173423 288.607805 0.00426377644 105.607805"></polygon>
                 <g id="Rectangle-3-Copy-8">
                     <use fill="black" fill-opacity="1" filter="url(#filter-28)" xlink:href="#path-27"></use>
                     <use fill="#DFB6E7" fill-rule="evenodd" xlink:href="#path-27"></use>
@@ -297,22 +297,22 @@
                     <use fill="black" fill-opacity="1" filter="url(#filter-30)" xlink:href="#path-29"></use>
                     <use fill="#B0B9EB" fill-rule="evenodd" xlink:href="#path-29"></use>
                 </g>
-                <polygon id="Rectangle-3-Copy-5" fill="#B6DE2A" points="219.699666 232.612431 326.172851 292.530464 326.172851 371.457323 219.663213 311.444676"></polygon>
+                <polygon id="Rectangle-3-Copy-5" fill="#B6DE2A" points="219.699666 228.612431 326.172851 288.530464 326.172851 367.457323 219.663213 307.444676"></polygon>
                 <g id="Rectangle-3-Copy-4">
                     <use fill="black" fill-opacity="1" filter="url(#filter-32)" xlink:href="#path-31"></use>
                     <use fill="#F8E71C" fill-rule="evenodd" xlink:href="#path-31"></use>
                 </g>
-                <polygon id="Rectangle-3-Copy-13" fill="#FFD9C3" points="0.0214786917 109.617862 219.705675 232.618739 219.663884 311.449345 0.0454354937 188.378112"></polygon>
-                <g id="Rectangle-4-Copy-9" transform="translate(108.041450, 211.987605) scale(-1, 1) translate(-108.041450, -211.987605) ">
+                <polygon id="Rectangle-3-Copy-13" fill="#FFD9C3" points="0.0214786917 105.617862 219.705675 228.618739 219.663884 307.449345 0.0454354937 184.378112"></polygon>
+                <g id="Rectangle-4-Copy-9" transform="translate(108.041450, 207.987605) scale(-1, 1) translate(-108.041450, -207.987605) ">
                     <use fill="black" fill-opacity="1" filter="url(#filter-34)" xlink:href="#path-33"></use>
                     <use fill="#8DE7D7" fill-rule="evenodd" xlink:href="#path-33"></use>
                 </g>
-                <polygon id="Rectangle-Copy" fill="url(#linearGradient-35)" points="366.945234 204.023214 366.99827 264.818644 326.169555 292.634828 326.149496 231.839398"></polygon>
-                <polygon id="Rectangle-Copy-5" fill="url(#linearGradient-35)" transform="translate(186.330734, 124.400184) rotate(-60.000000) translate(-186.330734, -124.400184) " points="211.782332 -42.3191626 214.055252 323.521828 162.759332 299.070089 158.606215 -74.72146"></polygon>
-                <polygon id="Rectangle-Copy-2" fill="url(#linearGradient-36)" points="366.945234 264.804623 366.99827 343.5818 326.169555 371.397984 326.149496 292.620808"></polygon>
-                <polygon id="Rectangle-Copy-3" fill="url(#linearGradient-37)" points="366.945234 343.614614 366.99827 456.642737 326.169555 484.458921 326.149496 371.430798"></polygon>
-                <polygon id="Rectangle-Copy-4" fill="url(#linearGradient-38)" points="366.945234 456.571476 366.99827 516.510633 326.169597 544.359618 326.149496 484.387661"></polygon>
-                <path d="M326.148321,543.866982 L325.939296,232.24182" id="Line-2-Copy" stroke-opacity="0.351505888" stroke="#FFFFFF" stroke-linecap="round"></path>
+                <polygon id="Rectangle-Copy" fill="url(#linearGradient-35)" points="366.945234 204.023214 366.99827 264.818644 326.169555 288.634828 326.149496 227.839398"></polygon>
+                <polygon id="Rectangle-Copy-5" fill="url(#linearGradient-35)" transform="translate(186.330734, 122.900184) rotate(-60.000000) translate(-186.330734, -122.900184) " points="209.617269 -42.5691626 211.890189 323.271828 164.924395 296.320089 160.771279 -77.47146"></polygon>
+                <polygon id="Rectangle-Copy-2" fill="url(#linearGradient-36)" points="366.945234 264.804623 366.99827 343.5818 326.169555 367.397984 326.149496 288.620808"></polygon>
+                <polygon id="Rectangle-Copy-3" fill="url(#linearGradient-37)" points="366.945234 343.614614 366.99827 456.642737 326.169555 480.458921 326.149496 367.430798"></polygon>
+                <polygon id="Rectangle-Copy-4" fill="url(#linearGradient-38)" points="366.945234 456.571476 366.99827 516.510633 326.169597 540.359618 326.149496 480.387661"></polygon>
+                <path d="M326.148321,539.866982 L325.939296,228.24182" id="Line-2-Copy" stroke-opacity="0.351505888" stroke="#FFFFFF" stroke-linecap="round"></path>
                 <g id="Line-2-Copy-3" stroke-linecap="round">
                     <use fill="black" fill-opacity="1" filter="url(#filter-40)" xlink:href="#path-39"></use>
                     <use stroke-opacity="0.351392663" stroke="#FFFFFF" stroke-width="1" xlink:href="#path-39"></use>
