@@ -2,29 +2,56 @@ development:
   mode: unreleased
 
 reference:
-  - title: Create/Modify Table Parts
+  - title: Create Table
     contents:
     - gt
     - gt_preview
-    - starts_with("tab")
+  - title: Create/Modify Parts
+    contents:
+    - tab_header
+    - tab_spanner
+    - tab_row_group
+    - tab_stubhead_label
+    - tab_footnote
+    - tab_source_note
+    - tab_options
+    - tab_style
   - title: Format Data
     contents:
-    - starts_with("fmt")
+    - fmt
+    - fmt_number
+    - fmt_scientific
+    - fmt_percent
+    - fmt_currency
+    - fmt_date
+    - fmt_time
+    - fmt_datetime
+    - fmt_missing
+    - fmt_passthrough
     - text_transform
   - title: Modify Columns
     contents:
-    - starts_with("cols")
+    - cols_align
+    - cols_hide
+    - cols_label
+    - cols_merge
+    - cols_merge_range
+    - cols_merge_uncert
+    - cols_move
+    - cols_move_to_end
+    - cols_move_to_start
+    - cols_split_delim
   - title: Modify Rows
     contents:
-    - blocks_arrange
+    - row_group_order
   - title: Add Rows
     contents:
     - summary_rows
   - title: Export Table
     contents:
+    - as_raw_html
     - as_latex
     - as_rtf
-    - as_raw_html
     - extract_summary
   - title: Shiny Functions
     contents:
@@ -46,7 +73,7 @@ reference:
     - local_image
     - ggplot_image
     - test_image
-  - title: Helpful Information
+  - title: Information
     contents:
     - info_date_style
     - info_time_style
@@ -57,3 +84,4 @@ reference:
     - gtcars
     - sp500
     - pizzaplace
+    - exibble
