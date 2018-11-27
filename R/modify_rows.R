@@ -57,8 +57,7 @@ row_group_order <- function(data,
     groups <- arrange_groups[group_indices]
   }
 
-  # Create and store a list of stub block
-  #   groups in the intended ordering
+  # Create and store a list of row groups in the intended ordering
   attr(data, "arrange_groups") <- list(groups = groups)
 
   data
