@@ -1,6 +1,6 @@
 #' Add custom styles to one or more cells
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The \code{\link{apply_styles}()}
+#' @param style a vector of styles to use. The \code{\link{cells_styles}()}
 #'   helper function can be used here to more easily generate valid styles.
 #' @param locations the cell or set of cells to be associated with the style
 #'   Supplying an object with the \code{\link{cells_data}()} helper function is
@@ -14,12 +14,12 @@
 #' gt_tbl <-
 #'   gt(mtcars, rownames_to_stub = TRUE) %>%
 #'     tab_style(
-#'       style = apply_styles(bkgd_color = "steelblue"),
+#'       style = cells_styles(bkgd_color = "steelblue"),
 #'       locations = cells_data(
 #'         columns = vars(hp),
 #'         rows = c("Datsun 710", "Valiant")))
 #' @family table-part creation/modification functions
-#' @seealso \code{\link{apply_styles}()} as a helper for defining custom styles
+#' @seealso \code{\link{cells_styles}()} as a helper for defining custom styles
 #'   and \code{\link{cells_data}()} as a useful helper function for targeting
 #'   one or more data cells to be styled.
 #' @importFrom stats setNames
@@ -136,12 +136,12 @@ set_style.cells_title <- function(loc, data, style) {
         grpname = NA_character_, colname = NA_character_,
         rownum = NA_character_, text = style)
 
-  } else if ((loc$groups %>% as.character())[-1] == "headnote") {
+  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
     attr(data, "styles_df") <-
       add_location_row(
         data, df_type = "styles_df",
-        locname = "headnote", locnum = 2,
+        locname = "subtitle", locnum = 2,
         grpname = NA_character_, colname = NA_character_,
         rownum = NA_character_, text = style)
   }

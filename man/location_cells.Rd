@@ -10,7 +10,7 @@
 \alias{cells_summary}
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
-cells_title(groups = c("title", "headnote"))
+cells_title(groups = c("title", "subtitle"))
 
 cells_boxhead(columns, groups)
 
@@ -41,18 +41,18 @@ from the top to the bottom of a table):
 
 \itemize{
 
-\item \code{cells_title()}: targets the table title or the table headnote
+\item \code{cells_title()}: targets the table title or the table subtitle
 depending on the value given to the \code{groups} argument (\code{"title"} or
-\code{"headnote"}).
+\code{"subtitle"}).
 
 \item \code{cells_boxhead()}: targets captions for the column headers (the
-\code{columns} argument) or group spanners (the \code{groups} argument) in
-the table boxhead.
+\code{columns} argument) or spanner column labels (the \code{groups}
+argument) in the table's column labels part.
 
-\item \code{cells_group()}: targets the group headings in the stub blocks
-using the \code{groups} argument.
+\item \code{cells_group()}: targets the row group labels in any available
+row groups using the \code{groups} argument.
 
-\item \code{cells_stub()}: targets row captions in the table stub using the
+\item \code{cells_stub()}: targets row labels in the table stub using the
 \code{rows} argument.
 
 \item \code{cells_data()}: targets data cells in the table field using

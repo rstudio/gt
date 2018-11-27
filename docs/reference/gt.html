@@ -87,7 +87,7 @@ we can consider at this stage." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -96,13 +96,7 @@ we can consider at this stage." />
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -185,12 +179,10 @@ multiple groups) in the displayed stub row group label.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
-  <code><a href='tab_boxhead_panel.html'>tab_boxhead_panel</a></code>,
-  <code><a href='tab_footnote.html'>tab_footnote</a></code>, <code><a href='tab_heading.html'>tab_heading</a></code>,
-  <code><a href='tab_options.html'>tab_options</a></code>, <code><a href='tab_source_note.html'>tab_source_note</a></code>,
-  <code><a href='tab_stub_block.html'>tab_stub_block</a></code>,
-  <code><a href='tab_stubhead_caption.html'>tab_stubhead_caption</a></code>,
-  <code><a href='tab_style.html'>tab_style</a></code></p></div>
+  <code><a href='tab_footnote.html'>tab_footnote</a></code>, <code><a href='tab_header.html'>tab_header</a></code>,
+  <code><a href='tab_options.html'>tab_options</a></code>, <code><a href='tab_row_group.html'>tab_row_group</a></code>,
+  <code><a href='tab_source_note.html'>tab_source_note</a></code>, <code><a href='tab_spanner.html'>tab_spanner</a></code>,
+  <code><a href='tab_stubhead_label.html'>tab_stubhead_label</a></code>, <code><a href='tab_style.html'>tab_style</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -206,10 +198,11 @@ multiple groups) in the displayed stub row group label.</p></td>
 <span class='co'># `fmt_*()`, `cols_*()` functions)</span>
 <span class='no'>gt_tbl_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>gt_tbl</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_heading.html'>tab_heading</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mtcars"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mtcars"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
     <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>drat</span>, <span class='no'>wt</span>, <span class='no'>qsec</span>),
-    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='cols_label.html'>cols_label</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='st'>"HP"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

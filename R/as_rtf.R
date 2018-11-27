@@ -71,8 +71,8 @@ as_rtf <- function(data) {
   # Get the `heading` object
   heading <- data_attr$heading
 
-  # Get the `stubhead_caption` object
-  stubhead_caption <- data_attr$stubhead_caption
+  # Get the `stubhead_label` object
+  stubhead_label <- data_attr$stubhead_label
 
   # Get the `source_note` object
   source_note <- data_attr$source_note
@@ -171,8 +171,8 @@ as_rtf <- function(data) {
   # Determine if the title has been defined
   title_defined <- is_title_defined(heading)
 
-  # Determine if a headnote has been defined
-  headnote_defined <- is_headnote_defined(heading)
+  # Determine if a subtitle has been defined
+  subtitle_defined <- is_subtitle_defined(heading)
 
   # Determine if there are any summaries present
   summaries_present <- are_summaries_present(list_of_summaries)
@@ -212,7 +212,7 @@ as_rtf <- function(data) {
   footnotes_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, headnote_defined,
+      boxhead_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
   # Add footnote glyphs to boxhead elements
@@ -262,10 +262,10 @@ as_rtf <- function(data) {
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0 &&
+      length(stubhead_label) > 0 &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <- stubhead_caption$stubhead_caption
+    headings[which(headings == "rowname")] <- stubhead_label$stubhead_label
 
   } else if ("rowname" %in% headings) {
 

@@ -74,7 +74,8 @@ render_formats <- function(output_df,
 # Move input data cells to `output_df` that didn't have any rendering applied
 # during the `render_formats()` call
 migrate_unformatted_to_output <- function(data_df,
-                                          output_df) {
+                                          output_df,
+                                          context) {
 
   for (colname in colnames(output_df)) {
 
@@ -90,6 +91,7 @@ migrate_unformatted_to_output <- function(data_df,
             x %>%
               format(drop0trailing = FALSE) %>%
               tidy_gsub("\\s+$", "") %>%
+              process_text(context) %>%
               paste(collapse = ", ")
           }
         )
@@ -98,7 +100,8 @@ migrate_unformatted_to_output <- function(data_df,
 
       # No `lapply()` used: all values will be treated cohesively
       output_df[[colname]][row_index] <-
-        format(data_df[[colname]][row_index], drop0trailing = FALSE)
+        format(data_df[[colname]][row_index], drop0trailing = FALSE) %>%
+        process_text(context)
     }
   }
 
@@ -477,25 +480,40 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list = summary_df_display_list)
 }
 
-# Apply column names to column labels for any of those column labels not
-# explicitly set
-migrate_colnames_to_labels <- function(boxh_df) {
+migrate_labels <- function(row_val) {
+  function(
+    boxh_df,
+    labels,
+    context) {
 
-  for (colname in colnames(boxh_df)) {
+    for (label_name in names(labels)) {
 
-    if (is.na(boxh_df["column_label", colname])) {
-      boxh_df["column_label", colname] <- colname
+      if (label_name %in% colnames(boxh_df)) {
+        boxh_df[row_val, label_name] <-
+          process_text(labels[[label_name]], context)
+      }
     }
-  }
 
-  boxh_df
+    boxh_df
+  }
 }
+
+# Process text of finalized column labels and migrate the
+# processed text to `boxh_df`
+migrate_colnames_to_labels <- migrate_labels("column_label")
+
+# Process text of finalized column group labels and migrate the
+# processed text to `boxh_df`
+migrate_grpnames_to_labels <- migrate_labels("group_label")
+
+
 
 # Assign center alignment for all columns that haven't had alignment
 # explicitly set
 set_default_alignments <- function(boxh_df) {
 
   for (colname in colnames(boxh_df)) {
+
     if (is.na(boxh_df["column_align", colname])) {
       boxh_df["column_align", colname] <- "center"
     }
@@ -520,10 +538,10 @@ is_title_defined <- function(heading) {
   length(heading) > 0 && !is.null(heading$title)
 }
 
-# Function to determine if a headnote element has been defined
-is_headnote_defined <- function(heading) {
+# Function to determine if a subtitle element has been defined
+is_subtitle_defined <- function(heading) {
 
-  length(heading) > 0 && !is.null(heading$headnote) && heading$headnote != ""
+  length(heading) > 0 && !is.null(heading$subtitle) && heading$subtitle != ""
 }
 
 # Function to determine if the `list_of_summaries` object contains
@@ -588,6 +606,42 @@ stub_component_is_rowname_groupname <- function(stub_components) {
   identical(stub_components, c("rowname", "groupname"))
 }
 
+# Process the `heading` object
+process_heading <- function(heading, context) {
+
+  if (!is.null(heading)) {
+    title <- heading$title %>% process_text(context)
+    subtitle <- heading$subtitle %>% process_text(context)
+
+    return(list(title = title, subtitle = subtitle))
+  }
+}
+
+# Process the `stubhead_caption` object
+process_stubhead_label <- function(caption, context) {
+
+  if (!is.null(caption)) {
+    stubhead_label <- caption$stubhead_label %>% process_text(context)
+
+    return(list(stubhead_label = stubhead_label))
+  }
+}
+
+# Process the `source_note` object
+process_source_notes <- function(source_note, context) {
+
+  if (!is.null(source_note)) {
+
+    source_notes <- c()
+    for (sn in source_note) {
+
+      source_notes <- c(source_notes, process_text(sn, context))
+    }
+
+    return(list(source_note = source_notes))
+  }
+}
+
 # Function to build a vector of `group` rows in the table field
 create_group_rows <- function(n_rows,
                               groups_rows_df,
@@ -630,6 +684,7 @@ create_data_rows <- function(n_rows,
 
 # Function to build a vector of `summary` rows in the table field
 create_summary_rows <- function(n_rows,
+                                n_cols,
                                 list_of_summaries,
                                 groups_rows_df,
                                 stub_available,

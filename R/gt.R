@@ -28,10 +28,11 @@
 #' # `fmt_*()`, `cols_*()` functions)
 #' gt_tbl_2 <-
 #'   gt_tbl %>%
-#'   tab_heading(title = "mtcars") %>%
+#'   tab_header(title = "mtcars") %>%
 #'   fmt_number(
 #'     columns = vars(drat, wt, qsec),
-#'     decimals = 1) %>%
+#'     decimals = 1
+#'   ) %>%
 #'   cols_label(hp = "HP")
 #' @family table-part creation/modification functions
 #' @export
@@ -103,10 +104,7 @@ gt <- function(data,
     # Remove the `groupname` column from `data`
     data[[groupname_col]] <- NULL
 
-  } #else if (missing(groupname_col)) {
-#
-#     stop("The `groupname_col` is missing.", call. = FALSE)
-#   }
+  }
 
   # Take the input data and convert to a
   # data frame
@@ -158,11 +156,30 @@ gt <- function(data,
   # within the object
   attr(data_tbl, "boxh_df") <- boxh_df
   attr(data_tbl, "stub_df") <- stub_df
-
   attr(data_tbl, "footnotes_df") <- footnotes_df
   attr(data_tbl, "styles_df") <- styles_df
   attr(data_tbl, "rows_df") <- rows_df
   attr(data_tbl, "cols_df") <- cols_df
+
+  data_tbl_colnames <- colnames(data_tbl)
+
+  # Create a prepopulated `col_labels` list object, which
+  # contains names of all the columns which can be all be
+  # modified later
+  col_labels <- data_tbl_colnames
+  names(col_labels) <- data_tbl_colnames
+  col_labels <- as.list(col_labels)
+
+  attr(data_tbl, "col_labels") <- col_labels
+
+  # Create a prepopulated `grp_labels` list object, which
+  # contains names of all the column groups which can be all be
+  # modified later
+  grp_labels <- rep(NA_character_, length(colnames(data_tbl)))
+  names(grp_labels) <- data_tbl_colnames
+  grp_labels <- as.list(grp_labels)
+
+  attr(data_tbl, "grp_labels") <- grp_labels
 
   # Create an `arrange_groups` list object, which contains
   # a vector of `groupname` values in the order of first
@@ -176,6 +193,7 @@ gt <- function(data,
       list(groups = character(0))
   }
 
+  # Apply the input data table as an attribute
   attr(data_tbl, "data_df") <- data
 
   # Apply the default theme options data frame as an attribute

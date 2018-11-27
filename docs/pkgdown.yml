@@ -1,11 +1,9 @@
-pandoc: 2.2.1
+pandoc: '2.4'
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
-  case-study-simple-table-from-the-economist: case-study-simple-table-from-the-economist.html
+  case-study-gtcars: case-study-gtcars.html
   creating-display-tables: creating-display-tables.html
   creating-summary-lines: creating-summary-lines.html
-  example-mtcars: example-mtcars.html
-  modifying-columns: modifying-columns.html
-  setting-gt-table-options: setting-gt-table-options.html
+  gt-datasets: gt-datasets.html
 

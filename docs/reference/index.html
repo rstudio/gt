@@ -81,7 +81,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -90,13 +90,7 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -138,23 +132,11 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-create-modify-table-parts" class="hasAnchor"><a href="#section-create-modify-table-parts" class="anchor"></a>Create/Modify Table Parts</h2>
+          <h2 id="section-create-table" class="hasAnchor"><a href="#section-create-table" class="anchor"></a>Create Table</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
-        
-        <td>
-          <p><code><a href="gt-options.html">gt-options</a></code> </p>
-        </td>
-        <td><p>gt package options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="gt-package.html">gt-package</a></code> </p>
-        </td>
-        <td><p>gt: Build Presentation-Ready Tables Using the Grammar of Tables</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="gt.html">gt()</a></code> </p>
@@ -163,21 +145,41 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="gt_output.html">gt_output()</a></code> </p>
-        </td>
-        <td><p>Create a gt display table output element for Shiny</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="gt_preview.html">gt_preview()</a></code> </p>
         </td>
         <td><p>Preview a gt table object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-create-modify-parts" class="hasAnchor"><a href="#section-create-modify-parts" class="anchor"></a>Create/Modify Parts</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="tab_header.html">tab_header()</a></code> </p>
+        </td>
+        <td><p>Add a table header</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="tab_boxhead_panel.html">tab_boxhead_panel()</a></code> </p>
+          <p><code><a href="tab_spanner.html">tab_spanner()</a></code> </p>
         </td>
-        <td><p>Arrange a boxhead into panels</p></td>
+        <td><p>Add a spanner column label</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tab_row_group.html">tab_row_group()</a></code> </p>
+        </td>
+        <td><p>Add a row group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tab_stubhead_label.html">tab_stubhead_label()</a></code> </p>
+        </td>
+        <td><p>Add label text to the stubhead</p></td>
       </tr><tr>
         
         <td>
@@ -187,33 +189,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="tab_heading.html">tab_heading()</a></code> </p>
-        </td>
-        <td><p>Add a table heading</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tab_options.html">tab_options()</a></code> </p>
-        </td>
-        <td><p>Modify the table output options</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="tab_source_note.html">tab_source_note()</a></code> </p>
         </td>
         <td><p>Add a source note citation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="tab_stub_block.html">tab_stub_block()</a></code> </p>
+          <p><code><a href="tab_options.html">tab_options()</a></code> </p>
         </td>
-        <td><p>Arrange a stub into blocks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tab_stubhead_caption.html">tab_stubhead_caption()</a></code> </p>
-        </td>
-        <td><p>Add caption text to the stubhead</p></td>
+        <td><p>Modify the table output options</p></td>
       </tr><tr>
         
         <td>
@@ -237,6 +221,24 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="fmt_number.html">fmt_number()</a></code> </p>
+        </td>
+        <td><p>Format numeric values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fmt_scientific.html">fmt_scientific()</a></code> </p>
+        </td>
+        <td><p>Format values to scientific notation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fmt_percent.html">fmt_percent()</a></code> </p>
+        </td>
+        <td><p>Format values as a percentage</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="fmt_currency.html">fmt_currency()</a></code> </p>
         </td>
         <td><p>Format values as currencies</p></td>
@@ -246,6 +248,12 @@
           <p><code><a href="fmt_date.html">fmt_date()</a></code> </p>
         </td>
         <td><p>Format values as dates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fmt_time.html">fmt_time()</a></code> </p>
+        </td>
+        <td><p>Format values as times</p></td>
       </tr><tr>
         
         <td>
@@ -261,33 +269,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="fmt_number.html">fmt_number()</a></code> </p>
-        </td>
-        <td><p>Format numeric values</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="fmt_passthrough.html">fmt_passthrough()</a></code> </p>
         </td>
         <td><p>Format by simply passing data through</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fmt_percent.html">fmt_percent()</a></code> </p>
-        </td>
-        <td><p>Format values as a percentage</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fmt_scientific.html">fmt_scientific()</a></code> </p>
-        </td>
-        <td><p>Format values to scientific notation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fmt_time.html">fmt_time()</a></code> </p>
-        </td>
-        <td><p>Format values as times</p></td>
       </tr><tr>
         
         <td>
@@ -373,9 +357,9 @@
       <tr>
         
         <td>
-          <p><code><a href="blocks_arrange.html">blocks_arrange()</a></code> </p>
+          <p><code><a href="row_group_order.html">row_group_order()</a></code> </p>
         </td>
-        <td><p>Modify the ordering of the stub block groups</p></td>
+        <td><p>Modify the ordering of any row groups</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -401,6 +385,12 @@
       <tr>
         
         <td>
+          <p><code><a href="as_raw_html.html">as_raw_html()</a></code> </p>
+        </td>
+        <td><p>Get the HTML content of a gt table</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="as_latex.html">as_latex()</a></code> </p>
         </td>
         <td><p>Output a gt table object as LateX</p></td>
@@ -410,12 +400,6 @@
           <p><code><a href="as_rtf.html">as_rtf()</a></code> </p>
         </td>
         <td><p>Save a gt table object as an RTF file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_raw_html.html">as_raw_html()</a></code> </p>
-        </td>
-        <td><p>Get the HTML content of a gt table</p></td>
       </tr><tr>
         
         <td>
@@ -459,7 +443,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="apply_styles.html">apply_styles()</a></code> </p>
+          <p><code><a href="cells_styles.html">cells_styles()</a></code> </p>
         </td>
         <td><p>Helper for defining custom styles for table cells</p></td>
       </tr><tr>
@@ -492,6 +476,12 @@
           <p><code><a href="pct.html">pct()</a></code> </p>
         </td>
         <td><p>Helper for providing a numeric value as percentage</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="escape_latex.html">escape_latex()</a></code> </p>
+        </td>
+        <td><p>Perform Latex escaping</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -528,7 +518,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-helpful-information" class="hasAnchor"><a href="#section-helpful-information" class="anchor"></a>Helpful Information</h2>
+          <h2 id="section-information" class="hasAnchor"><a href="#section-information" class="anchor"></a>Information</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -545,6 +535,50 @@
         </td>
         <td><p>View a table with info on time styles</p></td>
       </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="countrypops.html">countrypops</a></code> </p>
+        </td>
+        <td><p>Yearly populations of countries from 1960 to 2017</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sza.html">sza</a></code> </p>
+        </td>
+        <td><p>Twice hourly solar zenith angles by month and by latitude</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gtcars.html">gtcars</a></code> </p>
+        </td>
+        <td><p>Deluxe automobiles from the 2014-2017 period</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sp500.html">sp500</a></code> </p>
+        </td>
+        <td><p>Daily S&amp;P 500 Index data from 1950 to 2015</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pizzaplace.html">pizzaplace</a></code> </p>
+        </td>
+        <td><p>A year of pizza sales from a pizza place</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exibble.html">exibble</a></code> </p>
+        </td>
+        <td><p>A toy example tibble for testing with gt: exibble</p></td>
+      </tr>
     </tbody>
     </table>
   </div>
@@ -552,7 +586,8 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-create-modify-table-parts">Create/Modify Table Parts</a></li>
+      <li><a href="#section-create-table">Create Table</a></li>
+      <li><a href="#section-create-modify-parts">Create/Modify Parts</a></li>
       <li><a href="#section-format-data">Format Data</a></li>
       <li><a href="#section-modify-columns">Modify Columns</a></li>
       <li><a href="#section-modify-rows">Modify Rows</a></li>
@@ -561,7 +596,8 @@
       <li><a href="#section-shiny-functions">Shiny Functions</a></li>
       <li><a href="#section-helper-functions">Helper Functions</a></li>
       <li><a href="#section-images">Images</a></li>
-      <li><a href="#section-helpful-information">Helpful Information</a></li>
+      <li><a href="#section-information">Information</a></li>
+      <li><a href="#section-datasets">Datasets</a></li>
     </ul>
   </div>
 </div>

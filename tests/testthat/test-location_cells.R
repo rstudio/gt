@@ -22,8 +22,8 @@ test_that("the `cells_title()` function works correctly", {
     as.character() %>%
     expect_equal("title")
 
-  # Create a `cells_title` object with the `headnote` option
-  helper_cells_title <- cells_title(groups = "headnote")
+  # Create a `cells_title` object with the `subtitle` option
+  helper_cells_title <- cells_title(groups = "subtitle")
 
   # Expect this has the `cells_title` and `location_cells` classes
   helper_cells_title %>%
@@ -37,10 +37,10 @@ test_that("the `cells_title()` function works correctly", {
   # Expect the list component to have the `quosure` and `formula` classes
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
-  # Expect the RHS of the formula to be 'headnote'
+  # Expect the RHS of the formula to be 'subtitle'
   helper_cells_title[[1]][2] %>%
     as.character() %>%
-    expect_equal("headnote")
+    expect_equal("subtitle")
 })
 
 test_that("the `cells_boxhead()` function works correctly", {

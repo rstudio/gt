@@ -20,19 +20,15 @@ test_that("the `cols_split_delim()` function works correctly", {
     gt(iris_short) %>%
     cols_split_delim(delim = ".")
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Length", "Width", "Length", "Width", NA_character_))
+  # Expect a particular ordering of column labels in `col_labels`
+  expect_attr_equal(
+    tbl_html, "col_labels",
+    c("Length", "Width", "Length", "Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Sepal", "Sepal", "Petal", "Petal", NA_character_))
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  expect_attr_equal(
+    tbl_html, "grp_labels",
+    c("Sepal", "Sepal", "Petal", "Petal", NA_character_))
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table
@@ -63,19 +59,15 @@ test_that("the `cols_split_delim()` function works correctly", {
       delim = ".",
       columns = c("Sepal.Length", "Sepal.Width"))
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Length", "Width", NA_character_, NA_character_, NA_character_))
+  # Expect a particular ordering of column labels in `col_labels`
+  expect_attr_equal(
+    tbl_html, "col_labels",
+    c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Sepal", "Sepal", NA_character_, NA_character_, NA_character_))
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  expect_attr_equal(
+    tbl_html, "grp_labels",
+    c("Sepal", "Sepal", NA_character_, NA_character_, NA_character_))
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table
@@ -106,19 +98,15 @@ test_that("the `cols_split_delim()` function works correctly", {
       delim = ".",
       columns = vars(Sepal.Length, Sepal.Width))
 
-  # Expect a particular ordering of column labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["column_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Length", "Width", NA_character_, NA_character_, NA_character_))
+  # Expect a particular ordering of column labels in `col_labels`
+  expect_attr_equal(
+    tbl_html, "col_labels",
+    c("Length", "Width", "Petal.Length", "Petal.Width", "Species"))
 
-  # Expect a particular ordering of grouping labels in the internal `boxh_df`
-  attr(tbl_html, "boxh_df", exact = TRUE)["group_label", ] %>%
-    unlist() %>%
-    unname() %>%
-    expect_equal(
-      c("Sepal", "Sepal", NA_character_, NA_character_, NA_character_))
+  # Expect a particular ordering of grouping labels in `grp_labels`
+  expect_attr_equal(
+    tbl_html, "grp_labels",
+    c("Sepal", "Sepal", NA_character_, NA_character_, NA_character_))
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table

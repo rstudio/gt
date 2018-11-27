@@ -18,22 +18,35 @@ tbl <-
 # Create a table from `tbl` that has all the different components
 data <-
   gt(tbl) %>%
-  tab_heading(title = "The Title", headnote = "The Headnote") %>%
-  tab_stubhead_caption(caption = "Stubhead Caption") %>%
-  tab_boxhead_panel(group = "Group 1", columns = vars(col_1, col_2)) %>%
-  tab_boxhead_panel(group = "Group 2", columns = vars(col_3, col_4)) %>%
+  tab_header(
+    title = "The Title",
+    subtitle = "The Subtitle"
+  ) %>%
+  tab_stubhead_label(label = "Stubhead Caption") %>%
+  tab_spanner(
+    label = "Group 1",
+    columns = vars(col_1, col_2)
+  ) %>%
+  tab_spanner(
+    label = "Group 2",
+    columns = vars(col_3, col_4)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_data(columns = 1, rows = 1)) %>%
+    locations = cells_data(columns = 1, rows = 1)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_data(columns = 2, rows = 2)) %>%
+    locations = cells_data(columns = 2, rows = 2)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_data(columns = 3, rows = 3)) %>%
+    locations = cells_data(columns = 3, rows = 3)
+  ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_data(columns = 4, rows = 4)) %>%
+    locations = cells_data(columns = 4, rows = 4)
+  ) %>%
   tab_source_note("A source note for the table.")
 
 # Extract the internal `opts_df` table so that comparisons can be made
@@ -114,7 +127,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("100%", "50%"))
+    expect_equal(c("auto", "50%"))
 
   # Modify the `table.width` option using just a numeric value
   tbl_html <- data %>% tab_options(table.width = 500)
@@ -124,7 +137,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("100%", "500px"))
+    expect_equal(c("auto", "500px"))
 
   # Modify the `table.border.top.style`
   tbl_html <- data %>% tab_options(table.border.top.style = "dashed")
@@ -196,24 +209,24 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "heading_title_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("125%", "18px"))
 
-  # Modify the `heading.headnote.font.size`
-  tbl_html <- data %>% tab_options(heading.headnote.font.size = px(14))
+  # Modify the `heading.subtitle.font.size`
+  tbl_html <- data %>% tab_options(heading.subtitle.font.size = px(14))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "heading_subtitle_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "heading_subtitle_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("85%", "14px"))
 
-  # Modify the `heading.headnote.font.size` option using just a numeric value
-  tbl_html <- data %>% tab_options(heading.headnote.font.size = 14)
+  # Modify the `heading.subtitle.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(heading.subtitle.font.size = 14)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "heading_subtitle_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "heading_headnote_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "heading_subtitle_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("85%", "14px"))
 
   # Modify the `heading.border.bottom.style`

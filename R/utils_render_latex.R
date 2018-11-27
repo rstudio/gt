@@ -5,23 +5,6 @@ footnote_glyph_to_latex <- function(footnote_glyph) {
     "\\textsuperscript{", footnote_glyph, "}")
 }
 
-transform_boxh_labels_l <- function(boxh_df) {
-
-  text_group <-
-    boxh_df["group_label", ] %>% unlist() %>% unname() %>%
-    markdown_to_latex()
-
-  boxh_df["group_label", ] <- text_group
-
-  text_column <-
-    boxh_df["column_label", ] %>% unlist() %>% unname() %>%
-    markdown_to_latex()
-
-  boxh_df["column_label", ] <- text_column
-
-  boxh_df
-}
-
 #' @noRd
 latex_body_row <- function(content,
                            type) {
@@ -61,25 +44,13 @@ latex_group_row <- function(group_name,
 }
 
 #' @noRd
-create_table_start_l <- function() {
+create_table_start_l <- function(col_alignment) {
 
   paste0(
-    "\\captionsetup[table]{labelformat=empty}\n",
-    "\\begin{table}[h]\n",
-    "\\begin{minipage}{\\linewidth}\n",
-    collapse = "")
-}
-
-#' @noRd
-create_tabular_start_l <- function(col_alignment) {
-
-  paste0(
-    "\\centering",
-    "\\vspace*{-3mm}",
-    "\\begin{tabular}{",
+    "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
+    "\\begin{longtable}{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
     "}\n",
-    "\\toprule\n",
     collapse = "")
 }
 
@@ -90,7 +61,7 @@ create_boxhead_component_l <- function(boxh_df,
                                        output_df,
                                        stub_available,
                                        spanners_present,
-                                       stubhead_caption,
+                                       stubhead_label,
                                        col_alignment) {
 
   # Get the headings
@@ -99,9 +70,9 @@ create_boxhead_component_l <- function(boxh_df,
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
   if (stub_available &&
-      length(stubhead_caption) > 0) {
+      length(stubhead_label) > 0) {
 
-    headings <- rlang::prepend(headings, stubhead_caption$stubhead_caption)
+    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
 
   } else if (stub_available) {
 
@@ -149,7 +120,7 @@ create_boxhead_component_l <- function(boxh_df,
         cmidrule <-
           c(cmidrule,
             paste0(
-              "\\cmidrule{",
+              "\\cmidrule(lr){",
               sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
               "-",
               sum(spanners_lengths$lengths[1:i]),
@@ -171,7 +142,7 @@ create_boxhead_component_l <- function(boxh_df,
     table_col_spanners <- ""
   }
 
-  paste0(table_col_spanners, table_col_headings)
+  paste0("\\toprule\n", table_col_spanners, table_col_headings)
 }
 
 #' @importFrom dplyr mutate filter pull
@@ -197,7 +168,6 @@ create_body_component_l <- function(row_splits,
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
 
-
   group_rows <-
     create_group_rows(
       n_rows, groups_rows_df, context = "latex")
@@ -208,19 +178,18 @@ create_body_component_l <- function(row_splits,
 
   summary_rows <-
     create_summary_rows(
-      n_rows, list_of_summaries, groups_rows_df,
+      n_rows, n_cols, list_of_summaries, groups_rows_df,
       stub_available, summaries_present, context = "latex")
 
   paste(collapse = "", paste0(group_rows, data_rows, summary_rows))
 }
 
 #' @noRd
-create_tabular_end_l <- function() {
+create_table_end_l <- function() {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{tabular}\n",
-    "\\end{minipage}\n",
+    "\\end{longtable}\n",
     collapse = "")
 }
 
@@ -254,6 +223,7 @@ create_footnote_component_l <- function(footnotes_resolved,
   # Create the footnotes block
   footnote_component <-
     paste0(
+      "\\vspace{-5mm}\n",
       "\\begin{minipage}{\\linewidth}\n",
       paste0(
         footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
@@ -268,22 +238,21 @@ create_footnote_component_l <- function(footnotes_resolved,
 #' @noRd
 create_source_note_component_l <- function(source_note) {
 
-  if (length(source_note) != 0) {
-
-    # Create a source note
-    source_note_rows <-
-      paste0(
-        source_note %>% as.character(), "\\\\ \n",
-        collapse = "")
-  } else {
-    source_note_rows <- ""
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (length(source_note) == 0) {
+    return("")
   }
 
-  source_note_rows
-}
+  source_note <- source_note[[1]]
 
-#' @noRd
-create_table_end_l <- function() {
+  # Create the source notes block
+  source_note_component <-
+    paste0(
+      "\\begin{minipage}{\\linewidth}\n",
+      paste0(
+        source_note %>% as.character(), "\\\\ \n", collapse = ""),
+      "\\end{minipage}\n", collapse = "")
 
-  "\\end{table}\n"
+  source_note_component
 }

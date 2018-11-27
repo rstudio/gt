@@ -35,11 +35,9 @@ gt_tbl <- gt_preview(mtcars)
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt}},
-  \code{\link{tab_boxhead_panel}},
-  \code{\link{tab_footnote}}, \code{\link{tab_heading}},
-  \code{\link{tab_options}}, \code{\link{tab_source_note}},
-  \code{\link{tab_stub_block}},
-  \code{\link{tab_stubhead_caption}},
-  \code{\link{tab_style}}
+  \code{\link{tab_footnote}}, \code{\link{tab_header}},
+  \code{\link{tab_options}}, \code{\link{tab_row_group}},
+  \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
+  \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}
 }
 \concept{table-part creation/modification functions}

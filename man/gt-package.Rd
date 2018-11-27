@@ -4,13 +4,12 @@
 \name{gt-package}
 \alias{gt-package}
 \alias{_PACKAGE}
-\title{gt: Build Presentation-Ready Tables Using the Grammar of Tables}
+\title{gt: Easily Create Presentation-Ready Display Tables}
 \description{
-Build table output from tabular data using the Grammar of Tables
-    ethos. With this layering approach, we aim to construct presentation
-    tables with a clear separation of concerns: you don't have to decide how
-    the tabular data gets transformed and structured whilst also worrying
-    about aesthetics.
+Build display tables from tabular data using with an easy-to-use
+    API. With its progressive approach, we can construct display tables with a
+    clear separation of concerns: you don't have to decide how the tabular data
+    gets transformed and structured whilst also worrying about aesthetics.
 }
 \seealso{
 Useful links:
