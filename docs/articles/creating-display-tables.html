@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/case-study-simple-table-from-the-economist.html">Case Study: Simple Table from the Economist</a>
+      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     </li>
     <li>
       <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
@@ -61,13 +61,7 @@
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/example-mtcars.html">An Example: mtcars</a>
-    </li>
-    <li>
-      <a href="../articles/modifying-columns.html">Modifying Columns</a>
-    </li>
-    <li>
-      <a href="../articles/setting-gt-table-options.html">Setting gt Table Options</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
   </ul>
 </li>
@@ -104,12 +98,13 @@
 
     
     
-<p>The <strong>gt</strong> package is all about making it simple to produce wonderful-looking display tables. Display tables? Well yes, we are trying to distinguish between data tables (e.g., tibbles, <code>data.table</code>s, <code>data.frame</code>s) and those tables you’d find in a web page, a journal article, or in a magazine. Such tables can likewise be called presentation tables, summary tables, or just tables really. Are you getting it? If not, here are some examples, ripped straight from the web:</p>
-<p>Think of them as more like output only, seldom to be used as input ever again, full of annotations, full of the goodness that only <strong>gt</strong> can help you deliver. So, bring your own data table and leave with a display table.</p>
-<div id="very-simple-tables" class="section level3">
+<p>The <strong>gt</strong> package is all about making it simple to produce nice-looking display tables. Display tables? Well yes, we are trying to distinguish between data tables (e.g., tibbles, <code>data.frame</code>s, etc.) and those tables you’d find in a web page, a journal article, or in a magazine. Such tables can likewise be called presentation tables, summary tables, or just tables really. Here are some examples, ripped straight from the web:</p>
+<p><img src="images/tables_from_the_web.png" width="100%"></p>
+<p>We can think of display tables as output only, where we’d not want to use them as input ever again. Other features include annotations, table element styling, and text transformations that serve to communicate the subject matter more clearly.</p>
+<div id="a-walkthrough-of-the-gt-basics-with-a-simple-table" class="section level3">
 <h3 class="hasAnchor">
-<a href="#very-simple-tables" class="anchor"></a>Very Simple Tables</h3>
-<p>Let’s use a less common dataset that is available in the R <strong>datasets</strong> package: <code>islands</code>. It’s actually not a data frame but a named vector. No matter, we can use use <strong>dplyr</strong> and prepare a tibble from it:</p>
+<a href="#a-walkthrough-of-the-gt-basics-with-a-simple-table" class="anchor"></a>A Walkthrough of the <strong>gt</strong> Basics with a Simple Table</h3>
+<p>Let’s use a less common dataset that is available in the R <strong>datasets</strong> package: <code>islands</code>. It’s actually not a data frame but a named vector. That’s okay though, we can use use <strong>dplyr</strong> and prepare a tibble from it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Take the `islands` dataset and use some</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="co"># dplyr functionality to obtain the ten</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co"># biggest islands in the world</span></a>
@@ -117,7 +112,7 @@
 <a class="sourceLine" id="cb1-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</a>
 <a class="sourceLine" id="cb1-6" title="6">    <span class="dt">name =</span> <span class="kw">names</span>(islands),</a>
 <a class="sourceLine" id="cb1-7" title="7">    <span class="dt">size =</span> islands</a>
-<a class="sourceLine" id="cb1-8" title="8">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-8" title="8">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw">desc</span>(size)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb1-11" title="11"></a>
@@ -136,18 +131,19 @@
 <a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;  8 Greenland       840</span></a>
 <a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;  9 New Guinea      306</span></a>
 <a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; 10 Borneo          280</span></a></code></pre></div>
-<p>The <code>islands_tbl</code> tibble is now suitable input for <strong>gt</strong>! We can pass that table to the <em>function</em> <code><a href="../reference/gt.html">gt()</a></code>, and we’ll get a display table.</p>
+<p>Given that <code>islands_tbl</code> is a tibble, we now have a suitable input for <strong>gt</strong>.</p>
+<p>The main entry point into the <strong>gt</strong> API is the <code><a href="../reference/gt.html">gt()</a></code> function. If we pass <code>islands_tbl</code> to the <em>function</em> <code><a href="../reference/gt.html">gt()</a></code>, we’ll get a <strong>gt Table</strong> as output. As an aside, we could have easily used a data frame instead as valid <strong>Table Data</strong> for <strong>gt</strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Create a display table showing ten of</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co"># the largest islands in the world</span></a>
 <a class="sourceLine" id="cb2-3" title="3">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a>
 <a class="sourceLine" id="cb2-4" title="4"></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co"># Show the table</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co"># Show the gt Table</span></a>
 <a class="sourceLine" id="cb2-6" title="6">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#pehjefgqym .gt_table {
+#ufznzlljju .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -165,13 +161,13 @@
   /* table.border.top.color */
 }
 
-#pehjefgqym .gt_heading {
+#ufznzlljju .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#pehjefgqym .gt_title {
+#ufznzlljju .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -182,10 +178,10 @@
   border-bottom-width: 0;
 }
 
-#pehjefgqym .gt_headnote {
+#ufznzlljju .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -193,7 +189,7 @@
   border-top-width: 0;
 }
 
-#pehjefgqym .gt_bottom_border {
+#ufznzlljju .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -202,7 +198,7 @@
   /* heading.border.bottom.color */
 }
 
-#pehjefgqym .gt_column_spanner {
+#ufznzlljju .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -210,7 +206,7 @@
   padding-bottom: 4px;
 }
 
-#pehjefgqym .gt_col_heading {
+#ufznzlljju .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -222,11 +218,11 @@
   margin: 10px;
 }
 
-#pehjefgqym .gt_sep_right {
+#ufznzlljju .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#pehjefgqym .gt_group_heading {
+#ufznzlljju .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -249,7 +245,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#pehjefgqym .gt_empty_group_heading {
+#ufznzlljju .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -272,28 +268,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#pehjefgqym .gt_striped tr:nth-child(even) {
+#ufznzlljju .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#pehjefgqym .gt_row {
+#ufznzlljju .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#pehjefgqym .gt_stub {
+#ufznzlljju .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#pehjefgqym .gt_stub.gt_row {
+#ufznzlljju .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#pehjefgqym .gt_summary_row {
+#ufznzlljju .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -302,13 +298,13 @@
   /* summary_row.text_transform */
 }
 
-#pehjefgqym .gt_first_summary_row {
+#ufznzlljju .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#pehjefgqym .gt_table_body {
+#ufznzlljju .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -323,54 +319,55 @@
   /* field.border.bottom.color */
 }
 
-#pehjefgqym .gt_footnote {
+#ufznzlljju .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#pehjefgqym .gt_sourcenote {
+#ufznzlljju .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#pehjefgqym .gt_center {
+#ufznzlljju .gt_center {
   text-align: center;
 }
 
-#pehjefgqym .gt_left {
+#ufznzlljju .gt_left {
   text-align: left;
 }
 
-#pehjefgqym .gt_right {
+#ufznzlljju .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#pehjefgqym .gt_font_normal {
+#ufznzlljju .gt_font_normal {
   font-weight: normal;
 }
 
-#pehjefgqym .gt_font_bold {
+#ufznzlljju .gt_font_bold {
   font-weight: bold;
 }
 
-#pehjefgqym .gt_font_italic {
+#ufznzlljju .gt_font_italic {
   font-style: italic;
 }
 
-#pehjefgqym .gt_super {
+#ufznzlljju .gt_super {
   font-size: 65%;
 }
 
-#pehjefgqym .gt_footnote_glyph {
+#ufznzlljju .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pehjefgqym">
+<div id="ufznzlljju">
 <!--gt table start-->
 <table class="table">
 <tr>
@@ -422,36 +419,40 @@
 </table>
 <!--gt table end-->
 </div>
-<p>That doesn’t look too bad. Sure, it’s basic but we really didn’t really ask for much. We did receive a proper table <em>boxhead</em> (with column labels!) and a <em>field</em>. Also, that default striping is a nice touch. Oftentimes however, you’ll want a bit more: a <em>title</em>, a <em>stub</em> (it’s a good thing), <em>source notes</em>, and, sometimes, <em>footnotes</em>.</p>
+<p>That doesn’t look too bad. Sure, it’s basic but we really didn’t really ask for much. We did receive a proper table with column labels and the data. Also, that default striping is a nice touch. Oftentimes however, you’ll want a bit more: a <strong>Table header</strong>, a <strong>Stub</strong>, and sometimes <em>footnotes</em> and source notes in the <strong>Table Footer</strong>.</p>
 </div>
-<div id="slightly-more-complex-tables-adhering-to-the-grammar-of-tables" class="section level3">
+<div id="adding-parts-to-this-simple-table" class="section level3">
 <h3 class="hasAnchor">
-<a href="#slightly-more-complex-tables-adhering-to-the-grammar-of-tables" class="anchor"></a>Slightly More Complex Tables, Adhering to the Grammar of Tables</h3>
-<p>Let’s introduce the Grammar of Tables. It’s really just a bunch of table parts that work well together and some rules about how the information held within them is arranged. No big deal. Those terms provided earlier in slanted text signify the table parts. The last display table had only two parts, the <strong>boxhead</strong> and the <strong>field</strong>, the next few display tables will have considerably more.</p>
+<a href="#adding-parts-to-this-simple-table" class="anchor"></a>Adding Parts to this Simple Table</h3>
+<p>The <strong>gt</strong> package makes it relatively easy to add parts so that the resulting <strong>gt Table</strong> better conveys the information you want to present. These table parts work well together and there the possible variations in arrangement can handle most tabular presentation needs. The previous <strong>gt Table</strong> demonstrated had only two parts, the <strong>Column Labels</strong> and the <strong>Table Body</strong>. The next few examples will show all of the other table parts that are available.</p>
 <p>The way the main parts of a table (and their subparts) fit together is best shown as a schematic:</p>
+<p align="center">
+<img src="../man/figures/gt_parts_of_a_table.svg" width="100%"></p>
 <p>The parts (roughly from top to bottom) are:</p>
 <ul>
-<li>the <strong>heading</strong> (optional; with a <strong>title</strong> and possibly a <strong>headnote</strong>)</li>
-<li>the <strong>stub</strong> (optional; contains a <strong>stub head</strong> and <strong>row captions</strong>, optionally within <strong>stub blocks</strong> having <strong>group headings</strong> and possibly <strong>summary captions</strong>)</li>
-<li>the <strong>boxhead</strong> (contains <strong>column labels</strong>, optionally within <strong>boxhead panels</strong> having one or more <strong>spanner headings</strong>)</li>
-<li>the <strong>field</strong> (contains <em>cells</em>, <em>columns</em>, and <em>rows</em>)</li>
-<li>the <strong>footer</strong> (optional; possibly with <strong>footnotes</strong> and <strong>source notes</strong>)</li>
+<li>the <strong>Table Header</strong> (optional; with a <strong>title</strong> and possibly a <strong>subtitle</strong>)</li>
+<li>the <strong>Stub</strong> and the <strong>Stub Head</strong> (optional; contains <em>row labels</em>, optionally within <em>row groups</em> having <em>row group labels</em> and possibly <em>summary labels</em> when a summary is present)</li>
+<li>the <strong>Column Labels</strong> (contains <em>column labels</em>, optionally under <em>spanner column labels</em>)</li>
+<li>the <strong>Table Body</strong> (contains <em>columns</em> and <em>rows</em> of <em>cells</em>)</li>
+<li>the <strong>Table Footer</strong> (optional; possibly with <strong>footnotes</strong> and <strong>source notes</strong>)</li>
 </ul>
-<p>The way that we add parts like the <strong>heading</strong> and <strong>footnotes</strong> is to use the <code>tab_*()</code> family of functions. The heading part is very easy to reason about so let’s see how the previous table looks with a <strong>title</strong> and <strong>headnote</strong>. We add this part using the <code><a href="../reference/tab_heading.html">tab_heading()</a></code> function:</p>
+<p>The way that we add parts like the <strong>Table Header</strong> and <em>footnotes</em> in the <strong>Table Footer</strong> is to use the <code>tab_*()</code> family of functions. A <strong>Table Header</strong> is easy to add so let’s see how the previous table looks with a <strong>title</strong> and a <strong>subtitle</strong>. We can add this part using the <code><a href="../reference/tab_header.html">tab_header()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Make a display table with the `islands_tbl`</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co"># table; put a heading just above the boxhead</span></a>
-<a class="sourceLine" id="cb3-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
-<a class="sourceLine" id="cb3-6" title="6">    <span class="dt">headnote =</span> <span class="st">"The top ten largest are presented"</span>)</a>
-<a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb3-9" title="9">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb3-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_header.html">tab_header</a></span>(</a>
+<a class="sourceLine" id="cb3-6" title="6">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="dt">subtitle =</span> <span class="st">"The top ten largest are presented"</span></a>
+<a class="sourceLine" id="cb3-8" title="8">  )</a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb3-11" title="11">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#oyifxupxce .gt_table {
+#atufdgyrxj .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -469,13 +470,13 @@
   /* table.border.top.color */
 }
 
-#oyifxupxce .gt_heading {
+#atufdgyrxj .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#oyifxupxce .gt_title {
+#atufdgyrxj .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -486,10 +487,10 @@
   border-bottom-width: 0;
 }
 
-#oyifxupxce .gt_headnote {
+#atufdgyrxj .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -497,7 +498,7 @@
   border-top-width: 0;
 }
 
-#oyifxupxce .gt_bottom_border {
+#atufdgyrxj .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -506,7 +507,7 @@
   /* heading.border.bottom.color */
 }
 
-#oyifxupxce .gt_column_spanner {
+#atufdgyrxj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -514,7 +515,7 @@
   padding-bottom: 4px;
 }
 
-#oyifxupxce .gt_col_heading {
+#atufdgyrxj .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -526,11 +527,11 @@
   margin: 10px;
 }
 
-#oyifxupxce .gt_sep_right {
+#atufdgyrxj .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#oyifxupxce .gt_group_heading {
+#atufdgyrxj .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -553,7 +554,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#oyifxupxce .gt_empty_group_heading {
+#atufdgyrxj .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -576,28 +577,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#oyifxupxce .gt_striped tr:nth-child(even) {
+#atufdgyrxj .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#oyifxupxce .gt_row {
+#atufdgyrxj .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#oyifxupxce .gt_stub {
+#atufdgyrxj .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#oyifxupxce .gt_stub.gt_row {
+#atufdgyrxj .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#oyifxupxce .gt_summary_row {
+#atufdgyrxj .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -606,13 +607,13 @@
   /* summary_row.text_transform */
 }
 
-#oyifxupxce .gt_first_summary_row {
+#atufdgyrxj .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#oyifxupxce .gt_table_body {
+#atufdgyrxj .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -627,54 +628,55 @@
   /* field.border.bottom.color */
 }
 
-#oyifxupxce .gt_footnote {
+#atufdgyrxj .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#oyifxupxce .gt_sourcenote {
+#atufdgyrxj .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#oyifxupxce .gt_center {
+#atufdgyrxj .gt_center {
   text-align: center;
 }
 
-#oyifxupxce .gt_left {
+#atufdgyrxj .gt_left {
   text-align: left;
 }
 
-#oyifxupxce .gt_right {
+#atufdgyrxj .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#oyifxupxce .gt_font_normal {
+#atufdgyrxj .gt_font_normal {
   font-weight: normal;
 }
 
-#oyifxupxce .gt_font_bold {
+#atufdgyrxj .gt_font_bold {
   font-weight: bold;
 }
 
-#oyifxupxce .gt_font_italic {
+#atufdgyrxj .gt_font_italic {
   font-style: italic;
 }
 
-#oyifxupxce .gt_super {
+#atufdgyrxj .gt_super {
   font-size: 65%;
 }
 
-#oyifxupxce .gt_footnote_glyph {
+#atufdgyrxj .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="oyifxupxce">
+<div id="atufdgyrxj">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -682,7 +684,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">name</th>
@@ -734,18 +736,19 @@
 </table>
 <!--gt table end-->
 </div>
-<p>The <strong>heading</strong> provides a nice opportunity to describe the data that’s presented. The <code>headnote</code>, which functions as a subtitle, is an optional part of the <strong>heading</strong>. We may also style the <code>title</code> and <code>headnote</code> using markdown! We do this by wrapping the values passed to <code>title</code> or <code>headnote</code> with the <code><a href="../reference/md.html">md()</a></code> function. Here is an example with the table data truncated for brevity:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Use markdown for the heading's `title` and `headnote` to</span></a>
+<p>The <strong>heading</strong> provides a nice opportunity to describe the data that’s presented. The <code>subtitle</code>, which functions as a subtitle, is an optional part of the <strong>heading</strong>. We may also style the <code>title</code> and <code>subtitle</code> using markdown! We do this by wrapping the values passed to <code>title</code> or <code>subtitle</code> with the <code><a href="../reference/md.html">md()</a></code> function. Here is an example with the table data truncated for brevity:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Use markdown for the heading's `title` and `subtitle` to</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co"># add bold and italicized characters</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="../reference/gt.html">gt</a></span>(islands_tbl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_header.html">tab_header</a></span>(</a>
 <a class="sourceLine" id="cb4-5" title="5">    <span class="dt">title =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"**Large Landmasses of the World**"</span>),</a>
-<a class="sourceLine" id="cb4-6" title="6">    <span class="dt">headnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top two* largest are presented"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb4-6" title="6">    <span class="dt">subtitle =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The *top two* largest are presented"</span>)</a>
+<a class="sourceLine" id="cb4-7" title="7">    )</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#gifhjemeyw .gt_table {
+#gthccuiepw .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -763,13 +766,13 @@
   /* table.border.top.color */
 }
 
-#gifhjemeyw .gt_heading {
+#gthccuiepw .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#gifhjemeyw .gt_title {
+#gthccuiepw .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -780,10 +783,10 @@
   border-bottom-width: 0;
 }
 
-#gifhjemeyw .gt_headnote {
+#gthccuiepw .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -791,7 +794,7 @@
   border-top-width: 0;
 }
 
-#gifhjemeyw .gt_bottom_border {
+#gthccuiepw .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -800,7 +803,7 @@
   /* heading.border.bottom.color */
 }
 
-#gifhjemeyw .gt_column_spanner {
+#gthccuiepw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -808,7 +811,7 @@
   padding-bottom: 4px;
 }
 
-#gifhjemeyw .gt_col_heading {
+#gthccuiepw .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -820,11 +823,11 @@
   margin: 10px;
 }
 
-#gifhjemeyw .gt_sep_right {
+#gthccuiepw .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#gifhjemeyw .gt_group_heading {
+#gthccuiepw .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -847,7 +850,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#gifhjemeyw .gt_empty_group_heading {
+#gthccuiepw .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -870,28 +873,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#gifhjemeyw .gt_striped tr:nth-child(even) {
+#gthccuiepw .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#gifhjemeyw .gt_row {
+#gthccuiepw .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#gifhjemeyw .gt_stub {
+#gthccuiepw .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#gifhjemeyw .gt_stub.gt_row {
+#gthccuiepw .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#gifhjemeyw .gt_summary_row {
+#gthccuiepw .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -900,13 +903,13 @@
   /* summary_row.text_transform */
 }
 
-#gifhjemeyw .gt_first_summary_row {
+#gthccuiepw .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gifhjemeyw .gt_table_body {
+#gthccuiepw .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -921,54 +924,55 @@
   /* field.border.bottom.color */
 }
 
-#gifhjemeyw .gt_footnote {
+#gthccuiepw .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#gifhjemeyw .gt_sourcenote {
+#gthccuiepw .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#gifhjemeyw .gt_center {
+#gthccuiepw .gt_center {
   text-align: center;
 }
 
-#gifhjemeyw .gt_left {
+#gthccuiepw .gt_left {
   text-align: left;
 }
 
-#gifhjemeyw .gt_right {
+#gthccuiepw .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#gifhjemeyw .gt_font_normal {
+#gthccuiepw .gt_font_normal {
   font-weight: normal;
 }
 
-#gifhjemeyw .gt_font_bold {
+#gthccuiepw .gt_font_bold {
   font-weight: bold;
 }
 
-#gifhjemeyw .gt_font_italic {
+#gthccuiepw .gt_font_italic {
   font-style: italic;
 }
 
-#gifhjemeyw .gt_super {
+#gthccuiepw .gt_super {
   font-size: 65%;
 }
 
-#gifhjemeyw .gt_footnote_glyph {
+#gthccuiepw .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gifhjemeyw">
+<div id="gthccuiepw">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -976,7 +980,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2"><strong>Large Landmasses of the World</strong></th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The <em>top two</em> largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The <em>top two</em> largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">name</th>
@@ -996,23 +1000,25 @@
 </table>
 <!--gt table end-->
 </div>
-<p>A <strong>source note</strong> can be added to the table’s <strong>footer</strong> through use of the <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> function. It works in the same way as <code><a href="../reference/tab_heading.html">tab_heading()</a></code> (it also allows for markdown inputs) except it can be called multiple times—each invocation results in a new source note added below.</p>
+<p>A <strong>source note</strong> can be added to the table’s <strong>footer</strong> through use of the <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> function. It works in the same way as <code><a href="../reference/tab_header.html">tab_header()</a></code> (it also allows for markdown inputs) except it can be called multiple times—each invocation results in a new source note added below.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Display the `islands_tbl` data with a heading and</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># two source notes</span></a>
-<a class="sourceLine" id="cb5-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
-<a class="sourceLine" id="cb5-6" title="6">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb5-8" title="8">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>))</a>
-<a class="sourceLine" id="cb5-9" title="9"></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb5-11" title="11">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
+<a class="sourceLine" id="cb5-7" title="7">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb5-9" title="9">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)</a>
+<a class="sourceLine" id="cb5-10" title="10">    )</a>
+<a class="sourceLine" id="cb5-11" title="11"></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb5-13" title="13">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#mcnssmqiom .gt_table {
+#wqrwmwpbqq .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -1030,13 +1036,13 @@
   /* table.border.top.color */
 }
 
-#mcnssmqiom .gt_heading {
+#wqrwmwpbqq .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#mcnssmqiom .gt_title {
+#wqrwmwpbqq .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1047,10 +1053,10 @@
   border-bottom-width: 0;
 }
 
-#mcnssmqiom .gt_headnote {
+#wqrwmwpbqq .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -1058,7 +1064,7 @@
   border-top-width: 0;
 }
 
-#mcnssmqiom .gt_bottom_border {
+#wqrwmwpbqq .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1067,7 +1073,7 @@
   /* heading.border.bottom.color */
 }
 
-#mcnssmqiom .gt_column_spanner {
+#wqrwmwpbqq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1075,7 +1081,7 @@
   padding-bottom: 4px;
 }
 
-#mcnssmqiom .gt_col_heading {
+#wqrwmwpbqq .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1087,11 +1093,11 @@
   margin: 10px;
 }
 
-#mcnssmqiom .gt_sep_right {
+#wqrwmwpbqq .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#mcnssmqiom .gt_group_heading {
+#wqrwmwpbqq .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1114,7 +1120,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#mcnssmqiom .gt_empty_group_heading {
+#wqrwmwpbqq .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1137,28 +1143,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#mcnssmqiom .gt_striped tr:nth-child(even) {
+#wqrwmwpbqq .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#mcnssmqiom .gt_row {
+#wqrwmwpbqq .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#mcnssmqiom .gt_stub {
+#wqrwmwpbqq .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#mcnssmqiom .gt_stub.gt_row {
+#wqrwmwpbqq .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#mcnssmqiom .gt_summary_row {
+#wqrwmwpbqq .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1167,13 +1173,13 @@
   /* summary_row.text_transform */
 }
 
-#mcnssmqiom .gt_first_summary_row {
+#wqrwmwpbqq .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#mcnssmqiom .gt_table_body {
+#wqrwmwpbqq .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1188,54 +1194,55 @@
   /* field.border.bottom.color */
 }
 
-#mcnssmqiom .gt_footnote {
+#wqrwmwpbqq .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#mcnssmqiom .gt_sourcenote {
+#wqrwmwpbqq .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#mcnssmqiom .gt_center {
+#wqrwmwpbqq .gt_center {
   text-align: center;
 }
 
-#mcnssmqiom .gt_left {
+#wqrwmwpbqq .gt_left {
   text-align: left;
 }
 
-#mcnssmqiom .gt_right {
+#wqrwmwpbqq .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#mcnssmqiom .gt_font_normal {
+#wqrwmwpbqq .gt_font_normal {
   font-weight: normal;
 }
 
-#mcnssmqiom .gt_font_bold {
+#wqrwmwpbqq .gt_font_bold {
   font-weight: bold;
 }
 
-#mcnssmqiom .gt_font_italic {
+#wqrwmwpbqq .gt_font_italic {
   font-style: italic;
 }
 
-#mcnssmqiom .gt_super {
+#wqrwmwpbqq .gt_super {
   font-size: 65%;
 }
 
-#mcnssmqiom .gt_footnote_glyph {
+#wqrwmwpbqq .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="mcnssmqiom">
+<div id="wqrwmwpbqq">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -1243,7 +1250,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">name</th>
@@ -1303,24 +1310,26 @@
 </table>
 <!--gt table end-->
 </div>
-<p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function <code><a href="../reference/location_cells.html">cells_data()</a></code> is used with the <code>location</code> argument to specify which cells should be the target of the footnote. The <code><a href="../reference/location_cells.html">cells_data()</a></code> helper has the two arguments <code>columns</code> and <code>rows</code>. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in <code><a href="http://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> or row captions within <code>c()</code>, or (4) a select helper function (<code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">starts_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">ends_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">matches()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">one_of()</a></code>, and <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">everything()</a></code>).</p>
+<p>Footnotes live inside the footnote and their reference glyphs can be variously attached to cell data. Footnotes are added with the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function <code><a href="../reference/location_cells.html">cells_data()</a></code> is used with the <code>location</code> argument to specify which cells should be the target of the footnote. The <code><a href="../reference/location_cells.html">cells_data()</a></code> helper has the two arguments <code>columns</code> and <code>rows</code>. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in <code><a href="http://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> or row labels within <code>c()</code>, or (4) a select helper function (<code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">starts_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">ends_with()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">matches()</a></code>, <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">one_of()</a></code>, and <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">everything()</a></code>).</p>
 <p>Here is a simple example on how a footnotes can be added to a table cell. Let’s add a footnote that references the <code>North America</code> and <code>South America</code> cells in the <code>name</code> column:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Add footnotes (the same text) to two different</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co"># cell; data cells are targeted with `data_cells()`</span></a>
-<a class="sourceLine" id="cb6-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
-<a class="sourceLine" id="cb6-5" title="5">    <span class="dt">footnote =</span> <span class="st">"The Americas."</span>,</a>
-<a class="sourceLine" id="cb6-6" title="6">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb6-7" title="7">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(name),</a>
-<a class="sourceLine" id="cb6-8" title="8">      <span class="dt">rows =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb6-9" title="9"></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb6-11" title="11">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb6-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="dt">footnote =</span> <span class="st">"The Americas."</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
+<a class="sourceLine" id="cb6-8" title="8">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(name),</a>
+<a class="sourceLine" id="cb6-9" title="9">      <span class="dt">rows =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb6-10" title="10">    )</a>
+<a class="sourceLine" id="cb6-11" title="11"></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb6-13" title="13">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#suvfaubtjb .gt_table {
+#mpzkqanjge .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -1338,13 +1347,13 @@
   /* table.border.top.color */
 }
 
-#suvfaubtjb .gt_heading {
+#mpzkqanjge .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#suvfaubtjb .gt_title {
+#mpzkqanjge .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1355,10 +1364,10 @@
   border-bottom-width: 0;
 }
 
-#suvfaubtjb .gt_headnote {
+#mpzkqanjge .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -1366,7 +1375,7 @@
   border-top-width: 0;
 }
 
-#suvfaubtjb .gt_bottom_border {
+#mpzkqanjge .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1375,7 +1384,7 @@
   /* heading.border.bottom.color */
 }
 
-#suvfaubtjb .gt_column_spanner {
+#mpzkqanjge .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1383,7 +1392,7 @@
   padding-bottom: 4px;
 }
 
-#suvfaubtjb .gt_col_heading {
+#mpzkqanjge .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1395,11 +1404,11 @@
   margin: 10px;
 }
 
-#suvfaubtjb .gt_sep_right {
+#mpzkqanjge .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#suvfaubtjb .gt_group_heading {
+#mpzkqanjge .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1422,7 +1431,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#suvfaubtjb .gt_empty_group_heading {
+#mpzkqanjge .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1445,28 +1454,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#suvfaubtjb .gt_striped tr:nth-child(even) {
+#mpzkqanjge .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#suvfaubtjb .gt_row {
+#mpzkqanjge .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#suvfaubtjb .gt_stub {
+#mpzkqanjge .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#suvfaubtjb .gt_stub.gt_row {
+#mpzkqanjge .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#suvfaubtjb .gt_summary_row {
+#mpzkqanjge .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1475,13 +1484,13 @@
   /* summary_row.text_transform */
 }
 
-#suvfaubtjb .gt_first_summary_row {
+#mpzkqanjge .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#suvfaubtjb .gt_table_body {
+#mpzkqanjge .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1496,54 +1505,55 @@
   /* field.border.bottom.color */
 }
 
-#suvfaubtjb .gt_footnote {
+#mpzkqanjge .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#suvfaubtjb .gt_sourcenote {
+#mpzkqanjge .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#suvfaubtjb .gt_center {
+#mpzkqanjge .gt_center {
   text-align: center;
 }
 
-#suvfaubtjb .gt_left {
+#mpzkqanjge .gt_left {
   text-align: left;
 }
 
-#suvfaubtjb .gt_right {
+#mpzkqanjge .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#suvfaubtjb .gt_font_normal {
+#mpzkqanjge .gt_font_normal {
   font-weight: normal;
 }
 
-#suvfaubtjb .gt_font_bold {
+#mpzkqanjge .gt_font_bold {
   font-weight: bold;
 }
 
-#suvfaubtjb .gt_font_italic {
+#mpzkqanjge .gt_font_italic {
   font-style: italic;
 }
 
-#suvfaubtjb .gt_super {
+#mpzkqanjge .gt_super {
   font-size: 65%;
 }
 
-#suvfaubtjb .gt_footnote_glyph {
+#mpzkqanjge .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="suvfaubtjb">
+<div id="mpzkqanjge">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -1551,7 +1561,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">name</th>
@@ -1620,32 +1630,36 @@
 <p>Here is a slightly more complex example of adding footnotes that use expressions in <code>where</code> to help target cells in a column by the underlying data in <code>islands_tbl</code>. First, a set of <strong>dplyr</strong> statements obtains the name of the ‘island’ by largest landmass. This is assigned to the <code>largest</code> object and is used in the first <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> call that targets the cell in the <code>size</code> column that is next to a <code>name</code> value that is stored in <code>largest</code> (’Asia’). The second <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> is similar except we are directly supplying a <code>name</code> value in the <code>where</code> expression.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Determine the row that contains the</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co"># largest landmass ('Asia')</span></a>
-<a class="sourceLine" id="cb7-3" title="3">largest &lt;-<span class="st"> </span>islands_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(size)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">pull</span>(name)</a>
-<a class="sourceLine" id="cb7-7" title="7"></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co"># Create two additional footnotes, using the</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co"># `columns` and `where` arguments of `data_cells()`</span></a>
-<a class="sourceLine" id="cb7-10" title="10">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
-<a class="sourceLine" id="cb7-12" title="12">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
-<a class="sourceLine" id="cb7-13" title="13">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb7-14" title="14">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
-<a class="sourceLine" id="cb7-15" title="15">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> </span>largest)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
-<a class="sourceLine" id="cb7-17" title="17">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
-<a class="sourceLine" id="cb7-18" title="18">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb7-19" title="19">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
-<a class="sourceLine" id="cb7-20" title="20">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> "Antarctica"</span>))</a>
-<a class="sourceLine" id="cb7-21" title="21"></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb7-23" title="23">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb7-3" title="3">largest &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span>islands_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(size)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">pull</span>(name)</a>
+<a class="sourceLine" id="cb7-8" title="8"></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co"># Create two additional footnotes, using the</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co"># `columns` and `where` arguments of `data_cells()`</span></a>
+<a class="sourceLine" id="cb7-11" title="11">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb7-14" title="14">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
+<a class="sourceLine" id="cb7-15" title="15">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
+<a class="sourceLine" id="cb7-16" title="16">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-17" title="17">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> </span>largest)</a>
+<a class="sourceLine" id="cb7-18" title="18">    ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb7-20" title="20">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
+<a class="sourceLine" id="cb7-21" title="21">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
+<a class="sourceLine" id="cb7-22" title="22">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb7-23" title="23">      <span class="dt">rows =</span> name <span class="op">==</span><span class="st"> "Antarctica"</span>)</a>
+<a class="sourceLine" id="cb7-24" title="24">    )</a>
+<a class="sourceLine" id="cb7-25" title="25"></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb7-27" title="27">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#baoycbaabc .gt_table {
+#ojmepbivoc .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -1663,13 +1677,13 @@
   /* table.border.top.color */
 }
 
-#baoycbaabc .gt_heading {
+#ojmepbivoc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#baoycbaabc .gt_title {
+#ojmepbivoc .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1680,10 +1694,10 @@
   border-bottom-width: 0;
 }
 
-#baoycbaabc .gt_headnote {
+#ojmepbivoc .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -1691,7 +1705,7 @@
   border-top-width: 0;
 }
 
-#baoycbaabc .gt_bottom_border {
+#ojmepbivoc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1700,7 +1714,7 @@
   /* heading.border.bottom.color */
 }
 
-#baoycbaabc .gt_column_spanner {
+#ojmepbivoc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1708,7 +1722,7 @@
   padding-bottom: 4px;
 }
 
-#baoycbaabc .gt_col_heading {
+#ojmepbivoc .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -1720,11 +1734,11 @@
   margin: 10px;
 }
 
-#baoycbaabc .gt_sep_right {
+#ojmepbivoc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#baoycbaabc .gt_group_heading {
+#ojmepbivoc .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1747,7 +1761,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#baoycbaabc .gt_empty_group_heading {
+#ojmepbivoc .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1770,28 +1784,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#baoycbaabc .gt_striped tr:nth-child(even) {
+#ojmepbivoc .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#baoycbaabc .gt_row {
+#ojmepbivoc .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#baoycbaabc .gt_stub {
+#ojmepbivoc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#baoycbaabc .gt_stub.gt_row {
+#ojmepbivoc .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#baoycbaabc .gt_summary_row {
+#ojmepbivoc .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1800,13 +1814,13 @@
   /* summary_row.text_transform */
 }
 
-#baoycbaabc .gt_first_summary_row {
+#ojmepbivoc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#baoycbaabc .gt_table_body {
+#ojmepbivoc .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1821,54 +1835,55 @@
   /* field.border.bottom.color */
 }
 
-#baoycbaabc .gt_footnote {
+#ojmepbivoc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#baoycbaabc .gt_sourcenote {
+#ojmepbivoc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#baoycbaabc .gt_center {
+#ojmepbivoc .gt_center {
   text-align: center;
 }
 
-#baoycbaabc .gt_left {
+#ojmepbivoc .gt_left {
   text-align: left;
 }
 
-#baoycbaabc .gt_right {
+#ojmepbivoc .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#baoycbaabc .gt_font_normal {
+#ojmepbivoc .gt_font_normal {
   font-weight: normal;
 }
 
-#baoycbaabc .gt_font_bold {
+#ojmepbivoc .gt_font_bold {
   font-weight: bold;
 }
 
-#baoycbaabc .gt_font_italic {
+#ojmepbivoc .gt_font_italic {
   font-style: italic;
 }
 
-#baoycbaabc .gt_super {
+#ojmepbivoc .gt_super {
   font-size: 65%;
 }
 
-#baoycbaabc .gt_footnote_glyph {
+#ojmepbivoc .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="baoycbaabc">
+<div id="ojmepbivoc">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -1876,7 +1891,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">name</th>
@@ -1949,25 +1964,26 @@
 <div id="the-stub" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-stub" class="anchor"></a>The Stub</h3>
-<p>The <strong>stub</strong> is the area to the left in a table that contains <strong>row captions</strong>, <strong>summary captions</strong>, and <strong>group headings</strong>. Those subparts can be grouped in a sequence of <strong>stub blocks</strong>. The <strong>stub head</strong> provides a location for a caption that describes the <strong>stub</strong>. The <strong>stub</strong> is optional since there are cases where a <strong>stub</strong> wouldn’t be useful (e.g., the display tables presented above were just fine without a <strong>stub</strong>).</p>
-<p>The easiest way to generate a <strong>stub</strong> part is by having an input dataset with a column named <code>rowname</code>. This magic column will signal to <strong>gt</strong> that the data in that column should be placed in the stub as <strong>row captions</strong>. To make this work with our <code>islands_tbl</code> dataset, we’ll just change rename the column <code>name</code> to <code>rowname</code>, and then use <code><a href="../reference/gt.html">gt()</a></code> to view the table w/ stub:</p>
+<p>The <strong>Stub</strong> is the area to the left in a table that contains <em>row labels</em>, and may contain <em>row group labels</em>, and <em>summary labels</em>. Those subparts can be grouped in a sequence of <em>row groups</em>. The <strong>Stub Head</strong> provides a location for a label that describes the <strong>Stub</strong>. The <strong>Stub</strong> is optional since there are cases where a <strong>Stub</strong> wouldn’t be useful (e.g., the display tables presented above were just fine without a <strong>Stub</strong>).</p>
+<p>The easiest way to generate a <strong>Stub</strong> part is by having an input dataset with a column named <code>rowname</code>. This magic column will signal to <strong>gt</strong> that the data in that column should be placed in the stub as <em>row labels</em>. To make this work with our <code>islands_tbl</code> dataset, we’ll just change rename the column <code>name</code> to <code>rowname</code>, and then use <code><a href="../reference/gt.html">gt()</a></code> to view the table w/ stub:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Modify the `islands_tbl` by creating a</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="co"># `rowname` column (`name` -&gt; `rowname`)</span></a>
-<a class="sourceLine" id="cb8-3" title="3">islands_tbl &lt;-<span class="st"> </span>islands_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name)</a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co"># Create a display table showing ten of</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co"># the largest islands in the world; this</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co"># time with a stub</span></a>
-<a class="sourceLine" id="cb8-9" title="9">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a>
-<a class="sourceLine" id="cb8-10" title="10"></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb8-12" title="12">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" title="3">islands_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span>islands_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">rowname =</span> name)</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co"># Create a display table showing ten of</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co"># the largest islands in the world; this</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co"># time with a stub</span></a>
+<a class="sourceLine" id="cb8-10" title="10">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> islands_tbl)</a>
+<a class="sourceLine" id="cb8-11" title="11"></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb8-13" title="13">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#igqpulagvj .gt_table {
+#xmzmjaobks .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -1985,13 +2001,13 @@
   /* table.border.top.color */
 }
 
-#igqpulagvj .gt_heading {
+#xmzmjaobks .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#igqpulagvj .gt_title {
+#xmzmjaobks .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2002,10 +2018,10 @@
   border-bottom-width: 0;
 }
 
-#igqpulagvj .gt_headnote {
+#xmzmjaobks .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -2013,7 +2029,7 @@
   border-top-width: 0;
 }
 
-#igqpulagvj .gt_bottom_border {
+#xmzmjaobks .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2022,7 +2038,7 @@
   /* heading.border.bottom.color */
 }
 
-#igqpulagvj .gt_column_spanner {
+#xmzmjaobks .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2030,7 +2046,7 @@
   padding-bottom: 4px;
 }
 
-#igqpulagvj .gt_col_heading {
+#xmzmjaobks .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2042,11 +2058,11 @@
   margin: 10px;
 }
 
-#igqpulagvj .gt_sep_right {
+#xmzmjaobks .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#igqpulagvj .gt_group_heading {
+#xmzmjaobks .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2069,7 +2085,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#igqpulagvj .gt_empty_group_heading {
+#xmzmjaobks .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2092,28 +2108,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#igqpulagvj .gt_striped tr:nth-child(even) {
+#xmzmjaobks .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#igqpulagvj .gt_row {
+#xmzmjaobks .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#igqpulagvj .gt_stub {
+#xmzmjaobks .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#igqpulagvj .gt_stub.gt_row {
+#xmzmjaobks .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#igqpulagvj .gt_summary_row {
+#xmzmjaobks .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2122,13 +2138,13 @@
   /* summary_row.text_transform */
 }
 
-#igqpulagvj .gt_first_summary_row {
+#xmzmjaobks .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#igqpulagvj .gt_table_body {
+#xmzmjaobks .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2143,54 +2159,55 @@
   /* field.border.bottom.color */
 }
 
-#igqpulagvj .gt_footnote {
+#xmzmjaobks .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#igqpulagvj .gt_sourcenote {
+#xmzmjaobks .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#igqpulagvj .gt_center {
+#xmzmjaobks .gt_center {
   text-align: center;
 }
 
-#igqpulagvj .gt_left {
+#xmzmjaobks .gt_left {
   text-align: left;
 }
 
-#igqpulagvj .gt_right {
+#xmzmjaobks .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#igqpulagvj .gt_font_normal {
+#xmzmjaobks .gt_font_normal {
   font-weight: normal;
 }
 
-#igqpulagvj .gt_font_bold {
+#xmzmjaobks .gt_font_bold {
   font-weight: bold;
 }
 
-#igqpulagvj .gt_font_italic {
+#xmzmjaobks .gt_font_italic {
   font-style: italic;
 }
 
-#igqpulagvj .gt_super {
+#xmzmjaobks .gt_super {
   font-size: 65%;
 }
 
-#igqpulagvj .gt_footnote_glyph {
+#xmzmjaobks .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="igqpulagvj">
+<div id="xmzmjaobks">
 <!--gt table start-->
 <table class="table">
 <tr>
@@ -2242,19 +2259,20 @@
 </table>
 <!--gt table end-->
 </div>
-<p>Notice that the landmass names are off the the left in an unstriped area? That’s the <strong>stub</strong>. We can apply what’s known as a <strong>stubhead caption</strong>, which is label text that technically lives both in the <strong>stub</strong> and in the <strong>boxhead</strong>. Think of it as the intersection of the <strong>stub</strong> and <strong>boxhead.</strong> This operation is done with the <code><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption()</a></code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Generate a simple table with a stub and add</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co"># a stubhead caption</span></a>
-<a class="sourceLine" id="cb9-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_caption.html">tab_stubhead_caption</a></span>(<span class="dt">caption =</span> <span class="st">"landmass"</span>)</a>
-<a class="sourceLine" id="cb9-5" title="5"></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb9-7" title="7">gt_tbl</a></code></pre></div>
+<p>Notice that the landmass names are off the the left in an unstriped area? That’s the <strong>stub</strong>. We can apply what’s known as a <strong>stubhead label</strong>, which is label text that technically lives both in the <strong>stub</strong> and in the <strong>boxhead</strong>. Think of it as the intersection of the <strong>stub</strong> and <strong>boxhead.</strong> This operation is done with the <code><a href="../reference/tab_stubhead_label.html">tab_stubhead_label()</a></code> function:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Generate a simple table with a stub</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co"># and add a stubhead label</span></a>
+<a class="sourceLine" id="cb9-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_stubhead_label.html">tab_stubhead_label</a></span>(<span class="dt">label =</span> <span class="st">"landmass"</span>)</a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb9-8" title="8">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#uufvdmhihk .gt_table {
+#uoqkwwanzi .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -2272,13 +2290,13 @@
   /* table.border.top.color */
 }
 
-#uufvdmhihk .gt_heading {
+#uoqkwwanzi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#uufvdmhihk .gt_title {
+#uoqkwwanzi .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2289,10 +2307,10 @@
   border-bottom-width: 0;
 }
 
-#uufvdmhihk .gt_headnote {
+#uoqkwwanzi .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -2300,7 +2318,7 @@
   border-top-width: 0;
 }
 
-#uufvdmhihk .gt_bottom_border {
+#uoqkwwanzi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2309,7 +2327,7 @@
   /* heading.border.bottom.color */
 }
 
-#uufvdmhihk .gt_column_spanner {
+#uoqkwwanzi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2317,7 +2335,7 @@
   padding-bottom: 4px;
 }
 
-#uufvdmhihk .gt_col_heading {
+#uoqkwwanzi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2329,11 +2347,11 @@
   margin: 10px;
 }
 
-#uufvdmhihk .gt_sep_right {
+#uoqkwwanzi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#uufvdmhihk .gt_group_heading {
+#uoqkwwanzi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2356,7 +2374,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#uufvdmhihk .gt_empty_group_heading {
+#uoqkwwanzi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2379,28 +2397,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#uufvdmhihk .gt_striped tr:nth-child(even) {
+#uoqkwwanzi .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#uufvdmhihk .gt_row {
+#uoqkwwanzi .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#uufvdmhihk .gt_stub {
+#uoqkwwanzi .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#uufvdmhihk .gt_stub.gt_row {
+#uoqkwwanzi .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#uufvdmhihk .gt_summary_row {
+#uoqkwwanzi .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2409,13 +2427,13 @@
   /* summary_row.text_transform */
 }
 
-#uufvdmhihk .gt_first_summary_row {
+#uoqkwwanzi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#uufvdmhihk .gt_table_body {
+#uoqkwwanzi .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2430,54 +2448,55 @@
   /* field.border.bottom.color */
 }
 
-#uufvdmhihk .gt_footnote {
+#uoqkwwanzi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#uufvdmhihk .gt_sourcenote {
+#uoqkwwanzi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#uufvdmhihk .gt_center {
+#uoqkwwanzi .gt_center {
   text-align: center;
 }
 
-#uufvdmhihk .gt_left {
+#uoqkwwanzi .gt_left {
   text-align: left;
 }
 
-#uufvdmhihk .gt_right {
+#uoqkwwanzi .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#uufvdmhihk .gt_font_normal {
+#uoqkwwanzi .gt_font_normal {
   font-weight: normal;
 }
 
-#uufvdmhihk .gt_font_bold {
+#uoqkwwanzi .gt_font_bold {
   font-weight: bold;
 }
 
-#uufvdmhihk .gt_font_italic {
+#uoqkwwanzi .gt_font_italic {
   font-style: italic;
 }
 
-#uufvdmhihk .gt_super {
+#uoqkwwanzi .gt_super {
   font-size: 65%;
 }
 
-#uufvdmhihk .gt_footnote_glyph {
+#uoqkwwanzi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="uufvdmhihk">
+<div id="uoqkwwanzi">
 <!--gt table start-->
 <table class="table">
 <tr>
@@ -2529,39 +2548,42 @@
 </table>
 <!--gt table end-->
 </div>
-<p>A very important thing to note here is that the table now has one <strong>field</strong> column. Before, when there was no <strong>stub</strong>, two columns were present (with <strong>column labels</strong> <code>name</code> and <code>size</code>) but now column <code>1</code> (the only <strong>field</strong> column) is <code>size</code>. This has implications for column referencing (for instance, with the <code><a href="../reference/location_cells.html">cells_data()</a></code> helper function). Before, we referenced names in data cells using <code>where</code>. Now, the names are row captions and they can be referenced in the <code>rows</code> argument. To apply our table parts as before (up to and including the footnotes) we use the following statements:</p>
+<p>A very important thing to note here is that the table now has one column. Before, when there was no <strong>stub</strong>, two columns were present (with <strong>column labels</strong> <code>name</code> and <code>size</code>) but now column number <code>1</code> (the only column) is <code>size</code>.</p>
+<p>To apply our table parts as before (up to and including the footnotes) we use the following statements:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Display the `islands_tbl` data with a stub,</span></a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="co"># a heading, source notes, and footnotes</span></a>
-<a class="sourceLine" id="cb10-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
-<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">headnote =</span> <span class="st">"The top ten largest are presented"</span></a>
-<a class="sourceLine" id="cb10-7" title="7">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb10-9" title="9">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
-<a class="sourceLine" id="cb10-10" title="10">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
-<a class="sourceLine" id="cb10-12" title="12">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)</a>
-<a class="sourceLine" id="cb10-13" title="13">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-14" title="14"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
-<a class="sourceLine" id="cb10-15" title="15">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
-<a class="sourceLine" id="cb10-16" title="16">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb10-17" title="17">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
-<a class="sourceLine" id="cb10-18" title="18">      <span class="dt">rows =</span> largest)</a>
-<a class="sourceLine" id="cb10-19" title="19">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-20" title="20"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
-<a class="sourceLine" id="cb10-21" title="21">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
-<a class="sourceLine" id="cb10-22" title="22">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb10-23" title="23">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
-<a class="sourceLine" id="cb10-24" title="24">      <span class="dt">rows =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains</a></span>(<span class="st">"arc"</span>)))</a>
-<a class="sourceLine" id="cb10-25" title="25"></a>
-<a class="sourceLine" id="cb10-26" title="26"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb10-27" title="27">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb10-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_header.html">tab_header</a></span>(</a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">title =</span> <span class="st">"Large Landmasses of the World"</span>,</a>
+<a class="sourceLine" id="cb10-7" title="7">    <span class="dt">subtitle =</span> <span class="st">"The top ten largest are presented"</span></a>
+<a class="sourceLine" id="cb10-8" title="8">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb10-10" title="10">    <span class="dt">source_note =</span> <span class="st">"Source: The World Almanac and Book of Facts, 1975, page 406."</span></a>
+<a class="sourceLine" id="cb10-11" title="11">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_source_note.html">tab_source_note</a></span>(</a>
+<a class="sourceLine" id="cb10-13" title="13">    <span class="dt">source_note =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."</span>)</a>
+<a class="sourceLine" id="cb10-14" title="14">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb10-16" title="16">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The **largest** by area."</span>),</a>
+<a class="sourceLine" id="cb10-17" title="17">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
+<a class="sourceLine" id="cb10-18" title="18">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-19" title="19">      <span class="dt">rows =</span> largest)</a>
+<a class="sourceLine" id="cb10-20" title="20">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-21" title="21"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
+<a class="sourceLine" id="cb10-22" title="22">    <span class="dt">footnote =</span> <span class="st">"The lowest by population."</span>,</a>
+<a class="sourceLine" id="cb10-23" title="23">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
+<a class="sourceLine" id="cb10-24" title="24">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(size),</a>
+<a class="sourceLine" id="cb10-25" title="25">      <span class="dt">rows =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">contains</a></span>(<span class="st">"arc"</span>))</a>
+<a class="sourceLine" id="cb10-26" title="26">  )</a>
+<a class="sourceLine" id="cb10-27" title="27"></a>
+<a class="sourceLine" id="cb10-28" title="28"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb10-29" title="29">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#nribdckutd .gt_table {
+#tltauixrby .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -2579,13 +2601,13 @@
   /* table.border.top.color */
 }
 
-#nribdckutd .gt_heading {
+#tltauixrby .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#nribdckutd .gt_title {
+#tltauixrby .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2596,10 +2618,10 @@
   border-bottom-width: 0;
 }
 
-#nribdckutd .gt_headnote {
+#tltauixrby .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -2607,7 +2629,7 @@
   border-top-width: 0;
 }
 
-#nribdckutd .gt_bottom_border {
+#tltauixrby .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2616,7 +2638,7 @@
   /* heading.border.bottom.color */
 }
 
-#nribdckutd .gt_column_spanner {
+#tltauixrby .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2624,7 +2646,7 @@
   padding-bottom: 4px;
 }
 
-#nribdckutd .gt_col_heading {
+#tltauixrby .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2636,11 +2658,11 @@
   margin: 10px;
 }
 
-#nribdckutd .gt_sep_right {
+#tltauixrby .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#nribdckutd .gt_group_heading {
+#tltauixrby .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2663,7 +2685,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#nribdckutd .gt_empty_group_heading {
+#tltauixrby .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2686,28 +2708,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#nribdckutd .gt_striped tr:nth-child(even) {
+#tltauixrby .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#nribdckutd .gt_row {
+#tltauixrby .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#nribdckutd .gt_stub {
+#tltauixrby .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#nribdckutd .gt_stub.gt_row {
+#tltauixrby .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#nribdckutd .gt_summary_row {
+#tltauixrby .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2716,13 +2738,13 @@
   /* summary_row.text_transform */
 }
 
-#nribdckutd .gt_first_summary_row {
+#tltauixrby .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#nribdckutd .gt_table_body {
+#tltauixrby .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2737,54 +2759,55 @@
   /* field.border.bottom.color */
 }
 
-#nribdckutd .gt_footnote {
+#tltauixrby .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#nribdckutd .gt_sourcenote {
+#tltauixrby .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#nribdckutd .gt_center {
+#tltauixrby .gt_center {
   text-align: center;
 }
 
-#nribdckutd .gt_left {
+#tltauixrby .gt_left {
   text-align: left;
 }
 
-#nribdckutd .gt_right {
+#tltauixrby .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#nribdckutd .gt_font_normal {
+#tltauixrby .gt_font_normal {
   font-weight: normal;
 }
 
-#nribdckutd .gt_font_bold {
+#tltauixrby .gt_font_bold {
   font-weight: bold;
 }
 
-#nribdckutd .gt_font_italic {
+#tltauixrby .gt_font_italic {
   font-style: italic;
 }
 
-#nribdckutd .gt_super {
+#tltauixrby .gt_super {
   font-size: 65%;
 }
 
-#nribdckutd .gt_footnote_glyph {
+#tltauixrby .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="nribdckutd">
+<div id="tltauixrby">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -2792,7 +2815,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">landmass</th>
@@ -2858,34 +2881,36 @@
 </table>
 <!--gt table end-->
 </div>
-<p>Let’s incorporate row groups into the display table. This divides rows into groups, creating <strong>stub blocks</strong>, and results in a display of <strong>group heading</strong> row. This can be easily done with a table containing row captions. We can make a new <strong>stub block</strong> with each call of the <code><a href="../reference/tab_stub_block.html">tab_stub_block()</a></code> function. The inputs are group names in the <code>group</code> argument, and row references in the <code>rows</code> argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).</p>
-<p>Here we will create three stub blocks (with group names <code>continent</code>, <code>country</code>, and <code>subregion</code>) to have a groupings of rows.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Create three stub blocks with the</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co"># `tab_stub_block()` function</span></a>
-<a class="sourceLine" id="cb11-3" title="3">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
-<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">group =</span> <span class="st">"continent"</span>,</a>
-<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">rows =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb11-7" title="7">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
-<a class="sourceLine" id="cb11-9" title="9">    <span class="dt">group =</span> <span class="st">"country"</span>,</a>
-<a class="sourceLine" id="cb11-10" title="10">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"Australia"</span>, <span class="st">"Greenland"</span>)</a>
-<a class="sourceLine" id="cb11-11" title="11">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_stub_block.html">tab_stub_block</a></span>(</a>
-<a class="sourceLine" id="cb11-13" title="13">    <span class="dt">group =</span> <span class="st">"subregion"</span>,</a>
-<a class="sourceLine" id="cb11-14" title="14">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"New Guinea"</span>, <span class="st">"Borneo"</span>))</a>
-<a class="sourceLine" id="cb11-15" title="15"></a>
-<a class="sourceLine" id="cb11-16" title="16"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb11-17" title="17">gt_tbl</a>
-<a class="sourceLine" id="cb11-18" title="18"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
-<a class="sourceLine" id="cb11-19" title="19"><span class="co">#&gt; Inf</span></a>
-<a class="sourceLine" id="cb11-20" title="20"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
-<a class="sourceLine" id="cb11-21" title="21"><span class="co">#&gt; Inf</span></a></code></pre></div>
+<p>Let’s incorporate row groups into the display table. This divides rows into groups, creating <em>row groups</em>, and results in a display of a <em>row group labels</em> right above the each group. This can be easily done with a table containing row labels. We can make a new <em>row group</em> with each call of the <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code> function. The inputs are group names in the <code>group</code> argument, and row references in the <code>rows</code> argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).</p>
+<p>Here we will create three row groups (with row group labels <code>continent</code>, <code>country</code>, and <code>subregion</code>) to have a grouping of rows.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Create three row groups with the</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co"># `tab_row_group()` function</span></a>
+<a class="sourceLine" id="cb11-3" title="3">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_row_group.html">tab_row_group</a></span>(</a>
+<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">group =</span> <span class="st">"continent"</span>,</a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="dt">rows =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb11-8" title="8">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/tab_row_group.html">tab_row_group</a></span>(</a>
+<a class="sourceLine" id="cb11-10" title="10">    <span class="dt">group =</span> <span class="st">"country"</span>,</a>
+<a class="sourceLine" id="cb11-11" title="11">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"Australia"</span>, <span class="st">"Greenland"</span>)</a>
+<a class="sourceLine" id="cb11-12" title="12">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_row_group.html">tab_row_group</a></span>(</a>
+<a class="sourceLine" id="cb11-14" title="14">    <span class="dt">group =</span> <span class="st">"subregion"</span>,</a>
+<a class="sourceLine" id="cb11-15" title="15">    <span class="dt">rows =</span> <span class="kw">c</span>(<span class="st">"New Guinea"</span>, <span class="st">"Borneo"</span>)</a>
+<a class="sourceLine" id="cb11-16" title="16">  )</a>
+<a class="sourceLine" id="cb11-17" title="17"></a>
+<a class="sourceLine" id="cb11-18" title="18"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb11-19" title="19">gt_tbl</a>
+<a class="sourceLine" id="cb11-20" title="20"><span class="co">#&gt; Warning in min(rows_matched): no non-missing arguments to min; returning</span></a>
+<a class="sourceLine" id="cb11-21" title="21"><span class="co">#&gt; Inf</span></a>
+<a class="sourceLine" id="cb11-22" title="22"><span class="co">#&gt; Warning in max(rows_matched): no non-missing arguments to max; returning -</span></a>
+<a class="sourceLine" id="cb11-23" title="23"><span class="co">#&gt; Inf</span></a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#ugcyzprpuj .gt_table {
+#ovhsqnjjxg .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -2903,13 +2928,13 @@
   /* table.border.top.color */
 }
 
-#ugcyzprpuj .gt_heading {
+#ovhsqnjjxg .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ugcyzprpuj .gt_title {
+#ovhsqnjjxg .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2920,10 +2945,10 @@
   border-bottom-width: 0;
 }
 
-#ugcyzprpuj .gt_headnote {
+#ovhsqnjjxg .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -2931,7 +2956,7 @@
   border-top-width: 0;
 }
 
-#ugcyzprpuj .gt_bottom_border {
+#ovhsqnjjxg .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2940,7 +2965,7 @@
   /* heading.border.bottom.color */
 }
 
-#ugcyzprpuj .gt_column_spanner {
+#ovhsqnjjxg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2948,7 +2973,7 @@
   padding-bottom: 4px;
 }
 
-#ugcyzprpuj .gt_col_heading {
+#ovhsqnjjxg .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -2960,11 +2985,11 @@
   margin: 10px;
 }
 
-#ugcyzprpuj .gt_sep_right {
+#ovhsqnjjxg .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ugcyzprpuj .gt_group_heading {
+#ovhsqnjjxg .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2987,7 +3012,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#ugcyzprpuj .gt_empty_group_heading {
+#ovhsqnjjxg .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3010,28 +3035,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#ugcyzprpuj .gt_striped tr:nth-child(even) {
+#ovhsqnjjxg .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#ugcyzprpuj .gt_row {
+#ovhsqnjjxg .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#ugcyzprpuj .gt_stub {
+#ovhsqnjjxg .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#ugcyzprpuj .gt_stub.gt_row {
+#ovhsqnjjxg .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#ugcyzprpuj .gt_summary_row {
+#ovhsqnjjxg .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3040,13 +3065,13 @@
   /* summary_row.text_transform */
 }
 
-#ugcyzprpuj .gt_first_summary_row {
+#ovhsqnjjxg .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ugcyzprpuj .gt_table_body {
+#ovhsqnjjxg .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3061,54 +3086,55 @@
   /* field.border.bottom.color */
 }
 
-#ugcyzprpuj .gt_footnote {
+#ovhsqnjjxg .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#ugcyzprpuj .gt_sourcenote {
+#ovhsqnjjxg .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ugcyzprpuj .gt_center {
+#ovhsqnjjxg .gt_center {
   text-align: center;
 }
 
-#ugcyzprpuj .gt_left {
+#ovhsqnjjxg .gt_left {
   text-align: left;
 }
 
-#ugcyzprpuj .gt_right {
+#ovhsqnjjxg .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#ugcyzprpuj .gt_font_normal {
+#ovhsqnjjxg .gt_font_normal {
   font-weight: normal;
 }
 
-#ugcyzprpuj .gt_font_bold {
+#ovhsqnjjxg .gt_font_bold {
   font-weight: bold;
 }
 
-#ugcyzprpuj .gt_font_italic {
+#ovhsqnjjxg .gt_font_italic {
   font-style: italic;
 }
 
-#ugcyzprpuj .gt_super {
+#ovhsqnjjxg .gt_super {
   font-size: 65%;
 }
 
-#ugcyzprpuj .gt_footnote_glyph {
+#ovhsqnjjxg .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ugcyzprpuj">
+<div id="ovhsqnjjxg">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -3116,7 +3142,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="2">Large Landmasses of the World</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="2">The top ten largest are presented</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_left" rowspan="1" colspan="1">landmass</th>
@@ -3191,16 +3217,15 @@
 </table>
 <!--gt table end-->
 </div>
-<p>Three <strong>stub groups</strong> have been made since there are three unique categories under <code>groupname</code>. Across the top of each <strong>stub group</strong> is the <strong>group_heading</strong> contained in a separate row (these cut across the field and they contain nothing but the <strong>group heading</strong>). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate <strong>stub groups</strong>.</p>
-<p>Having groups of rows in <strong>stub blocks</strong> is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with <strong>summary captions</strong> is covered in a separate article (<em>Creating Summary Lines</em>).</p>
-<p>Another way to make group rows is to have the magic column <code>groupname</code> present in the input data table. For our above example with <code>islands_tbl</code>, a <code>groupname</code> column with the categories <code>continent</code>, <code>country</code>, and <code>subregion</code> in the appropriate rows would produce stub blocks automatically (i.e., there would be no need to use the <code><a href="../reference/tab_stub_block.html">tab_stub_block()</a></code> statements). This strategy of supplying group names in a <code>groupname</code> column name can sometimes be advantageous since we can rely on functions such as those available in <strong>dplyr</strong> to generate the categories (e.g., using <code>case_when()</code> or <code>if_else()</code>).</p>
+<p>Three <em>row groups</em> have been made since there are three unique categories under <code>groupname</code>. Across the top of each <em>row group</em> is the <em>row group label</em> contained in a separate row (these cut across the field and they contain nothing but the <em>row group label</em>). A rearrangement of rows is carried out to ensure each of the rows is collected within the appropriate <em>row groups</em>.</p>
+<p>Having groups of rows in <em>row groups</em> is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with <em>summary labels</em> is covered in a separate article (<em>Creating Summary Lines</em>).</p>
+<p>Another way to make row groups is to have the magic column <code>groupname</code> present in the input data table. For our above example with <code>islands_tbl</code>, a <code>groupname</code> column with the categories <code>continent</code>, <code>country</code>, and <code>subregion</code> in the appropriate rows would produce row groups automatically (i.e., there would be no need to use the <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code> statements). This strategy of supplying group names in a <code>groupname</code> column name can sometimes be advantageous since we can rely on functions such as those available in <strong>dplyr</strong> to generate the categories (e.g., using <code>case_when()</code> or <code>if_else()</code>).</p>
 </div>
-<div id="the-boxhead" class="section level3">
+<div id="the-column-labels" class="section level3">
 <h3 class="hasAnchor">
-<a href="#the-boxhead" class="anchor"></a>The Boxhead</h3>
-<p>The table’s <strong>boxhead</strong> is a required element of any table and it contains, at a minimum, <strong>column labels</strong>. The last example had a single <strong>column label</strong>: <code>size</code>. Just as in the <strong>stub</strong>, we can create groupings called <strong>boxhead panels</strong> that have one or more <strong>spanner headings</strong>.</p>
-<p>The following schematic provides a model for the layout of rows within each <strong>stub group</strong>, and, the layout of <strong>column labels</strong> under <strong>spanner headings</strong> in the <strong>boxhead</strong>.</p>
-<p>To better demonstrate how <strong>boxhead panels</strong> work and are displayed, let’s use an input data table with more columns. In this case, that input table will be <code>airquality</code>. It has the following columns:</p>
+<a href="#the-column-labels" class="anchor"></a>The Column Labels</h3>
+<p>The table’s <strong>Column Labels</strong> part contains, at a minimum, columns and their <em>column labels</em>. The last example had a single column: <code>size</code>. Just as in the <strong>Stub</strong>, we can create groupings called <em>spanner columns</em> that encompass one or more columns.</p>
+<p>To better demonstrate how <strong>Column Labels</strong> work and are displayed, let’s use an input data table with more columns. In this case, that input table will be <code>airquality</code>. It has the following columns:</p>
 <ul>
 <li>
 <code>Ozone</code>: mean ground-level ozone in parts per billion by volume (ppbV), measured between 13:00 and 15:00</li>
@@ -3214,33 +3239,38 @@
 <code>Month</code>, <code>Day</code>: the numeric month and day of month for the record</li>
 </ul>
 <p>We know that all measurements took place in 1973, so a <code>year</code> column will be added to the dataset before it is passed to <code><a href="../reference/gt.html">gt()</a></code>.</p>
-<p>Let’s organize the time information under a <code>Time</code> <strong>spanner heading</strong>, and put the other columns under a <code>Measurement</code> heading. We can do this with the <code><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel()</a></code> function.</p>
+<p>Let’s organize the time information under a <code>Time</code> <em>spanner column label</em>, and put the other columns under a <code>Measurement</code> <em>spanner column label</em>. We can do this with the <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Modify the `airquality` dataset by adding the year</span></a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="co"># of the measurements (1973) and limiting to 10 rows</span></a>
-<a class="sourceLine" id="cb12-3" title="3">airquality &lt;-<span class="st"> </span>airquality <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> 1973L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb12-6" title="6">  </a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co"># Create a display table using the `airquality`</span></a>
-<a class="sourceLine" id="cb12-8" title="8"><span class="co"># dataset; arrange columns into boxhead panels</span></a>
-<a class="sourceLine" id="cb12-9" title="9">gt_tbl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> airquality) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/tab_heading.html">tab_heading</a></span>(</a>
-<a class="sourceLine" id="cb12-11" title="11">    <span class="dt">title =</span> <span class="st">"New York Air Quality Measurements"</span>,</a>
-<a class="sourceLine" id="cb12-12" title="12">    <span class="dt">headnote =</span> <span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
-<a class="sourceLine" id="cb12-14" title="14">    <span class="dt">group =</span> <span class="st">"Time"</span>,</a>
-<a class="sourceLine" id="cb12-15" title="15">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_boxhead_panel.html">tab_boxhead_panel</a></span>(</a>
-<a class="sourceLine" id="cb12-17" title="17">    <span class="dt">group =</span> <span class="st">"Measurement"</span>,</a>
-<a class="sourceLine" id="cb12-18" title="18">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Ozone, Solar.R, Wind, Temp))</a>
-<a class="sourceLine" id="cb12-19" title="19"></a>
-<a class="sourceLine" id="cb12-20" title="20"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb12-21" title="21">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb12-3" title="3">airquality_m &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="st">  </span>airquality <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> 1973L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb12-7" title="7">  </a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co"># Create a display table using the `airquality`</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co"># dataset; arrange columns into groups</span></a>
+<a class="sourceLine" id="cb12-10" title="10">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">data =</span> airquality_m) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/tab_header.html">tab_header</a></span>(</a>
+<a class="sourceLine" id="cb12-13" title="13">    <span class="dt">title =</span> <span class="st">"New York Air Quality Measurements"</span>,</a>
+<a class="sourceLine" id="cb12-14" title="14">    <span class="dt">subtitle =</span> <span class="st">"Daily measurements in New York City (May 1-10, 1973)"</span></a>
+<a class="sourceLine" id="cb12-15" title="15">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/tab_spanner.html">tab_spanner</a></span>(</a>
+<a class="sourceLine" id="cb12-17" title="17">    <span class="dt">label =</span> <span class="st">"Time"</span>,</a>
+<a class="sourceLine" id="cb12-18" title="18">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)</a>
+<a class="sourceLine" id="cb12-19" title="19">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="st">  </span><span class="kw"><a href="../reference/tab_spanner.html">tab_spanner</a></span>(</a>
+<a class="sourceLine" id="cb12-21" title="21">    <span class="dt">label =</span> <span class="st">"Measurement"</span>,</a>
+<a class="sourceLine" id="cb12-22" title="22">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Ozone, Solar.R, Wind, Temp)</a>
+<a class="sourceLine" id="cb12-23" title="23">  )</a>
+<a class="sourceLine" id="cb12-24" title="24"></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb12-26" title="26">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#tvhhxzkavz .gt_table {
+#cdimgydxea .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -3258,13 +3288,13 @@
   /* table.border.top.color */
 }
 
-#tvhhxzkavz .gt_heading {
+#cdimgydxea .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#tvhhxzkavz .gt_title {
+#cdimgydxea .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3275,10 +3305,10 @@
   border-bottom-width: 0;
 }
 
-#tvhhxzkavz .gt_headnote {
+#cdimgydxea .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -3286,7 +3316,7 @@
   border-top-width: 0;
 }
 
-#tvhhxzkavz .gt_bottom_border {
+#cdimgydxea .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3295,7 +3325,7 @@
   /* heading.border.bottom.color */
 }
 
-#tvhhxzkavz .gt_column_spanner {
+#cdimgydxea .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3303,7 +3333,7 @@
   padding-bottom: 4px;
 }
 
-#tvhhxzkavz .gt_col_heading {
+#cdimgydxea .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -3315,11 +3345,11 @@
   margin: 10px;
 }
 
-#tvhhxzkavz .gt_sep_right {
+#cdimgydxea .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#tvhhxzkavz .gt_group_heading {
+#cdimgydxea .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3342,7 +3372,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#tvhhxzkavz .gt_empty_group_heading {
+#cdimgydxea .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3365,28 +3395,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#tvhhxzkavz .gt_striped tr:nth-child(even) {
+#cdimgydxea .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#tvhhxzkavz .gt_row {
+#cdimgydxea .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#tvhhxzkavz .gt_stub {
+#cdimgydxea .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#tvhhxzkavz .gt_stub.gt_row {
+#cdimgydxea .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#tvhhxzkavz .gt_summary_row {
+#cdimgydxea .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3395,13 +3425,13 @@
   /* summary_row.text_transform */
 }
 
-#tvhhxzkavz .gt_first_summary_row {
+#cdimgydxea .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#tvhhxzkavz .gt_table_body {
+#cdimgydxea .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3416,54 +3446,55 @@
   /* field.border.bottom.color */
 }
 
-#tvhhxzkavz .gt_footnote {
+#cdimgydxea .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#tvhhxzkavz .gt_sourcenote {
+#cdimgydxea .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#tvhhxzkavz .gt_center {
+#cdimgydxea .gt_center {
   text-align: center;
 }
 
-#tvhhxzkavz .gt_left {
+#cdimgydxea .gt_left {
   text-align: left;
 }
 
-#tvhhxzkavz .gt_right {
+#cdimgydxea .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#tvhhxzkavz .gt_font_normal {
+#cdimgydxea .gt_font_normal {
   font-weight: normal;
 }
 
-#tvhhxzkavz .gt_font_bold {
+#cdimgydxea .gt_font_bold {
   font-weight: bold;
 }
 
-#tvhhxzkavz .gt_font_italic {
+#cdimgydxea .gt_font_italic {
   font-style: italic;
 }
 
-#tvhhxzkavz .gt_super {
+#cdimgydxea .gt_super {
   font-size: 65%;
 }
 
-#tvhhxzkavz .gt_footnote_glyph {
+#cdimgydxea .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tvhhxzkavz">
+<div id="cdimgydxea">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -3471,7 +3502,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="7">New York Air Quality Measurements</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_column_spanner gt_sep_right gt_center" rowspan="1" colspan="4">Measurement</th>
@@ -3582,7 +3613,7 @@
 </table>
 <!--gt table end-->
 </div>
-<p>We can do a two more things to make this presentable:</p>
+<p>We can do two more things to make this presentable:</p>
 <ul>
 <li>move the <code>Time</code> columns to the beginning of the series (using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>)</li>
 <li>customize the column labels so that they are more descriptive (using <code><a href="../reference/cols_label.html">cols_label()</a></code>)</li>
@@ -3591,23 +3622,25 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Move the time-based columns to the start of</span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="co"># the column series; modify the column labels of</span></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="co"># the measurement-based columns</span></a>
-<a class="sourceLine" id="cb13-4" title="4">gt_tbl &lt;-<span class="st"> </span>gt_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/cols_move_to_start.html">cols_move_to_start</a></span>(</a>
-<a class="sourceLine" id="cb13-6" title="6">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)</a>
-<a class="sourceLine" id="cb13-7" title="7">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(</a>
-<a class="sourceLine" id="cb13-9" title="9">    <span class="dt">Ozone =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</a>
-<a class="sourceLine" id="cb13-10" title="10">    <span class="dt">Solar.R =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Solar R.,&lt;br&gt;cal/m&lt;sup&gt;2&lt;/sup&gt;"</span>),</a>
-<a class="sourceLine" id="cb13-11" title="11">    <span class="dt">Wind =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Wind,&lt;br&gt;mph"</span>),</a>
-<a class="sourceLine" id="cb13-12" title="12">    <span class="dt">Temp =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Temp,&lt;br&gt;&amp;deg;F"</span>))</a>
-<a class="sourceLine" id="cb13-13" title="13"></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="co"># Show the table</span></a>
-<a class="sourceLine" id="cb13-15" title="15">gt_tbl</a></code></pre></div>
+<a class="sourceLine" id="cb13-4" title="4">gt_tbl &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="st">  </span>gt_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/cols_move_to_start.html">cols_move_to_start</a></span>(</a>
+<a class="sourceLine" id="cb13-7" title="7">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(Year, Month, Day)</a>
+<a class="sourceLine" id="cb13-8" title="8">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(</a>
+<a class="sourceLine" id="cb13-10" title="10">    <span class="dt">Ozone =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Ozone,&lt;br&gt;ppbV"</span>),</a>
+<a class="sourceLine" id="cb13-11" title="11">    <span class="dt">Solar.R =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Solar R.,&lt;br&gt;cal/m&lt;sup&gt;2&lt;/sup&gt;"</span>),</a>
+<a class="sourceLine" id="cb13-12" title="12">    <span class="dt">Wind =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Wind,&lt;br&gt;mph"</span>),</a>
+<a class="sourceLine" id="cb13-13" title="13">    <span class="dt">Temp =</span> <span class="kw"><a href="../reference/html.html">html</a></span>(<span class="st">"Temp,&lt;br&gt;&amp;deg;F"</span>)</a>
+<a class="sourceLine" id="cb13-14" title="14">  )</a>
+<a class="sourceLine" id="cb13-15" title="15"></a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="co"># Show the gt Table</span></a>
+<a class="sourceLine" id="cb13-17" title="17">gt_tbl</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
-#gqvklnfqve .gt_table {
+#hkyrgusoao .gt_table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
@@ -3625,13 +3658,13 @@
   /* table.border.top.color */
 }
 
-#gqvklnfqve .gt_heading {
+#hkyrgusoao .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#gqvklnfqve .gt_title {
+#hkyrgusoao .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3642,10 +3675,10 @@
   border-bottom-width: 0;
 }
 
-#gqvklnfqve .gt_headnote {
+#hkyrgusoao .gt_subtitle {
   color: #000000;
   font-size: 85%;
-  /* heading.headnote.font.size */
+  /* heading.subtitle.font.size */
   padding-top: 1px;
   padding-bottom: 4px;
   /* heading.bottom.padding */
@@ -3653,7 +3686,7 @@
   border-top-width: 0;
 }
 
-#gqvklnfqve .gt_bottom_border {
+#hkyrgusoao .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3662,7 +3695,7 @@
   /* heading.border.bottom.color */
 }
 
-#gqvklnfqve .gt_column_spanner {
+#hkyrgusoao .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3670,7 +3703,7 @@
   padding-bottom: 4px;
 }
 
-#gqvklnfqve .gt_col_heading {
+#hkyrgusoao .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* boxhead.background.color */
@@ -3682,11 +3715,11 @@
   margin: 10px;
 }
 
-#gqvklnfqve .gt_sep_right {
+#hkyrgusoao .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#gqvklnfqve .gt_group_heading {
+#hkyrgusoao .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3709,7 +3742,7 @@
   /* stub_group.border.bottom  .color */
 }
 
-#gqvklnfqve .gt_empty_group_heading {
+#hkyrgusoao .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3732,28 +3765,28 @@
   /* stub_group.border.bottom  .color */
 }
 
-#gqvklnfqve .gt_striped tr:nth-child(even) {
+#hkyrgusoao .gt_striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#gqvklnfqve .gt_row {
+#hkyrgusoao .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
 }
 
-#gqvklnfqve .gt_stub {
+#hkyrgusoao .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   text-indent: 5px;
 }
 
-#gqvklnfqve .gt_stub.gt_row {
+#hkyrgusoao .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#gqvklnfqve .gt_summary_row {
+#hkyrgusoao .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3762,13 +3795,13 @@
   /* summary_row.text_transform */
 }
 
-#gqvklnfqve .gt_first_summary_row {
+#hkyrgusoao .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gqvklnfqve .gt_table_body {
+#hkyrgusoao .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3783,54 +3816,55 @@
   /* field.border.bottom.color */
 }
 
-#gqvklnfqve .gt_footnote {
+#hkyrgusoao .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#gqvklnfqve .gt_sourcenote {
+#hkyrgusoao .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#gqvklnfqve .gt_center {
+#hkyrgusoao .gt_center {
   text-align: center;
 }
 
-#gqvklnfqve .gt_left {
+#hkyrgusoao .gt_left {
   text-align: left;
 }
 
-#gqvklnfqve .gt_right {
+#hkyrgusoao .gt_right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-#gqvklnfqve .gt_font_normal {
+#hkyrgusoao .gt_font_normal {
   font-weight: normal;
 }
 
-#gqvklnfqve .gt_font_bold {
+#hkyrgusoao .gt_font_bold {
   font-weight: bold;
 }
 
-#gqvklnfqve .gt_font_italic {
+#hkyrgusoao .gt_font_italic {
   font-style: italic;
 }
 
-#gqvklnfqve .gt_super {
+#hkyrgusoao .gt_super {
   font-size: 65%;
 }
 
-#gqvklnfqve .gt_footnote_glyph {
+#hkyrgusoao .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gqvklnfqve">
+<div id="hkyrgusoao">
 <!--gt table start-->
 <table class="table">
 <thead>
@@ -3838,7 +3872,7 @@
 <th class="gt_heading gt_title gt_font_normal gt_center" colspan="7">New York Air Quality Measurements</th>
 </tr>
 <tr>
-<th class="gt_heading gt_headnote gt_font_normal gt_center gt_bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
+<th class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" colspan="7">Daily measurements in New York City (May 1-10, 1973)</th>
 </tr>
 <tr>
 <th class="gt_col_heading gt_column_spanner gt_sep_right gt_center" rowspan="1" colspan="3">Time</th>
@@ -3950,7 +3984,7 @@
 </table>
 <!--gt table end-->
 </div>
-<p>Note that even though columns were moved using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, the <strong>spanner headings</strong> still spanned above the correct columns. There are a number of functions that <strong>gt</strong> provides to move columns, including <code><a href="../reference/cols_move.html">cols_move()</a></code>, <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>; there’s even a function to hide columns: <code><a href="../reference/cols_hide.html">cols_hide()</a></code>.</p>
+<p>Note that even though columns were moved using <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, the <em>spanner column labels</em> still spanned above the correct <em>column labels</em>. There are a number of functions that <strong>gt</strong> provides to move columns, including <code><a href="../reference/cols_move.html">cols_move()</a></code>, <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>; there’s even a function to hide columns: <code><a href="../reference/cols_hide.html">cols_hide()</a></code>.</p>
 <p>Multiple columns can be renamed in a single use of <code><a href="../reference/cols_label.html">cols_label()</a></code>. Further to this, the helper functions <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> can be used to create column labels with additional styling. In the above example, we provided column labels as HTML so that we can insert linebreaks with <code>&lt;br&gt;</code>, insert a superscripted <code>2</code> (with <code>&lt;sup&gt;2&lt;/sup&gt;</code>), and insert a degree symbol as an HTML entity (<code>&amp;deg;</code>).</p>
 </div>
   </div>
