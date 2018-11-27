@@ -11,7 +11,7 @@ library(gt)
 library(dplyr)
 ```
 
-Create a table that creates a stub and stub blocks based on a naming convention
+Create a table that creates a stub and stub blocks based on magic column names
 
 ```{r}
 # Input table
