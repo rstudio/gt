@@ -29,6 +29,7 @@ globalVariables(
     ".",
     "are_groups_present",
     "arrange_dfs",
+    "blue",
     "colname",
     "colnames_start",
     "colnum",
@@ -38,14 +39,17 @@ globalVariables(
     "fs_id",
     "fs_id_coalesced",
     "get_groups_rows",
+    "green",
     "group_label",
     "grpname",
     "integrate_summary_lines",
     "locname",
     "locnum",
     "missing_text",
+    "n",
     "n_cols",
     "obtain_group_ordering",
+    "red",
     "row_end",
     "rownum",
     "styles_appended",
@@ -61,9 +65,11 @@ globalVariables(
     "rowname",
     "scss",
     "selector",
+    "text_col",
     "time",
     "type",
-    "value"
+    "value",
+    "yiq"
     )
   )
 

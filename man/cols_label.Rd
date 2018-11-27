@@ -39,6 +39,7 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+  \code{\link{cols_move}}, \code{\link{cols_split_delim}},
+  \code{\link{data_color}}
 }
 \concept{column modification functions}
