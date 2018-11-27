@@ -249,8 +249,8 @@ Let's incorporate row groups into the display table. This divides rows into grou
 Here we will create three row groups (with row group labels `continent`, `country`, and `subregion`) to have a grouping of rows.
 
 ```{r}
-# Create three stub blocks with the
-# `tab_stub_block()` function
+# Create three row groups with the
+# `tab_row_group()` function
 gt_tbl <- 
   gt_tbl %>% 
   tab_row_group(
