@@ -202,13 +202,13 @@ test_that("a gt table contains the expected source note", {
         "This was in Motor Trend magazine, hence the `mt`."))
 })
 
-test_that("a gt table contains the correct placement of stub blocks", {
+test_that("a gt table contains the correct placement of row groups", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a stub blocks in a specified order
+  # contains a row groups in a specified order
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
@@ -227,7 +227,7 @@ test_that("a gt table contains the correct placement of stub blocks", {
     expect_equal(c("Mazda", ""))
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a three stub blocks and the use of `row_group_order()`
+  # contains a three row groups and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
