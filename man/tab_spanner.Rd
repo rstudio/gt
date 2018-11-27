@@ -10,27 +10,27 @@ tab_spanner(data, label, columns)
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to be components of the spanner heading.}
+\item{label}{the text to use for the spanner column label.}
 
-\item{group}{the name to assign to the spanner heading.}
+\item{columns}{the columns to be components of the spanner heading.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
 Set a spanner column label by mapping it to columns already in the table.
-This label that is placed above one or more column labels, spanning the width
-of those columns.
+This label is placed above one or more columnd, spanning the width of those
+columns.
 }
 \examples{
 # Create a table based on `rock` where
-# there are column headings grouped
-# under a spanner column label
+# there are columns grouped under a
+# common spanner column label
 gt_tbl <-
   gt(data = rock) \%>\%
     tab_spanner(
-      group = "perimeter",
-      columns = c("peri", "shape"))
+      label = "perimeter",
+      columns = vars(peri, shape))
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
