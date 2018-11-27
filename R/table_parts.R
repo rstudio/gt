@@ -168,21 +168,21 @@ tab_row_group <- function(data,
 #' Add a spanner column label
 #'
 #' Set a spanner column label by mapping it to columns already in the table.
-#' This label that is placed above one or more column labels, spanning the width
-#' of those columns.
+#' This label is placed above one or more columnd, spanning the width of those
+#' columns.
 #' @inheritParams fmt_number
-#' @param group the name to assign to the spanner heading.
+#' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table based on `rock` where
-#' # there are column headings grouped
-#' # under a spanner column label
+#' # there are columns grouped under a
+#' # common spanner column label
 #' gt_tbl <-
 #'   gt(data = rock) %>%
 #'     tab_spanner(
-#'       group = "perimeter",
-#'       columns = c("peri", "shape"))
+#'       label = "perimeter",
+#'       columns = vars(peri, shape))
 #' @family table-part creation/modification functions
 #' @export
 tab_spanner <- function(data,
