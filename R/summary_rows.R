@@ -1,13 +1,13 @@
 #' Add summary rows using aggregation functions
 #'
-#' Add summary rows to one or more stub blocks by using the input data already
+#' Add summary rows to one or more row groups by using the input data already
 #' provided in the \code{\link{gt}()} function alongside any suitable
 #' aggregation functions. Should we need to obtain the summary data for external
 #' purposes, the \code{\link{extract_summary}()} can be used with a
 #' \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param groups the stub block groups heading names for which summary rows will
-#'   be added.
+#' @param groups the row groups labels that identify which summary rows will be
+#'   added.
 #' @param columns the columns for which the summaries should be calculated. If
 #'   nothing is provided, then the supplied aggregation functions will be
 #'   applied to all columns.
@@ -36,7 +36,8 @@
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Create a table that creates a stub and
-#' # stub blocks based on a naming convention
+#' # row groups based on the presence of the
+#' # magic column names `groupname` & `rowname`
 #' tbl <-
 #'   dplyr::tribble(
 #'     ~groupname, ~rowname, ~value_1, ~value_2,
