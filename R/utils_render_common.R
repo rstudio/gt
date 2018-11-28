@@ -83,9 +83,9 @@ render_formats <- function(data_df,
     col_vals <- data_df[[col]]
     if (!is.character(col_vals)) {
       if (is.list(col_vals)) {
-        col_vals <- vapply(col_vals, as.character, character(1))
+        col_vals <- vapply(col_vals, format, character(1))
       } else {
-        col_vals <- as.character(col_vals)
+        col_vals <- format(col_vals)
       }
       data_df[[col]] <- col_vals
     }
