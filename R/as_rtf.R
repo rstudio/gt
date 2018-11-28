@@ -83,11 +83,8 @@ as_rtf <- function(data) {
   # Get the `summary_list` object
   summary_list <- data_attr$summary
 
-  # Initialize `output_df`
-  output_df <- initialize_output_df(data_df)
-
   # Create `output_df` with rendered values
-  output_df <- render_formats(output_df, data_df, formats, context = "default")
+  output_df <- render_formats(data_df, formats, context = "default")
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
