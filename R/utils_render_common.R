@@ -39,36 +39,59 @@ initialize_output_df <- function(data_df) {
 }
 
 # Render any formatting directives available in the `formats` list
-render_formats <- function(output_df,
-                           data_df,
+render_formats <- function(data_df,
                            formats,
                            context) {
 
-  # Render input data to output data where formatting
-  # is specified
-  for (fmt in formats)  {
-
-    # Determine if the formatter has a function relevant
-    # to the context; if not, use the `default` function
-    # (which should always be present)
-    if (context %in% names(fmt$func)) {
-      eval_func <- context
-    } else {
-      eval_func <- "default"
+  if (length(formats) > 0) {
+    # make the output_df a list column data.frame
+    for (col in colnames(data_df)) {
+      col_val <- data_df[[col]]
+      if (!is.list(col_val)) {
+        data_df[[col]] <- as.list(col_val)
+      }
     }
 
-    for (col in fmt[["cols"]]) {
+    # Render input data to output data where formatting
+    # is specified
+    for (fmt in formats)  {
 
-      # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_df)) {
+      # Determine if the formatter has a function relevant
+      # to the context; if not, use the `default` function
+      # (which should always be present)
+      if (context %in% names(fmt$func)) {
+        eval_func <- context
+      } else {
+        eval_func <- "default"
+      }
 
-        output_df[[col]][fmt$rows] <-
-          fmt$func[[eval_func]](data_df[[col]][fmt$rows])
+      for (col in fmt[["cols"]]) {
+
+        # Perform rendering but only do so if the column is present
+        if (col %in% colnames(data_df)) {
+          fn <- fmt$func[[eval_func]]
+
+          formatted_vals <- fn(data_df[[col]][fmt$rows])
+          data_df[[col]][fmt$rows] <- as.list(formatted_vals)
+        }
       }
     }
   }
 
-  output_df
+  # force everything to a character
+  for (col in colnames(data_df)) {
+    col_vals <- data_df[[col]]
+    if (!is.character(col_vals)) {
+      if (is.list(col_vals)) {
+        col_vals <- vapply(col_vals, as.character, character(1))
+      } else {
+        col_vals <- as.character(col_vals)
+      }
+      data_df[[col]] <- col_vals
+    }
+  }
+
+  data_df
 }
 
 # Move input data cells to `output_df` that didn't have any rendering applied
