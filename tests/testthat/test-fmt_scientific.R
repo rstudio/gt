@@ -61,7 +61,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1.84 &times; 10<sup class='gt_super'>3</sup>",
       "2.76 &times; 10<sup class='gt_super'>3</sup>",
@@ -76,7 +76,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2) %>%
-       render_formats_test("default"))[["num_1"]],
+       render_formats_test("default"))[["num_1"]] %>% unlist(),
     c(
       "1.84 x 10(3)", "2.76 x 10(3)", "9.37 x 10(2)",
       "6.43 x 10(2)", "2.23", "0.00", "-2.32 x 10(1)"))
@@ -87,7 +87,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 5) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1.83623 &times; 10<sup class='gt_super'>3</sup>",
       "2.76339 &times; 10<sup class='gt_super'>3</sup>",
@@ -102,7 +102,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 5) %>%
-       render_formats_test("default"))[["num_1"]],
+       render_formats_test("default"))[["num_1"]] %>% unlist(),
     c(
       "1.83623 x 10(3)",
       "2.76339 x 10(3)",
@@ -119,7 +119,7 @@ test_that("the `fmt_scientific()` function works correctly", {
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2,
                       sep_mark = ".", dec_mark = ",") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
       "2,76 &times; 10<sup class='gt_super'>3</sup>",
@@ -136,7 +136,7 @@ test_that("the `fmt_scientific()` function works correctly", {
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2,
                       sep_mark = ".", dec_mark = ",") %>%
-       render_formats_test("default"))[["num_1"]],
+       render_formats_test("default"))[["num_1"]] %>% unlist(),
     c(
       "1,84 x 10(3)", "2,76 x 10(3)", "9,37 x 10(2)",
       "6,43 x 10(2)", "2,23", "0,00", "-2,32 x 10(1)"))
@@ -147,7 +147,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1.8362 &times; 10<sup class='gt_super'>0</sup>",
       "2.7634 &times; 10<sup class='gt_super'>0</sup>",
@@ -162,7 +162,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
-       render_formats_test("default"))[["num_1"]],
+       render_formats_test("default"))[["num_1"]] %>% unlist(),
     c("1.8362 x 10(0)", "2.7634 x 10(0)", "9.3729 x 10(-1)",
       "6.4300 x 10(-1)", "2.2320", "0.0000", "-2.3240 x 10(-2)"))
 
@@ -172,7 +172,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "a 1.84 &times; 10<sup class='gt_super'>3</sup> b",
       "a 2.76 &times; 10<sup class='gt_super'>3</sup> b",
@@ -187,7 +187,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
-       render_formats_test("default"))[["num_1"]],
+       render_formats_test("default"))[["num_1"]] %>% unlist(),
     c(
       "a 1.84 x 10(3) b", "a 2.76 x 10(3) b", "a 9.37 x 10(2) b",
       "a 6.43 x 10(2) b", "a 2.23 b", "a 0.00 b", "a -2.32 x 10(1) b"))
@@ -198,7 +198,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, locale = "en_US") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1.84 &times; 10<sup class='gt_super'>3</sup>",
       "2.76 &times; 10<sup class='gt_super'>3</sup>",
@@ -213,7 +213,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, locale = "da_DK") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
       "2,76 &times; 10<sup class='gt_super'>3</sup>",
@@ -228,7 +228,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, locale = "de_AT") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
       "2,76 &times; 10<sup class='gt_super'>3</sup>",
@@ -243,7 +243,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, locale = "et_EE") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
       "2,76 &times; 10<sup class='gt_super'>3</sup>",
@@ -258,7 +258,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
-       render_formats_test("html"))[["num_1"]],
+       render_formats_test("html"))[["num_1"]] %>% unlist(),
     c(
       "1,84 &times; 10<sup class='gt_super'>3</sup>",
       "2,76 &times; 10<sup class='gt_super'>3</sup>",

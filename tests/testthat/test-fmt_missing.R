@@ -1,6 +1,6 @@
-context("Ensuring that the `fmt_missing()` function works as expected")
+context("Ensuring that the `fmt_na()` function works as expected")
 
-test_that("the `fmt_missing()` function works correctly", {
+test_that("the `fmt_na()` function works correctly", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-
@@ -38,7 +38,7 @@ test_that("the `fmt_missing()` function works correctly", {
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
-    tab %>% fmt_missing(columns = "num_3"))
+    tab %>% fmt_na(columns = "num_3"))
 
   #
   # Format `date` in various date formats and verify the output
@@ -46,50 +46,50 @@ test_that("the `fmt_missing()` function works correctly", {
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1") %>%
-       render_formats_test(context = "default"))[["num_1"]],
+       fmt_na(columns = "num_1") %>%
+       render_formats_test(context = "default"))[["num_1"]] %>% unlist(),
     c("---", "74", "---", "93", "---", "76", "---"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1") %>%
-       render_formats_test(context = "html"))[["num_1"]],
+       fmt_na(columns = "num_1") %>%
+       render_formats_test(context = "html"))[["num_1"]] %>% unlist(),
     c("—", "74", "—", "93", "—", "76", "—"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "--") %>%
-       render_formats_test(context = "html"))[["num_1"]],
+       fmt_na(columns = "num_1", value = "--") %>%
+       render_formats_test(context = "html"))[["num_1"]] %>% unlist(),
     c("–", "74", "–", "93", "–", "76", "–"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "--") %>%
-       render_formats_test(context = "default"))[["num_1"]],
+       fmt_na(columns = "num_1", value = "--") %>%
+       render_formats_test(context = "default"))[["num_1"]] %>% unlist(),
     c("--", "74", "--", "93", "--", "76", "--"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "a") %>%
-       render_formats_test(context = "html"))[["num_1"]],
+       fmt_na(columns = "num_1", value = "a") %>%
+       render_formats_test(context = "html"))[["num_1"]] %>% unlist(),
     c("a", "74", "a", "93", "a", "76", "a"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_2") %>%
-       render_formats_test(context = "default"))[["num_2"]],
+       fmt_na(columns = "num_2") %>%
+       render_formats_test(context = "default"))[["num_2"]] %>% unlist(),
     c("34", "74", "23", "93", "35", "76", "57"))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
-       render_formats_test(context = "default"))[["num_1"]],
+       fmt_na(columns = "num_1", rows = num_2 < 50) %>%
+       render_formats_test(context = "default"))[["num_1"]] %>% unlist(),
     c("---", NA, "---", NA, "---", NA, NA))
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
-       render_formats_test(context = "html"))[["num_1"]],
+       fmt_na(columns = "num_1", rows = num_2 < 50) %>%
+       render_formats_test(context = "html"))[["num_1"]] %>% unlist(),
     c("—", NA, "—", NA, "—", NA, NA))
 })
 
