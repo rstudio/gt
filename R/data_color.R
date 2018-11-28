@@ -24,6 +24,7 @@
 #' @return an object of class \code{gt_tbl}.
 #' @family data cell modification
 #' @import rlang
+#' @importFrom scales col_numeric col_factor
 #' @export
 data_color <- function(data,
                        columns,
@@ -60,13 +61,13 @@ data_color <- function(data,
       if (is.numeric(data_vals)) {
 
         domain <- c(min(data_vals), max(data_vals))
-        color_fn <- col_numeric(palette = colors, domain = domain)
+        color_fn <- scales::col_numeric(palette = colors, domain = domain)
 
       } else if (is.character(data_vals)) {
 
         domain <- unique(data_vals)
         color_fn <-
-          col_factor(
+          scales::col_factor(
             palette = colors[seq(domain)],
             domain = domain)
 
@@ -75,7 +76,7 @@ data_color <- function(data,
         levels <- unique(levels(data_vals))
 
         color_fn <-
-          col_factor(
+          scales::col_factor(
             palette = colors[seq(levels)],
             levels = levels(data_vals))
       }
