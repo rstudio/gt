@@ -168,10 +168,8 @@ sza %>%
   dplyr::filter(!is.na(sza)) %>%
   tidyr::spread(key = "tst", value = sza) %>%
   gt(rowname_col = "month") %>%
-  fmt_missing(
-    columns = TRUE,
-    missing_text = ""
-  ) %>%
+  fmt_number(columns = TRUE, decimals = 1, na_value = "") %>%
+  cols_align(align = "center") %>%
   tab_stubhead_label(label = html("month<br>(20&deg;N)")) %>%
   tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(
