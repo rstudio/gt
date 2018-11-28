@@ -77,7 +77,7 @@ The way that we add parts like the **Table Header** and *footnotes* in the **Tab
 
 ```{r table_with_heading}
 # Make a display table with the `islands_tbl`
-# table; put a heading just above the boxhead
+# table; add a header with a title and subtitle
 gt_tbl <- 
   gt_tbl %>%
   tab_header(
@@ -89,7 +89,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-The **heading** provides a nice opportunity to describe the data that's presented. The `subtitle`, which functions as a subtitle, is an optional part of the **heading**. We may also style the `title` and `subtitle` using markdown! We do this by wrapping the values passed to `title` or `subtitle` with the `md()` function. Here is an example with the table data truncated for brevity:
+The **Header** provides a nice opportunity to describe the data that's presented. The *subtitle* is an optional part of the **Header**. We might also want to style the *title* and *subtitle* using markdown! We do this by wrapping the values passed to `title` or `subtitle` with the `md()` function. Here is an example with the **Table Data** truncated for sake of brevity:
 
 ```{r heading_w_markdown}
 # Use markdown for the heading's `title` and `subtitle` to
@@ -101,7 +101,7 @@ gt(islands_tbl[1:2,]) %>%
     )
 ```
 
-A **source note** can be added to the table's **footer** through use of the `tab_source_note()` function. It works in the same way as `tab_header()` (it also allows for markdown inputs) except it can be called multiple times---each invocation results in a new source note added below.
+A *source note* can be added to the table's **Footer** through use of the `tab_source_note()` function. It works in the same way as `tab_header()` (it also allows for markdown inputs) except it can be called multiple times---each invocation results in a new source note added below.
 
 ```{r}
 # Display the `islands_tbl` data with a heading and
@@ -110,10 +110,10 @@ gt_tbl <-
   gt_tbl %>%
   tab_source_note(
     source_note = "Source: The World Almanac and Book of Facts, 1975, page 406."
-    ) %>%
+  ) %>%
   tab_source_note(
     source_note = md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")
-    )
+  )
 
 # Show the gt Table
 gt_tbl
@@ -133,7 +133,7 @@ gt_tbl <-
     locations = cells_data(
       columns = vars(name),
       rows = 3:4)
-    )
+  )
 
 # Show the gt Table
 gt_tbl
@@ -146,9 +146,9 @@ Here is a slightly more complex example of adding footnotes that use expressions
 # largest landmass ('Asia')
 largest <- 
   islands_tbl %>% 
-  arrange(desc(size)) %>%
-  slice(1) %>%
-  pull(name)
+  dplyr::arrange(desc(size)) %>%
+  dplyr::slice(1) %>%
+  dplyr::pull(name)
 
 # Create two additional footnotes, using the
 # `columns` and `where` arguments of `data_cells()`
@@ -159,13 +159,13 @@ gt_tbl <-
     locations = cells_data(
       columns = vars(size),
       rows = name == largest)
-    ) %>%
+  ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
     locations = cells_data(
       columns = vars(size),
       rows = name == "Antarctica")
-    )
+  )
 
 # Show the gt Table
 gt_tbl
@@ -177,7 +177,7 @@ We were able to supply the reference locations in the table by using the `cells_
 
 The **Stub** is the area to the left in a table that contains *row labels*, and may contain *row group labels*, and *summary labels*. Those subparts can be grouped in a sequence of *row groups*. The **Stub Head** provides a location for a label that describes the **Stub**. The **Stub** is optional since there are cases where a **Stub** wouldn't be useful (e.g., the display tables presented above were just fine without a **Stub**).
 
-The easiest way to generate a **Stub** part is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as *row labels*. To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
+An easy way to generate a **Stub** part is by having an input dataset with a column named `rowname`. This magic column will signal to **gt** that the data in that column should be placed in the stub as *row labels*. (An alternative method is to specify a column name in the `rowname_col` argument of the `gt()` function.) To make this work with our `islands_tbl` dataset, we'll just change rename the column `name` to `rowname`, and then use `gt()` to view the table w/ stub:
 
 ```{r}
 # Modify the `islands_tbl` by creating a
@@ -195,7 +195,7 @@ gt_tbl <- gt(data = islands_tbl)
 gt_tbl
 ```
 
-Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**, which is label text that technically lives both in the **stub** and in the **boxhead**. Think of it as the intersection of the **stub** and **boxhead.** This operation is done with the `tab_stubhead_label()` function:
+Notice that the landmass names are off the the left in an unstriped area? That's the **Stub**. We can apply what's known as a *stubhead label*, which is label text that resides in the area above the **Stub** and left of the **Column Labels**. This operation is done with the `tab_stubhead_label()` function:
 
 ```{r}
 # Generate a simple table with a stub
@@ -208,7 +208,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-A very important thing to note here is that the table now has one column. Before, when there was no **stub**, two columns were present (with **column labels** `name` and `size`) but now column number `1` (the only column) is `size`.
+A very important thing to note here is that the table now has one column. Before, when there was no **stub**, two columns were present (with *column labels* `name` and `size`) but now column number `1` (the only column) is `size`.
 
 To apply our table parts as before (up to and including the footnotes) we use the following statements:
 
