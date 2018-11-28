@@ -86,7 +86,7 @@ gt_tbl <-
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
-  \code{\link{fmt_datetime}}, \code{\link{fmt_missing}},
+  \code{\link{fmt_datetime}}, \code{\link{fmt_na}},
   \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
   \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
   \code{\link{fmt_time}}, \code{\link{fmt}}

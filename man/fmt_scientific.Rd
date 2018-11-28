@@ -6,7 +6,7 @@
 \usage{
 fmt_scientific(data, columns, rows = NULL, decimals = 2,
   drop_trailing_zeros = FALSE, scale_by = 1, pattern = "{x}",
-  sep_mark = ",", dec_mark = ".", locale = NULL)
+  sep_mark = ",", dec_mark = ".", locale = NULL, na_value = NA)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -49,6 +49,9 @@ according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
 \code{dec_mark}.}
+
+\item{na_value}{a value to use for replacement of any \code{NA} values
+encountered during formatting.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -89,7 +92,7 @@ gt_tbl <-
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_na}}, \code{\link{fmt_number}},
   \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
   \code{\link{fmt_time}}, \code{\link{fmt}}
 }
