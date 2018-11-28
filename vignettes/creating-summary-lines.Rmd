@@ -281,7 +281,7 @@ summary_tbl <-
     formatter = fmt_passthrough,
     pattern = "({x})"
   ) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+  fmt_na(columns = vars(value_1, value_2))
 
 summary_tbl
 ```
