@@ -758,6 +758,9 @@ fmt_currency <- function(data,
           # Get a vector of `x` values to update
           x_num <- unlist(x[to_update])
 
+          # Determine which of `x` are negative
+          is_neg_x <- x_num < 0
+
           # Format all non-NA x values
           x_num <-
             formatC(
@@ -781,9 +784,6 @@ fmt_currency <- function(data,
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are negative
-            is_neg_x <- x_num < 0
-
             # If there are negative values, then carry out a
             # text transformation on those values
             if (any(is_neg_x)) {
@@ -791,7 +791,7 @@ fmt_currency <- function(data,
               # Apply parentheses to the formatted value
               # and remove the minus sign
               x_num[is_neg_x] <-
-                paste0("(", gsub("^-", "", x_num[is_neg_x]), ")")
+                paste0("(", gsub("-", "", x_num[is_neg_x]), ")")
             }
           }
 
@@ -817,6 +817,9 @@ fmt_currency <- function(data,
           # Get a vector of `x` values to update
           x_num <- unlist(x[to_update])
 
+          # Determine which of `x` are negative
+          is_neg_x <- x_num < 0
+
           x_num <-
             formatC(
               x = x_num * scale_by,
@@ -839,9 +842,6 @@ fmt_currency <- function(data,
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are negative
-            is_neg_x <- x_num < 0
-
             # If there are negative values, then carry out a
             # text transformation on those values
             if (any(is_neg_x)) {
@@ -849,7 +849,7 @@ fmt_currency <- function(data,
               # Apply parentheses to the formatted value
               # and remove the minus sign
               x_num[is_neg_x] <-
-                paste0("(", gsub("^-", "", x_num[is_neg_x]), ")")
+                paste0("(", gsub("-", "", x_num[is_neg_x]), ")")
             }
           }
 
@@ -913,7 +913,7 @@ fmt_currency <- function(data,
               # Apply parentheses to the formatted value
               # and remove the minus sign
               x_num[is_neg_x] <-
-                paste0("(", gsub("^-", "", x_num[is_neg_x]), ")")
+                paste0("(", gsub("-", "", x_num[is_neg_x]), ")")
             }
           }
 
