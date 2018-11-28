@@ -410,7 +410,8 @@ create_summary_dfs <- function(summary_list,
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
             dplyr::ungroup() %>%
             dplyr::mutate(rowname = labels[j]) %>%
-            dplyr::select(groupname, rowname, dplyr::everything()))
+            dplyr::select(groupname, rowname, dplyr::everything())
+          )
     }
 
     # Exclude columns that are not requested by
@@ -437,9 +438,9 @@ create_summary_dfs <- function(summary_list,
           formatter <- attr(format_data, "formats")[[1]]$func
 
           if ("html" %in% names(formatter)) {
-            formatter$html(x)
+            formatter$html(x) %>% as.character()
           } else {
-            formatter$default(x)
+            formatter$default(x) %>% as.character()
           }
         }
       ) %>%
