@@ -15,7 +15,7 @@ airquality_tbl <-
     label = "Measurement Period",
     columns = vars(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
+  fmt_na(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
 
 # Display the table in the Viewer
 airquality_tbl

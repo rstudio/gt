@@ -23,6 +23,6 @@ uncert_tbl <-
   fmt_number(
     columns = vars(value_1, value_2),
     decimals = 2) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+  fmt_na(columns = vars(value_1, value_2))
 
 uncert_tbl
