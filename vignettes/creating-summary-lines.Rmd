@@ -24,7 +24,7 @@ To most easily insert the necessary summary rows, we need to ensure that some pr
 
 The incoming data table for the purpose of the first example will be created using `dplyr::tribble()`:
 
-```{r}
+```{r create_tbl}
 # Create a table that creates a stub and
 # row groups by virtue of having `groupname`
 # and `rowname` columns
@@ -46,7 +46,7 @@ tbl <-
 
 There are three groups in this data table: `A`, `B`, and `C`. The presence of the `groupname` column will tell **gt** to partition the stub into three row groups. This is how the **gt** display table appears after simply providing `tbl` to `gt()`:
 
-```{r}
+```{r view_gt_tbl}
 # Create a display table by using `tbl` as input
 gt(tbl)
 ```
@@ -61,7 +61,7 @@ Because each function will yield a row, we need to be able to identify that row.
 
 Now that the `summary_rows()` function has been somewhat explained, let’s look at how we can get summary rows for the `tbl` table:
 
-```{r}
+```{r summary_rows_1}
 # Create a gt table with summary rows for
 # `value_1` in the `A` and `B` row groups;
 # three summary rows are made per group
@@ -78,7 +78,7 @@ Here we see that summary rows were created for the `A` and `B` groups (group `C`
 
 There is some flexibility in how we supply aggregation functions to `summary_rows()`. It's sometimes sufficient to supply function names enclosed in quotes (e.g., `list("mean", "sum", "sd")`) but the next section will demonstrate a more advanced method for supplying these functions (where we don't have to rely on function defaults). If we already have a vector of function names that use all of the default arguments within those functions, we can pass this directly to `fns`. This is nice if we want to build a common named vector of function names and summary labels. Here's an example that does just that:
 
-```{r}
+```{r fns_labels_summary}
 # Define a named vector of function names
 # and summary row labels
 fns_labels <- c(average = "mean", total = "sum", `std dev` = "sd")
@@ -95,7 +95,7 @@ gt(tbl) %>%
 
 Sometimes we want to use functions with some parameters set. The earlier example using `list("mean", "sum", "sd")` will break down if we have `NA` values in our data and we want to exclude those by using `na.rm = TRUE`. In this case we can provide a call to a function with a right-hand side (*RHS*) formula shortcut, having `.` serve as the data values. Here is an example where we modify our `tbl` to include some `NA` values (calling it `tbl_na`) and then changing the contents of the `list()`---using `c()` will work just as well---as calls to functions:
 
-```{r}
+```{r summary_rows_formula}
 # Create an alternate version of the
 # `tbl` data frame that contains NAs
 tbl_na <- 
@@ -132,7 +132,7 @@ Using `summary_rows()` to generate a summary is, in effect, creating new data an
 
 Let's start with an example where we format the summary row data using `fmt_number` as the formatter. The `fmt_number()` function several arguments to which we can pass values (`decimals`, `drop_trailing_zeros`, `negative_val`, `locale`, etc.). Here, we will provide `decimals = 3` to augment `fmt_number()`:
 
-```{r}
+```{r summary_rows_formatter}
 # Use the formatter options in `...` to
 # provide values to `fmt_number`
 gt(tbl) %>%
@@ -147,7 +147,7 @@ gt(tbl) %>%
 
 We can also store these argument values as local variables and pass them in both separate `fmt_number()` calls and then to a `summary_rows()` calls with `fmt_number()` used as the formatter. This is useful for standardizing formatting parameters across different table cell types.
 
-```{r}
+```{r summary_rows_formats_list}
 # Provide common formatting parameters to a list
 # object named `formats`; the number of decimal
 # places will be `2` and the locale is "fr_BE"
@@ -178,7 +178,7 @@ For a reproducible workflow, we do not want to have situtations where any data c
 
 However, the object created still contains data and we can obtain the summary data from a gt table object using the `extract_summary()` function. Taking the `gt_summary` object, we get a data frame containing the summary data while preserving the correct data types:
 
-```{r}
+```{r summary_rows_2}
 # Create a gt table with summary rows and
 # assign it to `gt_object`
 gt_object <-
@@ -190,7 +190,7 @@ gt_object <-
   )
 ```
 
-```{r}
+```{r extract_summary}
 # Extract the summary data from `gt_object`
 # to a data frame object
 summary_list <- gt_object %>% extract_summary()
@@ -200,12 +200,12 @@ summary_list <- gt_object %>% extract_summary()
 names(summary_list)
 ```
 
-```{r}
+```{r summary_list_a}
 # Print out the summary for the `A` group
 summary_list[["A"]]
 ```
 
-```{r}
+```{r summary_list_b}
 # Print out the summary for the `B` group
 summary_list[["B"]]
 ```
@@ -214,7 +214,7 @@ The output data frames within the list always contain the `groupname` and `rowna
 
 The output data frame from `extract_summary()` can be reintroduced to a reproducible workflow and serve as downstream inputs or undergo validation. Perhaps interestingly, the output data frame is structured in a way that faciliates direct input to `gt()` (i.e., has the magic `groupname` and `rowname` columns). This can produce a new, standalone summary table where the summary rows are now data rows:
 
-```{r}
+```{r gt_table_from_extracted_summary}
 # Take the `gt_object`, which has a list of
 # summary data frames, combine them with
 # `do.call(bind_rows, ...)`, input that into
@@ -236,7 +236,7 @@ While many of the functions available in base R and within packages are useful a
 
 Here, we'll define a function that takes a vector of numeric values and outputs the two highest values (sorted low to high) above a `threshold` value. The output from this function is always a formatted `character` string.
 
-```{r}
+```{r create_custom_agg_function}
 # Define a function that gives the
 # highest two values above a threshold
 agg_highest_two_above_value <- function(x, threshold) {
@@ -266,7 +266,7 @@ agg_highest_two_above_value(
 
 Because this is character value that's returned, we don't need formatting functions like `fmt_number()`, `fmt_percent()`, etc. However, a useful formatter (and we do need *some* formatter) is the `fmt_passthrough()` function. Like the name suggests, it to great extent passes values through but formats as `character` (like all the `fmt_*()` function do) and it provides the option to decorate the output with a `pattern`. Let's have a look at how the `agg_highest_two_above_value()` function can be used with the `fmt_passthrough()` formatter function.
 
-```{r}
+```{r summary_rows_custom_agg_fn}
 # Create a gt table with summary rows for
 # `value_1` & `value_2`; the custom function
 # is being used with a threshold of `150`; the
@@ -288,7 +288,7 @@ summary_tbl
 
 We can extract the summary data from the `summary_tbl` object. Note that columns `value_1` and `value_2` are classed as character since it was character outputs that were generated by the `agg_highest_two_above_value()` function.
 
-```{r}
+```{r extract_summary_str}
 summary_tbl %>%
   extract_summary() %>%
   str()
@@ -300,7 +300,7 @@ Suppose we have data across columns that should be summarized in the same way (i
 
 Let's start with a new data table. This table contains `groupname` and `rowname` columns, which making using `summary_rows()` possible, along with `large`, `medium`, and `small` data columns, all containing numeric values.
 
-```{r}
+```{r create_tbl_2}
 tbl_2 <-
   dplyr::tribble(
     ~groupname, ~rowname, ~large,   ~medium, ~small,
@@ -319,7 +319,7 @@ tbl_2
 
 Here, we would like to apply a different format (both to the data rows and to the summary rows) across the three columns. We can store formatting options to three different list objects (`large_fmts`, `medium_fmts`, and `small_fmts`) and use the stored values in the **gt** pipeline. 
 
-```{r}
+```{r format_opts_multiple_summary_rows}
 # Store formatting options in list objects
 large_fmts <- 
   list(
