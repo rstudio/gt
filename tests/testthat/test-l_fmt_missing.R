@@ -1,6 +1,6 @@
-context("Latex -- Ensuring that the `fmt_missing()` function works as expected")
+context("Latex -- Ensuring that the `fmt_na()` function works as expected")
 
-test_that("the `fmt_missing()` function works correctly", {
+test_that("the `fmt_na()` function works correctly", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-

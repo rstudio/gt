@@ -69,5 +69,5 @@ gt(tbl) %>%
     columns = vars(value_2),
     fns = list(
       ~sum(., na.rm = TRUE))) %>%
-  fmt_missing(columns = vars(value, value_2))
+  fmt_na(columns = vars(value, value_2))
 ```
