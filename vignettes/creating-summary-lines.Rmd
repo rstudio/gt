@@ -100,11 +100,11 @@ Sometimes we want to use functions with some parameters set. The earlier example
 # `tbl` data frame that contains NAs
 tbl_na <- 
   tbl %>%
-  mutate(value_1 = case_when(
+  dplyr::mutate(value_1 = dplyr::case_when(
     value_1 >= 300 ~ NA_real_,
     value_1 < 300 ~ value_1)
   ) %>%
-  mutate(value_2 = case_when(
+  dplyr::mutate(value_2 = dplyr::case_when(
     value_2 >= 600 ~ NA_real_,
     value_2 < 600 ~ value_2)
   )
