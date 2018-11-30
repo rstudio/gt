@@ -37,6 +37,12 @@ you need for the task at hand. Output can either be in the form of
 **HTML**, **LaTeX**, or **RTF**. All work beautifully inside **R
 Markdown** documents.
 
+<p align="center">
+
+<img src="man/figures/gt_workflow_diagram.svg" width="800px">
+
+</p>
+
 The **gt** API is designed to be both straightforward yet powerful. The
 emphasis is on simple functions for the everyday display table needs.
 However, should you need more customizability, there are options to make
