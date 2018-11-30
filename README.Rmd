@@ -31,6 +31,8 @@ With the **gt** package, anyone can make wonderful-looking tables using the **R*
 
 It all begins with preprocessed **table data** (be it a tibble or a data frame). You decide how to compose your **gt table** with the elements you need for the task at hand. Output can either be in the form of **HTML**, **LaTeX**, or **RTF**. All work beautifully inside **R Markdown** documents.
 
+<p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
+
 The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. However, should you need more customizability, there are options to make that possible.
 
 <p align="center"><img src="man/figures/gt_functions.svg" width="800px"></p>
