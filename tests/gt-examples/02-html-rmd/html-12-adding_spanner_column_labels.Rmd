@@ -1,5 +1,5 @@
 ---
-title: "html-12-adding_boxhead_panels"
+title: "html-12-adding_spanner_column_labels"
 output:
   - html_document
 ---
@@ -11,7 +11,7 @@ library(gt)
 library(dplyr)
 ```
 
-Create a table with boxhead panels
+Create a table with spanner column labels
 
 ```{r}
 # Input table
