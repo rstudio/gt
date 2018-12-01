@@ -55,13 +55,13 @@ gt_tbl <- gt(data = islands_tbl)
 gt_tbl
 ```
 
-That doesn't look too bad. Sure, it's basic but we really didn't really ask for much. We did receive a proper table with column labels and the data. Also, that default striping is a nice touch. Oftentimes however, you'll want a bit more: a **Table header**, a **Stub**, and sometimes *footnotes* and source notes in the **Table Footer**.
+That doesn't look too bad. Sure, it's basic but we really didn't really ask for much. We did receive a proper table with column labels and the data. Also, that default striping is a nice touch. Oftentimes however, you'll want a bit more: a **Table header**, a **Stub**, and sometimes *footnotes* and *source notes* in the **Table Footer** part.
 
 ### Adding Parts to this Simple Table
 
 The **gt** package makes it relatively easy to add parts so that the resulting **gt Table** better conveys the information you want to present. These table parts work well together and there the possible variations in arrangement can handle most tabular presentation needs. The previous **gt Table** demonstrated had only two parts, the **Column Labels** and the **Table Body**. The next few examples will show all of the other table parts that are available.
 
-The way the main parts of a table (and their subparts) fit together is best shown as a schematic:
+This is the way the main parts of a table (and their subparts) fit together:
 
 <p align="center"><img src="../man/figures/gt_parts_of_a_table.svg" width=100%></p>
 
@@ -98,7 +98,7 @@ gt(islands_tbl[1:2,]) %>%
   tab_header(
     title = md("**Large Landmasses of the World**"),
     subtitle = md("The *top two* largest are presented")
-    )
+  )
 ```
 
 A **source note** can be added to the table's **footer** through use of the `tab_source_note()` function. It works in the same way as `tab_header()` (it also allows for markdown inputs) except it can be called multiple times---each invocation results in a new source note added below.
@@ -110,10 +110,10 @@ gt_tbl <-
   gt_tbl %>%
   tab_source_note(
     source_note = "Source: The World Almanac and Book of Facts, 1975, page 406."
-    ) %>%
+  ) %>%
   tab_source_note(
     source_note = md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")
-    )
+  )
 
 # Show the gt Table
 gt_tbl
@@ -133,7 +133,7 @@ gt_tbl <-
     locations = cells_data(
       columns = vars(name),
       rows = 3:4)
-    )
+  )
 
 # Show the gt Table
 gt_tbl
@@ -159,13 +159,13 @@ gt_tbl <-
     locations = cells_data(
       columns = vars(size),
       rows = name == largest)
-    ) %>%
+  ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
     locations = cells_data(
       columns = vars(size),
       rows = name == "Antarctica")
-    )
+  )
 
 # Show the gt Table
 gt_tbl
