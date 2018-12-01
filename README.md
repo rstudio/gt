@@ -89,8 +89,18 @@ sp500 %>%
 
 </p>
 
-Should you need more customizability, there are many functions available
-in the **gt** to make creating virtually any table possible.
+There are six datasets included in **gt**: `countrypops`, `sza`,
+`gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
+for experimenting with the API.
+
+<p align="center">
+
+<img src="man/figures/gt_datasets.svg" width="800px">
+
+</p>
+
+Beyond this simple example, there are many functions available in **gt**
+that make it possible to create highly customized tables.
 
 <p align="center">
 
