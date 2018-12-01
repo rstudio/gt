@@ -33,7 +33,46 @@ It all begins with preprocessed **table data** (be it a tibble or a data frame).
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
-The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. However, should you need more customizability, there are options to make that possible.
+The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use the **gt** to create an HTML **gt Table** table with the included `sp500` dataset:
+
+```r
+library(gt)
+library(tidyverse)
+library(glue)
+
+# Define the start and end dates for the data range
+start_date <- "2010-06-07"
+end_date <- "2010-06-14"
+
+# Create a gt table based on preprocessed
+# `sp500` table data
+sp500 %>%
+  dplyr::filter(date >= start_date & date <= end_date) %>%
+  dplyr::select(-adj_close) %>%
+  dplyr::mutate(date = as.character(date)) %>%
+  gt() %>%
+  tab_header(
+    title = "S&P 500",
+    subtitle = glue::glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_date(
+    columns = vars(date),
+    date_style = 3
+  ) %>%
+  fmt_currency(
+    columns = vars(open, high, low, close),
+    currency = "USD"
+  ) %>%
+  fmt_number(
+    columns = vars(volume),
+    scale_by = 1 / 1E9,
+    pattern = "{x}B"
+  )
+```
+
+<p align="center"><img src="man/figures/gt_sp500_table.svg" width="800px"></p>
+
+Should you need more customizability, there are many functions available in the **gt** to make that possible.
 
 <p align="center"><img src="man/figures/gt_functions.svg" width="800px"></p>
 
