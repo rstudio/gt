@@ -54,6 +54,27 @@ that possible.
 
 </p>
 
+Want to try this out? First and foremost, the **gt** package is used in
+an R environment, so, if you don’t have an R installation, it can be
+obtained from the [**Comprehensive R Archive Network
+(CRAN)**](https://cran.r-project.org/). For the best experience in
+working with R, use the [**RStudio Desktop
+IDE**](https://www.rstudio.com/products/rstudio/).
+
+You can install the development version of **gt** from **GitHub** using
+the **remotes** package. Use the following in the R console to install
+the **devtools** package (which in turns installs **remotes**) and to
+install **gt**.
+
+``` r
+install.packages("devtools")
+remotes::install_github("rstudio/gt")
+```
+
+If you encounter a bug, have usage questions, or want to share ideas to
+make this package better, feel free to file an
+[issue](https://github.com/rstudio/gt/issues).
+
 -----
 
 <img src="man/figures/gt_tables.png">
