@@ -12,3 +12,5 @@
 ^API$
 tests/examples
 tests/manual_tests
+man/figures
+vignettes/videos
