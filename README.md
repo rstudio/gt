@@ -90,11 +90,11 @@ sp500 %>%
 </p>
 
 Should you need more customizability, there are many functions available
-in the **gt** to make that possible.
+in the **gt** to make creating virtually any table possible.
 
 <p align="center">
 
-<img src="man/figures/gt_functions.svg" width="800px">
+<img src="man/figures/gt_functions.svg" width="100%">
 
 </p>
 

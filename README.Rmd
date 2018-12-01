@@ -72,9 +72,9 @@ sp500 %>%
 
 <p align="center"><img src="man/figures/gt_sp500_table.svg" width="800px"></p>
 
-Should you need more customizability, there are many functions available in the **gt** to make that possible.
+Should you need more customizability, there are many functions available in the **gt** to make creating virtually any table possible.
 
-<p align="center"><img src="man/figures/gt_functions.svg" width="800px"></p>
+<p align="center"><img src="man/figures/gt_functions.svg" width="100%"></p>
 
 Want to try this out? First and foremost, the **gt** package is used in an R environment, so, if you don't have an R installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/). For the best experience in working with R, use the [**RStudio Desktop IDE**](https://www.rstudio.com/products/rstudio/).
 
