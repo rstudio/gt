@@ -24,6 +24,7 @@
 #' @return an object of class \code{gt_tbl}.
 #' @family data cell modification
 #' @import rlang
+#' @importFrom scales col_numeric col_factor
 #' @export
 data_color <- function(data,
                        columns,
