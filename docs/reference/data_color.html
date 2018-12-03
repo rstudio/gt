@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify the ordering of any row groups — row_group_order • gt</title>
+<title>Set data cell colors using a palette or a colorizing helper function — data_color • gt</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Modify the ordering of any row groups — row_group_order" />
+<meta property="og:title" content="Set data cell colors using a palette or a colorizing helper function — data_color" />
 
-<meta property="og:description" content="Modify the ordering of any row groups" />
+<meta property="og:description" content="Set data cell colors using a palette or a colorizing helper function" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,18 +123,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify the ordering of any row groups</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/modify_rows.R'><code>R/modify_rows.R</code></a></small>
-    <div class="hidden name"><code>row_group_order.Rd</code></div>
+    <h1>Set data cell colors using a palette or a colorizing helper function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/data_color.R'><code>R/data_color.R</code></a></small>
+    <div class="hidden name"><code>data_color.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Modify the ordering of any row groups</p>
+    <p>Set data cell colors using a palette or a colorizing helper function</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>row_group_order</span>(<span class='no'>data</span>, <span class='no'>groups</span>)</pre>
+    <pre class="usage"><span class='fu'>data_color</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='no'>colors</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>apply_to</span> <span class='kw'>=</span> <span class='st'>"bkgd"</span>,
+  <span class='kw'>autocolor_text</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,13 +146,40 @@
 function.</p></td>
     </tr>
     <tr>
-      <th>groups</th>
-      <td><p>a vector of row group names, or, a numeric vector of indices
-corresponding to the new ordering. Either vector must correspond to
-assigned group names or the index positions. Also, either type of vector is
-not required to have all of the row group names or available index
-positions within it; any omitted values will be added to the end while
-preserving the original ordering.</p></td>
+      <th>columns</th>
+      <td><p>the columns wherein changes to cell data colors should occur.</p></td>
+    </tr>
+    <tr>
+      <th>colors</th>
+      <td><p>either a color mapping function from the <code>scales</code> package
+or a vector of colors to use for each distinct value or level in each of
+the provided <code>columns</code>. The color mapping functions are:
+<code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_quantile()</a></code>, <code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_bin()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_numeric()</a></code>, and <code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_factor()</a></code>. If providing
+a vector of colors as a palette, each color value provided must either be a
+color name (in the set of colors provided by <code><a href='https://www.rdocumentation.org/packages/grDevices/topics/colors'>grDevices::colors()</a></code>) or
+hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>an optional, fixed alpha transparency value that will be applied
+to all of the <code>colors</code> provided if they are provided as a vector of
+colors. If using a colorizing helper function for <code>colors</code> then this
+option is ignored (each of the colorizing helper functions has its own
+<code>alpha</code> argument).</p></td>
+    </tr>
+    <tr>
+      <th>apply_to</th>
+      <td><p>which style element should the colors be applied to? Options
+include the cell background (the default, given as <code>bkgd</code>) or the cell
+text (<code>text</code>).</p></td>
+    </tr>
+    <tr>
+      <th>autocolor_text</th>
+      <td><p>an option to let <code>gt</code> modify the coloring of text
+within cells undergoing background coloring. This will in some cases yield
+more optimal text-to-background color contrast. By default, this is set to
+<code>TRUE</code>.</p></td>
     </tr>
     </table>
     
