@@ -3,7 +3,7 @@
 \name{location_cells}
 \alias{location_cells}
 \alias{cells_title}
-\alias{cells_boxhead}
+\alias{cells_columns}
 \alias{cells_group}
 \alias{cells_stub}
 \alias{cells_data}
@@ -12,7 +12,7 @@
 \usage{
 cells_title(groups = c("title", "subtitle"))
 
-cells_boxhead(columns, groups)
+cells_columns(columns, groups)
 
 cells_group(groups)
 
@@ -45,8 +45,8 @@ from the top to the bottom of a table):
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
 
-\item \code{cells_boxhead()}: targets captions for the column headers (the
-\code{columns} argument) or spanner column labels (the \code{groups}
+\item \code{cells_columns()}: targets labels in the column labels (the
+\code{columns} argument) or the spanner column labels (the \code{groups}
 argument) in the table's column labels part.
 
 \item \code{cells_group()}: targets the row group labels in any available
