@@ -4,10 +4,11 @@
 \alias{fmt_currency}
 \title{Format values as currencies}
 \usage{
-fmt_currency(data, columns, rows = NULL, currency, use_subunits = TRUE,
-  negative_val = "signed", decimals = NULL, use_seps = TRUE,
-  scale_by = 1, pattern = "{x}", sep_mark = ",", dec_mark = ".",
-  placement = "left", incl_space = FALSE, locale = NULL)
+fmt_currency(data, columns, rows = NULL, currency = "USD",
+  use_subunits = TRUE, negative_val = "signed", decimals = NULL,
+  use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
+  dec_mark = ".", placement = "left", incl_space = FALSE,
+  locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -31,7 +32,8 @@ to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{the currency to use for the numeric value. This is to be
 supplied as a 3-letter currency code. Examples include \code{"USD"} for
-U.S. Dollars and \code{"EUR"} for the Euro currency.}
+U.S. Dollars and \code{"EUR"} for the Euro currency. The default is
+\code{"USD"}.}
 
 \item{use_subunits}{an option for whether the subunits portion of a currency
 value should be displayed.}
