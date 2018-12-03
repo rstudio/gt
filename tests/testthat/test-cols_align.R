@@ -69,7 +69,7 @@ test_that("the `cols_align()` function works correctly", {
       cols_align(align = "righter", columns = vars(mpg, cyl, drat)))
 
   # Expect that supplying a column name that doesn't exist in the
-  # table boxhead will result in an error
+  # table columns will result in an error
   expect_error(
     gt(data = mtcars_short) %>%
       cols_align(align = "right", columns = vars(car)))

@@ -66,29 +66,29 @@ test_that("the `tab_footnote()` function works correctly", {
   # Check that specific suggested packages are available
   check_suggests()
 
-  # Apply a footnote to the boxhead and stub cells
+  # Apply a footnote to the column labels and stub cells
   tbl_html <-
     data %>%
     tab_footnote(
-      footnote = "Boxhead and stub footnote.",
+      footnote = "Column labels and stub footnote.",
       locations = list(
-        cells_boxhead(columns = TRUE),
+        cells_columns(columns = TRUE),
         cells_stub(rows = TRUE)))
 
   # Expect that the internal `footnotes_df` data frame will have
-  # its `locname` column entirely populated with `boxhead_columns`
+  # its `locname` column entirely populated with `columns_columns`
   # and `stub`
   attr(tbl_html, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(locname) %>%
     unique() %>%
-    expect_equal(c("boxhead_columns", "stub"))
+    expect_equal(c("columns_columns", "stub"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # its `text` column entirely populated with the footnote text
   attr(tbl_html, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(text) %>%
     unique() %>%
-    expect_equal("Boxhead and stub footnote.")
+    expect_equal("Column labels and stub footnote.")
 
   # Apply a footnote to a single stub cell
   tbl_html <-
@@ -196,7 +196,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Column group footnote.",
-      locations = cells_boxhead(groups = "gear_carb_cyl"))
+      locations = cells_columns(groups = "gear_carb_cyl"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -208,7 +208,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # single-row `footnotes_df` data frame
   expect_attr_equal(
     tbl_html, "footnotes_df",
-    c("boxhead_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
+    c("columns_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
       "Column group footnote."))
 
   # Apply a footnote to a single column label
@@ -216,7 +216,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Single column label footnote.",
-      locations = cells_boxhead(columns = "gear"))
+      locations = cells_columns(columns = "gear"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -228,7 +228,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # single-row `footnotes_df` data frame
   expect_attr_equal(
     tbl_html, "footnotes_df",
-    c("boxhead_columns", "4", NA_character_, "gear", NA_character_,
+    c("columns_columns", "4", NA_character_, "gear", NA_character_,
       "Single column label footnote."))
 
   # Apply a footnote to five rows of a single column

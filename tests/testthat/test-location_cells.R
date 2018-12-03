@@ -43,68 +43,68 @@ test_that("the `cells_title()` function works correctly", {
     expect_equal("subtitle")
 })
 
-test_that("the `cells_boxhead()` function works correctly", {
+test_that("the `cells_columns()` function works correctly", {
 
-  # Create a `cells_boxhead` object with names provided to `columns`
-  helper_cells_boxhead <- cells_boxhead(columns = c("col_1", "col_2"))
+  # Create a `cells_columns` object with names provided to `columns`
+  helper_cells_columns <- cells_columns(columns = c("col_1", "col_2"))
 
-  # Expect this has the `cells_boxhead` and `location_cells` classes
-  helper_cells_boxhead %>%
-    expect_is(c("cells_boxhead", "location_cells"))
+  # Expect this has the `cells_columns` and `location_cells` classes
+  helper_cells_columns %>%
+    expect_is(c("cells_columns", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_boxhead %>%
+  helper_cells_columns %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `groups`
-  helper_cells_boxhead %>%
+  helper_cells_columns %>%
     names() %>%
     expect_equal(c("columns", "groups"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_boxhead[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_columns[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the second list component to be NULL
-  is.null(helper_cells_boxhead[[2]]) %>% expect_true()
+  is.null(helper_cells_columns[[2]]) %>% expect_true()
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_boxhead[[1]][2] %>%
+  helper_cells_columns[[1]][2] %>%
     as.character() %>%
     expect_equal("c(\"col_1\", \"col_2\")")
 
-  # Create a `cells_boxhead` object with names provided to `groups`
-  helper_cells_boxhead <- cells_boxhead(groups = c("group_1", "group_2"))
+  # Create a `cells_columns` object with names provided to `groups`
+  helper_cells_columns <- cells_columns(groups = c("group_1", "group_2"))
 
-  # Expect this has the `cells_boxhead` and `location_cells` classes
-  helper_cells_boxhead %>%
-    expect_is(c("cells_boxhead", "location_cells"))
+  # Expect this has the `cells_columns` and `location_cells` classes
+  helper_cells_columns %>%
+    expect_is(c("cells_columns", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_boxhead %>%
+  helper_cells_columns %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `groups`
-  helper_cells_boxhead %>%
+  helper_cells_columns %>%
     names() %>%
     expect_equal(c("columns", "groups"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_boxhead[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_columns[[2]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the first list component to be NULL
-  is.null(helper_cells_boxhead[[1]]) %>% expect_true()
+  is.null(helper_cells_columns[[1]]) %>% expect_true()
 
   # Expect the RHS of the second component formula to
   # contain the vector provided
-  helper_cells_boxhead[[2]][2] %>%
+  helper_cells_columns[[2]][2] %>%
     as.character() %>%
     expect_equal("c(\"group_1\", \"group_2\")")
 
   # Expect an error if values provided to both `columns` and `groups`
   expect_error(
-    cells_boxhead(
+    cells_columns(
       columns = c("col_1", "col_2"),
       groups = c("group_1", "group_2")))
 })
