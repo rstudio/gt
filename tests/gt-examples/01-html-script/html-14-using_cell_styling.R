@@ -24,11 +24,13 @@ cell_styles_tbl <-
       text_color = "white"),
     locations = cells_data(
       columns = vars(value, value_2),
-      rows = 1)) %>%
+      rows = 1)
+  ) %>%
   tab_style(
     style = cells_styles(
       text_size = px(28)),
-    locations = cells_boxhead(
-      columns = c("value", "value_2")))
+    locations = cells_columns(
+      columns = c("value", "value_2"))
+  )
 
 cell_styles_tbl

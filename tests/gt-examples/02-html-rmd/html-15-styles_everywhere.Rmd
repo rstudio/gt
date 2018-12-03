@@ -51,7 +51,7 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   tab_style(
     style = cells_styles(bkgd_color = "lightgray"),
     locations = list(
-      cells_boxhead(columns = TRUE),
+      cells_columns(columns = TRUE),
       cells_stub(rows = TRUE))
   ) %>%
   tab_style(
@@ -75,15 +75,15 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   ) %>%
   tab_style(
     style = cells_styles(bkgd_color = "lightgreen"),
-    locations = cells_boxhead(groups = "gear_carb_cyl")
+    locations = cells_columns(groups = "gear_carb_cyl")
   ) %>%
   tab_style(
     style = cells_styles(bkgd_color = "turquoise"),
-    locations = cells_boxhead(columns = "gear")
+    locations = cells_columns(columns = "gear")
   ) %>%
   tab_style(
     style = cells_styles(bkgd_color = "pink"),
-    locations = cells_boxhead(columns = "hp")
+    locations = cells_columns(columns = "hp")
   ) %>%
   tab_style(
     style = cells_styles(
