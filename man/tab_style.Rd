@@ -28,13 +28,35 @@ Add custom styles to one or more cells
 \examples{
 # Add a style that is to be applied
 # to a single table cell
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
+gt_tbl_1 <-
+  mtcars \%>\%
+    gt(rownames_to_stub = TRUE) \%>\%
     tab_style(
       style = cells_styles(bkgd_color = "steelblue"),
       locations = cells_data(
         columns = vars(hp),
-        rows = c("Datsun 710", "Valiant")))
+        rows = c("Datsun 710", "Valiant"))
+    )
+
+# Color rows of cells based on values
+# in a particular column
+gt_tbl_2 <-
+  sp500 \%>\%
+    dplyr::filter(date >= "2015-12-01") \%>\%
+    dplyr::filter(date <= "2015-12-15") \%>\%
+    dplyr::select(-adj_close) \%>\%
+    dplyr::mutate(date = as.character(date)) \%>\%
+    gt() \%>\%
+    tab_style(
+      style = cells_styles(bkgd_color = "lightgreen"),
+      locations = cells_data(rows = close > open)
+    ) \%>\%
+    tab_style(
+      style = cells_styles(
+        bkgd_color = "darkred",
+        text_color = "white"),
+      locations = cells_data(rows = open > close)
+    )
 }
 \seealso{
 \code{\link{cells_styles}()} as a helper for defining custom styles
