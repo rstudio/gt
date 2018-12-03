@@ -9,9 +9,9 @@
 #'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 #'   helper functions can also be used to pass in numeric values and obtain
 #'   values as pixel or percent units.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,boxhead.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,columns.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
 #'   font sizes for the parent text element \code{table} and the following child
-#'   elements: \code{heading.title}, \code{heading.subtitle}, \code{boxhead},
+#'   elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
 #'   \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 #'   as a single-length character vector with units of pixels
 #'   (e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
@@ -19,13 +19,13 @@
 #'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param boxhead.font.weight,stub_group.font.weight the font weight of the
-#'   \code{boxhead} and \code{stub_group} text element.
+#' @param columns.font.weight,stub_group.font.weight the font weight of the
+#'   \code{columns} and \code{stub_group} text element.
 #' @param summary_row.text_transform an option to apply text transformations to
 #' the label text in each summary row.
-#' @param table.background.color,heading.background.color,boxhead.background.color,stub_group.background.color,summary_row.background.color
+#' @param table.background.color,heading.background.color,columns.background.color,stub_group.background.color,summary_row.background.color
 #'   background colors for the parent element \code{table} and the following
-#'   child elements: \code{heading}, \code{boxhead}, \code{stub_group},
+#'   child elements: \code{heading}, \code{columns}, \code{stub_group},
 #'   \code{summary_row}, and \code{field}. A color name or a hexadecimal color
 #'   code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
@@ -80,9 +80,9 @@ tab_options <- function(data,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
-                        boxhead.background.color = NULL,
-                        boxhead.font.size = NULL,
-                        boxhead.font.weight = NULL,
+                        columns.background.color = NULL,
+                        columns.font.size = NULL,
+                        columns.font.weight = NULL,
                         stub_group.background.color = NULL,
                         stub_group.font.size = NULL,
                         stub_group.font.weight = NULL,
@@ -220,27 +220,27 @@ tab_options <- function(data,
       opts_df, "heading_border_bottom_color", heading.border.bottom.color)
   }
 
-  # boxhead.background.color
-  if (!is.null(boxhead.background.color)) {
+  # columns.background.color
+  if (!is.null(columns.background.color)) {
 
     opts_df <- opts_df_set(
-      opts_df, "boxhead_background_color", boxhead.background.color)
+      opts_df, "columns_background_color", columns.background.color)
   }
 
-  # boxhead.font.size
-  if (!is.null(boxhead.font.size)) {
+  # columns.font.size
+  if (!is.null(columns.font.size)) {
 
-    if (is.numeric(boxhead.font.size)) {
-      boxhead.font.size <- paste0(boxhead.font.size, "px")
+    if (is.numeric(columns.font.size)) {
+      columns.font.size <- paste0(columns.font.size, "px")
     }
 
-    opts_df <- opts_df_set(opts_df, "boxhead_font_size", boxhead.font.size)
+    opts_df <- opts_df_set(opts_df, "columns_font_size", columns.font.size)
   }
 
-  # boxhead.font.weight
-  if (!is.null(boxhead.font.weight)) {
+  # columns.font.weight
+  if (!is.null(columns.font.weight)) {
 
-    opts_df <- opts_df_set(opts_df, "boxhead_font_weight", boxhead.font.weight)
+    opts_df <- opts_df_set(opts_df, "columns_font_weight", columns.font.weight)
   }
 
   # stub_group.background.color

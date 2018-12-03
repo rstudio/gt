@@ -54,10 +54,10 @@ create_table_start_l <- function(col_alignment) {
     collapse = "")
 }
 
-# Create the boxhead component of a table
+# Create the columns component of a table
 #' @import rlang
 #' @noRd
-create_boxhead_component_l <- function(boxh_df,
+create_columns_component_l <- function(boxh_df,
                                        output_df,
                                        stub_available,
                                        spanners_present,

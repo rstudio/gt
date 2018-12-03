@@ -12,8 +12,8 @@
 #' depending on the value given to the \code{groups} argument (\code{"title"} or
 #' \code{"subtitle"}).
 #'
-#' \item \code{cells_boxhead()}: targets captions for the column headers (the
-#' \code{columns} argument) or spanner column labels (the \code{groups}
+#' \item \code{cells_columns()}: targets labels in the column labels (the
+#' \code{columns} argument) or the spanner column labels (the \code{groups}
 #' argument) in the table's column labels part.
 #'
 #' \item \code{cells_group()}: targets the row group labels in any available
@@ -65,7 +65,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_boxhead <- function(columns, groups) {
+cells_columns <- function(columns, groups) {
 
   if (
     (!missing(columns) && !missing(groups)) ||
@@ -73,7 +73,6 @@ cells_boxhead <- function(columns, groups) {
   ) {
     stop("Value(s) must provided to either `columns` or `groups` but not both.")
   }
-
 
   # With input as `columns`
   if (!missing(columns)) {
@@ -91,10 +90,10 @@ cells_boxhead <- function(columns, groups) {
     group_expr <- rlang::enquo(groups)
   }
 
-  # Create the `cells_boxhead` object
+  # Create the `cells_columns` object
   structure(
     list(columns = col_expr, groups = group_expr),
-    class = c("cells_boxhead", "location_cells"))
+    class = c("cells_columns", "location_cells"))
 }
 
 #' @rdname location_cells

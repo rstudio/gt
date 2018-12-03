@@ -101,11 +101,11 @@ set_style.cells_stub <- function(loc, data, style) {
   data
 }
 
-set_style.cells_boxhead <- function(loc, data, style) {
+set_style.cells_columns <- function(loc, data, style) {
 
   if (!is.null(loc$columns)) {
 
-    resolved <- resolve_cells_boxhead(data = data, object = loc)
+    resolved <- resolve_cells_columns(data = data, object = loc)
 
     cols <- resolved$columns
 
@@ -114,7 +114,7 @@ set_style.cells_boxhead <- function(loc, data, style) {
     attr(data, "styles_df") <-
       add_location_row(
         data, df_type = "styles_df",
-        locname = "boxhead_columns", locnum = 4,
+        locname = "columns_columns", locnum = 4,
         grpname = NA_character_, colname = colnames,
         rownum = NA_character_, text = style)
 
@@ -125,7 +125,7 @@ set_style.cells_boxhead <- function(loc, data, style) {
     attr(data, "styles_df") <-
       add_location_row(
         data, df_type = "styles_df",
-        locname = "boxhead_groups", locnum = 3,
+        locname = "columns_groups", locnum = 3,
         grpname = groups, colname = NA_character_,
         rownum = NA_character_, text = style)
   }
@@ -176,7 +176,7 @@ set_style.cells_summary <- function(loc, data, style) {
   groups <- (loc$groups %>% as.character())[-1]
   rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
 
-  resolved <- resolve_cells_boxhead(data = data, object = loc)
+  resolved <- resolve_cells_columns(data = data, object = loc)
 
   cols <- resolved$columns
 

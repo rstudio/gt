@@ -1,6 +1,6 @@
-# cells_boxhead
+# cells_columns
 
-resolve_location.cells_boxhead <- function(loc, data_attr) {
+resolve_location.cells_columns <- function(loc, data_attr) {
 
   data_df <- data_attr[["data_df"]]
 
@@ -26,7 +26,7 @@ resolve_location.cells_boxhead <- function(loc, data_attr) {
   loc
 }
 
-text_transform_at_location.cells_boxhead <- function(loc,
+text_transform_at_location.cells_columns <- function(loc,
                                                      data_attr,
                                                      func = identity) {
 
