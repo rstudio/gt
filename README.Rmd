@@ -33,7 +33,7 @@ It all begins with preprocessed **table data** (be it a tibble or a data frame).
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
-The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use the **gt** to create an HTML **gt Table** table with the included `sp500` dataset:
+The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create an HTML **gt Table** from the included `sp500` dataset:
 
 ```r
 library(gt)
@@ -82,7 +82,7 @@ Beyond this simple example, there are many functions available in **gt** that ma
 
 Want to try this out? First and foremost, the **gt** package is used in an R environment, so, if you don't have an R installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/). For the best experience in working with R, use the [**RStudio Desktop IDE**](https://www.rstudio.com/products/rstudio/).
 
-You can install the development version of **gt** from **GitHub** using the **remotes** package. Use the following in the R console to install the **devtools** package (which in turns installs **remotes**) and to install **gt**.
+You can install the development version of **gt** from **GitHub** using the **remotes** package. Use the following in the R console to install **gt**.
 
 ```{r eval=FALSE}
 install.packages("devtools")
