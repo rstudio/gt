@@ -45,8 +45,8 @@ Markdown** documents.
 
 The **gt** API is designed to be both straightforward yet powerful. The
 emphasis is on simple functions for the everyday display table needs.
-Here is a brief example of how to use the **gt** to create an HTML **gt
-Table** table with the included `sp500` dataset:
+Here is a brief example of how to use **gt** to create an HTML **gt
+Table** from the included `sp500` dataset:
 
 ``` r
 library(gt)
@@ -117,8 +117,7 @@ IDE**](https://www.rstudio.com/products/rstudio/).
 
 You can install the development version of **gt** from **GitHub** using
 the **remotes** package. Use the following in the R console to install
-the **devtools** package (which in turns installs **remotes**) and to
-install **gt**.
+**gt**.
 
 ``` r
 install.packages("devtools")
