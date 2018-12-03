@@ -77,7 +77,7 @@ The way that we add parts like the **Table Header** and *footnotes* in the **Tab
 
 ```{r table_with_heading}
 # Make a display table with the `islands_tbl`
-# table; put a heading just above the boxhead
+# table; put a heading just above the column labels
 gt_tbl <- 
   gt_tbl %>%
   tab_header(
@@ -195,7 +195,7 @@ gt_tbl <- gt(data = islands_tbl)
 gt_tbl
 ```
 
-Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**, which is label text that technically lives both in the **stub** and in the **boxhead**. Think of it as the intersection of the **stub** and **boxhead.** This operation is done with the `tab_stubhead_label()` function:
+Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**. This operation is done with the `tab_stubhead_label()` function:
 
 ```{r}
 # Generate a simple table with a stub

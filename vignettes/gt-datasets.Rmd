@@ -55,7 +55,7 @@ countrypops_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -139,7 +139,7 @@ sza_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -175,7 +175,7 @@ sza %>%
   tab_stubhead_label(label = html("month<br>(20&deg;N)")) %>%
   tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(
-    boxhead.font.size = "smaller",
+    columns.font.size = "smaller",
     table.font.size = "smaller",
     row.padding = px(3)
   )
@@ -213,7 +213,7 @@ gtcars_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -261,11 +261,11 @@ gtcars %>%
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
-    locations = cells_boxhead(columns = vars(msrp))
+    locations = cells_columns(columns = vars(msrp))
   ) %>%
   tab_footnote(
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_boxhead(columns = vars(drivetrain))
+    locations = cells_columns(columns = vars(drivetrain))
   ) %>%
   tab_options(footnote.glyph = letters) %>%
   cols_label(
@@ -300,7 +300,7 @@ sp500_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -403,7 +403,7 @@ pizzaplace_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -490,7 +490,7 @@ exibble_ddtab <-
   tab_options(
     table.width = pct(80),
     table.font.size = "smaller",
-    boxhead.font.size = "small"
+    columns.font.size = "small"
   )
 ```
 
@@ -530,7 +530,7 @@ exibble %>%
     currency = "EUR"
   ) %>%
   tab_options(
-    boxhead.font.size = "small",
+    columns.font.size = "small",
     table.font.size = "small",
     stub_group.font.size = "small",
     row.padding = px(3)
