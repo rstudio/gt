@@ -44,6 +44,9 @@ reference:
   - title: Modify Rows
     contents:
     - row_group_order
+  - title: Modify Cells
+    contents:
+    - data_color
   - title: Add Rows
     contents:
     - summary_rows
@@ -67,6 +70,7 @@ reference:
     - px
     - pct
     - escape_latex
+    - adjust_luminance
   - title: Images
     contents:
     - web_image
