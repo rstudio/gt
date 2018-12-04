@@ -315,7 +315,7 @@ Let's bring it all together by putting together all the statements we developed 
 
 The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the glyph should be attached. It will handle the placement of the note glyph and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?gt::location_cells`.
 
-What `cells_data()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_columns()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
+What `cells_data()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
 
 In terms of structuring the code, we're taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the `tab_footnote()` statements first (again, any in order) and expect the same output table.
 
@@ -436,7 +436,7 @@ tab <-
   ) %>%
   tab_footnote(
     footnote = "All prices in U.S. dollars (USD).",
-    locations = cells_columns(
+    locations = cells_column_labels(
       columns = vars(msrp))
   )
 

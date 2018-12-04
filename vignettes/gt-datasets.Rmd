@@ -261,11 +261,11 @@ gtcars %>%
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
-    locations = cells_columns(columns = vars(msrp))
+    locations = cells_column_labels(columns = vars(msrp))
   ) %>%
   tab_footnote(
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_columns(columns = vars(drivetrain))
+    locations = cells_column_labels(columns = vars(drivetrain))
   ) %>%
   tab_options(footnote.glyph = letters) %>%
   cols_label(
