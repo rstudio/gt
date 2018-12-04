@@ -22,16 +22,35 @@ text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
 Relabel one or more columns
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and apply different
-# column labels to the `mpg` and `qsec`
-# columns (the column labels will be
-# inherited from the column names)
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    cols_label(
-      mpg = md("*MPG*"),
-      qsec = "QMT, seconds")
+# Use `countrypops` to create a gt table;
+# label all the table's columns to
+# present better
+tab_1 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_label(
+    country_name = "Name",
+    year = "Year",
+    population = "Population"
+  )
+
+# Use `countrypops` to create a gt table;
+# label columns as before but make them
+# bold with markdown formatting
+tab_2 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_label(
+    country_name = md("**Name**"),
+    year = md("**Year**"),
+    population = md("**Population**")
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

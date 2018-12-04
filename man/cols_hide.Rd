@@ -21,13 +21,37 @@ an object of class \code{gt_tbl}.
 Hide one or more columns
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and hide the `mpg`,
-# `cyl`, and `disp` columns
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    cols_hide(
-      columns = vars(mpg, cyl, disp))
+# Use `countrypops` to create a gt table;
+# Hide the columns `country_code_2` and
+# `country_code_3`
+tab_1 <-
+  countrypops \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_hide(
+    columns = vars(
+      country_code_2, country_code_3)
+  )
+
+# Use `countrypops` to create a gt table;
+# Use the `population` column to provide
+# the conditional placement of footnotes,
+# then hide that column and one other
+tab_2 <-
+  countrypops \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  tab_footnote(
+    footnote = "Population above 3,000,000.",
+    locations = cells_data(
+      columns = vars(year),
+      rows = population > 3000000)
+  ) \%>\%
+  cols_hide(
+    columns = vars(country_code_3, population)
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
