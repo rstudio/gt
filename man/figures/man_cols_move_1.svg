@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="88.1944mm"
+ viewBox="0 0 1024 250"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,250 L0,250 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,250 L0,250 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,250 L0,250 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,8 L648,8 L648,242 L376,242 L376,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,9 L497,9 L497,49 L376,49 L376,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,9 L592,9 L592,49 L497,49 L497,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,9 L648,9 L648,49 L592,49 L592,9"/>
+</g>
+
+<g fill="#f2f2f2" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,88 L497,88 L497,126 L376,126 L376,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,88 L592,88 L592,126 L497,126 L497,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,88 L648,88 L648,126 L592,126 L592,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,164 L497,164 L497,202 L376,202 L376,164"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,164 L592,164 L592,202 L497,202 L497,164"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,164 L648,164 L648,202 L592,202 L592,164"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,8 L497,8 L497,10 L376,10 L376,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,8 L592,8 L592,10 L497,10 L497,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,8 L648,8 L648,10 L592,10 L592,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,48 L497,48 L497,50 L376,50 L376,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,48 L592,48 L592,50 L497,50 L497,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,48 L648,48 L648,50 L592,50 L592,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,48 L497,48 L497,50 L376,50 L376,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,48 L592,48 L592,50 L497,50 L497,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,48 L648,48 L648,50 L592,50 L592,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M376,240 L497,240 L497,242 L376,242 L376,240"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M497,240 L592,240 L592,242 L497,242 L497,240"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M592,240 L648,240 L648,242 L592,242 L592,240"/>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >country_name</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="507" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >population</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="607" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Mongolia</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="519" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2869107</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="602" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2013</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="112" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Mongolia</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="519" y="112" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2923896</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="602" y="112" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2014</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="150" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Mongolia</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="519" y="150" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2976877</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="602" y="150" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="188" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Mongolia</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="519" y="188" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3027398</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="602" y="188" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2016</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="386" y="226" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Mongolia</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="519" y="226" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3075647</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="602" y="226" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2017</text>
+</g>
+</g>
+</svg>
