@@ -611,11 +611,10 @@ fmt_currency <- function(data,
          call. = FALSE)
   }
 
-  # Return data if `currency` does not have a valid value
+  # Stop function if `currency` does not have a valid value
   if (!is_currency_valid(currency)) {
-
-    message("The value supplied for `currency` is not valid.")
-    return(data)
+    stop("The supplied `currency` is not available in the list of supported currencies.",
+         call. = FALSE)
   }
 
   # Get the currency string for the HTML context
