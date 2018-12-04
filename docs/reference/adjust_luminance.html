@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify the ordering of any row groups — row_group_order • gt</title>
+<title>Adjust the luminance for a palette of colors — adjust_luminance • gt</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Modify the ordering of any row groups — row_group_order" />
+<meta property="og:title" content="Adjust the luminance for a palette of colors — adjust_luminance" />
 
-<meta property="og:description" content="Modify the ordering of any row groups" />
+<meta property="og:description" content="Adjust the luminance for a palette of colors" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,41 +123,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify the ordering of any row groups</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/modify_rows.R'><code>R/modify_rows.R</code></a></small>
-    <div class="hidden name"><code>row_group_order.Rd</code></div>
+    <h1>Adjust the luminance for a palette of colors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/data_color.R'><code>R/data_color.R</code></a></small>
+    <div class="hidden name"><code>adjust_luminance.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Modify the ordering of any row groups</p>
+    <p>Adjust the luminance for a palette of colors</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>row_group_order</span>(<span class='no'>data</span>, <span class='no'>groups</span>)</pre>
+    <pre class="usage"><span class='fu'>adjust_luminance</span>(<span class='no'>colors</span>, <span class='no'>steps</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt</a>()</code>
-function.</p></td>
+      <th>colors</th>
+      <td><p>a vector of colors that will undergo an adjustment in
+luminance.</p></td>
     </tr>
     <tr>
-      <th>groups</th>
-      <td><p>a vector of row group names, or, a numeric vector of indices
-corresponding to the new ordering. Either vector must correspond to
-assigned group names or the index positions. Also, either type of vector is
-not required to have all of the row group names or available index
-positions within it; any omitted values will be added to the end while
-preserving the original ordering.</p></td>
+      <th>steps</th>
+      <td><p>a positive or negative factor by which the luminance will be
+adjusted. Must be a number between <code>-2.0</code> and <code>2.0</code>.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an object of class <code>gt_tbl</code>.</p>
     
 
   </div>
@@ -165,9 +157,7 @@ preserving the original ordering.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

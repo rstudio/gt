@@ -1,5 +1,5 @@
 pandoc: '2.4'
-pkgdown: 1.1.0
+pkgdown: 1.2.0
 pkgdown_sha: ~
 articles:
   case-study-gtcars: case-study-gtcars.html
