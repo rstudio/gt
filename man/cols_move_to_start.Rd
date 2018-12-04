@@ -20,6 +20,13 @@ an object of class \code{gt_tbl}.
 \description{
 Move one or more columns to the start
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_move_to_start_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # With the remaining columns, move the
@@ -46,6 +53,7 @@ tab_2 <-
   cols_move_to_start(
     columns = vars(year, population)
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

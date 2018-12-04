@@ -25,18 +25,37 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a single column with a formatter
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table object using the
-# `sleep` dataset and merge the `group`
-# and `ID` columns together (where the
-# `ID` number is in parentheses after
-# the `group` number)
-gt_tbl <-
-  gt(sleep) \%>\%
-    cols_merge(
-      col_1 = vars(group),
-      col_2 = vars(ID),
-      pattern = "{1} ({2})")
+# Use `sp500` to create a gt table;
+# merge the `open` & `close` columns
+# together, and, the `low` & `high`
+# columns (putting an em dash between
+# both); rename the columns
+tab_1 <-
+  sp500 \%>\%
+  dplyr::slice(50:55) \%>\%
+  dplyr::select(-volume, -adj_close) \%>\%
+  gt() \%>\%
+  cols_merge(
+    col_1 = vars(open),
+    col_2 = vars(close),
+    pattern = "{1}&mdash;{2}"
+  ) \%>\%
+  cols_merge(
+    col_1 = vars(low),
+    col_2 = vars(high),
+    pattern = "{1}&mdash;{2}"
+  ) \%>\%
+  cols_label(
+    open = "open/close",
+    low = "low/high"
+  )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

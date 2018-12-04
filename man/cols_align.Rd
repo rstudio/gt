@@ -30,6 +30,11 @@ an object of class \code{gt_tbl}.
 \description{
 Set the alignment of columns
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # align the `population` column data to
@@ -44,6 +49,7 @@ tab_1 <-
     align = "left",
     columns = vars(population)
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_hide}},

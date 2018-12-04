@@ -20,28 +20,34 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a value + uncertainty column
 }
-\examples{
-# Create a tibble with two columns;
-# both are numeric but the `uncert`
-# column contains uncertainty values
-data_tbl <-
-  dplyr::tribble(
-    ~value,   ~uncert,
-    0.352,    0.10,
-    0.983,    0.13,
-    0.639,    NA_real_,
-    NA_real_, 0.17)
+\section{Figures}{
 
-# Create a table object using this
-# dataset where the `uncert` column
-# is merged into the `value` column,
-# forming a single column of values
-# with uncertainties
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    cols_merge_uncert(
-      col_val = vars(value),
-      col_uncert = vars(uncert))
+\if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table,
+# keeping only the `currency` and `num`
+# columns; merge columns into one with
+# a base value and uncertainty (after
+# formatting the `num` column)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(currency, num) \%>\%
+  dplyr::slice(1:7) \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num),
+    decimals = 3,
+    use_seps = FALSE
+  ) \%>\%
+  cols_merge_uncert(
+    col_val = vars(currency),
+    col_uncert = vars(num)
+  ) \%>\%
+  cols_label(
+    currency = "value + uncert.")
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

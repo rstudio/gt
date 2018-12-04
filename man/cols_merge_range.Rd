@@ -21,26 +21,23 @@ an object of class \code{gt_tbl}.
 Merge two columns to a value range column
 }
 \examples{
-# Create a tibble with two columns
-# that are both numeric
-data_tbl <-
-  dplyr::tribble(
-    ~val_1, ~val_2,
-    1.6,    2.6,
-    1.9,    3.3,
-    2.6,    3.8,
-    2.1,    4.2)
-
-# Create a table object using this
-# dataset where the `val_1` and
-# `val_2` columns are merged together
-# with an em-dash between them (the
-# `val_1` column is retained)
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    cols_merge_range(
-      col_begin = vars(val_1),
-      col_end = vars(val_2))
+# Use `gtcars` to create a gt table,
+# keeping only the `model`, `mpg_c`,
+# and `mpg_h` columns; merge the mpg
+# columns together as a single range
+# column (which is labeled as MPG,
+# in italics)
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(model, starts_with("mpg")) \%>\%
+  dplyr::slice(1:8) \%>\%
+  gt() \%>\%
+  cols_merge_range(
+    col_begin = vars(mpg_c),
+    col_end = vars(mpg_h)) \%>\%
+  cols_label(
+    mpg_c = md("*MPG*")
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
