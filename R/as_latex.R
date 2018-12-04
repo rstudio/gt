@@ -8,7 +8,7 @@
 #' @examples
 #' \dontrun{
 #' # Create a `gt` table using the `sleep`
-#' # dataset and output as Latex
+#' # dataset and output as LaTeX
 #' gt(data = sleep) %>%
 #'   as_latex()
 #' }
@@ -19,7 +19,7 @@ as_latex <- function(data) {
   # Build all table data objects through a common pipeline
   built_data <- data %>% build_data(context = "latex")
 
-  # Use Latex-specific builders to generate the Latex table code
+  # Use LaTeX-specific builders to generate the Latex table code
   with(built_data, {
 
     # Add footnote glyphs to boxhead elements
@@ -42,12 +42,12 @@ as_latex <- function(data) {
     # Extraction of body content as a vector ----------------------------------
     body_content <- as.vector(t(output_df))
 
-    # Composition of Latex ----------------------------------------------------
+    # Composition of LaTeX ----------------------------------------------------
 
     # Split `body_content` by slices of rows
     row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
-    # Create a Latex fragment for the start of the table
+    # Create a LaTeX fragment for the start of the table
     table_start <- create_table_start_l(col_alignment)
 
     # Create the heading component of the table
@@ -67,7 +67,7 @@ as_latex <- function(data) {
         row_splits, groups_rows_df, col_alignment, stub_available,
         summaries_present, list_of_summaries, n_rows, n_cols)
 
-    # Create a Latex fragment for the ending tabular statement
+    # Create a LaTeX fragment for the ending tabular statement
     table_end <- create_table_end_l()
 
     # Create the footnote component of the table
@@ -92,7 +92,7 @@ as_latex <- function(data) {
       latex_packages <- NULL
     }
 
-    # Compose the Latex table
+    # Compose the LaTeX table
     latex_table <-
       paste0(
         table_start,

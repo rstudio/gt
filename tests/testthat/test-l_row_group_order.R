@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the `row_group_order()` function works as expected")
+context("LaTeX -- Ensuring that the `row_group_order()` function works as expected")
 
 test_that("the `row_group_order()` function works correctly", {
 

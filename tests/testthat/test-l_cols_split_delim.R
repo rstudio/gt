@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the `cols_split_delim()` function works as expected")
+context("LaTeX -- Ensuring that the `cols_split_delim()` function works as expected")
 
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]

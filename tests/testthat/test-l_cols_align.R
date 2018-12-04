@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the `cols_align*()` functions work as expected")
+context("LaTeX -- Ensuring that the `cols_align*()` functions work as expected")
 
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
