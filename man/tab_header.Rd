@@ -21,15 +21,25 @@ an object of class \code{gt_tbl}.
 \description{
 Add a table header part with a table title and optional subtitle.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_header_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table object using the
-# `mtcars` dataset and add a header
-# part to contain a title and subtitle
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_header(
-      title = md("Data listing from **mtcars**"),
-      subtitle = md("`mtcars` is an R dataset"))
+# Use `gtcars` to create a gt table;
+# add a header part to contain a title
+# and subtitle
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  )
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

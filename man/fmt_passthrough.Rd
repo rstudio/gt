@@ -51,6 +51,11 @@ function is useful when used as a \code{formatter} function in the
 \code{summary_rows} function, where the output may be text or useful as is
 (that function requires a formatter function).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # keep only the `char` column;
@@ -66,6 +71,7 @@ tab_1 <-
     rows = !is.na(char),
     pattern = "{x}s"
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

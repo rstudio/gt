@@ -43,6 +43,11 @@ an object of class \code{gt_tbl}.
 \description{
 Format values as date-times
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # keep only the `datetime` column;
@@ -58,6 +63,7 @@ tab_1 <-
     date_style = 5,
     time_style = 3
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

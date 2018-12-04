@@ -52,6 +52,13 @@ The following time styles are available for simpler formatting of ISO times
 We can use the \code{\link{info_time_style}()} function for a useful
 reference on all of the possible inputs to \code{time_style}.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # keep only the `date` and `time` columns;
@@ -88,6 +95,7 @@ tab_2 <-
       time <= "16:00",
     time_style = 4
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

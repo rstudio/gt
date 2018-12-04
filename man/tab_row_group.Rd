@@ -37,15 +37,47 @@ Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
 through use of a select helper function like \code{starts_with()}.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_row_group_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table based on `mtcars` and
+# Use `gtcars` to create a gt table and
 # add two row groups with the labels:
-# `Mazda` and `NA` (group without a title)
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_row_group(
-      group = "Mazda",
-      rows = c("Mazda RX4", "Mazda RX4 Wag"))
+# `numbered` and `NA` (a group without
+# a title, or, the rest)
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(model, year, hp, trq) \%>\%
+  dplyr::slice(1:8) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_row_group(
+    group = "numbered",
+    rows = matches("^[0-9]")
+  )
+
+# # Use `gtcars` to create a gt table;
+# add two row groups with the labels
+# `powerful` and `super powerful`: the
+# distinction being `hp` lesser or
+# greater than `600`
+tab_2 <-
+  gtcars \%>\%
+  dplyr::select(model, year, hp, trq) \%>\%
+  dplyr::slice(1:8) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_row_group(
+    group = "powerful",
+    rows = hp <= 600
+  ) \%>\%
+  tab_row_group(
+    group = "super powerful",
+    rows = hp > 600
+  )
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

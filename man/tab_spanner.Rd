@@ -22,15 +22,31 @@ Set a spanner column label by mapping it to columns already in the table.
 This label is placed above one or more columnd, spanning the width of those
 columns.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_spanner_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table based on `rock` where
-# there are columns grouped under a
-# common spanner column label
-gt_tbl <-
-  gt(data = rock) \%>\%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peri, shape))
+# Use `gtcars` to create a gt table;
+# Group several columns related to car
+# performance under a spanner column
+# with the label `performance`
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(
+    -mfr, -trim, bdy_style, drivetrain,
+    -drivetrain, -trsmn, -ctry_origin
+  ) \%>\%
+  dplyr::slice(1:8) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_spanner(
+    label = "performance",
+    columns = vars(
+      hp, hp_rpm, trq, trq_rpm,
+      mpg_c, mpg_h)
+  )
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
