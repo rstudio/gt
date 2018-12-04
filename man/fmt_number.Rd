@@ -87,6 +87,13 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_number_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `num` column as numeric
@@ -118,6 +125,7 @@ tab_2 <-
     decimals = 1,
     scale_by = 1/1000,
     pattern = "{x}K")
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

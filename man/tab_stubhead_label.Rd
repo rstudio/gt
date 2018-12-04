@@ -21,14 +21,22 @@ an object of class \code{gt_tbl}.
 Add a label to the stubhead of a table. If a stub does not exist, no change
 will be made.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_stubhead_label_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table object using the
-# `mtcars` dataset and add a stubhead
-# label to describe what is in the stub
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_stubhead_label(
-      label = md("car *make* and *model*"))
+# Use `gtcars` to create a gt table; add
+# a stubhead label to describe what is
+# in the stub
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(model, year, hp, trq) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_stubhead_label(label = "car")
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

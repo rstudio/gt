@@ -20,13 +20,24 @@ an object of class \code{gt_tbl}.
 \description{
 Add a source note citation to the source note part of the table.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_source_note_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Add a source note that provides
-# a citation for the tabular data
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_source_note(
-      source_note = md("*Henderson and Velleman* (1981)."))
+# Use `gtcars` to create a gt table;
+# add a source note to the table
+# footer that cites the data source
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_source_note(
+    source_note = "From edmunds.com"
+  )
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},

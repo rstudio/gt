@@ -94,6 +94,11 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `num` column to have
@@ -108,6 +113,7 @@ tab_1 <-
     decimals = 1,
     drop_trailing_zeros = TRUE
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

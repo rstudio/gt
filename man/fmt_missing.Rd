@@ -36,6 +36,11 @@ an object of class \code{gt_tbl}.
 Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 may present better than the standard `NA` text that would otherwise appear.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # NA values in different columns will
@@ -52,6 +57,7 @@ tab_1 <-
     columns = 4:7,
     missing_text = "nothing"
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

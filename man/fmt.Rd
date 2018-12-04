@@ -34,6 +34,11 @@ an object of class \code{gt_tbl}.
 \description{
 Set a column format with a formatter function
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # NA values in different columns will
@@ -48,6 +53,7 @@ tab_1 <-
       paste0("'", x * 1000, "'")
     }
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

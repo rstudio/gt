@@ -103,6 +103,13 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_currency_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `currency` column to have
@@ -131,6 +138,7 @@ tab_2 <-
     columns = vars(currency),
     currency = "GBP"
   )
+
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},
