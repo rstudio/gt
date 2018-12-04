@@ -29,7 +29,7 @@ cell_styles_tbl <-
   tab_style(
     style = cells_styles(
       text_size = px(28)),
-    locations = cells_columns(
+    locations = cells_column_labels(
       columns = c("value", "value_2"))
   )
 

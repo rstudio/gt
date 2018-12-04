@@ -28,7 +28,7 @@ footnotes_tbl <-
     locations = cells_stub(rows = 1)) %>%
   tab_footnote(
     footnote = md("`value_1` is the second column of values."),
-    locations = cells_columns(columns = vars(value_1))) %>%
+    locations = cells_column_labels(columns = vars(value_1))) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
     locations = cells_data(columns = 2, rows = 9)) %>%
