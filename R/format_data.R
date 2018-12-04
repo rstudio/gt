@@ -92,6 +92,12 @@
 #'     decimals = 1,
 #'     scale_by = 1/1000,
 #'     pattern = "{x}K")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_number_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -210,6 +216,10 @@ fmt_number <- function(data,
 #'     rows = num <= 500,
 #'     decimals = 1
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_scientific_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -352,6 +362,10 @@ fmt_scientific <- function(data,
 #'     decimals = 1,
 #'     drop_trailing_zeros = TRUE
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -551,6 +565,12 @@ fmt_percent <- function(data,
 #'     columns = vars(currency),
 #'     currency = "GBP"
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_currency_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -818,6 +838,12 @@ fmt_currency <- function(data,
 #'       as.Date(date) <= as.Date("2015-04-01"),
 #'     date_style = 7
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_date_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_fmt_date_2.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -911,6 +937,12 @@ fmt_date <- function(data,
 #'       time <= "16:00",
 #'     time_style = 4
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -962,6 +994,10 @@ fmt_time <- function(data,
 #'     date_style = 5,
 #'     time_style = 3
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1034,6 +1070,10 @@ fmt_datetime <- function(data,
 #'     rows = !is.na(char),
 #'     pattern = "{x}s"
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1111,6 +1151,10 @@ fmt_passthrough <- function(data,
 #'     columns = 4:7,
 #'     missing_text = "nothing"
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1164,6 +1208,10 @@ fmt_missing <- function(data,
 #'       paste0("'", x * 1000, "'")
 #'     }
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @importFrom tibble rownames_to_column
