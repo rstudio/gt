@@ -92,7 +92,7 @@ migrate_unformatted_to_output <- function(data_df,
               format(
                 drop0trailing = FALSE,
                 trim = TRUE,
-                justify = FALSE) %>%
+                justify = "none") %>%
               tidy_gsub("\\s+$", "") %>%
               process_text(context) %>%
               paste(collapse = ", ")
