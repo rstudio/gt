@@ -838,7 +838,7 @@ fmt_currency <- function(data,
 fmt_date <- function(data,
                      columns,
                      rows = NULL,
-                     date_style) {
+                     date_style = 2) {
 
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
@@ -894,7 +894,7 @@ fmt_date <- function(data,
 fmt_time <- function(data,
                      columns,
                      rows = NULL,
-                     time_style) {
+                     time_style = 2) {
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -951,8 +951,8 @@ fmt_time <- function(data,
 fmt_datetime <- function(data,
                          columns,
                          rows = NULL,
-                         date_style,
-                         time_style) {
+                         date_style = 2,
+                         time_style = 2) {
 
   # Transform `date_style` to `date_format`
   date_format <- get_date_format(date_style = date_style)
