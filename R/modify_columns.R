@@ -27,6 +27,10 @@
 #'     align = "left",
 #'     columns = vars(population)
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
@@ -116,6 +120,12 @@ cols_align <- function(data,
 #'     year = md("**Year**"),
 #'     population = md("**Population**")
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_label_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @import rlang
 #' @export
@@ -186,6 +196,10 @@ cols_label <- function(data,
 #'     columns = vars(population),
 #'     after = vars(country_name)
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -290,6 +304,12 @@ cols_move <- function(data,
 #'   cols_move_to_start(
 #'     columns = vars(year, population)
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_move_to_start_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom dplyr select everything
 #' @export
@@ -358,6 +378,12 @@ cols_move_to_start <- function(data,
 #'   cols_move_to_end(
 #'     columns = vars(year, country_name)
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_move_to_end_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -435,6 +461,12 @@ cols_move_to_end <- function(data,
 #'   cols_hide(
 #'     columns = vars(country_code_3, population)
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -482,14 +514,18 @@ cols_hide <- function(data,
 #' @examples
 #' # Use `iris` to create a gt table; split
 #' # any columns that are dot-separated
-#' # between column spanners and column
-#' # labels
+#' # between column spanner labels (first
+#' # part) and column labels (second part)
 #' tab_1 <-
 #'   iris %>%
 #'   dplyr::group_by(Species) %>%
 #'   dplyr::slice(1:4) %>%
 #'   gt() %>%
 #'   cols_split_delim(delim = ".")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_split_delim_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @export
 cols_split_delim <- function(data,
@@ -543,17 +579,34 @@ cols_split_delim <- function(data,
 #'   \code{{2}}. All other characters are taken to be string literals.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `sleep` dataset and merge the `group`
-#' # and `ID` columns together (where the
-#' # `ID` number is in parentheses after
-#' # the `group` number)
-#' gt_tbl <-
-#'   gt(sleep) %>%
-#'     cols_merge(
-#'       col_1 = vars(group),
-#'       col_2 = vars(ID),
-#'       pattern = "{1} ({2})")
+#' # Use `sp500` to create a gt table;
+#' # merge the `open` & `close` columns
+#' # together, and, the `low` & `high`
+#' # columns (putting an em dash between
+#' # both); rename the columns
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::slice(50:55) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   cols_merge(
+#'     col_1 = vars(open),
+#'     col_2 = vars(close),
+#'     pattern = "{1}&mdash;{2}"
+#'   ) %>%
+#'   cols_merge(
+#'     col_1 = vars(low),
+#'     col_2 = vars(high),
+#'     pattern = "{1}&mdash;{2}"
+#'   ) %>%
+#'   cols_label(
+#'     open = "open/close",
+#'     low = "low/high"
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
@@ -610,27 +663,31 @@ cols_merge <- function(data,
 #' @param col_uncert a single column name that contains the uncertainty values.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with two columns;
-#' # both are numeric but the `uncert`
-#' # column contains uncertainty values
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~value,   ~uncert,
-#'     0.352,    0.10,
-#'     0.983,    0.13,
-#'     0.639,    NA_real_,
-#'     NA_real_, 0.17)
+#' # Use `exibble` to create a gt table,
+#' # keeping only the `currency` and `num`
+#' # columns; merge columns into one with
+#' # a base value and uncertainty (after
+#' # formatting the `num` column)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(currency, num) %>%
+#'   dplyr::slice(1:7) %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num),
+#'     decimals = 3,
+#'     use_seps = FALSE
+#'   ) %>%
+#'   cols_merge_uncert(
+#'     col_val = vars(currency),
+#'     col_uncert = vars(num)
+#'   ) %>%
+#'   cols_label(
+#'     currency = "value + uncert.")
 #'
-#' # Create a table object using this
-#' # dataset where the `uncert` column
-#' # is merged into the `value` column,
-#' # forming a single column of values
-#' # with uncertainties
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     cols_merge_uncert(
-#'       col_val = vars(value),
-#'       col_uncert = vars(uncert))
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
@@ -689,26 +746,23 @@ cols_merge_uncert <- function(data,
 #' @param col_end a column that contains values for the end of the range.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with two columns
-#' # that are both numeric
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~val_1, ~val_2,
-#'     1.6,    2.6,
-#'     1.9,    3.3,
-#'     2.6,    3.8,
-#'     2.1,    4.2)
-#'
-#' # Create a table object using this
-#' # dataset where the `val_1` and
-#' # `val_2` columns are merged together
-#' # with an em-dash between them (the
-#' # `val_1` column is retained)
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     cols_merge_range(
-#'       col_begin = vars(val_1),
-#'       col_end = vars(val_2))
+#' # Use `gtcars` to create a gt table,
+#' # keeping only the `model`, `mpg_c`,
+#' # and `mpg_h` columns; merge the mpg
+#' # columns together as a single range
+#' # column (which is labeled as MPG,
+#' # in italics)
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(model, starts_with("mpg")) %>%
+#'   dplyr::slice(1:8) %>%
+#'   gt() %>%
+#'   cols_merge_range(
+#'     col_begin = vars(mpg_c),
+#'     col_end = vars(mpg_h)) %>%
+#'   cols_label(
+#'     mpg_c = md("*MPG*")
+#'   )
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
