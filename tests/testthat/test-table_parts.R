@@ -354,7 +354,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html %>%
     rvest::html_nodes("[style='background-color:lightgray;font-style:italic;']") %>%
     rvest::html_text("[class='gt_row gt_center']") %>%
-    expect_equal(" 93")
+    expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
