@@ -55,6 +55,14 @@ test_that("the `fmt_currency()` function works correctly", {
     tab %>%
       fmt_currency(columns = "num_2", decimals = 2, locale = "aa_bb"))
 
+  # Format the `num_1` column using defaults (currency of "USD");
+  # extract `output_df` and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num_1") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "$-23.24"))
+
   # Format the `num_1` column as USD, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
