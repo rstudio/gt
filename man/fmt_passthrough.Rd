@@ -28,10 +28,10 @@ and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{escape}{an option to escape text according to the final output format
-of the table. For example, if a Latex table is to be generated then Latex
+of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed during rendering. By default this is set to
 \code{TRUE} and setting to \code{FALSE} is useful in the case where
-Latex-formatted text should be passed through to the output Latex table
+LaTeX-formatted text should be passed through to the output LaTeX table
 unchanged.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
