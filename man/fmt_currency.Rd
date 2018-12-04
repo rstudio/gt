@@ -104,60 +104,33 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-# Create a tibble with two columns
-# that are both numeric
-data_tbl <-
-  dplyr::tribble(
-    ~val_usd, ~val_jpy,
-    23.346,   2606.95,
-    832.830,  93002.54,
-    72.013,   8041.73,
-    83.1,     9279.82)
+# Use `exibble` to create a gt table;
+# format the `currency` column to have
+# currency values in euros (EUR)
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = vars(currency),
+    currency = "EUR"
+  )
 
-# Create a table object using this
-# dataset and where the `val_usd`
-# and `val_jpy` are formatted as
-# the `USD` and `JPY` currencies
-gt_tbl_1 <-
-  gt(data_tbl) \%>\%
-    fmt_currency(
-      columns = vars(val_usd),
-      currency = "USD") \%>\%
-    fmt_currency(
-      columns = vars(val_jpy),
-      currency = "JPY")
-
-# Create another tibble with larger
-# numeric values
-data_tbl_lg <-
-  dplyr::tribble(
-    ~val_usd_lg, ~val_jpy_lg,
-    546262,      3950249,
-    729472,      5390202,
-    292592,      9373824,
-    573256,      2350300)
-
-# Create a table object using this
-# dataset and where the `val_usd`
-# and `val_jpy` are still formatted as
-# the `USD` and `JPY` currencies but
-# this time with scaled values
-# (thousands and millions with the
-# appropriate suffixes)
-gt_tbl_2 <-
-  gt(data_tbl_lg) \%>\%
-    fmt_currency(
-      columns = vars(val_usd_lg),
-      currency = "USD",
-      decimals = 1,
-      scale_by = 1/1000,
-      pattern = "{x}K") \%>\%
-    fmt_currency(
-      columns = vars(val_jpy_lg),
-      currency = "JPY",
-      decimals = 2,
-      scale_by = 1E-6,
-      pattern = "{x}M")
+# Use `exibble` to create a gt table;
+# Keep only the `num` and `currency`,
+# columns, then, format those columns
+# using the "CNY" and "GBP" currencies
+tab_2 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = vars(num),
+    currency = "CNY"
+  ) \%>\%
+  fmt_currency(
+    columns = vars(currency),
+    currency = "GBP"
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_datetime}},

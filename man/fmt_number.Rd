@@ -88,41 +88,36 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and format specified
-# numeric columns to display values to
-# two decimal places
-gt_tbl_1 <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    fmt_number(
-      columns = vars(mpg, disp, drat, qsec),
-      decimals = 5)
+# Use `exibble` to create a gt table;
+# format the `num` column as numeric
+# with three decimal places and with no
+# use of digit separators
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num),
+    decimals = 3,
+    use_seps = FALSE
+  )
 
-# Create a tibble with two columns
-# that are both numeric
-data_tbl <-
-  dplyr::tribble(
-    ~val_1,   ~val_2,
-    8236625,  -2345,
-    6533405,  -7865,
-    7363931,  2345,
-    9326440,  7543)
-
-# Create a gt table from `data_tbl` and
-# scale the numeric values in columns
-# `val_1` and `val_2` and apply a suffix
-gt_tbl_2 <-
-  gt(data_tbl) \%>\%
-    fmt_number(
-      columns = vars(val_1),
-      decimals = 2,
-      scale_by = 1E-6,
-      pattern = "{x}") \%>\%
-    fmt_number(
-      columns = vars(val_2),
-      decimals = 2,
-      scale_by = 1/1000,
-      pattern = "{x}K")
+# Use `exibble` to create a gt table;
+# format the `num` column as numeric,
+# but treating the first four rows
+# different than the last four
+tab_2 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num),
+    rows = 1:4,
+    decimals = 2) \%>\%
+  fmt_number(
+    columns = vars(num),
+    rows = 5:8,
+    decimals = 1,
+    scale_by = 1/1000,
+    pattern = "{x}K")
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

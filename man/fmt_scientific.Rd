@@ -76,15 +76,25 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and format specified
-# numeric columns to display values in
-# scientific notation
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    fmt_scientific(
-      columns = vars(disp),
-      decimals = 2)
+# Use `exibble` to create a gt table;
+# format the `num` column as partially
+# numeric and partially in scientific
+# notation
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num),
+    rows = num > 500,
+    decimals = 1,
+    scale_by = 1/1000,
+    pattern = "{x}K"
+  ) \%>\%
+  fmt_scientific(
+    columns = vars(num),
+    rows = num <= 500,
+    decimals = 1
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

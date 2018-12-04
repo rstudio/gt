@@ -35,16 +35,19 @@ an object of class \code{gt_tbl}.
 Set a column format with a formatter function
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and format the `wt`
-# column data with a custom formatter
-# function within a `fmt()` call
-data_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    fmt(columns = vars(wt),
-        fns = function(x){
-          x * 1000
-        })
+# Use `exibble` to create a gt table;
+# NA values in different columns will
+# be given replacement text
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(-row, -group) \%>\%
+  gt() \%>\%
+  fmt(
+    columns = vars(num),
+    fns = function(x) {
+      paste0("'", x * 1000, "'")
+    }
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
