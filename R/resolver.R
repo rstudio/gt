@@ -82,12 +82,13 @@ resolve_cells_stub <- function(data,
   cells_resolved
 }
 
-#' Resolve the `cells_columns` object once it has access to the `data` object
+#' Resolve the `cells_column_labels` object once it has access to the `data`
+#' object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{cells_columns()}
+#' @param object the list object created by the \code{cells_column_labels()}
 #'   function.
 #' @noRd
-resolve_cells_columns <- function(data,
+resolve_cells_column_labels <- function(data,
                                   object) {
 
   # Get the `data_df` data frame from `data`
@@ -97,7 +98,7 @@ resolve_cells_columns <- function(data,
   colnames <- names(data_df)
 
   # Obtain the `columns` component of object created
-  # by the `cells_columns()` function
+  # by the `cells_column_labels()` function
   object_columns <- object$columns
 
   #

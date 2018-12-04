@@ -9,7 +9,7 @@
 #'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 #'   helper functions can also be used to pass in numeric values and obtain
 #'   values as pixel or percent units.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,columns.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,stub_group.font.size,footnote.font.size,sourcenote.font.size
 #'   font sizes for the parent text element \code{table} and the following child
 #'   elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
 #'   \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
@@ -19,11 +19,11 @@
 #'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param columns.font.weight,stub_group.font.weight the font weight of the
+#' @param column_labels.font.weight,stub_group.font.weight the font weight of the
 #'   \code{columns} and \code{stub_group} text element.
 #' @param summary_row.text_transform an option to apply text transformations to
 #' the label text in each summary row.
-#' @param table.background.color,heading.background.color,columns.background.color,stub_group.background.color,summary_row.background.color
+#' @param table.background.color,heading.background.color,column_labels.background.color,stub_group.background.color,summary_row.background.color
 #'   background colors for the parent element \code{table} and the following
 #'   child elements: \code{heading}, \code{columns}, \code{stub_group},
 #'   \code{summary_row}, and \code{field}. A color name or a hexadecimal color
@@ -80,9 +80,9 @@ tab_options <- function(data,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
-                        columns.background.color = NULL,
-                        columns.font.size = NULL,
-                        columns.font.weight = NULL,
+                        column_labels.background.color = NULL,
+                        column_labels.font.size = NULL,
+                        column_labels.font.weight = NULL,
                         stub_group.background.color = NULL,
                         stub_group.font.size = NULL,
                         stub_group.font.weight = NULL,
@@ -220,27 +220,27 @@ tab_options <- function(data,
       opts_df, "heading_border_bottom_color", heading.border.bottom.color)
   }
 
-  # columns.background.color
-  if (!is.null(columns.background.color)) {
+  # column_labels.background.color
+  if (!is.null(column_labels.background.color)) {
 
     opts_df <- opts_df_set(
-      opts_df, "columns_background_color", columns.background.color)
+      opts_df, "column_labels_background_color", column_labels.background.color)
   }
 
-  # columns.font.size
-  if (!is.null(columns.font.size)) {
+  # column_labels.font.size
+  if (!is.null(column_labels.font.size)) {
 
-    if (is.numeric(columns.font.size)) {
-      columns.font.size <- paste0(columns.font.size, "px")
+    if (is.numeric(column_labels.font.size)) {
+      column_labels.font.size <- paste0(column_labels.font.size, "px")
     }
 
-    opts_df <- opts_df_set(opts_df, "columns_font_size", columns.font.size)
+    opts_df <- opts_df_set(opts_df, "column_labels_font_size", column_labels.font.size)
   }
 
-  # columns.font.weight
-  if (!is.null(columns.font.weight)) {
+  # column_labels.font.weight
+  if (!is.null(column_labels.font.weight)) {
 
-    opts_df <- opts_df_set(opts_df, "columns_font_weight", columns.font.weight)
+    opts_df <- opts_df_set(opts_df, "column_labels_font_weight", column_labels.font.weight)
   }
 
   # stub_group.background.color

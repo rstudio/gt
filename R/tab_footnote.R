@@ -9,7 +9,7 @@
 #'   Supplying any of the \code{cells_*()} helper functions is a useful way to
 #'   target the location cells that are associated with the footnote text. These
 #'   helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_columns}()}, \code{\link{cells_group}()},
+#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
 #'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
 #'   \code{\link{cells_summary}()}. Please see the help article
 #'   \link{location_cells} for more information on how these helper functions
@@ -85,11 +85,11 @@ set_footnote.cells_stub <- function(loc, data, footnote) {
   data
 }
 
-set_footnote.cells_columns <- function(loc, data, footnote) {
+set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   if (!is.null(loc$columns)) {
 
-    resolved <- resolve_cells_columns(data = data, object = loc)
+    resolved <- resolve_cells_column_labels(data = data, object = loc)
 
     cols <- resolved$columns
 
@@ -160,7 +160,7 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
   groups <- (loc$groups %>% as.character())[-1]
   rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
 
-  resolved <- resolve_cells_columns(data = data, object = loc)
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
 
   cols <- resolved$columns
 

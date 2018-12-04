@@ -4,7 +4,7 @@
 #'   transformation. Supplying any of the \code{cells_*()} helper functions is a
 #'   useful way to target the location cells that are associated with the
 #'   footnote text. These helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_columns}()}, \code{\link{cells_group}()},
+#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
 #'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
 #'   \code{\link{cells_summary}()}. Please see the help article
 #'   \link{location_cells} for more information on how these helper functions

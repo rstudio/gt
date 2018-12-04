@@ -12,7 +12,7 @@
 #' depending on the value given to the \code{groups} argument (\code{"title"} or
 #' \code{"subtitle"}).
 #'
-#' \item \code{cells_columns()}: targets labels in the column labels (the
+#' \item \code{cells_column_labels()}: targets labels in the column labels (the
 #' \code{columns} argument) or the spanner column labels (the \code{groups}
 #' argument) in the table's column labels part.
 #'
@@ -65,7 +65,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_columns <- function(columns, groups) {
+cells_column_labels <- function(columns, groups) {
 
   if (
     (!missing(columns) && !missing(groups)) ||
@@ -90,10 +90,10 @@ cells_columns <- function(columns, groups) {
     group_expr <- rlang::enquo(groups)
   }
 
-  # Create the `cells_columns` object
+  # Create the `cells_column_labels` object
   structure(
     list(columns = col_expr, groups = group_expr),
-    class = c("cells_columns", "location_cells"))
+    class = c("cells_column_labels", "location_cells"))
 }
 
 #' @rdname location_cells
