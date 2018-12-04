@@ -29,17 +29,21 @@
 #' # four supplied colors, and a domain
 #' tab_1 <-
 #'   countrypops %>%
-#'     dplyr::filter(country_name == "Mongolia") %>%
-#'     dplyr::select(-contains("code")) %>%
-#'     tail(10) %>%
-#'     gt() %>%
-#'     data_color(
-#'       columns = vars(population),
-#'       colors = scales::col_numeric(
-#'         palette = c(
-#'           "red", "orange", "green", "blue"),
-#'         domain = c(0.2E7, 0.4E7))
-#'     )
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   tail(10) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = vars(population),
+#'     colors = scales::col_numeric(
+#'       palette = c(
+#'         "red", "orange", "green", "blue"),
+#'       domain = c(0.2E7, 0.4E7))
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_data_color_1.svg}{options: width=100\%}}
+#'
 #' @family data cell modification
 #' @import rlang
 #' @importFrom scales col_numeric col_factor
