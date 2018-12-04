@@ -62,41 +62,36 @@
 #'   \code{dec_mark}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and format specified
-#' # numeric columns to display values to
-#' # two decimal places
-#' gt_tbl_1 <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     fmt_number(
-#'       columns = vars(mpg, disp, drat, qsec),
-#'       decimals = 5)
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as numeric
+#' # with three decimal places and with no
+#' # use of digit separators
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num),
+#'     decimals = 3,
+#'     use_seps = FALSE
+#'   )
 #'
-#' # Create a tibble with two columns
-#' # that are both numeric
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~val_1,   ~val_2,
-#'     8236625,  -2345,
-#'     6533405,  -7865,
-#'     7363931,  2345,
-#'     9326440,  7543)
-#'
-#' # Create a gt table from `data_tbl` and
-#' # scale the numeric values in columns
-#' # `val_1` and `val_2` and apply a suffix
-#' gt_tbl_2 <-
-#'   gt(data_tbl) %>%
-#'     fmt_number(
-#'       columns = vars(val_1),
-#'       decimals = 2,
-#'       scale_by = 1E-6,
-#'       pattern = "{x}") %>%
-#'     fmt_number(
-#'       columns = vars(val_2),
-#'       decimals = 2,
-#'       scale_by = 1/1000,
-#'       pattern = "{x}K")
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as numeric,
+#' # but treating the first four rows
+#' # different than the last four
+#' tab_2 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num),
+#'     rows = 1:4,
+#'     decimals = 2) %>%
+#'   fmt_number(
+#'     columns = vars(num),
+#'     rows = 5:8,
+#'     decimals = 1,
+#'     scale_by = 1/1000,
+#'     pattern = "{x}K")
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -196,15 +191,25 @@ fmt_number <- function(data,
 #' @inheritParams fmt_number
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and format specified
-#' # numeric columns to display values in
-#' # scientific notation
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     fmt_scientific(
-#'       columns = vars(disp),
-#'       decimals = 2)
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as partially
+#' # numeric and partially in scientific
+#' # notation
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num),
+#'     rows = num > 500,
+#'     decimals = 1,
+#'     scale_by = 1/1000,
+#'     pattern = "{x}K"
+#'   ) %>%
+#'   fmt_scientific(
+#'     columns = vars(num),
+#'     rows = num <= 500,
+#'     decimals = 1
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -334,28 +339,19 @@ fmt_scientific <- function(data,
 #'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with two columns
-#' # that are both numeric
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~val_1, ~val_2,
-#'     0.345,  2.6,
-#'     0.234,  3.3,
-#'     0.53,   3.8,
-#'     0.391,  4.2)
-#'
-#' # Create a table object using this
-#' # dataset and foramt the `val_1` column
-#' # as percentage values and `val_2`
-#' # as numeric values
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     fmt_percent(
-#'       columns = vars(val_1),
-#'       decimals = 1) %>%
-#'     fmt_number(
-#'       columns = vars(val_2),
-#'       decimals = 2)
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column to have
+#' # percentage values in the first five
+#' # of its rows
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_percent(
+#'     columns = vars(num),
+#'     rows = 1:5,
+#'     decimals = 1,
+#'     drop_trailing_zeros = TRUE
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -528,60 +524,33 @@ fmt_percent <- function(data,
 #'   and the curerncy symbol. The default is to not introduce a space character.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with two columns
-#' # that are both numeric
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~val_usd, ~val_jpy,
-#'     23.346,   2606.95,
-#'     832.830,  93002.54,
-#'     72.013,   8041.73,
-#'     83.1,     9279.82)
+#' # Use `exibble` to create a gt table;
+#' # format the `currency` column to have
+#' # currency values in euros (EUR)
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = "EUR"
+#'   )
 #'
-#' # Create a table object using this
-#' # dataset and where the `val_usd`
-#' # and `val_jpy` are formatted as
-#' # the `USD` and `JPY` currencies
-#' gt_tbl_1 <-
-#'   gt(data_tbl) %>%
-#'     fmt_currency(
-#'       columns = vars(val_usd),
-#'       currency = "USD") %>%
-#'     fmt_currency(
-#'       columns = vars(val_jpy),
-#'       currency = "JPY")
-#'
-#' # Create another tibble with larger
-#' # numeric values
-#' data_tbl_lg <-
-#'   dplyr::tribble(
-#'     ~val_usd_lg, ~val_jpy_lg,
-#'     546262,      3950249,
-#'     729472,      5390202,
-#'     292592,      9373824,
-#'     573256,      2350300)
-#'
-#' # Create a table object using this
-#' # dataset and where the `val_usd`
-#' # and `val_jpy` are still formatted as
-#' # the `USD` and `JPY` currencies but
-#' # this time with scaled values
-#' # (thousands and millions with the
-#' # appropriate suffixes)
-#' gt_tbl_2 <-
-#'   gt(data_tbl_lg) %>%
-#'     fmt_currency(
-#'       columns = vars(val_usd_lg),
-#'       currency = "USD",
-#'       decimals = 1,
-#'       scale_by = 1/1000,
-#'       pattern = "{x}K") %>%
-#'     fmt_currency(
-#'       columns = vars(val_jpy_lg),
-#'       currency = "JPY",
-#'       decimals = 2,
-#'       scale_by = 1E-6,
-#'       pattern = "{x}M")
+#' # Use `exibble` to create a gt table;
+#' # Keep only the `num` and `currency`,
+#' # columns, then, format those columns
+#' # using the "CNY" and "GBP" currencies
+#' tab_2 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(num),
+#'     currency = "CNY"
+#'   ) %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = "GBP"
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -814,24 +783,41 @@ fmt_currency <- function(data,
 #' presets.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with a column
-#' # that contains dates
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~date,
-#'     "2017-10-15",
-#'     "2013-02-22",
-#'     "2014-09-22",
-#'     "2018-01-10")
+#' # Use `exibble` to create a gt table;
+#' # keep only the `date` and `time` columns;
+#' # format the `date` column to have
+#' # dates formatted as `month_day_year`
+#' # (date style `5`)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(date, time) %>%
+#'   gt() %>%
+#'   fmt_date(
+#'     columns = vars(date),
+#'     date_style = 5
+#'   )
 #'
-#' # Create a table object using this
-#' # dataset and format the `date`
-#' # column with a `date_style` of `2`
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     fmt_date(
-#'       columns = vars(date),
-#'       date_style = 2)
+#' # Use `exibble` to create a gt table;
+#' # keep only the `date` and `time` columns;
+#' # format the `date` column to have mixed
+#' # date formats (dates after April will
+#' # be different than the others)
+#' tab_2 <-
+#'   exibble %>%
+#'   dplyr::select(date, time) %>%
+#'   gt() %>%
+#'   fmt_date(
+#'     columns = vars(date),
+#'     rows =
+#'       as.Date(date) > as.Date("2015-04-01"),
+#'     date_style = 6
+#'   ) %>%
+#'   fmt_date(
+#'     columns = vars(date),
+#'     rows =
+#'       as.Date(date) <= as.Date("2015-04-01"),
+#'     date_style = 7
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -864,30 +850,67 @@ fmt_date <- function(data,
 }
 
 #' Format values as times
+#'
+#' Format input time values that are character-based and expressed according to
+#' the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
+#' are targeted with \code{columns} (and, optionally, \code{rows}), we can
+#' simply apply a preset time style to format the times.
+#'
+#' The following time styles are available for simpler formatting of ISO times
+#' (all using the input time of \code{14:35:00} in the example output times):
+#'
+#' \enumerate{
+#' \item hms: \code{14:35:00}
+#' \item hm: \code{14:35}
+#' \item hms_p: \code{2:35:00 PM}
+#' \item hm_p: \code{2:35 PM}
+#' \item h_p: \code{2 PM}
+#' }
+#'
+#' We can use the \code{\link{info_time_style}()} function for a useful
+#' reference on all of the possible inputs to \code{time_style}.
+#'
 #' @inheritParams fmt_number
 #' @param time_style the time style to use. Supply a number (from \code{1} to
 #' \code{5}) that corresponds to the preferred time style. Use
 #' \code{\link{info_time_style}()} to see the different numbered and named time
 #' presets.
 #' @examples
-#' # Create a tibble with a column
-#' # that contains 24-hour time strings
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~time,
-#'     "12:35:23",
-#'     "15:01:34",
-#'     "09:45:23",
-#'     "01:32:00")
+#' # Use `exibble` to create a gt table;
+#' # keep only the `date` and `time` columns;
+#' # format the `time` column to have
+#' # times formatted as `hms_p`
+#' # (time style `3`)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(date, time) %>%
+#'   gt() %>%
+#'   fmt_time(
+#'     columns = vars(time),
+#'     time_style = 3
+#'   )
 #'
-#' # Create a table object using this
-#' # dataset and format the `time`
-#' # column with a  `time_style` of `3`
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     fmt_time(
-#'       columns = vars(time),
-#'       time_style = 3)
+#' # Use `exibble` to create a gt table;
+#' # keep only the `date` and `time` columns;
+#' # format the `time` column to have mixed
+#' # time formats (times after 16:00 will
+#' # be different than the others)
+#' tab_2 <-
+#'   exibble %>%
+#'   dplyr::select(date, time) %>%
+#'   gt() %>%
+#'   fmt_time(
+#'     columns = vars(time),
+#'     rows =
+#'       time > "16:00",
+#'     time_style = 3
+#'   ) %>%
+#'   fmt_time(
+#'     columns = vars(time),
+#'     rows =
+#'       time <= "16:00",
+#'     time_style = 4
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -925,26 +948,20 @@ fmt_time <- function(data,
 #' @inheritParams fmt_time
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a tibble with a column
-#' # that contains date-time strings
-#' data_tbl <-
-#'   dplyr::tribble(
-#'     ~datetime,
-#'     "2017-06-10 12:35:23",
-#'     "2017-07-12 15:01:34",
-#'     "2017-08-05 09:45:23",
-#'     "2017-10-23 01:32:00")
-#'
-#' # Create a table object using this
-#' # dataset and format the `datetime`
-#' # column with a `date_style` of
-#' # `2` and a `time_style` of `3`
-#' gt_tbl <-
-#'   gt(data_tbl) %>%
-#'     fmt_datetime(
-#'       columns = vars(datetime),
-#'       date_style = 2,
-#'       time_style = 3)
+#' # Use `exibble` to create a gt table;
+#' # keep only the `datetime` column;
+#' # format the column to have dates
+#' # formatted as `month_day_year` and
+#' # times to be `hms_p`
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(datetime) %>%
+#'   gt() %>%
+#'   fmt_datetime(
+#'     columns = vars(datetime),
+#'     date_style = 5,
+#'     time_style = 3
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1002,6 +1019,21 @@ fmt_datetime <- function(data,
 #'   Latex-formatted text should be passed through to the output Latex table
 #'   unchanged.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # keep only the `char` column;
+#' # pass the data in that column through
+#' # but apply a simple pattern that adds
+#' # an 's' to the non-NA values
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(char) %>%
+#'   gt() %>%
+#'   fmt_passthrough(
+#'     columns = vars(char),
+#'     rows = !is.na(char),
+#'     pattern = "{x}s"
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1063,6 +1095,22 @@ fmt_passthrough <- function(data,
 #' @param missing_text the text to be used in place of \code{NA} values in the
 #' rendered table.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # NA values in different columns will
+#' # be given replacement text
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(-row, -group) %>%
+#'   gt() %>%
+#'   fmt_missing(
+#'     columns = 1:2,
+#'     missing_text = "missing"
+#'   ) %>%
+#'   fmt_missing(
+#'     columns = 4:7,
+#'     missing_text = "nothing"
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @export
@@ -1103,16 +1151,19 @@ fmt_missing <- function(data,
 #' @param fns a single formatting function or a named list of functions.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and format the `wt`
-#' # column data with a custom formatter
-#' # function within a `fmt()` call
-#' data_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     fmt(columns = vars(wt),
-#'         fns = function(x){
-#'           x * 1000
-#'         })
+#' # Use `exibble` to create a gt table;
+#' # NA values in different columns will
+#' # be given replacement text
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(-row, -group) %>%
+#'   gt() %>%
+#'   fmt(
+#'     columns = vars(num),
+#'     fns = function(x) {
+#'       paste0("'", x * 1000, "'")
+#'     }
+#'   )
 #' @family data formatting functions
 #' @import rlang
 #' @importFrom tibble rownames_to_column
