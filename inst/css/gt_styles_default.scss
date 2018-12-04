@@ -51,16 +51,16 @@
   }
 
   .gt_col_heading {
-    color: font-color($columns_background_color);
-    background-color: $columns_background_color; /* columns.background.color */
-    font-size: $columns_font_size; /* columns.font.size */
-    font-weight: $columns_font_weight; /* columns.font.weight */
+    color: font-color($column_labels_background_color);
+    background-color: $column_labels_background_color; /* column_labels.background.color */
+    font-size: $column_labels_font_size; /* column_labels.font.size */
+    font-weight: $column_labels_font_weight; /* column_labels.font.weight */
     padding: 10px;
     margin: 10px;
   }
 
   .gt_sep_right {
-    border-right: 5px solid #{$columns_background_color};
+    border-right: 5px solid #{$column_labels_background_color};
   }
 
   .gt_group_heading {
