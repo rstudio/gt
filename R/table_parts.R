@@ -8,14 +8,22 @@
 #'   HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and add a header
-#' # part to contain a title and subtitle
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_header(
-#'       title = md("Data listing from **mtcars**"),
-#'       subtitle = md("`mtcars` is an R dataset"))
+#' # Use `gtcars` to create a gt table;
+#' # add a header part to contain a title
+#' # and subtitle
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_tab_header_1.svg}{options: width=100\%}}
+#'
 #' @family table-part creation/modification functions
 #' @export
 tab_header <- function(data,
@@ -45,13 +53,19 @@ tab_header <- function(data,
 #'   text as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and add a stubhead
-#' # label to describe what is in the stub
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_stubhead_label(
-#'       label = md("car *make* and *model*"))
+#' # Use `gtcars` to create a gt table; add
+#' # a stubhead label to describe what is
+#' # in the stub
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(model, year, hp, trq) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_stubhead_label(label = "car")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_tab_stubhead_label_1.svg}{options: width=100\%}}
+#'
 #' @family table-part creation/modification functions
 #' @export
 tab_stubhead_label <- function(data,
@@ -87,14 +101,44 @@ tab_stubhead_label <- function(data,
 #'   a row group without a label.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table based on `mtcars` and
+#' # Use `gtcars` to create a gt table and
 #' # add two row groups with the labels:
-#' # `Mazda` and `NA` (group without a title)
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_row_group(
-#'       group = "Mazda",
-#'       rows = c("Mazda RX4", "Mazda RX4 Wag"))
+#' # `numbered` and `NA` (a group without
+#' # a title, or, the rest)
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(model, year, hp, trq) %>%
+#'   dplyr::slice(1:8) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_row_group(
+#'     group = "numbered",
+#'     rows = matches("^[0-9]")
+#'   )
+#'
+#' # # Use `gtcars` to create a gt table;
+#' # add two row groups with the labels
+#' # `powerful` and `super powerful`: the
+#' # distinction being `hp` lesser or
+#' # greater than `600`
+#' tab_2 <-
+#'   gtcars %>%
+#'   dplyr::select(model, year, hp, trq) %>%
+#'   dplyr::slice(1:8) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_row_group(
+#'     group = "powerful",
+#'     rows = hp <= 600
+#'   ) %>%
+#'   tab_row_group(
+#'     group = "super powerful",
+#'     rows = hp > 600
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_tab_row_group_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
+#'
 #' @family table-part creation/modification functions
 #' @import rlang
 #' @export
@@ -175,14 +219,28 @@ tab_row_group <- function(data,
 #' @param columns the columns to be components of the spanner heading.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table based on `rock` where
-#' # there are columns grouped under a
-#' # common spanner column label
-#' gt_tbl <-
-#'   gt(data = rock) %>%
-#'     tab_spanner(
-#'       label = "perimeter",
-#'       columns = vars(peri, shape))
+#' # Use `gtcars` to create a gt table;
+#' # Group several columns related to car
+#' # performance under a spanner column
+#' # with the label `performance`
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(
+#'     -mfr, -trim, bdy_style, drivetrain,
+#'     -drivetrain, -trsmn, -ctry_origin
+#'   ) %>%
+#'   dplyr::slice(1:8) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_spanner(
+#'     label = "performance",
+#'     columns = vars(
+#'       hp, hp_rpm, trq, trq_rpm,
+#'       mpg_c, mpg_h)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_tab_spanner_1.svg}{options: width=100\%}}
+#'
 #' @family table-part creation/modification functions
 #' @export
 tab_spanner <- function(data,
@@ -225,12 +283,21 @@ tab_spanner <- function(data,
 #'   as Markdown or to retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Add a source note that provides
-#' # a citation for the tabular data
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     tab_source_note(
-#'       source_note = md("*Henderson and Velleman* (1981)."))
+#' # Use `gtcars` to create a gt table;
+#' # add a source note to the table
+#' # footer that cites the data source
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_source_note(
+#'     source_note = "From edmunds.com"
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_tab_source_note_1.svg}{options: width=100\%}}
+#'
 #' @family table-part creation/modification functions
 #' @export
 tab_source_note <- function(data,
