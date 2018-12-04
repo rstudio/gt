@@ -51,6 +51,22 @@ function is useful when used as a \code{formatter} function in the
 \code{summary_rows} function, where the output may be text or useful as is
 (that function requires a formatter function).
 }
+\examples{
+# Use `exibble` to create a gt table;
+# keep only the `char` column;
+# pass the data in that column through
+# but apply a simple pattern that adds
+# an 's' to the non-NA values
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(char) \%>\%
+  gt() \%>\%
+  fmt_passthrough(
+    columns = vars(char),
+    rows = !is.na(char),
+    pattern = "{x}s"
+  )
+}
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},
   \code{\link{fmt_datetime}}, \code{\link{fmt_date}},

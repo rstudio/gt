@@ -4,7 +4,8 @@
 \alias{fmt_datetime}
 \title{Format values as date-times}
 \usage{
-fmt_datetime(data, columns, rows = NULL, date_style, time_style)
+fmt_datetime(data, columns, rows = NULL, date_style = 2,
+  time_style = 2)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -43,26 +44,20 @@ an object of class \code{gt_tbl}.
 Format values as date-times
 }
 \examples{
-# Create a tibble with a column
-# that contains date-time strings
-data_tbl <-
-  dplyr::tribble(
-    ~datetime,
-    "2017-06-10 12:35:23",
-    "2017-07-12 15:01:34",
-    "2017-08-05 09:45:23",
-    "2017-10-23 01:32:00")
-
-# Create a table object using this
-# dataset and format the `datetime`
-# column with a `date_style` of
-# `2` and a `time_style` of `3`
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    fmt_datetime(
-      columns = vars(datetime),
-      date_style = 2,
-      time_style = 3)
+# Use `exibble` to create a gt table;
+# keep only the `datetime` column;
+# format the column to have dates
+# formatted as `month_day_year` and
+# times to be `hms_p`
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(datetime) \%>\%
+  gt() \%>\%
+  fmt_datetime(
+    columns = vars(datetime),
+    date_style = 5,
+    time_style = 3
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

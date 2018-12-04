@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = NULL, time_style)
+fmt_time(data, columns, rows = NULL, time_style = 2)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -32,27 +32,62 @@ to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 presets.}
 }
 \description{
-Format values as times
+Format input time values that are character-based and expressed according to
+the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
+are targeted with \code{columns} (and, optionally, \code{rows}), we can
+simply apply a preset time style to format the times.
+}
+\details{
+The following time styles are available for simpler formatting of ISO times
+(all using the input time of \code{14:35:00} in the example output times):
+
+\enumerate{
+\item hms: \code{14:35:00}
+\item hm: \code{14:35}
+\item hms_p: \code{2:35:00 PM}
+\item hm_p: \code{2:35 PM}
+\item h_p: \code{2 PM}
+}
+
+We can use the \code{\link{info_time_style}()} function for a useful
+reference on all of the possible inputs to \code{time_style}.
 }
 \examples{
-# Create a tibble with a column
-# that contains 24-hour time strings
-data_tbl <-
-  dplyr::tribble(
-    ~time,
-    "12:35:23",
-    "15:01:34",
-    "09:45:23",
-    "01:32:00")
+# Use `exibble` to create a gt table;
+# keep only the `date` and `time` columns;
+# format the `time` column to have
+# times formatted as `hms_p`
+# (time style `3`)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(date, time) \%>\%
+  gt() \%>\%
+  fmt_time(
+    columns = vars(time),
+    time_style = 3
+  )
 
-# Create a table object using this
-# dataset and format the `time`
-# column with a  `time_style` of `3`
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    fmt_time(
-      columns = vars(time),
-      time_style = 3)
+# Use `exibble` to create a gt table;
+# keep only the `date` and `time` columns;
+# format the `time` column to have mixed
+# time formats (times after 16:00 will
+# be different than the others)
+tab_2 <-
+  exibble \%>\%
+  dplyr::select(date, time) \%>\%
+  gt() \%>\%
+  fmt_time(
+    columns = vars(time),
+    rows =
+      time > "16:00",
+    time_style = 3
+  ) \%>\%
+  fmt_time(
+    columns = vars(time),
+    rows =
+      time <= "16:00",
+    time_style = 4
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

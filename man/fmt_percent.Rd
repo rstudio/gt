@@ -95,28 +95,19 @@ expression to the \code{rows} argument. See the Arguments section for more
 information on this.
 }
 \examples{
-# Create a tibble with two columns
-# that are both numeric
-data_tbl <-
-  dplyr::tribble(
-    ~val_1, ~val_2,
-    0.345,  2.6,
-    0.234,  3.3,
-    0.53,   3.8,
-    0.391,  4.2)
-
-# Create a table object using this
-# dataset and foramt the `val_1` column
-# as percentage values and `val_2`
-# as numeric values
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    fmt_percent(
-      columns = vars(val_1),
-      decimals = 1) \%>\%
-    fmt_number(
-      columns = vars(val_2),
-      decimals = 2)
+# Use `exibble` to create a gt table;
+# format the `num` column to have
+# percentage values in the first five
+# of its rows
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_percent(
+    columns = vars(num),
+    rows = 1:5,
+    decimals = 1,
+    drop_trailing_zeros = TRUE
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

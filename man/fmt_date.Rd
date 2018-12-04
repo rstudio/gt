@@ -4,7 +4,7 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = NULL, date_style)
+fmt_date(data, columns, rows = NULL, date_style = 2)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -65,24 +65,41 @@ We can use the \code{\link{info_date_style}()} function for a useful
 reference on all of the possible inputs to \code{date_style}.
 }
 \examples{
-# Create a tibble with a column
-# that contains dates
-data_tbl <-
-  dplyr::tribble(
-    ~date,
-    "2017-10-15",
-    "2013-02-22",
-    "2014-09-22",
-    "2018-01-10")
+# Use `exibble` to create a gt table;
+# keep only the `date` and `time` columns;
+# format the `date` column to have
+# dates formatted as `month_day_year`
+# (date style `5`)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(date, time) \%>\%
+  gt() \%>\%
+  fmt_date(
+    columns = vars(date),
+    date_style = 5
+  )
 
-# Create a table object using this
-# dataset and format the `date`
-# column with a `date_style` of `2`
-gt_tbl <-
-  gt(data_tbl) \%>\%
-    fmt_date(
-      columns = vars(date),
-      date_style = 2)
+# Use `exibble` to create a gt table;
+# keep only the `date` and `time` columns;
+# format the `date` column to have mixed
+# date formats (dates after April will
+# be different than the others)
+tab_2 <-
+  exibble \%>\%
+  dplyr::select(date, time) \%>\%
+  gt() \%>\%
+  fmt_date(
+    columns = vars(date),
+    rows =
+      as.Date(date) > as.Date("2015-04-01"),
+    date_style = 6
+  ) \%>\%
+  fmt_date(
+    columns = vars(date),
+    rows =
+      as.Date(date) <= as.Date("2015-04-01"),
+    date_style = 7
+  )
 }
 \seealso{
 Other data formatting functions: \code{\link{fmt_currency}},

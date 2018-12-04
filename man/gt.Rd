@@ -33,25 +33,40 @@ before transforming the entire object to a display table. Using this function
 is the first step in that process, and, there are a few data ingest options
 we can consider at this stage.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_gt_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Create a table object using the
-# `mtcars` dataset; take the rownames
-# available in this table and use them
-# as row captions in the table stub
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE)
+# `exibble` dataset; use the `row`
+# and `group` columns to add a stub
+# and row groups
+tab_1 <-
+  exibble \%>\%
+  gt(
+    rowname_col = "row",
+    groupname_col = "group"
+  )
 
 # The resulting object can be used
 # in transformations (with `tab_*()`,
 # `fmt_*()`, `cols_*()` functions)
-gt_tbl_2 <-
-  gt_tbl \%>\%
-  tab_header(title = "mtcars") \%>\%
-  fmt_number(
-    columns = vars(drat, wt, qsec),
-    decimals = 1
+tab_2 <-
+  tab_1 \%>\%
+  tab_header(
+    title = "Table Title",
+    subtitle = "Subtitle"
   ) \%>\%
-  cols_label(hp = "HP")
+  fmt_number(
+    columns = vars(num),
+    decimals = 2
+  ) \%>\%
+  cols_label(num = "number")
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
