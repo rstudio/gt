@@ -269,44 +269,44 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "heading_border_bottom_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "purple"))
 
-  # Modify the `columns.font.size`
-  tbl_html <- data %>% tab_options(columns.font.size = px(18))
+  # Modify the `column_labels.font.size`
+  tbl_html <- data %>% tab_options(column_labels.font.size = px(18))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "columns_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "column_labels_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "columns_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "column_labels_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "18px"))
 
-  # Modify the `columns.font.size` option using just a numeric value
-  tbl_html <- data %>% tab_options(columns.font.size = 18)
+  # Modify the `column_labels.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(column_labels.font.size = 18)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "columns_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "column_labels_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "columns_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "column_labels_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "18px"))
 
-  # Modify the `columns.font.weight`
-  tbl_html <- data %>% tab_options(columns.font.weight = "bold")
+  # Modify the `column_labels.font.weight`
+  tbl_html <- data %>% tab_options(column_labels.font.weight = "bold")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "columns_font_weight") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "column_labels_font_weight") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "columns_font_weight") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "column_labels_font_weight") %>% dplyr::pull(value)) %>%
     expect_equal(c("initial", "bold"))
 
-  # Modify the `columns.background.color`
-  tbl_html <- data %>% tab_options(columns.background.color = "lightgray")
+  # Modify the `column_labels.background.color`
+  tbl_html <- data %>% tab_options(column_labels.background.color = "lightgray")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "columns_background_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "column_labels_background_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "columns_background_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "column_labels_background_color") %>% dplyr::pull(value)) %>%
     expect_equal(c(NA_character_, "lightgray"))
 
   # Modify the `stub_group.background.color`

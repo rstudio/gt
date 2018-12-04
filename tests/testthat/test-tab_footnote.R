@@ -72,7 +72,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Column labels and stub footnote.",
       locations = list(
-        cells_columns(columns = TRUE),
+        cells_column_labels(columns = TRUE),
         cells_stub(rows = TRUE)))
 
   # Expect that the internal `footnotes_df` data frame will have
@@ -196,7 +196,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Column group footnote.",
-      locations = cells_columns(groups = "gear_carb_cyl"))
+      locations = cells_column_labels(groups = "gear_carb_cyl"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -216,7 +216,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Single column label footnote.",
-      locations = cells_columns(columns = "gear"))
+      locations = cells_column_labels(columns = "gear"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row

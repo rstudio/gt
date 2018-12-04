@@ -73,11 +73,11 @@ test_that("a gt table can store the correct style statements", {
     tab_style(
       style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
-        cells_columns(columns = TRUE),
+        cells_column_labels(columns = TRUE),
         cells_stub(rows = TRUE)))
 
   # Expect that the internal `styles_df` data frame will have
-  # its `locname` column entirely populated with `cells_columns`
+  # its `locname` column entirely populated with `cells_column_labels`
   # and `stub`
   attr(tbl_html, "styles_df", exact = TRUE) %>%
     dplyr::pull(locname) %>%
@@ -202,7 +202,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_columns(groups = "gear_carb_cyl"))
+      locations = cells_column_labels(groups = "gear_carb_cyl"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -222,7 +222,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_columns(columns = "gear"))
+      locations = cells_column_labels(columns = "gear"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -242,7 +242,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "pink"),
-      locations = cells_columns(columns = "hp"))
+      locations = cells_column_labels(columns = "hp"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
