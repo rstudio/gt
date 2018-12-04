@@ -1,4 +1,4 @@
-# Transform a footnote glyph to a Latex representation as a superscript
+# Transform a footnote glyph to a LaTeX representation as a superscript
 footnote_glyph_to_latex <- function(footnote_glyph) {
 
   paste0(

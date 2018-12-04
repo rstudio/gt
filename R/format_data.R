@@ -296,7 +296,7 @@ fmt_scientific <- function(data,
     exp_start_str = " &times; 10<sup class='gt_super'>",
     exp_end_str = "</sup>")
 
-  # Create the Latex formatting function for scientific notation
+  # Create the LaTeX formatting function for scientific notation
   format_fcn_sci_notn_latex <- format_fcn_sci_notn_factory(
     exp_start_str = "$ \\times 10^{",
     exp_end_str = "}$")
@@ -1049,10 +1049,10 @@ fmt_datetime <- function(data,
 #' (that function requires a formatter function).
 #' @inheritParams fmt_number
 #' @param escape an option to escape text according to the final output format
-#'   of the table. For example, if a Latex table is to be generated then Latex
+#'   of the table. For example, if a LaTeX table is to be generated then LaTeX
 #'   escaping would be performed during rendering. By default this is set to
 #'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
-#'   Latex-formatted text should be passed through to the output Latex table
+#'   LaTeX-formatted text should be passed through to the output LaTeX table
 #'   unchanged.
 #' @return an object of class \code{gt_tbl}.
 #' @examples

@@ -384,13 +384,13 @@ px <- function(x) {
   paste0(x, "px")
 }
 
-#' Perform Latex escaping
+#' Perform LaTeX escaping
 #'
-#' Text may contain several characters with special meanings in Latex. This
+#' Text may contain several characters with special meanings in LaTeX. This
 #' function will transform a character vector so that it is safe to use within
-#' Latex tables.
+#' LaTeX tables.
 #' @param text a character vector containing the text that is to be
-#'   Latex-escaped.
+#'   LaTeX-escaped.
 #' @family helper functions
 #' @export
 escape_latex <- function(text) {

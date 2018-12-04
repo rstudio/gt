@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the formatting of dates and times works as expected")
+context("LaTeX -- Ensuring that the formatting of dates and times works as expected")
 
 test_that("the `fmt_date()` function works correctly", {
 

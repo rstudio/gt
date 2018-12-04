@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the `fmt_currency()` function works as expected")
+context("LaTeX -- Ensuring that the `fmt_currency()` function works as expected")
 
 test_that("the `fmt_currency()` function works correctly", {
 

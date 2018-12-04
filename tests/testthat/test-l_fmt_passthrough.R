@@ -1,4 +1,4 @@
-context("Latex -- Ensuring that the `fmt_passthrough()` function works as expected")
+context("LaTeX -- Ensuring that the `fmt_passthrough()` function works as expected")
 
 test_that("the `fmt_passthrough()` function works correctly", {
 

@@ -256,7 +256,7 @@ process_text <- function(text,
     }
   } else if (context == "latex") {
 
-    # Text processing for Latex output
+    # Text processing for LaTeX output
 
     if (inherits(text, "from_markdown")) {
 
@@ -315,8 +315,8 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
-# Transform Markdown text to Latex; also escapes ASCII
-# characters with special meaning in Latex
+# Transform Markdown text to LaTeX; also escapes ASCII
+# characters with special meaning in LaTeX
 #' @importFrom commonmark markdown_latex
 #' @noRd
 markdown_to_latex <- function(text) {
