@@ -607,7 +607,7 @@ fmt_currency <- function(data,
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
   } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not in the available in the list of supported locale list",
+    stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
 
