@@ -2,18 +2,18 @@
 % Please edit documentation in R/helpers.R
 \name{escape_latex}
 \alias{escape_latex}
-\title{Perform Latex escaping}
+\title{Perform LaTeX escaping}
 \usage{
 escape_latex(text)
 }
 \arguments{
 \item{text}{a character vector containing the text that is to be
-Latex-escaped.}
+LaTeX-escaped.}
 }
 \description{
-Text may contain several characters with special meanings in Latex. This
+Text may contain several characters with special meanings in LaTeX. This
 function will transform a character vector so that it is safe to use within
-Latex tables.
+LaTeX tables.
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},

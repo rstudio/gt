@@ -15,7 +15,7 @@ Take a \code{gt_tbl} table object and emit LateX.
 \examples{
 \dontrun{
 # Create a `gt` table using the `sleep`
-# dataset and output as Latex
+# dataset and output as LaTeX
 gt(data = sleep) \%>\%
   as_latex()
 }
