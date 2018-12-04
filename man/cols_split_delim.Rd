@@ -29,13 +29,16 @@ reference to individual columns must continue to be through the original
 column names.
 }
 \examples{
-# Create a table object using the
-# `iris` dataset and split any columns
-# that are dot separated between column
-# groups and column labels.
-gt_tbl <-
- gt(iris) \%>\%
-    cols_split_delim(delim = ".")
+# Use `iris` to create a gt table; split
+# any columns that are dot-separated
+# between column spanners and column
+# labels
+tab_1 <-
+  iris \%>\%
+  dplyr::group_by(Species) \%>\%
+  dplyr::slice(1:4) \%>\%
+  gt() \%>\%
+  cols_split_delim(delim = ".")
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

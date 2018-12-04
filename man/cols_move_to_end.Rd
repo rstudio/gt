@@ -21,14 +21,31 @@ an object of class \code{gt_tbl}.
 Move one or more columns to the end
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and move the `mpg`,
-# `cyl`, and `disp` columns to the end
-# of the column series
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    cols_move_to_end(
-      columns = vars(mpg, cyl, disp))
+# Use `countrypops` to create a gt table;
+# With the remaining columns, move the
+# `year` column to the end
+tab_1 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_move_to_end(
+    columns = vars(year)
+  )
+
+# Use `countrypops` to create a gt table;
+# With the remaining columns, move `year`
+# and `country_name` to the end
+tab_2 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_move_to_end(
+    columns = vars(year, country_name)
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

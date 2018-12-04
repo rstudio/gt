@@ -31,14 +31,19 @@ an object of class \code{gt_tbl}.
 Set the alignment of columns
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and align the `mpg`
-# column to the left
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    cols_align(
-      align = "left",
-      columns = vars(mpg))
+# Use `countrypops` to create a gt table;
+# align the `population` column data to
+# the left
+tab_1 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_align(
+    align = "left",
+    columns = vars(population)
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_hide}},

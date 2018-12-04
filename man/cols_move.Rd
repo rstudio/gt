@@ -23,15 +23,19 @@ an object of class \code{gt_tbl}.
 Move one or more columns
 }
 \examples{
-# Create a table object using the
-# `mtcars` dataset and move the `mpg`,
-# `cyl`, and `disp` columns to the right
-# of `qsec`
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    cols_move(
-      columns = vars(mpg, cyl, disp),
-      after = vars(qsec))
+# Use `countrypops` to create a gt table;
+# With the remaining columns, position
+# `population` after `country_name`
+tab_1 <-
+  countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_move(
+    columns = vars(population),
+    after = vars(country_name)
+  )
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
