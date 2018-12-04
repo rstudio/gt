@@ -529,7 +529,8 @@ fmt_percent <- function(data,
 #' @inheritParams fmt_number
 #' @param currency the currency to use for the numeric value. This is to be
 #'   supplied as a 3-letter currency code. Examples include \code{"USD"} for
-#'   U.S. Dollars and \code{"EUR"} for the Euro currency.
+#'   U.S. Dollars and \code{"EUR"} for the Euro currency. The default is
+#'   \code{"USD"}.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #'   value should be displayed.
 #' @param placement the placement of the currency symbol. This can be either be
@@ -577,7 +578,7 @@ fmt_percent <- function(data,
 fmt_currency <- function(data,
                          columns,
                          rows = NULL,
-                         currency,
+                         currency = "USD",
                          use_subunits = TRUE,
                          negative_val = "signed",
                          decimals = NULL,
@@ -595,15 +596,14 @@ fmt_currency <- function(data,
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
   } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not in the available in the list of supported locale list",
+    stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
 
-  # Return data if `currency` does not have a valid value
+  # Stop function if `currency` does not have a valid value
   if (!is_currency_valid(currency)) {
-
-    message("The value supplied for `currency` is not valid.")
-    return(data)
+    stop("The supplied `currency` is not available in the list of supported currencies.",
+         call. = FALSE)
   }
 
   # Get the currency string for the HTML context
