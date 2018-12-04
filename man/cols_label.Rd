@@ -21,6 +21,13 @@ text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
 \description{
 Relabel one or more columns
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_label_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # label all the table's columns to
@@ -51,6 +58,7 @@ tab_2 <-
     year = md("**Year**"),
     population = md("**Population**")
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

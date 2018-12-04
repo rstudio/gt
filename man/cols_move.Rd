@@ -22,6 +22,11 @@ an object of class \code{gt_tbl}.
 \description{
 Move one or more columns
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # With the remaining columns, position
@@ -36,6 +41,7 @@ tab_1 <-
     columns = vars(population),
     after = vars(country_name)
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

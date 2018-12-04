@@ -20,6 +20,13 @@ an object of class \code{gt_tbl}.
 \description{
 Hide one or more columns
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # Hide the columns `country_code_2` and
@@ -52,6 +59,7 @@ tab_2 <-
   cols_hide(
     columns = vars(country_code_3, population)
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
