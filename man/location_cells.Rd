@@ -3,7 +3,7 @@
 \name{location_cells}
 \alias{location_cells}
 \alias{cells_title}
-\alias{cells_columns}
+\alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
 \alias{cells_data}
@@ -12,7 +12,7 @@
 \usage{
 cells_title(groups = c("title", "subtitle"))
 
-cells_columns(columns, groups)
+cells_column_labels(columns, groups)
 
 cells_group(groups)
 
@@ -45,7 +45,7 @@ from the top to the bottom of a table):
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
 
-\item \code{cells_columns()}: targets labels in the column labels (the
+\item \code{cells_column_labels()}: targets labels in the column labels (the
 \code{columns} argument) or the spanner column labels (the \code{groups}
 argument) in the table's column labels part.
 

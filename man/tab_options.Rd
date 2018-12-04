@@ -11,8 +11,9 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   heading.subtitle.font.size = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
-  heading.border.bottom.color = NULL, columns.background.color = NULL,
-  columns.font.size = NULL, columns.font.weight = NULL,
+  heading.border.bottom.color = NULL,
+  column_labels.background.color = NULL,
+  column_labels.font.size = NULL, column_labels.font.weight = NULL,
   stub_group.background.color = NULL, stub_group.font.size = NULL,
   stub_group.font.weight = NULL, stub_group.border.top.style = NULL,
   stub_group.border.top.width = NULL,
@@ -41,7 +42,7 @@ given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, columns.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
 \code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 as a single-length character vector with units of pixels
@@ -51,7 +52,7 @@ units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, columns.background.color, stub_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
+\item{table.background.color, heading.background.color, column_labels.background.color, stub_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
 child elements: \code{heading}, \code{columns}, \code{stub_group},
 \code{summary_row}, and \code{field}. A color name or a hexadecimal color
 code should be provided.}
@@ -60,7 +61,7 @@ code should be provided.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
 
-\item{columns.font.weight, stub_group.font.weight}{the font weight of the
+\item{column_labels.font.weight, stub_group.font.weight}{the font weight of the
 \code{columns} and \code{stub_group} text element.}
 
 \item{stub_group.border.top.style, stub_group.border.top.width, stub_group.border.top.color}{the style, width, and color of the stub heading's top border.}
