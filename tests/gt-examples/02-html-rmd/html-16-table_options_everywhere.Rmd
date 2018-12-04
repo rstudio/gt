@@ -76,9 +76,9 @@ gt(tbl) %>%
     heading.border.bottom.style = "solid",     # Bottom line of heading - style
     heading.border.bottom.width = px(5),       # Bottom line of heading - width
     heading.border.bottom.color = "purple",    # Bottom line of heading - color
-    columns.font.size = px(16),                # Column labels - font size
-    columns.font.weight = "normal",            # Column labels - font weight
-    columns.background.color = "lightgray",    # Column labels - background color
+    column_labels.font.size = px(16),                # Column labels - font size
+    column_labels.font.weight = "normal",            # Column labels - font weight
+    column_labels.background.color = "lightgray",    # Column labels - background color
     stub_group.background.color = "green",     # Stub group background color
     stub_group.font.size = px(14),             # Stub group labels - font size
     stub_group.font.weight = "800",            # Stub group labels - font weight

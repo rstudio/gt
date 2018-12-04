@@ -83,7 +83,7 @@ pizza_tab <-
     heading.title.font.size = "small",
     heading.subtitle.font.size = "smaller",
     stub_group.font.size = "small",
-    columns.font.size = "small",
+    column_labels.font.size = "small",
     row.padding = "5px"
     ) %>%
   cols_label(
