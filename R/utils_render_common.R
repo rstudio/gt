@@ -89,7 +89,10 @@ migrate_unformatted_to_output <- function(data_df,
           data_df[[colname]][row_index],
           function(x) {
             x %>%
-              format(drop0trailing = FALSE) %>%
+              format(
+                drop0trailing = FALSE,
+                trim = TRUE,
+                justify = FALSE) %>%
               tidy_gsub("\\s+$", "") %>%
               process_text(context) %>%
               paste(collapse = ", ")
