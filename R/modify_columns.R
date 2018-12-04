@@ -14,14 +14,19 @@
 #'   \code{TRUE}), then the alignment affects all columns.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and align the `mpg`
-#' # column to the left
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_align(
-#'       align = "left",
-#'       columns = vars(mpg))
+#' # Use `countrypops` to create a gt table;
+#' # align the `population` column data to
+#' # the left
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_align(
+#'     align = "left",
+#'     columns = vars(population)
+#'   )
 #' @family column modification functions
 #' @export
 cols_align <- function(data,
@@ -82,16 +87,35 @@ cols_align <- function(data,
 #' @param .list allows for the use of a list as an input alternative to
 #'   \code{...}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and apply different
-#' # column labels to the `mpg` and `qsec`
-#' # columns (the column labels will be
-#' # inherited from the column names)
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_label(
-#'       mpg = md("*MPG*"),
-#'       qsec = "QMT, seconds")
+#' # Use `countrypops` to create a gt table;
+#' # label all the table's columns to
+#' # present better
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_label(
+#'     country_name = "Name",
+#'     year = "Year",
+#'     population = "Population"
+#'   )
+#'
+#' # Use `countrypops` to create a gt table;
+#' # label columns as before but make them
+#' # bold with markdown formatting
+#' tab_2 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_label(
+#'     country_name = md("**Name**"),
+#'     year = md("**Year**"),
+#'     population = md("**Population**")
+#'   )
 #' @family column modification functions
 #' @import rlang
 #' @export
@@ -149,15 +173,19 @@ cols_label <- function(data,
 #'   All of the moved columns will be placed to the right of this column.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and move the `mpg`,
-#' # `cyl`, and `disp` columns to the right
-#' # of `qsec`
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_move(
-#'       columns = vars(mpg, cyl, disp),
-#'       after = vars(qsec))
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, position
+#' # `population` after `country_name`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move(
+#'     columns = vars(population),
+#'     after = vars(country_name)
+#'   )
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -237,14 +265,31 @@ cols_move <- function(data,
 #'   with the remaining columns).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and move the `mpg`,
-#' # `cyl`, and `disp` columns to the start
-#' # of the column series
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_move_to_start(
-#'       columns = vars(mpg, cyl, disp))
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, move the
+#' # `year` column to the start
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move_to_start(
+#'     columns = vars(year)
+#'   )
+#'
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, move `year`
+#' # and `population` to the start
+#' tab_2 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move_to_start(
+#'     columns = vars(year, population)
+#'   )
 #' @family column modification functions
 #' @importFrom dplyr select everything
 #' @export
@@ -288,14 +333,31 @@ cols_move_to_start <- function(data,
 #'   with the remaining columns).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and move the `mpg`,
-#' # `cyl`, and `disp` columns to the end
-#' # of the column series
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_move_to_end(
-#'       columns = vars(mpg, cyl, disp))
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, move the
+#' # `year` column to the end
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move_to_end(
+#'     columns = vars(year)
+#'   )
+#'
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, move `year`
+#' # and `country_name` to the end
+#' tab_2 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move_to_end(
+#'     columns = vars(year, country_name)
+#'   )
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -342,13 +404,37 @@ cols_move_to_end <- function(data,
 #'   not correspond to column names will be disregarded.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `mtcars` dataset and hide the `mpg`,
-#' # `cyl`, and `disp` columns
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     cols_hide(
-#'       columns = vars(mpg, cyl, disp))
+#' # Use `countrypops` to create a gt table;
+#' # Hide the columns `country_code_2` and
+#' # `country_code_3`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_hide(
+#'     columns = vars(
+#'       country_code_2, country_code_3)
+#'   )
+#'
+#' # Use `countrypops` to create a gt table;
+#' # Use the `population` column to provide
+#' # the conditional placement of footnotes,
+#' # then hide that column and one other
+#' tab_2 <-
+#'   countrypops %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   tab_footnote(
+#'     footnote = "Population above 3,000,000.",
+#'     locations = cells_data(
+#'       columns = vars(year),
+#'       rows = population > 3000000)
+#'   ) %>%
+#'   cols_hide(
+#'     columns = vars(country_code_3, population)
+#'   )
 #' @family column modification functions
 #' @importFrom dplyr select
 #' @export
@@ -394,13 +480,16 @@ cols_hide <- function(data,
 #'   be limited to. The default is to consider all columns in the table.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
-#' # Create a table object using the
-#' # `iris` dataset and split any columns
-#' # that are dot separated between column
-#' # groups and column labels.
-#' gt_tbl <-
-#'  gt(iris) %>%
-#'     cols_split_delim(delim = ".")
+#' # Use `iris` to create a gt table; split
+#' # any columns that are dot-separated
+#' # between column spanners and column
+#' # labels
+#' tab_1 <-
+#'   iris %>%
+#'   dplyr::group_by(Species) %>%
+#'   dplyr::slice(1:4) %>%
+#'   gt() %>%
+#'   cols_split_delim(delim = ".")
 #' @family column modification functions
 #' @export
 cols_split_delim <- function(data,

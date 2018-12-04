@@ -22,6 +22,24 @@
 #'   more optimal text-to-background color contrast. By default, this is set to
 #'   \code{TRUE}.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # Apply a color scale to the `population`
+#' # column with `scales::col_numeric`,
+#' # four supplied colors, and a domain
+#' tab_1 <-
+#'   countrypops %>%
+#'     dplyr::filter(country_name == "Mongolia") %>%
+#'     dplyr::select(-contains("code")) %>%
+#'     tail(10) %>%
+#'     gt() %>%
+#'     data_color(
+#'       columns = vars(population),
+#'       colors = scales::col_numeric(
+#'         palette = c(
+#'           "red", "orange", "green", "blue"),
+#'         domain = c(0.2E7, 0.4E7))
+#'     )
 #' @family data cell modification
 #' @import rlang
 #' @importFrom scales col_numeric col_factor
