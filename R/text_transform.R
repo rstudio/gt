@@ -14,17 +14,46 @@
 #'   title, etc.).
 #' @param fn the function to use for text transformation.
 #' @examples
-#' # Add a footnote that is in
-#' # reference to a single table cell
-#' gt_tbl <-
-#'   gt(mtcars, rownames_to_stub = TRUE) %>%
-#'     text_transform(
-#'       locations = cells_data(columns = vars(mpg)),
-#'       fn = function(x) {
-#'         ifelse(x > 20,
-#'                paste(x, "(good)"),
-#'                paste(x, "(worse)"))
-#'       })
+#' # Use `exibble` to create a gt table;
+#' # transform the formatted text in the
+#' # `num` and `currency` columns using
+#' # a function within `text_transform()`,
+#' # where `x` is a formatted vector of
+#' # column values
+#' exibble %>%
+#'   dplyr::select(num, char, currency) %>%
+#'   dplyr::slice(1:4) %>%
+#'   gt() %>%
+#'   fmt_number(columns = vars(num)) %>%
+#'   fmt_currency(columns = vars(currency)) %>%
+#'   text_transform(
+#'     locations = cells_data(
+#'       columns = vars(num)),
+#'     fn = function(x) {
+#'
+#'       paste0(
+#'         x, " (",
+#'         dplyr::case_when(
+#'           x > 20   ~ "large",
+#'           x <= 20  ~ "small"),
+#'         ")")
+#'     }
+#'   ) %>%
+#'   text_transform(
+#'     locations = cells_data(
+#'       columns = vars(currency)),
+#'     fn = function(x) {
+#'
+#'       ifelse(
+#'         grepl(",", x),
+#'         gsub("\\.\\d\\d", "", x),
+#'         x)
+#'     }
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
+#'
 #' @export
 text_transform <- function(data,
                            locations,
