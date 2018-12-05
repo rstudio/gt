@@ -268,6 +268,11 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the <code>rows</code> argument. See the Arguments section for more
 information on this.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_percent_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -279,28 +284,19 @@ information on this.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_1</span>, ~<span class='no'>val_2</span>,
-    <span class='fl'>0.345</span>,  <span class='fl'>2.6</span>,
-    <span class='fl'>0.234</span>,  <span class='fl'>3.3</span>,
-    <span class='fl'>0.53</span>,   <span class='fl'>3.8</span>,
-    <span class='fl'>0.391</span>,  <span class='fl'>4.2</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and foramt the `val_1` column</span>
-<span class='co'># as percentage values and `val_2`</span>
-<span class='co'># as numeric values</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_percent</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_1</span>),
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_2</span>),
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># format the `num` column to have</span>
+<span class='co'># percentage values in the first five</span>
+<span class='co'># of its rows</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_percent</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>,
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <span class='kw'>drop_trailing_zeros</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -310,6 +306,8 @@ information on this.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="129.469mm"
+ viewBox="0 0 1024 367"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,367 L0,367 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,367 L0,367 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,367 L0,367 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,8 L898,8 L898,359 L126,359 L126,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,9 L212,9 L212,49 L126,49 L126,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,9 L306,9 L306,49 L212,49 L212,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,9 L369,9 L369,49 L306,49 L306,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,9 L471,9 L471,49 L369,49 L369,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,9 L531,9 L531,49 L471,49 L471,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,9 L677,9 L677,49 L531,49 L531,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,9 L773,9 L773,49 L677,49 L677,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,9 L837,9 L837,49 L773,49 L773,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,9 L898,9 L898,49 L837,49 L837,9"/>
+</g>
+
+<g fill="#f2f2f2" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,89 L212,89 L212,127 L126,127 L126,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,89 L306,89 L306,127 L212,127 L212,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,89 L369,89 L369,127 L306,127 L306,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,89 L471,89 L471,127 L369,127 L369,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,89 L531,89 L531,127 L471,127 L471,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,89 L677,89 L677,127 L531,127 L531,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,89 L773,89 L773,127 L677,127 L677,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,89 L837,89 L837,127 L773,127 L773,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,89 L898,89 L898,127 L837,127 L837,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,166 L212,166 L212,205 L126,205 L126,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,166 L306,166 L306,205 L212,205 L212,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,166 L369,166 L369,205 L306,205 L306,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,166 L471,166 L471,205 L369,205 L369,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,166 L531,166 L531,205 L471,205 L471,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,166 L677,166 L677,205 L531,205 L531,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,166 L773,166 L773,205 L677,205 L677,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,166 L837,166 L837,205 L773,205 L773,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,166 L898,166 L898,205 L837,205 L837,166"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,243 L212,243 L212,281 L126,281 L126,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,243 L306,243 L306,281 L212,281 L212,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,243 L369,243 L369,281 L306,281 L306,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,243 L471,243 L471,281 L369,281 L369,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,243 L531,243 L531,281 L471,281 L471,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,243 L677,243 L677,281 L531,281 L531,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,243 L773,243 L773,281 L677,281 L677,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,243 L837,243 L837,281 L773,281 L773,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,243 L898,243 L898,281 L837,281 L837,243"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,319 L212,319 L212,358 L126,358 L126,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,319 L306,319 L306,358 L212,358 L212,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,319 L369,319 L369,358 L306,358 L306,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,319 L471,319 L471,358 L369,358 L369,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,319 L531,319 L531,358 L471,358 L471,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,319 L677,319 L677,358 L531,358 L531,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,319 L773,319 L773,358 L677,358 L677,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,319 L837,319 L837,358 L773,358 L773,319"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,319 L898,319 L898,358 L837,358 L837,319"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,8 L212,8 L212,10 L126,10 L126,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,8 L306,8 L306,10 L212,10 L212,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,8 L369,8 L369,10 L306,10 L306,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,8 L471,8 L471,10 L369,10 L369,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,8 L531,8 L531,10 L471,10 L471,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,8 L677,8 L677,10 L531,10 L531,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,8 L773,8 L773,10 L677,10 L677,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,8 L837,8 L837,10 L773,10 L773,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,8 L898,8 L898,10 L837,10 L837,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,48 L212,48 L212,50 L126,50 L126,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,48 L306,48 L306,50 L212,50 L212,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,48 L369,48 L369,50 L306,50 L306,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,48 L471,48 L471,50 L369,50 L369,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,48 L531,48 L531,50 L471,50 L471,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,48 L677,48 L677,50 L531,50 L531,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,48 L773,48 L773,50 L677,50 L677,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,48 L837,48 L837,50 L773,50 L773,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,48 L898,48 L898,50 L837,50 L837,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,48 L212,48 L212,50 L126,50 L126,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,48 L306,48 L306,50 L212,50 L212,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,48 L369,48 L369,50 L306,50 L306,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,48 L471,48 L471,50 L369,50 L369,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,48 L531,48 L531,50 L471,50 L471,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,48 L677,48 L677,50 L531,50 L531,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,48 L773,48 L773,50 L677,50 L677,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,48 L837,48 L837,50 L773,50 L773,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,48 L898,48 L898,50 L837,50 L837,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M126,357 L212,357 L212,359 L126,359 L126,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M212,357 L306,357 L306,359 L212,359 L212,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M306,357 L369,357 L369,359 L306,359 L306,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M369,357 L471,357 L471,359 L369,359 L369,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M471,357 L531,357 L531,359 L471,359 L471,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M531,357 L677,357 L677,359 L531,359 L531,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M677,357 L773,357 L773,359 L677,359 L677,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M773,357 L837,357 L837,359 L773,359 L773,357"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M837,357 L898,357 L898,359 L837,359 L837,357"/>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="171" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >num</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >char</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="327" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >fctr</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >date</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >time</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >datetime</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="702" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >currency</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >group</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="136" y="75" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1.1 × 10</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="193" y="69" font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+ >-1</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >apricot</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="324" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >one</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-01-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >13:35</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-01-01 02:22</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="714" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >49.950</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_1</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_a</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="180" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2.2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >banana</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="325" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >two</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-02-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >14:40</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-02-02 14:33</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="714" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >17.950</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="113" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_a</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="139" y="152" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3.3 × 10</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="196" y="146" font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+ >1</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >coconut</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319.5" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >three</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-03-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >15:45</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-03-03 03:44</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="723" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1.390</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_3</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="151" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_a</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="139" y="191" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >4.4 × 10</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="196" y="185" font-family="Arial" font-size="10" font-weight="400" font-style="normal" 
+ >2</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >durian</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="324" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >four</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-04-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >16:50</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-04-04 15:55</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="687" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >65100.000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_4</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="190" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_a</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="169" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >5.5K</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="325" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >five</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-05-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >17:55</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-05-05 04:00</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="696" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1325.810</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_5</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="229" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_b</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="179" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >fig</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="327.5" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >six</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-06-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-06-06 16:11</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="714" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >13.255</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_6</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="267" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_b</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="151" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >777.0K</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grapefruit</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="316" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >seven</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >19:10</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-07-07 05:22</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="740" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_7</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="305" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_b</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="138" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >8,880.0K</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="222" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >honeydew</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="320" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >eight</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="379" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-08-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="481" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >20:20</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="541" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="723" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >0.440</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="783" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >row_8</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="847" y="343" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grp_b</text>
+</g>
+</g>
+</svg>

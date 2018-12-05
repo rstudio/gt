@@ -171,6 +171,11 @@ title, etc.).</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_tab_footnote_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
@@ -181,15 +186,31 @@ title, etc.).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Add a footnote that is in</span>
-<span class='co'># reference to a single table cell</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_footnote</span>(
-      <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Massive hp."</span>,
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-        <span class='kw'>columns</span> <span class='kw'>=</span> <span class='st'>"hp"</span>,
-        <span class='kw'>rows</span> <span class='kw'>=</span> <span class='st'>"Maserati Bora"</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `sza` to create a gt table; color</span>
+<span class='co'># the `sza` column using the `data_color()`</span>
+<span class='co'># function, then, add a footnote to the</span>
+<span class='co'># `sza` column label explaining what the</span>
+<span class='co'># color scale signifies</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>20</span> <span class='kw'>&amp;</span>
+      <span class='no'>month</span> <span class='kw'>==</span> <span class='st'>"jan"</span> <span class='kw'>&amp;</span>
+      !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>, -<span class='no'>month</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='data_color.html'>data_color</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sza</span>),
+    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a></span>(
+      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"yellow"</span>, <span class='st'>"navyblue"</span>),
+      <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>90</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_footnote</span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Color indicates height of sun."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_boxhead</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sza</span>))
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,6 +218,8 @@ title, etc.).</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

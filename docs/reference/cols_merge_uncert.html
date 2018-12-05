@@ -158,6 +158,11 @@ function.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_cols_merge_uncert_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
@@ -169,27 +174,27 @@ function.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns;</span>
-<span class='co'># both are numeric but the `uncert`</span>
-<span class='co'># column contains uncertainty values</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>value</span>,   ~<span class='no'>uncert</span>,
-    <span class='fl'>0.352</span>,    <span class='fl'>0.10</span>,
-    <span class='fl'>0.983</span>,    <span class='fl'>0.13</span>,
-    <span class='fl'>0.639</span>,    <span class='fl'>NA_real_</span>,
-    <span class='fl'>NA_real_</span>, <span class='fl'>0.17</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset where the `uncert` column</span>
-<span class='co'># is merged into the `value` column,</span>
-<span class='co'># forming a single column of values</span>
-<span class='co'># with uncertainties</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_merge_uncert</span>(
-      <span class='kw'>col_val</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>value</span>),
-      <span class='kw'>col_uncert</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>uncert</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table,</span>
+<span class='co'># keeping only the `currency` and `num`</span>
+<span class='co'># columns; merge columns into one with</span>
+<span class='co'># a base value and uncertainty (after</span>
+<span class='co'># formatting the `num` column)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>currency</span>, <span class='no'>num</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_merge_uncert</span>(
+    <span class='kw'>col_val</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+    <span class='kw'>col_uncert</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
+    <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"value + uncert."</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,6 +202,8 @@ function.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

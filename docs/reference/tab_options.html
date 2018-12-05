@@ -270,6 +270,16 @@ when striping rows.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_tab_options_1.svg' width=100% /></p>
+<p><img src='figures/man_tab_options_2.svg' width=100% /></p>
+<p><img src='figures/man_tab_options_3.svg' width=100% /></p>
+<p><img src='figures/man_tab_options_4.svg' width=100% /></p>
+<p><img src='figures/man_tab_options_5.svg' width=100% /></p>
+<p><img src='figures/man_tab_options_6.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
@@ -280,18 +290,90 @@ when striping rows.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and set the width</span>
-<span class='co'># of the table to 300px</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(<span class='kw'>table.width</span> <span class='kw'>=</span> <span class='st'>"900px"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table with</span>
+<span class='co'># all the main parts added; we can use this</span>
+<span class='co'># going forward to demo some `tab_options()`</span>
+<span class='no'>tbl_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+    -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>fctr</span>, <span class='no'>date</span>, <span class='no'>time</span>, <span class='no'>datetime</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(
+    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"row"</span>,
+    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"group"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **exibble**"</span>),
+    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`exibble` is an R dataset"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>currency</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Alphabetical fruit."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_boxhead</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>char</span>))
+  )
+
+<span class='co'># Modify the table width to 100% (which</span>
+<span class='co'># spans the entire content width area)</span>
+<span class='no'>tbl_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_options</span>(
+    <span class='kw'>table.width</span> <span class='kw'>=</span> <span class='fu'><a href='pct.html'>pct</a></span>(<span class='fl'>100</span>)
+  )
+
+<span class='co'># Modify the table's background color</span>
+<span class='co'># to be "lightcyan"</span>
+<span class='no'>tbl_3</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_options</span>(
+    <span class='kw'>table.background.color</span> <span class='kw'>=</span> <span class='st'>"lightcyan"</span>
+  )
+
+<span class='co'># Use letters as the glyphs for footnote</span>
+<span class='co'># references; also, separate footnotes in</span>
+<span class='co'># the footer by spaces instead of newlines</span>
+<span class='no'>tbl_4</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_options</span>(
+    <span class='kw'>footnote.sep</span> <span class='kw'>=</span> <span class='st'>" "</span>,
+    <span class='kw'>footnote.glyph</span> <span class='kw'>=</span> <span class='no'>letters</span>
+  )
+
+<span class='co'># Change the padding of data rows to 5px</span>
+<span class='no'>tbl_5</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_options</span>(
+    <span class='kw'>row.padding</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>5</span>)
+  )
+
+<span class='co'># Reduce the size of the title and the</span>
+<span class='co'># subtitle text</span>
+<span class='no'>tbl_6</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_options</span>(
+    <span class='kw'>heading.title.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>,
+    <span class='kw'>heading.subtitle.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#figures">Figures</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

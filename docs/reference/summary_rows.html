@@ -203,38 +203,43 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_summary_rows_1.svg' width=100% /></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table that creates a stub and</span>
-<span class='co'># row groups based on the presence of the</span>
-<span class='co'># magic column names `groupname` &amp; `rowname`</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>groupname</span>, ~<span class='no'>rowname</span>, ~<span class='no'>value_1</span>, ~<span class='no'>value_2</span>,
-    <span class='st'>"A"</span>,        <span class='st'>"1"</span>,      <span class='fl'>NA</span>,       <span class='fl'>260.1</span>,
-    <span class='st'>"A"</span>,        <span class='st'>"2"</span>,      <span class='fl'>184.3</span>,    <span class='fl'>84.4</span>,
-    <span class='st'>"A"</span>,        <span class='st'>"3"</span>,      <span class='fl'>342.3</span>,    <span class='fl'>126.3</span>,
-    <span class='st'>"A"</span>,        <span class='st'>"4"</span>,      <span class='fl'>234.9</span>,    <span class='fl'>NA</span>,
-    <span class='st'>"B"</span>,        <span class='st'>"1"</span>,      <span class='fl'>190.9</span>,    <span class='fl'>832.5</span>,
-    <span class='st'>"B"</span>,        <span class='st'>"2"</span>,      <span class='fl'>743.3</span>,    <span class='fl'>281.2</span>,
-    <span class='st'>"B"</span>,        <span class='st'>"3"</span>,      <span class='fl'>252.3</span>,    <span class='fl'>732.5</span>,
-    <span class='st'>"B"</span>,        <span class='st'>"4"</span>,      <span class='fl'>344.7</span>,    <span class='fl'>NA</span>,
-    <span class='st'>"C"</span>,        <span class='st'>"1"</span>,      <span class='fl'>197.2</span>,    <span class='fl'>818.0</span>,
-    <span class='st'>"C"</span>,        <span class='st'>"2"</span>,      <span class='fl'>284.3</span>,    <span class='fl'>394.4</span>)
-
-<span class='co'># Create a table with summary rows for the</span>
-<span class='co'># `A` and `C` groups; the 3 summary rows</span>
-<span class='co'># for these groups represent the mean, sum,</span>
-<span class='co'># and standard deviation of `value`</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>summary_rows</span>(
-      <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"C"</span>),
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>value_1</span>),
-      <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-        <span class='kw'>average</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-        <span class='kw'>total</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-        <span class='kw'>`std dev`</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/sd'>sd</a></span>(<span class='no'>.</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table with</span>
+<span class='co'># row groups; create summary rows (`min`,</span>
+<span class='co'># `max`, `avg`) by row group, where each</span>
+<span class='co'># each row group is a week number</span>
+<span class='no'>tbl_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
+      <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-16"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+    <span class='kw'>week</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
+      <span class='st'>"W"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/strptime'>strftime</a></span>(<span class='no'>date</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%V"</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(
+    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
+    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"week"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>summary_rows</span>(
+    <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
+    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+      <span class='kw'>min</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min</a></span>(<span class='no'>.</span>),
+      <span class='kw'>max</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>.</span>),
+      <span class='kw'>avg</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.</span>)),
+    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
+    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -242,6 +247,8 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

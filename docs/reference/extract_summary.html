@@ -156,12 +156,60 @@ function.</p></td>
 
     <p>a list of data frames containing summary data.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_extract_summary_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table export functions: <code><a href='as_latex.html'>as_latex</a></code>,
-  <code><a href='as_rtf.html'>as_rtf</a></code></p></div>
+  <code><a href='as_raw_html.html'>as_raw_html</a></code>, <code><a href='as_rtf.html'>as_rtf</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table with</span>
+<span class='co'># row groups; create summary rows by row</span>
+<span class='co'># group (`min`, `max`, `avg`) and then</span>
+<span class='co'># extract the summary rows as a list</span>
+<span class='co'># object</span>
+<span class='no'>summary_extracted</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
+      <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-30"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+    <span class='kw'>week</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
+      <span class='st'>"W"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/strptime'>strftime</a></span>(<span class='no'>date</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%V"</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(
+    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
+    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"week"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
+    <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
+    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+      <span class='kw'>min</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min</a></span>(<span class='no'>.</span>),
+      <span class='kw'>max</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>.</span>),
+      <span class='kw'>avg</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.</span>)),
+    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
+    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>extract_summary</span>()
+
+<span class='co'># Use the summary list to make a new</span>
+<span class='co'># gt table; the key is to `bind_rows()`</span>
+<span class='co'># as necessary and pass to `gt()` (the</span>
+<span class='co'># `groupname` and `rowname` magic</span>
+<span class='co'># columns create row groups and a stub)</span>
+<span class='no'>tbl_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>summary_extracted</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,8 +218,12 @@ function.</p></td>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#figures">Figures</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

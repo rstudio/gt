@@ -134,7 +134,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_datetime</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>date_style</span>, <span class='no'>time_style</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_datetime</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,6 +185,11 @@ presets.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_datetime_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -194,26 +200,20 @@ presets.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with a column</span>
-<span class='co'># that contains date-time strings</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>datetime</span>,
-    <span class='st'>"2017-06-10 12:35:23"</span>,
-    <span class='st'>"2017-07-12 15:01:34"</span>,
-    <span class='st'>"2017-08-05 09:45:23"</span>,
-    <span class='st'>"2017-10-23 01:32:00"</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and format the `datetime`</span>
-<span class='co'># column with a `date_style` of</span>
-<span class='co'># `2` and a `time_style` of `3`</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_datetime</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>datetime</span>),
-      <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-      <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># keep only the `datetime` column;</span>
+<span class='co'># format the column to have dates</span>
+<span class='co'># formatted as `month_day_year` and</span>
+<span class='co'># times to be `hms_p`</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>datetime</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_datetime</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>datetime</span>),
+    <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -221,6 +221,8 @@ presets.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
