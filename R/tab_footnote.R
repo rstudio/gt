@@ -41,7 +41,7 @@
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
-#'     locations = cells_boxhead(
+#'     locations = cells_column_labels(
 #'       columns = vars(sza))
 #'   )
 #'
