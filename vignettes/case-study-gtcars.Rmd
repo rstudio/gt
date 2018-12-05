@@ -19,22 +19,20 @@ library(tibble)
 
 <p align="center"><img src="images/gtcars.svg" width=50%></p>
 
-Let's make a display table using the `gtcars`. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble:
+Let's make a display table using the `gtcars` dataset. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble:
 
 ```{r gtcars_data_frame}
 # This is `gtcars`
-dplyr::glimpse(gt::gtcars)
+dplyr::glimpse(gtcars)
 ```
 
 For the purpose of simply learning more about **gt**, let's reduce this 47-row tibble to one that has only 8 rows:
-
-
 
 ```{r gtcars_8}
 # Get a subset of 8 cars from the `gtcars` dataset: two
 # from each manufacturer country of origin except the UK
 gtcars_8 <-
-  gt::gtcars %>%
+  gtcars %>%
   dplyr::group_by(ctry_origin) %>%
   dplyr::top_n(2) %>%
   dplyr::ungroup() %>%
@@ -43,7 +41,6 @@ gtcars_8 <-
 # Show the `gtcars_8` tibble
 dplyr::glimpse(gtcars_8)
 ```
-
 
 Let's make a display table from this dataset. In doing so we'll fulfil the following 10 requirements:
 
@@ -88,7 +85,7 @@ order_countries <- c("Germany", "Italy", "United States", "Japan")
 gtcars_8 %>%
   dplyr::arrange(
     factor(ctry_origin, levels = order_countries), mfr, desc(msrp)
-    ) %>%
+  ) %>%
   dplyr::group_by(ctry_origin) %>%
   gt()
 ```
@@ -134,13 +131,13 @@ tab
 
 ### Putting Columns Into Groups
 
-It's sometimes useful to arrange variables/columns into groups by using spanner column labels. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; the `label` is the spanner column label and the `columns` are those columns that belong in this group.
+It's sometimes useful to arrange variables/columns into groups by using spanner column labels. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; `label` is the spanner column label and the `columns` are those columns that belong in this group.
 
 Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns under the `Performance` spanner column, and the remaining columns won't be grouped together. This single spanner column label is styled with Markdown by using the `md()` helper.
 
 ```{r tab_spanner}
-# Put the first three columns under a spanner column with
-# the label 'Performance'
+# Put the first three columns under a spanner
+# column with the label 'Performance'
 tab <- 
   tab %>%
   tab_spanner(
@@ -154,15 +151,15 @@ tab
 
 ### Merging Columns Together and Labeling Them
 
-Sometimes we'd like to combine the data from two columns into a single column while describing the way the data is to be combined. The `cols_merge()` function allows for this. For our table, let's merge together the following pairs of columns:
+Sometimes we'd like to combine the data from two columns into a single column. The `cols_merge()` function allows us to do this, we just need to describe how the data should be combined. For our table, let's merge together the following pairs of columns:
 
 - `mpg_c` and `mpg_h` (miles per gallon in city and highway driving modes)
 - `hp` and `hp_rpm` (horsepower and associated RPM)
 - `trq` and `trq_rpm` (torque and associated RPM)
 
-The `cols_merge()` uses a `col_1` column and a `col_2` column. Once combined, the `col_1` column will be retained and the `col_2` column will be dropped. The pattern argument uses `{1}` and `{2}` to represent the content of `col_1` and `col_2`. Here, we can use string literals to add text like `rpm` or the `@` sign. Furthermore, because we are targeting an HTML table, we can use the `<br>` tag to insert a linebreaks.
+The `cols_merge()` function uses a `col_1` column and a `col_2` column. Once combined, the `col_1` column will be retained and the `col_2` column will be dropped. The pattern argument uses `{1}` and `{2}` to represent the content of `col_1` and `col_2`. Here, we can use string literals to add text like `rpm` or the `@` sign. Furthermore, because we are targeting an HTML table, we can use the `<br>` tag to insert a linebreak.
 
-Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column name (the default label). The `cols_label()` function makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
+Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column names (the default label). The `cols_label()` function makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
 
 ```{r merge_columns_pattern}
 # Perform three column merges to better present
@@ -203,16 +200,16 @@ tab
 
 There are a number of formatter functions, all with the general naming convention `fmt*()`. The various formatters are convenient for applying formats to numeric or character values in the table's field. Here, we will simply use `fmt_currency()` on the `msrp` column (we still refer to columns by their original names) to get USD currency will no decimal places. We're not supplying anything for the `rows` argument and this means we want to apply the formatting to the entire column of data.
 
-```{r fmt_number_missing}
-# Format the `wt`, `qsec`, and `drat` columns to
-# 3 decimal places; `mpg` and `disp` to 1 decimal place
+```{r fmt_currency}
+# Format the `msrp` column to USD currency
+# with no display of the currency subunits
 tab <- 
   tab %>%
   fmt_currency(
     columns = vars(msrp),
     currency = "USD",
     decimals = 0
-    )
+  )
 
 # Show the table
 tab
@@ -225,6 +222,9 @@ We can change the alignment of data in columns with `cols_align()`. For our tabl
 It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cells_styles()` helper function, which contains arguments for all the styles that are supported (use `?cells_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_data` and then supply our target columns to the `columns` argument.
 
 ```{r align_style}
+# Center-align three columns in the gt table
+# and modify the text size of a few columns
+# of data
 tab <- 
   tab %>%
   cols_align(
@@ -232,8 +232,10 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = cells_styles(text_size = px(12)),
-    locations = cells_data(columns = vars(trim, trsmn, mpg_c, hp, trq))
+    style = cells_styles(
+      text_size = px(12)),
+    locations = cells_data(
+      columns = vars(trim, trsmn, mpg_c, hp, trq))
   )
 
 # Show the table
@@ -245,14 +247,23 @@ tab
 A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_data()` location helper function, we supply a function to the `fn` argument that processes a vector of text. If we intend to render as an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here will build strings that read better in a display table.
 
 ```{r text_transform_html}
+# Transform the column of text in `trsmn` using
+# a custom function within `text_transform()`;
+# here `x` represents a character vector defined
+# in the `cells_data()` function
 tab <- 
   tab %>%
   text_transform(
     locations = cells_data(columns = vars(trsmn)),
     fn = function(x) {
       
+      # The first character of `x` always
+      # indicates the number of transmission speeds
       speed <- substr(x, 1, 1)
       
+      # We can carefully determine which transmission
+      # type we have in `x` with a `dplyr::case_when()`
+      # statement
       type <-
         dplyr::case_when(
           substr(x, 2, 3) == "am" ~ "Automatic/Manual",
@@ -261,6 +272,8 @@ tab <-
           substr(x, 2, 3) == "dd" ~ "Direct Drive"
         )
       
+      # Let's paste together the `speed` and `type`
+      # vectors to create HTML text replacing `x`
       paste(speed, " Speed<br><em>", type, "</em>")
     }
   )
@@ -274,8 +287,8 @@ tab
 The `tab_header()` function allows us to place a table title and, optionally, a subtitle at the top of the display table. It's generally a good idea to have both in a table, where the subtitle provides additional information (though that isn't quite the case in our example below).
 
 ```{r tab_header}
-# Add a table title and subtitle; we can use Markdown
-# with the `md()` helper function
+# Add a table title and subtitle; we can use
+# markdown with the `md()` helper function
 tab <- 
   tab %>%
   tab_header(
@@ -444,4 +457,4 @@ tab <-
 tab
 ```
 
-This is it. The final table looks pretty good and conveys the additional information we planned for. That table can be used in a lot of different places like R Markdown, Shiny, email messages... wherever HTML is accepted.
+That is it. The final table looks pretty good and conveys the additional information we planned for. That table can be used in a lot of different places like R Markdown, Shiny, email messages... wherever HTML is accepted.
