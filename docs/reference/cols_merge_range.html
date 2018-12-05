@@ -158,6 +158,11 @@ function.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_cols_merge_range_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
@@ -169,26 +174,23 @@ function.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_1</span>, ~<span class='no'>val_2</span>,
-    <span class='fl'>1.6</span>,    <span class='fl'>2.6</span>,
-    <span class='fl'>1.9</span>,    <span class='fl'>3.3</span>,
-    <span class='fl'>2.6</span>,    <span class='fl'>3.8</span>,
-    <span class='fl'>2.1</span>,    <span class='fl'>4.2</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset where the `val_1` and</span>
-<span class='co'># `val_2` columns are merged together</span>
-<span class='co'># with an em-dash between them (the</span>
-<span class='co'># `val_1` column is retained)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_merge_range</span>(
-      <span class='kw'>col_begin</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_1</span>),
-      <span class='kw'>col_end</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_2</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table,</span>
+<span class='co'># keeping only the `model`, `mpg_c`,</span>
+<span class='co'># and `mpg_h` columns; merge the mpg</span>
+<span class='co'># columns together as a single range</span>
+<span class='co'># column (which is labeled as MPG,</span>
+<span class='co'># in italics)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a></span>(<span class='st'>"mpg"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_merge_range</span>(
+    <span class='kw'>col_begin</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg_c</span>),
+    <span class='kw'>col_end</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg_h</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
+    <span class='kw'>mpg_c</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*MPG*"</span>)
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,6 +198,8 @@ function.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

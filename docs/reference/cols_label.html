@@ -158,6 +158,12 @@ text as Markdown) or <code><a href='html.html'>html</a>()</code> (to interpret t
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_cols_label_1.svg' width=100% /></p>
+<p><img src='figures/man_cols_label_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
@@ -169,22 +175,43 @@ text as Markdown) or <code><a href='html.html'>html</a>()</code> (to interpret t
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and apply different</span>
-<span class='co'># column labels to the `mpg` and `qsec`</span>
-<span class='co'># columns (the column labels will be</span>
-<span class='co'># inherited from the column names)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_label</span>(
-      <span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*MPG*"</span>),
-      <span class='kw'>qsec</span> <span class='kw'>=</span> <span class='st'>"QMT, seconds"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `countrypops` to create a gt table;</span>
+<span class='co'># label all the table's columns to</span>
+<span class='co'># present better</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"code"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>tail</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_label</span>(
+    <span class='kw'>country_name</span> <span class='kw'>=</span> <span class='st'>"Name"</span>,
+    <span class='kw'>year</span> <span class='kw'>=</span> <span class='st'>"Year"</span>,
+    <span class='kw'>population</span> <span class='kw'>=</span> <span class='st'>"Population"</span>
+  )
+
+<span class='co'># Use `countrypops` to create a gt table;</span>
+<span class='co'># label columns as before but make them</span>
+<span class='co'># bold with markdown formatting</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"code"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>tail</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_label</span>(
+    <span class='kw'>country_name</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"**Name**"</span>),
+    <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"**Year**"</span>),
+    <span class='kw'>population</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"**Population**"</span>)
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#figures">Figures</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

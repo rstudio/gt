@@ -32,7 +32,10 @@
 
 <meta property="og:title" content="Format values as times — fmt_time" />
 
-<meta property="og:description" content="Format values as times" />
+<meta property="og:description" content="Format input time values that are character-based and expressed according to
+the ISO 8601 time format (HH:MM:SS). Once the appropriate data cells
+are targeted with columns (and, optionally, rows), we can
+simply apply a preset time style to format the times." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,11 +133,14 @@
 
     <div class="ref-description">
     
-    <p>Format values as times</p>
+    <p>Format input time values that are character-based and expressed according to
+the ISO 8601 time format (<code>HH:MM:SS</code>). Once the appropriate data cells
+are targeted with <code>columns</code> (and, optionally, <code>rows</code>), we can
+simply apply a preset time style to format the times.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_time</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>time_style</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_time</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,6 +179,26 @@ presets.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The following time styles are available for simpler formatting of ISO times
+(all using the input time of <code>14:35:00</code> in the example output times):</p>
+<ol>
+<li><p>hms: <code>14:35:00</code></p></li>
+<li><p>hm: <code>14:35</code></p></li>
+<li><p>hms_p: <code>2:35:00 PM</code></p></li>
+<li><p>hm_p: <code>2:35 PM</code></p></li>
+<li><p>h_p: <code>2 PM</code></p></li>
+</ol>
+    <p>We can use the <code><a href='info_time_style.html'>info_time_style</a>()</code> function for a useful
+reference on all of the possible inputs to <code>time_style</code>.</p>
+    
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_time_1.svg' width=100% /></p>
+<p><img src='figures/man_fmt_time_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -183,30 +209,51 @@ presets.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with a column</span>
-<span class='co'># that contains 24-hour time strings</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>time</span>,
-    <span class='st'>"12:35:23"</span>,
-    <span class='st'>"15:01:34"</span>,
-    <span class='st'>"09:45:23"</span>,
-    <span class='st'>"01:32:00"</span>)
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># keep only the `date` and `time` columns;</span>
+<span class='co'># format the `time` column to have</span>
+<span class='co'># times formatted as `hms_p`</span>
+<span class='co'># (time style `3`)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_time</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
+  )
 
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and format the `time`</span>
-<span class='co'># column with a  `time_style` of `3`</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_time</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
-      <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div></pre>
+<span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># keep only the `date` and `time` columns;</span>
+<span class='co'># format the `time` column to have mixed</span>
+<span class='co'># time formats (times after 16:00 will</span>
+<span class='co'># be different than the others)</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_time</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span>
+      <span class='no'>time</span> <span class='kw'>&gt;</span> <span class='st'>"16:00"</span>,
+    <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_time</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span>
+      <span class='no'>time</span> <span class='kw'>&lt;=</span> <span class='st'>"16:00"</span>,
+    <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>4</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

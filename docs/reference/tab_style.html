@@ -163,6 +163,12 @@ Additionally, we can supply a list with multiple calls to
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_tab_style_1.svg' width=100% /></p>
+<p><img src='figures/man_tab_style_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cells_styles.html'>cells_styles</a>()</code> as a helper for defining custom styles
@@ -177,37 +183,60 @@ Additionally, we can supply a list with multiple calls to
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Add a style that is to be applied</span>
-<span class='co'># to a single table cell</span>
-<span class='no'>gt_tbl_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_style</span>(
-      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"steelblue"</span>),
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-        <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>hp</span>),
-        <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Datsun 710"</span>, <span class='st'>"Valiant"</span>))
-    )
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># add styles that are to be applied</span>
+<span class='co'># to data cells that satisfy a</span>
+<span class='co'># condition (using `tab_style()`)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>),
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_style</span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightcyan"</span>,
+      <span class='kw'>text_weight</span> <span class='kw'>=</span> <span class='st'>"bold"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;=</span> <span class='fl'>5000</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_style</span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"#F9E3D6"</span>,
+      <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='st'>"italic"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>currency</span> <span class='kw'>&lt;</span> <span class='fl'>100</span>)
+  )
 
-<span class='co'># Color rows of cells based on values</span>
-<span class='co'># in a particular column</span>
-<span class='no'>gt_tbl_2</span> <span class='kw'>&lt;-</span>
+<span class='co'># Use `sp500` to create a gt table;</span>
+<span class='co'># color entire rows of cells based</span>
+<span class='co'># on values in a particular column</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-12-01"</span>) <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>date</span> <span class='kw'>&lt;=</span> <span class='st'>"2015-12-15"</span>) <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>) <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_style</span>(
-      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(<span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightgreen"</span>),
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>close</span> <span class='kw'>&gt;</span> <span class='no'>open</span>)
-    ) <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_style</span>(
-      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
-        <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>,
-        <span class='kw'>text_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>),
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>open</span> <span class='kw'>&gt;</span> <span class='no'>close</span>)
-    )</div></pre>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-12-01"</span> <span class='kw'>&amp;</span>
+    <span class='no'>date</span> <span class='kw'>&lt;=</span> <span class='st'>"2015-12-15"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>adj_close</span>, <span class='no'>volume</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_style</span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightgreen"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>close</span> <span class='kw'>&gt;</span> <span class='no'>open</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_style</span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"crimson"</span>,
+      <span class='kw'>text_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>open</span> <span class='kw'>&gt;</span> <span class='no'>close</span>)
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -215,6 +244,8 @@ Additionally, we can supply a list with multiple calls to
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

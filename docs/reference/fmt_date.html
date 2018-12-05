@@ -140,7 +140,7 @@ simply apply a preset date style to format the dates.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_date</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>date_style</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_date</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,6 +206,12 @@ presets.</p></td>
     <p>We can use the <code><a href='info_date_style.html'>info_date_style</a>()</code> function for a useful
 reference on all of the possible inputs to <code>date_style</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_date_1.svg' width=100% /></p>
+<p><img src='figures/man_fmt_date_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -216,24 +222,41 @@ reference on all of the possible inputs to <code>date_style</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with a column</span>
-<span class='co'># that contains dates</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>date</span>,
-    <span class='st'>"2017-10-15"</span>,
-    <span class='st'>"2013-02-22"</span>,
-    <span class='st'>"2014-09-22"</span>,
-    <span class='st'>"2018-01-10"</span>)
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># keep only the `date` and `time` columns;</span>
+<span class='co'># format the `date` column to have</span>
+<span class='co'># dates formatted as `month_day_year`</span>
+<span class='co'># (date style `5`)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_date</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>5</span>
+  )
 
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and format the `date`</span>
-<span class='co'># column with a `date_style` of `2`</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_date</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
-      <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div></pre>
+<span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># keep only the `date` and `time` columns;</span>
+<span class='co'># format the `date` column to have mixed</span>
+<span class='co'># date formats (dates after April will</span>
+<span class='co'># be different than the others)</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_date</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span>
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>date</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2015-04-01"</span>),
+    <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>6</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_date</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span>
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>date</span>) <span class='kw'>&lt;=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2015-04-01"</span>),
+    <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>7</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -243,6 +266,8 @@ reference on all of the possible inputs to <code>date_style</code>.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

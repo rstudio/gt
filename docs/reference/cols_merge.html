@@ -165,6 +165,11 @@ function.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_cols_merge_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other column modification functions: <code><a href='cols_align.html'>cols_align</a></code>,
@@ -177,17 +182,30 @@ function.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `sleep` dataset and merge the `group`</span>
-<span class='co'># and `ID` columns together (where the</span>
-<span class='co'># `ID` number is in parentheses after</span>
-<span class='co'># the `group` number)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>sleep</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>cols_merge</span>(
-      <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>group</span>),
-      <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>ID</span>),
-      <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{1} ({2})"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table;</span>
+<span class='co'># merge the `open` &amp; `close` columns</span>
+<span class='co'># together, and, the `low` &amp; `high`</span>
+<span class='co'># columns (putting an em dash between</span>
+<span class='co'># both); rename the columns</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>50</span>:<span class='fl'>55</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>volume</span>, -<span class='no'>adj_close</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_merge</span>(
+    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>),
+    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>close</span>),
+    <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{1}&amp;mdash;{2}"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_merge</span>(
+    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>low</span>),
+    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>high</span>),
+    <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{1}&amp;mdash;{2}"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
+    <span class='kw'>open</span> <span class='kw'>=</span> <span class='st'>"open/close"</span>,
+    <span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"low/high"</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -195,6 +213,8 @@ function.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

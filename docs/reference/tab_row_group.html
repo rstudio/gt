@@ -179,6 +179,12 @@ a row group without a label.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_tab_row_group_1.svg' width=100% /></p>
+<p><img src='figures/man_tab_row_group_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt_preview.html'>gt_preview</a></code>,
@@ -189,14 +195,38 @@ a row group without a label.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table based on `mtcars` and</span>
+    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table and</span>
 <span class='co'># add two row groups with the labels:</span>
-<span class='co'># `Mazda` and `NA` (group without a title)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>tab_row_group</span>(
-      <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"Mazda"</span>,
-      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Mazda RX4"</span>, <span class='st'>"Mazda RX4 Wag"</span>))</div></pre>
+<span class='co'># `numbered` and `NA` (a group without</span>
+<span class='co'># a title, or, the rest)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_row_group</span>(
+    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"numbered"</span>,
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
+  )
+
+<span class='co'># # Use `gtcars` to create a gt table;</span>
+<span class='co'># add two row groups with the labels</span>
+<span class='co'># `powerful` and `super powerful`: the</span>
+<span class='co'># distinction being `hp` lesser or</span>
+<span class='co'># greater than `600`</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_row_group</span>(
+    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"powerful"</span>,
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>&lt;=</span> <span class='fl'>600</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>tab_row_group</span>(
+    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"super powerful"</span>,
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>&gt;</span> <span class='fl'>600</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -204,6 +234,8 @@ a row group without a label.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

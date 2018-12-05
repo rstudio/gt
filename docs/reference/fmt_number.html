@@ -256,6 +256,12 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the <code>rows</code> argument. See the Arguments section for more
 information on this.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_number_1.svg' width=100% /></p>
+<p><img src='figures/man_fmt_number_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
@@ -266,41 +272,36 @@ information on this.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and format specified</span>
-<span class='co'># numeric columns to display values to</span>
-<span class='co'># two decimal places</span>
-<span class='no'>gt_tbl_1</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_number</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg</span>, <span class='no'>disp</span>, <span class='no'>drat</span>, <span class='no'>qsec</span>),
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># format the `num` column as numeric</span>
+<span class='co'># with three decimal places and with no</span>
+<span class='co'># use of digit separators</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_number</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  )
 
-<span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_1</span>,   ~<span class='no'>val_2</span>,
-    <span class='fl'>8236625</span>,  -<span class='fl'>2345</span>,
-    <span class='fl'>6533405</span>,  -<span class='fl'>7865</span>,
-    <span class='fl'>7363931</span>,  <span class='fl'>2345</span>,
-    <span class='fl'>9326440</span>,  <span class='fl'>7543</span>)
-
-<span class='co'># Create a gt table from `data_tbl` and</span>
-<span class='co'># scale the numeric values in columns</span>
-<span class='co'># `val_1` and `val_2` and apply a suffix</span>
-<span class='no'>gt_tbl_2</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_number</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_1</span>),
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-      <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1E-6</span>,
-      <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_number</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_2</span>),
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-      <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>1000</span>,
-      <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}K"</span>)</div></pre>
+<span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># format the `num` column as numeric,</span>
+<span class='co'># but treating the first four rows</span>
+<span class='co'># different than the last four</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_number</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>,
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_number</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>8</span>,
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>1000</span>,
+    <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}K"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -310,6 +311,8 @@ information on this.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

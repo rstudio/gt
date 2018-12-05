@@ -138,10 +138,11 @@ code and numeric formatting facilitated through the use of a locale ID.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_currency</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>currency</span>, <span class='kw'>use_subunits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>negative_val</span> <span class='kw'>=</span> <span class='st'>"signed"</span>, <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>, <span class='kw'>sep_mark</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>dec_mark</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>placement</span> <span class='kw'>=</span> <span class='st'>"left"</span>, <span class='kw'>incl_space</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>locale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_currency</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"USD"</span>,
+  <span class='kw'>use_subunits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>negative_val</span> <span class='kw'>=</span> <span class='st'>"signed"</span>, <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>, <span class='kw'>sep_mark</span> <span class='kw'>=</span> <span class='st'>","</span>,
+  <span class='kw'>dec_mark</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>placement</span> <span class='kw'>=</span> <span class='st'>"left"</span>, <span class='kw'>incl_space</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>locale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,7 +176,8 @@ to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50<
       <th>currency</th>
       <td><p>the currency to use for the numeric value. This is to be
 supplied as a 3-letter currency code. Examples include <code>"USD"</code> for
-U.S. Dollars and <code>"EUR"</code> for the Euro currency.</p></td>
+U.S. Dollars and <code>"EUR"</code> for the Euro currency. The default is
+<code>"USD"</code>.</p></td>
     </tr>
     <tr>
       <th>use_subunits</th>
@@ -266,6 +268,12 @@ effective. Conditional formatting is possible by providing a conditional
 expression to the <code>rows</code> argument. See the Arguments section for more
 information on this.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_fmt_currency_1.svg' width=100% /></p>
+<p><img src='figures/man_fmt_currency_2.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_datetime.html'>fmt_datetime</a></code>,
@@ -276,60 +284,33 @@ information on this.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble with two columns</span>
-<span class='co'># that are both numeric</span>
-<span class='no'>data_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_usd</span>, ~<span class='no'>val_jpy</span>,
-    <span class='fl'>23.346</span>,   <span class='fl'>2606.95</span>,
-    <span class='fl'>832.830</span>,  <span class='fl'>93002.54</span>,
-    <span class='fl'>72.013</span>,   <span class='fl'>8041.73</span>,
-    <span class='fl'>83.1</span>,     <span class='fl'>9279.82</span>)
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># format the `currency` column to have</span>
+<span class='co'># currency values in euros (EUR)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+    <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"EUR"</span>
+  )
 
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and where the `val_usd`</span>
-<span class='co'># and `val_jpy` are formatted as</span>
-<span class='co'># the `USD` and `JPY` currencies</span>
-<span class='no'>gt_tbl_1</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_currency</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_usd</span>),
-      <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"USD"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_currency</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_jpy</span>),
-      <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"JPY"</span>)
-
-<span class='co'># Create another tibble with larger</span>
-<span class='co'># numeric values</span>
-<span class='no'>data_tbl_lg</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-    ~<span class='no'>val_usd_lg</span>, ~<span class='no'>val_jpy_lg</span>,
-    <span class='fl'>546262</span>,      <span class='fl'>3950249</span>,
-    <span class='fl'>729472</span>,      <span class='fl'>5390202</span>,
-    <span class='fl'>292592</span>,      <span class='fl'>9373824</span>,
-    <span class='fl'>573256</span>,      <span class='fl'>2350300</span>)
-
-<span class='co'># Create a table object using this</span>
-<span class='co'># dataset and where the `val_usd`</span>
-<span class='co'># and `val_jpy` are still formatted as</span>
-<span class='co'># the `USD` and `JPY` currencies but</span>
-<span class='co'># this time with scaled values</span>
-<span class='co'># (thousands and millions with the</span>
-<span class='co'># appropriate suffixes)</span>
-<span class='no'>gt_tbl_2</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>data_tbl_lg</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_currency</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_usd_lg</span>),
-      <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"USD"</span>,
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-      <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>1000</span>,
-      <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}K"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>fmt_currency</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>val_jpy_lg</span>),
-      <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"JPY"</span>,
-      <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-      <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1E-6</span>,
-      <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}M"</span>)</div></pre>
+<span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># Keep only the `num` and `currency`,</span>
+<span class='co'># columns, then, format those columns</span>
+<span class='co'># using the "CNY" and "GBP" currencies</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"CNY"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+    <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"GBP"</span>
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -339,6 +320,8 @@ information on this.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
