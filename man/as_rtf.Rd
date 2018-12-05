@@ -24,6 +24,6 @@ gt(data = sleep) \%>\%
 }
 \seealso{
 Other table export functions: \code{\link{as_latex}},
-  \code{\link{extract_summary}}
+  \code{\link{as_raw_html}}, \code{\link{extract_summary}}
 }
 \concept{table export functions}

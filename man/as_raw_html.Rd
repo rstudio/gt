@@ -19,3 +19,23 @@ character vector. There is also the option to transform the HTML such that
 CSS styles are inlined. This option is preferable when using the output HTML
 table in an emailing context.
 }
+\examples{
+# Use `gtcars` to create a gt table;
+# add a header and then export as
+# HTML code with CSS inlined
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) \%>\%
+  as_raw_html()
+}
+\seealso{
+Other table export functions: \code{\link{as_latex}},
+  \code{\link{as_rtf}}, \code{\link{extract_summary}}
+}
+\concept{table export functions}
