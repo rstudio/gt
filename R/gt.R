@@ -156,7 +156,7 @@ gt <- function(data,
   empty_df[] <- NA_character_
 
   # Create a data frame that represents the table's
-  # boxhead (`boxh_df`); each row has a special
+  # columns (`boxh_df`); each row has a special
   # meaning and this will be used during render time
   boxh_df <- empty_df[c(), , drop = FALSE]
   boxh_df[1:3, ] = list(NA_character_)

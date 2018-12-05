@@ -76,7 +76,7 @@ cols_align <- function(data,
       unname()
   }
 
-  # Set the alignment value to all boxhead columns in `columns`
+  # Set the alignment value for all columns in `columns`
   attr(data, "boxh_df")["column_align", resolved_columns] <- align
 
   data

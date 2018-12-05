@@ -63,9 +63,9 @@ many_options_tbl <-
     heading.border.bottom.style = "solid",     # Bottom line of heading - style
     heading.border.bottom.width = px(5),       # Bottom line of heading - width
     heading.border.bottom.color = "purple",    # Bottom line of heading - color
-    boxhead.font.size = px(16),                # Boxhead labels - font size
-    boxhead.font.weight = "normal",            # Boxhead labels - font weight
-    boxhead.background.color = "lightgray",    # Boxhead background color
+    column_labels.font.size = px(16),                # Column labels - font size
+    column_labels.font.weight = "normal",            # Column labels - font weight
+    column_labels.background.color = "lightgray",    # Column labels background color
     stub_group.background.color = "green",     # Stub group background color
     stub_group.font.size = px(14),             # Stub group labels - font size
     stub_group.font.weight = "800",            # Stub group labels - font weight

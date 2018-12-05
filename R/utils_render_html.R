@@ -353,11 +353,11 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-# Create the boxhead component of a table
+# Create the columns component of a table
 #' @import rlang
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-create_boxhead_component_h <- function(boxh_df,
+create_columns_component_h <- function(boxh_df,
                                        output_df,
                                        stub_available,
                                        spanners_present,
@@ -365,20 +365,20 @@ create_boxhead_component_h <- function(boxh_df,
                                        stubhead_label,
                                        col_alignment) {
 
-  # Get the style attrs for the boxhead group (spanner) headings
+  # Get the style attrs for the spanner column headings
   spanner_style_attrs <-
     styles_resolved %>%
-    dplyr::filter(locname == "boxhead_groups") %>%
+    dplyr::filter(locname == "columns_groups") %>%
     dplyr::group_by(grpname) %>%
     dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
     dplyr::ungroup() %>%
     dplyr::select(grpname, styles_appended) %>%
     dplyr::distinct()
 
-  # Get the style attrs for the boxhead group (spanner) headings
+  # Get the style attrs for the spanner column headings
   column_style_attrs <-
     styles_resolved %>%
-    dplyr::filter(locname == "boxhead_columns") %>%
+    dplyr::filter(locname == "columns_columns") %>%
     dplyr::group_by(colname) %>%
     dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
     dplyr::ungroup() %>%

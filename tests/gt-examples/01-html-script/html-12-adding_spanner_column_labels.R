@@ -1,6 +1,6 @@
 library(gt)
 
-# Create a table with boxhead panels
+# Create a table with spanner column labels
 
 # Input table
 tbl <-
@@ -11,7 +11,7 @@ tbl <-
     16.3, 34.3, 15.1, 93.2, 12.1)
 
 # Create a display table
-bh_panels_tbl <-
+gt_tbl <-
   gt(data = tbl) %>%
   tab_spanner(
     label = "v_1_2",
@@ -23,4 +23,4 @@ bh_panels_tbl <-
   ) %>%
   cols_move_to_start(columns = "v_3")
 
-bh_panels_tbl
+gt_tbl

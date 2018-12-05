@@ -180,13 +180,13 @@ get_groupnames_rownames_df <- function(stub_df,
   stub_df[rows_df$rownum_final, c("groupname", "rowname")]
 }
 
-# Function to get a vector of boxhead group (spanner) names
-get_boxhead_spanners_vec <- function(boxh_df) {
+# Function to get a vector of columns group (spanner) names
+get_columns_spanners_vec <- function(boxh_df) {
 
-  boxhead_spanners <-
+  columns_spanners <-
     boxh_df["group_label", ] %>% unlist() %>% unname()
 
-  boxhead_spanners[which(!is.na(boxhead_spanners))]
+  columns_spanners[which(!is.na(columns_spanners))]
 }
 
 # Function to create a data frame with group information and the
