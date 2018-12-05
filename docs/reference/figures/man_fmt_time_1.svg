@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="128.411mm"
+ viewBox="0 0 1024 364"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,364 L0,364 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,364 L0,364 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,364 L0,364 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,8 L613,8 L613,356 L410,356 L410,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,9 L512,9 L512,49 L410,49 L410,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,9 L613,9 L613,49 L512,49 L512,9"/>
+</g>
+
+<g fill="#f2f2f2" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,88 L512,88 L512,126 L410,126 L410,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,88 L613,88 L613,126 L512,126 L512,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,164 L512,164 L512,202 L410,202 L410,164"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,164 L613,164 L613,202 L512,202 L512,164"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,240 L512,240 L512,278 L410,278 L410,240"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,240 L613,240 L613,278 L512,278 L512,240"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,316 L512,316 L512,355 L410,355 L410,316"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,316 L613,316 L613,355 L512,355 L512,316"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,8 L512,8 L512,10 L410,10 L410,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,8 L613,8 L613,10 L512,10 L512,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,48 L512,48 L512,50 L410,50 L410,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,48 L613,48 L613,50 L512,50 L512,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,48 L512,48 L512,50 L410,50 L410,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,48 L613,48 L613,50 L512,50 L512,48"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M410,354 L512,354 L512,356 L410,356 L410,354"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M512,354 L613,354 L613,356 L512,356 L512,354"/>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >date</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="34" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >time</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-01-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="74" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1:35:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="112" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-02-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="112" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2:40:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="150" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-03-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="150" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3:45:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="188" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-04-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="188" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >4:50:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="226" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-05-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="226" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >5:55:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="264" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-06-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="264" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="302" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="302" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >7:10:00 PM</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="420" y="340" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-08-15</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="522" y="340" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >8:20:00 PM</text>
+</g>
+</g>
+</svg>
