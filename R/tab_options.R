@@ -91,7 +91,8 @@
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
-#'     locations = cells_boxhead(columns = vars(char))
+#'     locations = cells_column_labels(
+#'       columns = vars(char))
 #'   )
 #'
 #' # Modify the table width to 100% (which
