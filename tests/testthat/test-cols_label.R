@@ -59,7 +59,7 @@ test_that("the function `cols_label()` works correctly", {
     tbl_html, "col_labels",
     c("col_a", "col_b", "col_c", "col_d"))
 
-  # Expect that the column labels are set in the table boxhead
+  # Expect that the column labels are set
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
@@ -78,7 +78,6 @@ test_that("the function `cols_label()` works correctly", {
     colnames(tbl))
 
   # Expect that the column labels are set as the column names
-  # in the table boxhead
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
@@ -101,7 +100,7 @@ test_that("the function `cols_label()` works correctly", {
     tbl_html, "col_labels",
     c("col_a", "col_b", "col_c", "col_d"))
 
-  # Expect that the column labels are set in the table boxhead
+  # Expect that the column labels are set
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%

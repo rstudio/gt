@@ -7,7 +7,7 @@ resolve_footnotes_styles <- function(output_df,
                                      groups_rows_df,
                                      opts_df,
                                      arrange_groups,
-                                     boxhead_spanners,
+                                     columns_spanners,
                                      title_defined,
                                      subtitle_defined,
                                      footnotes_df = NULL,
@@ -40,11 +40,11 @@ resolve_footnotes_styles <- function(output_df,
         dplyr::filter(locname != "subtitle")
     }
 
-    # Filter by `grpname` in boxhead groups
-    if ("boxhead_groups" %in% tbl[["locname"]]) { # remove conditional
+    # Filter by `grpname` in columns groups
+    if ("columns_groups" %in% tbl[["locname"]]) { # remove conditional
 
       tbl <- tbl %>%
-        dplyr::filter(locname != "boxhead_groups" | grpname %in% boxhead_spanners)
+        dplyr::filter(locname != "columns_groups" | grpname %in% columns_spanners)
     }
 
     # Filter by `grpname` in stub groups
@@ -181,7 +181,7 @@ resolve_footnotes_styles <- function(output_df,
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-set_footnote_glyphs_boxhead <- function(footnotes_resolved,
+set_footnote_glyphs_columns <- function(footnotes_resolved,
                                         boxh_df,
                                         output = "html") {
 
@@ -191,39 +191,39 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
   # Get the `boxh_df` object
   boxh_df <- boxh_df
 
-  # If there are any footnotes to apply to the boxhead,
+  # If there are any footnotes to apply to the columns,
   # process them individually for the spanner groups and
   # for the column label groups
-  if (any(c("boxhead_columns", "boxhead_groups") %in% footnotes_tbl$locname)) {
+  if (any(c("columns_columns", "columns_groups") %in% footnotes_tbl$locname)) {
 
     footnotes_tbl <-
       footnotes_tbl %>%
-      dplyr::filter(locname %in% c("boxhead_columns", "boxhead_groups"))
+      dplyr::filter(locname %in% c("columns_columns", "columns_groups"))
 
-    # Filter the boxhead spanner group footnotes
-    footnotes_boxhead_group_tbl <-
+    # Filter the spanner column footnotes
+    footnotes_columns_group_tbl <-
       footnotes_tbl %>%
       dplyr::filter(!is.na(grpname))
 
-    # Filter the boxhead column label footnotes
-    footnotes_boxhead_column_tbl <-
+    # Filter the column label footnotes
+    footnotes_columns_column_tbl <-
       footnotes_tbl %>%
       dplyr::filter(!is.na(colname))
 
-    if (nrow(footnotes_boxhead_group_tbl) > 0) {
+    if (nrow(footnotes_columns_group_tbl) > 0) {
 
-      footnotes_boxhead_group_glyphs <-
-        footnotes_boxhead_group_tbl %>%
+      footnotes_columns_group_glyphs <-
+        footnotes_columns_group_tbl %>%
         dplyr::group_by(grpname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
         dplyr::select(grpname, fs_id_coalesced) %>%
         dplyr::distinct()
 
-      for (i in seq(nrow(footnotes_boxhead_group_glyphs))) {
+      for (i in seq(nrow(footnotes_columns_group_glyphs))) {
 
         column_indices <-
-          which(boxh_df["group_label", ] == footnotes_boxhead_group_glyphs$grpname[i])
+          which(boxh_df["group_label", ] == footnotes_columns_group_glyphs$grpname[i])
 
         text <-
           boxh_df["group_label", column_indices] %>%
@@ -235,7 +235,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_html(
-                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
 
         } else if (output == "rtf") {
 
@@ -243,7 +243,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_rtf(
-                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
 
         } else if (output == "latex") {
 
@@ -251,27 +251,27 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_latex(
-                footnotes_boxhead_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
         }
 
         boxh_df["group_label", column_indices] <- text
       }
     }
 
-    if (nrow(footnotes_boxhead_column_tbl) > 0) {
+    if (nrow(footnotes_columns_column_tbl) > 0) {
 
-      footnotes_boxhead_column_glyphs <-
-        footnotes_boxhead_column_tbl %>%
+      footnotes_columns_column_glyphs <-
+        footnotes_columns_column_tbl %>%
         dplyr::group_by(colname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
         dplyr::select(colname, fs_id_coalesced) %>%
         dplyr::distinct()
 
-      for (i in seq(nrow(footnotes_boxhead_column_glyphs))) {
+      for (i in seq(nrow(footnotes_columns_column_glyphs))) {
 
         text <-
-          boxh_df["column_label", footnotes_boxhead_column_glyphs$colname[i]]
+          boxh_df["column_label", footnotes_columns_column_glyphs$colname[i]]
 
         if (output == "html") {
 
@@ -279,7 +279,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_html(
-                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
 
         } else if (output == "rtf") {
 
@@ -287,7 +287,7 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_rtf(
-                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
 
         } else if (output == "latex") {
 
@@ -295,11 +295,11 @@ set_footnote_glyphs_boxhead <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_latex(
-                footnotes_boxhead_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
         }
 
         boxh_df[
-          "column_label", footnotes_boxhead_column_glyphs$colname[i]] <- text
+          "column_label", footnotes_columns_column_glyphs$colname[i]] <- text
       }
     }
   }

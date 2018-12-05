@@ -106,9 +106,9 @@ as_rtf <- function(data) {
   # of the stub `groupname` and `rowname` columns
   groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
 
-  # Get a `boxhead_spanners` vector, which has the unique, non-NA
-  # boxhead spanner labels
-  boxhead_spanners <- get_boxhead_spanners_vec(boxh_df)
+  # Get a `columns_spanners` vector, which has the unique, non-NA
+  # column spanner labels
+  columns_spanners <- get_columns_spanners_vec(boxh_df)
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
@@ -212,12 +212,12 @@ as_rtf <- function(data) {
   footnotes_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, subtitle_defined,
+      columns_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
-  # Add footnote glyphs to boxhead elements
+  # Add footnote glyphs to elements of the table columns
   boxh_df <-
-    set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df, output = "rtf")
+    set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "rtf")
 
   # Add footnote glyphs to the `data` rows
   output_df <-
@@ -277,7 +277,7 @@ as_rtf <- function(data) {
 
   if (spanners_present == FALSE) {
 
-    boxhead_component <-
+    columns_component <-
       paste0(rtf_heading_row(content = headings), collapse = "")
 
   } else {
@@ -300,7 +300,7 @@ as_rtf <- function(data) {
 
     spanners_lengths <- rle(spanners)
 
-    boxhead_component <-
+    columns_component <-
       rtf_heading_group_row(
         spanners_lengths = spanners_lengths,
         headings = headings,
@@ -397,7 +397,7 @@ as_rtf <- function(data) {
     paste0(
       table_start,
       heading_component,
-      boxhead_component,
+      columns_component,
       body_component,
       footnote_component,
       source_note_rows,

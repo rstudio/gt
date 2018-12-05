@@ -103,7 +103,7 @@ test_that("a gt table contains the expected stubhead label", {
     expect_equal("the mtcars")
 })
 
-test_that("a gt table contains the expected boxhead panel headings", {
+test_that("a gt table contains the expected spanner column labels", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -297,7 +297,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_style(
       style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
-        cells_boxhead(columns = TRUE),
+        cells_column_labels(columns = TRUE),
         cells_stub(rows = TRUE))
     ) %>%
     tab_style(
@@ -319,15 +319,15 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_boxhead(groups = "gear_carb_cyl")
+      locations = cells_column_labels(groups = "gear_carb_cyl")
     ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_boxhead(columns = "gear")
+      locations = cells_column_labels(columns = "gear")
     ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "pink"),
-      locations = cells_boxhead(columns = "hp")
+      locations = cells_column_labels(columns = "hp")
     ) %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
@@ -362,7 +362,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
     expect_equal("943.00")
 
-  # Expect that some boxhead cells (e.g., `disp`, `wt`, etc.) are
+  # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
   # styled with a lightgrey background
   (tbl_html %>%
     rvest::html_nodes("[style='background-color:lightgray;']") %>%

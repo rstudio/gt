@@ -31,9 +31,9 @@ as_latex <- function(data) {
   # Use LaTeX-specific builders to generate the Latex table code
   with(built_data, {
 
-    # Add footnote glyphs to boxhead elements
+    # Add footnote glyphs to elements of the table columns
     boxh_df <-
-      set_footnote_glyphs_boxhead(footnotes_resolved, boxh_df, output = "latex")
+      set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "latex")
 
     # Add footnote glyphs to the `data` rows
     output_df <-
@@ -64,9 +64,9 @@ as_latex <- function(data) {
       create_heading_component(
         heading, footnotes_resolved, n_cols = n_cols, output = "latex")
 
-    # Create the boxhead component of the table
-    boxhead_component <-
-      create_boxhead_component_l(
+    # Create the columns component of the table
+    columns_component <-
+      create_columns_component_l(
         boxh_df, output_df, stub_available, spanners_present,
         stubhead_label)
 
@@ -106,7 +106,7 @@ as_latex <- function(data) {
       paste0(
         table_start,
         heading_component,
-        boxhead_component,
+        columns_component,
         body_component,
         table_end,
         footnote_component,

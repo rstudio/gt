@@ -48,7 +48,7 @@ resolve_cells_data <- function(data,
 
 #' Resolve the `cells_stub` object once it has access to the `data` object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{stub_cells()} function.
+#' @param object the list object created by the \code{cells_stub()} function.
 #' @noRd
 resolve_cells_stub <- function(data,
                                object) {
@@ -82,12 +82,13 @@ resolve_cells_stub <- function(data,
   cells_resolved
 }
 
-#' Resolve the `cells_boxhead` object once it has access to the `data` object
+#' Resolve the `cells_column_labels` object once it has access to the `data`
+#' object
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{boxhead_cells()}
+#' @param object the list object created by the \code{cells_column_labels()}
 #'   function.
 #' @noRd
-resolve_cells_boxhead <- function(data,
+resolve_cells_column_labels <- function(data,
                                   object) {
 
   # Get the `data_df` data frame from `data`
@@ -97,7 +98,7 @@ resolve_cells_boxhead <- function(data,
   colnames <- names(data_df)
 
   # Obtain the `columns` component of object created
-  # by the `boxhead_columns()` function
+  # by the `cells_column_labels()` function
   object_columns <- object$columns
 
   #
@@ -110,12 +111,11 @@ resolve_cells_boxhead <- function(data,
   # Create a list object
   cells_resolved <- list(columns = resolved_columns)
 
-  # Apply the `boxhead_columns_resolved` class
-  attr(cells_resolved, "class") <- "boxhead_cells_resolved"
+  # Apply the `columns_cells_resolved` class
+  attr(cells_resolved, "class") <- "columns_cells_resolved"
 
   cells_resolved
 }
-
 
 #' Resolve variables for rows and columns using expressions
 #' @import tidyselect

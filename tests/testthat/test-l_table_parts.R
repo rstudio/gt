@@ -59,7 +59,7 @@ test_that("a gt table contains the expected stubhead label", {
     expect_true()
 })
 
-test_that("a gt table contains the expected boxhead panel headings", {
+test_that("a gt table contains the expected column spanner labels", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the

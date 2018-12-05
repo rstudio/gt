@@ -116,9 +116,9 @@ build_data <- function(data, context) {
   # explicitly set
   boxh_df <- set_default_alignments(boxh_df)
 
-  # Get a `boxhead_spanners` vector, which has the unique, non-NA
-  # boxhead spanner labels
-  boxhead_spanners <- get_boxhead_spanners_vec(boxh_df)
+  # Get a `columns_spanners` vector, which has the unique, non-NA
+  # spanner column labels
+  columns_spanners <- get_columns_spanners_vec(boxh_df)
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
@@ -214,14 +214,14 @@ build_data <- function(data, context) {
   footnotes_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, subtitle_defined,
+      columns_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      boxhead_spanners, title_defined, subtitle_defined,
+      columns_spanners, title_defined, subtitle_defined,
       footnotes_df = NULL, styles_df = styles_df)
 
   list(
@@ -242,7 +242,7 @@ build_data <- function(data, context) {
     groups_df = groups_df,
     groups_rows_df = groups_rows_df,
     heading = heading,
-    boxhead_spanners = boxhead_spanners,
+    columns_spanners = columns_spanners,
     source_note = source_note,
     stubhead_label = stubhead_label,
     stub_components = stub_components,

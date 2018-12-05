@@ -17,9 +17,9 @@ render_as_html <- function(data) {
 
     # Composition of HTML -----------------------------------------------------
 
-    # Add footnote glyphs to boxhead elements
+    # Add footnote glyphs to elements of the table columns
     boxh_df <-
-      set_footnote_glyphs_boxhead(
+      set_footnote_glyphs_columns(
         footnotes_resolved, boxh_df, output = "html")
 
     # Add footnote glyphs to the `data` rows
@@ -59,9 +59,9 @@ render_as_html <- function(data) {
       create_heading_component(
         heading, footnotes_resolved, styles_resolved, n_cols, output = "html")
 
-    # Create the boxhead component of the table
-    boxhead_component <-
-      create_boxhead_component_h(
+    # Create the columns component of the table
+    columns_component <-
+      create_columns_component_h(
         boxh_df, output_df, stub_available, spanners_present,
         styles_resolved, stubhead_label, col_alignment)
 
@@ -90,7 +90,7 @@ render_as_html <- function(data) {
       paste0(
         table_start,
         heading_component,
-        boxhead_component,
+        columns_component,
         body_component,
         source_note_component,
         footnote_component,

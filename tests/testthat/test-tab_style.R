@@ -66,23 +66,23 @@ test_that("a gt table can store the correct style statements", {
   # Check that specific suggested packages are available
   check_suggests()
 
-  # Apply a `lightgray` background color to the boxhead
+  # Apply a `lightgray` background color to the columns
   # and stub cells
   tbl_html <-
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgray"),
       locations = list(
-        cells_boxhead(columns = TRUE),
+        cells_column_labels(columns = TRUE),
         cells_stub(rows = TRUE)))
 
   # Expect that the internal `styles_df` data frame will have
-  # its `locname` column entirely populated with `boxhead_columns`
+  # its `locname` column entirely populated with `cells_column_labels`
   # and `stub`
   attr(tbl_html, "styles_df", exact = TRUE) %>%
     dplyr::pull(locname) %>%
     unique() %>%
-    expect_equal(c("boxhead_columns", "stub"))
+    expect_equal(c("columns_columns", "stub"))
 
   # Expect that the internal `styles_df` data frame will have
   # its `text` column entirely populated with the style statement
@@ -202,7 +202,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_boxhead(groups = "gear_carb_cyl"))
+      locations = cells_column_labels(groups = "gear_carb_cyl"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -214,7 +214,7 @@ test_that("a gt table can store the correct style statements", {
   # single-row `styles_df` data frame
   expect_attr_equal(
     tbl_html, "styles_df",
-    c("boxhead_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
+    c("columns_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
       "background-color:lightgreen;"))
 
   # Apply a `turquoise` background to a single column label
@@ -222,7 +222,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_boxhead(columns = "gear"))
+      locations = cells_column_labels(columns = "gear"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -234,7 +234,7 @@ test_that("a gt table can store the correct style statements", {
   # single-row `styles_df` data frame
   expect_attr_equal(
     tbl_html, "styles_df",
-    c("boxhead_columns", "4", NA_character_, "gear", NA_character_,
+    c("columns_columns", "4", NA_character_, "gear", NA_character_,
       "background-color:turquoise;"))
 
   # Apply a `turquoise` background to a single column label
@@ -242,7 +242,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cells_styles(bkgd_color = "pink"),
-      locations = cells_boxhead(columns = "hp"))
+      locations = cells_column_labels(columns = "hp"))
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
@@ -254,7 +254,7 @@ test_that("a gt table can store the correct style statements", {
   # single-row `styles_df` data frame
   expect_attr_equal(
     tbl_html, "styles_df",
-    c("boxhead_columns", "4", NA_character_, "hp", NA_character_,
+    c("columns_columns", "4", NA_character_, "hp", NA_character_,
       "background-color:pink;"))
 
   # Apply a `lightgray` background to five rows of a single column
