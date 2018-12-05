@@ -763,6 +763,10 @@ cols_merge_uncert <- function(data,
 #'   cols_label(
 #'     mpg_c = md("*MPG*")
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+#'
 #' @family column modification functions
 #' @importFrom stats setNames
 #' @export
