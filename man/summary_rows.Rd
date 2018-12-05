@@ -53,36 +53,42 @@ aggregation functions. Should we need to obtain the summary data for external
 purposes, the \code{\link{extract_summary}()} can be used with a
 \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 }
-\examples{
-# Create a table that creates a stub and
-# row groups based on the presence of the
-# magic column names `groupname` & `rowname`
-tbl <-
-  dplyr::tribble(
-    ~groupname, ~rowname, ~value_1, ~value_2,
-    "A",        "1",      NA,       260.1,
-    "A",        "2",      184.3,    84.4,
-    "A",        "3",      342.3,    126.3,
-    "A",        "4",      234.9,    NA,
-    "B",        "1",      190.9,    832.5,
-    "B",        "2",      743.3,    281.2,
-    "B",        "3",      252.3,    732.5,
-    "B",        "4",      344.7,    NA,
-    "C",        "1",      197.2,    818.0,
-    "C",        "2",      284.3,    394.4)
+\section{Figures}{
 
-# Create a table with summary rows for the
-# `A` and `C` groups; the 3 summary rows
-# for these groups represent the mean, sum,
-# and standard deviation of `value`
-gt_tbl <-
-  gt(tbl) \%>\%
-    summary_rows(
-      groups = c("A", "C"),
-      columns = vars(value_1),
-      fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+\if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `sp500` to create a gt table with
+# row groups; create summary rows (`min`,
+# `max`, `avg`) by row group, where each
+# each row group is a week number
+tbl_1 <-
+  sp500 \%>\%
+  dplyr::filter(
+    date >= "2015-01-05" &
+      date <="2015-01-16"
+  ) \%>\%
+  dplyr::arrange(date) \%>\%
+  dplyr::mutate(
+    week = paste0(
+      "W", strftime(date, format = "\%V"))
+  ) \%>\%
+  dplyr::select(-adj_close, -volume) \%>\%
+  gt(
+    rowname_col = "date",
+    groupname_col = "week"
+  ) \%>\%
+  summary_rows(
+    groups = TRUE,
+    columns = vars(open, high, low, close),
+    fns = list(
+      min = ~min(.),
+      max = ~max(.),
+      avg = ~mean(.)),
+    formatter = fmt_number,
+    use_seps = FALSE
+  )
+
 }
 \concept{row addition functions}

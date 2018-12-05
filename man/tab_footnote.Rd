@@ -33,16 +33,38 @@ an object of class \code{gt_tbl}.
 \description{
 Add a footnote with a glyph attached to the targeted cells, rows, or columns.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_tab_footnote_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Add a footnote that is in
-# reference to a single table cell
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_footnote(
-      footnote = "Massive hp.",
-      locations = cells_data(
-        columns = "hp",
-        rows = "Maserati Bora"))
+# Use `sza` to create a gt table; color
+# the `sza` column using the `data_color()`
+# function, then, add a footnote to the
+# `sza` column label explaining what the
+# color scale signifies
+tab_1 <-
+  sza \%>\%
+  dplyr::filter(
+    latitude == 20 &
+      month == "jan" &
+      !is.na(sza)
+  ) \%>\%
+  dplyr::select(-latitude, -month) \%>\%
+  gt() \%>\%
+  data_color(
+    columns = vars(sza),
+    colors = scales::col_numeric(
+      palette = c("white", "yellow", "navyblue"),
+      domain = c(0, 90))
+  ) \%>\%
+  tab_footnote(
+    footnote = "Color indicates height of sun.",
+    locations = cells_boxhead(
+      columns = vars(sza))
+  )
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt_preview}},
