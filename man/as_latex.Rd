@@ -13,15 +13,24 @@ as_latex(data)
 Take a \code{gt_tbl} table object and emit LateX.
 }
 \examples{
-\dontrun{
-# Create a `gt` table using the `sleep`
-# dataset and output as LaTeX
-gt(data = sleep) \%>\%
+# Use `gtcars` to create a gt table;
+# add a header and then export as
+# LaTeX code (use `as.character()`
+# to get just the code and no LaTeX
+# dependencies for R Markdown)
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) \%>\%
   as_latex()
 }
-}
 \seealso{
-Other table export functions: \code{\link{as_rtf}},
-  \code{\link{extract_summary}}
+Other table export functions: \code{\link{as_raw_html}},
+  \code{\link{as_rtf}}, \code{\link{extract_summary}}
 }
 \concept{table export functions}
