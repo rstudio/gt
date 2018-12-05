@@ -6,12 +6,21 @@
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stats setNames
 #' @examples
-#' \dontrun{
-#' # Create a `gt` table using the `sleep`
-#' # dataset and output as LaTeX
-#' gt(data = sleep) %>%
+#' # Use `gtcars` to create a gt table;
+#' # add a header and then export as
+#' # LaTeX code (use `as.character()`
+#' # to get just the code and no LaTeX
+#' # dependencies for R Markdown)
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
 #'   as_latex()
-#' }
 #' @family table export functions
 #' @export
 as_latex <- function(data) {
