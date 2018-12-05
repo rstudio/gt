@@ -1,9 +1,0 @@
-pandoc: '2.4'
-pkgdown: 1.2.0
-pkgdown_sha: ~
-articles:
-  case-study-gtcars: case-study-gtcars.html
-  creating-display-tables: creating-display-tables.html
-  creating-summary-lines: creating-summary-lines.html
-  gt-datasets: gt-datasets.html
-
