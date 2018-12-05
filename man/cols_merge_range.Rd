@@ -20,6 +20,11 @@ an object of class \code{gt_tbl}.
 \description{
 Merge two columns to a value range column
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+}
+
 \examples{
 # Use `gtcars` to create a gt table,
 # keeping only the `model`, `mpg_c`,
@@ -38,6 +43,7 @@ tab_1 <-
   cols_label(
     mpg_c = md("*MPG*")
   )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},

@@ -19,6 +19,56 @@ summary rows were added via the \code{\link{summary_rows}()} function. The
 output data frames contain the \code{groupname} and \code{rowname} columns,
 whereby \code{rowname} contains descriptive stub labels for the summary rows.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_extract_summary_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `sp500` to create a gt table with
+# row groups; create summary rows by row
+# group (`min`, `max`, `avg`) and then
+# extract the summary rows as a list
+# object
+summary_extracted <-
+  sp500 \%>\%
+  dplyr::filter(
+    date >= "2015-01-05" &
+      date <="2015-01-30"
+  ) \%>\%
+  dplyr::arrange(date) \%>\%
+  dplyr::mutate(
+    week = paste0(
+      "W", strftime(date, format = "\%V"))
+  ) \%>\%
+  dplyr::select(-adj_close, -volume) \%>\%
+  gt(
+    rowname_col = "date",
+    groupname_col = "week"
+  ) \%>\%
+  summary_rows(
+    groups = TRUE,
+    columns = vars(open, high, low, close),
+    fns = list(
+      min = ~min(.),
+      max = ~max(.),
+      avg = ~mean(.)),
+    formatter = fmt_number,
+    use_seps = FALSE
+  ) \%>\%
+  extract_summary()
+
+# Use the summary list to make a new
+# gt table; the key is to `bind_rows()`
+# as necessary and pass to `gt()` (the
+# `groupname` and `rowname` magic
+# columns create row groups and a stub)
+tbl_1 <-
+  summary_extracted \%>\%
+  dplyr::bind_rows() \%>\%
+  gt()
+
+}
 \seealso{
 Other table export functions: \code{\link{as_latex}},
   \code{\link{as_raw_html}}, \code{\link{as_rtf}}
