@@ -25,38 +25,69 @@ an object of class \code{gt_tbl}.
 \description{
 Add custom styles to one or more cells
 }
-\examples{
-# Add a style that is to be applied
-# to a single table cell
-gt_tbl_1 <-
-  mtcars \%>\%
-    gt(rownames_to_stub = TRUE) \%>\%
-    tab_style(
-      style = cells_styles(bkgd_color = "steelblue"),
-      locations = cells_data(
-        columns = vars(hp),
-        rows = c("Datsun 710", "Valiant"))
-    )
+\section{Figures}{
 
-# Color rows of cells based on values
-# in a particular column
-gt_tbl_2 <-
+\if{html}{\figure{man_tab_style_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table;
+# add styles that are to be applied
+# to data cells that satisfy a
+# condition (using `tab_style()`)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num, currency),
+    decimals = 1
+  ) \%>\%
+  tab_style(
+    style = cells_styles(
+      bkgd_color = "lightcyan",
+      text_weight = "bold"),
+    locations = cells_data(
+      columns = vars(num),
+      rows = num >= 5000)
+  ) \%>\%
+  tab_style(
+    style = cells_styles(
+      bkgd_color = "#F9E3D6",
+      text_style = "italic"),
+    locations = cells_data(
+      columns = vars(currency),
+      rows = currency < 100)
+  )
+
+# Use `sp500` to create a gt table;
+# color entire rows of cells based
+# on values in a particular column
+tab_2 <-
   sp500 \%>\%
-    dplyr::filter(date >= "2015-12-01") \%>\%
-    dplyr::filter(date <= "2015-12-15") \%>\%
-    dplyr::select(-adj_close) \%>\%
-    dplyr::mutate(date = as.character(date)) \%>\%
-    gt() \%>\%
-    tab_style(
-      style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_data(rows = close > open)
-    ) \%>\%
-    tab_style(
-      style = cells_styles(
-        bkgd_color = "darkred",
-        text_color = "white"),
-      locations = cells_data(rows = open > close)
-    )
+  dplyr::filter(
+    date >= "2015-12-01" &
+    date <= "2015-12-15"
+  ) \%>\%
+  dplyr::select(-c(adj_close, volume)) \%>\%
+  dplyr::mutate(date = as.character(date)) \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cells_styles(
+      bkgd_color = "lightgreen"),
+    locations = cells_data(
+      rows = close > open)
+  ) \%>\%
+  tab_style(
+    style = cells_styles(
+      bkgd_color = "crimson",
+      text_color = "white"),
+    locations = cells_data(
+      rows = open > close)
+  )
+
 }
 \seealso{
 \code{\link{cells_styles}()} as a helper for defining custom styles
