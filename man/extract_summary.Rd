@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_summary.R
 \name{extract_summary}
 \alias{extract_summary}
-\title{Extract a summary table from a gt table object}
+\title{Extract a summary list from a gt object}
 \usage{
 extract_summary(data)
 }
@@ -63,7 +63,7 @@ summary_extracted <-
 # as necessary and pass to `gt()` (the
 # `groupname` and `rowname` magic
 # columns create row groups and a stub)
-tbl_1 <-
+tab_1 <-
   summary_extracted \%>\%
   dplyr::bind_rows() \%>\%
   gt()
