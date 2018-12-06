@@ -1,4 +1,4 @@
-#' Output a gt table object as LaTeX
+#' Output a gt object as LaTeX
 #'
 #' Take a \code{gt_tbl} table object and emit LaTeX.
 #' @param data a table object that is created using the \code{gt()} function.
