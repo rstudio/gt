@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_color.R
 \name{data_color}
 \alias{data_color}
-\title{Set data cell colors using a palette or a colorizing helper function}
+\title{Set data cell colors using a palette or a color function}
 \usage{
 data_color(data, columns, colors, alpha = NULL, apply_to = "bkgd",
   autocolor_text = TRUE)
@@ -41,7 +41,7 @@ more optimal text-to-background color contrast. By default, this is set to
 an object of class \code{gt_tbl}.
 }
 \description{
-Set data cell colors using a palette or a colorizing helper function
+Set data cell colors using a palette or a color function
 }
 \section{Figures}{
 
@@ -68,4 +68,12 @@ tab_1 <-
   )
 
 }
-\concept{data cell modification}
+\seealso{
+Other data formatting functions: \code{\link{fmt_currency}},
+  \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{fmt}}, \code{\link{text_transform}}
+}
+\concept{data formatting functions}
