@@ -41,8 +41,9 @@ Set a column format with a formatter function
 
 \examples{
 # Use `exibble` to create a gt table;
-# NA values in different columns will
-# be given replacement text
+# format the numeric values in the `num`
+# column with a function supplied to
+# the `fns` argument
 tab_1 <-
   exibble \%>\%
   dplyr::select(-row, -group) \%>\%
