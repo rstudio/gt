@@ -63,7 +63,7 @@ purposes, the \code{\link{extract_summary}()} can be used with a
 # row groups; create summary rows (`min`,
 # `max`, `avg`) by row group, where each
 # each row group is a week number
-tbl_1 <-
+tab_1 <-
   sp500 \%>\%
   dplyr::filter(
     date >= "2015-01-05" &
