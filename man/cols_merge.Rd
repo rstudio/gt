@@ -2,7 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_merge}
 \alias{cols_merge}
-\title{Merge two columns to a single column with a formatter}
+\title{Merge two columns to a single column}
 \usage{
 cols_merge(data, col_1, col_2, pattern = "{1} {2}")
 }
@@ -23,7 +23,7 @@ function.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Merge two columns to a single column with a formatter
+Merge two columns to a single column
 }
 \section{Figures}{
 

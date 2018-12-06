@@ -2,7 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_split_delim}
 \alias{cols_split_delim}
-\title{Create group names and column labels via delimited column names}
+\title{Create group names and column labels via delimited names}
 \usage{
 cols_split_delim(data, delim, columns = NULL)
 }

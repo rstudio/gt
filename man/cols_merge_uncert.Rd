@@ -2,7 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_merge_uncert}
 \alias{cols_merge_uncert}
-\title{Merge two columns to a value + uncertainty column}
+\title{Merge two columns to a value & uncertainty column}
 \usage{
 cols_merge_uncert(data, col_val, col_uncert)
 }
@@ -18,7 +18,7 @@ function.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Merge two columns to a value + uncertainty column
+Merge two columns to a value & uncertainty column
 }
 \section{Figures}{
 
