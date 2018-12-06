@@ -77,7 +77,7 @@ globalVariables(
 #'
 #' @section Package options:
 #'
-#' gt uses the following \code{\link{options}} to configure behaviour:
+#' gt uses the following \code{\link{options}} to configure behavior:
 #'
 #' \itemize{
 #'   \item \code{gt.stub_group.sep}: a separator
