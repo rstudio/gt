@@ -181,17 +181,19 @@ to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50<
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other data formatting functions: <code><a href='fmt_currency.html'>fmt_currency</a></code>,
-  <code><a href='fmt_datetime.html'>fmt_datetime</a></code>, <code><a href='fmt_date.html'>fmt_date</a></code>,
-  <code><a href='fmt_missing.html'>fmt_missing</a></code>, <code><a href='fmt_number.html'>fmt_number</a></code>,
-  <code><a href='fmt_passthrough.html'>fmt_passthrough</a></code>, <code><a href='fmt_percent.html'>fmt_percent</a></code>,
-  <code><a href='fmt_scientific.html'>fmt_scientific</a></code>, <code><a href='fmt_time.html'>fmt_time</a></code></p></div>
+    <div class='dont-index'><p>Other data formatting functions: <code><a href='data_color.html'>data_color</a></code>,
+  <code><a href='fmt_currency.html'>fmt_currency</a></code>, <code><a href='fmt_datetime.html'>fmt_datetime</a></code>,
+  <code><a href='fmt_date.html'>fmt_date</a></code>, <code><a href='fmt_missing.html'>fmt_missing</a></code>,
+  <code><a href='fmt_number.html'>fmt_number</a></code>, <code><a href='fmt_passthrough.html'>fmt_passthrough</a></code>,
+  <code><a href='fmt_percent.html'>fmt_percent</a></code>, <code><a href='fmt_scientific.html'>fmt_scientific</a></code>,
+  <code><a href='fmt_time.html'>fmt_time</a></code>, <code><a href='text_transform.html'>text_transform</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># NA values in different columns will</span>
-<span class='co'># be given replacement text</span>
+<span class='co'># format the numeric values in the `num`</span>
+<span class='co'># column with a function supplied to</span>
+<span class='co'># the `fns` argument</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>row</span>, -<span class='no'>group</span>) <span class='kw'>%&gt;%</span>
