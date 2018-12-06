@@ -63,7 +63,7 @@ other characters are taken to be string literals.}
 \code{left} (the default) or \code{right}.}
 
 \item{incl_space}{an option on whether to include a space between the value
-and the curerncy symbol. The default is to not introduce a space character.}
+and the currency symbol. The default is to not introduce a space character.}
 
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
