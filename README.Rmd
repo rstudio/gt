@@ -85,7 +85,7 @@ Want to try this out? First and foremost, the **gt** package is used in an R env
 You can install the development version of **gt** from **GitHub** using the **remotes** package. Use the following in the R console to install **gt**.
 
 ```{r eval=FALSE}
-install.packages("devtools")
+install.packages("remotes")
 remotes::install_github("rstudio/gt")
 ```
 

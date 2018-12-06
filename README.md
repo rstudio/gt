@@ -120,7 +120,7 @@ the **remotes** package. Use the following in the R console to install
 **gt**.
 
 ``` r
-install.packages("devtools")
+install.packages("remotes")
 remotes::install_github("rstudio/gt")
 ```
 
