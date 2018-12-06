@@ -38,8 +38,8 @@ the sun with respect to the observer, which is different depending on the
 exact longitude. For example, two hours before the sun crosses the meridian
 (the highest point it would reach that day) corresponds to a true solar time
 of 10 a.m. The SZA has a strong dependence on the observer's latitude. For
-example, at a latitude of 50 deg N at the start of January, the noontime SZA
-is 73.0 but a different observer at 20 deg N would measure the noontime SZA
-to be 43.0 degrees.
+example, at a latitude of 50 degrees N at the start of January, the noontime
+SZA is 73.0 but a different observer at 20 degrees N would measure the
+noontime SZA to be 43.0 degrees.
 }
 \keyword{datasets}
