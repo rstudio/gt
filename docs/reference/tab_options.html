@@ -294,7 +294,7 @@ when striping rows.</p></td>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table with</span>
 <span class='co'># all the main parts added; we can use this</span>
 <span class='co'># going forward to demo some `tab_options()`</span>
-<span class='no'>tbl_1</span> <span class='kw'>&lt;-</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
     -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>fctr</span>, <span class='no'>date</span>, <span class='no'>time</span>, <span class='no'>datetime</span>)
@@ -329,16 +329,16 @@ when striping rows.</p></td>
 
 <span class='co'># Modify the table width to 100% (which</span>
 <span class='co'># spans the entire content width area)</span>
-<span class='no'>tbl_2</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_options</span>(
     <span class='kw'>table.width</span> <span class='kw'>=</span> <span class='fu'><a href='pct.html'>pct</a></span>(<span class='fl'>100</span>)
   )
 
 <span class='co'># Modify the table's background color</span>
 <span class='co'># to be "lightcyan"</span>
-<span class='no'>tbl_3</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+<span class='no'>tab_3</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_options</span>(
     <span class='kw'>table.background.color</span> <span class='kw'>=</span> <span class='st'>"lightcyan"</span>
   )
@@ -346,24 +346,24 @@ when striping rows.</p></td>
 <span class='co'># Use letters as the glyphs for footnote</span>
 <span class='co'># references; also, separate footnotes in</span>
 <span class='co'># the footer by spaces instead of newlines</span>
-<span class='no'>tbl_4</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+<span class='no'>tab_4</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_options</span>(
     <span class='kw'>footnote.sep</span> <span class='kw'>=</span> <span class='st'>" "</span>,
     <span class='kw'>footnote.glyph</span> <span class='kw'>=</span> <span class='no'>letters</span>
   )
 
 <span class='co'># Change the padding of data rows to 5px</span>
-<span class='no'>tbl_5</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+<span class='no'>tab_5</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_options</span>(
     <span class='kw'>row.padding</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>5</span>)
   )
 
 <span class='co'># Reduce the size of the title and the</span>
 <span class='co'># subtitle text</span>
-<span class='no'>tbl_6</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tbl_1</span> <span class='kw'>%&gt;%</span>
+<span class='no'>tab_6</span> <span class='kw'>&lt;-</span>
+  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_options</span>(
     <span class='kw'>heading.title.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>,
     <span class='kw'>heading.subtitle.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>

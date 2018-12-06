@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract a summary table from a gt table object — extract_summary • gt</title>
+<title>Extract a summary list from a gt object — extract_summary • gt</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Extract a summary table from a gt table object — extract_summary" />
+<meta property="og:title" content="Extract a summary list from a gt object — extract_summary" />
 
 <meta property="og:description" content="Get a list of summary row data frames from a gt_tbl object where
 summary rows were added via the summary_rows() function. The
@@ -126,7 +126,7 @@ whereby rowname contains descriptive stub labels for the summary rows." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract a summary table from a gt table object</h1>
+    <h1>Extract a summary list from a gt object</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/extract_summary.R'><code>R/extract_summary.R</code></a></small>
     <div class="hidden name"><code>extract_summary.Rd</code></div>
     </div>
@@ -206,7 +206,7 @@ function.</p></td>
 <span class='co'># as necessary and pass to `gt()` (the</span>
 <span class='co'># `groupname` and `rowname` magic</span>
 <span class='co'># columns create row groups and a stub)</span>
-<span class='no'>tbl_1</span> <span class='kw'>&lt;-</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>summary_extracted</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>()</div></pre>
