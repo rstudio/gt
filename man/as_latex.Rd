@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_latex.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a gt table object as LaTeX}
+\title{Output a gt object as LaTeX}
 \usage{
 as_latex(data)
 }

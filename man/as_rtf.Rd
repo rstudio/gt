@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_rtf.R
 \name{as_rtf}
 \alias{as_rtf}
-\title{Save a gt table object as an RTF file}
+\title{Save a gt table as an RTF file}
 \usage{
 as_rtf(data)
 }
