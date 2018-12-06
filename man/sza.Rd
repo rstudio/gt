@@ -3,7 +3,7 @@
 \docType{data}
 \name{sza}
 \alias{sza}
-\title{Twice hourly solar zenith angles by month and by latitude}
+\title{Twice hourly solar zenith angles by month & latitude}
 \format{A tibble with 816 rows and 4 variables:
 \describe{
   \item{latitude}{The latitude in decimal degrees for the observations}
