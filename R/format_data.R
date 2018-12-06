@@ -247,10 +247,19 @@ fmt_scientific <- function(data,
 
     function(x) {
 
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+
+      small_pos <- (
+        (x[non_na_x] >= 1 & x[non_na_x] < 10) |
+          (x[non_na_x] <= -1 & x[non_na_x] > -10) |
+          is_equal_to(x[non_na_x], 0)
+      )
+
       # Format the number component as a character vector
-      x_str <-
+      x[non_na_x] <-
         formatC(
-          x = x * scale_by,
+          x = x[non_na_x] * scale_by,
           digits = decimals,
           mode = "double",
           big.mark = sep_mark,
@@ -258,31 +267,27 @@ fmt_scientific <- function(data,
           format = "e",
           drop0trailing = drop_trailing_zeros)
 
-      small_pos <- (
-        (x >= 1 & x < 10) |
-          (x <= -1 & x > -10) |
-          is_equal_to(x, 0)
-      )
-
       # For any numbers that shouldn't have an exponent, remove
       # that portion from the character version
       if (any(small_pos)) {
-        x_str[small_pos] <- split_scientific_notn(x_str[small_pos])$num
+        x[non_na_x][small_pos] <-
+          split_scientific_notn(x[non_na_x][small_pos])$num
       }
 
       if (any(!small_pos)) {
-        sci_parts <- split_scientific_notn(x_str[!small_pos])
+        sci_parts <- split_scientific_notn(x[non_na_x][!small_pos])
 
-        x_str[!small_pos] <- paste0(
-          sci_parts$num, exp_start_str,
-          sci_parts$exp, exp_end_str)
+        x[non_na_x][!small_pos] <-
+          paste0(
+            sci_parts$num, exp_start_str,
+            sci_parts$exp, exp_end_str
+          )
       }
 
       # Handle formatting of pattern
       pre_post_txt <- get_pre_post_txt(pattern)
-      x_str <- paste0(pre_post_txt[1], x_str, pre_post_txt[2])
-
-      x_str
+      x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
+      x
     }
   }
 
