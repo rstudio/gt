@@ -19,7 +19,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Set a spanner column label by mapping it to columns already in the table.
-This label is placed above one or more columnd, spanning the width of those
+This label is placed above one or more columns, spanning the width of those
 columns.
 }
 \section{Figures}{

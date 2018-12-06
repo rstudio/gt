@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_latex.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a gt table object as LateX}
+\title{Output a gt table object as LaTeX}
 \usage{
 as_latex(data)
 }
@@ -10,7 +10,7 @@ as_latex(data)
 \item{data}{a table object that is created using the \code{gt()} function.}
 }
 \description{
-Take a \code{gt_tbl} table object and emit LateX.
+Take a \code{gt_tbl} table object and emit LaTeX.
 }
 \examples{
 # Use `gtcars` to create a gt table;
