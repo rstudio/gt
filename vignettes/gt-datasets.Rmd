@@ -420,7 +420,7 @@ Let's make a reporting table from the `pizzaplace` dataset with these requiremen
 3. add a title to explain the contents of the table
 4. format the numeric and currency values with `fmt_number()` and `fmt_currency()`
 5. add a summary for each grouping that provides total sell counts and revenue amounts 
-6. color the stub group rows and summary cells to add a little pizazz
+6. color the stub group rows and summary cells to add a little pizzazz
 
 ```{r pizzaplace}
 # Create a gt table based on a preprocessed `pizzaplace`

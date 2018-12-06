@@ -536,7 +536,7 @@ fmt_percent <- function(data,
 #' @param placement the placement of the currency symbol. This can be either be
 #'   \code{left} (the default) or \code{right}.
 #' @param incl_space an option on whether to include a space between the value
-#'   and the curerncy symbol. The default is to not introduce a space character.
+#'   and the currency symbol. The default is to not introduce a space character.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;

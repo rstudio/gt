@@ -42,7 +42,7 @@ gtcars_8 <-
 dplyr::glimpse(gtcars_8)
 ```
 
-Let's make a display table from this dataset. In doing so we'll fulfil the following 10 requirements:
+Let's make a display table from this dataset. In doing so we'll fulfill the following 10 requirements:
 
 1. putting the cars into characteristic groups (by the car manufacturer's country of origin)
 2. removing some of the columns that we don't want to present

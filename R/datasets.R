@@ -146,7 +146,7 @@
 #' This tibble contains data of a few different classes, which makes it
 #' well-suited for quick experimentation with the functions in this package. It
 #' contains only eight rows with numeric, character, and factor columns. The
-#' last 4 rows contain \code{NA} values in the majority of the tibbles's columns
+#' last 4 rows contain \code{NA} values in the majority of this tibble's columns
 #' (1 missing value per column). The \code{date}, \code{time}, and
 #' \code{datetime} columns are character-based dates/times in the familiar ISO
 #' 8601 format. The \code{row} and \code{group} columns provide for unique

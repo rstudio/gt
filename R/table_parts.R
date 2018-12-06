@@ -212,7 +212,7 @@ tab_row_group <- function(data,
 #' Add a spanner column label
 #'
 #' Set a spanner column label by mapping it to columns already in the table.
-#' This label is placed above one or more columnd, spanning the width of those
+#' This label is placed above one or more columns, spanning the width of those
 #' columns.
 #' @inheritParams fmt_number
 #' @param label the text to use for the spanner column label.

@@ -1,6 +1,6 @@
-#' Output a gt table object as LateX
+#' Output a gt table object as LaTeX
 #'
-#' Take a \code{gt_tbl} table object and emit LateX.
+#' Take a \code{gt_tbl} table object and emit LaTeX.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @import rlang
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
