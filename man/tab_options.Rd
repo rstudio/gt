@@ -122,7 +122,7 @@ components, the subcomponents, and the element that can adjusted.
 # Use `exibble` to create a gt table with
 # all the main parts added; we can use this
 # going forward to demo some `tab_options()`
-tbl_1 <-
+tab_1 <-
   exibble \%>\%
   dplyr::select(
     -c(fctr, date, time, datetime)
@@ -157,16 +157,16 @@ tbl_1 <-
 
 # Modify the table width to 100\% (which
 # spans the entire content width area)
-tbl_2 <-
-  tbl_1 \%>\%
+tab_2 <-
+  tab_1 \%>\%
   tab_options(
     table.width = pct(100)
   )
 
 # Modify the table's background color
 # to be "lightcyan"
-tbl_3 <-
-  tbl_1 \%>\%
+tab_3 <-
+  tab_1 \%>\%
   tab_options(
     table.background.color = "lightcyan"
   )
@@ -174,24 +174,24 @@ tbl_3 <-
 # Use letters as the glyphs for footnote
 # references; also, separate footnotes in
 # the footer by spaces instead of newlines
-tbl_4 <-
-  tbl_1 \%>\%
+tab_4 <-
+  tab_1 \%>\%
   tab_options(
     footnote.sep = " ",
     footnote.glyph = letters
   )
 
 # Change the padding of data rows to 5px
-tbl_5 <-
-  tbl_1 \%>\%
+tab_5 <-
+  tab_1 \%>\%
   tab_options(
     row.padding = px(5)
   )
 
 # Reduce the size of the title and the
 # subtitle text
-tbl_6 <-
-  tbl_1 \%>\%
+tab_6 <-
+  tab_1 \%>\%
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"
