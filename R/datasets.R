@@ -20,7 +20,7 @@
 #' @source \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
 "countrypops"
 
-#' Twice hourly solar zenith angles by month and by latitude
+#' Twice hourly solar zenith angles by month & latitude
 #'
 #' This dataset contains solar zenith angles (in degrees, with the range of
 #' 0-90) every half hour from 04:00 to 12:00, true solar time. This set of
