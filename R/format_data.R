@@ -242,8 +242,12 @@ fmt_number <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -556,8 +560,12 @@ fmt_percent <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         default = function(x) {
@@ -608,8 +616,12 @@ fmt_percent <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -870,8 +882,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         html = function(x) {
@@ -949,8 +965,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         latex = function(x) {
@@ -1028,8 +1048,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -1549,9 +1573,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt(
+              pattern,
+              values = x
+            )
 
           if (escape) {
             x_str <- x_str %>% process_text(context = "html")
@@ -1564,9 +1592,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt(
+              pattern,
+              values = x
+            )
 
           if (escape) {
             x_str <- x_str %>% process_text(context = "latex")
@@ -1579,9 +1611,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt(
+              pattern,
+              values = x
+            )
 
           x_str
         }
