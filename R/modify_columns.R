@@ -496,7 +496,7 @@ cols_hide <- function(data,
   data
 }
 
-#' Create group names and column labels via delimited column names
+#' Create group names and column labels via delimited names
 #'
 #' This option will split delimited column names such that the first component
 #' is promoted to the group name (and hence will span over column labels) and
@@ -569,7 +569,7 @@ cols_split_delim <- function(data,
   data
 }
 
-#' Merge two columns to a single column with a formatter
+#' Merge two columns to a single column
 #' @inheritParams cols_align
 #' @param col_1 a column that contains values for the start of the range.
 #' @param col_2 a column that contains values for the end of the range.
@@ -657,7 +657,7 @@ cols_merge <- function(data,
   data
 }
 
-#' Merge two columns to a value + uncertainty column
+#' Merge two columns to a value & uncertainty column
 #' @inheritParams cols_align
 #' @param col_val a single column name that contains the base values.
 #' @param col_uncert a single column name that contains the uncertainty values.

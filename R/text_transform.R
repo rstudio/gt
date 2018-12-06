@@ -54,6 +54,7 @@
 #' @section Figures:
 #' \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
 #'
+#' @family data formatting functions
 #' @export
 text_transform <- function(data,
                            locations,

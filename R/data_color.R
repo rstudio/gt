@@ -1,4 +1,4 @@
-#' Set data cell colors using a palette or a colorizing helper function
+#' Set data cell colors using a palette or a color function
 #' @inheritParams fmt_number
 #' @param columns the columns wherein changes to cell data colors should occur.
 #' @param colors either a color mapping function from the \code{scales} package
@@ -44,7 +44,7 @@
 #' @section Figures:
 #' \if{html}{\figure{man_data_color_1.svg}{options: width=100\%}}
 #'
-#' @family data cell modification
+#' @family data formatting functions
 #' @import rlang
 #' @importFrom scales col_numeric col_factor
 #' @export
