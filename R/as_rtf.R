@@ -1,4 +1,4 @@
-#' Save a gt table object as an RTF file
+#' Save a gt table as an RTF file
 #'
 #' Take a \code{gt_tbl} table object and render it to an RTF file with the
 #' extension \code{.rtf}.

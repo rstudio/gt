@@ -1,4 +1,4 @@
-#' Extract a summary table from a gt table object
+#' Extract a summary list from a gt object
 #'
 #' Get a list of summary row data frames from a \code{gt_tbl} object where
 #' summary rows were added via the \code{\link{summary_rows}()} function. The
@@ -46,7 +46,7 @@
 #' # as necessary and pass to `gt()` (the
 #' # `groupname` and `rowname` magic
 #' # columns create row groups and a stub)
-#' tbl_1 <-
+#' tab_1 <-
 #'   summary_extracted %>%
 #'   dplyr::bind_rows() %>%
 #'   gt()
