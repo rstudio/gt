@@ -36,9 +36,9 @@
 #' exact longitude. For example, two hours before the sun crosses the meridian
 #' (the highest point it would reach that day) corresponds to a true solar time
 #' of 10 a.m. The SZA has a strong dependence on the observer's latitude. For
-#' example, at a latitude of 50 deg N at the start of January, the noontime SZA
-#' is 73.0 but a different observer at 20 deg N would measure the noontime SZA
-#' to be 43.0 degrees.
+#' example, at a latitude of 50 degrees N at the start of January, the noontime
+#' SZA is 73.0 but a different observer at 20 degrees N would measure the
+#' noontime SZA to be 43.0 degrees.
 #'
 #' @format A tibble with 816 rows and 4 variables:
 #' \describe{
@@ -93,7 +93,7 @@
 #'
 #' This dataset provides daily price indicators for the S&P 500 index from the
 #' beginning of 1950 to the end of 2015. The index includes 500 leading
-#' companies and captures about 80% coverage of available market capitalization.
+#' companies and captures about 80\% coverage of available market capitalization.
 #'
 #' @format A tibble with 16607 rows and 7 variables:
 #' \describe{
