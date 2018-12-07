@@ -40,7 +40,8 @@ Perform targeted text transformation with a function
 # a function within `text_transform()`,
 # where `x` is a formatted vector of
 # column values
-exibble \%>\%
+tab_1 <-
+  exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
