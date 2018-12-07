@@ -502,7 +502,7 @@ exibble_ddtab
 
 Let's test as many formatter functions as possible with `exibble` while also using row labels and row groups (furnished by the `row` and `group` columns). We'll format `num` to display numbers with 2 decimal places. The dates in `date` will be formatted with `date_style` `6` (the `m_day_year` style, use `info_date_style()` to learn about all of them). The 24-h time values in `time` will use `time_style` `4` (`hm_p`, more info at `info_time_style()`). Datetimes as in `datetime` column can be formatted with the `fmt_datetime()` function (which uses the `date_style` and `time_style` arguments). The column `currency` will be formatted as a currency with `fmt_currency` and we'll consider these values to be euros (`currency = "EUR"`).
 
-```{r exibble, eval=FALSE}
+```{r exibble}
 # Create a gt table based on `exibble`
 exibble %>%
   gt(
@@ -536,4 +536,6 @@ exibble %>%
     row.padding = px(3)
   )
 ```
+
+
 
