@@ -18,14 +18,22 @@ a character object of class \code{from_markdown}.
 \description{
 Interpret input text as Markdown-formatted text
 }
+\section{Figures}{
+
+\if{html}{\figure{man_md_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table object using the
-# `mtcars` dataset and add a caption
-# that is to interpreted as Markdown
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_stubhead_label(
-      label = md("car *make* and *model*"))
+# Use `exibble` to create a gt table;
+# when adding a title, use the `md()`
+# helper to use Markdown formatting
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(currency, char) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Using *Markdown*"))
+
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
