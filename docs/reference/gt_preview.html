@@ -168,6 +168,11 @@ the table stub.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_gt_preview_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other table-part creation/modification functions: <code><a href='gt.html'>gt</a></code>,
@@ -178,10 +183,14 @@ the table stub.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a preview of the `mtcars`</span>
-<span class='co'># dataset; invoking the `gt_tbl`</span>
-<span class='co'># object will display it</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span> <span class='fu'>gt_preview</span>(<span class='no'>mtcars</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table</span>
+<span class='co'># preview (with only a few of its</span>
+<span class='co'># columns); you'll see the first five</span>
+<span class='co'># rows and the last row</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>year</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>gt_preview</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -189,6 +198,8 @@ the table stub.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
