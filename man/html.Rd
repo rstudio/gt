@@ -19,15 +19,22 @@ a character object of class \code{html}.
 \description{
 Interpret input text as HTML-formatted text
 }
+\section{Figures}{
+
+\if{html}{\figure{man_html_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a table object using the
-# `mtcars` dataset and add a caption
-# that is to interpreted as HTML
-gt_tbl <-
-  gt(mtcars, rownames_to_stub = TRUE) \%>\%
-    tab_stubhead_label(
-      label = html(
-        "car <em>make</em> and <em>model</em>"))
+# Use `exibble` to create a gt table;
+# when adding a title, use the `html()`
+# helper to use html formatting
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(currency, char) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = html("<em>HTML</em>"))
+
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
