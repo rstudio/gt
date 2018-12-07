@@ -56,6 +56,7 @@
     background-color: $column_labels_background_color; /* column_labels.background.color */
     font-size: $column_labels_font_size; /* column_labels.font.size */
     font-weight: $column_labels_font_weight; /* column_labels.font.weight */
+    vertical-align: middle;
     padding: 10px;
     margin: 10px;
   }
@@ -73,9 +74,10 @@
     border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
     border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
     border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
-    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom  .style */
-    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom  .width */
-    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom  .color */
+    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom.style */
+    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom.width */
+    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
+    vertical-align: middle;
   }
 
   .gt_empty_group_heading {
@@ -87,9 +89,10 @@
     border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
     border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
     border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
-    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom  .style */
-    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom  .width */
-    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom  .color */
+    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom.style */
+    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom.width */
+    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
+    vertical-align: middle;
   }
 
   .gt_striped tr:nth-child(even) {
@@ -99,13 +102,14 @@
   .gt_row {
     padding: $row_padding; /* row.padding */
     margin: 10px;
+    vertical-align: middle;
   }
 
   .gt_stub {
     border-right-style: solid;
     border-right-width: 2px;
     border-right-color: #A8A8A8;
-    text-indent: 5px;
+    padding-left: 12px;
     &.gt_row {
       background-color: $table_background_color;
     }
