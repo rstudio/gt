@@ -152,6 +152,11 @@ preserved.</p></td>
   be sanitized.</p>
 <p>a character object of class <code>html</code>.</p>
     
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_html_1.svg' width=100% /></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other helper functions: <code><a href='cells_styles.html'>cells_styles</a></code>,
@@ -160,14 +165,15 @@ preserved.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `mtcars` dataset and add a caption</span>
-<span class='co'># that is to interpreted as HTML</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='no'>mtcars</span>, <span class='kw'>rownames_to_stub</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_stubhead_label.html'>tab_stubhead_label</a></span>(
-      <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>html</span>(
-        <span class='st'>"car &lt;em&gt;make&lt;/em&gt; and &lt;em&gt;model&lt;/em&gt;"</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
+<span class='co'># when adding a title, use the `html()`</span>
+<span class='co'># helper to use html formatting</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>currency</span>, <span class='no'>char</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>html</span>(<span class='st'>"&lt;em&gt;HTML&lt;/em&gt;"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,6 +181,8 @@ preserved.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
