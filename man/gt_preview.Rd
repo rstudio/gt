@@ -27,11 +27,21 @@ an object of class \code{gt_tbl}.
 Create a preview version of table. Here we can specify the first and last
 \code{n} rows for the preview table.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Create a preview of the `mtcars`
-# dataset; invoking the `gt_tbl`
-# object will display it
-gt_tbl <- gt_preview(mtcars)
+# Use `gtcars` to create a gt table
+# preview (with only a few of its
+# columns); you'll see the first five
+# rows and the last row
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, year) \%>\%
+  gt_preview()
+
 }
 \seealso{
 Other table-part creation/modification functions: \code{\link{gt}},
