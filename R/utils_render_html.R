@@ -310,6 +310,9 @@ create_heading_component <- function(heading,
             n_cols, "'", create_style_attrs(subtitle_style_attrs), ">",
             heading$subtitle, footnote_subtitle_glyphs, "</th>\n</tr>\n"))
     }
+
+    heading_component <-
+      paste0(heading_component, "</thead>\n")
   }
 
   if (output == "rtf") {
