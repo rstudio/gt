@@ -52,7 +52,7 @@ as.tags.gt_tbl <- function(x, ...) {
   # Attach the dependency to the HTML table
   html_tbl <- htmltools::tagList(
     htmltools::tags$style(htmltools::HTML(css)),
-    tags$div(id = id, htmltools::HTML(html_table))
+    tags$div(id = id, style = htmltools::css(`overflow-x` = "auto"), htmltools::HTML(html_table))
   )
 
   html_tbl
