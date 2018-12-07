@@ -1,6 +1,7 @@
 @mixin gt_styles() {
 
   .gt_table {
+    display: table;
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
