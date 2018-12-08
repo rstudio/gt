@@ -32,8 +32,12 @@
 
 <meta property="og:title" content="Preview a gt table object — gt_preview" />
 
-<meta property="og:description" content="Create a preview version of table. Here we can specify the first and last
-n rows for the preview table." />
+<meta property="og:description" content="Sometimes you may want to see just a small portion of your input data. We can
+use gt_preview() in place of gt() to get the first x rows of
+data and the last y rows of data (which can be set by the top_n and
+bottom_n arguments). It's not advised to use additional gt API
+functions to further modify the output of gt_preview(). Furthermore,
+you cannot pass a gt object to gt_preview()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -131,8 +135,12 @@ n rows for the preview table." />
 
     <div class="ref-description">
     
-    <p>Create a preview version of table. Here we can specify the first and last
-<code>n</code> rows for the preview table.</p>
+    <p>Sometimes you may want to see just a small portion of your input data. We can
+use <code>gt_preview()</code> in place of <code><a href='gt.html'>gt()</a></code> to get the first x rows of
+data and the last y rows of data (which can be set by the <code>top_n</code> and
+<code>bottom_n</code> arguments). It's not advised to use additional gt API
+functions to further modify the output of <code>gt_preview()</code>. Furthermore,
+you cannot pass a gt object to <code>gt_preview()</code>.</p>
     
     </div>
 
@@ -160,13 +168,22 @@ the table.</p></td>
     <tr>
       <th>incl_rownums</th>
       <td><p>an option to include the row numbers for <code>data</code> in
-the table stub.</p></td>
+the table stub. By default, this is <code>TRUE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Any grouped data or magic columns such as <code>rowname</code> and <code>groupname</code>
+will be ignored by <code>gt_preview()</code> and, as such, one cannot add a stub or
+group rows in the output table. By default, the output table will include row
+numbers in a stub (including a range of row numbers for the omitted rows).
+This row numbering option can be deactivated by setting <code>incl_rownums</code>
+to <code>FALSE</code>.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -198,6 +215,8 @@ the table stub.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
