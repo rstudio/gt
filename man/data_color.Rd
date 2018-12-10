@@ -51,7 +51,7 @@ provides more control over how cells are colored since we provide an explicit
 color function and thus other requirements such as bin counts, cut points, or
 a numeric domain. Finally, we can choose whether to apply the cell-specific
 colors to either the cell background or the cell text. By default, gt will
-choose the ideal text color (for maximal constrast) when colorizing the
+choose the ideal text color (for maximal contrast) when colorizing the
 background of data cells.
 }
 \section{Figures}{
