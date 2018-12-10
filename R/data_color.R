@@ -1,4 +1,18 @@
 #' Set data cell colors using a palette or a color function
+#'
+#' It's possible to add color to data cells according to their values. The
+#' \code{data_color()} function colors all rows of any \code{columns} supplied.
+#' There are two ways to define how cells are colored: (1) through the use of a
+#' supplied color palette, and (2) through use of a color mapping function
+#' available from the \code{scales} package. The first method colorizes cell
+#' data according to whether values are character or numeric. The second method
+#' provides more control over how cells are colored since we provide an explicit
+#' color function and thus other requirements such as bin counts, cut points, or
+#' a numeric domain. Finally, we can choose whether to apply the cell-specific
+#' colors to either the cell background or the cell text. By default, gt will
+#' choose the ideal text color (for maximal constrast) when colorizing the
+#' background of data cells.
+#'
 #' @inheritParams fmt_number
 #' @param columns the columns wherein changes to cell data colors should occur.
 #' @param colors either a color mapping function from the \code{scales} package
