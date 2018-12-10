@@ -209,6 +209,25 @@ more optimal text-to-background color contrast. By default, this is set to
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>col_*()</code> functions from the scales package can be used in the
+<code>colors</code> argument. These functions map data values (<code>numeric</code> or
+<code>factor</code>/<code>character</code>) to colors according to the provided palette.</p>
+<ul>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_numeric()</a></code>: provides a simple linear mapping
+from continuous numeric data to an interpolated palette.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_bin()</a></code>: provides a mapping of continuous
+numeric data to value-based bins. This internally uses the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/cut'>base::cut()</a></code> function.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_quantile()</a></code>: provides a mapping of continuous
+numeric data to quantiles. This internally uses the
+<code><a href='https://www.rdocumentation.org/packages/stats/topics/quantile'>stats::quantile()</a></code> function.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_factor()</a></code>: provides a mapping of factors to
+colors.  If the palette is discrete and has a different number of colours than
+the number of factors, interpolation is used.</p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -249,6 +268,8 @@ more optimal text-to-background color contrast. By default, this is set to
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
