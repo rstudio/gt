@@ -215,16 +215,16 @@ more optimal text-to-background color contrast. By default, this is set to
 <code>colors</code> argument. These functions map data values (<code>numeric</code> or
 <code>factor</code>/<code>character</code>) to colors according to the provided palette.</p>
 <ul>
-<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_numeric()</a></code>: provides a simple linear mapping
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a>()</code>: provides a simple linear mapping
 from continuous numeric data to an interpolated palette.</p></li>
-<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_bin()</a></code>: provides a mapping of continuous
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_bin</a>()</code>: provides a mapping of continuous
 numeric data to value-based bins. This internally uses the
-<code><a href='https://www.rdocumentation.org/packages/base/topics/cut'>base::cut()</a></code> function.</p></li>
-<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_quantile()</a></code>: provides a mapping of continuous
+<code><a href='https://www.rdocumentation.org/packages/base/topics/cut'>cut</a>()</code> function.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_quantile</a>()</code>: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
-<code><a href='https://www.rdocumentation.org/packages/stats/topics/quantile'>stats::quantile()</a></code> function.</p></li>
-<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>scales::col_factor()</a></code>: provides a mapping of factors to
-colors.  If the palette is discrete and has a different number of colours than
+<code><a href='https://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a>()</code> function.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_factor</a>()</code>: provides a mapping of factors to
+colors. If the palette is discrete and has a different number of colors than
 the number of factors, interpolation is used.</p></li>
 </ul>
     
