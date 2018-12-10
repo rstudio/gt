@@ -32,7 +32,18 @@
 
 <meta property="og:title" content="Set data cell colors using a palette or a color function — data_color" />
 
-<meta property="og:description" content="Set data cell colors using a palette or a color function" />
+<meta property="og:description" content="It's possible to add color to data cells according to their values. The
+data_color() function colors all rows of any columns supplied.
+There are two ways to define how cells are colored: (1) through the use of a
+supplied color palette, and (2) through use of a color mapping function
+available from the scales package. The first method colorizes cell
+data according to whether values are character or numeric. The second method
+provides more control over how cells are colored since we provide an explicit
+color function and thus other requirements such as bin counts, cut points, or
+a numeric domain. Finally, we can choose whether to apply the cell-specific
+colors to either the cell background or the cell text. By default, gt will
+choose the ideal text color (for maximal contrast) when colorizing the
+background of data cells." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,7 +141,18 @@
 
     <div class="ref-description">
     
-    <p>Set data cell colors using a palette or a color function</p>
+    <p>It's possible to add color to data cells according to their values. The
+<code>data_color()</code> function colors all rows of any <code>columns</code> supplied.
+There are two ways to define how cells are colored: (1) through the use of a
+supplied color palette, and (2) through use of a color mapping function
+available from the <code>scales</code> package. The first method colorizes cell
+data according to whether values are character or numeric. The second method
+provides more control over how cells are colored since we provide an explicit
+color function and thus other requirements such as bin counts, cut points, or
+a numeric domain. Finally, we can choose whether to apply the cell-specific
+colors to either the cell background or the cell text. By default, gt will
+choose the ideal text color (for maximal contrast) when colorizing the
+background of data cells.</p>
     
     </div>
 
