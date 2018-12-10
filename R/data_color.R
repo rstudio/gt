@@ -13,6 +13,28 @@
 #' choose the ideal text color (for maximal contrast) when colorizing the
 #' background of data cells.
 #'
+#' The \code{col_*()} functions from the scales package can be used in the
+#' \code{colors} argument. These functions map data values (\code{numeric} or
+#' \code{factor}/\code{character}) to colors according to the provided palette.
+#'
+#' \itemize{
+#'
+#' \item \code{\link{scales::col_numeric}()}: provides a simple linear mapping
+#' from continuous numeric data to an interpolated palette.
+#'
+#' \item \code{\link{scales::col_bin}()}: provides a mapping of continuous
+#' numeric data to value-based bins. This internally uses the
+#' \code{\link{base::cut}()} function.
+#'
+#' \item \code{\link{scales::col_quantile}()}: provides a mapping of continuous
+#' numeric data to quantiles. This internally uses the
+#' \code{\link{stats::quantile}()} function.
+#'
+#' \item \code{\link{scales::col_factor}()}: provides a mapping of factors to
+#' colors.  If the palette is discrete and has a different number of colours than
+#' the number of factors, interpolation is used.
+#' }
+#'
 #' @inheritParams fmt_number
 #' @param columns the columns wherein changes to cell data colors should occur.
 #' @param colors either a color mapping function from the \code{scales} package
