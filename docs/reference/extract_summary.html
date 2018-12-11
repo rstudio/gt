@@ -202,10 +202,11 @@ function.</p></td>
   <span class='fu'>extract_summary</span>()
 
 <span class='co'># Use the summary list to make a new</span>
-<span class='co'># gt table; the key is to `bind_rows()`</span>
-<span class='co'># as necessary and pass to `gt()` (the</span>
-<span class='co'># `groupname` and `rowname` magic</span>
-<span class='co'># columns create row groups and a stub)</span>
+<span class='co'># gt table; the key thing is to use</span>
+<span class='co'># `dplyr::bind_rows()` and then pass the</span>
+<span class='co'># tibble to `gt()` (the `groupname` and</span>
+<span class='co'># `rowname` magic column names create</span>
+<span class='co'># row groups and a stub)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>summary_extracted</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
