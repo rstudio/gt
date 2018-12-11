@@ -59,10 +59,11 @@ summary_extracted <-
   extract_summary()
 
 # Use the summary list to make a new
-# gt table; the key is to `bind_rows()`
-# as necessary and pass to `gt()` (the
-# `groupname` and `rowname` magic
-# columns create row groups and a stub)
+# gt table; the key thing is to use
+# `dplyr::bind_rows()` and then pass the
+# tibble to `gt()` (the `groupname` and
+# `rowname` magic column names create
+# row groups and a stub)
 tab_1 <-
   summary_extracted \%>\%
   dplyr::bind_rows() \%>\%
