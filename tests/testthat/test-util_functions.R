@@ -403,7 +403,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Expect that certain portions of `inlined_html` have
   # inlined CSS rules
   expect_true(
-    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
   )
 
   expect_true(

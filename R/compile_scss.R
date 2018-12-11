@@ -21,7 +21,7 @@ compile_scss <- function(data, id = NULL) {
         "
         <<ifelse(has_id, 'html', '.gt_table')>> {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+            Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans',
             Arial, sans-serif;
         }
 
