@@ -250,14 +250,17 @@ fmt_scientific <- function(data,
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
 
-      small_pos <- (
-        (x[non_na_x] >= 1 & x[non_na_x] < 10) |
-          (x[non_na_x] <= -1 & x[non_na_x] > -10) |
-          is_equal_to(x[non_na_x], 0)
-      )
+      # Determine which of `x` don't require scientific notation
+      small_pos <-
+        ((x >= 1 & x < 10) |
+           (x <= -1 & x > -10) |
+           is_equal_to(x, 0)) & !is.na(x)
+
+      # Copy `x` into `x_str`
+      x_str <- x
 
       # Format the number component as a character vector
-      x[non_na_x] <-
+      x_str[non_na_x] <-
         formatC(
           x = x[non_na_x] * scale_by,
           digits = decimals,
@@ -270,14 +273,19 @@ fmt_scientific <- function(data,
       # For any numbers that shouldn't have an exponent, remove
       # that portion from the character version
       if (any(small_pos)) {
-        x[non_na_x][small_pos] <-
-          split_scientific_notn(x[non_na_x][small_pos])$num
+        x_str[small_pos] <-
+          split_scientific_notn(x_str[small_pos])$num
       }
 
+      # For any non-NA numbers that do have an exponent, format
+      # those according to the output context
       if (any(!small_pos)) {
-        sci_parts <- split_scientific_notn(x[non_na_x][!small_pos])
 
-        x[non_na_x][!small_pos] <-
+        x_str[non_na_x & !small_pos]
+
+        sci_parts <- split_scientific_notn(x_str[non_na_x & !small_pos])
+
+        x_str[non_na_x & !small_pos] <-
           paste0(
             sci_parts$num, exp_start_str,
             sci_parts$exp, exp_end_str
@@ -286,38 +294,46 @@ fmt_scientific <- function(data,
 
       # Handle formatting of pattern
       pre_post_txt <- get_pre_post_txt(pattern)
-      x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-      x
+      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+      x_str
     }
   }
 
   # Create the default formatting function for scientific notation
-  format_fcn_sci_notn_default <- format_fcn_sci_notn_factory(
-    exp_start_str = " x 10(",
-    exp_end_str = ")")
+  format_fcn_sci_notn_default <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = " x 10(",
+      exp_end_str = ")"
+    )
 
   # Create the HTML formatting function for scientific notation
-  format_fcn_sci_notn_html <- format_fcn_sci_notn_factory(
-    exp_start_str = " &times; 10<sup class='gt_super'>",
-    exp_end_str = "</sup>")
+  format_fcn_sci_notn_html <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = " &times; 10<sup class='gt_super'>",
+      exp_end_str = "</sup>"
+    )
 
   # Create the LaTeX formatting function for scientific notation
-  format_fcn_sci_notn_latex <- format_fcn_sci_notn_factory(
-    exp_start_str = "$ \\times 10^{",
-    exp_end_str = "}$")
+  format_fcn_sci_notn_latex <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = "$ \\times 10^{",
+      exp_end_str = "}$"
+    )
 
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = columns,
-      rows = !!rows,
-      fns = list(
-        html = format_fcn_sci_notn_html,
-        default = format_fcn_sci_notn_default,
-        latex = format_fcn_sci_notn_latex))
+  fmt(
+    data = data,
+    columns = columns,
+    rows = !!rows,
+    fns = list(
+      html = format_fcn_sci_notn_html,
+      default = format_fcn_sci_notn_default,
+      latex = format_fcn_sci_notn_latex)
+  )
 }
 
 #' Format values as a percentage
