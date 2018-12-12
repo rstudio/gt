@@ -193,6 +193,10 @@ gt_export_image_pdf <- function(data,
     # Determine if the `wkhtmltoimage` binary is in the path
     wkhtml_bin <- find_wkhtml_binary(type = "image")
 
+    # Define the `quiet` argument for squelching console messages
+    quiet_arg <- "--quiet "
+
+    # Create a `format` argument with the value being the output type
     format_arg <- paste0("--format ", output_type)
 
     # Create a `quality` argument with the value being the quality level
@@ -203,7 +207,7 @@ gt_export_image_pdf <- function(data,
     system(
       paste(
         wkhtml_bin,
-        format_arg, quality_arg, trim_lr_args,
+        quiet_arg, format_arg, quality_arg, trim_lr_args,
         gt_table_path, output_path)
     )
   }
