@@ -4,7 +4,7 @@
 \alias{gt_jpg}
 \title{Export the gt table as a JPG file}
 \usage{
-gt_jpg(data, file_name = NULL, quality = 85, trim_lr = TRUE)
+gt_jpg(data, file_name = NULL, quality = 95, trim_lr = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
