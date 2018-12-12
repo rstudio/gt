@@ -1,6 +1,6 @@
 #' Export the gt table as a PDF file
 #' @param data a table object that is created using the \code{\link{gt}()}
-#' function.
+#'   function.
 #' @param file_name the output file name of the PDF file.
 #' @examples
 #' \dontrun{
@@ -73,7 +73,7 @@ gt_png <- function(data,
 
 #' Export the gt table as a JPG file
 #' @param data a table object that is created using the \code{\link{gt}()}
-#' function.
+#'   function.
 #' @param file_name the output file name of the JPG file.
 #' @inheritParams gt_png
 #' @examples
@@ -150,6 +150,7 @@ gt_export_image_pdf <- function(data,
         info = TRUE
       )
 
+    # Get the dimensions of the temporary PNG file
     png_dim <- attributes(png_info)$info$dim
 
     # Determine if the `wkhtmltopdf` binary is in the path
@@ -194,6 +195,7 @@ gt_export_image_pdf <- function(data,
 
     format_arg <- paste0("--format ", output_type)
 
+    # Create a `quality` argument with the value being the quality level
     quality_arg <- paste0("--quality ", quality)
 
     # Use the `wkhtmltoimage` binary to generate a PDF file
