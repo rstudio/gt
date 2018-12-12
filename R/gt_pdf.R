@@ -51,19 +51,61 @@ gt_pdf <- function(data,
 #' @family table export functions
 #' @export
 gt_png <- function(data,
-                   file_name = NULL) {
+                   file_name = NULL,
+                   quality = 95,
+                   trim_lr = TRUE) {
 
   # Export the gt object to a PDF file
   gt_export_image_pdf(
     data = data,
     output_type = "png",
-    file_name = file_name)
+    file_name = file_name,
+    quality = quality,
+    trim_lr = trim_lr)
 }
 
+#' Export the gt table as a JPG file
+#' @param data a table object that is created using the \code{\link{gt}()}
+#' function.
+#' @param file_name the output file name of the JPG file.
+#' @examples
+#' \dontrun{
+#' # Use `countrypops` to create a gt table;
+#' # export the table as a JPG file
+#' countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_align(
+#'     align = "left",
+#'     columns = vars(population)
+#'   ) %>%
+#'   gt_jpg(file_name = "countrypops.jpg")
+#' }
+#' @family table export functions
+#' @export
+gt_jpg <- function(data,
+                   file_name = NULL,
+                   quality = 95,
+                   trim_lr = TRUE) {
 
+  # Export the gt object to a PDF file
+  gt_export_image_pdf(
+    data = data,
+    output_type = "jpg",
+    file_name = file_name,
+    quality = quality,
+    trim_lr = trim_lr)
+}
+
+# Main image export function for use via the
+# `wkhtmltopdf` and `wkhtmltoimage` binaries
 gt_export_image_pdf <- function(data,
                                 output_type = NULL,
-                                file_name = NULL) {
+                                file_name = NULL,
+                                quality = 95,
+                                trim_lr = TRUE) {
 
   # Create a path to a temporary directory
   tempdir <- tempdir()
@@ -106,19 +148,28 @@ gt_export_image_pdf <- function(data,
     system(paste(wkhtml_bin, margins_args, gt_table_path, output_path))
   }
 
-  if (output_type == "png") {
+  if (trim_lr) {
+    trim_lr_args <- "--width 0 --enable-smart-width"
+  } else {
+    trim_lr_args <- ""
+  }
 
-    # Determine if the `wkhtmltopdf` binary is in the path
+  if (output_type %in% c("png", "jpg", "bmp")) {
+
+    # Determine if the `wkhtmltoimage` binary is in the path
     wkhtml_bin <- find_wkhtml_binary(type = "image")
 
-    format_arg <- "--format png --width 0 --enable-smart-width"
+    format_arg <- paste0("--format ", output_type)
 
-    quality_arg <- "--quality 80"
+    quality_arg <- paste0("--quality ", quality)
 
-    # Use the `wkhtmltopdf` binary to generate a PDF file
+    # Use the `wkhtmltoimage` binary to generate a PDF file
     # in the working directory
     system(
-      paste(wkhtml_bin, format_arg, quality_arg, gt_table_path, output_path)
+      paste(
+        wkhtml_bin,
+        format_arg, quality_arg, trim_lr_args,
+        gt_table_path, output_path)
     )
   }
 }
