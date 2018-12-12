@@ -143,7 +143,12 @@ gt_export_image_pdf <- function(data,
         path.expand(paste0(tempdir, "/gt_table.png")))
     )
 
-    png_info <- png::readPNG(path.expand(paste0(tempdir, "/gt_table.png")), info = TRUE)
+    # Create a temporary PNG file to obtain cropbox dimensions
+    png_info <-
+      png::readPNG(
+        path.expand(paste0(tempdir, "/gt_table.png")),
+        info = TRUE
+      )
 
     png_dim <- attributes(png_info)$info$dim
 
