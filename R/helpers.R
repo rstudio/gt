@@ -1,11 +1,7 @@
 #' Helpers for targeting multiple cells in different locations
 #'
 #' These helper functions are used to target individual cells in different
-#' locations (e.g., the stub, the column labels, the title, etc.). They can be
-#' used in any of these functions (which all have a \code{locations} argument):
-#' \code{\link{tab_footnote}()}, \code{\link{tab_style}()}, and
-#' \code{\link{text_transform}()} Furthermore, multiple locations can be
-#' targeted by enclosing several \code{cells_*()} helper functions in a list.
+#' locations.
 #'
 #' The following helper functions can be used to target cells (roughly in order
 #' from the top to the bottom of a table):
