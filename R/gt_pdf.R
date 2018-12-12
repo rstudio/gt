@@ -92,6 +92,7 @@ gt_png <- function(data,
 #'   gt_jpg(file_name = "countrypops.jpg")
 #' }
 #' @family table export functions
+#' @importFrom png readPNG
 #' @export
 gt_jpg <- function(data,
                    file_name = NULL,
