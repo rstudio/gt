@@ -11,6 +11,15 @@ gt_jpg(data, file_name = NULL, quality = 95, trim_lr = TRUE)
 function.}
 
 \item{file_name}{the output file name of the JPG file.}
+
+\item{quality}{the quality level of the rendered image file. Can be any
+integer in the range of \code{0} to \code{100}, where higher numbers result
+in higher quality graphics. The default quality level is \code{95}, which
+produces high quality graphics at modest file sizes.}
+
+\item{trim_lr}{an option to trim horizontal whitespace of the resulting
+graphic. By default, this whitespace is removed, resulting in a graphic
+that is tightly cropped to the table content.}
 }
 \description{
 Export the gt table as a JPG file
