@@ -155,8 +155,21 @@ gt_export_image_pdf <- function(data,
     # Determine if the `wkhtmltopdf` binary is in the path
     wkhtml_bin <- find_wkhtml_binary(type = "pdf")
 
-    # Set margins
-    margins_args <- "--margin-top 2 --margin-bottom 2 --margin-left 2 --margin-right 2"
+    # Use an approximate pixels to mm conversion to get
+    # width and height for cropping
+    width <- png_dim[1] * 0.225
+    height <- png_dim[2] * 0.225
+
+    # Define the `quiet` argument for squelching console messages
+    quiet_arg <- "--quiet "
+
+    # Create args for page margins and page sizing
+    margins_args <-
+      paste0(
+        "-B 1 -L 1 -R 1 -T 3.4 ",
+        "--no-outline ",
+        "--page-width ", width, "mm ",
+        "--page-height ", height, "mm")
 
     # Use the `wkhtmltopdf` binary to generate a PDF file
     # in the working directory
