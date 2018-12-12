@@ -138,9 +138,10 @@ gt_export_image_pdf <- function(data,
     system(
       paste(
         find_wkhtml_binary(type = "image"),
-        format_args,
+        png_args,
         gt_table_path,
-        path.expand(paste0(tempdir, "/gt_table.png"))))
+        path.expand(paste0(tempdir, "/gt_table.png")))
+    )
 
     png_info <- png::readPNG(path.expand(paste0(tempdir, "/gt_table.png")), info = TRUE)
 
