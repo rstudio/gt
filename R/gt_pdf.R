@@ -111,11 +111,15 @@ gt_export_image_pdf <- function(data,
     # Determine if the `wkhtmltopdf` binary is in the path
     wkhtml_bin <- find_wkhtml_binary(type = "image")
 
-    format_args <- "--format png"
+    format_arg <- "--format png --width 0 --enable-smart-width"
+
+    quality_arg <- "--quality 80"
 
     # Use the `wkhtmltopdf` binary to generate a PDF file
     # in the working directory
-    system(paste(wkhtml_bin, format_args, gt_table_path, output_path))
+    system(
+      paste(wkhtml_bin, format_arg, quality_arg, gt_table_path, output_path)
+    )
   }
 }
 
