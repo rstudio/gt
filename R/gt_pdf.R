@@ -31,8 +31,15 @@ gt_pdf <- function(data,
 
 #' Export the gt table as a PNG file
 #' @param data a table object that is created using the \code{\link{gt}()}
-#' function.
+#'   function.
 #' @param file_name the output file name of the PNG file.
+#' @param quality the quality level of the rendered image file. Can be any
+#'   integer in the range of \code{0} to \code{100}, where higher numbers result
+#'   in higher quality graphics. The default quality level is \code{95}, which
+#'   produces high quality graphics at modest file sizes.
+#' @param trim_lr an option to trim horizontal whitespace of the resulting
+#'   graphic. By default, this whitespace is removed, resulting in a graphic
+#'   that is tightly cropped to the table content.
 #' @examples
 #' \dontrun{
 #' # Use `countrypops` to create a gt table;
@@ -68,6 +75,7 @@ gt_png <- function(data,
 #' @param data a table object that is created using the \code{\link{gt}()}
 #' function.
 #' @param file_name the output file name of the JPG file.
+#' @inheritParams gt_png
 #' @examples
 #' \dontrun{
 #' # Use `countrypops` to create a gt table;
