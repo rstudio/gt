@@ -36,6 +36,7 @@ tab_1 <-
 }
 \seealso{
 Other table export functions: \code{\link{as_latex}},
-  \code{\link{as_rtf}}, \code{\link{extract_summary}}
+  \code{\link{as_rtf}}, \code{\link{extract_summary}},
+  \code{\link{gt_pdf}}, \code{\link{gt_png}}
 }
 \concept{table export functions}
