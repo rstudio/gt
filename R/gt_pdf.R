@@ -173,7 +173,12 @@ gt_export_image_pdf <- function(data,
 
     # Use the `wkhtmltopdf` binary to generate a PDF file
     # in the working directory
-    system(paste(wkhtml_bin, margins_args, gt_table_path, output_path))
+    system(
+      paste(
+        wkhtml_bin,
+        quiet_arg, margins_args,
+        gt_table_path, output_path)
+    )
   }
 
   if (trim_lr) {
