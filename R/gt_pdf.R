@@ -205,37 +205,3 @@ find_wkhtml_binary <- function(type = c("pdf", "image")) {
 
   path.expand(path)
 }
-
-# Possible locations of the `wkhtmltopdf` executable
-# wkhtmltopdf_paths <- function() {
-#   if (is_windows()) {
-#     path <- Sys.getenv('APPDATA', '')
-#     path <- if (dir_exists(path)) {
-#       file.path(path, 'wkhtmltopdf')
-#     }
-#   } else if (is_osx()) {
-#     path <- '~/Library/Application Support'
-#     path <- if (dir.exists(path)) {
-#       file.path(path, 'wkhtmltopdf')
-#     }
-#   } else {
-#     path <- '~/bin'
-#   }
-# }
-
-# is_windows <- function() {
-#   .Platform$OS.type == "windows"
-# }
-#
-# is_osx <- function() {
-#   Sys.info()[['sysname']] == 'Darwin'
-# }
-#
-# is_linux <- function() {
-#   Sys.info()[['sysname']] == 'Linux'
-# }
-#
-# is_solaris <- function() {
-#   Sys.info()[['sysname']] == 'SunOS'
-# }
-
