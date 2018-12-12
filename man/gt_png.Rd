@@ -4,7 +4,7 @@
 \alias{gt_png}
 \title{Export the gt table as a PNG file}
 \usage{
-gt_png(data, file_name = NULL)
+gt_png(data, file_name = NULL, quality = 85, trim_lr = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -34,6 +34,7 @@ countrypops \%>\%
 \seealso{
 Other table export functions: \code{\link{as_latex}},
   \code{\link{as_raw_html}}, \code{\link{as_rtf}},
-  \code{\link{extract_summary}}, \code{\link{gt_pdf}}
+  \code{\link{extract_summary}}, \code{\link{gt_jpg}},
+  \code{\link{gt_pdf}}
 }
 \concept{table export functions}

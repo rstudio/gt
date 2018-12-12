@@ -34,6 +34,7 @@ countrypops \%>\%
 \seealso{
 Other table export functions: \code{\link{as_latex}},
   \code{\link{as_raw_html}}, \code{\link{as_rtf}},
-  \code{\link{extract_summary}}, \code{\link{gt_png}}
+  \code{\link{extract_summary}}, \code{\link{gt_jpg}},
+  \code{\link{gt_png}}
 }
 \concept{table export functions}
