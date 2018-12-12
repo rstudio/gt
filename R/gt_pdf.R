@@ -132,7 +132,7 @@ gt_export_image_pdf <- function(data,
 
   if (output_type == "pdf") {
 
-    format_args <- "--format png"
+    png_args <- "--quiet --format png --width 0 --enable-smart-width"
 
     # Get the dimensions of the table by converting to PNG first
     system(
