@@ -5,11 +5,27 @@ home:
 
 reference:
   - title: Create Table
+    desc: >
+      All gt tables begin with a call to `gt()`, where we would supply the
+      input data table (data frame or tibble) and some basic options for
+      creating a stub (`rowname_col`) and row groups (`groupname_col`). We
+      can also introduce a grouped tibble (via **dplyr**'s `group_by()`) for
+      more precise divisions of rows into row groups. The `gt_preview()`
+      function is great for getting a nicely-formatted preview of a data
+      table (defaulting to the first 5 rows and the last row).
     contents:
     - gt
     - gt_preview
 
   - title: Create/Modify Parts
+    desc: >
+      A gt table can contain a few useful parts for conveying additional
+      information. These include a header (with a titles and subtitle), a
+      footer (with footnotes and source notes), and additional areas for
+      labels (row group labels, column spanner labels, the stubhead label).
+      We can modify the look of table parts more generally with
+      `tab_options()` and perform styling on targeted table locations with
+      `tab_style()`
     contents:
     - tab_header
     - tab_spanner
@@ -21,6 +37,15 @@ reference:
     - tab_style
 
   - title: Format Data
+    desc: >
+      Columns of data can be formatted with the `fmt_*()` functions. We can
+      specify the rows of these columns quite precisely with the `rows`
+      argument. We get to apply these functions exactly once to each data
+      cell (last call wins). Need to do custom formatting? Use the `fmt()`
+      function and define your own formatter within (or, create a wrapper
+      with `fmt()` if you prefer). The `text_transform()` function allows
+      for post-processing of any data, and we provide a function for that
+      transformation.
     contents:
     - fmt
     - fmt_number
@@ -36,6 +61,14 @@ reference:
     - data_color
 
   - title: Modify Columns
+    desc: >
+      The `cols_*()` functions allow for modifications that act on entire
+      columns. This includes alignment of the data in columns
+      (`cols_align()`), hiding columns from view (`cols_hide()`),
+      re-labeling the column labels (`cols_label()`), merging two columns
+      together (`cols_merge*()`), moving columns around (`cols_move*()`),
+      and using a column name delimiter to create labels in the column
+      spanner (`cols_split_delim()`).
     contents:
     - cols_align
     - cols_hide
@@ -49,14 +82,30 @@ reference:
     - cols_split_delim
 
   - title: Modify Rows
+    desc: >
+      The only function currently that modifies entire rows is the
+      `row_group_order()` function. It lets us modify the ordering of any
+      row groups in the table.
     contents:
     - row_group_order
 
   - title: Add Rows
+    desc: >
+      There is one function that will adds rows to a **gt** table and that
+      is the `summary_rows()` function. It's useful for adding summary rows
+      to any table that has a row groups and a stub (required for summary
+      row labels).
     contents:
     - summary_rows
 
   - title: Export Table
+    desc: >
+      There may come a day when you need to export a **gt** table in some
+      specific format. We have functions for getting the HTML content of
+      a **gt** table (`as_raw_html()`), getting LaTeX code (`as_latex()`),
+      and getting rich text (`as_rtf()`). Did you use the `summary_rows()`
+      function and wish you had the summary data in a tibble? You can get
+      that with `extract_summary()`.
     contents:
     - as_raw_html
     - as_latex
@@ -64,11 +113,26 @@ reference:
     - extract_summary
 
   - title: Shiny Functions
+    desc: >
+      Shiny is great for building interactive web apps with R. The **gt**
+      table render function (for `server`) is `render_gt()` and the **gt**
+      table output element (for `ui`) is `gt_output()`.
     contents:
     - render_gt
     - gt_output
 
   - title: Helper Functions
+    desc: >
+      A small assortment of helper functions is available in the **gt**
+      package. The `location_cells` help document outlines the `cells_*()`
+      functions that are used for targeting cells with the `locations`
+      argument in the `tab_footnote()`, `tab_style()`, and
+      `text_transform()` functions. The `cells_styles()` function is used
+      exclusively with `tab_style()`'s `style` argument (and the `px()` &
+      `pct()` functions may be useful there). The `md()` and `html()`
+      helpers are used only with `tab_header()`, `tab_footnote()`,
+      `tab_spanner()`, `tab_stubhead_label()`, and `tab_source_note()`
+      functions.
     contents:
     - location_cells
     - cells_styles
