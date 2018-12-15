@@ -168,7 +168,7 @@ navbar:
   type: default
   left:
   - text: Intro
-    href: articles/creating-display-tables.html
+    href: articles/intro-creating-gt-tables.html
   - text: Reference
     href: reference/index.html
   - text: Articles
