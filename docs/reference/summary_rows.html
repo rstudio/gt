@@ -74,7 +74,7 @@ gt_tbl object where summary rows were added via summary_rows()." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/creating-display-tables.html">Intro</a>
+  <a href="../articles/intro-creating-gt-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -210,23 +210,23 @@ as <code>decimals</code>, <code>use_seps</code>, and <code>locale</code> can be 
 <span class='co'># each row group is a week number</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(
     <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
       <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-16"</span>
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/arrange'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(
     <span class='kw'>week</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
       <span class='st'>"W"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/strptime'>strftime</a></span>(<span class='no'>date</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%V"</span>))
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(
     <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
     <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"week"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>summary_rows</span>(
     <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
     <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
       <span class='kw'>min</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min</a></span>(<span class='no'>.</span>),
       <span class='kw'>max</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>.</span>),

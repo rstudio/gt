@@ -70,7 +70,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/creating-display-tables.html">Intro</a>
+  <a href="../articles/intro-creating-gt-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -170,8 +170,8 @@ as Markdown or to retain HTML elements in the text.</p></td>
 <span class='co'># footer that cites the data source</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>msrp</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>msrp</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/slice'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_source_note</span>(
     <span class='kw'>source_note</span> <span class='kw'>=</span> <span class='st'>"From edmunds.com"</span>

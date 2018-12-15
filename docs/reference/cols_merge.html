@@ -70,7 +70,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/creating-display-tables.html">Intro</a>
+  <a href="../articles/intro-creating-gt-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -183,17 +183,17 @@ function.</p></td>
 <span class='co'># both); rename the columns</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>50</span>:<span class='fl'>55</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>volume</span>, -<span class='no'>adj_close</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/slice'>slice</a></span>(<span class='fl'>50</span>:<span class='fl'>55</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(-<span class='no'>volume</span>, -<span class='no'>adj_close</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>cols_merge</span>(
-    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>),
-    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>close</span>),
+    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>open</span>),
+    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>close</span>),
     <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{1}&amp;mdash;{2}"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>cols_merge</span>(
-    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>low</span>),
-    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>high</span>),
+    <span class='kw'>col_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>low</span>),
+    <span class='kw'>col_2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>high</span>),
     <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{1}&amp;mdash;{2}"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
