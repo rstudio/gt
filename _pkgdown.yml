@@ -1,11 +1,14 @@
-development:
-  mode: unreleased
+url: https://gt.rstudio.com
+
+home:
+  strip_header: true
 
 reference:
   - title: Create Table
     contents:
     - gt
     - gt_preview
+
   - title: Create/Modify Parts
     contents:
     - tab_header
@@ -16,6 +19,7 @@ reference:
     - tab_source_note
     - tab_options
     - tab_style
+
   - title: Format Data
     contents:
     - fmt
@@ -30,6 +34,7 @@ reference:
     - fmt_passthrough
     - text_transform
     - data_color
+
   - title: Modify Columns
     contents:
     - cols_align
@@ -42,22 +47,27 @@ reference:
     - cols_move_to_end
     - cols_move_to_start
     - cols_split_delim
+
   - title: Modify Rows
     contents:
     - row_group_order
+
   - title: Add Rows
     contents:
     - summary_rows
+
   - title: Export Table
     contents:
     - as_raw_html
     - as_latex
     - as_rtf
     - extract_summary
+
   - title: Shiny Functions
     contents:
     - render_gt
     - gt_output
+
   - title: Helper Functions
     contents:
     - location_cells
@@ -69,16 +79,19 @@ reference:
     - pct
     - escape_latex
     - adjust_luminance
+
   - title: Images
     contents:
     - web_image
     - local_image
     - ggplot_image
     - test_image
+
   - title: Information
     contents:
     - info_date_style
     - info_time_style
+
   - title: Datasets
     contents:
     - countrypops
@@ -87,3 +100,27 @@ reference:
     - sp500
     - pizzaplace
     - exibble
+
+navbar:
+  type: default
+  left:
+  - text: Intro
+    href: articles/creating-display-tables.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: gt Datasets
+      href: articles/gt-datasets.html
+    - text: Creating Summary Lines
+      href: articles/creating-summary-lines.html
+    - text: Case Study with gtcars
+      href: articles/case-study-gtcars.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/rstudio/gt
+
+development:
+  mode: unreleased
