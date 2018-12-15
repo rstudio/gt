@@ -33,7 +33,11 @@
 <meta property="og:title" content="Helpers for targeting multiple cells in different locations — location_cells" />
 
 <meta property="og:description" content="These helper functions are used to target individual cells in different
-locations." />
+locations (e.g., the stub, the column labels, the title, etc.). They can be
+used in any of these functions (which all have a locations argument):
+tab_footnote(), tab_style(), and
+text_transform() Furthermore, multiple locations can be
+targeted by enclosing several cells_*() helper functions in a list." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,10 +75,7 @@ locations." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/creating-display-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -87,21 +88,18 @@ locations." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
-    </li>
-    <li>
-      <a href="../articles/creating-display-tables.html">Creating Display Tables</a>
+      <a href="../articles/gt-datasets.html">gt Datasets</a>
     </li>
     <li>
       <a href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     </li>
     <li>
-      <a href="../articles/gt-datasets.html">gt Datasets</a>
+      <a href="../articles/case-study-gtcars.html">Case Study with gtcars</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
@@ -132,7 +130,11 @@ locations." />
     <div class="ref-description">
     
     <p>These helper functions are used to target individual cells in different
-locations.</p>
+locations (e.g., the stub, the column labels, the title, etc.). They can be
+used in any of these functions (which all have a <code>locations</code> argument):
+<code><a href='tab_footnote.html'>tab_footnote</a>()</code>, <code><a href='tab_style.html'>tab_style</a>()</code>, and
+<code><a href='text_transform.html'>text_transform</a>()</code> Furthermore, multiple locations can be
+targeted by enclosing several <code>cells_*()</code> helper functions in a list.</p>
     
     </div>
 
@@ -185,12 +187,185 @@ intersections of <code>columns</code> and <code>rows</code>.</p></li>
 the <code>groups</code> argument and intersections of <code>columns</code> and
 <code>rows</code>.</p></li>
 </ul>
-    <p>The select helper functions are: <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>,
-  <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>,
-  <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>, and
-  <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>everything</a>()</code>.</p>
+    
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_location_cells_1.svg' width=100% /></p>
+<p><img src='figures/man_location_cells_2.svg' width=100% /></p>
+<p><img src='figures/man_location_cells_3.svg' width=100% /></p>
+<p><img src='figures/man_location_cells_4.svg' width=100% /></p>
+<p><img src='figures/man_location_cells_5.svg' width=100% /></p>
+<p><img src='figures/man_location_cells_6.svg' width=100% /></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table; add</span>
+<span class='co'># a header (with a title and a subtitle),</span>
+<span class='co'># and then add a footnote to the subtitle</span>
+<span class='co'># with `tab_footnote()` and `cells_title()`</span>
+<span class='co'># in `locations`</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
+      <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-10"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+    -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>adj_close</span>, <span class='no'>volume</span>, <span class='no'>high</span>, <span class='no'>low</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"S&amp;P 500"</span>,
+    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Open and Close Values"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"All values in USD."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_title</span>(
+      <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"subtitle"</span>)
+  )
+
+<span class='co'># Use `sza` to create a gt table; add a</span>
+<span class='co'># header and then add footnotes to the</span>
+<span class='co'># column labels with `tab_footnote()` and</span>
+<span class='co'># `cells_column_labels()` in `locations`</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>20</span> <span class='kw'>&amp;</span> <span class='no'>month</span> <span class='kw'>==</span> <span class='st'>"jan"</span> <span class='kw'>&amp;</span>
+      !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>, -<span class='no'>month</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"True solar time."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_column_labels</span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>tst</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Solar zenith angle."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_column_labels</span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sza</span>))
+  )
+
+<span class='co'># Use `pizzaplace` to create a gt table</span>
+<span class='co'># with grouped data; add a summary with the</span>
+<span class='co'># `summary_rows()` function and then add a</span>
+<span class='co'># footnote to the "peppr_salami" row group</span>
+<span class='co'># label with `tab_footnote()` and with</span>
+<span class='co'># `cells_group()` in `locations`</span>
+<span class='no'>tab_3</span> <span class='kw'>&lt;-</span>
+  <span class='no'>pizzaplace</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>name</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"soppressata"</span>, <span class='st'>"peppr_salami"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>name</span>, <span class='no'>size</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
+    <span class='kw'>`Pizzas Sold`</span> <span class='kw'>=</span> <span class='fu'>n</span>()
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"size"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
+    <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='st'>"Pizzas Sold"</span>),
+    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>TOTAL</span> <span class='kw'>=</span> <span class='st'>"sum"</span>),
+    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"The Pepper-Salami."</span>,
+    <span class='fu'>cells_group</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"peppr_salami"</span>)
+  )
+
+<span class='co'># Use `sza` to create a gt table; color</span>
+<span class='co'># all of the `month` values in the table</span>
+<span class='co'># stub with `tab_style()`, using `cells_stub()`</span>
+<span class='co'># in `locations` (`rows = TRUE` targets</span>
+<span class='co'># all stub rows)</span>
+<span class='no'>tab_4</span> <span class='kw'>&lt;-</span>
+  <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>20</span> <span class='kw'>&amp;</span> <span class='no'>tst</span> <span class='kw'>&lt;=</span> <span class='st'>"1000"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"tst"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>sza</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"month"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>missing_text</span> <span class='kw'>=</span> <span class='st'>""</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"darkblue"</span>,
+      <span class='kw'>text_color</span> <span class='kw'>=</span> <span class='st'>"white"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_stub</span>(<span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  )
+
+<span class='co'># Use `gtcars` to create a gt table; add</span>
+<span class='co'># a footnote that targets a single data cell</span>
+<span class='co'># with `tab_footnote()`, using `cells_data()`</span>
+<span class='co'># in `locations` (`rows = hp == max(hp)` will</span>
+<span class='co'># target a single row in the `hp` column)</span>
+<span class='no'>tab_5</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ctry_origin</span> <span class='kw'>==</span> <span class='st'>"United Kingdom"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_options.html'>tab_options</a></span>(<span class='kw'>footnote.glyph</span> <span class='kw'>=</span> <span class='st'>"*"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
+    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Highest horsepower."</span>,
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_data</span>(
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>hp</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>==</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>hp</span>))
+  )
+
+<span class='co'># Use `countrypops` to create a gt table; add</span>
+<span class='co'># some styling to the summary data cells with</span>
+<span class='co'># with `tab_style()`, using `cells_summary()`</span>
+<span class='co'># in `locations`</span>
+<span class='no'>tab_6</span> <span class='kw'>&lt;-</span>
+  <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Japan"</span>,
+    <span class='no'>year</span> <span class='kw'>&lt;</span> <span class='fl'>1970</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"country"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+    <span class='kw'>decade</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substr'>substr</a></span>(<span class='no'>year</span>, <span class='fl'>1</span>, <span class='fl'>3</span>), <span class='st'>"0s"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>decade</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(
+    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"year"</span>,
+    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"decade"</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
+    <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"min"</span>, <span class='st'>"max"</span>),
+    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
+    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='st'>"italic"</span>,
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightblue"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_summary</span>(
+      <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
+    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(
+      <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='st'>"italic"</span>,
+      <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightgreen"</span>),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_summary</span>(
+      <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -200,7 +375,11 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#figures">Figures</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
@@ -211,7 +390,7 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
