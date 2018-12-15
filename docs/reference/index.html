@@ -129,7 +129,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-create-table" class="hasAnchor"><a href="#section-create-table" class="anchor"></a>Create Table</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>All gt tables begin with a call to <code><a href="../reference/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <strong>dplyr</strong>’s <code>group_by()</code>) for more precise divisions of rows into row groups. The <code><a href="../reference/gt_preview.html">gt_preview()</a></code> function is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></p>
         </th>
       </tr>
       <tr>
@@ -149,7 +149,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-create-modify-parts" class="hasAnchor"><a href="#section-create-modify-parts" class="anchor"></a>Create/Modify Parts</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>A gt table can contain a few useful parts for conveying additional information. These include a header (with a titles and subtitle), a footer (with footnotes and source notes), and additional areas for labels (row group labels, column spanner labels, the stubhead label). We can modify the look of table parts more generally with <code><a href="../reference/tab_options.html">tab_options()</a></code> and perform styling on targeted table locations with <code><a href="../reference/tab_style.html">tab_style()</a></code></p></p>
         </th>
       </tr>
       <tr>
@@ -205,7 +205,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-format-data" class="hasAnchor"><a href="#section-format-data" class="anchor"></a>Format Data</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="../reference/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="../reference/fmt.html">fmt()</a></code> if you prefer). The <code><a href="../reference/text_transform.html">text_transform()</a></code> function allows for post-processing of any data, and we provide a function for that transformation.</p></p>
         </th>
       </tr>
       <tr>
@@ -285,7 +285,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-modify-columns" class="hasAnchor"><a href="#section-modify-columns" class="anchor"></a>Modify Columns</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="../reference/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="../reference/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="../reference/cols_label.html">cols_label()</a></code>), merging two columns together (<code>cols_merge*()</code>), moving columns around (<code>cols_move*()</code>), and using a column name delimiter to create labels in the column spanner (<code><a href="../reference/cols_split_delim.html">cols_split_delim()</a></code>).</p></p>
         </th>
       </tr>
       <tr>
@@ -353,7 +353,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-modify-rows" class="hasAnchor"><a href="#section-modify-rows" class="anchor"></a>Modify Rows</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>The only function currently that modifies entire rows is the <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function. It lets us modify the ordering of any row groups in the table.</p></p>
         </th>
       </tr>
       <tr>
@@ -367,7 +367,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-add-rows" class="hasAnchor"><a href="#section-add-rows" class="anchor"></a>Add Rows</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>There is one function that will adds rows to a <strong>gt</strong> table and that is the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function. It’s useful for adding summary rows to any table that has a row groups and a stub (required for summary row labels).</p></p>
         </th>
       </tr>
       <tr>
@@ -381,7 +381,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-export-table" class="hasAnchor"><a href="#section-export-table" class="anchor"></a>Export Table</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>There may come a day when you need to export a <strong>gt</strong> table in some specific format. We have functions for getting the HTML content of a <strong>gt</strong> table (<code><a href="../reference/as_raw_html.html">as_raw_html()</a></code>), getting LaTeX code (<code><a href="../reference/as_latex.html">as_latex()</a></code>), and getting rich text (<code><a href="../reference/as_rtf.html">as_rtf()</a></code>). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had the summary data in a tibble? You can get that with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>.</p></p>
         </th>
       </tr>
       <tr>
@@ -413,7 +413,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-shiny-functions" class="hasAnchor"><a href="#section-shiny-functions" class="anchor"></a>Shiny Functions</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>Shiny is great for building interactive web apps with R. The <strong>gt</strong> table render function (for <code>server</code>) is <code><a href="../reference/render_gt.html">render_gt()</a></code> and the <strong>gt</strong> table output element (for <code>ui</code>) is <code><a href="../reference/gt_output.html">gt_output()</a></code>.</p></p>
         </th>
       </tr>
       <tr>
@@ -433,7 +433,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
-          <p class="section-desc"></p>
+          <p class="section-desc"><p>A small assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code> functions. The <code><a href="../reference/cells_styles.html">cells_styles()</a></code> function is used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument (and the <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> functions may be useful there for specifying units in pixels or percentages). The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers are used only with <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code><a href="../reference/tab_stubhead_label.html">tab_stubhead_label()</a></code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> functions.</p></p>
         </th>
       </tr>
       <tr>
