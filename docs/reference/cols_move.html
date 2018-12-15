@@ -70,7 +70,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/creating-display-tables.html">Intro</a>
+  <a href="../articles/intro-creating-gt-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -176,13 +176,13 @@ All of the moved columns will be placed to the right of this column.</p></td>
 <span class='co'># `population` after `country_name`</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"code"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"code"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>tail</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>cols_move</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
-    <span class='kw'>after</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>country_name</span>)
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>population</span>),
+    <span class='kw'>after</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>country_name</span>)
   )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

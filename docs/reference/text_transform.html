@@ -70,7 +70,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/creating-display-tables.html">Intro</a>
+  <a href="../articles/intro-creating-gt-tables.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -183,19 +183,19 @@ title, etc.).</p></td>
 <span class='co'># column values</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>char</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>num</span>, <span class='no'>char</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/slice'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>text_transform</span>(
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>num</span>)),
     <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
 
       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(
         <span class='no'>x</span>, <span class='st'>" ("</span>,
-        <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
+        <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/case_when'>case_when</a></span>(
           <span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>20</span>   ~ <span class='st'>"large"</span>,
           <span class='no'>x</span> <span class='kw'>&lt;=</span> <span class='fl'>20</span>  ~ <span class='st'>"small"</span>),
         <span class='st'>")"</span>)
@@ -203,7 +203,7 @@ title, etc.).</p></td>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>text_transform</span>(
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>currency</span>)),
     <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
 
       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(

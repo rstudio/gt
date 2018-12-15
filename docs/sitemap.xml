@@ -205,12 +205,12 @@
     <loc>https://gt.rstudio.com/articles/case-study-gtcars.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/articles/creating-display-tables.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/articles/creating-summary-lines.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/articles/gt-datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/intro-creating-gt-tables.html</loc>
   </url>
 </urlset>
