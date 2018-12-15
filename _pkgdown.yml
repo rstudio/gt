@@ -124,15 +124,14 @@ reference:
   - title: Helper Functions
     desc: >
       A small assortment of helper functions is available in the **gt**
-      package. The `location_cells` help document outlines the `cells_*()`
-      functions that are used for targeting cells with the `locations`
-      argument in the `tab_footnote()`, `tab_style()`, and
-      `text_transform()` functions. The `cells_styles()` function is used
-      exclusively with `tab_style()`'s `style` argument (and the `px()` &
-      `pct()` functions may be useful there). The `md()` and `html()`
-      helpers are used only with `tab_header()`, `tab_footnote()`,
-      `tab_spanner()`, `tab_stubhead_label()`, and `tab_source_note()`
-      functions.
+      package. The various `cells_*()` functions are used for targeting
+      cells with the `locations` argument in the `tab_footnote()`,
+      `tab_style()`, and `text_transform()` functions. The `cells_styles()`
+      function is used exclusively with `tab_style()`'s `style` argument
+      (and the `px()` & `pct()` functions may be useful there for specifying
+      units in pixels or percentages). The `md()` and `html()` helpers are
+      used only with `tab_header()`, `tab_footnote()`, `tab_spanner()`,
+      `tab_stubhead_label()`, and `tab_source_note()` functions.
     contents:
     - location_cells
     - cells_styles
