@@ -14,6 +14,8 @@
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
 [![Travis build
 status](https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&branch=master)](https://travis-ci.com/rstudio/gt)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/rstudio/gt?branch=master&svg=true)](https://ci.appveyor.com/project/rstudio/gt)
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 
