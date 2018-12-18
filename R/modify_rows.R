@@ -15,6 +15,25 @@
 #'   positions within it; any omitted values will be added to the end while
 #'   preserving the original ordering.
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Use `exibble` to create a gt table
+#' # with a stub and with row groups;
+#' # modify the order of the row groups
+#' # with `row_group_order()`, specifying
+#' # the new ordering in `groups`
+#' exibble %>%
+#'   dplyr::select(char, currency, row, group) %>%
+#'     gt(
+#'       rowname_col = "row",
+#'       groupname_col = "group"
+#'     ) %>%
+#'     row_group_order(
+#'       groups = c("grp_b", "grp_a")
+#'     )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
+#'
 #' @family row modification functions
 #' @export
 row_group_order <- function(data,
