@@ -40,7 +40,8 @@ and the remaining row groups will follow in their original ordering.
 # modify the order of the row groups
 # with `row_group_order()`, specifying
 # the new ordering in `groups`
-exibble \%>\%
+tab_1 <-
+  exibble \%>\%
   dplyr::select(char, currency, row, group) \%>\%
     gt(
       rowname_col = "row",
