@@ -144,6 +144,12 @@ reference:
     - adjust_luminance
 
   - title: Images
+    desc: >
+      There is preliminary support for inserting images into cells. This
+      currently works well for HTML table output. A strategy for adding
+      image content is to use these `*_image()` functions in a
+      `dplyr::mutate()` call (before introducing table data to `gt()`), or,
+      using these within targeted `text_transform()` calls.
     contents:
     - web_image
     - local_image
@@ -151,11 +157,21 @@ reference:
     - test_image
 
   - title: Information
+    desc: >
+      These `info_*()` functions present us with **gt** tables containing
+      useful information. So far, we can get reference information on
+      date styles (`info_date_style()`) and on time styles
+      (`info_time_style()`).
     contents:
     - info_date_style
     - info_time_style
 
   - title: Datasets
+    desc: >
+      The **gt** package is equipped with six datasets. Use them to
+      experiment with the API, they come in all shapes and sizes. Many
+      examples in the internal help documents use these datasets to
+      quickly demonstrate key features of **gt**.
     contents:
     - countrypops
     - sza
