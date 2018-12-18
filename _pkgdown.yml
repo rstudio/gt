@@ -173,11 +173,13 @@ navbar:
     href: reference/index.html
   - text: Articles
     menu:
+    - text: How to Use
     - text: gt Datasets
       href: articles/gt-datasets.html
-    - text: Creating Summary Lines
+    - text: Summary Lines
       href: articles/creating-summary-lines.html
-    - text: Case Study with gtcars
+    - text: Case Studies
+    - text: 'Case Study: gtcars'
       href: articles/case-study-gtcars.html
   - text: News
     href: news/index.html
