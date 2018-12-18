@@ -58,6 +58,7 @@
 #'   when striping rows.
 #' @param row.striping.include_field an option for whether to include the field
 #'   when striping rows.
+#' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this
