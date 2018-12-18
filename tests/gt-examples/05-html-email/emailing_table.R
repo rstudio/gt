@@ -1,12 +1,17 @@
 library(gt)
-library(ggplot2)
+library(tidyverse)
 library(blastula)
+
+initial_months <-
+  c("D",
+    "J", "F", "M", "A", "M", "J",
+    "J", "A", "S", "O", "N", "D",
+    "J")
 
 # Create HTML tables that are suitable for
 # emailing; this requires `as_raw_html()` to
 # generate inline CSS styles, which are essential
 # (i.e., they won't be stripped away)
-
 pizza_plot <-
   pizzaplace %>%
   mutate(type = str_to_title(type)) %>%
@@ -17,12 +22,12 @@ pizza_plot <-
   ggplot() +
   geom_point(aes(x = date, y = Income), color = "steelblue") +
   facet_wrap(~type) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_x_date(date_breaks = "1 month", date_labels = initial_months) +
   scale_y_continuous(labels = scales::comma) +
   labs(
     title = "pizzaplace: Daily Pizza Sales in 2015",
     subtitle = "Faceted by the type of pizza",
-    x = "Month",
+    x = NULL,
     y = "Number of Pizzas Sold") +
   theme_minimal() +
   theme(
@@ -40,6 +45,13 @@ pizza_plot <-
     plot.margin = unit(c(20, 20, 20, 20), "points"),
     legend.box.spacing = unit(2, "points"),
     legend.position = "bottom")
+
+pizza_plot_email <-
+  pizza_plot %>%
+  blastula::add_ggplot()
+
+size_levels <- c("S", "M", "L", "XL", "XXL")
+type_levels <- c("Classic", "Chicken", "Supreme", "Veggie")
 
 pizza_tab <-
   pizzaplace %>%
@@ -115,10 +127,16 @@ email <-
 
   Just wanted to let you know that pizza \\
   sales were pretty strong in 2015. When \\
-  I look back at the numbers, it's $817,860 \\
+  I look back at the numbers, it's **$817,860** \\
   in sales. Not too bad. All things considered.
 
-  Anyway, here is a table that shows a breakdown \\
+  Here's a plot of the daily pizza sales. I \\
+  faceted by the type of pizza because I know \\
+  that's your preference:
+
+  {pizza_plot_email}
+
+  Here is a table that shows a breakdown \\
   of the 2015 results by pizza size, split into \\
   *Pizza Type* groups:
 
@@ -140,18 +158,18 @@ email %>% blastula::preview_email()
 
 # Create a credentials file for sending
 # this message through Gmail
-# blastula::create_email_creds_file(
-#   user = "someone@gmail.com",
-#   password = "<password>",
-#   provider = "gmail",
-#   sender = "The Sender",
-#   creds_file_name = "<creds_file>")
+blastula::create_email_creds_file(
+  user = "********@gmail.com",
+  password = "**************",
+  provider = "gmail",
+  sender = "Sender Name",
+  creds_file_name = "gmail_creds")
 
 # Send the email message out with
 # `send_email_out()`
 send_email_out(
   message = email,
-  from = "riannone@gmail.com",
-  to = "riannone@gmail.com",
+  from = "******@gmail.com",
+  to = "********@gmail.me",
   subject = "A look back at the pizzaplace 2015 sales",
   creds_file = "gmail_creds")
