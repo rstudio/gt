@@ -147,7 +147,7 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
@@ -211,10 +211,10 @@ reference on all of the possible inputs to <code>time_style</code>.</p>
 <span class='co'># (time style `3`)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_time</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
     <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
   )
 
@@ -225,16 +225,16 @@ reference on all of the possible inputs to <code>time_style</code>.</p>
 <span class='co'># be different than the others)</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_time</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span>
       <span class='no'>time</span> <span class='kw'>&gt;</span> <span class='st'>"16:00"</span>,
     <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_time</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>time</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>time</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span>
       <span class='no'>time</span> <span class='kw'>&lt;=</span> <span class='st'>"16:00"</span>,
     <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>4</span>
@@ -263,7 +263,7 @@ reference on all of the possible inputs to <code>time_style</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
