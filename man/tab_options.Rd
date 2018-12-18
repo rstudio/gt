@@ -99,6 +99,9 @@ when striping rows.}
 \item{row.striping.include_field}{an option for whether to include the field
 when striping rows.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Modify the options available in a table. These options are named by the
 components, the subcomponents, and the element that can adjusted.
