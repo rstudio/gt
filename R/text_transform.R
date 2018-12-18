@@ -13,6 +13,7 @@
 #'   types of locations (e.g., cell data values, stub group headings, the table
 #'   title, etc.).
 #' @param fn the function to use for text transformation.
+#' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # transform the formatted text in the
