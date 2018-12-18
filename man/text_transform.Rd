@@ -25,6 +25,9 @@ title, etc.).}
 
 \item{fn}{the function to use for text transformation.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Perform targeted text transformation with a function
 }
