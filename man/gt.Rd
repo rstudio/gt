@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt.R
 \name{gt}
 \alias{gt}
-\title{Create a gt table object}
+\title{Create a \pkg{gt} table object}
 \usage{
 gt(data, rowname_col = "rowname", groupname_col = "groupname",
   rownames_to_stub = FALSE,
@@ -20,18 +20,35 @@ group labels for generation of stub row groups.}
 \item{rownames_to_stub}{an option to take rownames from the input \code{data}
 table as row captions in the display table stub.}
 
-\item{stub_group.sep}{the separator to use between consecutive group names
-(a possibility when providing \code{data} as a \code{grouped_df} with
-multiple groups) in the displayed stub row group label.}
+\item{stub_group.sep}{the separator to use between consecutive group names (a
+possibility when providing \code{data} as a \code{grouped_df} with multiple
+groups) in the displayed stub row group label.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage.
+The \code{gt()} function creates a \pkg{gt} table object when provided with
+table data. Using this function is the first step in a typical \pkg{gt}
+workflow. Once we have the \pkg{gt} table object, we can perform styling
+transformations before rendering to a display table of various formats (e.g.,
+HTML, LaTeX, RTF).
+}
+\details{
+There are a few data ingest options we can consider at this stage. We can
+choose to create a table stub with rowname captions using the
+\code{rowname_col} argument. Further to this, stub row groups can be created
+with the \code{groupname_col}. Both arguments take the name of a column in
+the input table data. Typically, the data in the \code{groupname_col} will
+consist of categories of data in a table and the data in the
+\code{rowname_col} are unique labels (perhaps unique across the entire table
+or unique within groups).
+
+Row groups can also be created by passing a \code{grouped_df} to \code{gt()}
+by using the \code{dplyr::group_by()} function on the table data. In this
+way, two or more columns of categorical data can be used to make row groups.
+The \code{stub_group.sep} allows for control in how the row group label will
+appear in the display table.
 }
 \section{Figures}{
 

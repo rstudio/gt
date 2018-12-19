@@ -32,7 +32,7 @@ option is ignored (each of the colorizing helper functions has its own
 include the cell background (the default, given as \code{bkgd}) or the cell
 text (\code{text}).}
 
-\item{autocolor_text}{an option to let \code{gt} modify the coloring of text
+\item{autocolor_text}{an option to let \pkg{gt} modify the coloring of text
 within cells undergoing background coloring. This will in some cases yield
 more optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
@@ -50,9 +50,7 @@ data according to whether values are character or numeric. The second method
 provides more control over how cells are colored since we provide an explicit
 color function and thus other requirements such as bin counts, cut points, or
 a numeric domain. Finally, we can choose whether to apply the cell-specific
-colors to either the cell background or the cell text. By default, gt will
-choose the ideal text color (for maximal contrast) when colorizing the
-background of data cells.
+colors to either the cell background or the cell text.
 }
 \details{
 The \code{col_*()} functions from the scales package can be used in the
@@ -60,22 +58,21 @@ The \code{col_*()} functions from the scales package can be used in the
 \code{factor}/\code{character}) to colors according to the provided palette.
 
 \itemize{
-
 \item \code{\link[scales]{col_numeric}()}: provides a simple linear mapping
 from continuous numeric data to an interpolated palette.
-
 \item \code{\link[scales]{col_bin}()}: provides a mapping of continuous
 numeric data to value-based bins. This internally uses the
 \code{\link[base]{cut}()} function.
-
 \item \code{\link[scales]{col_quantile}()}: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
 \code{\link[stats]{quantile}()} function.
-
 \item \code{\link[scales]{col_factor}()}: provides a mapping of factors to
 colors. If the palette is discrete and has a different number of colors than
 the number of factors, interpolation is used.
 }
+
+By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
+when colorizing the background of data cells.
 }
 \section{Figures}{
 

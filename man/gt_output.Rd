@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{gt_output}
 \alias{gt_output}
-\title{Create a gt display table output element for Shiny}
+\title{Create a \pkg{gt} display table output element for Shiny}
 \usage{
 gt_output(outputId)
 }
@@ -10,10 +10,10 @@ gt_output(outputId)
 \item{outputId}{an output variable from which to read the table.}
 }
 \value{
-A gt table output element that can be included in a panel.
+A \pkg{gt} table output element that can be included in a panel.
 }
 \description{
-Create a gt display table output element for Shiny
+Create a \pkg{gt} display table output element for Shiny
 }
 \seealso{
 \link{render_gt}()

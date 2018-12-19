@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_preview.R
 \name{gt_preview}
 \alias{gt_preview}
-\title{Preview a gt table object}
+\title{Preview a \pkg{gt} table object}
 \usage{
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
@@ -27,9 +27,9 @@ an object of class \code{gt_tbl}.
 Sometimes you may want to see just a small portion of your input data. We can
 use \code{gt_preview()} in place of \code{gt()} to get the first x rows of
 data and the last y rows of data (which can be set by the \code{top_n} and
-\code{bottom_n} arguments). It's not advised to use additional gt API
+\code{bottom_n} arguments). It's not advised to use additional \pkg{gt} API
 functions to further modify the output of \code{gt_preview()}. Furthermore,
-you cannot pass a gt object to \code{gt_preview()}.
+you cannot pass a \pkg{gt} object to \code{gt_preview()}.
 }
 \details{
 Any grouped data or magic columns such as \code{rowname} and \code{groupname}
