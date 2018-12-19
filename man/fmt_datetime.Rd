@@ -41,7 +41,56 @@ presets.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Format values as date-times
+Format input date-time values that are character-based and expressed
+according to the ISO 8601 date-time format (\code{YYYY-MM-DD HH:MM:SS}). Once
+the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply preset date and time styles to format the
+data-time values.
+}
+\details{
+The following date styles are available for simpler formatting of the date
+portion (all using the input date of \code{2000-02-29} in the example output
+dates):
+
+\enumerate{
+\item iso: \code{2000-02-29}
+\item wday_month_day_year: \code{Tuesday, February 29, 2000}
+\item wd_m_day_year: \code{Tue, Feb 29, 2000}
+\item wday_day_month_year: \code{Tuesday 29 February 2000}
+\item month_day_year: \code{February 29, 2000}
+\item m_day_year: \code{Feb 29, 2000}
+\item day_m_year: \code{29 Feb 2000}
+\item day_month_year: \code{29 February 2000}
+\item day_month: \code{29 February}
+\item year: \code{2000}
+\item month: \code{February}
+\item day: \code{29}
+\item year.mn.day: \code{2000/02/29}
+\item y.mn.day: \code{0/02/29}
+}
+
+The following time styles are available for simpler formatting of the time
+portion (all using the input time of \code{14:35:00} in the example output
+times):
+
+\enumerate{
+\item hms: \code{14:35:00}
+\item hm: \code{14:35}
+\item hms_p: \code{2:35:00 PM}
+\item hm_p: \code{2:35 PM}
+\item h_p: \code{2 PM}
+}
+
+We can use the \code{\link{info_date_style}()} and
+\code{\link{info_time_style}()} functions as useful references for all of the
+possible inputs to \code{date_style} and \code{time_style}.
+
+Targeting of values is done through \code{columns} and additionally by
+\code{rows} (if nothing is provided for \code{rows} then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the \code{rows} argument. See the Arguments section for more
+information on this.
 }
 \section{Figures}{
 

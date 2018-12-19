@@ -63,19 +63,19 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a gt table, we can perform number-based formatting so
+With numeric values in a \pkg{gt} table, we can perform number-based formatting so
 that the targeted values are rendered with the following options:
 \itemize{
-\item decimals -- choice of the number of decimal places, option to drop
+\item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item negative values -- choice of a negative sign or parentheses for values
+\item negative values: choice of a negative sign or parentheses for values
 less than zero
-\item digit grouping separators -- options to enable/disable and a choice of
-separator symbol
-\item scaling -- we can choose to scale targeted values by a multiplier value
-\item pattern -- option to use a text pattern for decoration of the formatted
+\item digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+\item scaling: we can choose to scale targeted values by a multiplier value
+\item pattern: option to use a text pattern for decoration of the formatted
 values
-\item locale-based formatting -- providing a locale ID will result in number
+\item locale-based formatting: providing a locale ID will result in number
 formatting specific to the chosen locale
 }
 }
