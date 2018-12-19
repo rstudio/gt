@@ -34,7 +34,17 @@ an object of class \code{gt_tbl}.
 }
 \description{
 Wherever there is missing data (i.e., \code{NA} values) a customizable mark
-may present better than the standard `NA` text that would otherwise appear.
+may present better than the standard \code{NA} text that would otherwise
+appear. The \code{missing_text} argument allows for any replacement text that
+is suitable.
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by
+\code{rows} (if nothing is provided for \code{rows} then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the \code{rows} argument. See the Arguments section for more
+information on this.
 }
 \section{Figures}{
 

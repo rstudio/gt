@@ -51,6 +51,14 @@ function is useful when used as a \code{formatter} function in the
 \code{summary_rows} function, where the output may be text or useful as is
 (that function requires a formatter function).
 }
+\details{
+Targeting of values is done through \code{columns} and additionally by
+\code{rows} (if nothing is provided for \code{rows} then entire columns are
+selected). A number of helper functions exist to make targeting more
+effective. Conditional formatting is possible by providing a conditional
+expression to the \code{rows} argument. See the Arguments section for more
+information on this.
+}
 \section{Figures}{
 
 \if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
