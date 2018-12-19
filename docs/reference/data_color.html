@@ -48,9 +48,7 @@ data according to whether values are character or numeric. The second method
 provides more control over how cells are colored since we provide an explicit
 color function and thus other requirements such as bin counts, cut points, or
 a numeric domain. Finally, we can choose whether to apply the cell-specific
-colors to either the cell background or the cell text. By default, gt will
-choose the ideal text color (for maximal contrast) when colorizing the
-background of data cells." />
+colors to either the cell background or the cell text." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -155,9 +153,7 @@ data according to whether values are character or numeric. The second method
 provides more control over how cells are colored since we provide an explicit
 color function and thus other requirements such as bin counts, cut points, or
 a numeric domain. Finally, we can choose whether to apply the cell-specific
-colors to either the cell background or the cell text. By default, gt will
-choose the ideal text color (for maximal contrast) when colorizing the
-background of data cells.</p>
+colors to either the cell background or the cell text.</p>
     
     </div>
 
@@ -203,7 +199,7 @@ text (<code>text</code>).</p></td>
     </tr>
     <tr>
       <th>autocolor_text</th>
-      <td><p>an option to let <code>gt</code> modify the coloring of text
+      <td><p>an option to let <span class="pkg">gt</span> modify the coloring of text
 within cells undergoing background coloring. This will in some cases yield
 more optimal text-to-background color contrast. By default, this is set to
 <code>TRUE</code>.</p></td>
@@ -232,6 +228,8 @@ numeric data to quantiles. This internally uses the
 colors. If the palette is discrete and has a different number of colors than
 the number of factors, interpolation is used.</p></li>
 </ul>
+    <p>By default, <span class="pkg">gt</span> will choose the ideal text color (for maximal contrast)
+when colorizing the background of data cells.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
