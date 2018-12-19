@@ -137,7 +137,7 @@ code and numeric formatting facilitated through the use of a locale ID." />
 
     <div class="ref-description">
     
-    <p>With numeric values in a gt table, we can perform currency-based formatting.
+    <p>With numeric values in a <span class="pkg">gt</span> table, we can perform currency-based formatting.
 This function supports both automatic formatting with a three-letter currency
 code and numeric formatting facilitated through the use of a locale ID.</p>
     
@@ -251,19 +251,19 @@ locale ID will override any values provided in <code>sep_mark</code> and
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The targeted numeric values are rendered with the following options:</p><ul>
-<li><p>currency symbol placement -- the currency symbol can be placed before
+<li><p>currency symbol placement: the currency symbol can be placed before
 or after the values</p></li>
-<li><p>decimals/subunits -- choice of the number of decimal places, and a
+<li><p>decimals/subunits: choice of the number of decimal places, and a
 choice of the decimal symbol, and an option on whether to include or exclude
 the currency subunits (decimal portion)</p></li>
-<li><p>negative values -- choice of a negative sign or parentheses for values
+<li><p>negative values: choice of a negative sign or parentheses for values
 less than zero</p></li>
-<li><p>digit grouping separators -- options to enable/disable and a choice of
-separator symbol</p></li>
-<li><p>scaling -- we can choose to scale targeted values by a multiplier value</p></li>
-<li><p>pattern -- option to use a text pattern for decoration of the formatted
+<li><p>digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol</p></li>
+<li><p>scaling: we can choose to scale targeted values by a multiplier value</p></li>
+<li><p>pattern: option to use a text pattern for decoration of the formatted
 currency values</p></li>
-<li><p>locale-based formatting -- providing a locale ID will result in
+<li><p>locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale</p></li>
 </ul>
     <p>Targeting of values is done through <code>columns</code> and additionally by
