@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{render_gt}
 \alias{render_gt}
-\title{A gt display table render function for use in Shiny}
+\title{A \pkg{gt} display table render function for use in Shiny}
 \usage{
 render_gt(expr, env = parent.frame(), quoted = FALSE,
   outputArgs = list())
@@ -20,7 +20,7 @@ call to \code{\link{gt_output}()} when \code{render_gt} is used in an
 interactive R Markdown document.}
 }
 \description{
-A gt display table render function for use in Shiny
+A \pkg{gt} display table render function for use in Shiny
 }
 \seealso{
 \link{gt_output}()

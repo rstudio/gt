@@ -11,7 +11,7 @@ test_image(type = c("png", "svg"))
 \code{svg}.}
 }
 \description{
-Two test images are available within the \code{gt} package. Both contain the
+Two test images are available within the \pkg{gt} package. Both contain the
 same imagery (sized at 200px by 200px) but one is a PNG file while the other
 is an SVG file.
 }
