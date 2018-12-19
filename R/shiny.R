@@ -1,4 +1,4 @@
-#' A gt display table render function for use in Shiny
+#' A \pkg{gt} display table render function for use in Shiny
 #' @param expr an expression that creates a \code{gt} table object.
 #' @param env the environment in which to evaluate the \code{expr}.
 #' @param quoted is expr a quoted expression (with \code{quote()})? This is
@@ -44,9 +44,9 @@ render_gt <- function(expr,
   )
 }
 
-#' Create a gt display table output element for Shiny
+#' Create a \pkg{gt} display table output element for Shiny
 #' @param outputId an output variable from which to read the table.
-#' @return A gt table output element that can be included in a panel.
+#' @return A \pkg{gt} table output element that can be included in a panel.
 #' @seealso \link{render_gt}()
 #' @family Shiny functions
 #' @export
