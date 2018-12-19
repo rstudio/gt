@@ -39,7 +39,12 @@
 
 <meta property="og:title" content="Set a column format with a formatter function — fmt" />
 
-<meta property="og:description" content="Set a column format with a formatter function" />
+<meta property="og:description" content="The fmt() function provides greater control in formatting raw data
+values than any of the specialized fmt_*() functions that are
+available in gt. Along with the columns and rows
+arguments that provide some precision in targeting data cells, the fns
+argument allows you to define one or more functions for manipulating the raw
+data." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +140,12 @@
 
     <div class="ref-description">
     
-    <p>Set a column format with a formatter function</p>
+    <p>The <code>fmt()</code> function provides greater control in formatting raw data
+values than any of the specialized <code>fmt_*()</code> functions that are
+available in <span class="pkg">gt</span>. Along with the <code>columns</code> and <code>rows</code>
+arguments that provide some precision in targeting data cells, the <code>fns</code>
+argument allows you to define one or more functions for manipulating the raw
+data.</p>
     
     </div>
 
@@ -179,6 +189,25 @@ to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50<
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If providing a single function to <code>fns</code>, the recommended format is in
+the form: <code>fns = function(x) ...</code>. This single function will format the
+targeted data cells the same way regardless of the output format (e.g., HTML,
+LaTeX, RTF).</p>
+<p>If you require formatting of <code>x</code> that depends on the output format, a
+list of functions can be provided for the <code>html</code>, <code>latex</code>, and
+<code>default</code> contexts. This can be in the form of <code>fns = list(html =
+function(x) ..., latex = function(x) ..., default = function(x) ...)</code>. In
+this multiple-function case, we recommended including the <code>default</code>
+function as a fallback if all contexts aren't provided.</p>
+<p>As with all of the <code>fmt_*()</code> functions, targeting of values is done
+through <code>columns</code> and additionally by <code>rows</code> (if nothing is
+provided for <code>rows</code> then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the
+<code>rows</code> argument. See the Arguments section for more information on this.</p>
+    
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -216,6 +245,8 @@ to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50<
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
