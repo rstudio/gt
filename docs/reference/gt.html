@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a gt table object — gt • gt</title>
+<title>Create a <span class="pkg">gt</span> table object — gt • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,12 +37,13 @@
 
 
 
-<meta property="og:title" content="Create a gt table object — gt" />
+<meta property="og:title" content="Create a <span class="pkg">gt</span> table object — gt" />
 
-<meta property="og:description" content="Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage." />
+<meta property="og:description" content="The gt() function creates a gt table object when provided with
+table data. Using this function is the first step in a typical gt
+workflow. Once we have the gt table object, we can perform styling
+transformations before rendering to a display table of various formats (e.g.,
+HTML, LaTeX, RTF)." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -131,17 +132,18 @@ we can consider at this stage." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a gt table object</h1>
+    <h1>Create a <span class="pkg">gt</span> table object</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/gt.R'><code>R/gt.R</code></a></small>
     <div class="hidden name"><code>gt.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a gt table object so that we can perform styling transformations
-before transforming the entire object to a display table. Using this function
-is the first step in that process, and, there are a few data ingest options
-we can consider at this stage.</p>
+    <p>The <code>gt()</code> function creates a <span class="pkg">gt</span> table object when provided with
+table data. Using this function is the first step in a typical <span class="pkg">gt</span>
+workflow. Once we have the <span class="pkg">gt</span> table object, we can perform styling
+transformations before rendering to a display table of various formats (e.g.,
+HTML, LaTeX, RTF).</p>
     
     </div>
 
@@ -173,15 +175,31 @@ table as row captions in the display table stub.</p></td>
     </tr>
     <tr>
       <th>stub_group.sep</th>
-      <td><p>the separator to use between consecutive group names
-(a possibility when providing <code>data</code> as a <code>grouped_df</code> with
-multiple groups) in the displayed stub row group label.</p></td>
+      <td><p>the separator to use between consecutive group names (a
+possibility when providing <code>data</code> as a <code>grouped_df</code> with multiple
+groups) in the displayed stub row group label.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>There are a few data ingest options we can consider at this stage. We can
+choose to create a table stub with rowname captions using the
+<code>rowname_col</code> argument. Further to this, stub row groups can be created
+with the <code>groupname_col</code>. Both arguments take the name of a column in
+the input table data. Typically, the data in the <code>groupname_col</code> will
+consist of categories of data in a table and the data in the
+<code>rowname_col</code> are unique labels (perhaps unique across the entire table
+or unique within groups).</p>
+<p>Row groups can also be created by passing a <code>grouped_df</code> to <code>gt()</code>
+by using the <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> function on the table data. In this
+way, two or more columns of categorical data can be used to make row groups.
+The <code>stub_group.sep</code> argument allows for control in how the row group
+label will appear in the display table.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -231,6 +249,8 @@ multiple groups) in the displayed stub row group label.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
