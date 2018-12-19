@@ -1290,12 +1290,12 @@ fmt_missing <- function(data,
 #' targeted data cells the same way regardless of the output format (e.g., HTML,
 #' LaTeX, RTF).
 #'
-#' Should you need more different formatting of \code{x} depending on the ouput
-#' format, a list of functions can be provided for the \code{html},
-#' \code{latex}, and \code{default} contexts. This can be in the form of
-#' \code{fns = list(html = function(x) ..., latex = function(x) ..., default =
-#' function(x) ...)}. In this multiple-function case, we recommended including
-#' the \code{default} function as a fallback if all contexts aren't provided.
+#' If you require formatting of \code{x} that depends on the output format, a
+#' list of functions can be provided for the \code{html}, \code{latex}, and
+#' \code{default} contexts. This can be in the form of \code{fns = list(html =
+#' function(x) ..., latex = function(x) ..., default = function(x) ...)}. In
+#' this multiple-function case, we recommended including the \code{default}
+#' function as a fallback if all contexts aren't provided.
 #'
 #' As with all of the \code{fmt_*()} functions, targeting of values is done
 #' through \code{columns} and additionally by \code{rows} (if nothing is
