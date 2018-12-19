@@ -1,11 +1,11 @@
-#' Preview a gt table object
+#' Preview a \pkg{gt} table object
 #'
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use \code{gt_preview()} in place of \code{gt()} to get the first x rows of
 #' data and the last y rows of data (which can be set by the \code{top_n} and
-#' \code{bottom_n} arguments). It's not advised to use additional gt API
+#' \code{bottom_n} arguments). It's not advised to use additional \pkg{gt} API
 #' functions to further modify the output of \code{gt_preview()}. Furthermore,
-#' you cannot pass a gt object to \code{gt_preview()}.
+#' you cannot pass a \pkg{gt} object to \code{gt_preview()}.
 #'
 #' Any grouped data or magic columns such as \code{rowname} and \code{groupname}
 #' will be ignored by \code{gt_preview()} and, as such, one cannot add a stub or
@@ -104,7 +104,8 @@ gt_preview <- function(data,
   # Use a fixed-width font for the rownums, if they are included
   if (incl_rownums) {
 
-    gt_tbl <- gt_tbl %>%
+    gt_tbl <-
+      gt_tbl %>%
       tab_style(
         style = "font-family:Courier;",
         locations = cells_stub())
@@ -113,7 +114,8 @@ gt_preview <- function(data,
   # Add styling of ellipsis row, if it is present
   if (has_ellipsis_row) {
 
-    gt_tbl <- gt_tbl %>%
+    gt_tbl <-
+      gt_tbl %>%
       tab_style(
         style = cells_styles(bkgd_color = "#E4E4E4"),
         locations = cells_data(rows = ellipsis_row)) %>%
@@ -123,7 +125,8 @@ gt_preview <- function(data,
 
     if (incl_rownums) {
 
-      gt_tbl <- gt_tbl %>%
+      gt_tbl <-
+        gt_tbl %>%
         tab_style(
           style = cells_styles(bkgd_color = "#E4E4E4", text_size = "12px"),
           locations = cells_stub(rows = ellipsis_row)) %>%
@@ -133,7 +136,8 @@ gt_preview <- function(data,
 
     } else {
 
-      gt_tbl <- gt_tbl %>%
+      gt_tbl <-
+        gt_tbl %>%
         tab_style(
           style = "padding-top:8px;padding-bottom:8px;",
           locations = cells_data(rows = ellipsis_row))
