@@ -18,8 +18,8 @@
 #' Row groups can also be created by passing a \code{grouped_df} to \code{gt()}
 #' by using the \code{dplyr::group_by()} function on the table data. In this
 #' way, two or more columns of categorical data can be used to make row groups.
-#' The \code{stub_group.sep} allows for control in how the row group label will
-#' appear in the display table.
+#' The \code{stub_group.sep} argument allows for control in how the row group
+#' label will appear in the display table.
 #'
 #' @param data a \code{data.frame} object or a tibble.
 #' @param rowname_col the column name in the input \code{data} table to use as
