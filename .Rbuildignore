@@ -1,3 +1,4 @@
+^\.github$
 ^data-raw$
 ^appveyor\.yml$
 ^codecov\.yml$
@@ -12,4 +13,5 @@
 ^API$
 tests/examples
 tests/manual_tests
-vignettes/videos
+^vignettes/videos$
+^vignettes/images/apng$
