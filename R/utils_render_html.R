@@ -294,9 +294,14 @@ create_heading_component <- function(heading,
     heading_component <-
       paste0(
         "<thead>\n<tr>\n",
-        "<th class='gt_heading gt_title gt_font_normal gt_center' colspan='",
-        n_cols, "'", create_style_attrs(title_style_attrs), ">",
-        heading$title, footnote_title_glyphs, "</th>\n</tr>\n")
+        "<th ",
+        "colspan='", n_cols, "' ",
+        "class='gt_heading gt_title gt_font_normal gt_center' ",
+        create_style_attrs(title_style_attrs),
+        ">",
+        heading$title, footnote_title_glyphs,
+        "</th>\n</tr>\n"
+        )
 
     if ("subtitle" %in% names(heading)) {
 
@@ -306,13 +311,17 @@ create_heading_component <- function(heading,
           paste0(
             "<tr>\n",
             "<th ",
-            "class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' colspan='",
-            n_cols, "'", create_style_attrs(subtitle_style_attrs), ">",
-            heading$subtitle, footnote_subtitle_glyphs, "</th>\n</tr>\n"))
+            "colspan='", n_cols, "' ",
+            "class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' ",
+            create_style_attrs(subtitle_style_attrs),
+            ">",
+            heading$subtitle, footnote_subtitle_glyphs,
+            "</th>\n</tr>\n"
+          )
+        )
     }
 
-    heading_component <-
-      paste0(heading_component, "</thead>\n")
+    heading_component <- paste0(heading_component, "</thead>\n")
   }
 
   if (output == "rtf") {
