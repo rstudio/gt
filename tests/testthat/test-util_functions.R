@@ -414,7 +414,9 @@ test_that("the `inline_html_styles()` function works correctly", {
   data <-
     data %>%
     tab_style(
-      style = "font-size:10px;", locations = cells_data(columns = TRUE))
+      style = "font-size:10px;",
+      locations = cells_data(columns = TRUE)
+    )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
@@ -428,6 +430,37 @@ test_that("the `inline_html_styles()` function works correctly", {
   # the inlined rules derived from the CSS classes
   expect_true(
     grepl("style=\"padding:10px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+  )
+
+  # Create a gt table with a custom style in the title and subtitle
+  # (left alignment of text)
+  data <-
+    gt(mtcars) %>%
+    tab_header(
+      title = "The title",
+      subtitle = "The subtitle"
+    ) %>%
+    tab_style(
+      cells_styles(
+        text_align = "left"),
+        locations = list(
+          cells_title(groups = "title"),
+          cells_title(groups = "subtitle")
+          )
+    )
+
+  # Get the CSS tibble and the raw HTML
+  css_tbl <- data %>% get_css_tbl()
+  html <- data %>% as_raw_html()
+
+  # Get the inlined HTML using `inline_html_styles()`
+  inlined_html <-
+    inline_html_styles(html, css_tbl = css_tbl)
+
+  # Expect that the `colspan` attr is preserved in both <th> elements
+  # and that the `text-align:left` rule is present
+  expect_true(
+    grepl("th colspan='11' style=.*?text-align:left;", inlined_html)
   )
 })
 
