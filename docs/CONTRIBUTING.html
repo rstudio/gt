@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NA • gt</title>
+<title>Information and Guidelines for Contributing to gt • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -37,7 +37,7 @@
 
 
 
-<meta property="og:title" content="NA" />
+<meta property="og:title" content="Information and Guidelines for Contributing to gt" />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -126,16 +126,39 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>NA</h1>
+      <h1>Information and Guidelines for Contributing to gt</h1>
     </div>
 
+<div id="information-and-guidelines-for-contributing-to-gt" class="section level1">
 
-<p>The MIT License (MIT)</p>
-<p>Copyright (c) 2018 RStudio, Inc</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-
+<p>There are many ways to contribute to the ongoing development of the <strong>gt</strong> package. Some contributions can be rather easy to do (e.g., fixing typos, improving documentation, filing issues for feature requests or problems, etc.) whereas other contributions can require more time and patience (like answering questions and submitting pull requests with code changes). Just know that that help provided in any capacity is very much appreciated. :)</p>
+<div id="filing-issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filing-issues" class="anchor"></a>Filing Issues</h2>
+<p>If you believe you found a bug, create a minimal <a href="https://reprex.tidyverse.org">reprex</a> for your posting to the <a href="https://github.com/rstudio/gt/issues"><strong>gt</strong> issue tracker</a>. Try not to include anything unnecessary, just the minimal amount of code that constitutes the reproducible bug. We will try to verify the bug by running the code in the reprex provided. The quality of the reprex will reduce the amount of back-and-forth communication in trying to understand how to execute the code on our systems.</p>
+</div>
+<div id="answering-questions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#answering-questions" class="anchor"></a>Answering questions</h2>
+<p>A great way to help is by simply answering questions. It’s amazing how a little conversation could lead to better insights on a problem. Don’t quite know the answer? That’s okay too. We’re all in this together.</p>
+<p>Where might you answer user questions? Some of the forums for Q&amp;A on <strong>gt</strong> include the <a href="https://community.rstudio.com">RStudio community</a>, on Twitter (a good search term is <code>gt #rstats</code>), and on <a href="https://stackoverflow.com">Stack Overflow</a>. Good etiquette is key during these interactions: be a good person to all who ask questions.</p>
+<div id="making-pull-requests" class="section level3">
+<h3 class="hasAnchor">
+<a href="#making-pull-requests" class="anchor"></a>Making Pull Requests</h3>
+<p>Should you consider making a pull request (PR), please file an issue first and explain the problem in some detail. If the PR is an enhancement, detail how the change would make things better for package users. Bugfix PRs also requre some explanation about the bug and how the proposed fix will remove that bug. A great way to illustrate the bug is to include a <a href="https://reprex.tidyverse.org">reprex</a>. While all this upfront work prior to preparing a PR can be time-consuming it opens a line of communication with the package authors and the community, perhaps leading to better enhancement or more effective fixes!</p>
+<p>Once there is consensus that a PR based on the issue would be helpful, adhering to the following process will make things proceed more quickly:</p>
+<ul>
+<li>Create a separate Git branch for each PR.</li>
+<li>Look at the Travis and AppVeyor build status badges before and after making changes; these badges are available in the package <a href="https://github.com/rstudio/gt">README</a>.<br>
+</li>
+<li>The <strong>gt</strong> package follows the tidyverse <a href="http://style.tidyverse.org">style guide</a> so please adopt those style guidelines in your submitted code as best as possible.</li>
+<li>The internal documentation uses <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">roxygen2</a>; if your contribution requires new or revised documentation ensure that the roxygen comments are added/modified (do not modify any <code>.Rd</code> files in the <code>man</code> folder).</li>
+<li>We use <a href="https://cran.r-project.org/web/packages/testthat/">testthat</a> for code coverage; those contributions with test cases included are helpful easier to accept.</li>
+<li>Add a bullet to the top of <code>NEWS.md</code> below the current development version header describing any user-facing changes made; include your GitHub username, and links to relevant issue(s)/PR(s).</li>
+</ul>
+</div>
+</div>
+</div>
 
   </div>
 
