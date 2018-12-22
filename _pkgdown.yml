@@ -6,6 +6,8 @@ home:
 reference:
   - title: Create Table
     desc: >
+      [![RStudio Cloud Example](../../vignettes/images/rstudio-cloud-example.svg)](https://rstudio.cloud/project/159889)
+      <br /><br />
       All gt tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
       creating a stub (`rowname_col`) and row groups (`groupname_col`). We
