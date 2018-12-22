@@ -8,7 +8,7 @@ reference:
     desc: >
       [![RStudio Cloud Example](../../vignettes/images/rstudio-cloud-example.svg)](https://rstudio.cloud/project/159889)
       <br /><br />
-      All gt tables begin with a call to `gt()`, where we would supply the
+      All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
       creating a stub (`rowname_col`) and row groups (`groupname_col`). We
       can also introduce a grouped tibble (via **dplyr**'s `group_by()`) for
@@ -21,7 +21,9 @@ reference:
 
   - title: Create/Modify Parts
     desc: >
-      A gt table can contain a few useful parts for conveying additional
+      [![RStudio Cloud Example](../../vignettes/images/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160008)
+      <br /><br />
+      A **gt** table can contain a few useful parts for conveying additional
       information. These include a header (with a titles and subtitle), a
       footer (with footnotes and source notes), and additional areas for
       labels (row group labels, column spanner labels, the stubhead label).
@@ -40,6 +42,8 @@ reference:
 
   - title: Format Data
     desc: >
+      [![RStudio Cloud Example](../../vignettes/images/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160011)
+      <br /><br />
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
       argument. We get to apply these functions exactly once to each data
@@ -64,6 +68,8 @@ reference:
 
   - title: Modify Columns
     desc: >
+      [![RStudio Cloud Example](../../vignettes/images/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160017)
+      <br /><br />
       The `cols_*()` functions allow for modifications that act on entire
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
@@ -116,9 +122,10 @@ reference:
 
   - title: Shiny Functions
     desc: >
-      Shiny is great for building interactive web apps with R. The **gt**
-      table render function (for `server`) is `render_gt()` and the **gt**
-      table output element (for `ui`) is `gt_output()`.
+      Shiny is great for building interactive web apps with R. There's really
+      nothing quite like it. The **gt** package includes two functions that
+      work nicely with Shiny: a table render function `render_gt()` (for
+      the `server`) and a table output element `gt_output()` (for `ui`).
     contents:
     - render_gt
     - gt_output
