@@ -6,7 +6,7 @@ home:
 reference:
   - title: Create Table
     desc: >
-      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.svg)](https://rstudio.cloud/project/159889)
+      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png)](https://rstudio.cloud/project/159889)
       <br /><br />
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
@@ -21,7 +21,7 @@ reference:
 
   - title: Create/Modify Parts
     desc: >
-      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160008)
+      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png)](https://rstudio.cloud/project/160008)
       <br /><br />
       A **gt** table can contain a few useful parts for conveying additional
       information. These include a header (with a titles and subtitle), a
@@ -42,7 +42,7 @@ reference:
 
   - title: Format Data
     desc: >
-      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160011)
+      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png)](https://rstudio.cloud/project/160011)
       <br /><br />
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
@@ -68,7 +68,7 @@ reference:
 
   - title: Modify Columns
     desc: >
-      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.svg)](https://rstudio.cloud/project/160017)
+      [![RStudio Cloud Example](https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png)](https://rstudio.cloud/project/160017)
       <br /><br />
       The `cols_*()` functions allow for modifications that act on entire
       columns. This includes alignment of the data in columns
