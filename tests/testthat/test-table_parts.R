@@ -50,17 +50,17 @@ test_that("a gt table contains the expected heading components", {
     selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
     expect_equal("")
 
-  # Expect that the maximum number of rows is `5`
+  # Expect that the number of rows with `class='gt_row gt_right'` is `3`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(5)
+    expect_equal(3)
 
-  # Expect that the maximum number of columns is `11`
+  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `2`
   (tbl_html %>%
-      selection_text("[class='gt_row gt_right']") %>%
-      length()/nrow(mtcars_short)) %>%
-    expect_equal(11)
+      selection_text("[class='gt_row gt_right gt_striped']") %>%
+      length()/ncol(mtcars_short)) %>%
+    expect_equal(2)
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
