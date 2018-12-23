@@ -640,7 +640,7 @@ create_body_component_h <- function(row_splits_body,
               ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
-              "<td class='gt_row gt_", col_alignment[-1], "'",
+              "<td class='gt_row gt_", col_alignment[-1], ifelse(i %% 2 == 0, " gt_striped", ""), "'",
               create_style_attrs(row_splits_styles[[i]][-1]),
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
@@ -656,7 +656,7 @@ create_body_component_h <- function(row_splits_body,
           paste0(
             "<tr>\n",
             paste0(
-              "<td class='gt_row gt_", col_alignment, "'",
+              "<td class='gt_row gt_", col_alignment, ifelse(i %% 2 == 0, " gt_striped", ""), "'",
               create_style_attrs(row_splits_styles[[i]]),
               ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
@@ -728,7 +728,7 @@ create_body_component_h <- function(row_splits_body,
 
   # Create the `table_body` HTML component
   paste0(
-    "<tbody class='gt_table_body gt_striped'>\n",
+    "<tbody class='gt_table_body'>\n",
     body_rows,
     "</tbody>\n")
 }
