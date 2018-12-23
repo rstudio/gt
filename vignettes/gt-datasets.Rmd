@@ -312,18 +312,18 @@ sp500_ddtab
 
 The table that we'll create from `sp500` will meet these requirements:
 
-1. only data from `2010-06-01` to `2010-06-15` will be used 
+1. use only data from the period `2010-06-02` to `2010-06-15` 
 2. the adjusted close `adj_close` column won't be included
 3. a title and subtitle will be added to describe the contents of the table
-4. the column labels will be put in title case
-5. the `date` column will be formatted with `fmt_date()`
-6. the price columns will be formatted with `fmt_currency()`
-7. the `volume` column will be formatted with `fmt_number()` (abbreviating the figures)
+4. put the column labels in title case
+5. format the `date` column to appear as '2 Jun 2010'
+6. have the price columns (`open`, `high`, `low`, `close`) appear in USD
+7. the large numbers in `volume` will be shown as billions (with the `B` suffix)
 8. up- and down-pointing triangles (in green and red) will be added alongside the `close` price as appropriate
 
 ```{r sp500}
 # Define the start and end dates for the data range
-start_date <- "2010-06-01"
+start_date <- "2010-06-02"
 end_date <- "2010-06-15"
 
 # The HTML decimal references for the black
@@ -418,7 +418,8 @@ Let's make a reporting table from the `pizzaplace` dataset with these requiremen
 1. obtain the total sale numbers and revenue from each `size` of pizza from each category (`type`)
 2. create a gt table where each row represents a combination of `size`-`type` (`size` provides the row labels and `type` forms the row groups) 
 3. add a title to explain the contents of the table
-4. format the numeric and currency values with `fmt_number()` and `fmt_currency()`
+4. format the numeric `sold` column to use commas and no decimal places
+5. format the currency values (`income`) to be in `USD` currency
 5. add a summary for each grouping that provides total sell counts and revenue amounts 
 6. color the stub group rows and summary cells to add a little pizzazz
 
