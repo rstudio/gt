@@ -17,23 +17,23 @@ library(dplyr)
 library(tidyr)
 ```
 
-The **gt** package comes with six built-in datasets for experimenting with the **gt** API: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each dataset has different subject matter, all of them will be used to develop examples with consistent syntax.
+The **gt** package comes with six built-in datasets for experimenting with the **gt** API: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each dataset has different subject matter, all of them will be used to develop **gt** examples with consistent syntax.
 
 <img src="images/countrypops.svg" width=30%><img src="images/sza.svg" width=30%><img src="images/gtcars.svg" width=30%>
 
 <img src="images/sp500.svg" width=30%><img src="images/pizzaplace.svg" width=30%><img src="images/exibble.svg" width=30%>
 
-Each dataset is stored as a tibble, ranging from very small (like `exibble`, an example tibble of 8 rows) to quite large in size (e.g., at nearly 50,000 rows: `pizzaplace`). Larger are typically impractical as display tables but they provide opportunities for preprocessing through tidyverse tools like **dplyr** and **tidyr** upstream of **gt**. 
+Each dataset is stored as a tibble, ranging from very small (like `exibble`, an example tibble of 8 rows) to quite large in size (e.g., at nearly 50,000 rows: `pizzaplace`). Larger datasets are typically impractical as **gt output tables** but they provide opportunities for demonstrating preprocessing using tidyverse tools like **dplyr** and **tidyr** (upstream of **gt**'s `gt()` entry point). 
 
-In many **gt** workflows, there will be preparation work like this where the creation of the input table and any salient information (e.g., metadata for footnotes) will be done alongside the preparation of the display table.
+In many **gt** workflows, there will often be prep work like this where the creation of the input table and any salient information (e.g., metadata for footnotes) will be done alongside the preparation of the display table.
 
-Next, we'll show minimal examples of tables that can be created with each of these datasets. The hope is that this collection of examples will inspire the creation of much more interesting display tables with **gt**.
+In the next few examples, we'll show how tables can be created with each of these datasets. Each example will be preceded with a set of requirements that serve as a design brief. This planning stage can be very useful in your own work for the purpose of organization. The hope is that this collection of simple examples will inspire the creation of much more interesting display tables with **gt**.
 
 ### `countrypops`
 
-This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the [World Bank](https://data.worldbank.org/indicator/SP.POP.TOTL), where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country in a given year, where `NA` values indicate that a country did not exist for that particular year.
+This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the [World Bank](https://data.worldbank.org/indicator/SP.POP.TOTL), where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country in a given year, where `NA` values for `population` indicate that the country did not exist in that particular year.
 
-The `countrypops` dataset is a tibble with 12,470 rows and 5 variables. Here are explanations for each of the variables: 
+The `countrypops` dataset is a tibble with 12,470 rows and 5 variables. Here are explanations for each of the variables:
 
 ```{r countrypops_make_data_dictionary, echo=FALSE}
 countrypops_ddtab <-
@@ -67,11 +67,11 @@ countrypops_ddtab
 
 The table that we'll create from `countrypops` will meet these requirements:
 
-1. we will use countries from Oceania
+1. use countries from Oceania
 2. countries in different regions of Oceania will be grouped together
-3. populations will be given for the 1995, 2005, and 2015 years only, and they will appear as separate columns with a spanner group column stating that these columns refer to population values
-4. population figures will be formatted to contain commas
-5. a title will be provided
+3. provide populations for the 1995, 2005, and 2015 years only; they should appear as separate columns with a spanner group column stating that these columns refer to population values
+4. format population figures to contain commas
+5. provide a descriptive title
 
 ```{r countrypops}
 # Get vectors of 2-letter country codes for
@@ -151,14 +151,14 @@ sza_ddtab
 
 The table that we'll create from `sza` will meet these requirements:
 
-1. we will filter the data to just use the 20&deg;N data and remove the `latitude` column
+1. filter the data to just use the 20&deg;N data and remove the `latitude` column
 2. `NA` values from `sza` column are to be removed
-3. we will reshape the table so that columns of `tst` (true solar time) contain angles in degrees (from the `sza` column)
-4. the **gt** table will have the `month`s as row labels in the stub
+3. reshape the table so that columns of `tst` (true solar time) contain angles in degrees (from the `sza` column)
+4. the **gt output table** will have the `month`s as row labels in the stub
 5. missing values will be replaced with an empty string (so that those cells are blank)
 6. a stubhead label will state what's inside the stubs (months, at 20&deg;N)
-7. the table will have a heading decorated with the HTML *Black Sun with Rays* (&#x2600;) symbol
-8. to fit the large amount of data in a smaller area, use some table options to reduce text size and row padding
+7. the table will have a heading decorated with the HTML *Black Sun with Rays* (`&#x2600;`) symbol
+8. to fit the large amount of data in a small area, use some table options to reduce text size and row padding
 
 ```{r sza}
 # Create a gt table based on a preprocessed `sza`
@@ -226,14 +226,14 @@ gtcars_ddtab
 The table that we'll create from `gtcars` will meet these requirements:
 
 1. only include German cars
-2. limit dataset to top two most expensive offerings from each manufacturer
+2. limit the dataset to the top two most expensive offerings from each German manufacturer
 3. the information included will be the manufacturer (`mfr`), the car model (`model`), the `drivetrain`, and the price (`msrp`)
 4. add a table title
 5. combine the car make and model into a single column
 6. capitalize the `drivetrain` text
-7. format the prices with `fmt_currency()`
-8. Relabel the column headings
-9. Add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote glyphs are lowercase letters 
+7. format the prices as USD currency with commas and no decimal places shown
+8. relabel the column headings to provide nicer labels
+9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote glyphs are lowercase letters 
 
 ```{r gtcars}
 # Create a gt table based on a preprocessed `gtcars`
@@ -375,7 +375,7 @@ sp500 %>%
 
 ### `pizzaplace`
 
-The `pizzaplace` dataset is unusual to say the least. Why is it that the The Greek pizza comes in XL and XXL sizes whilst (almost) all the other pizzas must adhere to the S-M-L paradigm? Also, is any of this real? And, what is the nature of reality? (While I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
+The `pizzaplace` dataset is unusual to say the least. It brings up more questions than answers. Why is it that the 'The Greek' pizza (`the_greek`) comes in `XL` and `XXL` sizes whilst (almost) all the other pizzas adhere to the `S`-`M`-`L` paradigm? Why is the 'Brie Carre' pizza (`brie_carre`) only small? Also, is any of this real, and, what is the nature of reality? (All of these questions are quite complicated---while I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
 
 We have the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
 
@@ -474,9 +474,7 @@ exibble_ddtab <-
     "char",       "chr", "A character column composed of names of fruits from a to h",
     "fctr",       "fct", "A factor column with numbers from 1 to 8, written out",
     "date, time, datetime", "chr", "Character columns with dates, times, and datetimes",
-    "currency",   "dbl", "A numeric column that is useful for testing currency-based formatting
-
-",
+    "currency",   "dbl", "A numeric column that is useful for testing currency-based formatting",
     "row",        "chr", "A character column in the format `row_X` which can be useful for testing with row label in a table stub",
     "group",      "chr", "A character column with four `grp_a` values and four `grp_b` values which can be useful for testing tables that contain row groups",
   ) %>%
