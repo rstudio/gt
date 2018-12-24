@@ -107,7 +107,7 @@ cols_align <- function(data,
 #'
 #' It's important to note that while columns can be freely relabeled, we
 #' continue to refer to columns by their original column names. Column names in
-#' a tibble or data frame must be unique whereas column labels in \code{pkg}
+#' a tibble or data frame must be unique whereas column labels in \pkg{gt}
 #' have no requirement for uniqueness (which is useful for labeling columns as,
 #' say, measurement units that may be repeated several times---usually under
 #' different spanner column labels). Thus, we can still easily distinguish
