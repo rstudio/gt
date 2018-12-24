@@ -39,7 +39,15 @@
 
 <meta property="og:title" content="Relabel one or more columns — cols_label" />
 
-<meta property="og:description" content="Relabel one or more columns" />
+<meta property="og:description" content="Column labels can be modified from their default values (the names of the
+columns from the input table data). When you create a gt table object
+using gt(), column names effectively become the column labels.
+While this serves as a good first approximation, column names aren't often
+appealing as column labels in a gt output table. The
+cols_label() function provides the flexibility to relabel one or more
+columns and we even have the option to use the md() or
+html() helper functions for rendering column labels from
+Markdown or using HTML." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +143,15 @@
 
     <div class="ref-description">
     
-    <p>Relabel one or more columns</p>
+    <p>Column labels can be modified from their default values (the names of the
+columns from the input table data). When you create a <span class="pkg">gt</span> table object
+using <code><a href='gt.html'>gt</a>()</code>, column names effectively become the column labels.
+While this serves as a good first approximation, column names aren't often
+appealing as column labels in a <span class="pkg">gt</span> output table. The
+<code>cols_label()</code> function provides the flexibility to relabel one or more
+columns and we even have the option to use the <code><a href='md.html'>md</a>()</code> or
+<code><a href='html.html'>html</a>()</code> helper functions for rendering column labels from
+Markdown or using HTML.</p>
     
     </div>
 
@@ -162,6 +178,18 @@ text as Markdown) or <code><a href='html.html'>html</a>()</code> (to interpret t
 <code>...</code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It's important to note that while columns can be freely relabeled, we
+continue to refer to columns by their original column names. Column names in
+a tibble or data frame must be unique whereas column labels in <span class="pkg">gt</span>
+have no requirement for uniqueness (which is useful for labeling columns as,
+say, measurement units that may be repeated several times---usually under
+different spanner column labels). Thus, we can still easily distinguish
+between columns in other <span class="pkg">gt</span> function calls (e.g., in all of the
+<code>fmt*()</code> functions) even though we may lose distinguishability in column
+labels once they have been relabeled.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -215,6 +243,8 @@ text as Markdown) or <code><a href='html.html'>html</a>()</code> (to interpret t
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
