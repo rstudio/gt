@@ -210,7 +210,7 @@ cols_label <- function(data,
 #' Move one or more columns
 #'
 #' On those occasions where you need to move columns this way or that way, we
-#' can make use of the \code{cols_align()} function. While it's true that the
+#' can make use of the \code{cols_move()} function. While it's true that the
 #' movement of columns can be done upstream of \pkg{gt}'s API, it is much easier
 #' and less error prone to use the function provided here. The movement
 #' procedure here takes one or more specified columns (in the \code{columns}
@@ -323,6 +323,20 @@ cols_move <- function(data,
 }
 
 #' Move one or more columns to the start
+#'
+#' We can easily move set of columns to the beginning of the column series and
+#' we only need to specify which \code{columns}. It's possible to do this
+#' upstream of \pkg{gt}'s API, however, it is easier with this function and it
+#' presents less possibility for error. The ordering of the \code{columns} that
+#' are moved to the start is preserved (same with the ordering of all other
+#' columns in the table).
+#'
+#' The columns supplied in \code{columns} must all exist in the table. If you
+#' need to place one or columns at the end of the column series, the
+#' \code{\link{cols_move_to_end}()} function should be used. More control is
+#' offered with the \code{\link{cols_move}()} function, where columns could be
+#' placed after a specific column.
+#'
 #' @inheritParams cols_align
 #' @param columns the column names to move to the left-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
@@ -397,6 +411,20 @@ cols_move_to_start <- function(data,
 }
 
 #' Move one or more columns to the end
+#'
+#' It's possible to move a set of columns to the end of the column series, we
+#' only need to specify which \code{columns} are to be moved. While this can be
+#' done upstream of \pkg{gt}'s API, this function makes to process much easier
+#' and it's less error prone. The ordering of the \code{columns} that are moved
+#' to the end is preserved (same with the ordering of all other columns in the
+#' table).
+#'
+#' The columns supplied in \code{columns} must all exist in the table. If you
+#' need to place one or columns at the start of the column series, the
+#' \code{\link{cols_move_to_start}()} function should be used. More control is
+#' offered with the \code{\link{cols_move}()} function, where columns could be
+#' placed after a specific column.
+#'
 #' @inheritParams cols_align
 #' @param columns the column names to move to the right-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
