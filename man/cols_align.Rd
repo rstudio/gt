@@ -14,21 +14,30 @@ function.}
 \item{align}{the alignment type. This can be any of \code{"center"},
 \code{"left"}, or \code{"right"} for center-, left-, or center-alignment.
 Alternatively, the \code{"auto"} option (the default), will automatically
-align values in columns according to the data type (i.e., column class). In
-this way, left-alignment is applied to columns of class \code{character},
-\code{Date}, or \code{POSIXct}; center-alignment is for columns of class
-\code{logical}, \code{factor}, or \code{list}; and right-aligned is for the
-\code{numeric} and \code{integer} columns.}
+align values in columns according to the data type (see the Details section
+for specifics on which alignments are applied).}
 
 \item{columns}{an optional vector of column names for which the alignment
 should be applied. If nothing is supplied, or if \code{columns} is
-\code{TRUE}), then the alignment affects all columns.}
+\code{TRUE}), then the chosen alignment affects all columns.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-Set the alignment of columns
+The individual alignments of columns (which includes the column labels and
+all of their data cells) can be modified. We have the option to align text to
+the \code{left}, the \code{center}, and the \code{right}. In a less explicit
+manner, we can allow \pkg{gt} to automatically choose the alignment of each
+column based on the data type (with the \code{auto} option).
+}
+\details{
+When you create a \pkg{gt} table object using \code{\link{gt}()}, automatic
+alignment of column labels and their data cells is performed. By default,
+left-alignment is applied to columns of class \code{character}, \code{Date},
+or \code{POSIXct}; center-alignment is for columns of class \code{logical},
+\code{factor}, or \code{list}; and right-alignment is used for the
+\code{numeric} and \code{integer} columns.
 }
 \section{Figures}{
 

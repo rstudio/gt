@@ -19,7 +19,26 @@ text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
 \code{...}.}
 }
 \description{
-Relabel one or more columns
+Column labels can be modified from their default values (the names of the
+columns from the input table data). When you create a \pkg{gt} table object
+using \code{\link{gt}()}, column names effectively become the column labels.
+While this serves as a good first approximation, column names aren't often
+appealing as column labels in a \pkg{gt} output table. The
+\code{cols_label()} function provides the flexibility to relabel one or more
+columns and we even have the option to use the \code{\link{md}()} or
+\code{\link{html}()} helper functions for rendering column labels from
+Markdown or using HTML.
+}
+\details{
+It's important to note that while columns can be freely relabeled, we
+continue to refer to columns by their original column names. Column names in
+a tibble or data frame must be unique whereas column labels in \code{pkg}
+have no requirement for uniqueness (which is useful for labeling columns as,
+say, measurement units that may be repeated several times---usually under
+different spanner column labels). Thus, we can still easily distinguish
+between columns in other \pkg{gt} function calls (e.g., in all of the
+\code{fmt*()} functions) even though we may lose distinguishability in column
+labels once they have been relabeled.
 }
 \section{Figures}{
 
