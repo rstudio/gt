@@ -39,7 +39,11 @@
 
 <meta property="og:title" content="Set the alignment of columns — cols_align" />
 
-<meta property="og:description" content="Set the alignment of columns" />
+<meta property="og:description" content="The individual alignments of columns (which includes the column labels and
+all of their data cells) can be modified. We have the option to align text to
+the left, the center, and the right. In a less explicit
+manner, we can allow gt to automatically choose the alignment of each
+column based on the data type (with the auto option)." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +139,11 @@
 
     <div class="ref-description">
     
-    <p>Set the alignment of columns</p>
+    <p>The individual alignments of columns (which includes the column labels and
+all of their data cells) can be modified. We have the option to align text to
+the <code>left</code>, the <code>center</code>, and the <code>right</code>. In a less explicit
+manner, we can allow <span class="pkg">gt</span> to automatically choose the alignment of each
+column based on the data type (with the <code>auto</code> option).</p>
     
     </div>
 
@@ -155,23 +163,29 @@ function.</p></td>
       <td><p>the alignment type. This can be any of <code>"center"</code>,
 <code>"left"</code>, or <code>"right"</code> for center-, left-, or center-alignment.
 Alternatively, the <code>"auto"</code> option (the default), will automatically
-align values in columns according to the data type (i.e., column class). In
-this way, left-alignment is applied to columns of class <code>character</code>,
-<code>Date</code>, or <code>POSIXct</code>; center-alignment is for columns of class
-<code>logical</code>, <code>factor</code>, or <code>list</code>; and right-aligned is for the
-<code>numeric</code> and <code>integer</code> columns.</p></td>
+align values in columns according to the data type (see the Details section
+for specifics on which alignments are applied).</p></td>
     </tr>
     <tr>
       <th>columns</th>
       <td><p>an optional vector of column names for which the alignment
 should be applied. If nothing is supplied, or if <code>columns</code> is
-<code>TRUE</code>), then the alignment affects all columns.</p></td>
+<code>TRUE</code>), then the chosen alignment affects all columns.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>When you create a <span class="pkg">gt</span> table object using <code><a href='gt.html'>gt</a>()</code>, automatic
+alignment of column labels and their data cells is performed. By default,
+left-alignment is applied to columns of class <code>character</code>, <code>Date</code>,
+or <code>POSIXct</code>; center-alignment is for columns of class <code>logical</code>,
+<code>factor</code>, or <code>list</code>; and right-alignment is used for the
+<code>numeric</code> and <code>integer</code> columns.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -209,6 +223,8 @@ should be applied. If nothing is supplied, or if <code>columns</code> is
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 

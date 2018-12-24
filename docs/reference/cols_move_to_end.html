@@ -39,7 +39,12 @@
 
 <meta property="og:title" content="Move one or more columns to the end — cols_move_to_end" />
 
-<meta property="og:description" content="Move one or more columns to the end" />
+<meta property="og:description" content="It's possible to move a set of columns to the end of the column series, we
+only need to specify which columns are to be moved. While this can be
+done upstream of gt's API, this function makes to process much easier
+and it's less error prone. The ordering of the columns that are moved
+to the end is preserved (same with the ordering of all other columns in the
+table)." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +140,12 @@
 
     <div class="ref-description">
     
-    <p>Move one or more columns to the end</p>
+    <p>It's possible to move a set of columns to the end of the column series, we
+only need to specify which <code>columns</code> are to be moved. While this can be
+done upstream of <span class="pkg">gt</span>'s API, this function makes to process much easier
+and it's less error prone. The ordering of the <code>columns</code> that are moved
+to the end is preserved (same with the ordering of all other columns in the
+table).</p>
     
     </div>
 
@@ -160,6 +170,14 @@ with the remaining columns).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The columns supplied in <code>columns</code> must all exist in the table. If you
+need to place one or columns at the start of the column series, the
+<code><a href='cols_move_to_start.html'>cols_move_to_start</a>()</code> function should be used. More control is
+offered with the <code><a href='cols_move.html'>cols_move</a>()</code> function, where columns could be
+placed after a specific column.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -211,6 +229,8 @@ with the remaining columns).</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
