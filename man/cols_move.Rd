@@ -21,7 +21,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 On those occasions where you need to move columns this way or that way, we
-can make use of the \code{cols_align()} function. While it's true that the
+can make use of the \code{cols_move()} function. While it's true that the
 movement of columns can be done upstream of \pkg{gt}'s API, it is much easier
 and less error prone to use the function provided here. The movement
 procedure here takes one or more specified columns (in the \code{columns}

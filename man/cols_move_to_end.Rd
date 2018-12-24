@@ -18,7 +18,19 @@ with the remaining columns).}
 an object of class \code{gt_tbl}.
 }
 \description{
-Move one or more columns to the end
+It's possible to move a set of columns to the end of the column series, we
+only need to specify which \code{columns} are to be moved. While this can be
+done upstream of \pkg{gt}'s API, this function makes to process much easier
+and it's less error prone. The ordering of the \code{columns} that are moved
+to the end is preserved (same with the ordering of all other columns in the
+table).
+}
+\details{
+The columns supplied in \code{columns} must all exist in the table. If you
+need to place one or columns at the start of the column series, the
+\code{\link{cols_move_to_start}()} function should be used. More control is
+offered with the \code{\link{cols_move}()} function, where columns could be
+placed after a specific column.
 }
 \section{Figures}{
 
