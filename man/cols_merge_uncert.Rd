@@ -18,7 +18,44 @@ function.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Merge two columns to a value & uncertainty column
+The \code{cols_merge_uncert()} function is a specialized variant of the
+\code{\link{cols_merge}()} function. It operates by taking a base value
+column (\code{col_val}) and an uncertainty column (\code{col_uncert}) and
+merges them into a single column. What results is a column with values and
+associated uncertainties (e.g., \code{12.0 ± 0.1}), and, the column specified
+in \code{col_uncert} is dropped from the output table.
+}
+\details{
+This function could be somewhat replicated using \code{\link{cols_merge}()},
+however, \code{cols_merge_uncert()} employs the following specialized
+semantics for \code{NA} handling:
+
+\enumerate{
+
+\item \code{NA}s in \code{col_val} result in missing values for the merged
+column (e.g., \code{NA} + \code{0.1} = \code{NA})
+
+\item \code{NA}s in \code{col_uncert} (but not \code{col_val}) result in
+base values only for the merged column (e.g.,
+\code{12.0} + \code{NA} = \code{12.0})
+
+\item \code{NA}s both \code{col_val} and \code{col_uncert} result in
+missing values for the merged column (e.g., \code{NA} + \code{NA} =
+\code{NA})
+}
+
+Any resulting \code{NA} values in the \code{col_val} column following the
+merge operation can be easily formatted using the \code{\link{fmt_missing}()}
+function.
+
+This function is part of a set of three column-merging functions. The other
+two are the general \code{\link{cols_merge}()} function and the specialized
+\code{\link{cols_merge_range}()} function. These functions operate similarly,
+where the second column specified is dropped from the output table. For all
+of the \code{cols_merge*()} functions, column removal occurs late in the
+rendering lifecycle so those secondary columns are still usable as column
+references (e.g., inside expressions provided to `rows` in the \code{fmt*()}
+functions).
 }
 \section{Figures}{
 
