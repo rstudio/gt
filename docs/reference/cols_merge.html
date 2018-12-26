@@ -39,7 +39,12 @@
 
 <meta property="og:title" content="Merge two columns to a single column — cols_merge" />
 
-<meta property="og:description" content="Merge two columns to a single column" />
+<meta property="og:description" content="This function takes any two columns and merges them into a single column,
+using a pattern that specifies how the values in the data cells are combined.
+We specify the columns to merge together in the col_1 and col_2
+arguments and the string-combining pattern is specified in pattern.
+The column that is retained is that of col_1 whereas the column
+specified in col_2 is dropped from the output table." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +140,12 @@
 
     <div class="ref-description">
     
-    <p>Merge two columns to a single column</p>
+    <p>This function takes any two columns and merges them into a single column,
+using a pattern that specifies how the values in the data cells are combined.
+We specify the columns to merge together in the <code>col_1</code> and <code>col_2</code>
+arguments and the string-combining pattern is specified in <code>pattern</code>.
+The column that is retained is that of <code>col_1</code> whereas the column
+specified in <code>col_2</code> is dropped from the output table.</p>
     
     </div>
 
@@ -151,11 +161,14 @@ function.</p></td>
     </tr>
     <tr>
       <th>col_1</th>
-      <td><p>a column that contains values for the start of the range.</p></td>
+      <td><p>a retained column that contains values to be merged with those
+in <code>col_2</code>.</p></td>
     </tr>
     <tr>
       <th>col_2</th>
-      <td><p>a column that contains values for the end of the range.</p></td>
+      <td><p>a column that contains values to be merged with those in
+<code>col_1</code>. This column will be discarded but is still useful as a
+reference in other <span class="pkg">gt</span> functions.</p></td>
     </tr>
     <tr>
       <th>pattern</th>
@@ -169,6 +182,17 @@ function.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>There are two other column-merging functions that offer specialized behavior
+that is optimized for common table tasks: <code><a href='cols_merge_range.html'>cols_merge_range</a>()</code>
+and <code><a href='cols_merge_uncert.html'>cols_merge_uncert</a>()</code>. These functions operate similarly,
+where the second column specified is dropped from the output table. For all
+of the <code>cols_merge*()</code> functions, column removal occurs late in the
+rendering lifecycle so those secondary columns are still usable as column
+references (e.g., inside expressions provided to `rows` in the <code>fmt*()</code>
+functions).</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -218,6 +242,8 @@ function.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 

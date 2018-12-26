@@ -39,7 +39,12 @@
 
 <meta property="og:title" content="Merge two columns to a value &amp; uncertainty column — cols_merge_uncert" />
 
-<meta property="og:description" content="Merge two columns to a value &amp;amp; uncertainty column" />
+<meta property="og:description" content="The cols_merge_uncert() function is a specialized variant of the
+cols_merge() function. It operates by taking a base value
+column (col_val) and an uncertainty column (col_uncert) and
+merges them into a single column. What results is a column with values and
+associated uncertainties (e.g., 12.0 ± 0.1), and, the column specified
+in col_uncert is dropped from the output table." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +140,12 @@
 
     <div class="ref-description">
     
-    <p>Merge two columns to a value &amp; uncertainty column</p>
+    <p>The <code>cols_merge_uncert()</code> function is a specialized variant of the
+<code><a href='cols_merge.html'>cols_merge</a>()</code> function. It operates by taking a base value
+column (<code>col_val</code>) and an uncertainty column (<code>col_uncert</code>) and
+merges them into a single column. What results is a column with values and
+associated uncertainties (e.g., <code>12.0 ± 0.1</code>), and, the column specified
+in <code>col_uncert</code> is dropped from the output table.</p>
     
     </div>
 
@@ -162,6 +172,33 @@ function.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of class <code>gt_tbl</code>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function could be somewhat replicated using <code><a href='cols_merge.html'>cols_merge</a>()</code>,
+however, <code>cols_merge_uncert()</code> employs the following specialized
+semantics for <code>NA</code> handling:</p>
+<ol>
+<li><p><code>NA</code>s in <code>col_val</code> result in missing values for the merged
+column (e.g., <code>NA</code> + <code>0.1</code> = <code>NA</code>)</p></li>
+<li><p><code>NA</code>s in <code>col_uncert</code> (but not <code>col_val</code>) result in
+base values only for the merged column (e.g.,
+<code>12.0</code> + <code>NA</code> = <code>12.0</code>)</p></li>
+<li><p><code>NA</code>s both <code>col_val</code> and <code>col_uncert</code> result in
+missing values for the merged column (e.g., <code>NA</code> + <code>NA</code> =
+<code>NA</code>)</p></li>
+</ol>
+    <p>Any resulting <code>NA</code> values in the <code>col_val</code> column following the
+merge operation can be easily formatted using the <code><a href='fmt_missing.html'>fmt_missing</a>()</code>
+function.</p>
+<p>This function is part of a set of three column-merging functions. The other
+two are the general <code><a href='cols_merge.html'>cols_merge</a>()</code> function and the specialized
+<code><a href='cols_merge_range.html'>cols_merge_range</a>()</code> function. These functions operate similarly,
+where the second column specified is dropped from the output table. For all
+of the <code>cols_merge*()</code> functions, column removal occurs late in the
+rendering lifecycle so those secondary columns are still usable as column
+references (e.g., inside expressions provided to `rows` in the <code>fmt*()</code>
+functions).</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
@@ -207,6 +244,8 @@ function.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 
