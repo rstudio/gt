@@ -109,12 +109,11 @@ obtained from the [**Comprehensive R Archive Network
 working with R, use the [**RStudio Desktop
 IDE**](https://www.rstudio.com/products/rstudio/).
 
-You can install the development version of **gt** from **GitHub** using
-the **remotes** package. Use the following in the R console to install
-**gt**.
+You can install the development version of **gt** from **GitHub**. Use
+the following in the R console to install **gt**.
 
 ``` r
-install.packages("remotes")
+install.packages("devtools")
 remotes::install_github("rstudio/gt")
 ```
 

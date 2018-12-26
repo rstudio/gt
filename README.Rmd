@@ -83,10 +83,10 @@ Beyond this simple example, there are many functions available in **gt** that ma
 
 Want to try this out? First and foremost, the **gt** package is used in an R environment, so, if you don't have an R installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/). For the best experience in working with R, use the [**RStudio Desktop IDE**](https://www.rstudio.com/products/rstudio/).
 
-You can install the development version of **gt** from **GitHub** using the **remotes** package. Use the following in the R console to install **gt**.
+You can install the development version of **gt** from **GitHub**. Use the following in the R console to install **gt**.
 
 ```{r eval=FALSE}
-install.packages("remotes")
+install.packages("devtools")
 remotes::install_github("rstudio/gt")
 ```
 
