@@ -111,6 +111,10 @@ reference:
 
   - title: Add Rows
     desc: >
+      <a href="https://rstudio.cloud/project/160468">
+      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
+      </a>
+      <br /><br />
       There is one function that will adds rows to a **gt** table and that
       is the `summary_rows()` function. It's useful for adding summary rows
       to any table that has a row groups and a stub (required for summary
