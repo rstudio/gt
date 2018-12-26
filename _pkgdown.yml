@@ -99,6 +99,10 @@ reference:
 
   - title: Modify Rows
     desc: >
+      <a href="https://rstudio.cloud/project/160465">
+      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
+      </a>
+      <br /><br />
       The only function currently that modifies entire rows is the
       `row_group_order()` function. It lets us modify the ordering of any
       row groups in the table.
