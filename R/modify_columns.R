@@ -648,9 +648,29 @@ cols_split_delim <- function(data,
 }
 
 #' Merge two columns to a single column
+#'
+#' This function takes any two columns and merges them into a single column,
+#' using a pattern that specifies how the values in the data cells are combined.
+#' We specify the columns to merge together in the \code{col_1} and \code{col_2}
+#' arguments and the string-combining pattern is specified in \code{pattern}.
+#' The column that is retained is that of \code{col_1} whereas the column
+#' specified in \code{col_2} is dropped from the output table.
+#'
+#' There are two other column-merging functions that offer specialized behavior
+#' that is optimized for common table tasks: \code{\link{cols_merge_range}()}
+#' and \code{\link{cols_merge_uncert}()}. These functions operate similarly,
+#' where the second column specified is dropped from the output table. For all
+#' of the \code{cols_merge*()} functions, column removal occurs late in the
+#' rendering lifecycle so those secondary columns are still usable as column
+#' references (e.g., inside expressions provided to `rows` in the \code{fmt*()}
+#' functions).
+#'
 #' @inheritParams cols_align
-#' @param col_1 a column that contains values for the start of the range.
-#' @param col_2 a column that contains values for the end of the range.
+#' @param col_1 a retained column that contains values to be merged with those
+#'   in \code{col_2}.
+#' @param col_2 a column that contains values to be merged with those in
+#'   \code{col_1}. This column will be discarded but is still useful as a
+#'   reference in other \pkg{gt} functions.
 #' @param pattern a formatting pattern that specifies the arrangement of the
 #'   \code{col_1} and \code{col_1} values and any string literals. The
 #'   \code{col_1} column is represented as \code{{1}} whereas \code{col_2} is
@@ -736,6 +756,45 @@ cols_merge <- function(data,
 }
 
 #' Merge two columns to a value & uncertainty column
+#'
+#' The \code{cols_merge_uncert()} function is a specialized variant of the
+#' \code{\link{cols_merge}()} function. It operates by taking a base value
+#' column (\code{col_val}) and an uncertainty column (\code{col_uncert}) and
+#' merges them into a single column. What results is a column with values and
+#' associated uncertainties (e.g., \code{12.0 ± 0.1}), and, the column specified
+#' in \code{col_uncert} is dropped from the output table.
+#'
+#' This function could be somewhat replicated using \code{\link{cols_merge}()},
+#' however, \code{cols_merge_uncert()} employs the following specialized
+#' semantics for \code{NA} handling:
+#'
+#' \enumerate{
+#'
+#' \item \code{NA}s in \code{col_val} result in missing values for the merged
+#' column (e.g., \code{NA} + \code{0.1} = \code{NA})
+#'
+#' \item \code{NA}s in \code{col_uncert} (but not \code{col_val}) result in
+#' base values only for the merged column (e.g.,
+#' \code{12.0} + \code{NA} = \code{12.0})
+#'
+#' \item \code{NA}s both \code{col_val} and \code{col_uncert} result in
+#' missing values for the merged column (e.g., \code{NA} + \code{NA} =
+#' \code{NA})
+#' }
+#'
+#' Any resulting \code{NA} values in the \code{col_val} column following the
+#' merge operation can be easily formatted using the \code{\link{fmt_missing}()}
+#' function.
+#'
+#' This function is part of a set of three column-merging functions. The other
+#' two are the general \code{\link{cols_merge}()} function and the specialized
+#' \code{\link{cols_merge_range}()} function. These functions operate similarly,
+#' where the second column specified is dropped from the output table. For all
+#' of the \code{cols_merge*()} functions, column removal occurs late in the
+#' rendering lifecycle so those secondary columns are still usable as column
+#' references (e.g., inside expressions provided to `rows` in the \code{fmt*()}
+#' functions).
+#'
 #' @inheritParams cols_align
 #' @param col_val a single column name that contains the base values.
 #' @param col_uncert a single column name that contains the uncertainty values.
@@ -819,6 +878,45 @@ cols_merge_uncert <- function(data,
 }
 
 #' Merge two columns to a value range column
+#'
+#' The \code{cols_merge_range()} function is a specialized variant of the
+#' \code{\link{cols_merge}()} function. It operates by taking a two columns that
+#' constitute a range of values (\code{col_begin} and \code{col_end}) and merges
+#' them into a single column. What results is a column containing both values
+#' separated by a long dash (e.g., \code{12.0 — 20.0}). The column specified in
+#' \code{col_end} is dropped from the output table.
+#'
+#' This function could be somewhat replicated using \code{\link{cols_merge}()},
+#' however, \code{cols_merge_range()} employs the following specialized
+#' semantics for \code{NA} handling:
+#'
+#' \enumerate{
+#'
+#' \item \code{NA}s in \code{col_begin} result in missing values for the merged
+#' column (e.g., \code{NA} + \code{20.0} = \code{NA})
+#'
+#' \item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in
+#' a display of only the \code{col_begin} values only for the merged column
+#' (e.g., \code{12.0} + \code{NA} = \code{12.0})
+#'
+#' \item \code{NA}s both \code{col_begin} and \code{col_end} result in
+#' missing values for the merged column (e.g., \code{NA} + \code{NA} =
+#' \code{NA})
+#' }
+#'
+#' Any resulting \code{NA} values in the \code{col_begin} column following the
+#' merge operation can be easily formatted using the \code{\link{fmt_missing}()}
+#' function.
+#'
+#' This function is part of a set of three column-merging functions. The other
+#' two are the general \code{\link{cols_merge}()} function and the specialized
+#' \code{\link{cols_merge_uncert}()} function. These functions operate
+#' similarly, where the second column specified is dropped from the output
+#' table. For all of the \code{cols_merge*()} functions, column removal occurs
+#' late in the rendering lifecycle so those secondary columns are still usable
+#' as column references (e.g., inside expressions provided to `rows` in the
+#' \code{fmt*()} functions).
+#'
 #' @inheritParams cols_align
 #' @param col_begin a column that contains values for the start of the range.
 #' @param col_end a column that contains values for the end of the range.
