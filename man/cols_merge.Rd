@@ -10,9 +10,12 @@ cols_merge(data, col_1, col_2, pattern = "{1} {2}")
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{col_1}{a column that contains values for the start of the range.}
+\item{col_1}{a retained column that contains values to be merged with those
+in \code{col_2}.}
 
-\item{col_2}{a column that contains values for the end of the range.}
+\item{col_2}{a column that contains values to be merged with those in
+\code{col_1}. This column will be discarded but is still useful as a
+reference in other \pkg{gt} functions.}
 
 \item{pattern}{a formatting pattern that specifies the arrangement of the
 \code{col_1} and \code{col_1} values and any string literals. The
@@ -23,7 +26,22 @@ function.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Merge two columns to a single column
+This function takes any two columns and merges them into a single column,
+using a pattern that specifies how the values in the data cells are combined.
+We specify the columns to merge together in the \code{col_1} and \code{col_2}
+arguments and the string-combining pattern is specified in \code{pattern}.
+The column that is retained is that of \code{col_1} whereas the column
+specified in \code{col_2} is dropped from the output table.
+}
+\details{
+There are two other column-merging functions that offer specialized behavior
+that is optimized for common table tasks: \code{\link{cols_merge_range}()}
+and \code{\link{cols_merge_uncert}()}. These functions operate similarly,
+where the second column specified is dropped from the output table. For all
+of the \code{cols_merge*()} functions, column removal occurs late in the
+rendering lifecycle so those secondary columns are still usable as column
+references (e.g., inside expressions provided to `rows` in the \code{fmt*()}
+functions).
 }
 \section{Figures}{
 
