@@ -39,7 +39,11 @@
 
 <meta property="og:title" content="Adjust the luminance for a palette of colors — adjust_luminance" />
 
-<meta property="og:description" content="Adjust the luminance for a palette of colors" />
+<meta property="og:description" content="This function can brighten or darken a palette of colors by an arbitrary
+number of steps, which is defined by a real number between -2.0 and 2.0. The
+transformation of a palette by a fixed step in this function will tend to
+apply greater darkening or lightening for those colors in the midrange
+compared to any very dark or very light colors in the input palette." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +139,11 @@
 
     <div class="ref-description">
     
-    <p>Adjust the luminance for a palette of colors</p>
+    <p>This function can brighten or darken a palette of colors by an arbitrary
+number of steps, which is defined by a real number between -2.0 and 2.0. The
+transformation of a palette by a fixed step in this function will tend to
+apply greater darkening or lightening for those colors in the midrange
+compared to any very dark or very light colors in the input palette.</p>
     
     </div>
 
@@ -147,7 +155,9 @@
     <tr>
       <th>colors</th>
       <td><p>a vector of colors that will undergo an adjustment in
-luminance.</p></td>
+luminance. Each color value provided must either be a color name (in the
+set of colors provided by <code><a href='https://www.rdocumentation.org/packages/grDevices/topics/colors'>grDevices::colors()</a></code>) or a hexadecimal
+string in the form of "#RRGGBB" or "#RRGGBBAA".</p></td>
     </tr>
     <tr>
       <th>steps</th>
@@ -156,13 +166,63 @@ adjusted. Must be a number between <code>-2.0</code> and <code>2.0</code>.</p></
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>This function can be useful when combined with the <code><a href='data_color.html'>data_color</a>()</code>
+function's <code>palette</code> argument, which can use a vector of colors or any
+of the <code>col_*</code> functions from the <span class="pkg">scales</span> package (all of which
+have a <code>palette</code> argument).</p>
+    
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_adjust_luminance_1.svg' width=100% /></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Get a palette of 8 pastel colors from</span>
+<span class='co'># the RColorBrewer package</span>
+<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>RColorBrewer</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>brewer.pal</a></span>(<span class='fl'>8</span>, <span class='st'>"Pastel2"</span>)
+
+<span class='co'># Create lighter and darker variants</span>
+<span class='co'># of the base palette (one step lower, one</span>
+<span class='co'># step higher)</span>
+<span class='no'>pal_darker</span>  <span class='kw'>&lt;-</span> <span class='no'>pal</span> <span class='kw'>%&gt;%</span> <span class='fu'>adjust_luminance</span>(-<span class='fl'>1.0</span>)
+<span class='no'>pal_lighter</span> <span class='kw'>&lt;-</span> <span class='no'>pal</span> <span class='kw'>%&gt;%</span> <span class='fu'>adjust_luminance</span>(+<span class='fl'>1.0</span>)
+
+<span class='co'># Create a tibble and make a gt table from it;</span>
+<span class='co'># color each column in order of increasingly</span>
+<span class='co'># darker palettes (with `data_color()`)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='data_color.html'>data_color</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>),
+    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a></span>(
+      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal_lighter</span>, <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='data_color.html'>data_color</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>),
+    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a></span>(
+      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal</span>, <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='data_color.html'>data_color</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>),
+    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a></span>(
+      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal_darker</span>, <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
