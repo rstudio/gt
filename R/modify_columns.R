@@ -546,14 +546,14 @@ cols_move_to_end <- function(data,
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
+#'   cols_hide(
+#'     columns = vars(country_code_3, population)
+#'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
 #'     locations = cells_data(
 #'       columns = vars(year),
 #'       rows = population > 3000000)
-#'   ) %>%
-#'   cols_hide(
-#'     columns = vars(country_code_3, population)
 #'   )
 #'
 #' @section Figures:
