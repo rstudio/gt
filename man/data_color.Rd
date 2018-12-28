@@ -20,7 +20,7 @@ the provided \code{columns}. The color mapping functions are:
 \code{scales::col_numeric()}, and \code{scales::col_factor()}. If providing
 a vector of colors as a palette, each color value provided must either be a
 color name (in the set of colors provided by \code{grDevices::colors()}) or
-hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".}
+a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{alpha}{an optional, fixed alpha transparency value that will be applied
 to all of the \code{colors} provided if they are provided as a vector of
