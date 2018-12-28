@@ -18,7 +18,21 @@ not correspond to column names will be disregarded.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Hide one or more columns
+The \code{cols_hide()} function allows us to hide one or more columns from
+appearing in the final output table. While it's possible and often desirable
+to omit columns from the input table data before introduction to the
+\code{\link{gt}()} function, there can be cases where the data in certain
+columns is useful (as a column reference during formatting of other columns)
+but the final display of those columns is not necessary.
+}
+\details{
+The hiding of columns is internally a rendering directive, so, all columns
+that are 'hidden' are still accessible and useful in any expression provided
+to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as
+with many \pkg{gt} functions) can be placed anywhere in a pipeline of
+\pkg{gt} function calls (acting as a promise to hide columns when the timing
+is right). However there's perhaps greater readability when placing this call
+closer to the end of such a pipeline.
 }
 \section{Figures}{
 
@@ -50,14 +64,14 @@ tab_2 <-
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
+  cols_hide(
+    columns = vars(country_code_3, population)
+  ) \%>\%
   tab_footnote(
     footnote = "Population above 3,000,000.",
     locations = cells_data(
       columns = vars(year),
       rows = population > 3000000)
-  ) \%>\%
-  cols_hide(
-    columns = vars(country_code_3, population)
   )
 
 }
