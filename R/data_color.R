@@ -41,7 +41,7 @@
 #'   \code{scales::col_numeric()}, and \code{scales::col_factor()}. If providing
 #'   a vector of colors as a palette, each color value provided must either be a
 #'   color name (in the set of colors provided by \code{grDevices::colors()}) or
-#'   hexadecimal strings in the form of "#RRGGBB" or "#RRGGBBAA".
+#'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param alpha an optional, fixed alpha transparency value that will be applied
 #'   to all of the \code{colors} provided if they are provided as a vector of
 #'   colors. If using a colorizing helper function for \code{colors} then this
@@ -230,10 +230,60 @@ scale_apply_styles <- function(data,
 }
 
 #' Adjust the luminance for a palette of colors
+#'
+#' This function can brighten or darken a palette of colors by an arbitrary
+#' number of steps, which is defined by a real number between -2.0 and 2.0. The
+#' transformation of a palette by a fixed step in this function will tend to
+#' apply greater darkening or lightening for those colors in the midrange
+#' compared to any very dark or very light colors in the input palette.
+#'
+#' This function can be useful when combined with the \code{\link{data_color}()}
+#' function's \code{palette} argument, which can use a vector of colors or any
+#' of the \code{col_*} functions from the \pkg{scales} package (all of which
+#' have a \code{palette} argument).
+#'
 #' @param colors a vector of colors that will undergo an adjustment in
-#'   luminance.
+#'   luminance. Each color value provided must either be a color name (in the
+#'   set of colors provided by \code{grDevices::colors()}) or a hexadecimal
+#'   string in the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param steps a positive or negative factor by which the luminance will be
 #'   adjusted. Must be a number between \code{-2.0} and \code{2.0}.
+#' @examples
+#' # Get a palette of 8 pastel colors from
+#' # the RColorBrewer package
+#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+#'
+#' # Create lighter and darker variants
+#' # of the base palette (one step lower, one
+#' # step higher)
+#' pal_darker  <- pal %>% adjust_luminance(-1.0)
+#' pal_lighter <- pal %>% adjust_luminance(+1.0)
+#'
+#' # Create a tibble and make a gt table from it;
+#' # color each column in order of increasingly
+#' # darker palettes (with `data_color()`)
+#' tab_1 <-
+#'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = vars(a),
+#'     colors = scales::col_numeric(
+#'       palette = pal_lighter, domain = c(1, 8))
+#'   ) %>%
+#'   data_color(
+#'     columns = vars(b),
+#'     colors = scales::col_numeric(
+#'       palette = pal, domain = c(1, 8))
+#'   ) %>%
+#'   data_color(
+#'     columns = vars(c),
+#'     colors = scales::col_numeric(
+#'       palette = pal_darker, domain = c(1, 8))
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
+#'
 #' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
