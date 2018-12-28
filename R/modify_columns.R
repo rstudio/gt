@@ -502,6 +502,22 @@ cols_move_to_end <- function(data,
 }
 
 #' Hide one or more columns
+#'
+#' The \code{cols_hide()} function allows us to hide one or more columns from
+#' appearing in the final output table. While it's possible and often desirable
+#' to omit columns from the input table data before introduction to the
+#' \code{\link{gt}()} function, there can be cases where the data in certain
+#' columns is useful (as a column reference during formatting of other columns)
+#' but the final display of those columns is not necessary.
+#'
+#' The hiding of columns is internally a rendering directive, so, all columns
+#' that are 'hidden' are still accessible and useful in any expression provided
+#' to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as
+#' with many \pkg{gt} functions) can be placed anywhere in a pipeline of
+#' \pkg{gt} function calls (acting as a promise to hide columns when the timing
+#' is right). However there's perhaps greater readability when placing this call
+#' closer to the end of such a pipeline.
+#'
 #' @inheritParams cols_align
 #' @param columns the column names to hide from the output display table. The
 #'   order of the remaining columns will be preserved. Values provided that do
@@ -576,11 +592,24 @@ cols_hide <- function(data,
 
 #' Create group names and column labels via delimited names
 #'
-#' This option will split delimited column names such that the first component
-#' is promoted to the group name (and hence will span over column labels) and
-#' subsequent components will represent the column label. Please note that
-#' reference to individual columns must continue to be through the original
-#' column names.
+#' This function will split selected delimited column names such that the first
+#' components (LHS) are promoted to being spanner column labels, and the
+#' secondary components (RHS) will become the column labels. Please note that
+#' reference to individual columns must continue to be the column names from the
+#' input table data (which are unique by necessity).
+#'
+#' If we look to the column names in the \code{iris} dataset as an example of
+#' how \code{cols_split_delim()} might be useful, we find the names
+#' \code{Sepal.Length}, \code{Sepal.Width}, \code{Petal.Length},
+#' \code{Petal.Width}. From this naming system, it's easy to see that the
+#' \code{Sepal} and \code{Petal} can group together the repeated common
+#' \code{Length} and \code{Width} values. In your own datasets, we can avoid a
+#' lengthy relabeling with \code{\link{cols_label}()} if column names can be
+#' fashioned beforehand to contain both the spanner column label and the column
+#' label. An additional advantage is that the column names in the input table
+#' data remain unique even though there may eventually be repeated column labels
+#' in the rendered output table).
+#'
 #' @inheritParams cols_align
 #' @param delim the delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
