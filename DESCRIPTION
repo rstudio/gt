@@ -43,6 +43,7 @@ Remotes:
 Suggests:
     knitr,
     testthat,
+    RColorBrewer,
     rmarkdown,
     rvest,
     shiny,
