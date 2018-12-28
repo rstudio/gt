@@ -1,7 +1,6 @@
 #' Save a gt table as an RTF file
 #'
-#' Take a \code{gt_tbl} table object and render it to an RTF file with the
-#' extension \code{.rtf}.
+#' Take a \code{gt_tbl} table object and render it as RTF data.
 #' @param data a table object that is created using the \code{gt()} function.
 #' @examples
 #' \dontrun{
@@ -17,6 +16,8 @@
 #' @export
 as_rtf <- function(data) {
   checkmate::assert_class(data, "gt_tbl")
+
+  context <- "latex"
 
   # Preparation Work --------------------------------------------------------
 
@@ -56,6 +57,16 @@ as_rtf <- function(data) {
   # Get the `cols_df` data frame
   cols_df <- data_attr$cols_df
 
+  #
+  # Obtain initial list objects from `data_attr`
+  #
+
+  # Get the `col_labels` list
+  col_labels <- data_attr$col_labels
+
+  # Get the `grp_labels` list
+  grp_labels <- data_attr$grp_labels
+
   # Get the `formats` list
   formats <- data_attr$formats
 
@@ -87,11 +98,11 @@ as_rtf <- function(data) {
   output_df <- initialize_output_df(data_df)
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(output_df, data_df, formats, context = "default")
+  output_df <- render_formats(output_df, data_df, formats, context)
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
-  output_df <- migrate_unformatted_to_output(data_df, output_df)
+  output_df <- migrate_unformatted_to_output(data_df, output_df, context)
 
   # Get the reordering df (`rows_df`) for the data rows
   rows_df <- get_row_reorder_df(arrange_groups, stub_df)
@@ -128,7 +139,7 @@ as_rtf <- function(data) {
 
   # Apply column names to column labels for any of those column labels not
   # explicitly set
-  boxh_df <- migrate_colnames_to_labels(boxh_df)
+  boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
 
   # Assign default alignment for all columns that haven't had alignment
   # explicitly set
