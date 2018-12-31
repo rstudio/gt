@@ -11,4 +11,4 @@ source("data-raw/06-exibble.R")
 usethis::use_data(
   countrypops, sza, gtcars, sp500, pizzaplace, exibble,
   internal = FALSE, overwrite = TRUE
-  )
+)
