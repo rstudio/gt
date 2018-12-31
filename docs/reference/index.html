@@ -506,8 +506,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-images" class="hasAnchor"><a href="#section-images" class="anchor"></a>Images</h2>
-          <p class="section-desc"><p>There is preliminary support for inserting images into cells. This currently works well for HTML table output. A strategy for adding image content is to use these <code>*_image()</code> functions in a <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> call (before introducing table data to <code><a href="../reference/gt.html">gt()</a></code>), or, using these within targeted <code><a href="../reference/text_transform.html">text_transform()</a></code> calls.</p></p>
+          <h2 id="section-image-addition" class="hasAnchor"><a href="#section-image-addition" class="anchor"></a>Image Addition</h2>
+          <p class="section-desc"><p>We can add images into a <strong>gt</strong> table with the help of the <code>*_image()</code> functions. Two common ways to do this: (1) use <code><a href="../reference/text_transform.html">text_transform()</a></code> to insert images into data cells, (2) use any function that creates new labels (e.g., <code><a href="../reference/tab_header.html">tab_header()</a></code>) and use a <code>*_image()</code> function within the <code><a href="../reference/html.html">html()</a></code> helper.</p></p>
         </th>
       </tr>
       <tr>
@@ -615,7 +615,7 @@
       <li><a href="#section-export-table">Export Table</a></li>
       <li><a href="#section-shiny-functions">Shiny Functions</a></li>
       <li><a href="#section-helper-functions">Helper Functions</a></li>
-      <li><a href="#section-images">Images</a></li>
+      <li><a href="#section-image-addition">Image Addition</a></li>
       <li><a href="#section-information">Information</a></li>
       <li><a href="#section-datasets">Datasets</a></li>
     </ul>
