@@ -46,9 +46,9 @@ useful for HTML table output. To use this function inside of data cells, it
 is recommended that the text_transform() function is used. With
 that function, we can specify which data cells to target and then include a
 web_image() call within the required user-defined function (for the
-fn argument). If we want to include an image in other places (e.g.,
-in the header, within footnote text, etc.) we need to use web_image() within
-the html() helper function." />
+fn argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use web_image()
+within the html() helper function." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -151,9 +151,9 @@ useful for HTML table output. To use this function inside of data cells, it
 is recommended that the <code><a href='text_transform.html'>text_transform</a>()</code> function is used. With
 that function, we can specify which data cells to target and then include a
 <code>web_image()</code> call within the required user-defined function (for the
-<code>fn</code> argument). If we want to include an image in other places (e.g.,
-in the header, within footnote text, etc.) we need to use <code>web_image()</code> within
-the <code><a href='html.html'>html</a>()</code> helper function.</p>
+<code>fn</code> argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use <code>web_image()</code>
+within the <code><a href='html.html'>html</a>()</code> helper function.</p>
     
     </div>
 
@@ -203,7 +203,8 @@ the heights of most table rows.</p>
 <span class='co'># string, the other as numerical values),</span>
 <span class='co'># then, create a gt table; use the</span>
 <span class='co'># `text_transform()` function to insert</span>
-<span class='co'># the R logo PNG image with the various sizes</span>
+<span class='co'># the R logo PNG image with the various</span>
+<span class='co'># sizes</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
     <span class='kw'>pixels</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)),
