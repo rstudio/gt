@@ -54,6 +54,8 @@ construct.
 }
 
 \examples{
+library(ggplot2)
+
 # Create a ggplot plot
 plot_object <-
   ggplot(
