@@ -54,6 +54,7 @@
 #' @section Figures:
 #' \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
 #'
+#' @family image addition functions
 #' @importFrom glue glue
 #' @export
 local_image <- function(file,
@@ -172,6 +173,7 @@ local_image <- function(file,
 #'
 #' \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 #'
+#' @family image addition functions
 #' @importFrom glue glue
 #' @export
 web_image <- function(url,
@@ -257,6 +259,7 @@ web_image <- function(url,
 #' @section Figures:
 #' \if{html}{\figure{man_ggplot_image_1.svg}{options: width=100\%}}
 #'
+#' @family image addition functions
 #' @importFrom ggplot2 ggsave
 #' @export
 ggplot_image <- function(plot_object,
@@ -297,6 +300,7 @@ ggplot_image <- function(plot_object,
 #' within that function.
 #' @param type the type of the image. Can either be \code{png} (the default) or
 #'   \code{svg}.
+#' @family image addition functions
 #' @export
 test_image <- function(type = c("png", "svg")) {
 
