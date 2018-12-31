@@ -10,6 +10,7 @@ info_time_style()
 View a table with info on time styles
 }
 \seealso{
-Other information functions: \code{\link{info_date_style}}
+Other information functions: \code{\link{info_date_style}},
+  \code{\link{info_paletteer}}
 }
 \concept{information functions}
