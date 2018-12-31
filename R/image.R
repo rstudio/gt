@@ -222,6 +222,8 @@ web_image <- function(url,
 #' @return a character object with an HTML fragment that can be placed inside of
 #'   a cell.
 #' @examples
+#' library(ggplot2)
+#'
 #' # Create a ggplot plot
 #' plot_object <-
 #'   ggplot(
