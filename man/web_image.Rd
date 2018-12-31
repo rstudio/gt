@@ -23,9 +23,9 @@ useful for HTML table output. To use this function inside of data cells, it
 is recommended that the \code{\link{text_transform}()} function is used. With
 that function, we can specify which data cells to target and then include a
 \code{web_image()} call within the required user-defined function (for the
-\code{fn} argument). If we want to include an image in other places (e.g.,
-in the header, within footnote text, etc.) we need to use \code{web_image()} within
-the \code{\link{html}()} helper function.
+\code{fn} argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use \code{web_image()}
+within the \code{\link{html}()} helper function.
 }
 \details{
 By itself, the function creates an HTML image tag, so, the call
@@ -54,7 +54,8 @@ r_png_url <-
 # string, the other as numerical values),
 # then, create a gt table; use the
 # `text_transform()` function to insert
-# the R logo PNG image with the various sizes
+# the R logo PNG image with the various
+# sizes
 tab_1 <-
   dplyr::tibble(
     pixels = px(seq(10, 35, 5)),
