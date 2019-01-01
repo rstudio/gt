@@ -187,11 +187,13 @@ reference:
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
-      date styles (`info_date_style()`) and on time styles
-      (`info_time_style()`).
+      date styles (`info_date_style()`), on time styles
+      (`info_time_style()`), and on a huge number of color palettes
+      (`info_paletteer()`).
     contents:
     - info_date_style
     - info_time_style
+    - info_paletteer
 
   - title: Datasets
     desc: >
