@@ -57,22 +57,40 @@ info_time_style <- function() {
 }
 
 #' View a table with info on many different color palettes
-#' @param color_packages a vector of color packages to determine which
-#' sets of palettes should be displayed in the information table.
+#' @param color_pkgs a vector of color packages that determines which sets of
+#'   palettes should be displayed in the information table. If this is
+#'   \code{NULL} (the default) then all of the discrete palettes from all of the
+#'   color packages represented in \pkg{paletteer} will be displayed.
+#' @examples
+#' # Get a table of info on the `ggthemes`
+#' # color palettes (which are easily
+#' # accessible from the paletteer package)
+#' tab_1 <-
+#'   info_paletteer(
+#'     color_pkgs = "ggthemes")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
+#'
 #' @importFrom dplyr filter pull select mutate
 #' @family information functions
 #' @export
-info_paletteer <- function(color_packages = c(
-  "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
-  "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
-  "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
-  "Polychrome", "quickpalette","rcartocolor", "RColorBrewer",
-  "Redmonder", "wesanderson", "yarrr")
-) {
+info_paletteer <- function(color_pkgs = NULL) {
+
+  if (is.null(color_pkgs)) {
+
+    color_pkgs <-
+      c(
+        "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
+        "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
+        "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
+        "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
+        "Redmonder", "wesanderson", "yarrr")
+  }
 
   palettes_strips_df <-
     palettes_strips %>%
-    dplyr::filter(package %in% color_packages)
+    dplyr::filter(package %in% color_pkgs)
 
   palettes_strips <-
     palettes_strips_df %>%
@@ -93,7 +111,7 @@ info_paletteer <- function(color_packages = c(
     ) %>%
     tab_stubhead_label(label = "Package and Palette Name") %>%
     tab_header(
-      title = md("Palettes Made Easily Available with **palleteer**"),
+      title = md("Palettes Made Easily Available with **paletteer**"),
       subtitle = md("Palettes like these are useful with the `data_color()` **gt** function")
     ) %>%
     tab_style(
