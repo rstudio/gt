@@ -139,21 +139,24 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>info_paletteer</span>(<span class='kw'>color_packages</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"awtools"</span>, <span class='st'>"dichromat"</span>, <span class='st'>"dutchmasters"</span>,
-  <span class='st'>"ggsci"</span>, <span class='st'>"ggpomological"</span>, <span class='st'>"ggthemes"</span>, <span class='st'>"ghibli"</span>, <span class='st'>"grDevices"</span>, <span class='st'>"jcolors"</span>,
-  <span class='st'>"LaCroixColoR"</span>, <span class='st'>"NineteenEightyR"</span>, <span class='st'>"nord"</span>, <span class='st'>"ochRe"</span>, <span class='st'>"palettetown"</span>,
-  <span class='st'>"pals"</span>, <span class='st'>"Polychrome"</span>, <span class='st'>"quickpalette"</span>, <span class='st'>"rcartocolor"</span>, <span class='st'>"RColorBrewer"</span>,
-  <span class='st'>"Redmonder"</span>, <span class='st'>"wesanderson"</span>, <span class='st'>"yarrr"</span>))</pre>
+    <pre class="usage"><span class='fu'>info_paletteer</span>(<span class='kw'>color_pkgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>color_packages</th>
-      <td><p>a vector of color packages to determine which
-sets of palettes should be displayed in the information table.</p></td>
+      <th>color_pkgs</th>
+      <td><p>a vector of color packages that determines which sets of
+palettes should be displayed in the information table. If this is
+<code>NULL</code> (the default) then all of the discrete palettes from all of the
+color packages represented in <span class="pkg">paletteer</span> will be displayed.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_info_paletteer_1.svg' width=100% /></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -161,14 +164,25 @@ sets of palettes should be displayed in the information table.</p></td>
   <code><a href='info_time_style.html'>info_time_style</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Get a table of info on the `ggthemes`</span>
+<span class='co'># color palettes (which are easily</span>
+<span class='co'># accessible from the paletteer package)</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>info_paletteer</span>(
+    <span class='kw'>color_pkgs</span> <span class='kw'>=</span> <span class='st'>"ggthemes"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#figures">Figures</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
