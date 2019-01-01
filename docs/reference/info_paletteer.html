@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>View a table with info on date styles — info_date_style • gt</title>
+<title>View a table with info on many different color palettes — info_paletteer • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="View a table with info on date styles — info_date_style" />
+<meta property="og:title" content="View a table with info on many different color palettes — info_paletteer" />
 
-<meta property="og:description" content="View a table with info on date styles" />
+<meta property="og:description" content="View a table with info on many different color palettes" />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -128,22 +128,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>View a table with info on date styles</h1>
+    <h1>View a table with info on many different color palettes</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/info_tables.R'><code>R/info_tables.R</code></a></small>
-    <div class="hidden name"><code>info_date_style.Rd</code></div>
+    <div class="hidden name"><code>info_paletteer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>View a table with info on date styles</p>
+    <p>View a table with info on many different color palettes</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>info_date_style</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>info_paletteer</span>(<span class='kw'>color_packages</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"awtools"</span>, <span class='st'>"dichromat"</span>, <span class='st'>"dutchmasters"</span>,
+  <span class='st'>"ggsci"</span>, <span class='st'>"ggpomological"</span>, <span class='st'>"ggthemes"</span>, <span class='st'>"ghibli"</span>, <span class='st'>"grDevices"</span>, <span class='st'>"jcolors"</span>,
+  <span class='st'>"LaCroixColoR"</span>, <span class='st'>"NineteenEightyR"</span>, <span class='st'>"nord"</span>, <span class='st'>"ochRe"</span>, <span class='st'>"palettetown"</span>,
+  <span class='st'>"pals"</span>, <span class='st'>"Polychrome"</span>, <span class='st'>"quickpalette"</span>, <span class='st'>"rcartocolor"</span>, <span class='st'>"RColorBrewer"</span>,
+  <span class='st'>"Redmonder"</span>, <span class='st'>"wesanderson"</span>, <span class='st'>"yarrr"</span>))</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>color_packages</th>
+      <td><p>a vector of color packages to determine which
+sets of palettes should be displayed in the information table.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other information functions: <code><a href='info_paletteer.html'>info_paletteer</a></code>,
+    <div class='dont-index'><p>Other information functions: <code><a href='info_date_style.html'>info_date_style</a></code>,
   <code><a href='info_time_style.html'>info_time_style</a></code></p></div>
     
 
@@ -151,6 +165,7 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#see-also">See also</a></li>
           </ul>
