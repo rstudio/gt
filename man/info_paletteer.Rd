@@ -4,18 +4,30 @@
 \alias{info_paletteer}
 \title{View a table with info on many different color palettes}
 \usage{
-info_paletteer(color_packages = c("awtools", "dichromat", "dutchmasters",
-  "ggsci", "ggpomological", "ggthemes", "ghibli", "grDevices", "jcolors",
-  "LaCroixColoR", "NineteenEightyR", "nord", "ochRe", "palettetown",
-  "pals", "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
-  "Redmonder", "wesanderson", "yarrr"))
+info_paletteer(color_pkgs = NULL)
 }
 \arguments{
-\item{color_packages}{a vector of color packages to determine which
-sets of palettes should be displayed in the information table.}
+\item{color_pkgs}{a vector of color packages that determines which sets of
+palettes should be displayed in the information table. If this is
+\code{NULL} (the default) then all of the discrete palettes from all of the
+color packages represented in \pkg{paletteer} will be displayed.}
 }
 \description{
 View a table with info on many different color palettes
+}
+\section{Figures}{
+
+\if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Get a table of info on the `ggthemes`
+# color palettes (which are easily
+# accessible from the paletteer package)
+tab_1 <-
+  info_paletteer(
+    color_pkgs = "ggthemes")
+
 }
 \seealso{
 Other information functions: \code{\link{info_date_style}},
