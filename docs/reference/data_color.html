@@ -229,12 +229,23 @@ colors. If the palette is discrete and has a different number of colors than
 the number of factors, interpolation is used.</p></li>
 </ul>
     <p>By default, <span class="pkg">gt</span> will choose the ideal text color (for maximal contrast)
-when colorizing the background of data cells.</p>
+when colorizing the background of data cells. This option can be disabled by
+setting <code>autocolor_text</code> to <code>FALSE</code>.</p>
+<p>Choosing the right color palette can often be difficult because it's both
+hard to discover suitable palettes and then obtain the vector of colors. To
+make this process easier we can elect to use the <span class="pkg">paletteer</span> package,
+which makes a wide range of palettes from various R packages readily
+available. The <code><a href='info_paletteer.html'>info_paletteer</a>()</code> information table allows us to
+easily inspect all of the discrete color palettes available in
+<span class="pkg">paletteer</span>. We only then need to specify the <code>package</code> and
+<code>palette</code> when calling the <code><a href='https://www.rdocumentation.org/packages/paletteer/topics/paletteer_d'>paletteer::paletteer_d()</a></code> function,
+and, we get the palette as a vector of hexadecimal colors.</p>
     
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
     <p><img src='figures/man_data_color_1.svg' width=100% /></p>
+<p><img src='figures/man_data_color_2.svg' width=100% /></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -247,7 +258,9 @@ when colorizing the background of data cells.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `countrypops` to create a gt table;</span>
+    <pre class="examples"><div class='input'><span class='co'># library(paletteer)</span>
+
+<span class='co'># Use `countrypops` to create a gt table;</span>
 <span class='co'># Apply a color scale to the `population`</span>
 <span class='co'># column with `scales::col_numeric`,</span>
 <span class='co'># four supplied colors, and a domain</span>
@@ -263,6 +276,35 @@ when colorizing the background of data cells.</p>
       <span class='kw'>palette</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
         <span class='st'>"red"</span>, <span class='st'>"orange"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span>),
       <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.2E7</span>, <span class='fl'>0.4E7</span>))
+  )
+
+<span class='co'># Use `pizzaplace` to create a gt table;</span>
+<span class='co'># Apply colors from the `red_material`</span>
+<span class='co'># palette (in the `ggsci` pkg but</span>
+<span class='co'># more easily gotten from the `paletteer`</span>
+<span class='co'># package, info at `info_paletteer()`) to</span>
+<span class='co'># to `sold` and `income` columns; setting</span>
+<span class='co'># the `domain` of `scales::col_numeric()`</span>
+<span class='co'># to `NULL` will use the bounds of the</span>
+<span class='co'># available data as the domain</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='no'>pizzaplace</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='no'>type</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"chicken"</span>, <span class='st'>"supreme"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>type</span>, <span class='no'>size</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
+    <span class='kw'>sold</span> <span class='kw'>=</span> <span class='fu'>n</span>(),
+    <span class='kw'>income</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>price</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"size"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>data_color</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sold</span>, <span class='no'>income</span>),
+    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/col_numeric'>col_numeric</a></span>(
+      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='kw pkg'>paletteer</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/paletteer/topics/paletteer_d'>paletteer_d</a></span>(
+        <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ggsci"</span>,
+        <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"red_material"</span>
+        ),
+      <span class='kw'>domain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
   )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
