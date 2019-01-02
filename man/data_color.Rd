@@ -72,14 +72,29 @@ the number of factors, interpolation is used.
 }
 
 By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
-when colorizing the background of data cells.
+when colorizing the background of data cells. This option can be disabled by
+setting \code{autocolor_text} to \code{FALSE}.
+
+Choosing the right color palette can often be difficult because it's both
+hard to discover suitable palettes and then obtain the vector of colors. To
+make this process easier we can elect to use the \pkg{paletteer} package,
+which makes a wide range of palettes from various R packages readily
+available. The \code{\link{info_paletteer}()} information table allows us to
+easily inspect all of the discrete color palettes available in
+\pkg{paletteer}. We only then need to specify the \code{package} and
+\code{palette} when calling the \code{paletteer::paletteer_d()} function,
+and, we get the palette as a vector of hexadecimal colors.
 }
 \section{Figures}{
 
 \if{html}{\figure{man_data_color_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
 }
 
 \examples{
+# library(paletteer)
+
 # Use `countrypops` to create a gt table;
 # Apply a color scale to the `population`
 # column with `scales::col_numeric`,
@@ -96,6 +111,35 @@ tab_1 <-
       palette = c(
         "red", "orange", "green", "blue"),
       domain = c(0.2E7, 0.4E7))
+  )
+
+# Use `pizzaplace` to create a gt table;
+# Apply colors from the `red_material`
+# palette (in the `ggsci` pkg but
+# more easily gotten from the `paletteer`
+# package, info at `info_paletteer()`) to
+# to `sold` and `income` columns; setting
+# the `domain` of `scales::col_numeric()`
+# to `NULL` will use the bounds of the
+# available data as the domain
+tab_2 <-
+  pizzaplace \%>\%
+  dplyr::filter(
+    type \%in\% c("chicken", "supreme")) \%>\%
+  dplyr::group_by(type, size) \%>\%
+  dplyr::summarize(
+    sold = n(),
+    income = sum(price)
+  ) \%>\%
+  gt(rowname_col = "size") \%>\%
+  data_color(
+    columns = vars(sold, income),
+    colors = scales::col_numeric(
+      palette = paletteer::paletteer_d(
+        package = "ggsci",
+        palette = "red_material"
+        ),
+      domain = NULL)
   )
 
 }
