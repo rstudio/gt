@@ -172,6 +172,10 @@ reference:
 
   - title: Image Addition
     desc: >
+      <a href="https://rstudio.cloud/project/161121">
+      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
+      </a>
+      <br /><br />
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
       insert images into data cells, (2) use any function that creates
