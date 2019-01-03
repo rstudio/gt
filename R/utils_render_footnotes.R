@@ -1,5 +1,6 @@
 # Resolve footnotes or styles
-#' @importFrom dplyr filter bind_rows mutate inner_join select arrange pull tibble
+#' @importFrom dplyr filter bind_rows mutate inner_join group_by
+#' @importFrom dplyr summarize select arrange pull tibble distinct
 #' @importFrom tibble rownames_to_column
 #' @noRd
 resolve_footnotes_styles <- function(output_df,
@@ -93,9 +94,9 @@ resolve_footnotes_styles <- function(output_df,
           )
         )
 
-      # Add a `colnum` column that's required for arranging `tbl`
-      # in such a way that the order of records moves from
-      # top-to-bottom, left-to-right
+      # Add a `colnum` column that's required for
+      # arranging `tbl` in such a way that the order
+      # of records moves from top-to-bottom, left-to-right
       tbl_data <-
         tbl_data %>%
         dplyr::mutate(
@@ -116,7 +117,8 @@ resolve_footnotes_styles <- function(output_df,
       dplyr::mutate(colnum = NA_integer_)
   }
 
-  # For the stub groups, insert a `rownum` based on groups_rows_df
+  # For the stub groups, insert a `rownum` based
+  # on `groups_rows_df`
   if ("stub_groups" %in% tbl[["locname"]]) {
 
     tbl_not_stub_groups <-
@@ -134,14 +136,15 @@ resolve_footnotes_styles <- function(output_df,
       dplyr::select(-row, -row_end)
 
     # Re-combine `tbl_not_stub_groups`
-    #   with `tbl_stub_groups`
+    # with `tbl_stub_groups`
     tbl <-
       dplyr::bind_rows(
         tbl_not_stub_groups, tbl_stub_groups
       )
   }
 
-  # For the summary cells, insert a `rownum` based on groups_rows_df
+  # For the summary cells, insert a `rownum` based
+  # on `groups_rows_df`
   if ("summary_cells" %in% tbl[["locname"]]) {
 
     tbl_not_summary_cells <-
@@ -159,14 +162,15 @@ resolve_footnotes_styles <- function(output_df,
       dplyr::select(-row, -row_end)
 
     # Re-combine `tbl_not_summary_cells`
-    #   with `tbl_summary_cells`
+    # with `tbl_summary_cells`
     tbl <-
       dplyr::bind_rows(
         tbl_not_summary_cells, tbl_summary_cells
       )
   }
 
-  # For the column label cells, insert a `rownum` based on boxh_df
+  # For the column label cells, insert a `colnum`
+  # based on `boxh_df`
   if ("columns_columns" %in% tbl[["locname"]]) {
 
     tbl_not_column_cells <-
@@ -191,6 +195,37 @@ resolve_footnotes_styles <- function(output_df,
       dplyr::bind_rows(
         tbl_not_column_cells,
         tbl_column_cells
+      )
+  }
+
+  # For the column spanner label cells, insert a
+  # `colnum` based on `boxh_df`
+  if ("columns_groups" %in% tbl[["locname"]]) {
+
+    group_label_df <-
+      dplyr::tibble(
+        colnum = seq(ncol(boxh_df)),
+        grpname = boxh_df["group_label", ] %>% as.character()
+      ) %>%
+      dplyr::group_by(grpname) %>%
+      dplyr::summarize(colnum = min(colnum))
+
+    tbl_not_col_spanner_cells <-
+      tbl %>%
+      dplyr::filter(locname != "columns_groups")
+
+    tbl_column_spanner_cells <-
+      tbl %>%
+      dplyr::select(-colnum) %>%
+      dplyr::filter(locname == "columns_groups") %>%
+      dplyr::inner_join(group_label_df, by = "grpname")
+
+    # Re-combine `tbl_not_col_spanner_cells`
+    # with `tbl_not_col_spanner_cells`
+    tbl <-
+      dplyr::bind_rows(
+        tbl_not_col_spanner_cells,
+        tbl_column_spanner_cells
       )
   }
 
