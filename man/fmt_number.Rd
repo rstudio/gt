@@ -67,8 +67,10 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform number-based formatting so
-that the targeted values are rendered with the following options:
+With numeric values in a \pkg{gt} table, we can perform number-based
+formatting so that the targeted values are rendered with a higher
+consideration for tabular presentation. Furthermore, there is finer control
+over numeric foramtting with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol

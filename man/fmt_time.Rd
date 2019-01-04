@@ -35,7 +35,8 @@ presets.}
 Format input time values that are character-based and expressed according to
 the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
 are targeted with \code{columns} (and, optionally, \code{rows}), we can
-simply apply a preset time style to format the times.
+simply apply a preset time style (see table in
+\code{\link{info_time_style}()} for info) to format the times.
 }
 \details{
 The following time styles are available for simpler formatting of ISO times

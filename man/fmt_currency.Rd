@@ -79,12 +79,11 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform currency-based formatting.
-This function supports both automatic formatting with a three-letter currency
-code and numeric formatting facilitated through the use of a locale ID.
-}
-\details{
-The targeted numeric values are rendered with the following options:
+With numeric values in a \pkg{gt} table, we can perform currency-based
+formatting. This function supports both automatic formatting with a
+three-letter currency code and numeric formatting facilitated through the use
+of a locale ID. For fine control the conversion from numeric to currency
+values, we can take advantage of the following options:
 \itemize{
 \item currency symbol placement: the currency symbol can be placed before
 or after the values
@@ -101,7 +100,8 @@ currency values
 \item locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
 }
-
+}
+\details{
 Targeting of values is done through \code{columns} and additionally by
 \code{rows} (if nothing is provided for \code{rows} then entire columns are
 selected). A number of helper functions exist to make targeting more
