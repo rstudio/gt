@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_rtf.R
 \name{as_rtf}
 \alias{as_rtf}
-\title{Save a gt table as an RTF file}
+\title{Output a \pkg{gt} object as RTF}
 \usage{
 as_rtf(data)
 }
@@ -10,17 +10,27 @@ as_rtf(data)
 \item{data}{a table object that is created using the \code{gt()} function.}
 }
 \description{
-Take a \code{gt_tbl} table object and render it to an RTF file with the
-extension \code{.rtf}.
+Get the RTF content from a \code{gt_tbl} object as as a single-element
+character vector. This object can be used with \code{writeLines()} to
+generate a valid .rtf file that can be opened by RTF readers.
 }
 \examples{
 \dontrun{
-# Create a `gt` table using the `sleep`
-# dataset and then output the table to
-# a raw RTF object
-gt(data = sleep) \%>\%
-  as_rtf(file = "sleep.rtf")
+# Use `gtcars` to create a gt table;
+# add a header and then export as
+# RTF code
+tab_rtf <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) \%>\%
+  as_rtf()
 }
+
 }
 \seealso{
 Other table export functions: \code{\link{as_latex}},
