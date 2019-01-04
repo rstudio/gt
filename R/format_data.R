@@ -53,8 +53,12 @@
 #' @param pattern a formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by \code{{x}} and all
 #'   other characters are taken to be string literals.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
+#' @param sep_mark the mark to use as a separator between groups of digits
+#'   (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
+#'   formatted value of \code{1,000}).
+#' @param dec_mark the character to use as a decimal mark (e.g., using
+#'   \code{dec_mark = ","} with \code{0.152} would result in a formatted value
+#'   of \code{0,152}).
 #' @param locale an optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include \code{"en_US"} for English
 #'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
