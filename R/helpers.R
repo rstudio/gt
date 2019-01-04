@@ -433,13 +433,19 @@ is.html <- function(x) {
 #'
 #' This helper function is to be used with the \code{\link{tab_style}()}
 #' function, which itself allows for the setting of custom styles to one or more
-#' cells. We can also define several styles with a single call of
-#' \code{cells_styles} and \code{\link{tab_style}()} will reliably process that.
+#' cells. We can also define several styles within a single call of
+#' \code{cells_styles} and \code{\link{tab_style}()} will reliably apply those
+#' styles to the targeted element.
+#'
 #' @param bkgd_color the background color of the cell.
 #' @param text_color the text color.
 #' @param text_font the font or collection of fonts (subsequent font names are)
 #'   used as fallbacks.
-#' @param text_size the size of the font. Can either
+#' @param text_size the size of the font. Can be provided as a number that is
+#'   assumed to represent \code{px} values (or could be wrapped in the
+#'   \code{\link{px}()}) helper function. We can also use one of the following
+#'   absolute size keywords: \code{xx-small}, \code{x-small}, \code{small},
+#'   \code{medium}, \code{large}, \code{x-large}, or \code{xx-large}.
 #' @param text_style the text style. Can be one of either \code{"center"},
 #'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
 #' @param text_weight the weight of the font. Can be a text-based keyword such
