@@ -41,8 +41,9 @@
 
 <meta property="og:description" content="This helper function is to be used with the tab_style()
 function, which itself allows for the setting of custom styles to one or more
-cells. We can also define several styles with a single call of
-cells_styles and tab_style() will reliably process that." />
+cells. We can also define several styles within a single call of
+cells_styles and tab_style() will reliably apply those
+styles to the targeted element." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -140,8 +141,9 @@ cells_styles and tab_style() will reliably process that." />
     
     <p>This helper function is to be used with the <code><a href='tab_style.html'>tab_style</a>()</code>
 function, which itself allows for the setting of custom styles to one or more
-cells. We can also define several styles with a single call of
-<code>cells_styles</code> and <code><a href='tab_style.html'>tab_style</a>()</code> will reliably process that.</p>
+cells. We can also define several styles within a single call of
+<code>cells_styles</code> and <code><a href='tab_style.html'>tab_style</a>()</code> will reliably apply those
+styles to the targeted element.</p>
     
     </div>
 
@@ -168,7 +170,11 @@ used as fallbacks.</p></td>
     </tr>
     <tr>
       <th>text_size</th>
-      <td><p>the size of the font. Can either</p></td>
+      <td><p>the size of the font. Can be provided as a number that is
+assumed to represent <code>px</code> values (or could be wrapped in the
+<code><a href='px.html'>px</a>()</code>) helper function. We can also use one of the following
+absolute size keywords: <code>xx-small</code>, <code>x-small</code>, <code>small</code>,
+<code>medium</code>, <code>large</code>, <code>x-large</code>, or <code>xx-large</code>.</p></td>
     </tr>
     <tr>
       <th>text_align</th>
