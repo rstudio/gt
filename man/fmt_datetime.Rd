@@ -44,8 +44,9 @@ an object of class \code{gt_tbl}.
 Format input date-time values that are character-based and expressed
 according to the ISO 8601 date-time format (\code{YYYY-MM-DD HH:MM:SS}). Once
 the appropriate data cells are targeted with \code{columns} (and, optionally,
-\code{rows}), we can simply apply preset date and time styles to format the
-data-time values.
+\code{rows}), we can simply apply preset date and time styles (see tables in
+\code{\link{info_date_style}()} and \code{\link{info_time_style}()} for more
+info) to format the data-time values.
 }
 \details{
 The following date styles are available for simpler formatting of the date
