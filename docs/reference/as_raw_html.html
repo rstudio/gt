@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the HTML content of a gt table — as_raw_html • gt</title>
+<title>Get the HTML content of a <span class="pkg">gt</span> table — as_raw_html • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,12 +37,14 @@
 
 
 
-<meta property="og:title" content="Get the HTML content of a gt table — as_raw_html" />
+<meta property="og:title" content="Get the HTML content of a <span class="pkg">gt</span> table — as_raw_html" />
 
-<meta property="og:description" content="Get the HTML content string from a gt_tbl object as a single-length
-character vector. There is also the option to transform the HTML such that
-CSS styles are inlined. This option is preferable when using the output HTML
-table in an emailing context." />
+<meta property="og:description" content="Get the HTML content from a gt_tbl object as a single-element
+character vector. By default, the generated HTML will have inlined styles,
+where CSS styles (that were previously contained in CSS rule sets external to
+the &amp;lt;table&amp;gt; element) are included as style attributes in the
+HTML table's tags. This option is preferable when using the output HTML table
+in an emailing context." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -131,17 +133,19 @@ table in an emailing context." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the HTML content of a gt table</h1>
+    <h1>Get the HTML content of a <span class="pkg">gt</span> table</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/as_raw_html.R'><code>R/as_raw_html.R</code></a></small>
     <div class="hidden name"><code>as_raw_html.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Get the HTML content string from a <code>gt_tbl</code> object as a single-length
-character vector. There is also the option to transform the HTML such that
-CSS styles are inlined. This option is preferable when using the output HTML
-table in an emailing context.</p>
+    <p>Get the HTML content from a <code>gt_tbl</code> object as a single-element
+character vector. By default, the generated HTML will have inlined styles,
+where CSS styles (that were previously contained in CSS rule sets external to
+the <code>&lt;table&gt; element</code>) are included as <code>style</code> attributes in the
+HTML table's tags. This option is preferable when using the output HTML table
+in an emailing context.</p>
     
     </div>
 
@@ -172,7 +176,7 @@ styles.</p></td>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add a header and then export as</span>
 <span class='co'># HTML code with CSS inlined</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+<span class='no'>tab_html</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>msrp</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
@@ -181,7 +185,24 @@ styles.</p></td>
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
     <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>as_raw_html</span>()</div></pre>
+  <span class='fu'>as_raw_html</span>()
+
+<span class='co'># `tab_html` is a single-element vector</span>
+<span class='co'># containing inlined HTML for the table;</span>
+<span class='co'># it has only the `&lt;table&gt;...&lt;/table&gt;` part</span>
+<span class='co'># so it's not a complete HTML document but</span>
+<span class='co'># rather an HTML fragment</span>
+<span class='no'>tab_html</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substr'>substr</a></span>(<span class='fl'>1</span>, <span class='fl'>700</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>()</div><div class='output co'>#&gt; &lt;!--gt table start--&gt;
+#&gt; &lt;table style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;"&gt;
+#&gt; &lt;thead&gt;
+#&gt; &lt;tr&gt;
+#&gt; &lt;th style="background-color:#FFFFFF;border-bottom-color:#FFFFFF;color:#000000;font-size:125%;padding-top:4px;padding-bottom:1px;border-bottom-width:0;text-align:center;font-weight:normal;" colspan='3'&gt;Data listing from &lt;strong&gt;gtcars&lt;/strong&gt;&lt;/th&gt;
+#&gt; &lt;/tr&gt;
+#&gt; &lt;tr&gt;
+#&gt; &lt;th style="background-co</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

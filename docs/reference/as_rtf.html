@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Save a gt table as an RTF file — as_rtf • gt</title>
+<title>Output a <span class="pkg">gt</span> object as RTF — as_rtf • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,11 @@
 
 
 
-<meta property="og:title" content="Save a gt table as an RTF file — as_rtf" />
+<meta property="og:title" content="Output a <span class="pkg">gt</span> object as RTF — as_rtf" />
 
-<meta property="og:description" content="Take a gt_tbl table object and render it to an RTF file with the
-extension .rtf." />
+<meta property="og:description" content="Get the RTF content from a gt_tbl object as as a single-element
+character vector. This object can be used with writeLines() to
+generate a valid .rtf file that can be opened by RTF readers." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -129,15 +130,16 @@ extension .rtf." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Save a gt table as an RTF file</h1>
+    <h1>Output a <span class="pkg">gt</span> object as RTF</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/as_rtf.R'><code>R/as_rtf.R</code></a></small>
     <div class="hidden name"><code>as_rtf.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Take a <code>gt_tbl</code> table object and render it to an RTF file with the
-extension <code>.rtf</code>.</p>
+    <p>Get the RTF content from a <code>gt_tbl</code> object as as a single-element
+character vector. This object can be used with <code><a href='https://www.rdocumentation.org/packages/base/topics/writeLines'>writeLines()</a></code> to
+generate a valid .rtf file that can be opened by RTF readers.</p>
     
     </div>
 
@@ -160,12 +162,21 @@ extension <code>.rtf</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Create a `gt` table using the `sleep`</span>
-<span class='co'># dataset and then output the table to</span>
-<span class='co'># a raw RTF object</span>
-<span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>as_rtf</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"sleep.rtf"</span>)
-<span class='co'># }</span></pre>
+<span class='co'># Use `gtcars` to create a gt table;</span>
+<span class='co'># add a header and then export as</span>
+<span class='co'># RTF code</span>
+<span class='no'>tab_rtf</span> <span class='kw'>&lt;-</span>
+  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>msrp</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
+    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as_rtf</span>()
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
