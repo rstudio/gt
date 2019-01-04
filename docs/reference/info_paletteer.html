@@ -39,7 +39,14 @@
 
 <meta property="og:title" content="View a table with info on many different color palettes — info_paletteer" />
 
-<meta property="og:description" content="View a table with info on many different color palettes" />
+<meta property="og:description" content="While the data_color() function allows us to flexibly color
+data cells in our gt table, the harder part of this process is
+discovering and choosing color palettes that are suitable for the table
+output. We can make this process much easier in two ways: (1) by using the
+paletteer package, which makes a wide range of palettes from various R
+packages readily available, and (2) calling the info_paletteer()
+function to give us an information table that serves as quick reference for
+all of the discrete color palettes available in paletteer." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +142,14 @@
 
     <div class="ref-description">
     
-    <p>View a table with info on many different color palettes</p>
+    <p>While the <code><a href='data_color.html'>data_color</a>()</code> function allows us to flexibly color
+data cells in our <span class="pkg">gt</span> table, the harder part of this process is
+discovering and choosing color palettes that are suitable for the table
+output. We can make this process much easier in two ways: (1) by using the
+<span class="pkg">paletteer</span> package, which makes a wide range of palettes from various R
+packages readily available, and (2) calling the <code>info_paletteer()</code>
+function to give us an information table that serves as quick reference for
+all of the discrete color palettes available in <span class="pkg">paletteer</span>.</p>
     
     </div>
 
@@ -153,6 +167,16 @@ color packages represented in <span class="pkg">paletteer</span> will be display
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The palettes displayed are organized by package and by palette name. These
+values are required when obtaining a palette (as a vector of hexadecimal
+colors), from the the <code><a href='https://www.rdocumentation.org/packages/paletteer/topics/paletteer_d'>paletteer::paletteer_d()</a></code> function. Once we are
+familiar with the names of the color palette packages (e.g.,
+<span class="pkg">RColorBrewer</span>, <span class="pkg">ggthemes</span>, <span class="pkg">wesanderson</span>), we can narrow down
+the content of this information table by supplying a vector package names to
+<code>color_pkgs</code>.</p>
+    
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -165,9 +189,9 @@ color packages represented in <span class="pkg">paletteer</span> will be display
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Get a table of info on the `ggthemes`</span>
-<span class='co'># color palettes (which are easily</span>
-<span class='co'># accessible from the paletteer package)</span>
+    <pre class="examples"><div class='input'><span class='co'># Get a table of info on just the</span>
+<span class='co'># `ggthemes` color palette (easily</span>
+<span class='co'># accessible from the paletteer pkg)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='fu'>info_paletteer</span>(
     <span class='kw'>color_pkgs</span> <span class='kw'>=</span> <span class='st'>"ggthemes"</span>)</div></pre>
@@ -177,6 +201,8 @@ color packages represented in <span class="pkg">paletteer</span> will be display
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#figures">Figures</a></li>
 
       <li><a href="#see-also">See also</a></li>
