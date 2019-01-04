@@ -303,26 +303,33 @@ scale_apply_styles <- function(data,
 #' pal_darker  <- pal %>% adjust_luminance(-1.0)
 #' pal_lighter <- pal %>% adjust_luminance(+1.0)
 #'
-#' # Create a tibble and make a gt table from it;
-#' # color each column in order of increasingly
-#' # darker palettes (with `data_color()`)
+#' # Create a tibble and make a gt table
+#' # from it; color each column in order of
+#' # increasingly darker palettes (with
+#' # `data_color()`)
 #' tab_1 <-
 #'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
 #'   gt() %>%
 #'   data_color(
 #'     columns = vars(a),
 #'     colors = scales::col_numeric(
-#'       palette = pal_lighter, domain = c(1, 8))
+#'       palette = pal_lighter,
+#'       domain = c(1, 8)
+#'     )
 #'   ) %>%
 #'   data_color(
 #'     columns = vars(b),
 #'     colors = scales::col_numeric(
-#'       palette = pal, domain = c(1, 8))
+#'       palette = pal,
+#'       domain = c(1, 8)
+#'     )
 #'   ) %>%
 #'   data_color(
 #'     columns = vars(c),
 #'     colors = scales::col_numeric(
-#'       palette = pal_darker, domain = c(1, 8))
+#'       palette = pal_darker,
+#'       domain = c(1, 8)
+#'     )
 #'   )
 #'
 #' @section Figures:

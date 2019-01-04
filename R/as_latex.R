@@ -1,17 +1,21 @@
-#' Output a gt object as LaTeX
+#' Output a \pkg{gt} object as LaTeX
 #'
-#' Take a \code{gt_tbl} table object and emit LaTeX.
-#' @param data a table object that is created using the \code{gt()} function.
+#' Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis}
+#' object. This object contains the LaTeX code and attributes that serve as
+#' LaTeX dependencies (i.e., the LaTeX packages required for the table). Using
+#' \code{as.character()} on the created object will result in a single-element
+#' vector containing the LaTeX code.
+#'
+#' @param data a table object that is created using the \code{\link{gt}()}
+#'   function.
 #' @import rlang
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stats setNames
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
-#' # LaTeX code (use `as.character()`
-#' # to get just the code and no LaTeX
-#' # dependencies for R Markdown)
-#' tab_1 <-
+#' # an object with LaTeX code
+#' tab_latex <-
 #'   gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
@@ -21,6 +25,17 @@
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_latex()
+#'
+#' # `tab_latex` is a `knit_asis` object,
+#' # which makes it easy to include in
+#' # R Markdown documents that are knit to
+#' # PDF; we can use `as.character()` to
+#' # get just the LaTeX code as a single-
+#' # element vector
+#' tab_latex %>%
+#'   as.character() %>%
+#'   cat()
+#'
 #' @family table export functions
 #' @export
 as_latex <- function(data) {

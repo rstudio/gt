@@ -1,11 +1,12 @@
 #' Preview a \pkg{gt} table object
 #'
 #' Sometimes you may want to see just a small portion of your input data. We can
-#' use \code{gt_preview()} in place of \code{gt()} to get the first x rows of
-#' data and the last y rows of data (which can be set by the \code{top_n} and
-#' \code{bottom_n} arguments). It's not advised to use additional \pkg{gt} API
-#' functions to further modify the output of \code{gt_preview()}. Furthermore,
-#' you cannot pass a \pkg{gt} object to \code{gt_preview()}.
+#' use \code{gt_preview()} in place of \code{\link{gt}()} to get the first x
+#' rows of data and the last y rows of data (which can be set by the
+#' \code{top_n} and \code{bottom_n} arguments). It's not advised to use
+#' additional \pkg{gt} API functions to further modify the output of
+#' \code{gt_preview()}. Furthermore, you cannot pass a \pkg{gt} object to
+#' \code{gt_preview()}.
 #'
 #' Any grouped data or magic columns such as \code{rowname} and \code{groupname}
 #' will be ignored by \code{gt_preview()} and, as such, one cannot add a stub or

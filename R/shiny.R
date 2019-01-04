@@ -1,5 +1,5 @@
 #' A \pkg{gt} display table render function for use in Shiny
-#' @param expr an expression that creates a \code{gt} table object.
+#' @param expr an expression that creates a \pkg{gt} table object.
 #' @param env the environment in which to evaluate the \code{expr}.
 #' @param quoted is expr a quoted expression (with \code{quote()})? This is
 #'   useful if you want to save an expression in a variable.
