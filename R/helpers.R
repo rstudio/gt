@@ -595,11 +595,10 @@ escape_latex <- function(text) {
 #' Get the LaTeX dependencies required for a gt table
 #'
 #' @family helper functions
-#' @importFrom knitr asis_output
 #' @export
 get_latex_dependencies <- function() {
 
-  if (requireNamespace("rmarkdown", quietly = TRUE)) {
+  if (requireNamespace("knitr", quietly = TRUE)) {
 
     paste(
       "",
