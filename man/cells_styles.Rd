@@ -58,7 +58,7 @@ cells. We can also define several styles with a single call of
 }
 \seealso{
 Other helper functions: \code{\link{escape_latex}},
-  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
-  \code{\link{px}}
+  \code{\link{get_latex_dependencies}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
 }
 \concept{helper functions}
