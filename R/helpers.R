@@ -591,3 +591,26 @@ escape_latex <- function(text) {
     tidy_gsub("~", "\\\\textasciitilde ") %>%
     tidy_gsub("\\^", "\\\\textasciicircum ")
 }
+
+#' Get the LaTeX dependencies required for a gt table
+#'
+#' @family helper functions
+#' @importFrom knitr asis_output
+#' @export
+get_latex_dependencies <- function() {
+
+  if (requireNamespace("rmarkdown", quietly = TRUE)) {
+
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
+    ) %>%
+      knitr::asis_output()
+
+  } else {
+    stop("The `knitr` package is required for getting the LaTeX dependency headers.")
+  }
+}
