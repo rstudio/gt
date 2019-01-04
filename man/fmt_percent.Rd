@@ -47,9 +47,13 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
+formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark.}
+\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\code{dec_mark = ","} with \code{0.152} would result in a formatted value
+of \code{0,152}).}
 
 \item{incl_space}{an option on whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
