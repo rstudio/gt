@@ -92,11 +92,10 @@ as_latex <- function(data) {
     # `latex_dependency()` function to load latex packages
     # without requiring the user to do so
     if (requireNamespace("rmarkdown", quietly = TRUE)) {
+
       latex_packages <-
-        list(
-          rmarkdown::latex_dependency("longtable"),
-          rmarkdown::latex_dependency("booktabs"),
-          rmarkdown::latex_dependency("caption"))
+        lapply(latex_packages(), rmarkdown::latex_dependency)
+
     } else {
       latex_packages <- NULL
     }
