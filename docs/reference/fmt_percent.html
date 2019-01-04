@@ -40,8 +40,10 @@
 <meta property="og:title" content="Format values as a percentage — fmt_percent" />
 
 <meta property="og:description" content="With numeric values in a gt table, we can perform percentage-based
-formatting. The targeted values are scaled by 100 and are rendered
-with the following options:
+formatting. It is assumed the input numeric values are in a fractional format
+since the will be automatically multplied by 100 before decorating
+with a percent sign. For more control over percentage formatting, we can use
+the following options:
 percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the
 value.
@@ -152,8 +154,10 @@ formatting specific to the chosen locale
     <div class="ref-description">
     
     <p>With numeric values in a <span class="pkg">gt</span> table, we can perform percentage-based
-formatting. The targeted values are scaled by <code>100</code> and are rendered
-with the following options:</p><ul>
+formatting. It is assumed the input numeric values are in a fractional format
+since the will be automatically multplied by <code>100</code> before decorating
+with a percent sign. For more control over percentage formatting, we can use
+the following options:</p><ul>
 <li><p>percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the
 value.</p></li>
@@ -234,11 +238,15 @@ other characters are taken to be string literals.</p></td>
     </tr>
     <tr>
       <th>sep_mark</th>
-      <td><p>the mark to use as a separator between groups of digits.</p></td>
+      <td><p>the mark to use as a separator between groups of digits
+(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a
+formatted value of <code>1,000</code>).</p></td>
     </tr>
     <tr>
       <th>dec_mark</th>
-      <td><p>the character to use as a decimal mark.</p></td>
+      <td><p>the character to use as a decimal mark (e.g., using
+<code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value
+of <code>0,152</code>).</p></td>
     </tr>
     <tr>
       <th>incl_space</th>
