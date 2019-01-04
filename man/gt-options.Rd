@@ -2,17 +2,18 @@
 % Please edit documentation in R/zzz.R
 \name{gt-options}
 \alias{gt-options}
-\title{gt package options}
+\title{\pkg{gt} package options}
 \description{
-gt package options
+\pkg{gt} package options
 }
 \section{Package options}{
 
 
-gt uses the following \code{\link{options}} to configure behavior:
+\pkg{gt} uses the following \code{\link{options}} to configure behavior:
 
 \itemize{
-  \item \code{gt.stub_group.sep}: a separator
+  \item \code{gt.stub_group.sep}: a separator between groups for the
+  stub group label.
 
 }
 }

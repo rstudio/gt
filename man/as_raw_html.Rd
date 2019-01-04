@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_raw_html.R
 \name{as_raw_html}
 \alias{as_raw_html}
-\title{Get the HTML content of a gt table}
+\title{Get the HTML content of a \pkg{gt} table}
 \usage{
 as_raw_html(data, inline_css = TRUE)
 }
@@ -14,16 +14,18 @@ function.}
 styles.}
 }
 \description{
-Get the HTML content string from a \code{gt_tbl} object as a single-length
-character vector. There is also the option to transform the HTML such that
-CSS styles are inlined. This option is preferable when using the output HTML
-table in an emailing context.
+Get the HTML content from a \code{gt_tbl} object as a single-element
+character vector. By default, the generated HTML will have inlined styles,
+where CSS styles (that were previously contained in CSS rule sets external to
+the \code{<table> element}) are included as \code{style} attributes in the
+HTML table's tags. This option is preferable when using the output HTML table
+in an emailing context.
 }
 \examples{
 # Use `gtcars` to create a gt table;
 # add a header and then export as
 # HTML code with CSS inlined
-tab_1 <-
+tab_html <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -33,6 +35,16 @@ tab_1 <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_raw_html()
+
+# `tab_html` is a single-element vector
+# containing inlined HTML for the table;
+# it has only the `<table>...</table>` part
+# so it's not a complete HTML document but
+# rather an HTML fragment
+tab_html \%>\%
+  substr(1, 700) \%>\%
+  cat()
+
 }
 \seealso{
 Other table export functions: \code{\link{as_latex}},

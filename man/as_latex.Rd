@@ -2,23 +2,26 @@
 % Please edit documentation in R/as_latex.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a gt object as LaTeX}
+\title{Output a \pkg{gt} object as LaTeX}
 \usage{
 as_latex(data)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{a table object that is created using the \code{\link{gt}()}
+function.}
 }
 \description{
-Take a \code{gt_tbl} table object and emit LaTeX.
+Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis}
+object. This object contains the LaTeX code and attributes that serve as
+LaTeX dependencies (i.e., the LaTeX packages required for the table). Using
+\code{as.character()} on the created object will result in a single-element
+vector containing the LaTeX code.
 }
 \examples{
 # Use `gtcars` to create a gt table;
 # add a header and then export as
-# LaTeX code (use `as.character()`
-# to get just the code and no LaTeX
-# dependencies for R Markdown)
-tab_1 <-
+# an object with LaTeX code
+tab_latex <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -28,6 +31,17 @@ tab_1 <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_latex()
+
+# `tab_latex` is a `knit_asis` object,
+# which makes it easy to include in
+# R Markdown documents that are knit to
+# PDF; we can use `as.character()` to
+# get just the LaTeX code as a single-
+# element vector
+tab_latex \%>\%
+  as.character() \%>\%
+  cat()
+
 }
 \seealso{
 Other table export functions: \code{\link{as_raw_html}},

@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_summary.R
 \name{extract_summary}
 \alias{extract_summary}
-\title{Extract a summary list from a gt object}
+\title{Extract a summary list from a \pkg{gt} object}
 \usage{
 extract_summary(data)
 }

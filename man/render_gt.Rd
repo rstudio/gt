@@ -8,7 +8,7 @@ render_gt(expr, env = parent.frame(), quoted = FALSE,
   outputArgs = list())
 }
 \arguments{
-\item{expr}{an expression that creates a \code{gt} table object.}
+\item{expr}{an expression that creates a \pkg{gt} table object.}
 
 \item{env}{the environment in which to evaluate the \code{expr}.}
 

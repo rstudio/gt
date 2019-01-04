@@ -59,7 +59,7 @@ tab_1 <-
     rows = matches("^[0-9]")
   )
 
-# # Use `gtcars` to create a gt table;
+# Use `gtcars` to create a gt table;
 # add two row groups with the labels
 # `powerful` and `super powerful`: the
 # distinction being `hp` lesser or
