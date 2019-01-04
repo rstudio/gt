@@ -1,4 +1,4 @@
-#' Extract a summary list from a gt object
+#' Extract a summary list from a \pkg{gt} object
 #'
 #' Get a list of summary row data frames from a \code{gt_tbl} object where
 #' summary rows were added via the \code{\link{summary_rows}()} function. The
