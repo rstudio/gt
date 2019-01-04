@@ -10,8 +10,7 @@ as_rtf(data)
 \item{data}{a table object that is created using the \code{gt()} function.}
 }
 \description{
-Take a \code{gt_tbl} table object and render it to an RTF file with the
-extension \code{.rtf}.
+Take a \code{gt_tbl} table object and render it as RTF data.
 }
 \examples{
 \dontrun{
