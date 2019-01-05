@@ -110,7 +110,7 @@ gt <- function(data,
   # already in `stub_df$groupname`
   if (inherits(data, "grouped_df")) {
 
-    group_cols <- attr(data, "vars", exact = TRUE)
+    group_cols <- dplyr::group_vars(data)
     group_cols <- base::intersect(group_cols, colnames(data))
 
     group_labels <-
