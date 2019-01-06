@@ -231,13 +231,13 @@ construct.</p>
 <span class='co'># `ggplot_object()` within the user-</span>
 <span class='co'># defined function</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
     <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"Here is a ggplot:"</span>,
     <span class='kw'>ggplot</span> <span class='kw'>=</span> <span class='fl'>NA</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='text_transform.html'>text_transform</a></span>(
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>ggplot</span>)),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>ggplot</span>)),
     <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
       <span class='no'>plot_object</span> <span class='kw'>%&gt;%</span>
         <span class='fu'>ggplot_image</span>(<span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>200</span>))

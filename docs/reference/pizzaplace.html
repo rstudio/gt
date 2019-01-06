@@ -199,12 +199,12 @@ Tomatoes, Goat Cheese, Garlic, Oregano)</p></li>
 <li><p><code>napolitana</code>: The Napolitana Pizza (Tomatoes, Anchovies, Green
 Olives, Red Onions, Garlic)</p></li>
 <li><p><code>the_greek</code>: The Greek Pizza (Kalamata Olives, Feta Cheese,
-Tomatoes, Garlic, Beef chuck roast, Red Onions)</p></li>
+Tomatoes, Garlic, Beef Chuck Roast, Red Onions)</p></li>
 </ul>
     <p>Chicken Pizzas:</p><ul>
 <li><p><code>thai_ckn</code>: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
 Red Peppers, Thai Sweet Chilli Sauce)</p></li>
-<li><p><code>bbq_ckn</code>: The Barbecue Chicken Pizza(Barbecued Chicken, Red
+<li><p><code>bbq_ckn</code>: The Barbecue Chicken Pizza (Barbecued Chicken, Red
 Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)</p></li>
 <li><p><code>southw_ckn</code>: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
 Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)</p></li>
@@ -257,6 +257,18 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
 </ul>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
+<span class='co'># available in `pizzaplace`</span>
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>glimpse</a></span>(<span class='no'>pizzaplace</span>)</div><div class='output co'>#&gt; Observations: 49,574
+#&gt; Variables: 7
+#&gt; $ id    &lt;chr&gt; "2015-000001", "2015-000002", "2015-000002", "2015-000002", "...
+#&gt; $ date  &lt;chr&gt; "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015...
+#&gt; $ time  &lt;chr&gt; "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "...
+#&gt; $ name  &lt;chr&gt; "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_chee...
+#&gt; $ size  &lt;chr&gt; "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "...
+#&gt; $ type  &lt;chr&gt; "classic", "classic", "veggie", "chicken", "veggie", "supreme...
+#&gt; $ price &lt;dbl&gt; 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -265,7 +277,9 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
       <li><a href="#format">Format</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

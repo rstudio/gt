@@ -167,7 +167,7 @@ targeted by enclosing several <code>cells_*()</code> helper functions in a list.
     <tr>
       <th>columns, rows, groups</th>
       <td><p>either a vector of names, a vector of
-indices, values provided by <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a>()</code>, values provided by
+indices, values provided by <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a>()</code>, values provided by
 <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c()</a></code>, or a select helper function (see Details for information on
 these functions).</p></td>
     </tr>
@@ -218,11 +218,11 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># in `locations`</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
       <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-10"</span>
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
     -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>adj_close</span>, <span class='no'>volume</span>, <span class='no'>high</span>, <span class='no'>low</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
@@ -242,21 +242,21 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># `cells_column_labels()` in `locations`</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>20</span> <span class='kw'>&amp;</span> <span class='no'>month</span> <span class='kw'>==</span> <span class='st'>"jan"</span> <span class='kw'>&amp;</span>
       !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>, -<span class='no'>month</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>, -<span class='no'>month</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"True solar time."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_column_labels</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>tst</span>))
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>tst</span>))
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Solar zenith angle."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_column_labels</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sza</span>))
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>sza</span>))
   )
 
 <span class='co'># Use `pizzaplace` to create a gt table</span>
@@ -267,17 +267,17 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># `cells_group()` in `locations`</span>
 <span class='no'>tab_3</span> <span class='kw'>&lt;-</span>
   <span class='no'>pizzaplace</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>name</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"soppressata"</span>, <span class='st'>"peppr_salami"</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>name</span>, <span class='no'>size</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>name</span>, <span class='no'>size</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
     <span class='kw'>`Pizzas Sold`</span> <span class='kw'>=</span> <span class='fu'>n</span>()
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"size"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
     <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='st'>"Pizzas Sold"</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='st'>"Pizzas Sold"</span>),
     <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>TOTAL</span> <span class='kw'>=</span> <span class='st'>"sum"</span>),
     <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>,
@@ -295,10 +295,10 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># all stub rows)</span>
 <span class='no'>tab_4</span> <span class='kw'>&lt;-</span>
   <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>20</span> <span class='kw'>&amp;</span> <span class='no'>tst</span> <span class='kw'>&lt;=</span> <span class='st'>"1000"</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>sza</span>)) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"tst"</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>sza</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"month"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span>(
@@ -319,14 +319,14 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># target a single row in the `hp` column)</span>
 <span class='no'>tab_5</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ctry_origin</span> <span class='kw'>==</span> <span class='st'>"United Kingdom"</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>ctry_origin</span> <span class='kw'>==</span> <span class='st'>"United Kingdom"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_options.html'>tab_options</a></span>(<span class='kw'>footnote.glyph</span> <span class='kw'>=</span> <span class='st'>"*"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Highest horsepower."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_data</span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>hp</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>hp</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>==</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>hp</span>))
   )
 
@@ -336,25 +336,25 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
 <span class='co'># in `locations`</span>
 <span class='no'>tab_6</span> <span class='kw'>&lt;-</span>
   <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Japan"</span>,
     <span class='no'>year</span> <span class='kw'>&lt;</span> <span class='fl'>1970</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"country"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a></span>(<span class='st'>"country"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
     <span class='kw'>decade</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substr'>substr</a></span>(<span class='no'>year</span>, <span class='fl'>1</span>, <span class='fl'>3</span>), <span class='st'>"0s"</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>decade</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>decade</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(
     <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"year"</span>,
     <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"decade"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
     <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
     <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"min"</span>, <span class='st'>"max"</span>),
     <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>0</span>
@@ -365,7 +365,7 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
       <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightblue"</span>),
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_summary</span>(
       <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>1</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
@@ -374,7 +374,7 @@ the <code>groups</code> argument and intersections of <code>columns</code> and
       <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightgreen"</span>),
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_summary</span>(
       <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"1960s"</span>,
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>2</span>)
   )</div></pre>
   </div>

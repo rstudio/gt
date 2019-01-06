@@ -210,13 +210,13 @@ the heights of most table rows.</p>
 <span class='co'># a local test image (PNG) image with the</span>
 <span class='co'># various sizes</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
     <span class='kw'>pixels</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)),
     <span class='kw'>image</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='text_transform.html'>text_transform</a></span>(
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>image</span>)),
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>image</span>)),
     <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
       <span class='fu'>local_image</span>(
         <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='test_image.html'>test_image</a></span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"png"</span>),
