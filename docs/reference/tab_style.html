@@ -194,10 +194,10 @@ Additionally, we can supply a list with multiple calls to
 <span class='co'># condition (using `tab_style()`)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>),
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_style</span>(
@@ -205,7 +205,7 @@ Additionally, we can supply a list with multiple calls to
       <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"lightcyan"</span>,
       <span class='kw'>text_weight</span> <span class='kw'>=</span> <span class='st'>"bold"</span>),
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;=</span> <span class='fl'>5000</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_style</span>(
@@ -213,7 +213,7 @@ Additionally, we can supply a list with multiple calls to
       <span class='kw'>bkgd_color</span> <span class='kw'>=</span> <span class='st'>"#F9E3D6"</span>,
       <span class='kw'>text_style</span> <span class='kw'>=</span> <span class='st'>"italic"</span>),
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>currency</span> <span class='kw'>&lt;</span> <span class='fl'>100</span>)
   )
 
@@ -222,12 +222,12 @@ Additionally, we can supply a list with multiple calls to
 <span class='co'># on values in a particular column</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
     <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-12-01"</span> <span class='kw'>&amp;</span>
     <span class='no'>date</span> <span class='kw'>&lt;=</span> <span class='st'>"2015-12-15"</span>
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>adj_close</span>, <span class='no'>volume</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>adj_close</span>, <span class='no'>volume</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>date</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_style</span>(
     <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cells_styles.html'>cells_styles</a></span>(

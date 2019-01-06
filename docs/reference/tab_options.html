@@ -305,7 +305,7 @@ when striping rows.</p></td>
 <span class='co'># going forward to demo some `tab_options()`</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
     -<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>fctr</span>, <span class='no'>date</span>, <span class='no'>time</span>, <span class='no'>datetime</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(
@@ -316,24 +316,24 @@ when striping rows.</p></td>
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **exibble**"</span>),
     <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`exibble` is an R dataset"</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>currency</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Alphabetical fruit."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_column_labels</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>char</span>))
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>char</span>))
   )
 
 <span class='co'># Modify the table width to 100% (which</span>
