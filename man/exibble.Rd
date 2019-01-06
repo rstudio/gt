@@ -35,4 +35,9 @@ rownames and two groups (\code{grp_a} and \code{grp_b}) for experimenting
 with the \code{\link{gt}()} function's \code{rowname_col} and
 \code{groupname_col} arguments.
 }
+\examples{
+# Here is a glimpse at the data
+# available in `exibble`
+dplyr::glimpse(exibble)
+}
 \keyword{datasets}

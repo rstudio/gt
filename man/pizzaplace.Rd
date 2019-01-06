@@ -58,14 +58,14 @@ Tomatoes, Goat Cheese, Garlic, Oregano)
 \item \code{napolitana}: The Napolitana Pizza (Tomatoes, Anchovies, Green
 Olives, Red Onions, Garlic)
 \item \code{the_greek}: The Greek Pizza (Kalamata Olives, Feta Cheese,
-Tomatoes, Garlic, Beef chuck roast, Red Onions)
+Tomatoes, Garlic, Beef Chuck Roast, Red Onions)
 }
 
 Chicken Pizzas:
 \itemize{
 \item \code{thai_ckn}: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
 Red Peppers, Thai Sweet Chilli Sauce)
-\item \code{bbq_ckn}: The Barbecue Chicken Pizza(Barbecued Chicken, Red
+\item \code{bbq_ckn}: The Barbecue Chicken Pizza (Barbecued Chicken, Red
 Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)
 \item \code{southw_ckn}: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
 Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)
@@ -120,5 +120,10 @@ Red Onions, Feta Cheese, Garlic)
 \item \code{ital_veggie}: The Italian Vegetables Pizza (Eggplant, Artichokes,
 Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 }
+}
+\examples{
+# Here is a glimpse at the data
+# available in `pizzaplace`
+dplyr::glimpse(pizzaplace)
 }
 \keyword{datasets}
