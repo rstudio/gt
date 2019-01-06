@@ -18,6 +18,11 @@
 #' }
 #'
 #' @source \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `countrypops`
+#' dplyr::glimpse(countrypops)
 "countrypops"
 
 #' Twice hourly solar zenith angles by month & latitude
@@ -54,6 +59,11 @@
 #' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
 #' Photochemistry Applications (Peterson, 1976), available at:
 #' \url{https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt}.
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `sza`
+#' dplyr::glimpse(sza)
 "sza"
 
 #' Deluxe automobiles from the 2014-2017 period
@@ -87,6 +97,11 @@
 #' }
 #'
 #' @source Various pages within \url{https://www.edmunds.com}.
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `gtcars`
+#' dplyr::glimpse(gtcars)
 "gtcars"
 
 #' Daily S&P 500 Index data from 1950 to 2015
@@ -105,6 +120,11 @@
 #' }
 #'
 #' @source Data collected from \url{https://finance.yahoo.com/quote/\%5EGSPC/history/}.
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `sp500`
+#' dplyr::glimpse(sp500)
 "sp500"
 
 #' A year of pizza sales from a pizza place
@@ -139,14 +159,14 @@
 #' \item \code{napolitana}: The Napolitana Pizza (Tomatoes, Anchovies, Green
 #' Olives, Red Onions, Garlic)
 #' \item \code{the_greek}: The Greek Pizza (Kalamata Olives, Feta Cheese,
-#' Tomatoes, Garlic, Beef chuck roast, Red Onions)
+#' Tomatoes, Garlic, Beef Chuck Roast, Red Onions)
 #' }
 #'
 #' Chicken Pizzas:
 #' \itemize{
 #' \item \code{thai_ckn}: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
 #' Red Peppers, Thai Sweet Chilli Sauce)
-#' \item \code{bbq_ckn}: The Barbecue Chicken Pizza(Barbecued Chicken, Red
+#' \item \code{bbq_ckn}: The Barbecue Chicken Pizza (Barbecued Chicken, Red
 #' Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)
 #' \item \code{southw_ckn}: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
 #' Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)
@@ -221,6 +241,11 @@
 #'   \item{price}{The price of the pizza and the amount that it sold for
 #'   (in USD)}
 #' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `pizzaplace`
+#' dplyr::glimpse(pizzaplace)
 "pizzaplace"
 
 #' A toy example tibble for testing with gt: exibble
@@ -252,4 +277,9 @@
 #'   \code{grp_b} values which can be useful for testing tables that contain
 #'   row groups}
 #' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `exibble`
+#' dplyr::glimpse(exibble)
 "exibble"
