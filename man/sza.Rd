@@ -42,4 +42,9 @@ example, at a latitude of 50 degrees N at the start of January, the noontime
 SZA is 73.0 but a different observer at 20 degrees N would measure the
 noontime SZA to be 43.0 degrees.
 }
+\examples{
+# Here is a glimpse at the data
+# available in `sza`
+dplyr::glimpse(sza)
+}
 \keyword{datasets}
