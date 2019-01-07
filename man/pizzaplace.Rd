@@ -53,8 +53,8 @@ Chorizo Sausage)
 Cheese)
 \item \code{pep_msh_pep}: The Pepperoni, Mushroom, and Peppers Pizza
 (Pepperoni, Mushrooms, and Green Peppers)
-\item \code{ital_cpcllo}: The Italian Capocollo (Capocollo, Red Peppers,
-Tomatoes, Goat Cheese, Garlic, Oregano)
+\item \code{ital_cpcllo}: The Italian Capocollo Pizza (Capocollo, Red
+Peppers, Tomatoes, Goat Cheese, Garlic, Oregano)
 \item \code{napolitana}: The Napolitana Pizza (Tomatoes, Anchovies, Green
 Olives, Red Onions, Garlic)
 \item \code{the_greek}: The Greek Pizza (Kalamata Olives, Feta Cheese,

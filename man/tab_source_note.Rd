@@ -18,7 +18,7 @@ as Markdown or to retain HTML elements in the text.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a source note citation to the source note part of the table.
+Add a source note citation to the footer part of the \pkg{gt} table.
 }
 \section{Figures}{
 
