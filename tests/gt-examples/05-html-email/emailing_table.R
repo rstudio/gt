@@ -6,7 +6,7 @@ initial_months <-
   c("D",
     "J", "F", "M", "A", "M", "J",
     "J", "A", "S", "O", "N", "D",
-    "J")
+    " ")
 
 # Create HTML tables that are suitable for
 # emailing; this requires `as_raw_html()` to
@@ -93,7 +93,7 @@ pizza_tab <-
     stub_group.background.color = "#E6EFFC",
     table.font.size = "small",
     heading.title.font.size = "small",
-    heading.subtitle.font.size = "smaller",
+    heading.subtitle.font.size = "x-small",
     stub_group.font.size = "small",
     column_labels.font.size = "small",
     row.padding = "5px"
@@ -107,7 +107,7 @@ pizza_tab <-
     subtitle = "Split by the type of pizza and the size"
     ) %>%
   tab_footnote(
-    footnote = md("Only **The Greek** pizza comes in this size."),
+    footnote = md("Only **The Greek Pizza** comes in this size."),
     locations = cells_stub(rows = 4:5)
     ) %>%
   tab_footnote(
