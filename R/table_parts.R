@@ -284,7 +284,12 @@ tab_spanner <- function(data,
 
 #' Add a source note citation
 #'
-#' Add a source note citation to the footer part of the \pkg{gt} table.
+#' Add a source note to the footer part of the \pkg{gt} table. A source note is
+#' useful for citing the data included in the table. Several can be added to the
+#' footer, simply use multiple calls of \code{tab_source_note()} and they will
+#' be inserted in the order provided. We can use Markdown formatting for the
+#' note, or, if the table is intended for HTML output, we can include HTML
+#' formatting.
 #' @inheritParams fmt_number
 #' @param source_note text to be used in the source note. We can optionally use
 #'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text
