@@ -17,6 +17,8 @@ file extension is disregarded.}
 
 \item{save_fn}{a custom save function to allow for saving the table object
 through some means not already provided.}
+
+\item{...}{all other options passed to the \code{save_fn} function.}
 }
 \description{
 The \code{gtsave()} function makes it easy to save a \pkg{gt} table to a
