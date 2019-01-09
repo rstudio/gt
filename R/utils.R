@@ -645,6 +645,7 @@ footnote_glyphs <- function(x,
 }
 
 #' @importFrom checkmate test_class
+#' @noRd
 is_gt <- function(data) {
 
   checkmate::test_class(data, "gt_tbl")
