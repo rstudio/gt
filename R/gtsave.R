@@ -41,7 +41,7 @@ gtsave.default <- gtsave.gt_tbl <- function(data, filename, ...) {
 #' @importFrom htmltools as.tags save_html
 #' @export
 #' @noRd
-gtsave.html <- gtsave.htm <- function(data, filename, ..., inline_css = TRUE) {
+gtsave.html <- function(data, filename, ..., inline_css = TRUE) {
 
   data %>%
     htmltools::as.tags() %>%
@@ -50,7 +50,7 @@ gtsave.html <- gtsave.htm <- function(data, filename, ..., inline_css = TRUE) {
 
 #' @export
 #' @noRd
-gtsave.tex <- gtsave.ltx <- gtsave.rnw <- function(data, filename, ...) {
+gtsave.tex <- function(data, filename, ...) {
 
   data %>%
     as_latex() %>%
@@ -65,6 +65,18 @@ gtsave.rtf <- function(data, filename, ...) {
     as_rtf() %>%
     writeLines(con = filename)
 }
+
+#' @export
+#' @noRd
+gtsave.htm <- gtsave.html
+
+#' @export
+#' @noRd
+gtsave.ltx <- gtsave.tex
+
+#' @export
+#' @noRd
+gtsave.rnw <- gtsave.tex
 
 #' @importFrom tools file_ext
 #' @noRd
