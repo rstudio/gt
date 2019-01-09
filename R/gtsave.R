@@ -13,6 +13,7 @@
 #'   file extension is disregarded.
 #' @param save_fn a custom save function to allow for saving the table object
 #'   through some means not already provided.
+#' @param ... all other options passed to the \code{save_fn} function.
 #' @export
 gtsave <- function(data, filename, save_fn = NULL, ...) {
 
