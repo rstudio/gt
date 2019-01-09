@@ -643,3 +643,16 @@ footnote_glyphs <- function(x,
       paste(rep(val_i, rep_i), collapse = "")}
   ) %>% unname()
 }
+
+#' @importFrom checkmate test_class
+is_gt <- function(data) {
+
+  checkmate::test_class(data, "gt_tbl")
+}
+
+stop_if_not_gt <- function(data) {
+
+  if (!is_gt(data)) {
+    stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
+  }
+}
