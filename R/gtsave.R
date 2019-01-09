@@ -41,8 +41,8 @@ gtsave.default <- gtsave.gt_tbl <- function(data, filename, ...) {
 gtsave.html <- gtsave.htm <- function(data, filename, ..., inline_css = TRUE) {
 
   data %>%
-    as_raw_html(inline_css = inline_css) %>%
-    writeLines(con = filename)
+    htmltools::as.tags() %>%
+    htmltools::save_html(filename)
 }
 
 gtsave.tex <- gtsave.ltx <- gtsave.rnw <- function(data, filename, ...) {
