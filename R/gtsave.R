@@ -32,14 +32,24 @@ gtsave.gt_tbl <- function(data, filename, ...) {
        call. = FALSE)
 }
 
-#' @importFrom htmltools as.tags save_html
+#' @importFrom htmltools as.tags save_html HTML
 #' @export
 #' @noRd
-gtsave.html <- function(data, filename, ..., inline_css = TRUE) {
+gtsave.html <- function(data, filename, ..., inline_css = FALSE) {
 
-  data %>%
-    htmltools::as.tags() %>%
-    htmltools::save_html(filename)
+  if (inline_css) {
+
+    data %>%
+      as_raw_html(inline_css = inline_css) %>%
+      htmltools::HTML() %>%
+      htmltools::save_html(filename)
+
+  } else {
+
+    data %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(filename)
+  }
 }
 
 #' @export
