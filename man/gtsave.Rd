@@ -4,7 +4,7 @@
 \alias{gtsave}
 \title{Save a \pkg{gt} table as a file}
 \usage{
-gtsave(data, filename, save_fn = NULL, ...)
+gtsave(data, filename, ...)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -15,15 +15,10 @@ compatible with the output types is provided (\code{.html}, \code{.tex},
 \code{.ltx}, \code{.rtf}). If a custom save function is provided then the
 file extension is disregarded.}
 
-\item{save_fn}{a custom save function to allow for saving the table object
-through some means not already provided.}
-
-\item{...}{all other options passed to the \code{save_fn} function.}
+\item{...}{all other options passed to the next method.}
 }
 \description{
 The \code{gtsave()} function makes it easy to save a \pkg{gt} table to a
 file. The function guesses the file type by the extension provided in the
-output filename. It's also possible to create a custom output solution by
-providing a function to the \code{save_fn} argument. Just be sure to use
-\code{(data, filename, ...)} in the function signature.
+output filename.
 }
