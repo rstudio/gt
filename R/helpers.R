@@ -596,7 +596,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @export
-get_latex_dependencies <- function() {
+gt_latex_dependencies <- function() {
 
   if (requireNamespace("knitr", quietly = TRUE)) {
 
