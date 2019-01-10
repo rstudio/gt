@@ -106,54 +106,54 @@
 <img src="images/gtcars.svg" width="50%"></p>
 <p>Let’s make a display table using the <code>gtcars</code> dataset. We all know <code>mtcars</code>… what is <code>gtcars</code>? It’s basically a modernized <code>mtcars</code> for the <strong>gt</strong> age. It’s part of the <strong>gt</strong> package, and here is a preview of the tibble:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># This is `gtcars`</span></a>
-<a class="sourceLine" id="cb1-2" title="2">dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(gtcars)</a>
+<a class="sourceLine" id="cb1-2" title="2">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(gtcars)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; Observations: 47</span></a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; Variables: 15</span></a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; $ mfr         &lt;chr&gt; "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari"...</span></a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; $ model       &lt;chr&gt; "GT", "458 Speciale", "458 Spider", "458 Italia", ...</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; $ year        &lt;int&gt; 2017, 2015, 2015, 2014, 2016, 2015, 2017, 2015, 20...</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; $ year        &lt;dbl&gt; 2017, 2015, 2015, 2014, 2016, 2015, 2017, 2015, 20...</span></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; $ trim        &lt;chr&gt; "Base Coupe", "Base Coupe", "Base", "Base Coupe", ...</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; $ bdy_style   &lt;chr&gt; "coupe", "coupe", "convertible", "coupe", "coupe",...</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; $ hp          &lt;int&gt; 647, 597, 562, 562, 661, 553, 680, 652, 731, 949, ...</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; $ hp_rpm      &lt;int&gt; 6250, 9000, 9000, 9000, 8000, 7500, 8250, 8000, 82...</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; $ trq         &lt;int&gt; 550, 398, 398, 398, 561, 557, 514, 504, 509, 664, ...</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; $ trq_rpm     &lt;int&gt; 5900, 6000, 6000, 6000, 3000, 4750, 5750, 6000, 60...</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; $ mpg_c       &lt;int&gt; 11, 13, 13, 13, 15, 16, 12, 11, 11, 12, 21, 16, 11...</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; $ mpg_h       &lt;int&gt; 18, 17, 17, 17, 22, 23, 17, 16, 16, 16, 22, 22, 18...</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; $ hp          &lt;dbl&gt; 647, 597, 562, 562, 661, 553, 680, 652, 731, 949, ...</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; $ hp_rpm      &lt;dbl&gt; 6250, 9000, 9000, 9000, 8000, 7500, 8250, 8000, 82...</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; $ trq         &lt;dbl&gt; 550, 398, 398, 398, 561, 557, 514, 504, 509, 664, ...</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; $ trq_rpm     &lt;dbl&gt; 5900, 6000, 6000, 6000, 3000, 4750, 5750, 6000, 60...</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; $ mpg_c       &lt;dbl&gt; 11, 13, 13, 13, 15, 16, 12, 11, 11, 12, 21, 16, 11...</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; $ mpg_h       &lt;dbl&gt; 18, 17, 17, 17, 22, 23, 17, 16, 16, 16, 22, 22, 18...</span></a>
 <a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; $ drivetrain  &lt;chr&gt; "rwd", "rwd", "rwd", "rwd", "rwd", "rwd", "awd", "...</span></a>
 <a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; $ trsmn       &lt;chr&gt; "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7...</span></a>
 <a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; $ ctry_origin &lt;chr&gt; "United States", "Italy", "Italy", "Italy", "Italy...</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; $ msrp        &lt;int&gt; 447000, 291744, 263553, 233509, 245400, 198973, 29...</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; $ msrp        &lt;dbl&gt; 447000, 291744, 263553, 233509, 245400, 198973, 29...</span></a></code></pre></div>
 <p>For the purpose of simply learning more about <strong>gt</strong>, let’s reduce this 47-row tibble to one that has only 8 rows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Get a subset of 8 cars from the `gtcars` dataset: two</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co"># from each manufacturer country of origin except the UK</span></a>
 <a class="sourceLine" id="cb2-3" title="3">gtcars_<span class="dv">8</span> &lt;-</a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span>gtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(ctry_origin <span class="op">!=</span><span class="st"> "United Kingdom"</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(ctry_origin <span class="op">!=</span><span class="st"> "United Kingdom"</span>)</a>
 <a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; Selecting by msrp</span></a>
 <a class="sourceLine" id="cb2-10" title="10"></a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="co"># Show the `gtcars_8` tibble</span></a>
-<a class="sourceLine" id="cb2-12" title="12">dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(gtcars_<span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb2-12" title="12">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(gtcars_<span class="dv">8</span>)</a>
 <a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; Observations: 8</span></a>
 <a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; Variables: 15</span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; $ mfr         &lt;chr&gt; "Ford", "Ferrari", "Acura", "Nissan", "Lamborghini...</span></a>
 <a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; $ model       &lt;chr&gt; "GT", "LaFerrari", "NSX", "GT-R", "Aventador", "i8...</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; $ year        &lt;int&gt; 2017, 2015, 2017, 2016, 2015, 2016, 2017, 2016</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; $ year        &lt;dbl&gt; 2017, 2015, 2017, 2016, 2015, 2016, 2017, 2016</span></a>
 <a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; $ trim        &lt;chr&gt; "Base Coupe", "Base Coupe", "Base Coupe", "Premium...</span></a>
 <a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; $ bdy_style   &lt;chr&gt; "coupe", "coupe", "coupe", "coupe", "coupe", "coup...</span></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; $ hp          &lt;int&gt; 647, 949, 573, 545, 700, 357, 645, 503</span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; $ hp_rpm      &lt;int&gt; 6250, 9000, 6500, 6400, 8250, 5800, 5000, 6250</span></a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; $ trq         &lt;int&gt; 550, 664, 476, 436, 507, 420, 600, 479</span></a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; $ trq_rpm     &lt;int&gt; 5900, 6750, 2000, 3200, 5500, 3700, 5000, 1750</span></a>
-<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; $ mpg_c       &lt;int&gt; 11, 12, 21, 16, 11, 28, 12, 16</span></a>
-<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; $ mpg_h       &lt;int&gt; 18, 16, 22, 22, 18, 29, 19, 22</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; $ hp          &lt;dbl&gt; 647, 949, 573, 545, 700, 357, 645, 503</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; $ hp_rpm      &lt;dbl&gt; 6250, 9000, 6500, 6400, 8250, 5800, 5000, 6250</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; $ trq         &lt;dbl&gt; 550, 664, 476, 436, 507, 420, 600, 479</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; $ trq_rpm     &lt;dbl&gt; 5900, 6750, 2000, 3200, 5500, 3700, 5000, 1750</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; $ mpg_c       &lt;dbl&gt; 11, 12, 21, 16, 11, 28, 12, 16</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; $ mpg_h       &lt;dbl&gt; 18, 16, 22, 22, 18, 29, 19, 22</span></a>
 <a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; $ drivetrain  &lt;chr&gt; "rwd", "rwd", "awd", "awd", "awd", "awd", "rwd", "...</span></a>
 <a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; $ trsmn       &lt;chr&gt; "7a", "7a", "9a", "6a", "7a", "6am", "6m", "7a"</span></a>
 <a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; $ ctry_origin &lt;chr&gt; "United States", "Italy", "Japan", "Japan", "Italy...</span></a>
-<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; $ msrp        &lt;int&gt; 447000, 1416362, 156000, 101770, 397500, 140700, 9...</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; $ msrp        &lt;dbl&gt; 447000, 1416362, 156000, 101770, 397500, 140700, 9...</span></a></code></pre></div>
 <p>Let’s make a display table from this dataset. In doing so we’ll fulfill the following 10 requirements:</p>
 <ol style="list-style-type: decimal">
 <li>putting the cars into characteristic groups (by the car manufacturer’s country of origin)</li>
@@ -171,16 +171,16 @@
 <div id="row-groups" class="section level3">
 <h3 class="hasAnchor">
 <a href="#row-groups" class="anchor"></a>Row Groups</h3>
-<p>Let’s again use <strong>dplyr</strong> to help make groupings by the <code>ctry_origin</code> column, which provides the country of origin for the vehicle manufacturer of the car. We can simply use <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> on the <code>gtcars</code> dataset and pass that to <code><a href="../reference/gt.html">gt()</a></code>. What you get is a display table that arranges the cars into row groups, with the name of the group displayed prominently above.</p>
+<p>Let’s again use <strong>dplyr</strong> to help make groupings by the <code>ctry_origin</code> column, which provides the country of origin for the vehicle manufacturer of the car. We can simply use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> on the <code>gtcars</code> dataset and pass that to <code><a href="../reference/gt.html">gt()</a></code>. What you get is a display table that arranges the cars into row groups, with the name of the group displayed prominently above.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Use `group_by()` on `gtcars` and pass that to `gt()`</span></a>
 <a class="sourceLine" id="cb3-2" title="2">gtcars_<span class="dv">8</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>()</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hhlsqvrwuu .gt_table {
+#acfluzeerp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -199,13 +199,13 @@
   /* table.border.top.color */
 }
 
-#hhlsqvrwuu .gt_heading {
+#acfluzeerp .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#hhlsqvrwuu .gt_title {
+#acfluzeerp .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -216,7 +216,7 @@
   border-bottom-width: 0;
 }
 
-#hhlsqvrwuu .gt_subtitle {
+#acfluzeerp .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -227,7 +227,7 @@
   border-top-width: 0;
 }
 
-#hhlsqvrwuu .gt_bottom_border {
+#acfluzeerp .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -236,7 +236,7 @@
   /* heading.border.bottom.color */
 }
 
-#hhlsqvrwuu .gt_column_spanner {
+#acfluzeerp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -244,7 +244,7 @@
   padding-bottom: 4px;
 }
 
-#hhlsqvrwuu .gt_col_heading {
+#acfluzeerp .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -257,11 +257,11 @@
   margin: 10px;
 }
 
-#hhlsqvrwuu .gt_sep_right {
+#acfluzeerp .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#hhlsqvrwuu .gt_group_heading {
+#acfluzeerp .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -285,7 +285,7 @@
   vertical-align: middle;
 }
 
-#hhlsqvrwuu .gt_empty_group_heading {
+#acfluzeerp .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -309,29 +309,29 @@
   vertical-align: middle;
 }
 
-#hhlsqvrwuu .gt_striped {
+#acfluzeerp .gt_striped {
   background-color: #f2f2f2;
 }
 
-#hhlsqvrwuu .gt_row {
+#acfluzeerp .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#hhlsqvrwuu .gt_stub {
+#acfluzeerp .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#hhlsqvrwuu .gt_stub.gt_row {
+#acfluzeerp .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#hhlsqvrwuu .gt_summary_row {
+#acfluzeerp .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -340,13 +340,13 @@
   /* summary_row.text_transform */
 }
 
-#hhlsqvrwuu .gt_first_summary_row {
+#acfluzeerp .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hhlsqvrwuu .gt_table_body {
+#acfluzeerp .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -361,55 +361,55 @@
   /* field.border.bottom.color */
 }
 
-#hhlsqvrwuu .gt_footnote {
+#acfluzeerp .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#hhlsqvrwuu .gt_sourcenote {
+#acfluzeerp .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#hhlsqvrwuu .gt_center {
+#acfluzeerp .gt_center {
   text-align: center;
 }
 
-#hhlsqvrwuu .gt_left {
+#acfluzeerp .gt_left {
   text-align: left;
 }
 
-#hhlsqvrwuu .gt_right {
+#acfluzeerp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hhlsqvrwuu .gt_font_normal {
+#acfluzeerp .gt_font_normal {
   font-weight: normal;
 }
 
-#hhlsqvrwuu .gt_font_bold {
+#acfluzeerp .gt_font_bold {
   font-weight: bold;
 }
 
-#hhlsqvrwuu .gt_font_italic {
+#acfluzeerp .gt_font_italic {
   font-style: italic;
 }
 
-#hhlsqvrwuu .gt_super {
+#acfluzeerp .gt_super {
   font-size: 65%;
 }
 
-#hhlsqvrwuu .gt_footnote_glyph {
+#acfluzeerp .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hhlsqvrwuu" style="overflow-x:auto;">
+<div id="acfluzeerp" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -575,14 +575,14 @@
 </div>
 <p>Getting the row groups in the preferred order can be done easily with <strong>dplyr</strong>’s <code>arrange()</code> function. For example, we can have groups that are arranged alphabetically by manufacturer (<code>mfr</code>) and then sorted by highest sticker price (<code>msrp</code>) to lowest.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">gtcars_<span class="dv">8</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(mfr, <span class="kw">desc</span>(msrp)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(mfr, <span class="kw">desc</span>(msrp)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>()</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cfxyrptbge .gt_table {
+#tnvrojuaap .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -601,13 +601,13 @@
   /* table.border.top.color */
 }
 
-#cfxyrptbge .gt_heading {
+#tnvrojuaap .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#cfxyrptbge .gt_title {
+#tnvrojuaap .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -618,7 +618,7 @@
   border-bottom-width: 0;
 }
 
-#cfxyrptbge .gt_subtitle {
+#tnvrojuaap .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -629,7 +629,7 @@
   border-top-width: 0;
 }
 
-#cfxyrptbge .gt_bottom_border {
+#tnvrojuaap .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -638,7 +638,7 @@
   /* heading.border.bottom.color */
 }
 
-#cfxyrptbge .gt_column_spanner {
+#tnvrojuaap .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -646,7 +646,7 @@
   padding-bottom: 4px;
 }
 
-#cfxyrptbge .gt_col_heading {
+#tnvrojuaap .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -659,11 +659,11 @@
   margin: 10px;
 }
 
-#cfxyrptbge .gt_sep_right {
+#tnvrojuaap .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#cfxyrptbge .gt_group_heading {
+#tnvrojuaap .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -687,7 +687,7 @@
   vertical-align: middle;
 }
 
-#cfxyrptbge .gt_empty_group_heading {
+#tnvrojuaap .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -711,29 +711,29 @@
   vertical-align: middle;
 }
 
-#cfxyrptbge .gt_striped {
+#tnvrojuaap .gt_striped {
   background-color: #f2f2f2;
 }
 
-#cfxyrptbge .gt_row {
+#tnvrojuaap .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#cfxyrptbge .gt_stub {
+#tnvrojuaap .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#cfxyrptbge .gt_stub.gt_row {
+#tnvrojuaap .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#cfxyrptbge .gt_summary_row {
+#tnvrojuaap .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -742,13 +742,13 @@
   /* summary_row.text_transform */
 }
 
-#cfxyrptbge .gt_first_summary_row {
+#tnvrojuaap .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cfxyrptbge .gt_table_body {
+#tnvrojuaap .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -763,55 +763,55 @@
   /* field.border.bottom.color */
 }
 
-#cfxyrptbge .gt_footnote {
+#tnvrojuaap .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#cfxyrptbge .gt_sourcenote {
+#tnvrojuaap .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#cfxyrptbge .gt_center {
+#tnvrojuaap .gt_center {
   text-align: center;
 }
 
-#cfxyrptbge .gt_left {
+#tnvrojuaap .gt_left {
   text-align: left;
 }
 
-#cfxyrptbge .gt_right {
+#tnvrojuaap .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cfxyrptbge .gt_font_normal {
+#tnvrojuaap .gt_font_normal {
   font-weight: normal;
 }
 
-#cfxyrptbge .gt_font_bold {
+#tnvrojuaap .gt_font_bold {
   font-weight: bold;
 }
 
-#cfxyrptbge .gt_font_italic {
+#tnvrojuaap .gt_font_italic {
   font-style: italic;
 }
 
-#cfxyrptbge .gt_super {
+#tnvrojuaap .gt_super {
   font-size: 65%;
 }
 
-#cfxyrptbge .gt_footnote_glyph {
+#tnvrojuaap .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cfxyrptbge" style="overflow-x:auto;">
+<div id="tnvrojuaap" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -981,16 +981,16 @@
 <a class="sourceLine" id="cb5-3" title="3"></a>
 <a class="sourceLine" id="cb5-4" title="4"><span class="co"># Reorder the table rows by our specific ordering of groups</span></a>
 <a class="sourceLine" id="cb5-5" title="5">gtcars_<span class="dv">8</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
 <a class="sourceLine" id="cb5-7" title="7">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(ctry_origin, <span class="dt">levels =</span> order_countries), mfr, <span class="kw">desc</span>(msrp)</a>
 <a class="sourceLine" id="cb5-8" title="8">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>()</a></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#sjatugoqjr .gt_table {
+#wjjmymrvpt .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1009,13 +1009,13 @@
   /* table.border.top.color */
 }
 
-#sjatugoqjr .gt_heading {
+#wjjmymrvpt .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#sjatugoqjr .gt_title {
+#wjjmymrvpt .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1026,7 +1026,7 @@
   border-bottom-width: 0;
 }
 
-#sjatugoqjr .gt_subtitle {
+#wjjmymrvpt .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1037,7 +1037,7 @@
   border-top-width: 0;
 }
 
-#sjatugoqjr .gt_bottom_border {
+#wjjmymrvpt .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1046,7 +1046,7 @@
   /* heading.border.bottom.color */
 }
 
-#sjatugoqjr .gt_column_spanner {
+#wjjmymrvpt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1054,7 +1054,7 @@
   padding-bottom: 4px;
 }
 
-#sjatugoqjr .gt_col_heading {
+#wjjmymrvpt .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1067,11 +1067,11 @@
   margin: 10px;
 }
 
-#sjatugoqjr .gt_sep_right {
+#wjjmymrvpt .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#sjatugoqjr .gt_group_heading {
+#wjjmymrvpt .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1095,7 +1095,7 @@
   vertical-align: middle;
 }
 
-#sjatugoqjr .gt_empty_group_heading {
+#wjjmymrvpt .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1119,29 +1119,29 @@
   vertical-align: middle;
 }
 
-#sjatugoqjr .gt_striped {
+#wjjmymrvpt .gt_striped {
   background-color: #f2f2f2;
 }
 
-#sjatugoqjr .gt_row {
+#wjjmymrvpt .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#sjatugoqjr .gt_stub {
+#wjjmymrvpt .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#sjatugoqjr .gt_stub.gt_row {
+#wjjmymrvpt .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#sjatugoqjr .gt_summary_row {
+#wjjmymrvpt .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1150,13 +1150,13 @@
   /* summary_row.text_transform */
 }
 
-#sjatugoqjr .gt_first_summary_row {
+#wjjmymrvpt .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#sjatugoqjr .gt_table_body {
+#wjjmymrvpt .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1171,55 +1171,55 @@
   /* field.border.bottom.color */
 }
 
-#sjatugoqjr .gt_footnote {
+#wjjmymrvpt .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#sjatugoqjr .gt_sourcenote {
+#wjjmymrvpt .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#sjatugoqjr .gt_center {
+#wjjmymrvpt .gt_center {
   text-align: center;
 }
 
-#sjatugoqjr .gt_left {
+#wjjmymrvpt .gt_left {
   text-align: left;
 }
 
-#sjatugoqjr .gt_right {
+#wjjmymrvpt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sjatugoqjr .gt_font_normal {
+#wjjmymrvpt .gt_font_normal {
   font-weight: normal;
 }
 
-#sjatugoqjr .gt_font_bold {
+#wjjmymrvpt .gt_font_bold {
   font-weight: bold;
 }
 
-#sjatugoqjr .gt_font_italic {
+#wjjmymrvpt .gt_font_italic {
   font-style: italic;
 }
 
-#sjatugoqjr .gt_super {
+#wjjmymrvpt .gt_super {
   font-size: 65%;
 }
 
-#sjatugoqjr .gt_footnote_glyph {
+#wjjmymrvpt .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="sjatugoqjr" style="overflow-x:auto;">
+<div id="wjjmymrvpt" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -1383,17 +1383,17 @@
 </table>
 <!--gt table end-->
 </div>
-<p>The last variation is to combine the manufacturer name with the model name, using those combined strings as row labels for the table. This is just a little more <strong>dplyr</strong> where we can use <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> to make a new <code>car</code> column followed by <code><a href="http://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> where we remove the <code>mfr</code> and <code>model</code> columns. When introducing the tibble to the <code><a href="../reference/gt.html">gt()</a></code> function, we can now use the <code>rowname_col</code> argument to specify a column that will serve as row labels (which is the newly made <code>car</code> column).</p>
+<p>The last variation is to combine the manufacturer name with the model name, using those combined strings as row labels for the table. This is just a little more <strong>dplyr</strong> where we can use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> to make a new <code>car</code> column followed by <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> where we remove the <code>mfr</code> and <code>model</code> columns. When introducing the tibble to the <code><a href="../reference/gt.html">gt()</a></code> function, we can now use the <code>rowname_col</code> argument to specify a column that will serve as row labels (which is the newly made <code>car</code> column).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Reorder the table rows by our specific ordering of groups</span></a>
 <a class="sourceLine" id="cb6-2" title="2">tab &lt;-</a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span>gtcars_<span class="dv">8</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
 <a class="sourceLine" id="cb6-5" title="5">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(ctry_origin, <span class="dt">levels =</span> order_countries),</a>
 <a class="sourceLine" id="cb6-6" title="6">    mfr, <span class="kw">desc</span>(msrp)</a>
 <a class="sourceLine" id="cb6-7" title="7">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>mfr, <span class="op">-</span>model) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>mfr, <span class="op">-</span>model) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">rowname_col =</span> <span class="st">"car"</span>)</a>
 <a class="sourceLine" id="cb6-12" title="12"></a>
 <a class="sourceLine" id="cb6-13" title="13"><span class="co"># Show the table</span></a>
@@ -1402,7 +1402,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#vjntxhveyd .gt_table {
+#pailurfwzv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1421,13 +1421,13 @@
   /* table.border.top.color */
 }
 
-#vjntxhveyd .gt_heading {
+#pailurfwzv .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#vjntxhveyd .gt_title {
+#pailurfwzv .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1438,7 +1438,7 @@
   border-bottom-width: 0;
 }
 
-#vjntxhveyd .gt_subtitle {
+#pailurfwzv .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1449,7 +1449,7 @@
   border-top-width: 0;
 }
 
-#vjntxhveyd .gt_bottom_border {
+#pailurfwzv .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1458,7 +1458,7 @@
   /* heading.border.bottom.color */
 }
 
-#vjntxhveyd .gt_column_spanner {
+#pailurfwzv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1466,7 +1466,7 @@
   padding-bottom: 4px;
 }
 
-#vjntxhveyd .gt_col_heading {
+#pailurfwzv .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1479,11 +1479,11 @@
   margin: 10px;
 }
 
-#vjntxhveyd .gt_sep_right {
+#pailurfwzv .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#vjntxhveyd .gt_group_heading {
+#pailurfwzv .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1507,7 +1507,7 @@
   vertical-align: middle;
 }
 
-#vjntxhveyd .gt_empty_group_heading {
+#pailurfwzv .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1531,29 +1531,29 @@
   vertical-align: middle;
 }
 
-#vjntxhveyd .gt_striped {
+#pailurfwzv .gt_striped {
   background-color: #f2f2f2;
 }
 
-#vjntxhveyd .gt_row {
+#pailurfwzv .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#vjntxhveyd .gt_stub {
+#pailurfwzv .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#vjntxhveyd .gt_stub.gt_row {
+#pailurfwzv .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#vjntxhveyd .gt_summary_row {
+#pailurfwzv .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1562,13 +1562,13 @@
   /* summary_row.text_transform */
 }
 
-#vjntxhveyd .gt_first_summary_row {
+#pailurfwzv .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#vjntxhveyd .gt_table_body {
+#pailurfwzv .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1583,55 +1583,55 @@
   /* field.border.bottom.color */
 }
 
-#vjntxhveyd .gt_footnote {
+#pailurfwzv .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#vjntxhveyd .gt_sourcenote {
+#pailurfwzv .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#vjntxhveyd .gt_center {
+#pailurfwzv .gt_center {
   text-align: center;
 }
 
-#vjntxhveyd .gt_left {
+#pailurfwzv .gt_left {
   text-align: left;
 }
 
-#vjntxhveyd .gt_right {
+#pailurfwzv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vjntxhveyd .gt_font_normal {
+#pailurfwzv .gt_font_normal {
   font-weight: normal;
 }
 
-#vjntxhveyd .gt_font_bold {
+#pailurfwzv .gt_font_bold {
   font-weight: bold;
 }
 
-#vjntxhveyd .gt_font_italic {
+#pailurfwzv .gt_font_italic {
   font-style: italic;
 }
 
-#vjntxhveyd .gt_super {
+#pailurfwzv .gt_super {
   font-size: 65%;
 }
 
-#vjntxhveyd .gt_footnote_glyph {
+#pailurfwzv .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="vjntxhveyd" style="overflow-x:auto;">
+<div id="pailurfwzv" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -1791,14 +1791,14 @@
 <h3 class="hasAnchor">
 <a href="#hiding-and-moving-some-columns" class="anchor"></a>Hiding and Moving Some Columns</h3>
 <p>Let’s hide two columns that we don’t need to the final table: <code>drivetrain</code> and <code>bdy_style</code>. We can use the <code><a href="../reference/cols_hide.html">cols_hide()</a></code> function to hide columns. The same end result might also have been achieved by using <code>gtcars %&gt;% dplyr::select(-c(drivetrain, bdy_style))</code>, before introducing the table to <code><a href="../reference/gt.html">gt()</a></code>. Why this function then? Sometimes you’ll need variables for conditional statements within <strong>gt</strong> but won’t want to display them in the end.</p>
-<p>Aside from hiding columns, let’s <em>move</em> some of them. Again, this could be done with <code><a href="http://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> but there are options here in <strong>gt</strong> via the <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, <code><a href="../reference/cols_move.html">cols_move()</a></code>, and <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code> functions.</p>
+<p>Aside from hiding columns, let’s <em>move</em> some of them. Again, this could be done with <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> but there are options here in <strong>gt</strong> via the <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, <code><a href="../reference/cols_move.html">cols_move()</a></code>, and <code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code> functions.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Use a few `cols_*()` functions to hide and move columns </span></a>
 <a class="sourceLine" id="cb7-2" title="2">tab &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/cols_hide.html">cols_hide</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(drivetrain, bdy_style)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/cols_hide.html">cols_hide</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(drivetrain, bdy_style)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/cols_move.html">cols_move</a></span>(</a>
-<a class="sourceLine" id="cb7-6" title="6">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn, mpg_c, mpg_h),</a>
-<a class="sourceLine" id="cb7-7" title="7">    <span class="dt">after =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim)</a>
+<a class="sourceLine" id="cb7-6" title="6">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn, mpg_c, mpg_h),</a>
+<a class="sourceLine" id="cb7-7" title="7">    <span class="dt">after =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim)</a>
 <a class="sourceLine" id="cb7-8" title="8">  )</a>
 <a class="sourceLine" id="cb7-9" title="9"></a>
 <a class="sourceLine" id="cb7-10" title="10"><span class="co"># Show the table</span></a>
@@ -1807,7 +1807,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#duqjxcfkhw .gt_table {
+#jlcrzzpocb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1826,13 +1826,13 @@
   /* table.border.top.color */
 }
 
-#duqjxcfkhw .gt_heading {
+#jlcrzzpocb .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#duqjxcfkhw .gt_title {
+#jlcrzzpocb .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1843,7 +1843,7 @@
   border-bottom-width: 0;
 }
 
-#duqjxcfkhw .gt_subtitle {
+#jlcrzzpocb .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1854,7 +1854,7 @@
   border-top-width: 0;
 }
 
-#duqjxcfkhw .gt_bottom_border {
+#jlcrzzpocb .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1863,7 +1863,7 @@
   /* heading.border.bottom.color */
 }
 
-#duqjxcfkhw .gt_column_spanner {
+#jlcrzzpocb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1871,7 +1871,7 @@
   padding-bottom: 4px;
 }
 
-#duqjxcfkhw .gt_col_heading {
+#jlcrzzpocb .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1884,11 +1884,11 @@
   margin: 10px;
 }
 
-#duqjxcfkhw .gt_sep_right {
+#jlcrzzpocb .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#duqjxcfkhw .gt_group_heading {
+#jlcrzzpocb .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1912,7 +1912,7 @@
   vertical-align: middle;
 }
 
-#duqjxcfkhw .gt_empty_group_heading {
+#jlcrzzpocb .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1936,29 +1936,29 @@
   vertical-align: middle;
 }
 
-#duqjxcfkhw .gt_striped {
+#jlcrzzpocb .gt_striped {
   background-color: #f2f2f2;
 }
 
-#duqjxcfkhw .gt_row {
+#jlcrzzpocb .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#duqjxcfkhw .gt_stub {
+#jlcrzzpocb .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#duqjxcfkhw .gt_stub.gt_row {
+#jlcrzzpocb .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#duqjxcfkhw .gt_summary_row {
+#jlcrzzpocb .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -1967,13 +1967,13 @@
   /* summary_row.text_transform */
 }
 
-#duqjxcfkhw .gt_first_summary_row {
+#jlcrzzpocb .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#duqjxcfkhw .gt_table_body {
+#jlcrzzpocb .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -1988,55 +1988,55 @@
   /* field.border.bottom.color */
 }
 
-#duqjxcfkhw .gt_footnote {
+#jlcrzzpocb .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#duqjxcfkhw .gt_sourcenote {
+#jlcrzzpocb .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#duqjxcfkhw .gt_center {
+#jlcrzzpocb .gt_center {
   text-align: center;
 }
 
-#duqjxcfkhw .gt_left {
+#jlcrzzpocb .gt_left {
   text-align: left;
 }
 
-#duqjxcfkhw .gt_right {
+#jlcrzzpocb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#duqjxcfkhw .gt_font_normal {
+#jlcrzzpocb .gt_font_normal {
   font-weight: normal;
 }
 
-#duqjxcfkhw .gt_font_bold {
+#jlcrzzpocb .gt_font_bold {
   font-weight: bold;
 }
 
-#duqjxcfkhw .gt_font_italic {
+#jlcrzzpocb .gt_font_italic {
   font-style: italic;
 }
 
-#duqjxcfkhw .gt_super {
+#jlcrzzpocb .gt_super {
   font-size: 65%;
 }
 
-#duqjxcfkhw .gt_footnote_glyph {
+#jlcrzzpocb .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="duqjxcfkhw" style="overflow-x:auto;">
+<div id="jlcrzzpocb" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -2185,7 +2185,7 @@
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/tab_spanner.html">tab_spanner</a></span>(</a>
 <a class="sourceLine" id="cb8-6" title="6">    <span class="dt">label =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"*Performance*"</span>),</a>
-<a class="sourceLine" id="cb8-7" title="7">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)</a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)</a>
 <a class="sourceLine" id="cb8-8" title="8">  )</a>
 <a class="sourceLine" id="cb8-9" title="9"></a>
 <a class="sourceLine" id="cb8-10" title="10"><span class="co"># Show the table</span></a>
@@ -2194,7 +2194,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qymafwdffp .gt_table {
+#hypykvahij .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2213,13 +2213,13 @@
   /* table.border.top.color */
 }
 
-#qymafwdffp .gt_heading {
+#hypykvahij .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#qymafwdffp .gt_title {
+#hypykvahij .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2230,7 +2230,7 @@
   border-bottom-width: 0;
 }
 
-#qymafwdffp .gt_subtitle {
+#hypykvahij .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -2241,7 +2241,7 @@
   border-top-width: 0;
 }
 
-#qymafwdffp .gt_bottom_border {
+#hypykvahij .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2250,7 +2250,7 @@
   /* heading.border.bottom.color */
 }
 
-#qymafwdffp .gt_column_spanner {
+#hypykvahij .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2258,7 +2258,7 @@
   padding-bottom: 4px;
 }
 
-#qymafwdffp .gt_col_heading {
+#hypykvahij .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -2271,11 +2271,11 @@
   margin: 10px;
 }
 
-#qymafwdffp .gt_sep_right {
+#hypykvahij .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#qymafwdffp .gt_group_heading {
+#hypykvahij .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2299,7 +2299,7 @@
   vertical-align: middle;
 }
 
-#qymafwdffp .gt_empty_group_heading {
+#hypykvahij .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2323,29 +2323,29 @@
   vertical-align: middle;
 }
 
-#qymafwdffp .gt_striped {
+#hypykvahij .gt_striped {
   background-color: #f2f2f2;
 }
 
-#qymafwdffp .gt_row {
+#hypykvahij .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#qymafwdffp .gt_stub {
+#hypykvahij .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#qymafwdffp .gt_stub.gt_row {
+#hypykvahij .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#qymafwdffp .gt_summary_row {
+#hypykvahij .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2354,13 +2354,13 @@
   /* summary_row.text_transform */
 }
 
-#qymafwdffp .gt_first_summary_row {
+#hypykvahij .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#qymafwdffp .gt_table_body {
+#hypykvahij .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2375,55 +2375,55 @@
   /* field.border.bottom.color */
 }
 
-#qymafwdffp .gt_footnote {
+#hypykvahij .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#qymafwdffp .gt_sourcenote {
+#hypykvahij .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#qymafwdffp .gt_center {
+#hypykvahij .gt_center {
   text-align: center;
 }
 
-#qymafwdffp .gt_left {
+#hypykvahij .gt_left {
   text-align: left;
 }
 
-#qymafwdffp .gt_right {
+#hypykvahij .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qymafwdffp .gt_font_normal {
+#hypykvahij .gt_font_normal {
   font-weight: normal;
 }
 
-#qymafwdffp .gt_font_bold {
+#hypykvahij .gt_font_bold {
   font-weight: bold;
 }
 
-#qymafwdffp .gt_font_italic {
+#hypykvahij .gt_font_italic {
   font-style: italic;
 }
 
-#qymafwdffp .gt_super {
+#hypykvahij .gt_super {
   font-size: 65%;
 }
 
-#qymafwdffp .gt_footnote_glyph {
+#hypykvahij .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qymafwdffp" style="overflow-x:auto;">
+<div id="hypykvahij" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -2584,18 +2584,18 @@
 <a class="sourceLine" id="cb9-4" title="4">tab &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb9-7" title="7">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
-<a class="sourceLine" id="cb9-8" title="8">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_h),</a>
+<a class="sourceLine" id="cb9-7" title="7">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
+<a class="sourceLine" id="cb9-8" title="8">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_h),</a>
 <a class="sourceLine" id="cb9-9" title="9">    <span class="dt">pattern =</span> <span class="st">"{1}c&lt;br&gt;{2}h"</span></a>
 <a class="sourceLine" id="cb9-10" title="10">    ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb9-12" title="12">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
-<a class="sourceLine" id="cb9-13" title="13">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp_rpm),</a>
+<a class="sourceLine" id="cb9-12" title="12">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
+<a class="sourceLine" id="cb9-13" title="13">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp_rpm),</a>
 <a class="sourceLine" id="cb9-14" title="14">    <span class="dt">pattern =</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span></a>
 <a class="sourceLine" id="cb9-15" title="15">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb9-17" title="17">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq),</a>
-<a class="sourceLine" id="cb9-18" title="18">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq_rpm),</a>
+<a class="sourceLine" id="cb9-17" title="17">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq),</a>
+<a class="sourceLine" id="cb9-18" title="18">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq_rpm),</a>
 <a class="sourceLine" id="cb9-19" title="19">    <span class="dt">pattern =</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span></a>
 <a class="sourceLine" id="cb9-20" title="20">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-21" title="21"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(</a>
@@ -2614,7 +2614,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#varpfsafjd .gt_table {
+#jkulsqdinm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2633,13 +2633,13 @@
   /* table.border.top.color */
 }
 
-#varpfsafjd .gt_heading {
+#jkulsqdinm .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#varpfsafjd .gt_title {
+#jkulsqdinm .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -2650,7 +2650,7 @@
   border-bottom-width: 0;
 }
 
-#varpfsafjd .gt_subtitle {
+#jkulsqdinm .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -2661,7 +2661,7 @@
   border-top-width: 0;
 }
 
-#varpfsafjd .gt_bottom_border {
+#jkulsqdinm .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -2670,7 +2670,7 @@
   /* heading.border.bottom.color */
 }
 
-#varpfsafjd .gt_column_spanner {
+#jkulsqdinm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -2678,7 +2678,7 @@
   padding-bottom: 4px;
 }
 
-#varpfsafjd .gt_col_heading {
+#jkulsqdinm .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -2691,11 +2691,11 @@
   margin: 10px;
 }
 
-#varpfsafjd .gt_sep_right {
+#jkulsqdinm .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#varpfsafjd .gt_group_heading {
+#jkulsqdinm .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2719,7 +2719,7 @@
   vertical-align: middle;
 }
 
-#varpfsafjd .gt_empty_group_heading {
+#jkulsqdinm .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -2743,29 +2743,29 @@
   vertical-align: middle;
 }
 
-#varpfsafjd .gt_striped {
+#jkulsqdinm .gt_striped {
   background-color: #f2f2f2;
 }
 
-#varpfsafjd .gt_row {
+#jkulsqdinm .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#varpfsafjd .gt_stub {
+#jkulsqdinm .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#varpfsafjd .gt_stub.gt_row {
+#jkulsqdinm .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#varpfsafjd .gt_summary_row {
+#jkulsqdinm .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -2774,13 +2774,13 @@
   /* summary_row.text_transform */
 }
 
-#varpfsafjd .gt_first_summary_row {
+#jkulsqdinm .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#varpfsafjd .gt_table_body {
+#jkulsqdinm .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -2795,55 +2795,55 @@
   /* field.border.bottom.color */
 }
 
-#varpfsafjd .gt_footnote {
+#jkulsqdinm .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#varpfsafjd .gt_sourcenote {
+#jkulsqdinm .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#varpfsafjd .gt_center {
+#jkulsqdinm .gt_center {
   text-align: center;
 }
 
-#varpfsafjd .gt_left {
+#jkulsqdinm .gt_left {
   text-align: left;
 }
 
-#varpfsafjd .gt_right {
+#jkulsqdinm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#varpfsafjd .gt_font_normal {
+#jkulsqdinm .gt_font_normal {
   font-weight: normal;
 }
 
-#varpfsafjd .gt_font_bold {
+#jkulsqdinm .gt_font_bold {
   font-weight: bold;
 }
 
-#varpfsafjd .gt_font_italic {
+#jkulsqdinm .gt_font_italic {
   font-style: italic;
 }
 
-#varpfsafjd .gt_super {
+#jkulsqdinm .gt_super {
   font-size: 65%;
 }
 
-#varpfsafjd .gt_footnote_glyph {
+#jkulsqdinm .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="varpfsafjd" style="overflow-x:auto;">
+<div id="jkulsqdinm" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -2966,7 +2966,7 @@
 <a class="sourceLine" id="cb10-3" title="3">tab &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/fmt_currency.html">fmt_currency</a></span>(</a>
-<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp),</a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp),</a>
 <a class="sourceLine" id="cb10-7" title="7">    <span class="dt">currency =</span> <span class="st">"USD"</span>,</a>
 <a class="sourceLine" id="cb10-8" title="8">    <span class="dt">decimals =</span> <span class="dv">0</span></a>
 <a class="sourceLine" id="cb10-9" title="9">  )</a>
@@ -2977,7 +2977,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ihckkpvzhk .gt_table {
+#ztfzgzwkxo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2996,13 +2996,13 @@
   /* table.border.top.color */
 }
 
-#ihckkpvzhk .gt_heading {
+#ztfzgzwkxo .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ihckkpvzhk .gt_title {
+#ztfzgzwkxo .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3013,7 +3013,7 @@
   border-bottom-width: 0;
 }
 
-#ihckkpvzhk .gt_subtitle {
+#ztfzgzwkxo .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -3024,7 +3024,7 @@
   border-top-width: 0;
 }
 
-#ihckkpvzhk .gt_bottom_border {
+#ztfzgzwkxo .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3033,7 +3033,7 @@
   /* heading.border.bottom.color */
 }
 
-#ihckkpvzhk .gt_column_spanner {
+#ztfzgzwkxo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3041,7 +3041,7 @@
   padding-bottom: 4px;
 }
 
-#ihckkpvzhk .gt_col_heading {
+#ztfzgzwkxo .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -3054,11 +3054,11 @@
   margin: 10px;
 }
 
-#ihckkpvzhk .gt_sep_right {
+#ztfzgzwkxo .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ihckkpvzhk .gt_group_heading {
+#ztfzgzwkxo .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3082,7 +3082,7 @@
   vertical-align: middle;
 }
 
-#ihckkpvzhk .gt_empty_group_heading {
+#ztfzgzwkxo .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3106,29 +3106,29 @@
   vertical-align: middle;
 }
 
-#ihckkpvzhk .gt_striped {
+#ztfzgzwkxo .gt_striped {
   background-color: #f2f2f2;
 }
 
-#ihckkpvzhk .gt_row {
+#ztfzgzwkxo .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#ihckkpvzhk .gt_stub {
+#ztfzgzwkxo .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#ihckkpvzhk .gt_stub.gt_row {
+#ztfzgzwkxo .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#ihckkpvzhk .gt_summary_row {
+#ztfzgzwkxo .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3137,13 +3137,13 @@
   /* summary_row.text_transform */
 }
 
-#ihckkpvzhk .gt_first_summary_row {
+#ztfzgzwkxo .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ihckkpvzhk .gt_table_body {
+#ztfzgzwkxo .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3158,55 +3158,55 @@
   /* field.border.bottom.color */
 }
 
-#ihckkpvzhk .gt_footnote {
+#ztfzgzwkxo .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#ihckkpvzhk .gt_sourcenote {
+#ztfzgzwkxo .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ihckkpvzhk .gt_center {
+#ztfzgzwkxo .gt_center {
   text-align: center;
 }
 
-#ihckkpvzhk .gt_left {
+#ztfzgzwkxo .gt_left {
   text-align: left;
 }
 
-#ihckkpvzhk .gt_right {
+#ztfzgzwkxo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ihckkpvzhk .gt_font_normal {
+#ztfzgzwkxo .gt_font_normal {
   font-weight: normal;
 }
 
-#ihckkpvzhk .gt_font_bold {
+#ztfzgzwkxo .gt_font_bold {
   font-weight: bold;
 }
 
-#ihckkpvzhk .gt_font_italic {
+#ztfzgzwkxo .gt_font_italic {
   font-style: italic;
 }
 
-#ihckkpvzhk .gt_super {
+#ztfzgzwkxo .gt_super {
   font-size: 65%;
 }
 
-#ihckkpvzhk .gt_footnote_glyph {
+#ztfzgzwkxo .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ihckkpvzhk" style="overflow-x:auto;">
+<div id="ztfzgzwkxo" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -3332,13 +3332,13 @@
 <a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/cols_align.html">cols_align</a></span>(</a>
 <a class="sourceLine" id="cb11-7" title="7">    <span class="dt">align =</span> <span class="st">"center"</span>,</a>
-<a class="sourceLine" id="cb11-8" title="8">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, hp, trq)</a>
+<a class="sourceLine" id="cb11-8" title="8">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, hp, trq)</a>
 <a class="sourceLine" id="cb11-9" title="9">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/tab_style.html">tab_style</a></span>(</a>
 <a class="sourceLine" id="cb11-11" title="11">    <span class="dt">style =</span> <span class="kw"><a href="../reference/cells_styles.html">cells_styles</a></span>(</a>
 <a class="sourceLine" id="cb11-12" title="12">      <span class="dt">text_size =</span> <span class="kw"><a href="../reference/px.html">px</a></span>(<span class="dv">12</span>)),</a>
 <a class="sourceLine" id="cb11-13" title="13">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb11-14" title="14">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim, trsmn, mpg_c, hp, trq))</a>
+<a class="sourceLine" id="cb11-14" title="14">      <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim, trsmn, mpg_c, hp, trq))</a>
 <a class="sourceLine" id="cb11-15" title="15">  )</a>
 <a class="sourceLine" id="cb11-16" title="16"></a>
 <a class="sourceLine" id="cb11-17" title="17"><span class="co"># Show the table</span></a>
@@ -3347,7 +3347,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#honsuaodnc .gt_table {
+#osabrraxxi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3366,13 +3366,13 @@
   /* table.border.top.color */
 }
 
-#honsuaodnc .gt_heading {
+#osabrraxxi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#honsuaodnc .gt_title {
+#osabrraxxi .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3383,7 +3383,7 @@
   border-bottom-width: 0;
 }
 
-#honsuaodnc .gt_subtitle {
+#osabrraxxi .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -3394,7 +3394,7 @@
   border-top-width: 0;
 }
 
-#honsuaodnc .gt_bottom_border {
+#osabrraxxi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3403,7 +3403,7 @@
   /* heading.border.bottom.color */
 }
 
-#honsuaodnc .gt_column_spanner {
+#osabrraxxi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3411,7 +3411,7 @@
   padding-bottom: 4px;
 }
 
-#honsuaodnc .gt_col_heading {
+#osabrraxxi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -3424,11 +3424,11 @@
   margin: 10px;
 }
 
-#honsuaodnc .gt_sep_right {
+#osabrraxxi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#honsuaodnc .gt_group_heading {
+#osabrraxxi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3452,7 +3452,7 @@
   vertical-align: middle;
 }
 
-#honsuaodnc .gt_empty_group_heading {
+#osabrraxxi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3476,29 +3476,29 @@
   vertical-align: middle;
 }
 
-#honsuaodnc .gt_striped {
+#osabrraxxi .gt_striped {
   background-color: #f2f2f2;
 }
 
-#honsuaodnc .gt_row {
+#osabrraxxi .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#honsuaodnc .gt_stub {
+#osabrraxxi .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#honsuaodnc .gt_stub.gt_row {
+#osabrraxxi .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#honsuaodnc .gt_summary_row {
+#osabrraxxi .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3507,13 +3507,13 @@
   /* summary_row.text_transform */
 }
 
-#honsuaodnc .gt_first_summary_row {
+#osabrraxxi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#honsuaodnc .gt_table_body {
+#osabrraxxi .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3528,55 +3528,55 @@
   /* field.border.bottom.color */
 }
 
-#honsuaodnc .gt_footnote {
+#osabrraxxi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#honsuaodnc .gt_sourcenote {
+#osabrraxxi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#honsuaodnc .gt_center {
+#osabrraxxi .gt_center {
   text-align: center;
 }
 
-#honsuaodnc .gt_left {
+#osabrraxxi .gt_left {
   text-align: left;
 }
 
-#honsuaodnc .gt_right {
+#osabrraxxi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#honsuaodnc .gt_font_normal {
+#osabrraxxi .gt_font_normal {
   font-weight: normal;
 }
 
-#honsuaodnc .gt_font_bold {
+#osabrraxxi .gt_font_bold {
   font-weight: bold;
 }
 
-#honsuaodnc .gt_font_italic {
+#osabrraxxi .gt_font_italic {
   font-style: italic;
 }
 
-#honsuaodnc .gt_super {
+#osabrraxxi .gt_super {
   font-size: 65%;
 }
 
-#honsuaodnc .gt_footnote_glyph {
+#osabrraxxi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="honsuaodnc" style="overflow-x:auto;">
+<div id="osabrraxxi" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -3701,7 +3701,7 @@
 <a class="sourceLine" id="cb12-5" title="5">tab &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb12-6" title="6"><span class="st">  </span>tab <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/text_transform.html">text_transform</a></span>(</a>
-<a class="sourceLine" id="cb12-8" title="8">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn)),</a>
+<a class="sourceLine" id="cb12-8" title="8">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn)),</a>
 <a class="sourceLine" id="cb12-9" title="9">    <span class="dt">fn =</span> <span class="cf">function</span>(x) {</a>
 <a class="sourceLine" id="cb12-10" title="10">      </a>
 <a class="sourceLine" id="cb12-11" title="11">      <span class="co"># The first character of `x` always</span></a>
@@ -3712,7 +3712,7 @@
 <a class="sourceLine" id="cb12-16" title="16">      <span class="co"># type we have in `x` with a `dplyr::case_when()`</span></a>
 <a class="sourceLine" id="cb12-17" title="17">      <span class="co"># statement</span></a>
 <a class="sourceLine" id="cb12-18" title="18">      type &lt;-</a>
-<a class="sourceLine" id="cb12-19" title="19"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
 <a class="sourceLine" id="cb12-20" title="20">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">3</span>) <span class="op">==</span><span class="st"> "am"</span> <span class="op">~</span><span class="st"> "Automatic/Manual"</span>,</a>
 <a class="sourceLine" id="cb12-21" title="21">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">2</span>) <span class="op">==</span><span class="st"> "m"</span> <span class="op">~</span><span class="st"> "Manual"</span>,</a>
 <a class="sourceLine" id="cb12-22" title="22">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">2</span>) <span class="op">==</span><span class="st"> "a"</span> <span class="op">~</span><span class="st"> "Automatic"</span>,</a>
@@ -3731,7 +3731,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qphhmfdlrt .gt_table {
+#iqcxgxygft .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3750,13 +3750,13 @@
   /* table.border.top.color */
 }
 
-#qphhmfdlrt .gt_heading {
+#iqcxgxygft .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#qphhmfdlrt .gt_title {
+#iqcxgxygft .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -3767,7 +3767,7 @@
   border-bottom-width: 0;
 }
 
-#qphhmfdlrt .gt_subtitle {
+#iqcxgxygft .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -3778,7 +3778,7 @@
   border-top-width: 0;
 }
 
-#qphhmfdlrt .gt_bottom_border {
+#iqcxgxygft .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -3787,7 +3787,7 @@
   /* heading.border.bottom.color */
 }
 
-#qphhmfdlrt .gt_column_spanner {
+#iqcxgxygft .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -3795,7 +3795,7 @@
   padding-bottom: 4px;
 }
 
-#qphhmfdlrt .gt_col_heading {
+#iqcxgxygft .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -3808,11 +3808,11 @@
   margin: 10px;
 }
 
-#qphhmfdlrt .gt_sep_right {
+#iqcxgxygft .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#qphhmfdlrt .gt_group_heading {
+#iqcxgxygft .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3836,7 +3836,7 @@
   vertical-align: middle;
 }
 
-#qphhmfdlrt .gt_empty_group_heading {
+#iqcxgxygft .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -3860,29 +3860,29 @@
   vertical-align: middle;
 }
 
-#qphhmfdlrt .gt_striped {
+#iqcxgxygft .gt_striped {
   background-color: #f2f2f2;
 }
 
-#qphhmfdlrt .gt_row {
+#iqcxgxygft .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#qphhmfdlrt .gt_stub {
+#iqcxgxygft .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#qphhmfdlrt .gt_stub.gt_row {
+#iqcxgxygft .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#qphhmfdlrt .gt_summary_row {
+#iqcxgxygft .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -3891,13 +3891,13 @@
   /* summary_row.text_transform */
 }
 
-#qphhmfdlrt .gt_first_summary_row {
+#iqcxgxygft .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#qphhmfdlrt .gt_table_body {
+#iqcxgxygft .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -3912,55 +3912,55 @@
   /* field.border.bottom.color */
 }
 
-#qphhmfdlrt .gt_footnote {
+#iqcxgxygft .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#qphhmfdlrt .gt_sourcenote {
+#iqcxgxygft .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#qphhmfdlrt .gt_center {
+#iqcxgxygft .gt_center {
   text-align: center;
 }
 
-#qphhmfdlrt .gt_left {
+#iqcxgxygft .gt_left {
   text-align: left;
 }
 
-#qphhmfdlrt .gt_right {
+#iqcxgxygft .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qphhmfdlrt .gt_font_normal {
+#iqcxgxygft .gt_font_normal {
   font-weight: normal;
 }
 
-#qphhmfdlrt .gt_font_bold {
+#iqcxgxygft .gt_font_bold {
   font-weight: bold;
 }
 
-#qphhmfdlrt .gt_font_italic {
+#iqcxgxygft .gt_font_italic {
   font-style: italic;
 }
 
-#qphhmfdlrt .gt_super {
+#iqcxgxygft .gt_super {
   font-size: 65%;
 }
 
-#qphhmfdlrt .gt_footnote_glyph {
+#iqcxgxygft .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qphhmfdlrt" style="overflow-x:auto;">
+<div id="iqcxgxygft" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <tr>
@@ -4101,7 +4101,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bqaqttuztq .gt_table {
+#tojslbybqq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4120,13 +4120,13 @@
   /* table.border.top.color */
 }
 
-#bqaqttuztq .gt_heading {
+#tojslbybqq .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#bqaqttuztq .gt_title {
+#tojslbybqq .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -4137,7 +4137,7 @@
   border-bottom-width: 0;
 }
 
-#bqaqttuztq .gt_subtitle {
+#tojslbybqq .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -4148,7 +4148,7 @@
   border-top-width: 0;
 }
 
-#bqaqttuztq .gt_bottom_border {
+#tojslbybqq .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -4157,7 +4157,7 @@
   /* heading.border.bottom.color */
 }
 
-#bqaqttuztq .gt_column_spanner {
+#tojslbybqq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -4165,7 +4165,7 @@
   padding-bottom: 4px;
 }
 
-#bqaqttuztq .gt_col_heading {
+#tojslbybqq .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -4178,11 +4178,11 @@
   margin: 10px;
 }
 
-#bqaqttuztq .gt_sep_right {
+#tojslbybqq .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#bqaqttuztq .gt_group_heading {
+#tojslbybqq .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4206,7 +4206,7 @@
   vertical-align: middle;
 }
 
-#bqaqttuztq .gt_empty_group_heading {
+#tojslbybqq .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4230,29 +4230,29 @@
   vertical-align: middle;
 }
 
-#bqaqttuztq .gt_striped {
+#tojslbybqq .gt_striped {
   background-color: #f2f2f2;
 }
 
-#bqaqttuztq .gt_row {
+#tojslbybqq .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#bqaqttuztq .gt_stub {
+#tojslbybqq .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#bqaqttuztq .gt_stub.gt_row {
+#tojslbybqq .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#bqaqttuztq .gt_summary_row {
+#tojslbybqq .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -4261,13 +4261,13 @@
   /* summary_row.text_transform */
 }
 
-#bqaqttuztq .gt_first_summary_row {
+#tojslbybqq .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#bqaqttuztq .gt_table_body {
+#tojslbybqq .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -4282,55 +4282,55 @@
   /* field.border.bottom.color */
 }
 
-#bqaqttuztq .gt_footnote {
+#tojslbybqq .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#bqaqttuztq .gt_sourcenote {
+#tojslbybqq .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#bqaqttuztq .gt_center {
+#tojslbybqq .gt_center {
   text-align: center;
 }
 
-#bqaqttuztq .gt_left {
+#tojslbybqq .gt_left {
   text-align: left;
 }
 
-#bqaqttuztq .gt_right {
+#tojslbybqq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bqaqttuztq .gt_font_normal {
+#tojslbybqq .gt_font_normal {
   font-weight: normal;
 }
 
-#bqaqttuztq .gt_font_bold {
+#tojslbybqq .gt_font_bold {
   font-weight: bold;
 }
 
-#bqaqttuztq .gt_font_italic {
+#tojslbybqq .gt_font_italic {
   font-style: italic;
 }
 
-#bqaqttuztq .gt_super {
+#tojslbybqq .gt_super {
   font-size: 65%;
 }
 
-#bqaqttuztq .gt_footnote_glyph {
+#tojslbybqq .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bqaqttuztq" style="overflow-x:auto;">
+<div id="tojslbybqq" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>
@@ -4480,7 +4480,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bysgpgkbts .gt_table {
+#gdartfbzsj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4499,13 +4499,13 @@
   /* table.border.top.color */
 }
 
-#bysgpgkbts .gt_heading {
+#gdartfbzsj .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#bysgpgkbts .gt_title {
+#gdartfbzsj .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -4516,7 +4516,7 @@
   border-bottom-width: 0;
 }
 
-#bysgpgkbts .gt_subtitle {
+#gdartfbzsj .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -4527,7 +4527,7 @@
   border-top-width: 0;
 }
 
-#bysgpgkbts .gt_bottom_border {
+#gdartfbzsj .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -4536,7 +4536,7 @@
   /* heading.border.bottom.color */
 }
 
-#bysgpgkbts .gt_column_spanner {
+#gdartfbzsj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -4544,7 +4544,7 @@
   padding-bottom: 4px;
 }
 
-#bysgpgkbts .gt_col_heading {
+#gdartfbzsj .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -4557,11 +4557,11 @@
   margin: 10px;
 }
 
-#bysgpgkbts .gt_sep_right {
+#gdartfbzsj .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#bysgpgkbts .gt_group_heading {
+#gdartfbzsj .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4585,7 +4585,7 @@
   vertical-align: middle;
 }
 
-#bysgpgkbts .gt_empty_group_heading {
+#gdartfbzsj .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -4609,29 +4609,29 @@
   vertical-align: middle;
 }
 
-#bysgpgkbts .gt_striped {
+#gdartfbzsj .gt_striped {
   background-color: #f2f2f2;
 }
 
-#bysgpgkbts .gt_row {
+#gdartfbzsj .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#bysgpgkbts .gt_stub {
+#gdartfbzsj .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#bysgpgkbts .gt_stub.gt_row {
+#gdartfbzsj .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#bysgpgkbts .gt_summary_row {
+#gdartfbzsj .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -4640,13 +4640,13 @@
   /* summary_row.text_transform */
 }
 
-#bysgpgkbts .gt_first_summary_row {
+#gdartfbzsj .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#bysgpgkbts .gt_table_body {
+#gdartfbzsj .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -4661,55 +4661,55 @@
   /* field.border.bottom.color */
 }
 
-#bysgpgkbts .gt_footnote {
+#gdartfbzsj .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#bysgpgkbts .gt_sourcenote {
+#gdartfbzsj .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#bysgpgkbts .gt_center {
+#gdartfbzsj .gt_center {
   text-align: center;
 }
 
-#bysgpgkbts .gt_left {
+#gdartfbzsj .gt_left {
   text-align: left;
 }
 
-#bysgpgkbts .gt_right {
+#gdartfbzsj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bysgpgkbts .gt_font_normal {
+#gdartfbzsj .gt_font_normal {
   font-weight: normal;
 }
 
-#bysgpgkbts .gt_font_bold {
+#gdartfbzsj .gt_font_bold {
   font-weight: bold;
 }
 
-#bysgpgkbts .gt_font_italic {
+#gdartfbzsj .gt_font_italic {
   font-style: italic;
 }
 
-#bysgpgkbts .gt_super {
+#gdartfbzsj .gt_super {
   font-size: 65%;
 }
 
-#bysgpgkbts .gt_footnote_glyph {
+#gdartfbzsj .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bysgpgkbts" style="overflow-x:auto;">
+<div id="gdartfbzsj" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>
@@ -4851,61 +4851,61 @@
 b. identifying the car with the highest horsepower
 c. stating the currency of the MSRP</code></pre>
 <p>The <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function expects note text for the <code>footnote</code> argument, and locations for where the glyph should be attached. It will handle the placement of the note glyph and also place the footnote in the footnotes area. Here, we’ll use the <code><a href="../reference/location_cells.html">cells_data()</a></code> <em>location helper</em> function. There are several location helper functions for targeting all parts of the table (e.g,. <code><a href="../reference/location_cells.html">cells_data()</a></code>, <code><a href="../reference/location_cells.html">cells_stub()</a></code>, etc.). Each <em>location helper</em> has their own interface for targeting cells, help is available at <code><a href="../reference/location_cells.html">?gt::location_cells</a></code>.</p>
-<p>What <code><a href="../reference/location_cells.html">cells_data()</a></code> expects is <code>columns</code> (column names, which can be conveniently provided in <code><a href="http://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>) and <code>rows</code> (which can be a vector of row names or row indices). The <code><a href="../reference/location_cells.html">cells_stub()</a></code> location helper only expects a vector of <code>rows</code>. For <code><a href="../reference/location_cells.html">cells_column_labels()</a></code>, we can either provided targeted column labels in the <code>columns</code> argument or spanner column labels in the <code>groups</code> argument. Here, we are targeting a footnote to the <code>msrp</code> column label so we will use <code>columns = vars(msrp)</code>.</p>
+<p>What <code><a href="../reference/location_cells.html">cells_data()</a></code> expects is <code>columns</code> (column names, which can be conveniently provided in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>) and <code>rows</code> (which can be a vector of row names or row indices). The <code><a href="../reference/location_cells.html">cells_stub()</a></code> location helper only expects a vector of <code>rows</code>. For <code><a href="../reference/location_cells.html">cells_column_labels()</a></code>, we can either provided targeted column labels in the <code>columns</code> argument or spanner column labels in the <code>groups</code> argument. Here, we are targeting a footnote to the <code>msrp</code> column label so we will use <code>columns = vars(msrp)</code>.</p>
 <p>In terms of structuring the code, we’re taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> statements first (again, any in order) and expect the same output table.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="co"># Use dplyr functions to get the car with the best city gas mileage;</span></a>
 <a class="sourceLine" id="cb16-3" title="3"><span class="co"># this will be used to target the correct cell for a footnote</span></a>
 <a class="sourceLine" id="cb16-4" title="4">best_gas_mileage_city &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span>gtcars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw">desc</span>(mpg_c)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(car)</a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw">desc</span>(mpg_c)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(car)</a>
 <a class="sourceLine" id="cb16-10" title="10"></a>
 <a class="sourceLine" id="cb16-11" title="11"><span class="co"># Use dplyr functions to get the car with the highest horsepower</span></a>
 <a class="sourceLine" id="cb16-12" title="12"><span class="co"># this will be used to target the correct cell for a footnote</span></a>
 <a class="sourceLine" id="cb16-13" title="13">highest_horsepower &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb16-14" title="14"><span class="st">  </span>gtcars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-15" title="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw">desc</span>(hp)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-16" title="16"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-17" title="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-18" title="18"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(car)</a>
+<a class="sourceLine" id="cb16-15" title="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw">desc</span>(hp)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-16" title="16"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-17" title="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-18" title="18"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(car)</a>
 <a class="sourceLine" id="cb16-19" title="19"></a>
 <a class="sourceLine" id="cb16-20" title="20"><span class="co"># Create a display table with `gtcars`, using all of the previous</span></a>
 <a class="sourceLine" id="cb16-21" title="21"><span class="co"># statements piped together + additional `tab_footnote()` stmts</span></a>
 <a class="sourceLine" id="cb16-22" title="22">tab &lt;-</a>
 <a class="sourceLine" id="cb16-23" title="23"><span class="st">  </span>gtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-24" title="24"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
+<a class="sourceLine" id="cb16-24" title="24"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(</a>
 <a class="sourceLine" id="cb16-25" title="25">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(ctry_origin, <span class="dt">levels =</span> order_countries),</a>
 <a class="sourceLine" id="cb16-26" title="26">    mfr, <span class="kw">desc</span>(msrp)</a>
 <a class="sourceLine" id="cb16-27" title="27">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-28" title="28"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-29" title="29"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>mfr, <span class="op">-</span>model) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-30" title="30"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-28" title="28"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">car =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(mfr, model)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-29" title="29"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>mfr, <span class="op">-</span>model) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-30" title="30"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(ctry_origin) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-31" title="31"><span class="st">  </span><span class="kw"><a href="../reference/gt.html">gt</a></span>(<span class="dt">rowname_col =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-32" title="32"><span class="st">  </span><span class="kw"><a href="../reference/cols_hide.html">cols_hide</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(drivetrain, bdy_style)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-32" title="32"><span class="st">  </span><span class="kw"><a href="../reference/cols_hide.html">cols_hide</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(drivetrain, bdy_style)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-33" title="33"><span class="st">  </span><span class="kw"><a href="../reference/cols_move.html">cols_move</a></span>(</a>
-<a class="sourceLine" id="cb16-34" title="34">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn, mpg_c, mpg_h),</a>
-<a class="sourceLine" id="cb16-35" title="35">    <span class="dt">after =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim)</a>
+<a class="sourceLine" id="cb16-34" title="34">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn, mpg_c, mpg_h),</a>
+<a class="sourceLine" id="cb16-35" title="35">    <span class="dt">after =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim)</a>
 <a class="sourceLine" id="cb16-36" title="36">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-37" title="37"><span class="st">  </span><span class="kw"><a href="../reference/tab_spanner.html">tab_spanner</a></span>(</a>
 <a class="sourceLine" id="cb16-38" title="38">    <span class="dt">label =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"*Performance*"</span>),</a>
-<a class="sourceLine" id="cb16-39" title="39">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)</a>
+<a class="sourceLine" id="cb16-39" title="39">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)</a>
 <a class="sourceLine" id="cb16-40" title="40">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-41" title="41"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb16-42" title="42">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
-<a class="sourceLine" id="cb16-43" title="43">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_h),</a>
+<a class="sourceLine" id="cb16-42" title="42">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
+<a class="sourceLine" id="cb16-43" title="43">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_h),</a>
 <a class="sourceLine" id="cb16-44" title="44">    <span class="dt">pattern =</span> <span class="st">"{1}c&lt;br&gt;{2}h"</span></a>
 <a class="sourceLine" id="cb16-45" title="45">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-46" title="46"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb16-47" title="47">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
-<a class="sourceLine" id="cb16-48" title="48">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp_rpm),</a>
+<a class="sourceLine" id="cb16-47" title="47">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
+<a class="sourceLine" id="cb16-48" title="48">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp_rpm),</a>
 <a class="sourceLine" id="cb16-49" title="49">    <span class="dt">pattern =</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span></a>
 <a class="sourceLine" id="cb16-50" title="50">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-51" title="51"><span class="st">  </span><span class="kw"><a href="../reference/cols_merge.html">cols_merge</a></span>(</a>
-<a class="sourceLine" id="cb16-52" title="52">    <span class="dt">col_1 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq),</a>
-<a class="sourceLine" id="cb16-53" title="53">    <span class="dt">col_2 =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq_rpm),</a>
+<a class="sourceLine" id="cb16-52" title="52">    <span class="dt">col_1 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq),</a>
+<a class="sourceLine" id="cb16-53" title="53">    <span class="dt">col_2 =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trq_rpm),</a>
 <a class="sourceLine" id="cb16-54" title="54">    <span class="dt">pattern =</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span></a>
 <a class="sourceLine" id="cb16-55" title="55">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-56" title="56"><span class="st">  </span><span class="kw"><a href="../reference/cols_label.html">cols_label</a></span>(</a>
@@ -4918,26 +4918,26 @@ c. stating the currency of the MSRP</code></pre>
 <a class="sourceLine" id="cb16-63" title="63">    <span class="dt">msrp =</span> <span class="st">"MSRP"</span></a>
 <a class="sourceLine" id="cb16-64" title="64">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-65" title="65"><span class="st">  </span><span class="kw"><a href="../reference/fmt_currency.html">fmt_currency</a></span>(</a>
-<a class="sourceLine" id="cb16-66" title="66">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp),</a>
+<a class="sourceLine" id="cb16-66" title="66">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp),</a>
 <a class="sourceLine" id="cb16-67" title="67">    <span class="dt">currency =</span> <span class="st">"USD"</span>,</a>
 <a class="sourceLine" id="cb16-68" title="68">    <span class="dt">decimals =</span> <span class="dv">0</span></a>
 <a class="sourceLine" id="cb16-69" title="69">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-70" title="70"><span class="st">  </span><span class="kw"><a href="../reference/cols_align.html">cols_align</a></span>(</a>
 <a class="sourceLine" id="cb16-71" title="71">    <span class="dt">align =</span> <span class="st">"center"</span>,</a>
-<a class="sourceLine" id="cb16-72" title="72">    <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, hp, trq)</a>
+<a class="sourceLine" id="cb16-72" title="72">    <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c, hp, trq)</a>
 <a class="sourceLine" id="cb16-73" title="73">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-74" title="74"><span class="st">  </span><span class="kw"><a href="../reference/tab_style.html">tab_style</a></span>(</a>
 <a class="sourceLine" id="cb16-75" title="75">    <span class="dt">style =</span> <span class="kw"><a href="../reference/cells_styles.html">cells_styles</a></span>(<span class="dt">text_size =</span> <span class="kw"><a href="../reference/px.html">px</a></span>(<span class="dv">12</span>)),</a>
-<a class="sourceLine" id="cb16-76" title="76">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim, trsmn, mpg_c, hp, trq))</a>
+<a class="sourceLine" id="cb16-76" title="76">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trim, trsmn, mpg_c, hp, trq))</a>
 <a class="sourceLine" id="cb16-77" title="77">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-78" title="78"><span class="st">  </span><span class="kw"><a href="../reference/text_transform.html">text_transform</a></span>(</a>
-<a class="sourceLine" id="cb16-79" title="79">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn)),</a>
+<a class="sourceLine" id="cb16-79" title="79">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(<span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(trsmn)),</a>
 <a class="sourceLine" id="cb16-80" title="80">    <span class="dt">fn =</span> <span class="cf">function</span>(x) {</a>
 <a class="sourceLine" id="cb16-81" title="81">      </a>
 <a class="sourceLine" id="cb16-82" title="82">      speed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">1</span>, <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb16-83" title="83">      </a>
 <a class="sourceLine" id="cb16-84" title="84">      type &lt;-</a>
-<a class="sourceLine" id="cb16-85" title="85"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
+<a class="sourceLine" id="cb16-85" title="85"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
 <a class="sourceLine" id="cb16-86" title="86">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">3</span>) <span class="op">==</span><span class="st"> "am"</span> <span class="op">~</span><span class="st"> "Automatic/Manual"</span>,</a>
 <a class="sourceLine" id="cb16-87" title="87">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">2</span>) <span class="op">==</span><span class="st"> "m"</span> <span class="op">~</span><span class="st"> "Manual"</span>,</a>
 <a class="sourceLine" id="cb16-88" title="88">          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(x, <span class="dv">2</span>, <span class="dv">2</span>) <span class="op">==</span><span class="st"> "a"</span> <span class="op">~</span><span class="st"> "Automatic"</span>,</a>
@@ -4958,19 +4958,19 @@ c. stating the currency of the MSRP</code></pre>
 <a class="sourceLine" id="cb16-103" title="103"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb16-104" title="104">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"Best gas mileage (city) of all the **gtcars**."</span>),</a>
 <a class="sourceLine" id="cb16-105" title="105">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb16-106" title="106">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
+<a class="sourceLine" id="cb16-106" title="106">      <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(mpg_c),</a>
 <a class="sourceLine" id="cb16-107" title="107">      <span class="dt">rows =</span> best_gas_mileage_city)</a>
 <a class="sourceLine" id="cb16-108" title="108">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-109" title="109"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb16-110" title="110">    <span class="dt">footnote =</span> <span class="kw"><a href="../reference/md.html">md</a></span>(<span class="st">"The highest horsepower of all the **gtcars**."</span>),</a>
 <a class="sourceLine" id="cb16-111" title="111">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_data</a></span>(</a>
-<a class="sourceLine" id="cb16-112" title="112">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
+<a class="sourceLine" id="cb16-112" title="112">      <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(hp),</a>
 <a class="sourceLine" id="cb16-113" title="113">      <span class="dt">rows =</span> highest_horsepower)</a>
 <a class="sourceLine" id="cb16-114" title="114">  ) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-115" title="115"><span class="st">  </span><span class="kw"><a href="../reference/tab_footnote.html">tab_footnote</a></span>(</a>
 <a class="sourceLine" id="cb16-116" title="116">    <span class="dt">footnote =</span> <span class="st">"All prices in U.S. dollars (USD)."</span>,</a>
 <a class="sourceLine" id="cb16-117" title="117">    <span class="dt">locations =</span> <span class="kw"><a href="../reference/location_cells.html">cells_column_labels</a></span>(</a>
-<a class="sourceLine" id="cb16-118" title="118">      <span class="dt">columns =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp))</a>
+<a class="sourceLine" id="cb16-118" title="118">      <span class="dt">columns =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(msrp))</a>
 <a class="sourceLine" id="cb16-119" title="119">  )</a>
 <a class="sourceLine" id="cb16-120" title="120"></a>
 <a class="sourceLine" id="cb16-121" title="121"><span class="co"># Show the table</span></a>
@@ -4979,7 +4979,7 @@ c. stating the currency of the MSRP</code></pre>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xwjgkjjnvm .gt_table {
+#jynpwwygbn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4998,13 +4998,13 @@ c. stating the currency of the MSRP</code></pre>
   /* table.border.top.color */
 }
 
-#xwjgkjjnvm .gt_heading {
+#jynpwwygbn .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#xwjgkjjnvm .gt_title {
+#jynpwwygbn .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -5015,7 +5015,7 @@ c. stating the currency of the MSRP</code></pre>
   border-bottom-width: 0;
 }
 
-#xwjgkjjnvm .gt_subtitle {
+#jynpwwygbn .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -5026,7 +5026,7 @@ c. stating the currency of the MSRP</code></pre>
   border-top-width: 0;
 }
 
-#xwjgkjjnvm .gt_bottom_border {
+#jynpwwygbn .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -5035,7 +5035,7 @@ c. stating the currency of the MSRP</code></pre>
   /* heading.border.bottom.color */
 }
 
-#xwjgkjjnvm .gt_column_spanner {
+#jynpwwygbn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -5043,7 +5043,7 @@ c. stating the currency of the MSRP</code></pre>
   padding-bottom: 4px;
 }
 
-#xwjgkjjnvm .gt_col_heading {
+#jynpwwygbn .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -5056,11 +5056,11 @@ c. stating the currency of the MSRP</code></pre>
   margin: 10px;
 }
 
-#xwjgkjjnvm .gt_sep_right {
+#jynpwwygbn .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#xwjgkjjnvm .gt_group_heading {
+#jynpwwygbn .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -5084,7 +5084,7 @@ c. stating the currency of the MSRP</code></pre>
   vertical-align: middle;
 }
 
-#xwjgkjjnvm .gt_empty_group_heading {
+#jynpwwygbn .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -5108,29 +5108,29 @@ c. stating the currency of the MSRP</code></pre>
   vertical-align: middle;
 }
 
-#xwjgkjjnvm .gt_striped {
+#jynpwwygbn .gt_striped {
   background-color: #f2f2f2;
 }
 
-#xwjgkjjnvm .gt_row {
+#jynpwwygbn .gt_row {
   padding: 10px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#xwjgkjjnvm .gt_stub {
+#jynpwwygbn .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#xwjgkjjnvm .gt_stub.gt_row {
+#jynpwwygbn .gt_stub.gt_row {
   background-color: #FFFFFF;
 }
 
-#xwjgkjjnvm .gt_summary_row {
+#jynpwwygbn .gt_summary_row {
   background-color: #FFFFFF;
   /* summary_row.background.color */
   padding: 6px;
@@ -5139,13 +5139,13 @@ c. stating the currency of the MSRP</code></pre>
   /* summary_row.text_transform */
 }
 
-#xwjgkjjnvm .gt_first_summary_row {
+#jynpwwygbn .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xwjgkjjnvm .gt_table_body {
+#jynpwwygbn .gt_table_body {
   border-top-style: solid;
   /* field.border.top.style */
   border-top-width: 2px;
@@ -5160,55 +5160,55 @@ c. stating the currency of the MSRP</code></pre>
   /* field.border.bottom.color */
 }
 
-#xwjgkjjnvm .gt_footnote {
+#jynpwwygbn .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   padding: 4px;
   /* footnote.padding */
 }
 
-#xwjgkjjnvm .gt_sourcenote {
+#jynpwwygbn .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#xwjgkjjnvm .gt_center {
+#jynpwwygbn .gt_center {
   text-align: center;
 }
 
-#xwjgkjjnvm .gt_left {
+#jynpwwygbn .gt_left {
   text-align: left;
 }
 
-#xwjgkjjnvm .gt_right {
+#jynpwwygbn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xwjgkjjnvm .gt_font_normal {
+#jynpwwygbn .gt_font_normal {
   font-weight: normal;
 }
 
-#xwjgkjjnvm .gt_font_bold {
+#jynpwwygbn .gt_font_bold {
   font-weight: bold;
 }
 
-#xwjgkjjnvm .gt_font_italic {
+#jynpwwygbn .gt_font_italic {
   font-style: italic;
 }
 
-#xwjgkjjnvm .gt_super {
+#jynpwwygbn .gt_super {
   font-size: 65%;
 }
 
-#xwjgkjjnvm .gt_footnote_glyph {
+#jynpwwygbn .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xwjgkjjnvm" style="overflow-x:auto;">
+<div id="jynpwwygbn" style="overflow-x:auto;">
 <!--gt table start-->
 <table class="table gt_table">
 <thead>

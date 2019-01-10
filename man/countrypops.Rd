@@ -27,4 +27,9 @@ and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
 \code{NA} values for \code{populations} indicate the non-existence of the
 country during that year.
 }
+\examples{
+# Here is a glimpse at the data
+# available in `countrypops`
+dplyr::glimpse(countrypops)
+}
 \keyword{datasets}

@@ -39,9 +39,26 @@
 
 <meta property="og:title" content="Format values as currencies — fmt_currency" />
 
-<meta property="og:description" content="With numeric values in a gt table, we can perform currency-based formatting.
-This function supports both automatic formatting with a three-letter currency
-code and numeric formatting facilitated through the use of a locale ID." />
+<meta property="og:description" content="With numeric values in a gt table, we can perform currency-based
+formatting. This function supports both automatic formatting with a
+three-letter currency code and numeric formatting facilitated through the use
+of a locale ID. For fine control the conversion from numeric to currency
+values, we can take advantage of the following options:
+currency symbol placement: the currency symbol can be placed before
+or after the values
+decimals/subunits: choice of the number of decimal places, and a
+choice of the decimal symbol, and an option on whether to include or exclude
+the currency subunits (decimal portion)
+negative values: choice of a negative sign or parentheses for values
+less than zero
+digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+scaling: we can choose to scale targeted values by a multiplier value
+pattern: option to use a text pattern for decoration of the formatted
+currency values
+locale-based formatting: providing a locale ID will result in
+currency formatting specific to the chosen locale
+" />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,9 +154,26 @@ code and numeric formatting facilitated through the use of a locale ID." />
 
     <div class="ref-description">
     
-    <p>With numeric values in a <span class="pkg">gt</span> table, we can perform currency-based formatting.
-This function supports both automatic formatting with a three-letter currency
-code and numeric formatting facilitated through the use of a locale ID.</p>
+    <p>With numeric values in a <span class="pkg">gt</span> table, we can perform currency-based
+formatting. This function supports both automatic formatting with a
+three-letter currency code and numeric formatting facilitated through the use
+of a locale ID. For fine control the conversion from numeric to currency
+values, we can take advantage of the following options:</p><ul>
+<li><p>currency symbol placement: the currency symbol can be placed before
+or after the values</p></li>
+<li><p>decimals/subunits: choice of the number of decimal places, and a
+choice of the decimal symbol, and an option on whether to include or exclude
+the currency subunits (decimal portion)</p></li>
+<li><p>negative values: choice of a negative sign or parentheses for values
+less than zero</p></li>
+<li><p>digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol</p></li>
+<li><p>scaling: we can choose to scale targeted values by a multiplier value</p></li>
+<li><p>pattern: option to use a text pattern for decoration of the formatted
+currency values</p></li>
+<li><p>locale-based formatting: providing a locale ID will result in
+currency formatting specific to the chosen locale</p></li>
+</ul>
     
     </div>
 
@@ -160,7 +194,7 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
@@ -218,11 +252,15 @@ other characters are taken to be string literals.</p></td>
     </tr>
     <tr>
       <th>sep_mark</th>
-      <td><p>the mark to use as a separator between groups of digits.</p></td>
+      <td><p>the mark to use as a separator between groups of digits
+(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a
+formatted value of <code>1,000</code>).</p></td>
     </tr>
     <tr>
       <th>dec_mark</th>
-      <td><p>the character to use as a decimal mark.</p></td>
+      <td><p>the character to use as a decimal mark (e.g., using
+<code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value
+of <code>0,152</code>).</p></td>
     </tr>
     <tr>
       <th>placement</th>
@@ -250,22 +288,6 @@ locale ID will override any values provided in <code>sep_mark</code> and
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The targeted numeric values are rendered with the following options:</p><ul>
-<li><p>currency symbol placement: the currency symbol can be placed before
-or after the values</p></li>
-<li><p>decimals/subunits: choice of the number of decimal places, and a
-choice of the decimal symbol, and an option on whether to include or exclude
-the currency subunits (decimal portion)</p></li>
-<li><p>negative values: choice of a negative sign or parentheses for values
-less than zero</p></li>
-<li><p>digit grouping separators: options to enable/disable digit separators
-and provide a choice of separator symbol</p></li>
-<li><p>scaling: we can choose to scale targeted values by a multiplier value</p></li>
-<li><p>pattern: option to use a text pattern for decoration of the formatted
-currency values</p></li>
-<li><p>locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale</p></li>
-</ul>
     <p>Targeting of values is done through <code>columns</code> and additionally by
 <code>rows</code> (if nothing is provided for <code>rows</code> then entire columns are
 selected). A number of helper functions exist to make targeting more
@@ -297,7 +319,7 @@ information on this.</p>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_currency</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
     <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"EUR"</span>
   )
 
@@ -307,14 +329,14 @@ information on this.</p>
 <span class='co'># using the "CNY" and "GBP" currencies</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>num</span>, <span class='no'>currency</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_currency</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
     <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"CNY"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_currency</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
     <span class='kw'>currency</span> <span class='kw'>=</span> <span class='st'>"GBP"</span>
   )</div></pre>
   </div>

@@ -401,25 +401,25 @@
         <td>
           <p><code><a href="as_raw_html.html">as_raw_html()</a></code> </p>
         </td>
-        <td><p>Get the HTML content of a gt table</p></td>
+        <td><p>Get the HTML content of a <span class="pkg">gt</span> table</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="as_latex.html">as_latex()</a></code> </p>
         </td>
-        <td><p>Output a gt object as LaTeX</p></td>
+        <td><p>Output a <span class="pkg">gt</span> object as LaTeX</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="as_rtf.html">as_rtf()</a></code> </p>
         </td>
-        <td><p>Save a gt table as an RTF file</p></td>
+        <td><p>Output a <span class="pkg">gt</span> object as RTF</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="extract_summary.html">extract_summary()</a></code> </p>
         </td>
-        <td><p>Extract a summary list from a gt object</p></td>
+        <td><p>Extract a summary list from a <span class="pkg">gt</span> object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -506,8 +506,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-images" class="hasAnchor"><a href="#section-images" class="anchor"></a>Images</h2>
-          <p class="section-desc"><p>There is preliminary support for inserting images into cells. This currently works well for HTML table output. A strategy for adding image content is to use these <code>*_image()</code> functions in a <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> call (before introducing table data to <code><a href="../reference/gt.html">gt()</a></code>), or, using these within targeted <code><a href="../reference/text_transform.html">text_transform()</a></code> calls.</p></p>
+          <h2 id="section-image-addition" class="hasAnchor"><a href="#section-image-addition" class="anchor"></a>Image Addition</h2>
+          <p class="section-desc"><p><a href="https://rstudio.cloud/project/161121"> <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px"></a> <br><br> We can add images into a <strong>gt</strong> table with the help of the <code>*_image()</code> functions. Two common ways to do this: (1) use <code><a href="../reference/text_transform.html">text_transform()</a></code> to insert images into data cells, (2) use any function that creates new labels (e.g., <code><a href="../reference/tab_header.html">tab_header()</a></code>) and use a <code>*_image()</code> function within the <code><a href="../reference/html.html">html()</a></code> helper.</p></p>
         </th>
       </tr>
       <tr>
@@ -539,7 +539,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-information" class="hasAnchor"><a href="#section-information" class="anchor"></a>Information</h2>
-          <p class="section-desc"><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>) and on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>).</p></p>
+          <p class="section-desc"><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>), and on a huge number of color palettes (<code><a href="../reference/info_paletteer.html">info_paletteer()</a></code>).</p></p>
         </th>
       </tr>
       <tr>
@@ -554,6 +554,12 @@
           <p><code><a href="info_time_style.html">info_time_style()</a></code> </p>
         </td>
         <td><p>View a table with info on time styles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="info_paletteer.html">info_paletteer()</a></code> </p>
+        </td>
+        <td><p>View a table with info on many different color palettes</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -615,7 +621,7 @@
       <li><a href="#section-export-table">Export Table</a></li>
       <li><a href="#section-shiny-functions">Shiny Functions</a></li>
       <li><a href="#section-helper-functions">Helper Functions</a></li>
-      <li><a href="#section-images">Images</a></li>
+      <li><a href="#section-image-addition">Image Addition</a></li>
       <li><a href="#section-information">Information</a></li>
       <li><a href="#section-datasets">Datasets</a></li>
     </ul>

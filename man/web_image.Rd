@@ -16,14 +16,99 @@ a character object with an HTML fragment that can be placed inside of
   a cell.
 }
 \description{
-Add a web image inside a table with this helper function.
+We can flexibly add a web image inside of a table with \code{web_image()}
+function. The function provides a convenient way to generate an HTML fragment
+with an image URL. Because this function is currently HTML-based, it is only
+useful for HTML table output. To use this function inside of data cells, it
+is recommended that the \code{\link{text_transform}()} function is used. With
+that function, we can specify which data cells to target and then include a
+\code{web_image()} call within the required user-defined function (for the
+\code{fn} argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use \code{web_image()}
+within the \code{\link{html}()} helper function.
 }
+\details{
+By itself, the function creates an HTML image tag, so, the call
+\code{web_image("http://some.web.site/image.png")} evaluates to:
+
+\code{<img src=\"http://some.web.site/image.png\" style=\"height:30px;\">}
+
+where a height of \code{30px} is a default height chosen to work well within
+the heights of most table rows.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_web_image_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
+}
+
 \examples{
-\dontrun{
-# Create an HTML fragment that
-# contains an image
-img_file_html <-
-  web_image(
-    file = "https://.../web_image.png")
+# Get the PNG-based logo for the R
+# Project from an image URL
+r_png_url <-
+  "https://www.r-project.org/logo/Rlogo.png"
+
+# Create a tibble that contains heights
+# of an image in pixels (one column as a
+# string, the other as numerical values),
+# then, create a gt table; use the
+# `text_transform()` function to insert
+# the R logo PNG image with the various
+# sizes
+tab_1 <-
+  dplyr::tibble(
+    pixels = px(seq(10, 35, 5)),
+    image = seq(10, 35, 5)
+  ) \%>\%
+  gt() \%>\%
+  text_transform(
+    locations = cells_data(vars(image)),
+    fn = function(x) {
+      web_image(
+        url = r_png_url,
+        height = as.numeric(x)
+      )
+    }
+  )
+
+# Get the SVG-based logo for the R
+# Project from an image URL
+r_svg_url <-
+  "https://www.r-project.org/logo/Rlogo.svg"
+
+# Create a tibble that contains heights
+# of an image in pixels (one column as a
+# string, the other as numerical values),
+# then, create a gt table; use the
+# `tab_header()` function to insert
+# the R logo SVG image once in the title
+# and five times in the subtitle
+tab_2 <-
+  dplyr::tibble(
+    pixels = px(seq(10, 35, 5)),
+    image = seq(10, 35, 5)
+  ) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = html(
+      web_image(
+        url = r_svg_url,
+        height = px(50)
+      )
+    ),
+    subtitle = html(
+      web_image(
+        url = r_svg_url,
+        height = px(12)
+      ) \%>\%
+        rep(5)
+    )
+  )
+
 }
+\seealso{
+Other image addition functions: \code{\link{ggplot_image}},
+  \code{\link{local_image}}, \code{\link{test_image}}
 }
+\concept{image addition functions}

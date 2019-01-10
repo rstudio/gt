@@ -41,8 +41,8 @@
 
 <meta property="og:description" content="Wherever there is missing data (i.e., NA values) a customizable mark
 may present better than the standard NA text that would otherwise
-appear. The missing_text argument allows for any replacement text that
-is suitable." />
+appear. The fmt_missing() function allows for this replacement through
+its missing_text argument (where an em dash serves as the default)." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -140,8 +140,8 @@ is suitable." />
     
     <p>Wherever there is missing data (i.e., <code>NA</code> values) a customizable mark
 may present better than the standard <code>NA</code> text that would otherwise
-appear. The <code>missing_text</code> argument allows for any replacement text that
-is suitable.</p>
+appear. The <code>fmt_missing()</code> function allows for this replacement through
+its <code>missing_text</code> argument (where an em dash serves as the default).</p>
     
     </div>
 
@@ -158,7 +158,7 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
@@ -216,7 +216,7 @@ information on this.</p>
 <span class='co'># be given replacement text</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>row</span>, -<span class='no'>group</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>row</span>, -<span class='no'>group</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_missing</span>(
     <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>,

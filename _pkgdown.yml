@@ -170,13 +170,17 @@ reference:
     - escape_latex
     - adjust_luminance
 
-  - title: Images
+  - title: Image Addition
     desc: >
-      There is preliminary support for inserting images into cells. This
-      currently works well for HTML table output. A strategy for adding
-      image content is to use these `*_image()` functions in a
-      `dplyr::mutate()` call (before introducing table data to `gt()`), or,
-      using these within targeted `text_transform()` calls.
+      <a href="https://rstudio.cloud/project/161121">
+      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
+      </a>
+      <br /><br />
+      We can add images into a **gt** table with the help of the `*_image()`
+      functions. Two common ways to do this: (1) use `text_transform()` to
+      insert images into data cells, (2) use any function that creates
+      new labels (e.g., `tab_header()`) and use a `*_image()` function
+      within the `html()` helper.
     contents:
     - web_image
     - local_image
@@ -187,11 +191,13 @@ reference:
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
-      date styles (`info_date_style()`) and on time styles
-      (`info_time_style()`).
+      date styles (`info_date_style()`), on time styles
+      (`info_time_style()`), and on a huge number of color palettes
+      (`info_paletteer()`).
     contents:
     - info_date_style
     - info_time_style
+    - info_paletteer
 
   - title: Datasets
     desc: >

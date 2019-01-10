@@ -1,4 +1,4 @@
-#' Transform a gt table object to an HTML table
+#' Transform a \pkg{gt} table object to an HTML table
 #'
 #' Take a \code{gt_tbl} table object and transform it to an HTML table.
 #' @param data a table object that is created using the \code{gt()} function.

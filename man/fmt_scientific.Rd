@@ -40,9 +40,13 @@ trailing zeros (those redundant zeros after the decimal mark).}
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
+formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark.}
+\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\code{dec_mark = ","} with \code{0.152} would result in a formatted value
+of \code{0,152}).}
 
 \item{locale}{an optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -54,9 +58,9 @@ locale ID will override any values provided in \code{sep_mark} and
 an object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform formatting so that the
-targeted values are rendered in scientific notation. Furthermore, there is
-fine control with the following options:
+With numeric values in a \pkg{gt} table, we can perform formatting so that
+the targeted values are presented in scientific notation. We can exert finer
+finer control on the formatting with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol

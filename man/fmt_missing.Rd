@@ -35,8 +35,8 @@ an object of class \code{gt_tbl}.
 \description{
 Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 may present better than the standard \code{NA} text that would otherwise
-appear. The \code{missing_text} argument allows for any replacement text that
-is suitable.
+appear. The \code{fmt_missing()} function allows for this replacement through
+its \code{missing_text} argument (where an em dash serves as the default).
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by

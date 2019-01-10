@@ -39,8 +39,12 @@
 
 <meta property="og:title" content="Add label text to the stubhead — tab_stubhead_label" />
 
-<meta property="og:description" content="Add a label to the stubhead of a table. If a stub does not exist, no change
-will be made." />
+<meta property="og:description" content="Add a label to the stubhead of a gt table. The stubhead is the lone
+element that is positioned left of the column labels, and above the stub. If
+a stub does not exist, then there is no stubhead (so no change will be made
+when using this function in that case). We have the flexibility to use
+Markdown formatting for the stubhead label. Furthermore, if the table is
+intended for HTML output, we can use HTML for the stubhead label." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -136,8 +140,12 @@ will be made." />
 
     <div class="ref-description">
     
-    <p>Add a label to the stubhead of a table. If a stub does not exist, no change
-will be made.</p>
+    <p>Add a label to the stubhead of a <span class="pkg">gt</span> table. The stubhead is the lone
+element that is positioned left of the column labels, and above the stub. If
+a stub does not exist, then there is no stubhead (so no change will be made
+when using this function in that case). We have the flexibility to use
+Markdown formatting for the stubhead label. Furthermore, if the table is
+intended for HTML output, we can use HTML for the stubhead label.</p>
     
     </div>
 
@@ -184,8 +192,8 @@ text as Markdown or to retain HTML elements in the text.</p></td>
 <span class='co'># in the stub</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_stubhead_label</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"car"</span>)</div></pre>
   </div>

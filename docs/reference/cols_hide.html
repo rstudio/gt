@@ -39,7 +39,12 @@
 
 <meta property="og:title" content="Hide one or more columns — cols_hide" />
 
-<meta property="og:description" content="Hide one or more columns" />
+<meta property="og:description" content="The cols_hide() function allows us to hide one or more columns from
+appearing in the final output table. While it's possible and often desirable
+to omit columns from the input table data before introduction to the
+gt() function, there can be cases where the data in certain
+columns is useful (as a column reference during formatting of other columns)
+but the final display of those columns is not necessary." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +140,12 @@
 
     <div class="ref-description">
     
-    <p>Hide one or more columns</p>
+    <p>The <code>cols_hide()</code> function allows us to hide one or more columns from
+appearing in the final output table. While it's possible and often desirable
+to omit columns from the input table data before introduction to the
+<code><a href='gt.html'>gt</a>()</code> function, there can be cases where the data in certain
+columns is useful (as a column reference during formatting of other columns)
+but the final display of those columns is not necessary.</p>
     
     </div>
 
@@ -161,6 +171,16 @@ not correspond to column names will be disregarded.</p></td>
 
     <p>an object of class <code>gt_tbl</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The hiding of columns is internally a rendering directive, so, all columns
+that are 'hidden' are still accessible and useful in any expression provided
+to a <code>rows</code> argument. Furthermore, the <code>cols_hide()</code> function (as
+with many <span class="pkg">gt</span> functions) can be placed anywhere in a pipeline of
+<span class="pkg">gt</span> function calls (acting as a promise to hide columns when the timing
+is right). However there's perhaps greater readability when placing this call
+closer to the end of such a pipeline.</p>
+    
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -183,11 +203,11 @@ not correspond to column names will be disregarded.</p></td>
 <span class='co'># `country_code_3`</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>tail</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>cols_hide</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(
       <span class='no'>country_code_2</span>, <span class='no'>country_code_3</span>)
   )
 
@@ -197,17 +217,17 @@ not correspond to column names will be disregarded.</p></td>
 <span class='co'># then hide that column and one other</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Mongolia"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>tail</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>cols_hide</span>(
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>country_code_3</span>, <span class='no'>population</span>)
+  ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Population above 3,000,000."</span>,
     <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>year</span>),
+      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>year</span>),
       <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>population</span> <span class='kw'>&gt;</span> <span class='fl'>3000000</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>cols_hide</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>country_code_3</span>, <span class='no'>population</span>)
   )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -216,6 +236,8 @@ not correspond to column names will be disregarded.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#figures">Figures</a></li>
 

@@ -65,6 +65,8 @@
 #' \if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
+#'
+#' @importFrom dplyr group_vars
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
@@ -110,7 +112,7 @@ gt <- function(data,
   # already in `stub_df$groupname`
   if (inherits(data, "grouped_df")) {
 
-    group_cols <- attr(data, "vars", exact = TRUE)
+    group_cols <- dplyr::group_vars(data)
     group_cols <- base::intersect(group_cols, colnames(data))
 
     group_labels <-
@@ -133,12 +135,12 @@ gt <- function(data,
 
     # Remove the `groupname` column from `data`
     data[[groupname_col]] <- NULL
-
   }
 
   # Take the input data and convert to a
   # data frame
-  data_tbl <- data %>%
+  data_tbl <-
+    data %>%
     as.data.frame(stringsAsFactors = FALSE)
 
   # Reset the rownames in the `data_tbl` df
@@ -152,17 +154,20 @@ gt <- function(data,
       grpname = NA_character_,
       colname = NA_character_,
       rownum = NA_integer_,
-      text = NA_character_)[-1, ]
+      text = NA_character_
+    )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
   rows_df <-
     dplyr::tibble(
-      rownums_start = seq(nrow(data_tbl)))
+      rownums_start = seq(nrow(data_tbl))
+    )
 
   # Create a prepopulated `cols_df` data frame
   cols_df <-
     dplyr::tibble(
-      colnames_start = colnames(data_tbl))
+      colnames_start = colnames(data_tbl)
+    )
 
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for

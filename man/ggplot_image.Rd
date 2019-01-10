@@ -11,41 +11,84 @@ ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 
 \item{height}{the absolute height (px) of the image in the table cell.}
 
-\item{aspect_ratio}{the plot's final aspect ratio.}
+\item{aspect_ratio}{the plot's final aspect ratio. Where the height of the
+plot is fixed using the \code{height} argument, the \code{aspect_ratio}
+will either compress (\code{aspect_ratio} < \code{1.0}) or expand
+(\code{aspect_ratio} > \code{1.0}) the plot horizontally. The default value
+of \code{1.0} will neither compress nor expand the plot.}
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
   a cell.
 }
 \description{
-Add a ggplot plot inside a table with this helper function.
+We can add a \pkg{ggplot2} plot inside of a table with the help of the
+\code{ggplot_image()} function. The function provides a convenient way to
+generate an HTML fragment with a \code{ggplot} object. Because this function
+is currently HTML-based, it is only useful for HTML table output. To use this
+function inside of data cells, it is recommended that the
+\code{\link{text_transform}()} function is used. With that function, we can
+specify which data cells to target and then include a call to
+\code{ggplot_image()} within the required user-defined function (for the
+\code{fn} argument). If we want to include a plot in other places (e.g., in
+the header, within footnote text, etc.) we need to use \code{ggplot_image()}
+within the \code{\link{html}()} helper function.
 }
+\details{
+By itself, the function creates an HTML image tag with an image URI embedded
+within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot
+object, and using it within \code{ggplot_image(plot_object = <plot object>}
+evaluates to:
+
+\code{<img cid=<random CID> src=<data URI> style=\"height:100px;\">}
+
+where a height of \code{100px} is a default height chosen to work well within
+the heights of most table rows. There is the option to modify the aspect
+ratio of the plot (the default \code{aspect_ratio} is \code{1.0}) and this is
+useful for elongating any given plot to fit better within the table
+construct.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_ggplot_image_1.svg}{options: width=100\%}}
+}
+
 \examples{
-\dontrun{
 library(ggplot2)
 
 # Create a ggplot plot
 plot_object <-
   ggplot(
-    data = mtcars,
-    aes(x = disp, y = hp,
-        color = wt, size = mpg)) +
-  geom_point()
+    data = gtcars,
+    aes(x = hp, y = trq,
+        size = msrp)) +
+  geom_point(color = "blue") +
+  theme(legend.position = "none")
 
-# Create an HTML fragment that
-# contains an the ggplot as an
-# embedded plot that's 100px high
-plot_html <-
-  plot_object \%>\%
-  ggplot_image(
-    height = 200)
+# Create a tibble that contains two
+# cells (where one is a placeholder for
+# an image), then, create a gt table;
+# use the `text_transform()` function
+# to insert the plot using by calling
+# `ggplot_object()` within the user-
+# defined function
+tab_1 <-
+  dplyr::tibble(
+    text = "Here is a ggplot:",
+    ggplot = NA
+  ) \%>\%
+  gt() \%>\%
+  text_transform(
+    locations = cells_data(vars(ggplot)),
+    fn = function(x) {
+      plot_object \%>\%
+        ggplot_image(height = px(200))
+    }
+  )
 
-# Create a table that contains the
-# the html fragment with the plot
-# then pass it to `gt()`
-tribble(
-  ~row, ~plot,
-  1,  plot_html) \%>\%
-  gt()
 }
+\seealso{
+Other image addition functions: \code{\link{local_image}},
+  \code{\link{test_image}}, \code{\link{web_image}}
 }
+\concept{image addition functions}

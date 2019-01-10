@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="241.653mm"
+ viewBox="0 0 1024 685"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,685 L0,685 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,685 L0,685 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,685 L0,685 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,8 L753,8 L753,677 L270,677 L270,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,9 L753,9 L753,38 L270,38 L270,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,38 L753,38 L753,62 L270,62 L270,38"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,62 L533,62 L533,102 L270,102 L270,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,62 L753,62 L753,142 L533,142 L533,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,102 L347,102 L347,142 L270,142 L270,102"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,102 L533,102 L533,142 L347,142 L347,102"/>
+</g>
+
+<g fill="#f2f2f2" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,181 L347,181 L347,219 L270,219 L270,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,181 L533,181 L533,219 L347,219 L347,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,181 L753,181 L753,219 L533,219 L533,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,257 L347,257 L347,295 L270,295 L270,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,257 L533,257 L533,295 L347,295 L347,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,257 L753,257 L753,295 L533,295 L533,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,333 L347,333 L347,371 L270,371 L270,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,333 L533,333 L533,371 L347,371 L347,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,333 L753,333 L753,371 L533,371 L533,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,409 L347,409 L347,447 L270,447 L270,409"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,409 L533,409 L533,447 L347,447 L347,409"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,409 L753,409 L753,447 L533,447 L533,409"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,485 L347,485 L347,523 L270,523 L270,485"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,485 L533,485 L533,523 L347,523 L347,485"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,485 L753,485 L753,523 L533,523 L533,485"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,561 L347,561 L347,599 L270,599 L270,561"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,561 L533,561 L533,599 L347,599 L347,561"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,561 L753,561 L753,599 L533,599 L533,561"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,637 L347,637 L347,676 L270,676 L270,637"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,637 L533,637 L533,676 L347,676 L347,637"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,637 L753,637 L753,676 L533,676 L533,637"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,8 L753,8 L753,10 L270,10 L270,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,141 L753,141 L753,143 L533,143 L533,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,141 L347,141 L347,143 L270,143 L270,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,141 L533,141 L533,143 L347,143 L347,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,141 L347,141 L347,143 L270,143 L270,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,141 L533,141 L533,143 L347,143 L347,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,141 L753,141 L753,143 L533,143 L533,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,675 L347,675 L347,677 L270,677 L270,675"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,675 L533,675 L533,677 L347,677 L347,675"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,675 L753,675 L753,677 L533,677 L533,675"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,61 L753,61 L753,63 L270,63 L270,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,61 L533,61 L533,63 L270,63 L270,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,101 L533,101 L533,103 L270,103 L270,101"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M533,61 L753,61 L753,63 L533,63 L533,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M270,101 L347,101 L347,103 L270,103 L270,101"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M347,101 L533,101 L533,103 L347,103 L347,101"/>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="418.5" y="32" font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+ >Preset Date Formats</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="325.5" y="52" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ >Usable in the </text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="412.5" y="52" font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+ >fmt_date()</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="492.5" y="52" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ > and </text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="524.5" y="52" font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+ >fmt_datetime()</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="636.5" y="52" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ > functions</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="353.5" y="87" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Date Formats</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="588" y="107" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Formatted Date</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="280" y="127" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Number</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="127" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Name</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >iso</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2000-02-29</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >wday_month_day_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Tuesday, February 29, 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >wd_m_day_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Tue, Feb 29, 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >4</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >wday_day_month_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Tuesday 29 February 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >5</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >month_day_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >February 29, 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="357" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >6</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="357" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >m_day_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="357" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Feb 29, 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="395" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >7</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="395" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >day_m_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="395" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >29 Feb 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="433" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >8</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="433" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >day_month_year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="433" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >29 February 2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="328" y="471" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >9</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="471" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >day_month</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="471" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >29 February</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319" y="509" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >10</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="509" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >year</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="509" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2000</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319" y="547" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >11</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="547" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >month</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="547" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >February</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319" y="585" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >12</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="585" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >day</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="585" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >29</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319" y="623" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >13</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="623" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >year.mn.day</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="623" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2000/02/29</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="319" y="661" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >14</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="357" y="661" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >y.mn.day</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="543" y="661" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >0/02/29</text>
+</g>
+</g>
+</svg>

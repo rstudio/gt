@@ -1,17 +1,27 @@
 library(gt)
 library(tidyverse)
+library(scales)
 library(blastula)
 
+# Create short labels for months (displays
+# better for small plots in email messages)
 initial_months <-
   c("D",
     "J", "F", "M", "A", "M", "J",
     "J", "A", "S", "O", "N", "D",
-    "J")
+    " ")
 
-# Create HTML tables that are suitable for
-# emailing; this requires `as_raw_html()` to
-# generate inline CSS styles, which are essential
-# (i.e., they won't be stripped away)
+# Get the total pizzaplace sales in the
+# 2015 year; format as a currency value
+total_sales_2015 <-
+  pizzaplace$price %>%
+  sum() %>%
+  comma_format(
+    big.mark = ",",
+    prefix = "$"
+  )(.)
+
+# Create a plot using the `pizzaplace` dataset
 pizza_plot <-
   pizzaplace %>%
   mutate(type = str_to_title(type)) %>%
@@ -46,18 +56,26 @@ pizza_plot <-
     legend.box.spacing = unit(2, "points"),
     legend.position = "bottom")
 
+# Make the plot suitable for mailing by
+# converting it to an HTML fragment
 pizza_plot_email <-
   pizza_plot %>%
   blastula::add_ggplot()
 
-size_levels <- c("S", "M", "L", "XL", "XXL")
-type_levels <- c("Classic", "Chicken", "Supreme", "Veggie")
+# Create `sizes_order` and `types_order` to
+# support the ordering of pizza sizes and types
+sizes_order <- c("S", "M", "L", "XL", "XXL")
+types_order <- c("Classic", "Chicken", "Supreme", "Veggie")
 
-pizza_tab <-
+# Create a gt table that uses the `pizzaplace`
+# dataset; ensure that `as_raw_html()` is used
+# (that gets us an HTML fragement with inlined
+# CSS styles)
+pizza_tab_email <-
   pizzaplace %>%
   mutate(type = str_to_title(type)) %>%
-  mutate(size = factor(size, levels = size_levels)) %>%
-  mutate(type = factor(type, levels = type_levels)) %>%
+  mutate(size = factor(size, levels = sizes_order)) %>%
+  mutate(type = factor(type, levels = types_order)) %>%
   group_by(type, size) %>%
   summarize(
     pies = n(),
@@ -93,7 +111,7 @@ pizza_tab <-
     stub_group.background.color = "#E6EFFC",
     table.font.size = "small",
     heading.title.font.size = "small",
-    heading.subtitle.font.size = "smaller",
+    heading.subtitle.font.size = "x-small",
     stub_group.font.size = "small",
     column_labels.font.size = "small",
     row.padding = "5px"
@@ -107,7 +125,7 @@ pizza_tab <-
     subtitle = "Split by the type of pizza and the size"
     ) %>%
   tab_footnote(
-    footnote = md("Only **The Greek** pizza comes in this size."),
+    footnote = md("Only **The Greek Pizza** comes in this size."),
     locations = cells_stub(rows = 4:5)
     ) %>%
   tab_footnote(
@@ -127,7 +145,7 @@ email <-
 
   Just wanted to let you know that pizza \\
   sales were pretty strong in 2015. When \\
-  I look back at the numbers, it's **$817,860** \\
+  I look back at the numbers, it's **{total_sales_2015}** \\
   in sales. Not too bad. All things considered.
 
   Here's a plot of the daily pizza sales. I \\
@@ -140,7 +158,7 @@ email <-
   of the 2015 results by pizza size, split into \\
   *Pizza Type* groups:
 
-  {pizza_tab}
+  {pizza_tab_email}
 
   I also put all the 2015 numbers into an R \\
   dataset called `pizzaplace`. Not sure why \\

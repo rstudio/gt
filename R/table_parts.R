@@ -1,11 +1,15 @@
 #' Add a table header
 #'
-#' Add a table header part with a table title and optional subtitle.
+#' We can add a table header to the \pkg{gt} table with a title and even a
+#' subtitle. A table header is an optional table part that is positioned above
+#' the column labels. We have the flexibility to use Markdown formatting for the
+#' header's title and subtitle. Furthermore, if the table is intended for HTML
+#' output, we can use HTML in either of the title or subtitle.
 #' @inheritParams fmt_number
 #' @param title,subtitle text to be used in the table title and, optionally, for
-#'   the table subtitle. We can optionally use the \code{\link{md}()} and
-#'   \code{\link{html}()} functions to style the text as Markdown or to retain
-#'   HTML elements in the text.
+#'   the table subtitle. We can elect to use the \code{\link{md}()} and
+#'   \code{\link{html}()} helper functions to style the text as Markdown or to
+#'   retain HTML elements in the text.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -45,8 +49,12 @@ tab_header <- function(data,
 
 #' Add label text to the stubhead
 #'
-#' Add a label to the stubhead of a table. If a stub does not exist, no change
-#' will be made.
+#' Add a label to the stubhead of a \pkg{gt} table. The stubhead is the lone
+#' element that is positioned left of the column labels, and above the stub. If
+#' a stub does not exist, then there is no stubhead (so no change will be made
+#' when using this function in that case). We have the flexibility to use
+#' Markdown formatting for the stubhead label. Furthermore, if the table is
+#' intended for HTML output, we can use HTML for the stubhead label.
 #' @inheritParams fmt_number
 #' @param label the text to be used as the stubhead label We can optionally
 #'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
@@ -115,7 +123,7 @@ tab_stubhead_label <- function(data,
 #'     rows = matches("^[0-9]")
 #'   )
 #'
-#' # # Use `gtcars` to create a gt table;
+#' # Use `gtcars` to create a gt table;
 #' # add two row groups with the labels
 #' # `powerful` and `super powerful`: the
 #' # distinction being `hp` lesser or
@@ -212,8 +220,8 @@ tab_row_group <- function(data,
 #' Add a spanner column label
 #'
 #' Set a spanner column label by mapping it to columns already in the table.
-#' This label is placed above one or more columns, spanning the width of those
-#' columns.
+#' This label is placed above one or more column labels, spanning the width of
+#' those columns and column labels.
 #' @inheritParams fmt_number
 #' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
@@ -276,7 +284,12 @@ tab_spanner <- function(data,
 
 #' Add a source note citation
 #'
-#' Add a source note citation to the source note part of the table.
+#' Add a source note to the footer part of the \pkg{gt} table. A source note is
+#' useful for citing the data included in the table. Several can be added to the
+#' footer, simply use multiple calls of \code{tab_source_note()} and they will
+#' be inserted in the order provided. We can use Markdown formatting for the
+#' note, or, if the table is intended for HTML output, we can include HTML
+#' formatting.
 #' @inheritParams fmt_number
 #' @param source_note text to be used in the source note. We can optionally use
 #'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text

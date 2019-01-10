@@ -39,9 +39,9 @@
 
 <meta property="og:title" content="Format values to scientific notation — fmt_scientific" />
 
-<meta property="og:description" content="With numeric values in a gt table, we can perform formatting so that the
-targeted values are rendered in scientific notation. Furthermore, there is
-fine control with the following options:
+<meta property="og:description" content="With numeric values in a gt table, we can perform formatting so that
+the targeted values are presented in scientific notation. We can exert finer
+finer control on the formatting with the following options:
 decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
 scaling: we can choose to scale targeted values by a multiplier value
@@ -145,9 +145,9 @@ formatting specific to the chosen locale
 
     <div class="ref-description">
     
-    <p>With numeric values in a <span class="pkg">gt</span> table, we can perform formatting so that the
-targeted values are rendered in scientific notation. Furthermore, there is
-fine control with the following options:</p><ul>
+    <p>With numeric values in a <span class="pkg">gt</span> table, we can perform formatting so that
+the targeted values are presented in scientific notation. We can exert finer
+finer control on the formatting with the following options:</p><ul>
 <li><p>decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol</p></li>
 <li><p>scaling: we can choose to scale targeted values by a multiplier value</p></li>
@@ -174,7 +174,7 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
@@ -213,11 +213,15 @@ other characters are taken to be string literals.</p></td>
     </tr>
     <tr>
       <th>sep_mark</th>
-      <td><p>the mark to use as a separator between groups of digits.</p></td>
+      <td><p>the mark to use as a separator between groups of digits
+(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a
+formatted value of <code>1,000</code>).</p></td>
     </tr>
     <tr>
       <th>dec_mark</th>
-      <td><p>the character to use as a decimal mark.</p></td>
+      <td><p>the character to use as a decimal mark (e.g., using
+<code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value
+of <code>0,152</code>).</p></td>
     </tr>
     <tr>
       <th>locale</th>
@@ -266,14 +270,14 @@ information on this.</p>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;</span> <span class='fl'>500</span>,
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>,
     <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>1000</span>,
     <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}K"</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_scientific</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&lt;=</span> <span class='fl'>500</span>,
     <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>1</span>
   )</div></pre>

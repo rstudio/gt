@@ -22,11 +22,24 @@ be limited to. The default is to consider all columns in the table.}
 an object of class \code{gt_tbl}.
 }
 \description{
-This option will split delimited column names such that the first component
-is promoted to the group name (and hence will span over column labels) and
-subsequent components will represent the column label. Please note that
-reference to individual columns must continue to be through the original
-column names.
+This function will split selected delimited column names such that the first
+components (LHS) are promoted to being spanner column labels, and the
+secondary components (RHS) will become the column labels. Please note that
+reference to individual columns must continue to be the column names from the
+input table data (which are unique by necessity).
+}
+\details{
+If we look to the column names in the \code{iris} dataset as an example of
+how \code{cols_split_delim()} might be useful, we find the names
+\code{Sepal.Length}, \code{Sepal.Width}, \code{Petal.Length},
+\code{Petal.Width}. From this naming system, it's easy to see that the
+\code{Sepal} and \code{Petal} can group together the repeated common
+\code{Length} and \code{Width} values. In your own datasets, we can avoid a
+lengthy relabeling with \code{\link{cols_label}()} if column names can be
+fashioned beforehand to contain both the spanner column label and the column
+label. An additional advantage is that the column names in the input table
+data remain unique even though there may eventually be repeated column labels
+in the rendered output table).
 }
 \section{Figures}{
 

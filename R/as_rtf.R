@@ -1,15 +1,27 @@
-#' Save a gt table as an RTF file
+#' Output a \pkg{gt} object as RTF
 #'
-#' Take a \code{gt_tbl} table object and render it as RTF data.
+#' Get the RTF content from a \code{gt_tbl} object as as a single-element
+#' character vector. This object can be used with \code{writeLines()} to
+#' generate a valid .rtf file that can be opened by RTF readers.
+#'
 #' @param data a table object that is created using the \code{gt()} function.
 #' @examples
 #' \dontrun{
-#' # Create a `gt` table using the `sleep`
-#' # dataset and then output the table to
-#' # a raw RTF object
-#' gt(data = sleep) %>%
-#'   as_rtf(file = "sleep.rtf")
+#' # Use `gtcars` to create a gt table;
+#' # add a header and then export as
+#' # RTF code
+#' tab_rtf <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   as_rtf()
 #' }
+#'
 #' @family table export functions
 #' @import rlang
 #' @import checkmate

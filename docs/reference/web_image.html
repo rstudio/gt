@@ -39,7 +39,16 @@
 
 <meta property="og:title" content="Helper function for adding an image from the web — web_image" />
 
-<meta property="og:description" content="Add a web image inside a table with this helper function." />
+<meta property="og:description" content="We can flexibly add a web image inside of a table with web_image()
+function. The function provides a convenient way to generate an HTML fragment
+with an image URL. Because this function is currently HTML-based, it is only
+useful for HTML table output. To use this function inside of data cells, it
+is recommended that the text_transform() function is used. With
+that function, we can specify which data cells to target and then include a
+web_image() call within the required user-defined function (for the
+fn argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use web_image()
+within the html() helper function." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,7 +144,16 @@
 
     <div class="ref-description">
     
-    <p>Add a web image inside a table with this helper function.</p>
+    <p>We can flexibly add a web image inside of a table with <code>web_image()</code>
+function. The function provides a convenient way to generate an HTML fragment
+with an image URL. Because this function is currently HTML-based, it is only
+useful for HTML table output. To use this function inside of data cells, it
+is recommended that the <code><a href='text_transform.html'>text_transform</a>()</code> function is used. With
+that function, we can specify which data cells to target and then include a
+<code>web_image()</code> call within the required user-defined function (for the
+<code>fn</code> argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use <code>web_image()</code>
+within the <code><a href='html.html'>html</a>()</code> helper function.</p>
     
     </div>
 
@@ -159,15 +177,88 @@
     <p>a character object with an HTML fragment that can be placed inside of
   a cell.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>By itself, the function creates an HTML image tag, so, the call
+<code>web_image("http://some.web.site/image.png")</code> evaluates to:</p>
+<p><code>&lt;img src=\"http://some.web.site/image.png\" style=\"height:30px;\"&gt;</code></p>
+<p>where a height of <code>30px</code> is a default height chosen to work well within
+the heights of most table rows.</p>
+    
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+    <p><img src='figures/man_web_image_1.svg' width=100% /></p>
+<p><img src='figures/man_web_image_2.svg' width=100% /></p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other image addition functions: <code><a href='ggplot_image.html'>ggplot_image</a></code>,
+  <code><a href='local_image.html'>local_image</a></code>, <code><a href='test_image.html'>test_image</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Create an HTML fragment that</span>
-<span class='co'># contains an image</span>
-<span class='no'>img_file_html</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>web_image</span>(
-    <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"https://.../web_image.png"</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='co'># Get the PNG-based logo for the R</span>
+<span class='co'># Project from an image URL</span>
+<span class='no'>r_png_url</span> <span class='kw'>&lt;-</span>
+  <span class='st'>"https://www.r-project.org/logo/Rlogo.png"</span>
+
+<span class='co'># Create a tibble that contains heights</span>
+<span class='co'># of an image in pixels (one column as a</span>
+<span class='co'># string, the other as numerical values),</span>
+<span class='co'># then, create a gt table; use the</span>
+<span class='co'># `text_transform()` function to insert</span>
+<span class='co'># the R logo PNG image with the various</span>
+<span class='co'># sizes</span>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
+    <span class='kw'>pixels</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)),
+    <span class='kw'>image</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='text_transform.html'>text_transform</a></span>(
+    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='location_cells.html'>cells_data</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>image</span>)),
+    <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
+      <span class='fu'>web_image</span>(
+        <span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>r_png_url</span>,
+        <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>as.numeric</a></span>(<span class='no'>x</span>)
+      )
+    }
+  )
+
+<span class='co'># Get the SVG-based logo for the R</span>
+<span class='co'># Project from an image URL</span>
+<span class='no'>r_svg_url</span> <span class='kw'>&lt;-</span>
+  <span class='st'>"https://www.r-project.org/logo/Rlogo.svg"</span>
+
+<span class='co'># Create a tibble that contains heights</span>
+<span class='co'># of an image in pixels (one column as a</span>
+<span class='co'># string, the other as numerical values),</span>
+<span class='co'># then, create a gt table; use the</span>
+<span class='co'># `tab_header()` function to insert</span>
+<span class='co'># the R logo SVG image once in the title</span>
+<span class='co'># and five times in the subtitle</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
+    <span class='kw'>pixels</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)),
+    <span class='kw'>image</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='html.html'>html</a></span>(
+      <span class='fu'>web_image</span>(
+        <span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>r_svg_url</span>,
+        <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>50</span>)
+      )
+    ),
+    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='html.html'>html</a></span>(
+      <span class='fu'>web_image</span>(
+        <span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>r_svg_url</span>,
+        <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>12</span>)
+      ) <span class='kw'>%&gt;%</span>
+        <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>5</span>)
+    )
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,6 +266,12 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#figures">Figures</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

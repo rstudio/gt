@@ -42,7 +42,9 @@ Remotes:
     rstudio/sass
 Suggests:
     knitr,
+    paletteer,
     testthat,
+    RColorBrewer,
     rmarkdown,
     rvest,
     shiny,

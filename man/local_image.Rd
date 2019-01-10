@@ -16,14 +16,62 @@ a character object with an HTML fragment that can be placed inside of
   a cell.
 }
 \description{
-Add a local image inside a table with this helper function.
+We can flexibly add a local image (i.e., an image residing on disk) inside of
+a table with \code{local_image()} function. The function provides a
+convenient way to generate an HTML fragment using an on-disk PNG or SVG.
+Because this function is currently HTML-based, it is only useful for HTML
+table output. To use this function inside of data cells, it is recommended
+that the \code{\link{text_transform}()} function is used. With that function,
+we can specify which data cells to target and then include a
+\code{local_image()} call within the required user-defined function (for the
+\code{fn} argument). If we want to include an image in other places (e.g., in
+the header, within footnote text, etc.) we need to use \code{local_image()}
+within the \code{\link{html}()} helper function.
 }
+\details{
+By itself, the function creates an HTML image tag with an image URI embedded
+within. We can easily experiment with a local PNG or SVG image that's
+available in the \pkg{gt} package using the \code{\link{test_image}()}
+function. Using that, the call \code{local_image(file = test_image(type =
+"png"))} evaluates to:
+
+\code{<img cid=<random CID> src=<data URI> style=\"height:30px;\">}
+
+where a height of \code{30px} is a default height chosen to work well within
+the heights of most table rows.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
+}
+
 \examples{
-\dontrun{
-# Create an HTML fragment that
-# contains an image
-img_file_html <-
-  local_image(
-    file = "path/to/image.png")
+# Create a tibble that contains heights
+# of an image in pixels (one column as a
+# string, the other as numerical values),
+# then, create a gt table; use the
+# `text_transform()` function to insert
+# a local test image (PNG) image with the
+# various sizes
+tab_1 <-
+  dplyr::tibble(
+    pixels = px(seq(10, 35, 5)),
+    image = seq(10, 35, 5)
+  ) \%>\%
+  gt() \%>\%
+  text_transform(
+    locations = cells_data(vars(image)),
+    fn = function(x) {
+      local_image(
+        file = test_image(type = "png"),
+        height = as.numeric(x)
+      )
+    }
+  )
+
 }
+\seealso{
+Other image addition functions: \code{\link{ggplot_image}},
+  \code{\link{test_image}}, \code{\link{web_image}}
 }
+\concept{image addition functions}

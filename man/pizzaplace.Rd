@@ -10,7 +10,7 @@
   at a give \code{date} and \code{time}}
   \item{date}{A character representation of the \code{order} date,
   expressed in the ISO 8601 date format (YYYY-MM-DD)}
-  \item{date}{A character representation of the \code{order} time,
+  \item{time}{A character representation of the \code{order} time,
   expressed as a 24-hour time the ISO 8601 extended time format
   (hh:mm:ss)}
   \item{name}{The short name for the pizza}
@@ -37,5 +37,93 @@ as a major ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'),
 only the finest salami from my personal salumist!'), and, \code{veggie}
 (pizzas without any meats whatsoever: 'My Five Cheese pizza has so many
 cheeses, I can only offer it in Large Size!').
+}
+\details{
+Each pizza in the dataset is identified by a short \code{name}. The following
+listings provide the full names of each pizza and their main ingredients.
+
+Classic Pizzas:
+\itemize{
+\item \code{classic_dlx}: The Classic Deluxe Pizza (Pepperoni, Mushrooms, Red
+Onions, Red Peppers, Bacon)
+\item \code{big_meat}: The Big Meat Pizza (Bacon, Pepperoni, Italian Sausage,
+Chorizo Sausage)
+\item \code{pepperoni}: The Pepperoni Pizza (Mozzarella Cheese, Pepperoni)
+\item \code{hawaiian}: The Hawaiian Pizza (Sliced Ham, Pineapple, Mozzarella
+Cheese)
+\item \code{pep_msh_pep}: The Pepperoni, Mushroom, and Peppers Pizza
+(Pepperoni, Mushrooms, and Green Peppers)
+\item \code{ital_cpcllo}: The Italian Capocollo Pizza (Capocollo, Red
+Peppers, Tomatoes, Goat Cheese, Garlic, Oregano)
+\item \code{napolitana}: The Napolitana Pizza (Tomatoes, Anchovies, Green
+Olives, Red Onions, Garlic)
+\item \code{the_greek}: The Greek Pizza (Kalamata Olives, Feta Cheese,
+Tomatoes, Garlic, Beef Chuck Roast, Red Onions)
+}
+
+Chicken Pizzas:
+\itemize{
+\item \code{thai_ckn}: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
+Red Peppers, Thai Sweet Chilli Sauce)
+\item \code{bbq_ckn}: The Barbecue Chicken Pizza (Barbecued Chicken, Red
+Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)
+\item \code{southw_ckn}: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
+Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)
+\item \code{cali_ckn}: The California Chicken Pizza (Chicken, Artichoke,
+Spinach, Garlic, Jalapeño Peppers, Fontina Cheese, Gouda Cheese)
+\item \code{ckn_pesto}: The Chicken Pesto Pizza (Chicken, Tomatoes, Red
+Peppers, Spinach, Garlic, Pesto Sauce)
+\item \code{ckn_alfredo}: The Chicken Alfredo Pizza (Chicken, Red Onions,
+Red Peppers, Mushrooms, Asiago Cheese, Alfredo Sauce)
+}
+
+Supreme Pizzas:
+\itemize{
+\item \code{brie_carre}: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
+ Caramelized Onions, Pears, Thyme, Garlic)
+\item \code{calabrese}: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+Tomatoes, Red Onions, Friggitello Peppers, Garlic)
+\item \code{soppressata}: The Soppressata Pizza (Soppressata Salami, Fontina
+Cheese, Mozzarella Cheese, Mushrooms, Garlic)
+\item \code{sicilian}: The Sicilian Pizza (Coarse Sicilian Salami, Tomatoes,
+Green Olives, Luganega Sausage, Onions, Garlic)
+\item \code{ital_supr}: The Italian Supreme Pizza (Calabrese Salami,
+Capocollo, Tomatoes, Red Onions, Green Olives, Garlic)
+\item \code{peppr_salami}: The Pepper Salami Pizza (Genoa Salami, Capocollo,
+Pepperoni, Tomatoes, Asiago Cheese, Garlic)
+\item \code{prsc_argla}: The Prosciutto and Arugula Pizza (Prosciutto di San
+Daniele, Arugula, Mozzarella Cheese)
+\item \code{spinach_supr}: The Spinach Supreme Pizza (Spinach, Red Onions,
+Pepperoni, Tomatoes, Artichokes, Kalamata Olives, Garlic, Asiago Cheese)
+\item \code{spicy_ital}: The Spicy Italian Pizza (Capocollo, Tomatoes, Goat
+Cheese, Artichokes, Peperoncini verdi, Garlic)
+}
+
+Vegetable Pizzas
+\itemize{
+\item \code{mexicana}: The Mexicana Pizza (Tomatoes, Red Peppers, Jalapeno
+Peppers, Red Onions, Cilantro, Corn, Chipotle Sauce, Garlic)
+\item \code{four_cheese}: The Four Cheese Pizza (Ricotta Cheese, Gorgonzola
+Piccante Cheese, Mozzarella Cheese, Parmigiano Reggiano Cheese, Garlic)
+\item \code{five_cheese}: The Five Cheese Pizza (Mozzarella Cheese, Provolone
+Cheese, Smoked Gouda Cheese, Romano Cheese, Blue Cheese, Garlic)
+\item \code{spin_pesto}: The Spinach Pesto Pizza (Spinach, Artichokes,
+Tomatoes, Sun-dried Tomatoes, Garlic, Pesto Sauce)
+\item \code{veggie_veg}: The Vegetables + Vegetables Pizza (Mushrooms,
+Tomatoes, Red Peppers, Green Peppers, Red Onions, Zucchini, Spinach, Garlic)
+\item \code{green_garden}: The Green Garden Pizza (Spinach, Mushrooms,
+Tomatoes, Green Olives, Feta Cheese)
+\item \code{mediterraneo}: The Mediterranean Pizza (Spinach, Artichokes,
+Kalamata Olives, Sun-dried Tomatoes, Feta Cheese, Plum Tomatoes, Red Onions)
+\item \code{spinach_fet}: The Spinach and Feta Pizza (Spinach, Mushrooms,
+Red Onions, Feta Cheese, Garlic)
+\item \code{ital_veggie}: The Italian Vegetables Pizza (Eggplant, Artichokes,
+Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
+}
+}
+\examples{
+# Here is a glimpse at the data
+# available in `pizzaplace`
+dplyr::glimpse(pizzaplace)
 }
 \keyword{datasets}

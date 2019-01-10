@@ -18,7 +18,12 @@ as Markdown or to retain HTML elements in the text.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a source note citation to the source note part of the table.
+Add a source note to the footer part of the \pkg{gt} table. A source note is
+useful for citing the data included in the table. Several can be added to the
+footer, simply use multiple calls of \code{tab_source_note()} and they will
+be inserted in the order provided. We can use Markdown formatting for the
+note, or, if the table is intended for HTML output, we can include HTML
+formatting.
 }
 \section{Figures}{
 

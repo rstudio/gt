@@ -206,23 +206,23 @@ a row group without a label.</p></td>
 <span class='co'># a title, or, the rest)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_row_group</span>(
     <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"numbered"</span>,
     <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
   )
 
-<span class='co'># # Use `gtcars` to create a gt table;</span>
+<span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add two row groups with the labels</span>
 <span class='co'># `powerful` and `super powerful`: the</span>
 <span class='co'># distinction being `hp` lesser or</span>
 <span class='co'># greater than `600`</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_row_group</span>(
     <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"powerful"</span>,

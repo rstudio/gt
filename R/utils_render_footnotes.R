@@ -1,5 +1,6 @@
 # Resolve footnotes or styles
-#' @importFrom dplyr filter bind_rows mutate inner_join select arrange pull
+#' @importFrom dplyr filter bind_rows mutate inner_join group_by
+#' @importFrom dplyr summarize select arrange pull tibble distinct
 #' @importFrom tibble rownames_to_column
 #' @noRd
 resolve_footnotes_styles <- function(output_df,
@@ -22,29 +23,34 @@ resolve_footnotes_styles <- function(output_df,
   # Pare down to the relevant records
   if (nrow(tbl) > 0) {
 
-    # Filter `tbl` by elements preceeding the data rows (i.e., if element is not
-    # present but a reference is, remove the footnote reference since it is not
-    # relevant)
+    # Filter `tbl` by elements preceeding the data rows
+    # (i.e., if element is not present but a reference is,
+    # remove the footnote reference since it is not relevant)
 
     # Filter by `title`
     if (title_defined == FALSE) {
 
-      tbl <- tbl %>%
+      tbl <-
+        tbl %>%
         dplyr::filter(locname != "title")
     }
 
     # Filter by `subtitle`
     if (subtitle_defined == FALSE) {
 
-      tbl <- tbl %>%
+      tbl <-
+        tbl %>%
         dplyr::filter(locname != "subtitle")
     }
 
     # Filter by `grpname` in columns groups
     if ("columns_groups" %in% tbl[["locname"]]) { # remove conditional
 
-      tbl <- tbl %>%
-        dplyr::filter(locname != "columns_groups" | grpname %in% columns_spanners)
+      tbl <-
+        tbl %>%
+        dplyr::filter(
+          locname != "columns_groups" | grpname %in% columns_spanners
+        )
     }
 
     # Filter by `grpname` in stub groups
@@ -60,32 +66,44 @@ resolve_footnotes_styles <- function(output_df,
     }
 
     # Filter `tbl` by the remaining columns in `output_df`
-    tbl <- tbl %>%
+    tbl <-
+      tbl %>%
       dplyr::filter(colname %in% c(NA_character_, colnames(output_df)))
   }
 
   # Reorganize records that target the data rows
   if (5 %in% tbl[["locnum"]]) {
 
-    tbl_not_data <- tbl %>%
+    tbl_not_data <-
+      tbl %>%
       dplyr::filter(locnum != 5 | locname == "stub_groups")
 
-    tbl_data <- tbl %>%
+    tbl_data <-
+      tbl %>%
       dplyr::filter(locnum == 5 & locname != "stub_groups")
 
     if (nrow(tbl_data) > 0) {
 
       # Re-map the `rownum` to the new row numbers for the
       # data rows
-      tbl_data <- tbl_data %>%
-        dplyr::mutate(rownum = rownum_translation(
-          output_df, rownum_start = rownum))
+      tbl_data <-
+        tbl_data %>%
+        dplyr::mutate(
+          rownum = rownum_translation(
+            output_df, rownum_start = rownum
+          )
+        )
 
-      # Add a `colnum` column that's required for arranging `tbl` in such a way
-      # that the order of records moves from top-to-bottom, left-to-right
-      tbl_data <- tbl_data %>%
-        dplyr::mutate(colnum = colname_to_colnum(
-          boxh_df = boxh_df, colname = colname)) %>%
+      # Add a `colnum` column that's required for
+      # arranging `tbl` in such a way that the order
+      # of records moves from top-to-bottom, left-to-right
+      tbl_data <-
+        tbl_data %>%
+        dplyr::mutate(
+          colnum = colname_to_colnum(
+            boxh_df = boxh_df, colname = colname
+          )
+        ) %>%
         dplyr::mutate(colnum = ifelse(locname == "stub", 0, colnum))
     }
 
@@ -93,87 +111,159 @@ resolve_footnotes_styles <- function(output_df,
     tbl <- dplyr::bind_rows(tbl_not_data, tbl_data)
 
   } else {
-    tbl <- tbl %>%
+
+    tbl <-
+      tbl %>%
       dplyr::mutate(colnum = NA_integer_)
   }
 
-  # For the stub groups, insert a `rownum` based on groups_rows_df
+  # For the stub groups, insert a `rownum` based
+  # on `groups_rows_df`
   if ("stub_groups" %in% tbl[["locname"]]) {
 
-    tbl_not_stub_groups <- tbl %>%
+    tbl_not_stub_groups <-
+      tbl %>%
       dplyr::filter(locname != "stub_groups")
 
-    tbl_stub_groups <- tbl %>%
+    tbl_stub_groups <-
+      tbl %>%
       dplyr::filter(locname == "stub_groups") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")) %>%
+        by = c("grpname" = "group")
+      ) %>%
       dplyr::mutate(rownum = row - 0.1) %>%
       dplyr::select(-row, -row_end)
 
     # Re-combine `tbl_not_stub_groups`
-    #   with `tbl_stub_groups`
+    # with `tbl_stub_groups`
     tbl <-
       dplyr::bind_rows(
-        tbl_not_stub_groups, tbl_stub_groups)
+        tbl_not_stub_groups, tbl_stub_groups
+      )
   }
 
-  # For the summary cells, insert a `rownum` based on groups_rows_df
+  # For the summary cells, insert a `rownum` based
+  # on `groups_rows_df`
   if ("summary_cells" %in% tbl[["locname"]]) {
 
-    tbl_not_summary_cells <- tbl %>%
+    tbl_not_summary_cells <-
+      tbl %>%
       dplyr::filter(locname != "summary_cells")
 
-    tbl_summary_cells <- tbl %>%
+    tbl_summary_cells <-
+      tbl %>%
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")) %>%
+        by = c("grpname" = "group")
+      ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
       dplyr::select(-row, -row_end)
 
     # Re-combine `tbl_not_summary_cells`
-    #   with `tbl_summary_cells`
+    # with `tbl_summary_cells`
     tbl <-
       dplyr::bind_rows(
-        tbl_not_summary_cells, tbl_summary_cells)
+        tbl_not_summary_cells, tbl_summary_cells
+      )
   }
 
-  if (!("colnum" %in% colnames(tbl))) {
+  # For the column label cells, insert a `colnum`
+  # based on `boxh_df`
+  if ("columns_columns" %in% tbl[["locname"]]) {
 
-    tbl <- tbl %>%
-      dplyr::mutate(colnum = NA_integer_)
+    tbl_not_column_cells <-
+      tbl %>%
+      dplyr::filter(locname != "columns_columns")
+
+    tbl_column_cells <-
+      tbl %>%
+      dplyr::select(-colnum) %>%
+      dplyr::filter(locname == "columns_columns") %>%
+      dplyr::inner_join(
+        dplyr::tibble(
+          colnum = seq(ncol(boxh_df)),
+          colname = names(boxh_df)
+        ),
+        by = "colname"
+      )
+
+    # Re-combine `tbl_not_column_cells`
+    # with `tbl_column_cells`
+    tbl <-
+      dplyr::bind_rows(
+        tbl_not_column_cells,
+        tbl_column_cells
+      )
+  }
+
+  # For the column spanner label cells, insert a
+  # `colnum` based on `boxh_df`
+  if ("columns_groups" %in% tbl[["locname"]]) {
+
+    group_label_df <-
+      dplyr::tibble(
+        colnum = seq(ncol(boxh_df)),
+        grpname = boxh_df["group_label", ] %>% as.character()
+      ) %>%
+      dplyr::group_by(grpname) %>%
+      dplyr::summarize(colnum = min(colnum))
+
+    tbl_not_col_spanner_cells <-
+      tbl %>%
+      dplyr::filter(locname != "columns_groups")
+
+    tbl_column_spanner_cells <-
+      tbl %>%
+      dplyr::select(-colnum) %>%
+      dplyr::filter(locname == "columns_groups") %>%
+      dplyr::inner_join(group_label_df, by = "grpname")
+
+    # Re-combine `tbl_not_col_spanner_cells`
+    # with `tbl_not_col_spanner_cells`
+    tbl <-
+      dplyr::bind_rows(
+        tbl_not_col_spanner_cells,
+        tbl_column_spanner_cells
+      )
   }
 
   # Sort the table rows
-  tbl <- tbl %>%
+  tbl <-
+    tbl %>%
     dplyr::arrange(locnum, rownum, colnum)
 
   # Generate a lookup table with ID'd footnote
   # text elements (that are distinct)
-  lookup_tbl <- tbl %>%
+  lookup_tbl <-
+    tbl %>%
     dplyr::select(text) %>%
     dplyr::distinct() %>%
     tibble::rownames_to_column(var = "fs_id") %>%
     dplyr::mutate(fs_id = as.integer(fs_id))
 
   # Join the lookup table to `tbl`
-  tbl <- tbl %>%
+  tbl <-
+    tbl %>%
     dplyr::inner_join(lookup_tbl, by = "text")
 
   if (nrow(tbl) > 0) {
 
     # Get the glyph option from `opts_df`
-    glyphs <- opts_df %>%
+    glyphs <-
+      opts_df %>%
       dplyr::filter(parameter == "footnote_glyph") %>%
       dplyr::pull(value)
 
     # Modify `fs_id` to contain the glyphs we need
-    tbl <- tbl %>%
+    tbl <-
+      tbl %>%
       dplyr::mutate(
         fs_id = footnote_glyphs(
           x = fs_id,
-          glyphs = glyphs))
+          glyphs = glyphs)
+      )
   }
 
   tbl

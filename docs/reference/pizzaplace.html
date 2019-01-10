@@ -166,7 +166,7 @@ cheeses, I can only offer it in Large Size!').</p>
   at a give <code>date</code> and <code>time</code></p></dd>
   <dt>date</dt><dd><p>A character representation of the <code>order</code> date,
   expressed in the ISO 8601 date format (YYYY-MM-DD)</p></dd>
-  <dt>date</dt><dd><p>A character representation of the <code>order</code> time,
+  <dt>time</dt><dd><p>A character representation of the <code>order</code> time,
   expressed as a 24-hour time the ISO 8601 extended time format
   (hh:mm:ss)</p></dd>
   <dt>name</dt><dd><p>The short name for the pizza</p></dd>
@@ -180,14 +180,106 @@ cheeses, I can only offer it in Large Size!').</p>
   (in USD)</p></dd>
 </dl>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>Each pizza in the dataset is identified by a short <code>name</code>. The following
+listings provide the full names of each pizza and their main ingredients.</p>
+<p>Classic Pizzas:</p><ul>
+<li><p><code>classic_dlx</code>: The Classic Deluxe Pizza (Pepperoni, Mushrooms, Red
+Onions, Red Peppers, Bacon)</p></li>
+<li><p><code>big_meat</code>: The Big Meat Pizza (Bacon, Pepperoni, Italian Sausage,
+Chorizo Sausage)</p></li>
+<li><p><code>pepperoni</code>: The Pepperoni Pizza (Mozzarella Cheese, Pepperoni)</p></li>
+<li><p><code>hawaiian</code>: The Hawaiian Pizza (Sliced Ham, Pineapple, Mozzarella
+Cheese)</p></li>
+<li><p><code>pep_msh_pep</code>: The Pepperoni, Mushroom, and Peppers Pizza
+(Pepperoni, Mushrooms, and Green Peppers)</p></li>
+<li><p><code>ital_cpcllo</code>: The Italian Capocollo Pizza (Capocollo, Red
+Peppers, Tomatoes, Goat Cheese, Garlic, Oregano)</p></li>
+<li><p><code>napolitana</code>: The Napolitana Pizza (Tomatoes, Anchovies, Green
+Olives, Red Onions, Garlic)</p></li>
+<li><p><code>the_greek</code>: The Greek Pizza (Kalamata Olives, Feta Cheese,
+Tomatoes, Garlic, Beef Chuck Roast, Red Onions)</p></li>
+</ul>
+    <p>Chicken Pizzas:</p><ul>
+<li><p><code>thai_ckn</code>: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
+Red Peppers, Thai Sweet Chilli Sauce)</p></li>
+<li><p><code>bbq_ckn</code>: The Barbecue Chicken Pizza (Barbecued Chicken, Red
+Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)</p></li>
+<li><p><code>southw_ckn</code>: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
+Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)</p></li>
+<li><p><code>cali_ckn</code>: The California Chicken Pizza (Chicken, Artichoke,
+Spinach, Garlic, Jalapeño Peppers, Fontina Cheese, Gouda Cheese)</p></li>
+<li><p><code>ckn_pesto</code>: The Chicken Pesto Pizza (Chicken, Tomatoes, Red
+Peppers, Spinach, Garlic, Pesto Sauce)</p></li>
+<li><p><code>ckn_alfredo</code>: The Chicken Alfredo Pizza (Chicken, Red Onions,
+Red Peppers, Mushrooms, Asiago Cheese, Alfredo Sauce)</p></li>
+</ul>
+    <p>Supreme Pizzas:</p><ul>
+<li><p><code>brie_carre</code>: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
+ Caramelized Onions, Pears, Thyme, Garlic)</p></li>
+<li><p><code>calabrese</code>: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+Tomatoes, Red Onions, Friggitello Peppers, Garlic)</p></li>
+<li><p><code>soppressata</code>: The Soppressata Pizza (Soppressata Salami, Fontina
+Cheese, Mozzarella Cheese, Mushrooms, Garlic)</p></li>
+<li><p><code>sicilian</code>: The Sicilian Pizza (Coarse Sicilian Salami, Tomatoes,
+Green Olives, Luganega Sausage, Onions, Garlic)</p></li>
+<li><p><code>ital_supr</code>: The Italian Supreme Pizza (Calabrese Salami,
+Capocollo, Tomatoes, Red Onions, Green Olives, Garlic)</p></li>
+<li><p><code>peppr_salami</code>: The Pepper Salami Pizza (Genoa Salami, Capocollo,
+Pepperoni, Tomatoes, Asiago Cheese, Garlic)</p></li>
+<li><p><code>prsc_argla</code>: The Prosciutto and Arugula Pizza (Prosciutto di San
+Daniele, Arugula, Mozzarella Cheese)</p></li>
+<li><p><code>spinach_supr</code>: The Spinach Supreme Pizza (Spinach, Red Onions,
+Pepperoni, Tomatoes, Artichokes, Kalamata Olives, Garlic, Asiago Cheese)</p></li>
+<li><p><code>spicy_ital</code>: The Spicy Italian Pizza (Capocollo, Tomatoes, Goat
+Cheese, Artichokes, Peperoncini verdi, Garlic)</p></li>
+</ul>
+    <p>Vegetable Pizzas</p><ul>
+<li><p><code>mexicana</code>: The Mexicana Pizza (Tomatoes, Red Peppers, Jalapeno
+Peppers, Red Onions, Cilantro, Corn, Chipotle Sauce, Garlic)</p></li>
+<li><p><code>four_cheese</code>: The Four Cheese Pizza (Ricotta Cheese, Gorgonzola
+Piccante Cheese, Mozzarella Cheese, Parmigiano Reggiano Cheese, Garlic)</p></li>
+<li><p><code>five_cheese</code>: The Five Cheese Pizza (Mozzarella Cheese, Provolone
+Cheese, Smoked Gouda Cheese, Romano Cheese, Blue Cheese, Garlic)</p></li>
+<li><p><code>spin_pesto</code>: The Spinach Pesto Pizza (Spinach, Artichokes,
+Tomatoes, Sun-dried Tomatoes, Garlic, Pesto Sauce)</p></li>
+<li><p><code>veggie_veg</code>: The Vegetables + Vegetables Pizza (Mushrooms,
+Tomatoes, Red Peppers, Green Peppers, Red Onions, Zucchini, Spinach, Garlic)</p></li>
+<li><p><code>green_garden</code>: The Green Garden Pizza (Spinach, Mushrooms,
+Tomatoes, Green Olives, Feta Cheese)</p></li>
+<li><p><code>mediterraneo</code>: The Mediterranean Pizza (Spinach, Artichokes,
+Kalamata Olives, Sun-dried Tomatoes, Feta Cheese, Plum Tomatoes, Red Onions)</p></li>
+<li><p><code>spinach_fet</code>: The Spinach and Feta Pizza (Spinach, Mushrooms,
+Red Onions, Feta Cheese, Garlic)</p></li>
+<li><p><code>ital_veggie</code>: The Italian Vegetables Pizza (Eggplant, Artichokes,
+Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
+</ul>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
+<span class='co'># available in `pizzaplace`</span>
+<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>glimpse</a></span>(<span class='no'>pizzaplace</span>)</div><div class='output co'>#&gt; Observations: 49,574
+#&gt; Variables: 7
+#&gt; $ id    &lt;chr&gt; "2015-000001", "2015-000002", "2015-000002", "2015-000002", "...
+#&gt; $ date  &lt;chr&gt; "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015...
+#&gt; $ time  &lt;chr&gt; "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "...
+#&gt; $ name  &lt;chr&gt; "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_chee...
+#&gt; $ size  &lt;chr&gt; "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "...
+#&gt; $ type  &lt;chr&gt; "classic", "classic", "veggie", "chicken", "veggie", "supreme...
+#&gt; $ price &lt;dbl&gt; 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-          </ul>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

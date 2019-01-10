@@ -18,8 +18,12 @@ text as Markdown or to retain HTML elements in the text.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a label to the stubhead of a table. If a stub does not exist, no change
-will be made.
+Add a label to the stubhead of a \pkg{gt} table. The stubhead is the lone
+element that is positioned left of the column labels, and above the stub. If
+a stub does not exist, then there is no stubhead (so no change will be made
+when using this function in that case). We have the flexibility to use
+Markdown formatting for the stubhead label. Furthermore, if the table is
+intended for HTML output, we can use HTML for the stubhead label.
 }
 \section{Figures}{
 

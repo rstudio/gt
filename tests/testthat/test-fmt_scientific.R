@@ -11,7 +11,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       char_2 = c("june", "july", "august", "september",
                  "october", "november", "december"),
       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 2.232, 0, -23.24),
-      num_2 = c(34, 74, 23, 93, 35, 76, 57),
+      num_2 = c(34, 74, 23, 93, 35, 0.01, NA),
       stringsAsFactors = FALSE)
 
   # Create a `gt_tbl` object with `gt()` and the
@@ -69,6 +69,22 @@ test_that("the `fmt_scientific()` function works correctly", {
       "6.43 &times; 10<sup class='gt_super'>2</sup>",
       "2.23", "0.00",
       "-2.32 &times; 10<sup class='gt_super'>1</sup>"))
+
+  # Format the `num_2` column to 2 decimal places, use all
+  # other defaults; extract `output_df` in the HTML context
+  # and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num_2", decimals = 2) %>%
+       render_formats_test("html"))[["num_2"]],
+    c(
+      "3.40 &times; 10<sup class='gt_super'>1</sup>",
+      "7.40 &times; 10<sup class='gt_super'>1</sup>",
+      "2.30 &times; 10<sup class='gt_super'>1</sup>",
+      "9.30 &times; 10<sup class='gt_super'>1</sup>",
+      "3.50 &times; 10<sup class='gt_super'>1</sup>",
+      "1.00 &times; 10<sup class='gt_super'>-2</sup>",
+      NA))
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` in the default context

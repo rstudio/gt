@@ -38,4 +38,9 @@ horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
 characteristics are provided. The country of origin for the car manufacturer
 is also given.
 }
+\examples{
+# Here is a glimpse at the data
+# available in `gtcars`
+dplyr::glimpse(gtcars)
+}
 \keyword{datasets}

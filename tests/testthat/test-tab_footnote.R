@@ -2,7 +2,8 @@ context("Ensuring that the `tab_footnote()` function works as expected")
 
 # Create a table from `mtcars` that has all the different components
 data <-
-  gt(mtcars, rownames_to_stub = TRUE) %>%
+  mtcars %>%
+  gt(rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
   tab_stubhead_label(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
@@ -37,6 +38,35 @@ data <-
       ~sum(., na.rm = TRUE))
   )
 
+# Create a table from `gtcars` that has footnotes
+# in the column spanner labels and in the column labels
+data_2 <-
+  gtcars %>%
+  dplyr::filter(ctry_origin == "Germany") %>%
+  dplyr::group_by(mfr) %>%
+  dplyr::top_n(2, msrp) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(mfr, model, drivetrain, msrp) %>%
+  gt() %>%
+  tab_footnote(
+    footnote = "Prices in USD.",
+    locations = cells_column_labels(columns = vars(msrp))
+  ) %>%
+  tab_footnote(
+    footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
+    locations = cells_column_labels(columns = vars(drivetrain))
+  ) %>%
+  tab_footnote(
+    footnote = "The most important details.",
+    locations = cells_column_labels(groups = "specs and pricing")
+  ) %>%
+  tab_footnote(
+    footnote = "German cars only.",
+    locations = cells_column_labels(groups = "make and model")
+  ) %>%
+  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
+  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp))
+
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -67,7 +97,7 @@ test_that("the `tab_footnote()` function works correctly", {
   check_suggests()
 
   # Apply a footnote to the column labels and stub cells
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Column labels and stub footnote.",
@@ -78,20 +108,20 @@ test_that("the `tab_footnote()` function works correctly", {
   # Expect that the internal `footnotes_df` data frame will have
   # its `locname` column entirely populated with `columns_columns`
   # and `stub`
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal(c("columns_columns", "stub"))
 
   # Expect that the internal `footnotes_df` data frame will have
   # its `text` column entirely populated with the footnote text
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(text) %>%
     unique() %>%
     expect_equal("Column labels and stub footnote.")
 
   # Apply a footnote to a single stub cell
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Stub cell footnote.",
@@ -99,19 +129,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("stub", "5", NA_character_, NA_character_, "8",
       "Stub cell footnote."))
 
   # Apply a footnote to the table title
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Title footnote.",
@@ -119,19 +149,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("title", "1", NA_character_, NA_character_, NA_character_,
       "Title footnote."))
 
   # Apply a footnote to the table subtitle
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Subtitle footnote.",
@@ -139,19 +169,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("subtitle", "2", NA_character_, NA_character_, NA_character_,
       "Subtitle footnote."))
 
   # Apply a footnote to a single cell in a group summary section
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Summary cell footnote.",
@@ -160,19 +190,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("summary_cells", "5", "Mercs", "hp", "2",
       "Summary cell footnote."))
 
   # Apply a footnote to the `Mazdas` stub group cell
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Group cell footnote.",
@@ -180,19 +210,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("stub_groups", "5", "Mazdas", NA_character_, NA_character_,
       "Group cell footnote."))
 
   # Apply a footnote to the `gear_carb_cyl` column spanner cell
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Column group footnote.",
@@ -200,19 +230,19 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("columns_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
       "Column group footnote."))
 
   # Apply a footnote to a single column label
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Single column label footnote.",
@@ -220,49 +250,49 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("columns_columns", "4", NA_character_, "gear", NA_character_,
       "Single column label footnote."))
 
   # Apply a footnote to five rows of a single column
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "Five rows footnote.",
       locations = cells_data(columns = "hp", rows = 1:5))
 
   # Expect that the internal `footnotes_df` data frame will have five rows
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(5)
 
   # Expect that the `rownum` values in `footnotes_df` will be 1:5
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(rownum) %>%
     expect_equal(1:5)
 
   # Expect that the `text` in `footnotes_df` will be the same for
   # all five rows
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(text) %>%
     unique() %>%
     expect_equal("Five rows footnote.")
 
   # Expect that the `location` in `footnotes_df` is 'data' for all five rows
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal("data")
 
   # Expect that the `colname` in `footnotes_df` is 'hp' for all five rows
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     dplyr::pull(colname) %>%
     unique() %>%
     expect_equal("hp")
@@ -277,7 +307,7 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Apply a footnote to a single data cell; this time, use `vars()`
   # to specify the `rows`
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
@@ -285,40 +315,82 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for each of the columns in the
   # single-row `footnotes_df` data frame
   expect_attr_equal(
-    tbl_html, "footnotes_df",
+    tab, "footnotes_df",
     c("data", "5", NA_character_, "disp", "1", "A footnote."))
 
   # Apply a footnote to a single data cell; this time, use `vars()`
   # to specify the `columns`
-  tbl_html <-
+  tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
       locations = cells_data(columns = vars(disp, hp), rows = "Mazda RX4"))
 
   # Expect that the internal `footnotes_df` data frame will have two rows
-  attr(tbl_html, "footnotes_df", exact = TRUE) %>%
+  attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(2)
 
   # Expect certain values for each of the columns in the two rows
   # of the `footnotes_df` data frame
-  attr(tbl_html, "footnotes_df", exact = TRUE)[1, ] %>%
+  attr(tab, "footnotes_df", exact = TRUE)[1, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
       "data", "5", NA_character_, "disp", "1", "A footnote."))
 
-  attr(tbl_html, "footnotes_df", exact = TRUE)[2, ] %>%
+  attr(tab, "footnotes_df", exact = TRUE)[2, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
       "data", "5", NA_character_, "hp", "1", "A footnote."))
+
+  # Use the `data_2` gt table as `tab`
+  tab <- data_2
+
+  # Expect that the internal `footnotes_df` data frame
+  # will have four rows
+  attr(tab, "footnotes_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(4)
+
+  # Expect that the internal `footnotes_df` data frame will have
+  # its `locname` column entirely populated with `columns_columns`
+  # and `columns_groups`
+  attr(tab, "footnotes_df", exact = TRUE) %>%
+    dplyr::pull(locname) %>%
+    unique() %>%
+    expect_equal(c("columns_columns", "columns_groups"))
+
+  # Create a `tbl_html` object from the `tab` object
+  tbl_html <-
+    tab %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the footnote text elements are in the correct order
+  tbl_html %>%
+    selection_text(selection = "[class='gt_footnote']") %>%
+    expect_equal(
+      paste0(
+        "1 German cars only.",
+        "2 The most important details.",
+        "3 AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
+        "4 Prices in USD.")
+    )
+
+  # Expect that the two sets of footnote glyphs (1st set are
+  # throughout the table, 2nd set are in the footer) are in
+  # the correct order
+  tbl_html %>%
+    selection_text(selection = "[class='gt_footnote_glyph']") %>%
+    expect_equal(rep(as.character(1:4), 2))
+
 })

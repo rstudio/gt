@@ -42,7 +42,8 @@
 <meta property="og:description" content="Format input date values that are character-based and expressed according to
 the ISO 8601 date format (YYYY-MM-DD). Once the appropriate data cells
 are targeted with columns (and, optionally, rows), we can
-simply apply a preset date style to format the dates." />
+simply apply a preset date style (see table in
+info_date_style() for info) to format the dates." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -141,7 +142,8 @@ simply apply a preset date style to format the dates." />
     <p>Format input date values that are character-based and expressed according to
 the ISO 8601 date format (<code>YYYY-MM-DD</code>). Once the appropriate data cells
 are targeted with <code>columns</code> (and, optionally, <code>rows</code>), we can
-simply apply a preset date style to format the dates.</p>
+simply apply a preset date style (see table in
+<code><a href='info_date_style.html'>info_date_style</a>()</code> for info) to format the dates.</p>
     
     </div>
 
@@ -158,7 +160,7 @@ function.</p></td>
     <tr>
       <th>columns</th>
       <td><p>the columns to format. Can either be a series of column names
-provided in <code><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>starts_with</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>ends_with</a>()</code>,
 <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>contains</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>matches</a>()</code>, <code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>one_of</a>()</code>,
@@ -241,10 +243,10 @@ information on this.</p>
 <span class='co'># (date style `5`)</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_date</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
     <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>5</span>
   )
 
@@ -255,16 +257,16 @@ information on this.</p>
 <span class='co'># be different than the others)</span>
 <span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
   <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>date</span>, <span class='no'>time</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_date</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span>
       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>date</span>) <span class='kw'>&gt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2015-04-01"</span>),
     <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>6</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>fmt_date</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
+    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>),
     <span class='kw'>rows</span> <span class='kw'>=</span>
       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>date</span>) <span class='kw'>&lt;=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2015-04-01"</span>),
     <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>7</span>

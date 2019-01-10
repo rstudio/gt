@@ -1,7 +1,9 @@
 #' Format numeric values
 #'
-#' With numeric values in a \pkg{gt} table, we can perform number-based formatting so
-#' that the targeted values are rendered with the following options:
+#' With numeric values in a \pkg{gt} table, we can perform number-based
+#' formatting so that the targeted values are rendered with a higher
+#' consideration for tabular presentation. Furthermore, there is finer control
+#' over numeric foramtting with the following options:
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -53,8 +55,12 @@
 #' @param pattern a formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by \code{{x}} and all
 #'   other characters are taken to be string literals.
-#' @param sep_mark the mark to use as a separator between groups of digits.
-#' @param dec_mark the character to use as a decimal mark.
+#' @param sep_mark the mark to use as a separator between groups of digits
+#'   (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
+#'   formatted value of \code{1,000}).
+#' @param dec_mark the character to use as a decimal mark (e.g., using
+#'   \code{dec_mark = ","} with \code{0.152} would result in a formatted value
+#'   of \code{0,152}).
 #' @param locale an optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include \code{"en_US"} for English
 #'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
@@ -119,7 +125,7 @@ fmt_number <- function(data,
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
   } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not in the available in the list of supported locale list",
+    stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
 
@@ -143,8 +149,11 @@ fmt_number <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Format all non-NA x values
-          x[non_na_x] <-
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
               digits = decimals,
@@ -162,22 +171,22 @@ fmt_number <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         }
       ))
 }
 
 #' Format values to scientific notation
 #'
-#' With numeric values in a \pkg{gt} table, we can perform formatting so that the
-#' targeted values are rendered in scientific notation. Furthermore, there is
-#' fine control with the following options:
+#' With numeric values in a \pkg{gt} table, we can perform formatting so that
+#' the targeted values are presented in scientific notation. We can exert finer
+#' finer control on the formatting with the following options:
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -240,7 +249,7 @@ fmt_scientific <- function(data,
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
   } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not in the available in the list of supported locale list",
+    stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
 
@@ -248,10 +257,22 @@ fmt_scientific <- function(data,
 
     function(x) {
 
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+
+      # Determine which of `x` don't require scientific notation
+      small_pos <-
+        ((x >= 1 & x < 10) |
+           (x <= -1 & x > -10) |
+           is_equal_to(x, 0)) & !is.na(x)
+
+      # Create `x_str` with same length as `x`
+      x_str <- rep(NA_character_, length(x))
+
       # Format the number component as a character vector
-      x_str <-
+      x_str[non_na_x] <-
         formatC(
-          x = x * scale_by,
+          x = x[non_na_x] * scale_by,
           digits = decimals,
           mode = "double",
           big.mark = sep_mark,
@@ -259,68 +280,77 @@ fmt_scientific <- function(data,
           format = "e",
           drop0trailing = drop_trailing_zeros)
 
-      small_pos <- (
-        (x >= 1 & x < 10) |
-          (x <= -1 & x > -10) |
-          is_equal_to(x, 0)
-      )
-
       # For any numbers that shouldn't have an exponent, remove
       # that portion from the character version
       if (any(small_pos)) {
-        x_str[small_pos] <- split_scientific_notn(x_str[small_pos])$num
+        x_str[small_pos] <-
+          split_scientific_notn(x_str[small_pos])$num
       }
 
+      # For any non-NA numbers that do have an exponent, format
+      # those according to the output context
       if (any(!small_pos)) {
-        sci_parts <- split_scientific_notn(x_str[!small_pos])
 
-        x_str[!small_pos] <- paste0(
-          sci_parts$num, exp_start_str,
-          sci_parts$exp, exp_end_str)
+        sci_parts <- split_scientific_notn(x_str[non_na_x & !small_pos])
+
+        x_str[non_na_x & !small_pos] <-
+          paste0(
+            sci_parts$num, exp_start_str,
+            sci_parts$exp, exp_end_str
+          )
       }
 
       # Handle formatting of pattern
       pre_post_txt <- get_pre_post_txt(pattern)
-      x_str <- paste0(pre_post_txt[1], x_str, pre_post_txt[2])
-
+      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
       x_str
     }
   }
 
   # Create the default formatting function for scientific notation
-  format_fcn_sci_notn_default <- format_fcn_sci_notn_factory(
-    exp_start_str = " x 10(",
-    exp_end_str = ")")
+  format_fcn_sci_notn_default <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = " x 10(",
+      exp_end_str = ")"
+    )
 
   # Create the HTML formatting function for scientific notation
-  format_fcn_sci_notn_html <- format_fcn_sci_notn_factory(
-    exp_start_str = " &times; 10<sup class='gt_super'>",
-    exp_end_str = "</sup>")
+  format_fcn_sci_notn_html <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = " &times; 10<sup class='gt_super'>",
+      exp_end_str = "</sup>"
+    )
 
   # Create the LaTeX formatting function for scientific notation
-  format_fcn_sci_notn_latex <- format_fcn_sci_notn_factory(
-    exp_start_str = "$ \\times 10^{",
-    exp_end_str = "}$")
+  format_fcn_sci_notn_latex <-
+    format_fcn_sci_notn_factory(
+      exp_start_str = "$ \\times 10^{",
+      exp_end_str = "}$"
+    )
 
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = columns,
-      rows = !!rows,
-      fns = list(
-        html = format_fcn_sci_notn_html,
-        default = format_fcn_sci_notn_default,
-        latex = format_fcn_sci_notn_latex))
+  fmt(
+    data = data,
+    columns = columns,
+    rows = !!rows,
+    fns = list(
+      html = format_fcn_sci_notn_html,
+      default = format_fcn_sci_notn_default,
+      latex = format_fcn_sci_notn_latex)
+  )
 }
 
 #' Format values as a percentage
 #'
 #' With numeric values in a \pkg{gt} table, we can perform percentage-based
-#' formatting. The targeted values are scaled by \code{100} and are rendered
-#' with the following options:
+#' formatting. It is assumed the input numeric values are in a fractional format
+#' since the will be automatically multplied by \code{100} before decorating
+#' with a percent sign. For more control over percentage formatting, we can use
+#' the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
@@ -390,7 +420,7 @@ fmt_percent <- function(data,
     sep_mark <- get_locale_sep_mark(locale = locale)
     dec_mark <- get_locale_dec_mark(locale = locale)
   } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not in the available in the list of supported locale list",
+    stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
 
@@ -414,8 +444,11 @@ fmt_percent <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Format all non-NA x values
-          x[non_na_x] <-
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * 100.0,
               digits = decimals,
@@ -426,13 +459,20 @@ fmt_percent <- function(data,
               drop0trailing = drop_trailing_zeros)
 
           if (placement == "right") {
-            x[non_na_x] <- paste0(
-              x[non_na_x],
-              ifelse(incl_space, " \\%", "\\%"))
+
+            x_str[non_na_x] <-
+              paste0(
+                x_str[non_na_x],
+                ifelse(incl_space, " \\%", "\\%")
+              )
+
           } else {
-            x[non_na_x] <- paste0(
-              ifelse(incl_space, "\\% ", "\\%"),
-              x[non_na_x])
+
+            x_str[non_na_x] <-
+              paste0(
+                ifelse(incl_space, "\\% ", "\\%"),
+                x_str[non_na_x]
+              )
           }
 
           # Handle negative values
@@ -443,22 +483,24 @@ fmt_percent <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         },
         default = function(x) {
 
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Format all non-NA x values
-          x[non_na_x] <-
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * 100.0,
               digits = decimals,
@@ -469,13 +511,20 @@ fmt_percent <- function(data,
               drop0trailing = drop_trailing_zeros)
 
           if (placement == "right") {
-            x[non_na_x] <- paste0(
-              x[non_na_x],
-              ifelse(incl_space, " %", "%"))
+
+            x_str[non_na_x] <-
+              paste0(
+                x_str[non_na_x],
+                ifelse(incl_space, " %", "%")
+              )
+
           } else {
-            x[non_na_x] <- paste0(
-              ifelse(incl_space, "% ", "%"),
-              x[non_na_x])
+
+            x_str[non_na_x] <-
+              paste0(
+                ifelse(incl_space, "% ", "%"),
+                x_str[non_na_x]
+              )
           }
 
           # Handle negative values
@@ -486,25 +535,24 @@ fmt_percent <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("^-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         }
       ))
 }
 
 #' Format values as currencies
 #'
-#' With numeric values in a \pkg{gt} table, we can perform currency-based formatting.
-#' This function supports both automatic formatting with a three-letter currency
-#' code and numeric formatting facilitated through the use of a locale ID.
-#'
-#' The targeted numeric values are rendered with the following options:
+#' With numeric values in a \pkg{gt} table, we can perform currency-based
+#' formatting. This function supports both automatic formatting with a
+#' three-letter currency code and numeric formatting facilitated through the use
+#' of a locale ID. For fine control the conversion from numeric to currency
+#' values, we can take advantage of the following options:
 #' \itemize{
 #' \item currency symbol placement: the currency symbol can be placed before
 #' or after the values
@@ -652,8 +700,11 @@ fmt_currency <- function(data,
           # Determine which of `x` are not NA and also negative
           negative_x <- x < 0 & !is.na(x)
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Format all non-NA x values
-          x[non_na_x] <-
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
               digits = decimals,
@@ -665,11 +716,20 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(
-              currency_str, ifelse(incl_space, " ", ""), x[non_na_x])
+
+            x_str[non_na_x] <-
+              paste0(
+                currency_str,
+                ifelse(incl_space, " ", ""), x_str[non_na_x]
+              )
+
           } else {
-            x[non_na_x] <- paste0(
-              x[non_na_x], ifelse(incl_space, " ", ""), currency_str)
+
+            x_str[non_na_x] <-
+              paste0(
+                x_str[non_na_x],
+                ifelse(incl_space, " ", ""), currency_str
+              )
           }
 
           # Handle negative values
@@ -677,13 +737,13 @@ fmt_currency <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         },
         html = function(x) {
 
@@ -693,7 +753,10 @@ fmt_currency <- function(data,
           # Determine which of `x` are not NA and also negative
           negative_x <- x < 0 & !is.na(x)
 
-          x[non_na_x] <-
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
               digits = decimals,
@@ -705,11 +768,20 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(
-              currency_str_html, ifelse(incl_space, " ", ""), x[non_na_x])
+
+            x_str[non_na_x] <-
+              paste0(
+                currency_str_html,
+                ifelse(incl_space, " ", ""), x_str[non_na_x]
+              )
+
           } else {
-            x[non_na_x] <- paste0(
-              x[non_na_x], ifelse(incl_space, " ", ""), currency_str_html)
+
+            x_str[non_na_x] <-
+              paste0(
+                x_str[non_na_x],
+                ifelse(incl_space, " ", ""), currency_str_html
+              )
           }
 
           # Handle negative values
@@ -717,13 +789,13 @@ fmt_currency <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         },
         latex = function(x) {
 
@@ -733,8 +805,11 @@ fmt_currency <- function(data,
           # Determine which of `x` are not NA and also negative
           negative_x <- x < 0 & !is.na(x)
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Format all non-NA x values
-          x[non_na_x] <-
+          x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
               digits = decimals,
@@ -746,11 +821,20 @@ fmt_currency <- function(data,
 
           # Handle placement of the currency symbol
           if (placement == "left") {
-            x[non_na_x] <- paste0(
-              markdown_to_latex(currency_str), ifelse(incl_space, " ", ""), x[non_na_x])
+
+            x_str[non_na_x] <-
+              paste0(
+                markdown_to_latex(currency_str),
+                ifelse(incl_space, " ", ""), x_str[non_na_x]
+              )
+
           } else {
-            x[non_na_x] <- paste0(
-              x[non_na_x], ifelse(incl_space, " ", ""), markdown_to_latex(currency_str))
+
+            x_str[non_na_x] <-
+              paste0(
+                x_str[non_na_x], ifelse(incl_space, " ", ""),
+                markdown_to_latex(currency_str)
+              )
           }
 
           # Handle negative values
@@ -758,13 +842,13 @@ fmt_currency <- function(data,
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x[negative_x] <- paste0("(", gsub("-", "", x[negative_x]), ")")
+            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
           }
 
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x[non_na_x] <- paste0(pre_post_txt[1], x[non_na_x], pre_post_txt[2])
-          x
+          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str
         }
         ))
 }
@@ -774,7 +858,8 @@ fmt_currency <- function(data,
 #' Format input date values that are character-based and expressed according to
 #' the ISO 8601 date format (\code{YYYY-MM-DD}). Once the appropriate data cells
 #' are targeted with \code{columns} (and, optionally, \code{rows}), we can
-#' simply apply a preset date style to format the dates.
+#' simply apply a preset date style (see table in
+#' \code{\link{info_date_style}()} for info) to format the dates.
 #'
 #' The following date styles are available for simpler formatting of ISO dates
 #' (all using the input date of \code{2000-02-29} in the example output dates):
@@ -890,7 +975,8 @@ fmt_date <- function(data,
 #' Format input time values that are character-based and expressed according to
 #' the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
 #' are targeted with \code{columns} (and, optionally, \code{rows}), we can
-#' simply apply a preset time style to format the times.
+#' simply apply a preset time style (see table in
+#' \code{\link{info_time_style}()} for info) to format the times.
 #'
 #' The following time styles are available for simpler formatting of ISO times
 #' (all using the input time of \code{14:35:00} in the example output times):
@@ -996,8 +1082,9 @@ fmt_time <- function(data,
 #' Format input date-time values that are character-based and expressed
 #' according to the ISO 8601 date-time format (\code{YYYY-MM-DD HH:MM:SS}). Once
 #' the appropriate data cells are targeted with \code{columns} (and, optionally,
-#' \code{rows}), we can simply apply preset date and time styles to format the
-#' data-time values.
+#' \code{rows}), we can simply apply preset date and time styles (see tables in
+#' \code{\link{info_date_style}()} and \code{\link{info_time_style}()} for more
+#' info) to format the data-time values.
 #'
 #' The following date styles are available for simpler formatting of the date
 #' portion (all using the input date of \code{2000-02-29} in the example output
@@ -1170,35 +1257,44 @@ fmt_passthrough <- function(data,
       fns = list(
         html = function(x) {
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
 
           if (escape) {
-            x <- x %>% process_text(context = "html")
+            x_str <- x_str %>% process_text(context = "html")
           }
 
-          x
+          x_str
         },
         latex = function(x) {
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
 
           if (escape) {
-            x <- x %>% process_text(context = "latex")
+            x_str <- x_str %>% process_text(context = "latex")
           }
 
-          x
+          x_str
         },
         default = function(x) {
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
-          x <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
 
-          x
+          x_str
         }
       ))
 }
@@ -1207,8 +1303,8 @@ fmt_passthrough <- function(data,
 #'
 #' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
 #' may present better than the standard \code{NA} text that would otherwise
-#' appear. The \code{missing_text} argument allows for any replacement text that
-#' is suitable.
+#' appear. The \code{fmt_missing()} function allows for this replacement through
+#' its \code{missing_text} argument (where an em dash serves as the default).
 #'
 #' Targeting of values is done through \code{columns} and additionally by
 #' \code{rows} (if nothing is provided for \code{rows} then entire columns are
@@ -1259,6 +1355,7 @@ fmt_missing <- function(data,
       rows = !!rows,
       fns = list(
         html = function(x) {
+
           if (missing_text == "---") {
             missing_text <- "\u2014"
           } else if (missing_text == "--") {

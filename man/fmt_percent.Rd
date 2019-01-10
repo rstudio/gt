@@ -47,9 +47,13 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits.}
+\item{sep_mark}{the mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
+formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark.}
+\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\code{dec_mark = ","} with \code{0.152} would result in a formatted value
+of \code{0,152}).}
 
 \item{incl_space}{an option on whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
@@ -68,8 +72,10 @@ an object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \pkg{gt} table, we can perform percentage-based
-formatting. The targeted values are scaled by \code{100} and are rendered
-with the following options:
+formatting. It is assumed the input numeric values are in a fractional format
+since the will be automatically multplied by \code{100} before decorating
+with a percent sign. For more control over percentage formatting, we can use
+the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the

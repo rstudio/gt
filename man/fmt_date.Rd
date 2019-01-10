@@ -38,7 +38,8 @@ an object of class \code{gt_tbl}.
 Format input date values that are character-based and expressed according to
 the ISO 8601 date format (\code{YYYY-MM-DD}). Once the appropriate data cells
 are targeted with \code{columns} (and, optionally, \code{rows}), we can
-simply apply a preset date style to format the dates.
+simply apply a preset date style (see table in
+\code{\link{info_date_style}()} for info) to format the dates.
 }
 \details{
 The following date styles are available for simpler formatting of ISO dates
