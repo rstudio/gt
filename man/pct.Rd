@@ -17,7 +17,7 @@ Helper for providing a numeric value as percentage
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
-  \code{\link{get_latex_dependencies}}, \code{\link{html}},
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{px}}
 }
 \concept{helper functions}
