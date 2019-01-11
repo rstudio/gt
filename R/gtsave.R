@@ -17,25 +17,39 @@ gtsave <- function(data, filename, ...) {
   # Input object validation
   stop_if_not_gt(data)
 
-  # Attach extension as the first class value
-  class(data) <- c(gtsave_file_ext(filename), class(data))
+  # Get the lowercased file extension
+  file_ext <- gtsave_file_ext(filename)
 
-  UseMethod("gtsave", data)
+  # Stop function if a file extension is not provided
+  if (file_ext == "") {
+
+    stop("A file extension is required in the provided filename.\n",
+         " * We can use `", filename, "` + either of `.html`/`.htm`, `.tex`/`.ltx`/`.rnw`, or `.rtf`",
+         call. = FALSE)
+  }
+
+  # Use the appropriate save function based
+  # on the filename extension
+  switch(file_ext,
+         htm = gt_save_html(data, filename, ...),
+         html = gt_save_html(data, filename, ...),
+         ltx = gt_save_latex(data, filename, ...),
+         rnw = gt_save_latex(data, filename, ...),
+         tex = gt_save_latex(data, filename, ...),
+         rtf = gt_save_rtf(data, filename, ...),
+         {
+           stop("The file extension used (`.", file_ext, "`) doesn't have an ",
+                "associated saving function.\n",
+                " * We can use either of `.html`/`.htm`, `.tex`/`.ltx`/`.rnw`, or `.rtf`",
+                call. = FALSE)
+         }
+  )
 }
 
-#' @export
-#' @noRd
-gtsave.gt_tbl <- function(data, filename, ...) {
-
-  stop("`gtsave.", gtsave_file_ext(filename),
-       "(data, filename, ...)` has not been implemented.",
-       call. = FALSE)
-}
-
+# Saving function for an HTML file
 #' @importFrom htmltools as.tags save_html HTML
-#' @export
 #' @noRd
-gtsave.html <- function(data, filename, ..., inline_css = FALSE) {
+gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
 
   if (inline_css) {
 
@@ -52,35 +66,21 @@ gtsave.html <- function(data, filename, ..., inline_css = FALSE) {
   }
 }
 
-#' @export
-#' @noRd
-gtsave.tex <- function(data, filename, ...) {
+# Saving function for a LaTeX file
+gt_save_latex <- function(data, filename, ...) {
 
   data %>%
     as_latex() %>%
     writeLines(con = filename)
 }
 
-#' @export
-#' @noRd
-gtsave.rtf <- function(data, filename, ...) {
+# Saving function for an RTF file
+gt_save_rtf <- function(data, filename, ...) {
 
   data %>%
     as_rtf() %>%
     writeLines(con = filename)
 }
-
-#' @export
-#' @noRd
-gtsave.htm <- gtsave.html
-
-#' @export
-#' @noRd
-gtsave.ltx <- gtsave.tex
-
-#' @export
-#' @noRd
-gtsave.rnw <- gtsave.tex
 
 #' @importFrom tools file_ext
 #' @noRd
