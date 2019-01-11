@@ -1,6 +1,6 @@
 context("Ensuring that the `gtsave()` function works as expected")
 
-test_that("the `gtsave()` creates an HTML file based on the extension", {
+test_that("the `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
   # .html extension
@@ -55,7 +55,7 @@ test_that("the `gtsave()` creates an HTML file based on the extension", {
       fixed = TRUE)
 })
 
-test_that("the `gtsave()` creates a LaTeX file based on the extension", {
+test_that("the `gtsave()` function creates a LaTeX file based on the extension", {
 
   # Create a filename with path, having the
   # .html extension
@@ -108,4 +108,15 @@ test_that("the `gtsave()` creates a LaTeX file based on the extension", {
     expect_match(
       "\\captionsetup[table]{labelformat=empty,skip=1pt}",
       fixed = TRUE)
+})
+
+
+test_that("the `gtsave()` function stops in some cases", {
+
+  # Expect an error if the file extension doesn't
+  # correspond to a saving function
+  expect_error(exibble %>% gt() %>% gtsave(filename = "exibble.bat"))
+
+  # Expect an error if no file extension is provided
+  expect_error(exibble %>% gt() %>% gtsave(filename = "exibble"))
 })
