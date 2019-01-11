@@ -3,19 +3,23 @@
 #' Take a \code{gt_tbl} table object and render it to an RTF file with the
 #' extension \code{.rtf}.
 #' @param data a table object that is created using the \code{gt()} function.
+#' @param components a list object that is a customized component of the table with list name:
+#'                   table_start, heading_component, columns_component, body_component, footnote_component, source_note_rows, table_end.
+#'                   If a component is provided, the part will be rendered in the RTF table directly.
 #' @examples
 #' \dontrun{
 #' # Create a `gt` table using the `sleep`
 #' # dataset and then output the table to
 #' # a raw RTF object
 #' gt(data = sleep) %>%
-#'   as_rtf(file = "sleep.rtf")
+#'   as_rtf() %>%
+#'   writeLines(file("sleep.rtf"))
 #' }
 #' @family table export functions
 #' @import rlang
 #' @import checkmate
 #' @export
-as_rtf <- function(data) {
+as_rtf <- function(data, components = list() ) {
   checkmate::assert_class(data, "gt_tbl")
 
   # Preparation Work --------------------------------------------------------
@@ -91,7 +95,7 @@ as_rtf <- function(data) {
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
-  output_df <- migrate_unformatted_to_output(data_df, output_df)
+  output_df <- migrate_unformatted_to_output(data_df, output_df, context = "dafault")
 
   # Get the reordering df (`rows_df`) for the data rows
   rows_df <- get_row_reorder_df(arrange_groups, stub_df)
@@ -128,7 +132,7 @@ as_rtf <- function(data) {
 
   # Apply column names to column labels for any of those column labels not
   # explicitly set
-  boxh_df <- migrate_colnames_to_labels(boxh_df)
+  # boxh_df <- migrate_colnames_to_labels(boxh_df)
 
   # Assign default alignment for all columns that haven't had alignment
   # explicitly set
@@ -251,6 +255,9 @@ as_rtf <- function(data) {
   headings <- names(output_df)
 
   # Merge the heading labels
+  # Yilong: What is the purpose of this part? Can we remove it?
+  # Thre is a bug here, the labels will be missing instead of the variable name when
+  # boxdf[2, ] are all missing.
   headings_rev <- headings %>% rev()
   labels_rev <- boxh_df[2, ] %>% unname() %>% t() %>% as.vector() %>% rev()
 
@@ -392,7 +399,24 @@ as_rtf <- function(data) {
 
   table_end <- "}\n"
 
+  # Replace Components
+  if(! is.null(names(components))){
+    if(names(components) %in% c("table_start", "heading_component", "columns_component",
+                                "body_component", "footnote_component", "source_note_rows",
+                                "table_end")){
+      for(i in 1:seq(components)){
+        assign(names(components)[i], components[[i]])
+      }
+    }
+  }
+
+
+
   # Compose the RTF table
+  # Yilong: this is about the design of the function. Could we have an intermediate function that will output
+  #   the components as a listing? And the as_rtf function is the function to combine all the component?
+  #   In this way, we are able to allowe user to create table with multiple components or a
+  #    table with multiple pages with header in each page.
   rtf_table <-
     paste0(
       table_start,
