@@ -7,7 +7,7 @@
 ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \arguments{
-\item{plot_object}{the ggplot plot object.}
+\item{plot_object}{a ggplot plot object.}
 
 \item{height}{the absolute height (px) of the image in the table cell.}
 
