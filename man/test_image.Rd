@@ -7,8 +7,8 @@
 test_image(type = c("png", "svg"))
 }
 \arguments{
-\item{type}{the type of the image. Can either be \code{png} (the default) or
-\code{svg}.}
+\item{type}{the type of the image, which can either be \code{png} (the
+default) or \code{svg}.}
 }
 \description{
 Two test images are available within the \pkg{gt} package. Both contain the
