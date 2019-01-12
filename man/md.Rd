@@ -37,7 +37,8 @@ tab_1 <-
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
-  \code{\link{escape_latex}}, \code{\link{html}},
+  \code{\link{escape_latex}},
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{pct}}, \code{\link{px}}
 }
 \concept{helper functions}

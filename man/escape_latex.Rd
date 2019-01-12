@@ -17,7 +17,7 @@ LaTeX tables.
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
-  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
-  \code{\link{px}}
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
 }
 \concept{helper functions}
