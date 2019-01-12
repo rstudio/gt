@@ -16,7 +16,8 @@ Helper for providing a numeric value as pixels value
 }
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
-  \code{\link{escape_latex}}, \code{\link{html}},
+  \code{\link{escape_latex}},
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{pct}}
 }
 \concept{helper functions}

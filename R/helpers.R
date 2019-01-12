@@ -597,3 +597,59 @@ escape_latex <- function(text) {
     tidy_gsub("~", "\\\\textasciitilde ") %>%
     tidy_gsub("\\^", "\\\\textasciicircum ")
 }
+
+#' Get the LaTeX dependencies required for a gt table
+#'
+#' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
+#' including a \pkg{gt} table can be problematic if we don't have knowledge
+#' of the LaTeX dependencies. For the most part, these dependencies are the
+#' LaTeX packages that are required for rendering a \pkg{gt} table. The
+#' \code{gt_latex_dependencies()} function provides an object that can be
+#' used to provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work
+#' and not yield errors due to missing packages.
+#'
+#' Here is an example Rnw document that shows how the
+#' \code{gt_latex_dependencies()} can be used in conjunction with a \pkg{gt}
+#' table:
+#'
+#' \preformatted{
+#' \%!sweave=knitr
+#'
+#' \documentclass{article}
+#'
+#' <<echo=FALSE>>=
+#' library(gt)
+#'  @
+#'
+#' <<results='asis', echo=FALSE>>=
+#' gt_latex_dependencies()
+#'  @
+#'
+#' \begin{document}
+#'
+#' <<results='asis', echo=FALSE>>=
+#' exibble %>% gt()
+#'  @
+#'
+#' \end{document}
+#' }
+#' @family helper functions
+#' @export
+gt_latex_dependencies <- function() {
+
+  if (requireNamespace("knitr", quietly = TRUE)) {
+
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
+    ) %>%
+      knitr::asis_output()
+
+  } else {
+    stop("The `knitr` package is required for getting the LaTeX dependency headers.",
+         call. = FALSE)
+  }
+}
