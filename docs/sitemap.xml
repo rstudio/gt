@@ -106,6 +106,9 @@
     <loc>https://gt.rstudio.com/reference/gt.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/gt_latex_dependencies.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/gt_output.html</loc>
   </url>
   <url>
@@ -116,6 +119,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/html.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/info_currencies.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/info_date_style.html</loc>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="121.003mm"
+ viewBox="0 0 1024 343"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,343 L0,343 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,343 L0,343 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,343 L0,343 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,8 L827,8 L827,335 L196,335 L196,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,9 L827,9 L827,38 L196,38 L196,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,38 L827,38 L827,62 L196,62 L196,38"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,62 L618,62 L618,102 L196,102 L196,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,62 L666,62 L666,142 L618,142 L618,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,62 L827,62 L827,142 L666,142 L666,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,102 L344,102 L344,142 L196,142 L196,102"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,102 L472,102 L472,142 L344,142 L344,102"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,102 L618,102 L618,142 L472,142 L472,102"/>
+</g>
+
+<g fill="#f2f2f2" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,181 L344,181 L344,219 L196,219 L196,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,181 L472,181 L472,219 L344,219 L344,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,181 L618,181 L618,219 L472,219 L472,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,181 L666,181 L666,219 L618,219 L618,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,181 L827,181 L827,219 L666,219 L666,181"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,257 L344,257 L344,295 L196,295 L196,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,257 L472,257 L472,295 L344,295 L344,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,257 L618,257 L618,295 L472,295 L472,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,257 L666,257 L666,295 L618,295 L618,257"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,257 L827,257 L827,295 L666,295 L666,257"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,8 L827,8 L827,10 L196,10 L196,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,141 L666,141 L666,143 L618,143 L618,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,141 L827,141 L827,143 L666,143 L666,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,141 L344,141 L344,143 L196,143 L196,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,141 L472,141 L472,143 L344,143 L344,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,141 L618,141 L618,143 L472,143 L472,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,141 L344,141 L344,143 L196,143 L196,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,141 L472,141 L472,143 L344,143 L344,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,141 L618,141 L618,143 L472,143 L472,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,141 L666,141 L666,143 L618,143 L618,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,141 L827,141 L827,143 L666,143 L666,141"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,333 L344,333 L344,335 L196,335 L196,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,333 L472,333 L472,335 L344,335 L344,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,333 L618,333 L618,335 L472,335 L472,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,333 L666,333 L666,335 L618,335 L618,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,333 L827,333 L827,335 L666,335 L666,333"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,61 L827,61 L827,63 L196,63 L196,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,61 L618,61 L618,63 L196,63 L196,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,101 L618,101 L618,103 L196,103 L196,101"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M618,61 L666,61 L666,63 L618,63 L618,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M666,61 L827,61 L827,63 L666,63 L666,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M196,101 L344,101 L344,103 L196,103 L196,101"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M344,101 L472,101 L472,103 L344,103 L344,101"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M472,101 L618,101 L618,103 L472,103 L472,101"/>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="391.5" y="32" font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+ >Currencies Supported in </text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="20" font-weight="700" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="612.5" y="32" font-family="Arial" font-size="20" font-weight="700" font-style="normal" 
+ >gt</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="283" y="52" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ >Currency codes and numbers are used in the </text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="574" y="52" font-family="Courier New" font-size="14" font-weight="400" font-style="normal" 
+ >fmt_currency()</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="686" y="52" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ > function</text>
+</g>
+
+<g fill="#000000" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="372.5" y="87" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Identifiers</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="107" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Exp</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="676" y="107" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Formatted Currency</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="127" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Currency Name</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="127" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Currency Code</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="127" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Currency Number</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Hong Kong dollar</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HKD</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >344</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="745" y="167" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HK$49.95</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Honduran lempira</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HNL</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >340</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="768" y="205" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >L49.95</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Croatian kuna</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HRK</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >191</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="760" y="243" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >kn49.95</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Haitian gourde</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HTG</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >332</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="765" y="281" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >G49.95</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="206" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Hungarian forint</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="354" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >HUF</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="482" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >348</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="628" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2</text>
+<text fill="#000000" fill-opacity="1" stroke="none" xml:space="preserve" x="763" y="319" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >Ft49.95</text>
+</g>
+</g>
+</svg>

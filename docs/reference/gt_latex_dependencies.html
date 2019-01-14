@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper for providing a numeric value as pixels value — px • gt</title>
+<title>Get the LaTeX dependencies required for a gt table — gt_latex_dependencies • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,15 @@
 
 
 
-<meta property="og:title" content="Helper for providing a numeric value as pixels value — px" />
+<meta property="og:title" content="Get the LaTeX dependencies required for a gt table — gt_latex_dependencies" />
 
-<meta property="og:description" content="Helper for providing a numeric value as pixels value" />
+<meta property="og:description" content="When working with Rnw (Sweave) files or otherwise writing LaTeX code,
+including a gt table can be problematic if we don't have knowledge
+of the LaTeX dependencies. For the most part, these dependencies are the
+LaTeX packages that are required for rendering a gt table. The
+gt_latex_dependencies() function provides an object that can be
+used to provide the LaTeX in an Rnw file, allowing gt tables to work
+and not yield errors due to missing packages." />
 
 <meta property="og:image" content="https://gt.rstudio.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -128,44 +134,60 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper for providing a numeric value as pixels value</h1>
+    <h1>Get the LaTeX dependencies required for a gt table</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
-    <div class="hidden name"><code>px.Rd</code></div>
+    <div class="hidden name"><code>gt_latex_dependencies.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper for providing a numeric value as pixels value</p>
+    <p>When working with Rnw (Sweave) files or otherwise writing LaTeX code,
+including a <span class="pkg">gt</span> table can be problematic if we don't have knowledge
+of the LaTeX dependencies. For the most part, these dependencies are the
+LaTeX packages that are required for rendering a <span class="pkg">gt</span> table. The
+<code>gt_latex_dependencies()</code> function provides an object that can be
+used to provide the LaTeX in an Rnw file, allowing <span class="pkg">gt</span> tables to work
+and not yield errors due to missing packages.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>px</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>the numeric value to format as a string (e.g., <code>"12px"</code>) for
-some <code><a href='tab_options.html'>tab_options</a>()</code> arguments that can take values as units of
-pixels (e.g., <code>table.font.size</code>).</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='fu'>gt_latex_dependencies</span>()</pre>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Here is an example Rnw document that shows how the
+<code>gt_latex_dependencies()</code> can be used in conjunction with a <span class="pkg">gt</span>
+table:</p>
+<pre>
+%!sweave=knitr
+    \documentclass{article}
+    &lt;&lt;echo=FALSE&gt;&gt;=
+library(gt)
+ @
+    &lt;&lt;results='asis', echo=FALSE&gt;&gt;=
+gt_latex_dependencies()
+ @
+    \begin{document}
+    &lt;&lt;results='asis', echo=FALSE&gt;&gt;=
+exibble <!-- %&gt;% gt() -->
+ @
+    \end{document}
+</pre>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other helper functions: <code><a href='cells_styles.html'>cells_styles</a></code>,
-  <code><a href='escape_latex.html'>escape_latex</a></code>,
-  <code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a></code>, <code><a href='html.html'>html</a></code>,
-  <code><a href='md.html'>md</a></code>, <code><a href='pct.html'>pct</a></code></p></div>
+  <code><a href='escape_latex.html'>escape_latex</a></code>, <code><a href='html.html'>html</a></code>,
+  <code><a href='md.html'>md</a></code>, <code><a href='pct.html'>pct</a></code>, <code><a href='px.html'>px</a></code></p></div>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 
