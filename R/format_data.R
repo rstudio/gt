@@ -554,6 +554,8 @@ fmt_percent <- function(data,
 #' of a locale ID. For fine control the conversion from numeric to currency
 #' values, we can take advantage of the following options:
 #' \itemize{
+#' \item the currency: providing a currency code or common currency name will
+#' procure the correct currency symbol and number of currency subunits
 #' \item currency symbol placement: the currency symbol can be placed before
 #' or after the values
 #' \item decimals/subunits: choice of the number of decimal places, and a
@@ -570,6 +572,9 @@ fmt_percent <- function(data,
 #' currency formatting specific to the chosen locale
 #' }
 #'
+#' We can use the \code{\link{info_currencies}()} function for a useful
+#' reference on all of the possible inputs to \code{currency}.
+#'
 #' Targeting of values is done through \code{columns} and additionally by
 #' \code{rows} (if nothing is provided for \code{rows} then entire columns are
 #' selected). A number of helper functions exist to make targeting more
@@ -578,10 +583,16 @@ fmt_percent <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param currency the currency to use for the numeric value. This is to be
-#'   supplied as a 3-letter currency code. Examples include \code{"USD"} for
-#'   U.S. Dollars and \code{"EUR"} for the Euro currency. The default is
-#'   \code{"USD"}.
+#' @param currency the currency to use for the numeric value. This input can be
+#'   supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
+#'   \code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
+#'   get an information table with all of the valid currency codes and examples
+#'   of each. Alternatively, we can provide a common currency name (e.g.,
+#'   \code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the
+#'   process. Use \code{\link{info_currencies}()} with the \code{type ==
+#'   "symbol"} option to view an information table with all of the supported
+#'   currency symbol names along with examples. If nothing is provided then
+#'   \code{"USD"} will be used.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #'   value should be displayed.
 #' @param placement the placement of the currency symbol. This can be either be
