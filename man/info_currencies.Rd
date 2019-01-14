@@ -27,10 +27,17 @@ corresponding to the 3-letter currency code to \code{begins_with}. This will
 filter currencies in the info table to just the set beginning with the
 supplied letter.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
+}
+
 \examples{
-# Get a table of info on all of the
-# available currencies
-tab_1 <- info_currencies()
+# Get a table of info on all of
+# the currencies where the three-
+# letter code begins with a "h"
+tab_1 <- info_currencies(begins_with = "h")
+
 }
 \seealso{
 Other information functions: \code{\link{info_date_style}},
