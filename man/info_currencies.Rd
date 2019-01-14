@@ -4,12 +4,18 @@
 \alias{info_currencies}
 \title{View a table with info on supported currencies}
 \usage{
-info_currencies(begins_with = NULL)
+info_currencies(type = c("code", "symbol"), begins_with = NULL)
 }
 \arguments{
+\item{type}{the type of currency information provided. Can either be
+\code{code} where currency information corresponding to 3-letter currency
+codes is provided, or \code{symbol} where currency info for common currency
+names (e.g., dollar, pound, yen, etc.) is returned.}
+
 \item{begins_with}{providing a single letter will filter currencies to only
 those that begin with that letter in their currency code. The default
-(\code{NULL}) will produce a table with all currencies displayed.}
+(\code{NULL}) will produce a table with all currencies displayed. This
+option only constrains the information table where \code{type == "code"}.}
 }
 \description{
 The \code{fmt_currency()} function lets us format numeric values as
@@ -37,6 +43,11 @@ supplied letter.
 # the currencies where the three-
 # letter code begins with a "h"
 tab_1 <- info_currencies(begins_with = "h")
+
+# Get a table of info on all of the
+# common currency name/symbols that
+# can be used with `fmt_currency()`
+tab_2 <- info_currencies(type = "symbol")
 
 }
 \seealso{
