@@ -111,8 +111,12 @@ info_time_style <- function() {
 #' @examples
 #' # Get a table of info on all of
 #' # the currencies where the three-
-#' # letter code begins with a "g"
-#' tab_1 <- info_currencies(begins_with = "g")
+#' # letter code begins with a "h"
+#' tab_1 <- info_currencies(begins_with = "h")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
+#'
 #' @importFrom dplyr filter select everything mutate
 #' @family information functions
 #' @export
