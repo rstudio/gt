@@ -105,14 +105,24 @@ info_time_style <- function() {
 #' filter currencies in the info table to just the set beginning with the
 #' supplied letter.
 #'
+#' @param type the type of currency information provided. Can either be
+#'   \code{code} where currency information corresponding to 3-letter currency
+#'   codes is provided, or \code{symbol} where currency info for common currency
+#'   names (e.g., dollar, pound, yen, etc.) is returned.
 #' @param begins_with providing a single letter will filter currencies to only
 #'   those that begin with that letter in their currency code. The default
-#'   (\code{NULL}) will produce a table with all currencies displayed.
+#'   (\code{NULL}) will produce a table with all currencies displayed. This
+#'   option only constrains the information table where \code{type == "code"}.
 #' @examples
 #' # Get a table of info on all of
 #' # the currencies where the three-
 #' # letter code begins with a "h"
 #' tab_1 <- info_currencies(begins_with = "h")
+#'
+#' # Get a table of info on all of the
+#' # common currency name/symbols that
+#' # can be used with `fmt_currency()`
+#' tab_2 <- info_currencies(type = "symbol")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
@@ -120,56 +130,98 @@ info_time_style <- function() {
 #' @importFrom dplyr filter select everything mutate
 #' @family information functions
 #' @export
-info_currencies <- function(begins_with = NULL) {
+info_currencies <- function(type = c("code", "symbol"),
+                            begins_with = NULL) {
 
-  if (!is.null(begins_with)) {
+  if (type[1] == "code") {
 
-    starting <-
-      substr(begins_with, 1, 1) %>%
-      toupper()
+    if (!is.null(begins_with)) {
 
-    curr <-
-      currencies %>%
-      dplyr::filter(grepl(paste0("^", starting, ".*"), curr_code))
+      starting <-
+        substr(begins_with, 1, 1) %>%
+        toupper()
 
-  } else {
-    curr <- currencies
-  }
+      curr <-
+        currencies %>%
+        dplyr::filter(grepl(paste0("^", starting, ".*"), curr_code))
 
-  tab_1 <-
-    curr %>%
-    dplyr::select(-symbol) %>%
-    dplyr::select(curr_name, dplyr::everything()) %>%
-    dplyr::mutate(value = 49.95) %>%
-    gt()
+    } else {
+      curr <- currencies
+    }
 
-  for (i in seq(nrow(curr))) {
+    tab_1 <-
+      curr %>%
+      dplyr::select(-symbol) %>%
+      dplyr::select(curr_name, dplyr::everything()) %>%
+      dplyr::mutate(value = 49.95) %>%
+      gt()
+
+    for (i in seq(nrow(curr))) {
+
+      tab_1 <-
+        tab_1 %>%
+        fmt_currency(
+          columns = vars(value),
+          rows = i,
+          currency = curr[[i, "curr_code"]]
+        )
+    }
 
     tab_1 <-
       tab_1 %>%
-      fmt_currency(
-        columns = vars(value),
-        rows = i,
-        currency = curr[[i, "curr_code"]]
+      tab_spanner(
+        label = "Identifiers",
+        columns = c("curr_name", "curr_code", "curr_number")
+      ) %>%
+      cols_label(
+        curr_name = html("Currency\nName"),
+        curr_code = html("Currency\nCode"),
+        curr_number = html("Currency\nNumber"),
+        exponent = "Exp",
+        value = html("Formatted\nCurrency"),
+      ) %>%
+      tab_header(
+        title = md("Currencies Supported in **gt**"),
+        subtitle = md("Currency codes are used in the `fmt_currency()` function")
       )
+
+    return(tab_1)
   }
 
-  tab_1 %>%
-    tab_spanner(
-      label = "Identifiers",
-      columns = c("curr_name", "curr_code", "curr_number")
-    ) %>%
-    cols_label(
-      curr_name = html("Currency\nName"),
-      curr_code = html("Currency\nCode"),
-      curr_number = html("Currency\nNumber"),
-      exponent = "Exp",
-      value = html("Formatted\nCurrency"),
-    ) %>%
-    tab_header(
-      title = md("Currencies Supported in **gt**"),
-      subtitle = md("Currency codes are used in the `fmt_currency()` function")
-    )
+  if (type[1] == "symbol") {
+
+    curr <- currency_symbols
+
+    tab_1 <-
+      currency_symbols %>%
+      dplyr::select(-symbol) %>%
+      dplyr::mutate(value = 49.95) %>%
+      gt()
+
+    for (i in seq(nrow(curr))) {
+
+      tab_1 <-
+        tab_1 %>%
+        fmt_currency(
+          columns = vars(value),
+          rows = i,
+          currency = curr[[i, "curr_symbol"]]
+        )
+    }
+
+    tab_1 <-
+      tab_1 %>%
+      cols_label(
+        curr_symbol = html("Currency\nSymbol"),
+        value = html("Formatted\nCurrency"),
+      ) %>%
+      tab_header(
+        title = md("Currencies Supported in **gt**"),
+        subtitle = md("Currency symbols are used in the `fmt_currency()` function")
+      )
+
+    return(tab_1)
+  }
 }
 
 #' View a table with info on many different color palettes
