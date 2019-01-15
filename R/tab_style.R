@@ -1,12 +1,43 @@
 #' Add custom styles to one or more cells
+#'
+#' With the \code{tab_style()} function we can target specific cells and apply
+#' styles to them. This is best done in conjunction with the
+#' \code{\link{cells_styles}()} helper function. At present this function is
+#' focussed on the application of styles for HTML output only (as such, other
+#' output formats will ignore all \code{tab_style()} calls). With the help of
+#' \code{\link{cells_styles}()}, we can set the following styles:
+#' \itemize{
+#' \item the background color of the cell (\code{bkgd_color})
+#' \item the cell's text font (\code{text_font}), color (\code{text_color}), and
+#' size (\code{text_size})
+#' \item the text style (\code{text_style}), enabling the use of italics or
+#' oblique text.
+#' \item text decoration (\code{text_decorate}): use overlines, line-throughs,
+#' or underlines
+#' \item text transformations (\code{text_transform}) that result in lowercased,
+#' uppercased, or capitalized text
+#' \item the text weight (\code{text_weight}), allowing the use of thin to
+#' bold text (the degree of choice is greater with variable fonts)
+#' \item the alignment of text (\code{text_align})
+#' \item a stretching property for text (i.e., condensing or expanding)
+#' \item the text indentation (\code{text_indent})
+#' }
+#'
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The \code{\link{cells_styles}()}
 #'   helper function can be used here to more easily generate valid styles.
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying an object with the \code{\link{cells_data}()} helper function is
-#'   a useful way to specify the cell that is associated with the style.
-#'   Additionally, we can supply a list with multiple calls to
-#'   \code{\link{cells_data}()} if we wish to combine multiple cell selections.
+#'   Supplying any of the \code{cells_*()} helper functions is a useful way to
+#'   target the location cells that are associated with the style application.
+#'   These helper functions are: \code{\link{cells_title}()},
+#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
+#'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
+#'   \code{\link{cells_summary}()}. Please see the help article
+#'   \link{location_cells} for more information on how these helper functions
+#'   can be used. Additionally, we can enclose several \code{cells_*()} calls
+#'   within a \code{list()} if we wish to apply styles to different types of
+#'   locations (e.g., cell data values, stub group headings, the table title,
+#'   etc.).
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
