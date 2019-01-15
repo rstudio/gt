@@ -33,7 +33,7 @@ an object of class \code{gt_tbl}.
 With the \code{tab_style()} function we can target specific cells and apply
 styles to them. This is best done in conjunction with the
 \code{\link{cells_styles}()} helper function. At present this function is
-focussed on the application of styles for HTML output only (as such, other
+focused on the application of styles for HTML output only (as such, other
 output formats will ignore all \code{tab_style()} calls). With the help of
 \code{\link{cells_styles}()}, we can set the following styles:
 \itemize{
