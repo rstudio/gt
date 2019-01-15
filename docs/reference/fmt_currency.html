@@ -44,6 +44,8 @@ formatting. This function supports both automatic formatting with a
 three-letter currency code and numeric formatting facilitated through the use
 of a locale ID. For fine control the conversion from numeric to currency
 values, we can take advantage of the following options:
+the currency: providing a currency code or common currency name will
+procure the correct currency symbol and number of currency subunits
 currency symbol placement: the currency symbol can be placed before
 or after the values
 decimals/subunits: choice of the number of decimal places, and a
@@ -159,6 +161,8 @@ formatting. This function supports both automatic formatting with a
 three-letter currency code and numeric formatting facilitated through the use
 of a locale ID. For fine control the conversion from numeric to currency
 values, we can take advantage of the following options:</p><ul>
+<li><p>the currency: providing a currency code or common currency name will
+procure the correct currency symbol and number of currency subunits</p></li>
 <li><p>currency symbol placement: the currency symbol can be placed before
 or after the values</p></li>
 <li><p>decimals/subunits: choice of the number of decimal places, and a
@@ -213,10 +217,16 @@ to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50<
     </tr>
     <tr>
       <th>currency</th>
-      <td><p>the currency to use for the numeric value. This is to be
-supplied as a 3-letter currency code. Examples include <code>"USD"</code> for
-U.S. Dollars and <code>"EUR"</code> for the Euro currency. The default is
-<code>"USD"</code>.</p></td>
+      <td><p>the currency to use for the numeric value. This input can be
+supplied as a 3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars,
+<code>"EUR"</code> for the Euro currency). Use <code><a href='info_currencies.html'>info_currencies</a>()</code> to
+get an information table with all of the valid currency codes and examples
+of each. Alternatively, we can provide a common currency name (e.g.,
+<code>"dollar"</code>, <code>"pound"</code>, <code>"yen"</code>, etc.) to simplify the
+process. Use <code><a href='info_currencies.html'>info_currencies</a>()</code> with the <code>type ==
+"symbol"</code> option to view an information table with all of the supported
+currency symbol names along with examples. If nothing is provided then
+<code>"USD"</code> will be used.</p></td>
     </tr>
     <tr>
       <th>use_subunits</th>
@@ -288,7 +298,9 @@ locale ID will override any values provided in <code>sep_mark</code> and
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Targeting of values is done through <code>columns</code> and additionally by
+    <p>We can use the <code><a href='info_currencies.html'>info_currencies</a>()</code> function for a useful
+reference on all of the possible inputs to <code>currency</code>.</p>
+<p>Targeting of values is done through <code>columns</code> and additionally by
 <code>rows</code> (if nothing is provided for <code>rows</code> then entire columns are
 selected). A number of helper functions exist to make targeting more
 effective. Conditional formatting is possible by providing a conditional

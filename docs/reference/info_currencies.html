@@ -151,16 +151,24 @@ currency subunits). A formatted example is provided (based on the value of
     
     </div>
 
-    <pre class="usage"><span class='fu'>info_currencies</span>(<span class='kw'>begins_with</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>info_currencies</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"code"</span>, <span class='st'>"symbol"</span>), <span class='kw'>begins_with</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>type</th>
+      <td><p>the type of currency information provided. Can either be
+<code>code</code> where currency information corresponding to 3-letter currency
+codes is provided, or <code>symbol</code> where currency info for common currency
+names (e.g., dollar, pound, yen, etc.) is returned.</p></td>
+    </tr>
+    <tr>
       <th>begins_with</th>
       <td><p>providing a single letter will filter currencies to only
 those that begin with that letter in their currency code. The default
-(<code>NULL</code>) will produce a table with all currencies displayed.</p></td>
+(<code>NULL</code>) will produce a table with all currencies displayed. This
+option only constrains the information table where <code>type == "code"</code>.</p></td>
     </tr>
     </table>
     
@@ -176,6 +184,7 @@ supplied letter.</p>
 
     
     <p><img src='figures/man_info_currencies_1.svg' width=100% /></p>
+<p><img src='figures/man_info_currencies_2.svg' width=100% /></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -188,7 +197,12 @@ supplied letter.</p>
     <pre class="examples"><div class='input'><span class='co'># Get a table of info on all of</span>
 <span class='co'># the currencies where the three-</span>
 <span class='co'># letter code begins with a "h"</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span> <span class='fu'>info_currencies</span>(<span class='kw'>begins_with</span> <span class='kw'>=</span> <span class='st'>"h"</span>)</div></pre>
+<span class='no'>tab_1</span> <span class='kw'>&lt;-</span> <span class='fu'>info_currencies</span>(<span class='kw'>begins_with</span> <span class='kw'>=</span> <span class='st'>"h"</span>)
+
+<span class='co'># Get a table of info on all of the</span>
+<span class='co'># common currency name/symbols that</span>
+<span class='co'># can be used with `fmt_currency()`</span>
+<span class='no'>tab_2</span> <span class='kw'>&lt;-</span> <span class='fu'>info_currencies</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
