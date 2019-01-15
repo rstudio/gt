@@ -8,7 +8,7 @@
 #' \code{\link{cells_styles}()}, we can set the following styles:
 #' \itemize{
 #' \item the background color of the cell (\code{bkgd_color})
-#' \item the cell's text font (\code{text_font}), color (\code{text_color}), and
+#' \item the cell's text color (\code{text_color}), font (\code{text_font}), or
 #' size (\code{text_size})
 #' \item the text style (\code{text_style}), enabling the use of italics or
 #' oblique text.
