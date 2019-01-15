@@ -49,7 +49,8 @@ uppercased, or capitalized text
 \item the text weight (\code{text_weight}), allowing the use of thin to
 bold text (the degree of choice is greater with variable fonts)
 \item the alignment of text (\code{text_align})
-\item a stretching property for text (i.e., condensing or expanding)
+\item a stretching property for text that condenses or expands text
+(\code{text_stretch})
 \item the text indentation (\code{text_indent})
 }
 }
