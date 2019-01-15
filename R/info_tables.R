@@ -127,6 +127,8 @@ info_time_style <- function() {
 #' @section Figures:
 #' \if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
 #'
+#' \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
+#'
 #' @importFrom dplyr filter select everything mutate
 #' @family information functions
 #' @export
