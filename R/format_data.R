@@ -52,6 +52,18 @@
 #'   group separator is set by \code{sep_mark} and overridden if a locale ID is
 #'   provided to \code{locale}. This setting is \code{TRUE} by default.
 #' @param scale_by a value to scale the input. The default is \code{1.0}.
+#' @param suffixing an option to scale and apply suffixes to larger numbers
+#'   (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
+#'   accept a logical value, where \code{FALSE} (the default) will not perform
+#'   this transformation and \code{TRUE} will apply thousands (\code{K}),
+#'   millions (\code{M}), billions (\code{B}), and trillions (\code{T}) suffixes
+#'   after automatic value scaling. We can also specify which symbols to use for
+#'   each of the value ranges by using a 4-element character vector of preferred
+#'   symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+#'   Including NA values in the vector will ensure that the particular range
+#'   will not be included in the transformation (e.g, \code{c(NA, "M", "B",
+#'   NA)}). Usage of scaling and suffixing will result in any value provided to
+#'   \code{scale_by} being ignored.
 #' @param pattern a formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by \code{{x}} and all
 #'   other characters are taken to be string literals.
