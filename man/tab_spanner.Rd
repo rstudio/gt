@@ -4,7 +4,7 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(data, label, columns)
+tab_spanner(data, label, columns, gather = TRUE)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -13,6 +13,10 @@ function.}
 \item{label}{the text to use for the spanner column label.}
 
 \item{columns}{the columns to be components of the spanner heading.}
+
+\item{gather}{an option to move the specified \code{columns} such that they
+are unified under the spanner column label. Ordering of the
+moved-into-place columns will be preserved in all cases.}
 }
 \value{
 an object of class \code{gt_tbl}.
