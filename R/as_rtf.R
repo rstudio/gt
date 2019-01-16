@@ -6,21 +6,23 @@
 #'
 #' @param data a table object that is created using the \code{gt()} function.
 #' @examples
-#' \dontrun{
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # RTF code
 #' tab_rtf <-
 #'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
+#'   dplyr::select(mfr, model) %>%
+#'   dplyr::slice(1:2) %>%
 #'   gt() %>%
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_rtf()
-#' }
+#'
+#' # `tab_rtf` is a single element character
+#' # vector
+#' tab_rtf %>% cat()
 #'
 #' @family table export functions
 #' @import rlang
