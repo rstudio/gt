@@ -253,7 +253,8 @@ tab_row_group <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns) {
+                        columns,
+                        gather = TRUE) {
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
