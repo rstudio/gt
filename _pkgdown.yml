@@ -124,6 +124,10 @@ reference:
 
   - title: Export Table
     desc: >
+      <a href="https://rstudio.cloud/project/174361">
+      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
+      </a>
+      <br /><br />
       There may come a day when you need to export a **gt** table to some
       specific format. We have functions for getting the HTML content of
       a **gt** table (`as_raw_html()`), getting LaTeX code (`as_latex()`),
