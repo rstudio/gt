@@ -6,9 +6,9 @@
 \usage{
 fmt_currency(data, columns, rows = NULL, currency = "USD",
   use_subunits = TRUE, negative_val = "signed", decimals = NULL,
-  use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
-  dec_mark = ".", placement = "left", incl_space = FALSE,
-  locale = NULL)
+  use_seps = TRUE, scale_by = 1, suffixing = FALSE,
+  pattern = "{x}", sep_mark = ",", dec_mark = ".",
+  placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -56,6 +56,19 @@ group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+
+\item{suffixing}{an option to scale and apply suffixes to larger numbers
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
+accept a logical value, where \code{FALSE} (the default) will not perform
+this transformation and \code{TRUE} will apply thousands (\code{K}),
+millions (\code{M}), billions (\code{B}), and trillions (\code{T}) suffixes
+after automatic value scaling. We can also specify which symbols to use for
+each of the value ranges by using a 4-element character vector of preferred
+symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+Including NA values in the vector will ensure that the particular range
+will not be included in the transformation (e.g, \code{c(NA, "M", "B",
+NA)}). Usage of scaling and suffixing will result in any value provided to
+\code{scale_by} being ignored.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
