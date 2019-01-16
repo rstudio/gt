@@ -768,6 +768,26 @@ fmt_currency <- function(data,
     sep_mark <- ""
   }
 
+  # Determine whether large-number suffixing is being
+  # used and validate inputs
+  if (!is.na(suffixing[1]) && suffixing[1] == TRUE) {
+
+    num_suffixes <- c("K", "M", "B", "T")
+    to_suffix <- TRUE
+  }
+
+  if (length(suffixing) == 4 && is.character(suffixing) == TRUE) {
+
+    num_suffixes <- suffixing
+    to_suffix <- TRUE
+  }
+
+  # If choosing to perform large-number suffixing
+  # of numeric values, force `scale_by` to be 1.0
+  if (to_suffix) {
+    scale_by <- 1.0
+  }
+
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
@@ -788,6 +808,38 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          if (to_suffix) {
+
+            # Prepare vector of scalars
+            scale_by <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ 1,
+                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                  !is.na(num_suffixes[1]) ~ 1/1E3,
+                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                  !is.na(num_suffixes[2])~ 1/1E6,
+                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                  !is.na(num_suffixes[3])~ 1/1E9,
+                x[non_na_x] >= 1E12 ~ 1/1E12,
+                TRUE ~ 1
+              )
+
+            # Perform NA replacement to vector of
+            # suffix symbols
+            num_suffixes[which(is.na(num_suffixes))] <- ""
+
+            # Prepare vector of suffixes
+            suffixes <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ "",
+                x[non_na_x] < 1E6 ~ num_suffixes[1],
+                x[non_na_x] < 1E9 ~ num_suffixes[2],
+                x[non_na_x] < 1E12 ~ num_suffixes[3],
+                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                TRUE ~ ""
+              )
+          }
+
           # Format all non-NA x values
           x_str[non_na_x] <-
             formatC(
@@ -798,6 +850,15 @@ fmt_currency <- function(data,
               decimal.mark = dec_mark,
               format = "f",
               drop0trailing = FALSE)
+
+          # Apply large-number suffixes to scaled and
+          # formatted values if that option is taken
+          if (to_suffix) {
+
+            # Apply vector of suffixes
+            x_str[non_na_x] <-
+              paste0(x_str[non_na_x], suffixes)
+          }
 
           # Handle placement of the currency symbol
           if (placement == "left") {
@@ -841,6 +902,38 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          if (to_suffix) {
+
+            # Prepare vector of scalars
+            scale_by <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ 1,
+                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                  !is.na(num_suffixes[1]) ~ 1/1E3,
+                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                  !is.na(num_suffixes[2])~ 1/1E6,
+                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                  !is.na(num_suffixes[3])~ 1/1E9,
+                x[non_na_x] >= 1E12 ~ 1/1E12,
+                TRUE ~ 1
+              )
+
+            # Perform NA replacement to vector of
+            # suffix symbols
+            num_suffixes[which(is.na(num_suffixes))] <- ""
+
+            # Prepare vector of suffixes
+            suffixes <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ "",
+                x[non_na_x] < 1E6 ~ num_suffixes[1],
+                x[non_na_x] < 1E9 ~ num_suffixes[2],
+                x[non_na_x] < 1E12 ~ num_suffixes[3],
+                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                TRUE ~ ""
+              )
+          }
+
           x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
@@ -850,6 +943,15 @@ fmt_currency <- function(data,
               decimal.mark = dec_mark,
               format = "f",
               drop0trailing = FALSE)
+
+          # Apply large-number suffixes to scaled and
+          # formatted values if that option is taken
+          if (to_suffix) {
+
+            # Apply vector of suffixes
+            x_str[non_na_x] <-
+              paste0(x_str[non_na_x], suffixes)
+          }
 
           # Handle placement of the currency symbol
           if (placement == "left") {
@@ -893,6 +995,38 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          if (to_suffix) {
+
+            # Prepare vector of scalars
+            scale_by <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ 1,
+                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                  !is.na(num_suffixes[1]) ~ 1/1E3,
+                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                  !is.na(num_suffixes[2])~ 1/1E6,
+                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                  !is.na(num_suffixes[3])~ 1/1E9,
+                x[non_na_x] >= 1E12 ~ 1/1E12,
+                TRUE ~ 1
+              )
+
+            # Perform NA replacement to vector of
+            # suffix symbols
+            num_suffixes[which(is.na(num_suffixes))] <- ""
+
+            # Prepare vector of suffixes
+            suffixes <-
+              dplyr::case_when(
+                x[non_na_x] < 1E3 ~ "",
+                x[non_na_x] < 1E6 ~ num_suffixes[1],
+                x[non_na_x] < 1E9 ~ num_suffixes[2],
+                x[non_na_x] < 1E12 ~ num_suffixes[3],
+                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                TRUE ~ ""
+              )
+          }
+
           # Format all non-NA x values
           x_str[non_na_x] <-
             formatC(
@@ -903,6 +1037,15 @@ fmt_currency <- function(data,
               decimal.mark = dec_mark,
               format = "f",
               drop0trailing = FALSE)
+
+          # Apply large-number suffixes to scaled and
+          # formatted values if that option is taken
+          if (to_suffix) {
+
+            # Apply vector of suffixes
+            x_str[non_na_x] <-
+              paste0(x_str[non_na_x], suffixes)
+          }
 
           # Handle placement of the currency symbol
           if (placement == "left") {
