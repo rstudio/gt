@@ -127,23 +127,26 @@ tab_1 <-
     use_seps = FALSE
   )
 
-# Use `exibble` to create a gt table;
-# format the `num` column as numeric,
-# but treating the first four rows
-# different than the last four
+# Use `countrypops` to create a gt
+# table; format all columns to use
+# large-number suffixing
 tab_2 <-
-  exibble \%>\%
-  gt() \%>\%
+  countrypops \%>\%
+  dplyr::select(
+    country_code_3, year, population) \%>\%
+  dplyr::filter(
+    country_code_3 \%in\% c(
+      "CHN", "IND", "USA", "PAK", "IDN")
+  ) \%>\%
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
+  tidyr::spread(year, population) \%>\%
+  dplyr::arrange(desc(`2015`)) \%>\%
+  gt(rowname_col = "country_code_3") \%>\%
   fmt_number(
-    columns = vars(num),
-    rows = 1:4,
-    decimals = 2) \%>\%
-  fmt_number(
-    columns = vars(num),
-    rows = 5:8,
-    decimals = 1,
-    scale_by = 1/1000,
-    pattern = "{x}K")
+    columns = TRUE,
+    decimals = 2,
+    suffixing = TRUE
+  )
 
 }
 \seealso{
