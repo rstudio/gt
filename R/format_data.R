@@ -12,6 +12,8 @@
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item scaling: we can choose to scale targeted values by a multiplier value
+#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
 #' \item pattern: option to use a text pattern for decoration of the formatted
 #' values
 #' \item locale-based formatting: providing a locale ID will result in number
@@ -646,6 +648,8 @@ fmt_percent <- function(data,
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item scaling: we can choose to scale targeted values by a multiplier value
+#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
 #' \item pattern: option to use a text pattern for decoration of the formatted
 #' currency values
 #' \item locale-based formatting: providing a locale ID will result in
