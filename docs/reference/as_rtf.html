@@ -161,21 +161,75 @@ generate a valid .rtf file that can be opened by RTF readers.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Use `gtcars` to create a gt table;</span>
+    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add a header and then export as</span>
 <span class='co'># RTF code</span>
 <span class='no'>tab_rtf</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>msrp</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
     <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
     <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>as_rtf</span>()
-<span class='co'># }</span><div class='input'>
+
+<span class='co'># `tab_rtf` is a single element character</span>
+<span class='co'># vector</span>
+<span class='no'>tab_rtf</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cat'>cat</a></span>()</div><div class='output co'>#&gt; {\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+#&gt; {\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+#&gt; {\colortbl;\red255\green255\blue255;
+#&gt; }
+#&gt; {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c37036\c37036\c37036;\csgray\c0\c0;
+#&gt; }
+#&gt; \deftab20
+#&gt; \cf0
+#&gt; \itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil
+#&gt; \clmgf \clvertalb \clshdrawnil \clheight340 \clbrdrt\brdrs\brdrw40\brdrcf3 \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt100 \gaph\cellx935
+#&gt; \clmrg \clvertalb \clshdrawnil \clheight340 \clbrdrt\brdrs\brdrw40\brdrcf3 \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt100 \gaph\cellx1870
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \f0\fs36 \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 Data listing from **gtcars**
+#&gt; \fs24  \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt; \pard\intbl\itap1\cell
+#&gt; \row
+#&gt; 
+#&gt; \itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil
+#&gt; \clmgf \clvertalc \clshdrawnil \clheight240 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadb100 \gaph\cellx935
+#&gt; \clmrg \clvertalc \clshdrawnil \clheight240 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadb100 \gaph\cellx1870
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; 
+#&gt; \fs20 \expnd0\expndtw0\kerning0\up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 `gtcars` is an R dataset
+#&gt; \fs28  \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell\pard\intbl\itap1\cell
+#&gt; \row\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil
+#&gt; \clvertalc \clshdrawnil \clheight520 \clbrdrt\brdrs\brdrw40\brdrcf3 \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \gaph\cellx935
+#&gt; \clvertalc \clshdrawnil \clheight520 \clbrdrt\brdrs\brdrw40\brdrcf3 \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \gaph\cellx1870
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 mfr \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 model \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt;  \row\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil
+#&gt; \clvertalc \clshdrawnil \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt50 \clpadb50 \gaph\cellx935
+#&gt; \clvertalc \clshdrawnil \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt50 \clpadb50 \gaph\cellx1870
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 Ford \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 GT \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt;  \row\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil
+#&gt; \clvertalc \clshdrawnil \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt50 \clpadb50 \gaph\cellx935
+#&gt; \clvertalc \clshdrawnil \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrs\brdrw40\brdrcf3 \clbrdrr\brdrnil \clpadl100 \clpadr100 \clpadt50 \clpadb50 \gaph\cellx1870
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 Ferrari \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0 \cell
+#&gt; \pard\intbl\itap1\pardeftab20\qc\partightenfactor0
+#&gt; \expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 458 Speciale \kerning1\expnd0\expndtw0 \up0 \nosupersub \ulnone \outl0\strokewidth0\expnd0\expndtw0\kerning0
+#&gt; \up0 \nosupersub \ulnone \outl0\strokewidth0 \strokec2 \cell \lastrow\row}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
