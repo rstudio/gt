@@ -157,12 +157,15 @@ fmt_number <- function(data,
 
     num_suffixes <- c("K", "M", "B", "T")
     to_suffix <- TRUE
-  }
 
-  if (length(suffixing) == 4 && is.character(suffixing) == TRUE) {
+  } else if (length(suffixing) == 4 &&
+             is.character(suffixing) == TRUE) {
 
     num_suffixes <- suffixing
     to_suffix <- TRUE
+
+  } else {
+    to_suffix <- FALSE
   }
 
   # If choosing to perform large-number suffixing
@@ -778,12 +781,15 @@ fmt_currency <- function(data,
 
     num_suffixes <- c("K", "M", "B", "T")
     to_suffix <- TRUE
-  }
 
-  if (length(suffixing) == 4 && is.character(suffixing) == TRUE) {
+  } else if (length(suffixing) == 4 &&
+             is.character(suffixing) == TRUE) {
 
     num_suffixes <- suffixing
     to_suffix <- TRUE
+
+  } else {
+    to_suffix <- FALSE
   }
 
   # If choosing to perform large-number suffixing
