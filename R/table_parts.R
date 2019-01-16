@@ -225,6 +225,9 @@ tab_row_group <- function(data,
 #' @inheritParams fmt_number
 #' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
+#' @param gather an option to move the specified \code{columns} such that they
+#'   are unified under the spanner column label. Ordering of the
+#'   moved-into-place columns will be preserved in all cases.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `gtcars` to create a gt table;
