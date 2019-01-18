@@ -31,7 +31,14 @@ title, etc.).}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add a footnote with a glyph attached to the targeted cells, rows, or columns.
+The \code{tab_footnote()} function can make it a painless process to add a
+footnote to a \pkg{gt} table. There are two components to a footnote: (1) a
+glyph that is attached to the targeted cell text, and (2) the footnote text
+(that starts with the corresponding glyph) that is placed in the table's
+footer area. Each call of \code{tab_footnote()} will add a different note,
+and one or more cells can be targeted via the location helper functions
+(e.g., \code{\link{cells_data}()}, \code{\link{cells_column_labels}()},
+etc.).
 }
 \section{Figures}{
 
