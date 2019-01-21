@@ -40,6 +40,22 @@ and one or more cells can be targeted via the location helper functions
 (e.g., \code{\link{cells_data}()}, \code{\link{cells_column_labels}()},
 etc.).
 }
+\details{
+The formatting of the footnotes can be controlled through the use of various
+parameters in the \code{\link{tab_options}()} function:
+
+\itemize{
+\item \code{footnote.sep}: allows for a choice of the separator between
+consecutive footnotes in the table footer. By default, this is set to a
+linebreak.
+\item \code{footnote.glyph}: the set of sequential characters or numbers
+used to identify the footnotes.
+\item \code{footnote.font.size}: the size of the font used in the footnote
+section.
+\item \code{footnote.padding}: the amount of padding to apply between the
+footnote and source note sections in the table footer.
+}
+}
 \section{Figures}{
 
 \if{html}{\figure{man_tab_footnote_1.svg}{options: width=100\%}}
