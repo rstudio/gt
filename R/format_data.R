@@ -198,14 +198,14 @@ fmt_number <- function(data,
             # Prepare vectors of scalars
             scale_by <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ 1,
-                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                abs(x[non_na_x]) < 1E3 ~ 1,
+                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
                   !is.na(num_suffixes[1]) ~ 1/1E3,
-                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
-                  !is.na(num_suffixes[2])~ 1/1E6,
-                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
-                  !is.na(num_suffixes[3])~ 1/1E9,
-                x[non_na_x] >= 1E12 ~ 1/1E12,
+                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
+                  !is.na(num_suffixes[2]) ~ 1/1E6,
+                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
+                  !is.na(num_suffixes[3]) ~ 1/1E9,
+                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
                 TRUE ~ 1
               )
 
@@ -216,11 +216,11 @@ fmt_number <- function(data,
             # Prepare vector of suffixes
             suffixes <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ "",
-                x[non_na_x] < 1E6 ~ num_suffixes[1],
-                x[non_na_x] < 1E9 ~ num_suffixes[2],
-                x[non_na_x] < 1E12 ~ num_suffixes[3],
-                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                abs(x[non_na_x]) < 1E3 ~ "",
+                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
+                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
+                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
+                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
                 TRUE ~ ""
               )
           }
@@ -827,14 +827,14 @@ fmt_currency <- function(data,
             # Prepare vector of scalars
             scale_by <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ 1,
-                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                abs(x[non_na_x]) < 1E3 ~ 1,
+                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
                   !is.na(num_suffixes[1]) ~ 1/1E3,
-                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
                   !is.na(num_suffixes[2])~ 1/1E6,
-                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
                   !is.na(num_suffixes[3])~ 1/1E9,
-                x[non_na_x] >= 1E12 ~ 1/1E12,
+                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
                 TRUE ~ 1
               )
 
@@ -845,11 +845,11 @@ fmt_currency <- function(data,
             # Prepare vector of suffixes
             suffixes <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ "",
-                x[non_na_x] < 1E6 ~ num_suffixes[1],
-                x[non_na_x] < 1E9 ~ num_suffixes[2],
-                x[non_na_x] < 1E12 ~ num_suffixes[3],
-                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                abs(x[non_na_x]) < 1E3 ~ "",
+                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
+                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
+                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
+                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
                 TRUE ~ ""
               )
           }
