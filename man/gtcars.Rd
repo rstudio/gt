@@ -38,6 +38,15 @@ horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
 characteristics are provided. The country of origin for the car manufacturer
 is also given.
 }
+\details{
+All of the \code{gtcars} have something else in common (aside from the high
+asking prices): they are all grand tourer vehicles. These are proper GT cars
+that blend pure driving thrills with a level of comfort that is more expected
+from a fine limousine (e.g., a Rolls-Royce Phantom EWB). You'll find that,
+with these cars, comfort is emphasized over all-out performance.
+Nevertheless, the driving experience should also mean motoring at speed,
+doing so in style and safety.
+}
 \examples{
 # Here is a glimpse at the data
 # available in `gtcars`
