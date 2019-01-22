@@ -210,7 +210,7 @@ fmt_number <- function(data,
             
             # Add phantom space to non-negative numbers for alignment
             nonneg_x <- x >= 0 & !is.na(x)
-            x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\\hphantom{)}")
+            x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\hphantom{)}")
           }
           
           # Handle formatting of pattern
