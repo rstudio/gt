@@ -208,8 +208,10 @@ fmt_number <- function(data,
             # the minus sign
             x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
             
-            # Add phantom space to non-negative numbers for alignment
+            # Determine non-negative and non-NA `x` for alignment
             nonneg_x <- x >= 0 & !is.na(x)
+            
+            # Add phantom space to non-negative numbers for alignment
             x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\hphantom{)}")
           }
           
@@ -523,6 +525,12 @@ fmt_percent <- function(data,
             # Apply parentheses to the formatted value and remove
             # the minus sign
             x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
+            
+            # Determine non-negative and non-NA `x` for alignment
+            nonneg_x <- x >= 0 & !is.na(x)
+            
+            # Add phantom space to non-negative numbers for alignment
+            x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\hphantom{)}")
           }
 
           # Handle formatting of pattern
