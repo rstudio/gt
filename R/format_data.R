@@ -154,20 +154,43 @@ fmt_number <- function(data,
   }
 
   # Determine whether large-number suffixing is being
-  # used and validate inputs
-  if (!is.na(suffixing[1]) && suffixing[1] == TRUE) {
+  # used and set the appropriate inputs
+  if (is.logical(suffixing) &&
+      length(suffixing) == 1 &&
+      suffixing) {
 
+    # If `suffixing` is TRUE, the `to_suffix`
+    # logical will also be set to TRUE and the
+    # default set of symbols will be assigned
+    # to `num_suffixes`
+    to_suffix <- TRUE
     num_suffixes <- c("K", "M", "B", "T")
+
+  } else if (is.logical(suffixing) &&
+             length(suffixing) == 1 &&
+             suffixing == FALSE) {
+
+    # If `suffixing` is FALSE, the `to_suffix`
+    # logical will also be set to FALSE
+    to_suffix <- FALSE
+
+  } else if (is.character(suffixing) &&
+             length(suffixing) == 4){
+
+    # In the case of a four-element character vector
+    # we copy those values into `num_suffixes`; the
+    # `to_suffix` logical is checked within the
+    # `fmt()` function
     to_suffix <- TRUE
-
-  } else if (length(suffixing) == 4 &&
-             is.character(suffixing) == TRUE) {
-
     num_suffixes <- suffixing
-    to_suffix <- TRUE
 
   } else {
-    to_suffix <- FALSE
+
+    # Stop function if the input to `suffixing` isn't valid
+    stop("The value provided to `suffixing` must either be:\n",
+         " * `TRUE` or `FALSE` (the default)\n",
+         " * a four-element character vector with suffixing text",
+         call. = FALSE)
   }
 
   # If choosing to perform large-number suffixing
@@ -780,20 +803,43 @@ fmt_currency <- function(data,
   }
 
   # Determine whether large-number suffixing is being
-  # used and validate inputs
-  if (!is.na(suffixing[1]) && suffixing[1] == TRUE) {
+  # used and set the appropriate inputs
+  if (is.logical(suffixing) &&
+      length(suffixing) == 1 &&
+      suffixing) {
 
+    # If `suffixing` is TRUE, the `to_suffix`
+    # logical will also be set to TRUE and the
+    # default set of symbols will be assigned
+    # to `num_suffixes`
+    to_suffix <- TRUE
     num_suffixes <- c("K", "M", "B", "T")
+
+  } else if (is.logical(suffixing) &&
+             length(suffixing) == 1 &&
+             suffixing == FALSE) {
+
+    # If `suffixing` is FALSE, the `to_suffix`
+    # logical will also be set to FALSE
+    to_suffix <- FALSE
+
+  } else if (is.character(suffixing) &&
+             length(suffixing) == 4){
+
+    # In the case of a four-element character vector
+    # we copy those values into `num_suffixes`; the
+    # `to_suffix` logical is checked within the
+    # `fmt()` function
     to_suffix <- TRUE
-
-  } else if (length(suffixing) == 4 &&
-             is.character(suffixing) == TRUE) {
-
     num_suffixes <- suffixing
-    to_suffix <- TRUE
 
   } else {
-    to_suffix <- FALSE
+
+    # Stop function if the input to `suffixing` isn't valid
+    stop("The value provided to `suffixing` must either be:\n",
+         " * `TRUE` or `FALSE` (the default)\n",
+         " * a four-element character vector with suffixing text",
+         call. = FALSE)
   }
 
   # If choosing to perform large-number suffixing
@@ -921,14 +967,14 @@ fmt_currency <- function(data,
             # Prepare vector of scalars
             scale_by <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ 1,
-                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                abs(x[non_na_x]) < 1E3 ~ 1,
+                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
                   !is.na(num_suffixes[1]) ~ 1/1E3,
-                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
                   !is.na(num_suffixes[2])~ 1/1E6,
-                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
                   !is.na(num_suffixes[3])~ 1/1E9,
-                x[non_na_x] >= 1E12 ~ 1/1E12,
+                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
                 TRUE ~ 1
               )
 
@@ -939,11 +985,11 @@ fmt_currency <- function(data,
             # Prepare vector of suffixes
             suffixes <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ "",
-                x[non_na_x] < 1E6 ~ num_suffixes[1],
-                x[non_na_x] < 1E9 ~ num_suffixes[2],
-                x[non_na_x] < 1E12 ~ num_suffixes[3],
-                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                abs(x[non_na_x]) < 1E3 ~ "",
+                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
+                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
+                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
+                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
                 TRUE ~ ""
               )
           }
@@ -1014,14 +1060,14 @@ fmt_currency <- function(data,
             # Prepare vector of scalars
             scale_by <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ 1,
-                x[non_na_x] >= 1E3 & x[non_na_x] < 1E6 &
+                abs(x[non_na_x]) < 1E3 ~ 1,
+                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
                   !is.na(num_suffixes[1]) ~ 1/1E3,
-                x[non_na_x] >= 1E6 & x[non_na_x] < 1E9 &
+                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
                   !is.na(num_suffixes[2])~ 1/1E6,
-                x[non_na_x] >= 1E7 & x[non_na_x] < 1E12 &
+                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
                   !is.na(num_suffixes[3])~ 1/1E9,
-                x[non_na_x] >= 1E12 ~ 1/1E12,
+                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
                 TRUE ~ 1
               )
 
@@ -1032,11 +1078,11 @@ fmt_currency <- function(data,
             # Prepare vector of suffixes
             suffixes <-
               dplyr::case_when(
-                x[non_na_x] < 1E3 ~ "",
-                x[non_na_x] < 1E6 ~ num_suffixes[1],
-                x[non_na_x] < 1E9 ~ num_suffixes[2],
-                x[non_na_x] < 1E12 ~ num_suffixes[3],
-                x[non_na_x] >= 1E12 ~ num_suffixes[4],
+                abs(x[non_na_x]) < 1E3 ~ "",
+                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
+                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
+                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
+                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
                 TRUE ~ ""
               )
           }
