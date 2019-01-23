@@ -212,7 +212,7 @@ fmt_number <- function(data,
             nonneg_x <- x >= 0 & !is.na(x)
             
             # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\hphantom{)}")
+            x_str[nonneg_x] <- paste0("\\hphantom{()}",x_str[nonneg_x], "\\hphantom{)}")
           }
           
           # Handle formatting of pattern
@@ -530,7 +530,7 @@ fmt_percent <- function(data,
             nonneg_x <- x >= 0 & !is.na(x)
             
             # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0(x_str[nonneg_x], "\\hphantom{)}")
+            x_str[nonneg_x] <- paste0("\\hphantom{(}", x_str[nonneg_x], "\\hphantom{)}")
           }
 
           # Handle formatting of pattern
