@@ -248,7 +248,7 @@ fmt_number <- function(data,
               nonneg_x <- x >= 0 & !is.na(x)
               
               # Add phantom space to non-negative numbers for alignment
-              x_str[nonneg_x] <- paste0("<span style="visibility: hidden;">(</span>",x_str[nonneg_x], "<span style="visibility: hidden;">)</span>")
+              x_str[nonneg_x] <- paste0('<span style="visibility: hidden;">(</span>',x_str[nonneg_x], '<span style="visibility: hidden;">)</span>')
             }
           
           # Handle formatting of pattern
