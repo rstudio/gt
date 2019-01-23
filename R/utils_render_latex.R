@@ -213,11 +213,11 @@ create_body_component_l <- function(row_splits,
 }
 
 #' @noRd
-create_table_end_l <- function() {
+create_table_end_l <- function(table_fn = "longtable") {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{longtable}\n",
+    "\\end{", table_fn, "}\n",
     collapse = "")
 }
 
