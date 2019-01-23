@@ -213,7 +213,43 @@ fmt_number <- function(data,
             
             # Add phantom space to non-negative numbers for alignment
             x_str[nonneg_x] <- paste0("\\hphantom{(}",x_str[nonneg_x], "\\hphantom{)}")
-          }
+          },
+          
+        html = function(x) {
+            
+            # Determine which of `x` are not NA
+            non_na_x <- !is.na(x)
+            
+            # Create `x_str` with same length as `x`
+            x_str <- rep(NA_character_, length(x))
+            
+            # Format all non-NA x values
+            x_str[non_na_x] <-
+              formatC(
+                x = x[non_na_x] * scale_by,
+                digits = decimals,
+                mode = "double",
+                big.mark = sep_mark,
+                decimal.mark = dec_mark,
+                format = "f",
+                drop0trailing = drop_trailing_zeros)
+            
+            # Handle negative values
+            if (negative_val == "parens") {
+              
+              # Determine which of `x` are not NA and also negative
+              negative_x <- x < 0 & !is.na(x)
+              
+              # Apply parentheses to the formatted value and remove
+              # the minus sign
+              x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
+              
+              # Determine non-negative and non-NA `x` for alignment
+              nonneg_x <- x >= 0 & !is.na(x)
+              
+              # Add phantom space to non-negative numbers for alignment
+              x_str[nonneg_x] <- paste0("<span style="visibility: hidden;">(</span>",x_str[nonneg_x], "<span style="visibility: hidden;">)</span>")
+            }
           
           # Handle formatting of pattern
           pre_post_txt <- get_pre_post_txt(pattern)
