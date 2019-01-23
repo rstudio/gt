@@ -639,7 +639,7 @@ fmt_percent <- function(data,
           x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
           x_str
           
-        }
+        },
         default = function(x) {
 
           # Determine which of `x` are not NA
