@@ -4,11 +4,22 @@
 \alias{as_latex}
 \title{Output a \pkg{gt} object as LaTeX}
 \usage{
-as_latex(data)
+as_latex(data, ..., table_fn = "longtable", table_options = if
+  (table_fn == "longtable") "c" else NULL, pre_table = NULL,
+  post_table = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
+
+\item{table_fn}{the LaTeX package that provides functionality for defining
+the table. By default this uses the \code{longtable} LaTeX package.}
+
+\item{table_options}{the options to use within the \code{table_fn}.}
+
+\item{pre_table}{any LaTeX package to include just before the table.}
+
+\item{post_table}{any LaTeX package to include just after the table.}
 }
 \description{
 Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis}
