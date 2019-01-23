@@ -8,6 +8,11 @@
 #'
 #' @param data a table object that is created using the \code{\link{gt}()}
 #'   function.
+#' @param table_fn the LaTeX package that provides functionality for defining
+#'   the table. By default this uses the \code{longtable} LaTeX package.
+#' @param table_options the options to use within the \code{table_fn}.
+#' @param pre_table any LaTeX package to include just before the table.
+#' @param post_table any LaTeX package to include just after the table.
 #' @import rlang
 #' @importFrom dplyr mutate group_by summarize ungroup rename arrange
 #' @importFrom stats setNames
@@ -38,7 +43,12 @@
 #'
 #' @family table export functions
 #' @export
-as_latex <- function(data) {
+as_latex <- function(data,
+                     ...,
+                     table_fn = "longtable",
+                     table_options = if (table_fn == "longtable") "c" else NULL,
+                     pre_table = NULL,
+                     post_table = NULL) {
 
   # Build all table data objects through a common pipeline
   built_data <- data %>% build_data(context = "latex")
@@ -72,7 +82,7 @@ as_latex <- function(data) {
     row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a LaTeX fragment for the start of the table
-    table_start <- create_table_start_l(col_alignment)
+    table_start <- create_table_start_l(col_alignment, table_fn, table_options)
 
     # Create the heading component of the table
     heading_component <-
@@ -92,7 +102,7 @@ as_latex <- function(data) {
         summaries_present, list_of_summaries, n_rows, n_cols)
 
     # Create a LaTeX fragment for the ending tabular statement
-    table_end <- create_table_end_l()
+    table_end <- create_table_end_l(table_fn)
 
     # Create the footnote component of the table
     footnote_component <-
@@ -118,13 +128,29 @@ as_latex <- function(data) {
     # Compose the LaTeX table
     latex_table <-
       paste0(
+        "\\begingroup \n",
+        pre_table,
         table_start,
-        heading_component,
-        columns_component,
+        if (table_fn == "longtable") {
+          paste0(
+            heading_component,
+            columns_component,
+            "\\endfirsthead \n",
+            columns_component,
+            "\\endhead \n"
+          )
+        } else {
+          paste0(
+            heading_component,
+            columns_component
+          )
+        },
         body_component,
         table_end,
         footnote_component,
         source_note_component,
+        post_table,
+        "\\endgroup \n",
         collapse = "") %>%
       knitr::asis_output(meta = latex_packages)
 
