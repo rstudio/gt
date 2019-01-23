@@ -85,8 +85,9 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", negative_val = "parens") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("\\$1,836.23", "\\$2,763.39", "\\$937.29", "\\$643.00",
-      "\\$212.23", "\\$0.00", "(\\$23.24)"))
+    c("\\hphantom{(}\\$1,836.23\\hphantom{)}", "\\hphantom{(}\\$2,763.39\\hphantom{)}",
+      "\\hphantom{(}\\$937.29\\hphantom{)}", "\\hphantom{(}\\$643.00\\hphantom{)}",
+      "\\hphantom{(}\\$212.23\\hphantom{)}", "\\hphantom{(}\\$0.00\\hphantom{)}", "(\\$23.24)"))
 
   # Format the `num_1` column as USD, apply parentheses to all negative
   # values, use all other defaults; apply the default context, extract
@@ -96,8 +97,9 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", negative_val = "parens") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("\\$1,836.23", "\\$2,763.39", "\\$937.29", "\\$643.00",
-      "\\$212.23", "\\$0.00", "(\\$23.24)"))
+    c("\\hphantom{(}\\$1,836.23\\hphantom{)}", "\\hphantom{(}\\$2,763.39\\hphantom{)}",
+      "\\hphantom{(}\\$937.29\\hphantom{)}", "\\hphantom{(}\\$643.00\\hphantom{)}",
+      "\\hphantom{(}\\$212.23\\hphantom{)}", "\\hphantom{(}\\$0.00\\hphantom{)}", "(\\$23.24)"))
 
   # Format the `num_1` column as USD to 4 decimal places, scale all values by
   # 1/1000, use all other defaults; extract `output_df` and compare

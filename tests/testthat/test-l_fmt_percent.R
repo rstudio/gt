@@ -85,8 +85,10 @@ test_that("the `fmt_percent()` function works correctly", {
     (tbl_latex %>%
        fmt_percent(columns = "num_1", decimals = 2, negative_val = "parens") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("183,623.00\\%", "276,339.00\\%", "93,729.00\\%", "64,300.00\\%",
-      "21,223.20\\%", "0.00\\%", "(2,324.00\\%)"))
+    c("\\hphantom{(}183,623.00\\%\\hphantom{)}", "\\hphantom{(}276,339.00\\%\\hphantom{)}", 
+      "\\hphantom{(}93,729.00\\%\\hphantom{)}", "\\hphantom{(}64,300.00\\%\\hphantom{)}",
+      "\\hphantom{(}21,223.20\\%\\hphantom{)}", "\\hphantom{(}0.00\\%\\hphantom{)}", 
+      "(2,324.00\\%)"))
 
   # Format the `num_1` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults; extract
