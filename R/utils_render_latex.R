@@ -50,11 +50,33 @@ latex_group_row <- function(group_name,
 }
 
 #' @noRd
-create_table_start_l <- function(col_alignment) {
+create_table_start_l <- function(col_alignment,
+                                 table_fn = "longtable",
+                                 table_options = NULL) {
+
+  if (any(nchar(table_options) > 0)) {
+
+    # Convert a named vector to a unnamed vector
+    if (length(names(table_options)) > 0) {
+      table_options <- paste0(names(table_options), "=", unname(table_options))
+    }
+
+    # Reduce vector of length n to a single-element
+    # character vector
+    if (length(table_options) > 1) {
+      table_options <- paste0(table_options, collapse = ",")
+    }
+
+    # Enclosing string in square brackets
+    table_options_text <- paste0("[", table_options, "]")
+
+  } else {
+    table_options_text <- NULL
+  }
 
   paste0(
     "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
-    "\\begin{longtable}{",
+    "\\begin{", table_fn, "}", table_options_text, "{",
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
     "}\n",
     collapse = "")
