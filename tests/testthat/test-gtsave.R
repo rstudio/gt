@@ -28,6 +28,13 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
       "<!DOCTYPE html>",
       fixed = TRUE)
 
+  # Expect that CSS styles are not inlined
+  (path_1 %>%
+      readLines())[9] %>%
+    expect_match(
+      "<style>html {",
+      fixed = TRUE)
+
   # Create a filename with path, having the
   # .htm extension
   path_2 <- tempfile(fileext = ".htm")
@@ -53,6 +60,42 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
     expect_match(
       "<!DOCTYPE html>",
       fixed = TRUE)
+
+  # Expect that CSS styles are not inlined
+  (path_2 %>%
+      readLines())[9] %>%
+    expect_match(
+      "<style>html {",
+      fixed = TRUE)
+
+  # Create a filename with path, having the
+  # .html extension
+  path_3 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_3))
+
+  # Expect that a file does not yet exist
+  # on that path
+  expect_false(file.exists(path_3))
+
+  # Save a gt table based on the exibble dataset
+  # as an HTML file to the `path_3`; ensure
+  # that the CSS styles are indeed inlined
+  exibble %>%
+    gt() %>%
+    gtsave(filename = path_3, inline_css = TRUE)
+
+  # Expect that the content of the file is HTML
+  (path_3 %>%
+      readLines())[1] %>%
+    expect_match(
+      "<!DOCTYPE html>",
+      fixed = TRUE)
+
+  # Expect that CSS styles are indeed inlined
+  (path_3 %>%
+      readLines())[10] %>%
+    expect_match(
+      "<table style.*")
 })
 
 test_that("the `gtsave()` function creates a LaTeX file based on the extension", {
