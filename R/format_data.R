@@ -177,6 +177,13 @@ fmt_number <- function(data,
   } else if (is.character(suffixing) &&
              length(suffixing) == 4){
 
+    # Stop function if the character vector `suffixing`
+    # contains any names
+    if (!is.null(names(suffixing))) {
+      stop("The character vector supplied to `suffixed` cannot contain names.",
+           call. = FALSE)
+    }
+
     # In the case of a four-element character vector
     # we copy those values into `num_suffixes`; the
     # `to_suffix` logical is checked within the
