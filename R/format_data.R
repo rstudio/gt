@@ -204,7 +204,7 @@ fmt_number <- function(data,
   # of numeric values, force `scale_by` to be 1.0
   if (to_suffix) {
 
-    if (!missing(scale_by)) {
+    if (!missing(scale_by) & !identical(scale_by, 1.0)) {
       warning("The value for `scale_by` can't be changed if `suffixing` is ",
               "anything other than `FALSE`. The value provided to `scale_by` ",
               "will be ignored.",
