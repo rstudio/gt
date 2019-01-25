@@ -203,6 +203,14 @@ fmt_number <- function(data,
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
   if (to_suffix) {
+
+    if (!missing(scale_by)) {
+      warning("The value for `scale_by` can't be changed if `suffixing` is ",
+              "anything other than `FALSE`. The value provided to `scale_by` ",
+              "will be ignored.",
+              call. = FALSE)
+    }
+
     scale_by <- 1.0
   }
 
