@@ -107,6 +107,13 @@
 #' @family data formatting functions
 #' @import rlang
 #' @export
+
+# Strings for alignment of non-negative number in formatting functions
+paren_nonneg_start_html <- "<span style=\"visibility: hidden;\">(</span>"
+paren_nonneg_end_html <- "<span style=\"visibility: hidden;\">)</span>"
+paren_nonneg_start_latex <- "\\hphantom{(}"
+paren_nonneg_end_latex <- "\\hphantom{)}"
+  
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
@@ -128,13 +135,76 @@ fmt_number <- function(data,
     stop("The supplied `locale` is not available in the list of supported locales.",
          call. = FALSE)
   }
+  
+  format_fcn_num_factory <- function(posnum_start_str = "", posnum_end_str = "") {
+    
+    function(x) {
+      
+      # Provide an empty string for `sep_mark` if we choose
+      # to not use digit group separators
+      if (!use_seps) {
+        sep_mark <- ""
+      }
 
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+      
+      # Create `x_str` with same length as `x`
+      x_str <- rep(NA_character_, length(x))
+      
+      # Format all non-NA x values
+      x_str[non_na_x] <-
+        formatC(
+          x = x[non_na_x] * scale_by,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = drop_trailing_zeros)
+      
+      # Handle negative values
+      if (negative_val == "parens") {
+        
+        # Determine which of `x` are not NA and also negative
+        negative_x <- x < 0 & !is.na(x)
+        
+        # Apply parentheses to the formatted value and remove
+        # the minus sign
+        x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
+        
+        # Determine non-negative and non-NA `x` for alignment
+        nonneg_x <- x >= 0 & !is.na(x)
+        
+        # Add phantom space to non-negative numbers for alignment
+        x_str[nonneg_x] <- paste0(posnum_start_str, x_str[nonneg_x], posnum_end_str)
+      }
+      
+      # Handle formatting of pattern
+      pre_post_txt <- get_pre_post_txt(pattern)
+      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+      x_str
+    }
   }
-
+  
+  # Create the default formatting function for numbers
+  format_fcn_num_default <-
+    format_fcn_num_factory()
+  
+  # Create the HTML formatting function for numbers
+  format_fcn_num_html <-
+    format_fcn_num_factory(
+      posnum_start_str = paren_nonneg_start_html,
+      posnum_end_str = paren_nonneg_end_html
+    )
+  
+  # Create the LaTeX formatting function for numbers
+  format_fcn_num_latex <-
+    format_fcn_num_factory(
+      posnum_start_str = paren_nonneg_start_latex,
+      posnum_end_str = paren_nonneg_end_latex
+    )
+  
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
@@ -144,126 +214,10 @@ fmt_number <- function(data,
       columns = columns,
       rows = !!rows,
       fns = list(
-        latex = function(x) {
-          
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-          
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-          
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-          
-          # Handle negative values
-          if (negative_val == "parens") {
-            
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-            
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-            
-            # Determine non-negative and non-NA `x` for alignment
-            nonneg_x <- x >= 0 & !is.na(x)
-            
-            # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0("\\hphantom{(}",x_str[nonneg_x], "\\hphantom{)}")
-          }
-          
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        },
-        
-        html = function(x) {
-          
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-          
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-          
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-          
-          # Handle negative values
-          if (negative_val == "parens") {
-            
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-            
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-            
-            # Determine non-negative and non-NA `x` for alignment
-            nonneg_x <- x >= 0 & !is.na(x)
-            
-            # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0("<span style=\"visibility: hidden;\">(</span>",x_str[nonneg_x], "<span style=\"visibility: hidden;\">)</span>")
-          }
-          
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        },
-        
-        default = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        }
-      ))
+        html = format_fcn_num_html,
+        default = format_fcn_num_default,
+        latex = format_fcn_num_latex)
+  )
 }
 
 #' Format values to scientific notation
@@ -508,11 +462,95 @@ fmt_percent <- function(data,
          call. = FALSE)
   }
 
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
+  format_fcn_pct_factory <- function(pct_str, pospct_start_str = "", pospct_end_str = "") {
+    
+    function(x) {
+    
+      # Provide an empty string for `sep_mark` if we choose
+      # to not use digit group separators
+      if (!use_seps) {
+        sep_mark <- ""
+      }  
+      
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+      
+      # Create `x_str` with same length as `x`
+      x_str <- rep(NA_character_, length(x))
+      
+      # Format all non-NA x values
+      x_str[non_na_x] <-
+        formatC(
+          x = x[non_na_x] * 100.0,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = drop_trailing_zeros)
+      
+      if (placement == "right") {
+        
+        x_str[non_na_x] <-
+          paste0(
+            x_str[non_na_x],
+            ifelse(incl_space, paste0(" ", pct_str), pct_str)
+          )
+        
+      } else {
+        
+        x_str[non_na_x] <-
+          paste0(
+            ifelse(incl_space, paste0(pct_str, " "), pct_str),
+            x_str[non_na_x]
+          )
+      }
+      
+      # Handle negative values
+      if (negative_val == "parens") {
+        
+        # Determine which of `x` are not NA and also negative
+        negative_x <- x < 0 & !is.na(x)
+        
+        # Apply parentheses to the formatted value and remove
+        # the minus sign
+        x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
+        
+        # Determine non-negative and non-NA `x` for alignment
+        nonneg_x <- x >= 0 & !is.na(x)
+        
+        # Add phantom space to non-negative numbers for alignment
+        x_str[nonneg_x] <- paste0(pospct_start_str, x_str[nonneg_x], pospct_end_str)
+      }
+      
+      # Handle formatting of pattern
+      pre_post_txt <- get_pre_post_txt(pattern)
+      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+      x_str
+    }
   }
+  
+  # Create the default formatting function for percent
+  format_fcn_pct_default <-
+    format_fcn_pct_factory(
+      pct_str = "%"
+    )
+  
+  # Create the HTML formatting function for percent
+  format_fcn_pct_html <-
+    format_fcn_pct_factory(
+      pct_str = "%",
+      pospct_start_str = paren_nonneg_start_html,
+      pospct_end_str = paren_nonneg_end_html
+    )
+  
+  # Create the LaTeX formatting function for percent
+  format_fcn_pct_latex <-
+    format_fcn_pct_factory(
+      pct_str = "\\%",
+      pospct_start_str = paren_nonneg_start_latex,
+      pospct_end_str = paren_nonneg_end_latex
+    )  
 
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
@@ -523,176 +561,10 @@ fmt_percent <- function(data,
       columns = columns,
       rows = !!rows,
       fns = list(
-        latex = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * 100.0,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-
-          if (placement == "right") {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " \\%", "\\%")
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                ifelse(incl_space, "\\% ", "\\%"),
-                x_str[non_na_x]
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-            
-            # Determine non-negative and non-NA `x` for alignment
-            nonneg_x <- x >= 0 & !is.na(x)
-            
-            # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0("\\hphantom{(}", x_str[nonneg_x], "\\hphantom{)}")
-          }
-
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        },
-        html = function(x) {
-          
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-          
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-          
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * 100.0,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-          
-          if (placement == "right") {
-            
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " %", "%")
-              )
-            
-          } else {
-            
-            x_str[non_na_x] <-
-              paste0(
-                ifelse(incl_space, "% ", "%"),
-                x_str[non_na_x]
-              )
-          }
-          
-          # Handle negative values
-          if (negative_val == "parens") {
-            
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-            
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-            
-          # Determine non-negative and non-NA `x` for alignment
-          nonneg_x <- x >= 0 & !is.na(x)
-          
-          # Add phantom space to non-negative numbers for alignment
-          x_str[nonneg_x] <- paste0("<span style=\"visibility: hidden;\">(</span>",x_str[nonneg_x], "<span style=\"visibility: hidden;\">)</span>")
-          }
-          
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-          
-        },
-        default = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * 100.0,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-
-          if (placement == "right") {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " %", "%")
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                ifelse(incl_space, "% ", "%"),
-                x_str[non_na_x]
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        }
-      ))
+        html = format_fcn_pct_html,
+        default = format_fcn_pct_default,
+        latex = format_fcn_pct_latex)
+  )
 }
 
 #' Format values as currencies
@@ -817,12 +689,6 @@ fmt_currency <- function(data,
          call. = FALSE)
   }
 
-  # Get the currency string for the HTML context
-  currency_str_html <- get_currency_str(currency)
-
-  # Get the currency string for the non-HTML context
-  currency_str <- get_currency_str(currency, fallback_to_code = TRUE)
-
   # Get the number of decimal places
   if (is.null(decimals) & use_subunits) {
 
@@ -837,197 +703,112 @@ fmt_currency <- function(data,
     decimals <- 0
   }
 
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
+  format_fcn_curr_factory <- function(currency_str, poscurr_start_str = "", poscurr_end_str = "") {
+    
+    function(x) {
+      
+      # Provide an empty string for `sep_mark` if we choose
+      # to not use digit group separators
+      if (!use_seps) {
+        sep_mark <- ""
+      }  
+      
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+      
+      # Determine which of `x` are not NA and also negative
+      negative_x <- x < 0 & !is.na(x)
+      
+      # Create `x_str` with same length as `x`
+      x_str <- rep(NA_character_, length(x))
+      
+      # Format all non-NA x values
+      x_str[non_na_x] <-
+        formatC(
+          x = x[non_na_x] * scale_by,
+          digits = decimals,
+          mode = "double",
+          big.mark = sep_mark,
+          decimal.mark = dec_mark,
+          format = "f",
+          drop0trailing = FALSE)
+      
+      # Handle placement of the currency symbol
+      if (placement == "left") {
+        
+        x_str[non_na_x] <-
+          paste0(
+            currency_str,
+            ifelse(incl_space, " ", ""), x_str[non_na_x]
+          )
+        
+      } else {
+        
+        x_str[non_na_x] <-
+          paste0(
+            x_str[non_na_x], ifelse(incl_space, " ", ""),
+            currency_str
+          )
+      }
+      
+      # Handle negative values
+      if (negative_val == "parens") {
+        
+        # Apply parentheses to the formatted value and remove
+        # the minus sign
+        x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
+        
+        # Determine non-negative and non-NA `x` for alignment
+        nonneg_x <- x >= 0 & !is.na(x)
+        
+        # Add phantom space to non-negative numbers for alignment
+        x_str[nonneg_x] <- paste0(poscurr_start_str, x_str[nonneg_x], poscurr_end_str)
+      }
+      
+      # Handle formatting of pattern
+      pre_post_txt <- get_pre_post_txt(pattern)
+      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+      x_str
+      }
   }
-
+  
+  # Create the default formatting function for currency
+  format_fcn_curr_default <-
+    format_fcn_curr_factory(
+      currency_str = get_currency_str(currency, fallback_to_code = TRUE)
+    )
+  
+  # Create the HTML formatting function for currency
+  format_fcn_curr_html <-
+    format_fcn_curr_factory(
+      currency_str = get_currency_str(currency),
+      poscurr_start_str = paren_nonneg_start_html,
+      poscurr_end_str = paren_nonneg_end_html
+    )
+  
+  # Create the LaTeX formatting function for currency
+  format_fcn_curr_latex <-
+    format_fcn_curr_factory(
+      currency_str = markdown_to_latex(get_currency_str(currency, fallback_to_code = TRUE)),
+      poscurr_start_str = paren_nonneg_start_latex,
+      poscurr_end_str = paren_nonneg_end_latex
+    )  
+    
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
-
+  
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
       columns = columns,
       rows = !!rows,
       fns = list(
-        latex = function(x) {
-          
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-          
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-          
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-          
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-          
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-            
-            x_str[non_na_x] <-
-              paste0(
-                markdown_to_latex(currency_str),
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-            
-          } else {
-            
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x], ifelse(incl_space, " ", ""),
-                markdown_to_latex(currency_str)
-              )
-          }
-          
-          # Handle negative values
-          if (negative_val == "parens") {
-            
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-            
-            # Determine non-negative and non-NA `x` for alignment
-            nonneg_x <- x >= 0 & !is.na(x)
-            
-            # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0("\\hphantom{(}", x_str[nonneg_x], "\\hphantom{)}")
-          }
-          
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        },
-        
-        html = function(x) {
-          
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-          
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-          
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-          
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-          
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-            
-            x_str[non_na_x] <-
-              paste0(
-                currency_str_html,
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-            
-          } else {
-            
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " ", ""), currency_str_html
-              )
-          }
-          
-          # Handle negative values
-          if (negative_val == "parens") {
-            
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-            
-            # Determine non-negative and non-NA `x` for alignment
-            nonneg_x <- x >= 0 & !is.na(x)
-            
-            # Add phantom space to non-negative numbers for alignment
-            x_str[nonneg_x] <- paste0('<span style="visibility: hidden;">(</span>',x_str[nonneg_x], '<span style="visibility: hidden;">)</span>')
-          }
-          
-          
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        },
-        
-        default = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-
-            x_str[non_na_x] <-
-              paste0(
-                currency_str,
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " ", ""), currency_str
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
-          x_str
-        }
-        ))
+        html = format_fcn_curr_html,
+        default = format_fcn_curr_default,
+        latex = format_fcn_curr_latex)
+  )
 }
-
+  
 #' Format values as dates
 #'
 #' Format input date values that are character-based and expressed according to
