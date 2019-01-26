@@ -10,6 +10,8 @@
 #'   the table subtitle. We can elect to use the \code{\link{md}()} and
 #'   \code{\link{html}()} helper functions to style the text as Markdown or to
 #'   retain HTML elements in the text.
+#' @param label text used for cross-referencing and table numbering in LaTeX.
+#'   Will be inserted in \code{\\label{}} inside the caption. 
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -32,17 +34,24 @@
 #' @export
 tab_header <- function(data,
                        title,
-                       subtitle = NULL) {
+                       subtitle = NULL,
+                       label = NULL) {
 
   # Handle the optional `subtitle` text
   if (is.null(subtitle)) {
     subtitle <- ""
   }
 
+  # Handle the optional `label` text
+  if (is.null(label)) {
+    label <- ""
+  }
+
   attr(data, "heading") <-
     list(
       title = title,
-      subtitle = subtitle)
+      subtitle = subtitle,
+      label = label)
 
   data
 }

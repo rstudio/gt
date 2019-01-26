@@ -346,20 +346,36 @@ create_heading_component <- function(heading,
   if (output == "latex") {
 
     heading_component <-
-      paste0(
-        "\\caption*{\n",
-        "\\large ", paste0(heading$title, footnote_title_glyphs), "\\\\ \n")
+      paste0("  \\large ", 
+             heading$title, 
+             footnote_title_glyphs)
 
-    if ("subtitle" %in% names(heading)) {
+    # non-empty subtitle
+    if ("subtitle" %in% names(heading) && !grepl("^\\s*$", heading$subtitle)) {
 
       heading_component <-
-        paste0(
-          heading_component,
-          paste0(
-            "\\small ", paste0(heading$subtitle, footnote_subtitle_glyphs), "\\\\ \n"))
+        paste0(heading_component, 
+               " \\\\ \n  \\small ", 
+               heading$subtitle, 
+               footnote_subtitle_glyphs)
     }
 
-    heading_component <- paste0(heading_component, "} \\\\ \n")
+    # non-empty label
+    if ("label" %in% names(heading) && !grepl("^\\s*$", heading$label)) {
+      heading_component <-
+        paste0("\\caption{\n", 
+               heading_component, 
+               "\n  \\label{", 
+               heading$label, 
+               "}\n} \\\\\n")
+    # empty label
+    } else {
+      heading_component <-
+        paste0("\\caption*{\n", 
+               heading_component, 
+               "\n} \\\\\n")
+
+    }
   }
 
   heading_component

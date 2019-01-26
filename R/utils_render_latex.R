@@ -50,14 +50,27 @@ latex_group_row <- function(group_name,
 }
 
 #' @noRd
-create_table_start_l <- function(col_alignment) {
+create_table_start_l <- function(col_alignment, heading) {
 
-  paste0(
-    "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
-    "\\begin{longtable}{",
-    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
-    "}\n",
-    collapse = "")
+  table_start <-
+    paste0(
+      "\\begin{longtable}{",
+      col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+      "}\n",
+      collapse = "")
+
+  if ("label" %in% names(heading) && !grepl("^\\s*$", heading$label)) {
+    table_start <- paste0(
+        "\\captionsetup[table]{labelformat=default,skip=1pt}\n",
+        table_start)
+  } else {
+    table_start <- paste0(
+        "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
+        table_start)
+  }
+
+  return(table_start)
+
 }
 
 # Create the columns component of a table

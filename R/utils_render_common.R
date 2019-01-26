@@ -620,8 +620,9 @@ process_heading <- function(heading, context) {
   if (!is.null(heading)) {
     title <- heading$title %>% process_text(context)
     subtitle <- heading$subtitle %>% process_text(context)
+    label <- heading$label
 
-    return(list(title = title, subtitle = subtitle))
+    return(list(title = title, subtitle = subtitle, label = label))
   }
 }
 

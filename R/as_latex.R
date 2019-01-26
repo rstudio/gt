@@ -72,7 +72,7 @@ as_latex <- function(data) {
     row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a LaTeX fragment for the start of the table
-    table_start <- create_table_start_l(col_alignment)
+    table_start <- create_table_start_l(col_alignment, heading)
 
     # Create the heading component of the table
     heading_component <-
