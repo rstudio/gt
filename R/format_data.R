@@ -153,56 +153,12 @@ fmt_number <- function(data,
     sep_mark <- ""
   }
 
-  # Determine whether large-number suffixing is being
-  # used and set the appropriate inputs
-  if (is.logical(suffixing) &&
-      length(suffixing) == 1 &&
-      suffixing) {
-
-    # If `suffixing` is TRUE, the `to_suffix`
-    # logical will also be set to TRUE and the
-    # default set of symbols will be assigned
-    # to `num_suffixes`
-    to_suffix <- TRUE
-    num_suffixes <- c("K", "M", "B", "T")
-
-  } else if (is.logical(suffixing) &&
-             length(suffixing) == 1 &&
-             suffixing == FALSE) {
-
-    # If `suffixing` is FALSE, the `to_suffix`
-    # logical will also be set to FALSE
-    to_suffix <- FALSE
-
-  } else if (is.character(suffixing) &&
-             length(suffixing) == 4){
-
-    # Stop function if the character vector `suffixing`
-    # contains any names
-    if (!is.null(names(suffixing))) {
-      stop("The character vector supplied to `suffixed` cannot contain names.",
-           call. = FALSE)
-    }
-
-    # In the case of a four-element character vector
-    # we copy those values into `num_suffixes`; the
-    # `to_suffix` logical is checked within the
-    # `fmt()` function
-    to_suffix <- TRUE
-    num_suffixes <- suffixing
-
-  } else {
-
-    # Stop function if the input to `suffixing` isn't valid
-    stop("The value provided to `suffixing` must either be:\n",
-         " * `TRUE` or `FALSE` (the default)\n",
-         " * a four-element character vector with suffixing text",
-         call. = FALSE)
-  }
+  # Get the `suffixing_inputs`
+  suffixing_inputs <- get_suffixing_inputs(suffixing)
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
-  if (to_suffix) {
+  if (suffixing_inputs$to_suffix) {
 
     if (!missing(scale_by) & !identical(scale_by, 1.0)) {
       warning("The value for `scale_by` can't be changed if `suffixing` is ",
@@ -231,36 +187,13 @@ fmt_number <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
-          if (to_suffix) {
+          # Augment data in `suffixing_inputs` list
+          if (suffixing_inputs$to_suffix) {
 
-            # Prepare vectors of scalars
-            scale_by <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ 1,
-                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
-                  !is.na(num_suffixes[1]) ~ 1/1E3,
-                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
-                  !is.na(num_suffixes[2]) ~ 1/1E6,
-                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
-                  !is.na(num_suffixes[3]) ~ 1/1E9,
-                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
-                TRUE ~ 1
-              )
+            suffixing_inputs <-
+              get_suffixes_scalars(x = x[non_na_x], decimals, suffixing_inputs)
 
-            # Perform NA replacement to vector of
-            # suffix symbols
-            num_suffixes[which(is.na(num_suffixes))] <- ""
-
-            # Prepare vector of suffixes
-            suffixes <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ "",
-                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
-                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
-                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
-                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
-                TRUE ~ ""
-              )
+            scale_by <- suffixing_inputs$scale_by
           }
 
           # Format all non-NA x values
@@ -276,11 +209,11 @@ fmt_number <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (to_suffix) {
+          if (suffixing_inputs$to_suffix) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffixing_inputs$suffixes)
           }
 
           # Handle negative values
@@ -817,49 +750,20 @@ fmt_currency <- function(data,
     sep_mark <- ""
   }
 
-  # Determine whether large-number suffixing is being
-  # used and set the appropriate inputs
-  if (is.logical(suffixing) &&
-      length(suffixing) == 1 &&
-      suffixing) {
-
-    # If `suffixing` is TRUE, the `to_suffix`
-    # logical will also be set to TRUE and the
-    # default set of symbols will be assigned
-    # to `num_suffixes`
-    to_suffix <- TRUE
-    num_suffixes <- c("K", "M", "B", "T")
-
-  } else if (is.logical(suffixing) &&
-             length(suffixing) == 1 &&
-             suffixing == FALSE) {
-
-    # If `suffixing` is FALSE, the `to_suffix`
-    # logical will also be set to FALSE
-    to_suffix <- FALSE
-
-  } else if (is.character(suffixing) &&
-             length(suffixing) == 4){
-
-    # In the case of a four-element character vector
-    # we copy those values into `num_suffixes`; the
-    # `to_suffix` logical is checked within the
-    # `fmt()` function
-    to_suffix <- TRUE
-    num_suffixes <- suffixing
-
-  } else {
-
-    # Stop function if the input to `suffixing` isn't valid
-    stop("The value provided to `suffixing` must either be:\n",
-         " * `TRUE` or `FALSE` (the default)\n",
-         " * a four-element character vector with suffixing text",
-         call. = FALSE)
-  }
+  # Get the `suffixing_inputs`
+  suffixing_inputs <- get_suffixing_inputs(suffixing)
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
-  if (to_suffix) {
+  if (suffixing_inputs$to_suffix) {
+
+    if (!missing(scale_by) & !identical(scale_by, 1.0)) {
+      warning("The value for `scale_by` can't be changed if `suffixing` is ",
+              "anything other than `FALSE`. The value provided to `scale_by` ",
+              "will be ignored.",
+              call. = FALSE)
+    }
+
     scale_by <- 1.0
   }
 
@@ -883,36 +787,13 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
-          if (to_suffix) {
+          # Augment data in `suffixing_inputs` list
+          if (suffixing_inputs$to_suffix) {
 
-            # Prepare vector of scalars
-            scale_by <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ 1,
-                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
-                  !is.na(num_suffixes[1]) ~ 1/1E3,
-                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
-                  !is.na(num_suffixes[2])~ 1/1E6,
-                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
-                  !is.na(num_suffixes[3])~ 1/1E9,
-                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
-                TRUE ~ 1
-              )
+            suffixing_inputs <-
+              get_suffixes_scalars(x = x[non_na_x], decimals, suffixing_inputs)
 
-            # Perform NA replacement to vector of
-            # suffix symbols
-            num_suffixes[which(is.na(num_suffixes))] <- ""
-
-            # Prepare vector of suffixes
-            suffixes <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ "",
-                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
-                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
-                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
-                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
-                TRUE ~ ""
-              )
+            scale_by <- suffixing_inputs$scale_by
           }
 
           # Format all non-NA x values
@@ -928,11 +809,11 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (to_suffix) {
+          if (suffixing_inputs$to_suffix) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffixing_inputs$suffixes)
           }
 
           # Handle placement of the currency symbol
@@ -977,38 +858,16 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
-          if (to_suffix) {
+          # Augment data in `suffixing_inputs` list
+          if (suffixing_inputs$to_suffix) {
 
-            # Prepare vector of scalars
-            scale_by <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ 1,
-                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
-                  !is.na(num_suffixes[1]) ~ 1/1E3,
-                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
-                  !is.na(num_suffixes[2])~ 1/1E6,
-                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
-                  !is.na(num_suffixes[3])~ 1/1E9,
-                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
-                TRUE ~ 1
-              )
+            suffixing_inputs <-
+              get_suffixes_scalars(x = x[non_na_x], decimals, suffixing_inputs)
 
-            # Perform NA replacement to vector of
-            # suffix symbols
-            num_suffixes[which(is.na(num_suffixes))] <- ""
-
-            # Prepare vector of suffixes
-            suffixes <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ "",
-                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
-                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
-                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
-                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
-                TRUE ~ ""
-              )
+            scale_by <- suffixing_inputs$scale_by
           }
 
+          # Format all non-NA x values
           x_str[non_na_x] <-
             formatC(
               x = x[non_na_x] * scale_by,
@@ -1021,11 +880,11 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (to_suffix) {
+          if (suffixing_inputs$to_suffix) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffixing_inputs$suffixes)
           }
 
           # Handle placement of the currency symbol
@@ -1070,36 +929,13 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
-          if (to_suffix) {
+          # Augment data in `suffixing_inputs` list
+          if (suffixing_inputs$to_suffix) {
 
-            # Prepare vector of scalars
-            scale_by <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ 1,
-                abs(x[non_na_x]) >= 1E3 & abs(x[non_na_x]) < 1E6 &
-                  !is.na(num_suffixes[1]) ~ 1/1E3,
-                abs(x[non_na_x]) >= 1E6 & abs(x[non_na_x]) < 1E9 &
-                  !is.na(num_suffixes[2])~ 1/1E6,
-                abs(x[non_na_x]) >= 1E7 & abs(x[non_na_x]) < 1E12 &
-                  !is.na(num_suffixes[3])~ 1/1E9,
-                abs(x[non_na_x]) >= 1E12 ~ 1/1E12,
-                TRUE ~ 1
-              )
+            suffixing_inputs <-
+              get_suffixes_scalars(x = x[non_na_x], decimals, suffixing_inputs)
 
-            # Perform NA replacement to vector of
-            # suffix symbols
-            num_suffixes[which(is.na(num_suffixes))] <- ""
-
-            # Prepare vector of suffixes
-            suffixes <-
-              dplyr::case_when(
-                abs(x[non_na_x]) < 1E3 ~ "",
-                abs(x[non_na_x]) < 1E6 ~ num_suffixes[1],
-                abs(x[non_na_x]) < 1E9 ~ num_suffixes[2],
-                abs(x[non_na_x]) < 1E12 ~ num_suffixes[3],
-                abs(x[non_na_x]) >= 1E12 ~ num_suffixes[4],
-                TRUE ~ ""
-              )
+            scale_by <- suffixing_inputs$scale_by
           }
 
           # Format all non-NA x values
@@ -1115,11 +951,11 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (to_suffix) {
+          if (suffixing_inputs$to_suffix) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffixing_inputs$suffixes)
           }
 
           # Handle placement of the currency symbol
