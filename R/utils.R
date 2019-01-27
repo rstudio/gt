@@ -384,6 +384,104 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+# Get large-number suffixing inputs
+get_suffixing_inputs <- function(suffixing) {
+
+  if (isFALSE(suffixing)) {
+    to_suffix <- FALSE
+    to_suffix <- NULL
+  }
+
+  # Determine whether large-number suffixing is being
+  # used and set the appropriate inputs
+  if (isTRUE(suffixing)) {
+
+    # If `suffixing` is TRUE, the `to_suffix`
+    # logical will also be set to TRUE and the
+    # default set of symbols will be assigned
+    # to `num_suffixes`
+    to_suffix <- TRUE
+    num_suffixes <- c("K", "M", "B", "T")
+
+  } else if (isFALSE(suffixing)) {
+
+    # If `suffixing` is FALSE, the `to_suffix`
+    # logical will also be set to FALSE
+    to_suffix <- FALSE
+    num_suffixes <- NA
+
+  } else if (is.character(suffixing) &&
+             length(suffixing) == 4){
+
+    # Stop function if the character vector `suffixing`
+    # contains any names
+    if (!is.null(names(suffixing))) {
+      stop("The character vector supplied to `suffixed` cannot contain names.",
+           call. = FALSE)
+    }
+
+    # In the case of a four-element character vector
+    # we copy those values into `num_suffixes`; the
+    # `to_suffix` logical is checked within the
+    # `fmt()` function
+    to_suffix <- TRUE
+    num_suffixes <- suffixing
+
+  } else {
+
+    # Stop function if the input to `suffixing` isn't valid
+    stop("The value provided to `suffixing` must either be:\n",
+         " * `TRUE` or `FALSE` (the default)\n",
+         " * a four-element character vector with suffixing text",
+         call. = FALSE)
+  }
+
+  list(
+    to_suffix = to_suffix,
+    num_suffixes = num_suffixes
+  )
+}
+
+# Augment the `suffixing_inputs` list object
+get_suffixes_scalars <- function(x, decimals, suffixing_inputs) {
+
+  # Prepare vector of `scale_by` scalars
+  suffixing_inputs$scale_by <-
+    dplyr::case_when(
+      abs(round(x, decimals)) < 1E3 ~ 1,
+      abs(round(x, decimals)) >= 1E3 &
+        abs(round(x, decimals)) < 1E6 &
+        !is.na(suffixing_inputs$num_suffixes[1]) ~ 1/1E3,
+      abs(round(x, decimals)) >= 1E6 &
+        abs(round(x, decimals)) < 1E9 &
+        !is.na(suffixing_inputs$num_suffixes[2]) ~ 1/1E6,
+      abs(round(x, decimals)) >= 1E7 &
+        abs(round(x, decimals)) < 1E12 &
+        !is.na(suffixing_inputs$num_suffixes[3]) ~ 1/1E9,
+      abs(round(x, decimals)) >= 1E12 ~ 1/1E12,
+      TRUE ~ 1
+    )
+
+  # Perform NA replacement to vector of
+  # suffix symbols
+  suffixing_inputs$num_suffixes[
+    is.na(suffixing_inputs$num_suffixes)
+    ] <- ""
+
+  # Prepare vector of suffixes
+  suffixing_inputs$suffixes <-
+    dplyr::case_when(
+      abs(round(x, decimals)) < 1E3 ~ "",
+      abs(round(x, decimals)) < 1E6 ~ suffixing_inputs$num_suffixes[1],
+      abs(round(x, decimals)) < 1E9 ~ suffixing_inputs$num_suffixes[2],
+      abs(round(x, decimals)) < 1E12 ~ suffixing_inputs$num_suffixes[3],
+      abs(round(x, decimals)) >= 1E12 ~ suffixing_inputs$num_suffixes[4],
+      TRUE ~ ""
+    )
+
+  suffixing_inputs
+}
+
 # Derive a label based on a formula or a function name
 #' @import rlang
 #' @noRd
