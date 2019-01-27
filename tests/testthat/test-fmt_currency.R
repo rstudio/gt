@@ -338,4 +338,58 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
       )
   )
 
+  # Create an input data frame with a single
+  # numeric column and with one row
+  data_tbl_2 <- data.frame(num = 999.9999)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_2` dataset
+  tab_2 <- gt(data = data_tbl_2)
+
+  #
+  # Adjust the `decimals` value to verify that
+  # rounding is taken into consideration when
+  # applying large-number scaling
+  #
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 1,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.0K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.00K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 3,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.000K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 4,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$999.9999")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 5,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$999.99990")
+
 })
