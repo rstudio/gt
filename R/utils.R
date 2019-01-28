@@ -372,6 +372,13 @@ markdown_to_text <- function(text) {
     unname()
 }
 
+# Provide HTML and LaTeX strings for alignment of formatters using parentheses
+#' @noRD
+paren_nonneg_start_html <- "<span style=\"visibility: hidden;\">(</span>"
+paren_nonneg_end_html <- "<span style=\"visibility: hidden;\">)</span>"
+paren_nonneg_start_latex <- "\\hphantom{(}"
+paren_nonneg_end_latex <- "\\hphantom{)}"
+
 # Get prepending and appending text based on a simple pattern
 get_pre_post_txt <- function(pattern) {
 

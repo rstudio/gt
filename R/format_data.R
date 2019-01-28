@@ -108,12 +108,6 @@
 #' @import rlang
 #' @export
 
-# Strings for alignment of non-negative number in formatting functions
-paren_nonneg_start_html <- "<span style=\"visibility: hidden;\">(</span>"
-paren_nonneg_end_html <- "<span style=\"visibility: hidden;\">)</span>"
-paren_nonneg_start_latex <- "\\hphantom{(}"
-paren_nonneg_end_latex <- "\\hphantom{)}"
-  
 fmt_number <- function(data,
                        columns,
                        rows = NULL,
