@@ -384,6 +384,20 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+# Create an `isFALSE` helper function that
+# works with earlier versions of R
+is_x_false = function(x) {
+
+  if (getRversion() >= 3.5) {
+
+    isFALSE(x)
+
+  } else {
+
+    is.logical(x) && length(x) == 1L && !is.na(x) && !x
+  }
+}
+
 # Get large-number suffixing inputs
 get_suffixing_inputs <- function(suffixing) {
 
