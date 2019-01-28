@@ -401,7 +401,7 @@ is_x_false = function(x) {
 # Get large-number suffixing inputs
 get_suffixing_inputs <- function(suffixing) {
 
-  if (isFALSE(suffixing)) {
+  if (is_x_false(suffixing)) {
     to_suffix <- FALSE
     to_suffix <- NULL
   }
@@ -417,7 +417,7 @@ get_suffixing_inputs <- function(suffixing) {
     to_suffix <- TRUE
     num_suffixes <- c("K", "M", "B", "T")
 
-  } else if (isFALSE(suffixing)) {
+  } else if (is_x_false(suffixing)) {
 
     # If `suffixing` is FALSE, the `to_suffix`
     # logical will also be set to FALSE
