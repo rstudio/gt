@@ -1384,6 +1384,45 @@ fmt_missing <- function(data,
       ))
 }
 
+
+#' @export
+fmt_ggplot <- fmt_gg <- function(data,
+                                 columns,
+                                 rows = NULL,
+                                 height = 100,
+                                 aspect_ratio = 1.0) {
+
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions (as a function list) to `fmt()`
+  fmt(data = data,
+      columns = columns,
+      rows = !!rows,
+      fns = list(
+        html = function(x) {
+
+          map(
+            x,
+            ggplot_image,
+            height = height,
+            aspect_ratio = aspect_ratio
+          )
+
+        },
+        latex = function(x) {
+
+          stop("This formatter is not yet implemented for LaTeX output.", call. = FALSE)
+        },
+        default = function(x) {
+
+          stop("This formatter is not yet implemented.", call. = FALSE)
+        }
+      ))
+
+}
+
 #' Set a column format with a formatter function
 #'
 #' The \code{fmt()} function provides greater control in formatting raw data
