@@ -401,11 +401,6 @@ is_x_false = function(x) {
 # Get large-number suffixing inputs
 get_suffixing_inputs <- function(suffixing) {
 
-  if (is_x_false(suffixing)) {
-    to_suffix <- FALSE
-    to_suffix <- NULL
-  }
-
   # Determine whether large-number suffixing is being
   # used and set the appropriate inputs
   if (isTRUE(suffixing)) {
