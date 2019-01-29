@@ -83,21 +83,33 @@ migrate_unformatted_to_output <- function(data_df,
 
     if (inherits(data_df[[colname]], "list")) {
 
+
       # Use `lapply()` so that all values could be treated independently
       output_df[[colname]][row_index] <-
         lapply(
           data_df[[colname]][row_index],
           function(x) {
-            x %>%
-              format(
-                drop0trailing = FALSE,
-                trim = TRUE,
-                justify = "none") %>%
-              tidy_gsub("\\s+$", "") %>%
-              process_text(context) %>%
-              paste(collapse = ", ")
+
+            str(list(context = context, x = x), max = 3)
+
+            if (inherits(x, "gg") && context == "html") {
+
+              x %>% ggplot_image()
+
+            } else {
+
+              x %>%
+                format(
+                  drop0trailing = FALSE,
+                  trim = TRUE,
+                  justify = "none") %>%
+                tidy_gsub("\\s+$", "") %>%
+                process_text(context) %>%
+                paste(collapse = ", ")
+            }
           }
         )
+
 
     } else {
 
