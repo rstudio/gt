@@ -90,8 +90,6 @@ migrate_unformatted_to_output <- function(data_df,
           data_df[[colname]][row_index],
           function(x) {
 
-            str(list(context = context, x = x), max = 3)
-
             if (inherits(x, "gg") && context == "html") {
 
               x %>% ggplot_image()
