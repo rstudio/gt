@@ -255,9 +255,10 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2,
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("-1,800.00", "-17.00", "-16.00Mia.", "-150.00Mio.", "-1.40Mio.",
-      "-13,000.00", "-1,200.00", "-11.00", "0.00", "11.00", "1,200.00",
-      "13,000.00", "1.40Mio.", "150.00Mio.", "16.00Mia.", "17.00", "1,800.00"))
+    c("-1,800,000.00Mia.", "-17,000.00Mia.", "-16.00Mia.", "-150.00Mio.",
+      "-1.40Mio.", "-13,000.00", "-1,200.00", "-11.00", "0.00", "11.00",
+      "1,200.00", "13,000.00", "1.40Mio.", "150.00Mio.", "16.00Mia.",
+      "17,000.00Mia.", "1,800,000.00Mia."))
 
   # Format the `num` column to 2 decimal places, have the
   # `suffixing` option set to FALSE (the default option, where
