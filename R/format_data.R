@@ -1384,7 +1384,28 @@ fmt_missing <- function(data,
       ))
 }
 
-
+#' Format ggplot cells
+#'
+#' It's possible to include \pkg{ggplot2} plots within a list column of the
+#' input table data. The common pattern toward obtaining these plots is through
+#' mutation of a list column containing all the \code{data} required for a
+#' plot (e.g., \code{<data> %>% dplyr::group_by(<var>) %>%
+#' tidyr::nest(.key = plot) %>%
+#' dplyr::mutate(plot = purrr::map(plot, <ggplot code>))}). While \pkg{gt} will
+#' automatically format columns containing \pkg{ggplot2} plots, using the
+#' \code{fmt_ggplot()} function allows us to specify specific \code{rows} and
+#' set options for the plots' \code{height} and \code{aspect_ratio}.
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
+#'
+#' @inheritParams fmt_number
+#' @inheritParams ggplot_image
+#' @return an object of class \code{gt_tbl}.
 #' @export
 fmt_ggplot <- fmt_gg <- function(data,
                                  columns,
