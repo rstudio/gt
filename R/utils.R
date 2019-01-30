@@ -517,7 +517,7 @@ get_suffixing_inputs <- function(suffixing) {
     # If `suffixing` is FALSE, the `to_suffix`
     # logical will also be set to FALSE
     to_suffix <- FALSE
-    num_suffixes <- NA
+    num_suffixes <- NULL
 
   } else if (is.character(suffixing) &&
              length(suffixing) == 4){
