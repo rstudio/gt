@@ -438,6 +438,52 @@ non_na_index <- function(values, index, default_value = NA) {
   positions[index]
 }
 
+num_suffix <- function(x, suffixes = c("K", "M", "B", "T"), base = 1000) {
+
+  if (length(suffixes) == 0) {
+
+    return(
+      tibble(
+        scale_by = rep_len(1, length(x)),
+        suffix = rep_len("", length(x))
+      )
+    )
+  }
+
+  i <- floor(log(abs(x), base = base))
+  i <- pmin(i, length(suffixes))
+
+  i[is.infinite(i) | i == 0] <- NA_integer_
+
+  suffix_index <-
+    non_na_index(
+      values = suffixes,
+      index = i,
+      default_value = 0
+    )
+
+  # # Replace any zeros in `suffix_index` with NAs
+  suffix_index[suffix_index == 0] <- NA_integer_
+
+  # Get a vector of suffix text that is to be
+  # applied to the scaled values
+  applied_suffixes <- suffixes[suffix_index]
+
+  # Replace any NAs in `applied_suffixes` with an
+  # empty string
+  applied_suffixes[is.na(applied_suffixes)] <- ""
+
+  # Replace any NAs in `suffix_index` with zeros
+  suffix_index[is.na(suffix_index)] <- 0
+
+  # Create and return a tibble with `scale_by`
+  # and `suffix` values
+  tibble(
+    scale_by = 1 / base^suffix_index,
+    suffix = applied_suffixes
+  )
+}
+
 # Create an `isFALSE` helper function that
 # works with earlier versions of R
 is_x_false = function(x) {
