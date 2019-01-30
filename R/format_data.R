@@ -158,7 +158,7 @@ fmt_number <- function(data,
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
-  if (suffixing_inputs$to_suffix) {
+  if (!is.null(suffixing_inputs$num_suffixes)) {
 
     if (!missing(scale_by) && !identical(scale_by, 1.0)) {
       warning("The value for `scale_by` can't be changed if `suffixing` is ",
@@ -184,16 +184,20 @@ fmt_number <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          suffix_df <-
+            num_suffix(
+              x = round(x[non_na_x], decimals),
+              suffixes = suffixing_inputs$num_suffixes
+            )
+
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
-          # Augment data in `suffixing_inputs` list
-          if (suffixing_inputs$to_suffix) {
+          # Get local variables `scale_by` and `suffixes`
+          if (!is.null(suffixing_inputs$num_suffixes)) {
 
-            suffixing_inputs <-
-              get_suffixes_scalars(x = x[non_na_x], decimals, suffixing_inputs)
-
-            scale_by <- suffixing_inputs$scale_by
+            scale_by <- suffix_df$scale_by[non_na_x]
+            suffixes <- suffix_df$suffix[non_na_x]
           }
 
           # Format all non-NA x values
@@ -209,11 +213,11 @@ fmt_number <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (suffixing_inputs$to_suffix) {
+          if (!is.null(suffixing_inputs$num_suffixes)) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixing_inputs$suffixes)
+              paste0(x_str[non_na_x], suffixes)
           }
 
           # Handle negative values
