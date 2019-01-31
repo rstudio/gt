@@ -505,7 +505,7 @@ get_suffixing_inputs <- function(suffixing) {
   # used and set the appropriate inputs
   if (isTRUE(suffixing)) {
 
-    # If `suffixing` is TRUE, the `to_suffix`
+    # If `suffixing` is TRUE, the `num_suffixes`
     # logical will also be set to TRUE and the
     # default set of symbols will be assigned
     # to `num_suffixes`
@@ -513,8 +513,8 @@ get_suffixing_inputs <- function(suffixing) {
 
   } else if (is_x_false(suffixing)) {
 
-    # If `suffixing` is FALSE, the `to_suffix`
-    # logical will also be set to FALSE
+    # If `suffixing` is FALSE, the `num_suffixes`
+    # will also given as NULL
     num_suffixes <- NULL
 
   } else if (is.character(suffixing)){
@@ -526,10 +526,8 @@ get_suffixing_inputs <- function(suffixing) {
            call. = FALSE)
     }
 
-    # In the case of a four-element character vector
-    # we copy those values into `num_suffixes`; the
-    # `to_suffix` logical is checked within the
-    # `fmt()` function
+    # In the case of a character vector, we copy
+    # those values into `num_suffixes`
     num_suffixes <- suffixing
 
   } else {
