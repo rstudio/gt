@@ -297,12 +297,25 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2, currency = "EUR", locale = "de_DE",
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("&#8364;-1.800,00", "&#8364;-17,00", "&#8364;-16,00Mia.",
+    c("&#8364;-1.800.000,00Mia.", "&#8364;-17.000,00Mia.", "&#8364;-16,00Mia.",
       "&#8364;-150,00Mio.", "&#8364;-1,40Mio.", "&#8364;-13.000,00",
       "&#8364;-1.200,00", "&#8364;-11,00", "&#8364;0,00", "&#8364;11,00",
       "&#8364;1.200,00", "&#8364;13.000,00", "&#8364;1,40Mio.",
-      "&#8364;150,00Mio.", "&#8364;16,00Mia.", "&#8364;17,00",
-      "&#8364;1.800,00"))
+      "&#8364;150,00Mio.", "&#8364;16,00Mia.", "&#8364;17.000,00Mia.",
+      "&#8364;1.800.000,00Mia."))
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to use custom symbols with some NAs
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = c("K", NA, "Bn", NA)) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("$-1,800,000.00Bn", "$-17,000.00Bn", "$-16.00Bn", "$-150,000.00K",
+      "$-1,400.00K", "$-13.00K", "$-1.20K", "$-11.00", "$0.00", "$11.00",
+      "$1.20K", "$13.00K", "$1,400.00K", "$150,000.00K", "$16.00Bn",
+      "$17,000.00Bn", "$1,800,000.00Bn"))
 
   # Format the `num` column to 2 decimal places, have the
   # `suffixing` option set to FALSE (the default option, where
