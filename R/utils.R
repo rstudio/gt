@@ -517,8 +517,7 @@ get_suffixing_inputs <- function(suffixing) {
     # logical will also be set to FALSE
     num_suffixes <- NULL
 
-  } else if (is.character(suffixing) &&
-             length(suffixing) == 4){
+  } else if (is.character(suffixing)){
 
     # Stop function if the character vector `suffixing`
     # contains any names
