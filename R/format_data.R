@@ -193,15 +193,15 @@ fmt_number <- function(data,
               suffixes = suffixing_inputs$num_suffixes
             )
 
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
           # Get local variables `scale_by` and `suffixes`
           if (!is.null(suffixing_inputs$num_suffixes)) {
 
             scale_by <- suffix_df$scale_by[non_na_x]
             suffixes <- suffix_df$suffix[non_na_x]
           }
+
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
 
           # Format all non-NA x values
           x_str[non_na_x] <-
