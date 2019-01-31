@@ -509,14 +509,12 @@ get_suffixing_inputs <- function(suffixing) {
     # logical will also be set to TRUE and the
     # default set of symbols will be assigned
     # to `num_suffixes`
-    to_suffix <- TRUE
     num_suffixes <- c("K", "M", "B", "T")
 
   } else if (is_x_false(suffixing)) {
 
     # If `suffixing` is FALSE, the `to_suffix`
     # logical will also be set to FALSE
-    to_suffix <- FALSE
     num_suffixes <- NULL
 
   } else if (is.character(suffixing) &&
@@ -533,7 +531,6 @@ get_suffixing_inputs <- function(suffixing) {
     # we copy those values into `num_suffixes`; the
     # `to_suffix` logical is checked within the
     # `fmt()` function
-    to_suffix <- TRUE
     num_suffixes <- suffixing
 
   } else {
@@ -546,7 +543,6 @@ get_suffixing_inputs <- function(suffixing) {
   }
 
   list(
-    to_suffix = to_suffix,
     num_suffixes = num_suffixes
   )
 }
