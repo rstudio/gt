@@ -261,6 +261,19 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
       "17,000.00Mia.", "1,800,000.00Mia."))
 
   # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to use custom symbols with some NAs
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = "num", decimals = 2,
+         suffixing = c("K", NA, "Bn", NA)) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("-1,800,000.00Bn", "-17,000.00Bn", "-16.00Bn", "-150,000.00K",
+      "-1,400.00K", "-13.00K", "-1.20K", "-11.00", "0.00", "11.00",
+      "1.20K", "13.00K", "1,400.00K", "150,000.00K", "16.00Bn",
+      "17,000.00Bn", "1,800,000.00Bn"))
+
+  # Format the `num` column to 2 decimal places, have the
   # `suffixing` option set to FALSE (the default option, where
   # no scaling or suffixing is performed)
   expect_equal(
