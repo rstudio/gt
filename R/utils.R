@@ -537,7 +537,7 @@ get_suffixing_inputs <- function(suffixing) {
     # Stop function if the input to `suffixing` isn't valid
     stop("The value provided to `suffixing` must either be:\n",
          " * `TRUE` or `FALSE` (the default)\n",
-         " * a four-element character vector with suffixing text",
+         " * a character vector with suffixing labels",
          call. = FALSE)
   }
 
