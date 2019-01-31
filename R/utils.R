@@ -384,6 +384,166 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+non_na_index <- function(values, index, default_value = NA) {
+
+  if (is.logical(index)) {
+    index <- is.integer(index)
+  }
+
+  stopifnot(is.integer(index) || is.numeric(index))
+
+  # The algorithm requires `-Inf` not being present
+  stopifnot(!any(is.infinite(values) & values < 0))
+
+  # Get a vector of suffixes, which may include
+  # NA values
+  res <- values[index]
+
+  # If there are no NA values to reconcile, return
+  # the index
+  if (!any(is.na(res))) {
+    return(index)
+  }
+
+  # Create a vector of positions (`seq_along(values)`),
+  # but anywhere the `values` vector has an NA, use
+  # `-Inf`; (it's important that `values` not have `-Inf`
+  # as one of its elements)
+  positions <- ifelse(!is.na(values), seq_along(values), -Inf)
+
+  # Use rle (run-length encoding) to collapse multiple
+  # instances of `-Inf` into single instances. This
+  # makes it easy for us to replace them with their
+  # nearest (lower) neighbor in a single step, instead of
+  # having to iterate; for some reason, `rle()` doesn't
+  # know how to encode NAs, so that's why we use -Inf
+  # (seems like a bug)
+  encoded <- rle(positions)
+
+  # Replace each -Inf with its closest neighbor; basically,
+  # we do this by shifting a copy of the values to the
+  # right, and then using the original vector of (run-length
+  # encoded) values as a mask over it
+  encoded$values <-
+    ifelse(
+      encoded$values == -Inf,
+      c(default_value, head(encoded$values, -1)),
+      encoded$values
+    )
+
+  # Now convert back from run-length encoded
+  positions <- inverse.rle(encoded)
+
+  # positions[index] gives you the new index
+  positions[index]
+}
+
+num_suffix <- function(x, suffixes = c("K", "M", "B", "T"), base = 1000) {
+
+  if (length(suffixes) == 0) {
+
+    return(
+      tibble(
+        scale_by = rep_len(1, length(x)),
+        suffix = rep_len("", length(x))
+      )
+    )
+  }
+
+  i <- floor(log(abs(x), base = base))
+  i <- pmin(i, length(suffixes))
+
+  i[is.infinite(i) | i == 0] <- NA_integer_
+
+  suffix_index <-
+    non_na_index(
+      values = suffixes,
+      index = i,
+      default_value = 0
+    )
+
+  # # Replace any zeros in `suffix_index` with NAs
+  suffix_index[suffix_index == 0] <- NA_integer_
+
+  # Get a vector of suffix text that is to be
+  # applied to the scaled values
+  applied_suffixes <- suffixes[suffix_index]
+
+  # Replace any NAs in `applied_suffixes` with an
+  # empty string
+  applied_suffixes[is.na(applied_suffixes)] <- ""
+
+  # Replace any NAs in `suffix_index` with zeros
+  suffix_index[is.na(suffix_index)] <- 0
+
+  # Create and return a tibble with `scale_by`
+  # and `suffix` values
+  tibble(
+    scale_by = 1 / base^suffix_index,
+    suffix = applied_suffixes
+  )
+}
+
+# Create an `isFALSE` helper function that
+# works with earlier versions of R
+is_x_false = function(x) {
+
+  if (getRversion() >= 3.5) {
+
+    isFALSE(x)
+
+  } else {
+
+    is.logical(x) && length(x) == 1L && !is.na(x) && !x
+  }
+}
+
+# Get large-number suffixing inputs
+get_suffixing_inputs <- function(suffixing) {
+
+  # Determine whether large-number suffixing is being
+  # used and set the appropriate inputs
+  if (isTRUE(suffixing)) {
+
+    # If `suffixing` is TRUE, the `num_suffixes`
+    # logical will also be set to TRUE and the
+    # default set of symbols will be assigned
+    # to `num_suffixes`
+    num_suffixes <- c("K", "M", "B", "T")
+
+  } else if (is_x_false(suffixing)) {
+
+    # If `suffixing` is FALSE, the `num_suffixes`
+    # will also given as NULL
+    num_suffixes <- NULL
+
+  } else if (is.character(suffixing)){
+
+    # Stop function if the character vector `suffixing`
+    # contains any names
+    if (!is.null(names(suffixing))) {
+      stop("The character vector supplied to `suffixed` cannot contain names.",
+           call. = FALSE)
+    }
+
+    # In the case of a character vector, we copy
+    # those values into `num_suffixes`
+    num_suffixes <- suffixing
+
+  } else {
+
+    # Stop function if the input to `suffixing` isn't valid
+    stop("The value provided to `suffixing` must either be:\n",
+         " * `TRUE` or `FALSE` (the default)\n",
+         " * a character vector with suffixing labels",
+         call. = FALSE)
+  }
+
+  list(
+    num_suffixes = num_suffixes
+  )
+}
+
 # Derive a label based on a formula or a function name
 #' @import rlang
 #' @noRd
