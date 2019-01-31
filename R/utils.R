@@ -547,46 +547,6 @@ get_suffixing_inputs <- function(suffixing) {
   )
 }
 
-# Augment the `suffixing_inputs` list object
-get_suffixes_scalars <- function(x, decimals, suffixing_inputs) {
-
-  # Prepare vector of `scale_by` scalars
-  suffixing_inputs$scale_by <-
-    dplyr::case_when(
-      abs(round(x, decimals)) < 1E3 ~ 1,
-      abs(round(x, decimals)) >= 1E3 &
-        abs(round(x, decimals)) < 1E6 &
-        !is.na(suffixing_inputs$num_suffixes[1]) ~ 1/1E3,
-      abs(round(x, decimals)) >= 1E6 &
-        abs(round(x, decimals)) < 1E9 &
-        !is.na(suffixing_inputs$num_suffixes[2]) ~ 1/1E6,
-      abs(round(x, decimals)) >= 1E7 &
-        abs(round(x, decimals)) < 1E12 &
-        !is.na(suffixing_inputs$num_suffixes[3]) ~ 1/1E9,
-      abs(round(x, decimals)) >= 1E12 ~ 1/1E12,
-      TRUE ~ 1
-    )
-
-  # Perform NA replacement to vector of
-  # suffix symbols
-  suffixing_inputs$num_suffixes[
-    is.na(suffixing_inputs$num_suffixes)
-    ] <- ""
-
-  # Prepare vector of suffixes
-  suffixing_inputs$suffixes <-
-    dplyr::case_when(
-      abs(round(x, decimals)) < 1E3 ~ "",
-      abs(round(x, decimals)) < 1E6 ~ suffixing_inputs$num_suffixes[1],
-      abs(round(x, decimals)) < 1E9 ~ suffixing_inputs$num_suffixes[2],
-      abs(round(x, decimals)) < 1E12 ~ suffixing_inputs$num_suffixes[3],
-      abs(round(x, decimals)) >= 1E12 ~ suffixing_inputs$num_suffixes[4],
-      TRUE ~ ""
-    )
-
-  suffixing_inputs
-}
-
 # Derive a label based on a formula or a function name
 #' @import rlang
 #' @noRd
