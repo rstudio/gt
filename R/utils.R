@@ -498,7 +498,10 @@ is_x_false = function(x) {
   }
 }
 
-# Get large-number suffixing inputs
+# This function normalizes the `suffixing` input to a
+# character vector which is later appended to scaled
+# numerical values; the input can either be a single
+# logical value or a character vector
 get_suffixing_inputs <- function(suffixing) {
 
   # Determine whether large-number suffixing is being
