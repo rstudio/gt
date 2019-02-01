@@ -157,7 +157,7 @@ fmt_number <- function(data,
   }
 
   # Get the `suffixing_inputs`
-  suffixing_inputs <- get_suffixing_inputs(suffixing)
+  suffixing_inputs <- normalize_suffixing_inputs(suffixing)
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
@@ -758,7 +758,7 @@ fmt_currency <- function(data,
   }
 
   # Get the `suffixing_inputs`
-  suffixing_inputs <- get_suffixing_inputs(suffixing)
+  suffixing_inputs <- normalize_suffixing_inputs(suffixing)
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
