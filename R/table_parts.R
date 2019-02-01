@@ -291,7 +291,7 @@ tab_spanner <- function(data,
 
   # Gather columns not part of the group of columns under
   # the spanner heading
-  if (gather) {
+  if (gather && length(resolved_columns) > 1) {
 
     # Extract the internal `boxh_df` table
     boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -303,38 +303,16 @@ tab_spanner <- function(data,
     # `all_columns`
     matching_vec <- match(resolved_columns, all_columns) %>% sort()
 
-    # Reassign `columns` as a sorted vector of columns
-    columns <- all_columns[matching_vec]
+    # Get a vector of column names
+    columns_sorted <- all_columns[matching_vec]
 
-    # Gather columns if there are gaps between index positions
-    if (length(which(diff(matching_vec) != 1)) != 0) {
-
-      # Determine the name of the column in `columns` that is
-      # in the rightmost position in the main group
-      last_column <-
-        columns[which(diff(matching_vec) != 1)][1]
-
-      # Determine which column in `columns` is the first to
-      # be separated from the main group
-      separated_start <- (which(diff(matching_vec) != 1) + 1)[1]
-
-      for (i in separated_start:length(seq(columns))) {
-
-        # Perform a single-column move (separated column
-        # moving to the right of the right-most column
-        # in the main group)
-        data <-
-          data %>%
-          cols_move(
-            columns = columns[i],
-            after = last_column
-          )
-
-        # Reassign the `last_column` as the column moved
-        # into the main group
-        last_column <- columns[i]
-      }
-    }
+    # Move columns into place
+    data <-
+      data %>%
+      cols_move(
+        columns = columns_sorted[-1],
+        after = columns_sorted[1]
+      )
   }
 
   data
