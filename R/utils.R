@@ -498,47 +498,47 @@ is_false = function(x) {
 # logical value or a character vector
 normalize_suffixing_inputs <- function(suffixing) {
 
-  # Determine whether large-number suffixing is being
-  # used and set the appropriate inputs
-  if (isTRUE(suffixing)) {
+  if (is_false(suffixing)) {
 
-    # If `suffixing` is TRUE, the `num_suffixes`
-    # logical will also be set to TRUE and the
-    # default set of symbols will be assigned
-    # to `num_suffixes`
-    num_suffixes <- c("K", "M", "B", "T")
+    # If `suffixing` is FALSE, then return `NULL`;
+    # this will be used to signal there is nothing
+    # to be done in terms of scaling/suffixing
+    return(NULL)
 
-  } else if (is_x_false(suffixing)) {
+  } else if (isTRUE(suffixing)) {
 
-    # If `suffixing` is FALSE, the `num_suffixes`
-    # will also given as NULL
-    num_suffixes <- NULL
+    # If `suffixing` is TRUE, return the default
+    # set of suffixes
+    return(c("K", "M", "B", "T"))
 
-  } else if (is.character(suffixing)){
+  } else if (is.character(suffixing)) {
 
-    # Stop function if the character vector `suffixing`
-    # contains any names
+    # In the case that a character vector is provided
+    # to `suffixing`, we first want to check if there
+    # are any names provided
+
+    # TODO: found that the conditional below seems
+    # better than other solutions to determine whether
+    # the vector is even partially named
     if (!is.null(names(suffixing))) {
       stop("The character vector supplied to `suffixed` cannot contain names.",
            call. = FALSE)
     }
 
-    # In the case of a character vector, we copy
-    # those values into `num_suffixes`
-    num_suffixes <- suffixing
+    # We can now return the character vector, having
+    # adequately tested for improper cases
+    return(suffixing)
 
   } else {
 
-    # Stop function if the input to `suffixing` isn't valid
+    # Stop function if the input to `suffixing` isn't
+    # valid (i.e., isn't logical and isn't a valid
+    # character vector)
     stop("The value provided to `suffixing` must either be:\n",
          " * `TRUE` or `FALSE` (the default)\n",
          " * a character vector with suffixing labels",
          call. = FALSE)
   }
-
-  list(
-    num_suffixes = num_suffixes
-  )
 }
 
 # Derive a label based on a formula or a function name
