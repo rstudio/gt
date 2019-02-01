@@ -161,7 +161,7 @@ fmt_number <- function(data,
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
-  if (!is.null(suffixing_inputs$num_suffixes)) {
+  if (!is.null(suffixing_inputs)) {
 
     if (!missing(scale_by) && !identical(scale_by, 1.0)) {
       warning("The value for `scale_by` can't be changed if `suffixing` is ",
@@ -190,11 +190,11 @@ fmt_number <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffixing_inputs$num_suffixes
+              suffixes = suffixing_inputs
             )
 
           # Get local variables `scale_by` and `suffixes`
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             scale_by <- suffix_df$scale_by[non_na_x]
             suffixes <- suffix_df$suffix[non_na_x]
@@ -216,7 +216,7 @@ fmt_number <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
@@ -762,7 +762,7 @@ fmt_currency <- function(data,
 
   # If choosing to perform large-number suffixing
   # of numeric values, force `scale_by` to be 1.0
-  if (!is.null(suffixing_inputs$num_suffixes)) {
+  if (!is.null(suffixing_inputs)) {
 
     if (!missing(scale_by) && !identical(scale_by, 1.0)) {
       warning("The value for `scale_by` can't be changed if `suffixing` is ",
@@ -797,11 +797,11 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffixing_inputs$num_suffixes
+              suffixes = suffixing_inputs
             )
 
           # Get local variables `scale_by` and `suffixes`
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             scale_by <- suffix_df$scale_by[non_na_x]
             suffixes <- suffix_df$suffix[non_na_x]
@@ -820,7 +820,7 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
@@ -872,11 +872,11 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffixing_inputs$num_suffixes
+              suffixes = suffixing_inputs
             )
 
           # Get local variables `scale_by` and `suffixes`
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             scale_by <- suffix_df$scale_by[non_na_x]
             suffixes <- suffix_df$suffix[non_na_x]
@@ -895,7 +895,7 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
@@ -947,11 +947,11 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffixing_inputs$num_suffixes
+              suffixes = suffixing_inputs
             )
 
           # Get local variables `scale_by` and `suffixes`
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             scale_by <- suffix_df$scale_by[non_na_x]
             suffixes <- suffix_df$suffix[non_na_x]
@@ -970,7 +970,7 @@ fmt_currency <- function(data,
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
-          if (!is.null(suffixing_inputs$num_suffixes)) {
+          if (!is.null(suffixing_inputs)) {
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
