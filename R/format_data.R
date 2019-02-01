@@ -189,17 +189,21 @@ fmt_number <- function(data,
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
 
+          # Create a tibble with scaled values for
+          # `x[non_na_x]` and the suffix labels to
+          # use for character formatting
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
               suffixes = suffix_labels
             )
 
-          # Get local variables `scale_by` and `suffixes`
+          # If choosing to perform large-number suffixing
+          # of numeric values, replace `scale_by` with
+          # a vector of scaling values (of equal length
+          # with `x[non_na_x]`)
           if (!is.null(suffix_labels)) {
-
             scale_by <- suffix_df$scale_by[non_na_x]
-            suffixes <- suffix_df$suffix[non_na_x]
           }
 
           # Create `x_str` with same length as `x`
@@ -222,7 +226,7 @@ fmt_number <- function(data,
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
           }
 
           # Handle negative values
@@ -798,17 +802,21 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # Create a tibble with scaled values for
+          # `x[non_na_x]` and the suffix labels to
+          # use for character formatting
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
               suffixes = suffix_labels
             )
 
-          # Get local variables `scale_by` and `suffixes`
+          # If choosing to perform large-number suffixing
+          # of numeric values, replace `scale_by` with
+          # a vector of scaling values (of equal length
+          # with `x[non_na_x]`)
           if (!is.null(suffix_labels)) {
-
             scale_by <- suffix_df$scale_by[non_na_x]
-            suffixes <- suffix_df$suffix[non_na_x]
           }
 
           # Format all non-NA x values
@@ -828,7 +836,7 @@ fmt_currency <- function(data,
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
           }
 
           # Handle placement of the currency symbol
@@ -873,17 +881,21 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # Create a tibble with scaled values for
+          # `x[non_na_x]` and the suffix labels to
+          # use for character formatting
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
               suffixes = suffix_labels
             )
 
-          # Get local variables `scale_by` and `suffixes`
+          # If choosing to perform large-number suffixing
+          # of numeric values, replace `scale_by` with
+          # a vector of scaling values (of equal length
+          # with `x[non_na_x]`)
           if (!is.null(suffix_labels)) {
-
             scale_by <- suffix_df$scale_by[non_na_x]
-            suffixes <- suffix_df$suffix[non_na_x]
           }
 
           # Format all non-NA x values
@@ -903,7 +915,7 @@ fmt_currency <- function(data,
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
           }
 
           # Handle placement of the currency symbol
@@ -948,17 +960,21 @@ fmt_currency <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # Create a tibble with scaled values for
+          # `x[non_na_x]` and the suffix labels to
+          # use for character formatting
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
               suffixes = suffix_labels
             )
 
-          # Get local variables `scale_by` and `suffixes`
+          # If choosing to perform large-number suffixing
+          # of numeric values, replace `scale_by` with
+          # a vector of scaling values (of equal length
+          # with `x[non_na_x]`)
           if (!is.null(suffix_labels)) {
-
             scale_by <- suffix_df$scale_by[non_na_x]
-            suffixes <- suffix_df$suffix[non_na_x]
           }
 
           # Format all non-NA x values
@@ -978,7 +994,7 @@ fmt_currency <- function(data,
 
             # Apply vector of suffixes
             x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffixes)
+              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
           }
 
           # Handle placement of the currency symbol
