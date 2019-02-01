@@ -261,23 +261,29 @@ tab_spanner <- function(data,
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  data_df <- as.data.frame(data)
+  colnames <- colnames(data_df)
+
+  columns <- enquo(columns)
+
+  resolved_columns <-
+    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
+
+  # Translate the column indices to column names
+  resolved_columns <- colnames[resolved_columns]
 
   # Filter the vector of column names by the
   # column names actually in `input_df`
-  columns <- columns[which(columns %in% colnames(data))]
+  resolved_columns <- resolved_columns[which(resolved_columns %in% colnames)]
 
-  if (length(columns) == 0) {
+  if (length(resolved_columns) == 0) {
     return(data)
   }
 
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- label
+  for (i in seq(resolved_columns)) {
+    grp_labels[[resolved_columns[i]]] <- label
   }
 
   # Set the `grp_labels` attr with the `grp_labels` object
@@ -295,7 +301,7 @@ tab_spanner <- function(data,
 
     # Get the vector positions of the `columns` in
     # `all_columns`
-    matching_vec <- match(columns, all_columns) %>% sort()
+    matching_vec <- match(resolved_columns, all_columns) %>% sort()
 
     # Reassign `columns` as a sorted vector of columns
     columns <- all_columns[matching_vec]
