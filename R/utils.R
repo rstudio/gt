@@ -484,18 +484,12 @@ num_suffix <- function(x, suffixes = c("K", "M", "B", "T"), base = 1000) {
   )
 }
 
-# Create an `isFALSE` helper function that
-# works with earlier versions of R
-is_x_false = function(x) {
+# Create an `isFALSE`-based helper function that
+# works with earlier versions of R (the `isFALSE()`
+# function was introduced in R 3.5.0)
+is_false = function(x) {
 
-  if (getRversion() >= 3.5) {
-
-    isFALSE(x)
-
-  } else {
-
-    is.logical(x) && length(x) == 1L && !is.na(x) && !x
-  }
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
 # This function normalizes the `suffixing` input to a
