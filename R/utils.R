@@ -496,7 +496,7 @@ is_false = function(x) {
 # character vector which is later appended to scaled
 # numerical values; the input can either be a single
 # logical value or a character vector
-get_suffixing_inputs <- function(suffixing) {
+normalize_suffixing_inputs <- function(suffixing) {
 
   # Determine whether large-number suffixing is being
   # used and set the appropriate inputs
