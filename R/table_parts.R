@@ -301,7 +301,17 @@ tab_spanner <- function(data,
 
     # Get the vector positions of the `columns` in
     # `all_columns`
-    matching_vec <- match(resolved_columns, all_columns) %>% sort()
+    matching_vec <-
+      match(resolved_columns, all_columns) %>%
+      sort() %>%
+      unique()
+
+    # Issue a warning if duplicate values were given
+    # in resolved columns
+    if (any(duplicated(resolved_columns))) {
+      warning("Duplicate column names should not be provided in `columns`.",
+              call. = FALSE)
+    }
 
     # Get a vector of column names
     columns_sorted <- all_columns[matching_vec]
