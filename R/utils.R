@@ -438,23 +438,51 @@ non_na_index <- function(values, index, default_value = NA) {
   positions[index]
 }
 
-num_suffix <- function(x, suffixes = c("K", "M", "B", "T"), base = 1000) {
+# This function operates on a vector of numerical
+# values and returns a tibble where each row
+# represents a scaled values for `x` and the
+# correct suffix to use during x's character-based
+# formatting
+#' @importFrom dplyr tibble
+#' @noRd
+num_suffix <- function(x,
+                       suffixes = c("K", "M", "B", "T"),
+                       base = 1000) {
 
+  # If `suffixes` is a zero-length vector, we
+  # provide a tibble that will ultimately not
+  # scale value or apply any suffixes
   if (length(suffixes) == 0) {
 
     return(
-      tibble(
+      dplyr::tibble(
         scale_by = rep_len(1, length(x)),
         suffix = rep_len("", length(x))
       )
     )
   }
 
+  # Obtain a vector of index values that places
+  # each value of `x` (either postive or negative)
+  # in the correct scale category, according to
+  # the base value (defaulting to 1000); this works
+  # in tandem with the `suffixes` vector, where each
+  # index position (starting from 1) represents the
+  # index here
   i <- floor(log(abs(x), base = base))
   i <- pmin(i, length(suffixes))
 
+  # Replace any -Inf, Inf, or zero values
+  # with NA (required for the `non_na_index()`
+  # function)
   i[is.infinite(i) | i == 0] <- NA_integer_
 
+  # Using the `non_na_index()` function on the
+  # vector of index values (`i`) is required
+  # to enable inheritance of scalars/suffixes
+  # to ranges where the user prefers the last
+  # suffix given (e.g, [K, M, `NA`, T] -->
+  # [K, M, M, T])
   suffix_index <-
     non_na_index(
       values = suffixes,
@@ -462,25 +490,26 @@ num_suffix <- function(x, suffixes = c("K", "M", "B", "T"), base = 1000) {
       default_value = 0
     )
 
-  # # Replace any zeros in `suffix_index` with NAs
+  # Replace any zero values in `suffix_index`
+  # with NA values
   suffix_index[suffix_index == 0] <- NA_integer_
 
-  # Get a vector of suffix text that is to be
-  # applied to the scaled values
-  applied_suffixes <- suffixes[suffix_index]
+  # Get a vector of suffix labels; this vector
+  # is to be applied to the scaled values
+  suffix_labels <- suffixes[suffix_index]
 
-  # Replace any NAs in `applied_suffixes` with an
+  # Replace any NAs in `suffix_labels` with an
   # empty string
-  applied_suffixes[is.na(applied_suffixes)] <- ""
+  suffix_labels[is.na(suffix_labels)] <- ""
 
   # Replace any NAs in `suffix_index` with zeros
   suffix_index[is.na(suffix_index)] <- 0
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  tibble(
+  dplyr::tibble(
     scale_by = 1 / base^suffix_index,
-    suffix = applied_suffixes
+    suffix = suffix_labels
   )
 }
 
