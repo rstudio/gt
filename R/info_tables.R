@@ -245,6 +245,33 @@ info_currencies <- function(type = c("code", "symbol"),
 #' the content of this information table by supplying a vector of such package
 #' names to \code{color_pkgs}.
 #'
+#' Colors from the following color packages (all supported by \pkg{paletteer})
+#' are shown by default with \code{info_paletteer()}:
+#' \itemize{
+#' \item awtools, 5 palettes
+#' \item dichromat, 17 palettes
+#' \item dutchmasters, 6 palettes
+#' \item ggpomological, 2 palettes
+#' \item ggsci, 42 palettes
+#' \item ggthemes, 31 palettes
+#' \item ghibli, 27 palettes
+#' \item grDevices, 1 palette
+#' \item jcolors, 13 palettes
+#' \item LaCroixColoR, 21 palettes
+#' \item NineteenEightyR, 12 palettes
+#' \item nord, 16 palettes
+#' \item ochRe, 16 palettes
+#' \item palettetown, 389 palettes
+#' \item pals, 8 palettes
+#' \item Polychrome, 7 palettes
+#' \item quickpalette, 17 palettes
+#' \item rcartocolor, 34 palettes
+#' \item RColorBrewer, 35 palettes
+#' \item Redmonder, 41 palettes
+#' \item wesanderson, 19 palettes
+#' \item yarrr, 21 palettes
+#' }
+#'
 #' @param color_pkgs a vector of color packages that determines which sets of
 #'   palettes should be displayed in the information table. If this is
 #'   \code{NULL} (the default) then all of the discrete palettes from all of the
