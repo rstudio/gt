@@ -226,7 +226,7 @@ info_currencies <- function(type = c("code", "symbol"),
   }
 }
 
-#' View a table with info on many different color palettes
+#' View a table with info on color palettes
 #'
 #' While the \code{\link{data_color}()} function allows us to flexibly color
 #' data cells in our \pkg{gt} table, the harder part of this process is
