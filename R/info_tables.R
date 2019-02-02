@@ -234,7 +234,7 @@ info_currencies <- function(type = c("code", "symbol"),
 #' output. We can make this process much easier in two ways: (1) by using the
 #' \pkg{paletteer} package, which makes a wide range of palettes from various R
 #' packages readily available, and (2) calling the \code{info_paletteer()}
-#' function to give us an information table that serves as quick reference for
+#' function to give us an information table that serves as a quick reference for
 #' all of the discrete color palettes available in \pkg{paletteer}.
 #'
 #' The palettes displayed are organized by package and by palette name. These
@@ -242,8 +242,8 @@ info_currencies <- function(type = c("code", "symbol"),
 #' colors), from the the \code{paletteer::paletteer_d()} function. Once we are
 #' familiar with the names of the color palette packages (e.g.,
 #' \pkg{RColorBrewer}, \pkg{ggthemes}, \pkg{wesanderson}), we can narrow down
-#' the content of this information table by supplying a vector package names to
-#' \code{color_pkgs}.
+#' the content of this information table by supplying a vector of such package
+#' names to \code{color_pkgs}.
 #'
 #' @param color_pkgs a vector of color packages that determines which sets of
 #'   palettes should be displayed in the information table. If this is
