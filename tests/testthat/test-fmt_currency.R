@@ -236,3 +236,173 @@ test_that("the `fmt_currency()` function works correctly", {
     c("&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
       "&#8364;212,23", "&#8364;0,00", "&#8364;-23,24"))
 })
+
+test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
+
+  # Create an input data frame four columns: two
+  # character-based and two that are numeric
+  data_tbl <-
+    data.frame(
+      num = c(
+        -1.8E15, -1.7E13, -1.6E10, -1.5E8, -1.4E6, -1.3E4, -1.2E3, -1.1E1,
+        0,
+        1.1E1, 1.2E3, 1.3E4, 1.4E6, 1.5E8, 1.6E10, 1.7E13, 1.8E15),
+      stringsAsFactors = FALSE)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data = data_tbl)
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to TRUE (default labels, all
+  # 4 ranges used)
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num", decimals = 2, suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("$-1,800.00T", "$-17.00T", "$-16.00B", "$-150.00M", "$-1.40M", "$-13.00K",
+      "$-1.20K", "$-11.00", "$0.00", "$11.00", "$1.20K", "$13.00K", "$1.40M",
+      "$150.00M", "$16.00B", "$17.00T", "$1,800.00T"))
+
+  # Format the `num` column to no decimal places, have the
+  # `suffixing` option set to TRUE (default labels, all
+  # 4 ranges used)
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num", decimals = 0, suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("$-1,800T", "$-17T", "$-16B", "$-150M", "$-1M", "$-13K",
+      "$-1K", "$-11", "$0", "$11", "$1K", "$13K", "$1M",
+      "$150M", "$16B", "$17T", "$1,800T"))
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to use custom symbols across the
+  # 4 different ranges
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = c("k", "Mn", "Bn", "Tr")) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("$-1,800.00Tr", "$-17.00Tr", "$-16.00Bn", "$-150.00Mn", "$-1.40Mn",
+      "$-13.00k", "$-1.20k", "$-11.00", "$0.00", "$11.00", "$1.20k",
+      "$13.00k", "$1.40Mn", "$150.00Mn", "$16.00Bn", "$17.00Tr", "$1,800.00Tr"))
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to use custom symbols for the middle
+  # two ranges (millions and billions)
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", decimals = 2, currency = "EUR", locale = "de_DE",
+         suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("&#8364;-1.800.000,00Mia.", "&#8364;-17.000,00Mia.", "&#8364;-16,00Mia.",
+      "&#8364;-150,00Mio.", "&#8364;-1,40Mio.", "&#8364;-13.000,00",
+      "&#8364;-1.200,00", "&#8364;-11,00", "&#8364;0,00", "&#8364;11,00",
+      "&#8364;1.200,00", "&#8364;13.000,00", "&#8364;1,40Mio.",
+      "&#8364;150,00Mio.", "&#8364;16,00Mia.", "&#8364;17.000,00Mia.",
+      "&#8364;1.800.000,00Mia."))
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to use custom symbols with some NAs
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("$-1.80Qa", "$-17,000.00Bn", "$-16.00Bn", "$-150,000.00K",
+      "$-1,400.00K", "$-13.00K", "$-1.20K", "$-11.00", "$0.00", "$11.00",
+      "$1.20K", "$13.00K", "$1,400.00K", "$150,000.00K", "$16.00Bn",
+      "$17,000.00Bn", "$1.80Qa"))
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to FALSE (the default option, where
+  # no scaling or suffixing is performed)
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = FALSE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c( "$-1,800,000,000,000,000.00", "$-17,000,000,000,000.00",
+       "$-16,000,000,000.00", "$-150,000,000.00", "$-1,400,000.00",
+       "$-13,000.00", "$-1,200.00", "$-11.00", "$0.00", "$11.00",
+       "$1,200.00", "$13,000.00", "$1,400,000.00", "$150,000,000.00",
+       "$16,000,000,000.00", "$17,000,000,000,000.00",
+       "$1,800,000,000,000,000.00"))
+
+  # Expect an error if any vector length other than
+  # four is used for `suffixing`
+  expect_silent(
+    tab %>%
+      fmt_currency(
+        columns = "num", decimals = 2,
+        suffixing = c("k", "M", "Bn", "Tr", "Zn")
+      )
+  )
+
+  expect_silent(
+    tab %>%
+      fmt_currency(
+        columns = "num", decimals = 2,
+        suffixing = c("k", NA)
+      )
+  )
+
+  # Create an input data frame with a single
+  # numeric column and with one row
+  data_tbl_2 <- data.frame(num = 999.9999)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_2` dataset
+  tab_2 <- gt(data = data_tbl_2)
+
+  #
+  # Adjust the `decimals` value to verify that
+  # rounding is taken into consideration when
+  # applying large-number scaling
+  #
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 1,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.0K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 2,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.00K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 3,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$1.000K")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 4,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$999.9999")
+
+  expect_equal(
+    (tab_2 %>%
+       fmt_currency(
+         columns = "num", decimals = 5,
+         suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    "$999.99990")
+
+})

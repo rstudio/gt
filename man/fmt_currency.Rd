@@ -6,9 +6,9 @@
 \usage{
 fmt_currency(data, columns, rows = NULL, currency = "USD",
   use_subunits = TRUE, negative_val = "signed", decimals = NULL,
-  use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
-  dec_mark = ".", placement = "left", incl_space = FALSE,
-  locale = NULL)
+  use_seps = TRUE, scale_by = 1, suffixing = FALSE,
+  pattern = "{x}", sep_mark = ",", dec_mark = ".",
+  placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -57,6 +57,22 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{scale_by}{a value to scale the input. The default is \code{1.0}.}
 
+\item{suffixing}{an option to scale and apply suffixes to larger numbers
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
+accept a logical value, where \code{FALSE} (the default) will not perform
+this transformation and \code{TRUE} will apply thousands (\code{K}),
+millions (\code{M}), billions (\code{B}), and trillions (\code{T}) suffixes
+after automatic value scaling. We can also specify which symbols to use for
+each of the value ranges by using a character vector of the preferred
+symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+Including \code{NA} values in the vector will ensure that the particular
+range will either not be included in the transformation (e.g, \code{c(NA,
+"M", "B", "T")} won't modify numbers in the thousands range) or the range
+will inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all
+numbers in the range of millions and billions will be in terms of
+millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
+any value provided to \code{scale_by} will be ignored.}
+
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
@@ -103,6 +119,8 @@ less than zero
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
+\item large-number suffixing: larger figures (thousands, millions, etc.) can
+be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
 \item locale-based formatting: providing a locale ID will result in
