@@ -89,7 +89,7 @@ summary_rows <- function(data,
   if (is.null(columns)) {
     columns <- TRUE
   } else if (!is.null(columns) && inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+    columns <- resolve_vars(column_vars = columns, data = data)
   }
 
   if ("summary" %in% names(attributes(data))) {

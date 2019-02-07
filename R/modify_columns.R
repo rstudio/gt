@@ -257,15 +257,11 @@ cols_move <- function(data,
                       columns,
                       after) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(column_vars = columns, data = data)
 
-  # If using the `vars()` helper, get the `after` column as a character vector
-  if (inherits(after, "quosures")) {
-    after <- (after %>% lapply(`[[`, 2) %>% as.character())
-  }
+  # Get the `after` columns as a character vector
+  after <- resolve_vars(column_vars = after, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -380,10 +376,8 @@ cols_move <- function(data,
 cols_move_to_start <- function(data,
                                columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(column_vars = columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -468,10 +462,8 @@ cols_move_to_start <- function(data,
 cols_move_to_end <- function(data,
                              columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(column_vars = columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -567,10 +559,8 @@ cols_move_to_end <- function(data,
 cols_hide <- function(data,
                       columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(column_vars = columns, data = data)
 
   boxh_df <- attr(data, "boxh_df")
 
@@ -645,10 +635,8 @@ cols_split_delim <- function(data,
   # Get all of the columns in the dataset
   all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(column_vars = columns, data = data)
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
