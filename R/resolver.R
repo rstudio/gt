@@ -121,9 +121,8 @@ resolve_cells_column_labels <- function(data,
 #' @import tidyselect
 #' @import rlang
 #' @noRd
-resolve_vars <- function(var_expr, var_names, data_df) {
-
   stopifnot(rlang::is_quosure(var_expr))
+resolve_vars_idx <- function(var_expr, var_names, data_df) {
 
   resolved <-
     tidyselect::with_vars(
