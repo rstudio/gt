@@ -306,13 +306,6 @@ tab_spanner <- function(data,
       sort() %>%
       unique()
 
-    # Issue a warning if duplicate values were given
-    # in resolved columns
-    if (any(duplicated(resolved_columns))) {
-      warning("Duplicate column names should not be provided in `columns`.",
-              call. = FALSE)
-    }
-
     # Get a vector of column names
     columns_sorted <- all_columns[matching_vec]
 
