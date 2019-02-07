@@ -261,17 +261,18 @@ tab_spanner <- function(data,
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
+  # TODO: The five statements below will become refactored
+  # in a later PR (the `resolve-quosures` branch has improvements
+  # and helper functions for resolving); we will also handle the
+  # case of duplicate columns within that PR
   data_df <- as.data.frame(data)
   colnames <- colnames(data_df)
-
   columns <- enquo(columns)
-
   resolved_columns <-
     resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
-
-  # Translate the column indices to column names
   resolved_columns <- colnames[resolved_columns]
 
+  # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
   # Apply the `label` value to the relevant components
