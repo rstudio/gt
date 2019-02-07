@@ -272,14 +272,6 @@ tab_spanner <- function(data,
   # Translate the column indices to column names
   resolved_columns <- colnames[resolved_columns]
 
-  # Filter the vector of column names by the
-  # column names actually in `input_df`
-  resolved_columns <- resolved_columns[which(resolved_columns %in% colnames)]
-
-  if (length(resolved_columns) == 0) {
-    return(data)
-  }
-
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
   # Apply the `label` value to the relevant components
