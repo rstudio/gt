@@ -149,3 +149,20 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
 
   resolved
 }
+
+resolve_vars <- function(column_vars, data) {
+
+  data_df <- as.data.frame(data)
+
+  column_names <- colnames(data_df)
+
+  columns_idx <-
+    resolve_vars_idx(
+      var_expr = column_vars,
+      var_names = column_names,
+      data_df = data_df
+    )
+
+  # Translate the column indices to column names
+  column_names[columns_idx]
+}
