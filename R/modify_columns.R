@@ -57,7 +57,7 @@ cols_align <- function(data,
   columns <- enquo(columns)
 
   resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
+    resolve_vars_idx(var_expr = columns, var_names = colnames, data_df = data_df)
 
   # Translate the column indices to column names
   resolved_columns <- colnames[resolved_columns]

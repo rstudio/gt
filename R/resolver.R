@@ -28,8 +28,8 @@ resolve_cells_data <- function(data,
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars(object_columns, colnames, data_df)
-  resolved_rows <- resolve_vars(object_rows, rownames, data_df)
+  resolved_columns <- resolve_vars_idx(object_columns, colnames, data_df)
+  resolved_rows <- resolve_vars_idx(object_rows, rownames, data_df)
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
@@ -71,7 +71,7 @@ resolve_cells_stub <- function(data,
   # providing the positions of the matched variables
   #
 
-  resolved_rows <- resolve_vars(object_rows, rownames, data_df)
+  resolved_rows <- resolve_vars_idx(object_rows, rownames, data_df)
 
   # Create a list object
   cells_resolved <- list(rows = resolved_rows)
@@ -106,7 +106,7 @@ resolve_cells_column_labels <- function(data,
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars(object_columns, colnames, data_df)
+  resolved_columns <- resolve_vars_idx(object_columns, colnames, data_df)
 
   # Create a list object
   cells_resolved <- list(columns = resolved_columns)

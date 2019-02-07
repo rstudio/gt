@@ -172,7 +172,7 @@ tab_row_group <- function(data,
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows <-
-      resolve_vars(var_expr = row_expr, var_names = rownames, data_df = data_df)
+      resolve_vars_idx(var_expr = row_expr, var_names = rownames, data_df = data_df)
 
     # Place the `group` label in the `groupname` column
     # `stub_df`

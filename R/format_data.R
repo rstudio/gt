@@ -1633,10 +1633,10 @@ fmt <- function(data,
   rows <- rlang::enquo(rows)
 
   resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
+    resolve_vars_idx(var_expr = columns, var_names = colnames, data_df = data_df)
 
   resolved_rows <-
-    resolve_vars(var_expr = rows, var_names = rownames, data_df = data_df)
+    resolve_vars_idx(var_expr = rows, var_names = rownames, data_df = data_df)
 
   # Translate the column indices to column names
   resolved_columns <- colnames[resolved_columns]
