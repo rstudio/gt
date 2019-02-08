@@ -51,16 +51,8 @@ cols_align <- function(data,
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
-  data_df <- as.data.frame(data)
-  colnames <- colnames(data_df)
-
-  columns <- enquo(columns)
-
-  resolved_columns <-
-    resolve_vars_idx(var_expr = columns, var_names = colnames, data_df = data_df)
-
-  # Translate the column indices to column names
-  resolved_columns <- colnames[resolved_columns]
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(column_vars = columns, data = data)
 
   if (align == "auto") {
 
@@ -68,7 +60,7 @@ cols_align <- function(data,
     # names
     col_classes <-
       lapply(
-        attr(data, "data_df", exact = TRUE)[resolved_columns], class) %>%
+        attr(data, "data_df", exact = TRUE)[column_names], class) %>%
       lapply(`[[`, 1) %>%
       unlist()
 
@@ -88,7 +80,7 @@ cols_align <- function(data,
   }
 
   # Set the alignment value for all columns in `columns`
-  attr(data, "boxh_df")["column_align", resolved_columns] <- align
+  attr(data, "boxh_df")["column_align", column_names] <- align
 
   data
 }
@@ -730,21 +722,14 @@ cols_merge <- function(data,
                        col_2,
                        pattern = "{1} {2}") {
 
-  # If using the `vars()` helper, get `col_1` as a character vector
-  if (inherits(col_1, "quosures")) {
-    col_1 <- col_1 %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_1` as a character vector
+  col_1 <- resolve_vars(column_vars = col_1, data = data)
 
-  # If using the `vars()` helper, get `col_2` as a character vector
-  if (inherits(col_2, "quosures")) {
-    col_2 <- col_2 %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_2` as a character vector
+  col_2 <- resolve_vars(column_vars = col_2, data = data)
 
-  if (!(col_1 %in% colnames(data)) |
-      !(col_2 %in% colnames(data))) {
-    return(data)
-  }
-
+  # Create a named character vector using
+  # `col_1` and `col_2`
   col_1 <- stats::setNames(col_1, nm = col_2)
 
   # Create and store a list of column pairs
@@ -852,21 +837,14 @@ cols_merge_uncert <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u00B1 {2}"
 
-  # If using the `vars()` helper, get `col_val` as a character vector
-  if (inherits(col_val, "quosures")) {
-    col_val <- col_val %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_val` as a character vector
+  col_val <- resolve_vars(column_vars = col_val, data = data)
 
-  # If using the `vars()` helper, get `col_uncert` as a character vector
-  if (inherits(col_uncert, "quosures")) {
-    col_uncert <- col_uncert %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_val` as a character vector
+  col_uncert <- resolve_vars(column_vars = col_uncert, data = data)
 
-  if (!(col_val %in% colnames(data)) |
-      !(col_uncert %in% colnames(data))) {
-    return(data)
-  }
-
+  # Create a named character vector using
+  # `col_val` and `col_uncert`
   col_val <- stats::setNames(col_val, nm = col_uncert)
 
   # Create and store a list of column pairs
@@ -970,21 +948,14 @@ cols_merge_range <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u2014 {2}"
 
-  # If using the `vars()` helper, get `col_begin` as a character vector
-  if (inherits(col_begin, "quosures")) {
-    col_begin <- col_begin %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_begin` as a character vector
+  col_begin <- resolve_vars(column_vars = col_begin, data = data)
 
-  # If using the `vars()` helper, get `col_end` as a character vector
-  if (inherits(col_end, "quosures")) {
-    col_end <- col_end %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_end` as a character vector
+  col_end <- resolve_vars(column_vars = col_end, data = data)
 
-  if (!(col_begin %in% colnames(data)) |
-      !(col_end %in% colnames(data))) {
-    return(data)
-  }
-
+  # Create a named character vector using
+  # `col_begin` and `col_end`
   col_begin <- stats::setNames(col_begin, nm = col_end)
 
   # Create and store a list of column pairs
