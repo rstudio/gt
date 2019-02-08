@@ -456,6 +456,60 @@ non_na_index <- function(values, index, default_value = NA) {
   positions[index]
 }
 
+non_na_index <- function(values, index, default_value = NA) {
+
+  if (is.logical(index)) {
+    index <- is.integer(index)
+  }
+
+  stopifnot(is.integer(index) || is.numeric(index))
+
+  # The algorithm requires `-Inf` not being present
+  stopifnot(!any(is.infinite(values) & values < 0))
+
+  # Get a vector of suffixes, which may include
+  # NA values
+  res <- values[index]
+
+  # If there are no NA values to reconcile, return
+  # the index
+  if (!any(is.na(res))) {
+    return(index)
+  }
+
+  # Create a vector of positions (`seq_along(values)`),
+  # but anywhere the `values` vector has an NA, use
+  # `-Inf`; (it's important that `values` not have `-Inf`
+  # as one of its elements)
+  positions <- ifelse(!is.na(values), seq_along(values), -Inf)
+
+  # Use rle (run-length encoding) to collapse multiple
+  # instances of `-Inf` into single instances. This
+  # makes it easy for us to replace them with their
+  # nearest (lower) neighbor in a single step, instead of
+  # having to iterate; for some reason, `rle()` doesn't
+  # know how to encode NAs, so that's why we use -Inf
+  # (seems like a bug)
+  encoded <- rle(positions)
+
+  # Replace each -Inf with its closest neighbor; basically,
+  # we do this by shifting a copy of the values to the
+  # right, and then using the original vector of (run-length
+  # encoded) values as a mask over it
+  encoded$values <-
+    ifelse(
+      encoded$values == -Inf,
+      c(default_value, head(encoded$values, -1)),
+      encoded$values
+    )
+
+  # Now convert back from run-length encoded
+  positions <- inverse.rle(encoded)
+
+  # positions[index] gives you the new index
+  positions[index]
+}
+
 # This function operates on a vector of numerical
 # values and returns a tibble where each row
 # represents a scaled values for `x` and the
