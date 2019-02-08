@@ -89,7 +89,7 @@ resolve_cells_stub <- function(data,
 #'   function.
 #' @noRd
 resolve_cells_column_labels <- function(data,
-                                  object) {
+                                        object) {
 
   # Get the `data_df` data frame from `data`
   data_df <- as.data.frame(data)
