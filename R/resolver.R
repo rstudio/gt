@@ -129,10 +129,17 @@ resolve_cells_column_labels <- function(data,
 #' @noRd
 resolve_vars_idx <- function(var_expr, var_names, data_df) {
 
+  # Translate variable expressions (e.g., logical
+  # values, select helpers, expressions in `vars()`,
+  # etc.) to the appropriate output
   resolved <-
     tidyselect::with_vars(
-      var_names, rlang::eval_tidy(var_expr, data_df, env = NULL))
+      var_names, rlang::eval_tidy(var_expr, data_df, env = NULL)
+    )
 
+  # With the `resolved` output, check types and
+  # process inputs to reliably output as a vector
+  # of column indices based on `var_names`
   if (is.null(resolved)) {
 
     resolved <- seq_along(var_names)
@@ -173,10 +180,14 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
 #' @noRd
 resolve_vars <- function(column_vars, data) {
 
+  # Obtain the data frame of the input table data
   data_df <- as.data.frame(data)
 
+  # Collect column names from the input table data
   column_names <- colnames(data_df)
 
+  # Use `resolve_vars_idx()` to obtain a vector
+  # column indices
   columns_idx <-
     resolve_vars_idx(
       var_expr = column_vars,
