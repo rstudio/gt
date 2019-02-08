@@ -44,8 +44,12 @@ group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all
-other characters are taken to be string literals.}
+formatted value (defined here as \code{x}). The semantics for the pattern
+are taken from \code{glue::glue()}, where the formatted cell value is
+represented by \code{{x}} and it can be used multiple times within the
+pattern. We can treat other instances of \code{{...}} as environments that
+undergo evaluation, so, \code{x}, variables from the global environment,
+and functions are all usable within \code{{...}}.}
 
 \item{sep_mark}{the mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
