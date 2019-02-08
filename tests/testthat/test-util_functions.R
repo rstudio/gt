@@ -320,21 +320,47 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = html_text) %>% expect_is(c("html", "character"))
 })
 
-test_that("the `get_pre_post_txt()` function works correctly", {
+test_that("the `apply_pattern_fmt_x()` function works correctly", {
 
-  # Expect that various patterns will yield the expected
-  # length-2 character vectors
-  get_pre_post_txt(pattern = "{x}") %>%
-    expect_equal(c("", ""))
+  # Set formatted values in a character vector
+  x <- c("23.4%", "32.6%", "9.15%")
 
-  get_pre_post_txt(pattern = "a {x} b") %>%
-    expect_equal(c("a ", " b"))
+  # Expect that the default pattern `{x}` does not
+  # modify the values in `x`
+  apply_pattern_fmt_x(pattern = "{x}", values = x) %>%
+    expect_equal(x)
 
-  get_pre_post_txt(pattern = "\\a {x} \\b") %>%
-    expect_equal(c("\\a ", " \\b"))
+  # Expect that a pattern that appends literal text
+  # will work
+  apply_pattern_fmt_x(pattern = "{x}:n", values = x) %>%
+    expect_equal(paste0(x, ":n"))
 
-  get_pre_post_txt(pattern = "{x}....") %>%
-    expect_equal(c("", "...."))
+  # Expect that a pattern that appends and prepends
+  # literal text will work
+  apply_pattern_fmt_x(pattern = "+{x}:n", values = x) %>%
+    expect_equal(paste0("+", x, ":n"))
+
+  # Expect that multiple instances of `{x}` will
+  # create copies of `x` within the output strings
+  apply_pattern_fmt_x(pattern = "{x}, ({x})", values = x) %>%
+    expect_equal(paste0(x, ", (", x, ")"))
+
+  # Expect that an expression (that directly uses
+  # `x`) will be evaluated properly and placed
+  # into the output strings
+  apply_pattern_fmt_x(
+    pattern = '{(x %>% gsub("%", "", .) %>% as.numeric()) - 5.00}%',
+    values = x
+    ) %>%
+    expect_equal(c("18.4%", "27.6%", "4.15%"))
+
+  # Expect that globally-assigned variables could
+  # be referenced and used in the pattern
+  assign("plus", "+", envir = .GlobalEnv)
+  assign("by_n", ":n", envir = .GlobalEnv)
+
+  apply_pattern_fmt_x(pattern = "{plus}{x}{by_n}", values = x) %>%
+    expect_equal(paste0(plus, x, by_n))
 })
 
 test_that("the `remove_html()` function works correctly", {
