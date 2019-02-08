@@ -142,7 +142,15 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
 
   } else if (is_quosures(resolved)) {
 
-    resolved <- vapply(resolved, function(x) as.character(quo_get_expr(x)), character(1))
+    # Define function to get an expression from a
+    # quosure and translate it to a character vector
+    quo_get_expr_char <- function(x) {
+      x %>%
+        rlang::quo_get_expr() %>%
+        as.character()
+    }
+
+    resolved <- vapply(resolved, quo_get_expr_char, character(1))
     resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
     resolved <- which(var_names %in% resolved)
   }
