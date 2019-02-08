@@ -588,10 +588,25 @@ normalize_suffixing_inputs <- function(suffixing) {
   }
 }
 
-# Handle formatting of pattern
+#' Handle formatting of a pattern in a \code{fmt_*()} function
+#'
+#' Within the context of a \code{fmt_*()} function, we always
+#' have the single-length character vector of \code{pattern}
+#' available to describe a final decoration of the formatted
+#' values. We use \pkg{glue}'s semantics here (and literally,
+#' it's \code{glue::glue()}) and reserve \code{x} to be the
+#' formatted values. We can use \code{x} multiple times in
+#' the pattern or even variables in global scope or R
+#' statements within curly braces.
+#' @param pattern An expression string that is the primary
+#' input to \code{glue::glue()}). The variable \code{x} is
+#' reserved and represents the formatted values.
+#' @param values The values (as a character vector) that
+#' are formatting within the \code{fmt_*()} function.
 #' @importFrom glue glue
 #' @noRd
-apply_pattern_fmt_x <- function(pattern, values) {
+apply_pattern_fmt_x <- function(pattern,
+                                values) {
 
   glue::glue(pattern, x = values) %>% as.character()
 }
