@@ -117,7 +117,13 @@ resolve_cells_column_labels <- function(data,
   cells_resolved
 }
 
-#' Resolve variables for rows and columns using expressions
+#' Resolve variables for rows and columns to obtain indices
+#'
+#' @param var_expr An expression to evaluate. This is passed directly to
+#'   \code{rlang::eval_tidy()} as a value for the \code{expr} argument.
+#' @param var_names The immutable column names from the input table.
+#' @param data_df The input table available in \code{data} (usually accessed
+#'   through \code{as.data.frame(data)}).
 #' @import tidyselect
 #' @import rlang
 #' @noRd
@@ -158,6 +164,13 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
   resolved
 }
 
+
+#' Resolve variables to obtain column names
+#'
+#' @param column_vars The immutable column names from the input table.
+#' @param data A table object that is created using the \code{\link{gt}()}
+#'   function.
+#' @noRd
 resolve_vars <- function(column_vars, data) {
 
   data_df <- as.data.frame(data)
