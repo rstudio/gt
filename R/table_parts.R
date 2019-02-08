@@ -257,24 +257,15 @@ tab_spanner <- function(data,
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(column_vars = columns, data = data)
 
-  # Filter the vector of column names by the
-  # column names actually in `input_df`
-  columns <- columns[which(columns %in% colnames(data))]
-
-  if (length(columns) == 0) {
-    return(data)
-  }
-
+  # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- label
-  }
+  # Apply the `label` value to the relevant components
+  # of the `grp_labels` list
+  grp_labels[column_names] <- label
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
