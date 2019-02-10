@@ -751,7 +751,7 @@ inline_html_styles <- function(html, css_tbl) {
 }
 
 is_equal_to <- function(x, y) {
-  vapply(x, function(a, b) isTRUE(all.equal(a, b)), logical(1), y)
+  vapply(x, function(a, b) isTRUE(identical(a, b)), logical(1), y)
 }
 
 split_scientific_notn <- function(x_str) {
