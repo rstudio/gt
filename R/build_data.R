@@ -165,7 +165,7 @@ build_data <- function(data, context) {
 
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
-    create_summary_dfs(summary_list, data_df, stub_df, output_df)
+    create_summary_dfs(summary_list, data_df, stub_df, output_df, context)
 
   # Determine if there is a populated stub
   stub_available <- is_stub_available(stub_df)
