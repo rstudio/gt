@@ -82,10 +82,19 @@ summary_rows <- function(data,
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
+  # If `groups` is NULL, take that to mean the
+  # same as TRUE
+  # TODO: this will change later when (1) NULL is
+  # taken to mean grand total, and (2) TRUE indicates
+  # all groups
   if (is.null(groups)) {
     groups <- TRUE
   }
 
+  # Get a character vector of column names to
+  # which `fns` applies
+  # TODO: replace with improved resolver functions
+  # once that is merged to master
   if (is.null(columns)) {
     columns <- TRUE
   } else if (!is.null(columns) && inherits(columns, "quosures")) {
