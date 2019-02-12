@@ -393,7 +393,6 @@ create_summary_dfs <- function(summary_list,
         dplyr::bind_rows(
           summary_dfs_data,
           groups_data_df %>%
-            dplyr::select(c("groupname", colnames(output_df))) %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
