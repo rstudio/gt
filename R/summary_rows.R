@@ -82,13 +82,11 @@ summary_rows <- function(data,
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
-  # If `groups` is NULL, take that to mean the
-  # same as TRUE
-  # TODO: this will change later when (1) NULL is
-  # taken to mean grand total, and (2) TRUE indicates
-  # all groups
-  if (is.null(groups)) {
-    groups <- TRUE
+  # If `groups` is FALSE, take that to mean the
+  # same as NULL, which in turn results in the
+  # calculations of a grand summary
+  if (is_false(groups)) {
+    groups <- NULL
   }
 
   # Get a character vector of column names to
