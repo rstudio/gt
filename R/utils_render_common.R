@@ -422,26 +422,27 @@ create_summary_dfs <- function(summary_list,
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
     # Get the names if any were provided
-    labels <- names(fns) %>% process_text()
-
-    # If names weren't provided at all, handle
-    # this case by creating a vector of NAs that
-    # will be replaced later with derived names
-    if (length(labels) < 1) {
-      labels <- rep(NA_character_, length(fns))
-    }
-
-    # If one or more names not provided then
-    # replace the empty string with NAs
-    labels[labels == ""] <- NA_character_
-
-    # Get the labels for each of the function calls
-    derived_labels <-
-      summary_attrs$fns %>%
-      lapply(derive_summary_label) %>%
+    labels <-
+      names(fns) %>%
+      {
+        labels <- .
+        if (length(labels) < 1) {
+          rep(NA_character_, length(fns))
+        } else {
+          labels
+        }
+      } %>%
+      mapply(., fns, SIMPLIFY = FALSE, FUN = function(label, fn) {
+        if (is.na(label)) {
+          derive_summary_label(fn)
+        } else if(label == "") {
+          derive_summary_label(fn)
+        } else {
+          process_text(label, context = context)
+        }
+      }) %>%
       unlist() %>%
-      unname() %>%
-      make.names(unique = TRUE)
+      unname()
 
     # Replace missing labels with derived labels
     labels[is.na(labels)] <- derived_labels[is.na(labels)]
