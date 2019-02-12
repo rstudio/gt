@@ -734,16 +734,16 @@ create_body_component_h <- function(row_splits_body,
 
   # If there is a grand summary, include that at the end
   if (summaries_present &&
-      ":grand_summary:" %in% names(list_of_summaries$summary_df_display_list)) {
+      "::GRAND_SUMMARY" %in% names(list_of_summaries$summary_df_display_list)) {
 
     grand_summary_df <-
-      list_of_summaries$summary_df_display_list$`:grand_summary:` %>%
+      list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
       as.data.frame(stringsAsFactors = FALSE)
 
     row_splits_summary_styles <-
       apply_styles_to_summary_output(
         grand_summary_df, styles_resolved,
-        group = ":grand_summary:", n_cols = n_cols)
+        group = "::GRAND_SUMMARY", n_cols = n_cols)
 
     grand_summary <- as.vector(t(grand_summary_df))
 
