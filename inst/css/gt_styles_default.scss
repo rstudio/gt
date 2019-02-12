@@ -127,6 +127,12 @@
     border-top-color: #A8A8A8;
   }
 
+  .gt_first_grand_summary_row {
+    border-top-style: double;
+    border-top-width: 6px;
+    border-top-color: #A8A8A8;
+  }
+
   .gt_table_body {
     border-top-style: $field_border_top_style; /* field.border.top.style */
     border-top-width: $field_border_top_width; /* field.border.top.width */
