@@ -418,7 +418,8 @@ create_summary_dfs <- function(summary_list,
     }
 
     # Get the registered function calls
-    agg_funs <- fns %>% lapply(rlang::as_function)
+    #agg_funs <- fns %>% lapply(rlang::as_function)
+    agg_funs <- fns %>% lapply(rlang::as_closure)
 
     # Get the names if any were provided
     labels <- names(fns) %>% process_text()
