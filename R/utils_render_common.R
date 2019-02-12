@@ -310,10 +310,15 @@ create_summary_dfs <- function(summary_list,
                                stub_df,
                                output_df) {
 
+  # If the `summary_list` object is an empty list,
+  # return an empty list as the `list_of_summaries`
   if (length(summary_list) == 0) {
     return(list())
   }
 
+  # Create empty lists that are to contain summary
+  # data frames for display and for data collection
+  # purposes
   summary_df_display_list <- list()
   summary_df_data_list <- list()
 
@@ -328,7 +333,9 @@ create_summary_dfs <- function(summary_list,
       summary_attrs$missing_text <- "\u2013"
     }
 
-    # Resolve the groups to consider
+    # Resolve the groups to consider; if
+    # `groups` is TRUE then we are to obtain
+    # summary row data for all groups
     if (isTRUE(summary_attrs$groups)) {
       groups <- unique(stub_df$groupname)
     } else {
@@ -398,8 +405,8 @@ create_summary_dfs <- function(summary_list,
             dplyr::select(groupname, rowname, dplyr::everything()))
     }
 
-    # Exclude columns that are not requested by
-    # filling those with NA values
+    # Add those columns that were not part of
+    # the aggregation, filling those with NA values
     summary_dfs_data <-
       summary_dfs %>%
       dplyr::mutate_at(.vars = columns, .funs = function(x) {NA_real_})
@@ -455,7 +462,7 @@ create_summary_dfs <- function(summary_list,
     }
   }
 
-  # Condense data in summary_df_display_list in a
+  # Condense data in `summary_df_display_list` in a
   # groupwise manner
   summary_df_display_list <-
     tapply(
@@ -483,6 +490,9 @@ create_summary_dfs <- function(summary_list,
       replace(is.na(.), summary_attrs$missing_text)
   }
 
+  # Return a list of lists, each of which have
+  # summary data frames for display and for data
+  # collection purposes
   list(
     summary_df_data_list = summary_df_data_list,
     summary_df_display_list = summary_df_display_list)
