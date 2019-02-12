@@ -343,11 +343,7 @@ create_summary_dfs <- function(summary_list,
     }
 
     # Resolve the columns to exclude
-    if (isTRUE(summary_attrs$columns)) {
-      columns <- character(0)
-    } else {
-      columns <- base::setdiff(colnames(output_df), summary_attrs$columns)
-    }
+    columns_excl <- base::setdiff(colnames(output_df), summary_attrs$columns)
 
     # Combine `groupname` with the field data in order to
     # process data by groups
