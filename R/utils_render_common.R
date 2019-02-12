@@ -444,8 +444,14 @@ create_summary_dfs <- function(summary_list,
       unlist() %>%
       unname()
 
-    # Replace missing labels with derived labels
-    labels[is.na(labels)] <- derived_labels[is.na(labels)]
+    if (length(labels) != length(unique(labels))) {
+
+      stop("All summary labels must be unique:\n",
+           " * Review the names provided in `fns`\n",
+           " * These labels are in conflict: ",
+           paste0(labels, collapse = ", "), ".",
+           call. = FALSE)
+    }
 
     # Initialize an empty tibble to bind to
     summary_dfs_data <- dplyr::tibble()
