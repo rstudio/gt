@@ -81,6 +81,7 @@ test_that("the `summary_rows()` function works correctly", {
   gt_tbl <-
     gt(tbl) %>%
     summary_rows(
+      groups = TRUE,
       columns = vars(value_1),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -137,15 +138,21 @@ test_that("the `summary_rows()` function works correctly", {
   gt_tbl <-
     gt(tbl) %>%
     summary_rows(
+      groups = TRUE,
       columns = vars(value_1, value_2),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))) %>%
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    ) %>%
     summary_rows(
+      groups = TRUE,
       columns = vars(value_1, value_2),
       fns = list(
-        max = ~max(., na.rm = TRUE)))
+        max = ~max(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
   summary <- attr(gt_tbl, "summary", exact = TRUE)
