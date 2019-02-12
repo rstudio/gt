@@ -101,23 +101,11 @@ summary_rows <- function(data,
     columns <- columns %>% lapply(`[[`, 2) %>% as.character()
   }
 
-  if ("summary" %in% names(attributes(data))) {
-
-    attr(data, "summary") <-
-      c(
-        attr(data, "summary"),
-        list(
-          list(
-            groups = groups,
-            columns = columns,
-            fns = fns,
-            missing_text = missing_text,
-            formatter = formatter,
-            formatter_options = formatter_options)))
-
-  } else {
-
-    attr(data, "summary") <-
+  # Append list of summary inputs to the
+  # `summary` attribute
+  attr(data, "summary") <-
+    c(
+      attr(data, "summary"),
       list(
         list(
           groups = groups,
@@ -125,8 +113,10 @@ summary_rows <- function(data,
           fns = fns,
           missing_text = missing_text,
           formatter = formatter,
-          formatter_options = formatter_options))
-  }
+          formatter_options = formatter_options
+        )
+      )
+    )
 
   data
 }
