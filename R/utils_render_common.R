@@ -384,14 +384,14 @@ create_summary_dfs <- function(summary_list,
     labels[is.na(labels)] <- derived_labels[is.na(labels)]
 
     # Initialize an empty tibble to bind to
-    summary_dfs <- dplyr::tibble()
+    summary_dfs_data <- dplyr::tibble()
 
     for (j in seq(agg_funs)) {
 
       # Get aggregation rows for each of the `agg_funs`
-      summary_dfs <-
+      summary_dfs_data <-
         dplyr::bind_rows(
-          summary_dfs,
+          summary_dfs_data,
           groups_data_df %>%
             dplyr::select(c("groupname", colnames(output_df))) %>%
             dplyr::filter(groupname %in% groups) %>%
