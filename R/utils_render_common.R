@@ -398,18 +398,21 @@ create_summary_dfs <- function(summary_list,
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
             dplyr::ungroup() %>%
             dplyr::mutate(rowname = labels[j]) %>%
-            dplyr::select(groupname, rowname, dplyr::everything()))
+            dplyr::select(groupname, rowname, dplyr::everything())
+        )
     }
 
     # Add those columns that were not part of
     # the aggregation, filling those with NA values
+    summary_dfs_data[, columns_excl] <- NA_real_
+
     summary_dfs_data <-
-      summary_dfs %>%
-      dplyr::mutate_at(.vars = columns, .funs = function(x) {NA_real_})
+      summary_dfs_data %>%
+      dplyr::select(groupname, rowname, colnames(output_df))
 
     # Format the displayed summary lines
     summary_dfs_display <-
-      summary_dfs %>%
+      summary_dfs_data %>%
       dplyr::mutate_at(
         .vars = summary_attrs$columns,
         .funs = function(x) {
@@ -432,7 +435,7 @@ create_summary_dfs <- function(summary_list,
         }
       ) %>%
       dplyr::mutate_at(
-        .vars = columns,
+        .vars = columns_excl,
         .funs = function(x) {NA_character_})
 
     for (group in groups) {
@@ -491,7 +494,8 @@ create_summary_dfs <- function(summary_list,
   # collection purposes
   list(
     summary_df_data_list = summary_df_data_list,
-    summary_df_display_list = summary_df_display_list)
+    summary_df_display_list = summary_df_display_list
+  )
 }
 
 migrate_labels <- function(row_val) {
