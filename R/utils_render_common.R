@@ -326,50 +326,71 @@ create_summary_dfs <- function(summary_list,
 
     summary_attrs <- summary_list[[i]]
 
+    groups <- summary_attrs$groups
+    columns <- summary_attrs$columns
+    fns <- summary_attrs$fns
+    missing_text <- summary_attrs$missing_text
+    formatter <- summary_attrs$formatter
+    formatter_options <- summary_attrs$formatter_options
+
     # Resolve the `missing_text`
-    if (summary_attrs$missing_text == "---") {
-      summary_attrs$missing_text <- "\u2014"
-    } else if (summary_attrs$missing_text == "--") {
-      summary_attrs$missing_text <- "\u2013"
+    if (missing_text == "---") {
+      missing_text <- "\u2014"
+    } else if (missing_text == "--") {
+      missing_text <- "\u2013"
     }
 
     # Resolve the groups to consider; if
     # `groups` is TRUE then we are to obtain
     # summary row data for all groups
-    if (isTRUE(summary_attrs$groups)) {
+    if (isTRUE(groups)) {
       groups <- unique(stub_df$groupname)
-    } else {
-      groups <- summary_attrs$groups
+    } else if (is.null(groups)) {
+      groups <- ":grand_summary:"
     }
 
     # Resolve the columns to exclude
-    columns_excl <- base::setdiff(colnames(output_df), summary_attrs$columns)
+    columns_excl <- base::setdiff(colnames(output_df), columns)
 
     # Combine `groupname` with the field data in order to
     # process data by groups
-    groups_data_df <-
-      cbind(
-        stub_df[
-          seq(nrow(stub_df)),
-          c("groupname", "rowname")],
-        data_df)[, -2] %>%
-      dplyr::select(groupname, summary_attrs$columns)
+    if (groups[1] != ":grand_summary:") {
 
-    # Get the registered function calls
-    agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
+      select_data_df <-
+        cbind(
+          stub_df[
+            seq(nrow(stub_df)),
+            c("groupname", "rowname")],
+          data_df)[, -2] %>%
+        dplyr::select(groupname, columns)
 
-    # Get the names if any were provided
-    labels <- names(summary_attrs$fns) %>% process_text()
+    } else if (groups == ":grand_summary:") {
 
-    # If names weren't provided at all, handle this case by
-    # creating a vector of NAs that will be replaced later with
-    # derived names
-    if (length(labels) < 1) {
-      labels <- rep(NA_character_, length(summary_attrs$fns))
+      select_data_df <-
+        cbind(
+          stub_df[
+            seq(nrow(stub_df)),
+            c("groupname", "rowname")],
+          data_df)[, -2] %>%
+        dplyr::mutate(groupname = ":grand_summary:") %>%
+        dplyr::select(groupname, columns)
     }
 
-    # If one or more names not provided then replace the empty
-    # string with NA
+    # Get the registered function calls
+    agg_funs <- fns %>% lapply(rlang::as_function)
+
+    # Get the names if any were provided
+    labels <- names(fns) %>% process_text()
+
+    # If names weren't provided at all, handle
+    # this case by creating a vector of NAs that
+    # will be replaced later with derived names
+    if (length(labels) < 1) {
+      labels <- rep(NA_character_, length(fns))
+    }
+
+    # If one or more names not provided then
+    # replace the empty string with NAs
     labels[labels == ""] <- NA_character_
 
     # Get the labels for each of the function calls
@@ -392,7 +413,7 @@ create_summary_dfs <- function(summary_list,
       summary_dfs_data <-
         dplyr::bind_rows(
           summary_dfs_data,
-          groups_data_df %>%
+          select_data_df %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
@@ -414,7 +435,7 @@ create_summary_dfs <- function(summary_list,
     summary_dfs_display <-
       summary_dfs_data %>%
       dplyr::mutate_at(
-        .vars = summary_attrs$columns,
+        .vars = columns,
         .funs = function(x) {
 
           format_data <-
@@ -467,8 +488,8 @@ create_summary_dfs <- function(summary_list,
     tapply(
       summary_df_display_list,
       names(summary_df_display_list),
-      dplyr::bind_rows)
-
+      dplyr::bind_rows
+    )
 
   for (i in seq(summary_df_display_list)) {
 
@@ -486,7 +507,7 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
         match(arrangement, summary_df_display_list[[i]]$rowname), ] %>%
-      replace(is.na(.), summary_attrs$missing_text)
+      replace(is.na(.), missing_text)
   }
 
   # Return a list of lists, each of which have
