@@ -308,7 +308,8 @@ perform_col_merge <- function(col_merge,
 create_summary_dfs <- function(summary_list,
                                data_df,
                                stub_df,
-                               output_df) {
+                               output_df,
+                               context) {
 
   # If the `summary_list` object is an empty list,
   # return an empty list as the `list_of_summaries`
