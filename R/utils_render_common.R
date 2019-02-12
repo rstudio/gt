@@ -352,7 +352,8 @@ create_summary_dfs <- function(summary_list,
         stub_df[
           seq(nrow(stub_df)),
           c("groupname", "rowname")],
-        data_df)[, -2]
+        data_df)[, -2] %>%
+      dplyr::select(groupname, summary_attrs$columns)
 
     # Get the registered function calls
     agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
