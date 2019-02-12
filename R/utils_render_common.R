@@ -345,9 +345,49 @@ create_summary_dfs <- function(summary_list,
     # `groups` is TRUE then we are to obtain
     # summary row data for all groups
     if (isTRUE(groups)) {
+
+      if (all(is.na(stub_df$groupname))) {
+        stop("There are no row groups in the gt object:\n",
+             " * Use `groups = NULL` to create a grand summary\n",
+             " * Define row groups using `gt()` or `tab_row_group()`",
+             call. = FALSE)
+      }
+
       groups <- unique(stub_df$groupname)
+
+    } else if (!is.null(groups) && is.character(groups)) {
+
+      # TODO: this is repeated from above, make
+      # this a utility function
+      if (all(is.na(stub_df$groupname))) {
+        stop("There are no row groups in the gt object:\n",
+             " * Use `groups = NULL` to create a grand summary\n",
+             " * Define row groups using `gt()` or `tab_row_group()`",
+             call. = FALSE)
+      }
+
+      # Get the names of row groups available
+      # in the gt object
+      groups_available <- unique(stub_df$groupname)
+
+      if (any(!(groups %in% groups_available))) {
+
+        # Stop function if one or more `groups`
+        # are not present in the gt table
+        stop("All `groups` should be available in the gt object:\n",
+             " * The following groups aren't present: ",
+             paste0(
+               base::setdiff(groups, groups_available),
+               collapse = ", "
+             ), "\n",
+             call. = FALSE)
+      }
+
     } else if (is.null(groups)) {
-      groups <- ":grand_summary:"
+
+      # If groups is given as NULL (the default)
+      # then use a special group (`::GRAND_SUMMARY`)
+      groups <- "::GRAND_SUMMARY"
     }
 
     # Resolve the columns to exclude
