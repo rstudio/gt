@@ -575,7 +575,15 @@ normalize_suffixing_inputs <- function(suffixing) {
 #' @noRd
 derive_summary_label <- function(fn) {
 
-  if (inherits(fn, "formula")) {
+  if (is.function(fn)) {
+
+    # Stop the function if any functions provided
+    # as bare names (e.g., `mean`) don't have
+    # names provided
+    stop("All functions provided as bare names in `fns` need a label.",
+         call. = FALSE)
+
+  } else if (inherits(fn, "formula")) {
 
     (fn %>% rlang::f_rhs())[[1]] %>%
       as.character()
