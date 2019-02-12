@@ -732,6 +732,59 @@ create_body_component_h <- function(row_splits_body,
     }
   }
 
+  # If there is a grand summary, include that at the end
+  if (summaries_present &&
+      ":grand_summary:" %in% names(list_of_summaries$summary_df_display_list)) {
+
+    grand_summary_df <-
+      list_of_summaries$summary_df_display_list$`:grand_summary:` %>%
+      as.data.frame(stringsAsFactors = FALSE)
+
+    row_splits_summary_styles <-
+      apply_styles_to_summary_output(
+        grand_summary_df, styles_resolved,
+        group = ":grand_summary:", n_cols = n_cols)
+
+    grand_summary <- as.vector(t(grand_summary_df))
+
+    row_splits_grand_summary <-
+      split_body_content(
+        body_content = grand_summary,
+        n_cols = n_cols)
+
+    # Provide CSS classes for leading and non-leading summary rows
+    summary_row_classes_first <- "gt_summary_row gt_first_grand_summary_row "
+    summary_row_classes <- "gt_summary_row "
+
+    grand_summary_row_lines <- c()
+
+    for (j in seq(length(row_splits_grand_summary))) {
+
+      grand_summary_row_lines <-
+        c(grand_summary_row_lines,
+          paste0(
+            "<tr>\n",
+            paste0(
+              "<td class='gt_stub gt_row ",
+              ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+              "gt_", col_alignment[1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
+              row_splits_grand_summary[[j]][1],
+              "</td>"), "\n",
+            paste0(
+              "<td class='gt_row ",
+              ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+              "gt_", col_alignment[-1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
+              row_splits_grand_summary[[j]][-1],
+              "</td>", collapse = "\n"),
+            "\n</tr>\n")
+        )
+    }
+
+    body_rows <- c(body_rows, grand_summary_row_lines)
+  }
+
   # Create a single-length vector by collapsing all vector components
   body_rows <- body_rows %>% paste(collapse = "")
 
