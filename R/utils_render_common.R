@@ -395,7 +395,7 @@ create_summary_dfs <- function(summary_list,
 
     # Combine `groupname` with the field data in order to
     # process data by groups
-    if (groups[1] != ":grand_summary:") {
+    if (groups[1] != "::GRAND_SUMMARY") {
 
       select_data_df <-
         cbind(
@@ -405,7 +405,7 @@ create_summary_dfs <- function(summary_list,
           data_df)[, -2] %>%
         dplyr::select(groupname, columns)
 
-    } else if (groups == ":grand_summary:") {
+    } else if (groups == "::GRAND_SUMMARY") {
 
       select_data_df <-
         cbind(
@@ -413,7 +413,7 @@ create_summary_dfs <- function(summary_list,
             seq(nrow(stub_df)),
             c("groupname", "rowname")],
           data_df)[, -2] %>%
-        dplyr::mutate(groupname = ":grand_summary:") %>%
+        dplyr::mutate(groupname = "::GRAND_SUMMARY") %>%
         dplyr::select(groupname, columns)
     }
 
