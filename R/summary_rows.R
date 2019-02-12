@@ -77,7 +77,7 @@
 #' @family row addition functions
 #' @export
 summary_rows <- function(data,
-                         groups = NULL,
+                         groups = TRUE,
                          columns = NULL,
                          fns,
                          missing_text = "---",
