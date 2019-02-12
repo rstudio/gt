@@ -329,7 +329,7 @@ create_summary_dfs <- function(summary_list,
     # Resolve the `missing_text`
     if (summary_attrs$missing_text == "---") {
       summary_attrs$missing_text <- "\u2014"
-    } else if (missing_text == "--") {
+    } else if (summary_attrs$missing_text == "--") {
       summary_attrs$missing_text <- "\u2013"
     }
 
