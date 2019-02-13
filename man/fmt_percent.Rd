@@ -73,9 +73,9 @@ an object of class \code{gt_tbl}.
 \description{
 With numeric values in a \pkg{gt} table, we can perform percentage-based
 formatting. It is assumed the input numeric values are in a fractional format
-since the will be automatically multplied by \code{100} before decorating
-with a percent sign. For more control over percentage formatting, we can use
-the following options:
+since the numbers will be automatically multiplied by \code{100} before
+decorating with a percent sign. For more control over percentage formatting,
+we can use the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the

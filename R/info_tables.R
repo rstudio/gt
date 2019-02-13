@@ -226,6 +226,7 @@ info_currencies <- function(type = c("code", "symbol"),
   }
 }
 
+
 #' View a table with info on supported locales
 #'
 #' Many of the \code{fmt_*()} functions have a \code{locale} argument that makes
@@ -326,8 +327,7 @@ info_locales <- function(begins_with = NULL) {
     tab_options(row.padding = "5px")
 }
 
-
-#' View a table with info on many different color palettes
+#' View a table with info on color palettes
 #'
 #' While the \code{\link{data_color}()} function allows us to flexibly color
 #' data cells in our \pkg{gt} table, the harder part of this process is
@@ -335,7 +335,7 @@ info_locales <- function(begins_with = NULL) {
 #' output. We can make this process much easier in two ways: (1) by using the
 #' \pkg{paletteer} package, which makes a wide range of palettes from various R
 #' packages readily available, and (2) calling the \code{info_paletteer()}
-#' function to give us an information table that serves as quick reference for
+#' function to give us an information table that serves as a quick reference for
 #' all of the discrete color palettes available in \pkg{paletteer}.
 #'
 #' The palettes displayed are organized by package and by palette name. These
@@ -343,8 +343,35 @@ info_locales <- function(begins_with = NULL) {
 #' colors), from the the \code{paletteer::paletteer_d()} function. Once we are
 #' familiar with the names of the color palette packages (e.g.,
 #' \pkg{RColorBrewer}, \pkg{ggthemes}, \pkg{wesanderson}), we can narrow down
-#' the content of this information table by supplying a vector package names to
-#' \code{color_pkgs}.
+#' the content of this information table by supplying a vector of such package
+#' names to \code{color_pkgs}.
+#'
+#' Colors from the following color packages (all supported by \pkg{paletteer})
+#' are shown by default with \code{info_paletteer()}:
+#' \itemize{
+#' \item awtools, 5 palettes
+#' \item dichromat, 17 palettes
+#' \item dutchmasters, 6 palettes
+#' \item ggpomological, 2 palettes
+#' \item ggsci, 42 palettes
+#' \item ggthemes, 31 palettes
+#' \item ghibli, 27 palettes
+#' \item grDevices, 1 palette
+#' \item jcolors, 13 palettes
+#' \item LaCroixColoR, 21 palettes
+#' \item NineteenEightyR, 12 palettes
+#' \item nord, 16 palettes
+#' \item ochRe, 16 palettes
+#' \item palettetown, 389 palettes
+#' \item pals, 8 palettes
+#' \item Polychrome, 7 palettes
+#' \item quickpalette, 17 palettes
+#' \item rcartocolor, 34 palettes
+#' \item RColorBrewer, 35 palettes
+#' \item Redmonder, 41 palettes
+#' \item wesanderson, 19 palettes
+#' \item yarrr, 21 palettes
+#' }
 #'
 #' @param color_pkgs a vector of color packages that determines which sets of
 #'   palettes should be displayed in the information table. If this is
