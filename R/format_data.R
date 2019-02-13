@@ -175,13 +175,16 @@ fmt_number <- function(data,
     scale_by <- 1.0
   }
 
+  # Capture expression in `columns`
+  columns <- rlang::enquo(columns)
+
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1523,13 +1526,16 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
+  # Capture expression in `columns`
+  columns <- rlang::enquo(columns)
+
   # Capture expression in `rows`
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         html = function(x) {
@@ -1540,13 +1546,21 @@ fmt_missing <- function(data,
             missing_text <- "\u2013"
           }
 
-          x[is.na(x)] <- missing_text
-          x
+          # Any values of `x` that are `NA` get
+          # `missing_text` as output; any values that
+          # are not missing get `NA` as their output
+          # (meaning, the existing output for that
+          # value, if it exists, should be inherited)
+          ifelse(is.na(x), missing_text, NA_character_)
         },
         default = function(x) {
 
-          x[is.na(x)] <- missing_text
-          x
+          # Any values of `x` that are `NA` get
+          # `missing_text` as output; any values that
+          # are not missing get `NA` as their output
+          # (meaning, the existing output for that
+          # value, if it exists, should be inherited)
+          ifelse(is.na(x), missing_text, NA_character_)
         }
       ))
 }
