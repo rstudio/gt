@@ -139,12 +139,24 @@ resolve_vars <- function(var_expr, var_names, data_df) {
 
   } else if (is.character(resolved)) {
 
+    if (!all(resolved %in% var_names)) {
+      stop("One or more column names provided not available in the table",
+           call. = FALSE)
+    }
+
     resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
     resolved <- which(var_names %in% resolved)
 
   } else if (is_quosures(resolved)) {
 
-    resolved <- vapply(resolved, function(x) as.character(quo_get_expr(x)), character(1))
+    resolved <-
+      vapply(resolved, function(x) as.character(quo_get_expr(x)), character(1))
+
+    if (!all(resolved %in% var_names)) {
+      stop("One or more column names provided not available in the table",
+           call. = FALSE)
+    }
+
     resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
     resolved <- which(var_names %in% resolved)
   }

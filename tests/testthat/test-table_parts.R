@@ -143,22 +143,14 @@ test_that("a gt table contains the expected spanner column labels", {
     selection_text("[class='gt_col_heading gt_column_spanner gt_center']") %>%
     expect_equal("perimeter")
 
-  # Create a `gt_tbl` object with `gt()`; this table
-  # contains the spanner heading `perimeter` over the
-  # `peris` and `shapes` column labels (which don't exist)
-  tbl_html <-
+  # Expect an error when using column labels
+  # that don't exist
+  expect_error(
     gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peris, shapes)) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the content in the column headings only includes
-  # the column labels
-  tbl_html %>%
-    selection_text("[class='gt_col_heading gt_right']") %>%
-    expect_equal(c("area", "peri", "shape", "perm"))
+      tab_spanner(
+        label = "perimeter",
+        columns = vars(peris, shapes))
+  )
 })
 
 test_that("a gt table contains the expected source note", {
