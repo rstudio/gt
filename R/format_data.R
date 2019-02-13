@@ -330,7 +330,7 @@ fmt_scientific <- function(data,
       small_pos <-
         ((x >= 1 & x < 10) |
            (x <= -1 & x > -10) |
-           is_equal_to(x, 0)) & !is.na(x)
+           x == 0) & !is.na(x)
 
       # Create `x_str` with same length as `x`
       x_str <- rep(NA_character_, length(x))
