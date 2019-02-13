@@ -78,17 +78,27 @@ test_that("the `fmt_passthrough()` function works correctly", {
        fmt_passthrough(columns = "num_1", pattern = "{x} d") %>%
        render_formats_test(context = "default"))[["num_1"]],
     c("1836.23 d", "2763.39 d", "937.29 d",
-      "643 d", "212.232 d", "0 d", "-23.24 d"))
+      "643 d", "212.232 d", "0 d", "-23.24 d")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_passthrough(columns = "num_2", pattern = "{x}%") %>%
+       fmt_passthrough(
+         columns = "num_2",
+         pattern = "{x}%"
+       ) %>%
        render_formats_test(context = "default"))[["num_2"]],
-    c("34%", "74%", "23%", "93%", "35%", "76%", "57%"))
+    c("34%", "74%", "23%", "93%", "35%", "76%", "57%")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_passthrough(columns = "num_2", rows = num_2 < 50, pattern = "{x}%") %>%
+       fmt_passthrough(
+         columns = "num_2",
+         rows = num_2 < 50,
+         pattern = "{x}%"
+       ) %>%
        render_formats_test(context = "default"))[["num_2"]],
-    c("34%", NA, "23%", NA, "35%", NA, NA))
+    c("34%", "74", "23%", "NA", "35%", "NA", "NA")
+  )
 })

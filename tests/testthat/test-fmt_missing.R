@@ -83,13 +83,7 @@ test_that("the `fmt_missing()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
-       render_formats_test(context = "default"))[["num_1"]],
-    c("---", NA, "---", NA, "---", NA, NA))
-
-  expect_equal(
-    (tab %>%
-       fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", NA, "—", NA, "—", NA, NA))
+    c("—", "74", "—", "93", "—", "76", "NA"))
 })
 
