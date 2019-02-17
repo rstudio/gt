@@ -92,6 +92,7 @@ tab_2 <-
   gt() \%>\%
   tab_header(
     title = html(
+      "<strong>R Logo</strong>",
       web_image(
         url = r_svg_url,
         height = px(50)
