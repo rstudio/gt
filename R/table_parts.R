@@ -258,7 +258,7 @@ tab_spanner <- function(data,
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(column_vars = columns, data = data)
+  column_names <- resolve_vars(var_expr = columns, data = data)
 
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
