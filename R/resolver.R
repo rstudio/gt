@@ -6,34 +6,33 @@
 resolve_cells_data <- function(data,
                                object) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
 
   # Get the `stub_df` data frame from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  # Obtain the `columns` and `rows` components of
-  # object created by the `cells_data()` function
-  object_columns <- object$columns
-  object_rows <- object$rows
-
-  # Collect the column names from `data_df`
-  colnames <- names(data_df)
-
-  # Collect the rownames from `stub_df`
-  rownames <- stub_df$rowname
 
   #
   # Resolution of columns and rows as integer vectors
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars_idx(object_columns, colnames, data_df)
-  resolved_rows <- resolve_vars_idx(object_rows, rownames, data_df)
+  resolved_columns_idx <-
+    resolve_vars_idx(
+      var_expr = object$columns,
+      data = data
+    )
+
+  # Get the resolved rows
+  resolved_rows_idx <-
+    resolve_data_vals_idx(
+      var_expr = object$rows,
+      data = data,
+      # Collect the rownames from `stub_df`
+      vals = stub_df$rowname
+    )
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
-    expand.grid(resolved_columns, resolved_rows, stringsAsFactors = FALSE) %>%
+    expand.grid(resolved_columns_idx, resolved_rows_idx, stringsAsFactors = FALSE) %>%
     dplyr::arrange(Var1) %>%
     dplyr::distinct()
 
@@ -59,22 +58,20 @@ resolve_cells_stub <- function(data,
   # Get the `stub_df` data frame from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
-  # Obtain the `columns` and `rows` components of
-  # object created by the `cells_stub()` function
-  object_rows <- object$rows
-
-  # Collect the rownames from `stub_df`
-  rownames <- stub_df$rowname
-
   #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
 
-  resolved_rows <- resolve_vars_idx(object_rows, rownames, data_df)
+  resolved_rows_idx <-
+    resolve_data_vals_idx(
+      var_expr = object$rows,
+      data = data,
+      vals = stub_df$rowname
+    )
 
   # Create a list object
-  cells_resolved <- list(rows = resolved_rows)
+  cells_resolved <- list(rows = resolved_rows_idx)
 
   # Apply the `stub_cells_resolved` class
   attr(cells_resolved, "class") <- "stub_cells_resolved"
@@ -91,22 +88,15 @@ resolve_cells_stub <- function(data,
 resolve_cells_column_labels <- function(data,
                                         object) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
-
-  # Collect the column names from `data_df`
-  colnames <- names(data_df)
-
-  # Obtain the `columns` component of object created
-  # by the `cells_column_labels()` function
-  object_columns <- object$columns
-
   #
   # Resolution of columns as integer vectors
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars_idx(object_columns, colnames, data_df)
+  resolved_columns <-
+    resolve_vars_idx(
+      var_expr = object$columns,
+      data = data)
 
   # Create a list object
   cells_resolved <- list(columns = resolved_columns)
