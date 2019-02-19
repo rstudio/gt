@@ -128,31 +128,44 @@ resolve_cells_column_labels <- function(data,
 #' @import rlang
 #' @noRd
 resolve_vars_idx <- function(var_expr, var_names, data_df) {
+resolve_data_vals_idx <- function(var_expr,
+                                  data,
+                                  vals) {
+
+  if (!is.null(data)) {
+    data <- as.data.frame(data)
+  }
 
   # Translate variable expressions (e.g., logical
   # values, select helpers, expressions in `vars()`,
   # etc.) to the appropriate output
   resolved <-
     tidyselect::with_vars(
-      var_names, rlang::eval_tidy(var_expr, data_df, env = NULL)
+      vals,
+      rlang::eval_tidy(
+        expr = var_expr,
+        data = data,
+        env = emptyenv()
+      )
     )
 
   # With the `resolved` output, check types and
   # process inputs to reliably output as a vector
   # of column indices based on `var_names`
+
   if (is.null(resolved)) {
 
-    resolved <- seq_along(var_names)
+    resolved <- seq_along(vals)
 
   } else if (is.logical(resolved)) {
 
-    # TODO: Give a warning if `length(resolved) > length(var_names)`
-    resolved <- which(rlang::rep_along(var_names, resolved))
+    # TODO: Give a warning if `length(resolved) > length(vals)`
+    resolved <- which(rlang::rep_along(vals, resolved))
 
   } else if (is.character(resolved)) {
 
-    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
-    resolved <- which(var_names %in% resolved)
+    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
+    resolved <- which(vals %in% resolved)
 
   } else if (is_quosures(resolved)) {
 
@@ -165,8 +178,8 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
     }
 
     resolved <- vapply(resolved, quo_get_expr_char, character(1))
-    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
-    resolved <- which(var_names %in% resolved)
+    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
+    resolved <- which(vals %in% resolved)
   }
 
   resolved
@@ -179,7 +192,7 @@ resolve_vars_idx <- function(var_expr, var_names, data_df) {
 #' @param data A table object that is created using the \code{\link{gt}()}
 #'   function.
 #' @noRd
-resolve_vars <- function(column_vars, data) {
+resolve_vars <- function(var_expr, data) {
 
   # Obtain the data frame of the input table data
   data_df <- as.data.frame(data)
@@ -191,9 +204,8 @@ resolve_vars <- function(column_vars, data) {
   # column indices
   columns_idx <-
     resolve_vars_idx(
-      var_expr = column_vars,
-      var_names = column_names,
-      data_df = data_df
+      var_expr = var_expr,
+      data = data
     )
 
   # Translate the column indices to column names
