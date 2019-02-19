@@ -401,7 +401,7 @@ info_paletteer <- function(color_pkgs = NULL) {
         "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
         "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
         "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
-        "Redmonder", "wesanderson", "yarrr")
+        "Redmonder", "tidyquant", "wesanderson", "yarrr")
   }
 
   palettes_strips_df <-
