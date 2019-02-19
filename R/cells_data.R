@@ -8,14 +8,15 @@ resolve_location.cells_data <- function(loc, data_attr) {
   loc$columns <-
     resolve_vars_idx(
       var_expr = loc[["columns"]],
-      var_names = colnames(data_df),
-      data_df =  data_df)
+      data = data_df
+    )
 
   loc$rows <-
-    resolve_vars_idx(
+    resolve_data_vals_idx(
       var_expr = loc[["rows"]],
-      var_names = stub_df$rowname,
-      data_df = data_df)
+      data = data_df,
+      vals = stub_df$rowname
+    )
 
   class(loc) <- c("resolved", class(loc))
 

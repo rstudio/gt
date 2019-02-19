@@ -161,22 +161,21 @@ tab_row_group <- function(data,
   # Create a row group if a `group` is provided
   if (!is.null(group)) {
 
-    # Get the `data_df` data frame from `data`
-    data_df <- as.data.frame(data)
-
     # Get the `stub_df` data frame from `data`
     stub_df <- attr(data, "stub_df", exact = TRUE)
 
-    # Collect the rownames from `stub_df`
-    rownames <- stub_df$rowname
-
     # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows <-
-      resolve_vars_idx(var_expr = row_expr, var_names = rownames, data_df = data_df)
+    resolved_rows_idx <-
+      resolve_data_vals_idx(
+        var_expr = row_expr,
+        data = data,
+        vals = stub_df$rowname
+      )
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
+    attr(data, "stub_df")[resolved_rows_idx, "groupname"] <-
+      process_text(group[1])
 
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {

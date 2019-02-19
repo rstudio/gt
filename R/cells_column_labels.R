@@ -6,13 +6,10 @@ resolve_location.cells_column_labels <- function(loc, data_attr) {
 
   if (!is.null(loc$columns)) {
 
-    colnums <-
-      resolve_vars_idx(
-        var_expr = loc[["columns"]],
-        var_names = colnames(data_df),
-        data_df = data_df)
-
-    loc$colnames <- colnames(data_df)[colnums]
+    loc$colnames <-
+      resolve_vars(
+        var_expr = loc$columns,
+        data = data_df)
   }
 
   # TODO: for now, when groups is set to TRUE, the
