@@ -107,15 +107,12 @@ resolve_cells_column_labels <- function(data,
   cells_resolved
 }
 
-
-#' Resolve variables for rows and columns to obtain indices
+#' Resolve expressions to obtain column indices
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   \code{rlang::eval_tidy()} as a value for the \code{expr} argument.
 #' @param data The input table available in \code{data} (usually accessed
 #'   through \code{as.data.frame(data)}).
-#' @import tidyselect
-#' @import rlang
 #' @noRd
 resolve_vars_idx <- function(var_expr,
                              data) {
@@ -127,6 +124,16 @@ resolve_vars_idx <- function(var_expr,
   )
 }
 
+#' Resolve expressions to obtain row indices
+#'
+#' @param var_expr An expression to evaluate. This is passed directly to
+#'   \code{rlang::eval_tidy()} as a value for the \code{expr} argument.
+#' @param data The input table available in \code{data} (usually accessed
+#'   through \code{as.data.frame(data)}).
+#' @param vals The names of columns or rows in \code{data}.
+#' @import tidyselect
+#' @import rlang
+#' @noRd
 resolve_data_vals_idx <- function(var_expr,
                                   data,
                                   vals) {
@@ -150,8 +157,7 @@ resolve_data_vals_idx <- function(var_expr,
 
   # With the `resolved` output, check types and
   # process inputs to reliably output as a vector
-  # of column indices based on `var_names`
-
+  # of column indices based on `vals`
   if (is.null(resolved)) {
 
     resolved <- seq_along(vals)
@@ -184,14 +190,14 @@ resolve_data_vals_idx <- function(var_expr,
   resolved
 }
 
-
-#' Resolve variables to obtain column names
+#' Resolve expressions to obtain column names
 #'
-#' @param column_vars The immutable column names from the input table.
+#' @param var_expr The immutable column names from the input table.
 #' @param data A table object that is created using the \code{\link{gt}()}
 #'   function.
 #' @noRd
-resolve_vars <- function(var_expr, data) {
+resolve_vars <- function(var_expr,
+                         data) {
 
   # Obtain the data frame of the input table data
   data_df <- as.data.frame(data)
