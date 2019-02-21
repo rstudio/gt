@@ -315,6 +315,23 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
+#' Transform Markdown text to HTML; also performs HTML escaping
+#' @importFrom commonmark markdown_html
+#' @noRd
+md_to_html <- function(x) {
+
+  non_na_x <-
+    x[!is.na(x)] %>%
+    as.character() %>%
+    htmltools::htmlEscape() %>%
+    vapply(commonmark::markdown_html, character(1), USE.NAMES = FALSE) %>%
+    tidy_gsub("^", "<div class='gt_from_md'>") %>%
+    tidy_gsub("$", "</div>")
+
+  x[!is.na(x)] <- non_na_x
+  x
+}
+
 # Transform Markdown text to LaTeX; also escapes ASCII
 # characters with special meaning in LaTeX
 #' @importFrom commonmark markdown_latex
