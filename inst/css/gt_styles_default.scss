@@ -99,6 +99,10 @@
      background-color: darken($table_background_color, 5%);
   }
 
+  .gt_from_md > p {
+    margin: 0;
+  }
+
   .gt_row {
     padding: $row_padding; /* row.padding */
     margin: 10px;
