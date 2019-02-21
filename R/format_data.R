@@ -1370,6 +1370,51 @@ fmt_datetime <- function(data,
         }))
 }
 
+#' Format Markdown text
+#'
+#' Any Markdown-formatted text in the incoming cells will be transformed to the
+#' appropriate output type during render when using \code{fmt_markdown()}.
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
+#'
+#' @inheritParams fmt_number
+#' @return an object of class \code{gt_tbl}.
+#' @family data formatting functions
+#' @import rlang
+#' @export
+fmt_markdown <- function(data,
+                         columns,
+                         rows = NULL) {
+
+  # Capture expression in `rows`
+  rows <- rlang::enquo(rows)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = columns,
+    rows = !!rows,
+    fns = list(
+      html = function(x) {
+        md_to_html(x)
+      },
+      latex = function(x) {
+        markdown_to_latex(x)
+      },
+      default = function(x) {
+        vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
+          stringr::str_replace("\n$", "")
+      }
+    )
+  )
+}
+
 #' Format by simply passing data through
 #'
 #' Format by passing data through no other transformation other than: (1)
