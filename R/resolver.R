@@ -138,6 +138,7 @@ resolve_vars_idx <- function(var_expr,
 resolve_data_vals_idx <- function(var_expr,
                                   data,
                                   vals) {
+  var_expr <- enquo(var_expr)
 
   if (!is.null(data)) {
     data <- as.data.frame(data)
