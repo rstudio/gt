@@ -175,7 +175,7 @@ resolve_data_vals_idx <- function(var_expr,
   } else if (is.numeric(resolved)) {
 
     if (any(!(resolved %in% seq_along(vals)))) {
-      stop("All column or rows indices given must be present in `data`.",
+      stop("All column or row indices given must be present in `data`.",
            call. = FALSE)
     }
 
