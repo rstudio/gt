@@ -401,7 +401,7 @@ info_paletteer <- function(color_pkgs = NULL) {
         "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
         "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
         "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
-        "Redmonder", "wesanderson", "yarrr")
+        "Redmonder", "tidyquant", "wesanderson", "yarrr")
   }
 
   palettes_strips_df <-
@@ -428,7 +428,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     tab_stubhead_label(label = "Package and Palette Name") %>%
     tab_header(
       title = md("Palettes Made Easily Available with **paletteer**"),
-      subtitle = md("Palettes like these are useful with the `data_color()` **gt** function")
+      subtitle = md("Palettes like these are useful with the `data_color()` function")
     ) %>%
     tab_style(
       style = cells_styles(text_align = "left"),
