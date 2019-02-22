@@ -133,6 +133,7 @@ resolve_vars_idx <- function(var_expr,
 #' @param vals The names of columns or rows in \code{data}.
 #' @import tidyselect
 #' @import rlang
+#' @importFrom dplyr between
 #' @noRd
 resolve_data_vals_idx <- function(var_expr,
                                   data,
