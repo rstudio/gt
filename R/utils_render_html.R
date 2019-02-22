@@ -621,19 +621,37 @@ create_body_component_h <- function(row_splits_body,
     if (!is.null(groups_rows_df) &&
         i %in% groups_rows_df$row) {
 
-      # Process "group" rows
+      group_name <-
+        groups_rows_df %>%
+        dplyr::filter(row == i) %>%
+        dplyr::pull(group)
+
+      group_style <-
+        styles_resolved %>%
+        filter(locname == "stub_groups") %>%
+        dplyr::filter(grpname == group_name) %>%
+        dplyr::pull(text)
+
+      # Process `group` rows
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr class='gt_group_heading_row'>\n",
+            "<tr class='gt_group_heading_row'",
+            ">\n",
             "<td colspan='", n_cols, "' ",
             "class='",
             ifelse(
               groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] == "",
-              "gt_empty_group_heading", "gt_group_heading"), "'>",
+              "gt_empty_group_heading", "gt_group_heading"),
+            "'",
+            ifelse(
+              length(group_style) > 0,
+              paste0(" style='", paste(group_style, collapse = ","), "'"), ""),
+            ">",
             groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
-            "</tr>\n"))
+            "</tr>\n")
+        )
     }
 
     if (stub_available) {

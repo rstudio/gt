@@ -133,6 +133,7 @@ resolve_footnotes_styles <- function(output_df,
         by = c("grpname" = "group")
       ) %>%
       dplyr::mutate(rownum = row - 0.1) %>%
+      dplyr::mutate(colnum = 1) %>%
       dplyr::select(-row, -row_end)
 
     # Re-combine `tbl_not_stub_groups`
