@@ -165,13 +165,17 @@ resolve_data_vals_idx <- function(var_expr,
 
   } else if (is.logical(resolved)) {
 
-    # TODO: Give a warning if `length(resolved) > length(vals)`
+    if (dplyr::between(length(resolved), 2, length(vals) - 1)) {
+      stop("The number of logical values must either be one or the total ",
+           "number of columns or rows", call. = FALSE)
+    }
+
     resolved <- which(rlang::rep_along(vals, resolved))
 
   } else if (is.numeric(resolved)) {
 
     if (any(!(resolved %in% seq_along(vals)))) {
-      stop("All column indices given must be present in `data`.",
+      stop("All column or rows indices given must be present in `data`.",
            call. = FALSE)
     }
 
