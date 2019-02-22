@@ -1384,6 +1384,56 @@ fmt_datetime <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a few Markdown-based
+#' # text snippets
+#' text_1a <- "
+#' ### This is Markdown.
+#'
+#' Markdown’s syntax is comprised entirely of
+#' punctuation characters, which punctuation
+#' characters have been carefully chosen so as
+#' to look like what they mean... assuming
+#' you’ve ever used email.
+#' "
+#'
+#' text_1b <- "
+#' Info on Markdown syntax can be found
+#' [here](https://daringfireball.net/projects/markdown/).
+#' "
+#'
+#' text_2a <- "
+#' The **gt** package has these datasets:
+#'
+#'  - `countrypops`
+#'  - `sza`
+#'  - `gtcars`
+#'  - `sp500`
+#'  - `pizzaplace`
+#'  - `exibble`
+#' "
+#'
+#' text_2b <- "
+#' There's a quick reference [here](https://commonmark.org/help/).
+#' "
+#'
+#' # Arrange the text snippets as a tibble
+#' # using the `dplyr::tribble()` function;
+#' # then, create a gt table and format
+#' # all columns with `fmt_markdown()`
+#' tab_1 <-
+#'   dplyr::tribble(
+#'     ~Markdown, ~md,
+#'     text_1a,   text_2a,
+#'     text_1b,   text_2b,
+#'   ) %>%
+#'     gt() %>%
+#'     fmt_markdown(columns = TRUE) %>%
+#'     tab_options(table.width = px(400))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
+#'
 #' @family data formatting functions
 #' @import rlang
 #' @export
