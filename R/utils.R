@@ -401,6 +401,8 @@ get_pre_post_txt <- function(pattern) {
   c(prefix, suffix)
 }
 
+#' @importFrom utils head
+#' @noRd
 non_na_index <- function(values, index, default_value = NA) {
 
   if (is.logical(index)) {
@@ -444,7 +446,7 @@ non_na_index <- function(values, index, default_value = NA) {
   encoded$values <-
     ifelse(
       encoded$values == -Inf,
-      c(default_value, head(encoded$values, -1)),
+      c(default_value, utils::head(encoded$values, -1)),
       encoded$values
     )
 
