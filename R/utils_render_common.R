@@ -62,10 +62,6 @@ render_formats <- function(output_df,
       # Perform rendering but only do so if the column is present
       if (col %in% colnames(data_df)) {
 
-        output_df[[col]][fmt$rows] <-
-          fmt$func[[eval_func]](data_df[[col]][fmt$rows])
-
-
         result <- fmt$func[[eval_func]](data_df[[col]][fmt$rows])
 
         # If any of the resulting output is `NA`, that
