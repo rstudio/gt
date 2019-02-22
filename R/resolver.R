@@ -167,6 +167,15 @@ resolve_data_vals_idx <- function(var_expr,
     # TODO: Give a warning if `length(resolved) > length(vals)`
     resolved <- which(rlang::rep_along(vals, resolved))
 
+  } else if (is.numeric(resolved)) {
+
+    if (any(!(resolved %in% seq_along(vals)))) {
+      stop("All column indices given must be present in `data`.",
+           call. = FALSE)
+    }
+
+    resolved <- which(seq_along(vals) %in% resolved)
+
   } else if (is.character(resolved)) {
 
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
