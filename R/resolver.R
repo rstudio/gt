@@ -165,7 +165,7 @@ resolve_data_vals_idx <- function(var_expr,
 
   } else if (is.logical(resolved)) {
 
-    if (dplyr::between(length(resolved), 2, length(vals) - 1)) {
+    if (!(length(resolved) == 1 || length(resolved) == length(vals))) {
       stop("The number of logical values must either be one or the total ",
            "number of columns or rows", call. = FALSE)
     }
