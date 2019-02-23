@@ -113,6 +113,7 @@
   }
 
   .gt_summary_row {
+    color: font-color($summary_row_background_color);
     background-color: $summary_row_background_color; /* summary_row.background.color */
     padding: $summary_row_padding; /* summary_row.padding */
     text-transform: $summary_row_text_transform; /* summary_row.text_transform */
