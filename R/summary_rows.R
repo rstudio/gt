@@ -96,6 +96,20 @@ summary_rows <- function(data,
     return(data)
   }
 
+  # Get the `stub_df` object from `data`
+  stub_df <- attr(data, "stub_df", exact = TRUE)
+
+  # If there isn't a stub available, create an
+  # 'empty' stub (populated with empty strings);
+  # the stub is necessary for summary row labels
+  if (!is_stub_available(stub_df) && is.null(groups)) {
+
+    # Place the `rowname` values into `stub_df$rowname`
+    stub_df[["rowname"]] <- rep("", nrow(stub_df))
+
+    attr(data, "stub_df") <- stub_df
+  }
+
   # Get a character vector of column names to
   # which `fns` applies
   # TODO: replace with improved resolver functions
