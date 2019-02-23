@@ -25,7 +25,10 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   field.border.bottom.style = NULL, field.border.bottom.width = NULL,
   field.border.bottom.color = NULL, row.padding = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
-  summary_row.text_transform = NULL, footnote.sep = NULL,
+  summary_row.text_transform = NULL,
+  grand_summary_row.background.color = NULL,
+  grand_summary_row.padding = NULL,
+  grand_summary_row.text_transform = NULL, footnote.sep = NULL,
   footnote.glyph = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
   sourcenote.padding = NULL, row.striping.include_stub = NULL,
@@ -52,7 +55,7 @@ units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, stub_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
+\item{table.background.color, heading.background.color, column_labels.background.color, stub_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following
 child elements: \code{heading}, \code{columns}, \code{stub_group},
 \code{summary_row}, and \code{field}. A color name or a hexadecimal color
 code should be provided.}
@@ -61,8 +64,8 @@ code should be provided.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
 
-\item{column_labels.font.weight, stub_group.font.weight}{the font weight of the
-\code{columns} and \code{stub_group} text element.}
+\item{column_labels.font.weight, stub_group.font.weight}{the font weight of
+the \code{columns} and \code{stub_group} text element.}
 
 \item{stub_group.border.top.style, stub_group.border.top.width, stub_group.border.top.color}{the style, width, and color of the stub heading's top border.}
 
@@ -72,11 +75,11 @@ code should be provided.}
 
 \item{field.border.bottom.style, field.border.bottom.width, field.border.bottom.color}{the style, width, and color of the field's bottom border.}
 
-\item{row.padding, summary_row.padding}{the amount of padding in each row and
-in each summary row.}
+\item{row.padding, summary_row.padding, grand_summary_row.padding}{the amount
+of padding in each row and in each type of summary row.}
 
-\item{summary_row.text_transform}{an option to apply text transformations to
-the label text in each summary row.}
+\item{summary_row.text_transform, grand_summary_row.text_transform}{an option
+to apply text transformations to the label text in each summary row.}
 
 \item{footnote.sep}{the separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}

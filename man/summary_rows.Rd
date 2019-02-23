@@ -4,7 +4,7 @@
 \alias{summary_rows}
 \title{Add summary rows using aggregation functions}
 \usage{
-summary_rows(data, groups = TRUE, columns = NULL, fns,
+summary_rows(data, groups = NULL, columns = TRUE, fns,
   missing_text = "---", formatter = fmt_number, ...)
 }
 \arguments{

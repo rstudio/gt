@@ -8,6 +8,7 @@
 \alias{cells_stub}
 \alias{cells_data}
 \alias{cells_summary}
+\alias{cells_grand_summary}
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
 cells_title(groups = c("title", "subtitle"))
@@ -21,6 +22,8 @@ cells_stub(rows = NULL)
 cells_data(columns = NULL, rows = NULL)
 
 cells_summary(groups = NULL, columns = NULL, rows = NULL)
+
+cells_grand_summary(columns = NULL, rows = NULL)
 }
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
