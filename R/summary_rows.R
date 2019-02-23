@@ -77,8 +77,8 @@
 #' @family row addition functions
 #' @export
 summary_rows <- function(data,
-                         groups = TRUE,
-                         columns = NULL,
+                         groups = NULL,
+                         columns = TRUE,
                          fns,
                          missing_text = "---",
                          formatter = fmt_number,
@@ -87,11 +87,13 @@ summary_rows <- function(data,
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
-  # If `groups` is FALSE, take that to mean the
-  # same as NULL, which in turn results in the
-  # calculations of a grand summary
-  if (is_false(groups)) {
-    groups <- NULL
+  # If `groups` is FALSE, then do nothing; just
+  # return the `data` unchanged; having `groups`
+  # as `NULL` signifies a grand summary, `TRUE`
+  # is used for groupwise summaries across all
+  # groups
+  if (!is.null(groups) && is.logical(groups) && groups == FALSE) {
+    return(data)
   }
 
   # Get a character vector of column names to
