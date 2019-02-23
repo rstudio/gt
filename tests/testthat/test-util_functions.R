@@ -380,7 +380,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(104, 4))
+  css_tbl %>% dim() %>% expect_equal(c(108, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -429,7 +429,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
   expect_true(
-    grepl("style=\"padding:10px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+    grepl("style=\"padding:8px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
   )
 
   # Create a gt table with a custom style in the title and subtitle

@@ -517,17 +517,17 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value)) %>%
-    expect_equal(c("10px", "8px"))
+    expect_equal(c("8px", "8px"))
 
   # Modify the `row.padding` option using just a numeric value
-  tbl_html <- data %>% tab_options(row.padding = 8)
+  tbl_html <- data %>% tab_options(row.padding = 6)
 
   # Compare before and after values
   c(opts_df_1 %>%
       dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "row_padding") %>% dplyr::pull(value)) %>%
-    expect_equal(c("10px", "8px"))
+    expect_equal(c("8px", "6px"))
 
   # Modify the `summary_row.background.color`
   tbl_html <- data %>% tab_options(summary_row.background.color = "pink")
@@ -547,7 +547,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value)) %>%
-    expect_equal(c("6px", "4px"))
+    expect_equal(c("8px", "4px"))
 
   # Modify the `summary_row.padding` option using just a numeric value
   tbl_html <- data %>% tab_options(summary_row.padding = 4)
@@ -557,7 +557,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "summary_row_padding") %>% dplyr::pull(value)) %>%
-    expect_equal(c("6px", "4px"))
+    expect_equal(c("8px", "4px"))
 
   # Modify the `summary_row.text_transform`
   tbl_html <- data %>% tab_options(summary_row.text_transform = "lowercase")
