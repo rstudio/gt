@@ -19,11 +19,11 @@
 #'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param column_labels.font.weight,stub_group.font.weight the font weight of the
-#'   \code{columns} and \code{stub_group} text element.
-#' @param summary_row.text_transform an option to apply text transformations to
-#' the label text in each summary row.
-#' @param table.background.color,heading.background.color,column_labels.background.color,stub_group.background.color,summary_row.background.color
+#' @param column_labels.font.weight,stub_group.font.weight the font weight of
+#'   the \code{columns} and \code{stub_group} text element.
+#' @param summary_row.text_transform,grand_summary_row.text_transform an option
+#'   to apply text transformations to the label text in each summary row.
+#' @param table.background.color,heading.background.color,column_labels.background.color,stub_group.background.color,summary_row.background.color,grand_summary_row.background.color
 #'   background colors for the parent element \code{table} and the following
 #'   child elements: \code{heading}, \code{columns}, \code{stub_group},
 #'   \code{summary_row}, and \code{field}. A color name or a hexadecimal color
@@ -40,8 +40,8 @@
 #'   the style, width, and color of the field's top border.
 #' @param field.border.bottom.style,field.border.bottom.width,field.border.bottom.color
 #'   the style, width, and color of the field's bottom border.
-#' @param row.padding,summary_row.padding the amount of padding in each row and
-#'   in each summary row.
+#' @param row.padding,summary_row.padding,grand_summary_row.padding  the amount
+#'   of padding in each row and in each type of summary row.
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnote.glyph the set of sequential figures or characters used to
@@ -188,6 +188,9 @@ tab_options <- function(data,
                         summary_row.background.color = NULL,
                         summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
+                        grand_summary_row.background.color = NULL,
+                        grand_summary_row.padding = NULL,
+                        grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
                         footnote.glyph = NULL,
                         footnote.font.size = NULL,
@@ -486,6 +489,30 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "summary_row_text_transform", summary_row.text_transform)
+  }
+
+  # grand_summary_row.background.color
+  if (!is.null(grand_summary_row.background.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_background_color", grand_summary_row.background.color)
+  }
+
+  # grand_summary_row.padding
+  if (!is.null(grand_summary_row.padding)) {
+
+    if (is.numeric(grand_summary_row.padding)) {
+      grand_summary_row.padding <- paste0(grand_summary_row.padding, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "grand_summary_row_padding", grand_summary_row.padding)
+  }
+
+  # grand_summary_row.text_transform
+  if (!is.null(grand_summary_row.text_transform)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_text_transform", grand_summary_row.text_transform)
   }
 
   # footnote.sep
