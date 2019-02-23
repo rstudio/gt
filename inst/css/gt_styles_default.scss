@@ -99,8 +99,12 @@
      background-color: darken($table_background_color, 5%);
   }
 
-  .gt_from_md > p {
-    margin: 0;
+  .gt_from_md > :first-child {
+    margin-top: 0;
+  }
+
+  .gt_from_md > :last-child {
+    margin-bottom: 0;
   }
 
   .gt_row {
