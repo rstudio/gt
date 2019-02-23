@@ -252,3 +252,23 @@ set_style.cells_summary <- function(loc, data, style) {
 
   data
 }
+
+set_style.cells_grand_summary <- function(loc, data, style) {
+
+  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
+
+  cols <- resolved$columns
+
+  colnames <- colnames(as.data.frame(data))[cols]
+
+  attr(data, "styles_df") <-
+    add_location_row(
+      data, df_type = "styles_df",
+      locname = "grand_summary_cells", locnum = 6,
+      grpname = NA_character_, colname = colnames,
+      rownum = rows, text = style)
+
+  data
+}

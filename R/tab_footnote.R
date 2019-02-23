@@ -219,6 +219,26 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
   data
 }
 
+set_footnote.cells_grand_summary <- function(loc, data, footnote) {
+
+  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
+
+  cols <- resolved$columns
+
+  colnames <- colnames(as.data.frame(data))[cols]
+
+  attr(data, "footnotes_df") <-
+    add_location_row(
+      data, df_type = "footnotes_df",
+      locname = "grand_summary_cells", locnum = 6,
+      grpname = NA_character_, colname = colnames,
+      rownum = rows, text = footnote)
+
+  data
+}
+
 #' @importFrom dplyr bind_rows tibble distinct
 #' @noRd
 add_location_row <- function(data,

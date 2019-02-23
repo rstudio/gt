@@ -113,7 +113,7 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
-# Apply footnotes to the data rows
+#' Apply styles to summary rows
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_styles_to_summary_output <- function(summary_df,
@@ -127,7 +127,7 @@ apply_styles_to_summary_output <- function(summary_df,
 
   styles_tbl_summary <-
     styles_resolved %>%
-    dplyr::filter(locname == "summary_cells") %>%
+    dplyr::filter(locname %in% "summary_cells") %>%
     dplyr::filter(grpname == group)
 
   if (nrow(styles_tbl_summary) > 0) {
@@ -147,6 +147,46 @@ apply_styles_to_summary_output <- function(summary_df,
 
       styles_summary_df[
         styles_summary$row[i], styles_summary$colname[i]] <-
+        styles_summary$styles_appended[i]
+    }
+  }
+
+  # Extract `summary_styles` as a vector
+  summary_styles <- as.vector(t(styles_summary_df))
+
+  # Split `summary_styles` by slices of rows
+  split_body_content(body_content = summary_styles, n_cols)
+}
+
+#' Apply styles to summary rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_styles_to_grand_summary_output <- function(summary_df,
+                                                 styles_resolved,
+                                                 n_cols) {
+
+  styles_summary_df <- summary_df
+  styles_summary_df[] <- NA_character_
+
+  styles_tbl_summary <-
+    styles_resolved %>%
+    dplyr::filter(locname %in% "grand_summary_cells")
+
+  if (nrow(styles_tbl_summary) > 0) {
+
+    styles_summary <-
+      styles_tbl_summary %>%
+      dplyr::group_by(colname, rownum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct()
+
+
+    for (i in seq(nrow(styles_summary))) {
+
+      styles_summary_df[
+        styles_summary$rownum[i], styles_summary$colname[i]] <-
         styles_summary$styles_appended[i]
     }
   }
@@ -741,9 +781,11 @@ create_body_component_h <- function(row_splits_body,
       as.data.frame(stringsAsFactors = FALSE)
 
     row_splits_summary_styles <-
-      apply_styles_to_summary_output(
-        grand_summary_df, styles_resolved,
-        group = "::GRAND_SUMMARY", n_cols = n_cols)
+      apply_styles_to_grand_summary_output(
+        summary_df = grand_summary_df,
+        styles_resolved = styles_resolved,
+        n_cols = n_cols
+      )
 
     grand_summary <- as.vector(t(grand_summary_df))
 
@@ -752,9 +794,10 @@ create_body_component_h <- function(row_splits_body,
         body_content = grand_summary,
         n_cols = n_cols)
 
-    # Provide CSS classes for leading and non-leading summary rows
-    summary_row_classes_first <- "gt_summary_row gt_first_grand_summary_row "
-    summary_row_classes <- "gt_summary_row "
+    # Provide CSS classes for leading and
+    # non-leading grand summary rows
+    gs_row_classes_first <- "gt_grand_summary_row gt_first_grand_summary_row "
+    gs_row_classes <- "gt_grand_summary_row "
 
     grand_summary_row_lines <- c()
 
@@ -766,14 +809,14 @@ create_body_component_h <- function(row_splits_body,
             "<tr>\n",
             paste0(
               "<td class='gt_stub gt_row ",
-              ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
               "gt_", col_alignment[1], "'",
               create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
               row_splits_grand_summary[[j]][1],
               "</td>"), "\n",
             paste0(
               "<td class='gt_row ",
-              ifelse(j == 1, summary_row_classes_first, summary_row_classes),
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
               "gt_", col_alignment[-1], "'",
               create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
               row_splits_grand_summary[[j]][-1],
