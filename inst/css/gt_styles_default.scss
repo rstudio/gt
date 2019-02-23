@@ -118,6 +118,13 @@
     text-transform: $summary_row_text_transform; /* summary_row.text_transform */
   }
 
+  .gt_grand_summary_row {
+    color: font-color($grand_summary_row_background_color);
+    background-color: $grand_summary_row_background_color; /* grand_summary_row.background.color */
+    padding: $grand_summary_row_padding; /* grand_summary_row.padding */
+    text-transform: $grand_summary_row_text_transform; /* grand_summary_row.text_transform */
+  }
+
   .gt_first_summary_row {
     border-top-style: solid;
     border-top-width: 2px;
