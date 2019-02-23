@@ -406,3 +406,192 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
       data = tab,
       vals = tab_rownames), 7)
 })
+
+test_that("the `resolve_vars()` function works correctly", {
+
+  # Create a `tab` object with `gt()`
+  tab <-
+    exibble %>%
+    gt()
+
+  # Expect that passing in a single column name as a
+  # string will return the same column name
+  expect_equal(
+    resolve_vars(
+      var_expr = "date",
+      data = tab), "date")
+
+  # Expect that passing in multiple column names as
+  # strings will return the column names
+  expect_equal(
+    resolve_vars(
+      var_expr = c("fctr", "date", "row", "group"),
+      data = tab), c("fctr", "date", "row", "group"))
+
+  # Expect that duplicate column names are disregarded
+  # and that the column indices are always sorted
+  expect_equal(
+    resolve_vars(
+      var_expr = c("group", "row", "fctr", "date", "group", "date"),
+      data = tab), c("fctr", "date", "row", "group"))
+
+  # Expect that using any column names that don't exist
+  # in `data` will result in an error
+  expect_error(
+    resolve_vars(
+      var_expr = c("nums", "chars"),
+      data = tab))
+
+  # Expect that passing in a single column index as a
+  # number will return the correct column name
+  expect_equal(
+    resolve_vars(
+      var_expr = 2,
+      data = tab), "char")
+
+  # Expect that passing in a multiple column indices
+  # as a numeric vector will return the correct
+  # column names
+  expect_equal(
+    resolve_vars(
+      var_expr = c(1, 3, 4, 6),
+      data = tab), c("num", "fctr", "date", "datetime"))
+
+  # Expect that duplicate column indices are disregarded
+  # and that the column indices are always sorted
+  expect_equal(
+    resolve_vars(
+      var_expr = c(1, 6, 3, 4, 6, 1),
+      data = tab), c("num", "fctr", "date", "datetime"))
+
+  # Expect that using any column indices that don't
+  # exist in `data` will result in an error
+  expect_error(
+    resolve_vars(
+      var_expr = c(1, 3, 20),
+      data = tab))
+
+  # Expect that passing in `TRUE` will return
+  # all of the column names
+  expect_equal(
+    resolve_vars(
+      var_expr = TRUE,
+      data = tab), colnames(exibble))
+
+  # Expect that passing in `NULL` will return
+  # all of the column names (same effect as
+  # providing `TRUE`)
+  expect_equal(
+    resolve_vars(
+      var_expr = NULL,
+      data = tab), colnames(exibble))
+
+  # Expect that passing in `FALSE` will return
+  # `character(0)`
+  expect_equal(
+    resolve_vars(
+      var_expr = FALSE,
+      data = tab), character(0))
+
+  # Expect that passing in a set of logical
+  # values (equal in length to the number of
+  # columns) will return those column names
+  # that match on `TRUE`
+  expect_equal(
+    resolve_vars(
+      var_expr = c(
+        TRUE, TRUE, TRUE, FALSE, FALSE,
+        TRUE, TRUE, FALSE, FALSE),
+      data = tab),
+    c("num", "char", "fctr", "datetime", "currency"))
+
+  # Expect that passing in a set of logical
+  # values where the length is not one nor
+  # equal in length to the number of
+  # columns will result in an error
+  expect_error(
+    resolve_vars(
+      var_expr = c(
+        TRUE, TRUE, TRUE, FALSE, FALSE,
+        TRUE, TRUE),
+      data = tab))
+
+  # Expect that passing in a single column name
+  # in `vars()` will return the correct column name
+  expect_equal(
+    resolve_vars(
+      var_expr = vars(date),
+      data = tab), "date")
+
+  # Expect that passing in multiple column names
+  # inside `vars()` will return the correct
+  # column names
+  expect_equal(
+    resolve_vars(
+      var_expr = vars(fctr, date, row, group),
+      data = tab), c("fctr", "date", "row", "group"))
+
+  # Expect that duplicate column names inside `vars()`
+  # are disregarded and that the column names are
+  # always sorted
+  expect_equal(
+    resolve_vars(
+      var_expr = vars(group, row, fctr, date, group, date),
+      data = tab), c("fctr", "date", "row", "group"))
+
+  # Expect that using any column names within `vars()`
+  # that don't exist in `data` will result in an error
+  expect_error(
+    resolve_vars(
+      var_expr = vars(nums, chars),
+      data = tab))
+
+  # Expect that the select helper `starts_with()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = starts_with("n"),
+      data = tab), "num")
+
+  # Expect that the select helper `ends_with()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = ends_with("e"),
+      data = tab), c("date", "time", "datetime"))
+
+  # Expect that the select helper `contains()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = contains("t"),
+      data = tab), c("fctr", "date", "time", "datetime"))
+
+  # Expect that the select helper `matches()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = matches("et"),
+      data = tab), "datetime")
+
+  # Expect that the select helper `one_of()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = one_of(c("date", "time")),
+      data = tab), c("date", "time"))
+
+  # Expect that the select helper `everything()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = everything(),
+      data = tab), colnames(exibble))
+
+  # Expect that the select helper `last_col()`
+  # returns the expected column names
+  expect_equal(
+    resolve_vars(
+      var_expr = last_col(offset = 1),
+      data = tab), "row")
+})
