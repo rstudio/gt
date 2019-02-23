@@ -175,13 +175,14 @@ fmt_number <- function(data,
     scale_by <- 1.0
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -394,14 +395,15 @@ fmt_scientific <- function(data,
       exp_end_str = "}$"
     )
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = columns,
+    columns = !!columns,
     rows = !!rows,
     fns = list(
       html = format_fcn_sci_notn_html,
@@ -496,13 +498,14 @@ fmt_percent <- function(data,
     sep_mark <- ""
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         latex = function(x) {
@@ -782,13 +785,14 @@ fmt_currency <- function(data,
     scale_by <- 1.0
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1128,13 +1132,14 @@ fmt_date <- function(data,
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1235,13 +1240,14 @@ fmt_time <- function(data,
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1350,13 +1356,14 @@ fmt_datetime <- function(data,
   date_time_format_str <-
     paste0(date_format, " ", time_format)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1424,13 +1431,13 @@ fmt_passthrough <- function(data,
                             escape = TRUE,
                             pattern = "{x}") {
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         html = function(x) {
@@ -1523,13 +1530,14 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         html = function(x) {
