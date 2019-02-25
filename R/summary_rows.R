@@ -19,12 +19,12 @@
 #'   \code{sum} or any other user-defined aggregation function. The function(s)
 #'   should be supplied within a \code{list()}. Within that list, we can specify
 #'   the functions by use of function names in quotes (e.g., \code{"sum"}), as
-#'   bare functions (e.g., \code{sum}), or one-sided R formulas using a leading
-#'   \code{~} and a \code{.} that serves as the data to be summarized (e.g.,
-#'   \code{sum(., na.rm = TRUE)}). The use of named arguments is recommended as
-#'   the names will serve as summary row labels for the corresponding summary
-#'   rows data (the labels can derived from the function names but only when not
-#'   providing bare function names).
+#'   bare functions (e.g., \code{sum}), or as one-sided R formulas using a
+#'   leading \code{~}. In the formula representation, a \code{.} serves as the
+#'   data to be summarized (e.g., \code{sum(., na.rm = TRUE)}). The use of named
+#'   arguments is recommended as the names will serve as summary row labels for
+#'   the corresponding summary rows data (the labels can derived from the
+#'   function names but only when not providing bare function names).
 #' @param missing_text the text to be used in place of \code{NA} values in
 #'   summary cells with no data outputs.
 #' @param formatter a formatter function name. These can be any of the
