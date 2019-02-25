@@ -10,14 +10,13 @@ summary_rows(data, groups = NULL, columns = TRUE, fns,
 \arguments{
 \item{data}{a table object that is created using the \code{gt()} function.}
 
-\item{groups}{the groups to consider for generation of groupwise summary rows
-or a logical value. Providing the names of row groups in \code{c()} will
-limit summary rows to those groups. Setting this to \code{TRUE} indicates
-that all available groups will receive summary rows. Setting to either
-\code{FALSE} or \code{NULL} will result in the addition of grand summary
-rows, a summary of which operates on all table data. By default, this is
-set to \code{TRUE} which means that all row groups will receive their own
-sets of summary rows.}
+\item{groups}{the groups to consider for generation of groupwise summary
+rows. By default this is set to \code{NULL}, which results in the formation
+of grand summary rows (a grand summary operates on all table data).
+Providing the names of row groups in \code{c()} will create a groupwise
+summary and generate summary rows for the specified groups. Setting this to
+\code{TRUE} indicates that all available groups will receive groupwise
+summary rows.}
 
 \item{columns}{the columns for which the summaries should be calculated.}
 
@@ -26,12 +25,12 @@ like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
 \code{sum} or any other user-defined aggregation function. The function(s)
 should be supplied within a \code{list()}. Within that list, we can specify
 the functions by use of function names in quotes (e.g., \code{"sum"}), as
-bare functions (e.g., \code{sum}), or one-sided R formulas using a leading
-\code{~} and a \code{.} that serves as the data to be summarized (e.g.,
-\code{sum(., na.rm = TRUE)}). The use of named arguments is recommended as
-the names will serve as summary row labels for the corresponding summary
-rows data (the labels can derived from the function names but only when not
-providing bare function names).}
+bare functions (e.g., \code{sum}), or as one-sided R formulas using a
+leading \code{~}. In the formula representation, a \code{.} serves as the
+data to be summarized (e.g., \code{sum(., na.rm = TRUE)}). The use of named
+arguments is recommended as the names will serve as summary row labels for
+the corresponding summary rows data (the labels can derived from the
+function names but only when not providing bare function names).}
 
 \item{missing_text}{the text to be used in place of \code{NA} values in
 summary cells with no data outputs.}
