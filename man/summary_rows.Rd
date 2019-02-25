@@ -51,11 +51,17 @@ as \code{decimals}, \code{use_seps}, and \code{locale} can be used.}
 an object of class \code{gt_tbl}.
 }
 \description{
-Add summary rows to one or more row groups by using the input data already
-provided in the \code{\link{gt}()} function alongside any suitable
-aggregation functions. Should we need to obtain the summary data for external
-purposes, the \code{\link{extract_summary}()} can be used with a
-\code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
+Add groupwise summary rows to one or more row groups by using the input data
+already provided in the \code{\link{gt}()} function alongside any suitable
+aggregation functions. Or, add a grand summary that incorporates all
+available data, regardless of grouping. You choose how to format the values
+in the resulting summary cells by use of a \code{formatter} function (e.g,
+\code{\link{fmt_number}()}) and any relevant options.
+}
+\details{
+Should we need to obtain the summary data for external purposes, the
+\code{\link{extract_summary}()} function can be used with a \code{gt_tbl}
+object where summary rows were added via \code{summary_rows()}.
 }
 \section{Figures}{
 
