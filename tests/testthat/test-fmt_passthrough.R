@@ -99,6 +99,6 @@ test_that("the `fmt_passthrough()` function works correctly", {
          pattern = "{x}%"
        ) %>%
        render_formats_test(context = "default"))[["num_2"]],
-    c("34%", "74", "23%", "NA", "35%", "NA", "NA")
+    c("34%", "74", "23%", "93", "35%", "76", "57")
   )
 })
