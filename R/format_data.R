@@ -1442,13 +1442,14 @@ fmt_markdown <- function(data,
                          rows = NULL) {
 
   # Capture expression in `rows`
+  columns <- rlang::enquo(columns)
   rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = columns,
+    columns = !!columns,
     rows = !!rows,
     fns = list(
       html = function(x) {
