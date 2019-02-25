@@ -323,7 +323,6 @@ md_to_html <- function(x) {
   non_na_x <-
     x[!is.na(x)] %>%
     as.character() %>%
-    htmltools::htmlEscape() %>%
     vapply(commonmark::markdown_html, character(1), USE.NAMES = FALSE) %>%
     tidy_gsub("^", "<div class='gt_from_md'>") %>%
     tidy_gsub("$", "</div>")
