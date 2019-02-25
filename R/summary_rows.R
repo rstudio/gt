@@ -5,7 +5,7 @@
 #' aggregation functions. Or, add a grand summary that incorporates all
 #' available data, regardless of grouping. You choose how to format the values
 #' in the resulting summary cells by use of a \code{formatter} function (e.g,
-#' \code{\link{fmt_number}()) and any relevant options.
+#' \code{\link{fmt_number}()}) and any relevant options.
 #'
 #' Should we need to obtain the summary data for external purposes, the
 #' \code{\link{extract_summary}()} function can be used with a \code{gt_tbl}
