@@ -51,8 +51,10 @@ cols_align <- function(data,
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
+  columns <- enquo(columns)
+
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = columns, data = data)
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
   if (align == "auto") {
 
@@ -249,11 +251,14 @@ cols_move <- function(data,
                       columns,
                       after) {
 
+  columns <- enquo(columns)
+  after <- enquo(after)
+
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Get the `after` columns as a character vector
-  after <- resolve_vars(var_expr = after, data = data)
+  after <- resolve_vars(var_expr = !!after, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -368,8 +373,10 @@ cols_move <- function(data,
 cols_move_to_start <- function(data,
                                columns) {
 
+  columns <- enquo(columns)
+
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -454,8 +461,10 @@ cols_move_to_start <- function(data,
 cols_move_to_end <- function(data,
                              columns) {
 
+  columns <- enquo(columns)
+
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -551,8 +560,10 @@ cols_move_to_end <- function(data,
 cols_hide <- function(data,
                       columns) {
 
+  columns <- enquo(columns)
+
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   boxh_df <- attr(data, "boxh_df")
 
@@ -621,6 +632,8 @@ cols_split_delim <- function(data,
                              delim,
                              columns = NULL) {
 
+  columns <- enquo(columns)
+
   # Escape any characters that require escaping
   delim <- gsub("\\.", "\\\\.", delim)
 
@@ -628,7 +641,7 @@ cols_split_delim <- function(data,
   all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
@@ -722,11 +735,14 @@ cols_merge <- function(data,
                        col_2,
                        pattern = "{1} {2}") {
 
+  col_1 <- enquo(col_1)
+  col_2 <- enquo(col_2)
+
   # Get the columns supplied in `col_1` as a character vector
-  col_1 <- resolve_vars(var_expr = col_1, data = data)
+  col_1 <- resolve_vars(var_expr = !!col_1, data = data)
 
   # Get the columns supplied in `col_2` as a character vector
-  col_2 <- resolve_vars(var_expr = col_2, data = data)
+  col_2 <- resolve_vars(var_expr = !!col_2, data = data)
 
   # Create a named character vector using
   # `col_1` and `col_2`
@@ -837,11 +853,14 @@ cols_merge_uncert <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u00B1 {2}"
 
-  # Get the columns supplied in `col_val` as a character vector
-  col_val <- resolve_vars(var_expr = col_val, data = data)
+  col_val <- enquo(col_val)
+  col_uncert <- enquo(col_uncert)
 
   # Get the columns supplied in `col_val` as a character vector
-  col_uncert <- resolve_vars(var_expr = col_uncert, data = data)
+  col_val <- resolve_vars(var_expr = !!col_val, data = data)
+
+  # Get the columns supplied in `col_val` as a character vector
+  col_uncert <- resolve_vars(var_expr = !!col_uncert, data = data)
 
   # Create a named character vector using
   # `col_val` and `col_uncert`
@@ -948,11 +967,14 @@ cols_merge_range <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u2014 {2}"
 
+  col_begin <- enquo(col_begin)
+  col_end <- enquo(col_end)
+
   # Get the columns supplied in `col_begin` as a character vector
-  col_begin <- resolve_vars(var_expr = col_begin, data = data)
+  col_begin <- resolve_vars(var_expr = !!col_begin, data = data)
 
   # Get the columns supplied in `col_end` as a character vector
-  col_end <- resolve_vars(var_expr = col_end, data = data)
+  col_end <- resolve_vars(var_expr = !!col_end, data = data)
 
   # Create a named character vector using
   # `col_begin` and `col_end`

@@ -146,7 +146,7 @@ data_color <- function(data,
   columns <- rlang::enquo(columns)
 
   resolved_columns <-
-    resolve_vars(var_expr = columns, data = data)
+    resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
 

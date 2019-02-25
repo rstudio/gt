@@ -8,7 +8,7 @@ resolve_location.cells_column_labels <- function(loc, data_attr) {
 
     loc$colnames <-
       resolve_vars(
-        var_expr = loc$columns,
+        var_expr = !!loc$columns,
         data = data_df)
   }
 

@@ -17,14 +17,14 @@ resolve_cells_data <- function(data,
 
   resolved_columns_idx <-
     resolve_vars_idx(
-      var_expr = object$columns,
+      var_expr = !!object$columns,
       data = data
     )
 
   # Get the resolved rows
   resolved_rows_idx <-
     resolve_data_vals_idx(
-      var_expr = object$rows,
+      var_expr = !!object$rows,
       data = data,
       # Collect the rownames from `stub_df`
       vals = stub_df$rowname
@@ -65,7 +65,7 @@ resolve_cells_stub <- function(data,
 
   resolved_rows_idx <-
     resolve_data_vals_idx(
-      var_expr = object$rows,
+      var_expr = !!object$rows,
       data = data,
       vals = stub_df$rowname
     )
@@ -95,7 +95,7 @@ resolve_cells_column_labels <- function(data,
 
   resolved_columns <-
     resolve_vars_idx(
-      var_expr = object$columns,
+      var_expr = !!object$columns,
       data = data)
 
   # Create a list object
@@ -117,8 +117,10 @@ resolve_cells_column_labels <- function(data,
 resolve_vars_idx <- function(var_expr,
                              data) {
 
+  var_expr <- enquo(var_expr)
+
   resolve_data_vals_idx(
-    var_expr = var_expr,
+    var_expr = !!var_expr,
     data = NULL,
     vals = colnames(as.data.frame(data))
   )
@@ -138,6 +140,8 @@ resolve_vars_idx <- function(var_expr,
 resolve_data_vals_idx <- function(var_expr,
                                   data,
                                   vals) {
+
+  var_expr <- enquo(var_expr)
 
   if (!is.null(data)) {
     data <- as.data.frame(data)
@@ -213,6 +217,7 @@ resolve_data_vals_idx <- function(var_expr,
 resolve_vars <- function(var_expr,
                          data) {
 
+  var_expr <- enquo(var_expr)
   # Obtain the data frame of the input table data
   data_df <- as.data.frame(data)
 
@@ -223,7 +228,7 @@ resolve_vars <- function(var_expr,
   # column indices
   columns_idx <-
     resolve_vars_idx(
-      var_expr = var_expr,
+      var_expr = !!var_expr,
       data = data
     )
 

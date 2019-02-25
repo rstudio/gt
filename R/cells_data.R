@@ -7,13 +7,13 @@ resolve_location.cells_data <- function(loc, data_attr) {
 
   loc$columns <-
     resolve_vars_idx(
-      var_expr = loc[["columns"]],
+      var_expr = !!loc[["columns"]],
       data = data_df
     )
 
   loc$rows <-
     resolve_data_vals_idx(
-      var_expr = loc[["rows"]],
+      var_expr = !!loc[["rows"]],
       data = data_df,
       vals = stub_df$rowname
     )

@@ -1633,13 +1633,13 @@ fmt <- function(data,
 
   resolved_columns <-
     resolve_vars(
-      var_expr = columns,
+      var_expr = !!columns,
       data = data
     )
 
   resolved_rows_idx <-
     resolve_data_vals_idx(
-      var_expr = rows,
+      var_expr = !!rows,
       data = data,
       vals = stub_df$rowname
     )

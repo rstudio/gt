@@ -86,7 +86,9 @@ summary_rows <- function(data,
     groups <- TRUE
   }
 
-  columns <- resolve_vars(var_expr = columns, data = data)
+  columns <- enquo(columns)
+
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   if ("summary" %in% names(attributes(data))) {
 

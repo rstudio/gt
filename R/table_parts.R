@@ -167,7 +167,7 @@ tab_row_group <- function(data,
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
       resolve_data_vals_idx(
-        var_expr = row_expr,
+        var_expr = !!row_expr,
         data = data,
         vals = stub_df$rowname
       )
@@ -256,8 +256,10 @@ tab_spanner <- function(data,
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
+  columns <- enquo(columns)
+
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = columns, data = data)
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
