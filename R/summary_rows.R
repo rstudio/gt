@@ -6,14 +6,13 @@
 #' purposes, the \code{\link{extract_summary}()} can be used with a
 #' \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
 #' @param data a table object that is created using the \code{gt()} function.
-#' @param groups the groups to consider for generation of groupwise summary rows
-#'   or a logical value. Providing the names of row groups in \code{c()} will
-#'   limit summary rows to those groups. Setting this to \code{TRUE} indicates
-#'   that all available groups will receive summary rows. Setting to either
-#'   \code{FALSE} or \code{NULL} will result in the addition of grand summary
-#'   rows, a summary of which operates on all table data. By default, this is
-#'   set to \code{TRUE} which means that all row groups will receive their own
-#'   sets of summary rows.
+#' @param groups the groups to consider for generation of groupwise summary
+#'   rows. By default this is set to \code{NULL}, which results in the formation
+#'   of grand summary rows (a grand summary operates on all table data).
+#'   Providing the names of row groups in \code{c()} will create a groupwise
+#'   summary and generate summary rows for the specified groups. Setting this to
+#'   \code{TRUE} indicates that all available groups will receive groupwise
+#'   summary rows.
 #' @param columns the columns for which the summaries should be calculated.
 #' @param fns functions used for aggregations. This can include base functions
 #'   like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
