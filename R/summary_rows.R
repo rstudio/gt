@@ -110,7 +110,7 @@ summary_rows <- function(data,
   if (!is_stub_available(stub_df) && is.null(groups)) {
 
     # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- rep("", nrow(stub_df))
+    stub_df[["rowname"]] <- ""
 
     attr(data, "stub_df") <- stub_df
   }
