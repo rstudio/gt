@@ -3,7 +3,7 @@
 #' With numeric values in a \pkg{gt} table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
-#' over numeric foramtting with the following options:
+#' over numeric formatting with the following options:
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -331,7 +331,7 @@ fmt_scientific <- function(data,
       small_pos <-
         ((x >= 1 & x < 10) |
            (x <= -1 & x > -10) |
-           is_equal_to(x, 0)) & !is.na(x)
+           x == 0) & !is.na(x)
 
       # Create `x_str` with same length as `x`
       x_str <- rep(NA_character_, length(x))
@@ -416,9 +416,9 @@ fmt_scientific <- function(data,
 #'
 #' With numeric values in a \pkg{gt} table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are in a fractional format
-#' since the will be automatically multplied by \code{100} before decorating
-#' with a percent sign. For more control over percentage formatting, we can use
-#' the following options:
+#' since the numbers will be automatically multiplied by \code{100} before
+#' decorating with a percent sign. For more control over percentage formatting,
+#' we can use the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the

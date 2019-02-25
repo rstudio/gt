@@ -395,6 +395,13 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text() %>%
     expect_equal("gear_carb_cyl")
 
+  # Expect that the `Mazdas` row group label
+  # cell has a red background and white text
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color:red;color:white;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Mazdas")
+
   # Expect that the table title is formatted to the left
   tbl_html %>%
     rvest::html_nodes("[class='gt_heading gt_title gt_font_normal gt_center'][style='text-align:left;']") %>%

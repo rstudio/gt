@@ -224,6 +224,9 @@ tab_row_group <- function(data,
 #' @inheritParams fmt_number
 #' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
+#' @param gather an option to move the specified \code{columns} such that they
+#'   are unified under the spanner column label. Ordering of the
+#'   moved-into-place columns will be preserved in all cases.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -252,7 +255,8 @@ tab_row_group <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns) {
+                        columns,
+                        gather = TRUE) {
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
@@ -270,6 +274,35 @@ tab_spanner <- function(data,
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
+
+  # Gather columns not part of the group of columns under
+  # the spanner heading
+  if (gather && length(resolved_columns) > 1) {
+
+    # Extract the internal `boxh_df` table
+    boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+    # Get the sequence of columns available in `boxh_df`
+    all_columns <- colnames(boxh_df)
+
+    # Get the vector positions of the `columns` in
+    # `all_columns`
+    matching_vec <-
+      match(resolved_columns, all_columns) %>%
+      sort() %>%
+      unique()
+
+    # Get a vector of column names
+    columns_sorted <- all_columns[matching_vec]
+
+    # Move columns into place
+    data <-
+      data %>%
+      cols_move(
+        columns = columns_sorted[-1],
+        after = columns_sorted[1]
+      )
+  }
 
   data
 }

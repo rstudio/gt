@@ -187,6 +187,7 @@ resolve_data_vals_idx <- function(var_expr,
 
   } else if (is.character(resolved)) {
 
+
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
     resolved <- which(vals %in% resolved)
 
@@ -203,6 +204,7 @@ resolve_data_vals_idx <- function(var_expr,
     resolved <- vapply(resolved, quo_get_expr_char, character(1))
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
     resolved <- which(vals %in% resolved)
+
   }
 
   resolved
