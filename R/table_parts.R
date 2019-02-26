@@ -277,7 +277,7 @@ tab_spanner <- function(data,
 
   # Gather columns not part of the group of columns under
   # the spanner heading
-  if (gather && length(resolved_columns) > 1) {
+  if (gather && length(column_names) > 1) {
 
     # Extract the internal `boxh_df` table
     boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -288,7 +288,7 @@ tab_spanner <- function(data,
     # Get the vector positions of the `columns` in
     # `all_columns`
     matching_vec <-
-      match(resolved_columns, all_columns) %>%
+      match(column_names, all_columns) %>%
       sort() %>%
       unique()
 
