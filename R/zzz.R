@@ -38,6 +38,7 @@ globalVariables(
     "curr_code",
     "curr_name",
     "data_attr",
+    "display_name",
     "footnotes_to_list",
     "fs_id",
     "fs_id_coalesced",

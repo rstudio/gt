@@ -1377,6 +1377,102 @@ fmt_datetime <- function(data,
         }))
 }
 
+#' Format Markdown text
+#'
+#' Any Markdown-formatted text in the incoming cells will be transformed to the
+#' appropriate output type during render when using \code{fmt_markdown()}.
+#'
+#' Targeting of values is done through \code{columns} and additionally by
+#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
+#' selected). A number of helper functions exist to make targeting more
+#' effective. Conditional formatting is possible by providing a conditional
+#' expression to the \code{rows} argument. See the Arguments section for more
+#' information on this.
+#'
+#' @inheritParams fmt_number
+#' @return an object of class \code{gt_tbl}.
+#' @examples
+#' # Create a few Markdown-based
+#' # text snippets
+#' text_1a <- "
+#' ### This is Markdown.
+#'
+#' Markdown’s syntax is comprised entirely of
+#' punctuation characters, which punctuation
+#' characters have been carefully chosen so as
+#' to look like what they mean... assuming
+#' you’ve ever used email.
+#' "
+#'
+#' text_1b <- "
+#' Info on Markdown syntax can be found
+#' [here](https://daringfireball.net/projects/markdown/).
+#' "
+#'
+#' text_2a <- "
+#' The **gt** package has these datasets:
+#'
+#'  - `countrypops`
+#'  - `sza`
+#'  - `gtcars`
+#'  - `sp500`
+#'  - `pizzaplace`
+#'  - `exibble`
+#' "
+#'
+#' text_2b <- "
+#' There's a quick reference [here](https://commonmark.org/help/).
+#' "
+#'
+#' # Arrange the text snippets as a tibble
+#' # using the `dplyr::tribble()` function;
+#' # then, create a gt table and format
+#' # all columns with `fmt_markdown()`
+#' tab_1 <-
+#'   dplyr::tribble(
+#'     ~Markdown, ~md,
+#'     text_1a,   text_2a,
+#'     text_1b,   text_2b,
+#'   ) %>%
+#'     gt() %>%
+#'     fmt_markdown(columns = TRUE) %>%
+#'     tab_options(table.width = px(400))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
+#'
+#' @family data formatting functions
+#' @import rlang
+#' @export
+fmt_markdown <- function(data,
+                         columns,
+                         rows = NULL) {
+
+  # Capture expression in `rows`
+  columns <- rlang::enquo(columns)
+  rows <- rlang::enquo(rows)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      html = function(x) {
+        md_to_html(x)
+      },
+      latex = function(x) {
+        markdown_to_latex(x)
+      },
+      default = function(x) {
+        vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
+          stringr::str_replace("\n$", "")
+      }
+    )
+  )
+}
+
 #' Format by simply passing data through
 #'
 #' Format by passing data through no other transformation other than: (1)
