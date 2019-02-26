@@ -3,7 +3,7 @@
 #' With numeric values in a \pkg{gt} table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
-#' over numeric foramtting with the following options:
+#' over numeric formatting with the following options:
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -175,13 +175,14 @@ fmt_number <- function(data,
     scale_by <- 1.0
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -330,7 +331,7 @@ fmt_scientific <- function(data,
       small_pos <-
         ((x >= 1 & x < 10) |
            (x <= -1 & x > -10) |
-           is_equal_to(x, 0)) & !is.na(x)
+           x == 0) & !is.na(x)
 
       # Create `x_str` with same length as `x`
       x_str <- rep(NA_character_, length(x))
@@ -394,14 +395,15 @@ fmt_scientific <- function(data,
       exp_end_str = "}$"
     )
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = columns,
+    columns = !!columns,
     rows = !!rows,
     fns = list(
       html = format_fcn_sci_notn_html,
@@ -414,9 +416,9 @@ fmt_scientific <- function(data,
 #'
 #' With numeric values in a \pkg{gt} table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are in a fractional format
-#' since the will be automatically multplied by \code{100} before decorating
-#' with a percent sign. For more control over percentage formatting, we can use
-#' the following options:
+#' since the numbers will be automatically multiplied by \code{100} before
+#' decorating with a percent sign. For more control over percentage formatting,
+#' we can use the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
@@ -496,13 +498,14 @@ fmt_percent <- function(data,
     sep_mark <- ""
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         latex = function(x) {
@@ -782,13 +785,14 @@ fmt_currency <- function(data,
     scale_by <- 1.0
   }
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1028,7 +1032,7 @@ fmt_currency <- function(data,
           x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
           x_str
         }
-        ))
+      ))
 }
 
 #' Format values as dates
@@ -1128,13 +1132,14 @@ fmt_date <- function(data,
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1235,13 +1240,14 @@ fmt_time <- function(data,
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1350,13 +1356,14 @@ fmt_datetime <- function(data,
   date_time_format_str <-
     paste0(date_format, " ", time_format)
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         default = function(x) {
@@ -1424,13 +1431,14 @@ fmt_passthrough <- function(data,
                             escape = TRUE,
                             pattern = "{x}") {
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         html = function(x) {
@@ -1523,13 +1531,14 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
-  # Capture expression in `rows`
+  # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(data = data,
-      columns = columns,
+      columns = !!columns,
       rows = !!rows,
       fns = list(
         html = function(x) {
@@ -1611,18 +1620,8 @@ fmt <- function(data,
                 rows = NULL,
                 fns) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
-
   # Get the `stub_df` data frame from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  # Collect the column names and column indices
-  # from `data_df`
-  colnames <- names(data_df)
-
-  # Collect the rownames from `stub_df`
-  rownames <- stub_df$rowname
 
   #
   # Resolution of columns and rows as integer vectors
@@ -1633,13 +1632,17 @@ fmt <- function(data,
   rows <- rlang::enquo(rows)
 
   resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
+    resolve_vars(
+      var_expr = !!columns,
+      data = data
+    )
 
-  resolved_rows <-
-    resolve_vars(var_expr = rows, var_names = rownames, data_df = data_df)
-
-  # Translate the column indices to column names
-  resolved_columns <- colnames[resolved_columns]
+  resolved_rows_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!rows,
+      data = data,
+      vals = stub_df$rowname
+    )
 
   # If a single function is supplied to `fns` then
   # repackage that into a list as the `default` function
@@ -1652,7 +1655,7 @@ fmt <- function(data,
   formatter_list <- list(
     func = fns,
     cols = resolved_columns,
-    rows = resolved_rows)
+    rows = resolved_rows_idx)
 
   # Incorporate the `formatter_list` object as the next
   # list in the `formats` list of lists

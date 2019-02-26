@@ -104,6 +104,10 @@ summary_rows <- function(data,
   # Get the `stub_df` object from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
+  # Resolve the column names
+  columns <- enquo(columns)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels

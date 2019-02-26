@@ -143,22 +143,14 @@ test_that("a gt table contains the expected spanner column labels", {
     selection_text("[class='gt_col_heading gt_column_spanner gt_center']") %>%
     expect_equal("perimeter")
 
-  # Create a `gt_tbl` object with `gt()`; this table
-  # contains the spanner heading `perimeter` over the
-  # `peris` and `shapes` column labels (which don't exist)
-  tbl_html <-
+  # Expect an error when using column labels
+  # that don't exist
+  expect_error(
     gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peris, shapes)) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the content in the column headings only includes
-  # the column labels
-  tbl_html %>%
-    selection_text("[class='gt_col_heading gt_right']") %>%
-    expect_equal(c("area", "peri", "shape", "perm"))
+      tab_spanner(
+        label = "perimeter",
+        columns = vars(peris, shapes))
+  )
 })
 
 test_that("a gt table contains the expected source note", {
@@ -367,7 +359,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   (tbl_html %>%
     rvest::html_nodes("[style='background-color:lightgray;']") %>%
     rvest::html_text())[1:6] %>%
-    expect_equal(c("disp", "wt", "qsec", "am", "carb", "cyls"))
+    expect_equal(c("disp", "wt", "qsec", "am", "cyls", "carb"))
 
   # Expect that most stub cells are styled with a lightgrey background
   tbl_html %>%
@@ -402,6 +394,13 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_nodes("[style='background-color:lightgreen;']") %>%
     rvest::html_text() %>%
     expect_equal("gear_carb_cyl")
+
+  # Expect that the `Mazdas` row group label
+  # cell has a red background and white text
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color:red;color:white;']") %>%
+    rvest::html_text() %>%
+    expect_equal("Mazdas")
 
   # Expect that the table title is formatted to the left
   tbl_html %>%

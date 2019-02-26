@@ -161,22 +161,21 @@ tab_row_group <- function(data,
   # Create a row group if a `group` is provided
   if (!is.null(group)) {
 
-    # Get the `data_df` data frame from `data`
-    data_df <- as.data.frame(data)
-
     # Get the `stub_df` data frame from `data`
     stub_df <- attr(data, "stub_df", exact = TRUE)
 
-    # Collect the rownames from `stub_df`
-    rownames <- stub_df$rowname
-
     # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows <-
-      resolve_vars(var_expr = row_expr, var_names = rownames, data_df = data_df)
+    resolved_rows_idx <-
+      resolve_data_vals_idx(
+        var_expr = !!row_expr,
+        data = data,
+        vals = stub_df$rowname
+      )
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
+    attr(data, "stub_df")[resolved_rows_idx, "groupname"] <-
+      process_text(group[1])
 
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
@@ -225,6 +224,9 @@ tab_row_group <- function(data,
 #' @inheritParams fmt_number
 #' @param label the text to use for the spanner column label.
 #' @param columns the columns to be components of the spanner heading.
+#' @param gather an option to move the specified \code{columns} such that they
+#'   are unified under the spanner column label. Ordering of the
+#'   moved-into-place columns will be preserved in all cases.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -253,31 +255,54 @@ tab_row_group <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns) {
+                        columns,
+                        gather = TRUE) {
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
 
-  # Filter the vector of column names by the
-  # column names actually in `input_df`
-  columns <- columns[which(columns %in% colnames(data))]
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
-  if (length(columns) == 0) {
-    return(data)
-  }
-
+  # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- label
-  }
+  # Apply the `label` value to the relevant components
+  # of the `grp_labels` list
+  grp_labels[column_names] <- label
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
+
+  # Gather columns not part of the group of columns under
+  # the spanner heading
+  if (gather && length(column_names) > 1) {
+
+    # Extract the internal `boxh_df` table
+    boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+    # Get the sequence of columns available in `boxh_df`
+    all_columns <- colnames(boxh_df)
+
+    # Get the vector positions of the `columns` in
+    # `all_columns`
+    matching_vec <-
+      match(column_names, all_columns) %>%
+      sort() %>%
+      unique()
+
+    # Get a vector of column names
+    columns_sorted <- all_columns[matching_vec]
+
+    # Move columns into place
+    data <-
+      data %>%
+      cols_move(
+        columns = columns_sorted[-1],
+        after = columns_sorted[1]
+      )
+  }
 
   data
 }
