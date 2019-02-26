@@ -83,13 +83,31 @@ test_that("the `fmt_missing()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
-       render_formats_test(context = "default"))[["num_1"]],
-    c("---", NA, "---", NA, "---", NA, NA))
+       render_formats_test(context = "html"))[["num_1"]],
+    c("—", "74", "—", "93", "—", "76", "NA"))
 
+  # Format columns with `fmt_number()` then use
+  # `fmt_missing()` on all columns (the two functions
+  # shouldn't wipe out formatting on cells)
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
+       fmt_number(
+         columns = TRUE,
+         decimals = 3
+       ) %>%
+       fmt_missing(columns = TRUE) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", NA, "—", NA, "—", NA, NA))
-})
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—"))
 
+  # Reverse the ordering: use `fmt_missing()` first
+  # then `fmt_number()`; expect the same output as before
+  expect_equal(
+    (tab %>%
+       fmt_missing(columns = TRUE) %>%
+       fmt_number(
+         columns = TRUE,
+         decimals = 3
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—"))
+})

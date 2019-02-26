@@ -380,7 +380,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(108, 4))
+  css_tbl %>% dim() %>% expect_equal(c(110, 4))
 
   css_tbl %>%
     colnames() %>%

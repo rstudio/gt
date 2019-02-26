@@ -84,7 +84,9 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9.30 &times; 10<sup class='gt_super'>1</sup>",
       "3.50 &times; 10<sup class='gt_super'>1</sup>",
       "1.00 &times; 10<sup class='gt_super'>-2</sup>",
-      NA))
+      "NA"
+    )
+  )
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` in the default context
