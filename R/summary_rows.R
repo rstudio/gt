@@ -115,15 +115,9 @@ summary_rows <- function(data,
     attr(data, "stub_df") <- stub_df
   }
 
-  # Get a character vector of column names to
-  # which `fns` applies
-  # TODO: replace with improved resolver functions
-  # once that is merged to master
-  if (is.null(columns)) {
-    columns <- TRUE
-  } else if (!is.null(columns) && inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Append list of summary inputs to the
   # `summary` attribute
