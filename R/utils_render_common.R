@@ -38,7 +38,9 @@ initialize_output_df <- function(data_df) {
   output_df
 }
 
-# Render any formatting directives available in the `formats` list
+#' Render any formatting directives available in the `formats` list
+#' @importFrom stats na.omit
+#' @noRd
 render_formats <- function(output_df,
                            data_df,
                            formats,
@@ -68,7 +70,7 @@ render_formats <- function(output_df,
         # means we want to NOT make changes to those
         # particular cells' output (i.e. inherit the
         # results of the previous formatter).
-        output_df[[col]][fmt$rows][!is.na(result)] <- na.omit(result)
+        output_df[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
