@@ -6,16 +6,17 @@ resolve_location.cells_data <- function(loc, data_attr) {
   stub_df <- data_attr[["stub_df"]]
 
   loc$columns <-
-    resolve_vars(
-      var_expr = loc[["columns"]],
-      var_names = colnames(data_df),
-      data_df =  data_df)
+    resolve_vars_idx(
+      var_expr = !!loc[["columns"]],
+      data = data_df
+    )
 
   loc$rows <-
-    resolve_vars(
-      var_expr = loc[["rows"]],
-      var_names = stub_df$rowname,
-      data_df = data_df)
+    resolve_data_vals_idx(
+      var_expr = !!loc[["rows"]],
+      data = data_df,
+      vals = stub_df$rowname
+    )
 
   class(loc) <- c("resolved", class(loc))
 

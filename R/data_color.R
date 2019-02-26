@@ -146,10 +146,7 @@ data_color <- function(data,
   columns <- rlang::enquo(columns)
 
   resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
-
-  # Translate the column indices to column names
-  resolved_columns <- colnames[resolved_columns]
+    resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
 

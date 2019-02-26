@@ -106,9 +106,9 @@ test_that("a gt table contains the expected column spanner labels", {
   # that don't exist
   expect_error(
     gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peris, shapes))
+      tab_spanner(
+        label = "perimeter",
+        columns = vars(peris, shapes))
   )
 })
 

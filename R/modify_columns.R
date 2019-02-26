@@ -51,16 +51,10 @@ cols_align <- function(data,
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
-  data_df <- as.data.frame(data)
-  colnames <- colnames(data_df)
-
   columns <- enquo(columns)
 
-  resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
-
-  # Translate the column indices to column names
-  resolved_columns <- colnames[resolved_columns]
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
   if (align == "auto") {
 
@@ -68,7 +62,7 @@ cols_align <- function(data,
     # names
     col_classes <-
       lapply(
-        attr(data, "data_df", exact = TRUE)[resolved_columns], class) %>%
+        attr(data, "data_df", exact = TRUE)[column_names], class) %>%
       lapply(`[[`, 1) %>%
       unlist()
 
@@ -88,7 +82,7 @@ cols_align <- function(data,
   }
 
   # Set the alignment value for all columns in `columns`
-  attr(data, "boxh_df")["column_align", resolved_columns] <- align
+  attr(data, "boxh_df")["column_align", column_names] <- align
 
   data
 }
@@ -257,15 +251,14 @@ cols_move <- function(data,
                       columns,
                       after) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+  after <- enquo(after)
 
-  # If using the `vars()` helper, get the `after` column as a character vector
-  if (inherits(after, "quosures")) {
-    after <- (after %>% lapply(`[[`, 2) %>% as.character())
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
+  # Get the `after` columns as a character vector
+  after <- resolve_vars(var_expr = !!after, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -380,10 +373,10 @@ cols_move <- function(data,
 cols_move_to_start <- function(data,
                                columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -468,10 +461,10 @@ cols_move_to_start <- function(data,
 cols_move_to_end <- function(data,
                              columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   # Extract the internal `boxh_df` table
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -567,10 +560,10 @@ cols_move_to_end <- function(data,
 cols_hide <- function(data,
                       columns) {
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   boxh_df <- attr(data, "boxh_df")
 
@@ -639,16 +632,16 @@ cols_split_delim <- function(data,
                              delim,
                              columns = NULL) {
 
+  columns <- enquo(columns)
+
   # Escape any characters that require escaping
   delim <- gsub("\\.", "\\\\.", delim)
 
   # Get all of the columns in the dataset
   all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
@@ -742,21 +735,17 @@ cols_merge <- function(data,
                        col_2,
                        pattern = "{1} {2}") {
 
-  # If using the `vars()` helper, get `col_1` as a character vector
-  if (inherits(col_1, "quosures")) {
-    col_1 <- col_1 %>% lapply(`[[`, 2) %>% as.character()
-  }
+  col_1 <- enquo(col_1)
+  col_2 <- enquo(col_2)
 
-  # If using the `vars()` helper, get `col_2` as a character vector
-  if (inherits(col_2, "quosures")) {
-    col_2 <- col_2 %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_1` as a character vector
+  col_1 <- resolve_vars(var_expr = !!col_1, data = data)
 
-  if (!(col_1 %in% colnames(data)) |
-      !(col_2 %in% colnames(data))) {
-    return(data)
-  }
+  # Get the columns supplied in `col_2` as a character vector
+  col_2 <- resolve_vars(var_expr = !!col_2, data = data)
 
+  # Create a named character vector using
+  # `col_1` and `col_2`
   col_1 <- stats::setNames(col_1, nm = col_2)
 
   # Create and store a list of column pairs
@@ -864,21 +853,17 @@ cols_merge_uncert <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u00B1 {2}"
 
-  # If using the `vars()` helper, get `col_val` as a character vector
-  if (inherits(col_val, "quosures")) {
-    col_val <- col_val %>% lapply(`[[`, 2) %>% as.character()
-  }
+  col_val <- enquo(col_val)
+  col_uncert <- enquo(col_uncert)
 
-  # If using the `vars()` helper, get `col_uncert` as a character vector
-  if (inherits(col_uncert, "quosures")) {
-    col_uncert <- col_uncert %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_val` as a character vector
+  col_val <- resolve_vars(var_expr = !!col_val, data = data)
 
-  if (!(col_val %in% colnames(data)) |
-      !(col_uncert %in% colnames(data))) {
-    return(data)
-  }
+  # Get the columns supplied in `col_val` as a character vector
+  col_uncert <- resolve_vars(var_expr = !!col_uncert, data = data)
 
+  # Create a named character vector using
+  # `col_val` and `col_uncert`
   col_val <- stats::setNames(col_val, nm = col_uncert)
 
   # Create and store a list of column pairs
@@ -982,21 +967,17 @@ cols_merge_range <- function(data,
   # Set the formatting pattern
   pattern <- "{1} \u2014 {2}"
 
-  # If using the `vars()` helper, get `col_begin` as a character vector
-  if (inherits(col_begin, "quosures")) {
-    col_begin <- col_begin %>% lapply(`[[`, 2) %>% as.character()
-  }
+  col_begin <- enquo(col_begin)
+  col_end <- enquo(col_end)
 
-  # If using the `vars()` helper, get `col_end` as a character vector
-  if (inherits(col_end, "quosures")) {
-    col_end <- col_end %>% lapply(`[[`, 2) %>% as.character()
-  }
+  # Get the columns supplied in `col_begin` as a character vector
+  col_begin <- resolve_vars(var_expr = !!col_begin, data = data)
 
-  if (!(col_begin %in% colnames(data)) |
-      !(col_end %in% colnames(data))) {
-    return(data)
-  }
+  # Get the columns supplied in `col_end` as a character vector
+  col_end <- resolve_vars(var_expr = !!col_end, data = data)
 
+  # Create a named character vector using
+  # `col_begin` and `col_end`
   col_begin <- stats::setNames(col_begin, nm = col_end)
 
   # Create and store a list of column pairs
