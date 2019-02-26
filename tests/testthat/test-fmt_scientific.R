@@ -285,3 +285,59 @@ test_that("the `fmt_scientific()` function works correctly", {
       "2,23", "0,00",
       "-2,32 &times; 10<sup class='gt_super'>1</sup>"))
 })
+
+test_that("`fmt_scientific()` can handle extremely large and small values", {
+
+  # Create an input data frame with very
+  # large and very small numbers (both
+  # positive and negative)
+  data_tbl <-
+    data.frame(
+      num = c(
+        -1.5E200, -1.5E100, -2.5E0, -3.5E-100, -3.5E-200,
+        1.5E-200, 1.5E-100, 2.5E0, 3.5E100, 3.5E200
+      )
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data = data_tbl)
+
+  # Format the `num` column to 5 decimal places, use all
+  # other defaults; extract values in the default context
+  # and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num", decimals = 5) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-1.50000 x 10(200)", "-1.50000 x 10(100)",
+      "-2.50000",
+      "-3.50000 x 10(-100)", "-3.50000 x 10(-200)",
+      "1.50000 x 10(-200)", "1.50000 x 10(-100)",
+      "2.50000",
+      "3.50000 x 10(100)", "3.50000 x 10(200)"
+    )
+  )
+
+  # Format the `num` column to 5 decimal places, use all
+  # other defaults; extract values in the HTML context
+  # and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num", decimals = 5) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "-1.50000 &times; 10<sup class='gt_super'>200</sup>",
+      "-1.50000 &times; 10<sup class='gt_super'>100</sup>",
+      "-2.50000",
+      "-3.50000 &times; 10<sup class='gt_super'>-100</sup>",
+      "-3.50000 &times; 10<sup class='gt_super'>-200</sup>",
+      "1.50000 &times; 10<sup class='gt_super'>-200</sup>",
+      "1.50000 &times; 10<sup class='gt_super'>-100</sup>",
+      "2.50000",
+      "3.50000 &times; 10<sup class='gt_super'>100</sup>",
+      "3.50000 &times; 10<sup class='gt_super'>200</sup>"
+    )
+  )
+})
