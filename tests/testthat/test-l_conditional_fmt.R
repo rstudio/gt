@@ -39,7 +39,9 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          decimals = 4,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c(NA, NA, "937.2900", "643.0000", "212.2320", "0.0000", "-23.2400"))
+    c("1836.23", "2763.39", "937.2900", "643.0000",
+      "212.2320", "0.0000", "-23.2400")
+  )
 
   expect_equal(
     (tbl_latex %>%
@@ -48,7 +50,8 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("34.0000", rep(NA, 6)))
+    c("34.0000", "74", "23", "NA", "35", "NA", "NA")
+  )
 })
 
 test_that("the `fmt_scientific()` function works with conditional `rows`", {
@@ -60,9 +63,10 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c(NA, NA, "9.3729$ \\times 10^{2}$",
+    c("1836.23", "2763.39", "9.3729$ \\times 10^{2}$",
       "6.4300$ \\times 10^{2}$", "2.1223$ \\times 10^{2}$", "0.0000",
-      "-2.3240$ \\times 10^{1}$"))
+      "-2.3240$ \\times 10^{1}$")
+  )
 
   expect_equal(
     (tbl_latex %>%
@@ -71,7 +75,8 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("3.4000$ \\times 10^{1}$", rep(NA, 6)))
+    c("3.4000$ \\times 10^{1}$", "74", "23", "NA", "35", "NA", "NA")
+  )
 })
 
 test_that("the `fmt_percent()` function works with conditional `rows`", {
@@ -83,8 +88,9 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c(NA, NA, "93,729.00\\%", "64,300.00\\%", "21,223.20\\%",
-      "0.00\\%", "-2,324.00\\%"))
+    c("1836.23", "2763.39", "93,729.00\\%", "64,300.00\\%",
+      "21,223.20\\%", "0.00\\%", "-2,324.00\\%")
+  )
 
   expect_equal(
     (tbl_latex %>%
@@ -93,7 +99,8 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("3,400.00\\%", rep(NA, 6)))
+    c("3,400.00\\%", "74", "23", "NA", "35", "NA", "NA")
+  )
 })
 
 test_that("the `fmt_currency()` function works with conditional `rows`", {
@@ -105,7 +112,9 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c(NA, NA, "\\$937.29", "\\$643.00", "\\$212.23", "\\$0.00", "\\$-23.24"))
+    c("1836.23", "2763.39", "\\$937.29", "\\$643.00",
+      "\\$212.23", "\\$0.00", "\\$-23.24")
+  )
 
   expect_equal(
     (tbl_latex %>%
@@ -114,7 +123,8 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("\\$34.00", rep(NA, 6)))
+    c("\\$34.00", "74", "23", "NA", "35", "NA", "NA")
+  )
 })
 
 test_that("the `fmt_date()` function works with conditional `rows`", {
@@ -126,7 +136,9 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "latex"))[["date"]],
-    c("Sunday, October 15, 2017", rep(NA, 3)))
+    c("Sunday, October 15, 2017", "2013-02-22",
+      "2014-09-22", "2018-01-10")
+  )
 
   expect_equal(
     (tbl_latex_time %>%
@@ -135,7 +147,9 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "latex"))[["date"]],
-    c("Sunday, October 15, 2017", rep(NA, 3)))
+    c("Sunday, October 15, 2017", "2013-02-22",
+      "2014-09-22", "2018-01-10")
+  )
 })
 
 test_that("the `fmt_time()` function works with conditional `rows`", {
@@ -147,7 +161,8 @@ test_that("the `fmt_time()` function works with conditional `rows`", {
          time_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "latex"))[["time"]],
-    c("16:45", rep(NA, 3)))
+    c("16:45", "19:23", "01:30", "08:00")
+  )
 
   expect_equal(
     (tbl_latex_time %>%
@@ -156,7 +171,8 @@ test_that("the `fmt_time()` function works with conditional `rows`", {
          time_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "latex"))[["time"]],
-    c("16:45", rep(NA, 3)))
+    c("16:45", "19:23", "01:30", "08:00")
+  )
 })
 
 test_that("the `fmt_datetime()` function works with conditional `rows`", {
@@ -169,7 +185,9 @@ test_that("the `fmt_datetime()` function works with conditional `rows`", {
          time_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "latex"))[["datetime"]],
-    c("Thursday, March 25, 2010 19:45", rep(NA, 3)))
+    c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
+      "2016-01-15 14:38", "2012-08-07 12:31")
+  )
 
   expect_equal(
     (tbl_latex_time %>%
@@ -179,7 +197,9 @@ test_that("the `fmt_datetime()` function works with conditional `rows`", {
          time_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "latex"))[["datetime"]],
-    c("Thursday, March 25, 2010 19:45", rep(NA, 3)))
+    c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
+      "2016-01-15 14:38", "2012-08-07 12:31")
+  )
 })
 
 test_that("the `fmt_passthrough()` function works with conditional `rows`", {
@@ -190,7 +210,9 @@ test_that("the `fmt_passthrough()` function works with conditional `rows`", {
          columns = vars(datetime),
          rows = time == "16:45") %>%
        render_formats_test(context = "latex"))[["datetime"]],
-    c("2010-03-25 19:45", rep(NA, 3)))
+    c("2010-03-25 19:45", "2015-06-12 09:25",
+      "2016-01-15 14:38", "2012-08-07 12:31")
+  )
 
   expect_equal(
     (tbl_latex_time %>%
@@ -198,7 +220,9 @@ test_that("the `fmt_passthrough()` function works with conditional `rows`", {
          columns = vars(datetime),
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "latex"))[["datetime"]],
-    c("2010-03-25 19:45", rep(NA, 3)))
+    c("2010-03-25 19:45", "2015-06-12 09:25",
+      "2016-01-15 14:38", "2012-08-07 12:31")
+  )
 })
 
 test_that("the `fmt_missing()` function works with conditional `rows`", {
@@ -209,7 +233,8 @@ test_that("the `fmt_missing()` function works with conditional `rows`", {
          columns = vars(num_2),
          rows = num_1 <= 0) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c(rep(NA_character_, 5), rep("---", 2)))
+    c("34", "74", "23", "NA", "35", rep("---", 2))
+  )
 })
 
 test_that("the `fmt()` function works with conditional `rows`", {
@@ -223,5 +248,7 @@ test_that("the `fmt()` function works with conditional `rows`", {
            x * 1000
          }) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836230", "2763390", rep(NA_character_, 5)))
+    c("1836230", "2763390", "937.290", "643.000",
+      "212.232", "0.000", "-23.240")
+  )
 })

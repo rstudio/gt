@@ -1645,13 +1645,21 @@ fmt_missing <- function(data,
             missing_text <- "\u2013"
           }
 
-          x[is.na(x)] <- missing_text
-          x
+          # Any values of `x` that are `NA` get
+          # `missing_text` as output; any values that
+          # are not missing get `NA` as their output
+          # (meaning, the existing output for that
+          # value, if it exists, should be inherited)
+          ifelse(is.na(x), missing_text, NA_character_)
         },
         default = function(x) {
 
-          x[is.na(x)] <- missing_text
-          x
+          # Any values of `x` that are `NA` get
+          # `missing_text` as output; any values that
+          # are not missing get `NA` as their output
+          # (meaning, the existing output for that
+          # value, if it exists, should be inherited)
+          ifelse(is.na(x), missing_text, NA_character_)
         }
       ))
 }
