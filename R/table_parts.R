@@ -161,22 +161,21 @@ tab_row_group <- function(data,
   # Create a row group if a `group` is provided
   if (!is.null(group)) {
 
-    # Get the `data_df` data frame from `data`
-    data_df <- as.data.frame(data)
-
     # Get the `stub_df` data frame from `data`
     stub_df <- attr(data, "stub_df", exact = TRUE)
 
-    # Collect the rownames from `stub_df`
-    rownames <- stub_df$rowname
-
     # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows <-
-      resolve_vars(var_expr = row_expr, var_names = rownames, data_df = data_df)
+    resolved_rows_idx <-
+      resolve_data_vals_idx(
+        var_expr = !!row_expr,
+        data = data,
+        vals = stub_df$rowname
+      )
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
+    attr(data, "stub_df")[resolved_rows_idx, "groupname"] <-
+      process_text(group[1])
 
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
@@ -261,30 +260,24 @@ tab_spanner <- function(data,
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
-  # TODO: The five statements below will become refactored
-  # in a later PR (the `resolve-quosures` branch has improvements
-  # and helper functions for resolving); we will also handle the
-  # case of duplicate columns within that PR
-  data_df <- as.data.frame(data)
-  colnames <- colnames(data_df)
   columns <- enquo(columns)
-  resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
-  resolved_columns <- colnames[resolved_columns]
+
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
   # Apply the `label` value to the relevant components
   # of the `grp_labels` list
-  grp_labels[resolved_columns] <- label
+  grp_labels[column_names] <- label
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
 
   # Gather columns not part of the group of columns under
   # the spanner heading
-  if (gather && length(resolved_columns) > 1) {
+  if (gather && length(column_names) > 1) {
 
     # Extract the internal `boxh_df` table
     boxh_df <- attr(data, "boxh_df", exact = TRUE)
@@ -295,7 +288,7 @@ tab_spanner <- function(data,
     # Get the vector positions of the `columns` in
     # `all_columns`
     matching_vec <-
-      match(resolved_columns, all_columns) %>%
+      match(column_names, all_columns) %>%
       sort() %>%
       unique()
 

@@ -359,7 +359,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   (tbl_html %>%
     rvest::html_nodes("[style='background-color:lightgray;']") %>%
     rvest::html_text())[1:6] %>%
-    expect_equal(c("disp", "wt", "qsec", "am", "carb", "cyls"))
+    expect_equal(c("disp", "wt", "qsec", "am", "cyls", "carb"))
 
   # Expect that most stub cells are styled with a lightgrey background
   tbl_html %>%

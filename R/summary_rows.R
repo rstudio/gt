@@ -86,11 +86,9 @@ summary_rows <- function(data,
     groups <- TRUE
   }
 
-  if (is.null(columns)) {
-    columns <- TRUE
-  } else if (!is.null(columns) && inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
+
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
   if ("summary" %in% names(attributes(data))) {
 
