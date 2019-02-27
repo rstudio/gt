@@ -51,8 +51,9 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect the `groups` provided in `summary[[1]]$groups`
   summary[[1]]$groups %>%
@@ -285,14 +286,16 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   summary[[2]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect that `summary[[1|2]]$groups` is TRUE
   summary[[1]]$groups %>%
@@ -389,14 +392,16 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   summary[[2]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect that `summary[[1|2]]$groups` is TRUE
   summary[[1]]$groups %>%
@@ -489,8 +494,9 @@ test_that("the `summary_rows()` can make grand summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect the `groups` provided in `summary[[1]]$groups`
   # is NULL
@@ -564,14 +570,16 @@ test_that("the `summary_rows()` can make grand summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   summary[[2]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect that `summary[[1|2]]$groups` is TRUE
   summary[[1]]$groups %>%
@@ -696,14 +704,16 @@ test_that("the `summary_rows()` can make grand summaries", {
   summary[[1]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   summary[[2]] %>%
     names() %>%
     expect_equal(
-      c("groups", "columns", "fns", "missing_text",
-        "formatter", "formatter_options"))
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
 
   # Expect that `summary[[1]]$groups` is TRUE
   summary[[1]]$groups %>%
