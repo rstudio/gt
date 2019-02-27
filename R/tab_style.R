@@ -318,20 +318,51 @@ set_style.cells_summary <- function(loc, data, style) {
 
 set_style.cells_grand_summary <- function(loc, data, style) {
 
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  summary_data <- attr(data, "summary", exact = TRUE)
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  grand_summary_data <- subset(summary_data, is.null(summary_data$groups))
 
-  cols <- resolved$columns
+  grand_summary_labels <-
+    lapply(grand_summary_data, `[[`, "summary_labels") %>%
+    unlist() %>%
+    unique()
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  columns <-
+    resolve_vars(
+      var_expr = !!loc$columns,
+      data = data
+    )
+
+  if (length(columns) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `columns`",
+         call. = FALSE)
+  }
+
+  rows <-
+    resolve_data_vals_idx(
+      var_expr = !!loc$rows,
+      data = NULL,
+      vals = grand_summary_labels
+    )
+
+  if (length(rows) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `rows`",
+         call. = FALSE)
+  }
 
   attr(data, "styles_df") <-
     add_location_row(
-      data, df_type = "styles_df",
-      locname = "grand_summary_cells", locnum = 6,
-      grpname = NA_character_, colname = colnames,
-      rownum = rows, text = style)
+      data,
+      df_type = "styles_df",
+      locname = "grand_summary_cells",
+      locnum = 6,
+      grpname = NA_character_,
+      colname = columns,
+      rownum = rows,
+      text = style
+    )
 
   data
 }
