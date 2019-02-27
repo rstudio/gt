@@ -119,9 +119,15 @@ summary_rows <- function(data,
     attr(data, "stub_df") <- stub_df
   }
 
-  columns <- enquo(columns)
+  # Derive the summary labels
+  summary_labels <-
+    vapply(fns, derive_summary_label, FUN.VALUE = character(1))
 
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  # If there are names, use those names
+  # as the summary labels
+  if (!is.null(names(summary_labels))) {
+    summary_labels <- names(summary_labels)
+  }
 
   # Append list of summary inputs to the
   # `summary` attribute
@@ -133,6 +139,7 @@ summary_rows <- function(data,
           groups = groups,
           columns = columns,
           fns = fns,
+          summary_labels = summary_labels,
           missing_text = missing_text,
           formatter = formatter,
           formatter_options = formatter_options
