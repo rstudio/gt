@@ -200,21 +200,84 @@ set_footnote.cells_title <- function(loc, data, footnote) {
 
 set_footnote.cells_summary <- function(loc, data, footnote) {
 
-  groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  stub_df <- attr(data, "stub_df", exact = TRUE)
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  row_groups <-
+    stub_df[, "groupname"] %>%
+    unique()
 
-  cols <- resolved$columns
+  summary_data <- attr(data, "summary", exact = TRUE)
+  summary_data <- subset(summary_data, is.null(summary_data$groups))
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  summary_data_summaries <-
+    vapply(
+      seq(summary_data),
+      function(x) !is.null(summary_data[[x]]$groups),
+      logical(1)
+    )
 
-  attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
-      locname = "summary_cells", locnum = 5,
-      grpname = groups, colname = colnames,
-      rownum = rows, text = footnote)
+  summary_data <- summary_data[summary_data_summaries]
+
+  groups <-
+    row_groups[resolve_data_vals_idx(
+      var_expr = !!loc$groups,
+      data = NULL,
+      vals = row_groups
+    )]
+
+  for (group in groups) {
+
+    summary_labels <-
+      lapply(
+        seq(summary_data),
+        function(x) {
+          if (is.logical(summary_data[[x]]$groups)) {
+            summary_data[[x]]$summary_labels
+          } else if (group %in% summary_data[[x]]$groups){
+            summary_data[[x]]$summary_labels
+          }
+        }
+      ) %>%
+      unlist() %>%
+      unique()
+
+    columns <-
+      resolve_vars(
+        var_expr = !!loc$columns,
+        data = data
+      )
+
+    if (length(columns) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `columns`",
+           call. = FALSE)
+    }
+
+    rows <-
+      resolve_data_vals_idx(
+        var_expr = !!loc$rows,
+        data = NULL,
+        vals = summary_labels
+      )
+
+    if (length(rows) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `rows`",
+           call. = FALSE)
+    }
+
+    attr(data, "footnotes_df") <-
+      add_location_row(
+        data,
+        df_type = "footnotes_df",
+        locname = "summary_cells",
+        locnum = 5,
+        grpname = group,
+        colname = columns,
+        rownum = rows,
+        text = footnote
+      )
+  }
 
   data
 }
