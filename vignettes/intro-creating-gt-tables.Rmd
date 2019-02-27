@@ -31,7 +31,7 @@ Let's use a less common dataset that is available in the R **datasets** package:
 # dplyr functionality to obtain the ten
 # biggest islands in the world
 islands_tbl <- 
-  tibble::tibble(
+  dplyr::tibble(
     name = names(islands),
     size = islands
   ) %>%
