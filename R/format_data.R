@@ -1037,11 +1037,12 @@ fmt_currency <- function(data,
 
 #' Format values as dates
 #'
-#' Format input date values that are character-based and expressed according to
-#' the ISO 8601 date format (\code{YYYY-MM-DD}). Once the appropriate data cells
-#' are targeted with \code{columns} (and, optionally, \code{rows}), we can
-#' simply apply a preset date style (see table in
-#' \code{\link{info_date_style}()} for info) to format the dates.
+#' Format input date values that are either of the \code{Date} type, or, are
+#' character-based and expressed according to the ISO 8601 date format
+#' (\code{YYYY-MM-DD}). Once the appropriate data cells are targeted with
+#' \code{columns} (and, optionally, \code{rows}), we can simply apply a preset
+#' date style (see table in \code{\link{info_date_style}()} for info) to format
+#' the dates.
 #'
 #' The following date styles are available for simpler formatting of ISO dates
 #' (all using the input date of \code{2000-02-29} in the example output dates):
