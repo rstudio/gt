@@ -1144,6 +1144,12 @@ fmt_date <- function(data,
       fns = list(
         default = function(x) {
 
+          # If `x` is of the `Date` type, simply make
+          # that a character vector
+          if (inherits(x, "Date")) {
+            x <- as.character(x)
+          }
+
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
             strftime(format = date_format_str) %>%
             tidy_gsub("^0", "") %>%
