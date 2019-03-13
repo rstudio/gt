@@ -790,9 +790,9 @@ split_scientific_notn <- function(x_str) {
 
 # This function is wrapper for `gsub()` that uses default argument values and
 # rearranges first three arguments for better pipelining
-tidy_gsub <- function(x, pattern, replacement) {
+tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
-  gsub(pattern, replacement, x)
+  gsub(pattern, replacement, x, fixed = fixed)
 }
 
 # Options setter for the `opts_df` data frame
