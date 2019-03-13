@@ -16,8 +16,6 @@ jobs:
       r: oldrel
     - r: release
     - r: devel
-    - os: osx
-      r: release
 
     - stage: deploy
       name: covr
