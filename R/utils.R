@@ -405,7 +405,7 @@ apply_pattern_fmt_x <- function(pattern,
 
   vapply(
     values,
-    function(x) tidy_gsub(x = pattern, "\\{x\\}", x),
+    function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE),
     FUN.VALUE = character(1),
     USE.NAMES = FALSE
   )
