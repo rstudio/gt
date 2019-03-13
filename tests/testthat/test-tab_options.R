@@ -429,84 +429,84 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "row_group_border_bottom_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "orange"))
 
-  # Modify the `field.border.top.style`
-  tbl_html <- data %>% tab_options(field.border.top.style = "dotted")
+  # Modify the `table_body.border.top.style`
+  tbl_html <- data %>% tab_options(table_body.border.top.style = "dotted")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_top_style") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_top_style") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_top_style") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_top_style") %>% dplyr::pull(value)) %>%
     expect_equal(c("solid", "dotted"))
 
-  # Modify the `field.border.top.width`
-  tbl_html <- data %>% tab_options(field.border.top.width = px(5))
+  # Modify the `table_body.border.top.width`
+  tbl_html <- data %>% tab_options(table_body.border.top.width = px(5))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_top_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_top_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `field.border.top.width` option using just a numeric value
-  tbl_html <- data %>% tab_options(field.border.top.width = 5)
+  # Modify the `table_body.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table_body.border.top.width = 5)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_top_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_top_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_top_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `field.border.top.color`
-  tbl_html <- data %>% tab_options(field.border.top.color = "red")
+  # Modify the `table_body.border.top.color`
+  tbl_html <- data %>% tab_options(table_body.border.top.color = "red")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_top_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_top_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_top_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_top_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "red"))
 
-  # Modify the `field.border.bottom.style`
-  tbl_html <- data %>% tab_options(field.border.bottom.style = "dotted")
+  # Modify the `table_body.border.bottom.style`
+  tbl_html <- data %>% tab_options(table_body.border.bottom.style = "dotted")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_bottom_style") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_bottom_style") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_bottom_style") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_bottom_style") %>% dplyr::pull(value)) %>%
     expect_equal(c("solid", "dotted"))
 
-  # Modify the `field.border.bottom.width`
-  tbl_html <- data %>% tab_options(field.border.bottom.width = px(5))
+  # Modify the `table_body.border.bottom.width`
+  tbl_html <- data %>% tab_options(table_body.border.bottom.width = px(5))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_bottom_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `field.border.bottom.width` option using just a numeric value
-  tbl_html <- data %>% tab_options(field.border.bottom.width = 5)
+  # Modify the `table_body.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table_body.border.bottom.width = 5)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_bottom_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_bottom_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `field.border.bottom.color`
-  tbl_html <- data %>% tab_options(field.border.bottom.color = "red")
+  # Modify the `table_body.border.bottom.color`
+  tbl_html <- data %>% tab_options(table_body.border.bottom.color = "red")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "field_border_bottom_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_body_border_bottom_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "field_border_bottom_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_body_border_bottom_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "red"))
 
   # Modify the `row.padding`
@@ -659,14 +659,14 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value)) %>%
     expect_equal(c("TRUE", "FALSE"))
 
-  # Modify the `row.striping.include_field` option
-  tbl_html <- data %>% tab_options(row.striping.include_field = FALSE)
+  # Modify the `row.striping.include_table_body` option
+  tbl_html <- data %>% tab_options(row.striping.include_table_body = FALSE)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "row_striping_include_field") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_striping_include_table_body") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "row_striping_include_field") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_striping_include_table_body") %>% dplyr::pull(value)) %>%
     expect_equal(c("TRUE", "FALSE"))
 
   # Modify the `footnote.glyph` option
