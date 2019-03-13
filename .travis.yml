@@ -3,17 +3,46 @@
 language: R
 sudo: false
 cache: packages
+warnings_are_errors: false
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
 
 jobs:
   include:
-  - r: oldrel
-  - r: release
-  - r: devel
-  - os: osx
-    r: release
+    - stage: "R CMD check"
+      r: oldrel
+    - r: release
+    - r: devel
+    - os: osx
+      r: release
 
-r_binary_packages:
-  - covr
+    - stage: deploy
+      name: covr
+      r: release
+      r_binary_packages:
+        - covr
+      script:
+        - Rscript -e "covr::codecov()"
 
-after_success:
-  - Rscript -e 'covr::codecov()'
+    - stage: deploy
+      name: pkgdown
+      r: release
+      if: branch IN (master)
+      r_binary_packages:
+        - pkgdown
+      script:
+        - Rscript -e "devtools::install()"
+        - Rscript -e "pkgdown::build_site()"
+        - Rscript -e "remove.packages(devtools::as.package('.')$package)"
+      deploy:
+        provider: pages
+        local-dir: docs
+        skip-cleanup: true
+        keep-history: false
+        on:
+          all_branches: true
+        github-token:
+          secure: "VYVhr8KRgfJp5cexTVEciYvlULcCj8z6Qe63UUNw2Ob81vii9e9J450R+gS80qO8TYxwhrzkby21CESHwGbXIn6J9skW/V0CDlIHb/GGmwSKLUnbRT5X0On89Zogqz+yiY6HUa4oRZUSdFqo4pLjq56UHy/PK/GvAkDCA4tOKLc7qm9nwXov3NZJssgCo24beYq2FxXb2ifEfJ06/oB5E2/aR1E6HktR0KvbLspGP7DboRl/rbTg0wxpNAyUu49ZbRlC4I7Zl2tzehlq6MIO3u+0yVe7hyCwcrWBZbBLsekJ1tRlEs1Wh+O2q2NMSNFRmA8e3awQo7GO+maQRl2PFsO9Mn7P2oVRwaJzHkz+QKRtyJB8oNjwEJQDo2M0jW3ggEhQyO039tDic1b3iYi8QORBSwCkn6TbFlFedNdlnBhXskk7fSH4GEkr7Fq6//xKFRvEKZuLCKIbrCOnQxuDI6Ak7OWe1A1cXlOqDcvuLBg5ZFMvXMh3RrE4z4AoGyPr2xY3lOM1hoHDtjLBAAAJ7IpH251qAahsCxBLhWufHQ6xmz020aV8mg89KVsU58SbVBKwjyFRoR+1IaTb/dsxtWItW5AMh5kwwH36PQp2L7eixBBFUAyJaEpoNEGTJg24B5QJPMDfu1MXEkSBisrwtuKYzRuJ/XJd77Z47BkukEc="
