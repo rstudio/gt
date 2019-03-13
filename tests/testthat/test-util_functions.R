@@ -344,23 +344,6 @@ test_that("the `apply_pattern_fmt_x()` function works correctly", {
   # create copies of `x` within the output strings
   apply_pattern_fmt_x(pattern = "{x}, ({x})", values = x) %>%
     expect_equal(paste0(x, ", (", x, ")"))
-
-  # Expect that an expression (that directly uses
-  # `x`) will be evaluated properly and placed
-  # into the output strings
-  apply_pattern_fmt_x(
-    pattern = '{(x %>% gsub("%", "", .) %>% as.numeric()) - 5.00}%',
-    values = x
-    ) %>%
-    expect_equal(c("18.4%", "27.6%", "4.15%"))
-
-  # Expect that globally-assigned variables could
-  # be referenced and used in the pattern
-  assign("plus", "+", envir = .GlobalEnv)
-  assign("by_n", ":n", envir = .GlobalEnv)
-
-  apply_pattern_fmt_x(pattern = "{plus}{x}{by_n}", values = x) %>%
-    expect_equal(paste0(plus, x, by_n))
 })
 
 test_that("the `remove_html()` function works correctly", {
