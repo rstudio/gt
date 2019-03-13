@@ -401,7 +401,6 @@ markdown_to_text <- function(text) {
 #'   formatted values.
 #' @param values The values (as a character vector) that are formatting within
 #'   the \code{fmt_*()} function.
-#' @importFrom glue glue
 #' @noRd
 apply_pattern_fmt_x <- function(pattern,
                                 values) {
