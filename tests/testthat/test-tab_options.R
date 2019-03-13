@@ -309,124 +309,124 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "column_labels_background_color") %>% dplyr::pull(value)) %>%
     expect_equal(c(NA_character_, "lightgray"))
 
-  # Modify the `stub_group.background.color`
-  tbl_html <- data %>% tab_options(stub_group.background.color = "green")
+  # Modify the `row_group.background.color`
+  tbl_html <- data %>% tab_options(row_group.background.color = "green")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_background_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_background_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_background_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_background_color") %>% dplyr::pull(value)) %>%
     expect_equal(c(NA_character_, "green"))
 
-  # Modify the `stub_group.font.size`
-  tbl_html <- data %>% tab_options(stub_group.font.size = px(18))
+  # Modify the `row_group.font.size`
+  tbl_html <- data %>% tab_options(row_group.font.size = px(18))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "18px"))
 
-  # Modify the `stub_group.font.size` option using just a numeric value
-  tbl_html <- data %>% tab_options(stub_group.font.size = 18)
+  # Modify the `row_group.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.font.size = 18)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_font_size") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_font_size") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "18px"))
 
-  # Modify the `stub_group.font.weight`
-  tbl_html <- data %>% tab_options(stub_group.font.weight = "800")
+  # Modify the `row_group.font.weight`
+  tbl_html <- data %>% tab_options(row_group.font.weight = "800")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_font_weight") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_font_weight") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_font_weight") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_font_weight") %>% dplyr::pull(value)) %>%
     expect_equal(c("initial", "800"))
 
-  # Modify the `stub_group.border.top.style`
-  tbl_html <- data %>% tab_options(stub_group.border.top.style = "dashed")
+  # Modify the `row_group.border.top.style`
+  tbl_html <- data %>% tab_options(row_group.border.top.style = "dashed")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_top_style") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_top_style") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_top_style") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_top_style") %>% dplyr::pull(value)) %>%
     expect_equal(c("solid", "dashed"))
 
-  # Modify the `stub_group.border.top.width`
-  tbl_html <- data %>% tab_options(stub_group.border.top.width = px(5))
+  # Modify the `row_group.border.top.width`
+  tbl_html <- data %>% tab_options(row_group.border.top.width = px(5))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_top_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_top_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `stub_group.border.top.width` option using just a numeric value
-  tbl_html <- data %>% tab_options(stub_group.border.top.width = 5)
+  # Modify the `row_group.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.border.top.width = 5)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_top_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_top_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_top_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "5px"))
 
-  # Modify the `stub_group.border.top.color`
-  tbl_html <- data %>% tab_options(stub_group.border.top.color = "blue")
+  # Modify the `row_group.border.top.color`
+  tbl_html <- data %>% tab_options(row_group.border.top.color = "blue")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_top_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_top_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_top_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_top_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "blue"))
 
-  # Modify the `stub_group.border.bottom.style`
-  tbl_html <- data %>% tab_options(stub_group.border.bottom.style = "dashed")
+  # Modify the `row_group.border.bottom.style`
+  tbl_html <- data %>% tab_options(row_group.border.bottom.style = "dashed")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_style") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_bottom_style") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_style") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_bottom_style") %>% dplyr::pull(value)) %>%
     expect_equal(c("solid", "dashed"))
 
-  # Modify the `stub_group.border.bottom.width`
-  tbl_html <- data %>% tab_options(stub_group.border.bottom.width = px(4))
+  # Modify the `row_group.border.bottom.width`
+  tbl_html <- data %>% tab_options(row_group.border.bottom.width = px(4))
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_bottom_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "4px"))
 
-  # Modify the `stub_group.border.bottom.width` option using just a numeric value
-  tbl_html <- data %>% tab_options(stub_group.border.bottom.width = 4)
+  # Modify the `row_group.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.border.bottom.width = 4)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_bottom_width") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_width") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_bottom_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("2px", "4px"))
 
-  # Modify the `stub_group.border.bottom.color`
-  tbl_html <- data %>% tab_options(stub_group.border.bottom.color = "orange")
+  # Modify the `row_group.border.bottom.color`
+  tbl_html <- data %>% tab_options(row_group.border.bottom.color = "orange")
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_color") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "row_group_border_bottom_color") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "stub_group_border_bottom_color") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "row_group_border_bottom_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#A8A8A8", "orange"))
 
   # Modify the `field.border.top.style`
