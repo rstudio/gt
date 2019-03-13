@@ -388,62 +388,34 @@ markdown_to_text <- function(text) {
     unname()
 }
 
-#' @importFrom utils head
+#' Handle formatting of a pattern in a \code{fmt_*()} function
+#'
+#' Within the context of a \code{fmt_*()} function, we always have the
+#' single-length character vector of \code{pattern} available to describe a
+#' final decoration of the formatted values. We use \pkg{glue}'s semantics here
+#' (and literally, it's \code{glue::glue()}) and reserve \code{x} to be the
+#' formatted values. We can use \code{x} multiple times in the pattern or even
+#' variables in global scope or R statements within curly braces.
+#' @param pattern An expression string that is the primary input to
+#'   \code{glue::glue()}). The variable \code{x} is reserved and represents the
+#'   formatted values.
+#' @param values The values (as a character vector) that are formatting within
+#'   the \code{fmt_*()} function.
+#' @importFrom glue glue
 #' @noRd
-non_na_index <- function(values, index, default_value = NA) {
+apply_pattern_fmt_x <- function(pattern,
+                                values) {
 
-  if (is.logical(index)) {
-    index <- is.integer(index)
-  }
-
-  stopifnot(is.integer(index) || is.numeric(index))
-
-  # The algorithm requires `-Inf` not being present
-  stopifnot(!any(is.infinite(values) & values < 0))
-
-  # Get a vector of suffixes, which may include
-  # NA values
-  res <- values[index]
-
-  # If there are no NA values to reconcile, return
-  # the index
-  if (!any(is.na(res))) {
-    return(index)
-  }
-
-  # Create a vector of positions (`seq_along(values)`),
-  # but anywhere the `values` vector has an NA, use
-  # `-Inf`; (it's important that `values` not have `-Inf`
-  # as one of its elements)
-  positions <- ifelse(!is.na(values), seq_along(values), -Inf)
-
-  # Use rle (run-length encoding) to collapse multiple
-  # instances of `-Inf` into single instances. This
-  # makes it easy for us to replace them with their
-  # nearest (lower) neighbor in a single step, instead of
-  # having to iterate; for some reason, `rle()` doesn't
-  # know how to encode NAs, so that's why we use -Inf
-  # (seems like a bug)
-  encoded <- rle(positions)
-
-  # Replace each -Inf with its closest neighbor; basically,
-  # we do this by shifting a copy of the values to the
-  # right, and then using the original vector of (run-length
-  # encoded) values as a mask over it
-  encoded$values <-
-    ifelse(
-      encoded$values == -Inf,
-      c(default_value, utils::head(encoded$values, -1)),
-      encoded$values
-    )
-
-  # Now convert back from run-length encoded
-  positions <- inverse.rle(encoded)
-
-  # positions[index] gives you the new index
-  positions[index]
+  vapply(
+    values,
+    function(x) tidy_gsub(x = pattern, "\\{x\\}", x),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
+  )
 }
 
+#' @importFrom utils head
+#' @noRd
 non_na_index <- function(values, index, default_value = NA) {
 
   if (is.logical(index)) {
@@ -628,27 +600,6 @@ normalize_suffixing_inputs <- function(suffixing) {
          " * a character vector with suffixing labels",
          call. = FALSE)
   }
-}
-
-#' Handle formatting of a pattern in a \code{fmt_*()} function
-#'
-#' Within the context of a \code{fmt_*()} function, we always have the
-#' single-length character vector of \code{pattern} available to describe a
-#' final decoration of the formatted values. We use \pkg{glue}'s semantics here
-#' (and literally, it's \code{glue::glue()}) and reserve \code{x} to be the
-#' formatted values. We can use \code{x} multiple times in the pattern or even
-#' variables in global scope or R statements within curly braces.
-#' @param pattern An expression string that is the primary input to
-#'   \code{glue::glue()}). The variable \code{x} is reserved and represents the
-#'   formatted values.
-#' @param values The values (as a character vector) that are formatting within
-#'   the \code{fmt_*()} function.
-#' @importFrom glue glue
-#' @noRd
-apply_pattern_fmt_x <- function(pattern,
-                                values) {
-
-  glue::glue(pattern, x = values) %>% as.character()
 }
 
 # Derive a label based on a formula or a function name
