@@ -37,10 +37,8 @@ unchanged.}
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value (defined here as \code{x}). The semantics for the pattern
 are taken from \code{glue::glue()}, where the formatted cell value is
-represented by \code{{x}} and it can be used multiple times within the
-pattern. We can treat other instances of \code{{...}} as environments that
-undergo evaluation, so, \code{x}, variables from the global environment,
-and functions are all usable within \code{{...}}.}
+represented by \code{{x}} (which can be used multiple times within the
+pattern).}
 }
 \value{
 an object of class \code{gt_tbl}.

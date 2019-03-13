@@ -46,18 +46,8 @@ provided to \code{locale}. This setting is \code{TRUE} by default.}
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value (defined here as \code{x}). The semantics for the pattern
 are taken from \code{glue::glue()}, where the formatted cell value is
-represented by \code{{x}} and it can be used multiple times within the
-pattern. We can treat other instances of \code{{...}} as environments that
-undergo evaluation, so, \code{x}, variables from the global environment,
-and functions are all usable within \code{{...}}.}
-
-\item{sep_mark}{the mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
-formatted value of \code{1,000}).}
-
-\item{dec_mark}{the character to use as a decimal mark (e.g., using
-\code{dec_mark = ","} with \code{0.152} would result in a formatted value
-of \code{0,152}).}
+represented by \code{{x}} (which can be used multiple times within the
+pattern).}
 
 \item{incl_space}{an option on whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
