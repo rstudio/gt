@@ -136,12 +136,12 @@
   }
 
   .gt_table_body {
-    border-top-style: $field_border_top_style; /* field.border.top.style */
-    border-top-width: $field_border_top_width; /* field.border.top.width */
-    border-top-color: $field_border_top_color; /* field.border.top.color */
-    border-bottom-style: $field_border_bottom_style; /* field.border.bottom.style */
-    border-bottom-width: $field_border_bottom_width; /* field.border.bottom.width */
-    border-bottom-color: $field_border_bottom_color; /* field.border.bottom.color */
+    border-top-style: $table_body_border_top_style; /* table_body.border.top.style */
+    border-top-width: $table_body_border_top_width; /* table_body.border.top.width */
+    border-top-color: $table_body_border_top_color; /* table_body.border.top.color */
+    border-bottom-style: $table_body_border_bottom_style; /* table_body.border.bottom.style */
+    border-bottom-width: $table_body_border_bottom_width; /* table_body.border.bottom.width */
+    border-bottom-color: $table_body_border_bottom_color; /* table_body.border.bottom.color */
   }
 
   .gt_footnote {
