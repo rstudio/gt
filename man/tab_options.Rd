@@ -14,13 +14,12 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   heading.border.bottom.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
-  stub_group.background.color = NULL, stub_group.font.size = NULL,
-  stub_group.font.weight = NULL, stub_group.border.top.style = NULL,
-  stub_group.border.top.width = NULL,
-  stub_group.border.top.color = NULL,
-  stub_group.border.bottom.style = NULL,
-  stub_group.border.bottom.width = NULL,
-  stub_group.border.bottom.color = NULL, field.border.top.style = NULL,
+  row_group.background.color = NULL, row_group.font.size = NULL,
+  row_group.font.weight = NULL, row_group.border.top.style = NULL,
+  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
+  row_group.border.bottom.style = NULL,
+  row_group.border.bottom.width = NULL,
+  row_group.border.bottom.color = NULL, field.border.top.style = NULL,
   field.border.top.width = NULL, field.border.top.color = NULL,
   field.border.bottom.style = NULL, field.border.bottom.width = NULL,
   field.border.bottom.color = NULL, row.padding = NULL,
@@ -42,9 +41,9 @@ given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
-\code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
+\code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 as a single-length character vector with units of pixels
 (e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
 single-length numeric vector, it is assumed that the value is given in
@@ -52,8 +51,8 @@ units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, stub_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
-child elements: \code{heading}, \code{columns}, \code{stub_group},
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
+child elements: \code{heading}, \code{columns}, \code{row_group},
 \code{summary_row}, and \code{field}. A color name or a hexadecimal color
 code should be provided.}
 
@@ -61,12 +60,12 @@ code should be provided.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
 
-\item{column_labels.font.weight, stub_group.font.weight}{the font weight of the
-\code{columns} and \code{stub_group} text element.}
+\item{column_labels.font.weight, row_group.font.weight}{the font weight of the
+\code{columns} and \code{row_group} text element.}
 
-\item{stub_group.border.top.style, stub_group.border.top.width, stub_group.border.top.color}{the style, width, and color of the stub heading's top border.}
+\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{the style, width, and color of the row group's top border.}
 
-\item{stub_group.border.bottom.style, stub_group.border.bottom.width, stub_group.border.bottom.color}{the style, width, and color of the stub heading's bottom border.}
+\item{row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color}{the style, width, and color of the row group's bottom border.}
 
 \item{field.border.top.style, field.border.top.width, field.border.top.color}{the style, width, and color of the field's top border.}
 
