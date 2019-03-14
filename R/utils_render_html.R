@@ -597,7 +597,7 @@ create_body_component_h <- function(row_splits_body,
     stub_available <- TRUE
   }
 
-  # Get the sequence of column numbers in the data field
+  # Get the sequence of column numbers in the table body
   column_series <- seq(n_cols)
 
   # If there is a stub, remove the last element in the series

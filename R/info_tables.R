@@ -450,9 +450,11 @@ info_paletteer <- function(color_pkgs = NULL) {
       locations = cells_data(columns = vars(length))
     ) %>%
     tab_options(
-      stub_group.background.color = "#FFFFF0",
+      row_group.background.color = "#FFFFF0",
       column_labels.background.color = "#666660",
-      stub_group.font.weight = "600", stub_group.font.size = "smaller") %>%
+      row_group.font.weight = "600",
+      row_group.font.size = "smaller"
+    ) %>%
     tab_source_note(source_note = md(
       paste("The **paletteer** package is maintained by Emil Hvitfeldt. More information can be",
             "found on [the **paletteer** site](https://emilhvitfeldt.github.io/paletteer/) and",

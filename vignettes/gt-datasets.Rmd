@@ -459,7 +459,7 @@ pizzaplace %>%
   ) %>%
   tab_options(
     summary_row.background.color = "#ACEACE",
-    stub_group.background.color = "#FFEFDB"
+    row_group.background.color = "#FFEFDB"
   )
 ```
 
@@ -531,10 +531,7 @@ exibble %>%
   tab_options(
     column_labels.font.size = "small",
     table.font.size = "small",
-    stub_group.font.size = "small",
+    row_group.font.size = "small",
     row.padding = px(3)
   )
 ```
-
-
-
