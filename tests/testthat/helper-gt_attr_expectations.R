@@ -18,7 +18,7 @@ expect_tab_colnames <- function(tab,
       attr(tab, "stub_df")[["rowname"]],
       df$rowname)
 
-  } else if (rowname == "data_frame") {
+  } else if (rowname == "tibble") {
 
     expect_equal(
       attr(tab, "stub_df")[["rowname"]],
