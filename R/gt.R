@@ -75,6 +75,15 @@ gt <- function(data,
                table_id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
+  opts_df <- gt_options_default()
+
+  # Add the table ID to the `table_id` parameter
+  if (!is.null(table_id)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "table_id", table_id)
+  }
+
   # If the option to place rownames in the stub
   # is taken, then the `stub_df` data frame will
   # be pre-populated with rownames in the `rowname`
