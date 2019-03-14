@@ -857,3 +857,9 @@ stop_if_not_gt <- function(data) {
     stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
   }
 }
+#' Create a random `id` tag for the table
+#' @noRd
+random_id <- function() {
+
+  paste(sample(letters, 10, 10), collapse = "")
+}
