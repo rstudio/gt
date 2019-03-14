@@ -241,8 +241,8 @@ gt <- function(data,
   # Apply the input data table as an attribute
   attr(data_tbl, "data_df") <- data
 
-  # Apply the default theme options data frame as an attribute
-  attr(data_tbl, "opts_df") <- gt_options_default()
+  # Apply the `opts_df` data frame as an attribute
+  attr(data_tbl, "opts_df") <- opts_df
 
   # Apply an empty `formats` list as an attribute
   attr(data_tbl, "formats") <- list()
