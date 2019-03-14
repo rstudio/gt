@@ -72,6 +72,7 @@ gt <- function(data,
                rowname_col = "rowname",
                groupname_col = "groupname",
                rownames_to_stub = FALSE,
+               table_id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
   # If the option to place rownames in the stub
