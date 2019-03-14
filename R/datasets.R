@@ -179,7 +179,7 @@
 #' \item \code{southw_ckn}: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
 #' Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)
 #' \item \code{cali_ckn}: The California Chicken Pizza (Chicken, Artichoke,
-#' Spinach, Garlic, Jalapeño Peppers, Fontina Cheese, Gouda Cheese)
+#' Spinach, Garlic, Jalapeno Peppers, Fontina Cheese, Gouda Cheese)
 #' \item \code{ckn_pesto}: The Chicken Pesto Pizza (Chicken, Tomatoes, Red
 #' Peppers, Spinach, Garlic, Pesto Sauce)
 #' \item \code{ckn_alfredo}: The Chicken Alfredo Pizza (Chicken, Red Onions,
