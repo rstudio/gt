@@ -242,8 +242,12 @@ fmt_number <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -251,9 +255,9 @@ fmt_number <- function(data,
 
 #' Format values to scientific notation
 #'
-#' With numeric values in a \pkg{gt} table, we can perform formatting so that
-#' the targeted values are presented in scientific notation. We can exert finer
-#' finer control on the formatting with the following options:
+#' With numeric values in a \pkg{gt} table, we can perform formatting so that the
+#' targeted values are rendered in scientific notation. Furthermore, there is
+#' fine control with the following options:
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -368,8 +372,12 @@ fmt_scientific <- function(data,
       }
 
       # Handle formatting of pattern
-      pre_post_txt <- get_pre_post_txt(pattern)
-      x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+      x_str[non_na_x] <-
+        apply_pattern_fmt_x(
+          pattern,
+          values = x_str[non_na_x]
+        )
+
       x_str
     }
   }
@@ -556,8 +564,12 @@ fmt_percent <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         default = function(x) {
@@ -608,8 +620,12 @@ fmt_percent <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -870,8 +886,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         html = function(x) {
@@ -949,8 +969,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         },
         latex = function(x) {
@@ -1028,8 +1052,12 @@ fmt_currency <- function(data,
           }
 
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str[non_na_x] <- paste0(pre_post_txt[1], x_str[non_na_x], pre_post_txt[2])
+          x_str[non_na_x] <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x_str[non_na_x]
+            )
+
           x_str
         }
       ))
@@ -1549,9 +1577,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x
+            )
 
           if (escape) {
             x_str <- x_str %>% process_text(context = "html")
@@ -1564,9 +1596,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x
+            )
 
           if (escape) {
             x_str <- x_str %>% process_text(context = "latex")
@@ -1579,9 +1615,13 @@ fmt_passthrough <- function(data,
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # TODO: Deal with NA values in x
           # Handle formatting of pattern
-          pre_post_txt <- get_pre_post_txt(pattern)
-          x_str <- paste0(pre_post_txt[1], x, pre_post_txt[2])
+          x_str <-
+            apply_pattern_fmt_x(
+              pattern,
+              values = x
+            )
 
           x_str
         }

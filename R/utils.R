@@ -388,16 +388,27 @@ markdown_to_text <- function(text) {
     unname()
 }
 
-# Get prepending and appending text based on a simple pattern
-get_pre_post_txt <- function(pattern) {
+#' Handle formatting of a pattern in a \code{fmt_*()} function
+#'
+#' Within the context of a \code{fmt_*()} function, we always have the
+#' single-length character vector of \code{pattern} available to describe a
+#' final decoration of the formatted values. We use \pkg{glue}'s semantics here
+#' and reserve \code{x} to be the formatted values, and, we can use \code{x}
+#' multiple times in the pattern.
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value (defined here as \code{x}).
+#' @param values The values (as a character vector) that are formatted within
+#'   the \code{fmt_*()} function.
+#' @noRd
+apply_pattern_fmt_x <- function(pattern,
+                                values) {
 
-  prefix <- strsplit(pattern, "\\{x\\}")[[1]][1]
-  suffix <- strsplit(pattern, "\\{x\\}")[[1]][2]
-
-  prefix <- ifelse(is.na(prefix), "", prefix)
-  suffix <- ifelse(is.na(suffix), "", suffix)
-
-  c(prefix, suffix)
+  vapply(
+    values,
+    function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
+  )
 }
 
 #' @importFrom utils head
@@ -445,7 +456,7 @@ non_na_index <- function(values, index, default_value = NA) {
   encoded$values <-
     ifelse(
       encoded$values == -Inf,
-      c(default_value, utils::head(encoded$values, -1)),
+      c(default_value, head(encoded$values, -1)),
       encoded$values
     )
 
@@ -779,9 +790,9 @@ split_scientific_notn <- function(x_str) {
 
 # This function is wrapper for `gsub()` that uses default argument values and
 # rearranges first three arguments for better pipelining
-tidy_gsub <- function(x, pattern, replacement) {
+tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
-  gsub(pattern, replacement, x)
+  gsub(pattern, replacement, x, fixed = fixed)
 }
 
 # Options setter for the `opts_df` data frame
