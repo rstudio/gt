@@ -19,3 +19,25 @@ filter_table_to_row <- function(table, ...) {
   filtered_tbl
 }
 
+#' Pull a single value from a table with a single row
+#'
+#' @param table The single-row table.
+#' @param column The column from which the single value should be obtained.
+#' @import rlang
+#' @import rlang
+#' @importFrom dplyr pull
+#' @noRd
+pull_table_value_from_column <- function(table, column) {
+
+  if (nrow(table) != 1) {
+    stop("Internal error in `gt:::pull_table_value_from_column()`:\n",
+         " * The `table` must contain exactly one row.",
+         call. = FALSE)
+  }
+
+  column_enquo <- rlang::enquo(column)
+
+  table %>%
+    dplyr::pull(!!column_enquo)
+}
+
