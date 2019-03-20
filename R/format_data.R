@@ -331,11 +331,11 @@ fmt_scientific <- function(data,
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
 
-      # Determine which of `x` don't require scientific notation
-      small_pos <-
-        ((x >= 1 & x < 10) |
-           (x <= -1 & x > -10) |
-           x == 0) & !is.na(x)
+      # Determine which of `x` don't require the (x 10^n)
+      # since their order would be zero
+      # TODO: If numbers are scaled with `scale_by` this
+      #       will likely fail
+      small_pos <- has_order_zero(x)
 
       # Create `x_str` with same length as `x`
       x_str <- rep(NA_character_, length(x))
