@@ -142,19 +142,8 @@ fmt_number <- function(data,
                        locale = NULL) {
 
   # Use locale-based marks if a locale ID is provided
-  if (!is.null(locale) && locale %in% locales$base_locale_id) {
-    sep_mark <- get_locale_sep_mark(locale = locale)
-    dec_mark <- get_locale_dec_mark(locale = locale)
-  } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.",
-         call. = FALSE)
-  }
-
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
-  }
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Normalize the `suffixing` input to either return a
   # character vector of suffix labels, or NULL (the
@@ -187,39 +176,42 @@ fmt_number <- function(data,
       fns = list(
         default = function(x) {
 
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create a tibble with scaled values for
-          # `x[non_na_x]` and the suffix labels to
-          # use for character formatting
-          suffix_df <-
-            num_suffix(
-              x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels
-            )
-
-          # If choosing to perform large-number suffixing
-          # of numeric values, replace `scale_by` with
-          # a vector of scaling values (of equal length
-          # with `x[non_na_x]`)
-          if (!is.null(suffix_labels)) {
-            scale_by <- suffix_df$scale_by[non_na_x]
-          }
-
           # Create `x_str` with same length as `x`
           x_str <- rep(NA_character_, length(x))
 
+          # Scale values of `x`
+          x <- scale_x_values(x, scale_by)
+
+          # Determine which of `x` are not NA
+          non_na_x <- !is.na(x)
+
+          # If choosing to perform large-number suffixing
+          # of numeric values, rescaling of numerical values
+          # (`x`) is required
+          if (!is.null(suffix_labels)) {
+
+            # Create a tibble with scaled values for
+            # `x[non_na_x]` and the suffix labels to
+            # use for character formatting
+            suffix_df <-
+              num_suffix(
+                x = round(x[non_na_x], decimals),
+                suffixes = suffix_labels
+              )
+
+            # Replace `scale_by` with a vector of scaling
+            # values (of equal length with `x[non_na_x]`)
+            # and then apply those values
+            scale_by <- suffix_df$scale_by[non_na_x]
+            x[non_na_x] <- scale_x_values(x[non_na_x], scale_by)
+          }
+
           # Format all non-NA x values
           x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
+            format_num_to_str(
+              x = x[non_na_x], decimals, sep_mark,
+              dec_mark, drop_trailing_zeros
+            )
 
           # Apply large-number suffixes to scaled and
           # formatted values if that option is taken
@@ -316,13 +308,8 @@ fmt_scientific <- function(data,
                            locale = NULL) {
 
   # Use locale-based marks if a locale ID is provided
-  if (!is.null(locale) && locale %in% locales$base_locale_id) {
-    sep_mark <- get_locale_sep_mark(locale = locale)
-    dec_mark <- get_locale_dec_mark(locale = locale)
-  } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.",
-         call. = FALSE)
-  }
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   format_fcn_sci_notn_factory <- function(exp_start_str, exp_end_str) {
 
@@ -492,19 +479,8 @@ fmt_percent <- function(data,
                         locale = NULL) {
 
   # Use locale-based marks if a locale ID is provided
-  if (!is.null(locale) && locale %in% locales$base_locale_id) {
-    sep_mark <- get_locale_sep_mark(locale = locale)
-    dec_mark <- get_locale_dec_mark(locale = locale)
-  } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.",
-         call. = FALSE)
-  }
-
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
-  }
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -742,13 +718,8 @@ fmt_currency <- function(data,
                          locale = NULL) {
 
   # Use locale-based marks if a locale ID is provided
-  if (!is.null(locale) && locale %in% locales$base_locale_id) {
-    sep_mark <- get_locale_sep_mark(locale = locale)
-    dec_mark <- get_locale_dec_mark(locale = locale)
-  } else if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.",
-         call. = FALSE)
-  }
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `currency` does not have a valid value
   if (!is_currency_valid(currency)) {
