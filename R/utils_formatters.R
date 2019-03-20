@@ -123,3 +123,14 @@ get_locale_dec_mark <- function(locale = NULL,
   }
 }
 
+#' Determine which numbers in scientific notation would be zero order
+#'
+#' @param x A vector of numeric values, including `NA` values
+#' @noRd
+has_order_zero <- function(x) {
+
+  (
+    (x >= 1 & x < 10) | (x <= -1 & x > -10) | x == 0
+  ) & !is.na(x)
+}
+
