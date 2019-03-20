@@ -81,6 +81,8 @@ get_locale_sep_mark <- function(locale = NULL,
       filter_table_to_row(gt:::locales, base_locale_id == locale) %>%
       pull_table_value_from_column(column = group_sep)
 
+    if (sep_mark == "") sep_mark <- " "
+
     return(sep_mark)
   }
 }
