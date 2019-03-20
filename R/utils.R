@@ -179,34 +179,6 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-# Get the `sep_mark` value from a locale
-#' @importFrom dplyr filter pull
-#' @noRd
-get_locale_sep_mark <- function(locale) {
-
-  sep_mark <-
-    locales %>%
-    dplyr::filter(base_locale_id == locale) %>%
-    dplyr::pull(group_sep)
-
-  sep_mark <- ifelse(sep_mark == "", " ", sep_mark)
-
-  sep_mark
-}
-
-# Get the `dec_mark` value from a locale
-#' @importFrom dplyr filter pull
-#' @noRd
-get_locale_dec_mark <- function(locale) {
-
-  dec_mark <-
-    locales %>%
-    dplyr::filter(base_locale_id == locale) %>%
-    dplyr::pull(dec_sep)
-
-  dec_mark
-}
-
 # This function processes input text based on the class; if incoming text has
 # the class `from_markdown` (applied by the `md()` helper function), then the
 # text will be sanitized and transformed to HTML from Markdown. If the incoming
