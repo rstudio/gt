@@ -260,26 +260,6 @@ test_that("the `get_currency_exponent()` function works correctly", {
     expect_equal(rep(0, 7))
 })
 
-test_that("the `get_locale_sep_mark()` function works correctly", {
-
-  # Expect that `get_locale_sep_mark()` will return
-  # different group separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_sep_mark) %>%
-    unlist() %>%
-    expect_equal(c(" ", " ", ",", " ", " ", " ", ",", "."))
-})
-
-test_that("the `get_locale_dec_mark()` function works correctly", {
-
-  # Expect that `get_locale_dec_mark()` will return
-  # different decimal separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_dec_mark) %>%
-    unlist() %>%
-    expect_equal(c(",", ",", ".", ",", ",", ",", ".", ","))
-})
-
 test_that("the `process_text()` function works correctly", {
 
   # Create the `simple_text` variable, which is text
