@@ -87,3 +87,39 @@ get_locale_sep_mark <- function(locale = NULL,
   }
 }
 
+#' Get the `dec_mark` value based on a locale
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @param default The default value for the `dec_mark`.
+#' @importFrom dplyr filter pull
+#' @noRd
+get_locale_dec_mark <- function(locale = NULL,
+                                default) {
+
+  # If `locale` is NULL then return the
+  # default `dec_mark`
+  if (is.null(locale)) {
+    return(default)
+  }
+
+  # Stop function if the `locale` provided
+  # isn't a valid one
+  if (!(locale %in% locales$base_locale_id)) {
+    stop("The supplied `locale` is not available in the list of supported locales.\n",
+         " * Use the `info_locales()` function to see which locales can be used.",
+         call. = FALSE)
+  }
+
+  # If the locale is supplied and valid, get
+  # the correct `dec_sep` value from the
+  # `gt:::locales` lookup table
+  if (locale %in% locales$base_locale_id) {
+
+    dec_mark <-
+      filter_table_to_row(gt:::locales, base_locale_id == locale) %>%
+      pull_table_value_from_column(column = dec_sep)
+
+    return(dec_mark)
+  }
+}
+
