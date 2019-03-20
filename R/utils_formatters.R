@@ -168,3 +168,71 @@ scale_x_values <- function(x,
   x * scale_by
 }
 
+#' A `formatC()` call for `fmt_number()` and `fmt_percent()`
+#' @param x A vector of numeric values.
+#' @param decimals The number of decimal places (`digits`).
+#' @param sep_mark The separator for number groups (`big.mark`).
+#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @param format The numeric format for `formatC()`.
+#' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
+#' @noRd
+format_num_to_str <- function(x,
+                              decimals,
+                              sep_mark,
+                              dec_mark,
+                              drop_trailing_zeros,
+                              format = "f") {
+
+  formatC(
+    x = x,
+    digits = decimals,
+    mode = "double",
+    big.mark = sep_mark,
+    decimal.mark = dec_mark,
+    format = format,
+    drop0trailing = drop_trailing_zeros
+  )
+}
+
+#' A `formatC()` call for `fmt_scientific()`
+#' @param x A vector of numeric values.
+#' @param decimals The number of decimal places (`digits`).
+#' @param sep_mark The separator for number groups (`big.mark`).
+#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
+#' @noRd
+format_num_to_str_e <- function(x,
+                                decimals,
+                                sep_mark,
+                                dec_mark,
+                                drop_trailing_zeros) {
+
+  format_num_to_str(
+    x,
+    decimals,
+    sep_mark,
+    dec_mark,
+    format = "e",
+    drop_trailing_zeros)
+}
+
+#' A `formatC()` call for `fmt_currency()`
+#' @param x A vector of numeric values.
+#' @param decimals The number of decimal places (`digits`).
+#' @param sep_mark The separator for number groups (`big.mark`).
+#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @noRd
+format_num_to_str_c <- function(x,
+                                decimals,
+                                sep_mark,
+                                dec_mark) {
+
+  format_num_to_str(
+    x,
+    decimals,
+    sep_mark,
+    dec_mark,
+    format = "e",
+    drop_trailing_zeros = FALSE)
+}
+
