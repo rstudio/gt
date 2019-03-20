@@ -134,3 +134,37 @@ has_order_zero <- function(x) {
   ) & !is.na(x)
 }
 
+#' @param x A vector of numeric values.
+#' @param scale_by A numeric scalar.
+#' @noRd
+scale_x_values <- function(x,
+                           scale_by) {
+
+  # Stop function if `scale_by` isn't numeric
+  if (!inherits(scale_by, "numeric")) {
+    stop("The scaling value given as `scale_by` must be numeric.",
+         call. = FALSE)
+  }
+
+  # Stop function if the length of `scale_by`
+  # is not 1 of the length of `x`
+  if (!any(length(scale_by) == 1 || length(scale_by) == length(x))) {
+    stop("The length of the `scale_by` vector must be 1 or the length of `x`.",
+         call. = FALSE)
+  }
+
+  # Stop function if `scale_by` is an NA value
+  if (any(is.na(scale_by))) {
+    stop("The scaling value given as `scale_by` cannot be an `NA` value.",
+         call. = FALSE)
+  }
+
+  # Stop function if `scale_by` is infinite
+  if (any(is.infinite(scale_by))) {
+    stop("The scaling value given as `scale_by` cannot be infinite.",
+         call. = FALSE)
+  }
+
+  x * scale_by
+}
+
