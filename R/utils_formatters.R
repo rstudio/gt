@@ -64,25 +64,19 @@ get_locale_sep_mark <- function(locale = NULL,
 
   # Stop function if the `locale` provided
   # isn't a valid one
-  if (!(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.\n",
-         " * Use the `info_locales()` function to see which locales can be used.",
-         call. = FALSE)
-  }
+  validate_locale(locale)
 
-  # If the locale is supplied and valid, get
-  # the correct `group_sep` value from the
+  # Get the correct `group_sep` value from the
   # `gt:::locales` lookup table
-  if (locale %in% locales$base_locale_id) {
+  sep_mark <-
+    filter_table_to_value(locales, group_sep, base_locale_id == locale)
 
-    sep_mark <-
-      filter_table_to_row(gt:::locales, base_locale_id == locale) %>%
-      pull_table_value_from_column(column = group_sep)
+  # TODO: Modify `locales` table to replace `""` with
+  # `" "` in `group_sep` column; once that is done, the
+  # below statement can be safely removed
+  if (sep_mark == "") sep_mark <- " "
 
-    if (sep_mark == "") sep_mark <- " "
-
-    return(sep_mark)
-  }
+  sep_mark
 }
 
 #' Get the `dec_mark` value based on a locale
@@ -102,23 +96,11 @@ get_locale_dec_mark <- function(locale = NULL,
 
   # Stop function if the `locale` provided
   # isn't a valid one
-  if (!(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.\n",
-         " * Use the `info_locales()` function to see which locales can be used.",
-         call. = FALSE)
-  }
+  validate_locale(locale)
 
-  # If the locale is supplied and valid, get
-  # the correct `dec_sep` value from the
+  # Get the correct `dec_sep` value from the
   # `gt:::locales` lookup table
-  if (locale %in% locales$base_locale_id) {
-
-    dec_mark <-
-      filter_table_to_row(gt:::locales, base_locale_id == locale) %>%
-      pull_table_value_from_column(column = dec_sep)
-
-    return(dec_mark)
-  }
+  filter_table_to_value(locales, dec_sep, base_locale_id == locale)
 }
 
 #' Determine which numbers in scientific notation would be zero order
@@ -137,29 +119,17 @@ has_order_zero <- function(x) {
 #' @noRd
 scale_x_values <- function(x,
                            scale_by) {
+  checkmate::assert_numeric(
+    scale_by,
+    finite = TRUE,
+    any.missing = FALSE)
 
-  # Stop function if `scale_by` isn't numeric
-  if (!inherits(scale_by, "numeric")) {
-    stop("The scaling value given as `scale_by` must be numeric.",
-         call. = FALSE)
-  }
+  len <- length(scale_by)
 
   # Stop function if the length of `scale_by`
   # is not 1 of the length of `x`
-  if (!any(length(scale_by) == 1 || length(scale_by) == length(x))) {
+  if (!any(len == 1, len == length(x))) {
     stop("The length of the `scale_by` vector must be 1 or the length of `x`.",
-         call. = FALSE)
-  }
-
-  # Stop function if `scale_by` is an NA value
-  if (any(is.na(scale_by))) {
-    stop("The scaling value given as `scale_by` cannot be an `NA` value.",
-         call. = FALSE)
-  }
-
-  # Stop function if `scale_by` is infinite
-  if (any(is.infinite(scale_by))) {
-    stop("The scaling value given as `scale_by` cannot be infinite.",
          call. = FALSE)
   }
 
@@ -193,11 +163,7 @@ format_num_to_str <- function(x,
 }
 
 #' A `formatC()` call for `fmt_scientific()`
-#' @param x A vector of numeric values.
-#' @param decimals The number of decimal places (`digits`).
-#' @param sep_mark The separator for number groups (`big.mark`).
-#' @param dec_mark The decimal separator mark (`decimal.mark`).
-#' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
+#' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_e <- function(x,
                                 decimals,
@@ -215,10 +181,7 @@ format_num_to_str_e <- function(x,
 }
 
 #' A `formatC()` call for `fmt_currency()`
-#' @param x A vector of numeric values.
-#' @param decimals The number of decimal places (`digits`).
-#' @param sep_mark The separator for number groups (`big.mark`).
-#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_c <- function(x,
                                 decimals,
