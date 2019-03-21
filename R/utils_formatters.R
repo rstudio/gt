@@ -5,40 +5,37 @@
 #' @import rlang
 #' @importFrom dplyr filter
 #' @noRd
-filter_table_to_row <- function(table, ...) {
+filter_table_to_value <- function(table, column, ...) {
 
   filter_args_enquos <- rlang::enquos(...)
+  column_enquo <- rlang::enquo(column)
+
   filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
 
   if (nrow(filtered_tbl) != 1) {
     stop("Internal error in `gt:::filter_table_to_row()`:\n",
-         " * The filtered table doesn't result in a table of exactly one row.",
+         " * The filtered table doesn't result in a table of exactly one row. ",
+         "Found ", nrow(filtered_tbl), " rows.",
          call. = FALSE)
   }
 
-  filtered_tbl
+  filtered_tbl %>%
+    dplyr::pull(!!column_enquo)
 }
 
-#' Pull a single value from a table with a single row
-#'
-#' @param table The single-row table.
-#' @param column The column from which the single value should be obtained.
-#' @import rlang
-#' @import rlang
-#' @importFrom dplyr pull
+#' Validate the user-supplied `locale` value
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
-pull_table_value_from_column <- function(table, column) {
+validate_locale <- function(locale) {
 
-  if (nrow(table) != 1) {
-    stop("Internal error in `gt:::pull_table_value_from_column()`:\n",
-         " * The `table` must contain exactly one row.",
+  # Stop function if the `locale` provided
+  # isn't a valid one
+  if (!(locale %in% locales$base_locale_id)) {
+    stop("The supplied `locale` is not available in the list of supported locales.\n",
+         " * Use the `info_locales()` function to see which locales can be used.",
          call. = FALSE)
   }
-
-  column_enquo <- rlang::enquo(column)
-
-  table %>%
-    dplyr::pull(!!column_enquo)
 }
 
 #' Get the `sep_mark` value based on a locale
