@@ -197,3 +197,90 @@ format_num_to_str_c <- function(x,
     drop_trailing_zeros = FALSE)
 }
 
+#' Split a string into two pieces
+#' @param x The string to split into a character vector of length 2.
+#' @param before,after Either an exact numeric position for where splitting will
+#'   occur, or a regular expression to match on a range of characters. We can
+#'   use either `before` or `after` (but not both) with this variable input to
+#'   accurately define which side of the match is the split position.
+split_string_2 <- function(x,
+                           before = NULL,
+                           after = NULL) {
+
+  # Get the length of the string `x`
+  x_length <- nchar(x)
+
+  # If neither of `before` or `after` have a value,
+  # stop the function
+  if (is.null(before) && is.null(after)) {
+    stop("Internal error in `gt:::split_string_2()`:\n",
+         " * Both `before` and `after` cannot be `NULL`.",
+         call. = FALSE)
+  }
+
+  # If both `before` and `after` have values, stop
+  # the function
+  if (!is.null(before) && !is.null(after)) {
+    stop("Internal error in `gt:::split_string_2()`:\n",
+         " * A value must be provided to either `before` or `after`, not both.",
+         call. = FALSE)
+  }
+
+  # Collapse value for either `before` or `after`;
+  # add a class to retain the direction-of-split
+  # information
+  if (!is.null(before)) {
+    input <- before
+    class(input) <- c("before", class(before))
+  } else if (!is.null(after)) {
+    input <- after
+    class(input) <- c("after", class(after))
+  }
+
+  if (inherits(input, "character")) {
+
+    # Use the pattern (`input`) with the input string
+    # `x` with `regexpr()` to get the matching output
+    regexpr_out <- regexpr(input, x)
+
+    # If there is no match, return a character vector
+    # of length 2 (original string, then empty string)
+    if (as.numeric(regexpr_out) == -1) {
+      return(c(x, ""))
+    }
+
+    # Define the start position for the matched characters
+    split_start <-
+      regexpr_out %>%
+      as.numeric()
+
+    # Define the stop position for the matched characters
+    split_stop <-
+      attr(regexpr_out, "match.length", exact = TRUE) + split_start - 1
+
+  } else if (inherits(input, "numeric")) {
+
+    # Stop function if the index position is not valid
+    if (input > x_length) {
+      stop("Internal error in `gt:::split_string_2()`:\n",
+           "The numeric value provided cannot be greater than ", x_length, ".",
+           call. = FALSE)
+    }
+
+    # Define the start and stop positions as
+    # the single `input` value
+    split_start <- split_stop <- input %>% as.numeric()
+  }
+
+  # Perform the split either before the matched characters
+  if (inherits(input, "before")) {
+
+    x_2 <- c(substr(x, 0, split_start - 1), substr(x, split_start, x_length))
+
+  } else if (inherits(input, "after")) {
+
+    x_2 <- c(substr(x, 0, split_stop), substr(x, split_stop + 1, x_length))
+  }
+
+  x_2
+}
