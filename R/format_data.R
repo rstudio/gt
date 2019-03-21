@@ -160,8 +160,6 @@ fmt_number <- function(data,
               "will be ignored.",
               call. = FALSE)
     }
-
-    scale_by <- 1.0
   }
 
   # Capture expression in `rows` and `columns`
@@ -176,14 +174,12 @@ fmt_number <- function(data,
       fns = list(
         default = function(x) {
 
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Scale values of `x`
-          x <- scale_x_values(x, scale_by)
-
           # Determine which of `x` are not NA
           non_na_x <- !is.na(x)
+
+          # Create a possibly shorter vector of non-NA
+          # `x` values
+          x_vals <- x[non_na_x]
 
           # If choosing to perform large-number suffixing
           # of numeric values, rescaling of numerical values
@@ -195,21 +191,22 @@ fmt_number <- function(data,
             # use for character formatting
             suffix_df <-
               num_suffix(
-                x = round(x[non_na_x], decimals),
+                x = round(x_vals, decimals),
                 suffixes = suffix_labels
               )
 
             # Replace `scale_by` with a vector of scaling
             # values (of equal length with `x[non_na_x]`)
             # and then apply those values
-            scale_by <- suffix_df$scale_by[non_na_x]
-            x[non_na_x] <- scale_x_values(x[non_na_x], scale_by)
+            scale_by <- suffix_df$scale_by
           }
 
+          x_vals <- scale_x_values(x_vals, scale_by)
+
           # Format all non-NA x values
-          x_str[non_na_x] <-
+          x_str_vals <-
             format_num_to_str(
-              x = x[non_na_x], decimals, sep_mark,
+              x = x_vals, decimals, sep_mark,
               dec_mark, drop_trailing_zeros
             )
 
@@ -218,28 +215,32 @@ fmt_number <- function(data,
           if (!is.null(suffix_labels)) {
 
             # Apply vector of suffixes
-            x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
+            x_str_vals <-
+              paste0(x_str_vals, suffix_df$suffix)
           }
 
           # Handle negative values
           if (negative_val == "parens") {
 
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
+            # Determine which of `x_vals` are not NA and also negative
+            negative_x <- x_vals < 0
 
             # Apply parentheses to the formatted value and remove
             # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
+            x_str_vals[negative_x] <-
+              paste0("(", gsub("^-", "", x_str_vals[negative_x]), ")")
           }
 
           # Handle formatting of pattern
-          x_str[non_na_x] <-
+          x_str_vals <-
             apply_pattern_fmt_x(
               pattern,
-              values = x_str[non_na_x]
+              values = x_str_vals
             )
 
+          # Create `x_str` with same length as `x`
+          x_str <- rep(NA_character_, length(x))
+          x_str[non_na_x] <- x_str_vals
           x_str
         }
       ))
