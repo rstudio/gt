@@ -1,6 +1,7 @@
 #' Filter an internal table to a single row with filtering expressions
 #'
 #' @param table The table to filter down to one row.
+#' @param column The column from which the single value should be obtained.
 #' @param ... The arguments passed to `dplyr::filter()`
 #' @import rlang
 #' @importFrom dplyr filter
