@@ -1,42 +1,22 @@
 context("Ensuring that the utility functions for the formatters work correctly")
 
-test_that("the `filter_table_to_row()` function works correctly", {
+test_that("the `filter_table_to_value()` function works correctly", {
 
   # Expect that filtering the `locales` table with
-  # `filter_table_to_row()` will return a single row
+  # `filter_table_to_value()` will return a single value
   # so long as the filtering expressions are well chosen
   expect_equal(
     locales %>%
-      filter_table_to_row(base_locale_id == "en_US") %>%
-      nrow, 1
+      filter_table_to_value(lang, base_locale_id == "en_US"),
+    "en"
   )
 
-  # Expect an error with `filter_table_to_row()` if the
+  # Expect an error with `filter_table_to_value()` if the
   # chosen filtering expressions result in a number of
   # returned rows not equal to 1
   expect_error(
     locales %>%
-      filter_table_to_row(lang == "en")
-  )
-})
-
-test_that("the `pull_table_value_from_column()` function works correctly", {
-
-  # Expect that pulling a single column value from
-  # a single-row table with `pull_table_value_from_column()`
-  # will return a single value
-  expect_equal(
-    locales[1, ] %>%
-      pull_table_value_from_column(column = lang),
-    "af"
-  )
-
-  # Expect that the function will yield an error
-  # if we attempt to use a table that doesn't have
-  # exactly one row
-  expect_error(
-    locales[1:2, ] %>%
-      pull_table_value_from_column(column = lang)
+      filter_table_to_value(base_locale_id, lang == "en")
   )
 })
 
