@@ -143,3 +143,52 @@ test_that("the `has_order_zero()` function works correctly", {
       FALSE, FALSE, TRUE, FALSE, FALSE)
   )
 })
+
+test_that("the `split_string_2()` function works correctly", {
+
+  test_str <- "-HK$4,299"
+
+  # Expect certain length 2 character vectors from a series
+  # of `split_string_2()` operations with regex matching
+  expect_equal(split_string_2(x = test_str, before = "HK"), c("-", "HK$4,299"))
+  expect_equal(split_string_2(x = test_str, after = "HK"), c("-HK", "$4,299"))
+  expect_equal(split_string_2(x = test_str, before = "\\$"), c("-HK", "$4,299"))
+  expect_equal(split_string_2(x = test_str, after = "\\$"), c("-HK$", "4,299"))
+  expect_equal(split_string_2(x = test_str, before = "9"), c("-HK$4,2", "99"))
+  expect_equal(split_string_2(x = test_str, after = "9"), c("-HK$4,29", "9"))
+  expect_equal(split_string_2(x = test_str, before = "99"), c("-HK$4,2", "99"))
+  expect_equal(split_string_2(x = test_str, after = "99"), c("-HK$4,299", ""))
+  expect_equal(split_string_2(x = test_str, before = "9"), c("-HK$4,2", "99"))
+  expect_equal(split_string_2(x = test_str, before = "$"), c("-HK$4,299", ""))
+  expect_equal(split_string_2(x = test_str, after = "$"), c("-HK$4,299", ""))
+  expect_equal(split_string_2(x = test_str, before = ".$"), c("-HK$4,29", "9"))
+  expect_equal(split_string_2(x = test_str, after = ".$"), c("-HK$4,299", ""))
+  expect_equal(split_string_2(x = test_str, before = "^."), c("", "-HK$4,299"))
+  expect_equal(split_string_2(x = test_str, after = "^."), c("-", "HK$4,299"))
+  expect_equal(split_string_2(x = test_str, before = "x"), c("-HK$4,299", ""))
+  expect_equal(split_string_2(x = test_str, after = "x"), c("-HK$4,299", ""))
+
+  # Expect certain length 2 character vectors from a series
+  # of `split_string_2()` operations with numeric positions
+  expect_equal(split_string_2(x = test_str, before = 0), c("", "-HK$4,299"))
+  expect_equal(split_string_2(x = test_str, before = 1), c("", "-HK$4,299"))
+  expect_equal(split_string_2(x = test_str, before = 2), c("-", "HK$4,299"))
+  expect_equal(split_string_2(x = test_str, before = 3), c("-H", "K$4,299"))
+  expect_equal(split_string_2(x = test_str, before = 4), c("-HK", "$4,299"))
+  expect_equal(split_string_2(x = test_str, before = 5), c("-HK$", "4,299"))
+  expect_equal(split_string_2(x = test_str, before = 6), c("-HK$4", ",299"))
+  expect_equal(split_string_2(x = test_str, before = 7), c("-HK$4,", "299"))
+  expect_equal(split_string_2(x = test_str, before = 8), c("-HK$4,2", "99"))
+  expect_equal(split_string_2(x = test_str, before = 9), c("-HK$4,29", "9"))
+
+  expect_equal(split_string_2(x = test_str, after = 0),  c("", "-HK$4,299"))
+  expect_equal(split_string_2(x = test_str, after = 1),  c("-", "HK$4,299"))
+  expect_equal(split_string_2(x = test_str, after = 2),  c("-H", "K$4,299"))
+  expect_equal(split_string_2(x = test_str, after = 3),  c("-HK", "$4,299"))
+  expect_equal(split_string_2(x = test_str, after = 4),  c("-HK$", "4,299"))
+  expect_equal(split_string_2(x = test_str, after = 5),  c("-HK$4", ",299"))
+  expect_equal(split_string_2(x = test_str, after = 6),  c("-HK$4,", "299"))
+  expect_equal(split_string_2(x = test_str, after = 7),  c("-HK$4,2", "99"))
+  expect_equal(split_string_2(x = test_str, after = 8),  c("-HK$4,29", "9"))
+  expect_equal(split_string_2(x = test_str, after = 9),  c("-HK$4,299", ""))
+})
