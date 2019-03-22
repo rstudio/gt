@@ -208,6 +208,20 @@ split_string_2 <- function(x,
                            before = NULL,
                            after = NULL) {
 
+  # Stop function if `x` is not of class character
+  if (!inherits(x, "character")) {
+    stop("Internal error in `gt:::paste_within()`:\n",
+         "* The `x` object must be of class character.",
+         call. = FALSE)
+  }
+
+  # Stop function if the length of `x` is not 1
+  if (length(x) != 1) {
+    stop("Internal error in `gt:::paste_within()`:\n",
+         "* The length of the `x` must be exactly 1.",
+         call. = FALSE)
+  }
+
   # Get the length of the string `x`
   x_length <- nchar(x)
 
