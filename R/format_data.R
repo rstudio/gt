@@ -145,22 +145,9 @@ fmt_number <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  # Normalize the `suffixing` input to either return a
-  # character vector of suffix labels, or NULL (the
-  # case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing)
-
-  # If choosing to perform large-number suffixing
-  # of numeric values, force `scale_by` to be 1.0
-  if (!is.null(suffix_labels)) {
-
-    if (!missing(scale_by) && !identical(scale_by, 1.0)) {
-      warning("The value for `scale_by` can't be changed if `suffixing` is ",
-              "anything other than `FALSE`. The value provided to `scale_by` ",
-              "will be ignored.",
-              call. = FALSE)
-    }
-  }
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
