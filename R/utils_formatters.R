@@ -278,7 +278,7 @@ split_string_2 <- function(x,
     # Stop function if the index position is not valid
     if (input > x_length) {
       stop("Internal error in `gt:::split_string_2()`:\n",
-           "The numeric value provided cannot be greater than ", x_length, ".",
+           "* The numeric value provided cannot be greater than ", x_length, ".",
            call. = FALSE)
     }
 
