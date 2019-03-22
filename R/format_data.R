@@ -215,8 +215,7 @@ fmt_number <- function(data,
           if (!is.null(suffix_labels)) {
 
             # Apply vector of suffixes
-            x_str_vals <-
-              paste0(x_str_vals, suffix_df$suffix)
+            x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
           }
 
           # Handle negative values
@@ -228,7 +227,10 @@ fmt_number <- function(data,
             # Apply parentheses to the formatted value and remove
             # the minus sign
             x_str_vals[negative_x] <-
-              paste0("(", gsub("^-", "", x_str_vals[negative_x]), ")")
+              paste_between(
+                x_2 = c("(", ")"),
+                x_between = gsub("^-", "", x_str_vals[negative_x])
+              )
           }
 
           # Handle formatting of pattern
