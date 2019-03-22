@@ -292,6 +292,7 @@ unescape_html <- function(text) {
 }
 
 #' Transform Markdown text to HTML; also performs HTML escaping
+#'
 #' @importFrom commonmark markdown_html
 #' @noRd
 md_to_html <- function(x) {
@@ -543,6 +544,8 @@ is_false = function(x) {
 #' @param suffixing,scale_by The `suffixing` and `scale_by` options in some
 #'   `fmt_*()` functions.
 #' @noRd
+normalize_suffixing_inputs <- function(suffixing,
+                                       scale_by) {
 
   if (is_false(suffixing)) {
 
