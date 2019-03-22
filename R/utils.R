@@ -588,6 +588,18 @@ is_false = function(x) {
 }
 
 # Derive a label based on a formula or a function name
+#' If performing large-number suffixing, warn on `scale_by` != 1
+#' @param scale_by The `scale_by` option in some `fmt_*()` functions.
+#' @noRd
+warn_on_scale_by_input <- function(scale_by) {
+
+  if (scale_by != 1) {
+    warning("The value for `scale_by` cannot be changed if `suffixing` is ",
+            "anything other than `FALSE`. The value provided to `scale_by` ",
+            "will be ignored.",
+            call. = FALSE)
+  }
+}
 #' @import rlang
 #' @noRd
 derive_summary_label <- function(fn) {
