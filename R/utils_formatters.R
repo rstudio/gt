@@ -332,3 +332,46 @@ paste_between <- function(x_2,
   paste0(x_2[1], x_between, x_2[2])
 }
 
+#' Paste a string either onto the left or the right of another string
+#' @param x A character vector of length equal to that of `x_side`.
+#' @param x_side Another character vector, with a length equal to that of `x`.
+#'   It will be pasted either to the left or to the right of `x` depending on
+#'   the `direction`.
+#' @param direction The side that `x_side` will be relative to `x`. This can
+#'   be `left` or `right`.
+#' @noRd
+paste_on_side <- function(x,
+                          x_side,
+                          direction) {
+
+  # Stop function if `direction` is not valid
+  if (!(direction %in% c("left", "right"))) {
+    stop("Internal error in `gt:::paste_on_side()`:\n",
+         "* The `direction` must be either `left` or `right`.",
+         call. = FALSE)
+  }
+
+  # Stop function if `x` and `x_side` are not both of class character
+  if (any(!inherits(x, "character"), !inherits(x_side, "character"))) {
+    stop("Internal error in `gt:::paste_on_side()`:\n",
+         "* The `x` and `x_side` objects must be of class character.",
+         call. = FALSE)
+  }
+
+  # Stop function if the lengths of `x` and `x_side` are not the same
+  if (length(x) != length(x_side)) {
+    stop("Internal error in `gt:::paste_on_side()`:\n",
+         "* The length of `x` must be equal to the length of `x_2`.",
+         call. = FALSE)
+  }
+
+  if (direction == "left") {
+
+    return(paste0(x_side, x))
+
+  } else if (direction == "right") {
+
+    return(paste0(x, x_side))
+  }
+}
+
