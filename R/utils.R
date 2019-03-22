@@ -562,7 +562,6 @@ is_false = function(x) {
     # In the case that a character vector is provided
     # to `suffixing`, we first want to check if there
     # are any names provided
-
     # TODO: found that the conditional below seems
     # better than other solutions to determine whether
     # the vector is even partially named
@@ -587,7 +586,6 @@ is_false = function(x) {
   }
 }
 
-# Derive a label based on a formula or a function name
 #' If performing large-number suffixing, warn on `scale_by` != 1
 #' @param scale_by The `scale_by` option in some `fmt_*()` functions.
 #' @noRd
@@ -600,6 +598,8 @@ warn_on_scale_by_input <- function(scale_by) {
             call. = FALSE)
   }
 }
+
+#' Derive a label based on a formula or a function name
 #' @import rlang
 #' @noRd
 derive_summary_label <- function(fn) {
