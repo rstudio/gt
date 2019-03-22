@@ -197,12 +197,13 @@ format_num_to_str_c <- function(x,
     drop_trailing_zeros = FALSE)
 }
 
-#' Split a string into two pieces
+#' Flexibly split a string into two pieces
 #' @param x The string to split into a character vector of length 2.
 #' @param before,after Either an exact numeric position for where splitting will
 #'   occur, or a regular expression to match on a range of characters. We can
 #'   use either `before` or `after` (but not both) with this variable input to
 #'   accurately define which side of the match is the split position.
+#' @noRd
 split_string_2 <- function(x,
                            before = NULL,
                            after = NULL) {
