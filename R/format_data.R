@@ -201,6 +201,7 @@ fmt_number <- function(data,
             scale_by <- suffix_df$scale_by
           }
 
+          # Scale the `x_vals` by the `scale_by` value
           x_vals <- scale_x_values(x_vals, scale_by)
 
           # Format all non-NA x values
