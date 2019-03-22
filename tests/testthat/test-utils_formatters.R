@@ -180,7 +180,6 @@ test_that("the `split_string_2()` function works correctly", {
   expect_equal(split_string_2(x = test_str, before = 7), c("-HK$4,", "299"))
   expect_equal(split_string_2(x = test_str, before = 8), c("-HK$4,2", "99"))
   expect_equal(split_string_2(x = test_str, before = 9), c("-HK$4,29", "9"))
-
   expect_equal(split_string_2(x = test_str, after = 0),  c("", "-HK$4,299"))
   expect_equal(split_string_2(x = test_str, after = 1),  c("-", "HK$4,299"))
   expect_equal(split_string_2(x = test_str, after = 2),  c("-H", "K$4,299"))
@@ -191,4 +190,94 @@ test_that("the `split_string_2()` function works correctly", {
   expect_equal(split_string_2(x = test_str, after = 7),  c("-HK$4,2", "99"))
   expect_equal(split_string_2(x = test_str, after = 8),  c("-HK$4,29", "9"))
   expect_equal(split_string_2(x = test_str, after = 9),  c("-HK$4,299", ""))
+
+  # Expect an error if `x` is not of class character
+  expect_error(split_string_2(x = 23432, before = "34"))
+
+  # Expect an error if the length of `x` is not 1
+  expect_error(split_string_2(x = c("345", "234"), before = "34"))
+
+  # Expect an error if neither of `before` or `after` has a value
+  expect_error(split_string_2(x = "23432"))
+
+  # Expect an error if both `before` and `after` have values
+  expect_error(split_string_2(x = "23432", before = "3", after = "2"))
+
+  # Expect an error if the index position is not valid
+  expect_error(split_string_2(x = "23432", before = 10))
 })
+
+test_that("the `paste_between()` function works correctly", {
+
+  # Expect a correctly formed string with `paste_between()`
+  expect_equal(
+    paste_between(x_2 = c("left", "right"), "-between-"),
+    "left-between-right"
+  )
+
+  # Expect multiple correctly formed strings with `paste_between()`
+  expect_equal(
+    paste_between(x_2 = c("left", "right"), c("-a-", "-b-", "-c-")),
+    c("left-a-right", "left-b-right", "left-c-right")
+  )
+
+  # Expect an error if the class of `x_2` is not `character`
+  expect_error(paste_between(x_2 = 1:2, "-between-"))
+
+  # Expect an error if the class of `x_between` is not `character`
+  expect_error(paste_between(x_2 = c("left", "right"), 1))
+
+  # Expect an error if the length of `x_2` is not 2
+  expect_error(paste_between(x_2 = "left", "between"))
+})
+
+test_that("the `paste_on_side()` function works correctly", {
+
+  # Expect a correctly formed string with `paste_on_side()`,
+  # pasting to the left
+  expect_equal(
+    paste_on_side(x = "center", x_side = "left-", direction = "left"),
+    "left-center"
+  )
+
+  # Expect a correctly formed string with `paste_on_side()`,
+  # pasting to the right
+  expect_equal(
+    paste_on_side(x = "center", x_side = "-right", direction = "right"),
+    "center-right"
+  )
+
+  # Expect an error if `direction` is not valid
+  expect_error(paste_on_side(x = "center", x_side = "c", direction = "center"))
+})
+
+test_that("the `paste_left()` function works correctly", {
+
+  # Expect a correctly formed string with `paste_left()`
+  expect_equal(paste_left(x = "center", "left-"), "left-center")
+
+  # Expect an error if the class of `x` is not `character`
+  expect_error(paste_left(x = 1, x_left = "left"))
+
+  # Expect an error if the class of `x_left` is not `character`
+  expect_error(paste_left(x = "center", x_left = 1))
+
+  # Expect an error if the lengths of `x` and `x_left` are not equal
+  expect_error(paste_left(x = c("c1", "c2"), x_left = "left"))
+})
+
+test_that("the `paste_right()` function works correctly", {
+
+  # Expect a correctly formed string with `paste_right()`
+  expect_equal(paste_right(x = "center", "-right"), "center-right")
+
+  # Expect an error if the class of `x` is not `character`
+  expect_error(paste_right(x = 1, x_right = "right"))
+
+  # Expect an error if the class of `x_right` is not `character`
+  expect_error(paste_right(x = "center", x_right = 1))
+
+  # Expect an error if the lengths of `x` and `x_right` are not equal
+  expect_error(paste_right(x = c("c1", "c2"), x_right = "right"))
+})
+
