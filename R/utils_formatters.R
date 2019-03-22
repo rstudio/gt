@@ -225,7 +225,7 @@ split_string_2 <- function(x,
   # Get the length of the string `x`
   x_length <- nchar(x)
 
-  # If neither of `before` or `after` have a value,
+  # If neither of `before` or `after` has a value,
   # stop the function
   if (is.null(before) && is.null(after)) {
     stop("Internal error in `gt:::split_string_2()`:\n",
