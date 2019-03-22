@@ -553,11 +553,17 @@ is_false = function(x) {
 
   } else if (isTRUE(suffixing)) {
 
+    # Issue a warning if `scale_by` is not 1.0 (the default)
+    warn_on_scale_by_input(scale_by)
+
     # If `suffixing` is TRUE, return the default
     # set of suffixes
     return(c("K", "M", "B", "T"))
 
   } else if (is.character(suffixing)) {
+
+    # Issue a warning if `scale_by` is not 1.0 (the default)
+    warn_on_scale_by_input(scale_by)
 
     # In the case that a character vector is provided
     # to `suffixing`, we first want to check if there
