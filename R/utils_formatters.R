@@ -375,3 +375,20 @@ paste_on_side <- function(x,
   }
 }
 
+#' Paste a string onto left side of another string
+#' @inheritParams paste_on_side
+#' @param x_left Another character vector of length 1 that is to be pasted to
+#'   the left of `x`.
+#' @noRd
+paste_left <- function(x, x_left) {
+  paste_on_side(x, x_side = x_left, direction = "left")
+}
+
+#' Paste a string onto right side of another string
+#' @inheritParams paste_on_side
+#' @param x_right Another character vector of length 1 that is to be pasted to
+#'   the right of `x`.
+#' @noRd
+paste_right <- function(x, x_right) {
+  paste_on_side(x, x_side = x_right, direction = "right")
+}
