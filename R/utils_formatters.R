@@ -25,6 +25,7 @@ filter_table_to_value <- function(table, column, ...) {
 }
 
 #' Validate the user-supplied `locale` value
+#'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @noRd
@@ -40,6 +41,7 @@ validate_locale <- function(locale) {
 }
 
 #' Get the `sep_mark` value based on a locale
+#'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @param default The default value for the `sep_mark`.
@@ -80,6 +82,7 @@ get_locale_sep_mark <- function(locale = NULL,
 }
 
 #' Get the `dec_mark` value based on a locale
+#'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @param default The default value for the `dec_mark`.
@@ -114,6 +117,8 @@ has_order_zero <- function(x) {
   ) & !is.na(x)
 }
 
+#' Apply a scaling factor to a vector of numeric values
+#'
 #' @param x A vector of numeric values.
 #' @param scale_by A numeric scalar.
 #' @noRd
@@ -137,6 +142,7 @@ scale_x_values <- function(x,
 }
 
 #' A `formatC()` call for `fmt_number()` and `fmt_percent()`
+#'
 #' @param x A vector of numeric values.
 #' @param decimals The number of decimal places (`digits`).
 #' @param sep_mark The separator for number groups (`big.mark`).
@@ -163,6 +169,7 @@ format_num_to_str <- function(x,
 }
 
 #' A `formatC()` call for `fmt_scientific()`
+#'
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_e <- function(x,
@@ -181,6 +188,7 @@ format_num_to_str_e <- function(x,
 }
 
 #' A `formatC()` call for `fmt_currency()`
+#'
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_c <- function(x,
@@ -198,6 +206,7 @@ format_num_to_str_c <- function(x,
 }
 
 #' Flexibly split a string into two pieces
+#'
 #' @param x The string to split into a character vector of length 2.
 #' @param before,after Either an exact numeric position for where splitting will
 #'   occur, or a regular expression to match on a range of characters. We can
@@ -301,6 +310,7 @@ split_string_2 <- function(x,
 }
 
 #' Flexibly split a string into two pieces
+#'
 #' @param x_2 A character vector of length 2.
 #' @param paste_between A character vector that is to be pasted between the
 #'   first and second elements of `x_2`.
@@ -333,6 +343,7 @@ paste_between <- function(x_2,
 }
 
 #' Paste a string either onto the left or the right of another string
+#'
 #' @param x A character vector of length equal to that of `x_side`.
 #' @param x_side Another character vector, with a length equal to that of `x`.
 #'   It will be pasted either to the left or to the right of `x` depending on
@@ -377,6 +388,7 @@ paste_on_side <- function(x,
 }
 
 #' Paste a string onto left side of another string
+#'
 #' @inheritParams paste_on_side
 #' @param x_left Another character vector of length 1 that is to be pasted to
 #'   the left of `x`.
@@ -386,6 +398,7 @@ paste_left <- function(x, x_left) {
 }
 
 #' Paste a string onto right side of another string
+#'
 #' @inheritParams paste_on_side
 #' @param x_right Another character vector of length 1 that is to be pasted to
 #'   the right of `x`.
