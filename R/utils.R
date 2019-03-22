@@ -1,4 +1,5 @@
-# Create a tibble containing date formats
+#' Create a tibble containing date formats
+#'
 #' @importFrom dplyr tribble
 #' @noRd
 date_formats <- function() {
@@ -21,7 +22,8 @@ date_formats <- function() {
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
 
-# Create a tibble containing time formats
+#' Create a tibble containing time formats
+#'
 #' @importFrom dplyr tribble
 #' @noRd
 time_formats <- function() {
@@ -35,7 +37,8 @@ time_formats <- function() {
     "5",	          "h_p",        "%I %P")
 }
 
-# Transform `date_style` to `date_format`
+#' Transform a `date_style` to a `date_format`
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_date_format <- function(date_style) {
@@ -59,7 +62,7 @@ get_date_format <- function(date_style) {
   }
 }
 
-# Transform `time_style` to `time_format`
+#' Transform a `time_style` to a `time_format`
 #' @importFrom dplyr filter pull
 #' @noRd
 get_time_format <- function(time_style) {
@@ -94,7 +97,8 @@ is_currency_valid <- function(currency) {
     TRUE, FALSE)
 }
 
-# Transform `currency` to currency string
+#' Transform a `currency` code to a currency string
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_str <- function(currency,
@@ -303,8 +307,11 @@ md_to_html <- function(x) {
   x
 }
 
-# Transform Markdown text to LaTeX; also escapes ASCII
-# characters with special meaning in LaTeX
+#' Transform Markdown text to LaTeX
+#'
+#' In addition to the Markdown-to-LaTeX text transformation,
+#' `markdown_to_latex()` also escapes ASCII characters with special meaning in
+#' LaTeX.
 #' @importFrom commonmark markdown_latex
 #' @noRd
 markdown_to_latex <- function(text) {
@@ -332,7 +339,8 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
-# Transform Markdown text to plain text
+#' Transform Markdown text to plain text
+#'
 #' @importFrom commonmark markdown_text
 #' @noRd
 markdown_to_text <- function(text) {
@@ -385,7 +393,9 @@ apply_pattern_fmt_x <- function(pattern,
 
 #' @importFrom utils head
 #' @noRd
-non_na_index <- function(values, index, default_value = NA) {
+non_na_index <- function(values,
+                         index,
+                         default_value = NA) {
 
   if (is.logical(index)) {
     index <- is.integer(index)
@@ -439,11 +449,11 @@ non_na_index <- function(values, index, default_value = NA) {
   positions[index]
 }
 
-# This function operates on a vector of numerical
-# values and returns a tibble where each row
-# represents a scaled values for `x` and the
-# correct suffix to use during x's character-based
-# formatting
+#' Get a tibble of scaling values and suffixes
+#'
+#' The `num_suffix()` function operates on a vector of numerical values and
+#' returns a tibble where each row represents a scaled value for `x` and the
+#' correct suffix to use during `x`'s character-based formatting
 #' @importFrom dplyr tibble
 #' @noRd
 num_suffix <- function(x,
@@ -514,19 +524,25 @@ num_suffix <- function(x,
   )
 }
 
-# Create an `isFALSE`-based helper function that
-# works with earlier versions of R (the `isFALSE()`
-# function was introduced in R 3.5.0)
+#' An `isFALSE`-based helper function
+#'
+#' The `is_false()` function is similar to the `isFALSE()` function was
+#' introduced in R 3.5.0 except that this implementation works with earlier
+#' versions of R.
+#' @noRd
 is_false = function(x) {
 
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
-# This function normalizes the `suffixing` input to a
-# character vector which is later appended to scaled
-# numerical values; the input can either be a single
-# logical value or a character vector
-normalize_suffixing_inputs <- function(suffixing) {
+#' Normalize all suffixing input values
+#'
+#' This function normalizes the `suffixing` input to a character vector which is
+#' later appended to scaled numerical values; the input can either be a single
+#' logical value or a character vector
+#' @param suffixing,scale_by The `suffixing` and `scale_by` options in some
+#'   `fmt_*()` functions.
+#' @noRd
 
   if (is_false(suffixing)) {
 
@@ -587,21 +603,24 @@ derive_summary_label <- function(fn) {
 }
 
 #nocov start
-
-# This function is a conveient wrapper for `system.file()` where the `package`
-# refers to this package
+#' A `system.file()` replacement specific to this package
+#'
+#' This is a conveient wrapper for `system.file()` where the `package` refers to
+#' this package.
+#' @noRd
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
-
 #nocov end
 
-# This function removes entire HTML tags from input text
+#' Remove all HTML tags from input text
+#' @noRd
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
 }
 
-# This function transforms a CSS stylesheet to a tibble representation
+#' Transform a CSS stylesheet to a tibble representation
+#'
 #' @importFrom dplyr bind_rows tibble filter mutate case_when select pull
 #' @importFrom stringr str_remove str_extract str_trim str_detect
 #' @noRd
@@ -658,7 +677,8 @@ get_css_tbl <- function(data) {
   css_tbl
 }
 
-# Create an inlined style block from a CSS tibble
+#' Create an inlined style block from a CSS tibble
+#'
 #' @importFrom dplyr filter select distinct mutate pull
 #' @importFrom stringr str_split
 #' @noRd
@@ -684,7 +704,8 @@ create_inline_styles <- function(class_names,
     "\"")
 }
 
-# Transform HTML to inlined HTML using a CSS tibble
+#' Transform HTML to inlined HTML using a CSS tibble
+#'
 #' @importFrom stringr str_extract str_replace str_match
 #' @noRd
 inline_html_styles <- function(html, css_tbl) {
@@ -827,6 +848,8 @@ footnote_glyphs <- function(x,
   ) %>% unname()
 }
 
+#' Determine whether an object is a `gt_tbl`
+#'
 #' @importFrom checkmate test_class
 #' @noRd
 is_gt <- function(data) {
