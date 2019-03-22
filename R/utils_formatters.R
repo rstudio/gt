@@ -358,10 +358,11 @@ paste_on_side <- function(x,
          call. = FALSE)
   }
 
-  # Stop function if the lengths of `x` and `x_side` are not the same
-  if (length(x) != length(x_side)) {
-    stop("Internal error in `gt:::paste_on_side()`:\n",
-         "* The length of `x` must be equal to the length of `x_2`.",
+  len <- length(x_side)
+
+  # Stop function if the length of `x_side` is not 1 of the length of `x`
+  if (!any(len == 1, len == length(x))) {
+    stop("The length of the `x_side` vector must be 1 or the length of `x`.",
          call. = FALSE)
   }
 
