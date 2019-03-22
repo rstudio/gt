@@ -253,8 +253,19 @@ test_that("the `paste_on_side()` function works correctly", {
 
 test_that("the `paste_left()` function works correctly", {
 
-  # Expect a correctly formed string with `paste_left()`
-  expect_equal(paste_left(x = "center", "left-"), "left-center")
+  # Expect correctly formed strings with `paste_left()`
+  expect_equal(
+    paste_left(x = "center", "left-"),
+    "left-center"
+  )
+  expect_equal(
+    paste_left(x = c("a", "b", "c"), "left-"),
+    c("left-a", "left-b", "left-c")
+  )
+  expect_equal(
+    paste_left(x = c("c1", "c2", "c3"), c("l1-", "l2-", "l3-")),
+    c("l1-c1", "l2-c2", "l3-c3")
+  )
 
   # Expect an error if the class of `x` is not `character`
   expect_error(paste_left(x = 1, x_left = "left"))
@@ -262,14 +273,26 @@ test_that("the `paste_left()` function works correctly", {
   # Expect an error if the class of `x_left` is not `character`
   expect_error(paste_left(x = "center", x_left = 1))
 
-  # Expect an error if the lengths of `x` and `x_left` are not equal
-  expect_error(paste_left(x = c("c1", "c2"), x_left = "left"))
+  # Expect an error if the length of `x_left` is not 1 of the length of `x`
+  expect_error(paste_left(x = "center", x_left = c("l1", "l2", "l3")))
+  expect_error(paste_left(x = c("c1", "c2", "c3"), x_left = c("l1", "l2")))
 })
 
 test_that("the `paste_right()` function works correctly", {
 
-  # Expect a correctly formed string with `paste_right()`
-  expect_equal(paste_right(x = "center", "-right"), "center-right")
+  # Expect correctly formed strings with `paste_right()`
+  expect_equal(
+    paste_right(x = "center", "-right"),
+    "center-right"
+  )
+  expect_equal(
+    paste_right(x = c("a", "b", "c"), "-right"),
+    c("a-right", "b-right", "c-right")
+  )
+  expect_equal(
+    paste_right(x = c("c1", "c2", "c3"), c("-r1", "-r2", "-r3")),
+    c("c1-r1", "c2-r2", "c3-r3")
+  )
 
   # Expect an error if the class of `x` is not `character`
   expect_error(paste_right(x = 1, x_right = "right"))
@@ -277,7 +300,7 @@ test_that("the `paste_right()` function works correctly", {
   # Expect an error if the class of `x_right` is not `character`
   expect_error(paste_right(x = "center", x_right = 1))
 
-  # Expect an error if the lengths of `x` and `x_right` are not equal
-  expect_error(paste_right(x = c("c1", "c2"), x_right = "right"))
+  # Expect an error if the length of `x_right` is not 1 of the length of `x`
+  expect_error(paste_left(x = "center", x_right = c("r1", "r2", "r3")))
+  expect_error(paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
 })
-
