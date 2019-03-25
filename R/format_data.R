@@ -168,25 +168,17 @@ fmt_number <- function(data,
         # Create a possibly shorter vector of non-NA `x` values
         x_vals <- x[non_na_x]
 
-        # If choosing to perform large-number suffixing of numeric
-        # values, rescaling of numerical values (`x`) is required
-        if (!is.null(suffix_labels)) {
-
-          # Create a tibble with scaled values for `x[non_na_x]`
-          # and the suffix labels to use for character formatting
-          suffix_df <-
-            num_suffix(
-              round(x_vals, decimals),
-              suffixes = suffix_labels
-            )
-
-          # Replace `scale_by` with a vector of scaling values (of
-          # equal length with `x[non_na_x]`) and then apply those values
-          scale_by <- suffix_df$scale_by
-        }
+        # Create a tibble with scaled values for `x[non_na_x]`
+        # and the suffix labels to use for character formatting
+        suffix_df <-
+          num_suffix(
+            round(x_vals, decimals),
+            suffixes = suffix_labels,
+            scale_by = scale_by
+          )
 
         # Scale the `x_vals` by the `scale_by` value
-        x_vals <- scale_x_values(x_vals, scale_by)
+        x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
 
         # Format all non-NA x values
         x_str_vals <-
