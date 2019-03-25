@@ -469,7 +469,7 @@ num_suffix <- function(x,
 
     return(
       dplyr::tibble(
-        scale_by = rep_len(1, length(x)),
+        scale_by = rep_len(scale_by, length(x)),
         suffix = rep_len("", length(x))
       )
     )
