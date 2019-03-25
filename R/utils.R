@@ -459,7 +459,8 @@ non_na_index <- function(values,
 #' @noRd
 num_suffix <- function(x,
                        suffixes = c("K", "M", "B", "T"),
-                       base = 1000) {
+                       base = 1000,
+                       scale_by) {
 
   # If `suffixes` is a zero-length vector, we
   # provide a tibble that will ultimately not
