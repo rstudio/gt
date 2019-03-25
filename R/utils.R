@@ -63,6 +63,7 @@ get_date_format <- function(date_style) {
 }
 
 #' Transform a `time_style` to a `time_format`
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_time_format <- function(time_style) {
@@ -86,7 +87,8 @@ get_time_format <- function(time_style) {
   }
 }
 
-# Determine if a provided `currency` type is valid
+#' Determine if a provided `currency` type is valid
+#'
 #' @noRd
 is_currency_valid <- function(currency) {
 
@@ -153,7 +155,8 @@ get_currency_str <- function(currency,
   }
 }
 
-# Transform `currency` to a currency exponent
+#' Get a currency exponent from a currency code
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_exponent <- function(currency) {
@@ -183,11 +186,13 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-# This function processes input text based on the class; if incoming text has
-# the class `from_markdown` (applied by the `md()` helper function), then the
-# text will be sanitized and transformed to HTML from Markdown. If the incoming
-# text has the class `html` (applied by `html()` helper function), then
-# the text will be seen as HTML and it won't undergo sanitization
+#' Process text based on rendering context any applied classes
+#'
+#' If the incoming text has the class `from_markdown` (applied by the `md()`
+#' helper function), then the text will be sanitized and transformed to HTML
+#' from Markdown. If the incoming text has the class `html` (applied by `html()`
+#' helper function), then the text will be seen as HTML and it won't undergo
+#' sanitization
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
@@ -281,8 +286,11 @@ process_text <- function(text,
   }
 }
 
-# Find common HTML entities resulting from HTML escaping and
-# restore them back to ascii characters
+#' Reverse HTML escaping
+#'
+#' Find common HTML entities resulting from HTML escaping and restore them back
+#' to ASCII characters
+#' @noRd
 unescape_html <- function(text) {
 
   text %>%
@@ -291,7 +299,7 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
-#' Transform Markdown text to HTML; also performs HTML escaping
+#' Transform Markdown text to HTML and also perform HTML escaping
 #'
 #' @importFrom commonmark markdown_html
 #' @noRd
@@ -392,6 +400,8 @@ apply_pattern_fmt_x <- function(pattern,
   )
 }
 
+#' Get a vector of indices for large-number suffixing
+#'
 #' @importFrom utils head
 #' @noRd
 non_na_index <- function(values,
@@ -528,9 +538,10 @@ num_suffix <- function(x,
 
 #' An `isFALSE`-based helper function
 #'
-#' The `is_false()` function is similar to the `isFALSE()` function was
+#' The `is_false()` function is similar to the `isFALSE()` function that was
 #' introduced in R 3.5.0 except that this implementation works with earlier
 #' versions of R.
+#' @param x The single value to test for whether it is `FALSE`.
 #' @noRd
 is_false = function(x) {
 
@@ -597,6 +608,7 @@ normalize_suffixing_inputs <- function(suffixing,
 }
 
 #' If performing large-number suffixing, warn on `scale_by` != 1
+#'
 #' @param scale_by The `scale_by` option in some `fmt_*()` functions.
 #' @noRd
 warn_on_scale_by_input <- function(scale_by) {
@@ -610,6 +622,7 @@ warn_on_scale_by_input <- function(scale_by) {
 }
 
 #' Derive a label based on a formula or a function name
+#'
 #' @import rlang
 #' @noRd
 derive_summary_label <- function(fn) {
@@ -636,6 +649,7 @@ system_file <- function(file) {
 #nocov end
 
 #' Remove all HTML tags from input text
+#'
 #' @noRd
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
@@ -794,6 +808,11 @@ inline_html_styles <- function(html, css_tbl) {
   html
 }
 
+#' Split any strings that are values in scientific notation
+#'
+#' @param x_str The input character vector of values formatted in scientific
+#'   notation.
+#' @noRd
 split_scientific_notn <- function(x_str) {
 
   exp_parts <- strsplit(x_str, "e|E")
@@ -803,14 +822,25 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
-# This function is wrapper for `gsub()` that uses default argument values and
-# rearranges first three arguments for better pipelining
+#' Wrapper for `gsub()` where `x` is the first argument
+#'
+#' This function is wrapper for `gsub()` that uses default argument values and
+#' rearranges first three arguments for better pipelining
+#' @param x,pattern,replacement,fixed Select arguments from the `gsub()`
+#'   function.
+#' @noRd
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   gsub(pattern, replacement, x, fixed = fixed)
 }
 
-# Options setter for the `opts_df` data frame
+#' An options setter for the `opts_df` data frame
+#'
+#' @param opts_df The `opts_df` data frame.
+#' @param option The option name; a unique value in the `parameter` column of
+#'   `opts_df`.
+#' @param value The value to set for the given `option`.
+#' @noRd
 opts_df_set <- function(opts_df, option, value) {
 
   opts_df[which(opts_df$parameter == option), "value"] <- value
@@ -818,13 +848,21 @@ opts_df_set <- function(opts_df, option, value) {
   opts_df
 }
 
-# Options getter for the `opts_df` data frame
+#' An options getter for the `opts_df` data frame
+#'
+#' @inheritParams opts_df_set
+#' @noRd
 opts_df_get <- function(opts_df, option) {
 
   opts_df[which(opts_df$parameter == option), "value"]
 }
 
-# Upgrade `cells_*()` to a list() if a single instance provided
+#' Upgrader function for `cells_*` objects
+#'
+#' Upgrade a `cells_*` object to a `list()` if only a single instance is
+#' provided.
+#' @param locations Any `cells_*` object.
+#' @noRd
 as_locations <- function(locations) {
 
   if (!inherits(locations, "location_cells")) {
@@ -842,6 +880,9 @@ as_locations <- function(locations) {
   locations
 }
 
+#' Create a vector of glyphs to use for footnotes
+#'
+#' @noRd
 footnote_glyphs <- function(x,
                             glyphs) {
 
@@ -867,11 +908,14 @@ footnote_glyphs <- function(x,
     glyphs_val, glyphs_rep,
     FUN = function(val_i, rep_i) {
       paste(rep(val_i, rep_i), collapse = "")}
-  ) %>% unname()
+  ) %>%
+    unname()
 }
 
 #' Determine whether an object is a `gt_tbl`
 #'
+#' @param data A table object that is created using the \code{\link{gt}()}
+#'   function.
 #' @importFrom checkmate test_class
 #' @noRd
 is_gt <- function(data) {
@@ -879,6 +923,11 @@ is_gt <- function(data) {
   checkmate::test_class(data, "gt_tbl")
 }
 
+#' Stop any function if object is not a `gt_tbl` object
+#'
+#' @param data A table object that is created using the \code{\link{gt}()}
+#'   function.
+#' @noRd
 stop_if_not_gt <- function(data) {
 
   if (!is_gt(data)) {
