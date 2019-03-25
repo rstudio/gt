@@ -190,20 +190,15 @@ fmt_number <- function(data,
         # Apply large-number suffixes to scaled and formatted
         # values if that option is taken
         if (!is.null(suffix_labels)) {
+        # Paste vector of suffixes to the right of the `x_str_vals`
+        x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
-          # Paste vector of suffixes to the right of the `x_str_vals`
-          x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-        }
-
-        # Handle negative values
+        # Handle case where negative values are to be placed within parentheses
         if (negative_val == "parens") {
 
-          # Determine which of `x_vals` are not NA and also negative
-          negative_x <- x_vals < 0
-
-          # Selectively remove minus sign aand paste between parentheses
-          x_str_vals[negative_x] <-
-            paste_between(c("(", ")"), gsub("^-", "", x_str_vals[negative_x]))
+          # Selectively remove minus sign and paste between parentheses
+          x_str_vals[x_vals < 0] <-
+            paste_between(c("(", ")"), gsub("^-", "", x_str_vals[x_vals < 0]))
         }
 
         # Handle formatting of pattern
