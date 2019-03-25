@@ -187,9 +187,6 @@ fmt_number <- function(data,
             dec_mark, drop_trailing_zeros
           )
 
-        # Apply large-number suffixes to scaled and formatted
-        # values if that option is taken
-        if (!is.null(suffix_labels)) {
         # Paste vector of suffixes to the right of the `x_str_vals`
         x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
@@ -754,7 +751,8 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels
+              suffixes = suffix_labels,
+              scale_by = scale_by
             )
 
           # If choosing to perform large-number suffixing
@@ -837,7 +835,8 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels
+              suffixes = suffix_labels,
+              scale_by = scale_by
             )
 
           # If choosing to perform large-number suffixing
@@ -920,7 +919,8 @@ fmt_currency <- function(data,
           suffix_df <-
             num_suffix(
               x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels
+              suffixes = suffix_labels,
+              scale_by = scale_by
             )
 
           # If choosing to perform large-number suffixing
