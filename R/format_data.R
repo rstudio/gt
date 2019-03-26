@@ -688,10 +688,7 @@ fmt_currency <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `currency` does not have a valid value
-  if (!is_currency_valid(currency)) {
-    stop("The supplied `currency` is not available in the list of supported currencies.",
-         call. = FALSE)
-  }
+  validate_currency(currency)
 
   # Get the currency string for the HTML context
   currency_str_html <- get_currency_str(currency)
