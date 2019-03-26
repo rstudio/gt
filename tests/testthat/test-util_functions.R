@@ -80,54 +80,46 @@ test_that("the `get_time_format()` function works correctly", {
       c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
 })
 
-test_that("the `is_currency_valid()` function works correctly", {
+test_that("the `validate_currency()` function works correctly", {
 
   # Expect that specific currency names supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currency_symbols$curr_symbol, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currency_symbols$curr_symbol, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency names supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("thaler", "tetarteron"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("thaler", "tetarteron"), validate_currency))
+
 
   # Expect that specific currency codes supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_code, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currencies$curr_code, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("AAA", "ZZZ"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("AAA", "ZZZ"), validate_currency))
 
   # Expect that specific currency codes (3-number)
-  # supplied to `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_number, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # supplied to `validate_currency()` will return NULL
+  expect_null(
+    lapply(currencies$curr_number, validate_currency) %>%
+      unlist()
+  )
 
-  lapply(as.numeric(currencies$curr_number), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  expect_null(
+    lapply(as.numeric(currencies$curr_number), validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c(999, 998), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will return an error
+  expect_error(lapply(c(999, 998), validate_currency))
 })
 
 test_that("the `get_currency_str()` function works correctly", {
