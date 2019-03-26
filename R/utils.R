@@ -87,18 +87,6 @@ get_time_format <- function(time_style) {
   }
 }
 
-#' Determine if a provided `currency` type is valid
-#'
-#' @noRd
-is_currency_valid <- function(currency) {
-
-  ifelse(
-    as.character(currency) %in% currency_symbols$curr_symbol |
-      as.character(currency) %in% currencies$curr_code |
-      as.character(currency) %in% currencies$curr_number,
-    TRUE, FALSE)
-}
-
 #' Transform a `currency` code to a currency string
 #'
 #' @importFrom dplyr filter pull

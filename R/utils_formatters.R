@@ -40,6 +40,26 @@ validate_locale <- function(locale) {
   }
 }
 
+#' Validate the user-supplied `currency` value
+#'
+#' @param currency The user-supplied `currency` value, found in the
+#'   `fmt_currency()` function.
+#' @noRd
+validate_currency <- function(currency) {
+
+  # Stop function if the `currency` provided
+  # isn't a valid one
+  if (!(
+    as.character(currency) %in% currency_symbols$curr_symbol |
+    as.character(currency) %in% currencies$curr_code |
+    as.character(currency) %in% currencies$curr_number)) {
+    stop("The supplied `currency` is not available in the list of supported currencies.\n",
+         " * Use the `info_currencies()` function to see which currencies can be used.\n",
+         " * See `?fmt_currency` to understand which input types are valid.",
+         call. = FALSE)
+  }
+}
+
 #' Get the `sep_mark` value based on a locale
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
