@@ -710,12 +710,6 @@ fmt_currency <- function(data,
     decimals <- 0
   }
 
-  # Provide an empty string for `sep_mark` if we choose
-  # to not use digit group separators
-  if (!use_seps) {
-    sep_mark <- ""
-  }
-
   # Normalize the `suffixing` input to either return a
   # character vector of suffix labels, or NULL (the
   # case where `suffixing` is FALSE)
