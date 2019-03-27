@@ -58,7 +58,7 @@ test_that("the `fmt_missing()` function works correctly", {
        ) %>%
        fmt_missing(columns = TRUE) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "74.000", "---", "93.000", "---", "76.000", "---"))
+    c("---", "$74.000$", "---", "$93.000$", "---", "$76.000$", "---"))
 
   # Reverse the ordering: use `fmt_missing()` first
   # then `fmt_number()`; expect the same output as before
@@ -70,5 +70,5 @@ test_that("the `fmt_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "74.000", "---", "93.000", "---", "76.000", "---"))
+    c("---", "$74.000$", "---", "$93.000$", "---", "$76.000$", "---"))
 })
