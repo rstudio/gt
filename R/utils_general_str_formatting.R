@@ -203,3 +203,115 @@ paste_left <- function(x, x_left) {
 paste_right <- function(x, x_right) {
   paste_on_side(x, x_side = x_right, direction = "right")
 }
+
+#' Swap adjacent text groups
+#'
+#' @param x A text string.
+#' @param pattern_1,pattern_2 Regular expression to match on a range of
+#'   characters. The order of regex patterns does not need to be in the order of
+#'   matching in `x`.
+#' @noRd
+swap_adjacent_text_groups <- function(x,
+                                      pattern_1,
+                                      pattern_2) {
+
+  # Stop function if `x` is not of class character
+  if (!inherits(x, "character")) {
+    stop("Internal error in `gt:::paste_within()`:\n",
+         "* The `x` object must be of class character.",
+         call. = FALSE)
+  }
+
+  vapply(x, function(x) {
+
+    # Return `x` as is if both patterns aren't present
+    if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
+      return(x)
+    }
+
+    # Get the start and stop positions for the text groups
+    group_1 <- x %>% get_start_stop_positions(pattern = pattern_1)
+    group_2 <- x %>% get_start_stop_positions(pattern = pattern_2)
+
+    # Return `x` as is if the patterns don't encompass text ranges
+    # that aren't adjacent
+    if (!is_adjacent_separate(group_1, group_2)) {
+      return(x)
+    }
+
+    # Obtain a length-two vector of text groups based on the
+    # extracted substrings
+    substr <-
+      c(
+        substring(x, group_1[1], group_1[2]),
+        substring(x, group_2[1], group_2[2])
+      )
+
+    # Reverse the order of the elements in `substr`
+    # if necessary and paste elements together
+    if (group_1[1] < group_2[1]) {
+      rev_group <- paste0(rev(substr), collapse = "")
+    } else {
+      rev_group <- paste0(substr, collapse = "")
+    }
+
+    # Get the character indices that the contiguous text
+    # groups encompass
+    group_pos <- min(group_1, group_2):max(group_1, group_2)
+
+    # Return the reversed set of patterns
+    paste0(
+      substring(x, 0, min(group_pos) - 1),
+      rev_group,
+      substring(x, max(group_pos) + 1, nchar(x)),
+      collapse = ""
+    )
+  },
+  FUN.VALUE = character(1),
+  USE.NAMES = FALSE
+  )
+}
+
+#' Get the start and stop positions for a text match
+#'
+#' @param x A text string.
+#' @param pattern A regular expression pattern.
+#' @noRd
+get_start_stop_positions <- function(x,
+                                     pattern) {
+
+  # Use the pattern (`input`) with the input string
+  # `x` with `regexpr()` to get the matching output
+  regexpr_out <- regexpr(pattern, x)
+
+  # Define the start position for the matched characters
+  start_pos <- regexpr_out %>% as.numeric()
+
+  # Define the stop position for the matched characters
+  stop_pos <- attr(regexpr_out, "match.length", exact = TRUE) + start_pos - 1
+
+  # Return a vector of length 2
+  c(start_pos, stop_pos)
+}
+
+#' Determine if text groups are adjacent and non-overlapping
+#'
+#' @param group_1,group_2 Vectors of length 2 with starting and stopping
+#'   positions in a text string.
+#' @noRd
+is_adjacent_separate <- function(group_1,
+                                 group_2) {
+
+  group_1_expanded <- seq(group_1[1], group_1[2])
+  group_2_expanded <- seq(group_2[1], group_2[2])
+
+  if (length(base::intersect(group_1_expanded, group_2_expanded)) > 0) {
+    return(FALSE)
+  }
+
+  if (any(diff(sort(c(group_1_expanded, group_2_expanded))) > 1)) {
+    return(FALSE)
+  }
+
+  return(TRUE)
+}
