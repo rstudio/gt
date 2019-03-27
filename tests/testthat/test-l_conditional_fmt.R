@@ -40,7 +40,7 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c("1836.23", "2763.39", "937.2900", "643.0000",
-      "212.2320", "0.0000", "-23.2400")
+      "212.2320", "0.0000", "--23.2400")
   )
 
   expect_equal(
@@ -65,7 +65,7 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
        render_formats_test(context = "latex"))[["num_1"]],
     c("1836.23", "2763.39", "9.3729$ \\times 10^{2}$",
       "6.4300$ \\times 10^{2}$", "2.1223$ \\times 10^{2}$", "0.0000",
-      "-2.3240$ \\times 10^{1}$")
+      "--2.3240$ \\times 10^{1}$")
   )
 
   expect_equal(
@@ -89,7 +89,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c("1836.23", "2763.39", "93,729.00\\%", "64,300.00\\%",
-      "21,223.20\\%", "0.00\\%", "-2,324.00\\%")
+      "21,223.20\\%", "0.00\\%", "--2,324.00\\%")
   )
 
   expect_equal(
@@ -113,7 +113,7 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c("1836.23", "2763.39", "\\$937.29", "\\$643.00",
-      "\\$212.23", "\\$0.00", "\\$-23.24")
+      "\\$212.23", "\\$0.00", "--\\$23.24")
   )
 
   expect_equal(

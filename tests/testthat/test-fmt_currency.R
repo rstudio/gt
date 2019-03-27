@@ -61,7 +61,7 @@ test_that("the `fmt_currency()` function works correctly", {
     (tab %>%
        fmt_currency(columns = "num_1") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "$-23.24"))
+    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "&minus;$23.24"))
 
   # Format the `num_1` column as USD, use all other defaults;
   # extract `output_df` and compare to expected values
@@ -69,7 +69,7 @@ test_that("the `fmt_currency()` function works correctly", {
     (tab %>%
        fmt_currency(columns = "num_1", currency = "USD") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "$-23.24"))
+    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23", "$0.00", "&minus;$23.24"))
 
   # Format the `num_1` column as USD to 5 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
@@ -78,7 +78,7 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(columns = "num_1", currency = "USD", decimals = 5) %>%
        render_formats_test("html"))[["num_1"]],
     c("$1,836.23000", "$2,763.39000", "$937.29000", "$643.00000",
-      "$212.23200", "$0.00000", "$-23.24000"))
+      "$212.23200", "$0.00000", "&minus;$23.24000"))
 
   # Format the `num_1` column as USD, and don't include the subunits;
   # use all other defaults; extract `output_df` and compare to
@@ -87,7 +87,7 @@ test_that("the `fmt_currency()` function works correctly", {
     (tab %>%
        fmt_currency(columns = "num_1", currency = "USD", use_subunits = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1,836", "$2,763", "$937", "$643", "$212", "$0", "$-23"))
+    c("$1,836", "$2,763", "$937", "$643", "$212", "$0", "&minus;$23"))
 
   # Format the `num_1` column as USD, don't use digit
   # grouping separators, use all other defaults; extract `output_df`
@@ -96,7 +96,7 @@ test_that("the `fmt_currency()` function works correctly", {
     (tab %>%
        fmt_currency(columns = "num_1", currency = "USD", use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1836.23", "$2763.39", "$937.29", "$643.00", "$212.23", "$0.00", "$-23.24"))
+    c("$1836.23", "$2763.39", "$937.29", "$643.00", "$212.23", "$0.00", "&minus;$23.24"))
 
   # Format the `num_1` column to 2 decimal places, use a single space
   # character as digit grouping separators, use all other defaults;
@@ -105,7 +105,7 @@ test_that("the `fmt_currency()` function works correctly", {
     (tab %>%
        fmt_currency(columns = "num_1", currency = "USD", sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1 836.23", "$2 763.39", "$937.29", "$643.00", "$212.23", "$0.00", "$-23.24"))
+    c("$1 836.23", "$2 763.39", "$937.29", "$643.00", "$212.23", "$0.00", "&minus;$23.24"))
 
   # Format the `num_1` column as USD, use a period for the digit grouping
   # separators and a comma for the decimal mark, use all other defaults;
@@ -116,7 +116,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "USD",
          sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1.836,23", "$2.763,39", "$937,29", "$643,00", "$212,23", "$0,00", "$-23,24"))
+    c("$1.836,23", "$2.763,39", "$937,29", "$643,00", "$212,23", "$0,00", "&minus;$23,24"))
 
   # Format the `num_1` column as USD, apply parentheses to all negative
   # values, use all other defaults; extract `output_df` and compare
@@ -147,7 +147,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "USD",
          decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1.8362", "$2.7634", "$0.9373", "$0.6430", "$0.2122", "$0.0000", "$-0.0232"))
+    c("$1.8362", "$2.7634", "$0.9373", "$0.6430", "$0.2122", "$0.0000", "&minus;$0.0232"))
 
   # Format the `num_1` column as USD, prepend and append all values by 2
   # different literals, use all other defaults; extract `output_df` and
@@ -158,7 +158,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "USD", pattern = "a {x} b") %>%
        render_formats_test("html"))[["num_1"]],
     c("a $1,836.23 b", "a $2,763.39 b", "a $937.29 b", "a $643.00 b",
-      "a $212.23 b", "a $0.00 b", "a $-23.24 b"))
+      "a $212.23 b", "a $0.00 b", "a &minus;$23.24 b"))
 
   # Format the `num_1` column as USD to 4 decimal places, scale all values
   # by 1/1000 and append a `K` character to the resultant values, use
@@ -170,7 +170,7 @@ test_that("the `fmt_currency()` function works correctly", {
          scale_by = 1/1000, pattern = "{x}K") %>%
        render_formats_test("html"))[["num_1"]],
     c("$1.8362K", "$2.7634K", "$0.9373K", "$0.6430K",
-      "$0.2122K", "$0.0000K", "$-0.0232K"))
+      "$0.2122K", "$0.0000K", "&minus;$0.0232K"))
 
   # Format the `num_1` column as USD, apply the `en_US` locale and use all
   # other defaults; extract `output_df` and compare to expected values
@@ -180,7 +180,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "USD", locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
     c("$1,836.23", "$2,763.39", "$937.29", "$643.00",
-      "$212.23", "$0.00", "$-23.24"))
+      "$212.23", "$0.00", "&minus;$23.24"))
 
   # Format the `num_1` column as DKK, apply the `da_DK` locale and use all
   # other defaults; extract `output_df` and compare to expected values
@@ -191,7 +191,7 @@ test_that("the `fmt_currency()` function works correctly", {
          placement = "right", incl_space = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c("1.836,23 kr.", "2.763,39 kr.", "937,29 kr.", "643,00 kr.",
-      "212,23 kr.", "0,00 kr.", "-23,24 kr."))
+      "212,23 kr.", "0,00 kr.", "&minus;23,24 kr."))
 
   # Format the `num_1` column as DKK, apply the `da_DK` locale and use all
   # other defaults; use the default context, extract `output_df`, and
@@ -202,7 +202,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "DKK", locale = "da_DK") %>%
        render_formats_test("default"))[["num_1"]],
     c("kr.1.836,23", "kr.2.763,39", "kr.937,29", "kr.643,00",
-      "kr.212,23", "kr.0,00", "kr.-23,24"))
+      "kr.212,23", "kr.0,00", "-kr.23,24"))
 
   # Format the `num_1` column as EUR, apply the `de_AT` locale and use all
   # other defaults; extract `output_df` and compare to expected values
@@ -212,7 +212,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "EUR", locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
     c("&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
-      "&#8364;212,23", "&#8364;0,00", "&#8364;-23,24"))
+      "&#8364;212,23", "&#8364;0,00", "&minus;&#8364;23,24"))
 
   # Format the `num_1` column as EUR, apply the `de_AT` locale and use all
   # other defaults; use the default context, extract `output_df`, and
@@ -223,7 +223,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "EUR", locale = "de_AT") %>%
        render_formats_test("default"))[["num_1"]],
     c("EUR1 836,23", "EUR2 763,39", "EUR937,29", "EUR643,00",
-      "EUR212,23", "EUR0,00", "EUR-23,24"))
+      "EUR212,23", "EUR0,00", "-EUR23,24"))
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
   # locale and use all other defaults; extract `output_df` and compare
@@ -234,7 +234,7 @@ test_that("the `fmt_currency()` function works correctly", {
          columns = "num_1", currency = "EUR", locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
     c("&#8364;1 836,23", "&#8364;2 763,39", "&#8364;937,29", "&#8364;643,00",
-      "&#8364;212,23", "&#8364;0,00", "&#8364;-23,24"))
+      "&#8364;212,23", "&#8364;0,00", "&minus;&#8364;23,24"))
 })
 
 test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
@@ -260,8 +260,8 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
     (tab %>%
        fmt_currency(columns = "num", decimals = 2, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("$-1,800.00T", "$-17.00T", "$-16.00B", "$-150.00M", "$-1.40M", "$-13.00K",
-      "$-1.20K", "$-11.00", "$0.00", "$11.00", "$1.20K", "$13.00K", "$1.40M",
+    c("&minus;$1,800.00T", "&minus;$17.00T", "&minus;$16.00B", "&minus;$150.00M", "&minus;$1.40M", "&minus;$13.00K",
+      "&minus;$1.20K", "&minus;$11.00", "$0.00", "$11.00", "$1.20K", "$13.00K", "$1.40M",
       "$150.00M", "$16.00B", "$17.00T", "$1,800.00T"))
 
   # Format the `num` column to no decimal places, have the
@@ -271,8 +271,8 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
     (tab %>%
        fmt_currency(columns = "num", decimals = 0, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("$-1,800T", "$-17T", "$-16B", "$-150M", "$-1M", "$-13K",
-      "$-1K", "$-11", "$0", "$11", "$1K", "$13K", "$1M",
+    c("&minus;$1,800T", "&minus;$17T", "&minus;$16B", "&minus;$150M", "&minus;$1M", "&minus;$13K",
+      "&minus;$1K", "&minus;$11", "$0", "$11", "$1K", "$13K", "$1M",
       "$150M", "$16B", "$17T", "$1,800T"))
 
   # Format the `num` column to 2 decimal places, have the
@@ -284,8 +284,8 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2,
          suffixing = c("k", "Mn", "Bn", "Tr")) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("$-1,800.00Tr", "$-17.00Tr", "$-16.00Bn", "$-150.00Mn", "$-1.40Mn",
-      "$-13.00k", "$-1.20k", "$-11.00", "$0.00", "$11.00", "$1.20k",
+    c("&minus;$1,800.00Tr", "&minus;$17.00Tr", "&minus;$16.00Bn", "&minus;$150.00Mn", "&minus;$1.40Mn",
+      "&minus;$13.00k", "&minus;$1.20k", "&minus;$11.00", "$0.00", "$11.00", "$1.20k",
       "$13.00k", "$1.40Mn", "$150.00Mn", "$16.00Bn", "$17.00Tr", "$1,800.00Tr"))
 
   # Format the `num` column to 2 decimal places, have the
@@ -297,9 +297,9 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2, currency = "EUR", locale = "de_DE",
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("&#8364;-1.800.000,00Mia.", "&#8364;-17.000,00Mia.", "&#8364;-16,00Mia.",
-      "&#8364;-150,00Mio.", "&#8364;-1,40Mio.", "&#8364;-13.000,00",
-      "&#8364;-1.200,00", "&#8364;-11,00", "&#8364;0,00", "&#8364;11,00",
+    c("&minus;&#8364;1.800.000,00Mia.", "&minus;&#8364;17.000,00Mia.", "&minus;&#8364;16,00Mia.",
+      "&minus;&#8364;150,00Mio.", "&minus;&#8364;1,40Mio.", "&minus;&#8364;13.000,00",
+      "&minus;&#8364;1.200,00", "&minus;&#8364;11,00", "&#8364;0,00", "&#8364;11,00",
       "&#8364;1.200,00", "&#8364;13.000,00", "&#8364;1,40Mio.",
       "&#8364;150,00Mio.", "&#8364;16,00Mia.", "&#8364;17.000,00Mia.",
       "&#8364;1.800.000,00Mia."))
@@ -312,8 +312,8 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2,
          suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("$-1.80Qa", "$-17,000.00Bn", "$-16.00Bn", "$-150,000.00K",
-      "$-1,400.00K", "$-13.00K", "$-1.20K", "$-11.00", "$0.00", "$11.00",
+    c("&minus;$1.80Qa", "&minus;$17,000.00Bn", "&minus;$16.00Bn", "&minus;$150,000.00K",
+      "&minus;$1,400.00K", "&minus;$13.00K", "&minus;$1.20K", "&minus;$11.00", "$0.00", "$11.00",
       "$1.20K", "$13.00K", "$1,400.00K", "$150,000.00K", "$16.00Bn",
       "$17,000.00Bn", "$1.80Qa"))
 
@@ -326,9 +326,9 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
          columns = "num", decimals = 2,
          suffixing = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
-    c( "$-1,800,000,000,000,000.00", "$-17,000,000,000,000.00",
-       "$-16,000,000,000.00", "$-150,000,000.00", "$-1,400,000.00",
-       "$-13,000.00", "$-1,200.00", "$-11.00", "$0.00", "$11.00",
+    c( "&minus;$1,800,000,000,000,000.00", "&minus;$17,000,000,000,000.00",
+       "&minus;$16,000,000,000.00", "&minus;$150,000,000.00", "&minus;$1,400,000.00",
+       "&minus;$13,000.00", "&minus;$1,200.00", "&minus;$11.00", "$0.00", "$11.00",
        "$1,200.00", "$13,000.00", "$1,400,000.00", "$150,000,000.00",
        "$16,000,000,000.00", "$17,000,000,000,000.00",
        "$1,800,000,000,000,000.00"))
