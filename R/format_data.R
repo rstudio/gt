@@ -222,15 +222,6 @@ fmt_number <- function(data,
     }
   }
 
-  # Create the HTML formatting function for `fmt_number()`
-  fmt_number_html <- fmt_number_factory(context = "html")
-
-  # Create the LaTeX formatting function for `fmt_number()`
-  fmt_number_latex <- fmt_number_factory(context = "latex")
-
-  # Create the default formatting function for `fmt_number()`
-  fmt_number_default <- fmt_number_factory(context = "default")
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -242,9 +233,9 @@ fmt_number <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_number_html,
-      default = fmt_number_default,
-      latex = fmt_number_latex
+      html = fmt_number_factory(context = "html"),
+      latex = fmt_number_factory(context = "latex"),
+      default = fmt_number_factory(context = "default")
     )
   )
 }
@@ -388,15 +379,6 @@ fmt_scientific <- function(data,
     }
   }
 
-  # Create the HTML formatting function for scientific notation
-  fmt_scientific_html <- fmt_scientific_factory(context = "html")
-
-  # Create the LaTeX formatting function for scientific notation
-  fmt_scientific_latex <- fmt_scientific_factory(context = "latex")
-
-  # Create the default formatting function for scientific notation
-  fmt_scientific_default <- fmt_scientific_factory(context = "default")
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -408,9 +390,9 @@ fmt_scientific <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_scientific_html,
-      latex = fmt_scientific_latex,
-      default = fmt_scientific_default
+      html = fmt_scientific_factory(context = "html"),
+      latex = fmt_scientific_factory(context = "latex"),
+      default = fmt_scientific_factory(context = "default")
     )
   )
 }
@@ -568,15 +550,6 @@ fmt_percent <- function(data,
     }
   }
 
-  # Create the HTML formatting function for `format_percent()`
-  fmt_percent_html <- fmt_percent_factory(context = "html")
-
-  # Create the LaTeX formatting function for `format_percent()`
-  fmt_percent_latex <- fmt_percent_factory(context = "latex")
-
-  # Create the default formatting function for `format_percent()`
-  fmt_percent_default <- fmt_percent_factory(context = "default")
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -588,9 +561,9 @@ fmt_percent <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_percent_html,
-      latex = fmt_percent_latex,
-      default = fmt_percent_default
+      html = fmt_percent_factory(context = "html"),
+      latex = fmt_percent_factory(context = "latex"),
+      default = fmt_percent_factory(context = "default")
     )
   )
 }
@@ -802,15 +775,6 @@ fmt_currency <- function(data,
     }
   }
 
-  # Create the HTML formatting function for `format_currency()`
-  fmt_currency_html <- fmt_currency_factory(context = "html")
-
-  # Create the LaTeX formatting function for `format_currency()`
-  fmt_currency_latex <- fmt_currency_factory(context = "latex")
-
-  # Create the default formatting function for `format_currency()`
-  fmt_currency_default <- fmt_currency_factory(context = "default")
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -822,9 +786,9 @@ fmt_currency <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_currency_html,
-      default = fmt_currency_default,
-      latex = fmt_currency_latex
+      html = fmt_currency_factory(context = "html"),
+      latex = fmt_currency_factory(context = "latex"),
+      default = fmt_currency_factory(context = "default")
     )
   )
 }
