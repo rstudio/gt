@@ -221,6 +221,6 @@ format_num_to_str_c <- function(x,
     decimals,
     sep_mark,
     dec_mark,
-    format = "e",
+    format = "f",
     drop_trailing_zeros = FALSE)
 }
