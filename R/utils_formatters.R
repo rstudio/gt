@@ -137,6 +137,33 @@ has_order_zero <- function(x) {
   ) & !is.na(x)
 }
 
+#' @noRd
+get_currency_decimals <- function(currency,
+                                  decimals,
+                                  use_subunits) {
+
+  # Get the number of decimal places
+  if (is.null(decimals) && use_subunits) {
+
+    # Get decimal places using `get_currency_exponent()` fcn
+    if (currency %in% currency_symbols$curr_symbol) {
+
+      return(2)
+
+    } else {
+
+      return(get_currency_exponent(currency))
+    }
+
+  } else if (is.null(decimals) && !use_subunits) {
+
+    return(0)
+
+  } else {
+    return(decimals)
+  }
+}
+
 #' Apply a scaling factor to a vector of numeric values
 #'
 #' @param x A vector of numeric values.
