@@ -149,64 +149,102 @@ fmt_number <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
+  # Create a function factory for the `fmt_number()` function
+  fmt_number_factory <- function(context = "html") {
+
+    function(x) {
+
+      # Define the minus mark
+      if (context == "html") {
+
+        minus_mark <- "&minus;"
+
+      } else if (context == "latex") {
+
+        minus_mark <- "--"
+
+      } else if (context == "default") {
+
+        minus_mark <- "-"
+      }
+
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Create a tibble with scaled values for `x[non_na_x]`
+      # and the suffix labels to use for character formatting
+      suffix_df <-
+        num_suffix(
+          round(x_vals, decimals),
+          suffixes = suffix_labels,
+          scale_by = scale_by
+        )
+
+      # Scale the `x_vals` by the `scale_by` value
+      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
+
+      # Format all non-NA x values
+      x_str_vals <-
+        format_num_to_str(
+          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
+        )
+
+      # Paste vector of suffixes to the right of the `x_str_vals`
+      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
+
+      # Handle replacement of the minus mark
+      x_str_vals <-
+        x_str_vals %>%
+        tidy_gsub("-", minus_mark, fixed = TRUE)
+
+      # Handle case where negative values are to be placed within parentheses
+      if (negative_val == "parens") {
+
+        # Selectively remove minus sign and paste between parentheses
+        x_str_vals[x_vals < 0] <-
+          paste_between(
+            c("(", ")"),
+            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+          )
+      }
+
+      # Handle formatting of pattern
+      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
+
+      # Create `x_str` with the same length as `x`; place the
+      # `x_str_vals` into `str` (at the non-NA indices)
+      x_str <- rep(NA_character_, length(x))
+      x_str[non_na_x] <- x_str_vals
+      x_str
+    }
+  }
+
+  # Create the HTML formatting function for `fmt_number()`
+  fmt_number_html <- fmt_number_factory(context = "html")
+
+  # Create the LaTeX formatting function for `fmt_number()`
+  fmt_number_latex <- fmt_number_factory(context = "latex")
+
+  # Create the default formatting function for `fmt_number()`
+  fmt_number_default <- fmt_number_factory(context = "default")
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Pass `data`, `columns`, `rows`, and the formatting functions as a
-  # function list to `fmt()`
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      default = function(x) {
-
-        # Determine which of `x` are not NA
-        non_na_x <- !is.na(x)
-
-        # Create a possibly shorter vector of non-NA `x` values
-        x_vals <- x[non_na_x]
-
-        # Create a tibble with scaled values for `x[non_na_x]`
-        # and the suffix labels to use for character formatting
-        suffix_df <-
-          num_suffix(
-            round(x_vals, decimals),
-            suffixes = suffix_labels,
-            scale_by = scale_by
-          )
-
-        # Scale the `x_vals` by the `scale_by` value
-        x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
-
-        # Format all non-NA x values
-        x_str_vals <-
-          format_num_to_str(
-            x_vals, decimals, sep_mark,
-            dec_mark, drop_trailing_zeros
-          )
-
-        # Paste vector of suffixes to the right of the `x_str_vals`
-        x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            paste_between(c("(", ")"), gsub("^-", "", x_str_vals[x_vals < 0]))
-        }
-
-        # Handle formatting of pattern
-        x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-        # Create `x_str` with the same length as `x`; place the
-        # `x_str_vals` into `str` (at the non-NA indices)
-        x_str <- rep(NA_character_, length(x))
-        x_str[non_na_x] <- x_str_vals
-        x_str
-      }
+      html = fmt_number_html,
+      default = fmt_number_default,
+      latex = fmt_number_latex
     )
   )
 }
@@ -277,84 +315,101 @@ fmt_scientific <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  format_fcn_sci_notn_factory <- function(exp_start_str, exp_end_str) {
+  # Create a function factory for the `fmt_scientific()` function
+  fmt_scientific_factory <- function(context = "html") {
 
     function(x) {
+
+      # Get a `currency_str` based on `currency` according
+      # to the relevant `context`; define the minus mark
+      if (context == "html") {
+
+        exp_start_str <- " &times; 10<sup class='gt_super'>"
+        exp_end_str <- "</sup>"
+
+        minus_mark <- "&minus;"
+
+      } else if (context == "latex") {
+
+        exp_start_str <- "$ \\times 10^{"
+        exp_end_str <- "}$"
+
+        minus_mark <- "--"
+
+      } else if (context == "default") {
+
+        exp_start_str <- " x 10("
+        exp_end_str <- ")"
+
+        minus_mark <- "-"
+      }
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
 
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Scale the `x_vals` by the `scale_by` value
+      x_vals <- scale_x_values(x_vals, scale_by)
+
       # Determine which of `x` don't require the (x 10^n)
       # since their order would be zero
-      # TODO: If numbers are scaled with `scale_by` this
-      #       will likely fail
-      small_pos <- has_order_zero(x)
+      small_pos <- has_order_zero(x_vals)
 
-      # Create `x_str` with same length as `x`
-      x_str <- rep(NA_character_, length(x))
-
-      # Format the number component as a character vector
-      x_str[non_na_x] <-
-        formatC(
-          x = x[non_na_x] * scale_by,
-          digits = decimals,
-          mode = "double",
-          big.mark = sep_mark,
-          decimal.mark = dec_mark,
-          format = "e",
-          drop0trailing = drop_trailing_zeros)
+      # Format all non-NA x values
+      x_str_vals <-
+        format_num_to_str_e(
+          x_vals, decimals, sep_mark, dec_mark,
+          drop_trailing_zeros
+        )
 
       # For any numbers that shouldn't have an exponent, remove
       # that portion from the character version
       if (any(small_pos)) {
-        x_str[small_pos] <-
-          split_scientific_notn(x_str[small_pos])$num
+
+        x_str_vals[small_pos] <-
+          split_scientific_notn(x_str_vals[small_pos])$num
       }
 
       # For any non-NA numbers that do have an exponent, format
       # those according to the output context
       if (any(!small_pos)) {
 
-        sci_parts <- split_scientific_notn(x_str[non_na_x & !small_pos])
+        sci_parts <- split_scientific_notn(x_str_vals[!small_pos])
 
-        x_str[non_na_x & !small_pos] <-
+        x_str_vals[!small_pos] <-
           paste0(
             sci_parts$num, exp_start_str,
             sci_parts$exp, exp_end_str
           )
       }
 
-      # Handle formatting of pattern
-      x_str[non_na_x] <-
-        apply_pattern_fmt_x(
-          pattern,
-          values = x_str[non_na_x]
-        )
+      # Handle replacement of the minus mark
+      x_str_vals <-
+        x_str_vals %>%
+        tidy_gsub("-", minus_mark, fixed = TRUE) %>%
+        tidy_gsub("{--", "{-", fixed = TRUE)
 
+      # Handle formatting of pattern
+      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
+
+      # Create `x_str` with the same length as `x`; place the
+      # `x_str_vals` into `str` (at the non-NA indices)
+      x_str <- rep(NA_character_, length(x))
+      x_str[non_na_x] <- x_str_vals
       x_str
     }
   }
 
-  # Create the default formatting function for scientific notation
-  format_fcn_sci_notn_default <-
-    format_fcn_sci_notn_factory(
-      exp_start_str = " x 10(",
-      exp_end_str = ")"
-    )
-
   # Create the HTML formatting function for scientific notation
-  format_fcn_sci_notn_html <-
-    format_fcn_sci_notn_factory(
-      exp_start_str = " &times; 10<sup class='gt_super'>",
-      exp_end_str = "</sup>"
-    )
+  fmt_scientific_html <- fmt_scientific_factory(context = "html")
 
   # Create the LaTeX formatting function for scientific notation
-  format_fcn_sci_notn_latex <-
-    format_fcn_sci_notn_factory(
-      exp_start_str = "$ \\times 10^{",
-      exp_end_str = "}$"
-    )
+  fmt_scientific_latex <- fmt_scientific_factory(context = "latex")
+
+  # Create the default formatting function for scientific notation
+  fmt_scientific_default <- fmt_scientific_factory(context = "default")
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -367,9 +422,10 @@ fmt_scientific <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = format_fcn_sci_notn_html,
-      default = format_fcn_sci_notn_default,
-      latex = format_fcn_sci_notn_latex)
+      html = fmt_scientific_html,
+      latex = fmt_scientific_latex,
+      default = fmt_scientific_default
+    )
   )
 }
 
@@ -448,129 +504,107 @@ fmt_percent <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
+  # Create a function factory for the `fmt_percent()` function
+  fmt_percent_factory <- function(context = "html") {
+
+    function(x) {
+
+      # Define the minus mark and the percent mark
+      if (context == "html") {
+
+        minus_mark <- "&minus;"
+        percent_mark <- "&percnt;"
+
+      } else if (context == "latex") {
+
+        minus_mark <- "--"
+        percent_mark <- "\\%"
+
+      } else if (context == "default") {
+
+        minus_mark <- "-"
+        percent_mark <- "%"
+      }
+
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Scale the `x_vals` by the `scale_by` value
+      x_vals <- scale_x_values(x_vals, scale_by = 100)
+
+      # Format all non-NA x values
+      x_str_vals <-
+        format_num_to_str(
+          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
+        )
+
+      # Handle placement of the percent symbol
+      x_str_vals <-
+        x_str_vals %>%
+        paste_on_side(
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        ) %>%
+        paste_on_side(
+          x_side = percent_mark,
+          direction = placement
+        ) %>%
+        swap_adjacent_text_groups(
+          pattern_1 = percent_mark,
+          pattern_2 = "-"
+        ) %>%
+        tidy_gsub("-", minus_mark, fixed = TRUE)
+
+      # Handle case where negative values are to be placed within parentheses
+      if (negative_val == "parens") {
+
+        # Selectively remove minus sign and paste between parentheses
+        x_str_vals[x_vals < 0] <-
+          paste_between(
+            c("(", ")"),
+            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+          )
+      }
+
+      # Handle formatting of pattern
+      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
+
+      # Create `x_str` with the same length as `x`; place the
+      # `x_str_vals` into `str` (at the non-NA indices)
+      x_str <- rep(NA_character_, length(x))
+      x_str[non_na_x] <- x_str_vals
+      x_str
+    }
+  }
+
+  # Create the HTML formatting function for `format_percent()`
+  fmt_percent_html <- fmt_percent_factory(context = "html")
+
+  # Create the LaTeX formatting function for `format_percent()`
+  fmt_percent_latex <- fmt_percent_factory(context = "latex")
+
+  # Create the default formatting function for `format_percent()`
+  fmt_percent_default <- fmt_percent_factory(context = "default")
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        latex = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * 100.0,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-
-          if (placement == "right") {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " \\%", "\\%")
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                ifelse(incl_space, "\\% ", "\\%"),
-                x_str[non_na_x]
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          x_str[non_na_x] <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x_str[non_na_x]
-            )
-
-          x_str
-        },
-        default = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * 100.0,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = drop_trailing_zeros)
-
-          if (placement == "right") {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " %", "%")
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                ifelse(incl_space, "% ", "%"),
-                x_str[non_na_x]
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Determine which of `x` are not NA and also negative
-            negative_x <- x < 0 & !is.na(x)
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("^-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          x_str[non_na_x] <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x_str[non_na_x]
-            )
-
-          x_str
-        }
-      ))
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      html = fmt_percent_html,
+      latex = fmt_percent_latex,
+      default = fmt_percent_default
+    )
+  )
 }
 
 #' Format values as currencies
@@ -690,30 +724,119 @@ fmt_currency <- function(data,
   # Stop function if `currency` does not have a valid value
   validate_currency(currency)
 
-  # Get the currency string for the HTML context
-  currency_str_html <- get_currency_str(currency)
-
-  # Get the currency string for the non-HTML context
-  currency_str <- get_currency_str(currency, fallback_to_code = TRUE)
-
   # Get the number of decimal places
-  if (is.null(decimals) & use_subunits) {
+  decimals <- get_currency_decimals(currency, decimals, use_subunits)
 
-    # Get decimal places using `get_currency_exponent()` fcn
-    if (currency %in% currency_symbols$curr_symbol) {
-      decimals <- 2
-    } else {
-      decimals <- get_currency_exponent(currency = currency)
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
+  # Create a function factory for the `fmt_currency()` function
+  fmt_currency_factory <- function(context = "html") {
+
+    function(x) {
+
+      # Get a `currency_str` based on `currency` according
+      # to the relevant `context`; define the minus mark
+      if (context == "html") {
+
+        currency_str <- get_currency_str(currency)
+        currency_str_regex <- "\\$"
+        minus_mark <- "&minus;"
+
+      } else if (context == "latex") {
+
+        currency_str <-
+          currency %>%
+          get_currency_str(fallback_to_code = TRUE) %>%
+          markdown_to_latex()
+
+        currency_str_regex <- "\\\\$"
+        minus_mark <- "--"
+
+      } else if (context == "default") {
+
+        currency_str <-
+          currency %>%
+          get_currency_str(fallback_to_code = TRUE)
+
+        currency_str_regex <- "\\$"
+        minus_mark <- "-"
+      }
+
+      # Determine which of `x` are not NA
+      non_na_x <- !is.na(x)
+
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Create a tibble with scaled values for `x[non_na_x]`
+      # and the suffix labels to use for character formatting
+      suffix_df <-
+        num_suffix(
+          round(x_vals, decimals),
+          suffixes = suffix_labels,
+          scale_by = scale_by
+        )
+
+      # Scale the `x_vals` by the `scale_by` value
+      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
+
+      # Format all non-NA x values
+      x_str_vals <- format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
+
+      # Paste vector of suffixes to the right of the `x_str_vals`
+      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
+
+      # Handle placement of the currency symbol
+      x_str_vals <-
+        x_str_vals %>%
+        paste_on_side(
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        ) %>%
+        paste_on_side(
+          x_side = currency_str,
+          direction = placement
+        ) %>%
+        swap_adjacent_text_groups(
+          pattern_1 = tidy_gsub(
+            currency_str, "$", currency_str_regex, fixed = TRUE
+          ),
+          pattern_2 = "-"
+        ) %>%
+        tidy_gsub("-", minus_mark, fixed = TRUE)
+
+      # Handle case where negative values are to be placed within parentheses
+      if (negative_val == "parens") {
+
+        # Selectively remove minus sign and paste between parentheses
+        x_str_vals[x_vals < 0] <-
+          paste_between(
+            c("(", ")"),
+            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+          )
+      }
+
+      # Handle formatting of pattern
+      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
+
+      # Create `x_str` with the same length as `x`; place the
+      # `x_str_vals` into `str` (at the non-NA indices)
+      x_str <- rep(NA_character_, length(x))
+      x_str[non_na_x] <- x_str_vals
+      x_str
     }
-
-  } else if (is.null(decimals) & use_subunits == FALSE) {
-    decimals <- 0
   }
 
-  # Normalize the `suffixing` input to either return a
-  # character vector of suffix labels, or NULL (the
-  # case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+  # Create the HTML formatting function for `format_currency()`
+  fmt_currency_html <- fmt_currency_factory(context = "html")
+
+  # Create the LaTeX formatting function for `format_currency()`
+  fmt_currency_latex <- fmt_currency_factory(context = "latex")
+
+  # Create the default formatting function for `format_currency()`
+  fmt_currency_default <- fmt_currency_factory(context = "default")
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -721,263 +844,16 @@ fmt_currency <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        default = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Create a tibble with scaled values for
-          # `x[non_na_x]` and the suffix labels to
-          # use for character formatting
-          suffix_df <-
-            num_suffix(
-              x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels,
-              scale_by = scale_by
-            )
-
-          # If choosing to perform large-number suffixing
-          # of numeric values, replace `scale_by` with
-          # a vector of scaling values (of equal length
-          # with `x[non_na_x]`)
-          if (!is.null(suffix_labels)) {
-            scale_by <- suffix_df$scale_by[non_na_x]
-          }
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-
-          # Apply large-number suffixes to scaled and
-          # formatted values if that option is taken
-          if (!is.null(suffix_labels)) {
-
-            # Apply vector of suffixes
-            x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
-          }
-
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-
-            x_str[non_na_x] <-
-              paste0(
-                currency_str,
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " ", ""), currency_str
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          x_str[non_na_x] <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x_str[non_na_x]
-            )
-
-          x_str
-        },
-        html = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Create a tibble with scaled values for
-          # `x[non_na_x]` and the suffix labels to
-          # use for character formatting
-          suffix_df <-
-            num_suffix(
-              x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels,
-              scale_by = scale_by
-            )
-
-          # If choosing to perform large-number suffixing
-          # of numeric values, replace `scale_by` with
-          # a vector of scaling values (of equal length
-          # with `x[non_na_x]`)
-          if (!is.null(suffix_labels)) {
-            scale_by <- suffix_df$scale_by[non_na_x]
-          }
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-
-          # Apply large-number suffixes to scaled and
-          # formatted values if that option is taken
-          if (!is.null(suffix_labels)) {
-
-            # Apply vector of suffixes
-            x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
-          }
-
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-
-            x_str[non_na_x] <-
-              paste0(
-                currency_str_html,
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x],
-                ifelse(incl_space, " ", ""), currency_str_html
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          x_str[non_na_x] <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x_str[non_na_x]
-            )
-
-          x_str
-        },
-        latex = function(x) {
-
-          # Determine which of `x` are not NA
-          non_na_x <- !is.na(x)
-
-          # Determine which of `x` are not NA and also negative
-          negative_x <- x < 0 & !is.na(x)
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # Create a tibble with scaled values for
-          # `x[non_na_x]` and the suffix labels to
-          # use for character formatting
-          suffix_df <-
-            num_suffix(
-              x = round(x[non_na_x], decimals),
-              suffixes = suffix_labels,
-              scale_by = scale_by
-            )
-
-          # If choosing to perform large-number suffixing
-          # of numeric values, replace `scale_by` with
-          # a vector of scaling values (of equal length
-          # with `x[non_na_x]`)
-          if (!is.null(suffix_labels)) {
-            scale_by <- suffix_df$scale_by[non_na_x]
-          }
-
-          # Format all non-NA x values
-          x_str[non_na_x] <-
-            formatC(
-              x = x[non_na_x] * scale_by,
-              digits = decimals,
-              mode = "double",
-              big.mark = sep_mark,
-              decimal.mark = dec_mark,
-              format = "f",
-              drop0trailing = FALSE)
-
-          # Apply large-number suffixes to scaled and
-          # formatted values if that option is taken
-          if (!is.null(suffix_labels)) {
-
-            # Apply vector of suffixes
-            x_str[non_na_x] <-
-              paste0(x_str[non_na_x], suffix_df$suffix[non_na_x])
-          }
-
-          # Handle placement of the currency symbol
-          if (placement == "left") {
-
-            x_str[non_na_x] <-
-              paste0(
-                markdown_to_latex(currency_str),
-                ifelse(incl_space, " ", ""), x_str[non_na_x]
-              )
-
-          } else {
-
-            x_str[non_na_x] <-
-              paste0(
-                x_str[non_na_x], ifelse(incl_space, " ", ""),
-                markdown_to_latex(currency_str)
-              )
-          }
-
-          # Handle negative values
-          if (negative_val == "parens") {
-
-            # Apply parentheses to the formatted value and remove
-            # the minus sign
-            x_str[negative_x] <- paste0("(", gsub("-", "", x_str[negative_x]), ")")
-          }
-
-          # Handle formatting of pattern
-          x_str[non_na_x] <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x_str[non_na_x]
-            )
-
-          x_str
-        }
-      ))
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      html = fmt_currency_html,
+      default = fmt_currency_default,
+      latex = fmt_currency_latex
+    )
+  )
 }
 
 #' Format values as dates
