@@ -154,19 +154,9 @@ fmt_number <- function(data,
 
     function(x) {
 
-      # Define the minus mark
-      if (context == "html") {
-
-        minus_mark <- "&minus;"
-
-      } else if (context == "latex") {
-
-        minus_mark <- "--"
-
-      } else if (context == "default") {
-
-        minus_mark <- "-"
-      }
+      # Define the marks by context
+      minus_mark <- context_minus_mark(context)
+      parens_marks <- context_parens_marks_number(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -195,20 +185,30 @@ fmt_number <- function(data,
       # Paste vector of suffixes to the right of the `x_str_vals`
       x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
-      # Handle replacement of the minus mark
-      x_str_vals <-
-        x_str_vals %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE)
+      # Perform negative value formatting
+      if (any(x_vals < 0)) {
 
-      # Handle case where negative values are to be placed within parentheses
-      if (negative_val == "parens") {
+        # Handle replacement of the minus mark
+        x_str_vals <-
+          x_str_vals %>%
+          tidy_gsub("-", minus_mark, fixed = TRUE)
 
-        # Selectively remove minus sign and paste between parentheses
-        x_str_vals[x_vals < 0] <-
-          paste_between(
-            c("(", ")"),
-            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
-          )
+        # Handle case where negative values are to be placed within parentheses
+        if (negative_val == "parens") {
+
+          # Selectively remove minus sign and paste between parentheses
+          x_str_vals[x_vals < 0] <-
+            paste_between(
+              parens_marks,
+              gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+            )
+        }
+      }
+
+      # If in a LaTeX context, remove any double negative
+      # signs in the exponent
+      if (context == "latex") {
+        x_str_vals <- to_latex_math_mode(x_str_vals)
       }
 
       # Handle formatting of pattern
@@ -320,29 +320,9 @@ fmt_scientific <- function(data,
 
     function(x) {
 
-      # Get a `currency_str` based on `currency` according
-      # to the relevant `context`; define the minus mark
-      if (context == "html") {
-
-        exp_start_str <- " &times; 10<sup class='gt_super'>"
-        exp_end_str <- "</sup>"
-
-        minus_mark <- "&minus;"
-
-      } else if (context == "latex") {
-
-        exp_start_str <- "$ \\times 10^{"
-        exp_end_str <- "}$"
-
-        minus_mark <- "--"
-
-      } else if (context == "default") {
-
-        exp_start_str <- " x 10("
-        exp_end_str <- ")"
-
-        minus_mark <- "-"
-      }
+      # Define the marks by context
+      minus_mark <- context_minus_mark(context)
+      exp_marks <- context_exp_marks(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -380,16 +360,22 @@ fmt_scientific <- function(data,
 
         x_str_vals[!small_pos] <-
           paste0(
-            sci_parts$num, exp_start_str,
-            sci_parts$exp, exp_end_str
+            sci_parts$num, exp_marks[1],
+            sci_parts$exp, exp_marks[2]
           )
       }
 
-      # Handle replacement of the minus mark
+      # Handle replacement of the minus mark in number
+      # and exponent parts
       x_str_vals <-
         x_str_vals %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE) %>%
-        tidy_gsub("{--", "{-", fixed = TRUE)
+        tidy_gsub("-", minus_mark, fixed = TRUE)
+
+      # If in a LaTeX context, put formatted numbers
+      # in math mode
+      if (context == "latex") {
+        x_str_vals <- to_latex_math_mode(x_str_vals)
+      }
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
@@ -509,22 +495,10 @@ fmt_percent <- function(data,
 
     function(x) {
 
-      # Define the minus mark and the percent mark
-      if (context == "html") {
-
-        minus_mark <- "&minus;"
-        percent_mark <- "&percnt;"
-
-      } else if (context == "latex") {
-
-        minus_mark <- "--"
-        percent_mark <- "\\%"
-
-      } else if (context == "default") {
-
-        minus_mark <- "-"
-        percent_mark <- "%"
-      }
+      # Define the marks by context
+      minus_mark <- context_minus_mark(context)
+      percent_mark <- context_percent_mark(context)
+      parens_marks <- context_parens_marks(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -555,18 +529,32 @@ fmt_percent <- function(data,
         swap_adjacent_text_groups(
           pattern_1 = percent_mark,
           pattern_2 = "-"
-        ) %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE)
+        )
 
-      # Handle case where negative values are to be placed within parentheses
-      if (negative_val == "parens") {
+      # Perform negative value formatting
+      if (any(x_vals < 0)) {
 
-        # Selectively remove minus sign and paste between parentheses
-        x_str_vals[x_vals < 0] <-
-          paste_between(
-            c("(", ")"),
-            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
-          )
+        # Handle replacement of the minus mark
+        x_str_vals <-
+          x_str_vals %>%
+          tidy_gsub("-", minus_mark, fixed = TRUE)
+
+        # Handle case where negative values are to be placed within parentheses
+        if (negative_val == "parens") {
+
+          # Selectively remove minus sign and paste between parentheses
+          x_str_vals[x_vals < 0] <-
+            paste_between(
+              parens_marks,
+              gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+            )
+        }
+      }
+
+      # If in a LaTeX context, remove any double negative
+      # signs in the exponent
+      if (context == "latex") {
+        x_str_vals <- to_latex_math_mode(x_str_vals)
       }
 
       # Handle formatting of pattern
@@ -736,33 +724,11 @@ fmt_currency <- function(data,
 
     function(x) {
 
-      # Get a `currency_str` based on `currency` according
-      # to the relevant `context`; define the minus mark
-      if (context == "html") {
-
-        currency_str <- get_currency_str(currency)
-        currency_str_regex <- "\\$"
-        minus_mark <- "&minus;"
-
-      } else if (context == "latex") {
-
-        currency_str <-
-          currency %>%
-          get_currency_str(fallback_to_code = TRUE) %>%
-          markdown_to_latex()
-
-        currency_str_regex <- "\\\\$"
-        minus_mark <- "--"
-
-      } else if (context == "default") {
-
-        currency_str <-
-          currency %>%
-          get_currency_str(fallback_to_code = TRUE)
-
-        currency_str_regex <- "\\$"
-        minus_mark <- "-"
-      }
+      # Define the marks by context
+      negative_currency_mark <- context_negative_currency_mark(context)
+      currency_str <- context_currency_str(context, currency)
+      currency_str_regex <- context_currency_str_regex(context)
+      parens_marks <- context_parens_marks(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -785,37 +751,44 @@ fmt_currency <- function(data,
       # Format all non-NA x values
       x_str_vals <- format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
 
+      # If in a LaTeX context, wrap values in math mode
+      if (context == "latex") {
+
+        x_str_vals <-
+          x_str_vals %>%
+          to_latex_math_mode() %>%
+          swap_adjacent_text_groups("\\$", "-")
+      }
+
       # Paste vector of suffixes to the right of the `x_str_vals`
       x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
       # Handle placement of the currency symbol
       x_str_vals <-
         x_str_vals %>%
-        paste_on_side(
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        ) %>%
-        paste_on_side(
-          x_side = currency_str,
-          direction = placement
-        ) %>%
-        swap_adjacent_text_groups(
-          pattern_1 = tidy_gsub(
-            currency_str, "$", currency_str_regex, fixed = TRUE
-          ),
-          pattern_2 = "-"
-        ) %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE)
+        paste_currency_str(currency_str, incl_space, placement)
 
-      # Handle case where negative values are to be placed within parentheses
-      if (negative_val == "parens") {
+      # Perform negative value formatting
+      if (any(x_vals < 0)) {
 
-        # Selectively remove minus sign and paste between parentheses
-        x_str_vals[x_vals < 0] <-
-          paste_between(
-            c("(", ")"),
-            gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
-          )
+        # Handle replacement of the minus mark
+        x_str_vals <-
+          x_str_vals %>%
+          tidy_gsub("-", negative_currency_mark, fixed = TRUE)
+
+        # Handle case where negative values are to be placed within parentheses
+        if (negative_val == "parens") {
+
+          # Selectively remove minus sign and paste between parentheses
+          x_str_vals[x_vals < 0] <-
+            paste_between(
+              x_2 = parens_marks,
+              x_between = x_str_vals[x_vals < 0] %>% tidy_gsub(
+                negative_currency_mark, "",
+                fixed = TRUE
+              )
+            )
+        }
       }
 
       # Handle formatting of pattern
