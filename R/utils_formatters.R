@@ -251,3 +251,126 @@ format_num_to_str_c <- function(x,
     format = "f",
     drop_trailing_zeros = FALSE)
 }
+
+#' Surround formatted values with `$`s for LaTeX
+#'
+#' @noRd
+to_latex_math_mode <- function (x) {
+
+  x %>%
+    paste_between(x_2 = c("$", "$"))
+}
+
+context_minus_mark <- function(context) {
+
+  switch(context,
+         html = "&minus;",
+         "-")
+}
+
+context_negative_currency_mark <- function(context) {
+
+  switch(context,
+         html = "&minus;",
+         latex = "\\textendash",
+         "-")
+}
+
+context_parens_marks <- function(context) {
+
+  switch(context,
+         html = c("&#40;", "&#41;"),
+         latex = c("$($", "$)$"),
+         c("(", ")"))
+}
+
+context_parens_marks_number <- function(context) {
+
+  switch(context,
+         html = c("&#40;", "&#41;"),
+         latex = c("(", ")"),
+         c("(", ")"))
+}
+
+context_exp_marks <- function(context) {
+
+  switch(context,
+         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+         latex = c(" \\times 10^{", "}"),
+         c(" x 10(", ")"))
+}
+
+context_percent_mark <- function(context) {
+
+  switch(context,
+         html = "&percnt;",
+         latex = "\\%",
+         "%")
+}
+
+context_currency_str_regex <- function(context) {
+
+  switch(context,
+         latex = "\\\\$",
+         "\\$")
+}
+
+context_currency_str <- function(context, currency) {
+
+  switch(context,
+         html = {
+           get_currency_str(currency)
+         },
+         latex = {
+           currency %>%
+             get_currency_str(fallback_to_code = TRUE) %>%
+             markdown_to_latex()
+         },
+         {
+           currency %>%
+             get_currency_str(fallback_to_code = TRUE)
+         })
+}
+
+paste_currency_str <- function(x,
+                               currency_str,
+                               incl_space,
+                               placement) {
+
+  vapply(x, function(x) {
+
+    if (grepl("^-", x)) {
+
+      x <-
+        x %>%
+        tidy_gsub("^-", "") %>%
+        paste_on_side(
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        ) %>%
+        paste_on_side(
+          x_side = currency_str,
+          direction = placement
+        ) %>%
+        tidy_gsub("^", "-")
+
+    } else {
+
+      x <-
+        x %>%
+        paste_on_side(
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        ) %>%
+        paste_on_side(
+          x_side = currency_str,
+          direction = placement
+        )
+    }
+
+    x
+  },
+  FUN.VALUE = character(1),
+  USE.NAMES = FALSE
+  )
+}
