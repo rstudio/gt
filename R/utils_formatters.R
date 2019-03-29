@@ -323,7 +323,8 @@ context_currency_str <- function(context, currency) {
          latex = {
            currency %>%
              get_currency_str(fallback_to_code = TRUE) %>%
-             markdown_to_latex()
+             markdown_to_latex() %>%
+             paste_between(x_2 = c("\\text{", "}"))
          },
          {
            currency %>%
