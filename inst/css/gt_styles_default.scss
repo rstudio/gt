@@ -67,31 +67,31 @@
 
   .gt_group_heading {
     padding: 8px;
-    color: font-color($stub_group_background_color);
-    background-color: $stub_group_background_color; /* stub_group.background.color */
-    font-size: $stub_group_font_size; /* stub_group.font.size */
-    font-weight: $stub_group_font_weight; /* stub_group.font.weight */
-    border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
-    border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
-    border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
-    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom.style */
-    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom.width */
-    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
+    color: font-color($row_group_background_color);
+    background-color: $row_group_background_color; /* row_group.background.color */
+    font-size: $row_group_font_size; /* row_group.font.size */
+    font-weight: $row_group_font_weight; /* row_group.font.weight */
+    border-top-style: $row_group_border_top_style; /* row_group.border.top.style */
+    border-top-width: $row_group_border_top_width; /* row_group.border.top.width */
+    border-top-color: $row_group_border_top_color; /* row_group.border.top.color */
+    border-bottom-style: $row_group_border_bottom_style; /* row_group.border.bottom.style */
+    border-bottom-width: $row_group_border_bottom_width; /* row_group.border.bottom.width */
+    border-bottom-color: $row_group_border_bottom_color; /* row_group.border.bottom.color */
     vertical-align: middle;
   }
 
   .gt_empty_group_heading {
     padding: 0.5px;
-    color: font-color($stub_group_background_color);
-    background-color: $stub_group_background_color; /* stub_group.background.color */
-    font-size: $stub_group_font_size; /* stub_group.font.size */
-    font-weight: $stub_group_font_weight; /* stub_group.font.weight */
-    border-top-style: $stub_group_border_top_style; /* stub_group.border.top.style */
-    border-top-width: $stub_group_border_top_width; /* stub_group.border.top.width */
-    border-top-color: $stub_group_border_top_color; /* stub_group.border.top.color */
-    border-bottom-style: $stub_group_border_bottom_style; /* stub_group.border.bottom.style */
-    border-bottom-width: $stub_group_border_bottom_width; /* stub_group.border.bottom.width */
-    border-bottom-color: $stub_group_border_bottom_color; /* stub_group.border.bottom.color */
+    color: font-color($row_group_background_color);
+    background-color: $row_group_background_color; /* row_group.background.color */
+    font-size: $row_group_font_size; /* row_group.font.size */
+    font-weight: $row_group_font_weight; /* row_group.font.weight */
+    border-top-style: $row_group_border_top_style; /* row_group.border.top.style */
+    border-top-width: $row_group_border_top_width; /* row_group.border.top.width */
+    border-top-color: $row_group_border_top_color; /* row_group.border.top.color */
+    border-bottom-style: $row_group_border_bottom_style; /* row_group.border.bottom.style */
+    border-bottom-width: $row_group_border_bottom_width; /* row_group.border.bottom.width */
+    border-bottom-color: $row_group_border_bottom_color; /* row_group.border.bottom.color */
     vertical-align: middle;
   }
 
@@ -147,12 +147,12 @@
   }
 
   .gt_table_body {
-    border-top-style: $field_border_top_style; /* field.border.top.style */
-    border-top-width: $field_border_top_width; /* field.border.top.width */
-    border-top-color: $field_border_top_color; /* field.border.top.color */
-    border-bottom-style: $field_border_bottom_style; /* field.border.bottom.style */
-    border-bottom-width: $field_border_bottom_width; /* field.border.bottom.width */
-    border-bottom-color: $field_border_bottom_color; /* field.border.bottom.color */
+    border-top-style: $table_body_border_top_style; /* table_body.border.top.style */
+    border-top-width: $table_body_border_top_width; /* table_body.border.top.width */
+    border-top-color: $table_body_border_top_color; /* table_body.border.top.color */
+    border-bottom-style: $table_body_border_bottom_style; /* table_body.border.bottom.style */
+    border-bottom-width: $table_body_border_bottom_width; /* table_body.border.bottom.width */
+    border-bottom-color: $table_body_border_bottom_color; /* table_body.border.bottom.color */
   }
 
   .gt_footnote {

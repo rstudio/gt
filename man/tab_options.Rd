@@ -14,16 +14,18 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   heading.border.bottom.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
-  stub_group.background.color = NULL, stub_group.font.size = NULL,
-  stub_group.font.weight = NULL, stub_group.border.top.style = NULL,
-  stub_group.border.top.width = NULL,
-  stub_group.border.top.color = NULL,
-  stub_group.border.bottom.style = NULL,
-  stub_group.border.bottom.width = NULL,
-  stub_group.border.bottom.color = NULL, field.border.top.style = NULL,
-  field.border.top.width = NULL, field.border.top.color = NULL,
-  field.border.bottom.style = NULL, field.border.bottom.width = NULL,
-  field.border.bottom.color = NULL, row.padding = NULL,
+  row_group.background.color = NULL, row_group.font.size = NULL,
+  row_group.font.weight = NULL, row_group.border.top.style = NULL,
+  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
+  row_group.border.bottom.style = NULL,
+  row_group.border.bottom.width = NULL,
+  row_group.border.bottom.color = NULL,
+  table_body.border.top.style = NULL,
+  table_body.border.top.width = NULL,
+  table_body.border.top.color = NULL,
+  table_body.border.bottom.style = NULL,
+  table_body.border.bottom.width = NULL,
+  table_body.border.bottom.color = NULL, row.padding = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
   summary_row.text_transform = NULL,
   grand_summary_row.background.color = NULL,
@@ -32,7 +34,7 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   footnote.glyph = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
   sourcenote.padding = NULL, row.striping.include_stub = NULL,
-  row.striping.include_field = NULL)
+  row.striping.include_table_body = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -45,11 +47,11 @@ given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, stub_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
-\code{stub_group}, \code{footnote}, and \code{sourcenote}. Can be specified
-as a single-length character vector with units of pixels
-(e.g., \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
+\code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
+as a single-length character vector with units of pixels (e.g.,
+\code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
 single-length numeric vector, it is assumed that the value is given in
 units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
@@ -67,13 +69,13 @@ code should be provided.}
 \item{column_labels.font.weight, stub_group.font.weight}{the font weight of
 the \code{columns} and \code{stub_group} text element.}
 
-\item{stub_group.border.top.style, stub_group.border.top.width, stub_group.border.top.color}{the style, width, and color of the stub heading's top border.}
+\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{the style, width, and color of the row group's top border.}
 
-\item{stub_group.border.bottom.style, stub_group.border.bottom.width, stub_group.border.bottom.color}{the style, width, and color of the stub heading's bottom border.}
+\item{row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color}{the style, width, and color of the row group's bottom border.}
 
-\item{field.border.top.style, field.border.top.width, field.border.top.color}{the style, width, and color of the field's top border.}
+\item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color}{the style, width, and color of the table body's top border.}
 
-\item{field.border.bottom.style, field.border.bottom.width, field.border.bottom.color}{the style, width, and color of the field's bottom border.}
+\item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{the style, width, and color of the table body's bottom border.}
 
 \item{row.padding, summary_row.padding, grand_summary_row.padding}{the amount
 of padding in each row and in each type of summary row.}
@@ -99,8 +101,8 @@ the footnote and source note sections.}
 \item{row.striping.include_stub}{an option for whether to include the stub
 when striping rows.}
 
-\item{row.striping.include_field}{an option for whether to include the field
-when striping rows.}
+\item{row.striping.include_table_body}{an option for whether to include the
+table body when striping rows.}
 }
 \value{
 an object of class \code{gt_tbl}.

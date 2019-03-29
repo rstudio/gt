@@ -62,10 +62,10 @@ row groups using the \code{groups} argument.
 \item \code{cells_stub()}: targets row labels in the table stub using the
 \code{rows} argument.
 
-\item \code{cells_data()}: targets data cells in the table field using
+\item \code{cells_data()}: targets data cells in the table body using
 intersections of \code{columns} and \code{rows}.
 
-\item \code{cells_summary()}: targets summary cells in the table field using
+\item \code{cells_summary()}: targets summary cells in the table body using
 the \code{groups} argument and intersections of \code{columns} and
 \code{rows}.
 }

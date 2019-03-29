@@ -400,7 +400,7 @@ create_summary_dfs <- function(summary_list,
     # Resolve the columns to exclude
     columns_excl <- base::setdiff(colnames(output_df), columns)
 
-    # Combine `groupname` with the field data in order to
+    # Combine `groupname` with the table body data in order to
     # process data by groups
     if (groups[1] != "::GRAND_SUMMARY") {
 
@@ -737,7 +737,7 @@ process_source_notes <- function(source_note, context) {
   }
 }
 
-# Function to build a vector of `group` rows in the table field
+# Function to build a vector of `group` rows in the table body
 create_group_rows <- function(n_rows,
                               groups_rows_df,
                               context = "latex") {
@@ -760,7 +760,7 @@ create_group_rows <- function(n_rows,
     unname()
 }
 
-# Function to build a vector of `data` rows in the table field
+# Function to build a vector of `data` rows in the table body
 create_data_rows <- function(n_rows,
                              row_splits,
                              context = "latex") {
@@ -777,7 +777,7 @@ create_data_rows <- function(n_rows,
     unname()
 }
 
-# Function to build a vector of `summary` rows in the table field
+# Function to build a vector of `summary` rows in the table body
 create_summary_rows <- function(n_rows,
                                 n_cols,
                                 list_of_summaries,

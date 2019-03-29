@@ -24,7 +24,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
 
   expect_tab_colnames(
     tab, df = mtcars,
-    rowname = "data_frame",
+    rowname = "tibble",
     groupname_is_na = TRUE)
 })
 
