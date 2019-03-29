@@ -724,15 +724,6 @@ fmt_currency <- function(data,
       # Format all non-NA x values
       x_str_vals <- format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
 
-      # If in a LaTeX context, wrap values in math mode
-      if (context == "latex") {
-
-        x_str_vals <-
-          x_str_vals %>%
-          to_latex_math_mode() %>%
-          swap_adjacent_text_groups("\\$", "-")
-      }
-
       # Paste vector of suffixes to the right of the `x_str_vals`
       x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
@@ -762,6 +753,14 @@ fmt_currency <- function(data,
               )
             )
         }
+      }
+
+      # If in a LaTeX context, wrap values in math mode
+      if (context == "latex") {
+
+        x_str_vals <-
+          x_str_vals %>%
+          to_latex_math_mode()
       }
 
       # Handle formatting of pattern
