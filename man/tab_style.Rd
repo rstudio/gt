@@ -101,7 +101,6 @@ tab_2 <-
     date <= "2015-12-15"
   ) \%>\%
   dplyr::select(-c(adj_close, volume)) \%>\%
-  dplyr::mutate(date = as.character(date)) \%>\%
   gt() \%>\%
   tab_style(
     style = cells_styles(

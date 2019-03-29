@@ -1,9 +1,14 @@
-# Transform a footnote glyph to an HTML representation as a superscript
+
+#' Transform a footnote glyph to an HTML representation
+#'
+#' @noRd
 footnote_glyph_to_html <- function(footnote_glyph) {
 
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
+#' Get the spanner column label style from an attribute table
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_spanner_style <- function(spanner_style_attrs,
@@ -23,6 +28,8 @@ get_spanner_style <- function(spanner_style_attrs,
   }
 }
 
+#' Get the column label style from an attribute table
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_column_style <- function(column_style_attrs,
@@ -42,6 +49,9 @@ get_column_style <- function(column_style_attrs,
   }
 }
 
+#' Create a set of inline style attributes
+#'
+#' @noRd
 create_style_attrs <- function(style_values) {
 
   style_rules <- c()
@@ -58,15 +68,19 @@ create_style_attrs <- function(style_values) {
   style_rules
 }
 
-# Taking the `body_content` vector, split into list components with one
-# item per row in the output table
+#' Split the body content vector into a list structure
+#'
+#' Taking the `body_content` vector, split into list components with one item
+#' per row in the output table
+#' @noRd
 split_body_content <- function(body_content,
                                n_cols) {
 
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
-# Apply footnotes to the data rows
+#' Apply footnotes to the data rows
+#'
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_styles_to_output <- function(output_df,
@@ -113,7 +127,8 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
-# Apply footnotes to the data rows
+#' Apply footnotes to the summary data cells
+#'
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_styles_to_summary_output <- function(summary_df,
@@ -158,15 +173,18 @@ apply_styles_to_summary_output <- function(summary_df,
   split_body_content(body_content = summary_styles, n_cols)
 }
 
-# Create the opening HTML element of a table
-create_table_start_h <- function(groups_rows_df) {
-
+#' Create the opening HTML element of a table
+#'
+#' @noRd
+create_table_start_h <- function() {
   "<!--gt table start-->\n<table class='gt_table'>\n"
 }
 
-# Create the heading component of a table, which contains the heading and
-# possibly a subtitle; if there are no heading components defined this
-# function will return an empty string
+#' Create the heading component of a table
+#'
+#' The table heading component contains the heading and possibly a subtitle; if
+#' there are no heading components defined this function will return an empty
+#' string.
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 create_heading_component <- function(heading,
@@ -365,7 +383,8 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-# Create the columns component of a table
+#' Create the columns component of a table (HTML)
+#'
 #' @import rlang
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
@@ -575,6 +594,8 @@ create_columns_component_h <- function(boxh_df,
   table_col_headings
 }
 
+#' Create the table body component (HTML)
+#'
 #' @importFrom dplyr mutate filter pull
 #' @noRd
 create_body_component_h <- function(row_splits_body,
@@ -760,6 +781,9 @@ create_body_component_h <- function(row_splits_body,
     "</tbody>\n")
 }
 
+#' Create the table source note component (HTML)
+#'
+#' @noRd
 create_source_note_component_h <- function(source_note,
                                            n_cols) {
 
@@ -778,6 +802,8 @@ create_source_note_component_h <- function(source_note,
     "</tfoot>\n")
 }
 
+#' Create the table footnote component (HTML)
+#'
 #' @importFrom dplyr select distinct filter pull
 #' @noRd
 create_footnote_component_h <- function(footnotes_resolved,
@@ -815,7 +841,9 @@ create_footnote_component_h <- function(footnotes_resolved,
   footnote_component
 }
 
-# Create the closing HTML element of a table
+#' Create the closing HTML element of a table
+#'
+#' @noRd
 create_table_end_h <- function() {
 
   "</table>\n<!--gt table end-->\n"

@@ -10,7 +10,8 @@ data_tbl <-
                "october", "november", "december"),
     num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
     num_2 = c(34, 74, 23, NA, 35, NA, NA),
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE
+  )
 
 # Create a `tbl_latex` object with `gt()` and the
 # `data_tbl` dataset
@@ -24,7 +25,8 @@ time_tbl <-
     time = c("16:45", "19:23", "01:30", "08:00"),
     datetime = c("2010-03-25 19:45", "2015-06-12 09:25",
                  "2016-01-15 14:38", "2012-08-07 12:31"),
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE
+  )
 
 # Create a `tbl_latex_time` object with `gt()` and the
 # `data_tbl` dataset
@@ -39,8 +41,8 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          decimals = 4,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836.23", "2763.39", "937.2900", "643.0000",
-      "212.2320", "0.0000", "-23.2400")
+    c("1836.23", "2763.39", "$937.2900$", "$643.0000$",
+      "$212.2320$", "$0.0000$", "$-23.2400$")
   )
 
   expect_equal(
@@ -50,7 +52,7 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("34.0000", "74", "23", "NA", "35", "NA", "NA")
+    c("$34.0000$", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -63,9 +65,9 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836.23", "2763.39", "9.3729$ \\times 10^{2}$",
-      "6.4300$ \\times 10^{2}$", "2.1223$ \\times 10^{2}$", "0.0000",
-      "-2.3240$ \\times 10^{1}$")
+    c("1836.23", "2763.39", "$9.3729 \\times 10^{2}$",
+      "$6.4300 \\times 10^{2}$", "$2.1223 \\times 10^{2}$", "$0.0000$",
+      "$-2.3240 \\times 10^{1}$")
   )
 
   expect_equal(
@@ -75,7 +77,7 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("3.4000$ \\times 10^{1}$", "74", "23", "NA", "35", "NA", "NA")
+    c("$3.4000 \\times 10^{1}$", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -88,8 +90,8 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836.23", "2763.39", "93,729.00\\%", "64,300.00\\%",
-      "21,223.20\\%", "0.00\\%", "-2,324.00\\%")
+    c("1836.23", "2763.39", "$93,729.00\\%$", "$64,300.00\\%$",
+      "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$")
   )
 
   expect_equal(
@@ -99,7 +101,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("3,400.00\\%", "74", "23", "NA", "35", "NA", "NA")
+    c("$3,400.00\\%$", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -112,8 +114,8 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836.23", "2763.39", "\\$937.29", "\\$643.00",
-      "\\$212.23", "\\$0.00", "\\$-23.24")
+    c("1836.23", "2763.39", "$\\text{\\$}937.29$", "$\\text{\\$}643.00$",
+      "$\\text{\\$}212.23$", "$\\text{\\$}0.00$", "$-\\text{\\$}23.24$")
   )
 
   expect_equal(
@@ -123,7 +125,7 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("\\$34.00", "74", "23", "NA", "35", "NA", "NA")
+    c("$\\text{\\$}34.00$", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
