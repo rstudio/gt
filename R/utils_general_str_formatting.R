@@ -108,12 +108,12 @@ split_string_2 <- function(x,
 
 #' Flexibly split a string into two pieces
 #'
-#' @param x_2 A character vector of length 2.
-#' @param paste_between A character vector that is to be pasted between the
+#' @param x A character vector that is to be pasted between the
 #'   first and second elements of `x_2`.
+#' @param x_2 A character vector of length 2.
 #' @noRd
-paste_between <- function(x_2,
-                          x_between) {
+paste_between <- function(x,
+                          x_2) {
 
   # Stop function if `x_2` is not of class character
   if (!inherits(x_2, "character")) {
@@ -129,14 +129,14 @@ paste_between <- function(x_2,
          call. = FALSE)
   }
 
-  # Stop function if `x_between` is not of class character
-  if (!inherits(x_between, "character")) {
+  # Stop function if `x` is not of class character
+  if (!inherits(x, "character")) {
     stop("Internal error in `gt:::paste_between()`:\n",
-         "* The `x_between` object must be of class character.",
+         "* The `x` object must be of class character.",
          call. = FALSE)
   }
 
-  paste0(x_2[1], x_between, x_2[2])
+  paste0(x_2[1], x, x_2[2])
 }
 
 #' Paste a string either onto the left or the right of another string
