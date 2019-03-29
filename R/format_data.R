@@ -199,8 +199,8 @@ fmt_number <- function(data,
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
             paste_between(
-              parens_marks,
-              gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
+              x_2 = parens_marks
             )
         }
       }
@@ -527,8 +527,8 @@ fmt_percent <- function(data,
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
             paste_between(
-              parens_marks,
-              gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0])
+              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
+              x_2 = parens_marks
             )
         }
       }
@@ -746,11 +746,12 @@ fmt_currency <- function(data,
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
             paste_between(
-              x_2 = parens_marks,
-              x_between = x_str_vals[x_vals < 0] %>% tidy_gsub(
-                negative_currency_mark, "",
-                fixed = TRUE
-              )
+              x = x_str_vals[x_vals < 0] %>%
+                tidy_gsub(
+                  negative_currency_mark, "",
+                  fixed = TRUE
+                ),
+              x_2 = parens_marks
             )
         }
       }
