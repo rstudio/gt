@@ -272,7 +272,6 @@ context_negative_currency_mark <- function(context) {
 
   switch(context,
          html = "&minus;",
-         latex = "\\textendash",
          "-")
 }
 
@@ -280,7 +279,7 @@ context_parens_marks <- function(context) {
 
   switch(context,
          html = c("&#40;", "&#41;"),
-         latex = c("$($", "$)$"),
+         latex = c("\\left(", "\\right)"),
          c("(", ")"))
 }
 
