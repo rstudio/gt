@@ -57,17 +57,17 @@ units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, stub_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following
-child elements: \code{heading}, \code{columns}, \code{stub_group},
-\code{summary_row}, and \code{field}. A color name or a hexadecimal color
-code should be provided.}
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following
+child elements: \code{heading}, \code{columns}, \code{row_group},
+\code{summary_row}, and \code{table_body}. A color name or a hexadecimal
+color code should be provided.}
 
 \item{table.border.top.style, table.border.top.width, table.border.top.color}{the style, width, and color of the table's top border.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
 
-\item{column_labels.font.weight, stub_group.font.weight}{the font weight of
-the \code{columns} and \code{stub_group} text element.}
+\item{column_labels.font.weight, row_group.font.weight}{the font weight of
+the \code{columns} and \code{row_group} text element.}
 
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{the style, width, and color of the row group's top border.}
 
