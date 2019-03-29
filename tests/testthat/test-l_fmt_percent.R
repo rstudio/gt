@@ -98,7 +98,7 @@ test_that("the `fmt_percent()` function works correctly", {
        fmt_percent(columns = "num_1", decimals = 2, negative_val = "parens") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$", "$64,300.00\\%$",
-      "$21,223.20\\%$", "$0.00\\%$", "$$($2,324.00\\%$)$$")
+      "$21,223.20\\%$", "$0.00\\%$", "$\\left(2,324.00\\%\\right)$")
   )
 
   # Format the `num_1` column to 2 decimal places, prepend and append

@@ -19,3 +19,9 @@ gt(data = sleep) %>%
     footnote = "This is a footnote",
     locations = cells_data(columns = 1, rows = c(2, 3, 4)))
 ```
+
+```{r}
+dplyr::tibble(num_1 = c(-23, -5.43, 0, NA, 35.3)) %>% gt() %>%
+fmt_currency(columns = "num_1", decimals = 2, currency = "USD", placement = "left")
+```
+

@@ -114,8 +114,8 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("1836.23", "2763.39", "\\$$937.29$", "\\$$643.00$",
-      "\\$$212.23$", "\\$$0.00$", "\\textendash\\$$23.24$")
+    c("1836.23", "2763.39", "$\\text{\\$}937.29$", "$\\text{\\$}643.00$",
+      "$\\text{\\$}212.23$", "$\\text{\\$}0.00$", "$-\\text{\\$}23.24$")
   )
 
   expect_equal(
@@ -125,7 +125,7 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("\\$$34.00$", "74", "23", "NA", "35", "NA", "NA")
+    c("$\\text{\\$}34.00$", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
