@@ -337,12 +337,11 @@ paste_currency_str <- function(x,
                                incl_space,
                                placement) {
 
-  vapply(x, function(x) {
+  vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, x, function(x) {
 
     if (grepl("^-", x)) {
 
-      x <-
-        x %>%
+      x %>%
         tidy_gsub("^-", "") %>%
         paste_on_side(
           x_side = ifelse(incl_space, " ", ""),
@@ -352,12 +351,11 @@ paste_currency_str <- function(x,
           x_side = currency_str,
           direction = placement
         ) %>%
-        tidy_gsub("^", "-")
+        paste_left("-")
 
     } else {
 
-      x <-
-        x %>%
+      x %>%
         paste_on_side(
           x_side = ifelse(incl_space, " ", ""),
           direction = placement
@@ -367,10 +365,5 @@ paste_currency_str <- function(x,
           direction = placement
         )
     }
-
-    x
-  },
-  FUN.VALUE = character(1),
-  USE.NAMES = FALSE
-  )
+  })
 }
