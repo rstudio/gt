@@ -650,14 +650,14 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c("4px", "3px"))
 
   # Modify the `row.striping.include_stub` option
-  tbl_html <- data %>% tab_options(row.striping.include_stub = FALSE)
+  tbl_html <- data %>% tab_options(row.striping.include_stub = TRUE)
 
   # Compare before and after values
   c(opts_df_1 %>%
       dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value)) %>%
-    expect_equal(c("TRUE", "FALSE"))
+    expect_equal(c("FALSE", "TRUE"))
 
   # Modify the `row.striping.include_table_body` option
   tbl_html <- data %>% tab_options(row.striping.include_table_body = FALSE)
