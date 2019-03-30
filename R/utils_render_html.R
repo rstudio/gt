@@ -607,8 +607,8 @@ create_body_component_h <- function(row_splits_body,
                                     summaries_present,
                                     list_of_summaries,
                                     n_rows,
-                                    n_cols) {
-
+                                    n_cols,
+                                    opts_df) {
 
   if (is.null(stub_components)) {
     stub_available <- FALSE
