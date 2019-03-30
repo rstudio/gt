@@ -406,9 +406,7 @@ create_summary_dfs <- function(summary_list,
 
       select_data_df <-
         cbind(
-          stub_df[
-            seq(nrow(stub_df)),
-            c("groupname", "rowname")],
+          stub_df[c("groupname", "rowname")],
           data_df)[, -2] %>%
         dplyr::select(groupname, columns)
 
@@ -416,16 +414,13 @@ create_summary_dfs <- function(summary_list,
 
       select_data_df <-
         cbind(
-          stub_df[
-            seq(nrow(stub_df)),
-            c("groupname", "rowname")],
+          stub_df[c("groupname", "rowname")],
           data_df)[, -2] %>%
         dplyr::mutate(groupname = "::GRAND_SUMMARY") %>%
         dplyr::select(groupname, columns)
     }
 
     # Get the registered function calls
-    #agg_funs <- fns %>% lapply(rlang::as_function)
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
     # Get the names if any were provided
