@@ -57,7 +57,8 @@ render_as_html <- function(data) {
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
-        heading, footnotes_resolved, styles_resolved, n_cols, output = "html")
+        heading, footnotes_resolved, styles_resolved, n_cols,
+        subtitle_defined, output = "html")
 
     # Create the columns component of the table
     columns_component <-
