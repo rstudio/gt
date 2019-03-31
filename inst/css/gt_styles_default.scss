@@ -23,7 +23,7 @@
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; /* heading.title.font.size */
     padding-top: 4px; /* heading.top.padding */
-    padding-bottom: 1px;
+    padding-bottom: 4px;
     border-bottom-color: $table_background_color;
     border-bottom-width: 0;
   }
@@ -31,8 +31,8 @@
   .gt_subtitle {
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; /* heading.subtitle.font.size */
-    padding-top: 1px;
-    padding-bottom: 4px; /* heading.bottom.padding */
+    padding-top: 2px;
+    padding-bottom: 2px; /* heading.bottom.padding */
     border-top-color: $table_background_color;
     border-top-width: 0;
   }
