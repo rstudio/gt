@@ -193,6 +193,8 @@ create_heading_component <- function(heading,
                                      n_cols,
                                      output = "html") {
 
+  # If there is no heading component, then return
+  # an empty string
   if (length(heading) == 0) {
     return("")
   }
