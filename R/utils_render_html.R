@@ -182,7 +182,7 @@ create_table_start_h <- function() {
 
 #' Create the heading component of a table
 #'
-#' The table heading component contains the heading and possibly a subtitle; if
+#' The table heading component contains the title and possibly a subtitle; if
 #' there are no heading components defined this function will return an empty
 #' string.
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
