@@ -173,6 +173,52 @@ apply_styles_to_summary_output <- function(summary_df,
   split_body_content(body_content = summary_styles, n_cols)
 }
 
+
+#' For a given location, reduce the footnote glyphs to a single string
+#'
+#' @param fn_tbl The table containing all of the resolved footnote information.
+#' @param locname The location name for the footnotes.
+#' @param delimiter The delimiter to use for the coalesced footnote glyphs.
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+coalesce_glyphs <- function(fn_tbl,
+                            locname,
+                            delimiter = ",") {
+
+  locname_enquo <- rlang::enquo(locname)
+
+  fn_tbl %>%
+    dplyr::filter(locname == !!locname) %>%
+    dplyr::group_by() %>%
+    dplyr::mutate(fs_id_c = paste(fs_id, collapse = delimiter)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(fs_id_c) %>%
+    dplyr::distinct()
+}
+
+#' For a given location, reduce the HTML styles to a single string
+#'
+#' @param style_tbl The table containing all of the resolved HTML style
+#'   information.
+#' @param locname The location name for the HTML styles
+#' @param delimiter The delimiter to use for the coalesced HTML style rules.
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+coalesce_styles <- function(style_tbl,
+                            locname,
+                            delimiter = "") {
+
+  locname_enquo <- rlang::enquo(locname)
+
+  style_tbl %>%
+    dplyr::filter(locname == !!locname) %>%
+    dplyr::group_by() %>%
+    dplyr::mutate(styles = paste(text, collapse = delimiter)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(colname, rownum, styles) %>%
+    dplyr::distinct()
+}
+
 #' Create the opening HTML element of a table
 #'
 #' @noRd
