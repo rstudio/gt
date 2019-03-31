@@ -42,13 +42,8 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal gt_center gt_bottom_border']") %>%
     expect_equal("test heading")
-
-  # Expect that the `table_subtitle` content is an empty string
-  tbl_html %>%
-    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
-    expect_equal("")
 
   # Expect that the number of rows with `class='gt_row gt_right'` is `3`
   (tbl_html %>%
