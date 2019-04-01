@@ -13,12 +13,10 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect a characteristic pattern
   grepl(
-    paste0(
-      ".*.large test title",
-      ".*.small",
-      ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    "\\caption*{\n\\large test title\\\\ \n} \\\\ \n\\toprule",
+    tbl_latex %>% as_latex() %>% as.character(),
+    fixed = TRUE
+  ) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
