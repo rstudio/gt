@@ -363,7 +363,7 @@ create_heading_component <- function(heading,
 
   if (output == "rtf") {
 
-    if ("subtitle" %in% names(heading)) {
+    if (subtitle_defined) {
 
       heading_component <-
         rtf_title_subtitle(
