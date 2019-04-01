@@ -270,7 +270,8 @@ as_rtf <- function(data) {
   # Create a heading component of the table and handle any available footnotes
   heading_component <-
     create_heading_component(
-      heading, footnotes_resolved, n_cols = n_cols, output = "rtf")
+      heading, footnotes_resolved, styles_resolved, n_cols,
+      subtitle_defined, output = "rtf")
 
   # Get the headings
   headings <- names(output_df)
