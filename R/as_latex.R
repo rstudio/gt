@@ -77,7 +77,8 @@ as_latex <- function(data) {
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
-        heading, footnotes_resolved, n_cols = n_cols, output = "latex")
+        heading, footnotes_resolved, styles_resolved, n_cols,
+        subtitle_defined, output = "latex")
 
     # Create the columns component of the table
     columns_component <-
