@@ -254,21 +254,12 @@ create_heading_component <- function(heading,
       footnotes_resolved %>%
       coalesce_glyphs(locname = "title")
 
-    if (output == "html") {
-
-      footnote_title_glyphs <-
-        footnote_glyph_to_html(footnote_title_glyphs$fs_id_c)
-
-    } else if (output == "rtf") {
-
-      footnote_title_glyphs <-
-        footnote_glyph_to_rtf(footnote_title_glyphs$fs_id_c)
-
-    } else if (output == "latex") {
-
-      footnote_title_glyphs <-
-        footnote_glyph_to_latex(footnote_title_glyphs$fs_id_c)
-    }
+    footnote_title_glyphs <-
+      switch(output,
+             html = footnote_glyph_to_html(footnote_title_glyphs$fs_id_c),
+             latex = footnote_glyph_to_latex(footnote_title_glyphs$fs_id_c),
+             rtf = footnote_glyph_to_rtf(footnote_title_glyphs$fs_id_c),
+             stop("The context (`", output, "`) is invalid"))
 
   } else {
     footnote_title_glyphs <- ""
@@ -288,27 +279,18 @@ create_heading_component <- function(heading,
   }
 
   # Get the footnote glyphs for the subtitle
-  if ("subtitle" %in% footnotes_resolved$locname) {
+  if (subtitle_defined) {
 
     footnote_subtitle_glyphs <-
       styles_resolved %>%
       coalesce_glyphs(locname = "subtitle")
 
-    if (output == "html") {
-
-      footnote_subtitle_glyphs <-
-        footnote_glyph_to_html(footnote_subtitle_glyphs$fs_id_c)
-
-    } else if (output == "rtf") {
-
-      footnote_subtitle_glyphs <-
-        footnote_glyph_to_rtf(footnote_subtitle_glyphs$fs_id_c)
-
-    } else if (output == "latex") {
-
-      footnote_subtitle_glyphs <-
-        footnote_glyph_to_latex(footnote_subtitle_glyphs$fs_id_c)
-    }
+    footnote_subtitle_glyphs <-
+      switch(output,
+             html = footnote_glyph_to_html(footnote_subtitle_glyphs$fs_id_c),
+             latex = footnote_glyph_to_latex(footnote_subtitle_glyphs$fs_id_c),
+             rtf = footnote_glyph_to_rtf(footnote_subtitle_glyphs$fs_id_c),
+             stop("The context (`", output, "`) is invalid"))
 
   } else {
     footnote_subtitle_glyphs <- ""
@@ -338,16 +320,22 @@ create_heading_component <- function(heading,
       subtitle_classes <- subtitle_classes %>% paste_right(" gt_bottom_border")
     }
 
+    # TODO: make `glue_char(...)` that automatically drops the `glue` class
+    # with `as.character()`
     title_row <-
       glue::glue(
-        "<tr>\n<th colspan='{n_cols}' class='{title_classes}' {create_style_attrs(title_style_attrs)}>{heading$title}{footnote_title_glyphs}</th>\n</tr>\n\n"
+        "<tr>\n<th colspan='{n_cols}' class='{title_classes}'",
+        "{create_style_attrs(title_style_attrs)}>{heading$title}",
+        "{footnote_title_glyphs}</th>\n</tr>\n\n"
       ) %>% as.character()
 
     if (subtitle_defined) {
 
       subtitle_row <-
         glue::glue(
-          "<tr>\n<th colspan='{n_cols}' class='{subtitle_classes}' {create_style_attrs(subtitle_style_attrs)}>{heading$subtitle}{footnote_subtitle_glyphs}</th>\n</tr>\n\n"
+          "<tr>\n<th colspan='{n_cols}' class='{subtitle_classes}'",
+          "{create_style_attrs(subtitle_style_attrs)}>{heading$subtitle}",
+          "{footnote_subtitle_glyphs}</th>\n</tr>\n\n"
         ) %>% as.character()
 
     } else {
@@ -359,25 +347,6 @@ create_heading_component <- function(heading,
         "{title_row}{subtitle_row}"
       ) %>% as.character() %>%
       paste_between(x_2 = c("<thead>\n", "</thead>\n"))
-  }
-
-  if (output == "rtf") {
-
-    if (subtitle_defined) {
-
-      heading_component <-
-        rtf_title_subtitle(
-          title = paste0(remove_html(heading$title), footnote_title_glyphs),
-          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_glyphs),
-          n_cols = n_cols)
-
-    } else {
-
-      heading_component <-
-        rtf_title(
-          title = paste0(remove_html(heading$heading), footnote_title_glyphs),
-          n_cols = n_cols)
-    }
   }
 
   if (output == "latex") {
@@ -405,6 +374,25 @@ create_heading_component <- function(heading,
         "{title_row}{subtitle_row}"
       ) %>% as.character() %>%
       paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
+  }
+
+  if (output == "rtf") {
+
+    if (subtitle_defined) {
+
+      heading_component <-
+        rtf_title_subtitle(
+          title = paste0(remove_html(heading$title), footnote_title_glyphs),
+          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_glyphs),
+          n_cols = n_cols)
+
+    } else {
+
+      heading_component <-
+        rtf_title(
+          title = paste0(remove_html(heading$heading), footnote_title_glyphs),
+          n_cols = n_cols)
+    }
   }
 
   heading_component
