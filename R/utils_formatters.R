@@ -255,7 +255,7 @@ format_num_to_str_c <- function(x,
 #' Surround formatted values with `$`s for LaTeX
 #'
 #' @noRd
-to_latex_math_mode <- function (x) {
+to_latex_math_mode <- function(x) {
 
   x %>%
     paste_between(x_2 = c("$", "$"))
