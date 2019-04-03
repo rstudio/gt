@@ -268,13 +268,6 @@ context_minus_mark <- function(context) {
          "-")
 }
 
-context_negative_currency_mark <- function(context) {
-
-  switch(context,
-         html = "&minus;",
-         "-")
-}
-
 context_parens_marks <- function(context) {
 
   switch(context,
