@@ -186,23 +186,11 @@ fmt_number <- function(data,
       x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
       # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", minus_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            x_str_vals[x_vals < 0] %>%
-            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-            paste_between(x_2 = parens_marks)
-        }
-      }
+      x_str_vals <-
+        perform_negative_formatting(
+          x_vals, x_str_vals, negative_val,
+          minus_mark, parens_marks
+        )
 
       # If in a LaTeX context, remove any double negative
       # signs in the exponent
@@ -502,23 +490,11 @@ fmt_percent <- function(data,
         paste_symbol_str(symbol_str, incl_space, placement)
 
       # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", minus_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            x_str_vals[x_vals < 0] %>%
-            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-            paste_between(x_2 = parens_marks)
-        }
-      }
+      x_str_vals <-
+        perform_negative_formatting(
+          x_vals, x_str_vals, negative_val,
+          minus_mark, parens_marks
+        )
 
       # If in a LaTeX context, remove any double negative
       # signs in the exponent
@@ -719,23 +695,11 @@ fmt_currency <- function(data,
         paste_symbol_str(symbol_str, incl_space, placement)
 
       # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", minus_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            x_str_vals[x_vals < 0] %>%
-            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-            paste_between(x_2 = parens_marks)
-        }
-      }
+      x_str_vals <-
+        perform_negative_formatting(
+          x_vals, x_str_vals, negative_val,
+          minus_mark, parens_marks
+        )
 
       # If in a LaTeX context, wrap values in math mode
       if (context == "latex") {
