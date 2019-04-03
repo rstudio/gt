@@ -151,7 +151,7 @@ test_that("the `fmt_percent()` function works correctly", {
        render_formats_test("html"))[["num_1"]],
     c("&percnt; 183,623", "&percnt; 276,339", "&percnt; 93,729",
       "&percnt; 64,300", "&percnt; 21,223", "&percnt; 0",
-      "&percnt; &minus;2,324")
+      "&minus;&percnt; 2,324")
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`

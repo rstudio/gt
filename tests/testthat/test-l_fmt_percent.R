@@ -138,7 +138,7 @@ test_that("the `fmt_percent()` function works correctly", {
        ) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$\\% 183,623$", "$\\% 276,339$", "$\\% 93,729$", "$\\% 64,300$",
-      "$\\% 21,223$", "$\\% 0$", "$\\% -2,324$")
+      "$\\% 21,223$", "$\\% 0$", "$-\\% 2,324$")
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
