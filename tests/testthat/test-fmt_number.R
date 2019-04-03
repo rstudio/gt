@@ -117,7 +117,7 @@ test_that("the `fmt_number()` function works correctly", {
     (tab %>%
        fmt_number(columns = "num_1", decimals = 2, negative_val = "parens") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "&#40;23.24&#41;"))
+    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "(23.24)"))
 
   # Format the `num_1` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults; extract `output_df` and compare

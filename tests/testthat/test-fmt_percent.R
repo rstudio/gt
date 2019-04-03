@@ -112,7 +112,7 @@ test_that("the `fmt_percent()` function works correctly", {
        render_formats_test("html"))[["num_1"]],
     c("183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
       "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "&#40;2,324.00&percnt;&#41;")
+      "(2,324.00&percnt;)")
   )
 
   # Format the `num_1` column to 2 decimal places, prepend and append
