@@ -298,13 +298,6 @@ context_percent_mark <- function(context) {
          "%")
 }
 
-context_currency_str_regex <- function(context) {
-
-  switch(context,
-         latex = "\\\\$",
-         "\\$")
-}
-
 context_currency_str <- function(context, currency) {
 
   switch(context,
