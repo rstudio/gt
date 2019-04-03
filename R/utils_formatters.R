@@ -351,3 +351,33 @@ paste_symbol_str <- function(x,
     }
   })
 }
+
+#' @noRd
+perform_negative_formatting <- function(x_vals,
+                                        x_str_vals,
+                                        negative_val,
+                                        minus_mark,
+                                        parens_marks) {
+
+  # Perform negative value formatting
+  if (!any(x_vals < 0)) {
+    return(x_str_vals)
+  }
+
+  # Handle replacement of the minus mark
+  x_str_vals <-
+    x_str_vals %>%
+    tidy_gsub("-", minus_mark, fixed = TRUE)
+
+  # Handle case where negative values are to be placed within parentheses
+  if (negative_val == "parens") {
+
+    # Selectively remove minus sign and paste between parentheses
+    x_str_vals[x_vals < 0] <-
+      x_str_vals[x_vals < 0] %>%
+      tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+      paste_between(x_2 = parens_marks)
+  }
+
+  x_str_vals
+}
