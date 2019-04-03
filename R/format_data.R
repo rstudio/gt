@@ -479,7 +479,7 @@ fmt_percent <- function(data,
       # Define the marks by context
       minus_mark <- context_minus_mark(context)
       parens_marks <- context_parens_marks(context)
-      percent_mark <- context_percent_mark(context)
+      symbol_str <- context_percent_mark(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -687,7 +687,7 @@ fmt_currency <- function(data,
       # Define the marks by context
       minus_mark <- context_minus_mark(context)
       parens_marks <- context_parens_marks(context)
-      currency_str <- context_currency_str(context, currency)
+      symbol_str <- context_currency_str(context, currency)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
