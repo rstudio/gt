@@ -526,10 +526,9 @@ fmt_percent <- function(data,
 
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
-              x_2 = parens_marks
-            )
+            x_str_vals[x_vals < 0] %>%
+            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+            paste_between(x_2 = parens_marks)
         }
       }
 
