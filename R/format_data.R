@@ -198,10 +198,9 @@ fmt_number <- function(data,
 
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
-              x_2 = parens_marks
-            )
+            x_str_vals[x_vals < 0] %>%
+            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+            paste_between(x_2 = parens_marks)
         }
       }
 
@@ -479,8 +478,8 @@ fmt_percent <- function(data,
 
       # Define the marks by context
       minus_mark <- context_minus_mark(context)
-      percent_mark <- context_percent_mark(context)
       parens_marks <- context_parens_marks(context)
+      percent_mark <- context_percent_mark(context)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -697,9 +696,9 @@ fmt_currency <- function(data,
     function(x) {
 
       # Define the marks by context
-      negative_currency_mark <- context_minus_mark(context)
-      currency_str <- context_currency_str(context, currency)
+      minus_mark <- context_minus_mark(context)
       parens_marks <- context_parens_marks(context)
+      currency_str <- context_currency_str(context, currency)
 
       # Determine which of `x` are not NA
       non_na_x <- !is.na(x)
@@ -736,21 +735,16 @@ fmt_currency <- function(data,
         # Handle replacement of the minus mark
         x_str_vals <-
           x_str_vals %>%
-          tidy_gsub("-", negative_currency_mark, fixed = TRUE)
+          tidy_gsub("-", minus_mark, fixed = TRUE)
 
         # Handle case where negative values are to be placed within parentheses
         if (negative_val == "parens") {
 
           # Selectively remove minus sign and paste between parentheses
           x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = x_str_vals[x_vals < 0] %>%
-                tidy_gsub(
-                  negative_currency_mark, "",
-                  fixed = TRUE
-                ),
-              x_2 = parens_marks
-            )
+            x_str_vals[x_vals < 0] %>%
+            tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+            paste_between(x_2 = parens_marks)
         }
       }
 
