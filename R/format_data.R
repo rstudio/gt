@@ -697,7 +697,7 @@ fmt_currency <- function(data,
     function(x) {
 
       # Define the marks by context
-      negative_currency_mark <- context_negative_currency_mark(context)
+      negative_currency_mark <- context_minus_mark(context)
       currency_str <- context_currency_str(context, currency)
       parens_marks <- context_parens_marks(context)
 
