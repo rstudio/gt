@@ -192,11 +192,8 @@ fmt_number <- function(data,
           minus_mark, parens_marks
         )
 
-      # If in a LaTeX context, remove any double negative
-      # signs in the exponent
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
+      # If in a LaTeX context, wrap values in math mode
+      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
@@ -349,11 +346,8 @@ fmt_scientific <- function(data,
         x_str_vals %>%
         tidy_gsub("-", minus_mark, fixed = TRUE)
 
-      # If in a LaTeX context, put formatted numbers
-      # in math mode
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
+      # If in a LaTeX context, wrap values in math mode
+      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
@@ -496,11 +490,8 @@ fmt_percent <- function(data,
           minus_mark, parens_marks
         )
 
-      # If in a LaTeX context, remove any double negative
-      # signs in the exponent
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
+      # If in a LaTeX context, wrap values in math mode
+      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
@@ -702,12 +693,7 @@ fmt_currency <- function(data,
         )
 
       # If in a LaTeX context, wrap values in math mode
-      if (context == "latex") {
-
-        x_str_vals <-
-          x_str_vals %>%
-          to_latex_math_mode()
-      }
+      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
