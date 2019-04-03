@@ -271,7 +271,6 @@ context_minus_mark <- function(context) {
 context_parens_marks <- function(context) {
 
   switch(context,
-         html = c("&#40;", "&#41;"),
          latex = c("\\left(", "\\right)"),
          c("(", ")"))
 }
@@ -279,7 +278,6 @@ context_parens_marks <- function(context) {
 context_parens_marks_number <- function(context) {
 
   switch(context,
-         html = c("&#40;", "&#41;"),
          latex = c("(", ")"),
          c("(", ")"))
 }
