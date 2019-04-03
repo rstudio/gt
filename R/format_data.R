@@ -699,7 +699,6 @@ fmt_currency <- function(data,
       # Define the marks by context
       negative_currency_mark <- context_negative_currency_mark(context)
       currency_str <- context_currency_str(context, currency)
-      currency_str_regex <- context_currency_str_regex(context)
       parens_marks <- context_parens_marks(context)
 
       # Determine which of `x` are not NA
