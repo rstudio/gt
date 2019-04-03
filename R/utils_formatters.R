@@ -255,10 +255,13 @@ format_num_to_str_c <- function(x,
 #' Surround formatted values with `$`s for LaTeX
 #'
 #' @noRd
-to_latex_math_mode <- function(x) {
+to_latex_math_mode <- function(x, context) {
 
-  x %>%
-    paste_between(x_2 = c("$", "$"))
+  if (context != "latex") {
+    return(x)
+  } else {
+    return(x %>% paste_between(x_2 = c("$", "$")))
+  }
 }
 
 context_minus_mark <- function(context) {
