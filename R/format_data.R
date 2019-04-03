@@ -496,21 +496,10 @@ fmt_percent <- function(data,
           x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
         )
 
-      # Handle placement of the percent symbol
+      # Handle placement of the symbol
       x_str_vals <-
         x_str_vals %>%
-        paste_on_side(
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        ) %>%
-        paste_on_side(
-          x_side = percent_mark,
-          direction = placement
-        ) %>%
-        swap_adjacent_text_groups(
-          pattern_1 = percent_mark,
-          pattern_2 = "-"
-        )
+        paste_symbol_str(symbol_str, incl_space, placement)
 
       # Perform negative value formatting
       if (any(x_vals < 0)) {
@@ -724,10 +713,10 @@ fmt_currency <- function(data,
       # Paste vector of suffixes to the right of the `x_str_vals`
       x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
 
-      # Handle placement of the currency symbol
+      # Handle placement of the symbol
       x_str_vals <-
         x_str_vals %>%
-        paste_currency_str(currency_str, incl_space, placement)
+        paste_symbol_str(symbol_str, incl_space, placement)
 
       # Perform negative value formatting
       if (any(x_vals < 0)) {
