@@ -316,10 +316,10 @@ context_currency_str <- function(context, currency) {
          })
 }
 
-paste_currency_str <- function(x,
-                               currency_str,
-                               incl_space,
-                               placement) {
+paste_symbol_str <- function(x,
+                             symbol_str,
+                             incl_space,
+                             placement) {
 
   vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, x, function(x) {
 
@@ -332,7 +332,7 @@ paste_currency_str <- function(x,
           direction = placement
         ) %>%
         paste_on_side(
-          x_side = currency_str,
+          x_side = symbol_str,
           direction = placement
         ) %>%
         paste_left("-")
@@ -345,7 +345,7 @@ paste_currency_str <- function(x,
           direction = placement
         ) %>%
         paste_on_side(
-          x_side = currency_str,
+          x_side = symbol_str,
           direction = placement
         )
     }
