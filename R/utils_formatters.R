@@ -528,8 +528,8 @@ num_formatter_factory <- function(context,
 
       # Perform negative value formatting
       x_str_vals <-
-        perform_negative_formatting(
-          x_vals, x_str_vals, negative_val,
+        format_in_accounting_style(
+          x_vals, x_str_vals, accounting,
           minus_mark, parens_marks
         )
     }
