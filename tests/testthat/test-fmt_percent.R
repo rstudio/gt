@@ -103,18 +103,6 @@ test_that("the `fmt_percent()` function works correctly", {
       "&minus;2.324,00&percnt;")
   )
 
-  # Format the `num_1` column to 2 decimal places, apply parentheses to
-  # all negative values, use all other defaults; extract `output_df` and
-  # compare to expected values
-  expect_equal(
-    (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, negative_val = "parens") %>%
-       render_formats_test("html"))[["num_1"]],
-    c("183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
-      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "(2,324.00&percnt;)")
-  )
-
   # Format the `num_1` column to 2 decimal places, prepend and append
   # all values by 2 different literals, use all other defaults; extract
   # `output_df` and compare to expected values
