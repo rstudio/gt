@@ -5,9 +5,9 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop_trailing_zeros = FALSE, negative_val = "signed",
-  use_seps = TRUE, scale_by = 1, suffixing = FALSE,
-  pattern = "{x}", sep_mark = ",", dec_mark = ".", locale = NULL)
+  drop_trailing_zeros = FALSE, use_seps = TRUE, scale_by = 1,
+  suffixing = FALSE, pattern = "{x}", sep_mark = ",",
+  dec_mark = ".", locale = NULL)
 }
 \arguments{
 \item{data}{a table object that is created using the \code{\link{gt}()}
@@ -34,10 +34,6 @@ use. The default number of decimal places is \code{2}.}
 
 \item{drop_trailing_zeros}{a logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
-
-\item{negative_val}{the formatting to use for negative values. With
-\code{signed} (the default), negative values will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses.}
 
 \item{use_seps}{an option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
