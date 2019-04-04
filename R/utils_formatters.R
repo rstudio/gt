@@ -410,7 +410,7 @@ num_formatter_factory <- function(context,
     }
 
     if (type != "currency") {
-      negative_val <- "signed"
+      accounting <- FALSE
     }
 
     # Define the marks by context
