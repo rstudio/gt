@@ -374,7 +374,7 @@ format_in_accounting_style <- function(x_vals,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 
   # Handle case where negative values are to be placed within parentheses
-  if (negative_val == "parens") {
+  if (accounting) {
 
     # Selectively remove minus sign and paste between parentheses
     x_str_vals[x_vals < 0] <-
