@@ -322,7 +322,8 @@ context_currency_str <- function(context, currency) {
 paste_symbol_str <- function(x,
                              symbol_str,
                              incl_space,
-                             placement) {
+                             placement,
+                             minus_mark) {
 
   vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, x, function(x) {
 
@@ -338,7 +339,7 @@ paste_symbol_str <- function(x,
           x_side = symbol_str,
           direction = placement
         ) %>%
-        paste_left("-")
+        paste_left(minus_mark)
 
     } else {
 
