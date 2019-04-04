@@ -148,63 +148,6 @@ fmt_number <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
-  # Create a function factory for the `fmt_number()` function
-  fmt_number_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      parens_marks <- context_parens_marks_number(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Create a tibble with scaled values for `x[non_na_x]`
-      # and the suffix labels to use for character formatting
-      suffix_df <-
-        num_suffix(
-          round(x_vals, decimals),
-          suffixes = suffix_labels,
-          scale_by = scale_by
-        )
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str(
-          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
-        )
-
-      # Paste vector of suffixes to the right of the `x_str_vals`
-      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-
-      # Perform negative value formatting
-      x_str_vals <-
-        perform_negative_formatting(
-          x_vals, x_str_vals, negative_val,
-          minus_mark, parens_marks
-        )
-
-      # If in a LaTeX context, wrap values in math mode
-      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -216,9 +159,21 @@ fmt_number <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_number_factory(context = "html"),
-      latex = fmt_number_factory(context = "latex"),
-      default = fmt_number_factory(context = "default")
+      html = num_formatter_factory(
+        context = "html", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      latex = num_formatter_factory(
+        context = "latex", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      default = num_formatter_factory(
+        context = "default", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern)
     )
   )
 }
@@ -292,76 +247,6 @@ fmt_scientific <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  # Create a function factory for the `fmt_scientific()` function
-  fmt_scientific_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      exp_marks <- context_exp_marks(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by)
-
-      # Determine which of `x` don't require the (x 10^n)
-      # since their order would be zero
-      small_pos <- has_order_zero(x_vals)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str_e(
-          x_vals, decimals, sep_mark, dec_mark,
-          drop_trailing_zeros
-        )
-
-      # For any numbers that shouldn't have an exponent, remove
-      # that portion from the character version
-      if (any(small_pos)) {
-
-        x_str_vals[small_pos] <-
-          split_scientific_notn(x_str_vals[small_pos])$num
-      }
-
-      # For any non-NA numbers that do have an exponent, format
-      # those according to the output context
-      if (any(!small_pos)) {
-
-        sci_parts <- split_scientific_notn(x_str_vals[!small_pos])
-
-        x_str_vals[!small_pos] <-
-          paste0(
-            sci_parts$num, exp_marks[1],
-            sci_parts$exp, exp_marks[2]
-          )
-      }
-
-      # Handle replacement of the minus mark in number
-      # and exponent parts
-      x_str_vals <-
-        x_str_vals %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE)
-
-      # If in a LaTeX context, wrap values in math mode
-      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -373,9 +258,21 @@ fmt_scientific <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_scientific_factory(context = "html"),
-      latex = fmt_scientific_factory(context = "latex"),
-      default = fmt_scientific_factory(context = "default")
+      html = num_formatter_factory(
+        context = "html", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      latex = num_formatter_factory(
+        context = "latex", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      default = num_formatter_factory(
+        context = "default", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern)
     )
   )
 }
@@ -455,57 +352,6 @@ fmt_percent <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  # Create a function factory for the `fmt_percent()` function
-  fmt_percent_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      parens_marks <- context_parens_marks(context)
-      symbol_str <- context_percent_mark(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = 100)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str(
-          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
-        )
-
-      # Handle placement of the symbol
-      x_str_vals <-
-        x_str_vals %>%
-        paste_symbol_str(symbol_str, incl_space, placement)
-
-      # Perform negative value formatting
-      x_str_vals <-
-        perform_negative_formatting(
-          x_vals, x_str_vals, negative_val,
-          minus_mark, parens_marks
-        )
-
-      # If in a LaTeX context, wrap values in math mode
-      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -517,9 +363,21 @@ fmt_percent <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_percent_factory(context = "html"),
-      latex = fmt_percent_factory(context = "latex"),
-      default = fmt_percent_factory(context = "default")
+      html = num_formatter_factory(
+        context = "html", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      latex = num_formatter_factory(
+        context = "latex", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      default = num_formatter_factory(
+        context = "default", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern)
     )
   )
 }
@@ -575,6 +433,9 @@ fmt_percent <- function(data,
 #'   \code{"USD"} will be used.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #'   value should be displayed.
+#' @param negative_val the formatting to use for negative values. With
+#'   \code{signed} (the default), negative values will be shown with a negative
+#'   sign. Using \code{parens} will show the negative value in parentheses.
 #' @param placement the placement of the currency symbol. This can be either be
 #'   \code{left} (the default) or \code{right}.
 #' @param incl_space an option on whether to include a space between the value
@@ -651,66 +512,6 @@ fmt_currency <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
-  # Create a function factory for the `fmt_currency()` function
-  fmt_currency_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      parens_marks <- context_parens_marks(context)
-      symbol_str <- context_currency_str(context, currency)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Create a tibble with scaled values for `x[non_na_x]`
-      # and the suffix labels to use for character formatting
-      suffix_df <-
-        num_suffix(
-          round(x_vals, decimals),
-          suffixes = suffix_labels,
-          scale_by = scale_by
-        )
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
-
-      # Format all non-NA x values
-      x_str_vals <- format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
-
-      # Paste vector of suffixes to the right of the `x_str_vals`
-      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-
-      # Handle placement of the symbol
-      x_str_vals <-
-        x_str_vals %>%
-        paste_symbol_str(symbol_str, incl_space, placement)
-
-      # Perform negative value formatting
-      x_str_vals <-
-        perform_negative_formatting(
-          x_vals, x_str_vals, negative_val,
-          minus_mark, parens_marks
-        )
-
-      # If in a LaTeX context, wrap values in math mode
-      x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -722,9 +523,21 @@ fmt_currency <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = fmt_currency_factory(context = "html"),
-      latex = fmt_currency_factory(context = "latex"),
-      default = fmt_currency_factory(context = "default")
+      html = num_formatter_factory(
+        context = "html", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      latex = num_formatter_factory(
+        context = "latex", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern),
+      default = num_formatter_factory(
+        context = "default", type,
+        x, decimals, suffix_labels, scale_by,
+        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        negative_val, incl_space, placement, pattern)
     )
   )
 }
