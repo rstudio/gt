@@ -98,7 +98,7 @@ test_that("the `fmt_currency()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_currency(
-         columns = "num_1", currency = "USD", negative_val = "parens") %>%
+         columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
       "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",
@@ -111,7 +111,7 @@ test_that("the `fmt_currency()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_currency(
-         columns = "num_1", currency = "USD", negative_val = "parens") %>%
+         columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
       "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",

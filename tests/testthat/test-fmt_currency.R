@@ -141,7 +141,7 @@ test_that("the `fmt_currency()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_currency(
-         columns = "num_1", currency = "USD", negative_val = "parens") %>%
+         columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
       "$0.00", "($23.24)")
@@ -153,7 +153,7 @@ test_that("the `fmt_currency()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_currency(
-         columns = "num_1", currency = "USD", negative_val = "parens") %>%
+         columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("default"))[["num_1"]],
     c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
       "$0.00", "($23.24)")
