@@ -385,3 +385,166 @@ perform_negative_formatting <- function(x_vals,
 
   x_str_vals
 }
+
+#' @noRd
+num_formatter_factory <- function(context,
+                                  type,
+                                  x,
+                                  decimals = NULL,
+                                  suffix_labels = NULL,
+                                  scale_by = NULL,
+                                  sep_mark = NULL,
+                                  dec_mark = NULL,
+                                  currency = NULL,
+                                  drop_trailing_zeros = NULL,
+                                  negative_val = NULL,
+                                  incl_space = NULL,
+                                  placement = NULL,
+                                  pattern = NULL) {
+
+  function(x) {
+
+    # Define some initial values
+    if (type == "percent") {
+      scale_by <- 100
+    }
+
+    if (type != "currency") {
+      negative_val <- "signed"
+    }
+
+    # Define the marks by context
+    minus_mark <- context_minus_mark(context)
+    parens_marks <- context_parens_marks_number(context)
+    exp_marks <- context_exp_marks(context)
+
+    if (type == "currency") {
+      symbol_str <- context_currency_str(context, currency)
+      parens_marks <- context_parens_marks(context)
+    }
+
+    if (type == "percent") {
+      symbol_str <- context_percent_mark(context)
+    }
+
+    # Determine which of `x` are not NA
+    non_na_x <- !is.na(x)
+
+    # Create a possibly shorter vector of non-NA `x` values
+    x_vals <- x[non_na_x]
+
+    # Large-number suffixing support
+    if (type %in% c("number", "currency")) {
+
+      # Create a tibble with scaled values for `x[non_na_x]`
+      # and the suffix labels to use for character formatting
+      suffix_df <-
+        num_suffix(
+          round(x_vals, decimals),
+          suffixes = suffix_labels,
+          scale_by = scale_by
+        )
+
+      # Scale the `x_vals` by the `scale_by` value
+      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
+
+    } else {
+      x_vals <- scale_x_values(x_vals, scale_by = scale_by)
+    }
+
+    # Determine which values don't require the (x 10^n)
+    # for scientific foramtting since their order would be zero
+    if (type == "scientific") {
+      small_pos <- has_order_zero(x_vals)
+    }
+
+    # Format all non-NA x values
+    x_str_vals <-
+      if (type %in% c("number", "percent")) {
+        format_num_to_str(
+          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
+        )
+      } else if (type == "scientific") {
+        format_num_to_str_e(
+          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
+        )
+      } else if (type == "currency") {
+        format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
+      } else {
+        stop("The formatter type (", type, ") is not supported.")
+      }
+
+    # Support for scientific formatting
+    if (type == "scientific") {
+
+      # For any numbers that shouldn't have an exponent, remove
+      # that portion from the character version
+      if (any(small_pos)) {
+
+        x_str_vals[small_pos] <-
+          split_scientific_notn(x_str_vals[small_pos])$num
+      }
+
+      # For any non-NA numbers that do have an exponent, format
+      # those according to the output context
+      if (any(!small_pos)) {
+
+        sci_parts <- split_scientific_notn(x_str_vals[!small_pos])
+
+        x_str_vals[!small_pos] <-
+          paste0(
+            sci_parts$num, exp_marks[1],
+            sci_parts$exp, exp_marks[2]
+          )
+      }
+
+      # Handle replacement of the minus mark in number
+      # and exponent parts
+      x_str_vals <-
+        x_str_vals %>%
+        tidy_gsub("-", minus_mark, fixed = TRUE)
+    }
+
+    # Large-number suffixing support
+    if (type %in% c("number", "currency")) {
+
+      # Paste vector of suffixes to the right of the `x_str_vals`
+      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
+    }
+
+    # A symbol string is a group of character bound to the value
+    # and also takes on a negative sign
+    if (type %in% c("percent", "currency")) {
+
+      # Handle placement of the symbol
+      x_str_vals <-
+        x_str_vals %>%
+        paste_symbol_str(symbol_str, incl_space, placement, minus_mark)
+    }
+
+    # Certain types of formatters can create accounting-type
+    # formatting
+    if (type %in% c("number", "currency")) {
+
+      # Perform negative value formatting
+      x_str_vals <-
+        perform_negative_formatting(
+          x_vals, x_str_vals, negative_val,
+          minus_mark, parens_marks
+        )
+    }
+
+    # If in a LaTeX context, wrap values in math mode
+    x_str_vals <- x_str_vals %>% to_latex_math_mode(context)
+
+    # Handle formatting of pattern
+    x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
+
+    # Create `x_str` with the same length as `x`; place the
+    # `x_str_vals` into `str` (at the non-NA indices)
+    x_str <- rep(NA_character_, length(x))
+    x_str[non_na_x] <- x_str_vals
+    x_str
+  }
+}
+
