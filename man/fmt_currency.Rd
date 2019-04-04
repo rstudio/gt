@@ -5,7 +5,7 @@
 \title{Format values as currencies}
 \usage{
 fmt_currency(data, columns, rows = NULL, currency = "USD",
-  use_subunits = TRUE, negative_val = "signed", decimals = NULL,
+  use_subunits = TRUE, accounting = FALSE, decimals = NULL,
   use_seps = TRUE, scale_by = 1, suffixing = FALSE,
   pattern = "{x}", sep_mark = ",", dec_mark = ".",
   placement = "left", incl_space = FALSE, locale = NULL)
@@ -44,9 +44,10 @@ currency symbol names along with examples. If nothing is provided then
 \item{use_subunits}{an option for whether the subunits portion of a currency
 value should be displayed.}
 
-\item{negative_val}{the formatting to use for negative values. With
-\code{signed} (the default), negative values will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses.}
+\item{accounting}{an option to use accounting style for currency values. With
+\code{FALSE} (the default), negative values will be shown with a negative
+sign. Using \code{accounting = TRUE} will put negative values in
+parentheses.}
 
 \item{decimals}{an option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
