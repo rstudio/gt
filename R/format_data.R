@@ -433,9 +433,10 @@ fmt_percent <- function(data,
 #'   \code{"USD"} will be used.
 #' @param use_subunits an option for whether the subunits portion of a currency
 #'   value should be displayed.
-#' @param negative_val the formatting to use for negative values. With
-#'   \code{signed} (the default), negative values will be shown with a negative
-#'   sign. Using \code{parens} will show the negative value in parentheses.
+#' @param accounting an option to use accounting style for currency values. With
+#'   \code{FALSE} (the default), negative values will be shown with a negative
+#'   sign. Using \code{accounting = TRUE} will put negative values in
+#'   parentheses.
 #' @param placement the placement of the currency symbol. This can be either be
 #'   \code{left} (the default) or \code{right}.
 #' @param incl_space an option on whether to include a space between the value
@@ -483,7 +484,7 @@ fmt_currency <- function(data,
                          rows = NULL,
                          currency = "USD",
                          use_subunits = TRUE,
-                         negative_val = "signed",
+                         accounting = FALSE,
                          decimals = NULL,
                          use_seps = TRUE,
                          scale_by = 1.0,
