@@ -363,7 +363,7 @@ format_in_accounting_style <- function(x_vals,
                                        minus_mark,
                                        parens_marks) {
 
-  # Perform negative value formatting
+  # Return values unchanged if there are no negative values
   if (!any(x_vals < 0)) {
     return(x_str_vals)
   }
