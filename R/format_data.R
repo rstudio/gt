@@ -47,9 +47,6 @@
 #'   use. The default number of decimal places is \code{2}.
 #' @param drop_trailing_zeros a logical value that allows for removal of
 #'   trailing zeros (those redundant zeros after the decimal mark).
-#' @param negative_val the formatting to use for negative values. With
-#'   \code{signed} (the default), negative values will be shown with a negative
-#'   sign. Using \code{parens} will show the negative value in parentheses.
 #' @param use_seps an option to use digit group separators. The type of digit
 #'   group separator is set by \code{sep_mark} and overridden if a locale ID is
 #'   provided to \code{locale}. This setting is \code{TRUE} by default.
@@ -132,7 +129,6 @@ fmt_number <- function(data,
                        rows = NULL,
                        decimals = 2,
                        drop_trailing_zeros = FALSE,
-                       negative_val = "signed",
                        use_seps = TRUE,
                        scale_by = 1.0,
                        suffixing = FALSE,
@@ -397,8 +393,6 @@ fmt_scientific <- function(data,
 #' value.
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item negative values: choice of a negative sign or parentheses for values
-#' less than zero
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item pattern: option to use a text pattern for decoration of the formatted
@@ -446,7 +440,6 @@ fmt_percent <- function(data,
                         rows = NULL,
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
-                        negative_val = "signed",
                         use_seps = TRUE,
                         pattern = "{x}",
                         sep_mark = ",",
