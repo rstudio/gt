@@ -397,7 +397,7 @@ num_formatter_factory <- function(context,
                                   dec_mark = NULL,
                                   currency = NULL,
                                   drop_trailing_zeros = NULL,
-                                  negative_val = NULL,
+                                  accounting = NULL,
                                   incl_space = NULL,
                                   placement = NULL,
                                   pattern = NULL) {
