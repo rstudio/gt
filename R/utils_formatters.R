@@ -357,11 +357,11 @@ paste_symbol_str <- function(x,
 }
 
 #' @noRd
-perform_negative_formatting <- function(x_vals,
-                                        x_str_vals,
-                                        negative_val,
-                                        minus_mark,
-                                        parens_marks) {
+format_in_accounting_style <- function(x_vals,
+                                       x_str_vals,
+                                       accounting,
+                                       minus_mark,
+                                       parens_marks) {
 
   # Perform negative value formatting
   if (!any(x_vals < 0)) {
