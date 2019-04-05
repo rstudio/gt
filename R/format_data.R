@@ -137,6 +137,11 @@ fmt_number <- function(data,
 
   # Define the formatter `type`
   type <- "number"
+  # Set default values
+  accounting <- FALSE
+  currency <- NULL
+  placement <- "left"
+  incl_space <- FALSE
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -240,6 +245,12 @@ fmt_scientific <- function(data,
 
   # Define the formatter `type`
   type <- "scientific"
+  # Set default values
+  accounting <- FALSE
+  currency <- NULL
+  suffixing <- FALSE
+  placement <- "left"
+  incl_space <- FALSE
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
@@ -345,6 +356,11 @@ fmt_percent <- function(data,
 
   # Define the formatter `type`
   type <- "percent"
+  # Set default values
+  scale_by <- 100
+  accounting <- FALSE
+  currency <- "%"
+  suffixing <- FALSE
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -496,6 +512,8 @@ fmt_currency <- function(data,
 
   # Define the formatter `type`
   type <- "currency"
+  # Set default values
+  drop_trailing_zeros <- FALSE
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
