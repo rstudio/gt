@@ -441,6 +441,18 @@ num_formatter_factory <- function(context,
                                   placement = NULL,
                                   pattern = NULL) {
 
+  force(context)
+  force(decimals)
+  force(scale_by)
+  force(sep_mark)
+  force(dec_mark)
+  force(currency)
+  force(drop_trailing_zeros)
+  force(accounting)
+  force(incl_space)
+  force(placement)
+  force(pattern)
+
   function(x) {
 
     # Define some initial values
