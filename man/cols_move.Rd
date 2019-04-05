@@ -7,36 +7,34 @@
 cols_move(data, columns, after)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the column names to move to as a group to a different
+\item{columns}{The column names to move to as a group to a different
 position. The order of the remaining columns will be preserved.}
 
-\item{after}{a column name used to anchor the insertion of the moved columns.
+\item{after}{A column name used to anchor the insertion of the moved columns.
 All of the moved columns will be placed to the right of this column.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 On those occasions where you need to move columns this way or that way, we
-can make use of the \code{cols_move()} function. While it's true that the
-movement of columns can be done upstream of \pkg{gt}'s API, it is much easier
-and less error prone to use the function provided here. The movement
-procedure here takes one or more specified columns (in the \code{columns}
-argument) and places them to the right of a different column (the
-\code{after} argument). The ordering of the \code{columns} to be moved is
-preserved, as is the ordering of all other columns in the table.
+can make use of the \code{cols_move()} function. While it's true that the movement
+of columns can be done upstream of \pkg{gt}'s API, it is much easier and less
+error prone to use the function provided here. The movement procedure here
+takes one or more specified columns (in the \code{columns} argument) and places
+them to the right of a different column (the \code{after} argument). The ordering
+of the \code{columns} to be moved is preserved, as is the ordering of all other
+columns in the table.
 }
 \details{
-The columns supplied in \code{columns} must all exist in the table and none
-of them can be in the \code{after} argument. The \code{after} column must
-also exist and only one column should be provided here. If you need to place
-one or columns at the beginning of the column series, the
-\code{\link[=cols_move_to_start]{cols_move_to_start()}} function should be used. Similarly, if
-those columns to move should be placed at the end of the column series then
-use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
+The columns supplied in \code{columns} must all exist in the table and none of
+them can be in the \code{after} argument. The \code{after} column must also exist and
+only one column should be provided here. If you need to place one or columns
+at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols_move_to_start()}} function
+should be used. Similarly, if those columns to move should be placed at the
+end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
 }
 \section{Figures}{
 

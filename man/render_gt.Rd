@@ -8,16 +8,16 @@ render_gt(expr, env = parent.frame(), quoted = FALSE,
   outputArgs = list())
 }
 \arguments{
-\item{expr}{an expression that creates a \pkg{gt} table object.}
+\item{expr}{An expression that creates a \pkg{gt} table object.}
 
-\item{env}{the environment in which to evaluate the \code{expr}.}
+\item{env}{The environment in which to evaluate the \code{expr}.}
 
-\item{quoted}{is expr a quoted expression (with \code{quote()})? This is
-useful if you want to save an expression in a variable.}
+\item{quoted}{Is \code{expr`` a quoted expression (with }quote()`)? This is useful
+if you want to save an expression in a variable.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
-call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in an
-interactive R Markdown document.}
+call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in an interactive R Markdown
+document.}
 }
 \description{
 A \pkg{gt} display table render function for use in Shiny

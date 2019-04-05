@@ -7,12 +7,12 @@
 adjust_luminance(colors, steps)
 }
 \arguments{
-\item{colors}{a vector of colors that will undergo an adjustment in
+\item{colors}{A vector of colors that will undergo an adjustment in
 luminance. Each color value provided must either be a color name (in the
-set of colors provided by \code{grDevices::colors()}) or a hexadecimal
-string in the form of "#RRGGBB" or "#RRGGBBAA".}
+set of colors provided by \code{grDevices::colors()}) or a hexadecimal string in
+the form of "#RRGGBB" or "#RRGGBBAA".}
 
-\item{steps}{a positive or negative factor by which the luminance will be
+\item{steps}{A positive or negative factor by which the luminance will be
 adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
 }
 \description{
@@ -23,10 +23,10 @@ apply greater darkening or lightening for those colors in the midrange
 compared to any very dark or very light colors in the input palette.
 }
 \details{
-This function can be useful when combined with the \code{\link[=data_color]{data_color()}}
-function's \code{palette} argument, which can use a vector of colors or any
-of the \code{col_*} functions from the \pkg{scales} package (all of which
-have a \code{palette} argument).
+This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's
+\code{palette} argument, which can use a vector of colors or any of the \code{col_*}
+functions from the \pkg{scales} package (all of which have a \code{palette}
+argument).
 }
 \section{Figures}{
 

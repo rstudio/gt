@@ -11,9 +11,9 @@ data_color(data, columns, colors, alpha = NULL, apply_to = "bkgd",
 \item{data}{a table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns wherein changes to cell data colors should occur.}
+\item{columns}{The columns wherein changes to cell data colors should occur.}
 
-\item{colors}{either a color mapping function from the \code{scales} package
+\item{colors}{Either a color mapping function from the \code{scales} package
 or a vector of colors to use for each distinct value or level in each of
 the provided \code{columns}. The color mapping functions are:
 \code{scales::col_quantile()}, \code{scales::col_bin()},
@@ -22,40 +22,40 @@ a vector of colors as a palette, each color value provided must either be a
 color name (in the set of colors provided by \code{grDevices::colors()}) or
 a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
-\item{alpha}{an optional, fixed alpha transparency value that will be applied
+\item{alpha}{An optional, fixed alpha transparency value that will be applied
 to all of the \code{colors} provided if they are provided as a vector of
 colors. If using a colorizing helper function for \code{colors} then this
 option is ignored (each of the colorizing helper functions has its own
 \code{alpha} argument).}
 
-\item{apply_to}{which style element should the colors be applied to? Options
+\item{apply_to}{Which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{bkgd}) or the cell
 text (\code{text}).}
 
-\item{autocolor_text}{an option to let \pkg{gt} modify the coloring of text
+\item{autocolor_text}{An option to let \pkg{gt} modify the coloring of text
 within cells undergoing background coloring. This will in some cases yield
 more optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to add color to data cells according to their values. The
-\code{data_color()} function colors all rows of any \code{columns} supplied.
-There are two ways to define how cells are colored: (1) through the use of a
-supplied color palette, and (2) through use of a color mapping function
-available from the \code{scales} package. The first method colorizes cell
-data according to whether values are character or numeric. The second method
-provides more control over how cells are colored since we provide an explicit
-color function and thus other requirements such as bin counts, cut points, or
-a numeric domain. Finally, we can choose whether to apply the cell-specific
+\code{data_color()} function colors all rows of any \code{columns} supplied. There are
+two ways to define how cells are colored: (1) through the use of a supplied
+color palette, and (2) through use of a color mapping function available from
+the \code{scales} package. The first method colorizes cell data according to
+whether values are character or numeric. The second method provides more
+control over how cells are colored since we provide an explicit color
+function and thus other requirements such as bin counts, cut points, or a
+numeric domain. Finally, we can choose whether to apply the cell-specific
 colors to either the cell background or the cell text.
 }
 \details{
-The \code{col_*()} functions from the scales package can be used in the
-\code{colors} argument. These functions map data values (\code{numeric} or
-\code{factor}/\code{character}) to colors according to the provided palette.
+The \code{col_*()} functions from the scales package can be used in the \code{colors}
+argument. These functions map data values (\code{numeric} or \code{factor}/\code{character})
+to colors according to the provided palette.
 
 \itemize{
 \item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping
@@ -79,11 +79,11 @@ Choosing the right color palette can often be difficult because it's both
 hard to discover suitable palettes and then obtain the vector of colors. To
 make this process easier we can elect to use the \pkg{paletteer} package,
 which makes a wide range of palettes from various R packages readily
-available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to
-easily inspect all of the discrete color palettes available in
-\pkg{paletteer}. We only then need to specify the \code{package} and
-\code{palette} when calling the \code{paletteer::paletteer_d()} function,
-and, we get the palette as a vector of hexadecimal colors.
+available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
+inspect all of the discrete color palettes available in \pkg{paletteer}. We
+only then need to specify the \code{package} and \code{palette} when calling the
+\code{paletteer::paletteer_d()} function, and, we get the palette as a vector of
+hexadecimal colors.
 }
 \section{Figures}{
 

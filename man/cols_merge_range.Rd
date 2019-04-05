@@ -7,28 +7,27 @@
 cols_merge_range(data, col_begin, col_end)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{col_begin}{a column that contains values for the start of the range.}
+\item{col_begin}{A column that contains values for the start of the range.}
 
-\item{col_end}{a column that contains values for the end of the range.}
+\item{col_end}{A column that contains values for the end of the range.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_merge_range()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that
-constitute a range of values (\code{col_begin} and \code{col_end}) and merges
-them into a single column. What results is a column containing both values
-separated by a long dash (e.g., \code{12.0 — 20.0}). The column specified in
-\code{col_end} is dropped from the output table.
+\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that constitute
+a range of values (\code{col_begin} and \code{col_end}) and merges them into a single
+column. What results is a column containing both values separated by a long
+dash (e.g., \code{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
+the output table.
 }
 \details{
-This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}},
-however, \code{cols_merge_range()} employs the following specialized
-semantics for \code{NA} handling:
+This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
+\code{cols_merge_range()} employs the following specialized semantics for \code{NA}
+handling:
 
 \enumerate{
 
@@ -44,18 +43,16 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} =
 \code{NA})
 }
 
-Any resulting \code{NA} values in the \code{col_begin} column following the
-merge operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}}
-function.
+Any resulting \code{NA} values in the \code{col_begin} column following the merge
+operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
 
 This function is part of a set of three column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate
-similarly, where the second column specified is dropped from the output
-table. For all of the \code{cols_merge*()} functions, column removal occurs
-late in the rendering lifecycle so those secondary columns are still usable
-as column references (e.g., inside expressions provided to \code{rows} in the
-\code{fmt*()} functions).
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate similarly, where the
+second column specified is dropped from the output table. For all of the
+\code{cols_merge*()} functions, column removal occurs late in the rendering
+lifecycle so those secondary columns are still usable as column references
+(e.g., inside expressions provided to \code{rows} in the \code{fmt*()} functions).
 }
 \section{Figures}{
 

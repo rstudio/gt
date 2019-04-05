@@ -7,19 +7,18 @@
 cols_split_delim(data, delim, columns = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{delim}{the delimiter to use to split an input column name. The
+\item{delim}{The delimiter to use to split an input column name. The
 delimiter supplied will be autoescaped for the internal splitting
 procedure. The first component of the split will become the group name and
 the second component will be the column label.}
 
-\item{columns}{an optional vector of column names that this operation should
+\item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 This function will split selected delimited column names such that the first
@@ -29,17 +28,16 @@ reference to individual columns must continue to be the column names from the
 input table data (which are unique by necessity).
 }
 \details{
-If we look to the column names in the \code{iris} dataset as an example of
-how \code{cols_split_delim()} might be useful, we find the names
-\code{Sepal.Length}, \code{Sepal.Width}, \code{Petal.Length},
-\code{Petal.Width}. From this naming system, it's easy to see that the
-\code{Sepal} and \code{Petal} can group together the repeated common
-\code{Length} and \code{Width} values. In your own datasets, we can avoid a
-lengthy relabeling with \code{\link[=cols_label]{cols_label()}} if column names can be
-fashioned beforehand to contain both the spanner column label and the column
-label. An additional advantage is that the column names in the input table
-data remain unique even though there may eventually be repeated column labels
-in the rendered output table).
+If we look to the column names in the \code{iris} dataset as an example of how
+\code{cols_split_delim()} might be useful, we find the names \code{Sepal.Length},
+\code{Sepal.Width}, \code{Petal.Length}, \code{Petal.Width}. From this naming system, it's
+easy to see that the \code{Sepal} and \code{Petal} can group together the repeated
+common \code{Length} and \code{Width} values. In your own datasets, we can avoid a
+lengthy relabeling with \code{\link[=cols_label]{cols_label()}} if column names can be fashioned
+beforehand to contain both the spanner column label and the column label. An
+additional advantage is that the column names in the input table data remain
+unique even though there may eventually be repeated column labels in the
+rendered output table).
 }
 \section{Figures}{
 

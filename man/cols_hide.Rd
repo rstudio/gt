@@ -7,32 +7,31 @@
 cols_hide(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the column names to hide from the output display table. The
+\item{columns}{The column names to hide from the output display table. The
 order of the remaining columns will be preserved. Values provided that do
 not correspond to column names will be disregarded.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_hide()} function allows us to hide one or more columns from
 appearing in the final output table. While it's possible and often desirable
-to omit columns from the input table data before introduction to the
-\code{\link[=gt]{gt()}} function, there can be cases where the data in certain
-columns is useful (as a column reference during formatting of other columns)
-but the final display of those columns is not necessary.
+to omit columns from the input table data before introduction to the \code{\link[=gt]{gt()}}
+function, there can be cases where the data in certain columns is useful (as
+a column reference during formatting of other columns) but the final display
+of those columns is not necessary.
 }
 \details{
 The hiding of columns is internally a rendering directive, so, all columns
 that are 'hidden' are still accessible and useful in any expression provided
-to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as
-with many \pkg{gt} functions) can be placed anywhere in a pipeline of
-\pkg{gt} function calls (acting as a promise to hide columns when the timing
-is right). However there's perhaps greater readability when placing this call
-closer to the end of such a pipeline.
+to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with many
+\pkg{gt} functions) can be placed anywhere in a pipeline of \pkg{gt} function
+calls (acting as a promise to hide columns when the timing is right). However
+there's perhaps greater readability when placing this call closer to the end
+of such a pipeline.
 }
 \section{Figures}{
 
