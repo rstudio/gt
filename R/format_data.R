@@ -135,8 +135,6 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
-  # Define the formatter `type`
-  type <- "number"
   # Set default values
   accounting <- FALSE
   currency <- NULL
@@ -243,8 +241,6 @@ fmt_scientific <- function(data,
                            dec_mark = ".",
                            locale = NULL) {
 
-  # Define the formatter `type`
-  type <- "scientific"
   # Set default values
   accounting <- FALSE
   currency <- NULL
@@ -354,8 +350,6 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
-  # Define the formatter `type`
-  type <- "percent"
   # Set default values
   scale_by <- 100
   accounting <- FALSE
@@ -510,8 +504,6 @@ fmt_currency <- function(data,
                          incl_space = FALSE,
                          locale = NULL) {
 
-  # Define the formatter `type`
-  type <- "currency"
   # Set default values
   drop_trailing_zeros <- FALSE
 
