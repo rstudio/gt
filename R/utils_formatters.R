@@ -394,6 +394,36 @@ format_in_accounting_style <- function(x,
 
   x
 }
+
+#' @noRd
+prettify_scientific_notation <- function(x,
+                                         small_pos,
+                                         exp_marks,
+                                         minus_mark) {
+
+  if (!any(grepl("e|E", x))) {
+    return(x)
+  }
+
+  # For any numbers that shouldn't have an exponent, remove
+  # that portion from the character version
+  x[small_pos] <-
+    split_scientific_notn(x[small_pos])$num
+
+  # For any non-NA numbers that do have an exponent, format
+  # those according to the output context
+  sci_parts <- split_scientific_notn(x[!small_pos])
+
+  x[!small_pos] <-
+    paste0(
+      sci_parts$num, exp_marks[1],
+      sci_parts$exp, exp_marks[2]
+    )
+
+  # Handle replacement of the minus mark in number
+  # and exponent parts
+  x %>%
+    tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
 #' @noRd
