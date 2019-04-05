@@ -102,7 +102,7 @@ test_that("the `fmt_currency()` function works correctly", {
        render_formats_test("latex"))[["num_1"]],
     c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
       "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",
-      "$\\left(\\text{\\$}23.24\\right)$")
+      "$(\\text{\\$}23.24)$")
   )
 
   # Format the `num_1` column as USD, apply parentheses to all negative
@@ -115,7 +115,7 @@ test_that("the `fmt_currency()` function works correctly", {
        render_formats_test("latex"))[["num_1"]],
     c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
       "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",
-      "$\\left(\\text{\\$}23.24\\right)$")
+      "$(\\text{\\$}23.24)$")
   )
 
   # Format the `num_1` column as USD to 4 decimal places, scale all values by
