@@ -272,13 +272,6 @@ context_minus_mark <- function(context) {
          "-")
 }
 
-context_parens_marks <- function(context) {
-
-  switch(context,
-         latex = c("\\left(", "\\right)"),
-         c("(", ")"))
-}
-
 context_parens_marks_number <- function(context) {
 
   switch(context,
