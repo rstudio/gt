@@ -366,8 +366,8 @@ paste_symbol_str <- function(x,
 }
 
 #' @noRd
-format_in_accounting_style <- function(x_vals,
-                                       x_str_vals,
+format_in_accounting_style <- function(x,
+                                       x_vals,
                                        accounting,
                                        minus_mark,
                                        parens_marks) {
