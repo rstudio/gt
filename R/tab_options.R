@@ -6,27 +6,27 @@
 #' @param table.width the width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
-#'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
+#'   given in units of pixels. The [px()] and [pct()]
 #'   helper functions can also be used to pass in numeric values and obtain
 #'   values as pixel or percent units.
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
-#'   font sizes for the parent text element \code{table} and the following child
-#'   elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
-#'   \code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
+#'   font sizes for the parent text element `table` and the following child
+#'   elements: `heading.title`, `heading.subtitle`, `columns`,
+#'   `row_group`, `footnote`, and `sourcenote`. Can be specified
 #'   as a single-length character vector with units of pixels (e.g.,
-#'   \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
+#'   `12px`) or as a percentage (e.g., `80\%`). If provided as a
 #'   single-length numeric vector, it is assumed that the value is given in
-#'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+#'   units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
 #' @param column_labels.font.weight,row_group.font.weight the font weight of the
-#'   \code{columns} and \code{row_group} text element.
+#'   `columns` and `row_group` text element.
 #' @param summary_row.text_transform an option to apply text transformations to
 #' the label text in each summary row.
 #' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color
-#'   background colors for the parent element \code{table} and the following
-#'   child elements: \code{heading}, \code{columns}, \code{row_group},
-#'   \code{summary_row}, and \code{table_body}. A color name or a hexadecimal
+#'   background colors for the parent element `table` and the following
+#'   child elements: `heading`, `columns`, `row_group`,
+#'   `summary_row`, and `table_body`. A color name or a hexadecimal
 #'   color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
 #'   the style, width, and color of the table's top border.
@@ -45,20 +45,20 @@
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnote.glyph the set of sequential figures or characters used to
-#'   identify the footnotes. We can either supply the keyword \code{"numbers"}
+#'   identify the footnotes. We can either supply the keyword `"numbers"`
 #'   (the default, indicating that we want numeric glyphs), the keywords
-#'   \code{"letters"} or \code{"LETTERS"} (indicating that we want letters as
+#'   `"letters"` or `"LETTERS"` (indicating that we want letters as
 #'   glyphs, either lowercase or uppercase), or, a vector of character values
 #'   representing the series of glyphs. A series of glyphs is recycled when its
 #'   usage goes beyond the length of the set. At each cycle, the glyphs are
-#'   simply combined (e.g., \code{*} -> \code{**} -> \code{***}).
+#'   simply combined (e.g., `*` -> `**` -> `***`).
 #' @param footnote.padding,sourcenote.padding the amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub an option for whether to include the stub
 #'   when striping rows.
 #' @param row.striping.include_table_body an option for whether to include the
 #'   table body when striping rows.
-#' @return an object of class \code{gt_tbl}.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this

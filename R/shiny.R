@@ -1,10 +1,10 @@
 #' A \pkg{gt} display table render function for use in Shiny
 #' @param expr an expression that creates a \pkg{gt} table object.
-#' @param env the environment in which to evaluate the \code{expr}.
-#' @param quoted is expr a quoted expression (with \code{quote()})? This is
+#' @param env the environment in which to evaluate the `expr`.
+#' @param quoted is expr a quoted expression (with `quote()`)? This is
 #'   useful if you want to save an expression in a variable.
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to \code{\link{gt_output}()} when \code{render_gt} is used in an
+#'   call to [gt_output()] when `render_gt` is used in an
 #'   interactive R Markdown document.
 #' @seealso \link{gt_output}()
 #' @family Shiny functions

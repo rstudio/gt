@@ -1,19 +1,19 @@
 #' Perform targeted text transformation with a function
 #' @inheritParams cols_align
 #' @param locations the cell or set of cells to be associated with the text
-#'   transformation. Supplying any of the \code{cells_*()} helper functions is a
+#'   transformation. Supplying any of the `cells_*()` helper functions is a
 #'   useful way to target the location cells that are associated with the
-#'   footnote text. These helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-#'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-#'   \code{\link{cells_summary}()}. Please see the help article
+#'   footnote text. These helper functions are: [cells_title()],
+#'   [cells_column_labels()], [cells_group()],
+#'   [cells_stub()], [cells_data()], and
+#'   [cells_summary()]. Please see the help article
 #'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several \code{cells_*()} calls
-#'   within a \code{list()} if we wish to link the footnote text to different
+#'   can be used. Additionally, we can enclose several `cells_*()` calls
+#'   within a `list()` if we wish to link the footnote text to different
 #'   types of locations (e.g., cell data values, stub group headings, the table
 #'   title, etc.).
 #' @param fn the function to use for text transformation.
-#' @return an object of class \code{gt_tbl}.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # transform the formatted text in the

@@ -365,17 +365,17 @@ markdown_to_text <- function(text) {
     unname()
 }
 
-#' Handle formatting of a pattern in a \code{fmt_*()} function
+#' Handle formatting of a pattern in a `fmt_*()` function
 #'
-#' Within the context of a \code{fmt_*()} function, we always have the
-#' single-length character vector of \code{pattern} available to describe a
+#' Within the context of a `fmt_*()` function, we always have the
+#' single-length character vector of `pattern` available to describe a
 #' final decoration of the formatted values. We use \pkg{glue}'s semantics here
-#' and reserve \code{x} to be the formatted values, and, we can use \code{x}
+#' and reserve `x` to be the formatted values, and, we can use `x`
 #' multiple times in the pattern.
 #' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value (defined here as \code{x}).
+#'   formatted value (defined here as `x`).
 #' @param values The values (as a character vector) that are formatted within
-#'   the \code{fmt_*()} function.
+#'   the `fmt_*()` function.
 #' @noRd
 apply_pattern_fmt_x <- function(pattern,
                                 values) {
@@ -902,7 +902,7 @@ footnote_glyphs <- function(x,
 
 #' Determine whether an object is a `gt_tbl`
 #'
-#' @param data A table object that is created using the \code{\link{gt}()}
+#' @param data A table object that is created using the [gt()]
 #'   function.
 #' @importFrom checkmate test_class
 #' @noRd
@@ -913,7 +913,7 @@ is_gt <- function(data) {
 
 #' Stop any function if object is not a `gt_tbl` object
 #'
-#' @param data A table object that is created using the \code{\link{gt}()}
+#' @param data A table object that is created using the [gt()]
 #'   function.
 #' @noRd
 stop_if_not_gt <- function(data) {

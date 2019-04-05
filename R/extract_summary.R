@@ -1,10 +1,10 @@
 #' Extract a summary list from a \pkg{gt} object
 #'
-#' Get a list of summary row data frames from a \code{gt_tbl} object where
-#' summary rows were added via the \code{\link{summary_rows}()} function. The
-#' output data frames contain the \code{groupname} and \code{rowname} columns,
-#' whereby \code{rowname} contains descriptive stub labels for the summary rows.
-#' @param data a table object that is created using the \code{\link{gt}()}
+#' Get a list of summary row data frames from a `gt_tbl` object where
+#' summary rows were added via the [summary_rows()] function. The
+#' output data frames contain the `groupname` and `rowname` columns,
+#' whereby `rowname` contains descriptive stub labels for the summary rows.
+#' @param data a table object that is created using the [gt()]
 #'   function.
 #' @return a list of data frames containing summary data.
 #' @examples
