@@ -7,7 +7,7 @@
 as_raw_html(data, inline_css = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{inline_css}{an option to supply styles to table elements as inlined CSS

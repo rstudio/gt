@@ -24,7 +24,7 @@ cells_summary(groups = NULL, columns = NULL, rows = NULL)
 }
 \arguments{
 \item{columns, rows, groups}{either a vector of names, a vector of
-indices, values provided by \code{\link{vars}()}, values provided by
+indices, values provided by \code{\link[=vars]{vars()}}, values provided by
 \code{c()}, or a select helper function (see Details for information on
 these functions).}
 }
@@ -35,8 +35,8 @@ a list object of class \code{location_cells}.
 These helper functions are used to target individual cells in different
 locations (e.g., the stub, the column labels, the title, etc.). They can be
 used in any of these functions (which all have a \code{locations} argument):
-\code{\link{tab_footnote}()}, \code{\link{tab_style}()}, and
-\code{\link{text_transform}()} Furthermore, multiple locations can be
+\code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and
+\code{\link[=text_transform]{text_transform()}} Furthermore, multiple locations can be
 targeted by enclosing several \code{cells_*()} helper functions in a list.
 }
 \details{

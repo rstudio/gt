@@ -6,22 +6,22 @@
 \title{A year of pizza sales from a pizza place}
 \format{A tibble with 49574 rows and 7 variables:
 \describe{
-  \item{id}{The ID for the order, which consists of one or more pizzas
-  at a give \code{date} and \code{time}}
-  \item{date}{A character representation of the \code{order} date,
-  expressed in the ISO 8601 date format (YYYY-MM-DD)}
-  \item{time}{A character representation of the \code{order} time,
-  expressed as a 24-hour time the ISO 8601 extended time format
-  (hh:mm:ss)}
-  \item{name}{The short name for the pizza}
-  \item{size}{The size of the pizza, which can either be \code{S},
-  \code{M}, \code{L}, \code{XL} (rare!), or \code{XXL} (even rarer!);
-  most pizzas are available in the \code{S}, \code{M}, and \code{L} sizes
-  but exceptions apply}
-  \item{type}{The category or type of pizza, which can either be
-  \code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
-  \item{price}{The price of the pizza and the amount that it sold for
-  (in USD)}
+\item{id}{The ID for the order, which consists of one or more pizzas
+at a give \code{date} and \code{time}}
+\item{date}{A character representation of the \code{order} date,
+expressed in the ISO 8601 date format (YYYY-MM-DD)}
+\item{time}{A character representation of the \code{order} time,
+expressed as a 24-hour time the ISO 8601 extended time format
+(hh:mm:ss)}
+\item{name}{The short name for the pizza}
+\item{size}{The size of the pizza, which can either be \code{S},
+\code{M}, \code{L}, \code{XL} (rare!), or \code{XXL} (even rarer!);
+most pizzas are available in the \code{S}, \code{M}, and \code{L} sizes
+but exceptions apply}
+\item{type}{The category or type of pizza, which can either be
+\code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
+\item{price}{The price of the pizza and the amount that it sold for
+(in USD)}
 }}
 \usage{
 pizzaplace
@@ -80,7 +80,7 @@ Red Peppers, Mushrooms, Asiago Cheese, Alfredo Sauce)
 Supreme Pizzas:
 \itemize{
 \item \code{brie_carre}: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
- Caramelized Onions, Pears, Thyme, Garlic)
+Caramelized Onions, Pears, Thyme, Garlic)
 \item \code{calabrese}: The Calabrese Pizza (‘Nduja Salami, Pancetta,
 Tomatoes, Red Onions, Friggitello Peppers, Garlic)
 \item \code{soppressata}: The Soppressata Pizza (Soppressata Salami, Fontina

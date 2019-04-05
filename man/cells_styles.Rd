@@ -19,7 +19,7 @@ used as fallbacks.}
 
 \item{text_size}{the size of the font. Can be provided as a number that is
 assumed to represent \code{px} values (or could be wrapped in the
-\code{\link{px}()}) helper function. We can also use one of the following
+\code{\link[=px]{px()}}) helper function. We can also use one of the following
 absolute size keywords: \code{xx-small}, \code{x-small}, \code{small},
 \code{medium}, \code{large}, \code{x-large}, or \code{xx-large}.}
 
@@ -40,7 +40,7 @@ condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
 \code{condensed}, \code{semi-condensed}, \code{normal},
 \code{semi-expanded}, \code{expanded}, \code{extra-expanded}, and
 \code{ultra-expanded}. Alternatively, we can supply percentage values from
-\code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
+\code{0\\\%} to \code{200\\\%}, inclusive. Negative percentage values are not
 allowed.}
 
 \item{text_indent}{the indentation of the text.}
@@ -55,10 +55,10 @@ we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 a character vector containing formatted styles.
 }
 \description{
-This helper function is to be used with the \code{\link{tab_style}()}
+This helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more
 cells. We can also define several styles within a single call of
-\code{cells_styles} and \code{\link{tab_style}()} will reliably apply those
+\code{cells_styles} and \code{\link[=tab_style]{tab_style()}} will reliably apply those
 styles to the targeted element.
 }
 \seealso{

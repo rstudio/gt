@@ -8,7 +8,7 @@ cols_align(data, align = c("auto", "left", "center", "right"),
   columns = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{align}{the alignment type. This can be any of \code{"center"},
@@ -32,7 +32,7 @@ manner, we can allow \pkg{gt} to automatically choose the alignment of each
 column based on the data type (with the \code{auto} option).
 }
 \details{
-When you create a \pkg{gt} table object using \code{\link{gt}()}, automatic
+When you create a \pkg{gt} table object using \code{\link[=gt]{gt()}}, automatic
 alignment of column labels and their data cells is performed. By default,
 left-alignment is applied to columns of class \code{character}, \code{Date},
 or \code{POSIXct}; center-alignment is for columns of class \code{logical},

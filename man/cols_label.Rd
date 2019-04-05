@@ -7,13 +7,13 @@
 cols_label(data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
-\item{...}{one or more named arguments of column names from the input `data`
+\item{...}{one or more named arguments of column names from the input \code{data}
 table along with their labels for display as the column labels. We can
-optionally wrap the column labels with \code{\link{md}()} (to interpret
-text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
+optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret
+text as Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
 
 \item{.list}{allows for the use of a list as an input alternative to
 \code{...}.}
@@ -21,12 +21,12 @@ text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
 \description{
 Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \pkg{gt} table object
-using \code{\link{gt}()}, column names effectively become the column labels.
+using \code{\link[=gt]{gt()}}, column names effectively become the column labels.
 While this serves as a good first approximation, column names aren't often
 appealing as column labels in a \pkg{gt} output table. The
 \code{cols_label()} function provides the flexibility to relabel one or more
-columns and we even have the option to use the \code{\link{md}()} or
-\code{\link{html}()} helper functions for rendering column labels from
+columns and we even have the option to use the \code{\link[=md]{md()}} or
+\code{\link[=html]{html()}} helper functions for rendering column labels from
 Markdown or using HTML.
 }
 \details{

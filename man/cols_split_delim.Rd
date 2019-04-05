@@ -7,7 +7,7 @@
 cols_split_delim(data, delim, columns = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{delim}{the delimiter to use to split an input column name. The
@@ -35,7 +35,7 @@ how \code{cols_split_delim()} might be useful, we find the names
 \code{Petal.Width}. From this naming system, it's easy to see that the
 \code{Sepal} and \code{Petal} can group together the repeated common
 \code{Length} and \code{Width} values. In your own datasets, we can avoid a
-lengthy relabeling with \code{\link{cols_label}()} if column names can be
+lengthy relabeling with \code{\link[=cols_label]{cols_label()}} if column names can be
 fashioned beforehand to contain both the spanner column label and the column
 label. An additional advantage is that the column names in the input table
 data remain unique even though there may eventually be repeated column labels

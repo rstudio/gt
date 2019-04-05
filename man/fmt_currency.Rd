@@ -37,7 +37,7 @@ get an information table with all of the valid currency codes and examples
 of each. Alternatively, we can provide a common currency name (e.g.,
 \code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the
 process. Use \code{\link{info_currencies}()} with the \code{type ==
-"symbol"} option to view an information table with all of the supported
+  "symbol"} option to view an information table with all of the supported
 currency symbol names along with examples. If nothing is provided then
 \code{"USD"} will be used.}
 
@@ -67,7 +67,7 @@ each of the value ranges by using a character vector of the preferred
 symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
 Including \code{NA} values in the vector will ensure that the particular
 range will either not be included in the transformation (e.g, \code{c(NA,
-"M", "B", "T")} won't modify numbers in the thousands range) or the range
+  "M", "B", "T")} won't modify numbers in the thousands range) or the range
 will inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all
 numbers in the range of millions and billions will be in terms of
 millions). Any use of \code{suffixing} (where not \code{FALSE}) means that

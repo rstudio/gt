@@ -11,7 +11,7 @@ tab_stubhead_label(data, label)
 function.}
 
 \item{label}{the text to be used as the stubhead label We can optionally
-use the \code{\link{md}()} and \code{\link{html}()} functions to style the
+use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the
 text as Markdown or to retain HTML elements in the text.}
 }
 \value{

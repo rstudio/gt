@@ -19,7 +19,7 @@ of \code{1.0} will neither compress nor expand the plot.}
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-  a cell.
+a cell.
 }
 \description{
 We can add a \pkg{ggplot2} plot inside of a table with the help of the
@@ -27,12 +27,12 @@ We can add a \pkg{ggplot2} plot inside of a table with the help of the
 generate an HTML fragment with a \code{ggplot} object. Because this function
 is currently HTML-based, it is only useful for HTML table output. To use this
 function inside of data cells, it is recommended that the
-\code{\link{text_transform}()} function is used. With that function, we can
+\code{\link[=text_transform]{text_transform()}} function is used. With that function, we can
 specify which data cells to target and then include a call to
 \code{ggplot_image()} within the required user-defined function (for the
 \code{fn} argument). If we want to include a plot in other places (e.g., in
 the header, within footnote text, etc.) we need to use \code{ggplot_image()}
-within the \code{\link{html}()} helper function.
+within the \code{\link[=html]{html()}} helper function.
 }
 \details{
 By itself, the function creates an HTML image tag with an image URI embedded

@@ -11,16 +11,16 @@ tab_footnote(data, footnote, locations)
 function.}
 
 \item{footnote}{the text to be used in the footnote. We can optionally use
-the \code{\link{md}()} and \code{\link{html}()} functions to style the text
+the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text
 as Markdown or to retain HTML elements in the footnote text.}
 
 \item{locations}{the cell or set of cells to be associated with the footnote.
 Supplying any of the \code{cells_*()} helper functions is a useful way to
 target the location cells that are associated with the footnote text. These
-helper functions are: \code{\link{cells_title}()},
-\code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-\code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-\code{\link{cells_summary}()}. Please see the help article
+helper functions are: \code{\link[=cells_title]{cells_title()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}},
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}}, and
+\code{\link[=cells_summary]{cells_summary()}}. Please see the help article
 \link{location_cells} for more information on how these helper functions
 can be used. Additionally, we can enclose several \code{cells_*()} calls
 within a \code{list()} if we wish to link the footnote text to different
@@ -37,12 +37,12 @@ glyph that is attached to the targeted cell text, and (2) the footnote text
 (that starts with the corresponding glyph) that is placed in the table's
 footer area. Each call of \code{tab_footnote()} will add a different note,
 and one or more cells can be targeted via the location helper functions
-(e.g., \code{\link{cells_data}()}, \code{\link{cells_column_labels}()},
+(e.g., \code{\link[=cells_data]{cells_data()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
 etc.).
 }
 \details{
 The formatting of the footnotes can be controlled through the use of various
-parameters in the \code{\link{tab_options}()} function:
+parameters in the \code{\link[=tab_options]{tab_options()}} function:
 
 \itemize{
 \item \code{footnote.sep}: allows for a choice of the separator between

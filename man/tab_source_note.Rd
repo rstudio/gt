@@ -11,7 +11,7 @@ tab_source_note(data, source_note)
 function.}
 
 \item{source_note}{text to be used in the source note. We can optionally use
-the \code{\link{md}()} and \code{\link{html}()} functions to style the text
+the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text
 as Markdown or to retain HTML elements in the text.}
 }
 \value{

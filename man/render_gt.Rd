@@ -16,7 +16,7 @@ render_gt(expr, env = parent.frame(), quoted = FALSE,
 useful if you want to save an expression in a variable.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
-call to \code{\link{gt_output}()} when \code{render_gt} is used in an
+call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in an
 interactive R Markdown document.}
 }
 \description{

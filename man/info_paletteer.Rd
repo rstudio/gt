@@ -13,7 +13,7 @@ palettes should be displayed in the information table. If this is
 color packages represented in \pkg{paletteer} will be displayed.}
 }
 \description{
-While the \code{\link{data_color}()} function allows us to flexibly color
+While the \code{\link[=data_color]{data_color()}} function allows us to flexibly color
 data cells in our \pkg{gt} table, the harder part of this process is
 discovering and choosing color palettes that are suitable for the table
 output. We can make this process much easier in two ways: (1) by using the

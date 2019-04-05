@@ -11,7 +11,7 @@ md(text)
 }
 \value{
 a character object that is tagged for a Markdown-to-HTML
-  transformation.
+transformation.
 
 a character object of class \code{from_markdown}.
 }

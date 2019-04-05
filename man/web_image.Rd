@@ -13,19 +13,19 @@ web_image(url, height = 30)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-  a cell.
+a cell.
 }
 \description{
 We can flexibly add a web image inside of a table with \code{web_image()}
 function. The function provides a convenient way to generate an HTML fragment
 with an image URL. Because this function is currently HTML-based, it is only
 useful for HTML table output. To use this function inside of data cells, it
-is recommended that the \code{\link{text_transform}()} function is used. With
+is recommended that the \code{\link[=text_transform]{text_transform()}} function is used. With
 that function, we can specify which data cells to target and then include a
 \code{web_image()} call within the required user-defined function (for the
 \code{fn} argument). If we want to include an image in other places (e.g., in
 the header, within footnote text, etc.) we need to use \code{web_image()}
-within the \code{\link{html}()} helper function.
+within the \code{\link[=html]{html()}} helper function.
 }
 \details{
 By itself, the function creates an HTML image tag, so, the call

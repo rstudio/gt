@@ -7,7 +7,7 @@
 row_group_order(data, groups)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{groups}{a vector of row group names, or, a numeric vector of indices

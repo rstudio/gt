@@ -9,11 +9,11 @@
 \section{Package options}{
 
 
-\pkg{gt} uses the following \code{\link{options}} to configure behavior:
+\pkg{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
 
 \itemize{
-  \item \code{gt.stub_group.sep}: a separator between groups for the
-  stub group label.
+\item \code{gt.stub_group.sep}: a separator between groups for the
+stub group label.
 
 }
 }

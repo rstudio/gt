@@ -58,15 +58,15 @@ The \code{col_*()} functions from the scales package can be used in the
 \code{factor}/\code{character}) to colors according to the provided palette.
 
 \itemize{
-\item \code{\link[scales]{col_numeric}()}: provides a simple linear mapping
+\item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping
 from continuous numeric data to an interpolated palette.
-\item \code{\link[scales]{col_bin}()}: provides a mapping of continuous
+\item \code{\link[scales:col_bin]{scales::col_bin()}}: provides a mapping of continuous
 numeric data to value-based bins. This internally uses the
-\code{\link[base]{cut}()} function.
-\item \code{\link[scales]{col_quantile}()}: provides a mapping of continuous
+\code{\link[base:cut]{base::cut()}} function.
+\item \code{\link[scales:col_quantile]{scales::col_quantile()}}: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
-\code{\link[stats]{quantile}()} function.
-\item \code{\link[scales]{col_factor}()}: provides a mapping of factors to
+\code{\link[stats:quantile]{stats::quantile()}} function.
+\item \code{\link[scales:col_factor]{scales::col_factor()}}: provides a mapping of factors to
 colors. If the palette is discrete and has a different number of colors than
 the number of factors, interpolation is used.
 }
@@ -79,7 +79,7 @@ Choosing the right color palette can often be difficult because it's both
 hard to discover suitable palettes and then obtain the vector of colors. To
 make this process easier we can elect to use the \pkg{paletteer} package,
 which makes a wide range of palettes from various R packages readily
-available. The \code{\link{info_paletteer}()} information table allows us to
+available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to
 easily inspect all of the discrete color palettes available in
 \pkg{paletteer}. We only then need to specify the \code{package} and
 \code{palette} when calling the \code{paletteer::paletteer_d()} function,

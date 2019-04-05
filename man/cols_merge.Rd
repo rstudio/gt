@@ -7,7 +7,7 @@
 cols_merge(data, col_1, col_2, pattern = "{1} {2}")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{col_1}{a retained column that contains values to be merged with those
@@ -35,12 +35,12 @@ specified in \code{col_2} is dropped from the output table.
 }
 \details{
 There are two other column-merging functions that offer specialized behavior
-that is optimized for common table tasks: \code{\link{cols_merge_range}()}
-and \code{\link{cols_merge_uncert}()}. These functions operate similarly,
+that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}}
+and \code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly,
 where the second column specified is dropped from the output table. For all
 of the \code{cols_merge*()} functions, column removal occurs late in the
 rendering lifecycle so those secondary columns are still usable as column
-references (e.g., inside expressions provided to `rows` in the \code{fmt*()}
+references (e.g., inside expressions provided to \code{rows} in the \code{fmt*()}
 functions).
 }
 \section{Figures}{

@@ -13,7 +13,7 @@ local_image(file, height = 30)
 }
 \value{
 a character object with an HTML fragment that can be placed inside of
-  a cell.
+a cell.
 }
 \description{
 We can flexibly add a local image (i.e., an image residing on disk) inside of
@@ -21,19 +21,18 @@ a table with \code{local_image()} function. The function provides a
 convenient way to generate an HTML fragment using an on-disk PNG or SVG.
 Because this function is currently HTML-based, it is only useful for HTML
 table output. To use this function inside of data cells, it is recommended
-that the \code{\link{text_transform}()} function is used. With that function,
+that the \code{\link[=text_transform]{text_transform()}} function is used. With that function,
 we can specify which data cells to target and then include a
 \code{local_image()} call within the required user-defined function (for the
 \code{fn} argument). If we want to include an image in other places (e.g., in
 the header, within footnote text, etc.) we need to use \code{local_image()}
-within the \code{\link{html}()} helper function.
+within the \code{\link[=html]{html()}} helper function.
 }
 \details{
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
-available in the \pkg{gt} package using the \code{\link{test_image}()}
-function. Using that, the call \code{local_image(file = test_image(type =
-"png"))} evaluates to:
+available in the \pkg{gt} package using the \code{\link[=test_image]{test_image()}}
+function. Using that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 
 \code{<img cid=<random CID> src=<data URI> style=\"height:30px;\">}
 

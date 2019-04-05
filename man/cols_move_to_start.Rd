@@ -7,7 +7,7 @@
 cols_move_to_start(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{columns}{the column names to move to the left-most side of the table.
@@ -28,8 +28,8 @@ columns in the table).
 \details{
 The columns supplied in \code{columns} must all exist in the table. If you
 need to place one or columns at the end of the column series, the
-\code{\link{cols_move_to_end}()} function should be used. More control is
-offered with the \code{\link{cols_move}()} function, where columns could be
+\code{\link[=cols_move_to_end]{cols_move_to_end()}} function should be used. More control is
+offered with the \code{\link[=cols_move]{cols_move()}} function, where columns could be
 placed after a specific column.
 }
 \section{Figures}{

@@ -40,7 +40,7 @@ function.}
 \item{table.width}{the width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}}
 helper functions can also be used to pass in numeric values and obtain
 values as pixel or percent units.}
 
@@ -48,9 +48,9 @@ values as pixel or percent units.}
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
 \code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
 as a single-length character vector with units of pixels (e.g.,
-\code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
+\code{12px}) or as a percentage (e.g., \code{80\\\%}). If provided as a
 single-length numeric vector, it is assumed that the value is given in
-units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 

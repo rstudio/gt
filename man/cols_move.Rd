@@ -7,7 +7,7 @@
 cols_move(data, columns, after)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{columns}{the column names to move to as a group to a different
@@ -34,9 +34,9 @@ The columns supplied in \code{columns} must all exist in the table and none
 of them can be in the \code{after} argument. The \code{after} column must
 also exist and only one column should be provided here. If you need to place
 one or columns at the beginning of the column series, the
-\code{\link{cols_move_to_start}()} function should be used. Similarly, if
+\code{\link[=cols_move_to_start]{cols_move_to_start()}} function should be used. Similarly, if
 those columns to move should be placed at the end of the column series then
-use \code{\link{cols_move_to_end}()}.
+use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
 }
 \section{Figures}{
 

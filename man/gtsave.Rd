@@ -7,7 +7,7 @@
 gtsave(data, filename, ...)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{filename}{the file name to create on disk. Ensure that an extension
@@ -28,7 +28,7 @@ Output filenames with either the \code{.html} or \code{.htm} extensions will
 produce an HTML document. In this case, we can pass a \code{TRUE} or
 \code{FALSE} value to the \code{inline_css} option to obtain an HTML document
 with inlined CSS styles (the default is \code{FALSE}). More details on CSS
-inlining are available at \code{\link{as_raw_html}()}.
+inlining are available at \code{\link[=as_raw_html]{as_raw_html()}}.
 
 If the output filename is either of \code{.tex}, \code{.ltx}, or \code{.rnw},
 a LaTeX document is produced. An output filename of \code{.rtf} will generate

@@ -11,8 +11,8 @@ tab_header(data, title, subtitle = NULL)
 function.}
 
 \item{title, subtitle}{text to be used in the table title and, optionally, for
-the table subtitle. We can elect to use the \code{\link{md}()} and
-\code{\link{html}()} helper functions to style the text as Markdown or to
+the table subtitle. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to
 retain HTML elements in the text.}
 }
 \value{

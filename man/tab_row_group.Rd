@@ -16,9 +16,9 @@ group label.}
 \item{rows}{the rows to be made components of the row group. Can either be a
 vector of row captions provided \code{c()}, a vector of row indices, or a
 helper function focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+and \code{\link[=everything]{everything()}}.}
 
 \item{others}{an option to set a default row group label for any rows not
 formally placed in a row group named by \code{group} in any call of

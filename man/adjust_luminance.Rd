@@ -23,7 +23,7 @@ apply greater darkening or lightening for those colors in the midrange
 compared to any very dark or very light colors in the input palette.
 }
 \details{
-This function can be useful when combined with the \code{\link{data_color}()}
+This function can be useful when combined with the \code{\link[=data_color]{data_color()}}
 function's \code{palette} argument, which can use a vector of colors or any
 of the \code{col_*} functions from the \pkg{scales} package (all of which
 have a \code{palette} argument).

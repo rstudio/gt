@@ -7,7 +7,7 @@
 cols_hide(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
 function.}
 
 \item{columns}{the column names to hide from the output display table. The
@@ -21,7 +21,7 @@ an object of class \code{gt_tbl}.
 The \code{cols_hide()} function allows us to hide one or more columns from
 appearing in the final output table. While it's possible and often desirable
 to omit columns from the input table data before introduction to the
-\code{\link{gt}()} function, there can be cases where the data in certain
+\code{\link[=gt]{gt()}} function, there can be cases where the data in certain
 columns is useful (as a column reference during formatting of other columns)
 but the final display of those columns is not necessary.
 }
