@@ -252,6 +252,10 @@ fmt_scientific <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -359,6 +363,10 @@ fmt_percent <- function(data,
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
