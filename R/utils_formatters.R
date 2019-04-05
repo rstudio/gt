@@ -428,18 +428,18 @@ prettify_scientific_notation <- function(x,
 
 #' @noRd
 num_formatter_factory <- function(context,
-                                  decimals = NULL,
-                                  suffix_labels = NULL,
-                                  scale_by = NULL,
-                                  sep_mark = NULL,
-                                  dec_mark = NULL,
-                                  currency = NULL,
-                                  drop_trailing_zeros = NULL,
-                                  accounting = NULL,
-                                  incl_space = NULL,
-                                  placement = NULL,
-                                  pattern = NULL,
-                                  format_fn = NULL) {
+                                  decimals,
+                                  suffix_labels,
+                                  scale_by,
+                                  sep_mark,
+                                  dec_mark,
+                                  currency,
+                                  drop_trailing_zeros,
+                                  accounting,
+                                  incl_space,
+                                  placement,
+                                  pattern,
+                                  format_fn) {
 
   force(context)
   force(decimals)
