@@ -161,17 +161,17 @@ fmt_number <- function(data,
     fns = list(
       html = num_formatter_factory(
         context = "html", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       latex = num_formatter_factory(
         context = "latex", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       default = num_formatter_factory(
         context = "default", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern)
     )
@@ -260,17 +260,17 @@ fmt_scientific <- function(data,
     fns = list(
       html = num_formatter_factory(
         context = "html", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       latex = num_formatter_factory(
         context = "latex", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       default = num_formatter_factory(
         context = "default", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern)
     )
@@ -365,17 +365,17 @@ fmt_percent <- function(data,
     fns = list(
       html = num_formatter_factory(
         context = "html", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       latex = num_formatter_factory(
         context = "latex", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       default = num_formatter_factory(
         context = "default", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern)
     )
@@ -526,17 +526,17 @@ fmt_currency <- function(data,
     fns = list(
       html = num_formatter_factory(
         context = "html", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       latex = num_formatter_factory(
         context = "latex", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern),
       default = num_formatter_factory(
         context = "default", type,
-        x, decimals, suffix_labels, scale_by,
+        decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
         accounting, incl_space, placement, pattern)
     )

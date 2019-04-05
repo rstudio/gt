@@ -389,7 +389,6 @@ format_in_accounting_style <- function(x_vals,
 #' @noRd
 num_formatter_factory <- function(context,
                                   type,
-                                  x,
                                   decimals = NULL,
                                   suffix_labels = NULL,
                                   scale_by = NULL,
@@ -449,7 +448,7 @@ num_formatter_factory <- function(context,
       x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
 
     } else {
-      x_vals <- scale_x_values(x_vals, scale_by = scale_by)
+      x_vals <- scale_x_values(x_vals, scale_by)
     }
 
     # Determine which values don't require the (x 10^n)
