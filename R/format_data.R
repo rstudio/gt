@@ -161,20 +161,23 @@ fmt_number <- function(data,
     rows = !!rows,
     fns = list(
       html = num_formatter_factory(
-        context = "html", type,
+        context = "html",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str),
       latex = num_formatter_factory(
-        context = "latex", type,
+        context = "latex",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str),
       default = num_formatter_factory(
-        context = "default", type,
+        context = "default",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern)
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str)
     )
   )
 }
@@ -268,20 +271,23 @@ fmt_scientific <- function(data,
     rows = !!rows,
     fns = list(
       html = num_formatter_factory(
-        context = "html", type,
+        context = "html",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_e),
       latex = num_formatter_factory(
-        context = "latex", type,
+        context = "latex",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_e),
       default = num_formatter_factory(
-        context = "default", type,
+        context = "default",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern)
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_e)
     )
   )
 }
@@ -380,20 +386,23 @@ fmt_percent <- function(data,
     rows = !!rows,
     fns = list(
       html = num_formatter_factory(
-        context = "html", type,
+        context = "html",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str),
       latex = num_formatter_factory(
-        context = "latex", type,
+        context = "latex",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str),
       default = num_formatter_factory(
-        context = "default", type,
+        context = "default",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern)
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str)
     )
   )
 }
@@ -541,20 +550,23 @@ fmt_currency <- function(data,
     rows = !!rows,
     fns = list(
       html = num_formatter_factory(
-        context = "html", type,
+        context = "html",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_c),
       latex = num_formatter_factory(
-        context = "latex", type,
+        context = "latex",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern),
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_c),
       default = num_formatter_factory(
-        context = "default", type,
+        context = "default",
         decimals, suffix_labels, scale_by,
         sep_mark, dec_mark, currency, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern)
+        accounting, incl_space, placement, pattern,
+        format_fn = format_num_to_str_c)
     )
   )
 }
