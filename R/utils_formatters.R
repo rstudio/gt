@@ -374,25 +374,26 @@ format_in_accounting_style <- function(x,
 
   # Return values unchanged if there are no negative values
   if (!any(x_vals < 0)) {
-    return(x_str_vals)
+    return(x)
   }
 
   # Handle replacement of the minus mark
-  x_str_vals <-
-    x_str_vals %>%
+  x <-
+    x %>%
     tidy_gsub("-", minus_mark, fixed = TRUE)
 
   # Handle case where negative values are to be placed within parentheses
   if (accounting) {
 
     # Selectively remove minus sign and paste between parentheses
-    x_str_vals[x_vals < 0] <-
-      x_str_vals[x_vals < 0] %>%
+    x[x_vals < 0] <-
+      x[x_vals < 0] %>%
       tidy_gsub(minus_mark, "", fixed = TRUE) %>%
       paste_between(x_2 = parens_marks)
   }
 
-  x_str_vals
+  x
+}
 }
 
 #' @noRd
