@@ -34,7 +34,10 @@ use. The default number of decimal places is \code{2}.}
 \item{drop_trailing_zeros}{a logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+\item{scale_by}{a value to scale the input. The default is \code{1.0}. All
+numeric values will be multiplied by this value first before undergoing
+formatting. This value will be ignored if using any of the \code{suffixing}
+options (i.e., where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{pattern}{a formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
@@ -52,7 +55,8 @@ of \code{0,152}).}
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
-\code{dec_mark}.}
+\code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
+useful reference for all of the locales that are supported.}
 }
 \value{
 an object of class \code{gt_tbl}.

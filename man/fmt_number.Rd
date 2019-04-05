@@ -39,7 +39,10 @@ trailing zeros (those redundant zeros after the decimal mark).}
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+\item{scale_by}{a value to scale the input. The default is \code{1.0}. All
+numeric values will be multiplied by this value first before undergoing
+formatting. This value will be ignored if using any of the \code{suffixing}
+options (i.e., where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{suffixing}{an option to scale and apply suffixes to larger numbers
 (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
@@ -73,7 +76,8 @@ of \code{0,152}).}
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
-\code{dec_mark}.}
+\code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
+useful reference for all of the locales that are supported.}
 }
 \value{
 an object of class \code{gt_tbl}.
