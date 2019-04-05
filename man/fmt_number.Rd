@@ -86,8 +86,6 @@ over numeric formatting with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item negative values: choice of a negative sign or parentheses for values
-less than zero
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
