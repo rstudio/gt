@@ -241,7 +241,8 @@ format_num_to_str_e <- function(x,
 format_num_to_str_c <- function(x,
                                 decimals,
                                 sep_mark,
-                                dec_mark) {
+                                dec_mark,
+                                drop_trailing_zeros = FALSE) {
 
   format_num_to_str(
     x,
@@ -249,7 +250,7 @@ format_num_to_str_c <- function(x,
     sep_mark,
     dec_mark,
     format = "f",
-    drop_trailing_zeros = FALSE)
+    drop_trailing_zeros)
 }
 
 #' Surround formatted values with `$`s for LaTeX
