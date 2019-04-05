@@ -12,16 +12,16 @@
 #' center-alignment is for columns of class `logical`, `factor`, or `list`; and
 #' right-alignment is used for the `numeric` and `integer` columns.
 #'
-#' @param data a table object that is created using the [gt()] function.
-#' @param align the alignment type. This can be any of `"center"`, `"left"`, or
+#' @param data A table object that is created using the [gt()] function.
+#' @param align The alignment type. This can be any of `"center"`, `"left"`, or
 #'   `"right"` for center-, left-, or center-alignment. Alternatively, the
 #'   `"auto"` option (the default), will automatically align values in columns
 #'   according to the data type (see the Details section for specifics on which
 #'   alignments are applied).
-#' @param columns an optional vector of column names for which the alignment
+#' @param columns An optional vector of column names for which the alignment
 #'   should be applied. If nothing is supplied, or if `columns` is `TRUE`), then
 #'   the chosen alignment affects all columns.
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # align the `population` column data to
@@ -107,11 +107,12 @@ cols_align <- function(data,
 #' labels once they have been relabeled.
 #'
 #' @inheritParams cols_align
-#' @param ... one or more named arguments of column names from the input `data`
+#' @param ... One or more named arguments of column names from the input `data`
 #'   table along with their labels for display as the column labels. We can
 #'   optionally wrap the column labels with [md()] (to interpret text as
 #'   Markdown) or [html()] (to interpret text as HTML).
-#' @param .list allows for the use of a list as an input alternative to `...`.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # label all the table's columns to
@@ -216,11 +217,11 @@ cols_label <- function(data,
 #' end of the column series then use [cols_move_to_end()].
 #'
 #' @inheritParams cols_align
-#' @param columns the column names to move to as a group to a different
+#' @param columns The column names to move to as a group to a different
 #'   position. The order of the remaining columns will be preserved.
-#' @param after a column name used to anchor the insertion of the moved columns.
+#' @param after A column name used to anchor the insertion of the moved columns.
 #'   All of the moved columns will be placed to the right of this column.
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, position
@@ -326,10 +327,10 @@ cols_move <- function(data,
 #' column.
 #'
 #' @inheritParams cols_align
-#' @param columns the column names to move to the left-most side of the table.
+#' @param columns The column names to move to the left-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
 #'   with the remaining columns).
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, move the
@@ -413,10 +414,10 @@ cols_move_to_start <- function(data,
 #' column.
 #'
 #' @inheritParams cols_align
-#' @param columns the column names to move to the right-most side of the table.
+#' @param columns The column names to move to the right-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
 #'   with the remaining columns).
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, move the
@@ -506,10 +507,10 @@ cols_move_to_end <- function(data,
 #' of such a pipeline.
 #'
 #' @inheritParams cols_align
-#' @param columns the column names to hide from the output display table. The
+#' @param columns The column names to hide from the output display table. The
 #'   order of the remaining columns will be preserved. Values provided that do
 #'   not correspond to column names will be disregarded.
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # Hide the columns `country_code_2` and
@@ -597,13 +598,13 @@ cols_hide <- function(data,
 #' rendered output table).
 #'
 #' @inheritParams cols_align
-#' @param delim the delimiter to use to split an input column name. The
+#' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
 #'   procedure. The first component of the split will become the group name and
 #'   the second component will be the column label.
-#' @param columns an optional vector of column names that this operation should
+#' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `iris` to create a gt table; split
 #' # any columns that are dot-separated
@@ -666,31 +667,30 @@ cols_split_delim <- function(data,
 #'
 #' This function takes any two columns and merges them into a single column,
 #' using a pattern that specifies how the values in the data cells are combined.
-#' We specify the columns to merge together in the `col_1` and `col_2`
-#' arguments and the string-combining pattern is specified in `pattern`.
-#' The column that is retained is that of `col_1` whereas the column
-#' specified in `col_2` is dropped from the output table.
+#' We specify the columns to merge together in the `col_1` and `col_2` arguments
+#' and the string-combining pattern is specified in `pattern`. The column that
+#' is retained is that of `col_1` whereas the column specified in `col_2` is
+#' dropped from the output table.
 #'
 #' There are two other column-merging functions that offer specialized behavior
-#' that is optimized for common table tasks: [cols_merge_range()]
-#' and [cols_merge_uncert()]. These functions operate similarly,
-#' where the second column specified is dropped from the output table. For all
-#' of the `cols_merge*()` functions, column removal occurs late in the
-#' rendering lifecycle so those secondary columns are still usable as column
-#' references (e.g., inside expressions provided to `rows` in the `fmt*()`
-#' functions).
+#' that is optimized for common table tasks: [cols_merge_range()] and
+#' [cols_merge_uncert()]. These functions operate similarly, where the second
+#' column specified is dropped from the output table. For all of the
+#' `cols_merge*()` functions, column removal occurs late in the rendering
+#' lifecycle so those secondary columns are still usable as column references
+#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
 #'
 #' @inheritParams cols_align
-#' @param col_1 a retained column that contains values to be merged with those
+#' @param col_1 A retained column that contains values to be merged with those
 #'   in `col_2`.
-#' @param col_2 a column that contains values to be merged with those in
-#'   `col_1`. This column will be discarded but is still useful as a
-#'   reference in other \pkg{gt} functions.
-#' @param pattern a formatting pattern that specifies the arrangement of the
-#'   `col_1` and `col_1` values and any string literals. The
-#'   `col_1` column is represented as \code{{1}} whereas `col_2` is
-#'   \code{{2}}. All other characters are taken to be string literals.
-#' @return an object of class `gt_tbl`.
+#' @param col_2 A column that contains values to be merged with those in
+#'   `col_1`. This column will be discarded but is still useful as a reference
+#'   in other \pkg{gt} functions.
+#' @param pattern A formatting pattern that specifies the arrangement of the
+#'   `col_1` and `col_1` values and any string literals. The `col_1` column is
+#'   represented as \code{{1}} whereas `col_2` is \code{{2}}. All other
+#'   characters are taken to be string literals.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sp500` to create a gt table;
 #' # merge the `open` & `close` columns
@@ -769,15 +769,15 @@ cols_merge <- function(data,
 #' Merge two columns to a value & uncertainty column
 #'
 #' The `cols_merge_uncert()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking a base value
-#' column (`col_val`) and an uncertainty column (`col_uncert`) and
-#' merges them into a single column. What results is a column with values and
-#' associated uncertainties (e.g., `12.0 ± 0.1`), and, the column specified
-#' in `col_uncert` is dropped from the output table.
+#' [cols_merge()] function. It operates by taking a base value column
+#' (`col_val`) and an uncertainty column (`col_uncert`) and merges them into a
+#' single column. What results is a column with values and associated
+#' uncertainties (e.g., `12.0 ± 0.1`), and, the column specified in `col_uncert`
+#' is dropped from the output table.
 #'
-#' This function could be somewhat replicated using [cols_merge()],
-#' however, `cols_merge_uncert()` employs the following specialized
-#' semantics for `NA` handling:
+#' This function could be somewhat replicated using [cols_merge()], however,
+#' `cols_merge_uncert()` employs the following specialized semantics for `NA`
+#' handling:
 #'
 #' \enumerate{
 #'
@@ -793,23 +793,21 @@ cols_merge <- function(data,
 #' `NA`)
 #' }
 #'
-#' Any resulting `NA` values in the `col_val` column following the
-#' merge operation can be easily formatted using the [fmt_missing()]
-#' function.
+#' Any resulting `NA` values in the `col_val` column following the merge
+#' operation can be easily formatted using the [fmt_missing()] function.
 #'
 #' This function is part of a set of three column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_range()] function. These functions operate similarly,
-#' where the second column specified is dropped from the output table. For all
-#' of the `cols_merge*()` functions, column removal occurs late in the
-#' rendering lifecycle so those secondary columns are still usable as column
-#' references (e.g., inside expressions provided to `rows` in the `fmt*()`
-#' functions).
+#' [cols_merge_range()] function. These functions operate similarly, where the
+#' second column specified is dropped from the output table. For all of the
+#' `cols_merge*()` functions, column removal occurs late in the rendering
+#' lifecycle so those secondary columns are still usable as column references
+#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
 #'
 #' @inheritParams cols_align
-#' @param col_val a single column name that contains the base values.
-#' @param col_uncert a single column name that contains the uncertainty values.
-#' @return an object of class `gt_tbl`.
+#' @param col_val A single column name that contains the base values.
+#' @param col_uncert A single column name that contains the uncertainty values.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table,
 #' # keeping only the `currency` and `num`
@@ -887,15 +885,15 @@ cols_merge_uncert <- function(data,
 #' Merge two columns to a value range column
 #'
 #' The `cols_merge_range()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking a two columns that
-#' constitute a range of values (`col_begin` and `col_end`) and merges
-#' them into a single column. What results is a column containing both values
-#' separated by a long dash (e.g., `12.0 — 20.0`). The column specified in
-#' `col_end` is dropped from the output table.
+#' [cols_merge()] function. It operates by taking a two columns that constitute
+#' a range of values (`col_begin` and `col_end`) and merges them into a single
+#' column. What results is a column containing both values separated by a long
+#' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
+#' the output table.
 #'
-#' This function could be somewhat replicated using [cols_merge()],
-#' however, `cols_merge_range()` employs the following specialized
-#' semantics for `NA` handling:
+#' This function could be somewhat replicated using [cols_merge()], however,
+#' `cols_merge_range()` employs the following specialized semantics for `NA`
+#' handling:
 #'
 #' \enumerate{
 #'
@@ -911,23 +909,21 @@ cols_merge_uncert <- function(data,
 #' `NA`)
 #' }
 #'
-#' Any resulting `NA` values in the `col_begin` column following the
-#' merge operation can be easily formatted using the [fmt_missing()]
-#' function.
+#' Any resulting `NA` values in the `col_begin` column following the merge
+#' operation can be easily formatted using the [fmt_missing()] function.
 #'
 #' This function is part of a set of three column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_uncert()] function. These functions operate
-#' similarly, where the second column specified is dropped from the output
-#' table. For all of the `cols_merge*()` functions, column removal occurs
-#' late in the rendering lifecycle so those secondary columns are still usable
-#' as column references (e.g., inside expressions provided to `rows` in the
-#' `fmt*()` functions).
+#' [cols_merge_uncert()] function. These functions operate similarly, where the
+#' second column specified is dropped from the output table. For all of the
+#' `cols_merge*()` functions, column removal occurs late in the rendering
+#' lifecycle so those secondary columns are still usable as column references
+#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
 #'
 #' @inheritParams cols_align
-#' @param col_begin a column that contains values for the start of the range.
-#' @param col_end a column that contains values for the end of the range.
-#' @return an object of class `gt_tbl`.
+#' @param col_begin A column that contains values for the start of the range.
+#' @param col_end A column that contains values for the end of the range.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table,
 #' # keeping only the `model`, `mpg_c`,

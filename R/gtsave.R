@@ -1,27 +1,26 @@
 #' Save a \pkg{gt} table as a file
 #'
-#' The `gtsave()` function makes it easy to save a \pkg{gt} table to a
-#' file. The function guesses the file type by the extension provided in the
-#' output filename, producing either an HTML, LaTeX, or RTF file.
+#' The `gtsave()` function makes it easy to save a \pkg{gt} table to a file. The
+#' function guesses the file type by the extension provided in the output
+#' filename, producing either an HTML, LaTeX, or RTF file.
 #'
-#' Output filenames with either the `.html` or `.htm` extensions will
-#' produce an HTML document. In this case, we can pass a `TRUE` or
-#' `FALSE` value to the `inline_css` option to obtain an HTML document
-#' with inlined CSS styles (the default is `FALSE`). More details on CSS
-#' inlining are available at [as_raw_html()].
+#' Output filenames with either the `.html` or `.htm` extensions will produce an
+#' HTML document. In this case, we can pass a `TRUE` or `FALSE` value to the
+#' `inline_css` option to obtain an HTML document with inlined CSS styles (the
+#' default is `FALSE`). More details on CSS inlining are available at
+#' [as_raw_html()].
 #'
-#' If the output filename is either of `.tex`, `.ltx`, or `.rnw`,
-#' a LaTeX document is produced. An output filename of `.rtf` will generate
-#' an RTF document. The LaTeX and RTF saving function don't have any options to
-#' pass to `...`.
+#' If the output filename is either of `.tex`, `.ltx`, or `.rnw`, a LaTeX
+#' document is produced. An output filename of `.rtf` will generate an RTF
+#' document. The LaTeX and RTF saving function don't have any options to pass to
+#' `...`.
 #'
-#' @param data a table object that is created using the [gt()]
-#'   function.
-#' @param filename the file name to create on disk. Ensure that an extension
-#'   compatible with the output types is provided (`.html`, `.tex`,
-#'   `.ltx`, `.rtf`). If a custom save function is provided then the
-#'   file extension is disregarded.
-#' @param ... all other options passed to the appropriate internal saving
+#' @param data A table object that is created using the [gt()] function.
+#' @param filename The file name to create on disk. Ensure that an extension
+#'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
+#'   `.rtf`). If a custom save function is provided then the file extension is
+#'   disregarded.
+#' @param ... All other options passed to the appropriate internal saving
 #'   function.
 #' @export
 gtsave <- function(data, filename, ...) {
@@ -58,7 +57,8 @@ gtsave <- function(data, filename, ...) {
   )
 }
 
-# Saving function for an HTML file
+#' Saving function for an HTML file
+#'
 #' @importFrom htmltools as.tags save_html HTML
 #' @noRd
 gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
@@ -78,7 +78,9 @@ gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
   }
 }
 
-# Saving function for a LaTeX file
+#' Saving function for a LaTeX file
+#'
+#' @noRd
 gt_save_latex <- function(data, filename, ...) {
 
   data %>%
@@ -86,7 +88,9 @@ gt_save_latex <- function(data, filename, ...) {
     writeLines(con = filename)
 }
 
-# Saving function for an RTF file
+#' Saving function for an RTF file
+#'
+#' @noRd
 gt_save_rtf <- function(data, filename, ...) {
 
   data %>%
@@ -94,6 +98,8 @@ gt_save_rtf <- function(data, filename, ...) {
     writeLines(con = filename)
 }
 
+#' Get the file extension from an input filename
+#'
 #' @importFrom tools file_ext
 #' @noRd
 gtsave_file_ext <- function(filename) {

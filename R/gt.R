@@ -1,37 +1,36 @@
 #' Create a \pkg{gt} table object
 #'
-#' The `gt()` function creates a \pkg{gt} table object when provided with
-#' table data. Using this function is the first step in a typical \pkg{gt}
-#' workflow. Once we have the \pkg{gt} table object, we can perform styling
+#' The `gt()` function creates a \pkg{gt} table object when provided with table
+#' data. Using this function is the first step in a typical \pkg{gt} workflow.
+#' Once we have the \pkg{gt} table object, we can perform styling
 #' transformations before rendering to a display table of various formats (e.g.,
 #' HTML, LaTeX, RTF).
 #'
 #' There are a few data ingest options we can consider at this stage. We can
-#' choose to create a table stub with rowname captions using the
-#' `rowname_col` argument. Further to this, stub row groups can be created
-#' with the `groupname_col`. Both arguments take the name of a column in
-#' the input table data. Typically, the data in the `groupname_col` will
-#' consist of categories of data in a table and the data in the
-#' `rowname_col` are unique labels (perhaps unique across the entire table
-#' or unique within groups).
+#' choose to create a table stub with rowname captions using the `rowname_col`
+#' argument. Further to this, stub row groups can be created with the
+#' `groupname_col`. Both arguments take the name of a column in the input table
+#' data. Typically, the data in the `groupname_col` will consist of categories
+#' of data in a table and the data in the `rowname_col` are unique labels
+#' (perhaps unique across the entire table or unique within groups).
 #'
-#' Row groups can also be created by passing a `grouped_df` to `gt()`
-#' by using the `dplyr::group_by()` function on the table data. In this
-#' way, two or more columns of categorical data can be used to make row groups.
-#' The `stub_group.sep` argument allows for control in how the row group
-#' label will appear in the display table.
+#' Row groups can also be created by passing a `grouped_df` to `gt()` by using
+#' the `dplyr::group_by()` function on the table data. In this way, two or more
+#' columns of categorical data can be used to make row groups. The
+#' `stub_group.sep` argument allows for control in how the row group label will
+#' appear in the display table.
 #'
-#' @param data a `data.frame` object or a tibble.
-#' @param rowname_col the column name in the input `data` table to use as
-#'   row captions to be placed in the display table stub.
-#' @param groupname_col the column name in the input `data` table to use as
+#' @param data A `data.frame` object or a tibble.
+#' @param rowname_col The column name in the input `data` table to use as row
+#'   captions to be placed in the display table stub.
+#' @param groupname_col The column name in the input `data` table to use as
 #'   group labels for generation of stub row groups.
-#' @param rownames_to_stub an option to take rownames from the input `data`
+#' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
-#' @param stub_group.sep the separator to use between consecutive group names (a
-#'   possibility when providing `data` as a `grouped_df` with multiple
-#'   groups) in the displayed stub row group label.
-#' @return an object of class `gt_tbl`.
+#' @param stub_group.sep The separator to use between consecutive group names (a
+#'   possibility when providing `data` as a `grouped_df` with multiple groups)
+#'   in the displayed stub row group label.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Create a table object using the
 #' # `exibble` dataset; use the `row`

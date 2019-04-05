@@ -1,6 +1,7 @@
 #' Resolve the `cells_data` object once it has access to the `data` object
-#' @param data a table object that is created using the `gt()` function.
-#' @param object the list object created by the `cells_data()` function.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_data()` function.
 #' @importFrom dplyr arrange distinct
 #' @noRd
 resolve_cells_data <- function(data,
@@ -46,8 +47,9 @@ resolve_cells_data <- function(data,
 }
 
 #' Resolve the `cells_stub` object once it has access to the `data` object
-#' @param data a table object that is created using the `gt()` function.
-#' @param object the list object created by the `cells_stub()` function.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_stub()` function.
 #' @noRd
 resolve_cells_stub <- function(data,
                                object) {
@@ -81,8 +83,9 @@ resolve_cells_stub <- function(data,
 
 #' Resolve the `cells_column_labels` object once it has access to the `data`
 #' object
-#' @param data a table object that is created using the `gt()` function.
-#' @param object the list object created by the `cells_column_labels()`
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
 resolve_cells_column_labels <- function(data,
@@ -111,8 +114,8 @@ resolve_cells_column_labels <- function(data,
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data The input table available in `data` (usually accessed
-#'   through `as.data.frame(data)`).
+#' @param data The input table available in `data` (usually accessed through
+#'   `as.data.frame(data)`).
 #' @noRd
 resolve_vars_idx <- function(var_expr,
                              data) {
@@ -130,8 +133,8 @@ resolve_vars_idx <- function(var_expr,
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data The input table available in `data` (usually accessed
-#'   through `as.data.frame(data)`).
+#' @param data The input table available in `data` (usually accessed through
+#'   `as.data.frame(data)`).
 #' @param vals The names of columns or rows in `data`.
 #' @import tidyselect
 #' @import rlang
@@ -213,8 +216,7 @@ resolve_data_vals_idx <- function(var_expr,
 #' Resolve expressions to obtain column names
 #'
 #' @param var_expr The immutable column names from the input table.
-#' @param data A table object that is created using the [gt()]
-#'   function.
+#' @param data A table object that is created using the [gt()] function.
 #' @noRd
 resolve_vars <- function(var_expr,
                          data) {

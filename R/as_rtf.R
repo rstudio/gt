@@ -1,8 +1,8 @@
 #' Output a \pkg{gt} object as RTF
 #'
-#' Get the RTF content from a `gt_tbl` object as as a single-element
-#' character vector. This object can be used with `writeLines()` to
-#' generate a valid .rtf file that can be opened by RTF readers.
+#' Get the RTF content from a `gt_tbl` object as as a single-element character
+#' vector. This object can be used with `writeLines()` to generate a valid .rtf
+#' file that can be opened by RTF readers.
 #'
 #' @param data a table object that is created using the `gt()` function.
 #' @examples

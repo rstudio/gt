@@ -3,9 +3,9 @@
 #' These helper functions are used to target individual cells in different
 #' locations (e.g., the stub, the column labels, the title, etc.). They can be
 #' used in any of these functions (which all have a `locations` argument):
-#' [tab_footnote()], [tab_style()], and
-#' [text_transform()] Furthermore, multiple locations can be
-#' targeted by enclosing several `cells_*()` helper functions in a list.
+#' [tab_footnote()], [tab_style()], and [text_transform()] Furthermore, multiple
+#' locations can be targeted by enclosing several `cells_*()` helper functions
+#' in a list.
 #'
 #' The following helper functions can be used to target cells (roughly in order
 #' from the top to the bottom of a table):
@@ -34,10 +34,9 @@
 #' `rows`.
 #' }
 #'
-#' @param columns,rows,groups either a vector of names, a vector of
-#'   indices, values provided by [vars()], values provided by
-#'   `c()`, or a select helper function (see Details for information on
-#'   these functions).
+#' @param columns,rows,groups Either a vector of names, a vector of indices,
+#'   values provided by [vars()], values provided by `c()`, or a select helper
+#'   function (see Details for information on these functions).
 #'
 #' @examples
 #' # Use `sp500` to create a gt table; add
@@ -365,8 +364,9 @@ cells_summary <- function(groups = NULL,
 }
 
 #' Interpret input text as Markdown-formatted text
-#' @param text the text that is understood to contain Markdown formatting.
-#' @return a character object that is tagged for a Markdown-to-HTML
+#'
+#' @param text The text that is understood to contain Markdown formatting.
+#' @return A character object that is tagged for a Markdown-to-HTML
 #'   transformation.
 #' @return a character object of class `from_markdown`.
 #' @examples
@@ -393,9 +393,9 @@ md <- function(text) {
 }
 
 #' Interpret input text as HTML-formatted text
-#' @param text,... the text that is understood to be HTML text, which is to be
+#' @param text,... The text that is understood to be HTML text, which is to be
 #'   preserved.
-#' @return a character object that is tagged as an HTML fragment that is not to
+#' @return A character object that is tagged as an HTML fragment that is not to
 #'   be sanitized.
 #' @return a character object of class `html`.
 #' @examples
@@ -431,43 +431,40 @@ is.html <- function(x) {
 
 #' Helper for defining custom styles for table cells
 #'
-#' This helper function is to be used with the [tab_style()]
-#' function, which itself allows for the setting of custom styles to one or more
-#' cells. We can also define several styles within a single call of
-#' `cells_styles` and [tab_style()] will reliably apply those
-#' styles to the targeted element.
+#' This helper function is to be used with the [tab_style()] function, which
+#' itself allows for the setting of custom styles to one or more cells. We can
+#' also define several styles within a single call of `cells_styles` and
+#' [tab_style()] will reliably apply those styles to the targeted element.
 #'
-#' @param bkgd_color the background color of the cell.
-#' @param text_color the text color.
-#' @param text_font the font or collection of fonts (subsequent font names are)
+#' @param bkgd_color The background color of the cell.
+#' @param text_color The text color.
+#' @param text_font The font or collection of fonts (subsequent font names are)
 #'   used as fallbacks.
-#' @param text_size the size of the font. Can be provided as a number that is
-#'   assumed to represent `px` values (or could be wrapped in the
-#'   [px()]) helper function. We can also use one of the following
-#'   absolute size keywords: `xx-small`, `x-small`, `small`,
-#'   `medium`, `large`, `x-large`, or `xx-large`.
-#' @param text_style the text style. Can be one of either `"center"`,
+#' @param text_size The size of the font. Can be provided as a number that is
+#'   assumed to represent `px` values (or could be wrapped in the [px()]) helper
+#'   function. We can also use one of the following absolute size keywords:
+#'   `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, or
+#'   `xx-large`.
+#' @param text_style The text style. Can be one of either `"center"`,
 #'   `"normal"`, `"italic"`, or `"oblique"`.
-#' @param text_weight the weight of the font. Can be a text-based keyword such
-#'   as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
-#'   numeric value between `1` and `1000`, inclusive. Note that only
-#'   variable fonts may support the numeric mapping of weight.
-#' @param text_align the text alignment. Can be one of either `"center"`,
+#' @param text_weight The weight of the font. Can be a text-based keyword such
+#'   as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value
+#'   between `1` and `1000`, inclusive. Note that only variable fonts may
+#'   support the numeric mapping of weight.
+#' @param text_align The text alignment. Can be one of either `"center"`,
 #'   `"left"`, `"right"`, or `"justify"`.
-#' @param text_stretch allows for text to either be condensed or expanded. We
+#' @param text_stretch Allows for text to either be condensed or expanded. We
 #'   can use the following text-based keywords to describe the degree of
-#'   condensation/expansion: `ultra-condensed`, `extra-condensed`,
-#'   `condensed`, `semi-condensed`, `normal`,
-#'   `semi-expanded`, `expanded`, `extra-expanded`, and
-#'   `ultra-expanded`. Alternatively, we can supply percentage values from
-#'   `0\%` to `200\%`, inclusive. Negative percentage values are not
-#'   allowed.
-#' @param text_indent the indentation of the text.
-#' @param text_decorate allows for text decoration effect to be applied. Here,
+#'   condensation/expansion: `ultra-condensed`, `extra-condensed`, `condensed`,
+#'   `semi-condensed`, `normal`, `semi-expanded`, `expanded`, `extra-expanded`,
+#'   and `ultra-expanded`. Alternatively, we can supply percentage values from
+#'   `0\%` to `200\%`, inclusive. Negative percentage values are not allowed.
+#' @param text_indent The indentation of the text.
+#' @param text_decorate Allows for text decoration effect to be applied. Here,
 #'   we can use `"overline"`, `"line-through"`, or `"underline"`.
-#' @param text_transform allows for the transformation of text. Options are
+#' @param text_transform Allows for the transformation of text. Options are
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
-#' @return a character vector containing formatted styles.
+#' @return A character vector containing formatted styles.
 #' @family helper functions
 #' @export
 cells_styles <- function(bkgd_color = NULL,

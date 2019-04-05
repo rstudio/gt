@@ -67,19 +67,19 @@
 
 #' Deluxe automobiles from the 2014-2017 period
 #'
-#' Expensive and fast cars. Not your father's `mtcars`. Each row describes
-#' a car of a certain make, model, year, and trim. Basic specifications such as
+#' Expensive and fast cars. Not your father's `mtcars`. Each row describes a car
+#' of a certain make, model, year, and trim. Basic specifications such as
 #' horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
 #' characteristics are provided. The country of origin for the car manufacturer
 #' is also given.
 #'
-#' All of the `gtcars` have something else in common (aside from the high
-#' asking prices): they are all grand tourer vehicles. These are proper GT cars
-#' that blend pure driving thrills with a level of comfort that is more expected
-#' from a fine limousine (e.g., a Rolls-Royce Phantom EWB). You'll find that,
-#' with these cars, comfort is emphasized over all-out performance.
-#' Nevertheless, the driving experience should also mean motoring at speed,
-#' doing so in style and safety.
+#' All of the `gtcars` have something else in common (aside from the high asking
+#' prices): they are all grand tourer vehicles. These are proper GT cars that
+#' blend pure driving thrills with a level of comfort that is more expected from
+#' a fine limousine (e.g., a Rolls-Royce Phantom EWB). You'll find that, with
+#' these cars, comfort is emphasized over all-out performance. Nevertheless, the
+#' driving experience should also mean motoring at speed, doing so in style and
+#' safety.
 #'
 #' @format A tibble with 47 rows and 15 variables:
 #' \describe{
@@ -137,13 +137,13 @@
 #' A synthetic dataset that describes pizza sales for a pizza place somewhere in
 #' the US. While the contents are artificial, the ingredients used to make the
 #' pizzas are far from it. There are 32 different pizzas that fall into 4
-#' different categories: `classic` (classic pizzas: 'You probably had one
-#' like it before, but never like this!'), `chicken` (pizzas with chicken
-#' as a major ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'),
-#' `supreme` (pizzas that try a little harder: 'My Soppressata pizza uses
-#' only the finest salami from my personal salumist!'), and, `veggie`
-#' (pizzas without any meats whatsoever: 'My Five Cheese pizza has so many
-#' cheeses, I can only offer it in Large Size!').
+#' different categories: `classic` (classic pizzas: 'You probably had one like
+#' it before, but never like this!'), `chicken` (pizzas with chicken as a major
+#' ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'), `supreme`
+#' (pizzas that try a little harder: 'My Soppressata pizza uses only the finest
+#' salami from my personal salumist!'), and, `veggie` (pizzas without any meats
+#' whatsoever: 'My Five Cheese pizza has so many cheeses, I can only offer it in
+#' Large Size!').
 #'
 #' Each pizza in the dataset is identified by a short `name`. The following
 #' listings provide the full names of each pizza and their main ingredients.
@@ -258,12 +258,11 @@
 #' This tibble contains data of a few different classes, which makes it
 #' well-suited for quick experimentation with the functions in this package. It
 #' contains only eight rows with numeric, character, and factor columns. The
-#' last 4 rows contain `NA` values in the majority of this tibble's columns
-#' (1 missing value per column). The `date`, `time`, and
-#' `datetime` columns are character-based dates/times in the familiar ISO
-#' 8601 format. The `row` and `group` columns provide for unique
-#' rownames and two groups (`grp_a` and `grp_b`) for experimenting
-#' with the [gt()] function's `rowname_col` and
+#' last 4 rows contain `NA` values in the majority of this tibble's columns (1
+#' missing value per column). The `date`, `time`, and `datetime` columns are
+#' character-based dates/times in the familiar ISO 8601 format. The `row` and
+#' `group` columns provide for unique rownames and two groups (`grp_a` and
+#' `grp_b`) for experimenting with the [gt()] function's `rowname_col` and
 #' `groupname_col` arguments.
 #'
 #' @format A tibble with 8 rows and 9 variables:
