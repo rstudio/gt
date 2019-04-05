@@ -295,7 +295,18 @@ context_percent_mark <- function(context) {
          "%")
 }
 
-context_currency_str <- function(context, currency) {
+context_currency_str <- function(context,
+                                 currency) {
+
+  # If we supply `NULL` as currency, then
+  # return an empty string
+  if (is.null(currency)) {
+    return("")
+  }
+
+  if (currency == "%") {
+    return(context_percent_mark(context))
+  }
 
   switch(context,
          html = {
@@ -318,6 +329,10 @@ paste_symbol_str <- function(x,
                              incl_space,
                              placement,
                              minus_mark) {
+
+  if (symbol_str == "") {
+    return(x)
+  }
 
   vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, x, function(x) {
 
