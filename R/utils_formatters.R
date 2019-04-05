@@ -485,41 +485,24 @@ num_formatter_factory <- function(context,
     # for scientific foramtting since their order would be zero
     small_pos <- has_order_zero(x_vals)
 
-    # Format all non-NA x values with a formatting function
+    # Apply a series of transformations to `x_str_vals`
     x_str_vals <-
-      format_fn(x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros)
-
-    # Format scientific notation values in a way that
-    # is prettier than the form offered by `formatC()`
-    x_str_vals <-
-      x_str_vals %>%
-      prettify_scientific_notation(small_pos, exp_marks, minus_mark)
-
-    # With large-number suffixing support, we paste the
-    # vector of suffixes to the right of the `x_str_vals`
-    x_str_vals <-
-      x_str_vals %>%
-      paste_right(suffix_df$suffix)
-
-    # A symbol string is a group of characters bound to the value
-    # and also takes on a negative sign
-    x_str_vals <-
-      x_str_vals %>%
-      paste_symbol_str(symbol_str, incl_space, placement, minus_mark)
-
-    # Format values in accounting style
-    x_str_vals <-
-      x_str_vals %>%
-      format_in_accounting_style(x_vals, accounting, minus_mark, parens_marks)
-
-    # If in a LaTeX context, wrap values in math mode
-    x_str_vals <-
-      x_str_vals %>%
-      to_latex_math_mode(context)
-
-    # Handle formatting of pattern
-    x_str_vals <-
-      x_str_vals %>%
+      # Format all non-NA x values with a formatting function
+      format_fn(x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros) %>%
+      # Format scientific notation values in a way that
+      # is prettier than the form offered by `formatC()`
+      prettify_scientific_notation(small_pos, exp_marks, minus_mark) %>%
+      # With large-number suffixing support, we paste the
+      # vector of suffixes to the right of the `x_str_vals`
+      paste_right(suffix_df$suffix) %>%
+      # A symbol string is a group of characters bound to the value
+      # and also takes on a negative sign
+      paste_symbol_str(symbol_str, incl_space, placement, minus_mark) %>%
+      # Format values in accounting style
+      format_in_accounting_style(x_vals, accounting, minus_mark, parens_marks) %>%
+      # If in a LaTeX context, wrap values in math mode
+      to_latex_math_mode(context) %>%
+      # Handle formatting of pattern
       apply_pattern_fmt_x(pattern)
 
     # Create `x_str` with the same length as `x`; place the
