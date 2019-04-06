@@ -372,8 +372,11 @@ format_in_accounting_style <- function(x,
                                        minus_mark,
                                        parens_marks) {
 
+  # Store logical vector of `x_vals` < 0
+  x_vals_lt0 <- x_vals < 0
+
   # Return values unchanged if there are no negative values
-  if (!any(x_vals < 0)) {
+  if (!any(x_vals_lt0)) {
     return(x)
   }
 
@@ -386,8 +389,8 @@ format_in_accounting_style <- function(x,
   if (accounting) {
 
     # Selectively remove minus sign and paste between parentheses
-    x[x_vals < 0] <-
-      x[x_vals < 0] %>%
+    x[x_vals_lt0] <-
+      x[x_vals_lt0] %>%
       tidy_gsub(minus_mark, "", fixed = TRUE) %>%
       paste_between(x_2 = parens_marks)
   }
