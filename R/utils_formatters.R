@@ -295,31 +295,32 @@ context_percent_mark <- function(context) {
          "%")
 }
 
-context_currency_str <- function(context,
-                                 currency) {
+context_symbol_str <- function(context,
+                               symbol) {
 
   # If we supply `NULL` as currency, then
   # return an empty string
-  if (is.null(currency)) {
+  if (is.null(symbol)) {
     return("")
   }
 
-  if (currency == "%") {
+  if (symbol == "%") {
     return(context_percent_mark(context))
   }
 
   switch(context,
          html = {
-           get_currency_str(currency)
+           symbol %>%
+             get_currency_str()
          },
          latex = {
-           currency %>%
+           symbol %>%
              get_currency_str(fallback_to_code = TRUE) %>%
              markdown_to_latex() %>%
              paste_between(x_2 = c("\\text{", "}"))
          },
          {
-           currency %>%
+           symbol %>%
              get_currency_str(fallback_to_code = TRUE)
          })
 }
@@ -436,7 +437,7 @@ num_formatter_factory <- function(context,
                                   scale_by,
                                   sep_mark,
                                   dec_mark,
-                                  currency,
+                                  symbol,
                                   drop_trailing_zeros,
                                   accounting,
                                   incl_space,
@@ -447,7 +448,7 @@ num_formatter_factory <- function(context,
   # Force all arguments
   force(
     list(
-      context, decimals, scale_by, sep_mark, dec_mark, currency,
+      context, decimals, scale_by, sep_mark, dec_mark, symbol,
       drop_trailing_zeros, accounting, incl_space, placement, pattern
     )
   )
@@ -458,7 +459,7 @@ num_formatter_factory <- function(context,
     minus_mark <- context_minus_mark(context)
     parens_marks <- context_parens_marks_number(context)
     exp_marks <- context_exp_marks(context)
-    symbol_str <- context_currency_str(context, currency)
+    symbol_str <- context_symbol_str(context, symbol)
 
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)
