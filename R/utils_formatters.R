@@ -265,6 +265,9 @@ to_latex_math_mode <- function(x, context) {
   }
 }
 
+#' Obtain the contextually correct minus mark
+#'
+#' @noRd
 context_minus_mark <- function(context) {
 
   switch(context,
@@ -272,21 +275,9 @@ context_minus_mark <- function(context) {
          "-")
 }
 
-context_parens_marks_number <- function(context) {
-
-  switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
-}
-
-context_exp_marks <- function(context) {
-
-  switch(context,
-         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
-         latex = c(" \\times 10^{", "}"),
-         c(" x 10(", ")"))
-}
-
+#' Obtain the contextually correct percent mark
+#'
+#' @noRd
 context_percent_mark <- function(context) {
 
   switch(context,
@@ -295,19 +286,46 @@ context_percent_mark <- function(context) {
          "%")
 }
 
+#' Obtain the contextually correct pair of parentheses
+#'
+#' @noRd
+context_parens_marks_number <- function(context) {
+
+  switch(context,
+         latex = c("(", ")"),
+         c("(", ")"))
+}
+
+#' Obtain the contextually correct pair of opening/closing exponential strings
+#'
+#' @noRd
+context_exp_marks <- function(context) {
+
+  switch(context,
+         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+         latex = c(" \\times 10^{", "}"),
+         c(" x 10(", ")"))
+}
+
+
+
+#' @noRd
 context_symbol_str <- function(context,
                                symbol) {
 
-  # If we supply `NULL` as currency, then
+  # If we supply `NULL` as `symbol`, then
   # return an empty string
   if (is.null(symbol)) {
     return("")
   }
 
+  # If we supply a percent sign as `symbol`,
+  # get the contextually correct percent mark
   if (symbol == "%") {
     return(context_percent_mark(context))
   }
 
+  # Get the contextually correct currency string
   switch(context,
          html = {
            symbol %>%
@@ -325,6 +343,7 @@ context_symbol_str <- function(context,
          })
 }
 
+#' @noRd
 paste_symbol_str <- function(x,
                              symbol_str,
                              incl_space,
