@@ -444,17 +444,13 @@ num_formatter_factory <- function(context,
                                   pattern,
                                   format_fn) {
 
-  force(context)
-  force(decimals)
-  force(scale_by)
-  force(sep_mark)
-  force(dec_mark)
-  force(currency)
-  force(drop_trailing_zeros)
-  force(accounting)
-  force(incl_space)
-  force(placement)
-  force(pattern)
+  # Force all arguments
+  force(
+    list(
+      context, decimals, scale_by, sep_mark, dec_mark, currency,
+      drop_trailing_zeros, accounting, incl_space, placement, pattern
+    )
+  )
 
   function(x) {
 
