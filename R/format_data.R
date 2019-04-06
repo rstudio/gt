@@ -141,7 +141,7 @@ fmt_number <- function(data,
 
   # Set default values
   accounting <- FALSE
-  currency <- NULL
+  symbol <- NULL
   placement <- "left"
   incl_space <- FALSE
 
@@ -167,19 +167,19 @@ fmt_number <- function(data,
       html = num_formatter_factory(
         context = "html",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str),
       latex = num_formatter_factory(
         context = "latex",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str),
       default = num_formatter_factory(
         context = "default",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str)
     )
@@ -250,7 +250,7 @@ fmt_scientific <- function(data,
 
   # Set default values
   accounting <- FALSE
-  currency <- NULL
+  symbol <- NULL
   suffixing <- FALSE
   placement <- "left"
   incl_space <- FALSE
@@ -277,19 +277,19 @@ fmt_scientific <- function(data,
       html = num_formatter_factory(
         context = "html",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_e),
       latex = num_formatter_factory(
         context = "latex",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_e),
       default = num_formatter_factory(
         context = "default",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_e)
     )
@@ -367,7 +367,7 @@ fmt_percent <- function(data,
   # Set default values
   scale_by <- 100
   accounting <- FALSE
-  currency <- "%"
+  symbol <- "%"
   suffixing <- FALSE
 
   # Use locale-based marks if a locale ID is provided
@@ -392,19 +392,19 @@ fmt_percent <- function(data,
       html = num_formatter_factory(
         context = "html",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str),
       latex = num_formatter_factory(
         context = "latex",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str),
       default = num_formatter_factory(
         context = "default",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str)
     )
@@ -527,16 +527,17 @@ fmt_currency <- function(data,
 
   # Set default values
   drop_trailing_zeros <- FALSE
+  symbol <- currency
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `currency` does not have a valid value
-  validate_currency(currency)
+  validate_currency(currency = symbol)
 
   # Get the number of decimal places
-  decimals <- get_currency_decimals(currency, decimals, use_subunits)
+  decimals <- get_currency_decimals(currency = symbol, decimals, use_subunits)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -556,19 +557,19 @@ fmt_currency <- function(data,
       html = num_formatter_factory(
         context = "html",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_c),
       latex = num_formatter_factory(
         context = "latex",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_c),
       default = num_formatter_factory(
         context = "default",
         decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, currency, drop_trailing_zeros,
+        sep_mark, dec_mark, symbol, drop_trailing_zeros,
         accounting, incl_space, placement, pattern,
         format_fn = format_num_to_str_c)
     )
