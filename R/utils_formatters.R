@@ -526,6 +526,18 @@ num_formatter_factory <- function(context,
       drop_trailing_zeros, accounting, incl_space, placement, pattern
     )
   )
+}
+
+#' A factory function used for all numeric `fmt_*()` functions
+#'
+#' @param context The output context.
+#' @param var_list A variable list as returned by `create_var_list()`.
+#' @param format_fn A function for formatting the numeric values.
+#' @noRd
+num_fmt_factory <- function(context,
+                            var_list,
+                            format_fn) {
+
 
   function(x) {
 
