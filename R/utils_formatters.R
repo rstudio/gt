@@ -412,11 +412,11 @@ paste_symbol_str <- function(x,
 #' @param minus_mark The contextually correct minus mark.
 #' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
-format_in_accounting_style <- function(x,
-                                       x_vals,
-                                       accounting,
-                                       minus_mark,
-                                       parens_marks) {
+format_as_accounting <- function(x,
+                                 x_vals,
+                                 accounting,
+                                 minus_mark,
+                                 parens_marks) {
 
   # Store logical vector of `x_vals` < 0
   x_vals_lt0 <- x_vals < 0
