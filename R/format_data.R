@@ -145,9 +145,6 @@ fmt_number <- function(data,
   placement <- "left"
   incl_space <- FALSE
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -159,6 +156,14 @@ fmt_number <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
+  # Create a list of variables to pass to `num_fmt_factory()`
+  var_list <-
+    create_var_list(
+      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
+      symbol, drop_trailing_zeros, accounting, incl_space, placement,
+      pattern, locale
+    )
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -166,24 +171,9 @@ fmt_number <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = num_formatter_factory(
-        context = "html",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str),
-      latex = num_formatter_factory(
-        context = "latex",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str),
-      default = num_formatter_factory(
-        context = "default",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str)
+      html = num_fmt_factory("html", var_list, format_num_to_str),
+      latex = num_fmt_factory("latex", var_list, format_num_to_str),
+      default = num_fmt_factory("default", var_list, format_num_to_str)
     )
   )
 }
@@ -256,10 +246,8 @@ fmt_scientific <- function(data,
   suffixing <- FALSE
   placement <- "left"
   incl_space <- FALSE
+  use_seps <- TRUE
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -271,6 +259,14 @@ fmt_scientific <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
+  # Create a list of variables to pass to `num_fmt_factory()`
+  var_list <-
+    create_var_list(
+      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
+      symbol, drop_trailing_zeros, accounting, incl_space, placement,
+      pattern, locale
+    )
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -278,24 +274,9 @@ fmt_scientific <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = num_formatter_factory(
-        context = "html",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_e),
-      latex = num_formatter_factory(
-        context = "latex",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_e),
-      default = num_formatter_factory(
-        context = "default",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_e)
+      html = num_fmt_factory("html", var_list, format_num_to_str_e),
+      latex = num_fmt_factory("latex", var_list, format_num_to_str_e),
+      default = num_fmt_factory("default", var_list, format_num_to_str_e)
     )
   )
 }
@@ -374,9 +355,6 @@ fmt_percent <- function(data,
   symbol <- "%"
   suffixing <- FALSE
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -388,6 +366,14 @@ fmt_percent <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
+  # Create a list of variables to pass to `num_fmt_factory()`
+  var_list <-
+    create_var_list(
+      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
+      symbol, drop_trailing_zeros, accounting, incl_space, placement,
+      pattern, locale
+    )
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -395,24 +381,9 @@ fmt_percent <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = num_formatter_factory(
-        context = "html",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str),
-      latex = num_formatter_factory(
-        context = "latex",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str),
-      default = num_formatter_factory(
-        context = "default",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str)
+      html = num_fmt_factory("html", var_list, format_num_to_str),
+      latex = num_fmt_factory("latex", var_list, format_num_to_str),
+      default = num_fmt_factory("default", var_list, format_num_to_str)
     )
   )
 }
@@ -535,9 +506,6 @@ fmt_currency <- function(data,
   drop_trailing_zeros <- FALSE
   symbol <- currency
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -555,6 +523,14 @@ fmt_currency <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
+  # Create a list of variables to pass to `num_fmt_factory()`
+  var_list <-
+    create_var_list(
+      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
+      symbol, drop_trailing_zeros, accounting, incl_space, placement,
+      pattern, locale
+    )
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -562,24 +538,9 @@ fmt_currency <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = num_formatter_factory(
-        context = "html",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_c),
-      latex = num_formatter_factory(
-        context = "latex",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_c),
-      default = num_formatter_factory(
-        context = "default",
-        decimals, suffix_labels, scale_by,
-        sep_mark, dec_mark, symbol, drop_trailing_zeros,
-        accounting, incl_space, placement, pattern,
-        format_fn = format_num_to_str_c)
+      html = num_fmt_factory("html", var_list, format_num_to_str_c),
+      latex = num_fmt_factory("latex", var_list, format_num_to_str_c),
+      default = num_fmt_factory("default", var_list, format_num_to_str_c)
     )
   )
 }
