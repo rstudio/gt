@@ -9,17 +9,17 @@ fmt_scientific(data, columns, rows = NULL, decimals = 2,
   sep_mark = ",", dec_mark = ".", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
+\item{columns}{The columns to format. Can either be a series of column names
 provided in \code{vars()}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
+\item{rows}{Optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted. Can either be a vector of row
 captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
@@ -28,30 +28,30 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{decimals}{an option to specify the exact number of decimal places to
+\item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop_trailing_zeros}{a logical value that allows for removal of
+\item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{scale_by}{a value to scale the input. The default is \code{1.0}. All
+\item{scale_by}{A value to scale the input. The default is \code{1.0}. All
 numeric values will be multiplied by this value first before undergoing
 formatting. This value will be ignored if using any of the \code{suffixing}
 options (i.e., where \code{suffixing} is not set to \code{FALSE}).}
 
-\item{pattern}{a formatting pattern that allows for decoration of the
+\item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits
+\item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
 formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\item{dec_mark}{The character to use as a decimal mark (e.g., using
 \code{dec_mark = ","} with \code{0.152} would result in a formatted value
 of \code{0,152}).}
 
-\item{locale}{an optional locale ID that can be used for formatting the value
+\item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
@@ -59,7 +59,7 @@ locale ID will override any values provided in \code{sep_mark} and
 useful reference for all of the locales that are supported.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \pkg{gt} table, we can perform formatting so that the

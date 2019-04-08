@@ -11,17 +11,17 @@ fmt_currency(data, columns, rows = NULL, currency = "USD",
   placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
+\item{columns}{The columns to format. Can either be a series of column names
 provided in \code{vars()}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
+\item{rows}{Optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted. Can either be a vector of row
 captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
@@ -30,7 +30,7 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{currency}{the currency to use for the numeric value. This input can be
+\item{currency}{The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
 \code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
 get an information table with all of the valid currency codes and examples
@@ -41,27 +41,27 @@ process. Use \code{\link{info_currencies}()} with the \code{type ==
 currency symbol names along with examples. If nothing is provided then
 \code{"USD"} will be used.}
 
-\item{use_subunits}{an option for whether the subunits portion of a currency
+\item{use_subunits}{An option for whether the subunits portion of a currency
 value should be displayed.}
 
-\item{accounting}{an option to use accounting style for currency values. With
+\item{accounting}{An option to use accounting style for currency values. With
 \code{FALSE} (the default), negative values will be shown with a negative
 sign. Using \code{accounting = TRUE} will put negative values in
 parentheses.}
 
-\item{decimals}{an option to specify the exact number of decimal places to
+\item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{use_seps}{an option to use digit group separators. The type of digit
+\item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{scale_by}{a value to scale the input. The default is \code{1.0}. All
+\item{scale_by}{A value to scale the input. The default is \code{1.0}. All
 numeric values will be multiplied by this value first before undergoing
 formatting. This value will be ignored if using any of the \code{suffixing}
 options (i.e., where \code{suffixing} is not set to \code{FALSE}).}
 
-\item{suffixing}{an option to scale and apply suffixes to larger numbers
+\item{suffixing}{An option to scale and apply suffixes to larger numbers
 (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
 accept a logical value, where \code{FALSE} (the default) will not perform
 this transformation and \code{TRUE} will apply thousands (\code{K}),
@@ -77,25 +77,25 @@ numbers in the range of millions and billions will be in terms of
 millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
 any value provided to \code{scale_by} will be ignored.}
 
-\item{pattern}{a formatting pattern that allows for decoration of the
+\item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits
+\item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
 formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\item{dec_mark}{The character to use as a decimal mark (e.g., using
 \code{dec_mark = ","} with \code{0.152} would result in a formatted value
 of \code{0,152}).}
 
-\item{placement}{the placement of the currency symbol. This can be either be
+\item{placement}{The placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
 
-\item{incl_space}{an option on whether to include a space between the value
+\item{incl_space}{An option for whether to include a space between the value
 and the currency symbol. The default is to not introduce a space character.}
 
-\item{locale}{an optional locale ID that can be used for formatting the value
+\item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
@@ -103,7 +103,7 @@ locale ID will override any values provided in \code{sep_mark} and
 useful reference for all of the locales that are supported.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \pkg{gt} table, we can perform currency-based
