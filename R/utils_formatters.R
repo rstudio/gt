@@ -35,7 +35,7 @@ validate_locale <- function(locale) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
-  if (!(locale %in% locales$base_locale_id)) {
+  if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
     stop("The supplied `locale` is not available in the list of supported locales.\n",
          " * Use the `info_locales()` function to see which locales can be used.",
          call. = FALSE)
@@ -85,10 +85,6 @@ get_locale_sep_mark <- function(locale = NULL,
     return(default)
   }
 
-  # Stop function if the `locale` provided
-  # isn't a valid one
-  validate_locale(locale)
-
   # Get the correct `group_sep` value from the
   # `gt:::locales` lookup table
   sep_mark <-
@@ -116,10 +112,6 @@ get_locale_dec_mark <- function(locale = NULL,
   if (is.null(locale)) {
     return(default)
   }
-
-  # Stop function if the `locale` provided
-  # isn't a valid one
-  validate_locale(locale)
 
   # Get the correct `dec_sep` value from the
   # `gt:::locales` lookup table
