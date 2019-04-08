@@ -589,11 +589,12 @@ num_fmt_factory <- function(context,
 
     # Apply a series of transformations to `x_str_vals`
     x_str_vals <-
+      x_vals %>%
       # Format all non-NA x values with a formatting function
-      format_fn(x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros) %>%
-      # Format scientific notation values in a way that
-      # is prettier than the form offered by `formatC()`
-      prettify_scientific_notation(small_pos, exp_marks, minus_mark) %>%
+      format_fn(
+        decimals, sep_mark, dec_mark, drop_trailing_zeros,
+        small_pos, exp_marks, minus_mark
+      ) %>%
       # With large-number suffixing support, we paste the
       # vector of suffixes to the right of the `x_str_vals`
       paste_right(suffix_df$suffix) %>%
@@ -601,7 +602,7 @@ num_fmt_factory <- function(context,
       # and also takes on a negative sign
       paste_symbol_str(symbol_str, incl_space, placement, minus_mark) %>%
       # Format values in accounting style
-      format_in_accounting_style(x_vals, accounting, minus_mark, parens_marks) %>%
+      format_as_accounting(x_vals, accounting, minus_mark, parens_marks) %>%
       # If in a LaTeX context, wrap values in math mode
       to_latex_math_mode(context) %>%
       # Handle formatting of pattern
