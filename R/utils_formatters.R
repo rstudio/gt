@@ -483,9 +483,8 @@ prettify_scientific_notation <- function(x,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
-#' A factory function used for all numeric `fmt_*()` functions
+#' Create a list of variables to pass to `num_fmt_factory()`
 #'
-#' @param context The output context.
 #' @param decimals The number of decimal places (`digits`).
 #' @param suffix_labels Normalized output from the `suffixing` input; either
 #'   provides a character vector of suffix labels, or NULL (the case where the
@@ -493,6 +492,7 @@ prettify_scientific_notation <- function(x,
 #' @param scale_by A numeric scalar.
 #' @param sep_mark The separator for number groups (`big.mark`).
 #' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @param use_seps An option to use digit group separators.
 #' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
 #'   a currency symbol.
 #' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
@@ -503,28 +503,9 @@ prettify_scientific_notation <- function(x,
 #'   symbol string relative to the formatted, numeric values).
 #' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value.
-#' @param format_fn A function for formatting the numeric values.
+#' @param locale An optional locale ID that can be used for formatting the value
+#'   according the locale's rules.
 #' @noRd
-num_formatter_factory <- function(context,
-                                  decimals,
-                                  suffix_labels,
-                                  scale_by,
-                                  sep_mark,
-                                  dec_mark,
-                                  symbol,
-                                  drop_trailing_zeros,
-                                  accounting,
-                                  incl_space,
-                                  placement,
-                                  pattern,
-                                  format_fn) {
-
-  # Force all arguments
-  force(
-    list(
-      context, decimals, scale_by, sep_mark, dec_mark, symbol,
-      drop_trailing_zeros, accounting, incl_space, placement, pattern
-    )
 create_var_list <- function(decimals,
                             suffix_labels,
                             scale_by,
