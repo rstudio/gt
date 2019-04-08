@@ -538,6 +538,20 @@ num_fmt_factory <- function(context,
                             var_list,
                             format_fn) {
 
+  # Extract variables from `var_list`
+  decimals <- var_list$decimals
+  suffix_labels <- var_list$suffix_labels
+  scale_by <- var_list$scale_by
+  sep_mark <- var_list$sep_mark
+  dec_mark <- var_list$dec_mark
+  use_seps <- var_list$use_seps
+  symbol <- var_list$symbol
+  drop_trailing_zeros <- var_list$drop_trailing_zeros
+  accounting <- var_list$accounting
+  incl_space <- var_list$incl_space
+  placement <- var_list$placement
+  pattern <- var_list$pattern
+  locale <- var_list$locale
 
   function(x) {
 
