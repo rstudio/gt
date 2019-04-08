@@ -117,3 +117,29 @@ test_that("the function `cols_label()` works correctly", {
     gt(tbl) %>%
       cols_label(col_a = "col_1"))
 })
+
+test_that("all column labels can be entirely hidden from view", {
+
+  # Expect that the option `column_labels.hidden = TRUE` will
+  # remove the expected node with the classes of `gt_col_heading`
+  # and `gt_right` (i.e., the column labels)
+  expect_length(
+    tbl %>%
+      gt() %>%
+      tab_options(column_labels.hidden = TRUE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_right']"),
+    0)
+
+  # Expect that not hiding the column labels yields a length
+  # four vector when using the same search
+  expect_length(
+    tbl %>%
+      gt() %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_right']"),
+    4)
+})
+
