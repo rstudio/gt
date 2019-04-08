@@ -525,6 +525,27 @@ num_formatter_factory <- function(context,
       context, decimals, scale_by, sep_mark, dec_mark, symbol,
       drop_trailing_zeros, accounting, incl_space, placement, pattern
     )
+create_var_list <- function(decimals,
+                            suffix_labels,
+                            scale_by,
+                            sep_mark,
+                            dec_mark,
+                            use_seps,
+                            symbol,
+                            drop_trailing_zeros,
+                            accounting,
+                            incl_space,
+                            placement,
+                            pattern,
+                            locale) {
+
+  list(
+    decimals = decimals, suffix_labels = suffix_labels,
+    scale_by = scale_by, sep_mark = sep_mark, dec_mark = dec_mark,
+    use_seps = use_seps, symbol = symbol,
+    drop_trailing_zeros = drop_trailing_zeros,
+    accounting = accounting, incl_space = incl_space,
+    placement = placement, pattern = pattern, locale = locale
   )
 }
 
