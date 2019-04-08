@@ -200,6 +200,9 @@ format_num_to_str <- function(x,
                               sep_mark,
                               dec_mark,
                               drop_trailing_zeros,
+                              small_pos = NULL,
+                              exp_marks = NULL,
+                              minus_mark = NULL,
                               format = "f") {
 
   formatC(
@@ -221,7 +224,10 @@ format_num_to_str_e <- function(x,
                                 decimals,
                                 sep_mark,
                                 dec_mark,
-                                drop_trailing_zeros) {
+                                drop_trailing_zeros,
+                                small_pos,
+                                exp_marks,
+                                minus_mark) {
 
   format_num_to_str(
     x,
@@ -229,7 +235,10 @@ format_num_to_str_e <- function(x,
     sep_mark,
     dec_mark,
     format = "e",
-    drop_trailing_zeros)
+    drop_trailing_zeros) %>%
+    prettify_scientific_notation(small_pos, exp_marks, minus_mark)
+
+
 }
 
 #' A `formatC()` call for `fmt_currency()`
@@ -240,7 +249,10 @@ format_num_to_str_c <- function(x,
                                 decimals,
                                 sep_mark,
                                 dec_mark,
-                                drop_trailing_zeros = FALSE) {
+                                drop_trailing_zeros = FALSE,
+                                small_pos = NULL,
+                                exp_marks = NULL,
+                                minus_mark = NULL) {
 
   format_num_to_str(
     x,
