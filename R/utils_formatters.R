@@ -2,11 +2,13 @@
 #'
 #' @param table The table to filter down to one row.
 #' @param column The column from which the single value should be obtained.
-#' @param ... The arguments passed to `dplyr::filter()`
+#' @param ... The arguments passed to `dplyr::filter()`.
 #' @import rlang
 #' @importFrom dplyr filter
 #' @noRd
-filter_table_to_value <- function(table, column, ...) {
+filter_table_to_value <- function(table,
+                                  column,
+                                  ...) {
 
   filter_args_enquos <- rlang::enquos(...)
   column_enquo <- rlang::enquo(column)
@@ -66,7 +68,6 @@ validate_currency <- function(currency) {
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @param default The default value for the `sep_mark`.
 #' @param use_seps A logical value for whether to use separators at all.
-#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_sep_mark <- function(locale = NULL,
                                 default,
@@ -106,7 +107,6 @@ get_locale_sep_mark <- function(locale = NULL,
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @param default The default value for the `dec_mark`.
-#' @importFrom dplyr filter pull
 #' @noRd
 get_locale_dec_mark <- function(locale = NULL,
                                 default) {
@@ -137,6 +137,12 @@ has_order_zero <- function(x) {
   ) & !is.na(x)
 }
 
+#' Get the correct number of decimal places for a specified currency
+#'
+#' @param currency The currency to use for the numeric value.
+#' @param decimals The request number of decimal places.
+#' @param use_subunits An option for whether the subunits portion of a currency
+#'   value should be displayed.
 #' @noRd
 get_currency_decimals <- function(currency,
                                   decimals,
@@ -194,8 +200,8 @@ scale_x_values <- function(x,
 #' @param decimals The number of decimal places (`digits`).
 #' @param sep_mark The separator for number groups (`big.mark`).
 #' @param dec_mark The decimal separator mark (`decimal.mark`).
-#' @param format The numeric format for `formatC()`.
 #' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
+#' @param format The numeric format for `formatC()`.
 #' @noRd
 format_num_to_str <- function(x,
                               decimals,
@@ -255,8 +261,11 @@ format_num_to_str_c <- function(x,
 
 #' Surround formatted values with `$`s for LaTeX
 #'
+#' @param x Numeric values in `character` form.
+#' @param context The output context.
 #' @noRd
-to_latex_math_mode <- function(x, context) {
+to_latex_math_mode <- function(x,
+                               context) {
 
   if (context != "latex") {
     return(x)
@@ -267,6 +276,7 @@ to_latex_math_mode <- function(x, context) {
 
 #' Obtain the contextually correct minus mark
 #'
+#' @param context The output context.
 #' @noRd
 context_minus_mark <- function(context) {
 
@@ -277,6 +287,7 @@ context_minus_mark <- function(context) {
 
 #' Obtain the contextually correct percent mark
 #'
+#' @param context The output context.
 #' @noRd
 context_percent_mark <- function(context) {
 
@@ -288,6 +299,7 @@ context_percent_mark <- function(context) {
 
 #' Obtain the contextually correct pair of parentheses
 #'
+#' @param context The output context.
 #' @noRd
 context_parens_marks_number <- function(context) {
 
@@ -298,6 +310,7 @@ context_parens_marks_number <- function(context) {
 
 #' Obtain the contextually correct pair of opening/closing exponential strings
 #'
+#' @param context The output context.
 #' @noRd
 context_exp_marks <- function(context) {
 
@@ -308,7 +321,11 @@ context_exp_marks <- function(context) {
 }
 
 
-
+#' Obtain the contextually correct symbol string
+#'
+#' @param context The output context.
+#' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
+#'   a currency symbol.
 #' @noRd
 context_symbol_str <- function(context,
                                symbol) {
@@ -343,6 +360,17 @@ context_symbol_str <- function(context,
          })
 }
 
+#' Paste a symbol string to a formatted number
+#'
+#' @param x Numeric values in `character` form.
+#' @param symbol_str The string that represents the symbol. It can be placed to
+#'   the left or to the right of the numeric values. If on the left, it can take
+#'   on a negative value.
+#' @param incl_space A logical value indicating whether a single space character
+#'   should separate the symbols and the formatted values.
+#' @param placement Either `left` or `right` (this is the placement of the
+#'   symbol string relative to the formatted, numeric values).
+#' @param minus_mark The contextually correct minus mark.
 #' @noRd
 paste_symbol_str <- function(x,
                              symbol_str,
@@ -385,6 +413,12 @@ paste_symbol_str <- function(x,
   })
 }
 
+#' Transform currency values to accounting style
+#'
+#' @param x Numeric values in `character` form.
+#' @param x_vals Numeric values in `numeric` form.
+#' @param minus_mark The contextually correct minus mark.
+#' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
 format_in_accounting_style <- function(x,
                                        x_vals,
@@ -418,6 +452,14 @@ format_in_accounting_style <- function(x,
   x
 }
 
+#' Provide a nicer format for numbers in scientific notation
+#'
+#' @param x Numeric values in `character` form.
+#' @param small_pos A logical vector the length of `x` that indicates whether
+#'   values should be decorated.
+#' @param exp_marks A character vector (length of two) that encloses the
+#'   exponential power value.
+#' @param minus_mark The contextually correct minus mark.
 #' @noRd
 prettify_scientific_notation <- function(x,
                                          small_pos,
@@ -449,6 +491,27 @@ prettify_scientific_notation <- function(x,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
+#' A factory function used for all numeric `fmt_*()` functions
+#'
+#' @param context The output context.
+#' @param decimals The number of decimal places (`digits`).
+#' @param suffix_labels Normalized output from the `suffixing` input; either
+#'   provides a character vector of suffix labels, or NULL (the case where the
+#'   `suffixing` input is FALSE).
+#' @param scale_by A numeric scalar.
+#' @param sep_mark The separator for number groups (`big.mark`).
+#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
+#'   a currency symbol.
+#' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
+#' @param accounting An option to use accounting style for currency values.
+#' @param incl_space A logical value indicating whether a single space character
+#'   should separate the symbols and the formatted values.
+#' @param placement Either `left` or `right` (this is the placement of the
+#'   symbol string relative to the formatted, numeric values).
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value.
+#' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_formatter_factory <- function(context,
                                   decimals,

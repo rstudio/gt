@@ -25,15 +25,15 @@
 #' expression to the \code{rows} argument. See the Arguments section for more
 #' information on this.
 #'
-#' @param data a table object that is created using the \code{\link{gt}()}
+#' @param data A table object that is created using the \code{\link{gt}()}
 #'   function.
-#' @param columns the columns to format. Can either be a series of column names
+#' @param columns The columns to format. Can either be a series of column names
 #'   provided in \code{vars()}, a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}.
-#' @param rows optional rows to format. Not providing any value results in all
+#' @param rows Optional rows to format. Not providing any value results in all
 #'   rows in \code{columns} being formatted. Can either be a vector of row
 #'   captions provided \code{c()}, a vector of row indices, or a helper function
 #'   focused on selections. The select helper functions are:
@@ -41,18 +41,18 @@
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}. We can also use expressions to filter down
 #'   to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).
-#' @param decimals an option to specify the exact number of decimal places to
+#' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is \code{2}.
-#' @param drop_trailing_zeros a logical value that allows for removal of
+#' @param drop_trailing_zeros A logical value that allows for removal of
 #'   trailing zeros (those redundant zeros after the decimal mark).
-#' @param use_seps an option to use digit group separators. The type of digit
+#' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by \code{sep_mark} and overridden if a locale ID is
 #'   provided to \code{locale}. This setting is \code{TRUE} by default.
-#' @param scale_by a value to scale the input. The default is \code{1.0}. All
+#' @param scale_by A value to scale the input. The default is \code{1.0}. All
 #'   numeric values will be multiplied by this value first before undergoing
 #'   formatting. This value will be ignored if using any of the \code{suffixing}
 #'   options (i.e., where \code{suffixing} is not set to \code{FALSE}).
-#' @param suffixing an option to scale and apply suffixes to larger numbers
+#' @param suffixing An option to scale and apply suffixes to larger numbers
 #'   (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
 #'   accept a logical value, where \code{FALSE} (the default) will not perform
 #'   this transformation and \code{TRUE} will apply thousands (\code{K}),
@@ -67,22 +67,22 @@
 #'   numbers in the range of millions and billions will be in terms of
 #'   millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
 #'   any value provided to \code{scale_by} will be ignored.
-#' @param pattern a formatting pattern that allows for decoration of the
+#' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by \code{{x}} and all
 #'   other characters are taken to be string literals.
-#' @param sep_mark the mark to use as a separator between groups of digits
+#' @param sep_mark The mark to use as a separator between groups of digits
 #'   (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
 #'   formatted value of \code{1,000}).
-#' @param dec_mark the character to use as a decimal mark (e.g., using
+#' @param dec_mark The character to use as a decimal mark (e.g., using
 #'   \code{dec_mark = ","} with \code{0.152} would result in a formatted value
 #'   of \code{0,152}).
-#' @param locale an optional locale ID that can be used for formatting the value
+#' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include \code{"en_US"} for English
 #'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
 #'   locale ID will override any values provided in \code{sep_mark} and
 #'   \code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
 #'   useful reference for all of the locales that are supported.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as numeric
@@ -209,7 +209,7 @@ fmt_number <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as partially
@@ -325,9 +325,9 @@ fmt_scientific <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param incl_space an option on whether to include a space between the value
+#' @param incl_space An option for whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
-#' @param placement the placement of the percent sign. This can be either be
+#' @param placement The placement of the percent sign. This can be either be
 #'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -450,7 +450,7 @@ fmt_percent <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param currency the currency to use for the numeric value. This input can be
+#' @param currency The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
 #'   \code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
 #'   get an information table with all of the valid currency codes and examples
@@ -460,17 +460,17 @@ fmt_percent <- function(data,
 #'   "symbol"} option to view an information table with all of the supported
 #'   currency symbol names along with examples. If nothing is provided then
 #'   \code{"USD"} will be used.
-#' @param use_subunits an option for whether the subunits portion of a currency
+#' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed.
-#' @param accounting an option to use accounting style for currency values. With
+#' @param accounting An option to use accounting style for currency values. With
 #'   \code{FALSE} (the default), negative values will be shown with a negative
 #'   sign. Using \code{accounting = TRUE} will put negative values in
 #'   parentheses.
-#' @param placement the placement of the currency symbol. This can be either be
+#' @param placement The placement of the currency symbol. This can be either be
 #'   \code{left} (the default) or \code{right}.
-#' @param incl_space an option on whether to include a space between the value
+#' @param incl_space An option for whether to include a space between the value
 #'   and the currency symbol. The default is to not introduce a space character.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `currency` column to have
@@ -616,11 +616,11 @@ fmt_currency <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style the date style to use. Supply a number (from \code{1} to
+#' @param date_style The date style to use. Supply a number (from \code{1} to
 #' \code{14}) that corresponds to the preferred date style. Use
 #' \code{\link{info_date_style}()} to see the different numbered and named date
 #' presets.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -731,10 +731,11 @@ fmt_date <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style the time style to use. Supply a number (from \code{1} to
+#' @param time_style The time style to use. Supply a number (from \code{1} to
 #' \code{5}) that corresponds to the preferred time style. Use
 #' \code{\link{info_time_style}()} to see the different numbered and named time
 #' presets.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -865,7 +866,7 @@ fmt_time <- function(data,
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `datetime` column;
@@ -938,7 +939,7 @@ fmt_datetime <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Create a few Markdown-based
 #' # text snippets
@@ -1040,13 +1041,13 @@ fmt_markdown <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param escape an option to escape text according to the final output format
+#' @param escape An option to escape text according to the final output format
 #'   of the table. For example, if a LaTeX table is to be generated then LaTeX
 #'   escaping would be performed during rendering. By default this is set to
 #'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
 #'   LaTeX-formatted text should be passed through to the output LaTeX table
 #'   unchanged.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `char` column;
@@ -1156,9 +1157,9 @@ fmt_passthrough <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param missing_text the text to be used in place of \code{NA} values in the
+#' @param missing_text The text to be used in place of \code{NA} values in the
 #' rendered table.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # NA values in different columns will
@@ -1253,8 +1254,8 @@ fmt_missing <- function(data,
 #' \code{rows} argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param fns a single formatting function or a named list of functions.
-#' @return an object of class \code{gt_tbl}.
+#' @param fns Either a single formatting function or a named list of functions.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the numeric values in the `num`
