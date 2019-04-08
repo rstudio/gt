@@ -17,6 +17,7 @@ gt_options_default <- function() {
     "column_labels_background_color",     TRUE,  "columns",             NA_character_,
     "column_labels_font_size",            TRUE,  "columns",             "16px",
     "column_labels_font_weight",          TRUE,  "columns",             "initial",
+    "column_labels_hidden",               FALSE,  "columns",            "FALSE",
     "row_group_background_color",         TRUE,  "row_group",           NA_character_,
     "row_group_font_size",                TRUE,  "row_group",           "16px",
     "row_group_font_weight",              TRUE,  "row_group",           "initial",
