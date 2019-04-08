@@ -569,6 +569,10 @@ num_fmt_factory <- function(context,
 
   function(x) {
 
+    # Use locale-based marks if a locale ID is provided
+    sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+    dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
     # Define the marks by context
     minus_mark <- context_minus_mark(context)
     parens_marks <- context_parens_marks_number(context)
