@@ -542,6 +542,31 @@ create_var_list <- function(decimals,
   )
 }
 
+#' Create a list of function calls for all numeric `fmt_*()` functions
+#'
+#' @param contexts The output contexts to use in the `fmt()` call.
+#' @param decimals The number of decimal places (`digits`).
+#' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
+#' @param suffix_labels Normalized output from the `suffixing` input; either
+#'   provides a character vector of suffix labels, or NULL (the case where the
+#'   `suffixing` input is FALSE).
+#' @param scale_by A numeric scalar.
+#' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
+#'   a currency symbol.
+#' @param accounting An option to use accounting style for currency values.
+#' @param incl_space A logical value indicating whether a single space character
+#'   should separate the symbols and the formatted values.
+#' @param placement Either `left` or `right` (this is the placement of the
+#'   symbol string relative to the formatted, numeric values).
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value.
+#' @param use_seps An option to use digit group separators.
+#' @param sep_mark The separator for number groups (`big.mark`).
+#' @param dec_mark The decimal separator mark (`decimal.mark`).
+#' @param locale An optional locale ID that can be used for formatting the value
+#'   according the locale's rules.
+#' @param format_fn The format function (based on `formatC()`).
+#' @noRd
 num_fmt_factory_multi <- function(contexts = c("html", "latex", "default"),
                                   decimals,
                                   drop_trailing_zeros,
