@@ -156,24 +156,17 @@ fmt_number <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Create a list of variables to pass to `num_fmt_factory()`
-  var_list <-
-    create_var_list(
-      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
-      symbol, drop_trailing_zeros, accounting, incl_space, placement,
-      pattern, locale
-    )
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = num_fmt_factory("html", var_list, format_num_to_str),
-      latex = num_fmt_factory("latex", var_list, format_num_to_str),
-      default = num_fmt_factory("default", var_list, format_num_to_str)
+    fns = num_fmt_factory_multi(
+      contexts = c("html", "latex", "default"),
+      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
+      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
+      format_fn = format_num_to_str
     )
   )
 }
@@ -259,24 +252,17 @@ fmt_scientific <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Create a list of variables to pass to `num_fmt_factory()`
-  var_list <-
-    create_var_list(
-      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
-      symbol, drop_trailing_zeros, accounting, incl_space, placement,
-      pattern, locale
-    )
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = num_fmt_factory("html", var_list, format_num_to_str_e),
-      latex = num_fmt_factory("latex", var_list, format_num_to_str_e),
-      default = num_fmt_factory("default", var_list, format_num_to_str_e)
+    fns = num_fmt_factory_multi(
+      contexts = c("html", "latex", "default"),
+      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
+      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
+      format_fn = format_num_to_str_e
     )
   )
 }
@@ -366,24 +352,17 @@ fmt_percent <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Create a list of variables to pass to `num_fmt_factory()`
-  var_list <-
-    create_var_list(
-      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
-      symbol, drop_trailing_zeros, accounting, incl_space, placement,
-      pattern, locale
-    )
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = num_fmt_factory("html", var_list, format_num_to_str),
-      latex = num_fmt_factory("latex", var_list, format_num_to_str),
-      default = num_fmt_factory("default", var_list, format_num_to_str)
+    fns = num_fmt_factory_multi(
+      contexts = c("html", "latex", "default"),
+      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
+      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
+      format_fn = format_num_to_str
     )
   )
 }
@@ -523,24 +502,17 @@ fmt_currency <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Create a list of variables to pass to `num_fmt_factory()`
-  var_list <-
-    create_var_list(
-      decimals, suffix_labels, scale_by, sep_mark, dec_mark, use_seps,
-      symbol, drop_trailing_zeros, accounting, incl_space, placement,
-      pattern, locale
-    )
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = num_fmt_factory("html", var_list, format_num_to_str_c),
-      latex = num_fmt_factory("latex", var_list, format_num_to_str_c),
-      default = num_fmt_factory("default", var_list, format_num_to_str_c)
+    fns = num_fmt_factory_multi(
+      contexts = c("html", "latex", "default"),
+      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
+      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
+      format_fn = format_num_to_str_c
     )
   )
 }

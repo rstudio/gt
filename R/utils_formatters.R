@@ -542,6 +542,35 @@ create_var_list <- function(decimals,
   )
 }
 
+num_fmt_factory_multi <- function(contexts = c("html", "latex", "default"),
+                                  decimals,
+                                  drop_trailing_zeros,
+                                  suffix_labels,
+                                  scale_by,
+                                  symbol,
+                                  accounting,
+                                  incl_space,
+                                  placement,
+                                  pattern,
+                                  use_seps,
+                                  sep_mark,
+                                  dec_mark,
+                                  locale,
+                                  format_fn) {
+
+  # Upgrade `contexts` to have names
+  names(contexts) <- contexts
+
+  lapply(contexts, function(x) {
+    num_fmt_factory(
+      context = x,
+      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
+      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
+      format_fn = format_fn
+    )
+  })
+}
+
 #' A factory function used for all numeric `fmt_*()` functions
 #'
 #' @param context The output context.
@@ -549,23 +578,28 @@ create_var_list <- function(decimals,
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory <- function(context,
-                            var_list,
+                            decimals,
+                            drop_trailing_zeros,
+                            suffix_labels,
+                            scale_by,
+                            symbol,
+                            accounting,
+                            incl_space,
+                            placement,
+                            pattern,
+                            use_seps,
+                            sep_mark,
+                            dec_mark,
+                            locale,
                             format_fn) {
 
-  # Extract variables from `var_list`
-  decimals <- var_list$decimals
-  suffix_labels <- var_list$suffix_labels
-  scale_by <- var_list$scale_by
-  sep_mark <- var_list$sep_mark
-  dec_mark <- var_list$dec_mark
-  use_seps <- var_list$use_seps
-  symbol <- var_list$symbol
-  drop_trailing_zeros <- var_list$drop_trailing_zeros
-  accounting <- var_list$accounting
-  incl_space <- var_list$incl_space
-  placement <- var_list$placement
-  pattern <- var_list$pattern
-  locale <- var_list$locale
+  # Force all arguments
+  force(
+    list(
+      context, decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol,
+      accounting, incl_space, placement, pattern, use_seps, locale
+    )
+  )
 
   function(x) {
 
