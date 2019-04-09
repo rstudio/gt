@@ -196,10 +196,10 @@ scale_x_values <- function(x,
 #' @param format The numeric format for `formatC()`.
 #' @noRd
 format_num_to_str <- function(x,
-                              decimals,
-                              sep_mark,
-                              dec_mark,
-                              drop_trailing_zeros,
+                              decimals = NULL,
+                              sep_mark = NULL,
+                              dec_mark = NULL,
+                              drop_trailing_zeros = NULL,
                               small_pos = NULL,
                               exp_marks = NULL,
                               minus_mark = NULL,
@@ -221,13 +221,13 @@ format_num_to_str <- function(x,
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_e <- function(x,
-                                decimals,
-                                sep_mark,
-                                dec_mark,
-                                drop_trailing_zeros,
-                                small_pos,
-                                exp_marks,
-                                minus_mark) {
+                                decimals = NULL,
+                                sep_mark = NULL,
+                                dec_mark = NULL,
+                                drop_trailing_zeros = NULL,
+                                small_pos = NULL,
+                                exp_marks = NULL,
+                                minus_mark = NULL) {
 
   format_num_to_str(
     x,
@@ -246,9 +246,9 @@ format_num_to_str_e <- function(x,
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_c <- function(x,
-                                decimals,
-                                sep_mark,
-                                dec_mark,
+                                decimals = NULL,
+                                sep_mark = NULL,
+                                dec_mark = NULL,
                                 drop_trailing_zeros = FALSE,
                                 small_pos = NULL,
                                 exp_marks = NULL,
