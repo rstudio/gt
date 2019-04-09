@@ -420,13 +420,11 @@ html <- function(text, ...) {
   htmltools::HTML(text, ...)
 }
 
-is.html <- function(x) {
-
-  if (inherits(x, "html")) {
-    isTRUE(attr(x, "html"))
-  } else {
-    FALSE
-  }
+#' Does an object have the `html` class?
+#'
+#' @noRd
+is_html <- function(x) {
+  ifelse(inherits(x, "html"), TRUE, FALSE)
 }
 
 #' Helper for defining custom styles for table cells
