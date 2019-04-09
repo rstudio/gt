@@ -143,6 +143,36 @@ test_that("a gt table contains the expected spanner column labels", {
     selection_text("[class='gt_col_heading gt_column_spanner gt_center']") %>%
     expect_equal("perimeter")
 
+  # Create a `tbl_html` object with `gt()`; this table
+  # contains the spanner heading `perimeter` that is formatted
+  # with Markdown via `md()`
+  tbl_html <-
+    gt(data = rock) %>%
+    tab_spanner(
+      label = md("*perimeter*"),
+      columns = c("peri", "shape")) %>%
+    render_as_html()
+
+  # Expect that the `perimeter` word is wrapped in `<em>` tags
+  expect_true(
+    grepl("<em>perimeter</em>", tbl_html)
+  )
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # contains the spanner heading `perimeter` that is formatted
+  # with HTML via `html()`
+  tbl_html <-
+    gt(data = rock) %>%
+    tab_spanner(
+      label = html("<em>perimeter</em>"),
+      columns = c("peri", "shape")) %>%
+    render_as_html()
+
+  # Expect that the `perimeter` word is wrapped in `<em>` tags
+  expect_true(
+    grepl("<em>perimeter</em>", tbl_html)
+  )
+
   # Expect an error when using column labels
   # that don't exist
   expect_error(
