@@ -273,8 +273,8 @@ tab_spanner <- function(data,
   grp_labels[column_names] <- label
 
   # Ensure that the label classes are preserved
-  for (i in seq(grp_labels[column_names])) {
-    class(grp_labels[column_names][[i]]) <- class(label)
+  for (group_label_i in seq(grp_labels[column_names])) {
+    class(grp_labels[column_names][[group_label_i]]) <- class(label)
   }
 
   # Set the `grp_labels` attr with the `grp_labels` object
