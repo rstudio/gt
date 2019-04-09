@@ -209,7 +209,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -217,7 +217,8 @@ process_text <- function(text,
 
     } else {
 
-      text <- text %>%
+      text <-
+        text %>%
         as.character() %>%
         htmltools::htmlEscape()
 
@@ -229,12 +230,11 @@ process_text <- function(text,
 
     if (inherits(text, "from_markdown")) {
 
-      text <- text %>%
-        markdown_to_latex()
+      text <- text %>% markdown_to_latex()
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -252,12 +252,11 @@ process_text <- function(text,
 
     if (inherits(text, "from_markdown")) {
 
-      text <- text %>%
-        markdown_to_text()
+      text <- text %>% markdown_to_text()
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -265,7 +264,8 @@ process_text <- function(text,
 
     } else {
 
-      text <- text %>%
+      text <-
+        text %>%
         as.character() %>%
         htmltools::htmlEscape()
 
