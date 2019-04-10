@@ -244,6 +244,25 @@ test_that("a gt table contains the correct placement of row groups", {
     expect_equal(c("", "Mazda", "Mercs"))
 })
 
+test_that("a gt table's row group labels are HTML escaped", {
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # contains a row group with characters that require
+  # escaping for HTML
+  tbl_html <-
+    data.frame(group = "x > 30", value = seq(1, 5)) %>%
+    gt(groupname_col = "group") %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the row group label is `x > 30` (and not
+  # `x`, which would result from not escaping the inner HTML)
+  expect_equal(
+    tbl_html %>%
+      selection_text("[class='gt_group_heading']"),
+    "x > 30")
+})
+
 test_that("a gt table contains custom styles at the correct locations", {
 
   # Check that specific suggested packages are available
