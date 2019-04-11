@@ -129,7 +129,7 @@ as_rtf <- function(data) {
 
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
-  groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
+  groups_df <- get_groupnames_rownames_df(stub_df, rows_df, context)
 
   # Get a `columns_spanners` vector, which has the unique, non-NA
   # column spanner labels
