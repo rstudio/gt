@@ -207,7 +207,8 @@ get_columns_spanners_vec <- function(boxh_df) {
 # Function to create a data frame with group information and the
 # associated row numbers in the rearranged representation
 get_groups_rows_df <- function(arrange_groups,
-                               groups_df) {
+                               groups_df,
+                               context) {
 
   ordering <- arrange_groups[[1]]
 
@@ -232,7 +233,8 @@ get_groups_rows_df <- function(arrange_groups,
     groups_rows_df[i, "row_end"] <- max(rows_matched)
   }
 
-  groups_rows_df
+  groups_rows_df %>%
+    dplyr::mutate(group_label = process_text(group_label, context))
 }
 
 # Function for merging pairs of columns together (in `output_df`) and
