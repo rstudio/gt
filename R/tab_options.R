@@ -56,7 +56,8 @@
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @return An object of class `gt_tbl`.
+#' @param column_labels.hidden an option to hide the column labels.
+#' @return an object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this
@@ -167,6 +168,7 @@ tab_options <- function(data,
                         column_labels.background.color = NULL,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
+                        column_labels.hidden = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
                         row_group.font.weight = NULL,
@@ -325,6 +327,13 @@ tab_options <- function(data,
   if (!is.null(column_labels.font.weight)) {
 
     opts_df <- opts_df_set(opts_df, "column_labels_font_weight", column_labels.font.weight)
+  }
+
+  # column_labels.hidden
+  if (!is.null(column_labels.hidden)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "column_labels_hidden", column_labels.hidden)
   }
 
   # row_group.background.color
