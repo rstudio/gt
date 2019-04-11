@@ -193,7 +193,10 @@ scale_x_values <- function(x,
 #' @param sep_mark The separator for number groups (`big.mark`).
 #' @param dec_mark The decimal separator mark (`decimal.mark`).
 #' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
+#' @param minus_mark The contextually correct minus mark.
 #' @param format The numeric format for `formatC()`.
+#' @param replace_minus_mark An option for whether the minus sign should be
+#'   replaced with the minus mark.
 #' @noRd
 format_num_to_str <- function(x,
                               decimals,
@@ -222,29 +225,6 @@ format_num_to_str <- function(x,
   x_str
 }
 
-#' A `formatC()` call for `fmt_scientific()`
-#'
-#' @inheritParams format_num_to_str
-#' @noRd
-format_num_to_str_e <- function(x,
-                                decimals,
-                                sep_mark,
-                                dec_mark,
-                                drop_trailing_zeros,
-                                small_pos,
-                                exp_marks,
-                                minus_mark) {
-
-  format_num_to_str(
-    x,
-    decimals,
-    sep_mark,
-    dec_mark,
-    format = "e",
-    drop_trailing_zeros) %>%
-    prettify_scientific_notation(small_pos, exp_marks, minus_mark)
-}
-
 #' A `formatC()` call for `fmt_currency()`
 #'
 #' @inheritParams format_num_to_str
@@ -257,13 +237,14 @@ format_num_to_str_c <- function(x,
                                 drop_trailing_zeros = FALSE) {
 
   format_num_to_str(
-    x,
-    decimals,
-    sep_mark,
-    dec_mark,
-    format = "f",
-    drop_trailing_zeros)
-
+    x = x,
+    decimals = decimals,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    drop_trailing_zeros = drop_trailing_zeros,
+    minus_mark = minus_mark,
+    format = "f"
+  )
 }
 
 #' Surround formatted values with `$`s for LaTeX
@@ -369,7 +350,8 @@ context_symbol_str <- function(context,
 
 #' Paste a symbol string to a formatted number
 #'
-#' @param x Numeric values in `character` form.
+#' @param x_abs_str Absolute numeric values in `character` form.
+#' @param x Numeric values in `numeric` form.
 #' @param symbol_str The string that represents the symbol. It can be placed to
 #'   the left or to the right of the numeric values. If on the left, it can take
 #'   on a negative value.
@@ -422,8 +404,8 @@ format_symbol_str <- function(x_abs_str,
 
 #' Transform currency values to accounting style
 #'
-#' @param x Numeric values in `character` form.
-#' @param x_vals Numeric values in `numeric` form.
+#' @param x_str Numeric values in `character` form.
+#' @param x Numeric values in `numeric` form.
 #' @param minus_mark The contextually correct minus mark.
 #' @noRd
 format_minus <- function(x_str,
@@ -439,14 +421,15 @@ format_minus <- function(x_str,
   }
 
   # Handle replacement of the minus mark
-  x_str %>%
-    tidy_gsub("-", minus_mark, fixed = TRUE)
+  x_str %>% tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
 #' Transform currency values to accounting style
 #'
 #' @param x_str Numeric values in `character` form.
 #' @param x Numeric values in `numeric` form.
+#' @param accounting A logical value that indicates whether accounting style
+#'   should be used.
 #' @param minus_mark The contextually correct minus mark.
 #' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
@@ -518,10 +501,21 @@ prettify_scientific_notation <- function(x,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
-create_suffix_df <- function(x, decimals, suffix_labels, scale_by) {
+#' Create the data frame with suffixes and scaling values
+#'
+#' @param x Numeric values in `numeric` form.
+#' @param decimals The exact number of decimal places to be used in the
+#'   formatted numeric value.
+#' @param suffix_labels The vector of suffix labels to use.
+#' @param scale_by A value to scale the input.
+#' @noRd
+create_suffix_df <- function(x,
+                             decimals,
+                             suffix_labels,
+                             scale_by) {
 
-  # Create a tibble with scaled values for `x[non_na_x]`
-  # and the suffix labels to use for character formatting
+  # Create a tibble with scaled values for `x` and the
+  # suffix labels to use for character formatting
   num_suffix(
     round(x, decimals),
     suffixes = suffix_labels,
@@ -531,9 +525,9 @@ create_suffix_df <- function(x, decimals, suffix_labels, scale_by) {
 
 #' Create a list of function calls for all numeric `fmt_*()` functions
 #'
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value.
-#' @param format_fn The format function (based on `formatC()`).
+#' @param pattern The user-defined formatting pattern that allows for decoration
+#'   of the formatted value.
+#' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory_multi <- function(pattern,
                                   format_fn) {
@@ -544,6 +538,8 @@ num_fmt_factory_multi <- function(pattern,
   # Upgrade `contexts` to have names
   names(contexts) <- contexts
 
+  # Generate a named list of factory functions, with one
+  # component per context
   lapply(contexts, function(x) {
     num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
   })
@@ -552,7 +548,8 @@ num_fmt_factory_multi <- function(pattern,
 #' A factory function used for all numeric `fmt_*()` functions
 #'
 #' @param context The output context.
-#' @param pattern The pattern.
+#' @param pattern The user-defined formatting pattern that allows for decoration
+#'   of the formatted value.
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory <- function(context,

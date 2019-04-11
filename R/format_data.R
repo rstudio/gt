@@ -139,12 +139,6 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
-  # Set default values
-  accounting <- FALSE
-  symbol <- NULL
-  placement <- "left"
-  incl_space <- FALSE
-
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
@@ -179,15 +173,16 @@ fmt_number <- function(data,
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
-        # Scale the `x_vals` by the `scale_by` value
         x %>%
+          # Scale the `x_vals` by the `scale_by` values
           scale_x_values(suffix_df$scale_by) %>%
+          # Format numeric values to character-based numbers
           format_num_to_str(
             decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
           ) %>%
           # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the `x_str_vals`
+          # vector of suffixes to the right of the values
           paste_right(suffix_df$suffix)
       }
     )
@@ -257,11 +252,7 @@ fmt_scientific <- function(data,
                            locale = NULL) {
 
   # Set default values
-  accounting <- FALSE
-  symbol <- NULL
   suffixing <- FALSE
-  placement <- "left"
-  incl_space <- FALSE
   use_seps <- TRUE
 
   # Use locale-based marks if a locale ID is provided
@@ -289,32 +280,28 @@ fmt_scientific <- function(data,
       pattern = pattern,
       format_fn = function(x, context) {
 
-        x_str <- character(length(x))
-
         # Define the marks by context
         minus_mark <- context_minus_mark(context)
         exp_marks <- context_exp_marks(context)
 
+        # Define the `replace_minus()` function
         replace_minus <- function(x) {
-
-          x %>%
-            tidy_gsub("-", minus_mark, fixed = TRUE)
+          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
-        # Scale the `x_vals` by the `scale_by` value
-        x <-
-          x %>%
-          scale_x_values(suffix_df$scale_by)
+        # Scale the `x_vals` by the `scale_by` values
+        x <- x %>% scale_x_values(suffix_df$scale_by)
 
         x_str <-
           x %>%
+          # Format numeric values to character-based numbers
           format_num_to_str(
             decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
-            drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark, format = "e",
-            replace_minus_mark = FALSE
+            drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark,
+            format = "e", replace_minus_mark = FALSE
           )
 
         # # Determine which values don't require the (x 10^n)
@@ -345,7 +332,12 @@ fmt_scientific <- function(data,
   )
 }
 
-
+#' Format values to take a predefined symbol
+#'
+#' @inheritParams fmt_number
+#' @inheritParams fmt_currency
+#' @return An object of class \code{gt_tbl}.
+#' @noRd
 fmt_symbol <- function(data,
                        columns,
                        rows = NULL,
@@ -388,25 +380,19 @@ fmt_symbol <- function(data,
       pattern = pattern,
       format_fn = function(x, context) {
 
+        # Create the `x_str` vector
         x_str <- character(length(x))
 
         # Define the marks by context
         minus_mark <- context_minus_mark(context)
         parens_marks <- context_parens_marks_number(context)
-        #exp_marks <- context_exp_marks(context)
         symbol_str <- context_symbol_str(context, symbol)
-
-        # # Determine which values don't require the (x 10^n)
-        # # for scientific foramtting since their order would be zero
-        # small_pos <- has_order_zero(x)
 
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
         # Scale the `x_vals` by the `scale_by` value
-        x <-
-          x %>%
-          scale_x_values(suffix_df$scale_by)
+        x <- x %>% scale_x_values(suffix_df$scale_by)
 
         is_negative_x <- x < 0
         is_not_negative_x <- !is_negative_x
@@ -415,6 +401,7 @@ fmt_symbol <- function(data,
 
           x_str[is_not_negative_x] <-
             x[is_not_negative_x] %>%
+            # Format numeric values to character-based numbers
             format_num_to_str_c(
               decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
@@ -428,6 +415,7 @@ fmt_symbol <- function(data,
           x_abs_str[is_negative_x] <-
             x[is_negative_x] %>%
             abs() %>%
+            # Format numeric values to character-based numbers
             format_num_to_str_c(
               decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
@@ -435,6 +423,7 @@ fmt_symbol <- function(data,
         }
 
         x_str <-
+          # Format values with a symbol string
           format_symbol_str(
             x_abs_str = x_abs_str, x = x, symbol_str = symbol_str,
             incl_space = incl_space, placement = placement,
@@ -443,7 +432,7 @@ fmt_symbol <- function(data,
           # Format values in accounting style
           format_as_accounting(x, accounting, minus_mark, parens_marks) %>%
           # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the `x_str_vals`
+          # vector of suffixes to the right of the values
           paste_right(suffix_df$suffix)
 
         x_str
@@ -451,7 +440,6 @@ fmt_symbol <- function(data,
     )
   )
 }
-
 
 #' Format values as a percentage
 #'
@@ -541,7 +529,8 @@ fmt_percent <- function(data,
     dec_mark = dec_mark,
     placement = placement,
     incl_space = incl_space,
-    locale = locale)
+    locale = locale
+  )
 }
 
 #' Format values as currencies
@@ -684,7 +673,8 @@ fmt_currency <- function(data,
     dec_mark = dec_mark,
     placement = placement,
     incl_space = incl_space,
-    locale = locale)
+    locale = locale
+  )
 }
 
 #' Format values as dates
