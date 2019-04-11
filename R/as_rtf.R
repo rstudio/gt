@@ -129,7 +129,7 @@ as_rtf <- function(data) {
 
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
-  groups_df <- get_groupnames_rownames_df(stub_df, rows_df, context)
+  groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
 
   # Get a `columns_spanners` vector, which has the unique, non-NA
   # column spanner labels
@@ -137,7 +137,7 @@ as_rtf <- function(data) {
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df, context)
 
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
