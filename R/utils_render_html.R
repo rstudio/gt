@@ -282,7 +282,7 @@ create_heading_component <- function(heading,
   if (subtitle_defined) {
 
     footnote_subtitle_glyphs <-
-      styles_resolved %>%
+      footnotes_resolved %>%
       coalesce_glyphs(locname = "subtitle")
 
     footnote_subtitle_glyphs <-
