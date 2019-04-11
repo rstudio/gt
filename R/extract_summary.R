@@ -87,9 +87,6 @@ extract_summary <- function(data) {
   # Get the `arrange_groups` vector
   arrange_groups <- data_attr$arrange_groups
 
-  # Get the `others_group` vector
-  others_group <- data_attr$others_group[[1]] %||% NA_character_
-
   # Get the `col_merge` object
   col_merge <- data_attr$col_merge
 
@@ -115,26 +112,12 @@ extract_summary <- function(data) {
   # Reassemble the rows and columns of `data_df` in the correct order
   output_df <- reassemble_output_df(output_df, rows_df, columns_df)
 
-  # Get the `groups_df` data frame, which is a rearranged representation
-  # of the stub `groupname` and `rowname` columns
-  groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
-
-  # Replace NA values in the `groupname` column if there is a reserved
-  #   label for the unlabeled group
-  groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
-
-  # Create the `groups_rows_df` data frame, which provides information
-  #   on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
-
   # Perform any necessary column merge operations
   col_merge_output <-
     perform_col_merge(col_merge, data_df, output_df, boxh_df, columns_df)
 
   # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
   output_df <- col_merge_output$output_df
-  boxh_df <- col_merge_output$boxh_df
-  columns_df <- col_merge_output$columns_df
 
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
