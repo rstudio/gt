@@ -240,6 +240,9 @@ as_rtf <- function(data) {
       columns_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
+  # The styles table is not yet available for RTF
+  styles_resolved <- NULL
+
   # Add footnote glyphs to elements of the table columns
   boxh_df <-
     set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "rtf")
