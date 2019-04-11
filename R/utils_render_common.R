@@ -204,8 +204,10 @@ get_columns_spanners_vec <- function(boxh_df) {
   columns_spanners[which(!is.na(columns_spanners))]
 }
 
-# Function to create a data frame with group information and the
-# associated row numbers in the rearranged representation
+#' Create a data frame with row group information
+#'
+#' @importFrom dplyr mutate
+#' @noRd
 get_groups_rows_df <- function(arrange_groups,
                                groups_df,
                                context) {
