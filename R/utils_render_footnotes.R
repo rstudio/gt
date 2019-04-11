@@ -461,7 +461,6 @@ apply_footnotes_to_output <- function(output_df,
 }
 
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
-#' @importFrom htmltools htmlEscape
 #' @noRd
 set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
                                             groups_rows_df,
