@@ -65,7 +65,7 @@ elements: \code{heading}, \code{columns}, \code{row_group}, \code{summary_row}, 
 \item{column_labels.font.weight, row_group.font.weight}{The font weight of the
 \code{columns} and \code{row_group} text element.}
 
-\item{column_labels.hidden}{an option to hide the column labels.}
+\item{column_labels.hidden}{An option to hide the column labels.}
 
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{The style, width, and color of the row group's top border.}
 

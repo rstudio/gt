@@ -18,8 +18,8 @@ in other \pkg{gt} functions.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
 \code{col_1} and \code{col_1} values and any string literals. The \code{col_1} column is
-represented as \code{{1}} whereas \code{col_2} is \code{{2}}. All other
-characters are taken to be string literals.}
+represented as \code{{1}} whereas \code{col_2} is \code{{2}}. All other characters are
+taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
