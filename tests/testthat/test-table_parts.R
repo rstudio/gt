@@ -261,6 +261,27 @@ test_that("a gt table's row group labels are HTML escaped", {
     tbl_html %>%
       selection_text("[class='gt_group_heading']"),
     "x > 30")
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # has the row group label (with necessity to HTML-escape)
+  # but, this time, there is a footnote glyph attached to
+  # that label (which shouldn't be escaped)
+  tbl_html <-
+    data.frame(group = "x > 30", value = seq(1, 5)) %>%
+    gt(groupname_col = "group") %>%
+    tab_footnote(
+      footnote = "footnote",
+      locations = cells_group(groups = "x > 30")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the row group label is `x > 30` +
+  # the text for the footnote glyph: `1`
+  expect_equal(
+    tbl_html %>%
+      selection_text("[class='gt_group_heading']"),
+    "x > 301")
 })
 
 test_that("a gt table contains custom styles at the correct locations", {
