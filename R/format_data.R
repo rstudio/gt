@@ -163,7 +163,6 @@ fmt_number <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = num_fmt_factory_multi(
-      contexts = c("html", "latex", "default"),
       decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
       incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
       format_fn = format_num_to_str
@@ -259,7 +258,6 @@ fmt_scientific <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = num_fmt_factory_multi(
-      contexts = c("html", "latex", "default"),
       decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
       incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
       format_fn = format_num_to_str_e
@@ -359,7 +357,6 @@ fmt_percent <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = num_fmt_factory_multi(
-      contexts = c("html", "latex", "default"),
       decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
       incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
       format_fn = format_num_to_str
@@ -509,7 +506,6 @@ fmt_currency <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = num_fmt_factory_multi(
-      contexts = c("html", "latex", "default"),
       decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
       incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
       format_fn = format_num_to_str_c

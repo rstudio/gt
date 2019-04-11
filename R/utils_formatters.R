@@ -544,7 +544,6 @@ create_var_list <- function(decimals,
 
 #' Create a list of function calls for all numeric `fmt_*()` functions
 #'
-#' @param contexts The output contexts to use in the `fmt()` call.
 #' @param decimals The number of decimal places (`digits`).
 #' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
 #' @param suffix_labels Normalized output from the `suffixing` input; either
@@ -567,8 +566,7 @@ create_var_list <- function(decimals,
 #'   according the locale's rules.
 #' @param format_fn The format function (based on `formatC()`).
 #' @noRd
-num_fmt_factory_multi <- function(contexts = c("html", "latex", "default"),
-                                  decimals,
+num_fmt_factory_multi <- function(decimals,
                                   drop_trailing_zeros,
                                   suffix_labels,
                                   scale_by,
@@ -582,6 +580,9 @@ num_fmt_factory_multi <- function(contexts = c("html", "latex", "default"),
                                   dec_mark,
                                   locale,
                                   format_fn) {
+
+  # Define the contexts
+  contexts <- c("html", "latex", "default")
 
   # Upgrade `contexts` to have names
   names(contexts) <- contexts
