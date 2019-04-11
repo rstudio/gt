@@ -122,7 +122,7 @@ build_data <- function(data, context) {
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df, context)
 
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
