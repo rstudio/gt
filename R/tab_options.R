@@ -56,8 +56,8 @@
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @param column_labels.hidden an option to hide the column labels.
-#' @return an object of class \code{gt_tbl}.
+#' @param column_labels.hidden An option to hide the column labels.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this

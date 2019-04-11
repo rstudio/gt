@@ -688,8 +688,8 @@ cols_split_delim <- function(data,
 #'   in other \pkg{gt} functions.
 #' @param pattern A formatting pattern that specifies the arrangement of the
 #'   `col_1` and `col_1` values and any string literals. The `col_1` column is
-#'   represented as \code{{1}} whereas `col_2` is \code{{2}}. All other
-#'   characters are taken to be string literals.
+#'   represented as `{1}` whereas `col_2` is `{2}`. All other characters are
+#'   taken to be string literals.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sp500` to create a gt table;
