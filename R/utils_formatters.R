@@ -213,7 +213,8 @@ format_num_to_str <- function(x,
     decimal.mark = dec_mark,
     format = format,
     drop0trailing = drop_trailing_zeros
-  )
+  ) %>%
+    format_minus(x = x, minus_mark = minus_mark)
 }
 
 #' A `formatC()` call for `fmt_scientific()`
@@ -237,8 +238,6 @@ format_num_to_str_e <- function(x,
     format = "e",
     drop_trailing_zeros) %>%
     prettify_scientific_notation(small_pos, exp_marks, minus_mark)
-
-
 }
 
 #' A `formatC()` call for `fmt_currency()`
@@ -376,45 +375,69 @@ context_symbol_str <- function(context,
 #'   symbol string relative to the formatted, numeric values).
 #' @param minus_mark The contextually correct minus mark.
 #' @noRd
-paste_symbol_str <- function(x,
-                             symbol_str,
-                             incl_space,
-                             placement,
-                             minus_mark) {
+format_symbol_str <- function(x_str,
+                              x,
+                              x_abs_str,
+                              symbol_str,
+                              incl_space,
+                              placement,
+                              minus_mark) {
 
   if (symbol_str == "") {
-    return(x)
+    return(x_str)
   }
 
-  vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, x, function(x) {
+  vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, seq_along(x), function(i) {
 
-    if (grepl("^-", x)) {
+    x_i <- x[i]
+    x_str_i <- x_str[i]
 
-      x %>%
-        tidy_gsub("^-", "") %>%
-        paste_on_side(
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        ) %>%
-        paste_on_side(
-          x_side = symbol_str,
-          direction = placement
-        ) %>%
+    # Remove the `minus_mark` (to be added back later)
+    if (x_i < 0) {
+      x_str_i <- x_abs_str[i]
+    }
+
+    x_str_i <-
+      x_str_i %>%
+      paste_on_side(
+        x_side = ifelse(incl_space, " ", ""),
+        direction = placement
+      ) %>%
+      paste_on_side(
+        x_side = symbol_str,
+        direction = placement
+      )
+
+    # Reset the `minus_mark` onto the formatted strings
+    if (x_i < 0) {
+      x_str_i <-
+        x_str_i %>%
         paste_left(minus_mark)
-
-    } else {
-
-      x %>%
-        paste_on_side(
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        ) %>%
-        paste_on_side(
-          x_side = symbol_str,
-          direction = placement
-        )
     }
   })
+}
+
+#' Transform currency values to accounting style
+#'
+#' @param x Numeric values in `character` form.
+#' @param x_vals Numeric values in `numeric` form.
+#' @param minus_mark The contextually correct minus mark.
+#' @noRd
+format_minus <- function(x_str,
+                         x,
+                         minus_mark) {
+
+  # Store logical vector of `x_vals` < 0
+  x_lt0 <- x < 0
+
+  # Return values unchanged if there are no negative values
+  if (!any(x_lt0)) {
+    return(x_str)
+  }
+
+  # Handle replacement of the minus mark
+  x_str %>%
+    tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
 #' Transform currency values to accounting style
@@ -437,11 +460,6 @@ format_as_accounting <- function(x,
   if (!any(x_vals_lt0)) {
     return(x)
   }
-
-  # Handle replacement of the minus mark
-  x <-
-    x %>%
-    tidy_gsub("-", minus_mark, fixed = TRUE)
 
   # Handle case where negative values are to be placed within parentheses
   if (accounting) {
@@ -493,6 +511,17 @@ prettify_scientific_notation <- function(x,
   # and exponent parts
   x %>%
     tidy_gsub("-", minus_mark, fixed = TRUE)
+}
+
+create_suffix_df <- function(x, decimals, suffix_labels, scale_by) {
+
+  # Create a tibble with scaled values for `x[non_na_x]`
+  # and the suffix labels to use for character formatting
+  num_suffix(
+    round(x, decimals),
+    suffixes = suffix_labels,
+    scale_by = scale_by
+  )
 }
 
 #' Create a list of variables to pass to `num_fmt_factory()`
@@ -605,7 +634,6 @@ num_fmt_factory_multi <- function(decimals,
 #' @noRd
 num_fmt_factory <- function(context,
                             decimals,
-                            drop_trailing_zeros,
                             suffix_labels,
                             scale_by,
                             symbol,
@@ -614,8 +642,6 @@ num_fmt_factory <- function(context,
                             placement,
                             pattern,
                             use_seps,
-                            sep_mark,
-                            dec_mark,
                             locale,
                             format_fn) {
 
@@ -629,51 +655,20 @@ num_fmt_factory <- function(context,
 
   function(x) {
 
-    # Use locale-based marks if a locale ID is provided
-    sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-    dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-    # Define the marks by context
-    minus_mark <- context_minus_mark(context)
-    parens_marks <- context_parens_marks_number(context)
-    exp_marks <- context_exp_marks(context)
-    symbol_str <- context_symbol_str(context, symbol)
-
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)
 
     # Create a possibly shorter vector of non-NA `x` values
     x_vals <- x[non_na_x]
 
-    # Create a tibble with scaled values for `x[non_na_x]`
-    # and the suffix labels to use for character formatting
-    suffix_df <-
-      num_suffix(
-        round(x_vals, decimals),
-        suffixes = suffix_labels,
-        scale_by = scale_by
-      )
-
-    # Scale the `x_vals` by the `scale_by` value
-    x_vals <-
-      x_vals %>%
-      scale_x_values(suffix_df$scale_by)
-
-    # Determine which values don't require the (x 10^n)
-    # for scientific foramtting since their order would be zero
-    small_pos <- has_order_zero(x_vals)
-
     # Apply a series of transformations to `x_str_vals`
     x_str_vals <-
       x_vals %>%
       # Format all non-NA x values with a formatting function
-      format_fn(
-        decimals, sep_mark, dec_mark, drop_trailing_zeros,
-        small_pos, exp_marks, minus_mark
+      format_fn(context
+        #decimals, sep_mark, dec_mark, drop_trailing_zeros,
+        #small_pos, exp_marks, minus_mark
       ) %>%
-      # With large-number suffixing support, we paste the
-      # vector of suffixes to the right of the `x_str_vals`
-      paste_right(suffix_df$suffix) %>%
       # A symbol string is a group of characters bound to the value
       # and also takes on a negative sign
       paste_symbol_str(symbol_str, incl_space, placement, minus_mark) %>%

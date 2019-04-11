@@ -145,6 +145,10 @@ fmt_number <- function(data,
   placement <- "left"
   incl_space <- FALSE
 
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -239,6 +243,10 @@ fmt_scientific <- function(data,
   placement <- "left"
   incl_space <- FALSE
   use_seps <- TRUE
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
@@ -338,6 +346,10 @@ fmt_percent <- function(data,
   accounting <- FALSE
   symbol <- "%"
   suffixing <- FALSE
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
@@ -482,6 +494,10 @@ fmt_currency <- function(data,
   drop_trailing_zeros <- FALSE
   symbol <- currency
 
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
   # Stop function if `locale` does not have a valid value
   validate_locale(locale)
 
@@ -508,7 +524,67 @@ fmt_currency <- function(data,
     fns = num_fmt_factory_multi(
       decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
       incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
-      format_fn = format_num_to_str_c
+      format_fn = function(x, context) {
+
+        x_str <- character(length(x))
+
+        # Define the marks by context
+        minus_mark <- context_minus_mark(context)
+        parens_marks <- context_parens_marks_number(context)
+        exp_marks <- context_exp_marks(context)
+        #symbol_str <- context_symbol_str(context, symbol)
+
+        # Determine which values don't require the (x 10^n)
+        # for scientific foramtting since their order would be zero
+        small_pos <- has_order_zero(x)
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        # Scale the `x_vals` by the `scale_by` value
+        x <-
+          x %>%
+          scale_x_values(suffix_df$scale_by)
+
+        is_negative_x <- x < 0
+
+        if (any(!is_negative_x)) {
+
+          x_str[!is_negative_x] <-
+            x[!is_negative_x] %>%
+            format_num_to_str_c(
+              decimals, sep_mark, dec_mark, drop_trailing_zeros,
+              small_pos, exp_marks, minus_mark
+            )
+        }
+
+        x_abs_str <- x_str
+
+        if (any(is_negative_x)) {
+
+          x_abs_str[is_negative_x] <-
+            x[is_negative_x] %>%
+            abs() %>%
+            format_num_to_str_c(
+              decimals, sep_mark, dec_mark, drop_trailing_zeros,
+              small_pos, exp_marks, minus_mark
+            )
+        }
+
+        x_str <-
+          x_str %>%
+          format_symbol_str(
+            x, x_abs_str, symbol_str, incl_space, placement, minus_mark
+          )
+
+        # With large-number suffixing support, we paste the
+        # vector of suffixes to the right of the `x_str_vals`
+        x_str <-
+          x_str %>%
+          paste_right(suffix_df$suffix)
+
+        x_str
+      }
     )
   )
 }
