@@ -680,8 +680,7 @@ create_body_component_h <- function(row_splits_body,
               length(group_style) > 0,
               paste0(" style='", paste(group_style, collapse = ","), "'"), ""),
             ">",
-            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] %>%
-              process_text(context = "html"),
+            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
             "</tr>\n")
         )
