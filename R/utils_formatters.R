@@ -196,25 +196,30 @@ scale_x_values <- function(x,
 #' @param format The numeric format for `formatC()`.
 #' @noRd
 format_num_to_str <- function(x,
-                              decimals = NULL,
-                              sep_mark = NULL,
-                              dec_mark = NULL,
-                              drop_trailing_zeros = NULL,
-                              small_pos = NULL,
-                              exp_marks = NULL,
-                              minus_mark = NULL,
-                              format = "f") {
+                              decimals,
+                              sep_mark,
+                              dec_mark,
+                              drop_trailing_zeros,
+                              minus_mark,
+                              format = "f",
+                              replace_minus_mark = TRUE) {
 
-  formatC(
-    x = x,
-    digits = decimals,
-    mode = "double",
-    big.mark = sep_mark,
-    decimal.mark = dec_mark,
-    format = format,
-    drop0trailing = drop_trailing_zeros
-  ) %>%
-    format_minus(x = x, minus_mark = minus_mark)
+  x_str <-
+    formatC(
+      x = x,
+      digits = decimals,
+      mode = "double",
+      big.mark = sep_mark,
+      decimal.mark = dec_mark,
+      format = format,
+      drop0trailing = drop_trailing_zeros
+    )
+
+  if (replace_minus_mark) {
+    x_str <- format_minus(x_str = x_str, x = x, minus_mark = minus_mark)
+  }
+
+  x_str
 }
 
 #' A `formatC()` call for `fmt_scientific()`
@@ -222,13 +227,13 @@ format_num_to_str <- function(x,
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_e <- function(x,
-                                decimals = NULL,
-                                sep_mark = NULL,
-                                dec_mark = NULL,
-                                drop_trailing_zeros = NULL,
-                                small_pos = NULL,
-                                exp_marks = NULL,
-                                minus_mark = NULL) {
+                                decimals,
+                                sep_mark,
+                                dec_mark,
+                                drop_trailing_zeros,
+                                small_pos,
+                                exp_marks,
+                                minus_mark) {
 
   format_num_to_str(
     x,
@@ -245,13 +250,11 @@ format_num_to_str_e <- function(x,
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_c <- function(x,
-                                decimals = NULL,
-                                sep_mark = NULL,
-                                dec_mark = NULL,
-                                drop_trailing_zeros = FALSE,
-                                small_pos = NULL,
-                                exp_marks = NULL,
-                                minus_mark = NULL) {
+                                decimals,
+                                sep_mark,
+                                dec_mark,
+                                minus_mark,
+                                drop_trailing_zeros = FALSE) {
 
   format_num_to_str(
     x,
@@ -260,6 +263,7 @@ format_num_to_str_c <- function(x,
     dec_mark,
     format = "f",
     drop_trailing_zeros)
+
 }
 
 #' Surround formatted values with `$`s for LaTeX
@@ -375,28 +379,25 @@ context_symbol_str <- function(context,
 #'   symbol string relative to the formatted, numeric values).
 #' @param minus_mark The contextually correct minus mark.
 #' @noRd
-format_symbol_str <- function(x_str,
+format_symbol_str <- function(x_abs_str,
                               x,
-                              x_abs_str,
                               symbol_str,
                               incl_space,
                               placement,
                               minus_mark) {
 
   if (symbol_str == "") {
-    return(x_str)
+    return(x_abs_str)
   }
 
   vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, seq_along(x), function(i) {
 
+    # Using absolute value format, the minus mark will
+    # be added later
     x_i <- x[i]
-    x_str_i <- x_str[i]
+    x_str_i <- x_abs_str[i]
 
-    # Remove the `minus_mark` (to be added back later)
-    if (x_i < 0) {
-      x_str_i <- x_abs_str[i]
-    }
-
+    # Place possible space and symbol on correct side of value
     x_str_i <-
       x_str_i %>%
       paste_on_side(
@@ -408,12 +409,14 @@ format_symbol_str <- function(x_str,
         direction = placement
       )
 
-    # Reset the `minus_mark` onto the formatted strings
+    # Place the `minus_mark` onto the formatted strings
     if (x_i < 0) {
       x_str_i <-
         x_str_i %>%
         paste_left(minus_mark)
     }
+
+    x_str_i
   })
 }
 
@@ -442,36 +445,38 @@ format_minus <- function(x_str,
 
 #' Transform currency values to accounting style
 #'
-#' @param x Numeric values in `character` form.
-#' @param x_vals Numeric values in `numeric` form.
+#' @param x_str Numeric values in `character` form.
+#' @param x Numeric values in `numeric` form.
 #' @param minus_mark The contextually correct minus mark.
 #' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
-format_as_accounting <- function(x,
-                                 x_vals,
+format_as_accounting <- function(x_str,
+                                 x,
                                  accounting,
                                  minus_mark,
                                  parens_marks) {
 
-  # Store logical vector of `x_vals` < 0
-  x_vals_lt0 <- x_vals < 0
+  # TODO: Handle using `x_abs_str` instead
+
+  # Store logical vector of `x` < 0
+  x_lt0 <- x < 0
 
   # Return values unchanged if there are no negative values
-  if (!any(x_vals_lt0)) {
-    return(x)
+  if (!any(x_lt0)) {
+    return(x_str)
   }
 
   # Handle case where negative values are to be placed within parentheses
   if (accounting) {
 
     # Selectively remove minus sign and paste between parentheses
-    x[x_vals_lt0] <-
-      x[x_vals_lt0] %>%
+    x_str[x_lt0] <-
+      x_str[x_lt0] %>%
       tidy_gsub(minus_mark, "", fixed = TRUE) %>%
       paste_between(x_2 = parens_marks)
   }
 
-  x
+  x_str
 }
 
 #' Provide a nicer format for numbers in scientific notation
@@ -524,90 +529,13 @@ create_suffix_df <- function(x, decimals, suffix_labels, scale_by) {
   )
 }
 
-#' Create a list of variables to pass to `num_fmt_factory()`
-#'
-#' @param decimals The number of decimal places (`digits`).
-#' @param suffix_labels Normalized output from the `suffixing` input; either
-#'   provides a character vector of suffix labels, or NULL (the case where the
-#'   `suffixing` input is FALSE).
-#' @param scale_by A numeric scalar.
-#' @param sep_mark The separator for number groups (`big.mark`).
-#' @param dec_mark The decimal separator mark (`decimal.mark`).
-#' @param use_seps An option to use digit group separators.
-#' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
-#'   a currency symbol.
-#' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
-#' @param accounting An option to use accounting style for currency values.
-#' @param incl_space A logical value indicating whether a single space character
-#'   should separate the symbols and the formatted values.
-#' @param placement Either `left` or `right` (this is the placement of the
-#'   symbol string relative to the formatted, numeric values).
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value.
-#' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules.
-#' @noRd
-create_var_list <- function(decimals,
-                            suffix_labels,
-                            scale_by,
-                            sep_mark,
-                            dec_mark,
-                            use_seps,
-                            symbol,
-                            drop_trailing_zeros,
-                            accounting,
-                            incl_space,
-                            placement,
-                            pattern,
-                            locale) {
-
-  list(
-    decimals = decimals, suffix_labels = suffix_labels,
-    scale_by = scale_by, sep_mark = sep_mark, dec_mark = dec_mark,
-    use_seps = use_seps, symbol = symbol,
-    drop_trailing_zeros = drop_trailing_zeros,
-    accounting = accounting, incl_space = incl_space,
-    placement = placement, pattern = pattern, locale = locale
-  )
-}
-
 #' Create a list of function calls for all numeric `fmt_*()` functions
 #'
-#' @param decimals The number of decimal places (`digits`).
-#' @param drop_trailing_zeros An option to exclude trailing decimal zeros.
-#' @param suffix_labels Normalized output from the `suffixing` input; either
-#'   provides a character vector of suffix labels, or NULL (the case where the
-#'   `suffixing` input is FALSE).
-#' @param scale_by A numeric scalar.
-#' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
-#'   a currency symbol.
-#' @param accounting An option to use accounting style for currency values.
-#' @param incl_space A logical value indicating whether a single space character
-#'   should separate the symbols and the formatted values.
-#' @param placement Either `left` or `right` (this is the placement of the
-#'   symbol string relative to the formatted, numeric values).
 #' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value.
-#' @param use_seps An option to use digit group separators.
-#' @param sep_mark The separator for number groups (`big.mark`).
-#' @param dec_mark The decimal separator mark (`decimal.mark`).
-#' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules.
 #' @param format_fn The format function (based on `formatC()`).
 #' @noRd
-num_fmt_factory_multi <- function(decimals,
-                                  drop_trailing_zeros,
-                                  suffix_labels,
-                                  scale_by,
-                                  symbol,
-                                  accounting,
-                                  incl_space,
-                                  placement,
-                                  pattern,
-                                  use_seps,
-                                  sep_mark,
-                                  dec_mark,
-                                  locale,
+num_fmt_factory_multi <- function(pattern,
                                   format_fn) {
 
   # Define the contexts
@@ -617,41 +545,24 @@ num_fmt_factory_multi <- function(decimals,
   names(contexts) <- contexts
 
   lapply(contexts, function(x) {
-    num_fmt_factory(
-      context = x,
-      decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol, accounting,
-      incl_space, placement, pattern, use_seps, sep_mark, dec_mark, locale,
-      format_fn = format_fn
-    )
+    num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
   })
 }
 
 #' A factory function used for all numeric `fmt_*()` functions
 #'
 #' @param context The output context.
-#' @param var_list A variable list as returned by `create_var_list()`.
+#' @param pattern The pattern.
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory <- function(context,
-                            decimals,
-                            suffix_labels,
-                            scale_by,
-                            symbol,
-                            accounting,
-                            incl_space,
-                            placement,
                             pattern,
-                            use_seps,
-                            locale,
                             format_fn) {
 
   # Force all arguments
-  force(
-    list(
-      context, decimals, drop_trailing_zeros, suffix_labels, scale_by, symbol,
-      accounting, incl_space, placement, pattern, use_seps, locale
-    )
-  )
+  force(context)
+  force(pattern)
+  force(format_fn)
 
   function(x) {
 
@@ -665,15 +576,7 @@ num_fmt_factory <- function(context,
     x_str_vals <-
       x_vals %>%
       # Format all non-NA x values with a formatting function
-      format_fn(context
-        #decimals, sep_mark, dec_mark, drop_trailing_zeros,
-        #small_pos, exp_marks, minus_mark
-      ) %>%
-      # A symbol string is a group of characters bound to the value
-      # and also takes on a negative sign
-      paste_symbol_str(symbol_str, incl_space, placement, minus_mark) %>%
-      # Format values in accounting style
-      format_as_accounting(x_vals, accounting, minus_mark, parens_marks) %>%
+      format_fn(context) %>%
       # If in a LaTeX context, wrap values in math mode
       to_latex_math_mode(context) %>%
       # Handle formatting of pattern
