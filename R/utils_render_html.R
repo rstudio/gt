@@ -433,7 +433,18 @@ create_columns_component_h <- function(boxh_df,
                                        spanners_present,
                                        styles_resolved,
                                        stubhead_label,
-                                       col_alignment) {
+                                       col_alignment,
+                                       opts_df) {
+
+  # Should the column labels be hidden?
+  column_labels_hidden <-
+    opts_df %>%
+    opts_df_get(option = "column_labels_hidden") %>%
+    as.logical()
+
+  if (column_labels_hidden) {
+    return("")
+  }
 
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <-

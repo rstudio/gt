@@ -14,9 +14,10 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   heading.border.bottom.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
-  row_group.background.color = NULL, row_group.font.size = NULL,
-  row_group.font.weight = NULL, row_group.border.top.style = NULL,
-  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
+  column_labels.hidden = NULL, row_group.background.color = NULL,
+  row_group.font.size = NULL, row_group.font.weight = NULL,
+  row_group.border.top.style = NULL, row_group.border.top.width = NULL,
+  row_group.border.top.color = NULL,
   row_group.border.bottom.style = NULL,
   row_group.border.bottom.width = NULL,
   row_group.border.bottom.color = NULL,
@@ -68,6 +69,8 @@ color code should be provided.}
 
 \item{column_labels.font.weight, row_group.font.weight}{the font weight of
 the \code{columns} and \code{row_group} text element.}
+
+\item{column_labels.hidden}{an option to hide the column labels.}
 
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{the style, width, and color of the row group's top border.}
 
