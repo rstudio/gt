@@ -72,7 +72,8 @@ gtsave <- function(data, filename, ...) {
   )
 }
 
-# Saving function for an HTML file
+#' Saving function for an HTML file
+#'
 #' @importFrom htmltools as.tags save_html HTML
 #' @noRd
 gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
