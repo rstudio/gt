@@ -78,7 +78,39 @@ gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
   }
 }
 
-# Saving function for a LaTeX file
+#' Saving function for a LaTeX file
+#'
+#' @importFrom htmltools HTML save_html
+#' @noRd
+gt_save_webshot <- function(data, filename, ...) {
+
+  tempfile_ <- tempfile(fileext = ".html")
+
+  data %>%
+    as_raw_html(inline_css = TRUE) %>%
+    htmltools::HTML() %>%
+    htmltools::save_html(file = tempfile_)
+
+  if (requireNamespace("webshot", quietly = TRUE)) {
+
+    # Save the image in the working directory
+    webshot::webshot(
+      url = paste0("file://", tempfile_),
+      file = filename,
+      selector = "table",
+      zoom = 2,
+      expand = 5
+    )
+
+  } else {
+    stop("The `webshot` package is required saving images of gt tables.",
+         call. = FALSE)
+  }
+}
+
+#' Saving function for a LaTeX file
+#'
+#' @noRd
 gt_save_latex <- function(data, filename, ...) {
 
   data %>%
@@ -86,7 +118,9 @@ gt_save_latex <- function(data, filename, ...) {
     writeLines(con = filename)
 }
 
-# Saving function for an RTF file
+#' Saving function for an RTF file
+#'
+#' @noRd
 gt_save_rtf <- function(data, filename, ...) {
 
   data %>%
@@ -94,6 +128,8 @@ gt_save_rtf <- function(data, filename, ...) {
     writeLines(con = filename)
 }
 
+#' Get the lowercase extension from a filename
+#'
 #' @importFrom tools file_ext
 #' @noRd
 gtsave_file_ext <- function(filename) {
