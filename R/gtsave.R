@@ -48,12 +48,16 @@ gtsave <- function(data, filename, ...) {
   # Use the appropriate save function based
   # on the filename extension
   switch(file_ext,
-         htm = gt_save_html(data, filename, ...),
+          htm = gt_save_html(data, filename, ...),
          html = gt_save_html(data, filename, ...),
-         ltx = gt_save_latex(data, filename, ...),
-         rnw = gt_save_latex(data, filename, ...),
-         tex = gt_save_latex(data, filename, ...),
-         rtf = gt_save_rtf(data, filename, ...),
+          ltx = gt_save_latex(data, filename, ...),
+          rnw = gt_save_latex(data, filename, ...),
+          tex = gt_save_latex(data, filename, ...),
+          rtf = gt_save_rtf(data, filename, ...),
+          png = gt_save_webshot(data, filename, ...),
+         jpeg = gt_save_webshot(data, filename, ...),
+          jpg = gt_save_webshot(data, filename, ...),
+          pdf = gt_save_webshot(data, filename, ...),
          {
            stop("The file extension used (`.", file_ext, "`) doesn't have an ",
                 "associated saving function.\n",
