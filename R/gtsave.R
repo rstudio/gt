@@ -40,8 +40,13 @@ gtsave <- function(data, filename, ...) {
   # Stop function if a file extension is not provided
   if (file_ext == "") {
 
-    stop("A file extension is required in the provided filename.\n",
-         " * We can use `", filename, "` + either of `.html`/`.htm`, `.tex`/`.ltx`/`.rnw`, or `.rtf`",
+    stop("A file extension is required in the provided filename. We can use:\n",
+         " * `.html`/`.htm` (HTML file)\n",
+         " * `.tex`/`.ltx`/`.rnw` (LaTeX file)\n",
+         " * `.rtf` (RTF file)\n",
+         " * `.png` (PNG file)\n",
+         " * `.jpg/.jpeg` (JPEG file)\n",
+         " * `.pdf` (PDF file)",
          call. = FALSE)
   }
 
