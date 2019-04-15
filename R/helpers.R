@@ -550,6 +550,107 @@ cells_styles <- function(bkgd_color = NULL,
   paste(styles, collapse = "")
 }
 
+#' Helper for defining custom borders for table cells
+#'
+#' The \code{cell_borders()} helper function is to be used with the
+#' \code{\link{tab_style}()} function, which itself allows for the setting of
+#' custom styles to one or more cells. Specifically, the call to
+#' \code{cell_borders()} should be bound to the \code{styles} argument of
+#' \code{\link{tab_style}()}. The \code{selection} argument is where we define
+#' which borders should be modified (e.g., \code{left} and \code{right}
+#' borders). With that selection, the \code{color}, \code{style}, and
+#' \code{weight} of the selected borders can then be modified.
+#'
+#' @param selection The selection of borders to be modified. Options include
+#'   \code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all
+#'   borders surrounding the selected cells, we can use the \code{"all"} option.
+#' @param color The border color. If nothing is provided, then \code{#000000}
+#'   (black) will be used as a default.
+#' @param style The border style. Can be one of either \code{"solid"} (the
+#'   default), \code{"dashed"}, or \code{"dotted"}. If nothing is provided, then
+#'   \code{"solid"} will be used as a default.
+#' @param weight The weight of the border lines. If nothing is provided, then
+#'   \code{"1px"} will be used as a default.
+#'
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+cell_borders <- function(selection,
+                         color = NULL,
+                         style = NULL,
+                         weight = NULL) {
+
+  if (!any(selection %in% c(
+    "left", "l", "[",
+    "right", "r", "]",
+    "top", "t", "^",
+    "bottom", "b", "_",
+    # "center", "c", "|",
+    # "middle", "mid", "m", "-",
+    # "inside", "i", "+",
+    # "outside", "outline", "o",
+    "all", "everything", "a"
+  ))) {
+    stop("Selection elements for `cell_borders()` must be any of the following:\n",
+         " * left (or: `l`, `[`)\n",
+         " * right (or: `r`, `]`)\n",
+         " * top (or: `t`, `^`)\n",
+         " * bottom (or: `b`, `_`)\n",
+         " * all (or: `a`, `everything`",
+         call. = FALSE)
+  }
+
+  # Resolve the selection of borders into a vector of
+  # standardized directions
+  dir_ <-
+    vapply(
+      selection, resolve_selection,
+      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
+    unique()
+
+  # Should the `all` selection appear in the `dir_`
+  # vector, replace with all possible selections
+  if ("all" %in% dir_) {
+    dir_ <- c("left", "right", "top", "bottom")
+  }
+
+  if (!is.null(color)) {
+    c <- color
+  } else {
+    c <- "#000000"
+  }
+
+  if (!is.null(style)) {
+
+    if (style %in% c("solid", "dashed", "dotted")) {
+      s <- style
+    } else {
+      stop("The border `style` must be one of the following:\n",
+           " * solid\n",
+           " * dashed\n",
+           " * dotted",
+           call. = FALSE)
+    }
+  } else {
+    s <- "solid"
+  }
+
+  if (!is.null(weight)) {
+    w <- weight
+  } else {
+    w <- "1px"
+  }
+
+
+  # For each of the selections, create border rules
+  border_rules <-
+    glue::glue(
+      "border-{dir_}-style:{s};border-{dir_}-color:{c};border-{dir_}-width:{w};"
+    ) %>% as.character() %>% paste0(collapse = "")
+
+  border_rules
+}
+
 #' Helper for providing a numeric value as percentage
 #' @param x the numeric value to format as a string percentage for some
 #'   \code{\link{tab_options}()} arguments that can take percentage values
