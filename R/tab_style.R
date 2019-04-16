@@ -113,6 +113,16 @@ tab_style <- function(data,
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
+  # If style rules are part of a list, paste each of the list
+  # components together
+  if (inherits(style, "list")) {
+
+    style <-
+      style %>%
+      unlist() %>%
+      paste0(collapse = "")
+  }
+
   # Resolve the locations of the targeted data cells and append
   # the format directives
   for (loc in locations) {
