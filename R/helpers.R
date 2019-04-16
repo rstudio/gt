@@ -429,32 +429,31 @@ is.html <- function(x) {
   }
 }
 
-#' Helper for defining custom styles for table cells
+#' Helper for defining custom text styles for table cells
 #'
 #' This helper function is to be used with the \code{\link{tab_style}()}
 #' function, which itself allows for the setting of custom styles to one or more
 #' cells. We can also define several styles within a single call of
-#' \code{cells_styles} and \code{\link{tab_style}()} will reliably apply those
+#' \code{cell_text()} and \code{\link{tab_style}()} will reliably apply those
 #' styles to the targeted element.
 #'
-#' @param bkgd_color the background color of the cell.
-#' @param text_color the text color.
-#' @param text_font the font or collection of fonts (subsequent font names are)
+#' @param color The text color.
+#' @param font The font or collection of fonts (subsequent font names are)
 #'   used as fallbacks.
-#' @param text_size the size of the font. Can be provided as a number that is
+#' @param size The size of the font. Can be provided as a number that is
 #'   assumed to represent \code{px} values (or could be wrapped in the
 #'   \code{\link{px}()}) helper function. We can also use one of the following
 #'   absolute size keywords: \code{xx-small}, \code{x-small}, \code{small},
 #'   \code{medium}, \code{large}, \code{x-large}, or \code{xx-large}.
-#' @param text_style the text style. Can be one of either \code{"center"},
+#' @param style The text style. Can be one of either \code{"center"},
 #'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
-#' @param text_weight the weight of the font. Can be a text-based keyword such
+#' @param weight The weight of the font. Can be a text-based keyword such
 #'   as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
 #'   numeric value between \code{1} and \code{1000}, inclusive. Note that only
 #'   variable fonts may support the numeric mapping of weight.
-#' @param text_align the text alignment. Can be one of either \code{"center"},
+#' @param align The text alignment. Can be one of either \code{"center"},
 #'   \code{"left"}, \code{"right"}, or \code{"justify"}.
-#' @param text_stretch allows for text to either be condensed or expanded. We
+#' @param stretch Allows for text to either be condensed or expanded. We
 #'   can use the following text-based keywords to describe the degree of
 #'   condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
 #'   \code{condensed}, \code{semi-condensed}, \code{normal},
@@ -462,11 +461,12 @@ is.html <- function(x) {
 #'   \code{ultra-expanded}. Alternatively, we can supply percentage values from
 #'   \code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
 #'   allowed.
-#' @param text_indent the indentation of the text.
-#' @param text_decorate allows for text decoration effect to be applied. Here,
+#' @param indent The indentation of the text.
+#' @param decorate allows for text decoration effect to be applied. Here,
 #'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
-#' @param text_transform allows for the transformation of text. Options are
+#' @param transform Allows for the transformation of text. Options are
 #'   \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
+#'
 #' @return a character vector containing formatted styles.
 #' @family helper functions
 #' @export
