@@ -361,7 +361,8 @@ test_that("a gt table can store the correct style statements", {
   expect_attr_equal(
     tbl_html, "styles_df",
     c("data", "5", NA_character_, "disp", "1",
-      "background-color:yellow;"))
+      "background-color:yellow;")
+  )
 
   # Apply a `yellow` background a single data cell; this time, use `vars()`
   # to specify the `columns`
@@ -384,7 +385,8 @@ test_that("a gt table can store the correct style statements", {
     unname() %>%
     expect_equal(c(
       "data", "5", NA_character_, "disp", "1",
-      "background-color:yellow;"))
+      "background-color:yellow;")
+    )
 
   attr(tbl_html, "styles_df", exact = TRUE)[2, ] %>%
     unlist() %>%
@@ -392,4 +394,28 @@ test_that("a gt table can store the correct style statements", {
     expect_equal(c(
       "data", "5", NA_character_, "hp", "1",
       "background-color:yellow;"))
+
+  # Apply a left and right borders (solid, 2px) to the `carb`
+  # and `qsec` columns
+  tbl_html <-
+    data %>%
+    tab_style(
+      style = cell_borders(selection = c("left", "right"), weight = px(2)),
+      locations = cells_data(columns = vars(carb, qsec))
+    )
+
+  # Expect that the internal `styles_df` data frame will have
+  # 64 rows
+  attr(tbl_html, "styles_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(64)
+
+  # Expect the same style rules value for each of the targeted columns
+  attr(tbl_html, "styles_df", exact = TRUE)[, "text"] %>%
+    unlist() %>%
+    unname() %>%
+    unique() %>%
+    expect_equal(
+      "border-left-style:solid;border-left-color:#000000;border-left-width:2px;border-right-style:solid;border-right-color:#000000;border-right-width:2px;"
+    )
 })
