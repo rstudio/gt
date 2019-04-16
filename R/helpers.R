@@ -550,6 +550,33 @@ cells_styles <- function(bkgd_color = NULL,
   paste(styles, collapse = "")
 }
 
+
+#' Helper for defining custom fills for table cells
+#'
+#' The \code{cell_fill()} helper function is to be used with the
+#' \code{\link{tab_style}()} function, which itself allows for the setting of
+#' custom styles to one or more cells. Specifically, the call to
+#' \code{cell_fill()} should be bound to the \code{styles} argument of
+#' \code{\link{tab_style}()}.
+#'
+#' @param color The fill color. If nothing is provided, then \code{#D3D3D3}
+#'   (light gray) will be used as a default.
+#'
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+cell_fill <- function(color = NULL) {
+
+  fill <- c()
+
+  if (!is.null(color)) {
+    fill <- c(fill, paste0("background-color:", color, ";"))
+  }
+
+  paste(fill, collapse = "")
+}
+
+
 #' Helper for defining custom borders for table cells
 #'
 #' The \code{cell_borders()} helper function is to be used with the
