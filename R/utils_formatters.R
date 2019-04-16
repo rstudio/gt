@@ -289,7 +289,7 @@ context_percent_mark <- function(context) {
 #'
 #' @param context The output context.
 #' @noRd
-context_parens_marks_number <- function(context) {
+context_parens_marks <- function(context) {
 
   switch(context,
          latex = c("(", ")"),
@@ -437,13 +437,11 @@ format_minus <- function(x_str,
 #' @param context The output context.
 #' @param accounting A logical value that indicates whether accounting style
 #'   should be used.
-#' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
 format_as_accounting <- function(x_str,
                                  x,
                                  context,
-                                 accounting,
-                                 parens_marks) {
+                                 accounting) {
 
   # TODO: Handle using `x_abs_str` instead
 
@@ -458,8 +456,9 @@ format_as_accounting <- function(x_str,
   # Handle case where negative values are to be placed within parentheses
   if (accounting) {
 
-    # Create the minus mark for the context
+    # Create the minus and parens marks for the context
     minus_mark <- context_minus_mark(context)
+    parens_marks <- context_parens_marks(context)
 
     # Selectively remove minus sign and paste between parentheses
     x_str[x_lt0] <-

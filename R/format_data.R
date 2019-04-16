@@ -166,9 +166,6 @@ fmt_number <- function(data,
 
         x_str <- character(length(x))
 
-        # Define the marks by context
-        parens_marks <- context_parens_marks_number(context)
-
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
@@ -385,7 +382,6 @@ fmt_symbol <- function(data,
         x_str <- character(length(x))
 
         # Define the marks by context
-        parens_marks <- context_parens_marks_number(context)
         symbol_str <- context_symbol_str(context, symbol)
 
         # Create the `suffix_df` object
@@ -431,8 +427,7 @@ fmt_symbol <- function(data,
           ) %>%
           # Format values in accounting style
           format_as_accounting(
-            x = x, context = context, accounting = accounting,
-            parens_marks = parens_marks
+            x = x, context = context, accounting = accounting
           ) %>%
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
