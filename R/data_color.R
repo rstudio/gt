@@ -238,6 +238,7 @@ data_color <- function(data,
 # Apply color scale styles to the gt table data
 scale_apply_styles <- function(data,
                                column,
+                               apply_to,
                                styles,
                                rows_i) {
 
