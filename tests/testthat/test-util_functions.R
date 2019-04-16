@@ -422,12 +422,11 @@ test_that("the `inline_html_styles()` function works correctly", {
       subtitle = "The subtitle"
     ) %>%
     tab_style(
-      cells_styles(
-        text_align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
-          )
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
     )
 
   # Get the CSS tibble and the raw HTML
