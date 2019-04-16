@@ -922,3 +922,26 @@ stop_if_not_gt <- function(data) {
     stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
   }
 }
+
+#' Resolve the selection of border elements for a table cell
+#'
+#' @noRd
+resolve_selection <- function(selection) {
+
+  switch(selection,
+         l = "left",
+         `[` = "left",
+         left = "left",
+         r = "right",
+         `]` = "right",
+         right = "right",
+         t = "top",
+         `^` = "top",
+         top = "top",
+         b = "bottom",
+         `_` = "bottom",
+         bottom = "bottom",
+         a = "all",
+         everything = "all",
+         all = "all")
+}
