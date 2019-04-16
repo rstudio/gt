@@ -135,9 +135,10 @@
 #'     missing_text = ""
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "darkblue",
-#'       text_color = "white"),
+#'     style = list(
+#'       cell_fill(color = "darkblue"),
+#'       cell_text(color = "white")
+#'       ),
 #'     locations = cells_stub(rows = TRUE)
 #'   )
 #'
@@ -189,18 +190,20 @@
 #'     decimals = 0
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightblue"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightblue")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
 #'       rows = 1)
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightgreen"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightgreen")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
