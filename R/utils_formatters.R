@@ -353,9 +353,7 @@ context_symbol_str <- function(context,
 #' @param x_abs_str Absolute numeric values in `character` form.
 #' @param x Numeric values in `numeric` form.
 #' @param context The output context.
-#' @param symbol_str The string that represents the symbol. It can be placed to
-#'   the left or to the right of the numeric values. If on the left, it can take
-#'   on a negative value.
+#' @param symbol The symbol.
 #' @param incl_space A logical value indicating whether a single space character
 #'   should separate the symbols and the formatted values.
 #' @param placement Either `left` or `right` (this is the placement of the
@@ -364,9 +362,12 @@ context_symbol_str <- function(context,
 format_symbol_str <- function(x_abs_str,
                               x,
                               context,
-                              symbol_str,
+                              symbol,
                               incl_space,
                               placement) {
+
+
+  symbol_str <- context_symbol_str(context, symbol)
 
   if (symbol_str == "") {
     return(x_abs_str)

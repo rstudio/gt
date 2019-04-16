@@ -278,8 +278,6 @@ fmt_scientific <- function(data,
 
         # Define the marks by context
         exp_marks <- context_exp_marks(context)
-
-        # Create the minus mark for the context
         minus_mark <- context_minus_mark(context)
 
         # Define the `replace_minus()` function
@@ -381,9 +379,6 @@ fmt_symbol <- function(data,
         # Create the `x_str` vector
         x_str <- character(length(x))
 
-        # Define the marks by context
-        symbol_str <- context_symbol_str(context, symbol)
-
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
@@ -422,7 +417,7 @@ fmt_symbol <- function(data,
           # Format values with a symbol string
           format_symbol_str(
             context = context, x_abs_str = x_abs_str, x = x,
-            symbol_str = symbol_str, incl_space = incl_space,
+            symbol = symbol, incl_space = incl_space,
             placement = placement
           ) %>%
           # Format values in accounting style
