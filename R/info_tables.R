@@ -314,14 +314,14 @@ info_locales <- function(begins_with = NULL) {
       subtitle = md("Locale codes are used in several `fmt_*()` functions")
     ) %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
+      style = cell_text(align = "left"),
       locations = list(
         cells_title(groups = "title"),
         cells_title(groups = "subtitle")
       )
     ) %>%
     tab_style(
-      style = cells_styles(text_size = px(32)),
+      style = cell_text(size = px(32)),
       locations = cells_data(columns = vars(group_sep, dec_sep))
     ) %>%
     tab_options(row.padding = "5px")
@@ -431,22 +431,21 @@ info_paletteer <- function(color_pkgs = NULL) {
       subtitle = md("Palettes like these are useful with the `data_color()` function")
     ) %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
+      style = cell_text(align = "left"),
       locations = list(
         cells_title(groups = "title"),
         cells_title(groups = "subtitle")
       )
     ) %>%
     tab_style(
-      style = cells_styles(
-        bkgd_color = "#E3E3E3",
-        text_font = "Courier",
-        text_size = "smaller",
-        text_weight = "bold"),
+      style = list(
+        cell_fill(color = "#E3E3E3"),
+        cell_text(font = "Courier", size = "smaller", weight = "bold")
+        ),
       locations = cells_stub(rows = TRUE)
     ) %>%
     tab_style(
-      style = cells_styles(text_font = "Courier"),
+      style = cell_text(font = "Courier"),
       locations = cells_data(columns = vars(length))
     ) %>%
     tab_options(
