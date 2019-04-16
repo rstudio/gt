@@ -235,7 +235,9 @@ data_color <- function(data,
   data
 }
 
-# Apply color scale styles to the gt table data
+#' Apply color scale styles to the gt table data
+#'
+#' @noRd
 scale_apply_styles <- function(data,
                                column,
                                apply_to,
@@ -259,13 +261,26 @@ scale_apply_styles <- function(data,
   # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
+    if (apply_to == "fill") {
+
     data <-
       data %>%
       tab_style(
-        do.call(cells_styles, styles[[i]]),
+        do.call(cell_fill, styles[[i]]),
         cells_data(
           columns = column,
           rows = rows_i[[i]]))
+
+    } else if (apply_to == "text") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_text, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]))
+    }
   }
 
   data
