@@ -59,7 +59,7 @@
 #'   option is ignored (each of the colorizing helper functions has its own
 #'   \code{alpha} argument).
 #' @param apply_to which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as \code{bkgd}) or the cell
+#'   include the cell background (the default, given as \code{fill}) or the cell
 #'   text (\code{text}).
 #' @param autocolor_text an option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
@@ -129,7 +129,7 @@ data_color <- function(data,
                        columns,
                        colors,
                        alpha = NULL,
-                       apply_to = "bkgd",
+                       apply_to = "fill",
                        autocolor_text = TRUE) {
 
   # Extract `data_df` from the gt object
@@ -190,14 +190,15 @@ data_color <- function(data,
 
       color <- colors_cols[i]
 
-      if (apply_to == "bkgd") {
+      if (apply_to == "fill") {
 
         # Apply color value to the background of the cell
         data <-
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(bkgd_color = color)),
+            apply_to = apply_to,
+            styles = list(list(color = color)),
             rows_i = i)
 
       } else if (apply_to == "text") {
@@ -207,14 +208,15 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color)),
+            apply_to = apply_to,
+            styles = list(list(color = color)),
             rows_i = i)
       }
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (apply_to == "bkgd" & autocolor_text) {
+      if (apply_to == "fill" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
@@ -226,7 +228,8 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color_text)),
+            apply_to = "text",
+            styles = list(list(color = color_text)),
             rows_i = i)
       }
     }
