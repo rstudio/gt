@@ -470,80 +470,75 @@ is.html <- function(x) {
 #' @return a character vector containing formatted styles.
 #' @family helper functions
 #' @export
-cells_styles <- function(bkgd_color = NULL,
-                         text_color = NULL,
-                         text_font = NULL,
-                         text_size = NULL,
-                         text_align = NULL,
-                         text_style = NULL,
-                         text_weight = NULL,
-                         text_stretch = NULL,
-                         text_indent = NULL,
-                         text_decorate = NULL,
-                         text_transform = NULL) {
+cell_text <- function(color = NULL,
+                      font = NULL,
+                      size = NULL,
+                      align = NULL,
+                      style = NULL,
+                      weight = NULL,
+                      stretch = NULL,
+                      indent = NULL,
+                      decorate = NULL,
+                      transform = NULL) {
 
   styles <- c()
 
-  if (!is.null(bkgd_color)) {
-    styles <- c(styles, paste0("background-color:", bkgd_color, ";"))
+  if (!is.null(color)) {
+    styles <- c(styles, paste0("color:", color, ";"))
   }
 
-  if (!is.null(text_color)) {
-    styles <- c(styles, paste0("color:", text_color, ";"))
+  if (!is.null(font)) {
+    styles <- c(styles, paste0("font-family:", font, ";"))
   }
 
-  if (!is.null(text_font)) {
-    styles <- c(styles, paste0("font-family:", text_font, ";"))
+  if (!is.null(size)) {
+    styles <- c(styles, paste0("font-size:", size, ";"))
   }
 
-  if (!is.null(text_size)) {
-    styles <- c(styles, paste0("font-size:", text_size, ";"))
-  }
+  if (!is.null(align)) {
 
-  if (!is.null(text_align)) {
-
-    if (text_align %in% c("center", "left", "right", "justify")) {
-      styles <- c(styles, paste0("text-align:", text_align, ";"))
+    if (align %in% c("center", "left", "right", "justify")) {
+      styles <- c(styles, paste0("text-align:", align, ";"))
     }
   }
 
-  if (!is.null(text_style)) {
+  if (!is.null(style)) {
 
-    if (text_style %in% c("normal", "italic", "oblique")) {
-      styles <- c(styles, paste0("font-style:", text_style, ";"))
+    if (style %in% c("normal", "italic", "oblique")) {
+      styles <- c(styles, paste0("font-style:", style, ";"))
     }
   }
 
-  if (!is.null(text_weight)) {
-    if (text_weight %in% c("normal", "bold", "lighter", "bolder") ||
-        text_weight >= 1 & text_weight <= 1000)
-    styles <- c(styles, paste0("font-weight:", text_weight, ";"))
+  if (!is.null(weight)) {
+    if (weight %in% c("normal", "bold", "lighter", "bolder") ||
+        weight >= 1 & weight <= 1000)
+    styles <- c(styles, paste0("font-weight:", weight, ";"))
   }
 
-  if (!is.null(text_stretch)) {
-    if (text_stretch %in% c(
+  if (!is.null(stretch)) {
+    if (stretch %in% c(
       "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal",
       "semi-expanded", "expanded", "extra-expanded", "ultra-expanded") ||
-        text_stretch >= 0 & text_stretch <= 200)
-      styles <- c(styles, paste0("font-stretch:", text_stretch, ";"))
+        stretch >= 0 & stretch <= 200)
+      styles <- c(styles, paste0("font-stretch:", stretch, ";"))
   }
 
-  if (!is.null(text_indent)) {
-    styles <- c(styles, paste0("text-indent:", text_indent, ";"))
+  if (!is.null(indent)) {
+    styles <- c(styles, paste0("text-indent:", indent, ";"))
   }
 
-  if (!is.null(text_decorate)) {
+  if (!is.null(decorate)) {
 
-    if (text_decorate %in% c("overline", "line-through",
+    if (decorate %in% c("overline", "line-through",
                              "underline", "underline overline")) {
-      styles <- c(styles, paste0("text-decoration:", text_decorate, ";"))
+      styles <- c(styles, paste0("text-decoration:", decorate, ";"))
     }
   }
 
-  if (!is.null(text_transform)) {
+  if (!is.null(transform)) {
 
-    if (text_transform %in% c("uppercase", "lowercase", "capitalize")) {
-      styles <- c(styles, paste0("text-transform:", text_transform, ";"))
+    if (transform %in% c("uppercase", "lowercase", "capitalize")) {
+      styles <- c(styles, paste0("text-transform:", transform, ";"))
     }
   }
 
