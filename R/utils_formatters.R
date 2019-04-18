@@ -189,21 +189,21 @@ scale_x_values <- function(x,
 #' A `formatC()` call for `fmt_number()` and `fmt_percent()`
 #'
 #' @param x A vector of numeric values.
+#' @param context The output context.
 #' @param decimals The number of decimal places (`digits`).
 #' @param sep_mark The separator for number groups (`big.mark`).
 #' @param dec_mark The decimal separator mark (`decimal.mark`).
 #' @param drop_trailing_zeros Option to exclude trailing decimal zeros.
-#' @param minus_mark The contextually correct minus mark.
 #' @param format The numeric format for `formatC()`.
 #' @param replace_minus_mark An option for whether the minus sign should be
 #'   replaced with the minus mark.
 #' @noRd
 format_num_to_str <- function(x,
+                              context,
                               decimals,
                               sep_mark,
                               dec_mark,
                               drop_trailing_zeros,
-                              minus_mark,
                               format = "f",
                               replace_minus_mark = TRUE) {
 
@@ -219,7 +219,7 @@ format_num_to_str <- function(x,
     )
 
   if (replace_minus_mark) {
-    x_str <- format_minus(x_str = x_str, x = x, minus_mark = minus_mark)
+    x_str <- format_minus(x_str = x_str, x = x, context = context)
   }
 
   x_str
@@ -230,19 +230,19 @@ format_num_to_str <- function(x,
 #' @inheritParams format_num_to_str
 #' @noRd
 format_num_to_str_c <- function(x,
+                                context,
                                 decimals,
                                 sep_mark,
                                 dec_mark,
-                                minus_mark,
                                 drop_trailing_zeros = FALSE) {
 
   format_num_to_str(
     x = x,
+    context = context,
     decimals = decimals,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
-    minus_mark = minus_mark,
     format = "f"
   )
 }
@@ -289,7 +289,7 @@ context_percent_mark <- function(context) {
 #'
 #' @param context The output context.
 #' @noRd
-context_parens_marks_number <- function(context) {
+context_parens_marks <- function(context) {
 
   switch(context,
          latex = c("(", ")"),
@@ -352,21 +352,22 @@ context_symbol_str <- function(context,
 #'
 #' @param x_abs_str Absolute numeric values in `character` form.
 #' @param x Numeric values in `numeric` form.
-#' @param symbol_str The string that represents the symbol. It can be placed to
-#'   the left or to the right of the numeric values. If on the left, it can take
-#'   on a negative value.
+#' @param context The output context.
+#' @param symbol The symbol.
 #' @param incl_space A logical value indicating whether a single space character
 #'   should separate the symbols and the formatted values.
 #' @param placement Either `left` or `right` (this is the placement of the
 #'   symbol string relative to the formatted, numeric values).
-#' @param minus_mark The contextually correct minus mark.
 #' @noRd
 format_symbol_str <- function(x_abs_str,
                               x,
-                              symbol_str,
+                              context,
+                              symbol,
                               incl_space,
-                              placement,
-                              minus_mark) {
+                              placement) {
+
+
+  symbol_str <- context_symbol_str(context, symbol)
 
   if (symbol_str == "") {
     return(x_abs_str)
@@ -391,6 +392,9 @@ format_symbol_str <- function(x_abs_str,
         direction = placement
       )
 
+    # Create the minus mark for the context
+    minus_mark <- context_minus_mark(context)
+
     # Place the `minus_mark` onto the formatted strings
     if (x_i < 0) {
       x_str_i <-
@@ -406,11 +410,11 @@ format_symbol_str <- function(x_abs_str,
 #'
 #' @param x_str Numeric values in `character` form.
 #' @param x Numeric values in `numeric` form.
-#' @param minus_mark The contextually correct minus mark.
+#' @param context The output context.
 #' @noRd
 format_minus <- function(x_str,
                          x,
-                         minus_mark) {
+                         context) {
 
   # Store logical vector of `x_vals` < 0
   x_lt0 <- x < 0
@@ -420,6 +424,9 @@ format_minus <- function(x_str,
     return(x_str)
   }
 
+  # Create the minus mark for the context
+  minus_mark <- context_minus_mark(context)
+
   # Handle replacement of the minus mark
   x_str %>% tidy_gsub("-", minus_mark, fixed = TRUE)
 }
@@ -428,16 +435,14 @@ format_minus <- function(x_str,
 #'
 #' @param x_str Numeric values in `character` form.
 #' @param x Numeric values in `numeric` form.
+#' @param context The output context.
 #' @param accounting A logical value that indicates whether accounting style
 #'   should be used.
-#' @param minus_mark The contextually correct minus mark.
-#' @param parens_marks The contextually correct pair of parentheses.
 #' @noRd
 format_as_accounting <- function(x_str,
                                  x,
-                                 accounting,
-                                 minus_mark,
-                                 parens_marks) {
+                                 context,
+                                 accounting) {
 
   # TODO: Handle using `x_abs_str` instead
 
@@ -452,6 +457,10 @@ format_as_accounting <- function(x_str,
   # Handle case where negative values are to be placed within parentheses
   if (accounting) {
 
+    # Create the minus and parens marks for the context
+    minus_mark <- context_minus_mark(context)
+    parens_marks <- context_parens_marks(context)
+
     # Selectively remove minus sign and paste between parentheses
     x_str[x_lt0] <-
       x_str[x_lt0] %>%
@@ -465,16 +474,16 @@ format_as_accounting <- function(x_str,
 #' Provide a nicer format for numbers in scientific notation
 #'
 #' @param x Numeric values in `character` form.
+#' @param context The output context.
 #' @param small_pos A logical vector the length of `x` that indicates whether
 #'   values should be decorated.
 #' @param exp_marks A character vector (length of two) that encloses the
 #'   exponential power value.
-#' @param minus_mark The contextually correct minus mark.
 #' @noRd
 prettify_scientific_notation <- function(x,
+                                         context,
                                          small_pos,
-                                         exp_marks,
-                                         minus_mark) {
+                                         exp_marks) {
 
   if (!any(grepl("e|E", x))) {
     return(x)
@@ -494,6 +503,9 @@ prettify_scientific_notation <- function(x,
       sci_parts$num, exp_marks[1],
       sci_parts$exp, exp_marks[2]
     )
+
+  # Create the minus mark for the context
+  minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark in number
   # and exponent parts

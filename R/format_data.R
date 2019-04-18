@@ -166,10 +166,6 @@ fmt_number <- function(data,
 
         x_str <- character(length(x))
 
-        # Define the marks by context
-        minus_mark <- context_minus_mark(context)
-        parens_marks <- context_parens_marks_number(context)
-
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
@@ -178,8 +174,8 @@ fmt_number <- function(data,
           scale_x_values(suffix_df$scale_by) %>%
           # Format numeric values to character-based numbers
           format_num_to_str(
-            decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
-            drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
+            context = context, decimals = decimals, sep_mark = sep_mark,
+            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
           ) %>%
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
@@ -281,8 +277,8 @@ fmt_scientific <- function(data,
       format_fn = function(x, context) {
 
         # Define the marks by context
-        minus_mark <- context_minus_mark(context)
         exp_marks <- context_exp_marks(context)
+        minus_mark <- context_minus_mark(context)
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
@@ -299,8 +295,8 @@ fmt_scientific <- function(data,
           x %>%
           # Format numeric values to character-based numbers
           format_num_to_str(
-            decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
-            drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark,
+            context = context, decimals = decimals, sep_mark = sep_mark,
+            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
             format = "e", replace_minus_mark = FALSE
           )
 
@@ -383,11 +379,6 @@ fmt_symbol <- function(data,
         # Create the `x_str` vector
         x_str <- character(length(x))
 
-        # Define the marks by context
-        minus_mark <- context_minus_mark(context)
-        parens_marks <- context_parens_marks_number(context)
-        symbol_str <- context_symbol_str(context, symbol)
-
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
@@ -403,8 +394,8 @@ fmt_symbol <- function(data,
             x[is_not_negative_x] %>%
             # Format numeric values to character-based numbers
             format_num_to_str_c(
-              decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
-              drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
+              context = context, decimals = decimals, sep_mark = sep_mark,
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
             )
         }
 
@@ -417,20 +408,22 @@ fmt_symbol <- function(data,
             abs() %>%
             # Format numeric values to character-based numbers
             format_num_to_str_c(
-              decimals = decimals, sep_mark = sep_mark, dec_mark = dec_mark,
-              drop_trailing_zeros = drop_trailing_zeros, minus_mark = minus_mark
+              context = context, decimals = decimals, sep_mark = sep_mark,
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
             )
         }
 
         x_str <-
           # Format values with a symbol string
           format_symbol_str(
-            x_abs_str = x_abs_str, x = x, symbol_str = symbol_str,
-            incl_space = incl_space, placement = placement,
-            minus_mark = minus_mark
+            context = context, x_abs_str = x_abs_str, x = x,
+            symbol = symbol, incl_space = incl_space,
+            placement = placement
           ) %>%
           # Format values in accounting style
-          format_as_accounting(x, accounting, minus_mark, parens_marks) %>%
+          format_as_accounting(
+            x = x, context = context, accounting = accounting
+          ) %>%
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
           paste_right(suffix_df$suffix)
