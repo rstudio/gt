@@ -7,7 +7,7 @@
 tab_style(data, style, locations)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{style}{a vector of styles to use. The \code{\link{cells_styles}()}

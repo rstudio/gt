@@ -7,8 +7,6 @@
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item negative values: choice of a negative sign or parentheses for values
-#' less than zero
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item scaling: we can choose to scale targeted values by a multiplier value
@@ -27,15 +25,15 @@
 #' expression to the \code{rows} argument. See the Arguments section for more
 #' information on this.
 #'
-#' @param data a table object that is created using the \code{\link{gt}()}
+#' @param data A table object that is created using the \code{\link{gt}()}
 #'   function.
-#' @param columns the columns to format. Can either be a series of column names
+#' @param columns The columns to format. Can either be a series of column names
 #'   provided in \code{vars()}, a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are:
 #'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}.
-#' @param rows optional rows to format. Not providing any value results in all
+#' @param rows Optional rows to format. Not providing any value results in all
 #'   rows in \code{columns} being formatted. Can either be a vector of row
 #'   captions provided \code{c()}, a vector of row indices, or a helper function
 #'   focused on selections. The select helper functions are:
@@ -43,18 +41,18 @@
 #'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 #'   and \code{\link{everything}()}. We can also use expressions to filter down
 #'   to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).
-#' @param decimals an option to specify the exact number of decimal places to
+#' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is \code{2}.
-#' @param drop_trailing_zeros a logical value that allows for removal of
+#' @param drop_trailing_zeros A logical value that allows for removal of
 #'   trailing zeros (those redundant zeros after the decimal mark).
-#' @param negative_val the formatting to use for negative values. With
-#'   \code{signed} (the default), negative values will be shown with a negative
-#'   sign. Using \code{parens} will show the negative value in parentheses.
-#' @param use_seps an option to use digit group separators. The type of digit
+#' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by \code{sep_mark} and overridden if a locale ID is
 #'   provided to \code{locale}. This setting is \code{TRUE} by default.
-#' @param scale_by a value to scale the input. The default is \code{1.0}.
-#' @param suffixing an option to scale and apply suffixes to larger numbers
+#' @param scale_by A value to scale the input. The default is \code{1.0}. All
+#'   numeric values will be multiplied by this value first before undergoing
+#'   formatting. This value will be ignored if using any of the \code{suffixing}
+#'   options (i.e., where \code{suffixing} is not set to \code{FALSE}).
+#' @param suffixing An option to scale and apply suffixes to larger numbers
 #'   (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
 #'   accept a logical value, where \code{FALSE} (the default) will not perform
 #'   this transformation and \code{TRUE} will apply thousands (\code{K}),
@@ -69,21 +67,22 @@
 #'   numbers in the range of millions and billions will be in terms of
 #'   millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
 #'   any value provided to \code{scale_by} will be ignored.
-#' @param pattern a formatting pattern that allows for decoration of the
+#' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by \code{{x}} and all
 #'   other characters are taken to be string literals.
-#' @param sep_mark the mark to use as a separator between groups of digits
+#' @param sep_mark The mark to use as a separator between groups of digits
 #'   (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
 #'   formatted value of \code{1,000}).
-#' @param dec_mark the character to use as a decimal mark (e.g., using
+#' @param dec_mark The character to use as a decimal mark (e.g., using
 #'   \code{dec_mark = ","} with \code{0.152} would result in a formatted value
 #'   of \code{0,152}).
-#' @param locale an optional locale ID that can be used for formatting the value
+#' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include \code{"en_US"} for English
 #'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
 #'   locale ID will override any values provided in \code{sep_mark} and
-#'   \code{dec_mark}.
-#' @return an object of class \code{gt_tbl}.
+#'   \code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
+#'   useful reference for all of the locales that are supported.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as numeric
@@ -132,7 +131,6 @@ fmt_number <- function(data,
                        rows = NULL,
                        decimals = 2,
                        drop_trailing_zeros = FALSE,
-                       negative_val = "signed",
                        use_seps = TRUE,
                        scale_by = 1.0,
                        suffixing = FALSE,
@@ -145,82 +143,12 @@ fmt_number <- function(data,
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
-
-  # Create a function factory for the `fmt_number()` function
-  fmt_number_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      parens_marks <- context_parens_marks_number(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Create a tibble with scaled values for `x[non_na_x]`
-      # and the suffix labels to use for character formatting
-      suffix_df <-
-        num_suffix(
-          round(x_vals, decimals),
-          suffixes = suffix_labels,
-          scale_by = scale_by
-        )
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str(
-          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
-        )
-
-      # Paste vector of suffixes to the right of the `x_str_vals`
-      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-
-      # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", minus_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
-              x_2 = parens_marks
-            )
-        }
-      }
-
-      # If in a LaTeX context, remove any double negative
-      # signs in the exponent
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -232,10 +160,27 @@ fmt_number <- function(data,
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = fmt_number_factory(context = "html"),
-      latex = fmt_number_factory(context = "latex"),
-      default = fmt_number_factory(context = "default")
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        x_str <- character(length(x))
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        x %>%
+          # Scale the `x_vals` by the `scale_by` values
+          scale_x_values(suffix_df$scale_by) %>%
+          # Format numeric values to character-based numbers
+          format_num_to_str(
+            context = context, decimals = decimals, sep_mark = sep_mark,
+            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+          ) %>%
+          # With large-number suffixing support, we paste the
+          # vector of suffixes to the right of the values
+          paste_right(suffix_df$suffix)
+      }
     )
   )
 }
@@ -263,7 +208,7 @@ fmt_number <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as partially
@@ -302,82 +247,20 @@ fmt_scientific <- function(data,
                            dec_mark = ".",
                            locale = NULL) {
 
+  # Set default values
+  suffixing <- FALSE
+  use_seps <- TRUE
+
   # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps = TRUE)
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
-  # Create a function factory for the `fmt_scientific()` function
-  fmt_scientific_factory <- function(context = "html") {
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
 
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      exp_marks <- context_exp_marks(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by)
-
-      # Determine which of `x` don't require the (x 10^n)
-      # since their order would be zero
-      small_pos <- has_order_zero(x_vals)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str_e(
-          x_vals, decimals, sep_mark, dec_mark,
-          drop_trailing_zeros
-        )
-
-      # For any numbers that shouldn't have an exponent, remove
-      # that portion from the character version
-      if (any(small_pos)) {
-
-        x_str_vals[small_pos] <-
-          split_scientific_notn(x_str_vals[small_pos])$num
-      }
-
-      # For any non-NA numbers that do have an exponent, format
-      # those according to the output context
-      if (any(!small_pos)) {
-
-        sci_parts <- split_scientific_notn(x_str_vals[!small_pos])
-
-        x_str_vals[!small_pos] <-
-          paste0(
-            sci_parts$num, exp_marks[1],
-            sci_parts$exp, exp_marks[2]
-          )
-      }
-
-      # Handle replacement of the minus mark in number
-      # and exponent parts
-      x_str_vals <-
-        x_str_vals %>%
-        tidy_gsub("-", minus_mark, fixed = TRUE)
-
-      # If in a LaTeX context, put formatted numbers
-      # in math mode
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -389,10 +272,164 @@ fmt_scientific <- function(data,
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = fmt_scientific_factory(context = "html"),
-      latex = fmt_scientific_factory(context = "latex"),
-      default = fmt_scientific_factory(context = "default")
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        # Define the marks by context
+        exp_marks <- context_exp_marks(context)
+        minus_mark <- context_minus_mark(context)
+
+        # Define the `replace_minus()` function
+        replace_minus <- function(x) {
+          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+        }
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        # Scale the `x_vals` by the `scale_by` values
+        x <- x %>% scale_x_values(suffix_df$scale_by)
+
+        x_str <-
+          x %>%
+          # Format numeric values to character-based numbers
+          format_num_to_str(
+            context = context, decimals = decimals, sep_mark = sep_mark,
+            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+            format = "e", replace_minus_mark = FALSE
+          )
+
+        # # Determine which values don't require the (x 10^n)
+        # # for scientific foramtting since their order would be zero
+        small_pos <- has_order_zero(x)
+
+        # For any numbers that shouldn't have an exponent, remove
+        # that portion from the character version
+        x_str[small_pos] <-
+          split_scientific_notn(x_str[small_pos])$num %>%
+          replace_minus()
+
+        # For any non-NA numbers that do have an exponent, format
+        # those according to the output context
+        sci_parts <- split_scientific_notn(x_str[!small_pos])
+
+        x_str[!small_pos] <-
+          paste0(
+            sci_parts$num %>% replace_minus(),
+            exp_marks[1],
+            sci_parts$exp %>% replace_minus(),
+            exp_marks[2]
+          )
+
+        x_str
+      }
+    )
+  )
+}
+
+#' Format values to take a predefined symbol
+#'
+#' @inheritParams fmt_number
+#' @inheritParams fmt_currency
+#' @return An object of class \code{gt_tbl}.
+#' @noRd
+fmt_symbol <- function(data,
+                       columns,
+                       rows = NULL,
+                       symbol = "*",
+                       accounting = FALSE,
+                       decimals = NULL,
+                       drop_trailing_zeros = FALSE,
+                       use_seps = TRUE,
+                       scale_by = 1.0,
+                       suffixing = FALSE,
+                       pattern = "{x}",
+                       sep_mark = ",",
+                       dec_mark = ".",
+                       placement = "left",
+                       incl_space = FALSE,
+                       locale = NULL) {
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
+  # Capture expression in `rows` and `columns`
+  rows <- rlang::enquo(rows)
+  columns <- rlang::enquo(columns)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        # Create the `x_str` vector
+        x_str <- character(length(x))
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        # Scale the `x_vals` by the `scale_by` value
+        x <- x %>% scale_x_values(suffix_df$scale_by)
+
+        is_negative_x <- x < 0
+        is_not_negative_x <- !is_negative_x
+
+        if (any(is_not_negative_x)) {
+
+          x_str[is_not_negative_x] <-
+            x[is_not_negative_x] %>%
+            # Format numeric values to character-based numbers
+            format_num_to_str_c(
+              context = context, decimals = decimals, sep_mark = sep_mark,
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+            )
+        }
+
+        x_abs_str <- x_str
+
+        if (any(is_negative_x)) {
+
+          x_abs_str[is_negative_x] <-
+            x[is_negative_x] %>%
+            abs() %>%
+            # Format numeric values to character-based numbers
+            format_num_to_str_c(
+              context = context, decimals = decimals, sep_mark = sep_mark,
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+            )
+        }
+
+        x_str <-
+          # Format values with a symbol string
+          format_symbol_str(
+            context = context, x_abs_str = x_abs_str, x = x,
+            symbol = symbol, incl_space = incl_space,
+            placement = placement
+          ) %>%
+          # Format values in accounting style
+          format_as_accounting(
+            x = x, context = context, accounting = accounting
+          ) %>%
+          # With large-number suffixing support, we paste the
+          # vector of suffixes to the right of the values
+          paste_right(suffix_df$suffix)
+
+        x_str
+      }
     )
   )
 }
@@ -410,8 +447,6 @@ fmt_scientific <- function(data,
 #' value.
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item negative values: choice of a negative sign or parentheses for values
-#' less than zero
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item pattern: option to use a text pattern for decoration of the formatted
@@ -428,9 +463,9 @@ fmt_scientific <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param incl_space an option on whether to include a space between the value
+#' @param incl_space An option for whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
-#' @param placement the placement of the percent sign. This can be either be
+#' @param placement The placement of the percent sign. This can be either be
 #'   \code{right} (the default) or \code{left}.
 #' @return an object of class \code{gt_tbl}.
 #' @examples
@@ -459,7 +494,6 @@ fmt_percent <- function(data,
                         rows = NULL,
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
-                        negative_val = "signed",
                         use_seps = TRUE,
                         pattern = "{x}",
                         sep_mark = ",",
@@ -468,103 +502,27 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Create a function factory for the `fmt_percent()` function
-  fmt_percent_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      minus_mark <- context_minus_mark(context)
-      percent_mark <- context_percent_mark(context)
-      parens_marks <- context_parens_marks(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = 100)
-
-      # Format all non-NA x values
-      x_str_vals <-
-        format_num_to_str(
-          x_vals, decimals, sep_mark, dec_mark, drop_trailing_zeros
-        )
-
-      # Handle placement of the percent symbol
-      x_str_vals <-
-        x_str_vals %>%
-        paste_on_side(
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        ) %>%
-        paste_on_side(
-          x_side = percent_mark,
-          direction = placement
-        ) %>%
-        swap_adjacent_text_groups(
-          pattern_1 = percent_mark,
-          pattern_2 = "-"
-        )
-
-      # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", minus_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = gsub(paste0("^", minus_mark), "", x_str_vals[x_vals < 0]),
-              x_2 = parens_marks
-            )
-        }
-      }
-
-      # If in a LaTeX context, remove any double negative
-      # signs in the exponent
-      if (context == "latex") {
-        x_str_vals <- to_latex_math_mode(x_str_vals)
-      }
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Pass `data`, `columns`, `rows`, and the formatting
-  # functions as a function list to `fmt()`
-  fmt(
+  fmt_symbol(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = fmt_percent_factory(context = "html"),
-      latex = fmt_percent_factory(context = "latex"),
-      default = fmt_percent_factory(context = "default")
-    )
+    symbol = "%",
+    accounting = FALSE,
+    decimals = decimals,
+    drop_trailing_zeros = drop_trailing_zeros,
+    use_seps = use_seps,
+    scale_by = 100,
+    suffixing = FALSE,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    placement = placement,
+    incl_space = incl_space,
+    locale = locale
   )
 }
 
@@ -607,7 +565,7 @@ fmt_percent <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param currency the currency to use for the numeric value. This input can be
+#' @param currency The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
 #'   \code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
 #'   get an information table with all of the valid currency codes and examples
@@ -617,13 +575,17 @@ fmt_percent <- function(data,
 #'   "symbol"} option to view an information table with all of the supported
 #'   currency symbol names along with examples. If nothing is provided then
 #'   \code{"USD"} will be used.
-#' @param use_subunits an option for whether the subunits portion of a currency
+#' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed.
-#' @param placement the placement of the currency symbol. This can be either be
+#' @param accounting An option to use accounting style for currency values. With
+#'   \code{FALSE} (the default), negative values will be shown with a negative
+#'   sign. Using \code{accounting = TRUE} will put negative values in
+#'   parentheses.
+#' @param placement The placement of the currency symbol. This can be either be
 #'   \code{left} (the default) or \code{right}.
-#' @param incl_space an option on whether to include a space between the value
+#' @param incl_space An option for whether to include a space between the value
 #'   and the currency symbol. The default is to not introduce a space character.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `currency` column to have
@@ -666,7 +628,7 @@ fmt_currency <- function(data,
                          rows = NULL,
                          currency = "USD",
                          use_subunits = TRUE,
-                         negative_val = "signed",
+                         accounting = FALSE,
                          decimals = NULL,
                          use_seps = TRUE,
                          scale_by = 1.0,
@@ -678,118 +640,33 @@ fmt_currency <- function(data,
                          incl_space = FALSE,
                          locale = NULL) {
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `currency` does not have a valid value
-  validate_currency(currency)
-
-  # Get the number of decimal places
-  decimals <- get_currency_decimals(currency, decimals, use_subunits)
-
-  # Normalize the `suffixing` input to either return a character vector
-  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
-
-  # Create a function factory for the `fmt_currency()` function
-  fmt_currency_factory <- function(context = "html") {
-
-    function(x) {
-
-      # Define the marks by context
-      negative_currency_mark <- context_negative_currency_mark(context)
-      currency_str <- context_currency_str(context, currency)
-      currency_str_regex <- context_currency_str_regex(context)
-      parens_marks <- context_parens_marks(context)
-
-      # Determine which of `x` are not NA
-      non_na_x <- !is.na(x)
-
-      # Create a possibly shorter vector of non-NA `x` values
-      x_vals <- x[non_na_x]
-
-      # Create a tibble with scaled values for `x[non_na_x]`
-      # and the suffix labels to use for character formatting
-      suffix_df <-
-        num_suffix(
-          round(x_vals, decimals),
-          suffixes = suffix_labels,
-          scale_by = scale_by
-        )
-
-      # Scale the `x_vals` by the `scale_by` value
-      x_vals <- scale_x_values(x_vals, scale_by = suffix_df$scale_by)
-
-      # Format all non-NA x values
-      x_str_vals <- format_num_to_str_c(x_vals, decimals, sep_mark, dec_mark)
-
-      # Paste vector of suffixes to the right of the `x_str_vals`
-      x_str_vals <- paste_right(x_str_vals, suffix_df$suffix)
-
-      # Handle placement of the currency symbol
-      x_str_vals <-
-        x_str_vals %>%
-        paste_currency_str(currency_str, incl_space, placement)
-
-      # Perform negative value formatting
-      if (any(x_vals < 0)) {
-
-        # Handle replacement of the minus mark
-        x_str_vals <-
-          x_str_vals %>%
-          tidy_gsub("-", negative_currency_mark, fixed = TRUE)
-
-        # Handle case where negative values are to be placed within parentheses
-        if (negative_val == "parens") {
-
-          # Selectively remove minus sign and paste between parentheses
-          x_str_vals[x_vals < 0] <-
-            paste_between(
-              x = x_str_vals[x_vals < 0] %>%
-                tidy_gsub(
-                  negative_currency_mark, "",
-                  fixed = TRUE
-                ),
-              x_2 = parens_marks
-            )
-        }
-      }
-
-      # If in a LaTeX context, wrap values in math mode
-      if (context == "latex") {
-
-        x_str_vals <-
-          x_str_vals %>%
-          to_latex_math_mode()
-      }
-
-      # Handle formatting of pattern
-      x_str_vals <- apply_pattern_fmt_x(pattern, x_str_vals)
-
-      # Create `x_str` with the same length as `x`; place the
-      # `x_str_vals` into `str` (at the non-NA indices)
-      x_str <- rep(NA_character_, length(x))
-      x_str[non_na_x] <- x_str_vals
-      x_str
-    }
-  }
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Pass `data`, `columns`, `rows`, and the formatting
-  # functions as a function list to `fmt()`
-  fmt(
+  # Stop function if `currency` does not have a valid value
+  validate_currency(currency = currency)
+
+  # Get the number of decimal places
+  decimals <- get_currency_decimals(currency = currency, decimals, use_subunits)
+
+  fmt_symbol(
     data = data,
     columns = !!columns,
     rows = !!rows,
-    fns = list(
-      html = fmt_currency_factory(context = "html"),
-      latex = fmt_currency_factory(context = "latex"),
-      default = fmt_currency_factory(context = "default")
-    )
+    symbol = currency,
+    accounting = accounting,
+    decimals = decimals,
+    drop_trailing_zeros = FALSE,
+    use_seps = use_seps,
+    scale_by = scale_by,
+    suffixing = suffixing,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    placement = placement,
+    incl_space = incl_space,
+    locale = locale
   )
 }
 
@@ -833,11 +710,11 @@ fmt_currency <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style the date style to use. Supply a number (from \code{1} to
+#' @param date_style The date style to use. Supply a number (from \code{1} to
 #' \code{14}) that corresponds to the preferred date style. Use
 #' \code{\link{info_date_style}()} to see the different numbered and named date
 #' presets.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -948,10 +825,11 @@ fmt_date <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style the time style to use. Supply a number (from \code{1} to
+#' @param time_style The time style to use. Supply a number (from \code{1} to
 #' \code{5}) that corresponds to the preferred time style. Use
 #' \code{\link{info_time_style}()} to see the different numbered and named time
 #' presets.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -1082,7 +960,7 @@ fmt_time <- function(data,
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `datetime` column;
@@ -1155,7 +1033,7 @@ fmt_datetime <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Create a few Markdown-based
 #' # text snippets
@@ -1257,13 +1135,13 @@ fmt_markdown <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param escape an option to escape text according to the final output format
+#' @param escape An option to escape text according to the final output format
 #'   of the table. For example, if a LaTeX table is to be generated then LaTeX
 #'   escaping would be performed during rendering. By default this is set to
 #'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
 #'   LaTeX-formatted text should be passed through to the output LaTeX table
 #'   unchanged.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `char` column;
@@ -1373,9 +1251,9 @@ fmt_passthrough <- function(data,
 #' information on this.
 #'
 #' @inheritParams fmt_number
-#' @param missing_text the text to be used in place of \code{NA} values in the
+#' @param missing_text The text to be used in place of \code{NA} values in the
 #' rendered table.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # NA values in different columns will
@@ -1470,8 +1348,8 @@ fmt_missing <- function(data,
 #' \code{rows} argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param fns a single formatting function or a named list of functions.
-#' @return an object of class \code{gt_tbl}.
+#' @param fns Either a single formatting function or a named list of functions.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the numeric values in the `num`

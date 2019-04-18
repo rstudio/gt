@@ -7,7 +7,7 @@
 tab_row_group(data, group = NULL, rows = NULL, others = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{group}{the name of the row group. This text will also serve as the row
