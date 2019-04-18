@@ -118,7 +118,7 @@ gt_save_webshot <- function(data, filename, ...) {
     )
 
   } else {
-    stop("The `webshot` package is required saving images of gt tables.",
+    stop("The `webshot` package is required for saving images of gt tables.",
          call. = FALSE)
   }
 }
