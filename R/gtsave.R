@@ -93,19 +93,19 @@ gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
   }
 }
 
-#' Saving function for a LaTeX file
+#' Saving function for an image file via the webshot package
 #'
-#' @importFrom htmltools HTML save_html
 #' @noRd
 gt_save_webshot <- function(data, filename, ...) {
 
+  # Create a temporary file with the `html` extension
   tempfile_ <- tempfile(fileext = ".html")
 
-  data %>%
-    as_raw_html(inline_css = TRUE) %>%
-    htmltools::HTML() %>%
-    htmltools::save_html(file = tempfile_)
+  # Save gt table as HTML using the `gt_save_html()` function
+  data %>% gt_save_html(filename = tempfile_)
 
+  # Saving an image requires the webshot package; if it's
+  # not present, stop with a message
   if (requireNamespace("webshot", quietly = TRUE)) {
 
     # Save the image in the working directory
