@@ -8,17 +8,17 @@ fmt_passthrough(data, columns, rows = NULL, escape = TRUE,
   pattern = "{x}")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
+\item{columns}{The columns to format. Can either be a series of column names
 provided in \code{vars()}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
+\item{rows}{Optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted. Can either be a vector of row
 captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
@@ -27,19 +27,19 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{escape}{an option to escape text according to the final output format
+\item{escape}{An option to escape text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed during rendering. By default this is set to
 \code{TRUE} and setting to \code{FALSE} is useful in the case where
 LaTeX-formatted text should be passed through to the output LaTeX table
 unchanged.}
 
-\item{pattern}{a formatting pattern that allows for decoration of the
+\item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Format by passing data through no other transformation other than: (1)

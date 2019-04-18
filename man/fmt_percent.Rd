@@ -5,22 +5,22 @@
 \title{Format values as a percentage}
 \usage{
 fmt_percent(data, columns, rows = NULL, decimals = 2,
-  drop_trailing_zeros = FALSE, negative_val = "signed",
-  use_seps = TRUE, pattern = "{x}", sep_mark = ",", dec_mark = ".",
-  incl_space = FALSE, placement = "right", locale = NULL)
+  drop_trailing_zeros = FALSE, use_seps = TRUE, pattern = "{x}",
+  sep_mark = ",", dec_mark = ".", incl_space = FALSE,
+  placement = "right", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
+\item{columns}{The columns to format. Can either be a series of column names
 provided in \code{vars()}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
+\item{rows}{Optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted. Can either be a vector of row
 captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
@@ -29,43 +29,40 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{decimals}{an option to specify the exact number of decimal places to
+\item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop_trailing_zeros}{a logical value that allows for removal of
+\item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_val}{the formatting to use for negative values. With
-\code{signed} (the default), negative values will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses.}
-
-\item{use_seps}{an option to use digit group separators. The type of digit
+\item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{pattern}{a formatting pattern that allows for decoration of the
+\item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all
 other characters are taken to be string literals.}
 
-\item{sep_mark}{the mark to use as a separator between groups of digits
+\item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
 formatted value of \code{1,000}).}
 
-\item{dec_mark}{the character to use as a decimal mark (e.g., using
+\item{dec_mark}{The character to use as a decimal mark (e.g., using
 \code{dec_mark = ","} with \code{0.152} would result in a formatted value
 of \code{0,152}).}
 
-\item{incl_space}{an option on whether to include a space between the value
+\item{incl_space}{An option for whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
 
-\item{placement}{the placement of the percent sign. This can be either be
+\item{placement}{The placement of the percent sign. This can be either be
 \code{right} (the default) or \code{left}.}
 
-\item{locale}{an optional locale ID that can be used for formatting the value
+\item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and
-\code{dec_mark}.}
+\code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
+useful reference for all of the locales that are supported.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -82,8 +79,6 @@ before the values and a space can be inserted between the symbol and the
 value.
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item negative values: choice of a negative sign or parentheses for values
-less than zero
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
 \item pattern: option to use a text pattern for decoration of the formatted

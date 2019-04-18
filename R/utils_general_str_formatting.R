@@ -14,6 +14,9 @@ split_string_2 <- function(x,
                            before = NULL,
                            after = NULL) {
 
+  # TODO: use `split` instead of before/after and include
+  # a `dir` option (for "before" or "after" splitting)
+
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
     stop("Internal error in `gt:::paste_within()`:\n",
