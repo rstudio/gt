@@ -8,9 +8,9 @@ summary_rows(data, groups = NULL, columns = TRUE, fns,
   missing_text = "---", formatter = fmt_number, ...)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{A table object that is created using the \code{gt()} function.}
 
-\item{groups}{the groups to consider for generation of groupwise summary
+\item{groups}{The groups to consider for generation of groupwise summary
 rows. By default this is set to \code{NULL}, which results in the formation
 of grand summary rows (a grand summary operates on all table data).
 Providing the names of row groups in \code{c()} will create a groupwise
@@ -18,9 +18,9 @@ summary and generate summary rows for the specified groups. Setting this to
 \code{TRUE} indicates that all available groups will receive groupwise
 summary rows.}
 
-\item{columns}{the columns for which the summaries should be calculated.}
+\item{columns}{The columns for which the summaries should be calculated.}
 
-\item{fns}{functions used for aggregations. This can include base functions
+\item{fns}{Functions used for aggregations. This can include base functions
 like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
 \code{sum} or any other user-defined aggregation function. The function(s)
 should be supplied within a \code{list()}. Within that list, we can specify
@@ -32,23 +32,23 @@ arguments is recommended as the names will serve as summary row labels for
 the corresponding summary rows data (the labels can derived from the
 function names but only when not providing bare function names).}
 
-\item{missing_text}{the text to be used in place of \code{NA} values in
+\item{missing_text}{The text to be used in place of \code{NA} values in
 summary cells with no data outputs.}
 
-\item{formatter}{a formatter function name. These can be any of the
+\item{formatter}{A formatter function name. These can be any of the
 \code{fmt_*()}functions available in the package (e.g.,
 \code{\link{fmt_number}()}, \code{link{fmt_percent}()}, etc.), or a custom
 function using \code{\link{fmt}()}. The default function is
 \code{\link{fmt_number}()} and its options can be accessed through
 \code{...}.}
 
-\item{...}{values passed to the \code{formatter} function, where the provided
+\item{...}{Values passed to the \code{formatter} function, where the provided
 values are to be in the form of named vectors. For example, when using the
 default \code{formatter} function, \code{\link{fmt_number}()}, options such
 as \code{decimals}, \code{use_seps}, and \code{locale} can be used.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Add groupwise summary rows to one or more row groups by using the input data
