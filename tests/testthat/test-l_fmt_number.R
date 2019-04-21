@@ -89,17 +89,6 @@ test_that("the `fmt_number()` function works correctly", {
       "$212,23$", "$0,00$", "$-23,24$")
   )
 
-  # Format the `num_1` column to 2 decimal places, apply parentheses to
-  # all negative values, use all other defaults; extract `output_df` and
-  # compare to expected values
-  expect_equal(
-    (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, negative_val = "parens") %>%
-       render_formats_test("latex"))[["num_1"]],
-    c("$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$",
-      "$212.23$", "$0.00$", "$(23.24)$")
-  )
-
   # Format the `num_1` column to 4 decimal places, scale all values by
   # 1/1000, use all other defaults; extract `output_df` and compare
   # to expected values

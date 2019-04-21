@@ -372,13 +372,13 @@ markdown_to_text <- function(text) {
 #' final decoration of the formatted values. We use \pkg{glue}'s semantics here
 #' and reserve \code{x} to be the formatted values, and, we can use \code{x}
 #' multiple times in the pattern.
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value (defined here as \code{x}).
 #' @param values The values (as a character vector) that are formatted within
 #'   the \code{fmt_*()} function.
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value (defined here as \code{x}).
 #' @noRd
-apply_pattern_fmt_x <- function(pattern,
-                                values) {
+apply_pattern_fmt_x <- function(values,
+                                pattern) {
 
   vapply(
     values,
