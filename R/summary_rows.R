@@ -11,16 +11,16 @@
 #' \code{\link{extract_summary}()} function can be used with a \code{gt_tbl}
 #' object where summary rows were added via \code{summary_rows()}.
 #'
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param groups the groups to consider for generation of groupwise summary
+#' @param data A table object that is created using the \code{gt()} function.
+#' @param groups The groups to consider for generation of groupwise summary
 #'   rows. By default this is set to \code{NULL}, which results in the formation
 #'   of grand summary rows (a grand summary operates on all table data).
 #'   Providing the names of row groups in \code{c()} will create a groupwise
 #'   summary and generate summary rows for the specified groups. Setting this to
 #'   \code{TRUE} indicates that all available groups will receive groupwise
 #'   summary rows.
-#' @param columns the columns for which the summaries should be calculated.
-#' @param fns functions used for aggregations. This can include base functions
+#' @param columns The columns for which the summaries should be calculated.
+#' @param fns Functions used for aggregations. This can include base functions
 #'   like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
 #'   \code{sum} or any other user-defined aggregation function. The function(s)
 #'   should be supplied within a \code{list()}. Within that list, we can specify
@@ -31,19 +31,19 @@
 #'   arguments is recommended as the names will serve as summary row labels for
 #'   the corresponding summary rows data (the labels can derived from the
 #'   function names but only when not providing bare function names).
-#' @param missing_text the text to be used in place of \code{NA} values in
+#' @param missing_text The text to be used in place of \code{NA} values in
 #'   summary cells with no data outputs.
-#' @param formatter a formatter function name. These can be any of the
+#' @param formatter A formatter function name. These can be any of the
 #'   \code{fmt_*()}functions available in the package (e.g.,
 #'   \code{\link{fmt_number}()}, \code{link{fmt_percent}()}, etc.), or a custom
 #'   function using \code{\link{fmt}()}. The default function is
 #'   \code{\link{fmt_number}()} and its options can be accessed through
 #'   \code{...}.
-#' @param ... values passed to the \code{formatter} function, where the provided
+#' @param ... Values passed to the \code{formatter} function, where the provided
 #'   values are to be in the form of named vectors. For example, when using the
 #'   default \code{formatter} function, \code{\link{fmt_number}()}, options such
 #'   as \code{decimals}, \code{use_seps}, and \code{locale} can be used.
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class \code{gt_tbl}.
 #' @examples
 #' # Use `sp500` to create a gt table with
 #' # row groups; create summary rows (`min`,
