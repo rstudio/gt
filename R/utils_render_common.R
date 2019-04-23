@@ -350,10 +350,7 @@ create_summary_dfs <- function(summary_list,
       missing_text <- "\u2013"
     }
 
-    # Resolve the groups to consider; if
-    # `groups` is TRUE then we are to obtain
-    # summary row data for all groups
-    if (isTRUE(groups)) {
+    assert_rowgroups <- function() {
 
       if (all(is.na(stub_df$groupname))) {
         stop("There are no row groups in the gt object:\n",
@@ -361,6 +358,7 @@ create_summary_dfs <- function(summary_list,
              " * Define row groups using `gt()` or `tab_row_group()`",
              call. = FALSE)
       }
+    }
 
       groups <- unique(stub_df$groupname)
 
