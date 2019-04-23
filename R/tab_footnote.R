@@ -224,16 +224,18 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
       vals = row_groups
     )]
 
+  # Adding footnotes to intersections of group, row, and column; any
+  # that are missing at render time will be ignored
   for (group in groups) {
 
     summary_labels <-
       lapply(
-        seq(summary_data),
-        function(x) {
-          if (is.logical(summary_data[[x]]$groups)) {
-            summary_data[[x]]$summary_labels
-          } else if (group %in% summary_data[[x]]$groups){
-            summary_data[[x]]$summary_labels
+        summary_data,
+        function(summary_data_item) {
+          if (isTRUE(summary_data_item$groups)) {
+            summary_data_item$summary_labels
+          } else if (group %in% summary_data_item$groups){
+            summary_data_item$summary_labels
           }
         }
       ) %>%
@@ -286,7 +288,13 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   summary_data <- attr(data, "summary", exact = TRUE)
 
   grand_summary_labels <-
-    lapply(grand_summary_data, `[[`, "summary_labels") %>%
+    lapply(summary_data, function(summary_data_item) {
+      if (is.null(summary_data_item$groups)) {
+        return(summary_data_item$summary_labels)
+      }
+
+      NULL
+    }) %>%
     unlist() %>%
     unique()
 
