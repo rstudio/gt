@@ -423,29 +423,6 @@ create_summary_dfs <- function(summary_list,
     # Get the registered function calls
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
-    # # Get the names if any were provided
-    # labels <-
-    #   names(fns) %>%
-    #   {
-    #     labels <- .
-    #     if (length(labels) < 1) {
-    #       rep(NA_character_, length(fns))
-    #     } else {
-    #       labels
-    #     }
-    #   } %>%
-    #   mapply(., fns, SIMPLIFY = FALSE, FUN = function(label, fn) {
-    #     if (is.na(label)) {
-    #       derive_summary_label(fn)
-    #     } else if(label == "") {
-    #       derive_summary_label(fn)
-    #     } else {
-    #       process_text(label, context = context)
-    #     }
-    #   }) %>%
-    #   unlist() %>%
-    #   unname()
-
     if (length(labels) != length(unique(labels))) {
 
       stop("All summary labels must be unique:\n",
