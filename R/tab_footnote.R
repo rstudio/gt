@@ -207,7 +207,6 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
     unique()
 
   summary_data <- attr(data, "summary", exact = TRUE)
-  summary_data <- subset(summary_data, is.null(summary_data$groups))
 
   summary_data_summaries <-
     vapply(
@@ -285,8 +284,6 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
 set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 
   summary_data <- attr(data, "summary", exact = TRUE)
-
-  grand_summary_data <- subset(summary_data, is.null(summary_data$groups))
 
   grand_summary_labels <-
     lapply(grand_summary_data, `[[`, "summary_labels") %>%
