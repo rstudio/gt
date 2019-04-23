@@ -394,7 +394,7 @@ create_summary_dfs <- function(summary_list,
 
       # If groups is given as NULL (the default)
       # then use a special group (`::GRAND_SUMMARY`)
-      groups <- "::GRAND_SUMMARY"
+      groups <- grand_summary_col
     }
 
     # Resolve the columns to exclude
@@ -402,7 +402,7 @@ create_summary_dfs <- function(summary_list,
 
     # Combine `groupname` with the table body data in order to
     # process data by groups
-    if (groups[1] != "::GRAND_SUMMARY") {
+    if (groups[1] != grand_summary_col) {
 
       select_data_df <-
         cbind(
@@ -410,13 +410,13 @@ create_summary_dfs <- function(summary_list,
           data_df)[, -2] %>%
         dplyr::select(groupname, columns)
 
-    } else if (groups == "::GRAND_SUMMARY") {
+    } else if (identical(groups, grand_summary_col)) {
 
       select_data_df <-
         cbind(
           stub_df[c("groupname", "rowname")],
           data_df)[, -2] %>%
-        dplyr::mutate(groupname = "::GRAND_SUMMARY") %>%
+        dplyr::mutate(groupname = grand_summary_col) %>%
         dplyr::select(groupname, columns)
     }
 
