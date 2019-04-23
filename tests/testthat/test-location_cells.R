@@ -238,7 +238,8 @@ test_that("the `cells_summary()` function works correctly", {
   helper_cells_summary <-
     cells_summary(
       groups = "group_a",
-      columns = c("col_1", "col_2"))
+      columns = c("col_1", "col_2")
+    )
 
   # Expect this has the `cells_summary` and `location_cells` classes
   helper_cells_summary %>%
@@ -274,6 +275,20 @@ test_that("the `cells_summary()` function works correctly", {
   helper_cells_summary[[2]][2] %>%
     as.character() %>%
     expect_equal("c(\"col_1\", \"col_2\")")
+
+  # Create a `cells_summary` object with
+  # columns in `vars()` provided to `columns`
+  helper_cells_summary <-
+    cells_summary(
+      groups = "group_a",
+      columns = vars(col_1, col_2)
+    )
+
+  # Expect the RHS of the second component formula to contain
+  # the vector provided
+  helper_cells_summary[[2]][2] %>%
+    as.character() %>%
+    expect_equal("vars(col_1, col_2)")
 })
 
 
