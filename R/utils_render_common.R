@@ -340,6 +340,7 @@ create_summary_dfs <- function(summary_list,
     missing_text <- summary_attrs$missing_text
     formatter <- summary_attrs$formatter
     formatter_options <- summary_attrs$formatter_options
+    labels <- summary_attrs$summary_labels
 
     # Resolve the `missing_text`
     if (missing_text == "---") {
@@ -423,28 +424,28 @@ create_summary_dfs <- function(summary_list,
     # Get the registered function calls
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
-    # Get the names if any were provided
-    labels <-
-      names(fns) %>%
-      {
-        labels <- .
-        if (length(labels) < 1) {
-          rep(NA_character_, length(fns))
-        } else {
-          labels
-        }
-      } %>%
-      mapply(., fns, SIMPLIFY = FALSE, FUN = function(label, fn) {
-        if (is.na(label)) {
-          derive_summary_label(fn)
-        } else if(label == "") {
-          derive_summary_label(fn)
-        } else {
-          process_text(label, context = context)
-        }
-      }) %>%
-      unlist() %>%
-      unname()
+    # # Get the names if any were provided
+    # labels <-
+    #   names(fns) %>%
+    #   {
+    #     labels <- .
+    #     if (length(labels) < 1) {
+    #       rep(NA_character_, length(fns))
+    #     } else {
+    #       labels
+    #     }
+    #   } %>%
+    #   mapply(., fns, SIMPLIFY = FALSE, FUN = function(label, fn) {
+    #     if (is.na(label)) {
+    #       derive_summary_label(fn)
+    #     } else if(label == "") {
+    #       derive_summary_label(fn)
+    #     } else {
+    #       process_text(label, context = context)
+    #     }
+    #   }) %>%
+    #   unlist() %>%
+    #   unname()
 
     if (length(labels) != length(unique(labels))) {
 
