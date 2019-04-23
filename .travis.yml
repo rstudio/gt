@@ -2,8 +2,14 @@
 
 language: R
 sudo: false
-cache: packages
+cache:
+  packages: true
 warnings_are_errors: false
+
+r:
+  - oldrel
+  - release
+  - devel
 
 notifications:
   email:
@@ -12,14 +18,11 @@ notifications:
 
 jobs:
   include:
-    - stage: "R CMD check"
-      r: oldrel
-    - r: release
-    - r: devel
-
     - stage: deploy
       name: covr
       r: release
+      cache:
+        packages: false
       r_binary_packages:
         - covr
       script:
@@ -28,13 +31,19 @@ jobs:
     - stage: deploy
       name: pkgdown
       r: release
-      if: branch IN (master)
+      cache:
+        packages: false
+      if:
+        branch IN (master, travis) AND \
+        type = push AND \
+        repo = rstudio/gt
       r_binary_packages:
         - pkgdown
+        - remotes
       script:
-        - Rscript -e "devtools::install()"
+        - Rscript -e "remotes::install_local()"
         - Rscript -e "pkgdown::build_site()"
-        - Rscript -e "remove.packages(devtools::as.package('.')$package)"
+        - Rscript -e "remove.packages('gt')"
       deploy:
         provider: pages
         local-dir: docs
