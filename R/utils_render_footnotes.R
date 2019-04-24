@@ -614,18 +614,18 @@ apply_footnotes_to_summary <- function(list_of_summaries,
     for (i in seq(nrow(footnotes_data_glpyhs))) {
 
       text <-
-        summary_df_list$`::GRAND_SUMMARY`[[
+        summary_df_list[[grand_summary_col]][[
           footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]]
 
       text <-
         paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
 
-      summary_df_list$`::GRAND_SUMMARY`[[
+      summary_df_list[[grand_summary_col]][[
         footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]] <- text
     }
 
-    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` <-
-      summary_df_list$`::GRAND_SUMMARY`
+    list_of_summaries$summary_df_display_list[[grand_summary_col]] <-
+      summary_df_list[[grand_summary_col]]
   }
 
   list_of_summaries

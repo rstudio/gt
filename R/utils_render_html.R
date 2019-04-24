@@ -139,7 +139,6 @@ apply_styles_to_summary_output <- function(summary_df,
   styles_summary_df <- summary_df
   styles_summary_df[] <- NA_character_
 
-
   styles_tbl_summary <-
     styles_resolved %>%
     dplyr::filter(locname %in% "summary_cells") %>%
@@ -823,10 +822,10 @@ create_body_component_h <- function(row_splits_body,
 
   # If there is a grand summary, include that at the end
   if (summaries_present &&
-      "::GRAND_SUMMARY" %in% names(list_of_summaries$summary_df_display_list)) {
+      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
     grand_summary_df <-
-      list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
+      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
       as.data.frame(stringsAsFactors = FALSE)
 
     row_splits_summary_styles <-

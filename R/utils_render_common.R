@@ -339,7 +339,6 @@ create_summary_dfs <- function(summary_list,
   # purposes
   summary_df_display_list <- list()
   summary_df_data_list <- list()
-  grand_summary_col <- "::GRAND_SUMMARY"
 
   for (i in seq(summary_list)) {
 
