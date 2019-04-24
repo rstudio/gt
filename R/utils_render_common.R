@@ -353,6 +353,15 @@ create_summary_dfs <- function(summary_list,
     formatter_options <- summary_attrs$formatter_options
     labels <- summary_attrs$summary_labels
 
+    if (length(labels) != length(unique(labels))) {
+
+      stop("All summary labels must be unique:\n",
+           " * Review the names provided in `fns`\n",
+           " * These labels are in conflict: ",
+           paste0(labels, collapse = ", "), ".",
+           call. = FALSE)
+    }
+
     # Resolve the `missing_text`
     missing_text <-
       context_missing_text(missing_text = missing_text, context = context)
@@ -429,15 +438,6 @@ create_summary_dfs <- function(summary_list,
 
     # Get the registered function calls
     agg_funs <- fns %>% lapply(rlang::as_closure)
-
-    if (length(labels) != length(unique(labels))) {
-
-      stop("All summary labels must be unique:\n",
-           " * Review the names provided in `fns`\n",
-           " * These labels are in conflict: ",
-           paste0(labels, collapse = ", "), ".",
-           call. = FALSE)
-    }
 
     # Initialize an empty tibble to bind to
     summary_dfs_data <- dplyr::tibble()
