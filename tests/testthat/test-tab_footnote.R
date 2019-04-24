@@ -10,11 +10,14 @@ data <-
   cols_hide(columns = "vs") %>%
   tab_row_group(
     group = "Mercs",
-    rows = contains("Merc")
+    rows = contains("Merc"),
   ) %>%
   tab_row_group(
     group = "Mazdas",
-    rows = contains("Mazda")
+    rows = contains("Mazda"),
+  ) %>%
+  tab_row_group(
+    others = "Others"
   ) %>%
   tab_spanner(
     label = "gear_carb_cyl",
@@ -33,6 +36,12 @@ data <-
   summary_rows(
     groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),
+    fns = list(
+      ~mean(., na.rm = TRUE),
+      ~sum(., na.rm = TRUE))
+  ) %>%
+  summary_rows(
+    columns = vars(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -103,7 +112,9 @@ test_that("the `tab_footnote()` function works correctly", {
       footnote = "Column labels and stub footnote.",
       locations = list(
         cells_column_labels(columns = TRUE),
-        cells_stub(rows = TRUE)))
+        cells_stub(rows = TRUE)
+      )
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # its `locname` column entirely populated with `columns_columns`
@@ -125,7 +136,8 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Stub cell footnote.",
-      locations = cells_stub(rows = "Merc 240D"))
+      locations = cells_stub(rows = "Merc 240D")
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -138,14 +150,16 @@ test_that("the `tab_footnote()` function works correctly", {
   expect_attr_equal(
     tab, "footnotes_df",
     c("stub", "5", NA_character_, NA_character_, "8",
-      "Stub cell footnote."))
+      "Stub cell footnote.")
+  )
 
   # Apply a footnote to the table title
   tab <-
     data %>%
     tab_footnote(
       footnote = "Title footnote.",
-      locations = cells_title(groups = "title"))
+      locations = cells_title(groups = "title")
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -158,14 +172,16 @@ test_that("the `tab_footnote()` function works correctly", {
   expect_attr_equal(
     tab, "footnotes_df",
     c("title", "1", NA_character_, NA_character_, NA_character_,
-      "Title footnote."))
+      "Title footnote.")
+  )
 
   # Apply a footnote to the table subtitle
   tab <-
     data %>%
     tab_footnote(
       footnote = "Subtitle footnote.",
-      locations = cells_title(groups = "subtitle"))
+      locations = cells_title(groups = "subtitle")
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -178,7 +194,8 @@ test_that("the `tab_footnote()` function works correctly", {
   expect_attr_equal(
     tab, "footnotes_df",
     c("subtitle", "2", NA_character_, NA_character_, NA_character_,
-      "Subtitle footnote."))
+      "Subtitle footnote.")
+  )
 
   # Apply a footnote to a single cell in a group summary section
   tab <-
@@ -186,7 +203,8 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Summary cell footnote.",
       locations = cells_summary(
-        groups = "Mercs", columns = "hp", rows = 2))
+        groups = "Mercs", columns = "hp", rows = 2)
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -199,7 +217,66 @@ test_that("the `tab_footnote()` function works correctly", {
   expect_attr_equal(
     tab, "footnotes_df",
     c("summary_cells", "5", "Mercs", "hp", "2",
-      "Summary cell footnote."))
+      "Summary cell footnote.")
+  )
+
+  # Apply a footnote to a single cell in a grand
+  # summary section
+  tab <-
+    data %>%
+    tab_footnote(
+      footnote = "Grand summary cell footnote.",
+      locations = cells_grand_summary(
+        columns = vars(wt), rows = starts_with("s")
+      )
+    )
+
+  # Expect that the internal `footnotes_df` data frame
+  # will have a single row
+  attr(tab, "footnotes_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(1)
+
+  # Expect certain values for each of the columns in the
+  # single-row `footnotes_df` data frame
+  expect_attr_equal(
+    tab, "footnotes_df",
+    c("grand_summary_cells", "6", NA, "wt", "2",
+      "Grand summary cell footnote.")
+  )
+
+  # Apply a footnote to a single cell in a group
+  # summary section, and, to a single cell in a grand
+  # summary section
+  tab <-
+    data %>%
+    tab_footnote(
+      footnote = "Summary cell footnote.",
+      locations = cells_summary(
+        groups = "Mercs", columns = "hp", rows = 2)
+    ) %>%
+    tab_footnote(
+      footnote = "Grand summary cell footnote.",
+      locations = cells_grand_summary(
+        columns = vars(wt), rows = starts_with("s")
+      )
+    )
+
+  # Expect that the internal `footnotes_df` data frame
+  # will have two rows
+  attr(tab, "footnotes_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(2)
+
+  # Expect certain values for each of the columns in the
+  # double-row `footnotes_df` data frame
+  expect_attr_equal(
+    tab, "footnotes_df",
+    c("summary_cells", "grand_summary_cells",
+      "5", "6", "Mercs", NA, "hp", "wt", "2", "2",
+      "Summary cell footnote.",
+      "Grand summary cell footnote.")
+  )
 
   # Apply a footnote to the `Mazdas` stub group cell
   tab <-
@@ -208,8 +285,8 @@ test_that("the `tab_footnote()` function works correctly", {
       footnote = "Group cell footnote.",
       locations = cells_group(groups = "Mazdas"))
 
-  # Expect that the internal `footnotes_df` data frame will have
-  # a single row
+  # Expect that the internal `footnotes_df` data frame
+  # will have a single row
   attr(tab, "footnotes_df", exact = TRUE) %>%
     nrow() %>%
     expect_equal(1)
