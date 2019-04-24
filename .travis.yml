@@ -33,7 +33,7 @@ jobs:
       r: release
       cache:
         packages: false
-      if:
+      if: |
         branch IN (master, travis) AND \
         type = push AND \
         repo = rstudio/gt
