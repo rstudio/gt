@@ -767,7 +767,7 @@ cols_merge <- function(data,
     attr(data, "col_merge") <-
       list(
         pattern = pattern,
-        sep = NULL,
+        sep = "",
         col_1 = col_1)
   }
 
@@ -886,7 +886,7 @@ cols_merge_uncert <- function(data,
     attr(data, "col_merge") <-
       list(
         pattern = pattern,
-        sep = NULL,
+        sep = "",
         col_1 = col_val)
   }
 
