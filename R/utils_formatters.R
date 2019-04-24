@@ -266,6 +266,40 @@ to_latex_math_mode <- function(x,
 #'
 #' @param context The output context.
 #' @noRd
+context_missing_text <- function(missing_text,
+                                 context) {
+
+  missing_text <- process_text(missing_text, context)
+
+  switch(context,
+         html =
+           {
+             if (missing_text == "---") {
+               "&mdash;"
+             } else if (missing_text == "--") {
+               "&ndash;"
+             } else {
+               missing_text
+             }
+           },
+         latex = missing_text,
+         {
+           if (missing_text == "---") {
+             "\u2014"
+           } else if (missing_text == "--") {
+             "\u2013"
+           } else {
+             missing_text
+           }
+         })
+}
+context_dash_mark <- context_missing_text
+
+
+#' Obtain the contextually correct minus mark
+#'
+#' @param context The output context.
+#' @noRd
 context_minus_mark <- function(context) {
 
   switch(context,

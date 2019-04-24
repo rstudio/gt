@@ -1294,11 +1294,11 @@ fmt_missing <- function(data,
       fns = list(
         html = function(x) {
 
-          if (missing_text == "---") {
-            missing_text <- "\u2014"
-          } else if (missing_text == "--") {
-            missing_text <- "\u2013"
-          }
+          missing_text <-
+            context_missing_text(
+              missing_text = missing_text,
+              context = "html"
+            )
 
           # Any values of `x` that are `NA` get
           # `missing_text` as output; any values that
