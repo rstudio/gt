@@ -76,6 +76,50 @@ data_2 <-
   tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
   tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp))
 
+
+# Create a table from `gtcars` that has footnotes
+# in group summary and grand summary cells
+data_3 <-
+  gtcars %>%
+  dplyr::filter(ctry_origin == "Germany") %>%
+  dplyr::group_by(mfr) %>%
+  dplyr::top_n(3, msrp) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(mfr, model, drivetrain, msrp) %>%
+  gt(rowname_col = "model", groupname_col = "mfr") %>%
+  summary_rows(
+    groups = c("BMW", "Audi"),
+    columns = vars(msrp),
+    fns = list(
+      ~mean(., na.rm = TRUE),
+      ~min(., na.rm = TRUE))
+  ) %>%
+  summary_rows(
+    columns = vars(msrp),
+    fns = list(
+      ~min(., na.rm = TRUE),
+      ~max(., na.rm = TRUE))
+  ) %>%
+  tab_footnote(
+    footnote = "Average price for BMW and Audi.",
+    locations = cells_summary(
+      groups = c("BMW", "Audi"),
+      columns = vars(msrp),
+      rows = starts_with("me"))
+  ) %>%
+  tab_footnote(
+    footnote = "Maximum price across all cars.",
+    locations = cells_grand_summary(
+      columns = vars(msrp),
+      rows = starts_with("ma"))
+  ) %>%
+  tab_footnote(
+    footnote = "Minimum price across all cars.",
+    locations = cells_grand_summary(
+      columns = vars(msrp),
+      rows = starts_with("mi"))
+  )
+
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -509,5 +553,122 @@ test_that("the `tab_footnote()` function works correctly", {
   tbl_html %>%
     selection_text(selection = "[class='gt_footnote_glyph']") %>%
     expect_equal(rep(as.character(1:4), 2))
+})
+
+test_that("the `apply_footnotes_to_output()` function works correctly", {
+
+  # Build the `data_3` object (using the `html` context)
+  # and obtain the `built_data` list object
+  built_data <- build_data(data_3, context = "html")
+
+  # Extract `footnotes_resolved` and `list_of_summaries`
+  footnotes_resolved <- built_data$footnotes_resolved
+  list_of_summaries <- built_data$list_of_summaries
+
+  # Expect that the `footnotes_resolved` object inherits
+  # from `tbl_df`
+  expect_is(footnotes_resolved, "tbl_df")
+
+  # Expect that there are specific column names in
+  # this tibble
+  expect_equal(
+    colnames(footnotes_resolved),
+    c("locname", "locnum", "grpname", "colname", "rownum",
+      "text", "colnum", "fs_id")
+  )
+
+  # Expect that there are 4 rows in this tibble
+  expect_equal(nrow(footnotes_resolved), 4)
+
+  # Expect specific values to be in `footnotes_resolved`
+  expect_equal(
+    footnotes_resolved$locname,
+    c("summary_cells", "summary_cells",
+      "grand_summary_cells", "grand_summary_cells")
+  )
+  expect_equal(footnotes_resolved$locnum, c(5, 5, 6, 6))
+  expect_equal(footnotes_resolved$grpname, c("BMW", "Audi", NA, NA))
+  expect_equal(footnotes_resolved$colname, rep("msrp", 4))
+  expect_equal(footnotes_resolved$rownum, c(3.01, 6.01, 1.00, 2.00))
+  expect_equal(
+    footnotes_resolved$text,
+    c("Average price for BMW and Audi.", "Average price for BMW and Audi.",
+      "Minimum price across all cars.", "Maximum price across all cars.")
+  )
+  expect_equal(footnotes_resolved$colnum, rep(2, 4))
+  expect_equal(footnotes_resolved$fs_id, c("1", "1", "2", "3"))
+
+  # Expect that the list of summaries has length `2`
+  expect_equal(length(list_of_summaries), 2)
+
+  # Expect specific names in the `list_of_summaries` list
+  expect_equal(
+    names(list_of_summaries),
+    c("summary_df_data_list", "summary_df_display_list")
+  )
+
+  # Expect three tibbles in the `summary_df_data_list` component
+  expect_equal(length(list_of_summaries$summary_df_data_list), 3)
+
+  # Expect three tibbles in the `summary_df_display_list` component
+  expect_equal(length(list_of_summaries$summary_df_display_list), 3)
+
+  # Expect specific names for the subcomponents of the
+  # `summary_df_data_list` and `summary_df_data_list`
+  # parent components
+  expect_equal(
+    names(list_of_summaries$summary_df_data_list),
+    c("BMW", "Audi", "::GRAND_SUMMARY")
+  )
+  expect_equal(
+    names(list_of_summaries$summary_df_display_list),
+    c("::GRAND_SUMMARY", "Audi", "BMW")
+  )
+
+  # Expect formatted cell values with no HTML footnote markup
+  expect_equal(
+    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
+    c("56,000.00", "140,700.00")
+  )
+
+  expect_equal(
+    list_of_summaries$summary_df_display_list$Audi$msrp,
+    c("113,233.33", "108,900.00")
+  )
+
+  expect_equal(
+    list_of_summaries$summary_df_display_list$BMW$msrp,
+    c("116,066.67", "94,100.00")
+  )
+
+  # Use the `apply_footnotes_to_summary()` function to modify
+  # the cell values in the `list_of_summaries$summary_df_display_list`
+  # subcomponent of `list_of_summaries`
+  applied_footnotes <-
+    apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
+
+  # Expect no change in the `summary_df_data_list` subcomponent
+  # as a result of the transformation
+  expect_equivalent(
+    list_of_summaries$summary_df_data_list,
+    applied_footnotes$summary_df_data_list
+  )
+
+  # Expect formatted cell values with HTML footnote markup
+  expect_equal(
+    applied_footnotes$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
+    c("56,000.00<sup class='gt_footnote_glyph'>2</sup>",
+      "140,700.00<sup class='gt_footnote_glyph'>3</sup>")
+  )
+
+  expect_equal(
+    applied_footnotes$summary_df_display_list$Audi$msrp,
+    c("113,233.33<sup class='gt_footnote_glyph'>1</sup>", "108,900.00")
+  )
+
+  expect_equal(
+    applied_footnotes$summary_df_display_list$BMW$msrp,
+    c("116,066.67<sup class='gt_footnote_glyph'>1</sup>", "94,100.00")
+  )
 
 })
