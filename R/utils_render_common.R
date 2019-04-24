@@ -439,15 +439,9 @@ create_summary_dfs <- function(summary_list,
     # Get the registered function calls
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
-    # Initialize an empty tibble to bind to
-    summary_dfs_data <- dplyr::tibble()
-
-    for (j in seq(agg_funs)) {
-
-      # Get aggregation rows for each of the `agg_funs`
-      summary_dfs_data <-
-        dplyr::bind_rows(
-          summary_dfs_data,
+    summary_dfs_data <-
+      lapply(
+        seq(agg_funs), function(j) {
           select_data_df %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
@@ -455,8 +449,9 @@ create_summary_dfs <- function(summary_list,
             dplyr::ungroup() %>%
             dplyr::mutate(rowname = labels[j]) %>%
             dplyr::select(groupname, rowname, dplyr::everything())
-        )
-    }
+        }
+      ) %>%
+      dplyr::bind_rows()
 
     # Add those columns that were not part of
     # the aggregation, filling those with NA values
