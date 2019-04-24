@@ -477,12 +477,8 @@ create_summary_dfs <- function(summary_list,
                 summary_attrs$formatter_options))
 
           formatter <- attr(format_data, "formats")[[1]]$func
-
-          if ("html" %in% names(formatter)) {
-            formatter$html(x)
-          } else {
-            formatter$default(x)
-          }
+          fmt <- formatter[[context]] %||% formatter$default
+          fmt(x)
         }
       ) %>%
       dplyr::mutate_at(
