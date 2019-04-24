@@ -97,7 +97,7 @@ summary_rows <- function(data,
   # as `NULL` signifies a grand summary, `TRUE`
   # is used for groupwise summaries across all
   # groups
-  if (!is.null(groups) && is.logical(groups) && groups == FALSE) {
+  if (!is_false(groups)) {
     return(data)
   }
 
