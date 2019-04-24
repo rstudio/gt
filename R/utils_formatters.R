@@ -266,14 +266,11 @@ to_latex_math_mode <- function(x,
 #'
 #' @param context The output context.
 #' @noRd
-context_missing_text <- function(missing_text = NULL,
+context_missing_text <- function(missing_text,
                                  context) {
 
-  if (is.null(missing_text)) {
-    return("")
-  }
-
   missing_text <- process_text(missing_text, context)
+
   switch(context,
          html =
            {
