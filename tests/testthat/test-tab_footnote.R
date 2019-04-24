@@ -220,6 +220,26 @@ test_that("the `tab_footnote()` function works correctly", {
       "Summary cell footnote.")
   )
 
+  # Expect an error if columns couldn't be resolved
+  expect_error(
+    data %>%
+      tab_footnote(
+        footnote = "Summary cell footnote.",
+        locations = cells_summary(
+          groups = "Mercs", columns = starts_with("x"), rows = 2)
+      )
+  )
+
+  # Expect an error if rows couldn't be resolved
+  expect_error(
+    data %>%
+      tab_footnote(
+        footnote = "Summary cell footnote.",
+        locations = cells_summary(
+          groups = "Mercs", columns = starts_with("m"), rows = starts_with("x"))
+      )
+  )
+
   # Apply a footnote to a single cell in a grand
   # summary section
   tab <-
@@ -243,6 +263,26 @@ test_that("the `tab_footnote()` function works correctly", {
     tab, "footnotes_df",
     c("grand_summary_cells", "6", NA, "wt", "2",
       "Grand summary cell footnote.")
+  )
+
+  # Expect an error if columns couldn't be resolved
+  expect_error(
+    data %>%
+      tab_footnote(
+        footnote = "Grand summary cell footnote.",
+        locations = cells_grand_summary(
+          columns = starts_with("x"), rows = 2)
+      )
+  )
+
+  # Expect an error if rows couldn't be resolved
+  expect_error(
+    data %>%
+      tab_footnote(
+        footnote = "Grand summary cell footnote.",
+        locations = cells_grand_summary(
+          columns = starts_with("m"), rows = starts_with("x"))
+      )
   )
 
   # Apply a footnote to a single cell in a group
