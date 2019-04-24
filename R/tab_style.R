@@ -233,140 +233,20 @@ set_style.cells_title <- function(loc, data, style) {
 
 set_style.cells_summary <- function(loc, data, style) {
 
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  row_groups <-
-    stub_df[, "groupname"] %>%
-    unique()
-
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  summary_data_summaries <-
-    vapply(
-      seq(summary_data),
-      function(x) !is.null(summary_data[[x]]$groups),
-      logical(1)
-    )
-
-  summary_data <- summary_data[summary_data_summaries]
-
-  groups <-
-    row_groups[resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data = NULL,
-      vals = row_groups
-    )]
-
-  # Adding styles to intersections of group, row, and column; any
-  # that are missing at render time will be ignored
-  for (group in groups) {
-
-    summary_labels <-
-      lapply(
-        summary_data,
-        function(summary_data_item) {
-          if (isTRUE(summary_data_item$groups)) {
-            summary_data_item$summary_labels
-          } else if (group %in% summary_data_item$groups){
-            summary_data_item$summary_labels
-          }
-        }
-      ) %>%
-      unlist() %>%
-      unique()
-
-    columns <-
-      resolve_vars(
-        var_expr = !!loc$columns,
-        data = data
-      )
-
-    if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
-    }
-
-    rows <-
-      resolve_data_vals_idx(
-        var_expr = !!loc$rows,
-        data = NULL,
-        vals = summary_labels
-      )
-
-    if (length(rows) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `rows`",
-           call. = FALSE)
-    }
-
-    attr(data, "styles_df") <-
-      add_location_row(
-        data,
-        df_type = "styles_df",
-        locname = "summary_cells",
-        locnum = 5,
-        grpname = group,
-        colname = columns,
-        rownum = rows,
-        text = style
-      )
-  }
-
-  data
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
 }
 
 set_style.cells_grand_summary <- function(loc, data, style) {
 
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  grand_summary_labels <-
-    lapply(summary_data, function(summary_data_item) {
-      if (is.null(summary_data_item$groups)) {
-        return(summary_data_item$summary_labels)
-      }
-
-      NULL
-    }) %>%
-    unlist() %>%
-    unique()
-
-  columns <-
-    resolve_vars(
-      var_expr = !!loc$columns,
-      data = data
-    )
-
-  if (length(columns) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `columns`",
-         call. = FALSE)
-  }
-
-  rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$rows,
-      data = NULL,
-      vals = grand_summary_labels
-    )
-
-  if (length(rows) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `rows`",
-         call. = FALSE)
-  }
-
-  attr(data, "styles_df") <-
-    add_location_row(
-      data,
-      df_type = "styles_df",
-      locname = "grand_summary_cells",
-      locnum = 6,
-      grpname = NA_character_,
-      colname = columns,
-      rownum = rows,
-      text = style
-    )
-
-  data
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
 }
