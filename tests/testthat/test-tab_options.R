@@ -569,6 +569,46 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "summary_row_text_transform") %>% dplyr::pull(value)) %>%
     expect_equal(c("inherit", "lowercase"))
 
+  # Modify the `grand_summary_row.background.color`
+  tbl_html <- data %>% tab_options(grand_summary_row.background.color = "pink")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "grand_summary_row_background_color") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "grand_summary_row_background_color") %>% dplyr::pull(value)) %>%
+    expect_equal(c(NA_character_, "pink"))
+
+  # Modify the `grand_summary_row.padding`
+  tbl_html <- data %>% tab_options(grand_summary_row.padding = px(4))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "grand_summary_row_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "grand_summary_row_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("8px", "4px"))
+
+  # Modify the `grand_summary_row.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(grand_summary_row.padding = 4)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "grand_summary_row_padding") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "grand_summary_row_padding") %>% dplyr::pull(value)) %>%
+    expect_equal(c("8px", "4px"))
+
+  # Modify the `grand_summary_row.text_transform`
+  tbl_html <- data %>% tab_options(grand_summary_row.text_transform = "lowercase")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "grand_summary_row_text_transform") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "grand_summary_row_text_transform") %>% dplyr::pull(value)) %>%
+    expect_equal(c("inherit", "lowercase"))
+
   # Modify the `footnote.font.size`
   tbl_html <- data %>% tab_options(footnote.font.size = px(12))
 
