@@ -767,6 +767,7 @@ cols_merge <- function(data,
     attr(data, "col_merge") <-
       list(
         pattern = pattern,
+        sep = NULL,
         col_1 = col_1)
   }
 
@@ -885,6 +886,7 @@ cols_merge_uncert <- function(data,
     attr(data, "col_merge") <-
       list(
         pattern = pattern,
+        sep = NULL,
         col_1 = col_val)
   }
 
@@ -962,10 +964,11 @@ cols_merge_uncert <- function(data,
 #' @export
 cols_merge_range <- function(data,
                              col_begin,
-                             col_end) {
+                             col_end,
+                             sep = "---") {
 
   # Set the formatting pattern
-  pattern <- "{1} \u2014 {2}"
+  pattern <- "{1} {sep} {2}"
 
   col_begin <- enquo(col_begin)
   col_end <- enquo(col_end)
@@ -991,6 +994,9 @@ cols_merge_range <- function(data,
     attr(data, "col_merge")[["pattern"]] <-
       c(attr(data, "col_merge")[["pattern"]], pattern)
 
+    attr(data, "col_merge")[["sep"]] <-
+      c(attr(data, "col_merge")[["sep"]], sep)
+
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_begin)
 
@@ -999,6 +1005,7 @@ cols_merge_range <- function(data,
     attr(data, "col_merge") <-
       list(
         pattern = pattern,
+        sep = sep,
         col_1 = col_begin)
   }
 
