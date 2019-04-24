@@ -829,6 +829,10 @@ tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   gsub(pattern, replacement, x, fixed = fixed)
 }
+tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
+
+  sub(pattern, replacement, x, fixed = fixed)
+}
 
 #' An options setter for the `opts_df` data frame
 #'
