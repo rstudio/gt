@@ -241,7 +241,8 @@ perform_col_merge <- function(col_merge,
                               data_df,
                               output_df,
                               boxh_df,
-                              columns_df) {
+                              columns_df,
+                              context) {
 
   if (length(col_merge) == 0) {
     return(
@@ -254,7 +255,13 @@ perform_col_merge <- function(col_merge,
 
   for (i in seq(col_merge[[1]])) {
 
-    pattern <- col_merge[["pattern"]][i]
+    sep <- col_merge[["sep"]][i] %>% context_dash_mark(context = context)
+
+    pattern <-
+      col_merge[["pattern"]][i] %>%
+      tidy_sub("\\{sep\\}", sep)
+
+
     value_1_col <- col_merge[["col_1"]][i] %>% unname()
     value_2_col <- col_merge[["col_1"]][i] %>% names()
 
@@ -344,11 +351,8 @@ create_summary_dfs <- function(summary_list,
     labels <- summary_attrs$summary_labels
 
     # Resolve the `missing_text`
-    if (missing_text == "---") {
-      missing_text <- "\u2014"
-    } else if (missing_text == "--") {
-      missing_text <- "\u2013"
-    }
+    missing_text <-
+      context_missing_text(missing_text = missing_text, context = context)
 
     assert_rowgroups <- function() {
 
@@ -781,11 +785,6 @@ create_summary_rows <- function(n_rows,
 
     body_content_summary <-
       as.vector(t(summary_df))
-
-    if (context == "latex") {
-      body_content_summary <- body_content_summary %>%
-        tidy_gsub("\u2014", "---")
-    }
 
     row_splits_summary <-
       split_body_content(
