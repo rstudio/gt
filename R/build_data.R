@@ -156,7 +156,9 @@ build_data <- function(data, context) {
 
   # Perform any necessary column merge operations
   col_merge_output <-
-    perform_col_merge(col_merge, data_df, output_df, boxh_df, columns_df)
+    perform_col_merge(
+      col_merge, data_df, output_df, boxh_df, columns_df, context
+    )
 
   # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
   output_df <- col_merge_output$output_df
