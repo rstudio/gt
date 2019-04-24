@@ -139,10 +139,9 @@ apply_styles_to_summary_output <- function(summary_df,
   styles_summary_df <- summary_df
   styles_summary_df[] <- NA_character_
 
-
   styles_tbl_summary <-
     styles_resolved %>%
-    dplyr::filter(locname == "summary_cells") %>%
+    dplyr::filter(locname %in% "summary_cells") %>%
     dplyr::filter(grpname == group)
 
   if (nrow(styles_tbl_summary) > 0) {
@@ -173,10 +172,49 @@ apply_styles_to_summary_output <- function(summary_df,
   split_body_content(body_content = summary_styles, n_cols)
 }
 
-#' Create the opening HTML element of a table
-#'
+#' Apply styles to summary rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
-create_table_start_h <- function() {
+apply_styles_to_grand_summary_output <- function(summary_df,
+                                                 styles_resolved,
+                                                 n_cols) {
+
+  styles_summary_df <- summary_df
+  styles_summary_df[] <- NA_character_
+
+  styles_tbl_summary <-
+    styles_resolved %>%
+    dplyr::filter(locname %in% "grand_summary_cells")
+
+  if (nrow(styles_tbl_summary) > 0) {
+
+    styles_summary <-
+      styles_tbl_summary %>%
+      dplyr::group_by(colname, rownum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct()
+
+
+    for (i in seq(nrow(styles_summary))) {
+
+      styles_summary_df[
+        styles_summary$rownum[i], styles_summary$colname[i]] <-
+        styles_summary$styles_appended[i]
+    }
+  }
+
+  # Extract `summary_styles` as a vector
+  summary_styles <- as.vector(t(styles_summary_df))
+
+  # Split `summary_styles` by slices of rows
+  split_body_content(body_content = summary_styles, n_cols)
+}
+
+# Create the opening HTML element of a table
+create_table_start_h <- function(groups_rows_df) {
+
   "<!--gt table start-->\n<table class='gt_table'>\n"
 }
 
@@ -780,6 +818,62 @@ create_body_component_h <- function(row_splits_body,
         body_rows <- c(body_rows, summary_row_lines)
       }
     }
+  }
+
+  # If there is a grand summary, include that at the end
+  if (summaries_present &&
+      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+
+    grand_summary_df <-
+      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
+      as.data.frame(stringsAsFactors = FALSE)
+
+    row_splits_summary_styles <-
+      apply_styles_to_grand_summary_output(
+        summary_df = grand_summary_df,
+        styles_resolved = styles_resolved,
+        n_cols = n_cols
+      )
+
+    grand_summary <- as.vector(t(grand_summary_df))
+
+    row_splits_grand_summary <-
+      split_body_content(
+        body_content = grand_summary,
+        n_cols = n_cols)
+
+    # Provide CSS classes for leading and
+    # non-leading grand summary rows
+    gs_row_classes_first <- "gt_grand_summary_row gt_first_grand_summary_row "
+    gs_row_classes <- "gt_grand_summary_row "
+
+    grand_summary_row_lines <- c()
+
+    for (j in seq(length(row_splits_grand_summary))) {
+
+      grand_summary_row_lines <-
+        c(grand_summary_row_lines,
+          paste0(
+            "<tr>\n",
+            paste0(
+              "<td class='gt_stub gt_row ",
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
+              "gt_", col_alignment[1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
+              row_splits_grand_summary[[j]][1],
+              "</td>"), "\n",
+            paste0(
+              "<td class='gt_row ",
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
+              "gt_", col_alignment[-1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
+              row_splits_grand_summary[[j]][-1],
+              "</td>", collapse = "\n"),
+            "\n</tr>\n")
+        )
+    }
+
+    body_rows <- c(body_rows, grand_summary_row_lines)
   }
 
   # Create a single-length vector by collapsing all vector components

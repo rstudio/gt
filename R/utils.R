@@ -615,7 +615,15 @@ warn_on_scale_by_input <- function(scale_by) {
 #' @noRd
 derive_summary_label <- function(fn) {
 
-  if (inherits(fn, "formula")) {
+  if (is.function(fn)) {
+
+    # Stop the function if any functions provided
+    # as bare names (e.g., `mean`) don't have
+    # names provided
+    stop("All functions provided as bare names in `fns` need a label.",
+         call. = FALSE)
+
+  } else if (inherits(fn, "formula")) {
 
     (fn %>% rlang::f_rhs())[[1]] %>%
       as.character()
@@ -820,6 +828,10 @@ split_scientific_notn <- function(x_str) {
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   gsub(pattern, replacement, x, fixed = fixed)
+}
+tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
+
+  sub(pattern, replacement, x, fixed = fixed)
 }
 
 #' An options setter for the `opts_df` data frame

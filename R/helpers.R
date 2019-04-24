@@ -364,6 +364,30 @@ cells_summary <- function(groups = NULL,
   cells
 }
 
+#' @rdname location_cells
+#' @import rlang
+#' @export
+cells_grand_summary <- function(columns = NULL,
+                                rows = NULL) {
+
+  # Capture expressions for the `columns`
+  # and `rows` arguments
+  col_expr <- rlang::enquo(columns)
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `cells_grand_summary` object
+  cells <-
+    list(
+      columns = col_expr,
+      rows = row_expr)
+
+  # Apply the `cells_grand_summary` and
+  # `location_cells` classes
+  class(cells) <- c("cells_grand_summary", "location_cells")
+
+  cells
+}
+
 #' Interpret input text as Markdown-formatted text
 #' @param text the text that is understood to contain Markdown formatting.
 #' @return a character object that is tagged for a Markdown-to-HTML

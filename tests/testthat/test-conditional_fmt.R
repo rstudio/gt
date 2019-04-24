@@ -234,7 +234,7 @@ test_that("the `fmt_missing()` function works with conditional `rows`", {
          columns = vars(num_2),
          rows = num_1 <= 0) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("34", "74", "23", "NA", "35", rep("—", 2))
+    c("34", "74", "23", "NA", "35", rep("&mdash;", 2))
   )
 })
 
