@@ -233,21 +233,20 @@ set_style.cells_title <- function(loc, data, style) {
 
 set_style.cells_summary <- function(loc, data, style) {
 
-  groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
+}
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+set_style.cells_grand_summary <- function(loc, data, style) {
 
-  cols <- resolved$columns
-
-  colnames <- colnames(as.data.frame(data))[cols]
-
-  attr(data, "styles_df") <-
-    add_location_row(
-      data, df_type = "styles_df",
-      locname = "summary_cells", locnum = 5,
-      grpname = groups, colname = colnames,
-      rownum = rows, text = style)
-
-  data
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
 }

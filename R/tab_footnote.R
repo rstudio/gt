@@ -193,23 +193,22 @@ set_footnote.cells_title <- function(loc, data, footnote) {
 
 set_footnote.cells_summary <- function(loc, data, footnote) {
 
-  groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    text = footnote,
+    df_type = "footnotes_df"
+  )
+}
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 
-  cols <- resolved$columns
-
-  colnames <- colnames(as.data.frame(data))[cols]
-
-  attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
-      locname = "summary_cells", locnum = 5,
-      grpname = groups, colname = colnames,
-      rownum = rows, text = footnote)
-
-  data
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    text = footnote,
+    df_type = "footnotes_df"
+  )
 }
 
 #' @importFrom dplyr bind_rows tibble distinct

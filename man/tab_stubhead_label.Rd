@@ -7,7 +7,7 @@
 tab_stubhead_label(data, label)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{label}{The text to be used as the stubhead label We can optionally use

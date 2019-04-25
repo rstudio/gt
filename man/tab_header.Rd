@@ -7,7 +7,7 @@
 tab_header(data, title, subtitle = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{title, subtitle}{Text to be used in the table title and, optionally, for

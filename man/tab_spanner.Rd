@@ -7,7 +7,7 @@
 tab_spanner(data, label, columns, gather = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{label}{The text to use for the spanner column label.}

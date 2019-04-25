@@ -8,7 +8,7 @@ data_color(data, columns, colors, alpha = NULL, apply_to = "bkgd",
   autocolor_text = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
 \item{columns}{The columns wherein changes to cell data colors should occur.}

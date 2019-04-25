@@ -367,17 +367,18 @@ markdown_to_text <- function(text) {
 
 #' Handle formatting of a pattern in a `fmt_*()` function
 #'
-#' Within the context of a `fmt_*()` function, we always have the single-length
-#' character vector of `pattern` available to describe a final decoration of the
-#' formatted values. We use \pkg{glue}'s semantics here and reserve `x` to be
-#' the formatted values, and, we can use `x` multiple times in the pattern.
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value (defined here as `x`).
+#' Within the context of a \code{fmt_*()} function, we always have the
+#' single-length character vector of \code{pattern} available to describe a
+#' final decoration of the formatted values. We use \pkg{glue}'s semantics here
+#' and reserve \code{x} to be the formatted values, and, we can use \code{x}
+#' multiple times in the pattern.
 #' @param values The values (as a character vector) that are formatted within
-#'   the `fmt_*()` function.
+#'   the \code{fmt_*()} function.
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value (defined here as \code{x}).
 #' @noRd
-apply_pattern_fmt_x <- function(pattern,
-                                values) {
+apply_pattern_fmt_x <- function(values,
+                                pattern) {
 
   vapply(
     values,
@@ -614,7 +615,15 @@ warn_on_scale_by_input <- function(scale_by) {
 #' @noRd
 derive_summary_label <- function(fn) {
 
-  if (inherits(fn, "formula")) {
+  if (is.function(fn)) {
+
+    # Stop the function if any functions provided
+    # as bare names (e.g., `mean`) don't have
+    # names provided
+    stop("All functions provided as bare names in `fns` need a label.",
+         call. = FALSE)
+
+  } else if (inherits(fn, "formula")) {
 
     (fn %>% rlang::f_rhs())[[1]] %>%
       as.character()
@@ -819,6 +828,10 @@ split_scientific_notn <- function(x_str) {
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   gsub(pattern, replacement, x, fixed = fixed)
+}
+tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
+
+  sub(pattern, replacement, x, fixed = fixed)
 }
 
 #' An options setter for the `opts_df` data frame

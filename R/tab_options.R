@@ -18,14 +18,15 @@
 #'   the value is given in units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param column_labels.font.weight,row_group.font.weight The font weight of the
-#'   `columns` and `row_group` text element.
-#' @param summary_row.text_transform An option to apply text transformations to
-#' the label text in each summary row.
-#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color
-#'   Background colors for the parent element `table` and the following child
-#'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
-#'   `table_body`. A color name or a hexadecimal color code should be provided.
+#' @param column_labels.font.weight,row_group.font.weight the font weight of
+#'   the \code{columns} and \code{row_group} text element.
+#' @param summary_row.text_transform,grand_summary_row.text_transform an option
+#'   to apply text transformations to the label text in each summary row.
+#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
+#'   background colors for the parent element \code{table} and the following
+#'   child elements: \code{heading}, \code{columns}, \code{row_group},
+#'   \code{summary_row}, and \code{table_body}. A color name or a hexadecimal
+#'   color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
 #'   The style, width, and color of the table's top border.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
@@ -37,10 +38,10 @@
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color
 #'   The style, width, and color of the table body's top border.
 #' @param table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
-#'   The style, width, and color of the table body's bottom border.
-#' @param row.padding,summary_row.padding The amount of padding in each row and
-#'   in each summary row.
-#' @param footnote.sep The separating characters between adjacent footnotes in
+#'   the style, width, and color of the table body's bottom border.
+#' @param row.padding,summary_row.padding,grand_summary_row.padding the amount
+#'   of padding in each row and in each type of summary row.
+#' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnote.glyph The set of sequential figures or characters used to
 #'   identify the footnotes. We can either supply the keyword `"numbers"` (the
@@ -188,6 +189,9 @@ tab_options <- function(data,
                         summary_row.background.color = NULL,
                         summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
+                        grand_summary_row.background.color = NULL,
+                        grand_summary_row.padding = NULL,
+                        grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
                         footnote.glyph = NULL,
                         footnote.font.size = NULL,
@@ -493,6 +497,30 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "summary_row_text_transform", summary_row.text_transform)
+  }
+
+  # grand_summary_row.background.color
+  if (!is.null(grand_summary_row.background.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_background_color", grand_summary_row.background.color)
+  }
+
+  # grand_summary_row.padding
+  if (!is.null(grand_summary_row.padding)) {
+
+    if (is.numeric(grand_summary_row.padding)) {
+      grand_summary_row.padding <- paste0(grand_summary_row.padding, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "grand_summary_row_padding", grand_summary_row.padding)
+  }
+
+  # grand_summary_row.text_transform
+  if (!is.null(grand_summary_row.text_transform)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_text_transform", grand_summary_row.text_transform)
   }
 
   # footnote.sep

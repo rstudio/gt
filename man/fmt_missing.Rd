@@ -7,17 +7,17 @@
 fmt_missing(data, columns, rows = NULL, missing_text = "---")
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
+\item{data}{A table object that is created using the \code{\link{gt}()}
 function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
+\item{columns}{The columns to format. Can either be a series of column names
 provided in \code{vars()}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are:
 \code{\link{starts_with}()}, \code{\link{ends_with}()},
 \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
 and \code{\link{everything}()}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
+\item{rows}{Optional rows to format. Not providing any value results in all
 rows in \code{columns} being formatted. Can either be a vector of row
 captions provided \code{c()}, a vector of row indices, or a helper function
 focused on selections. The select helper functions are:
@@ -26,11 +26,11 @@ focused on selections. The select helper functions are:
 and \code{\link{everything}()}. We can also use expressions to filter down
 to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{missing_text}{the text to be used in place of \code{NA} values in the
+\item{missing_text}{The text to be used in place of \code{NA} values in the
 rendered table.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Wherever there is missing data (i.e., \code{NA} values) a customizable mark
