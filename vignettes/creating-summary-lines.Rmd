@@ -23,7 +23,7 @@ We can use the **gt** `summary_rows()` function to insert summary rows into a ta
 - by passing in a grouped `tbl_df` object to `gt()` (using `dplyr::group_by()`)
 
 We generate the summary data through specification of aggregation functions. You choose how to format the values in the resulting summary cells by use of a formatter function (e.g,
-fmt_number()`) and any relevant options. These summary rows are automatically inserted within the relevant row groups (for groupwise summaries) or at the bottom of the table (as a grand summary), where each summary row is the result of a different aggregation function. 
+`fmt_number()`) and any relevant options. These summary rows are automatically inserted within the relevant row groups (for groupwise summaries) or at the bottom of the table (as a grand summary), where each summary row is the result of a different aggregation function. 
 
 ### Preparing the Input Data Table
 
@@ -327,11 +327,11 @@ exibble_i <-
 exibble_i
 ```
 
-### Extracting the Summary Data from the gt Table Object
+### Extracting the Summary Data from the **gt** Table Object
 
 For a reproducible workflow, we do not want to have situations where any data created or modified cannot be accessed. While having summarized values be created in a **gt** pipeline presents advantages to readability and intent of analysis, it is recognized that the output table itself is essentially 'read only', as the input data undergoes processing and movement to an entirely different format.
 
-However, the object created still contains data and we can obtain the summary data from a gt table object using the `extract_summary()` function. Taking the `gt_summary` object, we get a data frame containing the summary data while preserving the correct data types:
+However, the object created still contains data and we can obtain the summary data from a **gt** table object using the `extract_summary()` function. Taking the `gt_summary` object, we get a data frame containing the summary data while preserving the correct data types:
 
 ```{r summary_list}
 # Extract the summary data from `exibble_d`
