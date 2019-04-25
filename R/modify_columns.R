@@ -759,6 +759,9 @@ cols_merge <- function(data,
     attr(data, "col_merge")[["pattern"]] <-
       c(attr(data, "col_merge")[["pattern"]], pattern)
 
+    attr(data, "col_merge")[["sep"]] <-
+      c(attr(data, "col_merge")[["sep"]], "")
+
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_1)
 
@@ -877,6 +880,9 @@ cols_merge_uncert <- function(data,
 
     attr(data, "col_merge")[["pattern"]] <-
       c(attr(data, "col_merge")[["pattern"]], pattern)
+
+    attr(data, "col_merge")[["sep"]] <-
+      c(attr(data, "col_merge")[["sep"]], "")
 
     attr(data, "col_merge")[["col_1"]] <-
       c(attr(data, "col_merge")[["col_1"]], col_val)
