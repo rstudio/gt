@@ -38,8 +38,7 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   row.striping.include_table_body = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
@@ -57,10 +56,9 @@ the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\li
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following
-child elements: \code{heading}, \code{columns}, \code{row_group},
-\code{summary_row}, and \code{table_body}. A color name or a hexadecimal
-color code should be provided.}
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following child
+elements: \code{heading}, \code{columns}, \code{row_group}, \code{summary_row}, and
+\code{table_body}. A color name or a hexadecimal color code should be provided.}
 
 \item{table.border.top.style, table.border.top.width, table.border.top.color}{The style, width, and color of the table's top border.}
 
@@ -77,7 +75,7 @@ the \code{columns} and \code{row_group} text element.}
 
 \item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color}{The style, width, and color of the table body's top border.}
 
-\item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{The style, width, and color of the table body's bottom border.}
+\item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{the style, width, and color of the table body's bottom border.}
 
 \item{row.padding, summary_row.padding, grand_summary_row.padding}{the amount
 of padding in each row and in each type of summary row.}
@@ -85,7 +83,7 @@ of padding in each row and in each type of summary row.}
 \item{summary_row.text_transform, grand_summary_row.text_transform}{an option
 to apply text transformations to the label text in each summary row.}
 
-\item{footnote.sep}{The separating characters between adjacent footnotes in
+\item{footnote.sep}{the separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}
 
 \item{footnote.glyph}{The set of sequential figures or characters used to

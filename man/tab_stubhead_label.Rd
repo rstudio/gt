@@ -7,8 +7,7 @@
 tab_stubhead_label(data, label)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to be used as the stubhead label We can optionally use
 the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to

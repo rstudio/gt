@@ -7,8 +7,7 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{source_note}{Text to be used in the source note. We can optionally use
 the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
