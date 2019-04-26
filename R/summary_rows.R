@@ -1,11 +1,12 @@
 #' Add summary rows using aggregation functions
 #'
-#' Add groupwise summary rows to one or more row groups by using the input data
-#' already provided in the [gt()] function alongside any suitable aggregation
-#' functions. Or, add a grand summary that incorporates all available data,
-#' regardless of grouping. You choose how to format the values in the resulting
-#' summary cells by use of a `formatter` function (e.g, `fmt_number`) and any
-#' relevant options.
+#' Add groupwise summary rows (with `summary_rows()`) to one or more row groups
+#' by using the input data already provided in the [gt()] function alongside any
+#' suitable aggregation functions. Or, add a grand summary (with
+#' `grand_summary_rows()`) that incorporates all available data, regardless of
+#' grouping. You choose how to format the values in the resulting summary cells
+#' by use of a `formatter` function (e.g, `fmt_number`) and any relevant
+#' options.
 #'
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
@@ -77,6 +78,7 @@
 #' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
 #'
 #' @family row addition functions
+#' @rdname summary_rows
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
@@ -145,6 +147,25 @@ summary_rows <- function(data,
     )
 
   data
+}
+
+#' @rdname summary_rows
+#' @export
+grand_summary_rows <- function(data,
+                               columns = TRUE,
+                               fns,
+                               missing_text = "---",
+                               formatter = fmt_number,
+                               ...) {
+
+  summary_rows(
+    data,
+    groups = NULL,
+    columns = columns,
+    fns = fns,
+    missing_text = missing_text,
+    formatter = formatter,
+    ...)
 }
 
 add_summary_location_row <- function(loc,
