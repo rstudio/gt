@@ -36,7 +36,15 @@ is focused on the application of styles for HTML output only (as such, other
 output formats will ignore all \code{tab_style()} calls). Using the aforementioned
 helper functions, here are some of the styles we can apply:
 \itemize{
-\item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color``) \item the cell's text color, font, and size ([cell_text()]: }color\code{, }font\code{, }size\code{) \item the text style ([cell_text()]: }style\code{), enabling the use of italics or oblique text. \item the text weight ([cell_text()]: }weight\code{), allowing the use of thin to bold text (the degree of choice is greater with variable fonts) \item the alignment and indentation of text ([cell_text()]: }align\code{and}indent`)
+\item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color})
+\item the cell's text color, font, and size (\code{\link[=cell_text]{cell_text()}}: \code{color}, \code{font},
+\code{size})
+\item the text style (\code{\link[=cell_text]{cell_text()}}: \code{style}), enabling the use of italics or
+oblique text.
+\item the text weight (\code{\link[=cell_text]{cell_text()}}: \code{weight}), allowing the use of thin to
+bold text (the degree of choice is greater with variable fonts)
+\item the alignment and indentation of text (\code{\link[=cell_text]{cell_text()}}: \code{align} and
+\code{indent})
 \item the cell borders (\code{\link[=cell_borders]{cell_borders()}})
 }
 }
