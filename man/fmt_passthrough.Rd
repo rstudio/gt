@@ -8,56 +8,49 @@ fmt_passthrough(data, columns, rows = NULL, escape = TRUE,
   pattern = "{x}")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
 \item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{escape}{An option to escape text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed during rendering. By default this is set to
-\code{TRUE} and setting to \code{FALSE} is useful in the case where
-LaTeX-formatted text should be passed through to the output LaTeX table
-unchanged.}
+\code{TRUE} and setting to \code{FALSE} is useful in the case where LaTeX-formatted
+text should be passed through to the output LaTeX table unchanged.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all
-other characters are taken to be string literals.}
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Format by passing data through no other transformation other than: (1)
-coercing to \code{character} (as all the \code{fmt_*()} functions do), and
-(2) applying prefixed or suffixed text via the \code{pattern} argument (the
-default is to apply nothing). All of this is useful when don't want to modify
-the input data other than to decorate it within a pattern. Also, this
-function is useful when used as a \code{formatter} function in the
-\code{summary_rows} function, where the output may be text or useful as is
-(that function requires a formatter function).
+coercing to \code{character} (as all the \code{fmt_*()} functions do), and (2) applying
+text via the \code{pattern} argument (the default is to apply nothing). All of
+this is useful when don't want to modify the input data other than to
+decorate it within a pattern. Also, this function is useful when used as the
+\code{formatter} function in the \code{\link[=summary_rows]{summary_rows()}} function, where the output may
+be text or useful as is.
 }
 \details{
-Targeting of values is done through \code{columns} and additionally by
-\code{rows} (if nothing is provided for \code{rows} then entire columns are
-selected). A number of helper functions exist to make targeting more
-effective. Conditional formatting is possible by providing a conditional
-expression to the \code{rows} argument. See the Arguments section for more
-information on this.
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 

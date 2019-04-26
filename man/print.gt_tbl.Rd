@@ -7,7 +7,7 @@
 \method{print}{gt_tbl}(x, ..., view = interactive())
 }
 \arguments{
-\item{x}{an object of class \code{gt_tbl}.}
+\item{x}{An object of class \code{gt_tbl}.}
 }
 \description{
 This facilitates printing of the HTML table to the R console.
