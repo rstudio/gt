@@ -238,14 +238,12 @@ Let's keep it simple and create group summary rows on a table without a stub. We
 
 ```{r exibble_g}
 # Create a simple grand summary on a gt
-# table that contains no stub (the
-# `groups = NULL` can be omitted)
+# table that contains no stub
 exibble_g <-
   exibble %>%
   dplyr::select(num, char, currency) %>%
   gt() %>%
-  summary_rows(
-    groups = NULL,
+  grand_summary_rows(
     columns = vars(num, currency),
     fns = fns_labels
   )
@@ -253,28 +251,26 @@ exibble_g <-
 exibble_g
 ```
 
-By default, `groups` is set to `NULL` and so the default behavior for `summary_rows()` is the production of a grand summary.
+By default, `groups` in the `summary_rows()` function is set to `NULL` and will produce a grand summary.
 
 A grand summary can be used in conjunction with groupwise summaries. Here's an mashup where both types are present:
 
 ```{r exibble_h}
-# Ussing the table in `exibble_f`, create
-# additional summary rows as a grand
-# summary (using two separate calls of
-# `summary_rows()` since the formatting
+# Using the table in `exibble_f`, create
+# additional grand summary rows (using two
+# separate calls of `grand_summary_rows()`
+# since the formatting
 # will be different)
 exibble_h <- 
   exibble_f %>%
-  summary_rows(
-    groups = NULL,
+  grand_summary_rows(
     columns = vars(num),
     fns = fns_labels,
     formatter = fmt_number,
     suffixing = TRUE,
     locale = formats$locale
   ) %>%
-  summary_rows(
-    groups = NULL,
+  grand_summary_rows(
     columns = vars(currency),
     fns = fns_labels,
     formatter = fmt_currency,
@@ -422,7 +418,7 @@ Because this is character value that's returned, we don't need formatting functi
 exibble_j <- 
   exibble_a %>%
   gt() %>%
-  summary_rows(
+  grand_summary_rows(
     columns = vars(num, currency),
     fns = list(
       high = ~agg_highest_two_above_value(., 20)),
