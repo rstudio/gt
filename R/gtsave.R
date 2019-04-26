@@ -122,7 +122,7 @@ gt_save_webshot <- function(data,
 
     # Save the image in the working directory
     webshot::webshot(
-      url = paste0("file://", tempfile_),
+      url = paste0("file:///", tempfile_),
       file = filename,
       selector = "table",
       zoom = 2,
