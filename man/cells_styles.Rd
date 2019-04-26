@@ -58,3 +58,11 @@ itself allows for the setting of custom styles to one or more cells. We can
 also define several styles within a single call of \code{cells_styles} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
+\seealso{
+Other helper functions: \code{\link{cell_borders}},
+  \code{\link{cell_fill}}, \code{\link{cell_text}},
+  \code{\link{escape_latex}},
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+}
+\concept{helper functions}

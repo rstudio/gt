@@ -7,22 +7,22 @@
 cell_fill(color = NULL)
 }
 \arguments{
-\item{color}{The fill color. If nothing is provided, then \code{#D3D3D3}
-(light gray) will be used as a default.}
+\item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light
+gray) will be used as a default.}
 }
 \value{
 a character vector containing formatted styles.
 }
 \description{
-The \code{cell_fill()} helper function is to be used with the
-\code{\link{tab_style}()} function, which itself allows for the setting of
-custom styles to one or more cells. Specifically, the call to
-\code{cell_fill()} should be bound to the \code{styles} argument of
-\code{\link{tab_style}()}.
+The \code{cell_fill()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
+function, which itself allows for the setting of custom styles to one or more
+cells. Specifically, the call to \code{cell_fill()} should be bound to the
+\code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
 \seealso{
 Other helper functions: \code{\link{cell_borders}},
-  \code{\link{cell_text}}, \code{\link{escape_latex}},
+  \code{\link{cell_text}}, \code{\link{cells_styles}},
+  \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
 }

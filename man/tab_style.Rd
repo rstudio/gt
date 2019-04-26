@@ -9,47 +9,35 @@ tab_style(data, style, locations)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{style}{a vector of styles to use. The \code{\link{cell_text}()},
-\code{\link{cell_fill}()}, and \code{\link{cell_borders}()} helper
-functions can be used here to more easily generate valid styles. If using
-more than one helper function to define styles, all calls must be enclosed
-in a \code{list()}.}
+\item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
+\code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate
+valid styles. If using more than one helper function to define styles, all
+calls must be enclosed in a \code{\link[=list]{list()}}.}
 
 \item{locations}{the cell or set of cells to be associated with the style
-Supplying any of the \code{cells_*()} helper functions is a useful way to
-target the location cells that are associated with the style application.
-These helper functions are: \code{\link[=cells_title]{cells_title()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}}, and
-\code{\link[=cells_summary]{cells_summary()}}. Please see the help article
-\link{location_cells} for more information on how these helper functions
-can be used. Additionally, we can enclose several \code{cells_*()} calls
-within a \code{list()} if we wish to apply styles to different types of
-locations (e.g., cell data values, stub group headings, the table title,
-etc.).}
+Supplying any of the \code{cells_*()} helper functions is a useful way to target
+the location cells that are associated with the style application. These
+helper functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}}, and \code{\link[=cells_summary]{cells_summary()}}.
+Please see the help article \link{location_cells} for more information on
+how these helper functions can be used. Additionally, we can enclose
+several \code{cells_*()} calls within a \code{list()} if we wish to apply styles to
+different types of locations (e.g., cell data values, stub group headings,
+the table title, etc.).}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-With the \code{tab_style()} function we can target specific cells and apply
-styles to them. This is best done in conjunction with the helper functions
-\code{\link{cell_text}()}, \code{\link{cell_fill}()}, and
-\code{\link{cell_borders}()}. At present this function is focused on the
-application of styles for HTML output only (as such, other output formats
-will ignore all \code{tab_style()} calls). Using the aforementioned helper
-functions, here are some of the styles we can apply:
+With the \code{tab_style()} function we can target specific cells and apply styles
+to them. This is best done in conjunction with the helper functions
+\code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}}. At present this function
+is focused on the application of styles for HTML output only (as such, other
+output formats will ignore all \code{tab_style()} calls). Using the aforementioned
+helper functions, here are some of the styles we can apply:
 \itemize{
-\item the background color of the cell (\code{cell_fill()}: \code{color})
-\item the cell's text color, font, and size (\code{cell_text()}:
-\code{text_color}, \code{text_font}, \code{text_size})
-\item the text style (\code{cell_text()}: \code{text_style}), enabling the
-use of italics or oblique text.
-\item the text weight (\code{text_weight}), allowing the use of thin to
-bold text (the degree of choice is greater with variable fonts)
-\item the alignment and indentation of text (\code{cell_text()}:
-\code{text_align} and \code{text_indent})
-\item the cell borders (\code{cell_borders()})
+\item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color``) \item the cell's text color, font, and size ([cell_text()]: }color\code{, }font\code{, }size\code{) \item the text style ([cell_text()]: }style\code{), enabling the use of italics or oblique text. \item the text weight ([cell_text()]: }weight\code{), allowing the use of thin to bold text (the degree of choice is greater with variable fonts) \item the alignment and indentation of text ([cell_text()]: }align\code{and}indent`)
+\item the cell borders (\code{\link[=cell_borders]{cell_borders()}})
 }
 }
 \section{Figures}{
@@ -118,10 +106,9 @@ tab_2 <-
 
 }
 \seealso{
-\code{\link{cell_text}()}, \code{\link{cell_fill}()}, and
-  \code{\link{cell_borders}()} as helpers for defining custom styles and
-  \code{\link{cells_data}()} as a useful helper function for targeting one or
-  more data cells to be styled.
+\code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} as helpers for
+defining custom styles and \code{\link[=cells_data]{cells_data()}} as a useful helper function for
+targeting one or more data cells to be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_footnote}},

@@ -8,15 +8,15 @@ cell_borders(selection, color = NULL, style = NULL, weight = NULL)
 }
 \arguments{
 \item{selection}{The selection of borders to be modified. Options include
-\code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all
-borders surrounding the selected cells, we can use the \code{"all"} option.}
+\code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding
+the selected cells, we can use the \code{"all"} option.}
 
-\item{color}{The border color. If nothing is provided, then \code{#000000}
+\item{color}{The border color. If nothing is provided, then \code{"#000000"}
 (black) will be used as a default.}
 
-\item{style}{The border style. Can be one of either \code{"solid"} (the
-default), \code{"dashed"}, or \code{"dotted"}. If nothing is provided, then
-\code{"solid"} will be used as a default.}
+\item{style}{The border style. Can be one of either \code{"solid"} (the default),
+\code{"dashed"}, or \code{"dotted"}. If nothing is provided, then \code{"solid"} will be
+used as a default.}
 
 \item{weight}{The weight of the border lines. If nothing is provided, then
 \code{"1px"} will be used as a default.}
@@ -25,18 +25,18 @@ default), \code{"dashed"}, or \code{"dotted"}. If nothing is provided, then
 a character vector containing formatted styles.
 }
 \description{
-The \code{cell_borders()} helper function is to be used with the
-\code{\link{tab_style}()} function, which itself allows for the setting of
-custom styles to one or more cells. Specifically, the call to
-\code{cell_borders()} should be bound to the \code{styles} argument of
-\code{\link{tab_style}()}. The \code{selection} argument is where we define
-which borders should be modified (e.g., \code{left} and \code{right}
-borders). With that selection, the \code{color}, \code{style}, and
-\code{weight} of the selected borders can then be modified.
+The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
+function, which itself allows for the setting of custom styles to one or more
+cells. Specifically, the call to \code{cell_borders()} should be bound to the
+\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{selection} argument is where we
+define which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.).
+With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
+borders can then be modified.
 }
 \seealso{
 Other helper functions: \code{\link{cell_fill}},
-  \code{\link{cell_text}}, \code{\link{escape_latex}},
+  \code{\link{cell_text}}, \code{\link{cells_styles}},
+  \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
 }
