@@ -60,8 +60,6 @@ gtsave <- function(data, filename, ...) {
           tex = gt_save_latex(data, filename, ...),
           rtf = gt_save_rtf(data, filename, ...),
           png = gt_save_webshot(data, filename, ...),
-         jpeg = gt_save_webshot(data, filename, ...),
-          jpg = gt_save_webshot(data, filename, ...),
           pdf = gt_save_webshot(data, filename, ...),
          {
            stop("The file extension used (`.", file_ext, "`) doesn't have an ",
