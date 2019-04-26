@@ -7,34 +7,34 @@
 cols_label(data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{one or more named arguments of column names from the input `data`
+\item{...}{One or more named arguments of column names from the input \code{data}
 table along with their labels for display as the column labels. We can
-optionally wrap the column labels with \code{\link{md}()} (to interpret
-text as Markdown) or \code{\link{html}()} (to interpret text as HTML).}
+optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret text as
+Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
 
-\item{.list}{allows for the use of a list as an input alternative to
-\code{...}.}
+\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+}
+\value{
+An object of class \code{gt_tbl}.
 }
 \description{
 Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \pkg{gt} table object
-using \code{\link{gt}()}, column names effectively become the column labels.
-While this serves as a good first approximation, column names aren't often
-appealing as column labels in a \pkg{gt} output table. The
-\code{cols_label()} function provides the flexibility to relabel one or more
-columns and we even have the option to use the \code{\link{md}()} or
-\code{\link{html}()} helper functions for rendering column labels from
-Markdown or using HTML.
+using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
+serves as a good first approximation, column names aren't often appealing as
+column labels in a \pkg{gt} output table. The \code{cols_label()} function
+provides the flexibility to relabel one or more columns and we even have the
+option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
+labels from Markdown or using HTML.
 }
 \details{
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \pkg{gt}
-have no requirement for uniqueness (which is useful for labeling columns as,
-say, measurement units that may be repeated several times---usually under
+a tibble or data frame must be unique whereas column labels in \pkg{gt} have
+no requirement for uniqueness (which is useful for labeling columns as, say,
+measurement units that may be repeated several times---usually under
 different spanner column labels). Thus, we can still easily distinguish
 between columns in other \pkg{gt} function calls (e.g., in all of the
 \code{fmt*()} functions) even though we may lose distinguishability in column

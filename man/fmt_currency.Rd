@@ -11,43 +11,37 @@ fmt_currency(data, columns, rows = NULL, currency = "USD",
   placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
 \item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
-\code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
-get an information table with all of the valid currency codes and examples
-of each. Alternatively, we can provide a common currency name (e.g.,
-\code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the
-process. Use \code{\link{info_currencies}()} with the \code{type ==
-"symbol"} option to view an information table with all of the supported
-currency symbol names along with examples. If nothing is provided then
-\code{"USD"} will be used.}
+\code{"EUR"} for the Euro currency). Use \code{\link[=info_currencies]{info_currencies()}} to get an
+information table with all of the valid currency codes and examples of
+each. Alternatively, we can provide a common currency name (e.g.,
+\code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the process. Use
+\code{\link[=info_currencies]{info_currencies()}} with the \code{type == "symbol"} option to view an
+information table with all of the supported currency symbol names along
+with examples. If nothing is provided then \code{"USD"} will be used.}
 
 \item{use_subunits}{An option for whether the subunits portion of a currency
 value should be displayed.}
 
 \item{accounting}{An option to use accounting style for currency values. With
-\code{FALSE} (the default), negative values will be shown with a negative
-sign. Using \code{accounting = TRUE} will put negative values in
-parentheses.}
+\code{FALSE} (the default), negative values will be shown with a minus sign.
+Using \code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
@@ -56,38 +50,35 @@ use. The default number of decimal places is \code{2}.}
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{scale_by}{A value to scale the input. The default is \code{1.0}. All
-numeric values will be multiplied by this value first before undergoing
-formatting. This value will be ignored if using any of the \code{suffixing}
-options (i.e., where \code{suffixing} is not set to \code{FALSE}).}
+\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
+values will be multiplied by this value first before undergoing formatting.
+This value will be ignored if using any of the \code{suffixing} options (i.e.,
+where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
-accept a logical value, where \code{FALSE} (the default) will not perform
-this transformation and \code{TRUE} will apply thousands (\code{K}),
-millions (\code{M}), billions (\code{B}), and trillions (\code{T}) suffixes
-after automatic value scaling. We can also specify which symbols to use for
-each of the value ranges by using a character vector of the preferred
-symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
-Including \code{NA} values in the vector will ensure that the particular
-range will either not be included in the transformation (e.g, \code{c(NA,
-"M", "B", "T")} won't modify numbers in the thousands range) or the range
-will inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all
-numbers in the range of millions and billions will be in terms of
-millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
-any value provided to \code{scale_by} will be ignored.}
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can accept a
+logical value, where \code{FALSE} (the default) will not perform this
+transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
+billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
+We can also specify which symbols to use for each of the value ranges by
+using a character vector of the preferred symbols to replace the defaults
+(e.g., \code{c("k", "Ml", "Bn", "Tr")}). Including \code{NA} values in the vector
+will ensure that the particular range will either not be included in the
+transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the
+thousands range) or the range will inherit a previous suffix (e.g., with
+\code{c("K", "M", NA, "T")}, all numbers in the range of millions and billions
+will be in terms of millions). Any use of \code{suffixing} (where not \code{FALSE})
+means that any value provided to \code{scale_by} will be ignored.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all
-other characters are taken to be string literals.}
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 
 \item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
-formatted value of \code{1,000}).}
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \code{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using
-\code{dec_mark = ","} with \code{0.152} would result in a formatted value
-of \code{0,152}).}
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
 
 \item{placement}{The placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
@@ -98,9 +89,9 @@ and the currency symbol. The default is to not introduce a space character.}
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and
-\code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
-useful reference for all of the locales that are supported.}
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -133,15 +124,14 @@ currency formatting specific to the chosen locale
 }
 }
 \details{
-We can use the \code{\link{info_currencies}()} function for a useful
-reference on all of the possible inputs to \code{currency}.
+We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
+the possible inputs to the \code{currency} argument.
 
-Targeting of values is done through \code{columns} and additionally by
-\code{rows} (if nothing is provided for \code{rows} then entire columns are
-selected). A number of helper functions exist to make targeting more
-effective. Conditional formatting is possible by providing a conditional
-expression to the \code{rows} argument. See the Arguments section for more
-information on this.
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 

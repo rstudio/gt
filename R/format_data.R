@@ -18,71 +18,64 @@
 #' formatting specific to the chosen locale
 #' }
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
-#' @param data A table object that is created using the \code{\link{gt}()}
-#'   function.
+#' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
-#'   provided in \code{vars()}, a vector of column indices, or a helper function
-#'   focused on selections. The select helper functions are:
-#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
-#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-#'   and \code{\link{everything}()}.
+#'   provided in [vars()], a vector of column indices, or a helper function
+#'   focused on selections. The select helper functions are: [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
 #' @param rows Optional rows to format. Not providing any value results in all
-#'   rows in \code{columns} being formatted. Can either be a vector of row
-#'   captions provided \code{c()}, a vector of row indices, or a helper function
-#'   focused on selections. The select helper functions are:
-#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
-#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-#'   and \code{\link{everything}()}. We can also use expressions to filter down
-#'   to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).
+#'   rows in `columns` being formatted. Can either be a vector of row captions
+#'   provided [c()], a vector of row indices, or a helper function focused on
+#'   selections. The select helper functions are: [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param decimals An option to specify the exact number of decimal places to
-#'   use. The default number of decimal places is \code{2}.
+#'   use. The default number of decimal places is `2`.
 #' @param drop_trailing_zeros A logical value that allows for removal of
 #'   trailing zeros (those redundant zeros after the decimal mark).
 #' @param use_seps An option to use digit group separators. The type of digit
-#'   group separator is set by \code{sep_mark} and overridden if a locale ID is
-#'   provided to \code{locale}. This setting is \code{TRUE} by default.
-#' @param scale_by A value to scale the input. The default is \code{1.0}. All
-#'   numeric values will be multiplied by this value first before undergoing
-#'   formatting. This value will be ignored if using any of the \code{suffixing}
-#'   options (i.e., where \code{suffixing} is not set to \code{FALSE}).
+#'   group separator is set by `sep_mark` and overridden if a locale ID is
+#'   provided to `locale`. This setting is `TRUE` by default.
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
+#'   This value will be ignored if using any of the `suffixing` options (i.e.,
+#'   where `suffixing` is not set to `FALSE`).
 #' @param suffixing An option to scale and apply suffixes to larger numbers
-#'   (e.g., \code{1924000} can be transformed to \code{1.92M}). This option can
-#'   accept a logical value, where \code{FALSE} (the default) will not perform
-#'   this transformation and \code{TRUE} will apply thousands (\code{K}),
-#'   millions (\code{M}), billions (\code{B}), and trillions (\code{T}) suffixes
-#'   after automatic value scaling. We can also specify which symbols to use for
-#'   each of the value ranges by using a character vector of the preferred
-#'   symbols to replace the defaults (e.g., \code{c("k", "Ml", "Bn", "Tr")}).
-#'   Including \code{NA} values in the vector will ensure that the particular
-#'   range will either not be included in the transformation (e.g, \code{c(NA,
-#'   "M", "B", "T")} won't modify numbers in the thousands range) or the range
-#'   will inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all
-#'   numbers in the range of millions and billions will be in terms of
-#'   millions). Any use of \code{suffixing} (where not \code{FALSE}) means that
-#'   any value provided to \code{scale_by} will be ignored.
+#'   (e.g., `1924000` can be transformed to `1.92M`). This option can accept a
+#'   logical value, where `FALSE` (the default) will not perform this
+#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
+#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
+#'   We can also specify which symbols to use for each of the value ranges by
+#'   using a character vector of the preferred symbols to replace the defaults
+#'   (e.g., `c("k", "Ml", "Bn", "Tr")`). Including `NA` values in the vector
+#'   will ensure that the particular range will either not be included in the
+#'   transformation (e.g, `c(NA, "M", "B", "T")` won't modify numbers in the
+#'   thousands range) or the range will inherit a previous suffix (e.g., with
+#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
+#'   will be in terms of millions). Any use of `suffixing` (where not `FALSE`)
+#'   means that any value provided to `scale_by` will be ignored.
 #' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value. The value itself is represented by \code{{x}} and all
-#'   other characters are taken to be string literals.
+#'   formatted value. The value itself is represented by `{x}` and all other
+#'   characters are taken to be string literals.
 #' @param sep_mark The mark to use as a separator between groups of digits
-#'   (e.g., using \code{sep_mark = ","} with \code{1000} would result in a
-#'   formatted value of \code{1,000}).
-#' @param dec_mark The character to use as a decimal mark (e.g., using
-#'   \code{dec_mark = ","} with \code{0.152} would result in a formatted value
-#'   of \code{0,152}).
+#'   (e.g., using `sep_mark = ","` with `1000` would result in a formatted value
+#'   of `1,000`).
+#' @param dec_mark The character to use as a decimal mark (e.g., using `dec_mark
+#'   = ","` with `0.152` would result in a formatted value of `0,152`).
 #' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include \code{"en_US"} for English
-#'   (United States) and \code{"fr_FR"} for French (France). The use of a valid
-#'   locale ID will override any values provided in \code{sep_mark} and
-#'   \code{dec_mark}. We can use the \code{\link{info_locales}()} function as a
-#'   useful reference for all of the locales that are supported.
-#' @return An object of class \code{gt_tbl}.
+#'   according the locale's rules. Examples include `"en_US"` for English
+#'   (United States) and `"fr_FR"` for French (France). The use of a valid
+#'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
+#'   We can use the [info_locales()] function as a useful reference for all of
+#'   the locales that are supported.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as numeric
@@ -200,15 +193,14 @@ fmt_number <- function(data,
 #' formatting specific to the chosen locale
 #' }
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as partially
@@ -332,7 +324,7 @@ fmt_scientific <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @inheritParams fmt_currency
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @noRd
 fmt_symbol <- function(data,
                        columns,
@@ -438,9 +430,9 @@ fmt_symbol <- function(data,
 #'
 #' With numeric values in a \pkg{gt} table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are in a fractional format
-#' since the numbers will be automatically multiplied by \code{100} before
-#' decorating with a percent sign. For more control over percentage formatting,
-#' we can use the following options:
+#' since the numbers will be automatically multiplied by `100` before decorating
+#' with a percent sign. For more control over percentage formatting, we can use
+#' the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
@@ -455,19 +447,18 @@ fmt_symbol <- function(data,
 #' formatting specific to the chosen locale
 #' }
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param incl_space An option for whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
 #' @param placement The placement of the percent sign. This can be either be
-#'   \code{right} (the default) or \code{left}.
-#' @return an object of class \code{gt_tbl}.
+#'   `right` (the default) or `left`.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column to have
@@ -554,38 +545,35 @@ fmt_percent <- function(data,
 #' currency formatting specific to the chosen locale
 #' }
 #'
-#' We can use the \code{\link{info_currencies}()} function for a useful
-#' reference on all of the possible inputs to \code{currency}.
+#' We can use the [info_currencies()] function for a useful reference on all of
+#' the possible inputs to the `currency` argument.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
-#'   supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
-#'   \code{"EUR"} for the Euro currency). Use \code{\link{info_currencies}()} to
-#'   get an information table with all of the valid currency codes and examples
-#'   of each. Alternatively, we can provide a common currency name (e.g.,
-#'   \code{"dollar"}, \code{"pound"}, \code{"yen"}, etc.) to simplify the
-#'   process. Use \code{\link{info_currencies}()} with the \code{type ==
-#'   "symbol"} option to view an information table with all of the supported
-#'   currency symbol names along with examples. If nothing is provided then
-#'   \code{"USD"} will be used.
+#'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
+#'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
+#'   information table with all of the valid currency codes and examples of
+#'   each. Alternatively, we can provide a common currency name (e.g.,
+#'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
+#'   [info_currencies()] with the `type == "symbol"` option to view an
+#'   information table with all of the supported currency symbol names along
+#'   with examples. If nothing is provided then `"USD"` will be used.
 #' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed.
 #' @param accounting An option to use accounting style for currency values. With
-#'   \code{FALSE} (the default), negative values will be shown with a negative
-#'   sign. Using \code{accounting = TRUE} will put negative values in
-#'   parentheses.
+#'   `FALSE` (the default), negative values will be shown with a minus sign.
+#'   Using `accounting = TRUE` will put negative values in parentheses.
 #' @param placement The placement of the currency symbol. This can be either be
-#'   \code{left} (the default) or \code{right}.
+#'   `left` (the default) or `right`.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the currency symbol. The default is to not introduce a space character.
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `currency` column to have
@@ -672,49 +660,46 @@ fmt_currency <- function(data,
 
 #' Format values as dates
 #'
-#' Format input date values that are either of the \code{Date} type, or, are
+#' Format input date values that are either of the `Date` type, or, are
 #' character-based and expressed according to the ISO 8601 date format
-#' (\code{YYYY-MM-DD}). Once the appropriate data cells are targeted with
-#' \code{columns} (and, optionally, \code{rows}), we can simply apply a preset
-#' date style (see table in \code{\link{info_date_style}()} for info) to format
-#' the dates.
+#' (`YYYY-MM-DD`). Once the appropriate data cells are targeted with `columns`
+#' (and, optionally, `rows`), we can simply apply a preset date style (see table
+#' in [info_date_style()] for info) to format the dates.
 #'
 #' The following date styles are available for simpler formatting of ISO dates
-#' (all using the input date of \code{2000-02-29} in the example output dates):
+#' (all using the input date of `2000-02-29` in the example output dates):
 #'
 #' \enumerate{
-#' \item iso: \code{2000-02-29}
-#' \item wday_month_day_year: \code{Tuesday, February 29, 2000}
-#' \item wd_m_day_year: \code{Tue, Feb 29, 2000}
-#' \item wday_day_month_year: \code{Tuesday 29 February 2000}
-#' \item month_day_year: \code{February 29, 2000}
-#' \item m_day_year: \code{Feb 29, 2000}
-#' \item day_m_year: \code{29 Feb 2000}
-#' \item day_month_year: \code{29 February 2000}
-#' \item day_month: \code{29 February}
-#' \item year: \code{2000}
-#' \item month: \code{February}
-#' \item day: \code{29}
-#' \item year.mn.day: \code{2000/02/29}
-#' \item y.mn.day: \code{0/02/29}
+#' \item iso: `2000-02-29`
+#' \item wday_month_day_year: `Tuesday, February 29, 2000`
+#' \item wd_m_day_year: `Tue, Feb 29, 2000`
+#' \item wday_day_month_year: `Tuesday 29 February 2000`
+#' \item month_day_year: `February 29, 2000`
+#' \item m_day_year: `Feb 29, 2000`
+#' \item day_m_year: `29 Feb 2000`
+#' \item day_month_year: `29 February 2000`
+#' \item day_month: `29 February`
+#' \item year: `2000`
+#' \item month: `February`
+#' \item day: `29`
+#' \item year.mn.day: `2000/02/29`
+#' \item y.mn.day: `0/02/29`
 #' }
 #'
-#' We can use the \code{\link{info_date_style}()} function for a useful
-#' reference on all of the possible inputs to \code{date_style}.
+#' We can use the [info_date_style()] function for a useful reference on all of
+#' the possible inputs to `date_style`.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style The date style to use. Supply a number (from \code{1} to
-#' \code{14}) that corresponds to the preferred date style. Use
-#' \code{\link{info_date_style}()} to see the different numbered and named date
-#' presets.
-#' @return An object of class \code{gt_tbl}.
+#' @param date_style The date style to use. Supply a number (from `1` to `14`)
+#'   that corresponds to the preferred date style. Use [info_date_style()] to
+#'   see the different numbered and named date presets.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -798,38 +783,36 @@ fmt_date <- function(data,
 #' Format values as times
 #'
 #' Format input time values that are character-based and expressed according to
-#' the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
-#' are targeted with \code{columns} (and, optionally, \code{rows}), we can
-#' simply apply a preset time style (see table in
-#' \code{\link{info_time_style}()} for info) to format the times.
+#' the ISO 8601 time format (`HH:MM:SS`). Once the appropriate data cells are
+#' targeted with `columns` (and, optionally, `rows`), we can simply apply a
+#' preset time style (see table in [info_time_style()] for info) to format the
+#' times.
 #'
 #' The following time styles are available for simpler formatting of ISO times
-#' (all using the input time of \code{14:35:00} in the example output times):
+#' (all using the input time of `14:35:00` in the example output times):
 #'
 #' \enumerate{
-#' \item hms: \code{14:35:00}
-#' \item hm: \code{14:35}
-#' \item hms_p: \code{2:35:00 PM}
-#' \item hm_p: \code{2:35 PM}
-#' \item h_p: \code{2 PM}
+#' \item hms: `14:35:00`
+#' \item hm: `14:35`
+#' \item hms_p: `2:35:00 PM`
+#' \item hm_p: `2:35 PM`
+#' \item h_p: `2 PM`
 #' }
 #'
-#' We can use the \code{\link{info_time_style}()} function for a useful
-#' reference on all of the possible inputs to \code{time_style}.
+#' We can use the [info_time_style()] function for a useful reference on all of
+#' the possible inputs to `time_style`.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style The time style to use. Supply a number (from \code{1} to
-#' \code{5}) that corresponds to the preferred time style. Use
-#' \code{\link{info_time_style}()} to see the different numbered and named time
-#' presets.
-#' @return An object of class \code{gt_tbl}.
+#' @param time_style The time style to use. Supply a number (from `1` to `5`)
+#'   that corresponds to the preferred time style. Use [info_time_style()] to
+#'   see the different numbered and named time presets.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -907,60 +890,58 @@ fmt_time <- function(data,
 #' Format values as date-times
 #'
 #' Format input date-time values that are character-based and expressed
-#' according to the ISO 8601 date-time format (\code{YYYY-MM-DD HH:MM:SS}). Once
-#' the appropriate data cells are targeted with \code{columns} (and, optionally,
-#' \code{rows}), we can simply apply preset date and time styles (see tables in
-#' \code{\link{info_date_style}()} and \code{\link{info_time_style}()} for more
-#' info) to format the data-time values.
+#' according to the ISO 8601 date-time format (`YYYY-MM-DD HH:MM:SS`). Once the
+#' appropriate data cells are targeted with `columns` (and, optionally, `rows`),
+#' we can simply apply preset date and time styles (see tables in
+#' [info_date_style()] and [info_time_style()] for more info) to format the
+#' data-time values.
 #'
 #' The following date styles are available for simpler formatting of the date
-#' portion (all using the input date of \code{2000-02-29} in the example output
+#' portion (all using the input date of `2000-02-29` in the example output
 #' dates):
 #'
 #' \enumerate{
-#' \item iso: \code{2000-02-29}
-#' \item wday_month_day_year: \code{Tuesday, February 29, 2000}
-#' \item wd_m_day_year: \code{Tue, Feb 29, 2000}
-#' \item wday_day_month_year: \code{Tuesday 29 February 2000}
-#' \item month_day_year: \code{February 29, 2000}
-#' \item m_day_year: \code{Feb 29, 2000}
-#' \item day_m_year: \code{29 Feb 2000}
-#' \item day_month_year: \code{29 February 2000}
-#' \item day_month: \code{29 February}
-#' \item year: \code{2000}
-#' \item month: \code{February}
-#' \item day: \code{29}
-#' \item year.mn.day: \code{2000/02/29}
-#' \item y.mn.day: \code{0/02/29}
+#' \item iso: `2000-02-29`
+#' \item wday_month_day_year: `Tuesday, February 29, 2000`
+#' \item wd_m_day_year: `Tue, Feb 29, 2000`
+#' \item wday_day_month_year: `Tuesday 29 February 2000`
+#' \item month_day_year: `February 29, 2000`
+#' \item m_day_year: `Feb 29, 2000`
+#' \item day_m_year: `29 Feb 2000`
+#' \item day_month_year: `29 February 2000`
+#' \item day_month: `29 February`
+#' \item year: `2000`
+#' \item month: `February`
+#' \item day: `29`
+#' \item year.mn.day: `2000/02/29`
+#' \item y.mn.day: `0/02/29`
 #' }
 #'
 #' The following time styles are available for simpler formatting of the time
-#' portion (all using the input time of \code{14:35:00} in the example output
-#' times):
+#' portion (all using the input time of `14:35:00` in the example output times):
 #'
 #' \enumerate{
-#' \item hms: \code{14:35:00}
-#' \item hm: \code{14:35}
-#' \item hms_p: \code{2:35:00 PM}
-#' \item hm_p: \code{2:35 PM}
-#' \item h_p: \code{2 PM}
+#' \item hms: `14:35:00`
+#' \item hm: `14:35`
+#' \item hms_p: `2:35:00 PM`
+#' \item hm_p: `2:35 PM`
+#' \item h_p: `2 PM`
 #' }
 #'
-#' We can use the \code{\link{info_date_style}()} and
-#' \code{\link{info_time_style}()} functions as useful references for all of the
-#' possible inputs to \code{date_style} and \code{time_style}.
+#' We can use the [info_date_style()] and [info_time_style()] functions as
+#' useful references for all of the possible inputs to `date_style` and
+#' `time_style`.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `datetime` column;
@@ -1023,17 +1004,16 @@ fmt_datetime <- function(data,
 #' Format Markdown text
 #'
 #' Any Markdown-formatted text in the incoming cells will be transformed to the
-#' appropriate output type during render when using \code{fmt_markdown()}.
+#' appropriate output type during render when using `fmt_markdown()`.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Create a few Markdown-based
 #' # text snippets
@@ -1119,29 +1099,26 @@ fmt_markdown <- function(data,
 #' Format by simply passing data through
 #'
 #' Format by passing data through no other transformation other than: (1)
-#' coercing to \code{character} (as all the \code{fmt_*()} functions do), and
-#' (2) applying prefixed or suffixed text via the \code{pattern} argument (the
-#' default is to apply nothing). All of this is useful when don't want to modify
-#' the input data other than to decorate it within a pattern. Also, this
-#' function is useful when used as a \code{formatter} function in the
-#' \code{summary_rows} function, where the output may be text or useful as is
-#' (that function requires a formatter function).
+#' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
+#' text via the `pattern` argument (the default is to apply nothing). All of
+#' this is useful when don't want to modify the input data other than to
+#' decorate it within a pattern. Also, this function is useful when used as the
+#' `formatter` function in the [summary_rows()] function, where the output may
+#' be text or useful as is.
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
 #'   of the table. For example, if a LaTeX table is to be generated then LaTeX
 #'   escaping would be performed during rendering. By default this is set to
-#'   \code{TRUE} and setting to \code{FALSE} is useful in the case where
-#'   LaTeX-formatted text should be passed through to the output LaTeX table
-#'   unchanged.
-#' @return An object of class \code{gt_tbl}.
+#'   `TRUE` and setting to `FALSE` is useful in the case where LaTeX-formatted
+#'   text should be passed through to the output LaTeX table unchanged.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `char` column;
@@ -1238,22 +1215,21 @@ fmt_passthrough <- function(data,
 
 #' Format missing values
 #'
-#' Wherever there is missing data (i.e., \code{NA} values) a customizable mark
-#' may present better than the standard \code{NA} text that would otherwise
-#' appear. The \code{fmt_missing()} function allows for this replacement through
-#' its \code{missing_text} argument (where an em dash serves as the default).
+#' Wherever there is missing data (i.e., `NA` values) a customizable mark may
+#' present better than the standard `NA` text that would otherwise appear. The
+#' `fmt_missing()` function allows for this replacement through its
+#' `missing_text` argument (where an em dash serves as the default).
 #'
-#' Targeting of values is done through \code{columns} and additionally by
-#' \code{rows} (if nothing is provided for \code{rows} then entire columns are
-#' selected). A number of helper functions exist to make targeting more
-#' effective. Conditional formatting is possible by providing a conditional
-#' expression to the \code{rows} argument. See the Arguments section for more
-#' information on this.
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param missing_text The text to be used in place of \code{NA} values in the
-#' rendered table.
-#' @return An object of class \code{gt_tbl}.
+#' @param missing_text The text to be used in place of `NA` values in the
+#'   rendered table.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # NA values in different columns will
@@ -1294,11 +1270,11 @@ fmt_missing <- function(data,
       fns = list(
         html = function(x) {
 
-          if (missing_text == "---") {
-            missing_text <- "\u2014"
-          } else if (missing_text == "--") {
-            missing_text <- "\u2013"
-          }
+          missing_text <-
+            context_missing_text(
+              missing_text = missing_text,
+              context = "html"
+            )
 
           # Any values of `x` that are `NA` get
           # `missing_text` as output; any values that
@@ -1321,35 +1297,34 @@ fmt_missing <- function(data,
 
 #' Set a column format with a formatter function
 #'
-#' The \code{fmt()} function provides greater control in formatting raw data
-#' values than any of the specialized \code{fmt_*()} functions that are
-#' available in \pkg{gt}. Along with the \code{columns} and \code{rows}
-#' arguments that provide some precision in targeting data cells, the \code{fns}
-#' argument allows you to define one or more functions for manipulating the raw
-#' data.
+#' The `fmt()` function provides greater control in formatting raw data values
+#' than any of the specialized `fmt_*()` functions that are available in
+#' \pkg{gt}. Along with the `columns` and `rows` arguments that provide some
+#' precision in targeting data cells, the `fns` argument allows you to define
+#' one or more functions for manipulating the raw data.
 #'
-#' If providing a single function to \code{fns}, the recommended format is in
-#' the form: \code{fns = function(x) ...}. This single function will format the
-#' targeted data cells the same way regardless of the output format (e.g., HTML,
-#' LaTeX, RTF).
+#' If providing a single function to `fns`, the recommended format is in the
+#' form: `fns = function(x) ...`. This single function will format the targeted
+#' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
+#' RTF).
 #'
-#' If you require formatting of \code{x} that depends on the output format, a
-#' list of functions can be provided for the \code{html}, \code{latex}, and
-#' \code{default} contexts. This can be in the form of \code{fns = list(html =
-#' function(x) ..., latex = function(x) ..., default = function(x) ...)}. In
-#' this multiple-function case, we recommended including the \code{default}
-#' function as a fallback if all contexts aren't provided.
+#' If you require formatting of `x` that depends on the output format, a list of
+#' functions can be provided for the `html`, `latex`, and `default` contexts.
+#' This can be in the form of `fns = list(html = function(x) ..., latex =
+#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
+#' we recommended including the `default` function as a fallback if all contexts
+#' aren't provided.
 #'
-#' As with all of the \code{fmt_*()} functions, targeting of values is done
-#' through \code{columns} and additionally by \code{rows} (if nothing is
-#' provided for \code{rows} then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
-#' formatting is possible by providing a conditional expression to the
-#' \code{rows} argument. See the Arguments section for more information on this.
+#' As with all of the `fmt_*()` functions, targeting of values is done through
+#' `columns` and additionally by `rows` (if nothing is provided for `rows` then
+#' entire columns are selected). A number of helper functions exist to make
+#' targeting more effective. Conditional formatting is possible by providing a
+#' conditional expression to the `rows` argument. See the Arguments section for
+#' more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
-#' @return An object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the numeric values in the `num`
