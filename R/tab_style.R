@@ -7,7 +7,7 @@
 #' output formats will ignore all `tab_style()` calls). Using the aforementioned
 #' helper functions, here are some of the styles we can apply:
 #' \itemize{
-#' \item the background color of the cell ([cell_fill()]: `color``)
+#' \item the background color of the cell ([cell_fill()]: `color`)
 #' \item the cell's text color, font, and size ([cell_text()]: `color`, `font`,
 #' `size`)
 #' \item the text style ([cell_text()]: `style`), enabling the use of italics or
@@ -29,7 +29,7 @@
 #'   the location cells that are associated with the style application. These
 #'   helper functions are: [cells_title()], [cells_column_labels()],
 #'   [cells_group()], [cells_stub()], [cells_data()], and [cells_summary()].
-#'   Please see the help article \link{location_cells} for more information on
+#'   Please see the help article [location_cells] for more information on
 #'   how these helper functions can be used. Additionally, we can enclose
 #'   several `cells_*()` calls within a `list()` if we wish to apply styles to
 #'   different types of locations (e.g., cell data values, stub group headings,
