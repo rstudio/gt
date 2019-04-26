@@ -1,43 +1,39 @@
 #' Add custom styles to one or more cells
 #'
-#' With the \code{tab_style()} function we can target specific cells and apply
-#' styles to them. This is best done in conjunction with the helper functions
-#' \code{\link{cell_text}()}, \code{\link{cell_fill}()}, and
-#' \code{\link{cell_borders}()}. At present this function is focused on the
-#' application of styles for HTML output only (as such, other output formats
-#' will ignore all \code{tab_style()} calls). Using the aforementioned helper
-#' functions, here are some of the styles we can apply:
+#' With the `tab_style()` function we can target specific cells and apply styles
+#' to them. This is best done in conjunction with the helper functions
+#' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
+#' is focused on the application of styles for HTML output only (as such, other
+#' output formats will ignore all `tab_style()` calls). Using the aforementioned
+#' helper functions, here are some of the styles we can apply:
 #' \itemize{
-#' \item the background color of the cell (\code{cell_fill()}: \code{color})
-#' \item the cell's text color, font, and size (\code{cell_text()}:
-#' \code{text_color}, \code{text_font}, \code{text_size})
-#' \item the text style (\code{cell_text()}: \code{text_style}), enabling the
-#' use of italics or oblique text.
-#' \item the text weight (\code{text_weight}), allowing the use of thin to
+#' \item the background color of the cell ([cell_fill()]: `color``)
+#' \item the cell's text color, font, and size ([cell_text()]: `color`, `font`,
+#' `size`)
+#' \item the text style ([cell_text()]: `style`), enabling the use of italics or
+#' oblique text.
+#' \item the text weight ([cell_text()]: `weight`), allowing the use of thin to
 #' bold text (the degree of choice is greater with variable fonts)
-#' \item the alignment and indentation of text (\code{cell_text()}:
-#' \code{text_align} and \code{text_indent})
-#' \item the cell borders (\code{cell_borders()})
+#' \item the alignment and indentation of text ([cell_text()]: `align` and
+#' `indent`)
+#' \item the cell borders ([cell_borders()])
 #' }
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The \code{\link{cell_text}()},
-#'   \code{\link{cell_fill}()}, and \code{\link{cell_borders}()} helper
-#'   functions can be used here to more easily generate valid styles. If using
-#'   more than one helper function to define styles, all calls must be enclosed
-#'   in a \code{list()}.
+#' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
+#'   [cell_borders()] helper functions can be used here to more easily generate
+#'   valid styles. If using more than one helper function to define styles, all
+#'   calls must be enclosed in a [list()].
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying any of the `cells_*()` helper functions is a useful way to
-#'   target the location cells that are associated with the style application.
-#'   These helper functions are: [cells_title()],
-#'   [cells_column_labels()], [cells_group()],
-#'   [cells_stub()], [cells_data()], and
-#'   [cells_summary()]. Please see the help article
-#'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several `cells_*()` calls
-#'   within a `list()` if we wish to apply styles to different types of
-#'   locations (e.g., cell data values, stub group headings, the table title,
-#'   etc.).
+#'   Supplying any of the `cells_*()` helper functions is a useful way to target
+#'   the location cells that are associated with the style application. These
+#'   helper functions are: [cells_title()], [cells_column_labels()],
+#'   [cells_group()], [cells_stub()], [cells_data()], and [cells_summary()].
+#'   Please see the help article \link{location_cells} for more information on
+#'   how these helper functions can be used. Additionally, we can enclose
+#'   several `cells_*()` calls within a `list()` if we wish to apply styles to
+#'   different types of locations (e.g., cell data values, stub group headings,
+#'   the table title, etc.).
 #' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -102,11 +98,9 @@
 #' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
-#' @seealso \code{\link{cell_text}()}, \code{\link{cell_fill}()}, and
-#'   \code{\link{cell_borders}()} as helpers for defining custom styles and
-#'   \code{\link{cells_data}()} as a useful helper function for targeting one or
-#'   more data cells to be styled.
-#' @importFrom stats setNames
+#' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
+#'   defining custom styles and [cells_data()] as a useful helper function for
+#'   targeting one or more data cells to be styled.
 #' @export
 tab_style <- function(data,
                       style,

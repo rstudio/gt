@@ -583,41 +583,39 @@ cells_styles <- function(bkgd_color = NULL,
 
 #' Helper for defining custom text styles for table cells
 #'
-#' This helper function is to be used with the \code{\link{tab_style}()}
-#' function, which itself allows for the setting of custom styles to one or more
-#' cells. We can also define several styles within a single call of
-#' \code{cell_text()} and \code{\link{tab_style}()} will reliably apply those
-#' styles to the targeted element.
+#' This helper function is to be used with the [tab_style()] function, which
+#' itself allows for the setting of custom styles to one or more cells. We can
+#' also define several styles within a single call of `cell_text()` and
+#' [tab_style()] will reliably apply those styles to the targeted element.
 #'
 #' @param color The text color.
-#' @param font The font or collection of fonts (subsequent font names are)
-#'   used as fallbacks.
-#' @param size The size of the font. Can be provided as a number that is
-#'   assumed to represent \code{px} values (or could be wrapped in the
-#'   \code{\link{px}()}) helper function. We can also use one of the following
-#'   absolute size keywords: \code{xx-small}, \code{x-small}, \code{small},
-#'   \code{medium}, \code{large}, \code{x-large}, or \code{xx-large}.
-#' @param style The text style. Can be one of either \code{"center"},
-#'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
-#' @param weight The weight of the font. Can be a text-based keyword such
-#'   as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-#'   numeric value between \code{1} and \code{1000}, inclusive. Note that only
-#'   variable fonts may support the numeric mapping of weight.
-#' @param align The text alignment. Can be one of either \code{"center"},
-#'   \code{"left"}, \code{"right"}, or \code{"justify"}.
-#' @param stretch Allows for text to either be condensed or expanded. We
-#'   can use the following text-based keywords to describe the degree of
-#'   condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
-#'   \code{condensed}, \code{semi-condensed}, \code{normal},
-#'   \code{semi-expanded}, \code{expanded}, \code{extra-expanded}, and
-#'   \code{ultra-expanded}. Alternatively, we can supply percentage values from
-#'   \code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
-#'   allowed.
+#' @param font The font or collection of fonts (subsequent font names are) used
+#'   as fallbacks.
+#' @param size The size of the font. Can be provided as a number that is assumed
+#'   to represent `px` values (or could be wrapped in the [px()] helper
+#'   function). We can also use one of the following absolute size keywords:
+#'   `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, or
+#'   `xx-large`.
+#' @param style The text style. Can be one of either `"center"`, `"normal"`,
+#'   `"italic"`, or `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param align The text alignment. Can be one of either `"center"`, `"left"`,
+#'   `"right"`, or `"justify"`.
+#' @param stretch Allows for text to either be condensed or expanded. We can use
+#'   one of the following text-based keywords to describe the degree of
+#'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
+#'   `"condensed"`, `"semi-condensed"`, `"normal"`, `"semi-expanded"`,
+#'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
+#'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
+#'   percentage values are not allowed.
 #' @param indent The indentation of the text.
-#' @param decorate allows for text decoration effect to be applied. Here,
-#'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
+#' @param decorate allows for text decoration effect to be applied. Here, we can
+#'   use `"overline"`, `"line-through"`, or `"underline"`.
 #' @param transform Allows for the transformation of text. Options are
-#'   \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
 #'
 #' @return a character vector containing formatted styles.
 #' @family helper functions
@@ -700,14 +698,13 @@ cell_text <- function(color = NULL,
 
 #' Helper for defining custom fills for table cells
 #'
-#' The \code{cell_fill()} helper function is to be used with the
-#' \code{\link{tab_style}()} function, which itself allows for the setting of
-#' custom styles to one or more cells. Specifically, the call to
-#' \code{cell_fill()} should be bound to the \code{styles} argument of
-#' \code{\link{tab_style}()}.
+#' The `cell_fill()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_fill()` should be bound to the
+#' `styles` argument of [tab_style()].
 #'
-#' @param color The fill color. If nothing is provided, then \code{#D3D3D3}
-#'   (light gray) will be used as a default.
+#' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
+#'   gray) will be used as a default.
 #'
 #' @return a character vector containing formatted styles.
 #' @family helper functions
@@ -726,25 +723,24 @@ cell_fill <- function(color = NULL) {
 
 #' Helper for defining custom borders for table cells
 #'
-#' The \code{cell_borders()} helper function is to be used with the
-#' \code{\link{tab_style}()} function, which itself allows for the setting of
-#' custom styles to one or more cells. Specifically, the call to
-#' \code{cell_borders()} should be bound to the \code{styles} argument of
-#' \code{\link{tab_style}()}. The \code{selection} argument is where we define
-#' which borders should be modified (e.g., \code{left} and \code{right}
-#' borders). With that selection, the \code{color}, \code{style}, and
-#' \code{weight} of the selected borders can then be modified.
+#' The `cell_borders()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_borders()` should be bound to the
+#' `styles` argument of [tab_style()]. The `selection` argument is where we
+#' define which borders should be modified (e.g., `"left"`, `"right"`, etc.).
+#' With that selection, the `color`, `style`, and `weight` of the selected
+#' borders can then be modified.
 #'
 #' @param selection The selection of borders to be modified. Options include
-#'   \code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all
-#'   borders surrounding the selected cells, we can use the \code{"all"} option.
-#' @param color The border color. If nothing is provided, then \code{#000000}
+#'   `"left"`, `"right"`, `"top"`, and `"bottom"`. For all borders surrounding
+#'   the selected cells, we can use the `"all"` option.
+#' @param color The border color. If nothing is provided, then `"#000000"`
 #'   (black) will be used as a default.
-#' @param style The border style. Can be one of either \code{"solid"} (the
-#'   default), \code{"dashed"}, or \code{"dotted"}. If nothing is provided, then
-#'   \code{"solid"} will be used as a default.
+#' @param style The border style. Can be one of either `"solid"` (the default),
+#'   `"dashed"`, or `"dotted"`. If nothing is provided, then `"solid"` will be
+#'   used as a default.
 #' @param weight The weight of the border lines. If nothing is provided, then
-#'   \code{"1px"} will be used as a default.
+#'   `"1px"` will be used as a default.
 #'
 #' @return a character vector containing formatted styles.
 #' @family helper functions
@@ -814,7 +810,6 @@ cell_borders <- function(selection,
   } else {
     w <- "1px"
   }
-
 
   # For each of the selections, create border rules
   border_rules <-

@@ -57,10 +57,10 @@
 #'   to all of the `colors` provided if they are provided as a vector of
 #'   colors. If using a colorizing helper function for `colors` then this
 #'   option is ignored (each of the colorizing helper functions has its own
-#'   \code{alpha} argument).
+#'   `alpha` argument).
 #' @param apply_to which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as \code{fill}) or the cell
-#'   text (\code{text}).
+#'   include the cell background (the default, given as `fill`) or the cell
+#'   text (`text`).
 #' @param autocolor_text an option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
