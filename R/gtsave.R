@@ -99,7 +99,11 @@ gt_save_html <- function(data,
 #' Saving function for an image file via the webshot package
 #'
 #' @noRd
-gt_save_webshot <- function(data, filename, ...) {
+gt_save_webshot <- function(data,
+                            filename,
+                            ...,
+                            zoom = 2,
+                            expand = 5) {
 
   # Create a temporary file with the `html` extension
   tempfile_ <- tempfile(fileext = ".html")
