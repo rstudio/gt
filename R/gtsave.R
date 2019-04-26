@@ -117,7 +117,12 @@ gt_save_webshot <- function(data,
 
   # Saving an image requires the webshot package; if it's
   # not present, stop with a message
-  if (requireNamespace("webshot", quietly = TRUE)) {
+  if (!requireNamespace("webshot", quietly = TRUE)) {
+
+    stop("The `webshot` package is required for saving images of gt tables.",
+         call. = FALSE)
+
+  } else {
 
     # Save the image in the working directory
     webshot::webshot(
@@ -127,10 +132,6 @@ gt_save_webshot <- function(data,
       zoom = zoom,
       expand = expand
     )
-
-  } else {
-    stop("The `webshot` package is required for saving images of gt tables.",
-         call. = FALSE)
   }
 }
 
