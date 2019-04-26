@@ -29,7 +29,9 @@
 #' @param ... all other options passed to the appropriate internal saving
 #'   function.
 #' @export
-gtsave <- function(data, filename, ...) {
+gtsave <- function(data,
+                   filename,
+                   ...) {
 
   # Input object validation
   stop_if_not_gt(data)
@@ -74,7 +76,10 @@ gtsave <- function(data, filename, ...) {
 #'
 #' @importFrom htmltools as.tags save_html HTML
 #' @noRd
-gt_save_html <- function(data, filename, ..., inline_css = FALSE) {
+gt_save_html <- function(data,
+                         filename,
+                         ...,
+                         inline_css = FALSE) {
 
   if (inline_css) {
 
@@ -124,7 +129,9 @@ gt_save_webshot <- function(data, filename, ...) {
 #' Saving function for a LaTeX file
 #'
 #' @noRd
-gt_save_latex <- function(data, filename, ...) {
+gt_save_latex <- function(data,
+                          filename,
+                          ...) {
 
   data %>%
     as_latex() %>%
@@ -134,7 +141,9 @@ gt_save_latex <- function(data, filename, ...) {
 #' Saving function for an RTF file
 #'
 #' @noRd
-gt_save_rtf <- function(data, filename, ...) {
+gt_save_rtf <- function(data,
+                        filename,
+                        ...) {
 
   data %>%
     as_rtf() %>%
