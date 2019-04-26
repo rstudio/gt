@@ -125,8 +125,8 @@ gt_save_webshot <- function(data,
       url = paste0("file:///", tempfile_),
       file = filename,
       selector = "table",
-      zoom = 2,
-      expand = 5
+      zoom = zoom,
+      expand = expand
     )
 
   } else {
