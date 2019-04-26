@@ -8,7 +8,7 @@ px(x)
 }
 \arguments{
 \item{x}{the numeric value to format as a string (e.g., \code{"12px"}) for
-some \code{\link{tab_options}()} arguments that can take values as units of
+some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
 pixels (e.g., \code{table.font.size}).}
 }
 \description{

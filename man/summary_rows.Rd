@@ -4,54 +4,60 @@
 \alias{summary_rows}
 \title{Add summary rows using aggregation functions}
 \usage{
-summary_rows(data, groups = NULL, columns = NULL, fns,
+summary_rows(data, groups = NULL, columns = TRUE, fns,
   missing_text = "---", formatter = fmt_number, ...)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{groups}{the row groups labels that identify which summary rows will be
-added.}
+\item{groups}{The groups to consider for generation of groupwise summary
+rows. By default this is set to \code{NULL}, which results in the formation of
+grand summary rows (a grand summary operates on all table data). Providing
+the names of row groups in \code{\link[=c]{c()}} will create a groupwise summary and
+generate summary rows for the specified groups. Setting this to \code{TRUE}
+indicates that all available groups will receive groupwise summary rows.}
 
-\item{columns}{the columns for which the summaries should be calculated. If
-nothing is provided, then the supplied aggregation functions will be
-applied to all columns.}
+\item{columns}{The columns for which the summaries should be calculated.}
 
-\item{fns}{functions used for aggregations. This can include base functions
-like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
-\code{sum} or any other user-defined aggregation function. The function(s)
-should be supplied within a \code{list()}. Within that list, we can specify
-the functions by use of function names (e.g., \code{"sum"}), the functions
-themselves (e.g., \code{sum}), or one-sided R formulas by prefacing with a
-\code{~} where \code{.} serves as the data to be summarized (e.g.,
-\code{sum(., na.rm = TRUE)}). By using named arguments, the names will
-serve as row labels for the corresponding summary rows (otherwise the
-labels will be derived from the function names).}
+\item{fns}{Functions used for aggregations. This can include base functions
+like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
+user-defined aggregation function. The function(s) should be supplied
+within a \code{list()}. Within that list, we can specify the functions by use of
+function names in quotes (e.g., \code{"sum"}), as bare functions (e.g., \code{sum}),
+or as one-sided R formulas using a leading \code{~}. In the formula
+representation, a \code{.} serves as the data to be summarized (e.g., \code{sum(., na.rm = TRUE)}). The use of named arguments is recommended as the names
+will serve as summary row labels for the corresponding summary rows data
+(the labels can derived from the function names but only when not providing
+bare function names).}
 
-\item{missing_text}{the text to be used in place of \code{NA} values in
-summary cells with no data outputs.}
+\item{missing_text}{The text to be used in place of \code{NA} values in summary
+cells with no data outputs.}
 
-\item{formatter}{a formatter function name. These can be any of the
-\code{fmt_*()}functions available in the package (e.g.,
-\code{\link{fmt_number}()}, \code{link{fmt_percent}()}, etc.), or a custom
-function using \code{\link{fmt}()}. The default function is
-\code{\link{fmt_number}()} and its options can be accessed through
-\code{...}.}
+\item{formatter}{A formatter function name. These can be any of the \code{fmt_*()}
+functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
+etc.), or a custom function using \code{fmt()}. The default function is
+\code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
 
-\item{...}{values passed to the \code{formatter} function, where the provided
+\item{...}{Values passed to the \code{formatter} function, where the provided
 values are to be in the form of named vectors. For example, when using the
-default \code{formatter} function, \code{\link{fmt_number}()}, options such
-as \code{decimals}, \code{use_seps}, and \code{locale} can be used.}
+default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, options such as \code{decimals},
+\code{use_seps}, and \code{locale} can be used.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
-Add summary rows to one or more row groups by using the input data already
-provided in the \code{\link{gt}()} function alongside any suitable
-aggregation functions. Should we need to obtain the summary data for external
-purposes, the \code{\link{extract_summary}()} can be used with a
-\code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
+Add groupwise summary rows to one or more row groups by using the input data
+already provided in the \code{\link[=gt]{gt()}} function alongside any suitable aggregation
+functions. Or, add a grand summary that incorporates all available data,
+regardless of grouping. You choose how to format the values in the resulting
+summary cells by use of a \code{formatter} function (e.g, \code{fmt_number}) and any
+relevant options.
+}
+\details{
+Should we need to obtain the summary data for external purposes, the
+\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
+rows were added via \code{summary_rows()}.
 }
 \section{Figures}{
 

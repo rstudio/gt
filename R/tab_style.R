@@ -27,18 +27,18 @@
 #'   more than one helper function to define styles, all calls must be enclosed
 #'   in a \code{list()}.
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying any of the \code{cells_*()} helper functions is a useful way to
+#'   Supplying any of the `cells_*()` helper functions is a useful way to
 #'   target the location cells that are associated with the style application.
-#'   These helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-#'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-#'   \code{\link{cells_summary}()}. Please see the help article
+#'   These helper functions are: [cells_title()],
+#'   [cells_column_labels()], [cells_group()],
+#'   [cells_stub()], [cells_data()], and
+#'   [cells_summary()]. Please see the help article
 #'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several \code{cells_*()} calls
-#'   within a \code{list()} if we wish to apply styles to different types of
+#'   can be used. Additionally, we can enclose several `cells_*()` calls
+#'   within a `list()` if we wish to apply styles to different types of
 #'   locations (e.g., cell data values, stub group headings, the table title,
 #'   etc.).
-#' @return an object of class \code{gt_tbl}.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # add styles that are to be applied
@@ -245,21 +245,20 @@ set_style.cells_title <- function(loc, data, style) {
 
 set_style.cells_summary <- function(loc, data, style) {
 
-  groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
+}
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+set_style.cells_grand_summary <- function(loc, data, style) {
 
-  cols <- resolved$columns
-
-  colnames <- colnames(as.data.frame(data))[cols]
-
-  attr(data, "styles_df") <-
-    add_location_row(
-      data, df_type = "styles_df",
-      locname = "summary_cells", locnum = 5,
-      grpname = groups, colname = colnames,
-      rownum = rows, text = style)
-
-  data
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    text = style,
+    df_type = "styles_df"
+  )
 }

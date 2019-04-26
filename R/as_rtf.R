@@ -1,10 +1,10 @@
 #' Output a \pkg{gt} object as RTF
 #'
-#' Get the RTF content from a \code{gt_tbl} object as as a single-element
-#' character vector. This object can be used with \code{writeLines()} to
-#' generate a valid .rtf file that can be opened by RTF readers.
+#' Get the RTF content from a `gt_tbl` object as as a single-element character
+#' vector. This object can be used with `writeLines()` to generate a valid .rtf
+#' file that can be opened by RTF readers.
 #'
-#' @param data a table object that is created using the \code{gt()} function.
+#' @param data a table object that is created using the `gt()` function.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -179,7 +179,9 @@ as_rtf <- function(data) {
 
   # Perform any necessary column merge operations
   col_merge_output <-
-    perform_col_merge(col_merge, data_df, output_df, boxh_df, columns_df)
+    perform_col_merge(
+      col_merge, data_df, output_df, boxh_df, columns_df, context
+    )
 
   # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
   output_df <- col_merge_output$output_df
@@ -188,7 +190,7 @@ as_rtf <- function(data) {
 
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
-    create_summary_dfs(summary_list, data_df, stub_df, output_df)
+    create_summary_dfs(summary_list, data_df, stub_df, output_df, context)
 
   # Determine if there is a populated stub
   stub_available <- is_stub_available(stub_df)

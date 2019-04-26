@@ -7,39 +7,34 @@
 fmt_markdown(data, columns, rows = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Any Markdown-formatted text in the incoming cells will be transformed to the
 appropriate output type during render when using \code{fmt_markdown()}.
 }
 \details{
-Targeting of values is done through \code{columns} and additionally by
-\code{rows} (if nothing is provided for \code{rows} then entire columns are
-selected). A number of helper functions exist to make targeting more
-effective. Conditional formatting is possible by providing a conditional
-expression to the \code{rows} argument. See the Arguments section for more
-information on this.
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
