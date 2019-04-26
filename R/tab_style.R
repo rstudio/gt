@@ -1,45 +1,45 @@
 #' Add custom styles to one or more cells
 #'
-#' With the \code{tab_style()} function we can target specific cells and apply
+#' With the `tab_style()` function we can target specific cells and apply
 #' styles to them. This is best done in conjunction with the
-#' \code{\link{cells_styles}()} helper function. At present this function is
+#' [cells_styles()] helper function. At present this function is
 #' focused on the application of styles for HTML output only (as such, other
-#' output formats will ignore all \code{tab_style()} calls). With the help of
-#' \code{\link{cells_styles}()}, we can set the following styles:
+#' output formats will ignore all `tab_style()` calls). With the help of
+#' [cells_styles()], we can set the following styles:
 #' \itemize{
-#' \item the background color of the cell (\code{bkgd_color})
-#' \item the cell's text color (\code{text_color}), font (\code{text_font}), or
-#' size (\code{text_size})
-#' \item the text style (\code{text_style}), enabling the use of italics or
+#' \item the background color of the cell (`bkgd_color`)
+#' \item the cell's text color (`text_color`), font (`text_font`), or
+#' size (`text_size`)
+#' \item the text style (`text_style`), enabling the use of italics or
 #' oblique text.
-#' \item text decoration (\code{text_decorate}): use overlines, line-throughs,
+#' \item text decoration (`text_decorate`): use overlines, line-throughs,
 #' or underlines
-#' \item text transformations (\code{text_transform}) that result in lowercased,
+#' \item text transformations (`text_transform`) that result in lowercased,
 #' uppercased, or capitalized text
-#' \item the text weight (\code{text_weight}), allowing the use of thin to
+#' \item the text weight (`text_weight`), allowing the use of thin to
 #' bold text (the degree of choice is greater with variable fonts)
-#' \item the alignment of text (\code{text_align})
+#' \item the alignment of text (`text_align`)
 #' \item a stretching property for text that condenses or expands text
-#' (\code{text_stretch})
-#' \item the text indentation (\code{text_indent})
+#' (`text_stretch`)
+#' \item the text indentation (`text_indent`)
 #' }
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The \code{\link{cells_styles}()}
+#' @param style a vector of styles to use. The [cells_styles()]
 #'   helper function can be used here to more easily generate valid styles.
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying any of the \code{cells_*()} helper functions is a useful way to
+#'   Supplying any of the `cells_*()` helper functions is a useful way to
 #'   target the location cells that are associated with the style application.
-#'   These helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-#'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-#'   \code{\link{cells_summary}()}. Please see the help article
+#'   These helper functions are: [cells_title()],
+#'   [cells_column_labels()], [cells_group()],
+#'   [cells_stub()], [cells_data()], and
+#'   [cells_summary()]. Please see the help article
 #'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several \code{cells_*()} calls
-#'   within a \code{list()} if we wish to apply styles to different types of
+#'   can be used. Additionally, we can enclose several `cells_*()` calls
+#'   within a `list()` if we wish to apply styles to different types of
 #'   locations (e.g., cell data values, stub group headings, the table title,
 #'   etc.).
-#' @return an object of class \code{gt_tbl}.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # add styles that are to be applied
@@ -101,8 +101,8 @@
 #' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
-#' @seealso \code{\link{cells_styles}()} as a helper for defining custom styles
-#'   and \code{\link{cells_data}()} as a useful helper function for targeting
+#' @seealso [cells_styles()] as a helper for defining custom styles
+#'   and [cells_data()] as a useful helper function for targeting
 #'   one or more data cells to be styled.
 #' @importFrom stats setNames
 #' @export

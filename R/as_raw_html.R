@@ -1,14 +1,13 @@
 #' Get the HTML content of a \pkg{gt} table
 #'
-#' Get the HTML content from a \code{gt_tbl} object as a single-element
-#' character vector. By default, the generated HTML will have inlined styles,
-#' where CSS styles (that were previously contained in CSS rule sets external to
-#' the \code{<table> element}) are included as \code{style} attributes in the
-#' HTML table's tags. This option is preferable when using the output HTML table
-#' in an emailing context.
-#' @param data a table object that is created using the \code{\link{gt}()}
-#'   function.
-#' @param inline_css an option to supply styles to table elements as inlined CSS
+#' Get the HTML content from a `gt_tbl` object as a single-element character
+#' vector. By default, the generated HTML will have inlined styles, where CSS
+#' styles (that were previously contained in CSS rule sets external to the
+#' `<table> element`) are included as `style` attributes in the HTML table's
+#' tags. This option is preferable when using the output HTML table in an
+#' emailing context.
+#' @param data A table object that is created using the [gt()] function.
+#' @param inline_css An option to supply styles to table elements as inlined CSS
 #'   styles.
 #' @examples
 #' # Use `gtcars` to create a gt table;
