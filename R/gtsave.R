@@ -46,7 +46,6 @@ gtsave <- function(data,
          " * `.tex`/`.ltx`/`.rnw` (LaTeX file)\n",
          " * `.rtf` (RTF file)\n",
          " * `.png` (PNG file)\n",
-         " * `.jpg/.jpeg` (JPEG file)\n",
          " * `.pdf` (PDF file)",
          call. = FALSE)
   }
