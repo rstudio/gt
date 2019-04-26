@@ -83,13 +83,13 @@ gt_save_html <- function(data,
     data %>%
       as_raw_html(inline_css = inline_css) %>%
       htmltools::HTML() %>%
-      htmltools::save_html(filename)
+      htmltools::save_html(filename, ...)
 
   } else {
 
     data %>%
       htmltools::as.tags() %>%
-      htmltools::save_html(filename)
+      htmltools::save_html(filename, ...)
   }
 }
 
@@ -128,7 +128,8 @@ gt_save_webshot <- function(data,
       file = filename,
       selector = "table",
       zoom = zoom,
-      expand = expand
+      expand = expand,
+      ...
     )
   }
 }
