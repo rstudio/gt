@@ -19,14 +19,13 @@
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
 #' @param column_labels.font.weight,row_group.font.weight the font weight of
-#'   the \code{columns} and \code{row_group} text element.
+#'   the `columns` and `row_group` text element.
 #' @param summary_row.text_transform,grand_summary_row.text_transform an option
 #'   to apply text transformations to the label text in each summary row.
 #' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
-#'   background colors for the parent element \code{table} and the following
-#'   child elements: \code{heading}, \code{columns}, \code{row_group},
-#'   \code{summary_row}, and \code{table_body}. A color name or a hexadecimal
-#'   color code should be provided.
+#'   background colors for the parent element `table` and the following child
+#'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
+#'   `table_body`. A color name or a hexadecimal color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
 #'   The style, width, and color of the table's top border.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
