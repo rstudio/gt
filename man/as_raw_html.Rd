@@ -7,19 +7,18 @@
 as_raw_html(data, inline_css = TRUE)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{inline_css}{an option to supply styles to table elements as inlined CSS
+\item{inline_css}{An option to supply styles to table elements as inlined CSS
 styles.}
 }
 \description{
-Get the HTML content from a \code{gt_tbl} object as a single-element
-character vector. By default, the generated HTML will have inlined styles,
-where CSS styles (that were previously contained in CSS rule sets external to
-the \code{<table> element}) are included as \code{style} attributes in the
-HTML table's tags. This option is preferable when using the output HTML table
-in an emailing context.
+Get the HTML content from a \code{gt_tbl} object as a single-element character
+vector. By default, the generated HTML will have inlined styles, where CSS
+styles (that were previously contained in CSS rule sets external to the
+\code{<table> element}) are included as \code{style} attributes in the HTML table's
+tags. This option is preferable when using the output HTML table in an
+emailing context.
 }
 \examples{
 # Use `gtcars` to create a gt table;

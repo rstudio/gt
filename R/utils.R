@@ -180,7 +180,7 @@ get_currency_exponent <- function(currency) {
 #' helper function), then the text will be sanitized and transformed to HTML
 #' from Markdown. If the incoming text has the class `html` (applied by `html()`
 #' helper function), then the text will be seen as HTML and it won't undergo
-#' sanitization
+#' sanitization.
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
@@ -277,7 +277,7 @@ process_text <- function(text,
 #' Reverse HTML escaping
 #'
 #' Find common HTML entities resulting from HTML escaping and restore them back
-#' to ASCII characters
+#' to ASCII characters.
 #' @noRd
 unescape_html <- function(text) {
 
@@ -365,17 +365,17 @@ markdown_to_text <- function(text) {
     unname()
 }
 
-#' Handle formatting of a pattern in a \code{fmt_*()} function
+#' Handle formatting of a pattern in a `fmt_*()` function
 #'
-#' Within the context of a \code{fmt_*()} function, we always have the
-#' single-length character vector of \code{pattern} available to describe a
-#' final decoration of the formatted values. We use \pkg{glue}'s semantics here
-#' and reserve \code{x} to be the formatted values, and, we can use \code{x}
+#' Within the context of a `fmt_*()`` function, we always have the
+#' single-length character vector of `pattern` available to describe a
+#' final decoration of the formatted values. We use glue's semantics here
+#' and reserve `x` to be the formatted values, and, we can use `x`
 #' multiple times in the pattern.
 #' @param values The values (as a character vector) that are formatted within
-#'   the \code{fmt_*()} function.
+#'   the `fmt_*()` function.
 #' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value (defined here as \code{x}).
+#'   formatted value (defined here as `x`).
 #' @noRd
 apply_pattern_fmt_x <- function(values,
                                 pattern) {
@@ -452,7 +452,7 @@ non_na_index <- function(values,
 #'
 #' The `num_suffix()` function operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
-#' correct suffix to use during `x`'s character-based formatting
+#' correct suffix to use during `x`'s character-based formatting.
 #' @importFrom dplyr tibble
 #' @noRd
 num_suffix <- function(x,
@@ -540,7 +540,7 @@ is_false = function(x) {
 #'
 #' This function normalizes the `suffixing` input to a character vector which is
 #' later appended to scaled numerical values; the input can either be a single
-#' logical value or a character vector
+#' logical value or a character vector.
 #' @param suffixing,scale_by The `suffixing` and `scale_by` options in some
 #'   `fmt_*()` functions.
 #' @noRd
@@ -914,8 +914,7 @@ footnote_glyphs <- function(x,
 
 #' Determine whether an object is a `gt_tbl`
 #'
-#' @param data A table object that is created using the \code{\link{gt}()}
-#'   function.
+#' @param data A table object that is created using the [gt()] function.
 #' @importFrom checkmate test_class
 #' @noRd
 is_gt <- function(data) {
@@ -925,8 +924,7 @@ is_gt <- function(data) {
 
 #' Stop any function if object is not a `gt_tbl` object
 #'
-#' @param data A table object that is created using the \code{\link{gt}()}
-#'   function.
+#' @param data A table object that is created using the [gt()] function.
 #' @noRd
 stop_if_not_gt <- function(data) {
 
