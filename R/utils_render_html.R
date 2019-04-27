@@ -503,15 +503,21 @@ create_columns_component_h <- function(boxh_df,
 
     for (i in seq(headings)) {
 
+      if (i == 1 & length(stubhead_label) > 0) {
+        column_style <-
+          get_stubhead_label_style(style_attrs = stubhead_label_style_attrs)
+      } else {
+        column_style <-
+          get_column_style(column_style_attrs, column_name = headings[i])
+      }
+
       table_col_headings <-
         c(table_col_headings,
           paste0(
             "<th class='gt_col_heading ",
             paste0("gt_", col_alignment[i]),
             "' rowspan='1' colspan='1'",
-            get_column_style(
-              column_style_attrs,
-              column_name = headings[i]),
+            column_style,
             ">", headings[i], "</th>")
         )
     }
