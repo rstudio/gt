@@ -3,6 +3,7 @@ $heading_background_color: $table_background_color !default;
 $column_labels_background_color: $table_background_color !default;
 $row_group_background_color: $table_background_color !default;
 $summary_row_background_color: $table_background_color !default;
+$grand_summary_row_background_color: $table_background_color !default;
 
 @function font-color($color) {
   @return if(

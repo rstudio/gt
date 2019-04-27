@@ -7,7 +7,7 @@
 gt_output(outputId)
 }
 \arguments{
-\item{outputId}{an output variable from which to read the table.}
+\item{outputId}{An output variable from which to read the table.}
 }
 \value{
 A \pkg{gt} table output element that can be included in a panel.

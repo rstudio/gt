@@ -3,62 +3,61 @@
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
-#' @param table.width the width of the table. Can be specified as a
+#' @param table.width The width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
-#'   given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
-#'   helper functions can also be used to pass in numeric values and obtain
-#'   values as pixel or percent units.
+#'   given in units of pixels. The [px()] and [pct()] helper functions can also
+#'   be used to pass in numeric values and obtain values as pixel or percent
+#'   units.
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
-#'   font sizes for the parent text element \code{table} and the following child
-#'   elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
-#'   \code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
-#'   as a single-length character vector with units of pixels (e.g.,
-#'   \code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
-#'   single-length numeric vector, it is assumed that the value is given in
-#'   units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+#'   Font sizes for the parent text element `table` and the following child
+#'   elements: `heading.title`, `heading.subtitle`, `columns`, `row_group`,
+#'   `footnote`, and `sourcenote`. Can be specified as a single-length character
+#'   vector with units of pixels (e.g., `12px`) or as a percentage (e.g.,
+#'   `80\%`). If provided as a single-length numeric vector, it is assumed that
+#'   the value is given in units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param column_labels.font.weight,row_group.font.weight the font weight of the
-#'   \code{columns} and \code{row_group} text element.
-#' @param summary_row.text_transform an option to apply text transformations to
-#' the label text in each summary row.
-#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color
-#'   background colors for the parent element \code{table} and the following
-#'   child elements: \code{heading}, \code{columns}, \code{row_group},
-#'   \code{summary_row}, and \code{table_body}. A color name or a hexadecimal
-#'   color code should be provided.
+#' @param column_labels.font.weight,row_group.font.weight the font weight of
+#'   the `columns` and `row_group` text element.
+#' @param summary_row.text_transform,grand_summary_row.text_transform an option
+#'   to apply text transformations to the label text in each summary row.
+#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
+#'   background colors for the parent element `table` and the following child
+#'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
+#'   `table_body`. A color name or a hexadecimal color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
-#'   the style, width, and color of the table's top border.
+#'   The style, width, and color of the table's top border.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
-#'   the style, width, and color of the heading's bottom border.
+#'   The style, width, and color of the heading's bottom border.
 #' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color
-#'   the style, width, and color of the row group's top border.
+#'   The style, width, and color of the row group's top border.
 #' @param row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color
-#'   the style, width, and color of the row group's bottom border.
+#'   The style, width, and color of the row group's bottom border.
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color
-#'   the style, width, and color of the table body's top border.
+#'   The style, width, and color of the table body's top border.
 #' @param table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
 #'   the style, width, and color of the table body's bottom border.
-#' @param row.padding,summary_row.padding the amount of padding in each row and
-#'   in each summary row.
+#' @param row.padding,summary_row.padding,grand_summary_row.padding the amount
+#'   of padding in each row and in each type of summary row.
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.glyph the set of sequential figures or characters used to
-#'   identify the footnotes. We can either supply the keyword \code{"numbers"}
-#'   (the default, indicating that we want numeric glyphs), the keywords
-#'   \code{"letters"} or \code{"LETTERS"} (indicating that we want letters as
-#'   glyphs, either lowercase or uppercase), or, a vector of character values
-#'   representing the series of glyphs. A series of glyphs is recycled when its
-#'   usage goes beyond the length of the set. At each cycle, the glyphs are
-#'   simply combined (e.g., \code{*} -> \code{**} -> \code{***}).
-#' @param footnote.padding,sourcenote.padding the amount of padding to apply to
+#' @param footnote.glyph The set of sequential figures or characters used to
+#'   identify the footnotes. We can either supply the keyword `"numbers"` (the
+#'   default, indicating that we want numeric glyphs), the keywords `"letters"`
+#'   or `"LETTERS"` (indicating that we want letters as glyphs, either lowercase
+#'   or uppercase), or, a vector of character values representing the series of
+#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
+#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
+#'   -> `**` -> `***`).
+#' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
-#' @param row.striping.include_stub an option for whether to include the stub
+#' @param row.striping.include_stub An option for whether to include the stub
 #'   when striping rows.
-#' @param row.striping.include_table_body an option for whether to include the
+#' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @return an object of class \code{gt_tbl}.
+#' @param column_labels.hidden An option to hide the column labels.
+#' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this
@@ -169,6 +168,7 @@ tab_options <- function(data,
                         column_labels.background.color = NULL,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
+                        column_labels.hidden = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
                         row_group.font.weight = NULL,
@@ -188,6 +188,9 @@ tab_options <- function(data,
                         summary_row.background.color = NULL,
                         summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
+                        grand_summary_row.background.color = NULL,
+                        grand_summary_row.padding = NULL,
+                        grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
                         footnote.glyph = NULL,
                         footnote.font.size = NULL,
@@ -327,6 +330,13 @@ tab_options <- function(data,
   if (!is.null(column_labels.font.weight)) {
 
     opts_df <- opts_df_set(opts_df, "column_labels_font_weight", column_labels.font.weight)
+  }
+
+  # column_labels.hidden
+  if (!is.null(column_labels.hidden)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "column_labels_hidden", column_labels.hidden)
   }
 
   # row_group.background.color
@@ -486,6 +496,30 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "summary_row_text_transform", summary_row.text_transform)
+  }
+
+  # grand_summary_row.background.color
+  if (!is.null(grand_summary_row.background.color)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_background_color", grand_summary_row.background.color)
+  }
+
+  # grand_summary_row.padding
+  if (!is.null(grand_summary_row.padding)) {
+
+    if (is.numeric(grand_summary_row.padding)) {
+      grand_summary_row.padding <- paste0(grand_summary_row.padding, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "grand_summary_row_padding", grand_summary_row.padding)
+  }
+
+  # grand_summary_row.text_transform
+  if (!is.null(grand_summary_row.text_transform)) {
+
+    opts_df <- opts_df_set(
+      opts_df, "grand_summary_row_text_transform", grand_summary_row.text_transform)
   }
 
   # footnote.sep

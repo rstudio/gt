@@ -15,6 +15,9 @@ data <-
     group = "Mazdas",
     rows = contains("Mazda")
   ) %>%
+  tab_row_group(
+    others = "Others"
+  ) %>%
   tab_spanner(
     label = "gear_carb_cyl",
     columns = vars(gear, carb, cyl)
@@ -32,6 +35,12 @@ data <-
   summary_rows(
     groups = c("Mazdas", "Mercs"),
     columns = vars(hp, wt, qsec),
+    fns = list(
+      ~mean(., na.rm = TRUE),
+      ~sum(., na.rm = TRUE))
+  ) %>%
+  summary_rows(
+    columns = vars(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -175,6 +184,69 @@ test_that("a gt table can store the correct style statements", {
     tbl_html, "styles_df",
     c("summary_cells", "5", "Mercs", "hp", "2",
       "background-color:green;color:white;"))
+
+  # Expect an error if columns couldn't be resolved
+  expect_error(
+    data %>%
+      tab_style(
+        style = cells_styles(bkgd_color = "green", text_color = "white"),
+        locations = cells_summary(
+          groups = "Mercs", columns = starts_with("x"), rows = 2)
+      )
+  )
+
+  # Expect an error if rows couldn't be resolved
+  expect_error(
+    data %>%
+      tab_style(
+        style = cells_styles(bkgd_color = "green", text_color = "white"),
+        locations = cells_summary(
+          groups = "Mercs", columns = starts_with("m"), rows = starts_with("x"))
+      )
+  )
+
+  # Apply a red background with white text to a single cell in
+  # the grand summary section
+  tbl_html <-
+    data %>%
+    tab_style(
+      style = cells_styles(bkgd_color = "red", text_color = "white"),
+      locations = cells_grand_summary(
+        columns = "hp", rows = vars(sum))
+    )
+
+  # Expect that the internal `styles_df` data frame will have
+  # a single row
+  attr(tbl_html, "styles_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(1)
+
+  # Expect certain values for each of the columns in the
+  # single-row `styles_df` data frame
+  expect_attr_equal(
+    tbl_html, "styles_df",
+    c("grand_summary_cells", "6", NA, "hp", "2",
+      "background-color:red;color:white;"))
+
+  # Expect an error if columns couldn't be resolved
+  expect_error(
+    data %>%
+      tab_style(
+        style = cells_styles(bkgd_color = "red", text_color = "white"),
+        locations = cells_grand_summary(
+          columns = starts_with("x"), rows = 2)
+      )
+  )
+
+  # Expect an error if rows couldn't be resolved
+  expect_error(
+    data %>%
+      tab_style(
+        style = cells_styles(bkgd_color = "red", text_color = "white"),
+        locations = cells_grand_summary(
+          columns = starts_with("m"), rows = starts_with("x"))
+      )
+  )
 
   # Apply a `yellow` background to the `Mazdas` stub group cell
   tbl_html <-

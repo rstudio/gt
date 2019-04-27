@@ -14,9 +14,10 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   heading.border.bottom.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
-  row_group.background.color = NULL, row_group.font.size = NULL,
-  row_group.font.weight = NULL, row_group.border.top.style = NULL,
-  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
+  column_labels.hidden = NULL, row_group.background.color = NULL,
+  row_group.font.size = NULL, row_group.font.weight = NULL,
+  row_group.border.top.style = NULL, row_group.border.top.width = NULL,
+  row_group.border.top.color = NULL,
   row_group.border.bottom.style = NULL,
   row_group.border.bottom.width = NULL,
   row_group.border.bottom.color = NULL,
@@ -27,78 +28,80 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
   table_body.border.bottom.width = NULL,
   table_body.border.bottom.color = NULL, row.padding = NULL,
   summary_row.background.color = NULL, summary_row.padding = NULL,
-  summary_row.text_transform = NULL, footnote.sep = NULL,
+  summary_row.text_transform = NULL,
+  grand_summary_row.background.color = NULL,
+  grand_summary_row.padding = NULL,
+  grand_summary_row.text_transform = NULL, footnote.sep = NULL,
   footnote.glyph = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
   sourcenote.padding = NULL, row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{table.width}{the width of the table. Can be specified as a
+\item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link{px}()} and \code{\link{pct}()}
-helper functions can also be used to pass in numeric values and obtain
-values as pixel or percent units.}
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{font sizes for the parent text element \code{table} and the following child
-elements: \code{heading.title}, \code{heading.subtitle}, \code{columns},
-\code{row_group}, \code{footnote}, and \code{sourcenote}. Can be specified
-as a single-length character vector with units of pixels (e.g.,
-\code{12px}) or as a percentage (e.g., \code{80\%}). If provided as a
-single-length numeric vector, it is assumed that the value is given in
-units of pixels. The \code{\link{px}()} and \code{\link{pct}()} helper
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{Font sizes for the parent text element \code{table} and the following child
+elements: \code{heading.title}, \code{heading.subtitle}, \code{columns}, \code{row_group},
+\code{footnote}, and \code{sourcenote}. Can be specified as a single-length character
+vector with units of pixels (e.g., \code{12px}) or as a percentage (e.g.,
+\code{80\\\%}). If provided as a single-length numeric vector, it is assumed that
+the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color}{background colors for the parent element \code{table} and the following
-child elements: \code{heading}, \code{columns}, \code{row_group},
-\code{summary_row}, and \code{table_body}. A color name or a hexadecimal
-color code should be provided.}
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following child
+elements: \code{heading}, \code{columns}, \code{row_group}, \code{summary_row}, and
+\code{table_body}. A color name or a hexadecimal color code should be provided.}
 
-\item{table.border.top.style, table.border.top.width, table.border.top.color}{the style, width, and color of the table's top border.}
+\item{table.border.top.style, table.border.top.width, table.border.top.color}{The style, width, and color of the table's top border.}
 
-\item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{the style, width, and color of the heading's bottom border.}
+\item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color of the heading's bottom border.}
 
-\item{column_labels.font.weight, row_group.font.weight}{the font weight of the
-\code{columns} and \code{row_group} text element.}
+\item{column_labels.font.weight, row_group.font.weight}{the font weight of
+the \code{columns} and \code{row_group} text element.}
 
-\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{the style, width, and color of the row group's top border.}
+\item{column_labels.hidden}{An option to hide the column labels.}
 
-\item{row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color}{the style, width, and color of the row group's bottom border.}
+\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color}{The style, width, and color of the row group's top border.}
 
-\item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color}{the style, width, and color of the table body's top border.}
+\item{row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color}{The style, width, and color of the row group's bottom border.}
+
+\item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color}{The style, width, and color of the table body's top border.}
 
 \item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{the style, width, and color of the table body's bottom border.}
 
-\item{row.padding, summary_row.padding}{the amount of padding in each row and
-in each summary row.}
+\item{row.padding, summary_row.padding, grand_summary_row.padding}{the amount
+of padding in each row and in each type of summary row.}
 
-\item{summary_row.text_transform}{an option to apply text transformations to
-the label text in each summary row.}
+\item{summary_row.text_transform, grand_summary_row.text_transform}{an option
+to apply text transformations to the label text in each summary row.}
 
 \item{footnote.sep}{the separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}
 
-\item{footnote.glyph}{the set of sequential figures or characters used to
-identify the footnotes. We can either supply the keyword \code{"numbers"}
-(the default, indicating that we want numeric glyphs), the keywords
-\code{"letters"} or \code{"LETTERS"} (indicating that we want letters as
-glyphs, either lowercase or uppercase), or, a vector of character values
-representing the series of glyphs. A series of glyphs is recycled when its
-usage goes beyond the length of the set. At each cycle, the glyphs are
-simply combined (e.g., \code{*} -> \code{**} -> \code{***}).}
+\item{footnote.glyph}{The set of sequential figures or characters used to
+identify the footnotes. We can either supply the keyword \code{"numbers"} (the
+default, indicating that we want numeric glyphs), the keywords \code{"letters"}
+or \code{"LETTERS"} (indicating that we want letters as glyphs, either lowercase
+or uppercase), or, a vector of character values representing the series of
+glyphs. A series of glyphs is recycled when its usage goes beyond the
+length of the set. At each cycle, the glyphs are simply combined (e.g., \code{*}
+-> \code{**} -> \code{***}).}
 
-\item{footnote.padding, sourcenote.padding}{the amount of padding to apply to
+\item{footnote.padding, sourcenote.padding}{The amount of padding to apply to
 the footnote and source note sections.}
 
-\item{row.striping.include_stub}{an option for whether to include the stub
+\item{row.striping.include_stub}{An option for whether to include the stub
 when striping rows.}
 
-\item{row.striping.include_table_body}{an option for whether to include the
+\item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
 }
 \value{
