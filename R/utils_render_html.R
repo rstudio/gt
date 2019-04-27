@@ -7,6 +7,23 @@ footnote_glyph_to_html <- function(footnote_glyph) {
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
+#' Get the column label style from an attribute table
+#'
+#' @importFrom dplyr pull
+#' @noRd
+get_stubhead_label_style <- function(style_attrs) {
+
+  if (nrow(style_attrs) > 0) {
+    return(
+      paste0(
+        " style=\"",
+        style_attrs %>% dplyr::pull(styles_appended), "\"")
+      )
+  } else {
+    return("")
+  }
+}
+
 #' Get the spanner column label style from an attribute table
 #'
 #' @importFrom dplyr filter pull
