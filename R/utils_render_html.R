@@ -462,6 +462,16 @@ create_columns_component_h <- function(boxh_df,
     return("")
   }
 
+  # Get the style attrs for the stubhead label
+  stubhead_label_style_attrs <-
+    styles_resolved %>%
+    dplyr::filter(locname == "stubhead_label") %>%
+    dplyr::group_by(grpname) %>%
+    dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(grpname, styles_appended) %>%
+    dplyr::distinct()
+
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <-
     styles_resolved %>%
