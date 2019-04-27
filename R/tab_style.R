@@ -150,6 +150,18 @@ set_style.cells_title <- function(loc, data, style) {
   data
 }
 
+set_style.cells_stubhead_label <- function(loc = "stubhead_label", data, style) {
+
+  attr(data, "styles_df") <-
+    add_location_row(
+      data, df_type = "styles_df",
+      locname = loc$groups, locnum = 2.5,
+      grpname = NA_character_, colname = NA_character_,
+      rownum = NA_character_, text = style)
+
+  data
+}
+
 set_style.cells_column_labels <- function(loc, data, style) {
 
   if (!is.null(loc$columns)) {
