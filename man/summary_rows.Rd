@@ -2,10 +2,14 @@
 % Please edit documentation in R/summary_rows.R
 \name{summary_rows}
 \alias{summary_rows}
+\alias{grand_summary_rows}
 \title{Add summary rows using aggregation functions}
 \usage{
 summary_rows(data, groups = NULL, columns = TRUE, fns,
   missing_text = "---", formatter = fmt_number, ...)
+
+grand_summary_rows(data, columns = TRUE, fns, missing_text = "---",
+  formatter = fmt_number, ...)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -47,12 +51,13 @@ default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, opti
 An object of class \code{gt_tbl}.
 }
 \description{
-Add groupwise summary rows to one or more row groups by using the input data
-already provided in the \code{\link[=gt]{gt()}} function alongside any suitable aggregation
-functions. Or, add a grand summary that incorporates all available data,
-regardless of grouping. You choose how to format the values in the resulting
-summary cells by use of a \code{formatter} function (e.g, \code{fmt_number}) and any
-relevant options.
+Add groupwise summary rows (with \code{summary_rows()}) to one or more row groups
+by using the input data already provided in the \code{\link[=gt]{gt()}} function alongside any
+suitable aggregation functions. Or, add a grand summary (with
+\code{grand_summary_rows()}) that incorporates all available data, regardless of
+grouping. You choose how to format the values in the resulting summary cells
+by use of a \code{formatter} function (e.g, \code{fmt_number}) and any relevant
+options.
 }
 \details{
 Should we need to obtain the summary data for external purposes, the
