@@ -244,6 +244,21 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
+cells_stubhead_label <- function() {
+
+  # Create the `cells_stubhead_label` object
+  cells <- list(groups = "stubhead_label")
+
+  # Apply the `cells_stubhead_label` and
+  # `location_cells` classes
+  class(cells) <- c("cells_stubhead_label", "location_cells")
+
+  cells
+}
+
+#' @rdname location_cells
+#' @import rlang
+#' @export
 cells_column_labels <- function(columns, groups) {
 
   if (
