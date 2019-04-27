@@ -7,30 +7,29 @@
 cols_move_to_start(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the column names to move to the left-most side of the table.
+\item{columns}{The column names to move to the left-most side of the table.
 The order in which columns are provided will be preserved (as is the case
 with the remaining columns).}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 We can easily move set of columns to the beginning of the column series and
-we only need to specify which \code{columns}. It's possible to do this
-upstream of \pkg{gt}'s API, however, it is easier with this function and it
-presents less possibility for error. The ordering of the \code{columns} that
-are moved to the start is preserved (same with the ordering of all other
-columns in the table).
+we only need to specify which \code{columns}. It's possible to do this upstream of
+\pkg{gt}'s API, however, it is easier with this function and it presents less
+possibility for error. The ordering of the \code{columns} that are moved to the
+start is preserved (same with the ordering of all other columns in the
+table).
 }
 \details{
-The columns supplied in \code{columns} must all exist in the table. If you
-need to place one or columns at the end of the column series, the
-\code{\link{cols_move_to_end}()} function should be used. More control is
-offered with the \code{\link{cols_move}()} function, where columns could be
-placed after a specific column.
+The columns supplied in \code{columns} must all exist in the table. If you need to
+place one or columns at the end of the column series, the
+\code{\link[=cols_move_to_end]{cols_move_to_end()}} function should be used. More control is offered with
+the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
+column.
 }
 \section{Figures}{
 
