@@ -22,6 +22,11 @@ render_as_html <- function(data) {
       set_footnote_glyphs_columns(
         footnotes_resolved, boxh_df, output = "html")
 
+    # Add footnote glyphs to the stubhead label
+    stubhead_label <-
+      set_footnote_glyphs_stubhead_label(
+        footnotes_resolved, stubhead_label, output = "html")
+
     # Add footnote glyphs to the `data` rows
     output_df <-
       apply_footnotes_to_output(
