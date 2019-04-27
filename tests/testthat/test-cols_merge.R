@@ -42,6 +42,9 @@ test_that("the function `cols_merge()` works correctly", {
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ({2})")
 
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("")
+
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
     expect_equal("wt")
@@ -62,6 +65,9 @@ test_that("the function `cols_merge()` works correctly", {
   # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ({2})")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
@@ -88,6 +94,9 @@ test_that("the function `cols_merge()` works correctly", {
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
     expect_equal("{1} ({2})")
 
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[1]] %>%
+    expect_equal("")
+
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[1] %>%
     names() %>%
     expect_equal("wt")
@@ -98,6 +107,9 @@ test_that("the function `cols_merge()` works correctly", {
 
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[2]] %>%
     expect_equal("{1}-{2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[2]] %>%
+    expect_equal("")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[2] %>%
     names() %>%
@@ -125,6 +137,9 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ± {2}")
 
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("")
+
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
     expect_equal("col_2")
@@ -144,6 +159,9 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
     expect_equal("{1} ± {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
@@ -168,6 +186,9 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
     expect_equal("{1} ± {2}")
 
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[1]] %>%
+    expect_equal("")
+
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[1] %>%
     names() %>%
     expect_equal("col_2")
@@ -178,6 +199,9 @@ test_that("the `cols_merge_uncert()` function works correctly", {
 
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[2]] %>%
     expect_equal("{1} ± {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[2]] %>%
+    expect_equal("")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[2] %>%
     names() %>%
@@ -203,7 +227,10 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
-    expect_equal("{1} — {2}")
+    expect_equal("{1} {sep} {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("---")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
@@ -223,7 +250,10 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern %>%
-    expect_equal("{1} — {2}")
+    expect_equal("{1} {sep} {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep %>%
+    expect_equal("---")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1 %>%
     names() %>%
@@ -246,7 +276,10 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   # Expect that merging statements are stored in `col_merge`
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[1]] %>%
-    expect_equal("{1} — {2}")
+    expect_equal("{1} {sep} {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[1]] %>%
+    expect_equal("---")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[1] %>%
     names() %>%
@@ -257,7 +290,10 @@ test_that("the `cols_merge_range()` function works correctly", {
     expect_equal("col_1")
 
   attr(tbl_html, "col_merge", exact = TRUE)$pattern[[2]] %>%
-    expect_equal("{1} — {2}")
+    expect_equal("{1} {sep} {2}")
+
+  attr(tbl_html, "col_merge", exact = TRUE)$sep[[2]] %>%
+    expect_equal("---")
 
   attr(tbl_html, "col_merge", exact = TRUE)$col_1[2] %>%
     names() %>%

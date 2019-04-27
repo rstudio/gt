@@ -170,6 +170,31 @@ resolve_footnotes_styles <- function(output_df,
       )
   }
 
+  # For the grand summary cells, insert a `colnum` based
+  # on `groups_rows_df`
+  if (6 %in% tbl[["locnum"]]) {
+
+    tbl_not_g_summary_cells <-
+      tbl %>%
+      dplyr::filter(locnum != 6)
+
+    tbl_g_summary_cells <-
+      tbl %>%
+      dplyr::filter(locnum == 6) %>%
+      dplyr::mutate(
+        colnum = colname_to_colnum(
+          boxh_df = boxh_df, colname = colname
+        )
+      )
+
+    # Re-combine `tbl_not_g_summary_cells`
+    # with `tbl_g_summary_cells`
+    tbl <-
+      dplyr::bind_rows(
+        tbl_not_g_summary_cells, tbl_g_summary_cells
+      )
+  }
+
   # For the column label cells, insert a `colnum`
   # based on `boxh_df`
   if ("columns_columns" %in% tbl[["locname"]]) {
@@ -536,37 +561,72 @@ apply_footnotes_to_summary <- function(list_of_summaries,
 
   summary_df_list <- list_of_summaries$summary_df_display_list
 
-  if (!("summary_cells" %in% footnotes_resolved$locname)) {
+  if (!("summary_cells" %in% footnotes_resolved$locname |
+        "grand_summary_cells" %in% footnotes_resolved$locname)) {
     return(list_of_summaries)
   }
 
-  footnotes_tbl_data <-
-    footnotes_resolved %>%
-    dplyr::filter(locname == "summary_cells")
+  if ("summary_cells" %in% footnotes_resolved$locname) {
 
-  footnotes_data_glpyhs <-
-    footnotes_tbl_data %>%
-    dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
-    dplyr::group_by(grpname, row, colnum) %>%
-    dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(grpname, colname, row, fs_id_coalesced) %>%
-    dplyr::distinct()
+    footnotes_tbl_data <-
+      footnotes_resolved %>%
+      dplyr::filter(locname == "summary_cells")
 
-  for (i in seq(nrow(footnotes_data_glpyhs))) {
+    footnotes_data_glpyhs <-
+      footnotes_tbl_data %>%
+      dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
+      dplyr::group_by(grpname, row, colnum) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(grpname, colname, row, fs_id_coalesced) %>%
+      dplyr::distinct()
 
-    text <-
+    for (i in seq(nrow(footnotes_data_glpyhs))) {
+
+      text <-
+        summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
+          footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]]
+
+      text <-
+        paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
+
       summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
-        footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]]
+        footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]] <- text
+    }
 
-    text <-
-      paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
-
-    summary_df_list[[footnotes_data_glpyhs[i, ][["grpname"]]]][[
-      footnotes_data_glpyhs$row[i], footnotes_data_glpyhs$colname[i]]] <- text
+    list_of_summaries$summary_df_display_list <- summary_df_list
   }
 
-  list_of_summaries$summary_df_display_list <- summary_df_list
+  if ("grand_summary_cells" %in% footnotes_resolved$locname) {
+
+    footnotes_tbl_data <-
+      footnotes_resolved %>%
+      dplyr::filter(locname == "grand_summary_cells")
+
+    footnotes_data_glpyhs <-
+      footnotes_tbl_data %>%
+      dplyr::group_by(rownum, colnum) %>%
+      dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, fs_id_coalesced) %>%
+      dplyr::distinct()
+
+    for (i in seq(nrow(footnotes_data_glpyhs))) {
+
+      text <-
+        summary_df_list[[grand_summary_col]][[
+          footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]]
+
+      text <-
+        paste0(text, footnote_glyph_to_html(footnotes_data_glpyhs$fs_id_coalesced[i]))
+
+      summary_df_list[[grand_summary_col]][[
+        footnotes_data_glpyhs$rownum[i], footnotes_data_glpyhs$colname[i]]] <- text
+    }
+
+    list_of_summaries$summary_df_display_list[[grand_summary_col]] <-
+      summary_df_list[[grand_summary_col]]
+  }
 
   list_of_summaries
 }

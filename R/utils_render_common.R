@@ -1,3 +1,6 @@
+
+grand_summary_col <- "::GRAND_SUMMARY"
+
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(boxh_df,
@@ -241,7 +244,8 @@ perform_col_merge <- function(col_merge,
                               data_df,
                               output_df,
                               boxh_df,
-                              columns_df) {
+                              columns_df,
+                              context) {
 
   if (length(col_merge) == 0) {
     return(
@@ -254,7 +258,13 @@ perform_col_merge <- function(col_merge,
 
   for (i in seq(col_merge[[1]])) {
 
-    pattern <- col_merge[["pattern"]][i]
+    sep <- col_merge[["sep"]][i] %>% context_dash_mark(context = context)
+
+    pattern <-
+      col_merge[["pattern"]][i] %>%
+      tidy_sub("\\{sep\\}", sep)
+
+
     value_1_col <- col_merge[["col_1"]][i] %>% unname()
     value_2_col <- col_merge[["col_1"]][i] %>% names()
 
@@ -315,12 +325,18 @@ perform_col_merge <- function(col_merge,
 create_summary_dfs <- function(summary_list,
                                data_df,
                                stub_df,
-                               output_df) {
+                               output_df,
+                               context) {
 
+  # If the `summary_list` object is an empty list,
+  # return an empty list as the `list_of_summaries`
   if (length(summary_list) == 0) {
     return(list())
   }
 
+  # Create empty lists that are to contain summary
+  # data frames for display and for data collection
+  # purposes
   summary_df_display_list <- list()
   summary_df_data_list <- list()
 
@@ -328,94 +344,127 @@ create_summary_dfs <- function(summary_list,
 
     summary_attrs <- summary_list[[i]]
 
-    # Resolve the `missing_text`
-    if (summary_attrs$missing_text == "---") {
-      summary_attrs$missing_text <- "\u2014"
-    } else if (missing_text == "--") {
-      summary_attrs$missing_text <- "\u2013"
+    groups <- summary_attrs$groups
+    columns <- summary_attrs$columns
+    fns <- summary_attrs$fns
+    missing_text <- summary_attrs$missing_text
+    formatter <- summary_attrs$formatter
+    formatter_options <- summary_attrs$formatter_options
+    labels <- summary_attrs$summary_labels
+
+    if (length(labels) != length(unique(labels))) {
+
+      stop("All summary labels must be unique:\n",
+           " * Review the names provided in `fns`\n",
+           " * These labels are in conflict: ",
+           paste0(labels, collapse = ", "), ".",
+           call. = FALSE)
     }
 
-    # Resolve the groups to consider
-    if (isTRUE(summary_attrs$groups)) {
+    # Resolve the `missing_text`
+    missing_text <-
+      context_missing_text(missing_text = missing_text, context = context)
+
+    assert_rowgroups <- function() {
+
+      if (all(is.na(stub_df$groupname))) {
+        stop("There are no row groups in the gt object:\n",
+             " * Use `groups = NULL` to create a grand summary\n",
+             " * Define row groups using `gt()` or `tab_row_group()`",
+             call. = FALSE)
+      }
+    }
+
+    # Resolve the groups to consider; if
+    # `groups` is TRUE then we are to obtain
+    # summary row data for all groups
+    if (isTRUE(groups)) {
+
+      assert_rowgroups()
+
       groups <- unique(stub_df$groupname)
-    } else {
-      groups <- summary_attrs$groups
+
+    } else if (!is.null(groups) && is.character(groups)) {
+
+      assert_rowgroups()
+
+      # Get the names of row groups available
+      # in the gt object
+      groups_available <- unique(stub_df$groupname)
+
+      if (any(!(groups %in% groups_available))) {
+
+        # Stop function if one or more `groups`
+        # are not present in the gt table
+        stop("All `groups` should be available in the gt object:\n",
+             " * The following groups aren't present: ",
+             paste0(
+               base::setdiff(groups, groups_available),
+               collapse = ", "
+             ), "\n",
+             call. = FALSE)
+      }
+
+    } else if (is.null(groups)) {
+
+      # If groups is given as NULL (the default)
+      # then use a special group (`::GRAND_SUMMARY`)
+      groups <- grand_summary_col
     }
 
     # Resolve the columns to exclude
-    if (isTRUE(summary_attrs$columns)) {
-      columns <- character(0)
-    } else {
-      columns <- base::setdiff(colnames(output_df), summary_attrs$columns)
-    }
+    columns_excl <- base::setdiff(colnames(output_df), columns)
 
     # Combine `groupname` with the table body data in order to
     # process data by groups
-    groups_data_df <-
-      cbind(
-        stub_df[
-          seq(nrow(stub_df)),
-          c("groupname", "rowname")],
-        data_df)[, -2]
+    if (identical(groups, grand_summary_col)) {
 
-    # Get the registered function calls
-    agg_funs <- summary_attrs$fns %>% lapply(rlang::as_function)
+      select_data_df <-
+        cbind(
+          stub_df[c("groupname", "rowname")],
+          data_df)[, -2] %>%
+        dplyr::mutate(groupname = grand_summary_col) %>%
+        dplyr::select(groupname, columns)
 
-    # Get the names if any were provided
-    labels <- names(summary_attrs$fns) %>% process_text()
+    } else {
 
-    # If names weren't provided at all, handle this case by
-    # creating a vector of NAs that will be replaced later with
-    # derived names
-    if (length(labels) < 1) {
-      labels <- rep(NA_character_, length(summary_attrs$fns))
+      select_data_df <-
+        cbind(
+          stub_df[c("groupname", "rowname")],
+          data_df)[, -2] %>%
+        dplyr::select(groupname, columns)
     }
 
-    # If one or more names not provided then replace the empty
-    # string with NA
-    labels[labels == ""] <- NA_character_
+    # Get the registered function calls
+    agg_funs <- fns %>% lapply(rlang::as_closure)
 
-    # Get the labels for each of the function calls
-    derived_labels <-
-      summary_attrs$fns %>%
-      lapply(derive_summary_label) %>%
-      unlist() %>%
-      unname() %>%
-      make.names(unique = TRUE)
-
-    # Replace missing labels with derived labels
-    labels[is.na(labels)] <- derived_labels[is.na(labels)]
-
-    # Initialize an empty tibble to bind to
-    summary_dfs <- dplyr::tibble()
-
-    for (j in seq(agg_funs)) {
-
-      # Get aggregation rows for each of the `agg_funs`
-      summary_dfs <-
-        dplyr::bind_rows(
-          summary_dfs,
-          groups_data_df %>%
-            dplyr::select(c("groupname", colnames(output_df))) %>%
+    summary_dfs_data <-
+      lapply(
+        seq(agg_funs), function(j) {
+          select_data_df %>%
             dplyr::filter(groupname %in% groups) %>%
             dplyr::group_by(groupname) %>%
             dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
             dplyr::ungroup() %>%
             dplyr::mutate(rowname = labels[j]) %>%
-            dplyr::select(groupname, rowname, dplyr::everything()))
-    }
+            dplyr::select(groupname, rowname, dplyr::everything())
+        }
+      ) %>%
+      dplyr::bind_rows()
 
-    # Exclude columns that are not requested by
-    # filling those with NA values
+    # Add those columns that were not part of
+    # the aggregation, filling those with NA values
+    summary_dfs_data[, columns_excl] <- NA_real_
+
     summary_dfs_data <-
-      summary_dfs %>%
-      dplyr::mutate_at(.vars = columns, .funs = function(x) {NA_real_})
+      summary_dfs_data %>%
+      dplyr::select(groupname, rowname, colnames(output_df))
 
     # Format the displayed summary lines
     summary_dfs_display <-
-      summary_dfs %>%
+      summary_dfs_data %>%
       dplyr::mutate_at(
-        .vars = summary_attrs$columns,
+        .vars = columns,
         .funs = function(x) {
 
           format_data <-
@@ -427,16 +476,12 @@ create_summary_dfs <- function(summary_list,
                 summary_attrs$formatter_options))
 
           formatter <- attr(format_data, "formats")[[1]]$func
-
-          if ("html" %in% names(formatter)) {
-            formatter$html(x)
-          } else {
-            formatter$default(x)
-          }
+          fmt <- formatter[[context]] %||% formatter$default
+          fmt(x)
         }
       ) %>%
       dplyr::mutate_at(
-        .vars = columns,
+        .vars = columns_excl,
         .funs = function(x) {NA_character_})
 
     for (group in groups) {
@@ -462,14 +507,14 @@ create_summary_dfs <- function(summary_list,
     }
   }
 
-  # Condense data in summary_df_display_list in a
+  # Condense data in `summary_df_display_list` in a
   # groupwise manner
   summary_df_display_list <-
     tapply(
       summary_df_display_list,
       names(summary_df_display_list),
-      dplyr::bind_rows)
-
+      dplyr::bind_rows
+    )
 
   for (i in seq(summary_df_display_list)) {
 
@@ -487,12 +532,16 @@ create_summary_dfs <- function(summary_list,
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
         match(arrangement, summary_df_display_list[[i]]$rowname), ] %>%
-      replace(is.na(.), summary_attrs$missing_text)
+      replace(is.na(.), missing_text)
   }
 
+  # Return a list of lists, each of which have
+  # summary data frames for display and for data
+  # collection purposes
   list(
     summary_df_data_list = summary_df_data_list,
-    summary_df_display_list = summary_df_display_list)
+    summary_df_display_list = summary_df_display_list
+  )
 }
 
 migrate_labels <- function(row_val) {
@@ -729,11 +778,6 @@ create_summary_rows <- function(n_rows,
 
     body_content_summary <-
       as.vector(t(summary_df))
-
-    if (context == "latex") {
-      body_content_summary <- body_content_summary %>%
-        tidy_gsub("\u2014", "---")
-    }
 
     row_splits_summary <-
       split_body_content(

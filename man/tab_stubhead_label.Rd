@@ -7,15 +7,14 @@
 tab_stubhead_label(data, label)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{label}{the text to be used as the stubhead label We can optionally
-use the \code{\link{md}()} and \code{\link{html}()} functions to style the
-text as Markdown or to retain HTML elements in the text.}
+\item{label}{The text to be used as the stubhead label We can optionally use
+the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
+retain HTML elements in the text.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Add a label to the stubhead of a \pkg{gt} table. The stubhead is the lone

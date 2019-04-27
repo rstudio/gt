@@ -6,11 +6,11 @@
 #' header's title and subtitle. Furthermore, if the table is intended for HTML
 #' output, we can use HTML in either of the title or subtitle.
 #' @inheritParams fmt_number
-#' @param title,subtitle text to be used in the table title and, optionally, for
-#'   the table subtitle. We can elect to use the \code{\link{md}()} and
-#'   \code{\link{html}()} helper functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param title,subtitle Text to be used in the table title and, optionally, for
+#'   the table subtitle. We can elect to use the [md()] and [html()] helper
+#'   functions to style the text as Markdown or to retain HTML elements in the
+#'   text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header part to contain a title
@@ -56,10 +56,10 @@ tab_header <- function(data,
 #' Markdown formatting for the stubhead label. Furthermore, if the table is
 #' intended for HTML output, we can use HTML for the stubhead label.
 #' @inheritParams fmt_number
-#' @param label the text to be used as the stubhead label We can optionally
-#'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
-#'   text as Markdown or to retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param label The text to be used as the stubhead label We can optionally use
+#'   the [md()] and [html()] functions to style the text as Markdown or to
+#'   retain HTML elements in the text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
@@ -89,25 +89,24 @@ tab_stubhead_label <- function(data,
 #'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like \code{starts_with()}.
+#' through use of a select helper function like `starts_with()`.
 #' @inheritParams fmt_number
-#' @param group the name of the row group. This text will also serve as the row
+#' @param group The name of the row group. This text will also serve as the row
 #'   group label.
-#' @param rows the rows to be made components of the row group. Can either be a
-#'   vector of row captions provided \code{c()}, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
-#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-#'   and \code{\link{everything}()}.
-#' @param others an option to set a default row group label for any rows not
-#'   formally placed in a row group named by \code{group} in any call of
-#'   \code{tab_row_group()}. A separate call to \code{tab_row_group()} with only
-#'   a value to \code{others} is possible and makes explicit that the call is
-#'   meant to provide a default row group label. If this is not set and
-#'   there are rows that haven't been placed into a row group (where one or
-#'   more row groups already exist), those rows will be automatically placed into
-#'   a row group without a label.
-#' @return an object of class \code{gt_tbl}.
+#' @param rows The rows to be made components of the row group. Can either be a
+#'   vector of row captions provided `c()`, a vector of row indices, or a helper
+#'   function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
+#' @param others An option to set a default row group label for any rows not
+#'   formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
+#'   to `others` is possible and makes explicit that the call is meant to
+#'   provide a default row group label. If this is not set and there are rows
+#'   that haven't been placed into a row group (where one or more row groups
+#'   already exist), those rows will be automatically placed into a row group
+#'   without a label.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table and
 #' # add two row groups with the labels:
@@ -222,12 +221,12 @@ tab_row_group <- function(data,
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
 #' @inheritParams fmt_number
-#' @param label the text to use for the spanner column label.
-#' @param columns the columns to be components of the spanner heading.
-#' @param gather an option to move the specified \code{columns} such that they
-#'   are unified under the spanner column label. Ordering of the
-#'   moved-into-place columns will be preserved in all cases.
-#' @return an object of class \code{gt_tbl}.
+#' @param label The text to use for the spanner column label.
+#' @param columns The columns to be components of the spanner heading.
+#' @param gather An option to move the specified `columns` such that they are
+#'   unified under the spanner column label. Ordering of the moved-into-place
+#'   columns will be preserved in all cases.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # Group several columns related to car
@@ -316,15 +315,14 @@ tab_spanner <- function(data,
 #'
 #' Add a source note to the footer part of the \pkg{gt} table. A source note is
 #' useful for citing the data included in the table. Several can be added to the
-#' footer, simply use multiple calls of \code{tab_source_note()} and they will
-#' be inserted in the order provided. We can use Markdown formatting for the
-#' note, or, if the table is intended for HTML output, we can include HTML
-#' formatting.
+#' footer, simply use multiple calls of `tab_source_note()` and they will be
+#' inserted in the order provided. We can use Markdown formatting for the note,
+#' or, if the table is intended for HTML output, we can include HTML formatting.
 #' @inheritParams fmt_number
-#' @param source_note text to be used in the source note. We can optionally use
-#'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text
-#'   as Markdown or to retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param source_note Text to be used in the source note. We can optionally use
+#'   the [md()] and [html()] functions to style the text as Markdown or to
+#'   retain HTML elements in the text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a source note to the table

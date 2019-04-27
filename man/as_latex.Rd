@@ -7,15 +7,14 @@
 as_latex(data)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \description{
-Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis}
-object. This object contains the LaTeX code and attributes that serve as
-LaTeX dependencies (i.e., the LaTeX packages required for the table). Using
-\code{as.character()} on the created object will result in a single-element
-vector containing the LaTeX code.
+Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis} object. This
+object contains the LaTeX code and attributes that serve as LaTeX
+dependencies (i.e., the LaTeX packages required for the table). Using
+\code{as.character()} on the created object will result in a single-element vector
+containing the LaTeX code.
 }
 \examples{
 # Use `gtcars` to create a gt table;

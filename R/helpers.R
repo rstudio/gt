@@ -2,42 +2,41 @@
 #'
 #' These helper functions are used to target individual cells in different
 #' locations (e.g., the stub, the column labels, the title, etc.). They can be
-#' used in any of these functions (which all have a \code{locations} argument):
-#' \code{\link{tab_footnote}()}, \code{\link{tab_style}()}, and
-#' \code{\link{text_transform}()} Furthermore, multiple locations can be
-#' targeted by enclosing several \code{cells_*()} helper functions in a list.
+#' used in any of these functions (which all have a `locations` argument):
+#' [tab_footnote()], [tab_style()], and [text_transform()] Furthermore, multiple
+#' locations can be targeted by enclosing several `cells_*()` helper functions
+#' in a list.
 #'
 #' The following helper functions can be used to target cells (roughly in order
 #' from the top to the bottom of a table):
 #'
 #' \itemize{
 #'
-#' \item \code{cells_title()}: targets the table title or the table subtitle
-#' depending on the value given to the \code{groups} argument (\code{"title"} or
-#' \code{"subtitle"}).
+#' \item `cells_title()`: targets the table title or the table subtitle
+#' depending on the value given to the `groups` argument (`"title"` or
+#' `"subtitle"`).
 #'
-#' \item \code{cells_column_labels()}: targets labels in the column labels (the
-#' \code{columns} argument) or the spanner column labels (the \code{groups}
+#' \item `cells_column_labels()`: targets labels in the column labels (the
+#' `columns` argument) or the spanner column labels (the `groups`
 #' argument) in the table's column labels part.
 #'
-#' \item \code{cells_group()}: targets the row group labels in any available
-#' row groups using the \code{groups} argument.
+#' \item `cells_group()`: targets the row group labels in any available
+#' row groups using the `groups` argument.
 #'
-#' \item \code{cells_stub()}: targets row labels in the table stub using the
-#' \code{rows} argument.
+#' \item `cells_stub()`: targets row labels in the table stub using the
+#' `rows` argument.
 #'
-#' \item \code{cells_data()}: targets data cells in the table body using
-#' intersections of \code{columns} and \code{rows}.
+#' \item `cells_data()`: targets data cells in the table body using
+#' intersections of `columns` and `rows`.
 #'
-#' \item \code{cells_summary()}: targets summary cells in the table body using
-#' the \code{groups} argument and intersections of \code{columns} and
-#' \code{rows}.
+#' \item `cells_summary()`: targets summary cells in the table body using
+#' the `groups` argument and intersections of `columns` and
+#' `rows`.
 #' }
 #'
-#' @param columns,rows,groups either a vector of names, a vector of
-#'   indices, values provided by \code{\link{vars}()}, values provided by
-#'   \code{c()}, or a select helper function (see Details for information on
-#'   these functions).
+#' @param columns,rows,groups Either a vector of names, a vector of indices,
+#'   values provided by [vars()], values provided by `c()`, or a select helper
+#'   function (see Details for information on these functions).
 #'
 #' @examples
 #' # Use `sp500` to create a gt table; add
@@ -221,7 +220,7 @@
 #' \if{html}{\figure{man_location_cells_6.svg}{options: width=100\%}}
 #'
 #' @name location_cells
-#' @return a list object of class \code{location_cells}.
+#' @return a list object of class `location_cells`.
 NULL
 
 #' @rdname location_cells
@@ -364,11 +363,36 @@ cells_summary <- function(groups = NULL,
   cells
 }
 
+#' @rdname location_cells
+#' @import rlang
+#' @export
+cells_grand_summary <- function(columns = NULL,
+                                rows = NULL) {
+
+  # Capture expressions for the `columns`
+  # and `rows` arguments
+  col_expr <- rlang::enquo(columns)
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `cells_grand_summary` object
+  cells <-
+    list(
+      columns = col_expr,
+      rows = row_expr)
+
+  # Apply the `cells_grand_summary` and
+  # `location_cells` classes
+  class(cells) <- c("cells_grand_summary", "location_cells")
+
+  cells
+}
+
 #' Interpret input text as Markdown-formatted text
-#' @param text the text that is understood to contain Markdown formatting.
-#' @return a character object that is tagged for a Markdown-to-HTML
+#'
+#' @param text The text that is understood to contain Markdown formatting.
+#' @return A character object that is tagged for a Markdown-to-HTML
 #'   transformation.
-#' @return a character object of class \code{from_markdown}.
+#' @return a character object of class `from_markdown`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # when adding a title, use the `md()`
@@ -393,11 +417,11 @@ md <- function(text) {
 }
 
 #' Interpret input text as HTML-formatted text
-#' @param text,... the text that is understood to be HTML text, which is to be
+#' @param text,... The text that is understood to be HTML text, which is to be
 #'   preserved.
-#' @return a character object that is tagged as an HTML fragment that is not to
+#' @return A character object that is tagged as an HTML fragment that is not to
 #'   be sanitized.
-#' @return a character object of class \code{html}.
+#' @return a character object of class `html`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # when adding a title, use the `html()`
@@ -429,43 +453,40 @@ is_html <- function(x) {
 
 #' Helper for defining custom styles for table cells
 #'
-#' This helper function is to be used with the \code{\link{tab_style}()}
-#' function, which itself allows for the setting of custom styles to one or more
-#' cells. We can also define several styles within a single call of
-#' \code{cells_styles} and \code{\link{tab_style}()} will reliably apply those
-#' styles to the targeted element.
+#' This helper function is to be used with the [tab_style()] function, which
+#' itself allows for the setting of custom styles to one or more cells. We can
+#' also define several styles within a single call of `cells_styles` and
+#' [tab_style()] will reliably apply those styles to the targeted element.
 #'
-#' @param bkgd_color the background color of the cell.
-#' @param text_color the text color.
-#' @param text_font the font or collection of fonts (subsequent font names are)
+#' @param bkgd_color The background color of the cell.
+#' @param text_color The text color.
+#' @param text_font The font or collection of fonts (subsequent font names are)
 #'   used as fallbacks.
-#' @param text_size the size of the font. Can be provided as a number that is
-#'   assumed to represent \code{px} values (or could be wrapped in the
-#'   \code{\link{px}()}) helper function. We can also use one of the following
-#'   absolute size keywords: \code{xx-small}, \code{x-small}, \code{small},
-#'   \code{medium}, \code{large}, \code{x-large}, or \code{xx-large}.
-#' @param text_style the text style. Can be one of either \code{"center"},
-#'   \code{"normal"}, \code{"italic"}, or \code{"oblique"}.
-#' @param text_weight the weight of the font. Can be a text-based keyword such
-#'   as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-#'   numeric value between \code{1} and \code{1000}, inclusive. Note that only
-#'   variable fonts may support the numeric mapping of weight.
-#' @param text_align the text alignment. Can be one of either \code{"center"},
-#'   \code{"left"}, \code{"right"}, or \code{"justify"}.
-#' @param text_stretch allows for text to either be condensed or expanded. We
+#' @param text_size The size of the font. Can be provided as a number that is
+#'   assumed to represent `px` values (or could be wrapped in the [px()]) helper
+#'   function. We can also use one of the following absolute size keywords:
+#'   `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, or
+#'   `xx-large`.
+#' @param text_style The text style. Can be one of either `"center"`,
+#'   `"normal"`, `"italic"`, or `"oblique"`.
+#' @param text_weight The weight of the font. Can be a text-based keyword such
+#'   as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value
+#'   between `1` and `1000`, inclusive. Note that only variable fonts may
+#'   support the numeric mapping of weight.
+#' @param text_align The text alignment. Can be one of either `"center"`,
+#'   `"left"`, `"right"`, or `"justify"`.
+#' @param text_stretch Allows for text to either be condensed or expanded. We
 #'   can use the following text-based keywords to describe the degree of
-#'   condensation/expansion: \code{ultra-condensed}, \code{extra-condensed},
-#'   \code{condensed}, \code{semi-condensed}, \code{normal},
-#'   \code{semi-expanded}, \code{expanded}, \code{extra-expanded}, and
-#'   \code{ultra-expanded}. Alternatively, we can supply percentage values from
-#'   \code{0\%} to \code{200\%}, inclusive. Negative percentage values are not
-#'   allowed.
-#' @param text_indent the indentation of the text.
-#' @param text_decorate allows for text decoration effect to be applied. Here,
-#'   we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.
-#' @param text_transform allows for the transformation of text. Options are
-#'   \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.
-#' @return a character vector containing formatted styles.
+#'   condensation/expansion: `ultra-condensed`, `extra-condensed`, `condensed`,
+#'   `semi-condensed`, `normal`, `semi-expanded`, `expanded`, `extra-expanded`,
+#'   and `ultra-expanded`. Alternatively, we can supply percentage values from
+#'   `0\%` to `200\%`, inclusive. Negative percentage values are not allowed.
+#' @param text_indent The indentation of the text.
+#' @param text_decorate Allows for text decoration effect to be applied. Here,
+#'   we can use `"overline"`, `"line-through"`, or `"underline"`.
+#' @param text_transform Allows for the transformation of text. Options are
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#' @return A character vector containing formatted styles.
 #' @family helper functions
 #' @export
 cells_styles <- function(bkgd_color = NULL,
@@ -550,8 +571,8 @@ cells_styles <- function(bkgd_color = NULL,
 
 #' Helper for providing a numeric value as percentage
 #' @param x the numeric value to format as a string percentage for some
-#'   \code{\link{tab_options}()} arguments that can take percentage values
-#'   (e.g., \code{table.width}).
+#'   [tab_options()] arguments that can take percentage values
+#'   (e.g., `table.width`).
 #' @family helper functions
 #' @export
 pct <- function(x) {
@@ -564,9 +585,9 @@ pct <- function(x) {
 }
 
 #' Helper for providing a numeric value as pixels value
-#' @param x the numeric value to format as a string (e.g., \code{"12px"}) for
-#'   some \code{\link{tab_options}()} arguments that can take values as units of
-#'   pixels (e.g., \code{table.font.size}).
+#' @param x the numeric value to format as a string (e.g., `"12px"`) for
+#'   some [tab_options()] arguments that can take values as units of
+#'   pixels (e.g., `table.font.size`).
 #' @family helper functions
 #' @export
 px <- function(x) {
@@ -602,12 +623,12 @@ escape_latex <- function(text) {
 #' including a \pkg{gt} table can be problematic if we don't have knowledge
 #' of the LaTeX dependencies. For the most part, these dependencies are the
 #' LaTeX packages that are required for rendering a \pkg{gt} table. The
-#' \code{gt_latex_dependencies()} function provides an object that can be
+#' `gt_latex_dependencies()` function provides an object that can be
 #' used to provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work
 #' and not yield errors due to missing packages.
 #'
 #' Here is an example Rnw document that shows how the
-#' \code{gt_latex_dependencies()} can be used in conjunction with a \pkg{gt}
+#' `gt_latex_dependencies()` can be used in conjunction with a \pkg{gt}
 #' table:
 #'
 #' \preformatted{

@@ -7,19 +7,18 @@
 tab_style(data, style, locations)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{style}{a vector of styles to use. The \code{\link{cells_styles}()}
+\item{style}{a vector of styles to use. The \code{\link[=cells_styles]{cells_styles()}}
 helper function can be used here to more easily generate valid styles.}
 
 \item{locations}{the cell or set of cells to be associated with the style
 Supplying any of the \code{cells_*()} helper functions is a useful way to
 target the location cells that are associated with the style application.
-These helper functions are: \code{\link{cells_title}()},
-\code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-\code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-\code{\link{cells_summary}()}. Please see the help article
+These helper functions are: \code{\link[=cells_title]{cells_title()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}},
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}}, and
+\code{\link[=cells_summary]{cells_summary()}}. Please see the help article
 \link{location_cells} for more information on how these helper functions
 can be used. Additionally, we can enclose several \code{cells_*()} calls
 within a \code{list()} if we wish to apply styles to different types of
@@ -32,10 +31,10 @@ an object of class \code{gt_tbl}.
 \description{
 With the \code{tab_style()} function we can target specific cells and apply
 styles to them. This is best done in conjunction with the
-\code{\link{cells_styles}()} helper function. At present this function is
+\code{\link[=cells_styles]{cells_styles()}} helper function. At present this function is
 focused on the application of styles for HTML output only (as such, other
 output formats will ignore all \code{tab_style()} calls). With the help of
-\code{\link{cells_styles}()}, we can set the following styles:
+\code{\link[=cells_styles]{cells_styles()}}, we can set the following styles:
 \itemize{
 \item the background color of the cell (\code{bkgd_color})
 \item the cell's text color (\code{text_color}), font (\code{text_font}), or
@@ -118,9 +117,9 @@ tab_2 <-
 
 }
 \seealso{
-\code{\link{cells_styles}()} as a helper for defining custom styles
-  and \code{\link{cells_data}()} as a useful helper function for targeting
-  one or more data cells to be styled.
+\code{\link[=cells_styles]{cells_styles()}} as a helper for defining custom styles
+and \code{\link[=cells_data]{cells_data()}} as a useful helper function for targeting
+one or more data cells to be styled.
 
 Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_footnote}},
