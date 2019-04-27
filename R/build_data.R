@@ -156,7 +156,9 @@ build_data <- function(data, context) {
 
   # Perform any necessary column merge operations
   col_merge_output <-
-    perform_col_merge(col_merge, data_df, output_df, boxh_df, columns_df)
+    perform_col_merge(
+      col_merge, data_df, output_df, boxh_df, columns_df, context
+    )
 
   # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
   output_df <- col_merge_output$output_df
@@ -165,7 +167,7 @@ build_data <- function(data, context) {
 
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
-    create_summary_dfs(summary_list, data_df, stub_df, output_df)
+    create_summary_dfs(summary_list, data_df, stub_df, output_df, context)
 
   # Determine if there is a populated stub
   stub_available <- is_stub_available(stub_df)

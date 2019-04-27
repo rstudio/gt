@@ -1,46 +1,39 @@
 #' Add a table footnote
 #'
-#' The \code{tab_footnote()} function can make it a painless process to add a
+#' The `tab_footnote()` function can make it a painless process to add a
 #' footnote to a \pkg{gt} table. There are two components to a footnote: (1) a
 #' glyph that is attached to the targeted cell text, and (2) the footnote text
 #' (that starts with the corresponding glyph) that is placed in the table's
-#' footer area. Each call of \code{tab_footnote()} will add a different note,
-#' and one or more cells can be targeted via the location helper functions
-#' (e.g., \code{\link{cells_data}()}, \code{\link{cells_column_labels}()},
-#' etc.).
+#' footer area. Each call of `tab_footnote()` will add a different note, and one
+#' or more cells can be targeted via the location helper functions (e.g.,
+#' [cells_data()], [cells_column_labels()], etc.).
 #'
 #' The formatting of the footnotes can be controlled through the use of various
-#' parameters in the \code{\link{tab_options}()} function:
+#' parameters in the [tab_options()] function:
 #'
-#' \itemize{
-#' \item \code{footnote.sep}: allows for a choice of the separator between
+#' \itemize{ \item `footnote.sep`: allows for a choice of the separator between
 #' consecutive footnotes in the table footer. By default, this is set to a
-#' linebreak.
-#' \item \code{footnote.glyph}: the set of sequential characters or numbers
-#' used to identify the footnotes.
-#' \item \code{footnote.font.size}: the size of the font used in the footnote
-#' section.
-#' \item \code{footnote.padding}: the amount of padding to apply between the
-#' footnote and source note sections in the table footer.
-#' }
+#' linebreak. \item `footnote.glyph`: the set of sequential characters or
+#' numbers used to identify the footnotes. \item `footnote.font.size`: the size
+#' of the font used in the footnote section. \item `footnote.padding`: the
+#' amount of padding to apply between the footnote and source note sections in
+#' the table footer. }
 #'
 #' @inheritParams fmt_number
-#' @param footnote the text to be used in the footnote. We can optionally use
-#'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text
-#'   as Markdown or to retain HTML elements in the footnote text.
-#' @param locations the cell or set of cells to be associated with the footnote.
-#'   Supplying any of the \code{cells_*()} helper functions is a useful way to
-#'   target the location cells that are associated with the footnote text. These
-#'   helper functions are: \code{\link{cells_title}()},
-#'   \code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-#'   \code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-#'   \code{\link{cells_summary}()}. Please see the help article
-#'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several \code{cells_*()} calls
-#'   within a \code{list()} if we wish to link the footnote text to different
+#' @param footnote The text to be used in the footnote. We can optionally use
+#'   the [md()] and [html()] functions to style the text as Markdown or to
+#'   retain HTML elements in the footnote text.
+#' @param locations The cell or set of cells to be associated with the footnote.
+#'   Supplying any of the `cells_*()` helper functions is a useful way to target
+#'   the location cells that are associated with the footnote text. These helper
+#'   functions are: [cells_title()], [cells_column_labels()], [cells_group()],
+#'   [cells_stub()], [cells_data()], and [cells_summary()]. Please see the help
+#'   article \link{location_cells} for more information on how these helper
+#'   functions can be used. Additionally, we can enclose several `cells_*()`
+#'   calls within a `list()` if we wish to link the footnote text to different
 #'   types of locations (e.g., cell data values, stub group headings, the table
 #'   title, etc.).
-#' @return an object of class \code{gt_tbl}.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sza` to create a gt table; color
 #' # the `sza` column using the `data_color()`
@@ -200,23 +193,22 @@ set_footnote.cells_title <- function(loc, data, footnote) {
 
 set_footnote.cells_summary <- function(loc, data, footnote) {
 
-  groups <- (loc$groups %>% as.character())[-1]
-  rows <- (loc$rows %>% as.character())[-1] %>% as.integer()
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    text = footnote,
+    df_type = "footnotes_df"
+  )
+}
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 
-  cols <- resolved$columns
-
-  colnames <- colnames(as.data.frame(data))[cols]
-
-  attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
-      locname = "summary_cells", locnum = 5,
-      grpname = groups, colname = colnames,
-      rownum = rows, text = footnote)
-
-  data
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    text = footnote,
+    df_type = "footnotes_df"
+  )
 }
 
 #' @importFrom dplyr bind_rows tibble distinct
