@@ -486,7 +486,7 @@ create_columns_component_h <- function(boxh_df,
   headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
-  #   caption or nothing
+  # label or nothing
   if (stub_available &&
       length(stubhead_label) > 0) {
 
