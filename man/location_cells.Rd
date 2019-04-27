@@ -3,6 +3,7 @@
 \name{location_cells}
 \alias{location_cells}
 \alias{cells_title}
+\alias{cells_stubhead_label}
 \alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
@@ -12,6 +13,8 @@
 \title{Helpers for targeting multiple cells in different locations}
 \usage{
 cells_title(groups = c("title", "subtitle"))
+
+cells_stubhead_label()
 
 cells_column_labels(columns, groups)
 
