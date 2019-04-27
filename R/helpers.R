@@ -460,8 +460,13 @@ is.html <- function(x) {
 #'
 #' This helper function is to be used with the [tab_style()] function, which
 #' itself allows for the setting of custom styles to one or more cells. We can
-#' also define several styles within a single call of `cells_styles` and
+#' also define several styles within a single call of `cells_styles()` and
 #' [tab_style()] will reliably apply those styles to the targeted element.
+#'
+#' This function is now soft-deprecated, which means it will soon be removed.
+#' Please consider using the [cell_fill()] (where `bkgd_color` is `fill`) and
+#' [cell_text()] (contains all other arguments here without the leading
+#' `text_`).
 #'
 #' @param bkgd_color The background color of the cell.
 #' @param text_color The text color.
