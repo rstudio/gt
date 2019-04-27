@@ -33,7 +33,7 @@ gt_options_default <- function() {
     "table_body_border_bottom_style",     TRUE,  "table_body",          "solid",
     "table_body_border_bottom_width",     TRUE,  "table_body",          "2px",
     "table_body_border_bottom_color",     TRUE,  "table_body",          "#A8A8A8",
-    "row_padding",                        TRUE,  "row",                 "10px",
+    "row_padding",                        TRUE,  "row",                 "8px",
     "row_striping_include_stub",         FALSE,  "row",                 "FALSE",
     "row_striping_include_table_body",   FALSE,  "row",                 "TRUE",
     "summary_row_background_color",       TRUE,  "summary_row",         NA_character_,
