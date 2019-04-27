@@ -38,6 +38,7 @@ globalVariables(
     "curr_code",
     "curr_name",
     "data_attr",
+    "display_name",
     "footnotes_to_list",
     "fs_id",
     "fs_id_coalesced",
@@ -83,10 +84,10 @@ globalVariables(
 #'
 #' @section Package options:
 #'
-#' \pkg{gt} uses the following \code{\link{options}} to configure behavior:
+#' \pkg{gt} uses the following [options()] to configure behavior:
 #'
 #' \itemize{
-#'   \item \code{gt.stub_group.sep}: a separator between groups for the
+#'   \item `gt.stub_group.sep`: a separator between groups for the
 #'   stub group label.
 #'
 #' }

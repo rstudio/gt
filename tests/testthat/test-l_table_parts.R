@@ -102,25 +102,14 @@ test_that("a gt table contains the expected column spanner labels", {
       as_latex() %>% as.character()) %>%
     expect_true()
 
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains the spanner heading `perimeter` over the
-  # `peris` and `shapes` column labels (which don't exist)
-  tbl_latex <-
+  # Expect an error when using column labels
+  # that don't exist
+  expect_error(
     gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peris, shapes))
-
-  # Expect a characteristic pattern
-  grepl(
-    paste0(
-      ".*.toprule",
-      ".*area & peri & shape & perm ",
-      ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
-    expect_true()
-
+      tab_spanner(
+        label = "perimeter",
+        columns = vars(peris, shapes))
+  )
 })
 
 test_that("a gt table contains the expected source note", {

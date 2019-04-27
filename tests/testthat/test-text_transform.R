@@ -45,7 +45,7 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match(".*mpg$")
+    expect_match(".* mpg$")
 
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column with a slightly more

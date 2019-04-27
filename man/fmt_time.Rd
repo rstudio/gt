@@ -7,36 +7,34 @@
 fmt_time(data, columns, rows = NULL, time_style = 2)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{time_style}{the time style to use. Supply a number (from \code{1} to
-\code{5}) that corresponds to the preferred time style. Use
-\code{\link{info_time_style}()} to see the different numbered and named time
-presets.}
+\item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
+that corresponds to the preferred time style. Use \code{\link[=info_time_style]{info_time_style()}} to
+see the different numbered and named time presets.}
+}
+\value{
+An object of class \code{gt_tbl}.
 }
 \description{
 Format input time values that are character-based and expressed according to
-the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells
-are targeted with \code{columns} (and, optionally, \code{rows}), we can
-simply apply a preset time style (see table in
-\code{\link{info_time_style}()} for info) to format the times.
+the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells are
+targeted with \code{columns} (and, optionally, \code{rows}), we can simply apply a
+preset time style (see table in \code{\link[=info_time_style]{info_time_style()}} for info) to format the
+times.
 }
 \details{
 The following time styles are available for simpler formatting of ISO times
@@ -50,15 +48,14 @@ The following time styles are available for simpler formatting of ISO times
 \item h_p: \code{2 PM}
 }
 
-We can use the \code{\link{info_time_style}()} function for a useful
-reference on all of the possible inputs to \code{time_style}.
+We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
+the possible inputs to \code{time_style}.
 
-Targeting of values is done through \code{columns} and additionally by
-\code{rows} (if nothing is provided for \code{rows} then entire columns are
-selected). A number of helper functions exist to make targeting more
-effective. Conditional formatting is possible by providing a conditional
-expression to the \code{rows} argument. See the Arguments section for more
-information on this.
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
@@ -108,9 +105,10 @@ tab_2 <-
 \seealso{
 Other data formatting functions: \code{\link{data_color}},
   \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt}}, \code{\link{text_transform}}
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{data formatting functions}

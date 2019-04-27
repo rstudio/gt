@@ -1,39 +1,47 @@
 #' Add summary rows using aggregation functions
 #'
-#' Add summary rows to one or more row groups by using the input data already
-#' provided in the \code{\link{gt}()} function alongside any suitable
-#' aggregation functions. Should we need to obtain the summary data for external
-#' purposes, the \code{\link{extract_summary}()} can be used with a
-#' \code{gt_tbl} object where summary rows were added via \code{summary_rows()}.
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param groups the row groups labels that identify which summary rows will be
-#'   added.
-#' @param columns the columns for which the summaries should be calculated. If
-#'   nothing is provided, then the supplied aggregation functions will be
-#'   applied to all columns.
-#' @param fns functions used for aggregations. This can include base functions
-#'   like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or
-#'   \code{sum} or any other user-defined aggregation function. The function(s)
-#'   should be supplied within a \code{list()}. Within that list, we can specify
-#'   the functions by use of function names (e.g., \code{"sum"}), the functions
-#'   themselves (e.g., \code{sum}), or one-sided R formulas by prefacing with a
-#'   \code{~} where \code{.} serves as the data to be summarized (e.g.,
-#'   \code{sum(., na.rm = TRUE)}). By using named arguments, the names will
-#'   serve as row labels for the corresponding summary rows (otherwise the
-#'   labels will be derived from the function names).
-#' @param missing_text the text to be used in place of \code{NA} values in
-#'   summary cells with no data outputs.
-#' @param formatter a formatter function name. These can be any of the
-#'   \code{fmt_*()}functions available in the package (e.g.,
-#'   \code{\link{fmt_number}()}, \code{link{fmt_percent}()}, etc.), or a custom
-#'   function using \code{\link{fmt}()}. The default function is
-#'   \code{\link{fmt_number}()} and its options can be accessed through
-#'   \code{...}.
-#' @param ... values passed to the \code{formatter} function, where the provided
+#' Add groupwise summary rows (with `summary_rows()`) to one or more row groups
+#' by using the input data already provided in the [gt()] function alongside any
+#' suitable aggregation functions. Or, add a grand summary (with
+#' `grand_summary_rows()`) that incorporates all available data, regardless of
+#' grouping. You choose how to format the values in the resulting summary cells
+#' by use of a `formatter` function (e.g, `fmt_number`) and any relevant
+#' options.
+#'
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where summary
+#' rows were added via `summary_rows()`.
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @param groups The groups to consider for generation of groupwise summary
+#'   rows. By default this is set to `NULL`, which results in the formation of
+#'   grand summary rows (a grand summary operates on all table data). Providing
+#'   the names of row groups in [c()] will create a groupwise summary and
+#'   generate summary rows for the specified groups. Setting this to `TRUE`
+#'   indicates that all available groups will receive groupwise summary rows.
+#' @param columns The columns for which the summaries should be calculated.
+#' @param fns Functions used for aggregations. This can include base functions
+#'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
+#'   user-defined aggregation function. The function(s) should be supplied
+#'   within a `list()`. Within that list, we can specify the functions by use of
+#'   function names in quotes (e.g., `"sum"`), as bare functions (e.g., `sum`),
+#'   or as one-sided R formulas using a leading `~`. In the formula
+#'   representation, a `.` serves as the data to be summarized (e.g., `sum(.,
+#'   na.rm = TRUE)`). The use of named arguments is recommended as the names
+#'   will serve as summary row labels for the corresponding summary rows data
+#'   (the labels can derived from the function names but only when not providing
+#'   bare function names).
+#' @param missing_text The text to be used in place of `NA` values in summary
+#'   cells with no data outputs.
+#' @param formatter A formatter function name. These can be any of the `fmt_*()`
+#'   functions available in the package (e.g., [fmt_number()], [fmt_percent()],
+#'   etc.), or a custom function using `fmt()`. The default function is
+#'   [fmt_number()] and its options can be accessed through `...`.
+#' @param ... Values passed to the `formatter` function, where the provided
 #'   values are to be in the form of named vectors. For example, when using the
-#'   default \code{formatter} function, \code{\link{fmt_number}()}, options such
-#'   as \code{decimals}, \code{use_seps}, and \code{locale} can be used.
-#' @return an object of class \code{gt_tbl}.
+#'   default `formatter` function, [fmt_number()], options such as `decimals`,
+#'   `use_seps`, and `locale` can be used.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sp500` to create a gt table with
 #' # row groups; create summary rows (`min`,
@@ -70,10 +78,11 @@
 #' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
 #'
 #' @family row addition functions
+#' @rdname summary_rows
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
-                         columns = NULL,
+                         columns = TRUE,
                          fns,
                          missing_text = "---",
                          formatter = fmt_number,
@@ -82,42 +91,225 @@ summary_rows <- function(data,
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
-  if (is.null(groups)) {
-    groups <- TRUE
+  # If `groups` is FALSE, then do nothing; just
+  # return the `data` unchanged; having `groups`
+  # as `NULL` signifies a grand summary, `TRUE`
+  # is used for groupwise summaries across all
+  # groups
+  if (is_false(groups)) {
+    return(data)
   }
 
-  if (is.null(columns)) {
-    columns <- TRUE
-  } else if (!is.null(columns) && inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
+  # Get the `stub_df` object from `data`
+  stub_df <- attr(data, "stub_df", exact = TRUE)
+
+  # Resolve the column names
+  columns <- enquo(columns)
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
+  # If there isn't a stub available, create an
+  # 'empty' stub (populated with empty strings);
+  # the stub is necessary for summary row labels
+  if (!is_stub_available(stub_df) && is.null(groups)) {
+
+    # Place the `rowname` values into `stub_df$rowname`
+    stub_df[["rowname"]] <- ""
+
+    attr(data, "stub_df") <- stub_df
   }
 
-  if ("summary" %in% names(attributes(data))) {
+  # Derive the summary labels
+  summary_labels <-
+    vapply(fns, derive_summary_label, FUN.VALUE = character(1))
 
-    attr(data, "summary") <-
-      c(
-        attr(data, "summary"),
-        list(
-          list(
-            groups = groups,
-            columns = columns,
-            fns = fns,
-            missing_text = missing_text,
-            formatter = formatter,
-            formatter_options = formatter_options)))
+  # If there are names, use those names
+  # as the summary labels
+  if (!is.null(names(summary_labels))) {
+    summary_labels <- names(summary_labels)
+  }
 
-  } else {
-
-    attr(data, "summary") <-
+  # Append list of summary inputs to the
+  # `summary` attribute
+  attr(data, "summary") <-
+    c(
+      attr(data, "summary"),
       list(
         list(
           groups = groups,
           columns = columns,
           fns = fns,
+          summary_labels = summary_labels,
           missing_text = missing_text,
           formatter = formatter,
-          formatter_options = formatter_options))
+          formatter_options = formatter_options
+        )
+      )
+    )
+
+  data
+}
+
+#' @rdname summary_rows
+#' @export
+grand_summary_rows <- function(data,
+                               columns = TRUE,
+                               fns,
+                               missing_text = "---",
+                               formatter = fmt_number,
+                               ...) {
+
+  summary_rows(
+    data,
+    groups = NULL,
+    columns = columns,
+    fns = fns,
+    missing_text = missing_text,
+    formatter = formatter,
+    ...)
+}
+
+add_summary_location_row <- function(loc,
+                                     data,
+                                     text,
+                                     df_type = "styles_df") {
+
+  stub_df <- attr(data, "stub_df", exact = TRUE)
+
+  row_groups <-
+    stub_df[, "groupname"] %>%
+    unique()
+
+  summary_data <- attr(data, "summary", exact = TRUE)
+
+  summary_data_summaries <-
+    vapply(
+      seq(summary_data),
+      function(x) !is.null(summary_data[[x]]$groups),
+      logical(1)
+    )
+
+  summary_data <- summary_data[summary_data_summaries]
+
+  groups <-
+    row_groups[resolve_data_vals_idx(
+      var_expr = !!loc$groups,
+      data = NULL,
+      vals = row_groups
+    )]
+
+  # Adding styles to intersections of group, row, and column; any
+  # that are missing at render time will be ignored
+  for (group in groups) {
+
+    summary_labels <-
+      lapply(
+        summary_data,
+        function(summary_data_item) {
+          if (isTRUE(summary_data_item$groups)) {
+            summary_data_item$summary_labels
+          } else if (group %in% summary_data_item$groups){
+            summary_data_item$summary_labels
+          }
+        }
+      ) %>%
+      unlist() %>%
+      unique()
+
+    columns <-
+      resolve_vars(
+        var_expr = !!loc$columns,
+        data = data
+      )
+
+    if (length(columns) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `columns`",
+           call. = FALSE)
+    }
+
+    rows <-
+      resolve_data_vals_idx(
+        var_expr = !!loc$rows,
+        data = NULL,
+        vals = summary_labels
+      )
+
+    if (length(rows) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `rows`",
+           call. = FALSE)
+    }
+
+    attr(data, df_type) <-
+      add_location_row(
+        data,
+        df_type = df_type,
+        locname = "summary_cells",
+        locnum = 5,
+        grpname = group,
+        colname = columns,
+        rownum = rows,
+        text = text
+      )
   }
+
+  data
+}
+
+add_grand_summary_location_row <- function(loc,
+                                           data,
+                                           text,
+                                           df_type = "styles_df") {
+
+  summary_data <- attr(data, "summary", exact = TRUE)
+
+  grand_summary_labels <-
+    lapply(summary_data, function(summary_data_item) {
+      if (is.null(summary_data_item$groups)) {
+        return(summary_data_item$summary_labels)
+      }
+
+      NULL
+    }) %>%
+    unlist() %>%
+    unique()
+
+  columns <-
+    resolve_vars(
+      var_expr = !!loc$columns,
+      data = data
+    )
+
+  if (length(columns) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `columns`",
+         call. = FALSE)
+  }
+
+  rows <-
+    resolve_data_vals_idx(
+      var_expr = !!loc$rows,
+      data = NULL,
+      vals = grand_summary_labels
+    )
+
+  if (length(rows) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `rows`",
+         call. = FALSE)
+  }
+
+  attr(data, df_type) <-
+    add_location_row(
+      data,
+      df_type = df_type,
+      locname = "grand_summary_cells",
+      locnum = 6,
+      grpname = NA_character_,
+      colname = columns,
+      rownum = rows,
+      text = text
+    )
 
   data
 }

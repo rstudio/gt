@@ -80,54 +80,46 @@ test_that("the `get_time_format()` function works correctly", {
       c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
 })
 
-test_that("the `is_currency_valid()` function works correctly", {
+test_that("the `validate_currency()` function works correctly", {
 
   # Expect that specific currency names supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currency_symbols$curr_symbol, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currency_symbols$curr_symbol, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency names supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("thaler", "tetarteron"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("thaler", "tetarteron"), validate_currency))
+
 
   # Expect that specific currency codes supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_code, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currencies$curr_code, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("AAA", "ZZZ"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("AAA", "ZZZ"), validate_currency))
 
   # Expect that specific currency codes (3-number)
-  # supplied to `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_number, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # supplied to `validate_currency()` will return NULL
+  expect_null(
+    lapply(currencies$curr_number, validate_currency) %>%
+      unlist()
+  )
 
-  lapply(as.numeric(currencies$curr_number), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  expect_null(
+    lapply(as.numeric(currencies$curr_number), validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c(999, 998), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will return an error
+  expect_error(lapply(c(999, 998), validate_currency))
 })
 
 test_that("the `get_currency_str()` function works correctly", {
@@ -260,26 +252,6 @@ test_that("the `get_currency_exponent()` function works correctly", {
     expect_equal(rep(0, 7))
 })
 
-test_that("the `get_locale_sep_mark()` function works correctly", {
-
-  # Expect that `get_locale_sep_mark()` will return
-  # different group separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_sep_mark) %>%
-    unlist() %>%
-    expect_equal(c(" ", " ", ",", " ", " ", " ", ",", "."))
-})
-
-test_that("the `get_locale_dec_mark()` function works correctly", {
-
-  # Expect that `get_locale_dec_mark()` will return
-  # different decimal separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_dec_mark) %>%
-    unlist() %>%
-    expect_equal(c(",", ",", ".", ",", ",", ",", ".", ","))
-})
-
 test_that("the `process_text()` function works correctly", {
 
   # Create the `simple_text` variable, which is text
@@ -320,21 +292,30 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = html_text) %>% expect_is(c("html", "character"))
 })
 
-test_that("the `get_pre_post_txt()` function works correctly", {
+test_that("the `apply_pattern_fmt_x()` function works correctly", {
 
-  # Expect that various patterns will yield the expected
-  # length-2 character vectors
-  get_pre_post_txt(pattern = "{x}") %>%
-    expect_equal(c("", ""))
+  # Set formatted values in a character vector
+  x <- c("23.4%", "32.6%", "9.15%")
 
-  get_pre_post_txt(pattern = "a {x} b") %>%
-    expect_equal(c("a ", " b"))
+  # Expect that the default pattern `{x}` does not
+  # modify the values in `x`
+  apply_pattern_fmt_x(pattern = "{x}", values = x) %>%
+    expect_equal(x)
 
-  get_pre_post_txt(pattern = "\\a {x} \\b") %>%
-    expect_equal(c("\\a ", " \\b"))
+  # Expect that a pattern that appends literal text
+  # will work
+  apply_pattern_fmt_x(pattern = "{x}:n", values = x) %>%
+    expect_equal(paste0(x, ":n"))
 
-  get_pre_post_txt(pattern = "{x}....") %>%
-    expect_equal(c("", "...."))
+  # Expect that a pattern that appends and prepends
+  # literal text will work
+  apply_pattern_fmt_x(pattern = "+{x}:n", values = x) %>%
+    expect_equal(paste0("+", x, ":n"))
+
+  # Expect that multiple instances of `{x}` will
+  # create copies of `x` within the output strings
+  apply_pattern_fmt_x(pattern = "{x}, ({x})", values = x) %>%
+    expect_equal(paste0(x, ", (", x, ")"))
 })
 
 test_that("the `remove_html()` function works correctly", {
@@ -380,7 +361,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(101, 4))
+  css_tbl %>% dim() %>% expect_equal(c(110, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -429,7 +410,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
   expect_true(
-    grepl("style=\"padding:10px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+    grepl("style=\"padding:8px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
   )
 
   # Create a gt table with a custom style in the title and subtitle

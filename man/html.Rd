@@ -7,12 +7,12 @@
 html(text, ...)
 }
 \arguments{
-\item{text, ...}{the text that is understood to be HTML text, which is to be
+\item{text, ...}{The text that is understood to be HTML text, which is to be
 preserved.}
 }
 \value{
-a character object that is tagged as an HTML fragment that is not to
-  be sanitized.
+A character object that is tagged as an HTML fragment that is not to
+be sanitized.
 
 a character object of class \code{html}.
 }

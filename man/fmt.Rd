@@ -7,57 +7,51 @@
 fmt(data, columns = NULL, rows = NULL, fns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{fns}{a single formatting function or a named list of functions.}
+\item{fns}{Either a single formatting function or a named list of functions.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt()} function provides greater control in formatting raw data
-values than any of the specialized \code{fmt_*()} functions that are
-available in \pkg{gt}. Along with the \code{columns} and \code{rows}
-arguments that provide some precision in targeting data cells, the \code{fns}
-argument allows you to define one or more functions for manipulating the raw
-data.
+The \code{fmt()} function provides greater control in formatting raw data values
+than any of the specialized \code{fmt_*()} functions that are available in
+\pkg{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
+precision in targeting data cells, the \code{fns} argument allows you to define
+one or more functions for manipulating the raw data.
 }
 \details{
-If providing a single function to \code{fns}, the recommended format is in
-the form: \code{fns = function(x) ...}. This single function will format the
-targeted data cells the same way regardless of the output format (e.g., HTML,
-LaTeX, RTF).
+If providing a single function to \code{fns}, the recommended format is in the
+form: \code{fns = function(x) ...}. This single function will format the targeted
+data cells the same way regardless of the output format (e.g., HTML, LaTeX,
+RTF).
 
-If you require formatting of \code{x} that depends on the output format, a
-list of functions can be provided for the \code{html}, \code{latex}, and
-\code{default} contexts. This can be in the form of \code{fns = list(html =
-function(x) ..., latex = function(x) ..., default = function(x) ...)}. In
-this multiple-function case, we recommended including the \code{default}
-function as a fallback if all contexts aren't provided.
+If you require formatting of \code{x} that depends on the output format, a list of
+functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
+This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
+we recommended including the \code{default} function as a fallback if all contexts
+aren't provided.
 
-As with all of the \code{fmt_*()} functions, targeting of values is done
-through \code{columns} and additionally by \code{rows} (if nothing is
-provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
-formatting is possible by providing a conditional expression to the
-\code{rows} argument. See the Arguments section for more information on this.
+As with all of the \code{fmt_*()} functions, targeting of values is done through
+\code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
+entire columns are selected). A number of helper functions exist to make
+targeting more effective. Conditional formatting is possible by providing a
+conditional expression to the \code{rows} argument. See the Arguments section for
+more information on this.
 }
 \section{Figures}{
 
@@ -84,9 +78,10 @@ tab_1 <-
 \seealso{
 Other data formatting functions: \code{\link{data_color}},
   \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}, \code{\link{text_transform}}
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{text_transform}}
 }
 \concept{data formatting functions}

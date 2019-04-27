@@ -49,7 +49,7 @@ get_d_palettes <- function(color_packages = c(
   "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
   "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
   "Polychrome", "quickpalette","rcartocolor", "RColorBrewer",
-  "Redmonder", "wesanderson", "yarrr")) {
+  "Redmonder", "tidyquant", "wesanderson", "yarrr")) {
 
   palettes <-
     palettes_d_names %>%

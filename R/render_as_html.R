@@ -1,8 +1,8 @@
 #' Transform a \pkg{gt} table object to an HTML table
 #'
-#' Take a \code{gt_tbl} table object and transform it to an HTML table.
-#' @param data a table object that is created using the \code{gt()} function.
-#' @return a character object with an HTML table
+#' Take a `gt_tbl` table object and transform it to an HTML table.
+#' @param data A table object that is created using the `gt()` function.
+#' @return A character object with an HTML table
 #' @import checkmate
 #' @import rlang
 #' @family table export functions
@@ -63,7 +63,7 @@ render_as_html <- function(data) {
     columns_component <-
       create_columns_component_h(
         boxh_df, output_df, stub_available, spanners_present,
-        styles_resolved, stubhead_label, col_alignment)
+        styles_resolved, stubhead_label, col_alignment, opts_df)
 
     # Create the body component of the table
     body_component <-

@@ -1,30 +1,28 @@
 #' Preview a \pkg{gt} table object
 #'
 #' Sometimes you may want to see just a small portion of your input data. We can
-#' use \code{gt_preview()} in place of \code{\link{gt}()} to get the first x
-#' rows of data and the last y rows of data (which can be set by the
-#' \code{top_n} and \code{bottom_n} arguments). It's not advised to use
-#' additional \pkg{gt} API functions to further modify the output of
-#' \code{gt_preview()}. Furthermore, you cannot pass a \pkg{gt} object to
-#' \code{gt_preview()}.
+#' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
+#' last y rows of data (which can be set by the `top_n` and `bottom_n`
+#' arguments). It's not advised to use additional \pkg{gt} API functions to
+#' further modify the output of `gt_preview()`. Furthermore, you cannot pass a
+#' \pkg{gt} object to `gt_preview()`.
 #'
-#' Any grouped data or magic columns such as \code{rowname} and \code{groupname}
-#' will be ignored by \code{gt_preview()} and, as such, one cannot add a stub or
-#' group rows in the output table. By default, the output table will include row
-#' numbers in a stub (including a range of row numbers for the omitted rows).
-#' This row numbering option can be deactivated by setting \code{incl_rownums}
-#' to \code{FALSE}.
+#' Any grouped data or magic columns such as `rowname` and `groupname` will be
+#' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
+#' in the output table. By default, the output table will include row numbers in
+#' a stub (including a range of row numbers for the omitted rows). This row
+#' numbering option can be deactivated by setting `incl_rownums` to `FALSE`.
 #'
-#' @param data a \code{data.frame} object or a tibble.
-#' @param top_n this value will be used as the number of rows from the top of
-#'   the table to display. The default, \code{5}, will show the first five rows
-#'   of the table.
-#' @param bottom_n the value will be used as the number of rows from the bottom
-#'   of the table to display. The default, \code{1}, will show the final row of
+#' @param data A `data.frame` object or a tibble.
+#' @param top_n This value will be used as the number of rows from the top of
+#'   the table to display. The default, `5`, will show the first five rows of
 #'   the table.
-#' @param incl_rownums an option to include the row numbers for \code{data} in
-#'   the table stub. By default, this is \code{TRUE}.
-#' @return an object of class \code{gt_tbl}.
+#' @param bottom_n The value will be used as the number of rows from the bottom
+#'   of the table to display. The default, `1`, will show the final row of the
+#'   table.
+#' @param incl_rownums An option to include the row numbers for `data` in the
+#'   table stub. By default, this is `TRUE`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table
 #' # preview (with only a few of its

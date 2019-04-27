@@ -1,9 +1,14 @@
-# Transform a footnote glyph to an HTML representation as a superscript
+
+#' Transform a footnote glyph to an HTML representation
+#'
+#' @noRd
 footnote_glyph_to_html <- function(footnote_glyph) {
 
   paste0("<sup class='gt_footnote_glyph'>", footnote_glyph, "</sup>")
 }
 
+#' Get the spanner column label style from an attribute table
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_spanner_style <- function(spanner_style_attrs,
@@ -23,6 +28,8 @@ get_spanner_style <- function(spanner_style_attrs,
   }
 }
 
+#' Get the column label style from an attribute table
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_column_style <- function(column_style_attrs,
@@ -42,6 +49,9 @@ get_column_style <- function(column_style_attrs,
   }
 }
 
+#' Create a set of inline style attributes
+#'
+#' @noRd
 create_style_attrs <- function(style_values) {
 
   style_rules <- c()
@@ -58,15 +68,19 @@ create_style_attrs <- function(style_values) {
   style_rules
 }
 
-# Taking the `body_content` vector, split into list components with one
-# item per row in the output table
+#' Split the body content vector into a list structure
+#'
+#' Taking the `body_content` vector, split into list components with one item
+#' per row in the output table
+#' @noRd
 split_body_content <- function(body_content,
                                n_cols) {
 
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
-# Apply footnotes to the data rows
+#' Apply footnotes to the data rows
+#'
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_styles_to_output <- function(output_df,
@@ -113,7 +127,8 @@ apply_styles_to_output <- function(output_df,
   split_body_content(body_content = body_styles, n_cols)
 }
 
-# Apply footnotes to the data rows
+#' Apply footnotes to the summary data cells
+#'
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 apply_styles_to_summary_output <- function(summary_df,
@@ -124,10 +139,9 @@ apply_styles_to_summary_output <- function(summary_df,
   styles_summary_df <- summary_df
   styles_summary_df[] <- NA_character_
 
-
   styles_tbl_summary <-
     styles_resolved %>%
-    dplyr::filter(locname == "summary_cells") %>%
+    dplyr::filter(locname %in% "summary_cells") %>%
     dplyr::filter(grpname == group)
 
   if (nrow(styles_tbl_summary) > 0) {
@@ -158,15 +172,57 @@ apply_styles_to_summary_output <- function(summary_df,
   split_body_content(body_content = summary_styles, n_cols)
 }
 
+#' Apply styles to summary rows
+#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' @noRd
+apply_styles_to_grand_summary_output <- function(summary_df,
+                                                 styles_resolved,
+                                                 n_cols) {
+
+  styles_summary_df <- summary_df
+  styles_summary_df[] <- NA_character_
+
+  styles_tbl_summary <-
+    styles_resolved %>%
+    dplyr::filter(locname %in% "grand_summary_cells")
+
+  if (nrow(styles_tbl_summary) > 0) {
+
+    styles_summary <-
+      styles_tbl_summary %>%
+      dplyr::group_by(colname, rownum) %>%
+      dplyr::mutate(styles_appended = paste(text, collapse = "")) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(colname, rownum, styles_appended) %>%
+      dplyr::distinct()
+
+
+    for (i in seq(nrow(styles_summary))) {
+
+      styles_summary_df[
+        styles_summary$rownum[i], styles_summary$colname[i]] <-
+        styles_summary$styles_appended[i]
+    }
+  }
+
+  # Extract `summary_styles` as a vector
+  summary_styles <- as.vector(t(styles_summary_df))
+
+  # Split `summary_styles` by slices of rows
+  split_body_content(body_content = summary_styles, n_cols)
+}
+
 # Create the opening HTML element of a table
 create_table_start_h <- function(groups_rows_df) {
 
   "<!--gt table start-->\n<table class='gt_table'>\n"
 }
 
-# Create the heading component of a table, which contains the heading and
-# possibly a subtitle; if there are no heading components defined this
-# function will return an empty string
+#' Create the heading component of a table
+#'
+#' The table heading component contains the heading and possibly a subtitle; if
+#' there are no heading components defined this function will return an empty
+#' string.
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 create_heading_component <- function(heading,
@@ -365,7 +421,8 @@ create_heading_component <- function(heading,
   heading_component
 }
 
-# Create the columns component of a table
+#' Create the columns component of a table (HTML)
+#'
 #' @import rlang
 #' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
@@ -375,7 +432,18 @@ create_columns_component_h <- function(boxh_df,
                                        spanners_present,
                                        styles_resolved,
                                        stubhead_label,
-                                       col_alignment) {
+                                       col_alignment,
+                                       opts_df) {
+
+  # Should the column labels be hidden?
+  column_labels_hidden <-
+    opts_df %>%
+    opts_df_get(option = "column_labels_hidden") %>%
+    as.logical()
+
+  if (column_labels_hidden) {
+    return("")
+  }
 
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <-
@@ -575,6 +643,8 @@ create_columns_component_h <- function(boxh_df,
   table_col_headings
 }
 
+#' Create the table body component (HTML)
+#'
 #' @importFrom dplyr mutate filter pull
 #' @noRd
 create_body_component_h <- function(row_splits_body,
@@ -597,7 +667,7 @@ create_body_component_h <- function(row_splits_body,
     stub_available <- TRUE
   }
 
-  # Get the sequence of column numbers in the data field
+  # Get the sequence of column numbers in the table body
   column_series <- seq(n_cols)
 
   # If there is a stub, remove the last element in the series
@@ -621,19 +691,37 @@ create_body_component_h <- function(row_splits_body,
     if (!is.null(groups_rows_df) &&
         i %in% groups_rows_df$row) {
 
-      # Process "group" rows
+      group_name <-
+        groups_rows_df %>%
+        dplyr::filter(row == i) %>%
+        dplyr::pull(group)
+
+      group_style <-
+        styles_resolved %>%
+        filter(locname == "stub_groups") %>%
+        dplyr::filter(grpname == group_name) %>%
+        dplyr::pull(text)
+
+      # Process `group` rows
       body_rows <-
         c(body_rows,
           paste0(
-            "<tr class='gt_group_heading_row'>\n",
+            "<tr class='gt_group_heading_row'",
+            ">\n",
             "<td colspan='", n_cols, "' ",
             "class='",
             ifelse(
               groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]] == "",
-              "gt_empty_group_heading", "gt_group_heading"), "'>",
+              "gt_empty_group_heading", "gt_group_heading"),
+            "'",
+            ifelse(
+              length(group_style) > 0,
+              paste0(" style='", paste(group_style, collapse = ","), "'"), ""),
+            ">",
             groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]],
             "</td>\n",
-            "</tr>\n"))
+            "</tr>\n")
+        )
     }
 
     if (stub_available) {
@@ -732,6 +820,62 @@ create_body_component_h <- function(row_splits_body,
     }
   }
 
+  # If there is a grand summary, include that at the end
+  if (summaries_present &&
+      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+
+    grand_summary_df <-
+      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
+      as.data.frame(stringsAsFactors = FALSE)
+
+    row_splits_summary_styles <-
+      apply_styles_to_grand_summary_output(
+        summary_df = grand_summary_df,
+        styles_resolved = styles_resolved,
+        n_cols = n_cols
+      )
+
+    grand_summary <- as.vector(t(grand_summary_df))
+
+    row_splits_grand_summary <-
+      split_body_content(
+        body_content = grand_summary,
+        n_cols = n_cols)
+
+    # Provide CSS classes for leading and
+    # non-leading grand summary rows
+    gs_row_classes_first <- "gt_grand_summary_row gt_first_grand_summary_row "
+    gs_row_classes <- "gt_grand_summary_row "
+
+    grand_summary_row_lines <- c()
+
+    for (j in seq(length(row_splits_grand_summary))) {
+
+      grand_summary_row_lines <-
+        c(grand_summary_row_lines,
+          paste0(
+            "<tr>\n",
+            paste0(
+              "<td class='gt_stub gt_row ",
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
+              "gt_", col_alignment[1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][1]), ">",
+              row_splits_grand_summary[[j]][1],
+              "</td>"), "\n",
+            paste0(
+              "<td class='gt_row ",
+              ifelse(j == 1, gs_row_classes_first, gs_row_classes),
+              "gt_", col_alignment[-1], "'",
+              create_style_attrs(row_splits_summary_styles[[j]][-1]), ">",
+              row_splits_grand_summary[[j]][-1],
+              "</td>", collapse = "\n"),
+            "\n</tr>\n")
+        )
+    }
+
+    body_rows <- c(body_rows, grand_summary_row_lines)
+  }
+
   # Create a single-length vector by collapsing all vector components
   body_rows <- body_rows %>% paste(collapse = "")
 
@@ -742,6 +886,9 @@ create_body_component_h <- function(row_splits_body,
     "</tbody>\n")
 }
 
+#' Create the table source note component (HTML)
+#'
+#' @noRd
 create_source_note_component_h <- function(source_note,
                                            n_cols) {
 
@@ -760,6 +907,8 @@ create_source_note_component_h <- function(source_note,
     "</tfoot>\n")
 }
 
+#' Create the table footnote component (HTML)
+#'
 #' @importFrom dplyr select distinct filter pull
 #' @noRd
 create_footnote_component_h <- function(footnotes_resolved,
@@ -797,7 +946,9 @@ create_footnote_component_h <- function(footnotes_resolved,
   footnote_component
 }
 
-# Create the closing HTML element of a table
+#' Create the closing HTML element of a table
+#'
+#' @noRd
 create_table_end_h <- function() {
 
   "</table>\n<!--gt table end-->\n"

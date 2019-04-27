@@ -108,11 +108,11 @@ pizza_tab_email <-
     ) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
-    stub_group.background.color = "#E6EFFC",
+    row_group.background.color = "#E6EFFC",
     table.font.size = "small",
     heading.title.font.size = "small",
     heading.subtitle.font.size = "x-small",
-    stub_group.font.size = "small",
+    row_group.font.size = "small",
     column_labels.font.size = "small",
     row.padding = "5px"
     ) %>%

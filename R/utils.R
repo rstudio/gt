@@ -1,4 +1,5 @@
-# Create a tibble containing date formats
+#' Create a tibble containing date formats
+#'
 #' @importFrom dplyr tribble
 #' @noRd
 date_formats <- function() {
@@ -21,7 +22,8 @@ date_formats <- function() {
     "14",	          "y.mn.day",             "%y/%m/%d")
 }
 
-# Create a tibble containing time formats
+#' Create a tibble containing time formats
+#'
 #' @importFrom dplyr tribble
 #' @noRd
 time_formats <- function() {
@@ -35,7 +37,8 @@ time_formats <- function() {
     "5",	          "h_p",        "%I %P")
 }
 
-# Transform `date_style` to `date_format`
+#' Transform a `date_style` to a `date_format`
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_date_format <- function(date_style) {
@@ -59,7 +62,8 @@ get_date_format <- function(date_style) {
   }
 }
 
-# Transform `time_style` to `time_format`
+#' Transform a `time_style` to a `time_format`
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_time_format <- function(time_style) {
@@ -83,18 +87,8 @@ get_time_format <- function(time_style) {
   }
 }
 
-# Determine if a provided `currency` type is valid
-#' @noRd
-is_currency_valid <- function(currency) {
-
-  ifelse(
-    as.character(currency) %in% currency_symbols$curr_symbol |
-      as.character(currency) %in% currencies$curr_code |
-      as.character(currency) %in% currencies$curr_number,
-    TRUE, FALSE)
-}
-
-# Transform `currency` to currency string
+#' Transform a `currency` code to a currency string
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_str <- function(currency,
@@ -149,7 +143,8 @@ get_currency_str <- function(currency,
   }
 }
 
-# Transform `currency` to a currency exponent
+#' Get a currency exponent from a currency code
+#'
 #' @importFrom dplyr filter pull
 #' @noRd
 get_currency_exponent <- function(currency) {
@@ -179,39 +174,13 @@ get_currency_exponent <- function(currency) {
   }
 }
 
-# Get the `sep_mark` value from a locale
-#' @importFrom dplyr filter pull
-#' @noRd
-get_locale_sep_mark <- function(locale) {
-
-  sep_mark <-
-    locales %>%
-    dplyr::filter(base_locale_id == locale) %>%
-    dplyr::pull(group_sep)
-
-  sep_mark <- ifelse(sep_mark == "", " ", sep_mark)
-
-  sep_mark
-}
-
-# Get the `dec_mark` value from a locale
-#' @importFrom dplyr filter pull
-#' @noRd
-get_locale_dec_mark <- function(locale) {
-
-  dec_mark <-
-    locales %>%
-    dplyr::filter(base_locale_id == locale) %>%
-    dplyr::pull(dec_sep)
-
-  dec_mark
-}
-
-# This function processes input text based on the class; if incoming text has
-# the class `from_markdown` (applied by the `md()` helper function), then the
-# text will be sanitized and transformed to HTML from Markdown. If the incoming
-# text has the class `html` (applied by `html()` helper function), then
-# the text will be seen as HTML and it won't undergo sanitization
+#' Process text based on rendering context any applied classes
+#'
+#' If the incoming text has the class `from_markdown` (applied by the `md()`
+#' helper function), then the text will be sanitized and transformed to HTML
+#' from Markdown. If the incoming text has the class `html` (applied by `html()`
+#' helper function), then the text will be seen as HTML and it won't undergo
+#' sanitization.
 #' @importFrom stringr str_replace_all
 #' @importFrom htmltools htmlEscape
 #' @importFrom commonmark markdown_html
@@ -305,8 +274,11 @@ process_text <- function(text,
   }
 }
 
-# Find common HTML entities resulting from HTML escaping and
-# restore them back to ascii characters
+#' Reverse HTML escaping
+#'
+#' Find common HTML entities resulting from HTML escaping and restore them back
+#' to ASCII characters.
+#' @noRd
 unescape_html <- function(text) {
 
   text %>%
@@ -315,8 +287,28 @@ unescape_html <- function(text) {
     tidy_gsub("&amp;", "&")
 }
 
-# Transform Markdown text to LaTeX; also escapes ASCII
-# characters with special meaning in LaTeX
+#' Transform Markdown text to HTML and also perform HTML escaping
+#'
+#' @importFrom commonmark markdown_html
+#' @noRd
+md_to_html <- function(x) {
+
+  non_na_x <-
+    x[!is.na(x)] %>%
+    as.character() %>%
+    vapply(commonmark::markdown_html, character(1), USE.NAMES = FALSE) %>%
+    tidy_gsub("^", "<div class='gt_from_md'>") %>%
+    tidy_gsub("$", "</div>")
+
+  x[!is.na(x)] <- non_na_x
+  x
+}
+
+#' Transform Markdown text to LaTeX
+#'
+#' In addition to the Markdown-to-LaTeX text transformation,
+#' `markdown_to_latex()` also escapes ASCII characters with special meaning in
+#' LaTeX.
 #' @importFrom commonmark markdown_latex
 #' @noRd
 markdown_to_latex <- function(text) {
@@ -344,7 +336,8 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
-# Transform Markdown text to plain text
+#' Transform Markdown text to plain text
+#'
 #' @importFrom commonmark markdown_text
 #' @noRd
 markdown_to_text <- function(text) {
@@ -372,24 +365,265 @@ markdown_to_text <- function(text) {
     unname()
 }
 
-# Get prepending and appending text based on a simple pattern
-get_pre_post_txt <- function(pattern) {
+#' Handle formatting of a pattern in a `fmt_*()` function
+#'
+#' Within the context of a `fmt_*()`` function, we always have the
+#' single-length character vector of `pattern` available to describe a
+#' final decoration of the formatted values. We use glue's semantics here
+#' and reserve `x` to be the formatted values, and, we can use `x`
+#' multiple times in the pattern.
+#' @param values The values (as a character vector) that are formatted within
+#'   the `fmt_*()` function.
+#' @param pattern A formatting pattern that allows for decoration of the
+#'   formatted value (defined here as `x`).
+#' @noRd
+apply_pattern_fmt_x <- function(values,
+                                pattern) {
 
-  prefix <- strsplit(pattern, "\\{x\\}")[[1]][1]
-  suffix <- strsplit(pattern, "\\{x\\}")[[1]][2]
-
-  prefix <- ifelse(is.na(prefix), "", prefix)
-  suffix <- ifelse(is.na(suffix), "", suffix)
-
-  c(prefix, suffix)
+  vapply(
+    values,
+    function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
+  )
 }
 
-# Derive a label based on a formula or a function name
+#' Get a vector of indices for large-number suffixing
+#'
+#' @importFrom utils head
+#' @noRd
+non_na_index <- function(values,
+                         index,
+                         default_value = NA) {
+
+  if (is.logical(index)) {
+    index <- is.integer(index)
+  }
+
+  stopifnot(is.integer(index) || is.numeric(index))
+
+  # The algorithm requires `-Inf` not being present
+  stopifnot(!any(is.infinite(values) & values < 0))
+
+  # Get a vector of suffixes, which may include
+  # NA values
+  res <- values[index]
+
+  # If there are no NA values to reconcile, return
+  # the index
+  if (!any(is.na(res))) {
+    return(index)
+  }
+
+  # Create a vector of positions (`seq_along(values)`),
+  # but anywhere the `values` vector has an NA, use
+  # `-Inf`; (it's important that `values` not have `-Inf`
+  # as one of its elements)
+  positions <- ifelse(!is.na(values), seq_along(values), -Inf)
+
+  # Use rle (run-length encoding) to collapse multiple
+  # instances of `-Inf` into single instances. This
+  # makes it easy for us to replace them with their
+  # nearest (lower) neighbor in a single step, instead of
+  # having to iterate; for some reason, `rle()` doesn't
+  # know how to encode NAs, so that's why we use -Inf
+  # (seems like a bug)
+  encoded <- rle(positions)
+
+  # Replace each -Inf with its closest neighbor; basically,
+  # we do this by shifting a copy of the values to the
+  # right, and then using the original vector of (run-length
+  # encoded) values as a mask over it
+  encoded$values <-
+    ifelse(
+      encoded$values == -Inf,
+      c(default_value, head(encoded$values, -1)),
+      encoded$values
+    )
+
+  # Now convert back from run-length encoded
+  positions <- inverse.rle(encoded)
+
+  # positions[index] gives you the new index
+  positions[index]
+}
+
+#' Get a tibble of scaling values and suffixes
+#'
+#' The `num_suffix()` function operates on a vector of numerical values and
+#' returns a tibble where each row represents a scaled value for `x` and the
+#' correct suffix to use during `x`'s character-based formatting.
+#' @importFrom dplyr tibble
+#' @noRd
+num_suffix <- function(x,
+                       suffixes = c("K", "M", "B", "T"),
+                       base = 1000,
+                       scale_by) {
+
+  # If `suffixes` is a zero-length vector, we
+  # provide a tibble that will ultimately not
+  # scale value or apply any suffixes
+  if (length(suffixes) == 0) {
+
+    return(
+      dplyr::tibble(
+        scale_by = rep_len(scale_by, length(x)),
+        suffix = rep_len("", length(x))
+      )
+    )
+  }
+
+  # Obtain a vector of index values that places
+  # each value of `x` (either postive or negative)
+  # in the correct scale category, according to
+  # the base value (defaulting to 1000); this works
+  # in tandem with the `suffixes` vector, where each
+  # index position (starting from 1) represents the
+  # index here
+  i <- floor(log(abs(x), base = base))
+  i <- pmin(i, length(suffixes))
+
+  # Replace any -Inf, Inf, or zero values
+  # with NA (required for the `non_na_index()`
+  # function)
+  i[is.infinite(i) | i == 0] <- NA_integer_
+
+  # Using the `non_na_index()` function on the
+  # vector of index values (`i`) is required
+  # to enable inheritance of scalars/suffixes
+  # to ranges where the user prefers the last
+  # suffix given (e.g, [K, M, `NA`, T] -->
+  # [K, M, M, T])
+  suffix_index <-
+    non_na_index(
+      values = suffixes,
+      index = i,
+      default_value = 0
+    )
+
+  # Replace any zero values in `suffix_index`
+  # with NA values
+  suffix_index[suffix_index == 0] <- NA_integer_
+
+  # Get a vector of suffix labels; this vector
+  # is to be applied to the scaled values
+  suffix_labels <- suffixes[suffix_index]
+
+  # Replace any NAs in `suffix_labels` with an
+  # empty string
+  suffix_labels[is.na(suffix_labels)] <- ""
+
+  # Replace any NAs in `suffix_index` with zeros
+  suffix_index[is.na(suffix_index)] <- 0
+
+  # Create and return a tibble with `scale_by`
+  # and `suffix` values
+  dplyr::tibble(
+    scale_by = 1 / base^suffix_index,
+    suffix = suffix_labels
+  )
+}
+
+#' An `isFALSE`-based helper function
+#'
+#' The `is_false()` function is similar to the `isFALSE()` function that was
+#' introduced in R 3.5.0 except that this implementation works with earlier
+#' versions of R.
+#' @param x The single value to test for whether it is `FALSE`.
+#' @noRd
+is_false = function(x) {
+
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+
+#' Normalize all suffixing input values
+#'
+#' This function normalizes the `suffixing` input to a character vector which is
+#' later appended to scaled numerical values; the input can either be a single
+#' logical value or a character vector.
+#' @param suffixing,scale_by The `suffixing` and `scale_by` options in some
+#'   `fmt_*()` functions.
+#' @noRd
+normalize_suffixing_inputs <- function(suffixing,
+                                       scale_by) {
+
+  if (is_false(suffixing)) {
+
+    # If `suffixing` is FALSE, then return `NULL`;
+    # this will be used to signal there is nothing
+    # to be done in terms of scaling/suffixing
+    return(NULL)
+
+  } else if (isTRUE(suffixing)) {
+
+    # Issue a warning if `scale_by` is not 1.0 (the default)
+    warn_on_scale_by_input(scale_by)
+
+    # If `suffixing` is TRUE, return the default
+    # set of suffixes
+    return(c("K", "M", "B", "T"))
+
+  } else if (is.character(suffixing)) {
+
+    # Issue a warning if `scale_by` is not 1.0 (the default)
+    warn_on_scale_by_input(scale_by)
+
+    # In the case that a character vector is provided
+    # to `suffixing`, we first want to check if there
+    # are any names provided
+    # TODO: found that the conditional below seems
+    # better than other solutions to determine whether
+    # the vector is even partially named
+    if (!is.null(names(suffixing))) {
+      stop("The character vector supplied to `suffixed` cannot contain names.",
+           call. = FALSE)
+    }
+
+    # We can now return the character vector, having
+    # adequately tested for improper cases
+    return(suffixing)
+
+  } else {
+
+    # Stop function if the input to `suffixing` isn't
+    # valid (i.e., isn't logical and isn't a valid
+    # character vector)
+    stop("The value provided to `suffixing` must either be:\n",
+         " * `TRUE` or `FALSE` (the default)\n",
+         " * a character vector with suffixing labels",
+         call. = FALSE)
+  }
+}
+
+#' If performing large-number suffixing, warn on `scale_by` != 1
+#'
+#' @param scale_by The `scale_by` option in some `fmt_*()` functions.
+#' @noRd
+warn_on_scale_by_input <- function(scale_by) {
+
+  if (scale_by != 1) {
+    warning("The value for `scale_by` cannot be changed if `suffixing` is ",
+            "anything other than `FALSE`. The value provided to `scale_by` ",
+            "will be ignored.",
+            call. = FALSE)
+  }
+}
+
+#' Derive a label based on a formula or a function name
+#'
 #' @import rlang
 #' @noRd
 derive_summary_label <- function(fn) {
 
-  if (inherits(fn, "formula")) {
+  if (is.function(fn)) {
+
+    # Stop the function if any functions provided
+    # as bare names (e.g., `mean`) don't have
+    # names provided
+    stop("All functions provided as bare names in `fns` need a label.",
+         call. = FALSE)
+
+  } else if (inherits(fn, "formula")) {
 
     (fn %>% rlang::f_rhs())[[1]] %>%
       as.character()
@@ -400,21 +634,25 @@ derive_summary_label <- function(fn) {
 }
 
 #nocov start
-
-# This function is a conveient wrapper for `system.file()` where the `package`
-# refers to this package
+#' A `system.file()` replacement specific to this package
+#'
+#' This is a conveient wrapper for `system.file()` where the `package` refers to
+#' this package.
+#' @noRd
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
-
 #nocov end
 
-# This function removes entire HTML tags from input text
+#' Remove all HTML tags from input text
+#'
+#' @noRd
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
 }
 
-# This function transforms a CSS stylesheet to a tibble representation
+#' Transform a CSS stylesheet to a tibble representation
+#'
 #' @importFrom dplyr bind_rows tibble filter mutate case_when select pull
 #' @importFrom stringr str_remove str_extract str_trim str_detect
 #' @noRd
@@ -471,7 +709,8 @@ get_css_tbl <- function(data) {
   css_tbl
 }
 
-# Create an inlined style block from a CSS tibble
+#' Create an inlined style block from a CSS tibble
+#'
 #' @importFrom dplyr filter select distinct mutate pull
 #' @importFrom stringr str_split
 #' @noRd
@@ -497,7 +736,8 @@ create_inline_styles <- function(class_names,
     "\"")
 }
 
-# Transform HTML to inlined HTML using a CSS tibble
+#' Transform HTML to inlined HTML using a CSS tibble
+#'
 #' @importFrom stringr str_extract str_replace str_match
 #' @noRd
 inline_html_styles <- function(html, css_tbl) {
@@ -564,10 +804,11 @@ inline_html_styles <- function(html, css_tbl) {
   html
 }
 
-is_equal_to <- function(x, y) {
-  vapply(x, function(a, b) isTRUE(all.equal(a, b)), logical(1), y)
-}
-
+#' Split any strings that are values in scientific notation
+#'
+#' @param x_str The input character vector of values formatted in scientific
+#'   notation.
+#' @noRd
 split_scientific_notn <- function(x_str) {
 
   exp_parts <- strsplit(x_str, "e|E")
@@ -577,14 +818,29 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
-# This function is wrapper for `gsub()` that uses default argument values and
-# rearranges first three arguments for better pipelining
-tidy_gsub <- function(x, pattern, replacement) {
+#' Wrapper for `gsub()` where `x` is the first argument
+#'
+#' This function is wrapper for `gsub()` that uses default argument values and
+#' rearranges first three arguments for better pipelining
+#' @param x,pattern,replacement,fixed Select arguments from the `gsub()`
+#'   function.
+#' @noRd
+tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
-  gsub(pattern, replacement, x)
+  gsub(pattern, replacement, x, fixed = fixed)
+}
+tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
+
+  sub(pattern, replacement, x, fixed = fixed)
 }
 
-# Options setter for the `opts_df` data frame
+#' An options setter for the `opts_df` data frame
+#'
+#' @param opts_df The `opts_df` data frame.
+#' @param option The option name; a unique value in the `parameter` column of
+#'   `opts_df`.
+#' @param value The value to set for the given `option`.
+#' @noRd
 opts_df_set <- function(opts_df, option, value) {
 
   opts_df[which(opts_df$parameter == option), "value"] <- value
@@ -592,13 +848,21 @@ opts_df_set <- function(opts_df, option, value) {
   opts_df
 }
 
-# Options getter for the `opts_df` data frame
+#' An options getter for the `opts_df` data frame
+#'
+#' @inheritParams opts_df_set
+#' @noRd
 opts_df_get <- function(opts_df, option) {
 
   opts_df[which(opts_df$parameter == option), "value"]
 }
 
-# Upgrade `cells_*()` to a list() if a single instance provided
+#' Upgrader function for `cells_*` objects
+#'
+#' Upgrade a `cells_*` object to a `list()` if only a single instance is
+#' provided.
+#' @param locations Any `cells_*` object.
+#' @noRd
 as_locations <- function(locations) {
 
   if (!inherits(locations, "location_cells")) {
@@ -616,6 +880,9 @@ as_locations <- function(locations) {
   locations
 }
 
+#' Create a vector of glyphs to use for footnotes
+#'
+#' @noRd
 footnote_glyphs <- function(x,
                             glyphs) {
 
@@ -641,9 +908,13 @@ footnote_glyphs <- function(x,
     glyphs_val, glyphs_rep,
     FUN = function(val_i, rep_i) {
       paste(rep(val_i, rep_i), collapse = "")}
-  ) %>% unname()
+  ) %>%
+    unname()
 }
 
+#' Determine whether an object is a `gt_tbl`
+#'
+#' @param data A table object that is created using the [gt()] function.
 #' @importFrom checkmate test_class
 #' @noRd
 is_gt <- function(data) {
@@ -651,6 +922,10 @@ is_gt <- function(data) {
   checkmate::test_class(data, "gt_tbl")
 }
 
+#' Stop any function if object is not a `gt_tbl` object
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @noRd
 stop_if_not_gt <- function(data) {
 
   if (!is_gt(data)) {
