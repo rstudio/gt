@@ -4,10 +4,10 @@
 \alias{local_image}
 \title{Helper function for adding a local image}
 \usage{
-local_image(file, height = 30)
+local_image(filename, height = 30)
 }
 \arguments{
-\item{file}{A path to an image file.}
+\item{filename}{A path to an image file.}
 
 \item{height}{The absolute height (px) of the image in the table cell.}
 }
@@ -61,7 +61,7 @@ tab_1 <-
     locations = cells_data(vars(image)),
     fn = function(x) {
       local_image(
-        file = test_image(type = "png"),
+        filename = test_image(type = "png"),
         height = as.numeric(x)
       )
     }
