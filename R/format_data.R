@@ -54,13 +54,16 @@
 #'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
 #'   We can also specify which symbols to use for each of the value ranges by
 #'   using a character vector of the preferred symbols to replace the defaults
-#'   (e.g., `c("k", "Ml", "Bn", "Tr")`). Including `NA` values in the vector
-#'   will ensure that the particular range will either not be included in the
-#'   transformation (e.g, `c(NA, "M", "B", "T")` won't modify numbers in the
-#'   thousands range) or the range will inherit a previous suffix (e.g., with
-#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
-#'   will be in terms of millions). Any use of `suffixing` (where not `FALSE`)
-#'   means that any value provided to `scale_by` will be ignored.
+#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'
+#'   Including `NA` values in the vector will ensure that the particular range
+#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
+#'   "T")` won't modify numbers in the thousands range) or the range will
+#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
+#'   in the range of millions and billions will be in terms of millions).
+#'
+#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
+#'   that any value provided to `scale_by` will be ignored.
 #' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by `{x}` and all other
 #'   characters are taken to be string literals.
@@ -521,12 +524,15 @@ fmt_percent <- function(data,
 #'
 #' With numeric values in a \pkg{gt} table, we can perform currency-based
 #' formatting. This function supports both automatic formatting with a
-#' three-letter currency code and numeric formatting facilitated through the use
-#' of a locale ID. For fine control the conversion from numeric to currency
-#' values, we can take advantage of the following options:
+#' three-letter or numeric currency code. We can also specify a custom currency
+#' that is formatted according to the output context with the [currency()]
+#' helper function. Numeric formatting facilitated through the use of a locale
+#' ID. We have fine control over the conversion from numeric values to currency
+#' values, where we could take advantage of the following options:
 #' \itemize{
 #' \item the currency: providing a currency code or common currency name will
-#' procure the correct currency symbol and number of currency subunits
+#' procure the correct currency symbol and number of currency subunits; we could
+#' also use the [currency()] helper function to specify a custom currency
 #' \item currency symbol placement: the currency symbol can be placed before
 #' or after the values
 #' \item decimals/subunits: choice of the number of decimal places, and a
@@ -563,9 +569,20 @@ fmt_percent <- function(data,
 #'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
 #'   [info_currencies()] with the `type == "symbol"` option to view an
 #'   information table with all of the supported currency symbol names along
-#'   with examples. If nothing is provided then `"USD"` will be used.
+#'   with examples.
+#'
+#'   We can also use the [currency()] helper function to specify a custom
+#'   currency, where the string could vary across output contexts. For example,
+#'   using `currency(html = "&fnof;", default = "f")` would give us a suitable
+#'   glyph for the Dutch guilder in an HTML output table, and it would simply be
+#'   the letter "f" in all other output contexts). Please note that a value for
+#'   the `decimals` argument must be provided if using the [currency()] helper
+#'   (this is unless the option `use_subunits` is set to `FALSE`).
+#'
+#'   If nothing is provided to `currency` then `"USD"` (U.S. dollars) will be
+#'   used.
 #' @param use_subunits An option for whether the subunits portion of a currency
-#'   value should be displayed.
+#'   value should be displayed. By default, this is `TRUE`.
 #' @param accounting An option to use accounting style for currency values. With
 #'   `FALSE` (the default), negative values will be shown with a minus sign.
 #'   Using `accounting = TRUE` will put negative values in parentheses.

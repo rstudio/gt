@@ -454,11 +454,47 @@ is.html <- function(x) {
 }
 
 
-#' Supply a context-aware currency symbol
+#' Supply a custom currency symbol to `fmt_currency()`
+#'
+#' The `currency()` helper function makes it easy to specify a context-aware
+#' currency symbol to `currency` argument of [fmt_currency()]. Since \pkg{gt}
+#' can render tables to several output formats, `currency()` allows for
+#' different variations of the custom symbol based on the output context (which
+#' are `html`, `latex`, and `default`). Because there is no information on the
+#' number of decimal places required for a custom currency, a value for the
+#' `decimals` argument for [fmt_currency()] must be provided (unless the option
+#' `use_subunits` is set to `FALSE`).
+#'
+#' We can use any combination of `html`, `latex`, and `default` as named
+#' arguments for the currency text in each of the namesake contexts. The
+#' `default` value is used as a fallback when there doesn't exist a dedicated
+#' currency text value for a particular output context (e.g., when a table is
+#' rendered as HTML and we use `currency(latex = "LTC", default = "ltc")`, the
+#' currency symbol will be `"ltc"`. For convenience, if we provide only a single
+#' string without a name, it will be taken as the `default` (i.e.,
+#' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
+#' we were to specify currency strings for muliple output contexts, names are
+#' required each and every context.
 #'
 #' @param ... One or more named arguments using output contexts as the names and
 #'   currency symbol text as the values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @return a list object of class `gt_currency`.
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `currency` column to have
+#' # currency values in guilder (a defunct
+#' # Dutch currency)
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = currency(
+#'       html = "&fnof;",
+#'       default = "f"),
+#'     decimals = 2
+#'   )
 #' @export
 currency <- function(...,
                      .list = list2(...)) {
