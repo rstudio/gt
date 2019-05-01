@@ -690,14 +690,14 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c("4px", "3px"))
 
   # Modify the `row.striping.include_stub` option
-  tbl_html <- data %>% tab_options(row.striping.include_stub = FALSE)
+  tbl_html <- data %>% tab_options(row.striping.include_stub = TRUE)
 
   # Compare before and after values
   c(opts_df_1 %>%
       dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "row_striping_include_stub") %>% dplyr::pull(value)) %>%
-    expect_equal(c("TRUE", "FALSE"))
+    expect_equal(c("FALSE", "TRUE"))
 
   # Modify the `row.striping.include_table_body` option
   tbl_html <- data %>% tab_options(row.striping.include_table_body = FALSE)
@@ -745,4 +745,118 @@ test_that("the `opts_df` getter/setter both function properly", {
     opts_df_set(option = "footnote_font_size", value = "60%") %>%
     opts_df_get(option = "footnote_font_size") %>%
     expect_equal("60%")
+})
+
+test_that("all column labels can be entirely hidden from view", {
+
+  # Expect that the option `column_labels.hidden = TRUE` will
+  # remove the expected node with the classes of `gt_col_heading`
+  # and `gt_right` (i.e., the column labels)
+  expect_length(
+    tbl %>%
+      gt() %>%
+      tab_options(column_labels.hidden = TRUE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_right']"),
+    0)
+
+  # Expect that not hiding the column labels yields a length
+  # four vector when using the same search
+  expect_length(
+    tbl %>%
+      gt() %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_right']"),
+    4)
+})
+
+test_that("the row striping options work correctly", {
+
+  # Expect that the option `row.striping.include_stub = FALSE`
+  # will result in no CSS class combinations of `gt_stub` and
+  # `gt_striped`
+  expect_length(
+    tbl %>%
+      gt() %>%
+      tab_options(row.striping.include_stub = FALSE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+    0)
+
+  # Expect that the option `row.striping.include_stub = TRUE` will
+  # result in a particular class combination for every second
+  # stub cell (includes `gt_striped`)
+  expect_length(
+    tbl %>%
+      gt() %>%
+      tab_options(row.striping.include_stub = TRUE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+    5)
+
+  # Expect that the option `row.striping.include_table_body = TRUE` will
+  # result in a particular class combination for every second
+  # stub cell (includes `gt_striped`)
+  expect_length(
+    tbl %>%
+      gt() %>%
+      tab_options(row.striping.include_table_body = TRUE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_row gt_right gt_striped']"),
+    20)
+
+  # Expect that the options `row.striping.include_table_body = TRUE`
+  # and `row.striping.include_stub = TRUE` will result in cells that
+  # have either of two class combinations for every second stub cell
+  # (both include `gt_striped`)
+  expect_length(
+    c(
+      tbl %>%
+      gt() %>%
+      tab_options(
+        row.striping.include_stub = TRUE,
+        row.striping.include_table_body = TRUE) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+      tbl %>%
+        gt() %>%
+        tab_options(
+          row.striping.include_stub = TRUE,
+          row.striping.include_table_body = TRUE) %>%
+        render_as_html() %>%
+        xml2::read_html() %>%
+        selection_text("[class='gt_row gt_right gt_striped']")
+      ),
+    25)
+
+  # Expect that the options `row.striping.include_table_body = FALSE`
+  # and `row.striping.include_stub = FALSE` will result in cells that
+  # have neither of two class combinations in every second stub cell
+  # (with `gt_striped`)
+  expect_length(
+    c(
+      tbl %>%
+        gt() %>%
+        tab_options(
+          row.striping.include_stub = FALSE,
+          row.striping.include_table_body = FALSE) %>%
+        render_as_html() %>%
+        xml2::read_html() %>%
+        selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+      tbl %>%
+        gt() %>%
+        tab_options(
+          row.striping.include_stub = FALSE,
+          row.striping.include_table_body = FALSE) %>%
+        render_as_html() %>%
+        xml2::read_html() %>%
+        selection_text("[class='gt_row gt_right gt_striped']")
+    ),
+    0)
 })
