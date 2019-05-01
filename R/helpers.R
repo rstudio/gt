@@ -481,9 +481,21 @@ currency <- function(...,
     currency_list <- list(default = currency_list[[1]])
   }
 
+  # Stop function if `currency_list` isn't entirely named
+  if (!rlang::is_named(currency_list)) {
+    stop("Names must be provided for all output contexts.",
+         call. = FALSE)
+  }
+
   # Stop function if all names are not part of the supported contexts
   if (!all(names(currency_list) %in% contexts)) {
-    stop("All output contexts must either of `html`, `latex`, or `default`",
+    stop("All output contexts must either of `html`, `latex`, or `default`.",
+         call. = FALSE)
+  }
+
+  # Stop function if there are duplicated names
+  if (!rlang::is_dictionaryish(currency_list)) {
+    stop("There cannot be any duplicate names for output contexts.",
          call. = FALSE)
   }
 
