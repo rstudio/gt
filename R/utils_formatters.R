@@ -49,16 +49,20 @@ validate_locale <- function(locale) {
 #' @noRd
 validate_currency <- function(currency) {
 
-  # Stop function if the `currency` provided
-  # isn't a valid one
-  if (!(
-    as.character(currency) %in% currency_symbols$curr_symbol |
-    as.character(currency) %in% currencies$curr_code |
-    as.character(currency) %in% currencies$curr_number)) {
-    stop("The supplied `currency` is not available in the list of supported currencies.\n",
-         " * Use the `info_currencies()` function to see which currencies can be used.\n",
-         " * See `?fmt_currency` to understand which input types are valid.",
-         call. = FALSE)
+  # If `currency` isn't a custom currency object
+  # (`gt_currency`), then validate the supplied symbol
+  if (!inherits(currency, "gt_currency")) {
+
+    # Stop function if the `currency` provided isn't a valid one
+    if (!(
+      as.character(currency) %in% currency_symbols$curr_symbol |
+      as.character(currency) %in% currencies$curr_code |
+      as.character(currency) %in% currencies$curr_number)) {
+      stop("The supplied `currency` is not available in the list of supported currencies.\n",
+           " * Use the `info_currencies()` function to see which currencies can be used.\n",
+           " * See `?fmt_currency` to understand which input types are valid.",
+           call. = FALSE)
+    }
   }
 }
 
