@@ -144,6 +144,23 @@ get_currency_decimals <- function(currency,
                                   decimals,
                                   use_subunits) {
 
+  # Stop function if using the `currency()` helper function
+  # without providing a value for `decimals`
+  if (inherits(currency, "gt_currency")) {
+
+    if (is.null(decimals) && use_subunits) {
+      stop("The number of decimal places must be provided if ",
+           "`use_subunits = TRUE` and the `currency()` helper function is used.",
+           call. = FALSE)
+    } else if (!use_subunits) {
+
+      return(0)
+
+    } else {
+      return(decimals)
+    }
+  }
+
   # Get the number of decimal places
   if (is.null(decimals) && use_subunits) {
 
