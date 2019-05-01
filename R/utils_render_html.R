@@ -656,8 +656,8 @@ create_body_component_h <- function(row_splits_body,
                                     summaries_present,
                                     list_of_summaries,
                                     n_rows,
-                                    n_cols) {
-
+                                    n_cols,
+                                    opts_df) {
 
   if (is.null(stub_components)) {
     stub_available <- FALSE
@@ -683,6 +683,18 @@ create_body_component_h <- function(row_splits_body,
       dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
       dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
+
+  # Is the stub to be striped?
+  stub_striped <-
+    opts_df %>%
+    opts_df_get(option = "row_striping_include_stub") %>%
+    as.logical()
+
+  # Are the rows in the table body to be striped?
+  table_body_striped <-
+    opts_df %>%
+    opts_df_get(option = "row_striping_include_table_body") %>%
+    as.logical()
 
   body_rows <- c()
 
@@ -732,12 +744,14 @@ create_body_component_h <- function(row_splits_body,
           paste0(
             "<tr>\n",
             paste0(
-              "<td class='gt_row gt_stub gt_", col_alignment[1], "'",
+              "<td class='gt_row gt_stub gt_", col_alignment[1],
+              ifelse(i %% 2 == 0 && stub_striped, " gt_striped", ""), "'",
               create_style_attrs(row_splits_styles[[i]][1]),
               ">", row_splits_body[[i]][1],
               "</td>"), "\n",
             paste0(
-              "<td class='gt_row gt_", col_alignment[-1], ifelse(i %% 2 == 0, " gt_striped", ""), "'",
+              "<td class='gt_row gt_", col_alignment[-1],
+              ifelse(i %% 2 == 0 && table_body_striped, " gt_striped", ""), "'",
               create_style_attrs(row_splits_styles[[i]][-1]),
               ">", row_splits_body[[i]][-1],
               "</td>", collapse = "\n"),
@@ -753,7 +767,8 @@ create_body_component_h <- function(row_splits_body,
           paste0(
             "<tr>\n",
             paste0(
-              "<td class='gt_row gt_", col_alignment, ifelse(i %% 2 == 0, " gt_striped", ""), "'",
+              "<td class='gt_row gt_", col_alignment,
+              ifelse(i %% 2 == 0 && table_body_striped, " gt_striped", ""), "'",
               create_style_attrs(row_splits_styles[[i]]),
               ">", row_splits_body[[i]],
               "</td>", collapse = "\n"),
