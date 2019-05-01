@@ -453,6 +453,46 @@ is.html <- function(x) {
   }
 }
 
+
+#' Supply a context-aware currency symbol
+#'
+#' @param ... One or more named arguments using output contexts as the names and
+#'   currency symbol text as the values.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @export
+currency <- function(...,
+                     .list = list2(...)) {
+
+  # Collect a named list of currencies
+  currency_list <- .list
+
+  # Define the contexts
+  contexts <- c("html", "latex", "default")
+
+  # Stop function if the currency list contains no values
+  if (length(currency_list) == 0) {
+    stop("The `currency()` function must be provided with currency symbols.",
+         call. = FALSE)
+  }
+
+  # If only a single string is provided, upgrade the `currency_list`
+  # to have that string be the `default` value
+  if (length(currency_list) == 1 && !rlang::is_named(currency_list)) {
+    currency_list <- list(default = currency_list[[1]])
+  }
+
+  # Stop function if all names are not part of the supported contexts
+  if (!all(names(currency_list) %in% contexts)) {
+    stop("All output contexts must either of `html`, `latex`, or `default`",
+         call. = FALSE)
+  }
+
+  # Set the `gt_currency` class
+  class(currency_list) <- "gt_currency"
+
+  currency_list
+}
+
 #' Helper for defining custom styles for table cells
 #'
 #' This helper function is to be used with the [tab_style()] function, which
