@@ -47,13 +47,15 @@ transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{
 billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
 We can also specify which symbols to use for each of the value ranges by
 using a character vector of the preferred symbols to replace the defaults
-(e.g., \code{c("k", "Ml", "Bn", "Tr")}). Including \code{NA} values in the vector
-will ensure that the particular range will either not be included in the
-transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the
-thousands range) or the range will inherit a previous suffix (e.g., with
-\code{c("K", "M", NA, "T")}, all numbers in the range of millions and billions
-will be in terms of millions). Any use of \code{suffixing} (where not \code{FALSE})
-means that any value provided to \code{scale_by} will be ignored.}
+(e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+
+Including \code{NA} values in the vector will ensure that the particular range
+will either not be included in the transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the thousands range) or the range will
+inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
+in the range of millions and billions will be in terms of millions).
+
+Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
+that any value provided to \code{scale_by} will be ignored.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other

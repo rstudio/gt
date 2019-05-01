@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{currency}
 \alias{currency}
-\title{Supply a context-aware currency symbol}
+\title{Supply a custom currency symbol to \code{fmt_currency()}}
 \usage{
 currency(..., .list = list2(...))
 }
@@ -12,6 +12,44 @@ currency symbol text as the values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
+\value{
+a list object of class \code{gt_currency}.
+}
 \description{
-Supply a context-aware currency symbol
+The \code{currency()} helper function makes it easy to specify a context-aware
+currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \pkg{gt}
+can render tables to several output formats, \code{currency()} allows for
+different variations of the custom symbol based on the output context (which
+are \code{html}, \code{latex}, and \code{default}). Because there is no information on the
+number of decimal places required for a custom currency, a value for the
+\code{decimals} argument for \code{\link[=fmt_currency]{fmt_currency()}} must be provided (unless the option
+\code{use_subunits} is set to \code{FALSE}).
+}
+\details{
+We can use any combination of \code{html}, \code{latex}, and \code{default} as named
+arguments for the currency text in each of the namesake contexts. The
+\code{default} value is used as a fallback when there doesn't exist a dedicated
+currency text value for a particular output context (e.g., when a table is
+rendered as HTML and we use \code{currency(latex = "LTC", default = "ltc")}, the
+currency symbol will be \code{"ltc"}. For convenience, if we provide only a single
+string without a name, it will be taken as the \code{default} (i.e.,
+\code{currency("ltc")} is equivalent to \code{currency(default = "ltc")}). However, if
+we were to specify currency strings for muliple output contexts, names are
+required each and every context.
+}
+\examples{
+# Use `exibble` to create a gt table;
+# format the `currency` column to have
+# currency values in guilder (a defunct
+# Dutch currency)
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = vars(currency),
+    currency = currency(
+      html = "&fnof;",
+      default = "f"),
+    decimals = 2
+  )
 }
