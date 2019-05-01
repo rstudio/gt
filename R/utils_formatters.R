@@ -379,6 +379,32 @@ context_symbol_str <- function(context,
     return("")
   }
 
+  if (inherits(symbol, "gt_currency")) {
+
+    if (context %in% names(symbol)) {
+
+      symbol <- symbol[[context]]
+
+    } else if ("default" %in% names(symbol)) {
+
+      symbol <- symbol[["default"]]
+
+    } else {
+      stop("The `", context, "` output context isn't available in the ",
+           "`currency()` object (and there isn't a `default` context either).",
+           call. = FALSE)
+    }
+
+    if (context == "latex") {
+      symbol <-
+        symbol %>%
+        markdown_to_latex() %>%
+        paste_between(x_2 = c("\\text{", "}"))
+    }
+
+    return(symbol)
+  }
+
   # If we supply a percent sign as `symbol`,
   # get the contextually correct percent mark
   if (symbol == "%") {
