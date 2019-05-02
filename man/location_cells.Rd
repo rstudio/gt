@@ -40,9 +40,9 @@ a list object of class \code{location_cells}.
 These helper functions are used to target individual cells in different
 locations (e.g., the stub, the column labels, the title, etc.). They can be
 used in any of these functions (which all have a \code{locations} argument):
-\code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and \code{\link[=text_transform]{text_transform()}} Furthermore, multiple
-locations can be targeted by enclosing several \code{cells_*()} helper functions
-in a list.
+\code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and \code{\link[=text_transform]{text_transform()}}. Furthermore,
+multiple locations can be targeted by enclosing several \code{cells_*()} helper
+functions in a \code{\link[=list]{list()}}.
 }
 \details{
 The following helper functions can be used to target cells (roughly in order
@@ -54,22 +54,25 @@ from the top to the bottom of a table):
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
 
+\item \code{cells_stubhead_label()}: targets the stubhead label, a cell of which
+is only available when there is a stub, and a label of which is only
+available if the \code{\link[=tab_stubhead_label]{tab_stubhead_label()}} function is used.
+
 \item \code{cells_column_labels()}: targets labels in the column labels (the
-\code{columns} argument) or the spanner column labels (the \code{groups}
-argument) in the table's column labels part.
+\code{columns} argument) or the spanner column labels (the \code{groups} argument) in
+the table's column labels part.
 
-\item \code{cells_group()}: targets the row group labels in any available
-row groups using the \code{groups} argument.
+\item \code{cells_group()}: targets the row group labels in any available row
+groups using the \code{groups} argument.
 
-\item \code{cells_stub()}: targets row labels in the table stub using the
-\code{rows} argument.
+\item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
+argument.
 
 \item \code{cells_data()}: targets data cells in the table body using
 intersections of \code{columns} and \code{rows}.
 
-\item \code{cells_summary()}: targets summary cells in the table body using
-the \code{groups} argument and intersections of \code{columns} and
-\code{rows}.
+\item \code{cells_summary()}: targets summary cells in the table body using the
+\code{groups} argument and intersections of \code{columns} and \code{rows}.
 }
 }
 \section{Figures}{
