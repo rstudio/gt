@@ -3,9 +3,9 @@
 #' These helper functions are used to target individual cells in different
 #' locations (e.g., the stub, the column labels, the title, etc.). They can be
 #' used in any of these functions (which all have a `locations` argument):
-#' [tab_footnote()], [tab_style()], and [text_transform()] Furthermore, multiple
-#' locations can be targeted by enclosing several `cells_*()` helper functions
-#' in a list.
+#' [tab_footnote()], [tab_style()], and [text_transform()]. Furthermore,
+#' multiple locations can be targeted by enclosing several `cells_*()` helper
+#' functions in a [list()].
 #'
 #' The following helper functions can be used to target cells (roughly in order
 #' from the top to the bottom of a table):
@@ -16,22 +16,25 @@
 #' depending on the value given to the `groups` argument (`"title"` or
 #' `"subtitle"`).
 #'
+#' \item `cells_stubhead_label()`: targets the stubhead label, a cell of which
+#' is only available when there is a stub, and a label of which is only
+#' available if the [tab_stubhead_label()] function is used.
+#'
 #' \item `cells_column_labels()`: targets labels in the column labels (the
-#' `columns` argument) or the spanner column labels (the `groups`
-#' argument) in the table's column labels part.
+#' `columns` argument) or the spanner column labels (the `groups` argument) in
+#' the table's column labels part.
 #'
-#' \item `cells_group()`: targets the row group labels in any available
-#' row groups using the `groups` argument.
+#' \item `cells_group()`: targets the row group labels in any available row
+#' groups using the `groups` argument.
 #'
-#' \item `cells_stub()`: targets row labels in the table stub using the
-#' `rows` argument.
+#' \item `cells_stub()`: targets row labels in the table stub using the `rows`
+#' argument.
 #'
 #' \item `cells_data()`: targets data cells in the table body using
 #' intersections of `columns` and `rows`.
 #'
-#' \item `cells_summary()`: targets summary cells in the table body using
-#' the `groups` argument and intersections of `columns` and
-#' `rows`.
+#' \item `cells_summary()`: targets summary cells in the table body using the
+#' `groups` argument and intersections of `columns` and `rows`.
 #' }
 #'
 #' @param columns,rows,groups Either a vector of names, a vector of indices,
