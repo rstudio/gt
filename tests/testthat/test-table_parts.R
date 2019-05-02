@@ -343,8 +343,18 @@ test_that("a gt table contains custom styles at the correct locations", {
       style = cells_styles(bkgd_color = "red", text_color = "white"),
       locations = cells_group(groups = "Mazdas")
     ) %>%
+    tab_style(
+      style = cells_styles(bkgd_color = "blue", text_color = "white"),
+      locations = cells_stubhead_label()
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
+
+  # Expect that the stubhead label is styled
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color:blue;color:white;']") %>%
+    rvest::html_text("[class='gt_col_heading gt_left']") %>%
+    expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
@@ -377,7 +387,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text())[1:6] %>%
     expect_equal(c("disp", "wt", "qsec", "am", "cyls", "carb"))
 
-  # Expect that most stub cells are styled with a lightgrey background
+  # Expect that most stub cells are styled with a lightgray background
   tbl_html %>%
     rvest::html_nodes("[class='gt_row gt_stub gt_left'][style='background-color:lightgray;']") %>%
     rvest::html_text() %>%

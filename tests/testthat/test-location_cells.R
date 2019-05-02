@@ -339,3 +339,29 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal("vars(col_1, col_2)")
 })
 
+test_that("the `cells_stubhead_label()` function works correctly", {
+
+  # Create a `cells_stubhead_label` object
+  helper_cells_stubhead_label <- cells_stubhead_label()
+
+  # Expect this has the `cells_stubhead_label` and `location_cells` classes
+  helper_cells_stubhead_label %>%
+    expect_is(c("cells_stubhead_label", "location_cells"))
+
+  # Expect the length of the object to be `1`
+  helper_cells_stubhead_label %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect that the object has the single name `groups`
+  helper_cells_stubhead_label %>%
+    names() %>%
+    expect_equal("groups")
+
+  # Expect the first list component to have the `character`
+  helper_cells_stubhead_label[[1]] %>% expect_is("character")
+
+  # Expect a specific value for the single list component
+  helper_cells_stubhead_label[[1]] %>%
+    expect_equal("stubhead_label")
+})
