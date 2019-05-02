@@ -932,3 +932,11 @@ stop_if_not_gt <- function(data) {
     stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
   }
 }
+
+
+#' Expand a path using fs::path_ex
+#' @noRd
+path_expand <- function(file) {
+
+  fs::path_expand(file)
+}

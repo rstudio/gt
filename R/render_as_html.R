@@ -75,7 +75,7 @@ render_as_html <- function(data) {
       create_body_component_h(
         row_splits_body, row_splits_styles, styles_resolved,
         groups_rows_df, col_alignment, stub_components, summaries_present,
-        list_of_summaries, n_rows, n_cols)
+        list_of_summaries, n_rows, n_cols, opts_df)
 
     # Create the source note rows and handle any available footnotes
     source_note_component <-
