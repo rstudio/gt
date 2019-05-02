@@ -549,12 +549,19 @@ create_columns_component_h <- function(boxh_df,
 
     if (stub_available) {
 
+      if (length(stubhead_label) > 0) {
+        column_style <-
+          get_stubhead_label_style(style_attrs = stubhead_label_style_attrs)
+      } else {
+        column_style <- ""
+      }
+
       first_set <-
         c(first_set,
           paste0(
             "<th class='gt_col_heading ", paste0("gt_", col_alignment[1]),
             "' rowspan='2' colspan='1'",
-            get_column_style(column_style_attrs, column_name = headings[1]),
+            column_style,
             ">", headings[1], "</th>"))
 
       headings <- headings[-1]
