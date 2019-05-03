@@ -623,15 +623,12 @@ create_suffix_df <- function(x,
 num_fmt_factory_multi <- function(pattern,
                                   format_fn) {
 
-  # Define the contexts
-  contexts <- c("html", "latex", "default")
-
   # Upgrade `contexts` to have names
-  names(contexts) <- contexts
+  names(all_contexts) <- all_contexts
 
   # Generate a named list of factory functions, with one
   # component per context
-  lapply(contexts, function(x) {
+  lapply(all_contexts, function(x) {
     num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
   })
 }
