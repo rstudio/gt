@@ -386,19 +386,12 @@ context_symbol_str <- function(context,
 
   if (inherits(symbol, "gt_currency")) {
 
-    if (context %in% names(symbol)) {
-
-      symbol <- symbol[[context]]
-
-    } else if ("default" %in% names(symbol)) {
-
-      symbol <- symbol[["default"]]
-
-    } else {
+    symbol <-
+      symbol[[context]] %||%
+      symbol[["default"]] %||%
       stop("The `", context, "` output context isn't available in the ",
            "`currency()` object (and there isn't a `default` context either).",
            call. = FALSE)
-    }
 
     if (context == "latex") {
       symbol <-
