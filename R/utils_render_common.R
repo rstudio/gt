@@ -1,6 +1,9 @@
 
 grand_summary_col <- "::GRAND_SUMMARY"
 
+# Define the contexts
+all_contexts <- c("html", "latex", "rtf", "default")
+
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(boxh_df,
