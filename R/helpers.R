@@ -502,9 +502,6 @@ currency <- function(...,
   # Collect a named list of currencies
   currency_list <- .list
 
-  # Define the contexts
-  contexts <- c("html", "latex", "default")
-
   # Stop function if the currency list contains no values
   if (length(currency_list) == 0) {
     stop("The `currency()` function must be provided with currency symbols.",
@@ -524,10 +521,7 @@ currency <- function(...,
   }
 
   # Stop function if all names are not part of the supported contexts
-  if (!all(names(currency_list) %in% contexts)) {
-    stop("All output contexts must either of `html`, `latex`, or `default`.",
-         call. = FALSE)
-  }
+  validate_contexts(contexts = names(currency_list))
 
   # Stop function if there are duplicated names
   if (!rlang::is_dictionaryish(currency_list)) {
