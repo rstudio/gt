@@ -373,7 +373,7 @@ context_exp_marks <- function(context) {
 #'
 #' @param context The output context.
 #' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
-#'   a currency symbol.
+#'   a currency symbol, or a `gt_currency` object.
 #' @noRd
 context_symbol_str <- function(context,
                                symbol) {
