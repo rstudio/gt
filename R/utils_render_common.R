@@ -4,6 +4,19 @@ grand_summary_col <- "::GRAND_SUMMARY"
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "default")
 
+validate_contexts <- function(contexts) {
+
+  if (!all(contexts %in% all_contexts)) {
+
+    invalid_contexts <- base::setdiff(contexts, all_contexts)
+
+    stop("All output contexts must be in the set of supported contexts\n",
+         " * Supported: ", paste0(all_contexts, collapse = ", "), "\n",
+         " * Invalid: ", paste0(invalid_contexts, collapse = ", "),
+         call. = FALSE)
+  }
+}
+
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(boxh_df,
