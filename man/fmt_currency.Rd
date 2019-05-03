@@ -40,9 +40,8 @@ We can also use the \code{\link[=currency]{currency()}} helper function to speci
 currency, where the string could vary across output contexts. For example,
 using \code{currency(html = "&fnof;", default = "f")} would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
-the letter "f" in all other output contexts). Please note that a value for
-the \code{decimals} argument must be provided if using the \code{\link[=currency]{currency()}} helper
-(this is unless the option \code{use_subunits} is set to \code{FALSE}).
+the letter "f" in all other output contexts). Please note that \code{decimals}
+will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
 
 If nothing is provided to \code{currency} then \code{"USD"} (U.S. dollars) will be
 used.}
