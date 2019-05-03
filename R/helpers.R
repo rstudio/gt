@@ -460,12 +460,11 @@ is.html <- function(x) {
 #' currency symbol to `currency` argument of [fmt_currency()]. Since \pkg{gt}
 #' can render tables to several output formats, `currency()` allows for
 #' different variations of the custom symbol based on the output context (which
-#' are `html`, `latex`, and `default`). Because there is no information on the
-#' number of decimal places required for a custom currency, a value for the
-#' `decimals` argument for [fmt_currency()] must be provided (unless the option
-#' `use_subunits` is set to `FALSE`).
+#' are `html`, `latex`, `rtf`, and `default`). The number of decimal places for
+#' the custom currency defaults to `2`, however, a value set for the `decimals`
+#' argument of [fmt_currency()] will take precedence.
 #'
-#' We can use any combination of `html`, `latex`, and `default` as named
+#' We can use any combination of `html`, `latex`, `rtf`, and `default` as named
 #' arguments for the currency text in each of the namesake contexts. The
 #' `default` value is used as a fallback when there doesn't exist a dedicated
 #' currency text value for a particular output context (e.g., when a table is
