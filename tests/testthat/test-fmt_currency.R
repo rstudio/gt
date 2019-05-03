@@ -533,12 +533,20 @@ test_that("the `currency()` helper function works correctly", {
       "&minus;&#8383;23.2400")
   )
 
-  # Expect an error if a value for `decimals` isn't provided
-  expect_error(
-    tab %>%
-      fmt_currency(
-        columns = "num_1",
-        currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"))
+  # Format the `num_1` column using the `currency()` helper function (not
+  # supplying a value for `decimals`); extract `output_df` in the HTML
+  # context and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(
+           html = "&#8383;", latex = "BTC", default = "BTC")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("&#8383;1,836.23", "&#8383;2,763.39", "&#8383;937.29",
+      "&#8383;643.00", "&#8383;212.23", "&#8383;0.00",
+      "&minus;&#8383;23.24")
   )
 
   # Format the `num_1` column using the `currency()` helper function;
@@ -582,7 +590,4 @@ test_that("the `currency()` helper function works correctly", {
       "$\\text{HK\\$}937.29$", "$\\text{HK\\$}643.00$",
       "$\\text{HK\\$}212.23$", "$\\text{HK\\$}0.00$", "$-\\text{HK\\$}23.24$")
   )
-
-
 })
-
