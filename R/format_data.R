@@ -575,9 +575,8 @@ fmt_percent <- function(data,
 #'   currency, where the string could vary across output contexts. For example,
 #'   using `currency(html = "&fnof;", default = "f")` would give us a suitable
 #'   glyph for the Dutch guilder in an HTML output table, and it would simply be
-#'   the letter "f" in all other output contexts). Please note that a value for
-#'   the `decimals` argument must be provided if using the [currency()] helper
-#'   (this is unless the option `use_subunits` is set to `FALSE`).
+#'   the letter "f" in all other output contexts). Please note that `decimals`
+#'   will default to `2` when using the [currency()] helper function.
 #'
 #'   If nothing is provided to `currency` then `"USD"` (U.S. dollars) will be
 #'   used.
