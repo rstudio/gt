@@ -171,6 +171,7 @@ reference:
     - html
     - px
     - pct
+    - currency
     - escape_latex
     - adjust_luminance
 
