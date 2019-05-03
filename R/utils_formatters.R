@@ -152,9 +152,11 @@ get_currency_decimals <- function(currency,
   if (inherits(currency, "gt_currency")) {
 
     if (is.null(decimals) && use_subunits) {
-      stop("The number of decimal places must be provided if ",
-           "`use_subunits = TRUE` and the `currency()` helper function is used.",
-           call. = FALSE)
+
+      # This default value is a reasonable assumption given
+      # that most currencies present two decimal places
+      return(2)
+
     } else if (!use_subunits) {
 
       return(0)
