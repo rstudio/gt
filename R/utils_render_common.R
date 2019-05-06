@@ -811,6 +811,11 @@ create_summary_rows <- function(n_rows,
     unname()
 }
 
+#' Suitably replace `NA` values in the `groups_df` data frame
+#'
+#' @param groups_df The `groups_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
 replace_na_groups_df <- function(groups_df,
                                  others_group) {
 
@@ -821,6 +826,11 @@ replace_na_groups_df <- function(groups_df,
   groups_df
 }
 
+#' Suitably replace `NA` values in the `groups_rows_df` data frame
+#'
+#' @param groups_rows_df The `groups_rows_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
 replace_na_groups_rows_df <- function(groups_rows_df,
                                       others_group) {
 
