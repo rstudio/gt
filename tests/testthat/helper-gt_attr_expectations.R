@@ -70,8 +70,17 @@ expect_tab <- function(tab,
 
   # Expect that the attribute objects are of the
   # correct dimensions
+  if (dplyr::is_grouped_df(df)) {
 
-  final_df <- df
+    non_group_cols <- base::setdiff(colnames(df), dplyr::group_vars(df))
+
+    final_df <-
+      df %>% dplyr::ungroup() %>%
+      dplyr::select(non_group_cols)
+
+  } else {
+    final_df <- df
+  }
 
   if (has_rownames) {
     final_df$rowname <- NULL
