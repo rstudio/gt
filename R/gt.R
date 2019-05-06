@@ -167,7 +167,9 @@ gt <- function(data,
   # data frames that contain specialized formatting
   # directives that will be used during render time
   empty_df <- data_tbl
-  empty_df[] <- NA_character_
+  if (nrow(data_tbl) > 0) {
+    empty_df[] <- NA_character_
+  }
 
   # Create a data frame that represents the table's
   # columns (`boxh_df`); each row has a special
