@@ -91,6 +91,10 @@ apply_styles_to_output <- function(output_df,
                                    styles_resolved,
                                    n_cols) {
 
+  if (nrow(output_df) == 0) {
+    return()
+  }
+
   styles_output_df <- output_df
   styles_output_df[] <- NA_character_
 
