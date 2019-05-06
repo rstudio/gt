@@ -48,8 +48,7 @@ render_as_html <- function(data) {
 
     # Split `body_content` by slices of rows
     row_splits_body <-
-      split_body_content(
-        body_content, n_cols)
+      split_body_content(body_content, n_cols)
 
     # Create an HTML fragment for the start of the table
     table_start <- create_table_start_h()
