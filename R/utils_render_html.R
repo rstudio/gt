@@ -76,6 +76,10 @@ create_style_attrs <- function(style_values) {
 split_body_content <- function(body_content,
                                n_cols) {
 
+  if (length(body_content) == 0) {
+    return(list(rep("", n_cols)))
+  }
+
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
