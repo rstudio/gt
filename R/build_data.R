@@ -124,17 +124,36 @@ build_data <- function(data, context) {
   # on which rows the group rows should appear above
   groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
 
+  replace_na_groups_df <- function(groups_df,
+                                   others_group) {
+
+    if (nrow(groups_df) > 0) {
+      groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+    }
+
+    groups_df
+  }
+
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
-  groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+  groups_df <- replace_na_groups_df(groups_df, others_group)
+
+
+  replace_na_groups_rows_df <- function(groups_rows_df,
+                                        others_group) {
+
+    if (nrow(groups_rows_df) > 0) {
+      groups_rows_df[
+        is.na(groups_rows_df[, "group"]),
+        c("group", "group_label")] <- others_group
+    }
+
+    groups_rows_df
+  }
 
   # Replace NA values in the `group` and `group_label` columns of
   # `group_rows_df`
-  if (!is.na(others_group)) {
-    groups_rows_df[
-      is.na(groups_rows_df[, "group"]),
-      c("group", "group_label")] <- others_group
-  }
+  groups_rows_df <- replace_na_groups_rows_df(groups_rows_df, others_group)
 
   data_attr$boxh_df <- boxh_df
   data_attr$stub_df <- stub_df
