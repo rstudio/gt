@@ -157,16 +157,10 @@ gt <- function(data,
     )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
-  rows_df <-
-    dplyr::tibble(
-      rownums_start = seq(nrow(data_tbl))
-    )
+  rows_df <-dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
 
   # Create a prepopulated `cols_df` data frame
-  cols_df <-
-    dplyr::tibble(
-      colnames_start = colnames(data_tbl)
-    )
+  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
 
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for
@@ -183,8 +177,7 @@ gt <- function(data,
 
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
-  rownames(boxh_df) <-
-    c("group_label", "column_label", "column_align")
+  rownames(boxh_df) <- c("group_label", "column_label", "column_align")
 
   # Apply initialized data frames as attributes
   # within the object
