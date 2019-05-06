@@ -157,7 +157,11 @@ gt <- function(data,
     )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
-  rows_df <-dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
+  if (nrow(data_tbl) > 0) {
+    rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
+  } else {
+    rows_df <- dplyr::tibble(rownums_start = NA_integer_)[-1, ]
+  }
 
   # Create a prepopulated `cols_df` data frame
   cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
