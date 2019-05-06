@@ -37,7 +37,11 @@ rownum_translation <- function(output_df,
 initialize_output_df <- function(data_df) {
 
   output_df <- data_df
+
+  if (nrow(output_df) > 0) {
   output_df[] <- NA_character_
+  }
+
   output_df
 }
 
