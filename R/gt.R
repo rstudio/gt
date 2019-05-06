@@ -176,6 +176,7 @@ gt <- function(data,
   # meaning and this will be used during render time
   boxh_df <- empty_df[c(), , drop = FALSE]
   boxh_df[1:3, ] = list(NA_character_)
+  boxh_df[] <- NA_character_
 
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
