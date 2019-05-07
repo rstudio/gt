@@ -139,7 +139,7 @@ get_currency_str <- function(currency,
     return(currency_symbol)
 
   } else {
-    return(NA)
+    return(currency)
   }
 }
 
@@ -933,6 +933,7 @@ stop_if_not_gt <- function(data) {
   }
 }
 
+
 #' Resolve the selection of border elements for a table cell
 #'
 #' @noRd
@@ -954,4 +955,11 @@ resolve_selection <- function(selection) {
          a = "all",
          everything = "all",
          all = "all")
+}
+
+#' Expand a path using fs::path_ex
+#' @noRd
+path_expand <- function(file) {
+
+  fs::path_expand(file)
 }
