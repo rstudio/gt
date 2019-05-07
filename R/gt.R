@@ -73,6 +73,12 @@ gt <- function(data,
                rownames_to_stub = FALSE,
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
+  # Stop if input `data` has no columns
+  if (ncol(data) == 0) {
+    stop("The input `data` table must have at least one column.",
+         call. = FALSE)
+  }
+
   # If the option to place rownames in the stub
   # is taken, then the `stub_df` data frame will
   # be pre-populated with rownames in the `rowname`
@@ -134,6 +140,13 @@ gt <- function(data,
 
     # Remove the `groupname` column from `data`
     data[[groupname_col]] <- NULL
+  }
+
+  # Stop if input `data` has no columns (after modifying
+  # `data` for groups)
+  if (ncol(data) == 0) {
+    stop("The `data` must have at least one column that isn't a 'group' column.",
+         call. = FALSE)
   }
 
   # Take the input data and convert to a
