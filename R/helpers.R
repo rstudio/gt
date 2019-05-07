@@ -471,6 +471,87 @@ is.html <- function(x) {
   }
 }
 
+
+#' Supply a custom currency symbol to `fmt_currency()`
+#'
+#' The `currency()` helper function makes it easy to specify a context-aware
+#' currency symbol to `currency` argument of [fmt_currency()]. Since \pkg{gt}
+#' can render tables to several output formats, `currency()` allows for
+#' different variations of the custom symbol based on the output context (which
+#' are `html`, `latex`, `rtf`, and `default`). The number of decimal places for
+#' the custom currency defaults to `2`, however, a value set for the `decimals`
+#' argument of [fmt_currency()] will take precedence.
+#'
+#' We can use any combination of `html`, `latex`, `rtf`, and `default` as named
+#' arguments for the currency text in each of the namesake contexts. The
+#' `default` value is used as a fallback when there doesn't exist a dedicated
+#' currency text value for a particular output context (e.g., when a table is
+#' rendered as HTML and we use `currency(latex = "LTC", default = "ltc")`, the
+#' currency symbol will be `"ltc"`. For convenience, if we provide only a single
+#' string without a name, it will be taken as the `default` (i.e.,
+#' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
+#' we were to specify currency strings for muliple output contexts, names are
+#' required each and every context.
+#'
+#' @param ... One or more named arguments using output contexts as the names and
+#'   currency symbol text as the values.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @return a list object of class `gt_currency`.
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `currency` column to have
+#' # currency values in guilder (a defunct
+#' # Dutch currency)
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = currency(
+#'       html = "&fnof;",
+#'       default = "f"),
+#'     decimals = 2
+#'   )
+#' @export
+currency <- function(...,
+                     .list = list2(...)) {
+
+  # Collect a named list of currencies
+  currency_list <- .list
+
+  # Stop function if the currency list contains no values
+  if (length(currency_list) == 0) {
+    stop("The `currency()` function must be provided with currency symbols.",
+         call. = FALSE)
+  }
+
+  # If only a single string is provided, upgrade the `currency_list`
+  # to have that string be the `default` value
+  if (length(currency_list) == 1 && !rlang::is_named(currency_list)) {
+    currency_list <- list(default = currency_list[[1]])
+  }
+
+  # Stop function if `currency_list` isn't entirely named
+  if (!rlang::is_named(currency_list)) {
+    stop("Names must be provided for all output contexts.",
+         call. = FALSE)
+  }
+
+  # Stop function if all names are not part of the supported contexts
+  validate_contexts(contexts = names(currency_list))
+
+  # Stop function if there are duplicated names
+  if (!rlang::is_dictionaryish(currency_list)) {
+    stop("There cannot be any duplicate names for output contexts.",
+         call. = FALSE)
+  }
+
+  # Set the `gt_currency` class
+  class(currency_list) <- "gt_currency"
+
+  currency_list
+}
+
 #' Helper for defining custom styles for table cells
 #'
 #' This helper function is to be used with the [tab_style()] function, which
