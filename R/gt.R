@@ -191,13 +191,12 @@ gt <- function(data,
   # Create a data frame that represents the table's
   # columns (`boxh_df`); each row has a special
   # meaning and this will be used during render time
-  boxh_df <- empty_df[c(), , drop = FALSE]
-  boxh_df[1:3, ] = list(NA_character_)
-  boxh_df[] <- NA_character_
-
-  # Assign rownames to the `boxh_df` for easier
-  # manipulation of rows
-  rownames(boxh_df) <- c("group_label", "column_label", "column_align")
+  boxh_df <-
+    matrix(data = NA_character_, nrow = 3, ncol = ncol(data_tbl)) %>%
+    as.data.frame() %>%
+    dplyr::mutate_all(as.character) %>%
+    magrittr::set_names(names(data_tbl)) %>%
+    magrittr::set_rownames(c("group_label", "column_label", "column_align"))
 
   # Apply initialized data frames as attributes
   # within the object
