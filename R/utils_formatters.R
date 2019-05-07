@@ -392,15 +392,6 @@ context_symbol_str <- function(context,
       stop("The `", context, "` output context isn't available in the ",
            "`currency()` object (and there isn't a `default` context either).",
            call. = FALSE)
-
-    if (context == "latex") {
-      symbol <-
-        symbol %>%
-        markdown_to_latex() %>%
-        paste_between(x_2 = c("\\text{", "}"))
-    }
-
-    return(symbol)
   }
 
   # If we supply a percent sign as `symbol`,
