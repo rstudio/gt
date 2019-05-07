@@ -614,14 +614,13 @@ create_suffix_df <- function(x,
 num_fmt_factory_multi <- function(pattern,
                                   format_fn) {
 
-  # Upgrade `contexts` to have names
-  names(all_contexts) <- all_contexts
-
   # Generate a named list of factory functions, with one
   # component per context
-  lapply(all_contexts, function(x) {
-    num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
-  })
+  all_contexts %>%
+    magrittr::set_names(all_contexts) %>%
+    lapply(function(x) {
+      num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
+    })
 }
 
 #' A factory function used for all numeric `fmt_*()` functions
