@@ -188,11 +188,8 @@ coalesce_glyphs <- function(fn_tbl,
 
   fn_tbl %>%
     dplyr::filter(locname == !!locname) %>%
-    dplyr::group_by() %>%
-    dplyr::mutate(fs_id_c = paste(fs_id, collapse = delimiter)) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(fs_id_c) %>%
-    dplyr::distinct()
+    dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter)) %>%
+    dplyr::pull(fs_id_c)
 }
 
 #' For a given location, reduce the HTML styles to a single string
