@@ -206,11 +206,10 @@ test_that("the `get_currency_str()` function works correctly", {
   get_currency_str(currency = "hryvnia", fallback_to_code = TRUE) %>%
     expect_equal("&#8372;")
 
-  # Expect an NA value when the currency can't be
+  # Expect the input value when the currency can't be
   # interpreted as a valid currency
   get_currency_str(currency = "thaler") %>%
-    is.na() %>%
-    expect_true()
+    expect_equal("thaler")
 })
 
 test_that("the `get_currency_exponent()` function works correctly", {

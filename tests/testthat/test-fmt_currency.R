@@ -448,3 +448,146 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
        render_formats_test(context = "html"))[["num"]],
     "$999.99990")
 })
+
+test_that("the `currency()` helper function works correctly", {
+
+  # Expect that the object produced by `currency()` is a
+  # list with `gt_currency` class
+  expect_true(
+    currency(html = "&#8383;", latex = "BTC", default = "BTC") %>%
+      is.list()
+  )
+
+  expect_is(
+    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+    "gt_currency"
+  )
+
+  # Expect as many components as there are named arguments
+  currency(html = "&#8383;", latex = "BTC", default = "BTC") %>%
+    length() %>%
+    expect_equal(3)
+
+  currency(html = "&#8383;", default = "BTC") %>%
+    length() %>%
+    expect_equal(2)
+
+  currency(default = "BTC") %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect that a single, unnamed string will be upgraded
+  # to the `default` context
+  single_default_currency <- currency("BTC")
+
+  single_default_currency %>% is.list() %>% expect_true()
+  single_default_currency %>% expect_is("gt_currency")
+  single_default_currency %>% length() %>% expect_equal(1)
+  single_default_currency %>% names() %>% expect_equal("default")
+  single_default_currency[[1]] %>% expect_equal("BTC")
+
+  # Expect an error if nothing is provided
+  expect_error(currency())
+
+  # Expect an error if any argument names don't correspond
+  # to the available contexts
+  expect_error(currency(html = "&#8383;", none = "BTC"))
+
+  # Expect an error there are no names and there are multiple items
+  expect_error(currency("&#8383;", "BTC"))
+
+  # Expect an error if there is partial naming
+  expect_error(currency(html = "&#8383;", "BTC"))
+
+  # Expect an error if there are duplicate names
+  expect_error(currency(html = "&#8383;", default = "BTC", default = "BT"))
+
+  # Create an input data frame four columns: two
+  # character-based and two that are numeric
+  data_tbl <-
+    data.frame(
+      char_1 = c("saturday", "sunday", "monday", "tuesday",
+                 "wednesday", "thursday", "friday"),
+      char_2 = c("june", "july", "august", "september",
+                 "october", "november", "december"),
+      num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
+      num_2 = c(34, 74, 23, 93, 35, 76, 57),
+      stringsAsFactors = FALSE
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data = data_tbl)
+
+  # Format the `num_1` column using the `currency()` helper function;
+  # extract `output_df` in the HTML context and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+         decimals = 4) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("&#8383;1,836.2300", "&#8383;2,763.3900", "&#8383;937.2900",
+      "&#8383;643.0000", "&#8383;212.2320", "&#8383;0.0000",
+      "&minus;&#8383;23.2400")
+  )
+
+  # Format the `num_1` column using the `currency()` helper function (not
+  # supplying a value for `decimals`); extract `output_df` in the HTML
+  # context and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(
+           html = "&#8383;", latex = "BTC", default = "BTC")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("&#8383;1,836.23", "&#8383;2,763.39", "&#8383;937.29",
+      "&#8383;643.00", "&#8383;212.23", "&#8383;0.00",
+      "&minus;&#8383;23.24")
+  )
+
+  # Format the `num_1` column using the `currency()` helper function;
+  # extract `output_df` in the LaTeX context and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+         decimals = 4) %>%
+       render_formats_test(context = "latex"))[["num_1"]],
+    c("$\\text{BTC}1,836.2300$", "$\\text{BTC}2,763.3900$",
+      "$\\text{BTC}937.2900$", "$\\text{BTC}643.0000$",
+      "$\\text{BTC}212.2320$", "$\\text{BTC}0.0000$", "$-\\text{BTC}23.2400$")
+  )
+
+  # Format the `num_1` column using the `currency()` helper function;
+  # extract `output_df` in the HTML context and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(latex = "BTC", default = "bt"),
+         decimals = 2) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("bt1,836.23", "bt2,763.39", "bt937.29", "bt643.00", "bt212.23", "bt0.00",
+      "&minus;bt23.24")
+  )
+
+  # Format the `num_1` column using the `currency()` helper function;
+  # extract `output_df` in the LaTeX context and compare to expected values
+  # (we expect that values are escaped for LaTeX)
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num_1",
+         currency = currency(html = "HKD", latex = "HK$", default = "hkd"),
+         decimals = 2) %>%
+       render_formats_test(context = "latex"))[["num_1"]],
+    c("$\\text{HK\\$}1,836.23$", "$\\text{HK\\$}2,763.39$",
+      "$\\text{HK\\$}937.29$", "$\\text{HK\\$}643.00$",
+      "$\\text{HK\\$}212.23$", "$\\text{HK\\$}0.00$", "$-\\text{HK\\$}23.24$")
+  )
+})

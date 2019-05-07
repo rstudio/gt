@@ -102,6 +102,9 @@ gt_save_webshot <- function(data,
                             zoom = 2,
                             expand = 5) {
 
+  # Normalize file path
+  filename <- filename %>% path_expand()
+
   # Create a temporary file with the `html` extension
   tempfile_ <- tempfile(fileext = ".html")
 
