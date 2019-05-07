@@ -20,12 +20,12 @@ The \code{currency()} helper function makes it easy to specify a context-aware
 currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \pkg{gt}
 can render tables to several output formats, \code{currency()} allows for
 different variations of the custom symbol based on the output context (which
-are \code{html}, \code{latex}, and \code{default}). The number of decimal places for the
-custom currency defaults to \code{2}, however, a value set for the \code{decimals}
+are \code{html}, \code{latex}, \code{rtf}, and \code{default}). The number of decimal places for
+the custom currency defaults to \code{2}, however, a value set for the \code{decimals}
 argument of \code{\link[=fmt_currency]{fmt_currency()}} will take precedence.
 }
 \details{
-We can use any combination of \code{html}, \code{latex}, and \code{default} as named
+We can use any combination of \code{html}, \code{latex}, \code{rtf}, and \code{default} as named
 arguments for the currency text in each of the namesake contexts. The
 \code{default} value is used as a fallback when there doesn't exist a dedicated
 currency text value for a particular output context (e.g., when a table is
