@@ -21,7 +21,7 @@
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
 #'
-#' @param file A path to an image file.
+#' @param filename A path to an image file.
 #' @param height The absolute height (px) of the image in the table cell.
 #' @return a character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -43,7 +43,7 @@
 #'     locations = cells_data(vars(image)),
 #'     fn = function(x) {
 #'       local_image(
-#'         file = test_image(type = "png"),
+#'         filename = test_image(type = "png"),
 #'         height = as.numeric(x)
 #'       )
 #'     }
@@ -55,8 +55,11 @@
 #' @family image addition functions
 #' @importFrom glue glue
 #' @export
-local_image <- function(file,
+local_image <- function(filename,
                         height = 30) {
+
+  # Normalize file path
+  filename <- filename %>% path_expand()
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")
@@ -67,10 +70,10 @@ local_image <- function(file,
   cid <-
     paste0(
       sample(letters, 12) %>% paste(collapse = ""), "__",
-      basename(file))
+      basename(filename))
 
   # Create the image URI
-  uri <- get_image_uri(file)
+  uri <- get_image_uri(filename)
 
   # Generate the Base64-encoded image and place it
   # within <img> tags

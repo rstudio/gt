@@ -139,7 +139,7 @@ get_currency_str <- function(currency,
     return(currency_symbol)
 
   } else {
-    return(NA)
+    return(currency)
   }
 }
 
@@ -931,4 +931,12 @@ stop_if_not_gt <- function(data) {
   if (!is_gt(data)) {
     stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
   }
+}
+
+
+#' Expand a path using fs::path_ex
+#' @noRd
+path_expand <- function(file) {
+
+  fs::path_expand(file)
 }
