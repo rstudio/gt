@@ -188,8 +188,7 @@ coalesce_glyphs <- function(fn_tbl,
 
   fn_tbl %>%
     dplyr::filter(locname == !!locname) %>%
-    dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter)) %>%
-    dplyr::pull(fs_id_c)
+    dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
 #' For a given location, reduce the HTML styles to a single string
@@ -208,11 +207,7 @@ coalesce_styles <- function(style_tbl,
 
   style_tbl %>%
     dplyr::filter(locname == !!locname) %>%
-    dplyr::group_by() %>%
-    dplyr::mutate(styles = paste(text, collapse = delimiter)) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(colname, rownum, styles) %>%
-    dplyr::distinct()
+    dplyr::summarize(styles = paste(text, collapse = delimiter))
 }
 
 #' Create the opening HTML element of a table
