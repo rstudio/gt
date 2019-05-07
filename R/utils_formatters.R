@@ -49,12 +49,19 @@ validate_locale <- function(locale) {
 #' @noRd
 validate_currency <- function(currency) {
 
-  # Stop function if the `currency` provided
-  # isn't a valid one
+  # If `currency` isn't a custom currency object
+  # (`gt_currency`), then validate the supplied symbol
+  if (inherits(currency, "gt_currency")) {
+    return()
+  }
+
+  currency_char <- as.character(currency)
+
+  # Stop function if the `currency` provided isn't a valid one
   if (!(
-    as.character(currency) %in% currency_symbols$curr_symbol |
-    as.character(currency) %in% currencies$curr_code |
-    as.character(currency) %in% currencies$curr_number)) {
+    currency_char %in% currency_symbols$curr_symbol |
+    currency_char %in% currencies$curr_code |
+    currency_char %in% currencies$curr_number)) {
     stop("The supplied `currency` is not available in the list of supported currencies.\n",
          " * Use the `info_currencies()` function to see which currencies can be used.\n",
          " * See `?fmt_currency` to understand which input types are valid.",
@@ -139,6 +146,25 @@ has_order_zero <- function(x) {
 get_currency_decimals <- function(currency,
                                   decimals,
                                   use_subunits) {
+
+  # Stop function if using the `currency()` helper function
+  # without providing a value for `decimals`
+  if (inherits(currency, "gt_currency")) {
+
+    if (is.null(decimals) && use_subunits) {
+
+      # This default value is a reasonable assumption given
+      # that most currencies present two decimal places
+      return(2)
+
+    } else if (!use_subunits) {
+
+      return(0)
+
+    } else {
+      return(decimals)
+    }
+  }
 
   # Get the number of decimal places
   if (is.null(decimals) && use_subunits) {
@@ -347,7 +373,7 @@ context_exp_marks <- function(context) {
 #'
 #' @param context The output context.
 #' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
-#'   a currency symbol.
+#'   a currency symbol, or a `gt_currency` object.
 #' @noRd
 context_symbol_str <- function(context,
                                symbol) {
@@ -356,6 +382,16 @@ context_symbol_str <- function(context,
   # return an empty string
   if (is.null(symbol)) {
     return("")
+  }
+
+  if (inherits(symbol, "gt_currency")) {
+
+    symbol <-
+      symbol[[context]] %||%
+      symbol[["default"]] %||%
+      stop("The `", context, "` output context isn't available in the ",
+           "`currency()` object (and there isn't a `default` context either).",
+           call. = FALSE)
   }
 
   # If we supply a percent sign as `symbol`,
@@ -578,17 +614,13 @@ create_suffix_df <- function(x,
 num_fmt_factory_multi <- function(pattern,
                                   format_fn) {
 
-  # Define the contexts
-  contexts <- c("html", "latex", "default")
-
-  # Upgrade `contexts` to have names
-  names(contexts) <- contexts
-
   # Generate a named list of factory functions, with one
   # component per context
-  lapply(contexts, function(x) {
-    num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
-  })
+  all_contexts %>%
+    magrittr::set_names(all_contexts) %>%
+    lapply(function(x) {
+      num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
+    })
 }
 
 #' A factory function used for all numeric `fmt_*()` functions

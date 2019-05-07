@@ -139,7 +139,7 @@ get_currency_str <- function(currency,
     return(currency_symbol)
 
   } else {
-    return(NA)
+    return(currency)
   }
 }
 
