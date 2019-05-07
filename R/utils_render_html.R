@@ -706,11 +706,7 @@ create_body_component_h <- function(row_splits_body,
 
   body_rows <- c()
 
-  if (n_rows == 0) {
-    n_rows <- 1
-  }
-
-  for (i in seq(n_rows)) {
+  for (i in seq_len(n_rows)) {
 
     if (!is.null(groups_rows_df) &&
         i %in% groups_rows_df$row) {
