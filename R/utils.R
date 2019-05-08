@@ -933,16 +933,6 @@ stop_if_not_gt <- function(data) {
   }
 }
 
-#' Create a random `id` tag for a \pkg{gt} table
-#'
-#' The `random`
-#'
-#' @export
-id_random <- function() {
-
-  paste(sample(letters, 10, 10), collapse = "")
-}
-
 #' Expand a path using fs::path_expand
 #' @noRd
 path_expand <- function(file) {

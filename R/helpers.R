@@ -682,6 +682,19 @@ px <- function(x) {
   paste0(x, "px")
 }
 
+#' Helper for creating a random `id` tag for a \pkg{gt} table
+#'
+#' This helper function is to be used with `id` argument of the [gt()] function.
+#' The `id` option in [gt()] uses `id_random()` by default however we can
+#' optionally supply a custom `id` value, or, use `NULL` for no ID at all.
+#'
+#' @family helper functions
+#' @export
+id_random <- function() {
+
+  paste(sample(letters, 10, 10), collapse = "")
+}
+
 #' Perform LaTeX escaping
 #'
 #' Text may contain several characters with special meanings in LaTeX. This
