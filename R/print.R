@@ -50,8 +50,13 @@ as.tags.gt_tbl <- function(x, ...) {
   container_width <- opts_df_get(opts_df, option = "container_width")
   container_height <- opts_df_get(opts_df, option = "container_height")
 
-  # Create a random `id` tag
-  id <- paste(sample(letters, 10, 10), collapse = "")
+  # Get the table ID from `opts_df`
+  id <- opts_df_get(opts_df, option = "table_id")
+
+  # If the ID hasn't been set, set `id` as NULL
+  if (is.na(id)) {
+    id <- NULL
+  }
 
   # Compile the SCSS as CSS
   css <- compile_scss(data = x, id = id)

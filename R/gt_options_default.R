@@ -4,6 +4,7 @@ gt_options_default <- function() {
     ~parameter,                          ~scss,  ~category,             ~value,
     "container_width",                   FALSE,  "container",           "auto",
     "container_height",                  FALSE,  "container",           "auto",
+    "table_id",                          FALSE,  "table",               NA_character_,
     "table_width",                        TRUE,  "table",               "auto",
     "table_font_size",                    TRUE,  "table",               "16px",
     "table_background_color",             TRUE,  "table",               "#FFFFFF",
@@ -51,6 +52,7 @@ gt_options_default <- function() {
     "footnote_font_size",                 TRUE,  "footnote",            "90%",
     "footnote_padding",                   TRUE,  "footnote",            "4px",
     "sourcenote_font_size",               TRUE,  "sourcenote",          "90%",
-    "sourcenote_padding",                 TRUE,  "sourcenote",          "4px") %>%
+    "sourcenote_padding",                 TRUE,  "sourcenote",          "4px",
+    ) %>%
     as.data.frame()
 }
