@@ -154,6 +154,8 @@
 #' @export
 tab_options <- function(data,
                         table.width = NULL,
+                        table.height = NULL,
+                        table.align = NULL,
                         table.font.size = NULL,
                         table.background.color = NULL,
                         table.border.top.style = NULL,
@@ -202,6 +204,45 @@ tab_options <- function(data,
 
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
+
+  # table.width
+  if (!is.null(table.width)) {
+
+    if (is.numeric(table.width)) {
+      table.width <- paste0(table.width, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "table_width", table.width)
+  }
+
+  # table.height
+  if (!is.null(table.height)) {
+
+    if (is.numeric(table.height)) {
+      table.height <- paste0(table.height, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "table_height", table.height)
+  }
+
+  # table.align
+  if (!is.null(table.align)) {
+
+    if (table.align == "center") {
+      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
+      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
+    }
+
+    if (table.align == "left") {
+      opts_df <- opts_df_set(opts_df, "margin_left", "0")
+      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
+    }
+
+    if (table.align == "right") {
+      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
+      opts_df <- opts_df_set(opts_df, "margin_right", "0")
+    }
+  }
 
   # table.font.size
   if (!is.null(table.font.size)) {
