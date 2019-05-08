@@ -682,7 +682,7 @@ px <- function(x) {
   paste0(x, "px")
 }
 
-#' Helper for creating a random `id` tag for a \pkg{gt} table
+#' Helper for creating a random `id` for a \pkg{gt} table
 #'
 #' This helper function is to be used with `id` argument of the [gt()] function.
 #' The `id` option in [gt()] uses `id_random()` by default however we can

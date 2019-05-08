@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{id_random}
 \alias{id_random}
-\title{Helper for creating a random \code{id} tag for a \pkg{gt} table}
+\title{Helper for creating a random \code{id} for a \pkg{gt} table}
 \usage{
 id_random()
 }
