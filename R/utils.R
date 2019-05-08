@@ -933,9 +933,12 @@ stop_if_not_gt <- function(data) {
   }
 }
 
-#' Create a random `id` tag for the table
-#' @noRd
-random_id <- function() {
+#' Create a random `id` tag for a \pkg{gt} table
+#'
+#' The `random`
+#'
+#' @export
+id_random <- function() {
 
   paste(sample(letters, 10, 10), collapse = "")
 }
