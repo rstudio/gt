@@ -3,6 +3,12 @@
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
+#' @param container.width,container.height The width and height of the table's
+#'   container. Can be specified as a single-length character with units of
+#'   pixels or as a percentage. If provided as a single-length numeric vector,
+#'   it is assumed that the value is given in units of pixels. The [px()] and
+#'   [pct()] helper functions can also be used to pass in numeric values and
+#'   obtain values as pixel or percent units.
 #' @param table.width The width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
@@ -155,8 +161,9 @@
 #' @family table-part creation/modification functions
 #' @export
 tab_options <- function(data,
+                        container.width = NULL,
+                        container.height = NULL,
                         table.width = NULL,
-                        table.height = NULL,
                         table.align = NULL,
                         table.font.size = NULL,
                         table.background.color = NULL,
@@ -207,6 +214,26 @@ tab_options <- function(data,
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
 
+  # container.width
+  if (!is.null(container.width)) {
+
+    if (is.numeric(container.width)) {
+      container.width <- paste0(container.width, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "container_width", container.width)
+  }
+
+  # container.height
+  if (!is.null(container.height)) {
+
+    if (is.numeric(container.height)) {
+      container.height <- paste0(container.height, "px")
+    }
+
+    opts_df <- opts_df_set(opts_df, "container_height", container.height)
+  }
+
   # table.width
   if (!is.null(table.width)) {
 
@@ -215,16 +242,6 @@ tab_options <- function(data,
     }
 
     opts_df <- opts_df_set(opts_df, "table_width", table.width)
-  }
-
-  # table.height
-  if (!is.null(table.height)) {
-
-    if (is.numeric(table.height)) {
-      table.height <- paste0(table.height, "px")
-    }
-
-    opts_df <- opts_df_set(opts_df, "table_height", table.height)
   }
 
   # table.align

@@ -47,7 +47,8 @@ as.tags.gt_tbl <- function(x, ...) {
   opts_df <- attr(x, "opts_df", exact = TRUE)
 
   # Get options related to the enclosing <div>
-  table_height <- opts_df_get(opts_df, option = "table_height")
+  container_width <- opts_df_get(opts_df, option = "container_width")
+  container_height <- opts_df_get(opts_df, option = "container_height")
 
   # Create a random `id` tag
   id <- paste(sample(letters, 10, 10), collapse = "")
@@ -63,7 +64,8 @@ as.tags.gt_tbl <- function(x, ...) {
       style = htmltools::css(
         `overflow-x` = "auto",
         `overflow-y` = "auto",
-        height = table_height),
+        height = container_height,
+        width = container_width),
       htmltools::HTML(html_table))
   )
 
