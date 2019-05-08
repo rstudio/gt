@@ -933,8 +933,7 @@ stop_if_not_gt <- function(data) {
   }
 }
 
-
-#' Expand a path using fs::path_ex
+#' Expand a path using fs::path_expand
 #' @noRd
 path_expand <- function(file) {
 

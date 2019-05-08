@@ -61,6 +61,7 @@ also define several styles within a single call of \code{cells_styles} and
 \seealso{
 Other helper functions: \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}
