@@ -4,7 +4,8 @@
 \alias{tab_options}
 \title{Modify the table output options}
 \usage{
-tab_options(data, table.width = NULL, table.font.size = NULL,
+tab_options(data, table.width = NULL, table.height = NULL,
+  table.align = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
@@ -40,12 +41,15 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{table.width}{The width of the table. Can be specified as a
-single-length character with units of pixels or as a percentage. If
-provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
-be used to pass in numeric values and obtain values as pixel or percent
-units.}
+\item{table.width, table.height}{The width and height of the table. Can be
+specified as a single-length character with units of pixels or as a
+percentage. If provided as a single-length numeric vector, it is assumed
+that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units.}
+
+\item{table.align}{The alignment of the table in its container. By default,
+this is \code{"center"}. Other options are \code{"left"} and \code{"right"}.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{Font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns}, \code{row_group},

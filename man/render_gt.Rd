@@ -4,15 +4,25 @@
 \alias{render_gt}
 \title{A \pkg{gt} display table render function for use in Shiny}
 \usage{
-render_gt(expr, env = parent.frame(), quoted = FALSE,
-  outputArgs = list())
+render_gt(expr, width = NULL, height = NULL, align = NULL,
+  env = parent.frame(), quoted = FALSE, outputArgs = list())
 }
 \arguments{
 \item{expr}{An expression that creates a \pkg{gt} table object.}
 
+\item{width, height}{The width and height of the table. Can be specified as a
+single-length character with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units.}
+
+\item{align}{The alignment of the table in its container. By default, this is
+\code{"center"}. Other options are \code{"left"} and \code{"right"}.}
+
 \item{env}{The environment in which to evaluate the \code{expr}.}
 
-\item{quoted}{Is \code{expr`` a quoted expression (with }quote()`)? This is useful
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This is useful
 if you want to save an expression in a variable.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
@@ -23,8 +33,6 @@ document.}
 A \pkg{gt} display table render function for use in Shiny
 }
 \seealso{
-\link{gt_output}()
-
 Other Shiny functions: \code{\link{gt_output}}
 }
 \concept{Shiny functions}

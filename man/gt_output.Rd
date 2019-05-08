@@ -16,8 +16,6 @@ A \pkg{gt} table output element that can be included in a panel.
 Create a \pkg{gt} display table output element for Shiny
 }
 \seealso{
-\link{render_gt}()
-
 Other Shiny functions: \code{\link{render_gt}}
 }
 \concept{Shiny functions}
