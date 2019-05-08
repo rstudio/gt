@@ -101,14 +101,24 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("auto", "500px"))
 
-  # Modify the `table.height` option using just a numeric value
-  tbl_html <- data %>% tab_options(table.height = 300)
+  # Modify the `container.height` option using a numeric value
+  tbl_html <- data %>% tab_options(container.height = 300)
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "table_height") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "container_height") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "table_height") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "container_height") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "300px"))
+
+  # Modify the `container.width` option using a numeric value
+  tbl_html <- data %>% tab_options(container.width = 300)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "container_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "container_width") %>% dplyr::pull(value)) %>%
     expect_equal(c("auto", "300px"))
 
   # Modify the `table.align` option (using the `"left"` option)
