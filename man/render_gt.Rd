@@ -8,14 +8,16 @@ render_gt(expr, width = NULL, height = NULL, align = NULL,
   env = parent.frame(), quoted = FALSE, outputArgs = list())
 }
 \arguments{
-\item{expr}{An expression that creates a \pkg{gt} table object.}
+\item{expr}{An expression that creates a \pkg{gt} table object. For sake of
+convenience, a data frame or tibble can be used here (it will be
+automatically introduced to \code{\link[=gt]{gt()}} with its default options).}
 
-\item{width, height}{The width and height of the table. Can be specified as a
-single-length character with units of pixels or as a percentage. If
-provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
-be used to pass in numeric values and obtain values as pixel or percent
-units.}
+\item{width, height}{The width and height of the table's container. Either can
+be specified as a single-length character with units of pixels or as a
+percentage. If provided as a single-length numeric vector, it is assumed
+that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units.}
 
 \item{align}{The alignment of the table in its container. By default, this is
 \code{"center"}. Other options are \code{"left"} and \code{"right"}.}
