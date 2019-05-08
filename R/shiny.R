@@ -26,22 +26,10 @@ render_gt <- function(expr,
                       quoted = FALSE,
                       outputArgs = list()) {
 
+  # TODO: width should mean container width
+  # TODO: include example where the table width overflows the container width
+
   check_shiny()
-
-  # If the `expr` is an object that inherits from `data.frame`,
-  # simply use `gt()` with no options to create the gt table
-  if (inherits(expr, "data.frame")) {
-    expr <- expr %>% gt()
-  }
-
-  # Modify some gt table options via `tab_options()`
-  expr <-
-    expr %>%
-    tab_options(
-      table.width = width,
-      table.height = height,
-      table.align = align
-    )
 
   # Install the expression as a function
   func <-
@@ -58,6 +46,21 @@ render_gt <- function(expr,
       if (is.null(result)) {
         return(NULL)
       }
+
+      # If the `expr` is an object that doesn't inherits from `gt_tbl`,
+      # simply use `gt()` with no options to create the gt table
+      if (!inherits(result, "gt_tbl")) {
+        result <- result %>% gt()
+      }
+
+      # Modify some gt table options via `tab_options()`
+      result <-
+        result %>%
+        tab_options(
+          table.width = width,
+          table.height = height,
+          table.align = align
+        )
 
       html_tbl <- as.tags.gt_tbl(result)
 
