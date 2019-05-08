@@ -18,7 +18,7 @@ Helper for providing a numeric value as pixels value
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{id_random}}, \code{\link{md}},
-  \code{\link{pct}}
+  \code{\link{md}}, \code{\link{pct}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}

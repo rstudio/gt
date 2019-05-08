@@ -39,8 +39,8 @@ tab_1 <-
 \seealso{
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
-  \code{\link{gt_latex_dependencies}},
-  \code{\link{id_random}}, \code{\link{md}},
-  \code{\link{pct}}, \code{\link{px}}
+  \code{\link{gt_latex_dependencies}}, \code{\link{md}},
+  \code{\link{pct}}, \code{\link{px}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}
