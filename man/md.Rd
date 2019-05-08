@@ -39,6 +39,7 @@ tab_1 <-
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{pct}}, \code{\link{px}}
+  \code{\link{id_random}}, \code{\link{pct}},
+  \code{\link{px}}
 }
 \concept{helper functions}
