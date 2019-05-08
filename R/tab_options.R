@@ -3,12 +3,14 @@
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #' @inheritParams fmt_number
-#' @param table.width The width of the table. Can be specified as a
-#'   single-length character with units of pixels or as a percentage. If
-#'   provided as a single-length numeric vector, it is assumed that the value is
-#'   given in units of pixels. The [px()] and [pct()] helper functions can also
-#'   be used to pass in numeric values and obtain values as pixel or percent
-#'   units.
+#' @param table.width,table.height The width and height of the table. Can be
+#'   specified as a single-length character with units of pixels or as a
+#'   percentage. If provided as a single-length numeric vector, it is assumed
+#'   that the value is given in units of pixels. The [px()] and [pct()] helper
+#'   functions can also be used to pass in numeric values and obtain values as
+#'   pixel or percent units.
+#' @param table.align The alignment of the table in its container. By default,
+#'   this is `"center"`. Other options are `"left"` and `"right"`.
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
 #'   Font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `columns`, `row_group`,
@@ -259,16 +261,6 @@ tab_options <- function(data,
 
     opts_df <- opts_df_set(
       opts_df, "table_background_color", table.background.color)
-  }
-
-  # table.width
-  if (!is.null(table.width)) {
-
-    if (is.numeric(table.width)) {
-      table.width <- paste0(table.width, "px")
-    }
-
-    opts_df <- opts_df_set(opts_df, "table_width", table.width)
   }
 
   # table.border.top.style
