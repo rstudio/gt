@@ -4,8 +4,8 @@
 \alias{tab_options}
 \title{Modify the table output options}
 \usage{
-tab_options(data, table.width = NULL, table.height = NULL,
-  table.align = NULL, table.font.size = NULL,
+tab_options(data, container.width = NULL, container.height = NULL,
+  table.width = NULL, table.align = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
@@ -41,12 +41,19 @@ tab_options(data, table.width = NULL, table.height = NULL,
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{table.width, table.height}{The width and height of the table. Can be
-specified as a single-length character with units of pixels or as a
-percentage. If provided as a single-length numeric vector, it is assumed
-that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
-functions can also be used to pass in numeric values and obtain values as
-pixel or percent units.}
+\item{container.width, container.height}{The width and height of the table's
+container. Can be specified as a single-length character with units of
+pixels or as a percentage. If provided as a single-length numeric vector,
+it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
+\code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
+obtain values as pixel or percent units.}
+
+\item{table.width}{The width of the table. Can be specified as a
+single-length character with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units.}
 
 \item{table.align}{The alignment of the table in its container. By default,
 this is \code{"center"}. Other options are \code{"left"} and \code{"right"}.}
