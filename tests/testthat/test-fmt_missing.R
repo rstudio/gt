@@ -54,13 +54,13 @@ test_that("the `fmt_missing()` function works correctly", {
     (tab %>%
        fmt_missing(columns = "num_1") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", "74", "—", "93", "—", "76", "—"))
+    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "&mdash;"))
 
   expect_equal(
     (tab %>%
        fmt_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("–", "74", "–", "93", "–", "76", "–"))
+    c("&ndash;", "74", "&ndash;", "93", "&ndash;", "76", "&ndash;"))
 
   expect_equal(
     (tab %>%
@@ -84,7 +84,7 @@ test_that("the `fmt_missing()` function works correctly", {
     (tab %>%
        fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", "74", "—", "93", "—", "76", "NA"))
+    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "NA"))
 
   # Format columns with `fmt_number()` then use
   # `fmt_missing()` on all columns (the two functions
@@ -97,7 +97,7 @@ test_that("the `fmt_missing()` function works correctly", {
        ) %>%
        fmt_missing(columns = TRUE) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", "74.000", "—", "93.000", "—", "76.000", "—"))
+    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;"))
 
   # Reverse the ordering: use `fmt_missing()` first
   # then `fmt_number()`; expect the same output as before
@@ -109,5 +109,5 @@ test_that("the `fmt_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("—", "74.000", "—", "93.000", "—", "76.000", "—"))
+    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;"))
 })

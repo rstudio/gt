@@ -41,7 +41,7 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c("1836.23", "2763.39", "937.2900", "643.0000",
-      "212.2320", "0.0000", "-23.2400"))
+      "212.2320", "0.0000", "&minus;23.2400"))
 
   expect_equal(
     (tab %>%
@@ -65,7 +65,7 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
     c("1836.23", "2763.39", "9.3729 &times; 10<sup class='gt_super'>2</sup>",
       "6.4300 &times; 10<sup class='gt_super'>2</sup>",
       "2.1223 &times; 10<sup class='gt_super'>2</sup>", "0.0000",
-      "-2.3240 &times; 10<sup class='gt_super'>1</sup>")
+      "&minus;2.3240 &times; 10<sup class='gt_super'>1</sup>")
   )
 
   expect_equal(
@@ -89,8 +89,8 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1836.23", "2763.39", "93,729.00%", "64,300.00%",
-      "21,223.20%", "0.00%", "-2,324.00%")
+    c("1836.23", "2763.39", "93,729.00&percnt;", "64,300.00&percnt;",
+      "21,223.20&percnt;", "0.00&percnt;", "&minus;2,324.00&percnt;")
   )
 
   expect_equal(
@@ -100,7 +100,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("3,400.00%", "74", "23", "NA", "35", "NA", "NA")
+    c("3,400.00&percnt;", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -114,7 +114,7 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c("1836.23", "2763.39", "$937.29", "$643.00", "$212.23",
-      "$0.00", "$-23.24")
+      "$0.00", "&minus;$23.24")
   )
 
   expect_equal(
@@ -234,7 +234,7 @@ test_that("the `fmt_missing()` function works with conditional `rows`", {
          columns = vars(num_2),
          rows = num_1 <= 0) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("34", "74", "23", "NA", "35", rep("—", 2))
+    c("34", "74", "23", "NA", "35", rep("&mdash;", 2))
   )
 })
 

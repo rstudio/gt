@@ -6,13 +6,13 @@
 \title{Twice hourly solar zenith angles by month & latitude}
 \format{A tibble with 816 rows and 4 variables:
 \describe{
-  \item{latitude}{The latitude in decimal degrees for the observations}
-  \item{month}{The measurement month; all calculations where conducted
-  for the first day of each month}
-  \item{tst}{The true solar time at the given \code{latitude} and date
-  (first of \code{month}) for which the solar zenith angle is calculated}
-  \item{sza}{The solar zenith angle in degrees, where \code{NA}s
-  indicate that sunrise hadn't yet occurred by the \code{tst} value}
+\item{latitude}{The latitude in decimal degrees for the observations}
+\item{month}{The measurement month; all calculations where conducted
+for the first day of each month}
+\item{tst}{The true solar time at the given \code{latitude} and date
+(first of \code{month}) for which the solar zenith angle is calculated}
+\item{sza}{The solar zenith angle in degrees, where \code{NA}s
+indicate that sunrise hadn't yet occurred by the \code{tst} value}
 }}
 \source{
 Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
