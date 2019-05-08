@@ -47,10 +47,7 @@ as.tags.gt_tbl <- function(x, ...) {
   opts_df <- attr(x, "opts_df", exact = TRUE)
 
   # Get the table ID from `opts_df`
-  id <-
-    opts_df %>%
-    dplyr::filter(parameter == "table_id") %>%
-    dplyr::pull(value)
+  id <- opts_df_get(opts_df, option = "table_id")
 
   # If the ID hasn't been set, set `id` as NULL
   if (is.na(id)) {
