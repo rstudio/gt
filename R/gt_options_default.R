@@ -1,11 +1,12 @@
 gt_options_default <- function() {
 
   dplyr::tribble(
-    ~parameter,                           ~scss, ~category,             ~value,
+    ~parameter,                          ~scss,  ~category,             ~value,
+    "container_width",                   FALSE,  "container",           "auto",
+    "container_height",                  FALSE,  "container",           "auto",
+    "table_width",                        TRUE,  "table",               "auto",
     "table_font_size",                    TRUE,  "table",               "16px",
     "table_background_color",             TRUE,  "table",               "#FFFFFF",
-    "table_width",                        TRUE,  "table",               "auto",
-    "table_height",                      FALSE,  "table",               "auto",
     "margin_left",                        TRUE,  "table",               "auto",
     "margin_right",                       TRUE,  "table",               "auto",
     "table_border_top_style",             TRUE,  "table",               "solid",
