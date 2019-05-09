@@ -1,11 +1,17 @@
 gt_options_default <- function() {
 
   dplyr::tribble(
-    ~parameter,                           ~scss, ~category,             ~value,
+    ~parameter,                          ~scss,  ~category,             ~value,
+    "container_width",                   FALSE,  "container",           "auto",
+    "container_height",                  FALSE,  "container",           "auto",
+    "container_overflow_x",              FALSE,  "container",           "auto",
+    "container_overflow_y",              FALSE,  "container",           "auto",
     "table_id",                          FALSE,  "table",               NA_character_,
+    "table_width",                        TRUE,  "table",               "auto",
     "table_font_size",                    TRUE,  "table",               "16px",
     "table_background_color",             TRUE,  "table",               "#FFFFFF",
-    "table_width",                        TRUE,  "table",               "auto",
+    "margin_left",                        TRUE,  "table",               "auto",
+    "margin_right",                       TRUE,  "table",               "auto",
     "table_border_top_style",             TRUE,  "table",               "solid",
     "table_border_top_width",             TRUE,  "table",               "2px",
     "table_border_top_color",             TRUE,  "table",               "#A8A8A8",
@@ -18,7 +24,7 @@ gt_options_default <- function() {
     "column_labels_background_color",     TRUE,  "columns",             NA_character_,
     "column_labels_font_size",            TRUE,  "columns",             "16px",
     "column_labels_font_weight",          TRUE,  "columns",             "initial",
-    "column_labels_hidden",               FALSE,  "columns",            "FALSE",
+    "column_labels_hidden",              FALSE,  "columns",             "FALSE",
     "row_group_background_color",         TRUE,  "row_group",           NA_character_,
     "row_group_font_size",                TRUE,  "row_group",           "16px",
     "row_group_font_weight",              TRUE,  "row_group",           "initial",

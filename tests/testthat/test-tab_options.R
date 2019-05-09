@@ -81,6 +81,88 @@ test_that("the internal `opts_df` table can be correctly modified", {
   # Check that specific suggested packages are available
   check_suggests()
 
+  # Modify the `table.width`
+  tbl_html <- data %>% tab_options(table.width = pct(50))
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "50%"))
+
+  # Modify the `table.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table.width = 500)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "500px"))
+
+  # Modify the `container.height` option using a numeric value
+  tbl_html <- data %>% tab_options(container.height = 300)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "container_height") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "container_height") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "300px"))
+
+  # Modify the `container.width` option using a numeric value
+  tbl_html <- data %>% tab_options(container.width = 300)
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "container_width") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "container_width") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "300px"))
+
+  # Modify the `table.align` option (using the `"left"` option)
+  tbl_html <- data %>% tab_options(table.align = "left")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    opts_df_1 %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "auto", "0", "auto"))
+
+  # Modify the `table.align` option (using the `"center"` option)
+  tbl_html <- data %>% tab_options(table.align = "center")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    opts_df_1 %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "auto", "auto", "auto"))
+
+  # Modify the `table.align` option (using the `"right"` option)
+  tbl_html <- data %>% tab_options(table.align = "right")
+
+  # Compare before and after values
+  c(opts_df_1 %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    opts_df_1 %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+    attr(tbl_html, "opts_df", exact = TRUE) %>%
+      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+    expect_equal(c("auto", "auto", "auto", "0"))
+
   # Modify the `table.font.size`
   tbl_html <- data %>% tab_options(table.font.size = px(14))
 
@@ -101,7 +183,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
       dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value)) %>%
     expect_equal(c("16px", "14px"))
 
-
   # Compare before and after values
   c(opts_df_1 %>%
       dplyr::filter(parameter == "table_font_size") %>% dplyr::pull(value),
@@ -118,26 +199,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
     attr(tbl_html, "opts_df", exact = TRUE) %>%
       dplyr::filter(parameter == "table_background_color") %>% dplyr::pull(value)) %>%
     expect_equal(c("#FFFFFF", "yellow"))
-
-  # Modify the `table.width`
-  tbl_html <- data %>% tab_options(table.width = pct(50))
-
-  # Compare before and after values
-  c(opts_df_1 %>%
-      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
-    attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("auto", "50%"))
-
-  # Modify the `table.width` option using just a numeric value
-  tbl_html <- data %>% tab_options(table.width = 500)
-
-  # Compare before and after values
-  c(opts_df_1 %>%
-      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value),
-    attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "table_width") %>% dplyr::pull(value)) %>%
-    expect_equal(c("auto", "500px"))
 
   # Modify the `table.border.top.style`
   tbl_html <- data %>% tab_options(table.border.top.style = "dashed")
