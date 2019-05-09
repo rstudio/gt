@@ -22,7 +22,9 @@
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units.
 #' @param table.align The alignment of the table in its container. By default,
-#'   this is `"center"`. Other options are `"left"` and `"right"`.
+#'   this is `"center"`. Other options are `"left"` and `"right"`. This will
+#'   automatically set `table.margin.left` and `table.margin.right` to the
+#'   appropriate values.
 #' @param table.margin.left,table.margin.right The size of the margins on the
 #'   left and right of the table within the container. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If

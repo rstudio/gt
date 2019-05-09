@@ -65,7 +65,9 @@ be used to pass in numeric values and obtain values as pixel or percent
 units.}
 
 \item{table.align}{The alignment of the table in its container. By default,
-this is \code{"center"}. Other options are \code{"left"} and \code{"right"}.}
+this is \code{"center"}. Other options are \code{"left"} and \code{"right"}. This will
+automatically set \code{table.margin.left} and \code{table.margin.right} to the
+appropriate values.}
 
 \item{table.margin.left, table.margin.right}{The size of the margins on the
 left and right of the table within the container. Can be specified as a

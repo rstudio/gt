@@ -32,7 +32,6 @@
 #'   document.
 #'
 #' @examples
-#' \dontrun{
 #' # Here is a Shiny app (contained within
 #' # a single file) that (1) prepares a
 #' # gt table, (2) sets up the `ui` with
@@ -63,6 +62,7 @@
 #'     )
 #' }
 #'
+#' \dontrun{
 #' shinyApp(ui, server)
 #' }
 #' @family Shiny functions
@@ -147,7 +147,6 @@ render_gt <- function(expr,
 #' @param outputId An output variable from which to read the table.
 #'
 #' @examples
-#' \dontrun{
 #' # Here is a Shiny app (contained within
 #' # a single file) that (1) prepares a
 #' # gt table, (2) sets up the `ui` with
@@ -178,6 +177,7 @@ render_gt <- function(expr,
 #'     )
 #' }
 #'
+#' \dontrun{
 #' shinyApp(ui, server)
 #' }
 #' @family Shiny functions

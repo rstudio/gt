@@ -25,7 +25,6 @@ is easily by using \code{install.packages("shiny")}. More information on creatin
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 }
 \examples{
-\dontrun{
 # Here is a Shiny app (contained within
 # a single file) that (1) prepares a
 # gt table, (2) sets up the `ui` with
@@ -56,6 +55,7 @@ server <- function(input,
     )
 }
 
+\dontrun{
 shinyApp(ui, server)
 }
 }
