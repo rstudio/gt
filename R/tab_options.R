@@ -243,6 +243,9 @@ tab_options <- function(data,
                                ...,
                                collapse = ",") {
 
+    # TODO: Move all util function to outside of function
+
+
     # If `option` is `NULL`, exit function
     if (is.null(option)) {
       return()
@@ -316,18 +319,18 @@ tab_options <- function(data,
 
     if (option == "center") {
 
-      opts_df_set_value("margin_left", "auto", var_name)
-      opts_df_set_value("margin_right", "auto", var_name)
+      opts_df_set_value("table_margin_left", "auto", var_name)
+      opts_df_set_value("table_margin_right", "auto", var_name)
 
     } else if (option == "left") {
 
-      opts_df_set_value("margin_left", "0", var_name)
-      opts_df_set_value("margin_right", "auto", var_name)
+      opts_df_set_value("table_margin_left", "0", var_name)
+      opts_df_set_value("table_margin_right", "auto", var_name)
 
     } else if (option == "right") {
 
-      opts_df_set_value("margin_left", "auto", var_name)
-      opts_df_set_value("margin_right", "0", var_name)
+      opts_df_set_value("table_margin_left", "auto", var_name)
+      opts_df_set_value("table_margin_right", "0", var_name)
 
     } else {
       stop("The chosen option for `", var_name, "` (`", option, "`) is invalid\n",
@@ -345,7 +348,7 @@ tab_options <- function(data,
   # container.overflow.x
   opts_df_set_overflow("container_overflow_x", container.overflow.x)
 
-  # container.overflow.x
+  # container.overflow.y
   opts_df_set_overflow("container_overflow_y", container.overflow.y)
 
   # table.width
@@ -355,10 +358,10 @@ tab_options <- function(data,
   opts_df_set_table_align("ignored", table.align)
 
   # table.margin.left
-  opts_df_set_px("margin_left", table.margin.left)
+  opts_df_set_px("table_margin_left", table.margin.left)
 
   # table.margin.right
-  opts_df_set_px("margin_right", table.margin.right)
+  opts_df_set_px("table_margin_right", table.margin.right)
 
   # table.font.size
   opts_df_set_px("table_font_size", table.font.size)

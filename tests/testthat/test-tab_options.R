@@ -126,13 +126,13 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     opts_df_1 %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value)) %>%
     expect_equal(c("auto", "auto", "0", "auto"))
 
   # Modify the `table.align` option (using the `"center"` option)
@@ -140,13 +140,13 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     opts_df_1 %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value)) %>%
     expect_equal(c("auto", "auto", "auto", "auto"))
 
   # Modify the `table.align` option (using the `"right"` option)
@@ -154,13 +154,13 @@ test_that("the internal `opts_df` table can be correctly modified", {
 
   # Compare before and after values
   c(opts_df_1 %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     opts_df_1 %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_left") %>% dplyr::pull(value),
+      dplyr::filter(parameter == "table_margin_left") %>% dplyr::pull(value),
     attr(tbl_html, "opts_df", exact = TRUE) %>%
-      dplyr::filter(parameter == "margin_right") %>% dplyr::pull(value)) %>%
+      dplyr::filter(parameter == "table_margin_right") %>% dplyr::pull(value)) %>%
     expect_equal(c("auto", "auto", "auto", "0"))
 
   # Modify the `table.font.size`
