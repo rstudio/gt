@@ -1,0 +1,59 @@
+---
+title: "Formatting Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Formatting Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+library(gt)
+library(dplyr)
+```
+
+Just as with any spreadsheet application, we can format our input data in a variety of ways. We might want to ensure a consistent number of decimal places are displayed in a certain column. Perhaps dates should be given a format that includes the day of the week. If we are lucky enough to have Markdown text within some cells, it should be transformed to HTML. The formatting functions of **gt** provide us with these such options and more. All of them begin with `fmt` and most operate with the following principles:
+
+1. entire columns can formatted as a batch operation (with an expression in the `columns` argument)
+2. the rows to be included can be filtered (with an expression in the `rows` argument). 
+
+### Numeric Formatting Functions
+
+`fmt_number()` 
+
+`fmt_scientific()`
+
+`fmt_percent()`
+
+`fmt_currency()`
+
+### Date and Time Formatting Functions
+
+`fmt_date()`
+
+`fmt_time()`
+
+`fmt_datetime()`
+
+### Formatting Markdown Text
+
+`fmt_markdown()`
+
+### Formatting `NA` Values with `fmt_missing()`
+
+`fmt_missing()`
+
+### The Formatter that Does (Almost) Nothing: `fmt_passthrough()`
+
+`fmt_passthrough()`
+
+### The `fmt()` Function: for that DIY Formatting
+
+`fmt()`
+
+### Summary
+
