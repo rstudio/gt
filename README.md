@@ -56,7 +56,6 @@ end_date <- "2010-06-14"
 sp500 %>%
   dplyr::filter(date >= start_date & date <= end_date) %>%
   dplyr::select(-adj_close) %>%
-  dplyr::mutate(date = as.character(date)) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
@@ -72,8 +71,7 @@ sp500 %>%
   ) %>%
   fmt_number(
     columns = vars(volume),
-    scale_by = 1 / 1E9,
-    pattern = "{x}B"
+    suffixing = TRUE
   )
 ```
 
@@ -113,7 +111,6 @@ You can install the development version of **gt** from **GitHub**. Use
 the following in the R console to install **gt**.
 
 ``` r
-install.packages("devtools")
 remotes::install_github("rstudio/gt")
 ```
 

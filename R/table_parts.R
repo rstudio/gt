@@ -6,11 +6,11 @@
 #' header's title and subtitle. Furthermore, if the table is intended for HTML
 #' output, we can use HTML in either of the title or subtitle.
 #' @inheritParams fmt_number
-#' @param title,subtitle text to be used in the table title and, optionally, for
-#'   the table subtitle. We can elect to use the \code{\link{md}()} and
-#'   \code{\link{html}()} helper functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param title,subtitle Text to be used in the table title and, optionally, for
+#'   the table subtitle. We can elect to use the [md()] and [html()] helper
+#'   functions to style the text as Markdown or to retain HTML elements in the
+#'   text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header part to contain a title
@@ -56,10 +56,10 @@ tab_header <- function(data,
 #' Markdown formatting for the stubhead label. Furthermore, if the table is
 #' intended for HTML output, we can use HTML for the stubhead label.
 #' @inheritParams fmt_number
-#' @param label the text to be used as the stubhead label We can optionally
-#'   use the \code{\link{md}()} and \code{\link{html}()} functions to style the
-#'   text as Markdown or to retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param label The text to be used as the stubhead label We can optionally use
+#'   the [md()] and [html()] functions to style the text as Markdown or to
+#'   retain HTML elements in the text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
@@ -89,25 +89,24 @@ tab_stubhead_label <- function(data,
 #'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like \code{starts_with()}.
+#' through use of a select helper function like `starts_with()`.
 #' @inheritParams fmt_number
-#' @param group the name of the row group. This text will also serve as the row
+#' @param group The name of the row group. This text will also serve as the row
 #'   group label.
-#' @param rows the rows to be made components of the row group. Can either be a
-#'   vector of row captions provided \code{c()}, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   \code{\link{starts_with}()}, \code{\link{ends_with}()},
-#'   \code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-#'   and \code{\link{everything}()}.
-#' @param others an option to set a default row group label for any rows not
-#'   formally placed in a row group named by \code{group} in any call of
-#'   \code{tab_row_group()}. A separate call to \code{tab_row_group()} with only
-#'   a value to \code{others} is possible and makes explicit that the call is
-#'   meant to provide a default row group label. If this is not set and
-#'   there are rows that haven't been placed into a row group (where one or
-#'   more row groups already exist), those rows will be automatically placed into
-#'   a row group without a label.
-#' @return an object of class \code{gt_tbl}.
+#' @param rows The rows to be made components of the row group. Can either be a
+#'   vector of row captions provided `c()`, a vector of row indices, or a helper
+#'   function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
+#' @param others An option to set a default row group label for any rows not
+#'   formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
+#'   to `others` is possible and makes explicit that the call is meant to
+#'   provide a default row group label. If this is not set and there are rows
+#'   that haven't been placed into a row group (where one or more row groups
+#'   already exist), those rows will be automatically placed into a row group
+#'   without a label.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table and
 #' # add two row groups with the labels:
@@ -161,22 +160,21 @@ tab_row_group <- function(data,
   # Create a row group if a `group` is provided
   if (!is.null(group)) {
 
-    # Get the `data_df` data frame from `data`
-    data_df <- as.data.frame(data)
-
     # Get the `stub_df` data frame from `data`
     stub_df <- attr(data, "stub_df", exact = TRUE)
 
-    # Collect the rownames from `stub_df`
-    rownames <- stub_df$rowname
-
     # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows <-
-      resolve_vars(var_expr = row_expr, var_names = rownames, data_df = data_df)
+    resolved_rows_idx <-
+      resolve_data_vals_idx(
+        var_expr = !!row_expr,
+        data = data,
+        vals = stub_df$rowname
+      )
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows, "groupname"] <- process_text(group[1])
+    attr(data, "stub_df")[resolved_rows_idx, "groupname"] <-
+      process_text(group[1])
 
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
@@ -223,9 +221,12 @@ tab_row_group <- function(data,
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
 #' @inheritParams fmt_number
-#' @param label the text to use for the spanner column label.
-#' @param columns the columns to be components of the spanner heading.
-#' @return an object of class \code{gt_tbl}.
+#' @param label The text to use for the spanner column label.
+#' @param columns The columns to be components of the spanner heading.
+#' @param gather An option to move the specified `columns` such that they are
+#'   unified under the spanner column label. Ordering of the moved-into-place
+#'   columns will be preserved in all cases.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # Group several columns related to car
@@ -253,31 +254,54 @@ tab_row_group <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns) {
+                        columns,
+                        gather = TRUE) {
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
 
-  # If using the `vars()` helper, get the columns as a character vector
-  if (inherits(columns, "quosures")) {
-    columns <- columns %>% lapply(`[[`, 2) %>% as.character()
-  }
+  columns <- enquo(columns)
 
-  # Filter the vector of column names by the
-  # column names actually in `input_df`
-  columns <- columns[which(columns %in% colnames(data))]
+  # Get the columns supplied in `columns` as a character vector
+  column_names <- resolve_vars(var_expr = !!columns, data = data)
 
-  if (length(columns) == 0) {
-    return(data)
-  }
-
+  # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  for (i in seq(columns)) {
-    grp_labels[[columns[i]]] <- label
-  }
+  # Apply the `label` value to the relevant components
+  # of the `grp_labels` list
+  grp_labels[column_names] <- label
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
+
+  # Gather columns not part of the group of columns under
+  # the spanner heading
+  if (gather && length(column_names) > 1) {
+
+    # Extract the internal `boxh_df` table
+    boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+    # Get the sequence of columns available in `boxh_df`
+    all_columns <- colnames(boxh_df)
+
+    # Get the vector positions of the `columns` in
+    # `all_columns`
+    matching_vec <-
+      match(column_names, all_columns) %>%
+      sort() %>%
+      unique()
+
+    # Get a vector of column names
+    columns_sorted <- all_columns[matching_vec]
+
+    # Move columns into place
+    data <-
+      data %>%
+      cols_move(
+        columns = columns_sorted[-1],
+        after = columns_sorted[1]
+      )
+  }
 
   data
 }
@@ -286,15 +310,14 @@ tab_spanner <- function(data,
 #'
 #' Add a source note to the footer part of the \pkg{gt} table. A source note is
 #' useful for citing the data included in the table. Several can be added to the
-#' footer, simply use multiple calls of \code{tab_source_note()} and they will
-#' be inserted in the order provided. We can use Markdown formatting for the
-#' note, or, if the table is intended for HTML output, we can include HTML
-#' formatting.
+#' footer, simply use multiple calls of `tab_source_note()` and they will be
+#' inserted in the order provided. We can use Markdown formatting for the note,
+#' or, if the table is intended for HTML output, we can include HTML formatting.
 #' @inheritParams fmt_number
-#' @param source_note text to be used in the source note. We can optionally use
-#'   the \code{\link{md}()} and \code{\link{html}()} functions to style the text
-#'   as Markdown or to retain HTML elements in the text.
-#' @return an object of class \code{gt_tbl}.
+#' @param source_note Text to be used in the source note. We can optionally use
+#'   the [md()] and [html()] functions to style the text as Markdown or to
+#'   retain HTML elements in the text.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a source note to the table

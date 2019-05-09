@@ -1,7 +1,7 @@
 #' Print the table
 #'
 #' This facilitates printing of the HTML table to the R console.
-#' @param x an object of class \code{gt_tbl}.
+#' @param x An object of class `gt_tbl`.
 #' @keywords internal
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
@@ -20,7 +20,7 @@ knitr_is_rtf_output <- function() {
 #' Knit print the table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
-#' @param x an object of class \code{gt_tbl}.
+#' @param x An object of class `gt_tbl`.
 #' @keywords internal
 knit_print.gt_tbl <- function(x, ...) {
 
@@ -43,8 +43,16 @@ as.tags.gt_tbl <- function(x, ...) {
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
-  # Create a random `id` tag
-  id <- paste(sample(letters, 10, 10), collapse = "")
+  # Extract the `opts_df` data frame object from `x`
+  opts_df <- attr(x, "opts_df", exact = TRUE)
+
+  # Get the table ID from `opts_df`
+  id <- opts_df_get(opts_df, option = "table_id")
+
+  # If the ID hasn't been set, set `id` as NULL
+  if (is.na(id)) {
+    id <- NULL
+  }
 
   # Compile the SCSS as CSS
   css <- compile_scss(data = x, id = id)

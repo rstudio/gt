@@ -7,11 +7,11 @@
 md(text)
 }
 \arguments{
-\item{text}{the text that is understood to contain Markdown formatting.}
+\item{text}{The text that is understood to contain Markdown formatting.}
 }
 \value{
-a character object that is tagged for a Markdown-to-HTML
-  transformation.
+A character object that is tagged for a Markdown-to-HTML
+transformation.
 
 a character object of class \code{from_markdown}.
 }
@@ -39,6 +39,7 @@ tab_1 <-
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{pct}}, \code{\link{px}}
+  \code{\link{pct}}, \code{\link{px}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}

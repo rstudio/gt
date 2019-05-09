@@ -39,7 +39,7 @@ summary_tbl <-
   fmt_missing(columns = vars(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
-    stub_group.background.color = "lightblue")
+    row_group.background.color = "lightblue")
 
 summary_tbl
 

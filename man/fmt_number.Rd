@@ -5,80 +5,91 @@
 \title{Format numeric values}
 \usage{
 fmt_number(data, columns, rows = NULL, decimals = 2,
-  drop_trailing_zeros = FALSE, negative_val = "signed",
-  use_seps = TRUE, scale_by = 1, pattern = "{x}", sep_mark = ",",
+  drop_trailing_zeros = FALSE, use_seps = TRUE, scale_by = 1,
+  suffixing = FALSE, pattern = "{x}", sep_mark = ",",
   dec_mark = ".", locale = NULL)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the columns to format. Can either be a series of column names
-provided in \code{vars()}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}.}
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row
-captions provided \code{c()}, a vector of row indices, or a helper function
-focused on selections. The select helper functions are:
-\code{\link{starts_with}()}, \code{\link{ends_with}()},
-\code{\link{contains}()}, \code{\link{matches}()}, \code{\link{one_of}()},
-and \code{\link{everything}()}. We can also use expressions to filter down
-to the rows we need (e.g., \code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Not providing any value results in all
+rows in \code{columns} being formatted. Can either be a vector of row captions
+provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
+selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{decimals}{an option to specify the exact number of decimal places to
+\item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
-\item{drop_trailing_zeros}{a logical value that allows for removal of
+\item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
-\item{negative_val}{the formatting to use for negative values. With
-\code{signed} (the default), negative values will be shown with a negative
-sign. Using \code{parens} will show the negative value in parentheses.}
-
-\item{use_seps}{an option to use digit group separators. The type of digit
+\item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{scale_by}{a value to scale the input. The default is \code{1.0}.}
+\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
+values will be multiplied by this value first before undergoing formatting.
+This value will be ignored if using any of the \code{suffixing} options (i.e.,
+where \code{suffixing} is not set to \code{FALSE}).}
 
-\item{pattern}{a formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all
-other characters are taken to be string literals.}
+\item{suffixing}{An option to scale and apply suffixes to larger numbers
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can accept a
+logical value, where \code{FALSE} (the default) will not perform this
+transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
+billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
+We can also specify which symbols to use for each of the value ranges by
+using a character vector of the preferred symbols to replace the defaults
+(e.g., \code{c("k", "Ml", "Bn", "Tr")}).
 
-\item{sep_mark}{the mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a
-formatted value of \code{1,000}).}
+Including \code{NA} values in the vector will ensure that the particular range
+will either not be included in the transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the thousands range) or the range will
+inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
+in the range of millions and billions will be in terms of millions).
 
-\item{dec_mark}{the character to use as a decimal mark (e.g., using
-\code{dec_mark = ","} with \code{0.152} would result in a formatted value
-of \code{0,152}).}
+Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
+that any value provided to \code{scale_by} will be ignored.}
 
-\item{locale}{an optional locale ID that can be used for formatting the value
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
+
+\item{sep_mark}{The mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \code{1,000}).}
+
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and
-\code{dec_mark}.}
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \pkg{gt} table, we can perform number-based
 formatting so that the targeted values are rendered with a higher
 consideration for tabular presentation. Furthermore, there is finer control
-over numeric foramtting with the following options:
+over numeric formatting with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item negative values: choice of a negative sign or parentheses for values
-less than zero
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
+\item large-number suffixing: larger figures (thousands, millions, etc.) can
+be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 values
 \item locale-based formatting: providing a locale ID will result in number
@@ -86,12 +97,11 @@ formatting specific to the chosen locale
 }
 }
 \details{
-Targeting of values is done through \code{columns} and additionally by
-\code{rows} (if nothing is provided for \code{rows} then entire columns are
-selected). A number of helper functions exist to make targeting more
-effective. Conditional formatting is possible by providing a conditional
-expression to the \code{rows} argument. See the Arguments section for more
-information on this.
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
@@ -114,31 +124,35 @@ tab_1 <-
     use_seps = FALSE
   )
 
-# Use `exibble` to create a gt table;
-# format the `num` column as numeric,
-# but treating the first four rows
-# different than the last four
+# Use `countrypops` to create a gt
+# table; format all columns to use
+# large-number suffixing
 tab_2 <-
-  exibble \%>\%
-  gt() \%>\%
+  countrypops \%>\%
+  dplyr::select(
+    country_code_3, year, population) \%>\%
+  dplyr::filter(
+    country_code_3 \%in\% c(
+      "CHN", "IND", "USA", "PAK", "IDN")
+  ) \%>\%
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
+  tidyr::spread(year, population) \%>\%
+  dplyr::arrange(desc(`2015`)) \%>\%
+  gt(rowname_col = "country_code_3") \%>\%
   fmt_number(
-    columns = vars(num),
-    rows = 1:4,
-    decimals = 2) \%>\%
-  fmt_number(
-    columns = vars(num),
-    rows = 5:8,
-    decimals = 1,
-    scale_by = 1/1000,
-    pattern = "{x}K")
+    columns = TRUE,
+    decimals = 2,
+    suffixing = TRUE
+  )
 
 }
 \seealso{
 Other data formatting functions: \code{\link{data_color}},
   \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{fmt}}, \code{\link{text_transform}}
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{data formatting functions}

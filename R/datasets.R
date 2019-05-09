@@ -4,20 +4,19 @@
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
 #' and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-#' \code{population} value for a given \code{year} (from 1960 to 2017). Any
-#' \code{NA} values for \code{populations} indicate the non-existence of the
-#' country during that year.
+#' `population` value for a given `year` (from 1960 to 2017). Any `NA` values
+#' for `populations` indicate the non-existence of the country during that year.
 #'
 #' @format A tibble with 12470 rows and 5 variables:
 #' \describe{
-#'   \item{country_name}{Name of the country}
-#'   \item{country_code_2}{The 2-letter ISO 3166-1 country code}
-#'   \item{country_code_3}{The 3-letter ISO 3166-1 country code}
-#'   \item{year}{The year for the population estimate}
-#'   \item{population}{The population estimate, midway through the year}
+#' \item{country_name}{Name of the country}
+#' \item{country_code_2}{The 2-letter ISO 3166-1 country code}
+#' \item{country_code_3}{The 3-letter ISO 3166-1 country code}
+#' \item{year}{The year for the population estimate}
+#' \item{population}{The population estimate, midway through the year}
 #' }
 #'
-#' @source \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
+#' @source <https://data.worldbank.org/indicator/SP.POP.TOTL>
 #'
 #' @examples
 #' # Here is a glimpse at the data
@@ -50,15 +49,15 @@
 #'   \item{latitude}{The latitude in decimal degrees for the observations}
 #'   \item{month}{The measurement month; all calculations where conducted
 #'   for the first day of each month}
-#'   \item{tst}{The true solar time at the given \code{latitude} and date
-#'   (first of \code{month}) for which the solar zenith angle is calculated}
-#'   \item{sza}{The solar zenith angle in degrees, where \code{NA}s
-#'   indicate that sunrise hadn't yet occurred by the \code{tst} value}
+#'   \item{tst}{The true solar time at the given `latitude` and date
+#'   (first of `month`) for which the solar zenith angle is calculated}
+#'   \item{sza}{The solar zenith angle in degrees, where `NA`s
+#'   indicate that sunrise hadn't yet occurred by the `tst` value}
 #' }
 #'
 #' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
 #' Photochemistry Applications (Peterson, 1976), available at:
-#' \url{https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt}.
+#' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
 #'
 #' @examples
 #' # Here is a glimpse at the data
@@ -68,11 +67,19 @@
 
 #' Deluxe automobiles from the 2014-2017 period
 #'
-#' Expensive and fast cars. Not your father's \code{mtcars}. Each row describes
-#' a car of a certain make, model, year, and trim. Basic specifications such as
+#' Expensive and fast cars. Not your father's `mtcars`. Each row describes a car
+#' of a certain make, model, year, and trim. Basic specifications such as
 #' horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
 #' characteristics are provided. The country of origin for the car manufacturer
 #' is also given.
+#'
+#' All of the `gtcars` have something else in common (aside from the high asking
+#' prices): they are all grand tourer vehicles. These are proper GT cars that
+#' blend pure driving thrills with a level of comfort that is more expected from
+#' a fine limousine (e.g., a Rolls-Royce Phantom EWB). You'll find that, with
+#' these cars, comfort is emphasized over all-out performance. Nevertheless, the
+#' driving experience should also mean motoring at speed, doing so in style and
+#' safety.
 #'
 #' @format A tibble with 47 rows and 15 variables:
 #' \describe{
@@ -81,23 +88,22 @@
 #'   \item{year}{The car's model year}
 #'   \item{trim}{A short description of the car model's trim}
 #'   \item{bdy_style}{An identifier of the car's body style, which is either
-#'   \code{coupe}, \code{convertible}, \code{sedan}, or \code{hatchback}}
+#'   `coupe`, `convertible`, `sedan`, or `hatchback`}
 #'   \item{hp, hp_rpm}{The car's horsepower and the associated RPM level}
 #'   \item{trq, trq_rpm}{The car's torque and the associated RPM level}
 #'   \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
 #'   and highway driving}
 #'   \item{drivetrain}{The car's drivetrain which, for this dataset is either
-#'   \code{rwd} (Rear Wheel Drive) or \code{awd} (All Wheel Drive)}
+#'   `rwd` (Rear Wheel Drive) or `awd` (All Wheel Drive)}
 #'   \item{trsmn}{The codified transmission type, where the number part is
 #'   the number of gears; the car could have automatic transmission
-#'   (\code{a}), manual transmission (\code{m}), an option to switch between
-#'   both types (\code{am}), or, direct drive (\code{dd})}
+#'   (`a`), manual transmission (`m`), an option to switch between
+#'   both types (`am`), or, direct drive (`dd`)}
 #'   \item{ctry_origin}{The country name for where the vehicle manufacturer
 #'   is headquartered}
 #' }
 #'
-#' @source Various pages within \url{https://www.edmunds.com}.
-#'
+#' @source Various pages within <https://www.edmunds.com>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `gtcars`
@@ -112,15 +118,14 @@
 #'
 #' @format A tibble with 16607 rows and 7 variables:
 #' \describe{
-#'   \item{date}{The date expressed as \code{Date} values}
-#'   \item{open, high, low, close}{The day's opening, high, low, and closing
-#'   prices in USD; the \code{close} price is adjusted for splits}
-#'   \item{volume}{the number of trades for the given \code{date}}
-#'   \item{adj_close}{The close price adjusted for both dividends and splits}
+#' \item{date}{The date expressed as `Date` values}
+#' \item{open, high, low, close}{The day's opening, high, low, and closing
+#' prices in USD; the `close` price is adjusted for splits}
+#' \item{volume}{the number of trades for the given `date`}
+#' \item{adj_close}{The close price adjusted for both dividends and splits}
 #' }
 #'
-#' @source Data collected from \url{https://finance.yahoo.com/quote/\%5EGSPC/history/}.
-#'
+#' @source Data collected from <https://finance.yahoo.com/quote/\\%5EGSPC/history/>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `sp500`
@@ -132,112 +137,112 @@
 #' A synthetic dataset that describes pizza sales for a pizza place somewhere in
 #' the US. While the contents are artificial, the ingredients used to make the
 #' pizzas are far from it. There are 32 different pizzas that fall into 4
-#' different categories: \code{classic} (classic pizzas: 'You probably had one
-#' like it before, but never like this!'), \code{chicken} (pizzas with chicken
-#' as a major ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'),
-#' \code{supreme} (pizzas that try a little harder: 'My Soppressata pizza uses
-#' only the finest salami from my personal salumist!'), and, \code{veggie}
-#' (pizzas without any meats whatsoever: 'My Five Cheese pizza has so many
-#' cheeses, I can only offer it in Large Size!').
+#' different categories: `classic` (classic pizzas: 'You probably had one like
+#' it before, but never like this!'), `chicken` (pizzas with chicken as a major
+#' ingredient: 'Try the Southwest Chicken Pizza! You'll love it!'), `supreme`
+#' (pizzas that try a little harder: 'My Soppressata pizza uses only the finest
+#' salami from my personal salumist!'), and, `veggie` (pizzas without any meats
+#' whatsoever: 'My Five Cheese pizza has so many cheeses, I can only offer it in
+#' Large Size!').
 #'
-#' Each pizza in the dataset is identified by a short \code{name}. The following
+#' Each pizza in the dataset is identified by a short `name`. The following
 #' listings provide the full names of each pizza and their main ingredients.
 #'
 #' Classic Pizzas:
 #' \itemize{
-#' \item \code{classic_dlx}: The Classic Deluxe Pizza (Pepperoni, Mushrooms, Red
+#' \item `classic_dlx`: The Classic Deluxe Pizza (Pepperoni, Mushrooms, Red
 #' Onions, Red Peppers, Bacon)
-#' \item \code{big_meat}: The Big Meat Pizza (Bacon, Pepperoni, Italian Sausage,
+#' \item `big_meat`: The Big Meat Pizza (Bacon, Pepperoni, Italian Sausage,
 #' Chorizo Sausage)
-#' \item \code{pepperoni}: The Pepperoni Pizza (Mozzarella Cheese, Pepperoni)
-#' \item \code{hawaiian}: The Hawaiian Pizza (Sliced Ham, Pineapple, Mozzarella
+#' \item `pepperoni`: The Pepperoni Pizza (Mozzarella Cheese, Pepperoni)
+#' \item `hawaiian`: The Hawaiian Pizza (Sliced Ham, Pineapple, Mozzarella
 #' Cheese)
-#' \item \code{pep_msh_pep}: The Pepperoni, Mushroom, and Peppers Pizza
+#' \item `pep_msh_pep`: The Pepperoni, Mushroom, and Peppers Pizza
 #' (Pepperoni, Mushrooms, and Green Peppers)
-#' \item \code{ital_cpcllo}: The Italian Capocollo Pizza (Capocollo, Red
+#' \item `ital_cpcllo`: The Italian Capocollo Pizza (Capocollo, Red
 #' Peppers, Tomatoes, Goat Cheese, Garlic, Oregano)
-#' \item \code{napolitana}: The Napolitana Pizza (Tomatoes, Anchovies, Green
+#' \item `napolitana`: The Napolitana Pizza (Tomatoes, Anchovies, Green
 #' Olives, Red Onions, Garlic)
-#' \item \code{the_greek}: The Greek Pizza (Kalamata Olives, Feta Cheese,
+#' \item `the_greek`: The Greek Pizza (Kalamata Olives, Feta Cheese,
 #' Tomatoes, Garlic, Beef Chuck Roast, Red Onions)
 #' }
 #'
 #' Chicken Pizzas:
 #' \itemize{
-#' \item \code{thai_ckn}: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
+#' \item `thai_ckn`: The Thai Chicken Pizza (Chicken, Pineapple, Tomatoes,
 #' Red Peppers, Thai Sweet Chilli Sauce)
-#' \item \code{bbq_ckn}: The Barbecue Chicken Pizza (Barbecued Chicken, Red
+#' \item `bbq_ckn`: The Barbecue Chicken Pizza (Barbecued Chicken, Red
 #' Peppers, Green Peppers, Tomatoes, Red Onions, Barbecue Sauce)
-#' \item \code{southw_ckn}: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
+#' \item `southw_ckn`: The Southwest Chicken Pizza (Chicken, Tomatoes, Red
 #' Peppers, Red Onions, Jalapeno Peppers, Corn, Cilantro, Chipotle Sauce)
-#' \item \code{cali_ckn}: The California Chicken Pizza (Chicken, Artichoke,
-#' Spinach, Garlic, Jalapeño Peppers, Fontina Cheese, Gouda Cheese)
-#' \item \code{ckn_pesto}: The Chicken Pesto Pizza (Chicken, Tomatoes, Red
+#' \item `cali_ckn`: The California Chicken Pizza (Chicken, Artichoke,
+#' Spinach, Garlic, Jalapeno Peppers, Fontina Cheese, Gouda Cheese)
+#' \item `ckn_pesto`: The Chicken Pesto Pizza (Chicken, Tomatoes, Red
 #' Peppers, Spinach, Garlic, Pesto Sauce)
-#' \item \code{ckn_alfredo}: The Chicken Alfredo Pizza (Chicken, Red Onions,
+#' \item `ckn_alfredo`: The Chicken Alfredo Pizza (Chicken, Red Onions,
 #' Red Peppers, Mushrooms, Asiago Cheese, Alfredo Sauce)
 #' }
 #'
 #' Supreme Pizzas:
 #' \itemize{
-#' \item \code{brie_carre}: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
+#' \item `brie_carre`: The Brie Carre Pizza (Brie Carre Cheese, Prosciutto,
 #'  Caramelized Onions, Pears, Thyme, Garlic)
-#' \item \code{calabrese}: The Calabrese Pizza (‘Nduja Salami, Pancetta,
+#' \item `calabrese`: The Calabrese Pizza (‘Nduja Salami, Pancetta,
 #' Tomatoes, Red Onions, Friggitello Peppers, Garlic)
-#' \item \code{soppressata}: The Soppressata Pizza (Soppressata Salami, Fontina
+#' \item `soppressata`: The Soppressata Pizza (Soppressata Salami, Fontina
 #' Cheese, Mozzarella Cheese, Mushrooms, Garlic)
-#' \item \code{sicilian}: The Sicilian Pizza (Coarse Sicilian Salami, Tomatoes,
+#' \item `sicilian`: The Sicilian Pizza (Coarse Sicilian Salami, Tomatoes,
 #' Green Olives, Luganega Sausage, Onions, Garlic)
-#' \item \code{ital_supr}: The Italian Supreme Pizza (Calabrese Salami,
+#' \item `ital_supr`: The Italian Supreme Pizza (Calabrese Salami,
 #' Capocollo, Tomatoes, Red Onions, Green Olives, Garlic)
-#' \item \code{peppr_salami}: The Pepper Salami Pizza (Genoa Salami, Capocollo,
+#' \item `peppr_salami`: The Pepper Salami Pizza (Genoa Salami, Capocollo,
 #' Pepperoni, Tomatoes, Asiago Cheese, Garlic)
-#' \item \code{prsc_argla}: The Prosciutto and Arugula Pizza (Prosciutto di San
+#' \item `prsc_argla`: The Prosciutto and Arugula Pizza (Prosciutto di San
 #' Daniele, Arugula, Mozzarella Cheese)
-#' \item \code{spinach_supr}: The Spinach Supreme Pizza (Spinach, Red Onions,
+#' \item `spinach_supr`: The Spinach Supreme Pizza (Spinach, Red Onions,
 #' Pepperoni, Tomatoes, Artichokes, Kalamata Olives, Garlic, Asiago Cheese)
-#' \item \code{spicy_ital}: The Spicy Italian Pizza (Capocollo, Tomatoes, Goat
+#' \item `spicy_ital`: The Spicy Italian Pizza (Capocollo, Tomatoes, Goat
 #' Cheese, Artichokes, Peperoncini verdi, Garlic)
 #' }
 #'
 #' Vegetable Pizzas
 #' \itemize{
-#' \item \code{mexicana}: The Mexicana Pizza (Tomatoes, Red Peppers, Jalapeno
+#' \item `mexicana`: The Mexicana Pizza (Tomatoes, Red Peppers, Jalapeno
 #' Peppers, Red Onions, Cilantro, Corn, Chipotle Sauce, Garlic)
-#' \item \code{four_cheese}: The Four Cheese Pizza (Ricotta Cheese, Gorgonzola
+#' \item `four_cheese`: The Four Cheese Pizza (Ricotta Cheese, Gorgonzola
 #' Piccante Cheese, Mozzarella Cheese, Parmigiano Reggiano Cheese, Garlic)
-#' \item \code{five_cheese}: The Five Cheese Pizza (Mozzarella Cheese, Provolone
+#' \item `five_cheese`: The Five Cheese Pizza (Mozzarella Cheese, Provolone
 #' Cheese, Smoked Gouda Cheese, Romano Cheese, Blue Cheese, Garlic)
-#' \item \code{spin_pesto}: The Spinach Pesto Pizza (Spinach, Artichokes,
+#' \item `spin_pesto`: The Spinach Pesto Pizza (Spinach, Artichokes,
 #' Tomatoes, Sun-dried Tomatoes, Garlic, Pesto Sauce)
-#' \item \code{veggie_veg}: The Vegetables + Vegetables Pizza (Mushrooms,
+#' \item `veggie_veg`: The Vegetables + Vegetables Pizza (Mushrooms,
 #' Tomatoes, Red Peppers, Green Peppers, Red Onions, Zucchini, Spinach, Garlic)
-#' \item \code{green_garden}: The Green Garden Pizza (Spinach, Mushrooms,
+#' \item `green_garden`: The Green Garden Pizza (Spinach, Mushrooms,
 #' Tomatoes, Green Olives, Feta Cheese)
-#' \item \code{mediterraneo}: The Mediterranean Pizza (Spinach, Artichokes,
+#' \item `mediterraneo`: The Mediterranean Pizza (Spinach, Artichokes,
 #' Kalamata Olives, Sun-dried Tomatoes, Feta Cheese, Plum Tomatoes, Red Onions)
-#' \item \code{spinach_fet}: The Spinach and Feta Pizza (Spinach, Mushrooms,
+#' \item `spinach_fet`: The Spinach and Feta Pizza (Spinach, Mushrooms,
 #' Red Onions, Feta Cheese, Garlic)
-#' \item \code{ital_veggie}: The Italian Vegetables Pizza (Eggplant, Artichokes,
+#' \item `ital_veggie`: The Italian Vegetables Pizza (Eggplant, Artichokes,
 #' Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 #' }
 #'
 #' @format A tibble with 49574 rows and 7 variables:
 #' \describe{
 #'   \item{id}{The ID for the order, which consists of one or more pizzas
-#'   at a give \code{date} and \code{time}}
-#'   \item{date}{A character representation of the \code{order} date,
+#'   at a give `date` and `time`}
+#'   \item{date}{A character representation of the `order` date,
 #'   expressed in the ISO 8601 date format (YYYY-MM-DD)}
-#'   \item{time}{A character representation of the \code{order} time,
+#'   \item{time}{A character representation of the `order` time,
 #'   expressed as a 24-hour time the ISO 8601 extended time format
 #'   (hh:mm:ss)}
 #'   \item{name}{The short name for the pizza}
-#'   \item{size}{The size of the pizza, which can either be \code{S},
-#'   \code{M}, \code{L}, \code{XL} (rare!), or \code{XXL} (even rarer!);
-#'   most pizzas are available in the \code{S}, \code{M}, and \code{L} sizes
+#'   \item{size}{The size of the pizza, which can either be `S`,
+#'   `M`, `L`, `XL` (rare!), or `XXL` (even rarer!);
+#'   most pizzas are available in the `S`, `M`, and `L` sizes
 #'   but exceptions apply}
 #'   \item{type}{The category or type of pizza, which can either be
-#'   \code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
+#'   `classic`, `chicken`, `supreme`, or `veggie`}
 #'   \item{price}{The price of the pizza and the amount that it sold for
 #'   (in USD)}
 #' }
@@ -253,28 +258,27 @@
 #' This tibble contains data of a few different classes, which makes it
 #' well-suited for quick experimentation with the functions in this package. It
 #' contains only eight rows with numeric, character, and factor columns. The
-#' last 4 rows contain \code{NA} values in the majority of this tibble's columns
-#' (1 missing value per column). The \code{date}, \code{time}, and
-#' \code{datetime} columns are character-based dates/times in the familiar ISO
-#' 8601 format. The \code{row} and \code{group} columns provide for unique
-#' rownames and two groups (\code{grp_a} and \code{grp_b}) for experimenting
-#' with the \code{\link{gt}()} function's \code{rowname_col} and
-#' \code{groupname_col} arguments.
+#' last 4 rows contain `NA` values in the majority of this tibble's columns (1
+#' missing value per column). The `date`, `time`, and `datetime` columns are
+#' character-based dates/times in the familiar ISO 8601 format. The `row` and
+#' `group` columns provide for unique rownames and two groups (`grp_a` and
+#' `grp_b`) for experimenting with the [gt()] function's `rowname_col` and
+#' `groupname_col` arguments.
 #'
 #' @format A tibble with 8 rows and 9 variables:
 #' \describe{
 #'   \item{num}{a numeric column ordered with increasingly larger values}
-#'   \item{char}{a character column composed of names of fruits from \code{a} to
-#'   \code{h}}
+#'   \item{char}{a character column composed of names of fruits from `a` to
+#'   `h`}
 #'   \item{fctr}{a factor column with numbers from 1 to 8, written out}
 #'   \item{date, time, datetime}{character columns with dates, times, and
 #'   datetimes}
 #'   \item{currency}{a numeric column that is useful for testing currency-based
 #'   formatting}
-#'   \item{row}{a character column in the format \code{row_X} which can be
+#'   \item{row}{a character column in the format `row_X` which can be
 #'   useful for testing with row captions in a table stub}
-#'   \item{group}{a character column with four \code{grp_a} values and four
-#'   \code{grp_b} values which can be useful for testing tables that contain
+#'   \item{group}{a character column with four `grp_a` values and four
+#'   `grp_b` values which can be useful for testing tables that contain
 #'   row groups}
 #' }
 #'

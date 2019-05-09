@@ -8,7 +8,7 @@ px(x)
 }
 \arguments{
 \item{x}{the numeric value to format as a string (e.g., \code{"12px"}) for
-some \code{\link{tab_options}()} arguments that can take values as units of
+some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
 pixels (e.g., \code{table.font.size}).}
 }
 \description{
@@ -18,6 +18,7 @@ Helper for providing a numeric value as pixels value
 Other helper functions: \code{\link{cells_styles}},
   \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}
+  \code{\link{md}}, \code{\link{pct}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}

@@ -7,30 +7,28 @@
 cols_move_to_end(data, columns)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{the column names to move to the right-most side of the table.
+\item{columns}{The column names to move to the right-most side of the table.
 The order in which columns are provided will be preserved (as is the case
 with the remaining columns).}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to move a set of columns to the end of the column series, we
-only need to specify which \code{columns} are to be moved. While this can be
-done upstream of \pkg{gt}'s API, this function makes to process much easier
-and it's less error prone. The ordering of the \code{columns} that are moved
-to the end is preserved (same with the ordering of all other columns in the
-table).
+only need to specify which \code{columns} are to be moved. While this can be done
+upstream of \pkg{gt}'s API, this function makes to process much easier and
+it's less error prone. The ordering of the \code{columns} that are moved to the
+end is preserved (same with the ordering of all other columns in the table).
 }
 \details{
-The columns supplied in \code{columns} must all exist in the table. If you
-need to place one or columns at the start of the column series, the
-\code{\link{cols_move_to_start}()} function should be used. More control is
-offered with the \code{\link{cols_move}()} function, where columns could be
-placed after a specific column.
+The columns supplied in \code{columns} must all exist in the table. If you need to
+place one or columns at the start of the column series, the
+\code{\link[=cols_move_to_start]{cols_move_to_start()}} function should be used. More control is offered with
+the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
+column.
 }
 \section{Figures}{
 

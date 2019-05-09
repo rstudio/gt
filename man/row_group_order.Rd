@@ -7,10 +7,9 @@
 row_group_order(data, groups)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{groups}{a vector of row group names, or, a numeric vector of indices
+\item{groups}{A vector of row group names, or, a numeric vector of indices
 corresponding to the new ordering. Either vector must correspond to
 assigned group names or the index positions. Also, either type of vector is
 not required to have all of the row group names or available index
@@ -18,16 +17,16 @@ positions within it; any omitted values will be added to the end while
 preserving the original ordering.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 We can modify the display order of any row groups in a \pkg{gt} object with
-the \code{row_group_order()} function. The \code{groups} argument can either
-take a vector of row group names or a numeric vector of row group indices;
-whichever is provided, the row groups will adhere to this revised ordering.
-It isn't necessary to provide all row group names in \code{groups}, rather,
-what is provided will assume the specified ordering at the top of the table
-and the remaining row groups will follow in their original ordering.
+the \code{row_group_order()} function. The \code{groups} argument can either take a
+vector of row group names or a numeric vector of row group indices; whichever
+is provided, the row groups will adhere to this revised ordering. It isn't
+necessary to provide all row group names in \code{groups}, rather, what is
+provided will assume the specified ordering at the top of the table and the
+remaining row groups will follow in their original ordering.
 }
 \section{Figures}{
 
