@@ -234,61 +234,61 @@ tab_options <- function(data,
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
 
-  # Function to set `opts_df` with a pixel value
-  opts_df_set_px <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+  opts_df_set_type <- function(type,
+                               option_name,
+                               option,
+                               ...) {
+
+    # Collect any additional options
+    x <- list(...)
 
     if (is.null(option)) {
       return()
     }
 
-    if (is.numeric(option)) {
-      option <- px(option)
-    }
+    # Perform pre-processing on the option depending on `type`
+    option <-
+      switch(type,
+             px = {
+               if (is.numeric(option)) {
+                 option <- px(option)
+               }
+               option
+             },
+             collapsed_value = {
+               paste0(option, collapse = x$collapse)
+             },
+             option
+      )
 
-    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
+    # Perform checkmate assertions by `type`
+    switch(type,
+           logical = checkmate::assert_logical(
+             option, len = 1, any.missing = FALSE),
+           px =,
+           value =,
+           collapsed_value = checkmate::assert_character(
+             option, len = 1, any.missing = FALSE)
+           )
 
     opts_df <<- opts_df_set(opts_df, option_name, option)
   }
 
-  opts_df_set_logical <- function(option_name, option, var_name = checkmate::vname(option)) {
-
-    if (is.null(option)) {
-      return()
-    }
-
-    option <- as.logical(option)
-
-    checkmate::assert_logical(option, len = 1, any.missing = FALSE, .var.name = var_name)
-
-    opts_df <<- opts_df_set(opts_df, option_name, option)
+  opts_df_set_logical <- function(option_name, option) {
+    opts_df_set_type("logical", option_name, option)
   }
 
-
-  opts_df_set_value <- function(option_name, option, var_name = checkmate::vname(option)) {
-
-    if (is.null(option)) {
-      return()
-    }
-
-    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
-
-    opts_df <<- opts_df_set(opts_df, option_name, option)
+  opts_df_set_px <- function(option_name, option) {
+    opts_df_set_type("px", option_name, option)
   }
 
-  opts_df_set_collapsed_value <- function(option_name,
-                                          option,
-                                          collapse = ",",
-                                          var_name = checkmate::vname(option)) {
+  opts_df_set_value <- function(option_name, option) {
+    opts_df_set_type("value", option_name, option)
+  }
 
-    if (is.null(option)) {
-      return()
-    }
-
-    option <- paste0(option, collapse = collapse)
-
-    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
-
-    opts_df <<- opts_df_set(opts_df, option_name, option)
+  opts_df_set_collapsed_value <- function(option_name, option, collapse = ",") {
+    opts_df_set_type("collapsed_value", option_name, option, collapse = collapse)
   }
 
   # container.width
