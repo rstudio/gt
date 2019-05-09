@@ -32,6 +32,8 @@
 #'   document.
 #'
 #' @examples
+#' library(shiny)
+#'
 #' # Here is a Shiny app (contained within
 #' # a single file) that (1) prepares a
 #' # gt table, (2) sets up the `ui` with
@@ -147,6 +149,8 @@ render_gt <- function(expr,
 #' @param outputId An output variable from which to read the table.
 #'
 #' @examples
+#' library(shiny)
+#'
 #' # Here is a Shiny app (contained within
 #' # a single file) that (1) prepares a
 #' # gt table, (2) sets up the `ui` with
