@@ -23,6 +23,13 @@
 #'   units.
 #' @param table.align The alignment of the table in its container. By default,
 #'   this is `"center"`. Other options are `"left"` and `"right"`.
+#' @param table.margin.left,table.margin.right The size of the margins on the
+#'   left and right of the table within the container. Can be specified as a
+#'   single-length character with units of pixels or as a percentage. If
+#'   provided as a single-length numeric vector, it is assumed that the value is
+#'   given in units of pixels. The [px()] and [pct()] helper functions can also
+#'   be used to pass in numeric values and obtain values as pixel or percent
+#'   units.
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
 #'   Font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `columns`, `row_group`,
@@ -173,6 +180,8 @@ tab_options <- function(data,
                         container.overflow.y = NULL,
                         table.width = NULL,
                         table.align = NULL,
+                        table.margin.left = NULL,
+                        table.margin.right = NULL,
                         table.font.size = NULL,
                         table.background.color = NULL,
                         table.border.top.style = NULL,
@@ -277,6 +286,22 @@ tab_options <- function(data,
       opts_df <- opts_df_set(opts_df, "margin_left", "auto")
       opts_df <- opts_df_set(opts_df, "margin_right", "0")
     }
+  }
+
+  # table.margin.left
+  if (!is.null(table.margin.left)) {
+    if (is.numeric(table.margin.left)) {
+      table.margin.left <- px(table.margin.left)
+    }
+    opts_df <- opts_df_set(opts_df, "margin_left", table.margin.left)
+  }
+
+  # table.margin.right
+  if (!is.null(table.margin.right)) {
+    if (is.numeric(table.margin.right)) {
+      table.margin.right <- px(table.margin.right)
+    }
+    opts_df <- opts_df_set(opts_df, "margin_right", table.margin.right)
   }
 
   # table.font.size
