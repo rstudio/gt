@@ -724,6 +724,7 @@ process_source_notes <- function(source_note, context) {
 
 # Function to build a vector of `group` rows in the table body
 create_group_rows <- function(n_rows,
+                              n_cols,
                               groups_rows_df,
                               context = "latex") {
 
@@ -738,6 +739,7 @@ create_group_rows <- function(n_rows,
       latex_group_row(
         group_name = groups_rows_df[
           which(groups_rows_df$row %in% x), "group_label"][[1]],
+        n_cols = n_cols,
         top_border = x != 1, bottom_border = x != n_rows)
     }
   }) %>%

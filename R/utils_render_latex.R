@@ -38,12 +38,13 @@ latex_heading_row <- function(content) {
 
 #' @noRd
 latex_group_row <- function(group_name,
+                            n_cols,
                             top_border = TRUE,
                             bottom_border = TRUE) {
 
   paste0(
     ifelse(top_border, "\\midrule\n", ""),
-    "\\multicolumn{1}{l}{", group_name,
+    "\\multicolumn{", n_cols, "}{l}{", group_name,
     "} \\\\ \n",
     ifelse(bottom_border, "\\midrule\n", ""),
     collapse = "")
@@ -176,7 +177,7 @@ create_body_component_l <- function(row_splits,
 
   group_rows <-
     create_group_rows(
-      n_rows, groups_rows_df, context = "latex")
+      n_rows, n_cols, groups_rows_df, context = "latex")
 
   data_rows <-
     create_data_rows(
