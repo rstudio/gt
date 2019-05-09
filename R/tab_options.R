@@ -234,7 +234,8 @@ tab_options <- function(data,
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
 
-
+  # Add general function that preprocesses and checks option
+  # value by `type`, and then sets the value in `opts_df`
   opts_df_set_type <- function(type,
                                option_name,
                                option,
@@ -243,6 +244,7 @@ tab_options <- function(data,
     # Collect any additional options
     x <- list(...)
 
+    # If `option` is `NULL`, exit function
     if (is.null(option)) {
       return()
     }
@@ -272,21 +274,20 @@ tab_options <- function(data,
              option, len = 1, any.missing = FALSE)
            )
 
+    # Write the option to the appropriate location in `opts_df`
     opts_df <<- opts_df_set(opts_df, option_name, option)
   }
 
+  # Create specialized functions by `type`
   opts_df_set_logical <- function(option_name, option) {
     opts_df_set_type("logical", option_name, option)
   }
-
   opts_df_set_px <- function(option_name, option) {
     opts_df_set_type("px", option_name, option)
   }
-
   opts_df_set_value <- function(option_name, option) {
     opts_df_set_type("value", option_name, option)
   }
-
   opts_df_set_collapsed_value <- function(option_name, option, collapse = ",") {
     opts_df_set_type("collapsed_value", option_name, option, collapse = collapse)
   }
