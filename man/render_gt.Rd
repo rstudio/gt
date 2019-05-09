@@ -32,7 +32,54 @@ call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in a
 document.}
 }
 \description{
-A \pkg{gt} display table render function for use in Shiny
+With \code{render_gt()} we can create a reactive \pkg{gt} table that works
+wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
+function is to be used within Shiny's \code{server()} component. We have some
+options for controlling the size of the container holding the \pkg{gt} table.
+The \code{width} and \code{height} arguments allow for sizing the container, and the
+\code{align} argument allows us to align the table within the container (some
+other fine-grained options for positioning are available in the
+\code{\link[=tab_options]{tab_options()}} function).
+}
+\details{
+We need to ensure that we have the \pkg{shiny} package installed first. This
+is easily by using \code{install.packages("shiny")}. More information on creating
+Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+}
+\examples{
+\dontrun{
+# Here is a Shiny app (contained within
+# a single file) that (1) prepares a
+# gt table, (2) sets up the `ui` with
+# `gt_output()`, and (3) sets up the
+# `server` with a `render_gt()` that
+# uses the `gt_tbl` object as the input
+# expression
+
+gt_tbl <-
+  gtcars \%>\%
+  gt() \%>\%
+  cols_hide(contains("_"))
+
+ui <- fluidPage(
+
+  gt_output(outputId = "table")
+)
+
+server <- function(input,
+                   output,
+                   session) {
+
+  output$table <-
+    render_gt(
+      expr = gt_tbl,
+      height = px(600),
+      width = px(600)
+    )
+}
+
+shinyApp(ui, server)
+}
 }
 \seealso{
 Other Shiny functions: \code{\link{gt_output}}
