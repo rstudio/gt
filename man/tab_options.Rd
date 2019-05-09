@@ -5,7 +5,9 @@
 \title{Modify the table output options}
 \usage{
 tab_options(data, container.width = NULL, container.height = NULL,
-  table.width = NULL, table.align = NULL, table.font.size = NULL,
+  container.overflow.x = NULL, container.overflow.y = NULL,
+  table.width = NULL, table.align = NULL, table.margin.left = NULL,
+  table.margin.right = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
@@ -48,6 +50,13 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.}
 
+\item{container.overflow.x, container.overflow.y}{Options to enable scrolling
+in the horizontal and vertical directions when the table content overflows
+the container dimensions. Using \code{TRUE} (the default for both) means that
+horizontal or vertical scrolling is enabled to view the entire table in
+those directions. With \code{FALSE}, the table may be clipped if the table width
+or height exceeds the \code{container.width} or \code{container.height}.}
+
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
@@ -57,6 +66,14 @@ units.}
 
 \item{table.align}{The alignment of the table in its container. By default,
 this is \code{"center"}. Other options are \code{"left"} and \code{"right"}.}
+
+\item{table.margin.left, table.margin.right}{The size of the margins on the
+left and right of the table within the container. Can be specified as a
+single-length character with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{Font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns}, \code{row_group},
