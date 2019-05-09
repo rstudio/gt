@@ -4,6 +4,8 @@ gt_options_default <- function() {
     ~parameter,                          ~scss,  ~category,             ~value,
     "container_width",                   FALSE,  "container",           "auto",
     "container_height",                  FALSE,  "container",           "auto",
+    "container_overflow_x",              FALSE,  "container",           "auto",
+    "container_overflow_y",              FALSE,  "container",           "auto",
     "table_id",                          FALSE,  "table",               NA_character_,
     "table_width",                        TRUE,  "table",               "auto",
     "table_font_size",                    TRUE,  "table",               "16px",
