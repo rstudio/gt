@@ -234,425 +234,251 @@ tab_options <- function(data,
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
 
-  # container.width
-  if (!is.null(container.width)) {
-    if (is.numeric(container.width)) container.width <- px(container.width)
-    opts_df <- opts_df_set(opts_df, "container_width", container.width)
+  # Function to set `opts_df` with a pixel value
+  opts_df_set_px <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+    if (is.null(option)) {
+      return()
+    }
+
+    if (is.numeric(option)) {
+      option <- px(option)
+    }
+
+    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
+
+    opts_df <<- opts_df_set(opts_df, option_name, option)
   }
 
-  # container.height
-  if (!is.null(container.height)) {
-    if (is.numeric(container.height)) container.height <- px(container.height)
-    opts_df <- opts_df_set(opts_df, "container_height", container.height)
+  opts_df_set_logical <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+    if (is.null(option)) {
+      return()
+    }
+
+    option <- as.logical(option)
+
+    checkmate::assert_logical(option, len = 1, any.missing = FALSE, .var.name = var_name)
+
+    opts_df <<- opts_df_set(opts_df, option_name, option)
   }
+
+
+  opts_df_set_value <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+    if (is.null(option)) {
+      return()
+    }
+
+    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
+
+    opts_df <<- opts_df_set(opts_df, option_name, option)
+  }
+
+  opts_df_set_collapsed_value <- function(option_name,
+                                          option,
+                                          collapse = ",",
+                                          var_name = checkmate::vname(option)) {
+
+    if (is.null(option)) {
+      return()
+    }
+
+    option <- paste0(option, collapse = collapse)
+
+    checkmate::assert_character(option, len = 1, any.missing = FALSE, .var.name = var_name)
+
+    opts_df <<- opts_df_set(opts_df, option_name, option)
+  }
+
+  # container.width
+  opts_df_set_px("container_width", container.width)
+
+  # container.height
+  opts_df_set_px("container_height", container.height)
 
   # container.overflow.x
   if (!is.null(container.overflow.x)) {
     if (isTRUE(container.overflow.x)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_x", "auto")
+      opts_df_set_value("container_overflow_x", "auto")
     }
     if (isFALSE(container.overflow.x)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_x", "hidden")
+      opts_df_set_value("container_overflow_x", "hidden")
     }
   }
 
   # container.overflow.y
   if (!is.null(container.overflow.y)) {
     if (isTRUE(container.overflow.y)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_y", "auto")
+      opts_df_set_value("container_overflow_y", "auto")
     }
     if (isFALSE(container.overflow.y)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_y", "hidden")
+      opts_df_set_value("container_overflow_y", "hidden")
     }
   }
 
   # table.width
-  if (!is.null(table.width)) {
-    if (is.numeric(table.width)) table.width <- px(table.width)
-    opts_df <- opts_df_set(opts_df, "table_width", table.width)
-  }
+  opts_df_set_px("table_width", table.width)
 
   # table.align
   if (!is.null(table.align)) {
 
     if (table.align == "center") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
-      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
+      opts_df_set_value("margin_left", "auto")
+      opts_df_set_value("margin_right", "auto")
     }
 
     if (table.align == "left") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "0")
-      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
+      opts_df_set_value("margin_left", "0")
+      opts_df_set_value("margin_right", "auto")
     }
 
     if (table.align == "right") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
-      opts_df <- opts_df_set(opts_df, "margin_right", "0")
+      opts_df_set_value("margin_left", "auto")
+      opts_df_set_value("margin_right", "0")
     }
   }
 
   # table.margin.left
-  if (!is.null(table.margin.left)) {
-    if (is.numeric(table.margin.left)) {
-      table.margin.left <- px(table.margin.left)
-    }
-    opts_df <- opts_df_set(opts_df, "margin_left", table.margin.left)
-  }
+  opts_df_set_px("margin_left", table.margin.left)
 
   # table.margin.right
-  if (!is.null(table.margin.right)) {
-    if (is.numeric(table.margin.right)) {
-      table.margin.right <- px(table.margin.right)
-    }
-    opts_df <- opts_df_set(opts_df, "margin_right", table.margin.right)
-  }
+  opts_df_set_px("margin_right", table.margin.right)
 
   # table.font.size
-  if (!is.null(table.font.size)) {
-    if (is.numeric(table.font.size)) table.font.size <- px(table.font.size)
-    opts_df <- opts_df_set(opts_df, "table_font_size", table.font.size)
-  }
+  opts_df_set_px("table_font_size", table.font.size)
 
   # table.background.color
-  if (!is.null(table.background.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_background_color", table.background.color)
-  }
+  opts_df_set_value("table_background_color", table.background.color)
 
   # table.border.top.style
-  if (!is.null(table.border.top.style)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_style", table.border.top.style)
-  }
+  opts_df_set_value("table_border_top_style", table.border.top.style)
 
   # table.border.top.width
-  if (!is.null(table.border.top.width)) {
-    if (is.numeric(table.border.top.width)) {
-      table.border.top.width <- px(table.border.top.width)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_width", table.border.top.width)
-  }
+  opts_df_set_px("table_border_top_width", table.border.top.width)
 
   # table.border.top.color
-  if (!is.null(table.border.top.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_color", table.border.top.color)
-  }
+  opts_df_set_value("table_border_top_color", table.border.top.color)
 
   # heading.background.color
-  if (!is.null(heading.background.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_background_color", heading.background.color)
-  }
+  opts_df_set_value("heading_background_color", heading.background.color)
 
   # heading.title.font.size
-  if (!is.null(heading.title.font.size)) {
-    if (is.numeric(heading.title.font.size)) {
-      heading.title.font.size <- px(heading.title.font.size)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_title_font_size", heading.title.font.size)
-  }
+  opts_df_set_px("heading_title_font_size", heading.title.font.size)
 
   # heading.subtitle.font.size
-  if (!is.null(heading.subtitle.font.size)) {
-    if (is.numeric(heading.subtitle.font.size)) {
-      heading.subtitle.font.size <- px(heading.subtitle.font.size)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_subtitle_font_size", heading.subtitle.font.size)
-  }
+  opts_df_set_px("heading_subtitle_font_size", heading.subtitle.font.size)
 
   # heading.border.bottom.style
-  if (!is.null(heading.border.bottom.style)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_style", heading.border.bottom.style)
-  }
+  opts_df_set_value("heading_border_bottom_style", heading.border.bottom.style)
 
   # heading.border.bottom.width
-  if (!is.null(heading.border.bottom.width)) {
-    if (is.numeric(heading.border.bottom.width)) {
-      heading.border.bottom.width <- px(heading.border.bottom.width)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_width", heading.border.bottom.width)
-  }
+  opts_df_set_px("heading_border_bottom_width", heading.border.bottom.width)
 
   # heading.border.bottom.color
-  if (!is.null(heading.border.bottom.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_color", heading.border.bottom.color)
-  }
+  opts_df_set_value("heading_border_bottom_color", heading.border.bottom.color)
 
   # column_labels.background.color
-  if (!is.null(column_labels.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "column_labels_background_color", column_labels.background.color
-      )
-  }
+  opts_df_set_value("column_labels_background_color", column_labels.background.color)
 
   # column_labels.font.size
-  if (!is.null(column_labels.font.size)) {
-    if (is.numeric(column_labels.font.size)) {
-      column_labels.font.size <- px(column_labels.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_font_size", column_labels.font.size)
-  }
+  opts_df_set_px("column_labels_font_size", column_labels.font.size)
 
   # column_labels.font.weight
-  if (!is.null(column_labels.font.weight)) {
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_font_weight", column_labels.font.weight)
-  }
+  opts_df_set_value("column_labels_font_weight", column_labels.font.weight)
 
   # column_labels.hidden
-  if (!is.null(column_labels.hidden)) {
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_hidden", column_labels.hidden)
-  }
+  opts_df_set_logical("column_labels_hidden", column_labels.hidden)
 
   # row_group.background.color
-  if (!is.null(row_group.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_background_color", row_group.background.color
-      )
-  }
+  opts_df_set_value("row_group_background_color", row_group.background.color)
 
   # row_group.font.size
-  if (!is.null(row_group.font.size)) {
-    if (is.numeric(row_group.font.size)) {
-      row_group.font.size <- px(row_group.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "row_group_font_size", row_group.font.size)
-  }
+  opts_df_set_px("row_group_font_size", row_group.font.size)
 
   # row_group.font.weight
-  if (!is.null(row_group.font.weight)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_font_weight", row_group.font.weight)
-  }
+  opts_df_set_value("row_group_font_weight", row_group.font.weight)
 
   # row_group.border.top.style
-  if (!is.null(row_group.border.top.style)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_style", row_group.border.top.style)
-  }
+  opts_df_set_value("row_group_border_top_style", row_group.border.top.style)
 
   # row_group.border.top.width
-  if (!is.null(row_group.border.top.width)) {
-    if (is.numeric(row_group.border.top.width)) {
-      row_group.border.top.width <- px(row_group.border.top.width)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_width", row_group.border.top.width)
-  }
+  opts_df_set_px("row_group_border_top_width", row_group.border.top.width)
 
   # row_group.border.top.color
-  if (!is.null(row_group.border.top.color)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_color", row_group.border.top.color)
-  }
+  opts_df_set_value("row_group_border_top_color", row_group.border.top.color)
 
   # row_group.border.bottom.style
-  if (!is.null(row_group.border.bottom.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_style", row_group.border.bottom.style
-      )
-  }
+  opts_df_set_value("row_group_border_bottom_style", row_group.border.bottom.style)
 
   # row_group.border.bottom.width
-  if (!is.null(row_group.border.bottom.width)) {
-    if (is.numeric(row_group.border.bottom.width)) {
-      row_group.border.bottom.width <- px(row_group.border.bottom.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_width", row_group.border.bottom.width
-      )
-  }
+  opts_df_set_px("row_group_border_bottom_width", row_group.border.bottom.width)
 
   # row_group.border.bottom.color
-  if (!is.null(row_group.border.bottom.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_color", row_group.border.bottom.color
-      )
-  }
+  opts_df_set_value("row_group_border_bottom_color", row_group.border.bottom.color)
 
   # table_body.border.top.style
-  if (!is.null(table_body.border.top.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_style", table_body.border.top.style
-      )
-  }
+  opts_df_set_value("table_body_border_top_style", table_body.border.top.style)
 
   # table_body.border.top.width
-  if (!is.null(table_body.border.top.width)) {
-    if (is.numeric(table_body.border.top.width)) {
-      table_body.border.top.width <- px(table_body.border.top.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_width", table_body.border.top.width
-      )
-  }
+  opts_df_set_px("table_body_border_top_width", table_body.border.top.width)
 
   # table_body.border.top.color
-  if (!is.null(table_body.border.top.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_color", table_body.border.top.color
-      )
-  }
+  opts_df_set_value("table_body_border_top_color", table_body.border.top.color)
 
   # table_body.border.bottom.style
-  if (!is.null(table_body.border.bottom.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_style", table_body.border.bottom.style
-      )
-  }
+  opts_df_set_value("table_body_border_bottom_style", table_body.border.bottom.style)
 
   # table_body.border.bottom.width
-  if (!is.null(table_body.border.bottom.width)) {
-    if (is.numeric(table_body.border.bottom.width)) {
-      table_body.border.bottom.width <- px(table_body.border.bottom.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_width", table_body.border.bottom.width
-      )
-  }
+  opts_df_set_px("table_body_border_bottom_width", table_body.border.bottom.width)
 
   # table_body.border.bottom.color
-  if (!is.null(table_body.border.bottom.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_color", table_body.border.bottom.color
-      )
-  }
+  opts_df_set_value("table_body_border_bottom_color", table_body.border.bottom.color)
 
   # row.padding
-  if (!is.null(row.padding)) {
-    if (is.numeric(row.padding)) row.padding <- px(row.padding)
-    opts_df <- opts_df_set(opts_df, "row_padding", row.padding)
-  }
+  opts_df_set_px("row_padding", row.padding)
 
   # summary_row.background.color
-  if (!is.null(summary_row.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "summary_row_background_color", summary_row.background.color
-      )
-  }
+  opts_df_set_value("summary_row_background_color", summary_row.background.color)
 
   # summary_row.padding
-  if (!is.null(summary_row.padding)) {
-    if (is.numeric(summary_row.padding)) {
-      summary_row.padding <- px(summary_row.padding)
-    }
-    opts_df <- opts_df_set(opts_df, "summary_row_padding", summary_row.padding)
-  }
+  opts_df_set_px("summary_row_padding", summary_row.padding)
 
   # summary_row.text_transform
-  if (!is.null(summary_row.text_transform)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "summary_row_text_transform", summary_row.text_transform
-      )
-  }
+  opts_df_set_value("summary_row_text_transform", summary_row.text_transform)
 
   # grand_summary_row.background.color
-  if (!is.null(grand_summary_row.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_background_color", grand_summary_row.background.color
-      )
-  }
+  opts_df_set_value("grand_summary_row_background_color", grand_summary_row.background.color)
 
   # grand_summary_row.padding
-  if (!is.null(grand_summary_row.padding)) {
-    if (is.numeric(grand_summary_row.padding)) {
-      grand_summary_row.padding <- px(grand_summary_row.padding)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_padding", grand_summary_row.padding
-      )
-  }
+  opts_df_set_px("grand_summary_row_padding", grand_summary_row.padding)
 
   # grand_summary_row.text_transform
-  if (!is.null(grand_summary_row.text_transform)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_text_transform", grand_summary_row.text_transform
-      )
-  }
+  opts_df_set_value("grand_summary_row_text_transform", grand_summary_row.text_transform)
 
   # footnote.sep
-  if (!is.null(footnote.sep)) {
-    opts_df <- opts_df_set(opts_df, "footnote_sep", footnote.sep)
-  }
+  opts_df_set_value("footnote_sep", footnote.sep)
 
   # footnote.glyph
-  if (!is.null(footnote.glyph)) {
-    footnote.glyph <- paste0(footnote.glyph, collapse = ",")
-    opts_df <- opts_df_set(opts_df, "footnote_glyph", footnote.glyph)
-  }
+  opts_df_set_collapsed_value("footnote_glyph", footnote.glyph)
 
   # footnote.font.size
-  if (!is.null(footnote.font.size)) {
-    if (is.numeric(footnote.font.size)) {
-      footnote.font.size <- px(footnote.font.size)
-    }
-    opts_df <- opts_df_set(opts_df, "footnote_font_size", footnote.font.size)
-  }
+  opts_df_set_px("footnote_font_size", footnote.font.size)
 
   # footnote.padding
-  if (!is.null(footnote.padding)) {
-    if (is.numeric(footnote.padding)) footnote.padding <- px(footnote.padding)
-    opts_df <- opts_df_set(opts_df, "footnote_padding", footnote.padding)
-  }
+  opts_df_set_px("footnote_padding", footnote.padding)
 
   # sourcenote.font.size
-  if (!is.null(sourcenote.font.size)) {
-    if (is.numeric(sourcenote.font.size)) {
-      sourcenote.font.size <- px(sourcenote.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "sourcenote_font_size", sourcenote.font.size)
-  }
+  opts_df_set_px("sourcenote_font_size", sourcenote.font.size)
 
   # sourcenote.padding
-  if (!is.null(sourcenote.padding)) {
-    if (is.numeric(sourcenote.padding)) {
-      sourcenote.padding <- px(sourcenote.padding)
-    }
-    opts_df <- opts_df_set(opts_df, "sourcenote_padding", sourcenote.padding)
-  }
+  opts_df_set_px("sourcenote_padding", sourcenote.padding)
 
   # row.striping.include.stub
-  if (!is.null(row.striping.include_stub)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_striping_include_stub", row.striping.include_stub
-      )
-  }
+  opts_df_set_logical("row_striping_include_stub", row.striping.include_stub)
 
   # row.striping.include_table_body
-  if (!is.null(row.striping.include_table_body)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_striping_include_table_body", row.striping.include_table_body
-      )
-  }
+  opts_df_set_logical("row_striping_include_table_body", row.striping.include_table_body)
 
   # Write the modified `opts_df` to the `data` attribute
   attr(data, "opts_df") <- opts_df
