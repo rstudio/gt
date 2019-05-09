@@ -77,19 +77,17 @@ gt <- function(data,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
-
   # Stop if input `data` has no columns
   if (ncol(data) == 0) {
     stop("The input `data` table must have at least one column.",
          call. = FALSE)
+  }
 
   opts_df <- gt_options_default()
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "table_id", id)
+    opts_df <- opts_df_set(opts_df, "table_id", id)
   }
 
   # If the option to place rownames in the stub
