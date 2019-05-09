@@ -239,6 +239,7 @@ tab_options <- function(data,
   opts_df_set_type <- function(type,
                                option_name,
                                option,
+                               var_name = checkmate::vname(option),
                                ...,
                                collapse = ",") {
 
@@ -265,11 +266,11 @@ tab_options <- function(data,
     # Perform checkmate assertions by `type`
     switch(type,
            logical = checkmate::assert_logical(
-             option, len = 1, any.missing = FALSE),
+             option, len = 1, any.missing = FALSE, .var.name = var_name),
            px =,
            value =,
            collapsed_value = checkmate::assert_character(
-             option, len = 1, any.missing = FALSE)
+             option, len = 1, any.missing = FALSE, .var.name = var_name)
            )
 
     # Write the option to the appropriate location in `opts_df`
@@ -277,17 +278,62 @@ tab_options <- function(data,
   }
 
   # Create specialized functions by `type`
-  opts_df_set_logical <- function(option_name, option) {
-    opts_df_set_type("logical", option_name, option)
+  opts_df_set_logical <- function(option_name, option, var_name = checkmate::vname(option)) {
+    opts_df_set_type("logical", option_name, option, var_name)
   }
-  opts_df_set_px <- function(option_name, option) {
-    opts_df_set_type("px", option_name, option)
+  opts_df_set_px <- function(option_name, option, var_name = checkmate::vname(option)) {
+    opts_df_set_type("px", option_name, option, var_name)
   }
-  opts_df_set_value <- function(option_name, option) {
-    opts_df_set_type("value", option_name, option)
+  opts_df_set_value <- function(option_name, option, var_name = checkmate::vname(option)) {
+    opts_df_set_type("value", option_name, option, var_name)
   }
-  opts_df_set_collapsed_value <- function(option_name, option, collapse = ",") {
-    opts_df_set_type("collapsed_value", option_name, option, collapse = collapse)
+  opts_df_set_collapsed_value <- function(option_name,
+                                          option,
+                                          var_name = checkmate::vname(option),
+                                          collapse = ",") {
+    opts_df_set_type("collapsed_value", option_name, option, var_name, collapse = collapse)
+  }
+
+  # Function for setting the `container.overflow.*` values
+  opts_df_set_overflow <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+    if (!is.null(option)) {
+      if (isTRUE(option)) {
+        opts_df_set_value(option_name, "auto", var_name)
+      }
+      if (isFALSE(option)) {
+        opts_df_set_value(option_name, "hidden", var_name)
+      }
+    }
+  }
+
+  # Function for setting the table alignment values
+  opts_df_set_table_align <- function(option_name, option, var_name = checkmate::vname(option)) {
+
+    if (is.null(option)) {
+      return()
+    }
+
+    if (option == "center") {
+
+      opts_df_set_value("margin_left", "auto", var_name)
+      opts_df_set_value("margin_right", "auto", var_name)
+
+    } else if (option == "left") {
+
+      opts_df_set_value("margin_left", "0", var_name)
+      opts_df_set_value("margin_right", "auto", var_name)
+
+    } else if (option == "right") {
+
+      opts_df_set_value("margin_left", "auto", var_name)
+      opts_df_set_value("margin_right", "0", var_name)
+
+    } else {
+      stop("The chosen option for `", var_name, "` (`", option, "`) is invalid\n",
+           " * We can use either of `left`, `center`, or `right`.",
+           call. = FALSE)
+    }
   }
 
   # container.width
@@ -297,46 +343,16 @@ tab_options <- function(data,
   opts_df_set_px("container_height", container.height)
 
   # container.overflow.x
-  if (!is.null(container.overflow.x)) {
-    if (isTRUE(container.overflow.x)) {
-      opts_df_set_value("container_overflow_x", "auto")
-    }
-    if (isFALSE(container.overflow.x)) {
-      opts_df_set_value("container_overflow_x", "hidden")
-    }
-  }
+  opts_df_set_overflow("container_overflow_x", container.overflow.x)
 
-  # container.overflow.y
-  if (!is.null(container.overflow.y)) {
-    if (isTRUE(container.overflow.y)) {
-      opts_df_set_value("container_overflow_y", "auto")
-    }
-    if (isFALSE(container.overflow.y)) {
-      opts_df_set_value("container_overflow_y", "hidden")
-    }
-  }
+  # container.overflow.x
+  opts_df_set_overflow("container_overflow_y", container.overflow.y)
 
   # table.width
   opts_df_set_px("table_width", table.width)
 
   # table.align
-  if (!is.null(table.align)) {
-
-    if (table.align == "center") {
-      opts_df_set_value("margin_left", "auto")
-      opts_df_set_value("margin_right", "auto")
-    }
-
-    if (table.align == "left") {
-      opts_df_set_value("margin_left", "0")
-      opts_df_set_value("margin_right", "auto")
-    }
-
-    if (table.align == "right") {
-      opts_df_set_value("margin_left", "auto")
-      opts_df_set_value("margin_right", "0")
-    }
-  }
+  opts_df_set_table_align("ignored", table.align)
 
   # table.margin.left
   opts_df_set_px("margin_left", table.margin.left)
