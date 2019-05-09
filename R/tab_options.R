@@ -239,10 +239,8 @@ tab_options <- function(data,
   opts_df_set_type <- function(type,
                                option_name,
                                option,
-                               ...) {
-
-    # Collect any additional options
-    x <- list(...)
+                               ...,
+                               collapse = ",") {
 
     # If `option` is `NULL`, exit function
     if (is.null(option)) {
@@ -259,7 +257,7 @@ tab_options <- function(data,
                option
              },
              collapsed_value = {
-               paste0(option, collapse = x$collapse)
+               paste0(option, collapse = collapse)
              },
              option
       )
