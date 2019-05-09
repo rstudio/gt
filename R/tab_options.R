@@ -31,7 +31,8 @@
 #'   provided as a single-length numeric vector, it is assumed that the value is
 #'   given in units of pixels. The [px()] and [pct()] helper functions can also
 #'   be used to pass in numeric values and obtain values as pixel or percent
-#'   units.
+#'   units. Using `table.margin.left` or `table.margin.right` will overwrite any
+#'   values set by `table.align`.
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
 #'   Font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `columns`, `row_group`,

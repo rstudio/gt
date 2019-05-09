@@ -75,7 +75,8 @@ single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
 given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
 be used to pass in numeric values and obtain values as pixel or percent
-units.}
+units. Using \code{table.margin.left} or \code{table.margin.right} will overwrite any
+values set by \code{table.align}.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{Font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns}, \code{row_group},
