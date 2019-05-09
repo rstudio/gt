@@ -9,6 +9,12 @@
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percent units.
+#' @param container.overflow.x,container.overflow.y Options to enable scrolling
+#'   in the horizontal and vertical directions when the table content overflows
+#'   the container dimensions. Using `TRUE` (the default for both) means that
+#'   horizontal or vertical scrolling is enabled to view the entire table in
+#'   those directions. With `FALSE`, the table may be clipped if the table width
+#'   or height exceeds the `container.width` or `container.height`.
 #' @param table.width The width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
@@ -163,6 +169,8 @@
 tab_options <- function(data,
                         container.width = NULL,
                         container.height = NULL,
+                        container.overflow.x = NULL,
+                        container.overflow.y = NULL,
                         table.width = NULL,
                         table.align = NULL,
                         table.font.size = NULL,
@@ -224,6 +232,26 @@ tab_options <- function(data,
   if (!is.null(container.height)) {
     if (is.numeric(container.height)) container.height <- px(container.height)
     opts_df <- opts_df_set(opts_df, "container_height", container.height)
+  }
+
+  # container.overflow.x
+  if (!is.null(container.overflow.x)) {
+    if (isTRUE(container.overflow.x)) {
+      opts_df <- opts_df_set(opts_df, "container_overflow_x", "auto")
+    }
+    if (isFALSE(container.overflow.x)) {
+      opts_df <- opts_df_set(opts_df, "container_overflow_x", "hidden")
+    }
+  }
+
+  # container.overflow.y
+  if (!is.null(container.overflow.y)) {
+    if (isTRUE(container.overflow.y)) {
+      opts_df <- opts_df_set(opts_df, "container_overflow_y", "auto")
+    }
+    if (isFALSE(container.overflow.y)) {
+      opts_df <- opts_df_set(opts_df, "container_overflow_y", "hidden")
+    }
   }
 
   # table.width
