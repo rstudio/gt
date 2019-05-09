@@ -6,16 +6,12 @@
 #' `as.character()` on the created object will result in a single-element vector
 #' containing the LaTeX code.
 #'
-#' @param data a table object that is created using the \code{\link{gt}()}
-#'   function.
-#' @param table_fn the LaTeX package that provides functionality for defining
-#'   the table. By default this uses the \code{longtable} LaTeX package.
-#' @param table_options the options to use within the \code{table_fn}.
-#' @param pre_table any LaTeX package to include just before the table.
-#' @param post_table any LaTeX package to include just after the table.
-#' @import rlang
-#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stats setNames
+#' @param data A table object that is created using the [gt()] function.
+#' @param table_fn The LaTeX package that provides functionality for defining
+#'   the table. By default this uses the `longtable` LaTeX package.
+#' @param table_options The options to use within the `table_fn`.
+#' @param pre_table Any LaTeX package to include just before the table.
+#' @param post_table Any LaTeX package to include just after the table.
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -42,6 +38,10 @@
 #'   cat()
 #'
 #' @family table export functions
+#'
+#' @import rlang
+#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
+#' @importFrom stats setNames
 #' @export
 as_latex <- function(data,
                      ...,
