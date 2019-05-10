@@ -87,7 +87,7 @@ expect_tab <- function(tab,
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(nrow(df), 1))
   expect_equal(dim(attr(tab, "cols_df")), c(ncol(final_df), 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 4)
+  expect_equal(ncol(attr(tab, "opts_df")), 5)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 
