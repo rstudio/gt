@@ -279,8 +279,7 @@ resolve_footnotes_styles <- function(output_df,
     # Get the glyph option from `opts_df`
     glyphs <-
       opts_df %>%
-      dplyr::filter(parameter == "footnote_glyph") %>%
-      dplyr::pull(value)
+      opts_df_get(option = "footnote_glyph")
 
     # Modify `fs_id` to contain the glyphs we need
     tbl <-
