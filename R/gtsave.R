@@ -131,7 +131,7 @@ gt_save_webshot <- function(data,
     tidy_gsub("\\\\", "/")
 
   # Save gt table as HTML using the `gt_save_html()` function
-  data %>% gt_save_html(filename = tempfile_)
+  data %>% gt_save_html(filename = tempfile_, path = NULL)
 
   # Saving an image requires the webshot package; if it's
   # not present, stop with a message
