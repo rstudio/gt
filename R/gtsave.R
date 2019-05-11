@@ -12,8 +12,8 @@
 #'
 #' If the output filename extension is either of `.tex`, `.ltx`, or `.rnw`, a
 #' LaTeX document is produced. An output filename of `.rtf` will generate an RTF
-#' document. The LaTeX and RTF saving function don't have any options to pass to
-#' the triple-dots.
+#' document. The LaTeX and RTF saving functions don't have any options to pass
+#' to `...`.
 #'
 #' We can create an image file based on the HTML version of the `gt` table. With
 #' the filename extension `.png`, we get a PNG image file. A PDF document can be
@@ -24,6 +24,8 @@
 #'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
 #'   `.rtf`). If a custom save function is provided then the file extension is
 #'   disregarded.
+#' @param path An optional path to which the file should be saved (combined with
+#'   filename).
 #' @param ... All other options passed to the appropriate internal saving
 #'   function.
 #' @export
