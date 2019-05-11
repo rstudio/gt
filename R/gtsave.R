@@ -29,6 +29,7 @@
 #' @export
 gtsave <- function(data,
                    filename,
+                   path = NULL,
                    ...) {
 
   # Input object validation
@@ -53,13 +54,13 @@ gtsave <- function(data,
   # on the filename extension
   switch(file_ext,
           htm = ,
-         html = gt_save_html(data, filename, ...),
+         html = gt_save_html(data, filename, path, ...),
           ltx = ,
           rnw = ,
-          tex = gt_save_latex(data, filename, ...),
-          rtf = gt_save_rtf(data, filename, ...),
+          tex = gt_save_latex(data, filename, path, ...),
+          rtf = gt_save_rtf(data, filename, path, ...),
           png = ,
-          pdf = gt_save_webshot(data, filename, ...),
+          pdf = gt_save_webshot(data, filename, path, ...),
          {
            stop("The file extension used (`.", file_ext, "`) doesn't have an ",
                 "associated saving function.\n",
@@ -75,6 +76,7 @@ gtsave <- function(data,
 #' @noRd
 gt_save_html <- function(data,
                          filename,
+                         path = NULL,
                          ...,
                          inline_css = FALSE) {
 
@@ -98,6 +100,7 @@ gt_save_html <- function(data,
 #' @noRd
 gt_save_webshot <- function(data,
                             filename,
+                            path = NULL,
                             ...,
                             zoom = 2,
                             expand = 5) {
@@ -142,6 +145,7 @@ gt_save_webshot <- function(data,
 #' @noRd
 gt_save_latex <- function(data,
                           filename,
+                          path = NULL,
                           ...) {
 
   data %>%
@@ -154,6 +158,7 @@ gt_save_latex <- function(data,
 #' @noRd
 gt_save_rtf <- function(data,
                         filename,
+                        path = NULL,
                         ...) {
 
   data %>%
