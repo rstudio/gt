@@ -66,7 +66,8 @@ gtsave <- function(data,
          {
            stop("The file extension used (`.", file_ext, "`) doesn't have an ",
                 "associated saving function.\n",
-                " * We can use either of `.html`/`.htm`, `.tex`/`.ltx`/`.rnw`, or `.rtf`",
+                " * We can use either of `.html`/`.htm`, ",
+                "`.tex`/`.ltx`/`.rnw`, `.png`, or `.rtf`",
                 call. = FALSE)
          }
   )
