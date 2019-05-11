@@ -80,6 +80,13 @@ gt_save_html <- function(data,
                          ...,
                          inline_css = FALSE) {
 
+  # Combine `path` with `filename` if necessary
+  # and normalize the path
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  filename <- filename %>% path_expand()
+
   if (inline_css) {
 
     data %>%
@@ -105,7 +112,11 @@ gt_save_webshot <- function(data,
                             zoom = 2,
                             expand = 5) {
 
-  # Normalize file path
+  # Combine `path` with `filename` if necessary
+  # and normalize the path
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
   filename <- filename %>% path_expand()
 
   # Create a temporary file with the `html` extension
@@ -148,6 +159,13 @@ gt_save_latex <- function(data,
                           path = NULL,
                           ...) {
 
+  # Combine `path` with `filename` if necessary
+  # and normalize the path
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  filename <- filename %>% path_expand()
+
   data %>%
     as_latex() %>%
     writeLines(con = filename)
@@ -160,6 +178,13 @@ gt_save_rtf <- function(data,
                         filename,
                         path = NULL,
                         ...) {
+
+  # Combine `path` with `filename` if necessary
+  # and normalize the path
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  filename <- filename %>% path_expand()
 
   data %>%
     as_rtf() %>%
