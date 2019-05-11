@@ -4,7 +4,7 @@
 \alias{gtsave}
 \title{Save a \pkg{gt} table as a file}
 \usage{
-gtsave(data, filename, ...)
+gtsave(data, filename, path = NULL, ...)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -13,6 +13,9 @@ gtsave(data, filename, ...)
 compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},
 \code{.rtf}). If a custom save function is provided then the file extension is
 disregarded.}
+
+\item{path}{An optional path to which the file should be saved (combined with
+filename).}
 
 \item{...}{All other options passed to the appropriate internal saving
 function.}
@@ -31,8 +34,8 @@ default is \code{FALSE}). More details on CSS inlining are available at
 
 If the output filename extension is either of \code{.tex}, \code{.ltx}, or \code{.rnw}, a
 LaTeX document is produced. An output filename of \code{.rtf} will generate an RTF
-document. The LaTeX and RTF saving function don't have any options to pass to
-the triple-dots.
+document. The LaTeX and RTF saving functions don't have any options to pass
+to \code{...}.
 
 We can create an image file based on the HTML version of the \code{gt} table. With
 the filename extension \code{.png}, we get a PNG image file. A PDF document can be
