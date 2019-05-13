@@ -81,7 +81,7 @@ expect_tab <- function(tab,
     final_df$groupname <- NULL
   }
 
-  expect_equal(dim(attr(tab, "boxh_df")), c(3, ncol(final_df)))
+  expect_equal(dim(attr(tab, "boxh_df")), c(4, ncol(final_df)))
   expect_equal(dim(attr(tab, "stub_df")), c(nrow(df), 2))
   expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
