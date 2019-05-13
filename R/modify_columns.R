@@ -158,6 +158,16 @@ cols_widths <- function(data,
 
         quosure <- rlang::enquo(quosure)
 
+        quo_expr <- quosure %>% rlang::quo_get_expr() %>% as.character()
+
+        if (any(quo_expr %in% col_labels) &&
+            !any(c("starts_with", "ends_with", "contains",
+                   "matches", "one_of", "everything") %in% quo_expr[1])) {
+
+          columns <- c(columns, quo_expr)
+
+        } else {
+
         columns <-
           c(columns,
             resolve_vars(
