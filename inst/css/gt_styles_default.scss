@@ -59,6 +59,7 @@
     vertical-align: middle;
     padding: 10px;
     margin: 10px;
+    overflow-x: hidden;
   }
 
   .gt_sep_right {
@@ -111,6 +112,7 @@
     padding: $row_padding; /* row.padding */
     margin: 10px;
     vertical-align: middle;
+    overflow-x: hidden;
   }
 
   .gt_stub {
