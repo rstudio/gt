@@ -4,7 +4,7 @@
 \alias{cols_widths}
 \title{Set the widths of columns}
 \usage{
-cols_widths(data, ..., .list = list2(...), default_width = px(100))
+cols_widths(data, ..., .list = list2(...), .others = px(100))
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -13,12 +13,22 @@ cols_widths(data, ..., .list = list2(...), default_width = px(100))
 table along with their width values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.others}{The width to set for all other columns not specified in \code{...}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Set the widths of columns
+Manual adjustments to column widths can be performed using the
+\code{cols_widths()} function. Normally, column widths are automatically set to
+span across the width of the container (both table and container widths can
+be individually modified with the \code{table.width} and \code{container.width} options
+within \code{\link[=tab_options]{tab_options()}}). When using \code{cols_widths()} though, the \code{table.width}
+is disregarded in favor of the pixel values set for each column. We choose
+which columns get specific widths (in pixels, usually by use of the \code{\link[=px]{px()}}
+helper function) and all other columns are assigned a default width value
+though the \code{.others} argument.
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
