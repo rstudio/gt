@@ -91,13 +91,14 @@ cols_align <- function(data,
 #' @param ... One or more named arguments of column names from the input `data`
 #'   table along with their width values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .others The width to set for all other columns not specified in `...`.
 #' @return An object of class `gt_tbl`.
 #' @family column modification functions
 #' @export
 cols_widths <- function(data,
                         ...,
                         .list = list2(...),
-                        default_width = px(100)) {
+                        .others = px(100)) {
 
   # Collect a named list of column widths
   widths_list <- .list
@@ -212,7 +213,7 @@ cols_widths <- function(data,
 
   na_widths <- is.na(attr(data, "boxh_df")["column_widths", ]) %>% which()
 
-  attr(data, "boxh_df")["column_widths", na_widths] <- default_width
+  attr(data, "boxh_df")["column_widths", na_widths] <- .others
 
   data
 }
