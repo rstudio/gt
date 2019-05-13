@@ -213,9 +213,40 @@ apply_styles_to_grand_summary_output <- function(summary_df,
 }
 
 # Create the opening HTML element of a table
-create_table_start_h <- function(groups_rows_df) {
+create_table_start_h <- function(boxh_df) {
 
-  "<!--gt table start-->\n<table class='gt_table'>\n"
+  table_start <- "<!--gt table start-->\n<table class='gt_table'>\n"
+
+  if (!all(is.na(boxh_df["column_widths", ] %>% unlist() %>% unname()))) {
+
+    widths <- boxh_df["column_widths", ] %>% unlist() %>% unname()
+
+    total_width <-
+      widths %>%
+      tidy_gsub("px", "") %>%
+      as.numeric() %>%
+      sum(na.rm = TRUE)
+
+    table_start <-
+      glue::glue(
+        paste0(
+          "<!--gt table start-->\n<table class='gt_table' ",
+          "style='table-layout:fixed;width:{total_width}px;'>\n"
+        )
+      ) %>%
+      as.character()
+
+    col_groups <-
+      paste_between(
+        x = glue::glue("<col style=\"width:{widths}\">") %>%
+          as.character() %>% paste(collapse = "\n") %>% paste_right("\n"),
+        x_2 = c("<colgroup>\n", "</colgroup>\n")
+      )
+
+    table_start <- table_start %>% paste_right(col_groups)
+  }
+
+  table_start
 }
 
 #' Create the heading component of a table
