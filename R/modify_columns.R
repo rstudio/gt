@@ -107,6 +107,80 @@ cols_widths <- function(data,
     return(data)
   }
 
+  # Extract the `col_labels` list from `data/boxh_df`
+  col_labels <- attr(data, "boxh_df", exact = TRUE) %>% names()
+
+  has_quosures <-
+    vapply(
+      seq_along(widths_list),
+      FUN = function(x) is_quosure(widths_list[[x]][[1]]),
+      FUN.VALUE = logical(1)
+    ) %>% any()
+
+  if (has_quosures) {
+
+    quosured_items <-
+      vapply(
+        seq_along(widths_list),
+        FUN = function(x) is_quosure(widths_list[[x]][[1]]),
+        FUN.VALUE = logical(1)
+      ) %>%
+      which()
+
+    nonquosured_items <-
+      vapply(
+        seq_along(widths_list),
+        FUN = function(x) is_character(widths_list[[x]][[1]]),
+        FUN.VALUE = logical(1)
+      ) %>%
+      which()
+
+    if (length(quosured_items) != length(nonquosured_items)) {
+      stop("Each group of column expressions must pair with a value",
+           call. = FALSE)
+    }
+
+    if (length(widths_list) %% 2 != 0) {
+      stop("Each group of column expressions must pair with a value",
+           call. = FALSE)
+    }
+
+    widths_list2 <- list()
+
+    for (quosure_i in quosured_items) {
+
+      quosures <- widths_list[[quosure_i]]
+
+      columns <- c()
+
+      for (quosure in quosures) {
+
+        quosure <- rlang::enquo(quosure)
+
+        columns <-
+          c(columns,
+            resolve_vars(
+              var_expr = !!quosure,
+              data = data
+            )
+          )
+      }
+
+      columns <- columns %>% unique()
+
+      value_columns <- widths_list[[quosure_i + 1]]
+
+      #widths_list2[columns] <- NULL
+
+      widths_list2 <-
+        c(widths_list2,
+          setNames(as.list(rep(value_columns, length(columns))), columns)
+        )
+    }
+
+    widths_list <- widths_list2
+  }
+
   # Test for names being NULL
   if (is.null(names(widths_list))) {
     stop("Named arguments are required for `cols_widths()`.", call. = FALSE)
@@ -117,16 +191,13 @@ cols_widths <- function(data,
     stop("All arguments to `cols_widths()` must be named.", call. = FALSE)
   }
 
-  # Extract the `col_labels` list from `data`
-  col_labels <- attr(data, "col_labels", exact = TRUE)
-
   # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(widths_list) %in% names(col_labels))) {
+  if (!all(names(widths_list) %in% col_labels)) {
     stop("All column names provided must exist in the input `data` table.")
   }
 
   # Filter the list of labels by the names in `col_labels`
-  widths_list <- widths_list[names(widths_list) %in% names(col_labels)]
+  widths_list <- widths_list[names(widths_list) %in% col_labels]
 
   # If no labels remain after filtering, return the data
   if (length(widths_list) == 0) {
