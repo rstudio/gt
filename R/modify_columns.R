@@ -87,6 +87,16 @@ cols_align <- function(data,
 
 #' Set the widths of columns
 #'
+#' Manual adjustments to column widths can be performed using the
+#' `cols_widths()` function. Normally, column widths are automatically set to
+#' span across the width of the container (both table and container widths can
+#' be individually modified with the `table.width` and `container.width` options
+#' within [tab_options()]). When using `cols_widths()` though, the `table.width`
+#' is disregarded in favor of the pixel values set for each column. We choose
+#' which columns get specific widths (in pixels, usually by use of the [px()]
+#' helper function) and all other columns are assigned a default width value
+#' though the `.others` argument.
+#'
 #' @inheritParams cols_align
 #' @param ... One or more named arguments of column names from the input `data`
 #'   table along with their width values.
@@ -175,6 +185,7 @@ cols_widths <- function(data,
               data = data
             )
           )
+        }
       }
 
       columns <- columns %>% unique()
