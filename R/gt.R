@@ -192,12 +192,12 @@ gt <- function(data,
   # columns (`boxh_df`); each row has a special
   # meaning and this will be used during render time
   boxh_df <- empty_df[c(), , drop = FALSE]
-  boxh_df[1:3, ] = list(NA_character_)
+  boxh_df[1:4, ] = list(NA_character_)
 
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
   rownames(boxh_df) <-
-    c("group_label", "column_label", "column_align")
+    c("group_label", "column_label", "column_align", "column_width")
 
   # Apply initialized data frames as attributes
   # within the object
