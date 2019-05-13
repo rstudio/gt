@@ -9,26 +9,98 @@ cols_widths(data, ..., .list = list2(...), .others = px(100))
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{One or more named arguments of column names from the input \code{data}
-table along with their width values.}
+\item{...}{Expressions for the assignment of column widths for the table
+columns in \code{data}. Named arguments can be used, where each name corresponds
+to a column name. Acceptable width values are single-length character
+values in the form \code{{##}px} (i.e., pixel dimensions); the \code{\link[=px]{px()}} helper
+function is best used for this purpose. An alternate means for assigning
+column widths uses pairs of \code{\link[=vars]{vars()}} and pixel dimension values (separated
+by commas). The main advantage with this method is that multiple columns
+can be assigned a common value (e.g., \code{vars(1, 2, 5, 6), px(80)} or
+\code{vars(starts_with("a"), ends_with("n")), px(100)}). Subsequent expressions
+that operate on the columns assigned previously will result in overwriting
+column width values (both in the same \code{cols_widths()} call and across
+separate calls).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.others}{The width to set for all other columns not specified in \code{...}.}
+\item{.others}{The width to set for all other columns not specified in \code{...}.
+By default, this is set as the expression \code{px(100)}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Manual adjustments to column widths can be performed using the
-\code{cols_widths()} function. Normally, column widths are automatically set to
-span across the width of the container (both table and container widths can
-be individually modified with the \code{table.width} and \code{container.width} options
-within \code{\link[=tab_options]{tab_options()}}). When using \code{cols_widths()} though, the \code{table.width}
-is disregarded in favor of the pixel values set for each column. We choose
-which columns get specific widths (in pixels, usually by use of the \code{\link[=px]{px()}}
-helper function) and all other columns are assigned a default width value
-though the \code{.others} argument.
+\code{cols_widths()} function.  We choose which columns get specific widths (in
+pixels, usually by use of the \code{\link[=px]{px()}} helper function) and all other columns
+are assigned a default width value though the \code{.others} argument. There are
+two ways make the width assignments, both occur in the \code{...}: (1) named
+arguments where the names are those of the columns and the values are the
+dimensions (in \code{px} where, for instance, \code{px(80)} would helpfully generate
+\code{30px}), and (2) paired \code{vars()}---\code{px()} expressions, which:
+\itemize{
+\item are separated by commas (e.g., \code{vars(col_b), px(120)})
+\item allow the use of one or more column names, column indices, or select
+helpers (e.g., \code{\link[=starts_with]{starts_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=everything]{everything()}}, etc.) within
+each \code{\link[=vars]{vars()}} expression
+\item cannot be mixed with named arguments as in (1)
+}
+}
+\details{
+Normally, column widths are automatically set to span across the width of the
+container (both table and container widths can be individually modified with
+the \code{table.width} and \code{container.width} options within \code{\link[=tab_options]{tab_options()}}). When
+using \code{cols_widths()} though, the \code{table.width} option is disregarded in
+favor of the pixel values set for each column.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_cols_widths_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table;
+# with named arguments in `...`, we
+# can specify the exact widths for
+# table columns (the `.others` value
+# will provide a default width for
+# any unset columns)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(
+    num, char, date,
+    datetime, row
+  ) \%>\%
+  gt() \%>\%
+  cols_widths(
+    num = px(150),
+    char = px(100),
+    date = px(200),
+    datetime = px(200),
+    .others = px(60)
+  )
+
+# We can take a different approach
+# in making the same table by using
+# paired `vars()`--`px()` expressions;
+# these are all unnamed and we need
+# to ensure alternation between the
+# `vars()` and `px()` expressions
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(
+    num, char, date,
+    datetime, row
+  ) \%>\%
+  gt() \%>\%
+  cols_widths(
+    vars(num), px(150),
+    vars(ends_with("r")), px(100),
+    vars(starts_with("date")), px(200),
+    .others = px(60)
+  )
+
 }
 \seealso{
 Other column modification functions: \code{\link{cols_align}},
