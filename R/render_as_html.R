@@ -52,7 +52,7 @@ render_as_html <- function(data) {
         body_content, n_cols)
 
     # Create an HTML fragment for the start of the table
-    table_start <- create_table_start_h()
+    table_start <- create_table_start_h(boxh_df)
 
     # Create the heading component of the table
     heading_component <-
