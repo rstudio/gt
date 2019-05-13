@@ -181,7 +181,13 @@ cols_widths <- function(data,
 
       value_columns <- widths_list[[quosure_i + 1]]
 
-      #widths_list2[columns] <- NULL
+      if (any(columns %in% names(widths_list2))) {
+
+        common_columns <-
+          columns %>% base::intersect(names(widths_list2))
+
+        widths_list2[common_columns] <- NULL
+      }
 
       widths_list2 <-
         c(widths_list2,
