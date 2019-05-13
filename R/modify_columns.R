@@ -85,6 +85,67 @@ cols_align <- function(data,
   data
 }
 
+#' Set the widths of columns
+#'
+#' @inheritParams cols_align
+#' @param ... One or more named arguments of column names from the input `data`
+#'   table along with their width values.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @return An object of class `gt_tbl`.
+#' @family column modification functions
+#' @export
+cols_widths <- function(data,
+                        ...,
+                        .list = list2(...),
+                        default_width = px(100)) {
+
+  # Collect a named list of column widths
+  widths_list <- .list
+
+  # If nothing is provided, return `data` unchanged
+  if (length(widths_list) == 0) {
+    return(data)
+  }
+
+  # Test for names being NULL
+  if (is.null(names(widths_list))) {
+    stop("Named arguments are required for `cols_widths()`.", call. = FALSE)
+  }
+
+  # Test for any missing names
+  if (any(names(widths_list) == "")) {
+    stop("All arguments to `cols_widths()` must be named.", call. = FALSE)
+  }
+
+  # Extract the `col_labels` list from `data`
+  col_labels <- attr(data, "col_labels", exact = TRUE)
+
+  # Stop function if any of the column names specified are not in `cols_labels`
+  if (!all(names(widths_list) %in% names(col_labels))) {
+    stop("All column names provided must exist in the input `data` table.")
+  }
+
+  # Filter the list of labels by the names in `col_labels`
+  widths_list <- widths_list[names(widths_list) %in% names(col_labels)]
+
+  # If no labels remain after filtering, return the data
+  if (length(widths_list) == 0) {
+    return(data)
+  }
+
+  column_names <- widths_list %>% names()
+  widths <- widths_list %>% unlist() %>% unname()
+
+  # Set the alignment value for all columns in `columns`
+  attr(data, "boxh_df")["column_widths", column_names] <- widths
+
+  na_widths <- is.na(attr(data, "boxh_df")["column_widths", ]) %>% which()
+
+  attr(data, "boxh_df")["column_widths", na_widths] <- default_width
+
+  data
+}
+
 #' Relabel one or more columns
 #'
 #' Column labels can be modified from their default values (the names of the
@@ -179,7 +240,7 @@ cols_label <- function(data,
 
   # Stop function if any of the column names specified are not in `cols_labels`
   if (!all(names(labels_list) %in% names(col_labels))) {
-    stop("All columns names provided must exist in the input `data` table.")
+    stop("All column names provided must exist in the input `data` table.")
   }
 
   # Filter the list of labels by the names in `col_labels`
