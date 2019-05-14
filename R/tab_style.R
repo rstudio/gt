@@ -1,44 +1,39 @@
 #' Add custom styles to one or more cells
 #'
-#' With the `tab_style()` function we can target specific cells and apply
-#' styles to them. This is best done in conjunction with the
-#' [cells_styles()] helper function. At present this function is
-#' focused on the application of styles for HTML output only (as such, other
-#' output formats will ignore all `tab_style()` calls). With the help of
-#' [cells_styles()], we can set the following styles:
+#' With the `tab_style()` function we can target specific cells and apply styles
+#' to them. This is best done in conjunction with the helper functions
+#' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
+#' is focused on the application of styles for HTML output only (as such, other
+#' output formats will ignore all `tab_style()` calls). Using the aforementioned
+#' helper functions, here are some of the styles we can apply:
 #' \itemize{
-#' \item the background color of the cell (`bkgd_color`)
-#' \item the cell's text color (`text_color`), font (`text_font`), or
-#' size (`text_size`)
-#' \item the text style (`text_style`), enabling the use of italics or
+#' \item the background color of the cell ([cell_fill()]: `color`)
+#' \item the cell's text color, font, and size ([cell_text()]: `color`, `font`,
+#' `size`)
+#' \item the text style ([cell_text()]: `style`), enabling the use of italics or
 #' oblique text.
-#' \item text decoration (`text_decorate`): use overlines, line-throughs,
-#' or underlines
-#' \item text transformations (`text_transform`) that result in lowercased,
-#' uppercased, or capitalized text
-#' \item the text weight (`text_weight`), allowing the use of thin to
+#' \item the text weight ([cell_text()]: `weight`), allowing the use of thin to
 #' bold text (the degree of choice is greater with variable fonts)
-#' \item the alignment of text (`text_align`)
-#' \item a stretching property for text that condenses or expands text
-#' (`text_stretch`)
-#' \item the text indentation (`text_indent`)
+#' \item the alignment and indentation of text ([cell_text()]: `align` and
+#' `indent`)
+#' \item the cell borders ([cell_borders()])
 #' }
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The [cells_styles()]
-#'   helper function can be used here to more easily generate valid styles.
+#' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
+#'   [cell_borders()] helper functions can be used here to more easily generate
+#'   valid styles. If using more than one helper function to define styles, all
+#'   calls must be enclosed in a [list()].
 #' @param locations the cell or set of cells to be associated with the style
-#'   Supplying any of the `cells_*()` helper functions is a useful way to
-#'   target the location cells that are associated with the style application.
-#'   These helper functions are: [cells_title()],
-#'   [cells_column_labels()], [cells_group()],
-#'   [cells_stub()], [cells_data()], and
-#'   [cells_summary()]. Please see the help article
-#'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several `cells_*()` calls
-#'   within a `list()` if we wish to apply styles to different types of
-#'   locations (e.g., cell data values, stub group headings, the table title,
-#'   etc.).
+#'   Supplying any of the `cells_*()` helper functions is a useful way to target
+#'   the location cells that are associated with the style application. These
+#'   helper functions are: [cells_title()], [cells_column_labels()],
+#'   [cells_group()], [cells_stub()], [cells_data()], and [cells_summary()].
+#'   Please see the help article [location_cells] for more information on
+#'   how these helper functions can be used. Additionally, we can enclose
+#'   several `cells_*()` calls within a `list()` if we wish to apply styles to
+#'   different types of locations (e.g., cell data values, stub group headings,
+#'   the table title, etc.).
 #' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -54,17 +49,19 @@
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "lightcyan",
-#'       text_weight = "bold"),
+#'     style = list(
+#'       cell_fill(color = "lightcyan"),
+#'       cell_text(weight = "bold")
+#'       ),
 #'     locations = cells_data(
 #'       columns = vars(num),
 #'       rows = num >= 5000)
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "#F9E3D6",
-#'       text_style = "italic"),
+#'     style = list(
+#'       cell_fill(color = "#F9E3D6"),
+#'       cell_text(style = "italic")
+#'       ),
 #'     locations = cells_data(
 #'       columns = vars(currency),
 #'       rows = currency < 100)
@@ -82,15 +79,15 @@
 #'   dplyr::select(-c(adj_close, volume)) %>%
 #'   gt() %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "lightgreen"),
+#'     style = cell_fill(color = "lightgreen"),
 #'     locations = cells_data(
 #'       rows = close > open)
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "crimson",
-#'       text_color = "white"),
+#'     style = list(
+#'       cell_fill(color = "crimson"),
+#'       cell_text(color = "white")
+#'       ),
 #'     locations = cells_data(
 #'       rows = open > close)
 #'   )
@@ -101,10 +98,9 @@
 #' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
-#' @seealso [cells_styles()] as a helper for defining custom styles
-#'   and [cells_data()] as a useful helper function for targeting
-#'   one or more data cells to be styled.
-#' @importFrom stats setNames
+#' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
+#'   defining custom styles and [cells_data()] as a useful helper function for
+#'   targeting one or more data cells to be styled.
 #' @export
 tab_style <- function(data,
                       style,
@@ -112,6 +108,16 @@ tab_style <- function(data,
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
+
+  # If style rules are part of a list, paste each of the list
+  # components together
+  if (inherits(style, "list")) {
+
+    style <-
+      style %>%
+      unlist() %>%
+      paste0(collapse = "")
+  }
 
   # Resolve the locations of the targeted data cells and append
   # the format directives

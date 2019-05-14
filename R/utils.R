@@ -934,6 +934,29 @@ stop_if_not_gt <- function(data) {
 }
 
 
+#' Resolve the selection of border elements for a table cell
+#'
+#' @noRd
+resolve_selection <- function(selection) {
+
+  switch(selection,
+         l = "left",
+         `[` = "left",
+         left = "left",
+         r = "right",
+         `]` = "right",
+         right = "right",
+         t = "top",
+         `^` = "top",
+         top = "top",
+         b = "bottom",
+         `_` = "bottom",
+         bottom = "bottom",
+         a = "all",
+         everything = "all",
+         all = "all")
+}
+
 #' Expand a path using fs::path_ex
 #' @noRd
 path_expand <- function(file) {

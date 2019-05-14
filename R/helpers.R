@@ -134,9 +134,10 @@
 #'     missing_text = ""
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "darkblue",
-#'       text_color = "white"),
+#'     style = list(
+#'       cell_fill(color = "darkblue"),
+#'       cell_text(color = "white")
+#'       ),
 #'     locations = cells_stub(rows = TRUE)
 #'   )
 #'
@@ -188,18 +189,20 @@
 #'     decimals = 0
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightblue"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightblue")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
 #'       rows = 1)
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightgreen"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightgreen")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
@@ -538,8 +541,13 @@ currency <- function(...,
 #'
 #' This helper function is to be used with the [tab_style()] function, which
 #' itself allows for the setting of custom styles to one or more cells. We can
-#' also define several styles within a single call of `cells_styles` and
+#' also define several styles within a single call of `cells_styles()` and
 #' [tab_style()] will reliably apply those styles to the targeted element.
+#'
+#' This function is now soft-deprecated, which means it will soon be removed.
+#' Please consider using the [cell_fill()] (where `bkgd_color` is `fill`) and
+#' [cell_text()] (contains all other arguments here without the leading
+#' `text_`).
 #'
 #' @param bkgd_color The background color of the cell.
 #' @param text_color The text color.
@@ -619,14 +627,14 @@ cells_styles <- function(bkgd_color = NULL,
   if (!is.null(text_weight)) {
     if (text_weight %in% c("normal", "bold", "lighter", "bolder") ||
         text_weight >= 1 & text_weight <= 1000)
-    styles <- c(styles, paste0("font-weight:", text_weight, ";"))
+      styles <- c(styles, paste0("font-weight:", text_weight, ";"))
   }
 
   if (!is.null(text_stretch)) {
     if (text_stretch %in% c(
       "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal",
       "semi-expanded", "expanded", "extra-expanded", "ultra-expanded") ||
-        text_stretch >= 0 & text_stretch <= 200)
+      text_stretch >= 0 & text_stretch <= 200)
       styles <- c(styles, paste0("font-stretch:", text_stretch, ";"))
   }
 
@@ -649,7 +657,253 @@ cells_styles <- function(bkgd_color = NULL,
     }
   }
 
+  # Display soft-deprecation message for `cells_styles()`
+  message("The `cells_styles()` function is now soft-deprecated.\n",
+          "Please look into using the following stylizing helper functions:\n",
+          " * `cell_text()\n",
+          " * `cell_fill()\n",
+          " * `cell_borders()`")
+
   paste(styles, collapse = "")
+}
+
+#' Helper for defining custom text styles for table cells
+#'
+#' This helper function is to be used with the [tab_style()] function, which
+#' itself allows for the setting of custom styles to one or more cells. We can
+#' also define several styles within a single call of `cell_text()` and
+#' [tab_style()] will reliably apply those styles to the targeted element.
+#'
+#' @param color The text color.
+#' @param font The font or collection of fonts (subsequent font names are) used
+#'   as fallbacks.
+#' @param size The size of the font. Can be provided as a number that is assumed
+#'   to represent `px` values (or could be wrapped in the [px()] helper
+#'   function). We can also use one of the following absolute size keywords:
+#'   `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, or
+#'   `xx-large`.
+#' @param style The text style. Can be one of either `"center"`, `"normal"`,
+#'   `"italic"`, or `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param align The text alignment. Can be one of either `"center"`, `"left"`,
+#'   `"right"`, or `"justify"`.
+#' @param stretch Allows for text to either be condensed or expanded. We can use
+#'   one of the following text-based keywords to describe the degree of
+#'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
+#'   `"condensed"`, `"semi-condensed"`, `"normal"`, `"semi-expanded"`,
+#'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
+#'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
+#'   percentage values are not allowed.
+#' @param indent The indentation of the text.
+#' @param decorate allows for text decoration effect to be applied. Here, we can
+#'   use `"overline"`, `"line-through"`, or `"underline"`.
+#' @param transform Allows for the transformation of text. Options are
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#'
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+cell_text <- function(color = NULL,
+                      font = NULL,
+                      size = NULL,
+                      align = NULL,
+                      style = NULL,
+                      weight = NULL,
+                      stretch = NULL,
+                      indent = NULL,
+                      decorate = NULL,
+                      transform = NULL) {
+
+  styles <- c()
+
+  if (!is.null(color)) {
+    styles <- c(styles, paste0("color:", color, ";"))
+  }
+
+  if (!is.null(font)) {
+    styles <- c(styles, paste0("font-family:", font, ";"))
+  }
+
+  if (!is.null(size)) {
+    styles <- c(styles, paste0("font-size:", size, ";"))
+  }
+
+  if (!is.null(align)) {
+
+    if (align %in% c("center", "left", "right", "justify")) {
+      styles <- c(styles, paste0("text-align:", align, ";"))
+    }
+  }
+
+  if (!is.null(style)) {
+
+    if (style %in% c("normal", "italic", "oblique")) {
+      styles <- c(styles, paste0("font-style:", style, ";"))
+    }
+  }
+
+  if (!is.null(weight)) {
+    if (weight %in% c("normal", "bold", "lighter", "bolder") ||
+        weight >= 1 & weight <= 1000)
+    styles <- c(styles, paste0("font-weight:", weight, ";"))
+  }
+
+  if (!is.null(stretch)) {
+    if (stretch %in% c(
+      "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal",
+      "semi-expanded", "expanded", "extra-expanded", "ultra-expanded") ||
+        stretch >= 0 & stretch <= 200)
+      styles <- c(styles, paste0("font-stretch:", stretch, ";"))
+  }
+
+  if (!is.null(indent)) {
+    styles <- c(styles, paste0("text-indent:", indent, ";"))
+  }
+
+  if (!is.null(decorate)) {
+
+    if (decorate %in% c("overline", "line-through",
+                             "underline", "underline overline")) {
+      styles <- c(styles, paste0("text-decoration:", decorate, ";"))
+    }
+  }
+
+  if (!is.null(transform)) {
+
+    if (transform %in% c("uppercase", "lowercase", "capitalize")) {
+      styles <- c(styles, paste0("text-transform:", transform, ";"))
+    }
+  }
+
+  paste(styles, collapse = "")
+}
+
+
+#' Helper for defining custom fills for table cells
+#'
+#' The `cell_fill()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_fill()` should be bound to the
+#' `styles` argument of [tab_style()].
+#'
+#' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
+#'   gray) will be used as a default.
+#'
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+cell_fill <- function(color = NULL) {
+
+  fill <- c()
+
+  if (!is.null(color)) {
+    fill <- c(fill, paste0("background-color:", color, ";"))
+  }
+
+  paste(fill, collapse = "")
+}
+
+
+#' Helper for defining custom borders for table cells
+#'
+#' The `cell_borders()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_borders()` should be bound to the
+#' `styles` argument of [tab_style()]. The `selection` argument is where we
+#' define which borders should be modified (e.g., `"left"`, `"right"`, etc.).
+#' With that selection, the `color`, `style`, and `weight` of the selected
+#' borders can then be modified.
+#'
+#' @param selection The selection of borders to be modified. Options include
+#'   `"left"`, `"right"`, `"top"`, and `"bottom"`. For all borders surrounding
+#'   the selected cells, we can use the `"all"` option.
+#' @param color The border color. If nothing is provided, then `"#000000"`
+#'   (black) will be used as a default.
+#' @param style The border style. Can be one of either `"solid"` (the default),
+#'   `"dashed"`, or `"dotted"`. If nothing is provided, then `"solid"` will be
+#'   used as a default.
+#' @param weight The weight of the border lines. If nothing is provided, then
+#'   `"1px"` will be used as a default.
+#'
+#' @return a character vector containing formatted styles.
+#' @family helper functions
+#' @export
+cell_borders <- function(selection,
+                         color = NULL,
+                         style = NULL,
+                         weight = NULL) {
+
+  if (!any(selection %in% c(
+    "left", "l", "[",
+    "right", "r", "]",
+    "top", "t", "^",
+    "bottom", "b", "_",
+    # "center", "c", "|",
+    # "middle", "mid", "m", "-",
+    # "inside", "i", "+",
+    # "outside", "outline", "o",
+    "all", "everything", "a"
+  ))) {
+    stop("Selection elements for `cell_borders()` must be any of the following:\n",
+         " * left (or: `l`, `[`)\n",
+         " * right (or: `r`, `]`)\n",
+         " * top (or: `t`, `^`)\n",
+         " * bottom (or: `b`, `_`)\n",
+         " * all (or: `a`, `everything`",
+         call. = FALSE)
+  }
+
+  # Resolve the selection of borders into a vector of
+  # standardized directions
+  dir_ <-
+    vapply(
+      selection, resolve_selection,
+      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
+    unique()
+
+  # Should the `all` selection appear in the `dir_`
+  # vector, replace with all possible selections
+  if ("all" %in% dir_) {
+    dir_ <- c("left", "right", "top", "bottom")
+  }
+
+  if (!is.null(color)) {
+    c <- color
+  } else {
+    c <- "#000000"
+  }
+
+  if (!is.null(style)) {
+
+    if (style %in% c("solid", "dashed", "dotted")) {
+      s <- style
+    } else {
+      stop("The border `style` must be one of the following:\n",
+           " * solid\n",
+           " * dashed\n",
+           " * dotted",
+           call. = FALSE)
+    }
+  } else {
+    s <- "solid"
+  }
+
+  if (!is.null(weight)) {
+    w <- weight
+  } else {
+    w <- "1px"
+  }
+
+  # For each of the selections, create border rules
+  border_rules <-
+    glue::glue(
+      "border-{dir_}-style:{s};border-{dir_}-color:{c};border-{dir_}-width:{w};"
+    ) %>% as.character() %>% paste0(collapse = "")
+
+  border_rules
 }
 
 #' Helper for providing a numeric value as percentage

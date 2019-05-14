@@ -58,10 +58,10 @@
 #'   colors. If using a colorizing helper function for `colors` then this
 #'   option is ignored (each of the colorizing helper functions has its own
 #'   `alpha` argument).
-#' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `bkgd`) or the cell
+#' @param apply_to which style element should the colors be applied to? Options
+#'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
-#' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
+#' @param autocolor_text an option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
 #'   `TRUE`.
@@ -129,7 +129,7 @@ data_color <- function(data,
                        columns,
                        colors,
                        alpha = NULL,
-                       apply_to = "bkgd",
+                       apply_to = "fill",
                        autocolor_text = TRUE) {
 
   # Extract `data_df` from the gt object
@@ -190,14 +190,15 @@ data_color <- function(data,
 
       color <- colors_cols[i]
 
-      if (apply_to == "bkgd") {
+      if (apply_to == "fill") {
 
         # Apply color value to the background of the cell
         data <-
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(bkgd_color = color)),
+            apply_to = apply_to,
+            styles = list(list(color = color)),
             rows_i = i)
 
       } else if (apply_to == "text") {
@@ -207,14 +208,15 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color)),
+            apply_to = apply_to,
+            styles = list(list(color = color)),
             rows_i = i)
       }
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (apply_to == "bkgd" & autocolor_text) {
+      if (apply_to == "fill" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
@@ -226,7 +228,8 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color_text)),
+            apply_to = "text",
+            styles = list(list(color = color_text)),
             rows_i = i)
       }
     }
@@ -240,6 +243,7 @@ data_color <- function(data,
 #' @noRd
 scale_apply_styles <- function(data,
                                column,
+                               apply_to,
                                styles,
                                rows_i) {
 
@@ -260,13 +264,26 @@ scale_apply_styles <- function(data,
   # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
+    if (apply_to == "fill") {
+
     data <-
       data %>%
       tab_style(
-        do.call(cells_styles, styles[[i]]),
+        do.call(cell_fill, styles[[i]]),
         cells_data(
           columns = column,
           rows = rows_i[[i]]))
+
+    } else if (apply_to == "text") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_text, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]))
+    }
   }
 
   data
