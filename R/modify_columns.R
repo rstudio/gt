@@ -178,6 +178,9 @@ cols_widths <- function(data,
                         .list = list2(...),
                         .others = px(100)) {
 
+  # TODO: use `dplyr::case_when()` API for this instead
+  # of paired expressions
+
   # Collect a named list of column widths
   widths_list <- .list
 
