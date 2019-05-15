@@ -970,3 +970,18 @@ glue_char <- function(...) {
 
   glue::glue(...) %>% as.character()
 }
+
+validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
+
+  if (arg_name %in% style_names) {
+
+    arg_value <- style_vals[[arg_name]]
+
+    if (!(arg_value %in% in_vector)) {
+      stop("The provided `", arg_name, "` value cannot be `",
+           arg_value, "`; it can only be either of the following:\n",
+           " * ", str_catalog(in_vector, conj = "or"),
+           call. = FALSE)
+    }
+  }
+}
