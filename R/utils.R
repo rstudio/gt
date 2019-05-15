@@ -933,7 +933,6 @@ stop_if_not_gt <- function(data) {
   }
 }
 
-
 #' Resolve the selection of border elements for a table cell
 #'
 #' @noRd
@@ -962,4 +961,12 @@ resolve_selection <- function(selection) {
 path_expand <- function(file) {
 
   fs::path_expand(file)
+}
+
+#' Use `glue::glue()` and coerce to a character vector
+#'
+#' @noRd
+glue_char <- function(...) {
+
+  glue::glue(...) %>% as.character()
 }
