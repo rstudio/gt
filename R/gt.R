@@ -145,8 +145,8 @@ gt <- function(data,
   # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
-  # Create empty `footnotes_df` and `styles_df` data frames
-  footnotes_df <- styles_df <-
+  # Create an empty `footnotes_df` data frame
+  footnotes_df <-
     dplyr::tibble(
       locname = NA_character_,
       locnum = NA_integer_,
@@ -154,6 +154,17 @@ gt <- function(data,
       colname = NA_character_,
       rownum = NA_integer_,
       text = NA_character_
+    )[-1, ]
+
+  # Create an empty `styles_df` data frame
+  styles_df <-
+    dplyr::tibble(
+      locname = NA_character_,
+      locnum = NA_integer_,
+      grpname = NA_character_,
+      colname = NA_character_,
+      rownum = NA_integer_,
+      styles = list()
     )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
