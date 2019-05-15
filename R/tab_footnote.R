@@ -211,6 +211,39 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   )
 }
 
+
+add_location_row_styles <- function(data,
+                                    locname,
+                                    locnum,
+                                    grpname,
+                                    colname,
+                                    rownum,
+                                    styles) {
+
+  add_location_row(
+    data,
+    df_type = "styles_df",
+    locname, locnum, grpname, colname, rownum,
+    styles = styles
+  )
+}
+
+add_location_row_footnotes <- function(data,
+                                       locname,
+                                       locnum,
+                                       grpname,
+                                       colname,
+                                       rownum,
+                                       footnotes) {
+
+  add_location_row(
+    data,
+    df_type = "footnotes_df",
+    locname, locnum, grpname, colname, rownum,
+    text = footnotes
+  )
+}
+
 #' @importFrom dplyr bind_rows tibble distinct
 #' @noRd
 add_location_row <- function(data,
@@ -220,13 +253,13 @@ add_location_row <- function(data,
                              grpname,
                              colname,
                              rownum,
-                             text) {
+                             ...) {
 
   dplyr::bind_rows(
     attr(data, df_type, exact = TRUE),
     dplyr::tibble(
       locname = locname, locnum = locnum,
       grpname = grpname, colname = colname,
-      rownum = rownum, text = text)) %>%
+      rownum = rownum, ...)) %>%
     dplyr::distinct()
 }
