@@ -10,9 +10,6 @@ cell_fill(color = NULL)
 \item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light
 gray) will be used as a default.}
 }
-\value{
-a character vector containing formatted styles.
-}
 \description{
 The \code{cell_fill()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more

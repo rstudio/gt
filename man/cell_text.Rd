@@ -15,10 +15,10 @@ cell_text(color = NULL, font = NULL, size = NULL, align = NULL,
 as fallbacks.}
 
 \item{size}{The size of the font. Can be provided as a number that is assumed
-to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}} helper
-function). We can also use one of the following absolute size keywords:
-\code{xx-small}, \code{x-small}, \code{small}, \code{medium}, \code{large}, \code{x-large}, or
-\code{xx-large}.}
+to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper
+function. We can also use one of the following absolute size keywords:
+\code{"xx-small"}, \code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"},
+or \code{"xx-large"}.}
 
 \item{align}{The text alignment. Can be one of either \code{"center"}, \code{"left"},
 \code{"right"}, or \code{"justify"}.}
@@ -46,9 +46,6 @@ use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
 \item{transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
-}
-\value{
-a character vector containing formatted styles.
 }
 \description{
 This helper function is to be used with the \code{\link[=tab_style]{tab_style()}} function, which

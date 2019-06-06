@@ -260,6 +260,6 @@ add_location_row <- function(data,
     dplyr::tibble(
       locname = locname, locnum = locnum,
       grpname = grpname, colname = colname,
-      rownum = rownum, ...)) %>%
-    dplyr::distinct()
+      rownum = rownum, ...)
+  )
 }

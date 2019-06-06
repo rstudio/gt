@@ -21,9 +21,6 @@ used as a default.}
 \item{weight}{The weight of the border lines. If nothing is provided, then
 \code{"1px"} will be used as a default.}
 }
-\value{
-a character vector containing formatted styles.
-}
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more

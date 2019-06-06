@@ -20,8 +20,8 @@ used as fallbacks.}
 \item{text_size}{The size of the font. Can be provided as a number that is
 assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper
 function. We can also use one of the following absolute size keywords:
-\code{xx-small}, \code{x-small}, \code{small}, \code{medium}, \code{large}, \code{x-large}, or
-\code{xx-large}.}
+\code{"xx-small"}, \code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"},
+or \code{"xx-large"}.}
 
 \item{text_align}{The text alignment. Can be one of either \code{"center"},
 \code{"left"}, \code{"right"}, or \code{"justify"}.}
@@ -36,10 +36,11 @@ support the numeric mapping of weight.}
 
 \item{text_stretch}{Allows for text to either be condensed or expanded. We
 can use the following text-based keywords to describe the degree of
-condensation/expansion: \code{ultra-condensed}, \code{extra-condensed}, \code{condensed},
-\code{semi-condensed}, \code{normal}, \code{semi-expanded}, \code{expanded}, \code{extra-expanded},
-and \code{ultra-expanded}. Alternatively, we can supply percentage values from
-\code{0\\\%} to \code{200\\\%}, inclusive. Negative percentage values are not allowed.}
+condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
+\code{"condensed"}, \code{"semi-condensed"}, \code{"normal"}, \code{"semi-expanded"},
+\code{"expanded"}, \code{"extra-expanded"}, and \code{"ultra-expanded"}. Alternatively, we
+can supply percentage values from \code{0\\\%} to \code{200\\\%}, inclusive. Negative
+percentage values are not allowed.}
 
 \item{text_indent}{The indentation of the text.}
 
@@ -48,9 +49,6 @@ we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
 \item{text_transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
-}
-\value{
-A character vector containing formatted styles.
 }
 \description{
 This helper function is to be used with the \code{\link[=tab_style]{tab_style()}} function, which
