@@ -89,6 +89,21 @@ test_that("the `fmt_percent()` function works correctly", {
       "64 300.00&percnt;", "21 223.20&percnt;", "0.00&percnt;",
       "&minus;2 324.00&percnt;")
   )
+  
+  # Format the `num_1` column to accounting format, use all other defaults;
+  # extract `output_df` and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = "num_1", accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c("<span style=\"visibility: hidden;\">(</span>183,623.00&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>276,339.00&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>93,729.00&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>64,300.00&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>21,223.20&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.00&percnt;<span style=\"visibility: hidden;\">)</span>",
+      "(2,324.00&percnt;)")
+  )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use

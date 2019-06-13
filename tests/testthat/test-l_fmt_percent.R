@@ -75,6 +75,21 @@ test_that("the `fmt_percent()` function works correctly", {
     c("$183 623.00\\%$", "$276 339.00\\%$", "$93 729.00\\%$", "$64 300.00\\%$",
       "$21 223.20\\%$", "$0.00\\%$", "$-2 324.00\\%$")
   )
+  
+  # Format the `num_1` column to accounting format, use all other defaults;
+  # extract `output_df` and compare to expected values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(columns = "num_1", accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c("$\\hphantom{(}183,623.00\\%\\hphantom{)}$", 
+      "$\\hphantom{(}276,339.00\\%\\hphantom{)}$", 
+      "$\\hphantom{(}93,729.00\\%\\hphantom{)}$",
+      "$\\hphantom{(}64,300.00\\%\\hphantom{)}$",
+      "$\\hphantom{(}21,223.20\\%\\hphantom{)}$",
+      "$\\hphantom{(}0.00\\%\\hphantom{)}$",
+      "$(2,324.00\\%)$")
+  )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use

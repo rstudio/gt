@@ -143,8 +143,12 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
-      "$0.00", "($23.24)")
+    c("<span style=\"visibility: hidden;\">(</span>$1,836.23<span style=\"visibility: hidden;\">)</span>", 
+      "<span style=\"visibility: hidden;\">(</span>$2,763.39<span style=\"visibility: hidden;\">)</span>", 
+      "<span style=\"visibility: hidden;\">(</span>$937.29<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$643.00<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$212.23<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;\">)</span>", "($23.24)")
   )
 
   # Format the `num_1` column as USD, apply parentheses to all negative
@@ -155,8 +159,12 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("default"))[["num_1"]],
-    c("$1,836.23", "$2,763.39", "$937.29", "$643.00", "$212.23",
-      "$0.00", "($23.24)")
+    c("<span style=\"visibility: hidden;\">(</span>$1,836.23<span style=\"visibility: hidden;\">)</span>", 
+      "<span style=\"visibility: hidden;\">(</span>$2,763.39<span style=\"visibility: hidden;\">)</span>", 
+      "<span style=\"visibility: hidden;\">(</span>$937.29<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$643.00<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$212.23<span style=\"visibility: hidden;\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;\">)</span>", "($23.24)")
   )
 
   # Format the `num_1` column as USD to 4 decimal places, scale all values by

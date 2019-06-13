@@ -100,8 +100,9 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
-      "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",
+    c("$\\hphantom{(}\\text{\\$}1,836.23\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}2,763.39\\hphantom{)}$", 
+      "$\\hphantom{(}\\text{\\$}937.29\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}643.00\\hphantom{)}$",
+      "$\\hphantom{(}\\text{\\$}212.23\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}0.00\\hphantom{)}$",
       "$(\\text{\\$}23.24)$")
   )
 
@@ -113,8 +114,9 @@ test_that("the `fmt_currency()` function works correctly", {
        fmt_currency(
          columns = "num_1", currency = "USD", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$\\text{\\$}1,836.23$", "$\\text{\\$}2,763.39$", "$\\text{\\$}937.29$",
-      "$\\text{\\$}643.00$", "$\\text{\\$}212.23$", "$\\text{\\$}0.00$",
+    c("$\\hphantom{(}\\text{\\$}1,836.23\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}2,763.39\\hphantom{)}$", 
+      "$\\hphantom{(}\\text{\\$}937.29\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}643.00\\hphantom{)}$",
+      "$\\hphantom{(}\\text{\\$}212.23\\hphantom{)}$", "$\\hphantom{(}\\text{\\$}0.00\\hphantom{)}$",
       "$(\\text{\\$}23.24)$")
   )
 
