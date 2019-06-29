@@ -46,12 +46,14 @@ test_that("the function `cols_label()` works correctly", {
 
   # Create a `tbl_html` object with `gt()` and label all
   # of the columns
-  tbl_html <- gt(tbl) %>%
+  tbl_html <-
+    gt(tbl) %>%
     cols_label(
       col_1 = "col_a",
       col_2 = "col_b",
       col_3 = "col_c",
-      col_4 = "col_d")
+      col_4 = "col_d"
+    )
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
@@ -63,12 +65,13 @@ test_that("the function `cols_label()` works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_right']") %>%
+    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Create a `tbl_html` object with `gt()` and label none
   # of the columns
-  tbl_html <- gt(tbl) %>%
+  tbl_html <-
+    gt(tbl) %>%
     cols_label()
 
   # Expect the original column names for `tbl` as values for
@@ -81,18 +84,20 @@ test_that("the function `cols_label()` works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_right']") %>%
+    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     expect_equal(c("col_1", "col_2", "col_3", "col_4"))
 
   # Create a `tbl_html` object with `gt()` and label all
   # of the columns using a named list passed to `.list`
-  tbl_html <- gt(tbl) %>%
+  tbl_html <-
+    gt(tbl) %>%
     cols_label(
       .list = list(
         col_1 = "col_a",
         col_2 = "col_b",
         col_3 = "col_c",
-        col_4 = "col_d"))
+        col_4 = "col_d")
+    )
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
@@ -104,7 +109,7 @@ test_that("the function `cols_label()` works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("[class='gt_col_heading gt_right']") %>%
+    selection_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect an error if any names are missing

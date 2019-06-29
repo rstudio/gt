@@ -16,7 +16,6 @@
 #' @section Figures:
 #' \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
 #'
-#' @importFrom dplyr tibble
 #' @family information functions
 #' @export
 info_date_style <- function() {
@@ -68,7 +67,6 @@ info_date_style <- function() {
 #' @section Figures:
 #' \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
 #'
-#' @importFrom dplyr tibble
 #' @family information functions
 #' @export
 info_time_style <- function() {
@@ -132,7 +130,6 @@ info_time_style <- function() {
 #'
 #' \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
 #'
-#' @importFrom dplyr filter select everything mutate
 #' @family information functions
 #' @export
 info_currencies <- function(type = c("code", "symbol"),
@@ -254,7 +251,6 @@ info_currencies <- function(type = c("code", "symbol"),
 #' # locale ID begins with a "v"
 #' tab_1 <- info_locales(begins_with = "v")
 #'
-#' @importFrom dplyr filter select mutate
 #' @family information functions
 #' @export
 info_locales <- function(begins_with = NULL) {
@@ -390,7 +386,6 @@ info_locales <- function(begins_with = NULL) {
 #' @section Figures:
 #' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
 #'
-#' @importFrom dplyr filter pull select mutate
 #' @family information functions
 #' @export
 info_paletteer <- function(color_pkgs = NULL) {
@@ -457,8 +452,12 @@ info_paletteer <- function(color_pkgs = NULL) {
       row_group.font.size = "smaller"
     ) %>%
     tab_source_note(source_note = md(
-      paste("The **paletteer** package is maintained by Emil Hvitfeldt. More information can be",
-            "found on [the **paletteer** site](https://emilhvitfeldt.github.io/paletteer/) and",
-            "on the [**CRAN** info page](https://cran.r-project.org/web/packages/paletteer/index.html).")
+      paste0(
+        "The **paletteer** package is maintained by Emil Hvitfeldt. More ",
+        "information can be found on [the **paletteer** site]",
+        "(https://emilhvitfeldt.github.io/paletteer/) and on the ",
+        "[**CRAN** info page]",
+        "(https://cran.r-project.org/web/packages/paletteer/index.html)."
+      )
     ))
 }

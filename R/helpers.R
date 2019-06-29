@@ -440,7 +440,6 @@ md <- function(text) {
 #' \if{html}{\figure{man_html_1.svg}{options: width=100\%}}
 #'
 #' @family helper functions
-#' @importFrom htmltools HTML
 #' @export
 html <- function(text, ...) {
 
@@ -455,7 +454,6 @@ is.html <- function(x) {
     FALSE
   }
 }
-
 
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
@@ -751,6 +749,29 @@ cell_text <- function(color = NULL,
   cell_style_structure("cell_text", style_vals)
 }
 
+cell_style_to_html.cell_text <- function(style) {
+
+  css <- style %>% unclass()
+
+  css_names <-
+    c(
+      font = "font-family",
+      size = "font-size",
+      align = "text-align",
+      style = "font-style",
+      weight = "font-weight",
+      stretch = "font-stretch",
+      indent = "text-indent",
+      decorate = "text-decoration",
+      transform = "text-transform"
+    )
+
+  html_names <- css_names[names(css)]
+  names(css) <- ifelse(!is.na(html_names), html_names, names(css))
+
+  css
+}
+
 #' Helper for defining custom fills for table cells
 #'
 #' The `cell_fill()` helper function is to be used with the [tab_style()]
@@ -774,6 +795,14 @@ cell_fill <- function(color = NULL) {
   style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
 
   cell_style_structure("cell_fill", style_vals)
+}
+
+cell_style_to_html.cell_fill <- function(style) {
+
+  css <- list()
+  css$`background-color` <- style$color
+
+  css
 }
 
 

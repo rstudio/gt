@@ -754,6 +754,7 @@ test_that("all column labels can be entirely hidden from view", {
   # and `gt_right` (i.e., the column labels)
   expect_length(
     tbl %>%
+      dplyr::select(col_1, col_2, col_3, col_4) %>%
       gt() %>%
       tab_options(column_labels.hidden = TRUE) %>%
       render_as_html() %>%
@@ -765,10 +766,11 @@ test_that("all column labels can be entirely hidden from view", {
   # four vector when using the same search
   expect_length(
     tbl %>%
+      dplyr::select(col_1, col_2, col_3, col_4) %>%
       gt() %>%
       render_as_html() %>%
       xml2::read_html() %>%
-      selection_text("[class='gt_col_heading gt_right']"),
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']"),
     4)
 })
 
@@ -783,7 +785,7 @@ test_that("the row striping options work correctly", {
       tab_options(row.striping.include_stub = FALSE) %>%
       render_as_html() %>%
       xml2::read_html() %>%
-      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+      selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
     0)
 
   # Expect that the option `row.striping.include_stub = TRUE` will
@@ -795,7 +797,7 @@ test_that("the row striping options work correctly", {
       tab_options(row.striping.include_stub = TRUE) %>%
       render_as_html() %>%
       xml2::read_html() %>%
-      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+      selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
     5)
 
   # Expect that the option `row.striping.include_table_body = TRUE` will
@@ -823,7 +825,7 @@ test_that("the row striping options work correctly", {
         row.striping.include_table_body = TRUE) %>%
       render_as_html() %>%
       xml2::read_html() %>%
-      selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+      selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(
@@ -848,7 +850,7 @@ test_that("the row striping options work correctly", {
           row.striping.include_table_body = FALSE) %>%
         render_as_html() %>%
         xml2::read_html() %>%
-        selection_text("[class='gt_row gt_stub gt_left gt_striped']"),
+        selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(

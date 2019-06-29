@@ -93,7 +93,7 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
 
   # Expect that CSS styles are indeed inlined
   (path_3 %>%
-      readLines())[10] %>%
+      readLines())[9] %>%
     expect_match(
       "<table style.*")
 })

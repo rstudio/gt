@@ -109,7 +109,18 @@ tab_style <- function(data,
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
-  # TODO: make an `as.cell_style` method
+  style <- as_style(style)
+
+  # Resolve the locations of the targeted data cells and append
+  # the format directives
+  for (loc in locations) {
+    data <- set_style(loc, data, style)
+  }
+
+  data
+}
+
+as_style <- function(style) {
 
   # If style rules are part of a list, paste each of the list
   # components together
@@ -140,7 +151,7 @@ tab_style <- function(data,
              call. = FALSE)
       }
 
-      final_style <- modifyList(final_style, style_item)
+      final_style <- utils::modifyList(final_style, style_item)
     }
 
     class(final_style) <- "cell_styles"
@@ -148,13 +159,10 @@ tab_style <- function(data,
     style <- final_style
   }
 
-  # Resolve the locations of the targeted data cells and append
-  # the format directives
-  for (loc in locations) {
-    data <- set_style(loc, data, style)
-  }
+  # Check for class of `cell_style` in upgraded `style` list
+  lapply(style, function(x) checkmate::assert_class(x = x, classes = "cell_style"))
 
-  data
+  style
 }
 
 set_style <- function(loc, data, style) {
@@ -175,7 +183,7 @@ set_style.cells_data <- function(loc, data, style) {
       data,
       locname = "data", locnum = 5,
       grpname = NA_character_, colname = colnames,
-      rownum = rows, styles = style)
+      rownum = rows, styles = list(style))
 
   data
 }
@@ -191,7 +199,7 @@ set_style.cells_stub <- function(loc, data, style) {
       data,
       locname = "stub", locnum = 5,
       grpname = NA_character_, colname = NA_character_,
-      rownum = rows, styles = style)
+      rownum = rows, styles = list(style))
 
   data
 }
@@ -211,7 +219,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_columns", locnum = 4,
         grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, styles = style)
+        rownum = NA_character_, styles = list(style))
 
   } else if (!is.null(loc$groups)) {
 
@@ -222,7 +230,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_groups", locnum = 3,
         grpname = groups, colname = NA_character_,
-        rownum = NA_character_, styles = style)
+        rownum = NA_character_, styles = list(style))
   }
 
   data
@@ -237,7 +245,7 @@ set_style.cells_group <- function(loc, data, style) {
       data,
       locname = "stub_groups", locnum = 5,
       grpname = groups, colname = NA_character_,
-      rownum = NA_character_, styles = style)
+      rownum = NA_character_, styles = list(style))
 
   data
 }
@@ -251,7 +259,7 @@ set_style.cells_title <- function(loc, data, style) {
         data,
         locname = "title", locnum = 1,
         grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = style)
+        rownum = NA_character_, styles = list(style))
 
   } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
@@ -260,7 +268,7 @@ set_style.cells_title <- function(loc, data, style) {
         data,
         locname = "subtitle", locnum = 2,
         grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = style)
+        rownum = NA_character_, styles = list(style))
   }
 
   data
@@ -271,7 +279,7 @@ set_style.cells_summary <- function(loc, data, style) {
   add_summary_location_row(
     loc = loc,
     data = data,
-    text = style,
+    style = style,
     df_type = "styles_df"
   )
 }
@@ -281,7 +289,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
   add_grand_summary_location_row(
     loc = loc,
     data = data,
-    text = style,
+    style = style,
     df_type = "styles_df"
   )
 }

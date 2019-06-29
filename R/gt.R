@@ -65,7 +65,6 @@
 #'
 #' @family table-part creation/modification functions
 #'
-#' @importFrom dplyr group_vars
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
@@ -83,7 +82,8 @@ gt <- function(data,
       data.frame(
         groupname = NA_character_,
         rowname = rownames(data),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
 
   } else {
 
@@ -91,7 +91,8 @@ gt <- function(data,
       data.frame(
         groupname = rep(NA_character_, nrow(data)),
         rowname = rep(NA_character_, nrow(data)),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
   }
 
   # If `rowname` is a column available in `data`,
@@ -168,16 +169,10 @@ gt <- function(data,
     )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
-  rows_df <-
-    dplyr::tibble(
-      rownums_start = seq(nrow(data_tbl))
-    )
+  rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
 
   # Create a prepopulated `cols_df` data frame
-  cols_df <-
-    dplyr::tibble(
-      colnames_start = colnames(data_tbl)
-    )
+  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
 
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for
@@ -194,8 +189,7 @@ gt <- function(data,
 
   # Assign rownames to the `boxh_df` for easier
   # manipulation of rows
-  rownames(boxh_df) <-
-    c("group_label", "column_label", "column_align")
+  rownames(boxh_df) <- c("group_label", "column_label", "column_align")
 
   # Apply initialized data frames as attributes
   # within the object

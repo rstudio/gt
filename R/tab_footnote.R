@@ -196,7 +196,7 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
   add_summary_location_row(
     loc = loc,
     data = data,
-    text = footnote,
+    style = footnote,
     df_type = "footnotes_df"
   )
 }
@@ -206,11 +206,10 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   add_grand_summary_location_row(
     loc = loc,
     data = data,
-    text = footnote,
+    style = footnote,
     df_type = "footnotes_df"
   )
 }
-
 
 add_location_row_styles <- function(data,
                                     locname,
@@ -244,8 +243,6 @@ add_location_row_footnotes <- function(data,
   )
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
-#' @noRd
 add_location_row <- function(data,
                              df_type,
                              locname,

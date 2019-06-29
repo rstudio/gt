@@ -23,7 +23,6 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-#' @importFrom utils globalVariables
 globalVariables(
   c(
     ".",
@@ -46,6 +45,7 @@ globalVariables(
     "green",
     "group_label",
     "grpname",
+    "grprow",
     "integrate_summary_lines",
     "locname",
     "locnum",
@@ -58,6 +58,7 @@ globalVariables(
     "red",
     "row_end",
     "rownum",
+    "styles",
     "styles_appended",
     "symbol",
     "text",

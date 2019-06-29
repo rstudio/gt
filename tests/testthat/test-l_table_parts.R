@@ -23,9 +23,7 @@ test_that("a gt table contains the expected heading components", {
   # contains a title and a subtitle
   tbl_latex <-
     gt(data = mtcars_short) %>%
-    tab_header(
-      title = "test title",
-      subtitle = "test subtitle")
+    tab_header(title = "test title", subtitle = "test subtitle")
 
   # Expect a characteristic pattern
   grepl(
@@ -33,10 +31,9 @@ test_that("a gt table contains the expected heading components", {
       ".*.large test title",
       ".*.small test subtitle",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
-
 })
 
 test_that("a gt table contains the expected stubhead label", {
