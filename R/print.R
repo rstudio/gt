@@ -61,18 +61,19 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_scss(data = x, id = id)
 
   # Attach the dependency to the HTML table
-  html_tbl <- htmltools::tagList(
-    htmltools::tags$style(htmltools::HTML(css)),
-    tags$div(
-      id = id,
-      style = htmltools::css(
-        `overflow-x` = container_overflow_x,
-        `overflow-y` = container_overflow_y,
-        width = container_width,
-        height = container_height
+  html_tbl <-
+    htmltools::tagList(
+      htmltools::tags$style(htmltools::HTML(css)),
+      htmltools::tags$div(
+        id = id,
+        style = htmltools::css(
+          `overflow-x` = container_overflow_x,
+          `overflow-y` = container_overflow_y,
+          width = container_width,
+          height = container_height
         ),
-      htmltools::HTML(html_table))
-  )
+        htmltools::HTML(html_table))
+    )
 
   html_tbl
 }
