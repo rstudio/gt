@@ -21,6 +21,7 @@ Other helper functions: \code{\link{cell_borders}},
   \code{\link{cell_text}}, \code{\link{cells_styles}},
   \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
+  \code{\link{random_id}}
 }
 \concept{helper functions}
