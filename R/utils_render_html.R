@@ -571,213 +571,214 @@ create_body_component_h <- function(row_splits_body,
     opts_df_get(option = "row_striping_include_table_body") %>%
     as.logical()
 
-  body_rows <- list()
+  body_rows <-
+    lapply(
+      seq_len(n_rows),
+      function(i) {
 
-  for (i in 1:n_rows) {
+        body_section <- list()
 
-    #
-    # Create a group heading row
-    #
+        #
+        # Create a group heading row
+        #
 
-    if (!is.null(groups_rows_df) &&
-        i %in% groups_rows_df$row) {
+        if (!is.null(groups_rows_df) &&
+            i %in% groups_rows_df$row) {
 
-      group_label <-
-        groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
-
-      styles_resolved_row <-
-        styles_resolved %>%
-        dplyr::filter(locname == "stub_groups", grpname == group_label)
-
-      row_style <-
-        if (nrow(styles_resolved_row) > 0) {
-          styles_resolved_row$html_style
-        } else {
-          NULL
-        }
-
-      group_class <-
-        if (group_label == "") {
-          "gt_empty_group_heading"
-        } else {
-          "gt_group_heading"
-        }
-
-      body_rows[[length(body_rows) + 1]] <-
-        htmltools::tags$tr(
-            class = "gt_group_heading_row",
-            htmltools::tags$td(
-            colspan = n_cols,
-            class = group_class,
-            style = row_style,
-            htmltools::HTML(group_label)
-          )
-        )
-    }
-
-    #
-    # Create a body row
-    #
-
-    alignment_classes <- paste0("gt_", col_alignment)
-
-    extra_classes <- rep_len(list(NULL), n_cols)
-
-    if (stub_available) {
-      extra_classes[[1]] <- "gt_stub"
-    }
-
-    # Handle striping in rows in both the stub and the body
-    if (i %% 2 == 0) {
-
-      if (stub_available & table_stub_striped) {
-        extra_classes[[1]] <- paste(extra_classes[[1]], "gt_striped")
-      }
-
-      if (table_body_striped) {
-        if (stub_available) {
-          for (j in 2:length(extra_classes)) {
-            extra_classes[[j]] <- paste(extra_classes[[j]], "gt_striped")
-          }
-        } else {
-          for (j in 1:length(extra_classes)) {
-            extra_classes[[j]] <- paste(extra_classes[[j]], "gt_striped")
-          }
-        }
-      }
-    }
-
-    row_styles <- rep_len(list(NULL), n_cols)
-
-    styles_resolved_row <-
-      styles_resolved %>%
-      dplyr::filter(rownum == i, locname == "data")
-
-    if (nrow(styles_resolved_row) > 0) {
-      if (!stub_available) {
-        row_styles[styles_resolved_row$colnum] <-
-          styles_resolved_row$html_style
-      } else {
-        row_styles[styles_resolved_row$colnum + 1] <-
-          styles_resolved_row$html_style
-      }
-    }
-
-    body_rows[[length(body_rows) + 1]] <-
-      htmltools::tags$tr(
-        mapply(
-          SIMPLIFY = FALSE,
-          USE.NAMES = FALSE,
-          row_splits_body[[i]],
-          alignment_classes,
-          extra_classes,
-          row_styles,
-          FUN = function(x, alignment_class, extra_class, cell_style) {
-
-            htmltools::tags$td(
-              class = paste(
-                c("gt_row", alignment_class, extra_class),
-                collapse = " ") %>% tidy_gsub("\\s\\s*", " "),
-              style = cell_style,
-              htmltools::HTML(x)
-            )
-          }
-        )
-      )
-
-    #
-    # Add groupwise summary rows
-    #
-
-    if (stub_available && summaries_present &&
-        i %in% groups_rows_df$row_end) {
-
-      group_i <-
-        groups_rows_df %>%
-        dplyr::filter(row_end == i)
-
-      group_id <- group_i$group
-
-      if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
-
-        summary_df <-
-          list_of_summaries$summary_df_display_list[[group_id]] %>%
-          as.data.frame(stringsAsFactors = FALSE)
-
-        body_content_summary <- as.vector(t(summary_df))
-
-        row_splits_summary <-
-          split_body_content(
-            body_content = body_content_summary,
-            n_cols = n_cols
-          )
-
-        summary_row_class <- "gt_summary_row"
-
-        summary_row_lines <- list()
-
-        for (j in seq(length(row_splits_summary))) {
-
-          alignment_classes <- paste0("gt_", col_alignment)
-
-          stub_classes <- rep_len(list(NULL), n_cols)
-
-          if (stub_available) {
-            stub_classes[[1]] <- "gt_stub"
-          }
-
-          row_styles <- rep_len(list(NULL), n_cols)
+          group_label <-
+            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
 
           styles_resolved_row <-
             styles_resolved %>%
-            dplyr::filter(grpname == group_id, locname == "summary_cells") %>%
-            dplyr::mutate(grprow = ceiling((rownum %% 1) * 100)) %>%
-            dplyr::filter(grprow == j)
+            dplyr::filter(locname == "stub_groups", grpname == group_label)
 
+          row_style <-
             if (nrow(styles_resolved_row) > 0) {
-              if (!stub_available) {
-                row_styles[styles_resolved_row$colnum] <-
-                  styles_resolved_row$html_style
-              } else {
-                row_styles[styles_resolved_row$colnum + 1] <-
-                  styles_resolved_row$html_style
-              }
+              styles_resolved_row$html_style
+            } else {
+              NULL
             }
 
+          group_class <-
+            if (group_label == "") {
+              "gt_empty_group_heading"
+            } else {
+              "gt_group_heading"
+            }
 
-          summary_row_lines[[length(summary_row_lines) + 1]] <-
+          group_heading_row <-
             htmltools::tags$tr(
-              mapply(
-                SIMPLIFY = FALSE,
-                USE.NAMES = FALSE,
-                row_splits_summary[[j]],
-                stub_classes,
-                alignment_classes,
-                row_styles,
-                FUN = function(x, stub_class, alignment_class, cell_style) {
-
-                  if (j == 1) {
-                    summary_row_class <-
-                      c(summary_row_class, "gt_first_summary_row")
-                  }
-
-                  htmltools::tags$td(
-                    class = paste(
-                      c("gt_row", stub_class, alignment_class, summary_row_class),
-                      collapse = " "),
-                    style = cell_style,
-                    htmltools::HTML(x)
-                  )
-                }
+              class = "gt_group_heading_row",
+              htmltools::tags$td(
+                colspan = n_cols,
+                class = group_class,
+                style = row_style,
+                htmltools::HTML(group_label)
               )
             )
+
+          body_section <- append(body_section, list(group_heading_row))
         }
 
-        body_rows <-
-          c(body_rows, summary_row_lines)
+        #
+        # Create a body row
+        #
+
+        alignment_classes <- paste0("gt_", col_alignment)
+
+        # Handle striping in rows in both the stub and the body
+        striped_class_val <-
+          if (table_body_striped && (i %% 2 == 0)) {
+            "gt_striped"
+          } else {
+            NULL
+          }
+
+        extra_classes <- rep_len(list(striped_class_val), n_cols)
+
+        if (stub_available) {
+
+          if (table_stub_striped) {
+            extra_classes[[1]] <- c("gt_stub", extra_classes[[1]])
+          } else {
+            extra_classes[[1]] <- "gt_stub"
+          }
+        }
+
+        row_styles <- rep_len(list(NULL), n_cols)
+
+        styles_resolved_row <-
+          styles_resolved %>%
+          dplyr::filter(rownum == i, locname == "data")
+
+        if (nrow(styles_resolved_row) > 0) {
+          if (!stub_available) {
+            row_styles[styles_resolved_row$colnum] <-
+              styles_resolved_row$html_style
+          } else {
+            row_styles[styles_resolved_row$colnum + 1] <-
+              styles_resolved_row$html_style
+          }
+        }
+
+        body_row <-
+          htmltools::tags$tr(
+            mapply(
+              SIMPLIFY = FALSE,
+              USE.NAMES = FALSE,
+              row_splits_body[[i]],
+              alignment_classes,
+              extra_classes,
+              row_styles,
+              FUN = function(x, alignment_class, extra_class, cell_style) {
+
+                htmltools::tags$td(
+                  class = paste(
+                    c("gt_row", alignment_class, extra_class),
+                    collapse = " "),
+                  style = cell_style,
+                  htmltools::HTML(x)
+                )
+              }
+            )
+          )
+
+        body_section <- append(body_section, list(body_row))
+
+        #
+        # Add groupwise summary rows
+        #
+
+        if (stub_available && summaries_present &&
+            i %in% groups_rows_df$row_end) {
+
+          group_i <-
+            groups_rows_df %>%
+            dplyr::filter(row_end == i)
+
+          group_id <- group_i$group
+
+          if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
+
+            summary_df <-
+              list_of_summaries$summary_df_display_list[[group_id]] %>%
+              as.data.frame(stringsAsFactors = FALSE)
+
+            body_content_summary <- as.vector(t(summary_df))
+
+            row_splits_summary <-
+              split_body_content(
+                body_content = body_content_summary,
+                n_cols = n_cols
+              )
+
+            summary_row_class <- "gt_summary_row"
+
+            summary_row_lines <- list()
+
+            for (j in seq(length(row_splits_summary))) {
+
+              alignment_classes <- paste0("gt_", col_alignment)
+
+              stub_classes <- rep_len(list(NULL), n_cols)
+
+              if (stub_available) {
+                stub_classes[[1]] <- "gt_stub"
+              }
+
+              row_styles <- rep_len(list(NULL), n_cols)
+
+              styles_resolved_row <-
+                styles_resolved %>%
+                dplyr::filter(grpname == group_id, locname == "summary_cells") %>%
+                dplyr::mutate(grprow = ceiling((rownum %% 1) * 100)) %>%
+                dplyr::filter(grprow == j)
+
+              if (nrow(styles_resolved_row) > 0) {
+                if (!stub_available) {
+                  row_styles[styles_resolved_row$colnum] <-
+                    styles_resolved_row$html_style
+                } else {
+                  row_styles[styles_resolved_row$colnum + 1] <-
+                    styles_resolved_row$html_style
+                }
+              }
+
+              summary_row_lines[[length(summary_row_lines) + 1]] <-
+                htmltools::tags$tr(
+                  mapply(
+                    SIMPLIFY = FALSE,
+                    USE.NAMES = FALSE,
+                    row_splits_summary[[j]],
+                    stub_classes,
+                    alignment_classes,
+                    row_styles,
+                    FUN = function(x, stub_class, alignment_class, cell_style) {
+
+                      if (j == 1) {
+                        summary_row_class <-
+                          c(summary_row_class, "gt_first_summary_row")
+                      }
+
+                      htmltools::tags$td(
+                        class = paste(
+                          c("gt_row", stub_class, alignment_class, summary_row_class),
+                          collapse = " "),
+                        style = cell_style,
+                        htmltools::HTML(x)
+                      )
+                    }
+                  )
+                )
+            }
+
+            body_section <- append(body_section, summary_row_lines)
+          }
+        }
+
+        body_section
       }
-    }
-  }
+    ) %>% flatten_list()
 
   #
   # Add grand summary rows

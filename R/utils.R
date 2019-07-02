@@ -960,3 +960,7 @@ validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
     }
   }
 }
+
+flatten_list <- function(x) {
+  x %>% unlist(recursive = FALSE)
+}
