@@ -523,7 +523,7 @@ create_columns_component_h <- function(boxh_df,
 #' Create the table body component (HTML)
 #'
 #' @noRd
-create_body_component_h <- function(row_splits_body,
+create_body_component_h <- function(output_df,
                                     styles_resolved,
                                     groups_rows_df,
                                     col_alignment,
@@ -533,6 +533,10 @@ create_body_component_h <- function(row_splits_body,
                                     n_rows,
                                     n_cols,
                                     opts_df) {
+
+  output_df_row <- function(i) {
+    output_df[i, ] %>% unlist() %>% unname()
+  }
 
   if (is.null(stub_components)) {
     stub_available <- FALSE
@@ -666,7 +670,7 @@ create_body_component_h <- function(row_splits_body,
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
-              row_splits_body[[i]],
+              output_df_row(i),
               alignment_classes,
               extra_classes,
               row_styles,
@@ -704,36 +708,36 @@ create_body_component_h <- function(row_splits_body,
               list_of_summaries$summary_df_display_list[[group_id]] %>%
               as.data.frame(stringsAsFactors = FALSE)
 
-            body_content_summary <- as.vector(t(summary_df))
-
-            row_splits_summary <-
-              split_body_content(
-                body_content = body_content_summary,
-                n_cols = n_cols
-              )
+            summary_df_row <- function(j) {
+              summary_df[j, ] %>% unlist() %>% unname()
+            }
 
             summary_row_class <- "gt_summary_row"
 
             summary_row_lines <- list()
 
-            for (j in seq(length(row_splits_summary))) {
+            alignment_classes <- paste0("gt_", col_alignment)
 
-              alignment_classes <- paste0("gt_", col_alignment)
+            stub_classes <- rep_len(list(NULL), n_cols)
 
-              stub_classes <- rep_len(list(NULL), n_cols)
+            if (stub_available) {
+              stub_classes[[1]] <- "gt_stub"
+            }
 
-              if (stub_available) {
-                stub_classes[[1]] <- "gt_stub"
-              }
+            row_styles <- rep_len(list(NULL), n_cols)
 
-              row_styles <- rep_len(list(NULL), n_cols)
+            styles_resolved_group <-
+              styles_resolved %>%
+              dplyr::filter(grpname == group_id, locname == "summary_cells") %>%
+              dplyr::mutate(grprow = ceiling((rownum %% 1) * 100))
+
+            for (j in seq_len(nrow(summary_df))) {
 
               styles_resolved_row <-
-                styles_resolved %>%
-                dplyr::filter(grpname == group_id, locname == "summary_cells") %>%
-                dplyr::mutate(grprow = ceiling((rownum %% 1) * 100)) %>%
+                styles_resolved_group %>%
                 dplyr::filter(grprow == j)
 
+              # TODO: make this a function
               if (nrow(styles_resolved_row) > 0) {
                 if (!stub_available) {
                   row_styles[styles_resolved_row$colnum] <-
@@ -749,7 +753,7 @@ create_body_component_h <- function(row_splits_body,
                   mapply(
                     SIMPLIFY = FALSE,
                     USE.NAMES = FALSE,
-                    row_splits_summary[[j]],
+                    summary_df_row(j),
                     stub_classes,
                     alignment_classes,
                     row_styles,
