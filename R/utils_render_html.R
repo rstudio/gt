@@ -649,21 +649,16 @@ create_body_component_h <- function(output_df,
           }
         }
 
-        row_styles <- rep_len(list(NULL), n_cols)
-
         styles_resolved_row <-
           styles_resolved %>%
           dplyr::filter(rownum == i, locname == "data")
 
-        if (nrow(styles_resolved_row) > 0) {
-          if (!stub_available) {
-            row_styles[styles_resolved_row$colnum] <-
-              styles_resolved_row$html_style
-          } else {
-            row_styles[styles_resolved_row$colnum + 1] <-
-              styles_resolved_row$html_style
-          }
-        }
+        row_styles <-
+          build_row_styles(
+            styles_resolved_row = styles_resolved_row,
+            stub_available = stub_available,
+            n_cols = n_cols
+          )
 
         body_row <-
           htmltools::tags$tr(
@@ -833,7 +828,6 @@ create_footnote_component_h <- function(footnotes_resolved,
   )
 }
 
-
 summary_row_tags <- function(group_id,
                              first_row_class,
                              summary_row_class,
@@ -866,8 +860,6 @@ summary_row_tags <- function(group_id,
       stub_classes[[1]] <- "gt_stub"
     }
 
-    row_styles <- rep_len(list(NULL), n_cols)
-
     styles_resolved_group <-
       styles_resolved %>%
       dplyr::filter(grpname == group_id, locname == locname_val) %>%
@@ -888,16 +880,12 @@ summary_row_tags <- function(group_id,
           dplyr::filter(grprow == j)
       }
 
-      # TODO: make this a function
-      if (nrow(styles_resolved_row) > 0) {
-        if (!stub_available) {
-          row_styles[styles_resolved_row$colnum] <-
-            styles_resolved_row$html_style
-        } else {
-          row_styles[styles_resolved_row$colnum + 1] <-
-            styles_resolved_row$html_style
-        }
-      }
+    row_styles <-
+      build_row_styles(
+        styles_resolved_row = styles_resolved_row,
+        stub_available = stub_available,
+        n_cols = n_cols
+      )
 
       summary_row_lines[[length(summary_row_lines) + 1]] <-
         htmltools::tags$tr(
@@ -929,4 +917,23 @@ summary_row_tags <- function(group_id,
   }
 
   summary_row_lines
+}
+
+build_row_styles <- function(styles_resolved_row,
+                             stub_available,
+                             n_cols) {
+
+  row_styles <- rep_len(list(NULL), n_cols)
+
+  if (nrow(styles_resolved_row) > 0) {
+    if (!stub_available) {
+      row_styles[styles_resolved_row$colnum] <-
+        styles_resolved_row$html_style
+    } else {
+      row_styles[styles_resolved_row$colnum + 1] <-
+        styles_resolved_row$html_style
+    }
+  }
+
+  row_styles
 }
