@@ -589,7 +589,7 @@ test_that("the `apply_footnotes_to_output()` function works correctly", {
       "grand_summary_cells", "grand_summary_cells")
   )
   expect_equal(footnotes_resolved$locnum, c(5, 5, 6, 6))
-  expect_equal(footnotes_resolved$grpname, c("BMW", "Audi", NA, NA))
+  expect_equal(footnotes_resolved$grpname, c("BMW", "Audi", "::GRAND_SUMMARY", "::GRAND_SUMMARY"))
   expect_equal(footnotes_resolved$colname, rep("msrp", 4))
   expect_equal(footnotes_resolved$rownum, c(3.01, 6.01, 1.00, 2.00))
   expect_equal(

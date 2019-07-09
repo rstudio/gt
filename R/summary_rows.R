@@ -318,17 +318,17 @@ add_grand_summary_location_row <- function(loc,
 
   if (df_type == "footnotes_df") {
 
-  attr(data, df_type) <-
-    add_location_row(
-      data,
-      df_type = df_type,
-      locname = "grand_summary_cells",
-      locnum = 6,
-      grpname = NA_character_,
-      colname = columns,
-      rownum = rows,
-      text = style
-    )
+    attr(data, df_type) <-
+      add_location_row(
+        data,
+        df_type = df_type,
+        locname = "grand_summary_cells",
+        locnum = 6,
+        grpname = grand_summary_col,
+        colname = columns,
+        rownum = rows,
+        text = style
+      )
 
   } else {
 
@@ -338,7 +338,7 @@ add_grand_summary_location_row <- function(loc,
         df_type = df_type,
         locname = "grand_summary_cells",
         locnum = 6,
-        grpname = NA_character_,
+        grpname = grand_summary_col,
         colname = columns,
         rownum = rows,
         styles = list(style)
