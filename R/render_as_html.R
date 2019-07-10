@@ -48,12 +48,6 @@ render_as_html <- function(data) {
         )
     }
 
-    # # Extraction of body content as a vector
-    # body_content <- as.vector(t(output_df))
-    #
-    # # Split `body_content` by slices of rows
-    # row_splits_body <- split_body_content(body_content, n_cols)
-
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
