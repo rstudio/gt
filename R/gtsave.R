@@ -146,12 +146,7 @@ gt_save_html <- function(data,
                          ...,
                          inline_css = FALSE) {
 
-  # Combine `path` with `filename` if necessary
-  # and normalize the path
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
-  filename <- filename %>% path_expand()
+  filename <- gtsave_filename(path = path, filename = filename)
 
   if (inline_css) {
 
@@ -178,12 +173,7 @@ gt_save_webshot <- function(data,
                             zoom = 2,
                             expand = 5) {
 
-  # Combine `path` with `filename` if necessary
-  # and normalize the path
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
-  filename <- filename %>% path_expand()
+  filename <- gtsave_filename(path = path, filename = filename)
 
   # Create a temporary file with the `html` extension
   tempfile_ <- tempfile(fileext = ".html")
@@ -225,12 +215,7 @@ gt_save_latex <- function(data,
                           path = NULL,
                           ...) {
 
-  # Combine `path` with `filename` if necessary
-  # and normalize the path
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
-  filename <- filename %>% path_expand()
+  filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
     as_latex() %>%
@@ -245,12 +230,7 @@ gt_save_rtf <- function(data,
                         path = NULL,
                         ...) {
 
-  # Combine `path` with `filename` if necessary
-  # and normalize the path
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
-  filename <- filename %>% path_expand()
+  filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
     as_rtf() %>%
@@ -263,4 +243,17 @@ gt_save_rtf <- function(data,
 gtsave_file_ext <- function(filename) {
 
   tools::file_ext(filename) %>% tolower()
+}
+
+
+#' Combine `path` with `filename` and normalize the path
+#'
+#' @noRd
+gtsave_filename <- function(path, filename) {
+
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+
+  filename %>% path_expand()
 }
