@@ -99,34 +99,39 @@ gtsave <- function(data,
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
 
+  ext_supported_text <-
+    paste0(
+      "We can use:\n",
+      " * `.html`, `.htm` (HTML file)\n",
+      " * `.png`          (PNG file)\n",
+      " * `.pdf`          (PDF file)\n",
+      " * `.tex`, `.rnw`  (LaTeX file)\n",
+      " * `.rtf`          (RTF file)\n"
+    )
+
   # Stop function if a file extension is not provided
   if (file_ext == "") {
 
-    stop("A file extension is required in the provided filename. We can use:\n",
-         " * `.html`/`.htm` (HTML file)\n",
-         " * `.pdf` (PDF file)\n",
-         " * `.png` (PNG file)\n",
-         " * `.tex`/`.ltx`/`.rnw` (LaTeX file)\n",
-         " * `.rtf` (RTF file)",
+    stop("A file extension is required in the provided filename. ",
+         ext_supported_text,
          call. = FALSE)
   }
 
   # Use the appropriate save function based
   # on the filename extension
   switch(file_ext,
-          htm = ,
-         html = gt_save_html(data, filename, path, ...),
-          ltx = ,
-          rnw = ,
-          tex = gt_save_latex(data, filename, path, ...),
-          rtf = gt_save_rtf(data, filename, path, ...),
-          png = ,
-          pdf = gt_save_webshot(data, filename, path, ...),
+          "htm" = ,
+         "html" = gt_save_html(data, filename, path, ...),
+          "ltx" = , # We don't verbally support using `ltx`
+          "rnw" = ,
+          "tex" = gt_save_latex(data, filename, path, ...),
+          "rtf" = gt_save_rtf(data, filename, path, ...),
+          "png" = ,
+          "pdf" = gt_save_webshot(data, filename, path, ...),
          {
            stop("The file extension used (`.", file_ext, "`) doesn't have an ",
-                "associated saving function.\n",
-                " * We can use either of `.html`/`.htm`, ",
-                "`.tex`/`.ltx`/`.rnw`, `.png`, or `.rtf`",
+                "associated saving function. ",
+                ext_supported_text,
                 call. = FALSE)
          }
   )
