@@ -270,12 +270,13 @@ ggplot_image <- function(plot_object,
 
   # Save PNG file to disk
   ggplot2::ggsave(
-    device = "png",
-    plot = plot_object,
     filename = "temp_ggplot.png",
+    plot = plot_object,
+    device = "png",
     dpi = 100,
     width = 5 * aspect_ratio,
-    height = 5)
+    height = 5
+  )
 
   # Wait longer for file to be written on async filesystems
   Sys.sleep(1)
