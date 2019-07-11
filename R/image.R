@@ -281,10 +281,7 @@ ggplot_image <- function(plot_object,
   # Wait longer for file to be written on async filesystems
   Sys.sleep(1)
 
-  image_html <-
-    local_image(
-      file = "temp_ggplot.png",
-      height = height)
+  image_html <- local_image(filename = "temp_ggplot.png", height = height)
 
   file.remove("temp_ggplot.png")
 
