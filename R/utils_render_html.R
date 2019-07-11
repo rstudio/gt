@@ -788,8 +788,7 @@ create_footnote_component_h <- function(footnotes_resolved,
   # Get the separator option from `opts_df`
   separator <-
     opts_df %>%
-    dplyr::filter(parameter == "footnote_sep") %>%
-    dplyr::pull(value)
+    opts_df_get(option = "footnote_sep")
 
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["text"]]

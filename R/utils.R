@@ -823,7 +823,7 @@ tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
 #' @noRd
 opts_df_set <- function(opts_df, option, value) {
 
-  opts_df[which(opts_df$parameter == option), "value"] <- value
+  opts_df$value[[which(opts_df$parameter == option)]] <- value
 
   opts_df
 }
@@ -834,7 +834,7 @@ opts_df_set <- function(opts_df, option, value) {
 #' @noRd
 opts_df_get <- function(opts_df, option) {
 
-  opts_df[which(opts_df$parameter == option), "value"]
+  opts_df$value[[which(opts_df$parameter == option)]]
 }
 
 #' Upgrader function for `cells_*` objects
