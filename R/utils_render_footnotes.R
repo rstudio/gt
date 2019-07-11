@@ -268,12 +268,6 @@ resolve_footnotes_styles <- function(output_df,
   # column with footnote glyphs
   if (!is.null(footnotes_df)) {
 
-# <<<<<<< HEAD
-#     # Get the glyph option from `opts_df`
-#     glyphs <-
-#       opts_df %>%
-#       opts_df_get(option = "footnote_glyph")
-# =======
     # Generate a lookup table with ID'd footnote
     # text elements (that are distinct)
     lookup_tbl <-
@@ -282,7 +276,6 @@ resolve_footnotes_styles <- function(output_df,
       dplyr::distinct() %>%
       tibble::rownames_to_column(var = "fs_id") %>%
       dplyr::mutate(fs_id = as.integer(fs_id))
-#>>>>>>> master
 
     # Join the lookup table to `tbl`
     tbl <-
@@ -294,8 +287,7 @@ resolve_footnotes_styles <- function(output_df,
       # Get the glyph option from `opts_df`
       glyphs <-
         opts_df %>%
-        dplyr::filter(parameter == "footnote_glyph") %>%
-        dplyr::pull(value)
+        opts_df_get(option = "footnote_glyph")
 
       # Modify `fs_id` to contain the glyphs we need
       tbl <-
