@@ -232,8 +232,7 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = cells_styles(
-      text_size = px(12)),
+    style = cell_text(size = px(12)),
     locations = cells_data(
       columns = vars(trim, trsmn, mpg_c, hp, trq))
   )
@@ -333,7 +332,6 @@ What `cells_data()` expects is `columns` (column names, which can be convenientl
 In terms of structuring the code, we're taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the `tab_footnote()` statements first (again, any in order) and expect the same output table.
 
 ```{r tab_footnote}
-
 # Use dplyr functions to get the car with the best city gas mileage;
 # this will be used to target the correct cell for a footnote
 best_gas_mileage_city <- 
@@ -407,8 +405,10 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = cells_styles(text_size = px(12)),
-    locations = cells_data(columns = vars(trim, trsmn, mpg_c, hp, trq))
+    style = cell_text(size = px(12)),
+    locations = cells_data(
+      columns = vars(trim, trsmn, mpg_c, hp, trq)
+    )
   ) %>%
   text_transform(
     locations = cells_data(columns = vars(trsmn)),

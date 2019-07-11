@@ -47,7 +47,7 @@ countrypops_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -131,7 +131,7 @@ sza_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -205,7 +205,7 @@ gtcars_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -292,7 +292,7 @@ sp500_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -395,7 +395,7 @@ pizzaplace_ddtab <-
 ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -481,7 +481,7 @@ exibble_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))

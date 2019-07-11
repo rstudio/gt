@@ -134,7 +134,6 @@ gtsave <- function(data,
 
 #' Saving function for an HTML file
 #'
-#' @importFrom htmltools as.tags save_html HTML
 #' @noRd
 gt_save_html <- function(data,
                          filename,
@@ -255,7 +254,6 @@ gt_save_rtf <- function(data,
 
 #' Get the lowercase extension from a filename
 #'
-#' @importFrom tools file_ext
 #' @noRd
 gtsave_file_ext <- function(filename) {
 

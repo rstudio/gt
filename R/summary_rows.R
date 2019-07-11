@@ -170,7 +170,7 @@ grand_summary_rows <- function(data,
 
 add_summary_location_row <- function(loc,
                                      data,
-                                     text,
+                                     style,
                                      df_type = "styles_df") {
 
   stub_df <- attr(data, "stub_df", exact = TRUE)
@@ -240,17 +240,32 @@ add_summary_location_row <- function(loc,
            call. = FALSE)
     }
 
-    attr(data, df_type) <-
-      add_location_row(
-        data,
-        df_type = df_type,
-        locname = "summary_cells",
-        locnum = 5,
-        grpname = group,
-        colname = columns,
-        rownum = rows,
-        text = text
-      )
+    if (df_type == "footnotes_df") {
+
+      attr(data, df_type) <-
+        add_location_row_footnotes(
+          data,
+          locname = "summary_cells",
+          locnum = 5,
+          grpname = group,
+          colname = columns,
+          rownum = rows,
+          footnotes = style
+        )
+
+    } else {
+
+      attr(data, df_type) <-
+        add_location_row_styles(
+          data,
+          locname = "summary_cells",
+          locnum = 5,
+          grpname = group,
+          colname = columns,
+          rownum = rows,
+          styles = list(style)
+        )
+    }
   }
 
   data
@@ -258,7 +273,7 @@ add_summary_location_row <- function(loc,
 
 add_grand_summary_location_row <- function(loc,
                                            data,
-                                           text,
+                                           style,
                                            df_type = "styles_df") {
 
   summary_data <- attr(data, "summary", exact = TRUE)
@@ -299,17 +314,32 @@ add_grand_summary_location_row <- function(loc,
          call. = FALSE)
   }
 
-  attr(data, df_type) <-
-    add_location_row(
-      data,
-      df_type = df_type,
-      locname = "grand_summary_cells",
-      locnum = 6,
-      grpname = NA_character_,
-      colname = columns,
-      rownum = rows,
-      text = text
-    )
+  if (df_type == "footnotes_df") {
+
+    attr(data, df_type) <-
+      add_location_row_footnotes(
+        data,
+        locname = "grand_summary_cells",
+        locnum = 6,
+        grpname = grand_summary_col,
+        colname = columns,
+        rownum = rows,
+        footnotes = style
+      )
+
+  } else {
+
+    attr(data, df_type) <-
+      add_location_row_styles(
+        data,
+        locname = "grand_summary_cells",
+        locnum = 6,
+        grpname = grand_summary_col,
+        colname = columns,
+        rownum = rows,
+        styles = list(style)
+      )
+  }
 
   data
 }
