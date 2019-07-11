@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(110, 4))
+  css_tbl %>% dim() %>% expect_equal(c(126, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -374,42 +374,72 @@ test_that("the `inline_html_styles()` function works correctly", {
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that certain portions of `inlined_html` have
   # inlined CSS rules
   expect_true(
-    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
+        "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
+        "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
+        "collapse; margin-left: auto; margin-right: auto; color: #000000; ",
+        "font-size: 16px; background-color: #FFFFFF; width: auto; ",
+        "border-top-style: solid; border-top-width: 2px; border-top-color: ",
+        "#A8A8A8; border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #A8A8A8;\""
+      ),
+      inlined_html
+    )
   )
 
   expect_true(
-    grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;vertical-align:middle;padding:10px;margin:10px;text-align:right;font-variant-numeric:tabular-nums;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"color: #000000; background-color: #FFFFFF; font-size: ",
+        "16px; font-weight: initial; vertical-align: middle; padding: ",
+        "10px; margin: 10px; border-top-style: solid; border-top-width: ",
+        "2px; border-top-color: #A8A8A8; border-bottom-style: solid; ",
+        "border-bottom-width: 2px; border-bottom-color: #A8A8A8; ",
+        "text-align: center;\""
+      ),
+      inlined_html
+    )
   )
 
   # Augment the gt table with custom styles
   data <-
     data %>%
     tab_style(
-      style = "font-size:10px;",
+      style = cell_text(size = px(10)),
       locations = cells_data(columns = TRUE)
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
+  # TODO: this isn't quite right; we are missing some rules in the
+  # lines that have the `gt_striped` class (the `font-variant-numeric` and
+  # the `text-align` rules)
   expect_true(
-    grepl("style=\"padding:8px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"padding: 8px; margin: 10px; vertical-align: middle; ",
+        "text-align: right; font-variant-numeric: tabular-nums; ",
+        "font-size: 10px;\""
+      ),
+      inlined_html
+    )
   )
 
   # Create a gt table with a custom style in the title and subtitle
@@ -421,26 +451,24 @@ test_that("the `inline_html_styles()` function works correctly", {
       subtitle = "The subtitle"
     ) %>%
     tab_style(
-      cells_styles(
-        text_align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
-          )
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the `colspan` attr is preserved in both <th> elements
   # and that the `text-align:left` rule is present
   expect_true(
-    grepl("th colspan='11' style=.*?text-align:left;", inlined_html)
+    grepl("th colspan=\"11\" style=.*?text-align: left;", inlined_html)
   )
 })
 

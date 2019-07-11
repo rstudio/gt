@@ -59,7 +59,7 @@
 #'   option is ignored (each of the colorizing helper functions has its own
 #'   `alpha` argument).
 #' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `bkgd`) or the cell
+#'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
 #' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
@@ -123,13 +123,12 @@
 #'
 #' @family data formatting functions
 #' @import rlang
-#' @importFrom scales col_numeric col_factor
 #' @export
 data_color <- function(data,
                        columns,
                        colors,
                        alpha = NULL,
-                       apply_to = "bkgd",
+                       apply_to = "fill",
                        autocolor_text = TRUE) {
 
   # Extract `data_df` from the gt object
@@ -145,8 +144,7 @@ data_color <- function(data,
   #
   columns <- rlang::enquo(columns)
 
-  resolved_columns <-
-    resolve_vars(var_expr = !!columns, data = data)
+  resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
 
@@ -162,10 +160,12 @@ data_color <- function(data,
       } else if (is.character(data_vals)) {
 
         domain <- unique(data_vals)
+
         color_fn <-
           scales::col_factor(
             palette = colors[seq(domain)],
-            domain = domain)
+            domain = domain
+          )
 
       } else if (is.factor(data_vals)) {
 
@@ -174,7 +174,8 @@ data_color <- function(data,
         color_fn <-
           scales::col_factor(
             palette = colors[seq(levels)],
-            levels = levels(data_vals))
+            levels = levels(data_vals)
+          )
       }
 
     } else if (inherits(colors, "function")) {
@@ -190,15 +191,17 @@ data_color <- function(data,
 
       color <- colors_cols[i]
 
-      if (apply_to == "bkgd") {
+      if (apply_to == "fill") {
 
         # Apply color value to the background of the cell
         data <-
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(bkgd_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
 
       } else if (apply_to == "text") {
 
@@ -207,14 +210,16 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
       }
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (apply_to == "bkgd" & autocolor_text) {
+      if (apply_to == "fill" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
@@ -226,8 +231,10 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color_text)),
-            rows_i = i)
+            apply_to = "text",
+            styles = list(list(color = color_text)),
+            rows_i = i
+          )
       }
     }
   }
@@ -240,6 +247,7 @@ data_color <- function(data,
 #' @noRd
 scale_apply_styles <- function(data,
                                column,
+                               apply_to,
                                styles,
                                rows_i) {
 
@@ -260,13 +268,30 @@ scale_apply_styles <- function(data,
   # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
-    data <-
-      data %>%
-      tab_style(
-        do.call(cells_styles, styles[[i]]),
-        cells_data(
-          columns = column,
-          rows = rows_i[[i]]))
+    if (apply_to == "fill") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_fill, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+
+    } else if (apply_to == "text") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_text, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+    }
   }
 
   data
@@ -334,7 +359,6 @@ scale_apply_styles <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
 #'
-#' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
                              steps) {
@@ -403,7 +427,6 @@ get_alpha_vec <- function(colors) {
 
 #' Determining the best `light` and `dark` colors for contrast
 #'
-#' @importFrom grDevices col2rgb
 #' @noRd
 ideal_fgnd_color <- function(bgnd_colors,
                              light = "#FFFFFFFF",

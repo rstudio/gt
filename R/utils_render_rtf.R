@@ -5,8 +5,6 @@ footnote_glyph_to_rtf <- function(footnote_glyph) {
     "{\\super \\i ", footnote_glyph, "}")
 }
 
-
-#' @importFrom stats setNames
 #' @noRd
 create_footnote_component_rtf <- function(footnotes_resolved,
                                           opts_df,

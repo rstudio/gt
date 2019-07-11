@@ -134,9 +134,10 @@
 #'     missing_text = ""
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       bkgd_color = "darkblue",
-#'       text_color = "white"),
+#'     style = list(
+#'       cell_fill(color = "darkblue"),
+#'       cell_text(color = "white")
+#'       ),
 #'     locations = cells_stub(rows = TRUE)
 #'   )
 #'
@@ -188,18 +189,20 @@
 #'     decimals = 0
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightblue"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightblue")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
 #'       rows = 1)
 #'   ) %>%
 #'   tab_style(
-#'     style = cells_styles(
-#'       text_style = "italic",
-#'       bkgd_color = "lightgreen"),
+#'     style = list(
+#'       cell_text(style = "italic"),
+#'       cell_fill(color = "lightgreen")
+#'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = vars(population),
@@ -437,7 +440,6 @@ md <- function(text) {
 #' \if{html}{\figure{man_html_1.svg}{options: width=100\%}}
 #'
 #' @family helper functions
-#' @importFrom htmltools HTML
 #' @export
 html <- function(text, ...) {
 
@@ -452,7 +454,6 @@ is.html <- function(x) {
     FALSE
   }
 }
-
 
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
@@ -538,8 +539,13 @@ currency <- function(...,
 #'
 #' This helper function is to be used with the [tab_style()] function, which
 #' itself allows for the setting of custom styles to one or more cells. We can
-#' also define several styles within a single call of `cells_styles` and
+#' also define several styles within a single call of `cells_styles()` and
 #' [tab_style()] will reliably apply those styles to the targeted element.
+#'
+#' This function is now soft-deprecated, which means it will soon be removed.
+#' Please consider using the [cell_fill()] (where `bkgd_color` is `fill`) and
+#' [cell_text()] (contains all other arguments here without the leading
+#' `text_`).
 #'
 #' @param bkgd_color The background color of the cell.
 #' @param text_color The text color.
@@ -548,8 +554,8 @@ currency <- function(...,
 #' @param text_size The size of the font. Can be provided as a number that is
 #'   assumed to represent `px` values (or could be wrapped in the [px()]) helper
 #'   function. We can also use one of the following absolute size keywords:
-#'   `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, or
-#'   `xx-large`.
+#'   `"xx-small"`, `"x-small"`, `"small"`, `"medium"`, `"large"`, `"x-large"`,
+#'   or `"xx-large"`.
 #' @param text_style The text style. Can be one of either `"center"`,
 #'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param text_weight The weight of the font. Can be a text-based keyword such
@@ -560,16 +566,17 @@ currency <- function(...,
 #'   `"left"`, `"right"`, or `"justify"`.
 #' @param text_stretch Allows for text to either be condensed or expanded. We
 #'   can use the following text-based keywords to describe the degree of
-#'   condensation/expansion: `ultra-condensed`, `extra-condensed`, `condensed`,
-#'   `semi-condensed`, `normal`, `semi-expanded`, `expanded`, `extra-expanded`,
-#'   and `ultra-expanded`. Alternatively, we can supply percentage values from
-#'   `0\%` to `200\%`, inclusive. Negative percentage values are not allowed.
+#'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
+#'   `"condensed"`, `"semi-condensed"`, `"normal"`, `"semi-expanded"`,
+#'   `"expanded"`, `"extra-expanded"`, and `"ultra-expanded"`. Alternatively, we
+#'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
+#'   percentage values are not allowed.
 #' @param text_indent The indentation of the text.
 #' @param text_decorate Allows for text decoration effect to be applied. Here,
 #'   we can use `"overline"`, `"line-through"`, or `"underline"`.
 #' @param text_transform Allows for the transformation of text. Options are
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
-#' @return A character vector containing formatted styles.
+#'
 #' @family helper functions
 #' @export
 cells_styles <- function(bkgd_color = NULL,
@@ -584,72 +591,318 @@ cells_styles <- function(bkgd_color = NULL,
                          text_decorate = NULL,
                          text_transform = NULL) {
 
-  styles <- c()
+  # Get all assigned values for the functions' arguments
+  style_names <- formals(cells_styles) %>% names()
+  style_names <- mget(style_names)
 
-  if (!is.null(bkgd_color)) {
-    styles <- c(styles, paste0("background-color:", bkgd_color, ";"))
+  # Filter list by only the non-NULL (e.g., assigned with
+  # value) elements
+  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+
+  # Get a vector of argument names (`style_names`) for
+  # validation purposes
+  style_names <- style_vals %>% names()
+
+  #
+  # Validate textual styles values with `validate_style_in()`
+  #
+
+  validate_style_in(
+    style_vals, style_names, "text_align",
+    c("center", "left", "right", "justify")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "text_style",
+    c("normal", "italic", "oblique")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "text_weight",
+    c("normal", "bold", "lighter", "bolder")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "text_stretch",
+    c("ultra-condensed", "extra-condensed", "condensed",
+      "semi-condensed", "normal", "semi-expanded", "expanded",
+      "extra-expanded", "ultra-expanded")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "text_decorate",
+    c("overline", "line-through", "underline", "underline overline")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "text_transform",
+    c("uppercase", "lowercase", "capitalize")
+  )
+
+  # Display soft-deprecation message for `cells_styles()`
+  message("The `cells_styles()` function is now soft-deprecated.\n",
+          "Please look into using the following stylizing helper functions:\n",
+          " * `cell_text()\n",
+          " * `cell_fill()\n",
+          " * `cell_borders()`")
+
+  style_vals
+}
+
+#' Helper for defining custom text styles for table cells
+#'
+#' This helper function is to be used with the [tab_style()] function, which
+#' itself allows for the setting of custom styles to one or more cells. We can
+#' also define several styles within a single call of `cell_text()` and
+#' [tab_style()] will reliably apply those styles to the targeted element.
+#'
+#' @param color The text color.
+#' @param font The font or collection of fonts (subsequent font names are) used
+#'   as fallbacks.
+#' @param size The size of the font. Can be provided as a number that is assumed
+#'   to represent `px` values (or could be wrapped in the [px()]) helper
+#'   function. We can also use one of the following absolute size keywords:
+#'   `"xx-small"`, `"x-small"`, `"small"`, `"medium"`, `"large"`, `"x-large"`,
+#'   or `"xx-large"`.
+#' @param style The text style. Can be one of either `"center"`, `"normal"`,
+#'   `"italic"`, or `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param align The text alignment. Can be one of either `"center"`, `"left"`,
+#'   `"right"`, or `"justify"`.
+#' @param stretch Allows for text to either be condensed or expanded. We can use
+#'   one of the following text-based keywords to describe the degree of
+#'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
+#'   `"condensed"`, `"semi-condensed"`, `"normal"`, `"semi-expanded"`,
+#'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
+#'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
+#'   percentage values are not allowed.
+#' @param indent The indentation of the text.
+#' @param decorate allows for text decoration effect to be applied. Here, we can
+#'   use `"overline"`, `"line-through"`, or `"underline"`.
+#' @param transform Allows for the transformation of text. Options are
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#'
+#' @family helper functions
+#' @export
+cell_text <- function(color = NULL,
+                      font = NULL,
+                      size = NULL,
+                      align = NULL,
+                      style = NULL,
+                      weight = NULL,
+                      stretch = NULL,
+                      indent = NULL,
+                      decorate = NULL,
+                      transform = NULL) {
+
+  # Get all assigned values for the functions' arguments
+  style_names <- formals(cell_text) %>% names()
+  style_names <- mget(style_names)
+
+  # Filter list by only the non-NULL (e.g., assigned with
+  # value) elements
+  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+
+  # Get a vector of argument names (`style_names`) for
+  # validation purposes
+  style_names <- style_vals %>% names()
+
+  #
+  # Validate textual styles values with `validate_style_in()`
+  #
+
+  validate_style_in(
+    style_vals, style_names, "align",
+    c("center", "left", "right", "justify")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "style",
+    c("normal", "italic", "oblique")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "weight",
+    c("normal", "bold", "lighter", "bolder")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "stretch",
+    c("ultra-condensed", "extra-condensed", "condensed",
+      "semi-condensed", "normal", "semi-expanded", "expanded",
+      "extra-expanded", "ultra-expanded")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "decorate",
+    c("overline", "line-through", "underline", "underline overline")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "transform",
+    c("uppercase", "lowercase", "capitalize")
+  )
+
+  cell_style_structure("cell_text", style_vals)
+}
+
+cell_style_to_html.cell_text <- function(style) {
+
+  css <- style %>% unclass()
+
+  css_names <-
+    c(
+      font = "font-family",
+      size = "font-size",
+      align = "text-align",
+      style = "font-style",
+      weight = "font-weight",
+      stretch = "font-stretch",
+      indent = "text-indent",
+      decorate = "text-decoration",
+      transform = "text-transform"
+    )
+
+  html_names <- css_names[names(css)]
+  names(css) <- ifelse(!is.na(html_names), html_names, names(css))
+
+  css
+}
+
+#' Helper for defining custom fills for table cells
+#'
+#' The `cell_fill()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_fill()` should be bound to the
+#' `styles` argument of [tab_style()].
+#'
+#' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
+#'   gray) will be used as a default.
+#'
+#' @family helper functions
+#' @export
+cell_fill <- function(color = NULL) {
+
+  # Get all assigned values for the functions' arguments
+  style_names <- formals(cell_fill) %>% names()
+  style_names <- mget(style_names)
+
+  # Filter list by only the non-NULL (e.g., assigned with
+  # value) elements
+  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+
+  cell_style_structure("cell_fill", style_vals)
+}
+
+cell_style_to_html.cell_fill <- function(style) {
+
+  css <- list()
+  css$`background-color` <- style$color
+
+  css
+}
+
+
+#' Helper for defining custom borders for table cells
+#'
+#' The `cell_borders()` helper function is to be used with the [tab_style()]
+#' function, which itself allows for the setting of custom styles to one or more
+#' cells. Specifically, the call to `cell_borders()` should be bound to the
+#' `styles` argument of [tab_style()]. The `selection` argument is where we
+#' define which borders should be modified (e.g., `"left"`, `"right"`, etc.).
+#' With that selection, the `color`, `style`, and `weight` of the selected
+#' borders can then be modified.
+#'
+#' @param selection The selection of borders to be modified. Options include
+#'   `"left"`, `"right"`, `"top"`, and `"bottom"`. For all borders surrounding
+#'   the selected cells, we can use the `"all"` option.
+#' @param color The border color. If nothing is provided, then `"#000000"`
+#'   (black) will be used as a default.
+#' @param style The border style. Can be one of either `"solid"` (the default),
+#'   `"dashed"`, or `"dotted"`. If nothing is provided, then `"solid"` will be
+#'   used as a default.
+#' @param weight The weight of the border lines. If nothing is provided, then
+#'   `"1px"` will be used as a default.
+#'
+#' @family helper functions
+#' @export
+cell_borders <- function(selection,
+                         color = NULL,
+                         style = NULL,
+                         weight = NULL) {
+
+  if (!any(selection %in% c(
+    "left", "l",
+    "right", "r",
+    "top", "t",
+    "bottom", "b",
+    "all", "everything", "a"
+  ))) {
+    stop("The `selection` vector for `cell_borders()` has to include one ",
+         "or more of the following keywords (or short forms):\n",
+         " * \"left\" (or: \"l\")\n",
+         " * \"right\" (or: \"r\")\n",
+         " * \"top\" (or: \"t\")\n",
+         " * \"bottom\" (or: \"b\")\n",
+         " * \"all\" (or: \"a\", \"everything\"",
+         call. = FALSE)
   }
 
-  if (!is.null(text_color)) {
-    styles <- c(styles, paste0("color:", text_color, ";"))
+  # Resolve the selection of borders into a vector of
+  # standardized directions
+  directions <-
+    vapply(
+      selection, resolve_selection,
+      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
+    unique()
+
+  # Should the `all` selection appear in the
+  # `directions` vector, use all possible directions
+  if ("all" %in% directions) {
+    directions <- c("left", "right", "top", "bottom")
   }
 
-  if (!is.null(text_font)) {
-    styles <- c(styles, paste0("font-family:", text_font, ";"))
-  }
+  # Resolve cell border styles with regard to
+  # non-specified values
+  color <- color %||% "#000000"
+  style <- style %||% "solid"
+  weight <- weight %||% px(1)
 
-  if (!is.null(text_size)) {
-    styles <- c(styles, paste0("font-size:", text_size, ";"))
-  }
+  # Get all assigned values for the functions' arguments
+  style_names <- formals(cell_borders) %>% names()
+  style_names <- mget(style_names)
 
-  if (!is.null(text_align)) {
+  # Filter list by only the non-NULL (e.g., assigned with
+  # value) elements
+  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
 
-    if (text_align %in% c("center", "left", "right", "justify")) {
-      styles <- c(styles, paste0("text-align:", text_align, ";"))
-    }
-  }
+  # Get a vector of argument names (`style_names`) for
+  # validation purposes
+  style_names <- style_vals %>% names()
 
-  if (!is.null(text_style)) {
+  validate_style_in(
+    style_vals, style_names, "style",
+    c("solid", "dashed", "dotted")
+  )
 
-    if (text_style %in% c("normal", "italic", "oblique")) {
-      styles <- c(styles, paste0("font-style:", text_style, ";"))
-    }
-  }
+  list(cell_borders = style_vals)
+}
 
-  if (!is.null(text_weight)) {
-    if (text_weight %in% c("normal", "bold", "lighter", "bolder") ||
-        text_weight >= 1 & text_weight <= 1000)
-    styles <- c(styles, paste0("font-weight:", text_weight, ";"))
-  }
 
-  if (!is.null(text_stretch)) {
-    if (text_stretch %in% c(
-      "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "normal",
-      "semi-expanded", "expanded", "extra-expanded", "ultra-expanded") ||
-        text_stretch >= 0 & text_stretch <= 200)
-      styles <- c(styles, paste0("font-stretch:", text_stretch, ";"))
-  }
+cell_style_structure <- function(.subclass, obj) {
 
-  if (!is.null(text_indent)) {
-    styles <- c(styles, paste0("text-indent:", text_indent, ";"))
-  }
+  style_obj <- list()
 
-  if (!is.null(text_decorate)) {
+  class(obj) <- c(.subclass, "cell_style")
 
-    if (text_decorate %in% c("overline", "line-through",
-                             "underline", "underline overline")) {
-      styles <- c(styles, paste0("text-decoration:", text_decorate, ";"))
-    }
-  }
+  style_obj[[.subclass]] <- obj
 
-  if (!is.null(text_transform)) {
+  class(style_obj) <- "cell_styles"
 
-    if (text_transform %in% c("uppercase", "lowercase", "capitalize")) {
-      styles <- c(styles, paste0("text-transform:", text_transform, ";"))
-    }
-  }
-
-  paste(styles, collapse = "")
+  style_obj
 }
 
 #' Helper for providing a numeric value as percentage
