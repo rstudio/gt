@@ -68,7 +68,6 @@
 #' shinyApp(ui, server)
 #' }
 #' @family Shiny functions
-#' @importFrom htmltools resolveDependencies findDependencies doRenderTags
 #' @export
 render_gt <- function(expr,
                       width = NULL,
@@ -84,14 +83,14 @@ render_gt <- function(expr,
   # Install the expression as a function
   func <-
     shiny::installExprFunction(
-      expr,
+      expr = expr,
       name = "func",
       eval.env = env,
       quoted = quoted
     )
 
   shiny::createRenderFunction(
-    func,
+    func = func,
     function(result, shinysession, name, ...) {
       if (is.null(result)) {
         return(NULL)

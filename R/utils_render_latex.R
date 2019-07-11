@@ -60,8 +60,8 @@ create_table_start_l <- function(col_alignment) {
     collapse = "")
 }
 
-# Create the columns component of a table
-#' @import rlang
+#' Create the columns component of a table
+#'
 #' @noRd
 create_columns_component_l <- function(boxh_df,
                                        output_df,
@@ -151,7 +151,6 @@ create_columns_component_l <- function(boxh_df,
   paste0("\\toprule\n", table_col_spanners, table_col_headings)
 }
 
-#' @importFrom dplyr mutate filter pull
 #' @noRd
 create_body_component_l <- function(row_splits,
                                     groups_rows_df,
@@ -199,7 +198,6 @@ create_table_end_l <- function() {
     collapse = "")
 }
 
-#' @importFrom stats setNames
 #' @noRd
 create_footnote_component_l <- function(footnotes_resolved,
                                         opts_df) {

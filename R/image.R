@@ -53,7 +53,6 @@
 #' \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
 #'
 #' @family image addition functions
-#' @importFrom glue glue
 #' @export
 local_image <- function(filename,
                         height = 30) {
@@ -70,7 +69,8 @@ local_image <- function(filename,
   cid <-
     paste0(
       sample(letters, 12) %>% paste(collapse = ""), "__",
-      basename(filename))
+      basename(filename)
+    )
 
   # Create the image URI
   uri <- get_image_uri(filename)
@@ -175,7 +175,6 @@ local_image <- function(filename,
 #' \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 #'
 #' @family image addition functions
-#' @importFrom glue glue
 #' @export
 web_image <- function(url,
                       height = 30) {
