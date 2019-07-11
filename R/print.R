@@ -37,7 +37,6 @@ knit_print.gt_tbl <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
-#' @importFrom htmltools tags HTML tagList
 as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the HTML table
@@ -46,8 +45,12 @@ as.tags.gt_tbl <- function(x, ...) {
   # Extract the `opts_df` data frame object from `x`
   opts_df <- attr(x, "opts_df", exact = TRUE)
 
-  # Get the table ID from `opts_df`
+  # Get options related to the enclosing <div>
   id <- opts_df_get(opts_df, option = "table_id")
+  container_overflow_x <- opts_df_get(opts_df, option = "container_overflow_x")
+  container_overflow_y <- opts_df_get(opts_df, option = "container_overflow_y")
+  container_width <- opts_df_get(opts_df, option = "container_width")
+  container_height <- opts_df_get(opts_df, option = "container_height")
 
   # If the ID hasn't been set, set `id` as NULL
   if (is.na(id)) {
@@ -58,10 +61,19 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_scss(data = x, id = id)
 
   # Attach the dependency to the HTML table
-  html_tbl <- htmltools::tagList(
-    htmltools::tags$style(htmltools::HTML(css)),
-    tags$div(id = id, style = htmltools::css(`overflow-x` = "auto"), htmltools::HTML(html_table))
-  )
+  html_tbl <-
+    htmltools::tagList(
+      htmltools::tags$style(htmltools::HTML(css)),
+      htmltools::tags$div(
+        id = id,
+        style = htmltools::css(
+          `overflow-x` = container_overflow_x,
+          `overflow-y` = container_overflow_y,
+          width = container_width,
+          height = container_height
+        ),
+        htmltools::HTML(html_table))
+    )
 
   html_tbl
 }
