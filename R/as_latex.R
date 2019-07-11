@@ -7,9 +7,6 @@
 #' containing the LaTeX code.
 #'
 #' @param data A table object that is created using the [gt()] function.
-#' @import rlang
-#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stats setNames
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -56,7 +53,8 @@ as_latex <- function(data) {
     # Add footnote glyphs to stub group title elements
     groups_rows_df <-
       set_footnote_glyphs_stub_groups(
-        footnotes_resolved, groups_rows_df, output = "latex")
+        footnotes_resolved, groups_rows_df, output = "latex"
+      )
 
     # Add footnote glyphs to the `summary` rows
     list_of_summaries <-
@@ -76,31 +74,33 @@ as_latex <- function(data) {
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
-        heading, footnotes_resolved, n_cols = n_cols, output = "latex")
+        heading, footnotes_resolved, styles_resolved, n_cols,
+        subtitle_defined, output = "latex"
+      )
 
     # Create the columns component of the table
     columns_component <-
       create_columns_component_l(
         boxh_df, output_df, stub_available, spanners_present,
-        stubhead_label)
+        stubhead_label
+      )
 
     # Create the body component of the table
     body_component <-
       create_body_component_l(
         row_splits, groups_rows_df, col_alignment, stub_available,
-        summaries_present, list_of_summaries, n_rows, n_cols)
+        summaries_present, list_of_summaries, n_rows, n_cols
+      )
 
     # Create a LaTeX fragment for the ending tabular statement
     table_end <- create_table_end_l()
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component_l(
-        footnotes_resolved, opts_df)
+      create_footnote_component_l(footnotes_resolved, opts_df)
 
     # Create the source note component of the table
-    source_note_component <-
-      create_source_note_component_l(source_note)
+    source_note_component <- create_source_note_component_l(source_note)
 
     # If the `rmarkdown` package is available, use the
     # `latex_dependency()` function to load latex packages

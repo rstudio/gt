@@ -12,6 +12,9 @@
     border-top-style: $table_border_top_style; /* table.border.top.style */
     border-top-width: $table_border_top_width; /* table.border.top.width */
     border-top-color: $table_border_top_color; /* table.border.top.color */
+    border-bottom-style: $table_border_bottom_style; /* table.border.bottom.style */
+    border-bottom-width: $table_border_bottom_width; /* table.border.bottom.width */
+    border-bottom-color: $table_border_bottom_color; /* table.border.bottom.color */
   }
 
   .gt_heading {
@@ -23,7 +26,7 @@
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; /* heading.title.font.size */
     padding-top: 4px; /* heading.top.padding */
-    padding-bottom: 1px;
+    padding-bottom: 4px;
     border-bottom-color: $table_background_color;
     border-bottom-width: 0;
   }
@@ -31,8 +34,8 @@
   .gt_subtitle {
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; /* heading.subtitle.font.size */
-    padding-top: 1px;
-    padding-bottom: 4px; /* heading.bottom.padding */
+    padding-top: 2px;
+    padding-bottom: 2px; /* heading.bottom.padding */
     border-top-color: $table_background_color;
     border-top-width: 0;
   }
@@ -59,6 +62,18 @@
     vertical-align: middle;
     padding: 10px;
     margin: 10px;
+  }
+
+  .gt_columns_top_border {
+    border-top-style: $columns_border_top_style;
+    border-top-width: $columns_border_top_width;
+    border-top-color: $columns_border_top_color;
+  }
+
+  .gt_columns_bottom_border {
+    border-bottom-style: $columns_border_bottom_style;
+    border-bottom-width: $columns_border_bottom_width;
+    border-bottom-color: $columns_border_bottom_color;
   }
 
   .gt_sep_right {
@@ -155,9 +170,22 @@
     border-bottom-color: $table_body_border_bottom_color; /* table_body.border.bottom.color */
   }
 
+  .gt_footnotes {
+    border-top-style: $footnotes_border_top_style; /* footnotes.border.top.style */
+    border-top-width: $footnotes_border_top_width; /* footnotes.border.top.width */
+    border-top-color: $footnotes_border_top_color; /* footnotes.border.top.color */
+  }
+
   .gt_footnote {
     font-size: $footnote_font_size; /* footnote.font.size */
+    margin: $footnote_margin;
     padding: $footnote_padding; /* footnote.padding */
+  }
+
+  .gt_sourcenotes {
+    border-top-style: $sourcenotes_border_top_style; /* sourcenotes.border.top.style */
+    border-top-width: $sourcenotes_border_top_width; /* sourcenotes.border.top.width */
+    border-top-color: $sourcenotes_border_top_color; /* sourcenotes.border.top.color */
   }
 
   .gt_sourcenote {

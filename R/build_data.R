@@ -16,7 +16,8 @@ build_data <- function(data, context) {
       "names", "row.names", "class", "boxh_df", "stub_df",
       "footnotes_df", "styles_df", "rows_df", "cols_df",
       "col_labels", "grp_labels", "arrange_groups", "opts_df",
-      "formats", "transforms"))
+      "formats", "transforms")
+  )
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
@@ -217,14 +218,16 @@ build_data <- function(data, context) {
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = footnotes_df, styles_df = NULL)
+      footnotes_df = footnotes_df, styles_df = NULL
+    )
 
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = NULL, styles_df = styles_df)
+      footnotes_df = NULL, styles_df = styles_df
+    )
 
   list(
     data_df = data_df,
@@ -261,5 +264,6 @@ build_data <- function(data, context) {
     spanners_present = spanners_present,
     summaries_present = summaries_present,
     n_rows = n_rows,
-    n_cols = n_cols)
+    n_cols = n_cols
+  )
 }

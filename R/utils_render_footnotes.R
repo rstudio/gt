@@ -1,7 +1,5 @@
-# Resolve footnotes or styles
-#' @importFrom dplyr filter bind_rows mutate inner_join group_by
-#' @importFrom dplyr summarize select arrange pull tibble distinct
-#' @importFrom tibble rownames_to_column
+#' Resolve footnotes or styles
+#'
 #' @noRd
 resolve_footnotes_styles <- function(output_df,
                                      boxh_df,
@@ -14,10 +12,15 @@ resolve_footnotes_styles <- function(output_df,
                                      footnotes_df = NULL,
                                      styles_df = NULL) {
 
+  # TODO: use `tbl` in arg list to avoid below statement
   if (!is.null(styles_df) && is.null(footnotes_df)) {
     tbl <- styles_df
   } else if (is.null(styles_df) && !is.null(footnotes_df)) {
     tbl <- footnotes_df
+  }
+
+  if (nrow(tbl) == 0) {
+    return(tbl)
   }
 
   # Pare down to the relevant records
@@ -62,7 +65,8 @@ resolve_footnotes_styles <- function(output_df,
             dplyr::filter(locname != "stub_groups"),
           tbl %>%
             dplyr::filter(locname == "stub_groups") %>%
-            dplyr::filter(grpname %in% arrange_groups$groups))
+            dplyr::filter(grpname %in% arrange_groups$groups)
+        )
     }
 
     # Filter `tbl` by the remaining columns in `output_df`
@@ -260,41 +264,66 @@ resolve_footnotes_styles <- function(output_df,
     tbl %>%
     dplyr::arrange(locnum, rownum, colnum)
 
-  # Generate a lookup table with ID'd footnote
-  # text elements (that are distinct)
-  lookup_tbl <-
-    tbl %>%
-    dplyr::select(text) %>%
-    dplyr::distinct() %>%
-    tibble::rownames_to_column(var = "fs_id") %>%
-    dplyr::mutate(fs_id = as.integer(fs_id))
+  # In the case of footnotes, populate table
+  # column with footnote glyphs
+  if (!is.null(footnotes_df)) {
 
-  # Join the lookup table to `tbl`
-  tbl <-
-    tbl %>%
-    dplyr::inner_join(lookup_tbl, by = "text")
+# <<<<<<< HEAD
+#     # Get the glyph option from `opts_df`
+#     glyphs <-
+#       opts_df %>%
+#       opts_df_get(option = "footnote_glyph")
+# =======
+    # Generate a lookup table with ID'd footnote
+    # text elements (that are distinct)
+    lookup_tbl <-
+      tbl %>%
+      dplyr::select(text) %>%
+      dplyr::distinct() %>%
+      tibble::rownames_to_column(var = "fs_id") %>%
+      dplyr::mutate(fs_id = as.integer(fs_id))
+#>>>>>>> master
 
-  if (nrow(tbl) > 0) {
-
-    # Get the glyph option from `opts_df`
-    glyphs <-
-      opts_df %>%
-      opts_df_get(option = "footnote_glyph")
-
-    # Modify `fs_id` to contain the glyphs we need
+    # Join the lookup table to `tbl`
     tbl <-
       tbl %>%
-      dplyr::mutate(
-        fs_id = footnote_glyphs(
-          x = fs_id,
-          glyphs = glyphs)
-      )
+      dplyr::inner_join(lookup_tbl, by = "text")
+
+    if (nrow(tbl) > 0) {
+
+      # Get the glyph option from `opts_df`
+      glyphs <-
+        opts_df %>%
+        dplyr::filter(parameter == "footnote_glyph") %>%
+        dplyr::pull(value)
+
+      # Modify `fs_id` to contain the glyphs we need
+      tbl <-
+        tbl %>%
+        dplyr::mutate(
+          fs_id = footnote_glyphs(
+            x = fs_id,
+            glyphs = glyphs)
+        )
+    }
+  }
+
+  if (!is.null(styles_df)) {
+
+    if (nrow(tbl) > 0) {
+
+      tbl <-
+        tbl %>%
+        dplyr::group_by(
+          .dots = colnames(.) %>% base::setdiff(c("styles", "text"))) %>%
+        dplyr::summarize(styles_appended = list(as_style(styles))) %>%
+        dplyr::ungroup()
+    }
   }
 
   tbl
 }
 
-#' @importFrom dplyr filter group_by mutate ungroup select distinct
 #' @noRd
 set_footnote_glyphs_columns <- function(footnotes_resolved,
                                         boxh_df,
@@ -342,7 +371,9 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
 
         text <-
           boxh_df["group_label", column_indices] %>%
-          unlist() %>% unname() %>% unique()
+          unlist() %>%
+          unname() %>%
+          unique()
 
         if (output == "html") {
 
@@ -350,7 +381,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_html(
-                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i])
+            )
 
         } else if (output == "rtf") {
 
@@ -358,7 +390,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_rtf(
-                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i])
+            )
 
         } else if (output == "latex") {
 
@@ -366,7 +399,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_latex(
-                footnotes_columns_group_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_group_glyphs$fs_id_coalesced[i])
+            )
         }
 
         boxh_df["group_label", column_indices] <- text
@@ -394,7 +428,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_html(
-                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i])
+            )
 
         } else if (output == "rtf") {
 
@@ -402,7 +437,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_rtf(
-                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i])
+            )
 
         } else if (output == "latex") {
 
@@ -410,7 +446,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
             paste0(
               text,
               footnote_glyph_to_latex(
-                footnotes_columns_column_glyphs$fs_id_coalesced[i]))
+                footnotes_columns_column_glyphs$fs_id_coalesced[i])
+            )
         }
 
         boxh_df[
@@ -422,8 +459,8 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
   boxh_df
 }
 
-# Apply footnotes to the data rows
-#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' Apply footnotes to the data rows
+#'
 #' @noRd
 apply_footnotes_to_output <- function(output_df,
                                       footnotes_resolved,
@@ -440,8 +477,7 @@ apply_footnotes_to_output <- function(output_df,
         "rowname" %in% colnames(output_df)) {
 
       footnotes_tbl_data[
-        which(is.na(footnotes_tbl_data$colname)), "colname"] <-
-        "rowname"
+        which(is.na(footnotes_tbl_data$colname)), "colname"] <- "rowname"
     }
 
     footnotes_data_glpyhs <-
@@ -461,19 +497,22 @@ apply_footnotes_to_output <- function(output_df,
 
         text <-
           paste0(text, footnote_glyph_to_html(
-            footnotes_data_glpyhs$fs_id_coalesced[i]))
+            footnotes_data_glpyhs$fs_id_coalesced[i])
+          )
 
       } else if (output == "rtf") {
 
         text <-
           paste0(text, footnote_glyph_to_rtf(
-            footnotes_data_glpyhs$fs_id_coalesced[i]))
+            footnotes_data_glpyhs$fs_id_coalesced[i])
+          )
 
       } else if (output == "latex") {
 
         text <-
           paste0(text, footnote_glyph_to_latex(
-            footnotes_data_glpyhs$fs_id_coalesced[i]))
+            footnotes_data_glpyhs$fs_id_coalesced[i])
+          )
       }
 
       output_df[
@@ -484,8 +523,6 @@ apply_footnotes_to_output <- function(output_df,
   output_df
 }
 
-#' @importFrom dplyr filter group_by mutate ungroup select distinct
-#' @importFrom htmltools htmlEscape
 #' @noRd
 set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
                                             groups_rows_df,
@@ -526,7 +563,8 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_html(
-              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i])
+          )
 
       } else if (output == "rtf") {
 
@@ -534,7 +572,8 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_rtf(
-              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i])
+          )
 
       } else if (output == "latex") {
 
@@ -542,7 +581,8 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
           paste0(
             text,
             footnote_glyph_to_latex(
-              footnotes_stub_groups_glyphs$fs_id_coalesced[i]))
+              footnotes_stub_groups_glyphs$fs_id_coalesced[i])
+          )
       }
 
       groups_rows_df[row_index, "group_label"] <- text
@@ -552,8 +592,8 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
   groups_rows_df
 }
 
-# Apply footnotes to the summary rows
-#' @importFrom dplyr filter group_by mutate ungroup select distinct
+#' Apply footnotes to the summary rows
+#'
 #' @noRd
 apply_footnotes_to_summary <- function(list_of_summaries,
                                        footnotes_resolved) {
