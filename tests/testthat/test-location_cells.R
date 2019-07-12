@@ -18,8 +18,8 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'title'
-  helper_cells_title[[1]][2] %>%
-    as.character() %>%
+  helper_cells_title[[1]] %>%
+    rlang::quo_get_expr() %>%
     expect_equal("title")
 
   # Create a `cells_title` object with the `subtitle` option
