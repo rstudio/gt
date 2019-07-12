@@ -227,7 +227,6 @@ get_columns_spanners_vec <- function(boxh_df) {
 
 #' Create a data frame with row group information
 #'
-#' @importFrom dplyr mutate
 #' @noRd
 get_groups_rows_df <- function(arrange_groups,
                                groups_df,
@@ -241,7 +240,8 @@ get_groups_rows_df <- function(arrange_groups,
       group_label = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   for (i in seq(ordering)) {
 
