@@ -28,12 +28,13 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the style application. These
 #'   helper functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_group()], [cells_stub()], [cells_data()], and [cells_summary()].
-#'   Please see the help article [location_cells] for more information on
-#'   how these helper functions can be used. Additionally, we can enclose
-#'   several `cells_*()` calls within a `list()` if we wish to apply styles to
-#'   different types of locations (e.g., cell data values, stub group headings,
-#'   the table title, etc.).
+#'   [cells_group()], [cells_stub()], [cells_stubhead()], [cells_data()],
+#'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
+#'   [location_cells] for more information on how these helper functions can be
+#'   used. Additionally, we can enclose several `cells_*()` calls within a
+#'   `list()` if we wish to apply styles to different types of locations (e.g.,
+#'   cell data values, stub group headings, the table title, etc.).
+#'
 #' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -179,7 +180,7 @@ set_style.cells_title <- function(loc, data, style) {
         locname = "title", locnum = 1,
         grpname = NA_character_, colname = NA_character_,
         rownum = NA_character_, styles = list(style)
-        )
+      )
 
   } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
@@ -195,7 +196,7 @@ set_style.cells_title <- function(loc, data, style) {
   data
 }
 
-set_style.cells_stubhead_label <- function(loc, data, style) {
+set_style.cells_stubhead <- function(loc, data, style) {
 
   attr(data, "styles_df") <-
     add_location_row_styles(
@@ -223,7 +224,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_columns", locnum = 4,
         grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, styles = list(style))
+        rownum = NA_character_, styles = list(style)
+      )
 
   } else if (!is.null(loc$groups)) {
 
@@ -234,7 +236,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_groups", locnum = 3,
         grpname = groups, colname = NA_character_,
-        rownum = NA_character_, styles = list(style))
+        rownum = NA_character_, styles = list(style)
+      )
   }
 
   data

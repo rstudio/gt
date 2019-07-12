@@ -16,9 +16,9 @@
 #' depending on the value given to the `groups` argument (`"title"` or
 #' `"subtitle"`).
 #'
-#' \item `cells_stubhead_label()`: targets the stubhead label, a cell of which
-#' is only available when there is a stub, and a label of which is only
-#' available if the [tab_stubhead_label()] function is used.
+#' \item `cells_stubhead()`: targets the stubhead location, a cell of which is
+#' only available when there is a stub; a label in that location can be created
+#' by using the [tab_stubhead_label()] function.
 #'
 #' \item `cells_column_labels()`: targets labels in the column labels (the
 #' `columns` argument) or the spanner column labels (the `groups` argument) in
@@ -250,14 +250,14 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_stubhead_label <- function() {
+cells_stubhead <- function() {
 
-  # Create the `cells_stubhead_label` object
+  # Create the `cells_stubhead` object
   cells <- list(groups = "stubhead_label")
 
-  # Apply the `cells_stubhead_label` and
+  # Apply the `cells_stubhead` and
   # `location_cells` classes
-  class(cells) <- c("cells_stubhead_label", "location_cells")
+  class(cells) <- c("cells_stubhead", "location_cells")
 
   cells
 }
