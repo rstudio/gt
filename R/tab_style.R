@@ -178,7 +178,8 @@ set_style.cells_title <- function(loc, data, style) {
         data,
         locname = "title", locnum = 1,
         grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, text = style)
+        rownum = NA_character_, styles = list(style)
+        )
 
   } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
@@ -187,7 +188,7 @@ set_style.cells_title <- function(loc, data, style) {
         data,
         locname = "subtitle", locnum = 2,
         grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, text = style
+        rownum = NA_character_, styles = list(style)
       )
   }
 
