@@ -303,7 +303,7 @@ create_columns_component_h <- function(boxh_df,
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
   if (stub_available && length(stubhead) > 0) {
-    headings <- rlang::prepend(headings, stubhead$stubhead)
+    headings <- rlang::prepend(headings, stubhead$label)
   } else if (stub_available) {
     headings <- rlang::prepend(headings, "")
   }

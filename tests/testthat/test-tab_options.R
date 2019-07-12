@@ -22,7 +22,7 @@ data <-
     title = "The Title",
     subtitle = "The Subtitle"
   ) %>%
-  tab_stubhead_label(label = "Stubhead Caption") %>%
+  tab_stubhead(label = "Stubhead Caption") %>%
   tab_spanner(
     label = "Group 1",
     columns = vars(col_1, col_2)

@@ -56,7 +56,7 @@ depending on the value given to the \code{groups} argument (\code{"title"} or
 
 \item \code{cells_stubhead()}: targets the stubhead location, a cell of which is
 only available when there is a stub; a label in that location can be created
-by using the \code{\link[=tab_stubhead_label]{tab_stubhead_label()}} function.
+by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
 
 \item \code{cells_column_labels()}: targets labels in the column labels (the
 \code{columns} argument) or the spanner column labels (the \code{groups} argument) in

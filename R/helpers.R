@@ -18,7 +18,7 @@
 #'
 #' \item `cells_stubhead()`: targets the stubhead location, a cell of which is
 #' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead_label()] function.
+#' by using the [tab_stubhead()] function.
 #'
 #' \item `cells_column_labels()`: targets labels in the column labels (the
 #' `columns` argument) or the spanner column labels (the `groups` argument) in

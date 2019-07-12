@@ -87,7 +87,7 @@ test_that("a gt table contains the expected stubhead label", {
   # contains a stub and a stubhead label
   tbl_html <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_label(label = "the mtcars") %>%
+    tab_stubhead(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -248,7 +248,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
-    tab_stubhead_label(label = "cars") %>%
+    tab_stubhead(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_row_group(

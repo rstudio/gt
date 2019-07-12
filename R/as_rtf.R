@@ -295,7 +295,7 @@ as_rtf <- function(data) {
   if (stub_available && length(stubhead) > 0 &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <- stubhead$stubhead
+    headings[which(headings == "rowname")] <- stubhead$label
 
   } else if ("rowname" %in% headings) {
 

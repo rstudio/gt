@@ -69,17 +69,17 @@ tab_header <- function(data,
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
-#'   tab_stubhead_label(label = "car")
+#'   tab_stubhead(label = "car")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_label_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_stubhead_1.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
 #' @export
-tab_stubhead_label <- function(data,
-                               label) {
+tab_stubhead <- function(data,
+                         label) {
 
-  attr(data, "stubhead") <- list(stubhead = label)
+  attr(data, "stubhead") <- list(label = label)
 
   data
 }

@@ -704,12 +704,12 @@ process_heading <- function(heading, context) {
 }
 
 # Process the `stubhead` object
-process_stubhead <- function(caption, context) {
+process_stubhead <- function(stubhead, context) {
 
-  if (!is.null(caption)) {
-    stubhead <- caption$stubhead %>% process_text(context)
+  if (!is.null(stubhead)) {
+    label <- stubhead$label %>% process_text(context)
 
-    return(list(stubhead = stubhead))
+    return(list(label = label))
   }
 }
 

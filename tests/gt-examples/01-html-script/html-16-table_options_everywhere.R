@@ -24,7 +24,7 @@ many_options_tbl <-
     title = "The Title",
     subtitle = "The Subtitle"
   ) %>%
-  tab_stubhead_label(label = "Stubhead Label") %>%
+  tab_stubhead(label = "Stubhead Label") %>%
   tab_spanner(
     label = "Group 1",
     columns = vars(col_1, col_2)

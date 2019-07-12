@@ -5,7 +5,7 @@ data <-
   mtcars %>%
   gt(rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_label(label = "cars") %>%
+  tab_stubhead(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(

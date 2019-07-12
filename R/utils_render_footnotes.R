@@ -479,7 +479,7 @@ set_footnote_glyphs_stubhead <- function(footnotes_resolved,
         dplyr::distinct() %>%
         dplyr::pull(fs_id_coalesced)
 
-      text <- stubhead$stubhead
+      text <- stubhead$label
 
       if (output == "html") {
 
@@ -497,7 +497,7 @@ set_footnote_glyphs_stubhead <- function(footnotes_resolved,
           paste0(text, footnote_glyph_to_latex(footnotes_stubhead_glyphs))
       }
 
-      stubhead$stubhead <- text
+      stubhead$label <- text
     }
   }
 
