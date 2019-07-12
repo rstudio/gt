@@ -358,7 +358,7 @@ test_that("a gt table contains custom styles at the correct locations", {
         cell_fill(color = "blue"),
         cell_text(color = "white")
       ),
-      locations = cells_stubhead_label()
+      locations = cells_stubhead()
     ) %>%
     render_as_html() %>%
     xml2::read_html()

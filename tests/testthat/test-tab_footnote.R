@@ -246,7 +246,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Stubhead label footnote.",
-      locations = cells_stubhead_label()
+      locations = cells_stubhead()
     )
 
   # Expect that the internal `footnotes_df` data frame will have
