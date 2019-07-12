@@ -5,7 +5,7 @@ data <-
   mtcars %>%
   gt(rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_label(label = "cars") %>%
+  tab_stubhead(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(
@@ -239,6 +239,28 @@ test_that("the `tab_footnote()` function works correctly", {
     tab, "footnotes_df",
     c("subtitle", "2", NA_character_, NA_character_, NA_character_,
       "Subtitle footnote.")
+  )
+
+  # Apply a footnote to the stubhead label
+  tab <-
+    data %>%
+    tab_footnote(
+      footnote = "Stubhead label footnote.",
+      locations = cells_stubhead()
+    )
+
+  # Expect that the internal `footnotes_df` data frame will have
+  # a single row
+  attr(tab, "footnotes_df", exact = TRUE) %>%
+    nrow() %>%
+    expect_equal(1)
+
+  # Expect certain values for each of the columns in the
+  # single-row `footnotes_df` data frame
+  expect_attr_equal(
+    tab, "footnotes_df",
+    c("stubhead", "2.5", NA_character_, NA_character_, NA_character_,
+      "Stubhead label footnote.")
   )
 
   # Apply a footnote to a single cell in a group summary section
@@ -557,7 +579,7 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(rep(as.character(1:4), 2))
 })
 
-test_that("the `apply_footnotes_to_output()` function works correctly", {
+test_that("the `apply_footnotes_to_summary()` function works correctly", {
 
   # Build the `data_3` object (using the `html` context)
   # and obtain the `built_data` list object

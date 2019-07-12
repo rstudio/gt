@@ -451,6 +451,58 @@ set_footnote_glyphs_columns <- function(footnotes_resolved,
   boxh_df
 }
 
+#' Set footnote glyphs for the stubhead
+#'
+#' @noRd
+set_footnote_glyphs_stubhead <- function(footnotes_resolved,
+                                         stubhead,
+                                         output = "html") {
+
+  # Get the resolved footnotes
+  footnotes_tbl <- footnotes_resolved
+
+  if ("stubhead" %in% footnotes_tbl$locname) {
+
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::filter(locname == "stubhead")
+
+    if (nrow(footnotes_tbl) > 0) {
+
+      footnotes_stubhead_glyphs <-
+        footnotes_tbl %>%
+        dplyr::group_by(grpname) %>%
+        dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
+        dplyr::ungroup() %>%
+        dplyr::select(grpname, fs_id_coalesced) %>%
+        dplyr::distinct() %>%
+        dplyr::pull(fs_id_coalesced)
+
+      text <- stubhead$label
+
+      if (output == "html") {
+
+        text <-
+          paste0(text, footnote_glyph_to_html(footnotes_stubhead_glyphs))
+
+      } else if (output == "rtf") {
+
+        text <-
+          paste0(text, footnote_glyph_to_rtf(footnotes_stubhead_glyphs))
+
+      } else if (output == "latex") {
+
+        text <-
+          paste0(text, footnote_glyph_to_latex(footnotes_stubhead_glyphs))
+      }
+
+      stubhead$label <- text
+    }
+  }
+
+  stubhead
+}
+
 #' Apply footnotes to the data rows
 #'
 #' @noRd
