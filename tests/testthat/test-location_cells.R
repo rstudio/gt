@@ -344,9 +344,9 @@ test_that("the `cells_stubhead()` function works correctly", {
   # Create a `cells_stubhead` object
   helper_cells_stubhead <- cells_stubhead()
 
-  # Expect this has the `cells_stubhead_label` and `location_cells` classes
+  # Expect this has the `cells_stubhead` and `location_cells` classes
   helper_cells_stubhead %>%
-    expect_is(c("cells_stubhead_label", "location_cells"))
+    expect_is(c("cells_stubhead", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_stubhead %>%
