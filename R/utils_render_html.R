@@ -184,7 +184,9 @@ create_heading_component <- function(heading,
           colspan = n_cols,
           class = paste(title_classes, collapse = " "),
           style = title_styles,
-          htmltools::HTML(heading$title)
+          htmltools::HTML(
+            heading$title %>% paste_right(footnote_title_glyphs)
+          )
         )
       )
 
@@ -196,7 +198,9 @@ create_heading_component <- function(heading,
             colspan = n_cols,
             class = paste(subtitle_classes, collapse = " "),
             style = subtitle_styles,
-            htmltools::HTML(heading$subtitle)
+            htmltools::HTML(
+              heading$subtitle %>% paste_right(footnote_subtitle_glyphs)
+            )
           )
         )
 
