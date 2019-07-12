@@ -23,44 +23,6 @@ split_body_content <- function(body_content,
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
-#' Get the column label style from an attribute table
-#'
-#' @importFrom dplyr pull
-#' @noRd
-get_stubhead_label_style <- function(style_attrs) {
-
-  if (nrow(style_attrs) > 0) {
-    return(
-      paste0(
-        " style=\"",
-        style_attrs %>% dplyr::pull(styles_appended), "\"")
-      )
-  } else {
-    return("")
-  }
-}
-
-#' Get the spanner column label style from an attribute table
-#'
-#' @importFrom dplyr filter pull
-#' @noRd
-get_spanner_style <- function(spanner_style_attrs,
-                              group_name) {
-
-  if (group_name %in% spanner_style_attrs$grpname) {
-
-    return(
-      paste0(
-        " style=\"",
-        spanner_style_attrs %>%
-          dplyr::filter(grpname == group_name) %>%
-          dplyr::pull(styles_appended), "\"")
-    )
-  } else {
-    return("")
-  }
-}
-
 #' Split the body content vector into a list structure
 #'
 #' Taking the `body_content` vector, split into list components with one item
