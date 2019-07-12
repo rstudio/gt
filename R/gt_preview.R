@@ -106,7 +106,7 @@ gt_preview <- function(data,
     gt_tbl <-
       gt_tbl %>%
       tab_style(
-        style = "font-family:Courier;",
+        style = cell_text(font = "Courier"),
         locations = cells_stub())
   }
 
@@ -116,30 +116,33 @@ gt_preview <- function(data,
     gt_tbl <-
       gt_tbl %>%
       tab_style(
-        style = cells_styles(bkgd_color = "#E4E4E4"),
-        locations = cells_data(rows = ellipsis_row)) %>%
-      tab_style(
-        style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
-        locations = cells_data(rows = ellipsis_row))
+        style = cell_fill(color = "#E4E4E4"),
+        locations = cells_data(rows = ellipsis_row)) #%>%
+      # tab_style(
+      #   style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
+      #   locations = cells_data(rows = ellipsis_row))
 
     if (incl_rownums) {
 
       gt_tbl <-
         gt_tbl %>%
         tab_style(
-          style = cells_styles(bkgd_color = "#E4E4E4", text_size = "12px"),
-          locations = cells_stub(rows = ellipsis_row)) %>%
-        tab_style(
-          style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
-          locations = cells_stub(rows = ellipsis_row))
+          style = list(
+            cell_fill(color = "#E4E4E4"),
+            cell_text(size = "12px")
+            ),
+          locations = cells_stub(rows = ellipsis_row)) #%>%
+        # tab_style(
+        #   style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
+        #   locations = cells_stub(rows = ellipsis_row))
 
     } else {
 
       gt_tbl <-
-        gt_tbl %>%
-        tab_style(
-          style = "padding-top:8px;padding-bottom:8px;",
-          locations = cells_data(rows = ellipsis_row))
+        gt_tbl # %>%
+        # tab_style(
+        #   style = "padding-top:8px;padding-bottom:8px;",
+        #   locations = cells_data(rows = ellipsis_row))
     }
   }
 

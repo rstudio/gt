@@ -16,7 +16,8 @@ build_data <- function(data, context) {
       "names", "row.names", "class", "boxh_df", "stub_df",
       "footnotes_df", "styles_df", "rows_df", "cols_df",
       "col_labels", "grp_labels", "arrange_groups", "opts_df",
-      "formats", "transforms"))
+      "formats", "transforms")
+  )
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
@@ -71,8 +72,8 @@ build_data <- function(data, context) {
   # Get and process the `heading` object
   heading <- data_attr$heading %>% process_heading(context)
 
-  # Get and process the `stubhead_label` object
-  stubhead_label <- data_attr$stubhead_label %>% process_stubhead_label(context)
+  # Get and process the `stubhead` object
+  stubhead <- data_attr$stubhead %>% process_stubhead(context)
 
   # Get and process the `source_note` object
   source_note <- data_attr$source_note %>% process_source_notes(context)
@@ -217,14 +218,16 @@ build_data <- function(data, context) {
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = footnotes_df, styles_df = NULL)
+      footnotes_df = footnotes_df, styles_df = NULL
+    )
 
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
       output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
       columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = NULL, styles_df = styles_df)
+      footnotes_df = NULL, styles_df = styles_df
+    )
 
   list(
     data_df = data_df,
@@ -246,7 +249,7 @@ build_data <- function(data, context) {
     heading = heading,
     columns_spanners = columns_spanners,
     source_note = source_note,
-    stubhead_label = stubhead_label,
+    stubhead = stubhead,
     stub_components = stub_components,
     col_alignment = col_alignment,
     col_merge = col_merge,
@@ -261,5 +264,6 @@ build_data <- function(data, context) {
     spanners_present = spanners_present,
     summaries_present = summaries_present,
     n_rows = n_rows,
-    n_cols = n_cols)
+    n_cols = n_cols
+  )
 }

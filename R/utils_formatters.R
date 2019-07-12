@@ -4,7 +4,6 @@
 #' @param column The column from which the single value should be obtained.
 #' @param ... The arguments passed to `dplyr::filter()`.
 #' @import rlang
-#' @importFrom dplyr filter
 #' @noRd
 filter_table_to_value <- function(table,
                                   column,
@@ -22,8 +21,7 @@ filter_table_to_value <- function(table,
          call. = FALSE)
   }
 
-  filtered_tbl %>%
-    dplyr::pull(!!column_enquo)
+  filtered_tbl %>% dplyr::pull(!!column_enquo)
 }
 
 #' Validate the user-supplied `locale` value

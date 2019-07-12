@@ -18,8 +18,8 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'title'
-  helper_cells_title[[1]][2] %>%
-    as.character() %>%
+  helper_cells_title[[1]] %>%
+    rlang::quo_get_expr() %>%
     expect_equal("title")
 
   # Create a `cells_title` object with the `subtitle` option
@@ -339,3 +339,29 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal("vars(col_1, col_2)")
 })
 
+test_that("the `cells_stubhead()` function works correctly", {
+
+  # Create a `cells_stubhead` object
+  helper_cells_stubhead <- cells_stubhead()
+
+  # Expect this has the `cells_stubhead` and `location_cells` classes
+  helper_cells_stubhead %>%
+    expect_is(c("cells_stubhead", "location_cells"))
+
+  # Expect the length of the object to be `1`
+  helper_cells_stubhead %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect that the object has the single name `groups`
+  helper_cells_stubhead %>%
+    names() %>%
+    expect_equal("groups")
+
+  # Expect the first list component to have the `character`
+  helper_cells_stubhead[[1]] %>% expect_is("character")
+
+  # Expect a specific value for the single list component
+  helper_cells_stubhead[[1]] %>%
+    expect_equal("stubhead")
+})

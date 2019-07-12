@@ -27,12 +27,12 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
 #'   functions are: [cells_title()], [cells_column_labels()], [cells_group()],
-#'   [cells_stub()], [cells_data()], and [cells_summary()]. Please see the help
-#'   article \link{location_cells} for more information on how these helper
-#'   functions can be used. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to link the footnote text to different
-#'   types of locations (e.g., cell data values, stub group headings, the table
-#'   title, etc.).
+#'   [cells_stub()], [cells_stubhead()], [cells_data()], [cells_summary()], and
+#'   [cells_grand_summary()]. Please see the help article \link{location_cells}
+#'   for more information on how these helper functions can be used.
+#'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
+#'   we wish to link the footnote text to different types of locations (e.g.,
+#'   cell data values, stub group headings, the table title, etc.).
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sza` to create a gt table; color
@@ -86,37 +86,41 @@ set_footnote <- function(loc, data, footnote) {
   UseMethod("set_footnote")
 }
 
-set_footnote.cells_data <- function(loc, data, footnote) {
+set_footnote.cells_title <- function(loc, data, footnote) {
 
-  resolved <- resolve_cells_data(data = data, object = loc)
+  if ((loc$groups %>% as.character())[-1] == "title") {
 
-  cols <- resolved$columns
-  rows <- resolved$rows
+    attr(data, "footnotes_df") <-
+      add_location_row_footnotes(
+        data,
+        locname = "title", locnum = 1,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, footnotes = footnote
+      )
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
-  attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
-      locname = "data", locnum = 5,
-      grpname = NA_character_, colname = colnames,
-      rownum = rows, text = footnote)
+    attr(data, "footnotes_df") <-
+      add_location_row_footnotes(
+        data,
+        locname = "subtitle", locnum = 2,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, footnotes = footnote
+      )
+  }
 
   data
 }
 
-set_footnote.cells_stub <- function(loc, data, footnote) {
-
-  resolved <- resolve_cells_stub(data = data, object = loc)
-
-  rows <- resolved$rows
+set_footnote.cells_stubhead <- function(loc, data, footnote) {
 
   attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
-      locname = "stub", locnum = 5,
+    add_location_row_footnotes(
+      data,
+      locname = loc$groups, locnum = 2.5,
       grpname = NA_character_, colname = NA_character_,
-      rownum = rows, text = footnote)
+      rownum = NA_character_, footnotes = footnote
+    )
 
   data
 }
@@ -132,22 +136,24 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
     colnames <- colnames(as.data.frame(data))[cols]
 
     attr(data, "footnotes_df") <-
-      add_location_row(
-        data, df_type = "footnotes_df",
+      add_location_row_footnotes(
+        data,
         locname = "columns_columns", locnum = 4,
         grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, text = footnote)
+        rownum = NA_character_, footnotes = footnote
+      )
 
   } else if (!is.null(loc$groups)) {
 
     groups <- (loc$groups %>% as.character())[-1]
 
     attr(data, "footnotes_df") <-
-      add_location_row(
-        data, df_type = "footnotes_df",
+      add_location_row_footnotes(
+        data,
         locname = "columns_groups", locnum = 3,
         grpname = groups, colname = NA_character_,
-        rownum = NA_character_, text = footnote)
+        rownum = NA_character_, footnotes = footnote
+      )
   }
 
   data
@@ -158,35 +164,49 @@ set_footnote.cells_group <- function(loc, data, footnote) {
   groups <- (loc$groups %>% as.character())[-1]
 
   attr(data, "footnotes_df") <-
-    add_location_row(
-      data, df_type = "footnotes_df",
+    add_location_row_footnotes(
+      data,
       locname = "stub_groups", locnum = 5,
       grpname = groups, colname = NA_character_,
-      rownum = NA_character_, text = footnote)
+      rownum = NA_character_, footnotes = footnote
+    )
 
   data
 }
 
-set_footnote.cells_title <- function(loc, data, footnote) {
+set_footnote.cells_data <- function(loc, data, footnote) {
 
-  if ((loc$groups %>% as.character())[-1] == "title") {
+  resolved <- resolve_cells_data(data = data, object = loc)
 
-    attr(data, "footnotes_df") <-
-      add_location_row(
-        data, df_type = "footnotes_df",
-        locname = "title", locnum = 1,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, text = footnote)
+  cols <- resolved$columns
+  rows <- resolved$rows
 
-  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
+  colnames <- colnames(as.data.frame(data))[cols]
 
-    attr(data, "footnotes_df") <-
-      add_location_row(
-        data, df_type = "footnotes_df",
-        locname = "subtitle", locnum = 2,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, text = footnote)
-  }
+  attr(data, "footnotes_df") <-
+    add_location_row_footnotes(
+      data,
+      locname = "data", locnum = 5,
+      grpname = NA_character_, colname = colnames,
+      rownum = rows, footnotes = footnote
+    )
+
+  data
+}
+
+set_footnote.cells_stub <- function(loc, data, footnote) {
+
+  resolved <- resolve_cells_stub(data = data, object = loc)
+
+  rows <- resolved$rows
+
+  attr(data, "footnotes_df") <-
+    add_location_row_footnotes(
+      data,
+      locname = "stub", locnum = 5,
+      grpname = NA_character_, colname = NA_character_,
+      rownum = rows, footnotes = footnote
+    )
 
   data
 }
@@ -196,7 +216,7 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
   add_summary_location_row(
     loc = loc,
     data = data,
-    text = footnote,
+    style = footnote,
     df_type = "footnotes_df"
   )
 }
@@ -206,13 +226,43 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   add_grand_summary_location_row(
     loc = loc,
     data = data,
-    text = footnote,
+    style = footnote,
     df_type = "footnotes_df"
   )
 }
 
-#' @importFrom dplyr bind_rows tibble distinct
-#' @noRd
+add_location_row_styles <- function(data,
+                                    locname,
+                                    locnum,
+                                    grpname,
+                                    colname,
+                                    rownum,
+                                    styles) {
+
+  add_location_row(
+    data,
+    df_type = "styles_df",
+    locname, locnum, grpname, colname, rownum,
+    styles = styles
+  )
+}
+
+add_location_row_footnotes <- function(data,
+                                       locname,
+                                       locnum,
+                                       grpname,
+                                       colname,
+                                       rownum,
+                                       footnotes) {
+
+  add_location_row(
+    data,
+    df_type = "footnotes_df",
+    locname, locnum, grpname, colname, rownum,
+    text = footnotes
+  )
+}
+
 add_location_row <- function(data,
                              df_type,
                              locname,
@@ -220,13 +270,13 @@ add_location_row <- function(data,
                              grpname,
                              colname,
                              rownum,
-                             text) {
+                             ...) {
 
   dplyr::bind_rows(
     attr(data, df_type, exact = TRUE),
     dplyr::tibble(
       locname = locname, locnum = locnum,
       grpname = grpname, colname = colname,
-      rownum = rownum, text = text)) %>%
-    dplyr::distinct()
+      rownum = rownum, ...)
+  )
 }

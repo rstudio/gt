@@ -4,7 +4,10 @@
 \alias{tab_options}
 \title{Modify the table output options}
 \usage{
-tab_options(data, table.width = NULL, table.font.size = NULL,
+tab_options(data, container.width = NULL, container.height = NULL,
+  container.overflow.x = NULL, container.overflow.y = NULL,
+  table.width = NULL, table.align = NULL, table.margin.left = NULL,
+  table.margin.right = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
   heading.background.color = NULL, heading.title.font.size = NULL,
@@ -40,12 +43,40 @@ tab_options(data, table.width = NULL, table.font.size = NULL,
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
+\item{container.width, container.height}{The width and height of the table's
+container. Can be specified as a single-length character with units of
+pixels or as a percentage. If provided as a single-length numeric vector,
+it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
+\code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
+obtain values as pixel or percent units.}
+
+\item{container.overflow.x, container.overflow.y}{Options to enable scrolling
+in the horizontal and vertical directions when the table content overflows
+the container dimensions. Using \code{TRUE} (the default for both) means that
+horizontal or vertical scrolling is enabled to view the entire table in
+those directions. With \code{FALSE}, the table may be clipped if the table width
+or height exceeds the \code{container.width} or \code{container.height}.}
+
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
 given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
 be used to pass in numeric values and obtain values as pixel or percent
 units.}
+
+\item{table.align}{The alignment of the table in its container. By default,
+this is \code{"center"}. Other options are \code{"left"} and \code{"right"}. This will
+automatically set \code{table.margin.left} and \code{table.margin.right} to the
+appropriate values.}
+
+\item{table.margin.left, table.margin.right}{The size of the margins on the
+left and right of the table within the container. Can be specified as a
+single-length character with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units. Using \code{table.margin.left} or \code{table.margin.right} will overwrite any
+values set by \code{table.align}.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnote.font.size, sourcenote.font.size}{Font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{columns}, \code{row_group},
@@ -211,6 +242,6 @@ Other table-part creation/modification functions: \code{\link{gt_preview}},
   \code{\link{gt}}, \code{\link{tab_footnote}},
   \code{\link{tab_header}}, \code{\link{tab_row_group}},
   \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
-  \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}
+  \code{\link{tab_stubhead}}, \code{\link{tab_style}}
 }
 \concept{table-part creation/modification functions}

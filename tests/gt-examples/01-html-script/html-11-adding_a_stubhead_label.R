@@ -20,6 +20,6 @@ tbl <-
 # Create a display table
 sh_caption_tbl <-
   gt(data = tbl) %>%
-  tab_stubhead_label(label = "groups")
+  tab_stubhead(label = "groups")
 
 sh_caption_tbl
