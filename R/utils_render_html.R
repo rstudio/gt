@@ -321,7 +321,13 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
-      # TODO: Get style for stubhead caption
+      stubhead_label_style <-
+        if (nrow(stubhead_label_style_attrs) > 0) {
+          stubhead_label_style_attrs$html_style
+        } else {
+          NULL
+        }
+
       table_col_headings[[length(table_col_headings) + 1]] <-
         htmltools::tags$th(
           class = paste(
@@ -330,6 +336,7 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 1,
           colspan = 1,
+          style = stubhead_label_style,
           htmltools::HTML(headings[1])
         )
 
@@ -337,25 +344,6 @@ create_columns_component_h <- function(boxh_df,
     }
 
     for (i in seq(headings)) {
-
-# <<<<<<< HEAD
-#       if (i == 1 & length(stubhead_label) > 0) {
-#         column_style <-
-#           get_stubhead_label_style(style_attrs = stubhead_label_style_attrs)
-#       } else {
-#         column_style <-
-#           get_column_style(column_style_attrs, column_name = headings[i])
-#       }
-#
-#       table_col_headings <-
-#         c(table_col_headings,
-#           paste0(
-#             "<th class='gt_col_heading ",
-#             paste0("gt_", col_alignment[i]),
-#             "' rowspan='1' colspan='1'",
-#             column_style,
-#             ">", headings[i], "</th>")
-# =======
 
       styles_resolved_column <-
         column_style_attrs %>%
@@ -373,10 +361,10 @@ create_columns_component_h <- function(boxh_df,
           class = paste(
             c("gt_col_heading", "gt_columns_bottom_border", "gt_columns_top_border", column_alignments[i]),
             collapse = " "),
-          rowspan = 1, colspan = 1,
+          rowspan = 1,
+          colspan = 1,
           style = column_style,
           htmltools::HTML(headings[i])
-
         )
     }
 
@@ -396,24 +384,12 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
-# <<<<<<< HEAD
-#       if (length(stubhead_label) > 0) {
-#         column_style <-
-#           get_stubhead_label_style(style_attrs = stubhead_label_style_attrs)
-#       } else {
-#         column_style <- ""
-#       }
-#
-#       first_set <-
-#         c(first_set,
-#           paste0(
-#             "<th class='gt_col_heading ", paste0("gt_", col_alignment[1]),
-#             "' rowspan='2' colspan='1'",
-#             column_style,
-#             ">", headings[1], "</th>"))
-# =======
-
-      # TODO: Get style for stubhead caption
+      stubhead_label_style <-
+        if (nrow(stubhead_label_style_attrs) > 0) {
+          stubhead_label_style_attrs$html_style
+        } else {
+          NULL
+        }
 
       first_set[[length(first_set) + 1]] <-
         htmltools::tags$th(
@@ -423,9 +399,9 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 2,
           colspan = 1,
+          style = stubhead_label_style,
           htmltools::HTML(headings[1])
         )
-
 
       headings <- headings[-1]
     }
