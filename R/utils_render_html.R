@@ -23,6 +23,17 @@ split_body_content <- function(body_content,
   split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
+#' Split the body content vector into a list structure
+#'
+#' Taking the `body_content` vector, split into list components with one item
+#' per row in the output table
+#' @noRd
+split_body_content <- function(body_content,
+                               n_cols) {
+
+  split(body_content, ceiling(seq_along(body_content) / n_cols))
+}
+
 styles_to_html <- function(styles) {
 
   style_list <-
@@ -173,7 +184,9 @@ create_heading_component <- function(heading,
           colspan = n_cols,
           class = paste(title_classes, collapse = " "),
           style = title_styles,
-          htmltools::HTML(heading$title)
+          htmltools::HTML(
+            heading$title %>% paste_right(footnote_title_glyphs)
+          )
         )
       )
 
@@ -185,7 +198,9 @@ create_heading_component <- function(heading,
             colspan = n_cols,
             class = paste(subtitle_classes, collapse = " "),
             style = subtitle_styles,
-            htmltools::HTML(heading$subtitle)
+            htmltools::HTML(
+              heading$subtitle %>% paste_right(footnote_subtitle_glyphs)
+            )
           )
         )
 
@@ -253,7 +268,7 @@ create_columns_component_h <- function(boxh_df,
                                        stub_available,
                                        spanners_present,
                                        styles_resolved,
-                                       stubhead_label,
+                                       stubhead,
                                        col_alignment,
                                        opts_df) {
 
@@ -266,6 +281,11 @@ create_columns_component_h <- function(boxh_df,
   if (column_labels_hidden) {
     return("")
   }
+
+  # Get the style attrs for the stubhead label
+  stubhead_style_attrs <-
+    styles_resolved %>%
+    dplyr::filter(locname == "stubhead")
 
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <-
@@ -281,10 +301,9 @@ create_columns_component_h <- function(boxh_df,
   headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
-  # caption or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0) {
-    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
+  # label or nothing
+  if (stub_available && length(stubhead) > 0) {
+    headings <- rlang::prepend(headings, stubhead$label)
   } else if (stub_available) {
     headings <- rlang::prepend(headings, "")
   }
@@ -301,6 +320,13 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
+      stubhead_style <-
+        if (nrow(stubhead_style_attrs) > 0) {
+          stubhead_style_attrs$html_style
+        } else {
+          NULL
+        }
+
       table_col_headings[[length(table_col_headings) + 1]] <-
         htmltools::tags$th(
           class = paste(
@@ -309,6 +335,7 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 1,
           colspan = 1,
+          style = stubhead_style,
           htmltools::HTML(headings[1])
         )
 
@@ -333,7 +360,8 @@ create_columns_component_h <- function(boxh_df,
           class = paste(
             c("gt_col_heading", "gt_columns_bottom_border", "gt_columns_top_border", column_alignments[i]),
             collapse = " "),
-          rowspan = 1, colspan = 1,
+          rowspan = 1,
+          colspan = 1,
           style = column_style,
           htmltools::HTML(headings[i])
         )
@@ -355,6 +383,13 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
+      stubhead_style <-
+        if (nrow(stubhead_style_attrs) > 0) {
+          stubhead_style_attrs$html_style
+        } else {
+          NULL
+        }
+
       first_set[[length(first_set) + 1]] <-
         htmltools::tags$th(
           class = paste(
@@ -363,6 +398,7 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 2,
           colspan = 1,
+          style = stubhead_style,
           htmltools::HTML(headings[1])
         )
 

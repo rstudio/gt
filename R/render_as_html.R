@@ -18,24 +18,41 @@ render_as_html <- function(data) {
     # Add footnote glyphs to elements of the table columns
     boxh_df <-
       set_footnote_glyphs_columns(
-        footnotes_resolved, boxh_df, output = "html"
+        footnotes_resolved = footnotes_resolved,
+        boxh_df = boxh_df,
+        output = "html"
+      )
+
+    # Add footnote glyphs to the stubhead label
+    stubhead <-
+      set_footnote_glyphs_stubhead(
+        footnotes_resolved = footnotes_resolved,
+        stubhead = stubhead,
+        output = "html"
       )
 
     # Add footnote glyphs to the `data` rows
     output_df <-
       apply_footnotes_to_output(
-        output_df, footnotes_resolved, output = "html"
+        output_df = output_df,
+        footnotes_resolved = footnotes_resolved,
+        output = "html"
       )
 
     # Add footnote glyphs to the stub group cells
     groups_rows_df <-
       set_footnote_glyphs_stub_groups(
-        footnotes_resolved, groups_rows_df, output = "html"
+        footnotes_resolved = footnotes_resolved,
+        groups_rows_df = groups_rows_df,
+        output = "html"
       )
 
     # Add footnote glyphs to the `summary` cells
     list_of_summaries <-
-      apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
+      apply_footnotes_to_summary(
+        list_of_summaries = list_of_summaries,
+        footnotes_resolved = footnotes_resolved
+      )
 
     # Upgrade `styles_resolved` to gain a `html_style`
     # column with style rules
@@ -51,15 +68,25 @@ render_as_html <- function(data) {
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
-        heading, footnotes_resolved, styles_resolved, n_cols,
-        subtitle_defined, output = "html"
+        heading = heading,
+        footnotes_resolved = footnotes_resolved,
+        styles_resolved = styles_resolved,
+        n_cols = n_cols,
+        subtitle_defined = subtitle_defined,
+        output = "html"
       )
 
     # Create the columns component of the table
     columns_component <-
       create_columns_component_h(
-        boxh_df, output_df, stub_available, spanners_present,
-        styles_resolved, stubhead_label, col_alignment, opts_df
+        boxh_df = boxh_df,
+        output_df = output_df,
+        stub_available = stub_available,
+        spanners_present = spanners_present,
+        styles_resolved = styles_resolved,
+        stubhead = stubhead,
+        col_alignment = col_alignment,
+        opts_df = opts_df
       )
 
     # Create the body component of the table
@@ -78,11 +105,19 @@ render_as_html <- function(data) {
       )
 
     # Create the source note rows and handle any available footnotes
-    source_note_component <- create_source_note_component_h(source_note, n_cols)
+    source_note_component <-
+      create_source_note_component_h(
+        source_note = source_note,
+        n_cols = n_cols
+      )
 
     # Create the footnote component of the table
     footnote_component <-
-      create_footnote_component_h(footnotes_resolved, opts_df, n_cols)
+      create_footnote_component_h(
+        footnotes_resolved = footnotes_resolved,
+        opts_df = opts_df,
+        n_cols = n_cols
+      )
 
     # Compose the HTML table
     htmltools::tags$table(

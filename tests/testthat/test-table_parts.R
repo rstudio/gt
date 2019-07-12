@@ -87,7 +87,7 @@ test_that("a gt table contains the expected stubhead label", {
   # contains a stub and a stubhead label
   tbl_html <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_label(label = "the mtcars") %>%
+    tab_stubhead(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -248,7 +248,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
-    tab_stubhead_label(label = "cars") %>%
+    tab_stubhead(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_row_group(
@@ -353,8 +353,21 @@ test_that("a gt table contains custom styles at the correct locations", {
       ),
       locations = cells_group(groups = "Mazdas")
     ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "blue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stubhead()
+    ) %>%
     render_as_html() %>%
     xml2::read_html()
+
+  # Expect that the stubhead label is styled
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: blue; color: white;']") %>%
+    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left]") %>%
+    expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
@@ -382,6 +395,12 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
   # styled with a lightgrey background
+  # (tbl_html %>%
+  #   rvest::html_nodes("[style='background-color:lightgray;']") %>%
+  #   rvest::html_text())[1:6] %>%
+  #   expect_equal(c("disp", "wt", "qsec", "am", "cyls", "carb"))
+
+  # Expect that most stub cells are styled with a lightgray background
   # TODO: Fix this (`cyls` is not colored gray)
   # (tbl_html %>%
   #   rvest::html_nodes("[style='background-color: lightgray;']") %>%

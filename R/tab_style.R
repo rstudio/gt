@@ -28,12 +28,13 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the style application. These
 #'   helper functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_group()], [cells_stub()], [cells_data()], and [cells_summary()].
-#'   Please see the help article [location_cells] for more information on
-#'   how these helper functions can be used. Additionally, we can enclose
-#'   several `cells_*()` calls within a `list()` if we wish to apply styles to
-#'   different types of locations (e.g., cell data values, stub group headings,
-#'   the table title, etc.).
+#'   [cells_group()], [cells_stub()], [cells_stubhead()], [cells_data()],
+#'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
+#'   [location_cells] for more information on how these helper functions can be
+#'   used. Additionally, we can enclose several `cells_*()` calls within a
+#'   `list()` if we wish to apply styles to different types of locations (e.g.,
+#'   cell data values, stub group headings, the table title, etc.).
+#'
 #' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -169,37 +170,41 @@ set_style <- function(loc, data, style) {
   UseMethod("set_style")
 }
 
-set_style.cells_data <- function(loc, data, style) {
+set_style.cells_title <- function(loc, data, style) {
 
-  resolved <- resolve_cells_data(data = data, object = loc)
+  if ((loc$groups %>% as.character())[-1] == "title") {
 
-  cols <- resolved$columns
-  rows <- resolved$rows
+    attr(data, "styles_df") <-
+      add_location_row_styles(
+        data,
+        locname = "title", locnum = 1,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, styles = list(style)
+      )
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
 
-  attr(data, "styles_df") <-
-    add_location_row_styles(
-      data,
-      locname = "data", locnum = 5,
-      grpname = NA_character_, colname = colnames,
-      rownum = rows, styles = list(style))
+    attr(data, "styles_df") <-
+      add_location_row_styles(
+        data,
+        locname = "subtitle", locnum = 2,
+        grpname = NA_character_, colname = NA_character_,
+        rownum = NA_character_, styles = list(style)
+      )
+  }
 
   data
 }
 
-set_style.cells_stub <- function(loc, data, style) {
-
-  resolved <- resolve_cells_stub(data = data, object = loc)
-
-  rows <- resolved$rows
+set_style.cells_stubhead <- function(loc, data, style) {
 
   attr(data, "styles_df") <-
     add_location_row_styles(
       data,
-      locname = "stub", locnum = 5,
+      locname = loc$groups, locnum = 2.5,
       grpname = NA_character_, colname = NA_character_,
-      rownum = rows, styles = list(style))
+      rownum = NA_character_, styles = list(style)
+    )
 
   data
 }
@@ -219,7 +224,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_columns", locnum = 4,
         grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, styles = list(style))
+        rownum = NA_character_, styles = list(style)
+      )
 
   } else if (!is.null(loc$groups)) {
 
@@ -230,7 +236,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
         data,
         locname = "columns_groups", locnum = 3,
         grpname = groups, colname = NA_character_,
-        rownum = NA_character_, styles = list(style))
+        rownum = NA_character_, styles = list(style)
+      )
   }
 
   data
@@ -245,31 +252,45 @@ set_style.cells_group <- function(loc, data, style) {
       data,
       locname = "stub_groups", locnum = 5,
       grpname = groups, colname = NA_character_,
-      rownum = NA_character_, styles = list(style))
+      rownum = NA_character_, styles = list(style)
+    )
 
   data
 }
 
-set_style.cells_title <- function(loc, data, style) {
+set_style.cells_data <- function(loc, data, style) {
 
-  if ((loc$groups %>% as.character())[-1] == "title") {
+  resolved <- resolve_cells_data(data = data, object = loc)
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "title", locnum = 1,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = list(style))
+  cols <- resolved$columns
+  rows <- resolved$rows
 
-  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
+  colnames <- colnames(as.data.frame(data))[cols]
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "subtitle", locnum = 2,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = list(style))
-  }
+  attr(data, "styles_df") <-
+    add_location_row_styles(
+      data,
+      locname = "data", locnum = 5,
+      grpname = NA_character_, colname = colnames,
+      rownum = rows, styles = list(style)
+    )
+
+  data
+}
+
+set_style.cells_stub <- function(loc, data, style) {
+
+  resolved <- resolve_cells_stub(data = data, object = loc)
+
+  rows <- resolved$rows
+
+  attr(data, "styles_df") <-
+    add_location_row_styles(
+      data,
+      locname = "stub", locnum = 5,
+      grpname = NA_character_, colname = NA_character_,
+      rownum = rows, styles = list(style)
+    )
 
   data
 }

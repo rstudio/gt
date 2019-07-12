@@ -67,7 +67,7 @@ create_columns_component_l <- function(boxh_df,
                                        output_df,
                                        stub_available,
                                        spanners_present,
-                                       stubhead_label,
+                                       stubhead,
                                        col_alignment) {
 
   # Get the headings
@@ -75,10 +75,9 @@ create_columns_component_l <- function(boxh_df,
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0) {
+  if (stub_available && length(stubhead) > 0) {
 
-    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
+    headings <- rlang::prepend(headings, stubhead$label)
 
   } else if (stub_available) {
 

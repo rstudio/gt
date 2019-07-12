@@ -42,7 +42,7 @@ test_that("a gt table contains the expected stubhead label", {
   # contains a stub and a stubhead caption
   tbl_latex <-
     gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_label(label = "the mtcars")
+    tab_stubhead(label = "the mtcars")
 
   # Expect a characteristic pattern
   grepl(

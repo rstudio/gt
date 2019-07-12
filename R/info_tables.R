@@ -422,7 +422,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     cols_label(
       length = ""
     ) %>%
-    tab_stubhead_label(label = "Package and Palette Name") %>%
+    tab_stubhead(label = "Package and Palette Name") %>%
     tab_header(
       title = md("Palettes Made Easily Available with **paletteer**"),
       subtitle = md("Palettes like these are useful with the `data_color()` function")
