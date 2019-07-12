@@ -79,8 +79,7 @@ tab_header <- function(data,
 tab_stubhead_label <- function(data,
                                label) {
 
-  attr(data, "stubhead_label") <-
-    list(stubhead_label = label)
+  attr(data, "stubhead") <- list(stubhead = label)
 
   data
 }

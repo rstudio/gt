@@ -259,7 +259,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # single-row `footnotes_df` data frame
   expect_attr_equal(
     tab, "footnotes_df",
-    c("stubhead_label", "2.5", NA_character_, NA_character_, NA_character_,
+    c("stubhead", "2.5", NA_character_, NA_character_, NA_character_,
       "Stubhead label footnote.")
   )
 

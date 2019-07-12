@@ -268,7 +268,7 @@ create_columns_component_h <- function(boxh_df,
                                        stub_available,
                                        spanners_present,
                                        styles_resolved,
-                                       stubhead_label,
+                                       stubhead,
                                        col_alignment,
                                        opts_df) {
 
@@ -283,9 +283,9 @@ create_columns_component_h <- function(boxh_df,
   }
 
   # Get the style attrs for the stubhead label
-  stubhead_label_style_attrs <-
+  stubhead_style_attrs <-
     styles_resolved %>%
-    dplyr::filter(locname == "stubhead_label")
+    dplyr::filter(locname == "stubhead")
 
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <-
@@ -302,9 +302,8 @@ create_columns_component_h <- function(boxh_df,
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0) {
-    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
+  if (stub_available && length(stubhead) > 0) {
+    headings <- rlang::prepend(headings, stubhead$stubhead)
   } else if (stub_available) {
     headings <- rlang::prepend(headings, "")
   }
@@ -321,9 +320,9 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
-      stubhead_label_style <-
-        if (nrow(stubhead_label_style_attrs) > 0) {
-          stubhead_label_style_attrs$html_style
+      stubhead_style <-
+        if (nrow(stubhead_style_attrs) > 0) {
+          stubhead_style_attrs$html_style
         } else {
           NULL
         }
@@ -336,7 +335,7 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 1,
           colspan = 1,
-          style = stubhead_label_style,
+          style = stubhead_style,
           htmltools::HTML(headings[1])
         )
 
@@ -384,9 +383,9 @@ create_columns_component_h <- function(boxh_df,
     # Create the cell for the stubhead label
     if (stub_available) {
 
-      stubhead_label_style <-
-        if (nrow(stubhead_label_style_attrs) > 0) {
-          stubhead_label_style_attrs$html_style
+      stubhead_style <-
+        if (nrow(stubhead_style_attrs) > 0) {
+          stubhead_style_attrs$html_style
         } else {
           NULL
         }
@@ -399,7 +398,7 @@ create_columns_component_h <- function(boxh_df,
             collapse = " "),
           rowspan = 2,
           colspan = 1,
-          style = stubhead_label_style,
+          style = stubhead_style,
           htmltools::HTML(headings[1])
         )
 

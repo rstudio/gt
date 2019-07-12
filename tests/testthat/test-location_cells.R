@@ -363,5 +363,5 @@ test_that("the `cells_stubhead()` function works correctly", {
 
   # Expect a specific value for the single list component
   helper_cells_stubhead[[1]] %>%
-    expect_equal("stubhead_label")
+    expect_equal("stubhead")
 })

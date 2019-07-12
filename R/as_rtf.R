@@ -96,8 +96,8 @@ as_rtf <- function(data) {
   # Get the `heading` object
   heading <- data_attr$heading
 
-  # Get the `stubhead_label` object
-  stubhead_label <- data_attr$stubhead_label
+  # Get the `stubhead` object
+  stubhead <- data_attr$stubhead
 
   # Get the `source_note` object
   source_note <- data_attr$source_note
@@ -292,11 +292,10 @@ as_rtf <- function(data) {
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0 &&
+  if (stub_available && length(stubhead) > 0 &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <- stubhead_label$stubhead_label
+    headings[which(headings == "rowname")] <- stubhead$stubhead
 
   } else if ("rowname" %in% headings) {
 

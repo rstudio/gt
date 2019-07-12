@@ -253,7 +253,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 cells_stubhead <- function() {
 
   # Create the `cells_stubhead` object
-  cells <- list(groups = "stubhead_label")
+  cells <- list(groups = "stubhead")
 
   # Apply the `cells_stubhead` and
   # `location_cells` classes

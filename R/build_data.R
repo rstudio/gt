@@ -72,8 +72,8 @@ build_data <- function(data, context) {
   # Get and process the `heading` object
   heading <- data_attr$heading %>% process_heading(context)
 
-  # Get and process the `stubhead_label` object
-  stubhead_label <- data_attr$stubhead_label %>% process_stubhead_label(context)
+  # Get and process the `stubhead` object
+  stubhead <- data_attr$stubhead %>% process_stubhead(context)
 
   # Get and process the `source_note` object
   source_note <- data_attr$source_note %>% process_source_notes(context)
@@ -249,7 +249,7 @@ build_data <- function(data, context) {
     heading = heading,
     columns_spanners = columns_spanners,
     source_note = source_note,
-    stubhead_label = stubhead_label,
+    stubhead = stubhead,
     stub_components = stub_components,
     col_alignment = col_alignment,
     col_merge = col_merge,

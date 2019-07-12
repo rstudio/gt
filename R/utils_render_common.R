@@ -703,13 +703,13 @@ process_heading <- function(heading, context) {
   }
 }
 
-# Process the `stubhead_caption` object
-process_stubhead_label <- function(caption, context) {
+# Process the `stubhead` object
+process_stubhead <- function(caption, context) {
 
   if (!is.null(caption)) {
-    stubhead_label <- caption$stubhead_label %>% process_text(context)
+    stubhead <- caption$stubhead %>% process_text(context)
 
-    return(list(stubhead_label = stubhead_label))
+    return(list(stubhead = stubhead))
   }
 }
 
