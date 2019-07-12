@@ -3,7 +3,7 @@
 \name{location_cells}
 \alias{location_cells}
 \alias{cells_title}
-\alias{cells_stubhead_label}
+\alias{cells_stubhead}
 \alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
@@ -14,7 +14,7 @@
 \usage{
 cells_title(groups = c("title", "subtitle"))
 
-cells_stubhead_label()
+cells_stubhead()
 
 cells_column_labels(columns, groups)
 
@@ -54,9 +54,9 @@ from the top to the bottom of a table):
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
 
-\item \code{cells_stubhead_label()}: targets the stubhead label, a cell of which
-is only available when there is a stub, and a label of which is only
-available if the \code{\link[=tab_stubhead_label]{tab_stubhead_label()}} function is used.
+\item \code{cells_stubhead()}: targets the stubhead location, a cell of which is
+only available when there is a stub; a label in that location can be created
+by using the \code{\link[=tab_stubhead_label]{tab_stubhead_label()}} function.
 
 \item \code{cells_column_labels()}: targets labels in the column labels (the
 \code{columns} argument) or the spanner column labels (the \code{groups} argument) in
