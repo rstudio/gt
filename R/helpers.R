@@ -468,7 +468,7 @@ html <- function(text, ...) {
 #'
 #' @noRd
 is_html <- function(x) {
-  ifelse(inherits(x, "html"), TRUE, FALSE)
+  inherits(x, "html")
 }
 
 #' Supply a custom currency symbol to `fmt_currency()`
