@@ -1,4 +1,3 @@
-# cells_column_labels
 
 resolve_location.cells_column_labels <- function(loc, data_attr) {
 

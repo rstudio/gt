@@ -74,7 +74,7 @@ cols_align <- function(data,
       "factor" = "center",
       "list" = "center",
       "numeric" = "right",
-      "integer" = "right",
+      "integer" = "center",
       "center") %>%
       unname()
   }
@@ -241,7 +241,7 @@ cols_label <- function(data,
 #' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom dplyr select
+#' @import rlang
 #' @export
 cols_move <- function(data,
                       columns,
@@ -364,7 +364,7 @@ cols_move <- function(data,
 #' \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom dplyr select everything
+#' @import rlang
 #' @export
 cols_move_to_start <- function(data,
                                columns) {
@@ -451,7 +451,7 @@ cols_move_to_start <- function(data,
 #' \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom dplyr select
+#' @import rlang
 #' @export
 cols_move_to_end <- function(data,
                              columns) {
@@ -550,7 +550,7 @@ cols_move_to_end <- function(data,
 #' \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom dplyr select
+#' @import rlang
 #' @export
 cols_hide <- function(data,
                       columns) {
@@ -721,7 +721,7 @@ cols_split_delim <- function(data,
 #' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom stats setNames
+#' @import rlang
 #' @export
 cols_merge <- function(data,
                        col_1,
@@ -764,7 +764,8 @@ cols_merge <- function(data,
       list(
         pattern = pattern,
         sep = "",
-        col_1 = col_1)
+        col_1 = col_1
+      )
   }
 
   data
@@ -833,13 +834,14 @@ cols_merge <- function(data,
 #'     col_uncert = vars(num)
 #'   ) %>%
 #'   cols_label(
-#'     currency = "value + uncert.")
+#'     currency = "value + uncert."
+#'   )
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom stats setNames
+#' @import rlang
 #' @export
 cols_merge_uncert <- function(data,
                               col_val,
@@ -884,7 +886,8 @@ cols_merge_uncert <- function(data,
       list(
         pattern = pattern,
         sep = "",
-        col_1 = col_val)
+        col_1 = col_val
+      )
   }
 
   data
@@ -908,13 +911,12 @@ cols_merge_uncert <- function(data,
 #' \item `NA`s in `col_begin` result in missing values for the merged
 #' column (e.g., `NA` + `20.0` = `NA`)
 #'
-#' \item `NA`s in `col_end` (but not `col_begin`) result in
-#' a display of only the `col_begin` values only for the merged column
+#' \item `NA`s in `col_end` (but not `col_begin`) result in a display of only
+#' the `col_begin` values only for the merged column
 #' (e.g., `12.0` + `NA` = `12.0`)
 #'
-#' \item `NA`s both `col_begin` and `col_end` result in
-#' missing values for the merged column (e.g., `NA` + `NA` =
-#' `NA`)
+#' \item `NA`s both in `col_begin` and `col_end` result in missing values for
+#' the merged column (e.g., `NA` + `NA` = `NA`)
 #' }
 #'
 #' Any resulting `NA` values in the `col_begin` column following the merge
@@ -931,6 +933,7 @@ cols_merge_uncert <- function(data,
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
 #' @param col_end A column that contains values for the end of the range.
+#' @param sep The separator text that indicates the values are ranged.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table,
@@ -955,7 +958,7 @@ cols_merge_uncert <- function(data,
 #' \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
-#' @importFrom stats setNames
+#' @import rlang
 #' @export
 cols_merge_range <- function(data,
                              col_begin,
@@ -1001,7 +1004,8 @@ cols_merge_range <- function(data,
       list(
         pattern = pattern,
         sep = sep,
-        col_1 = col_begin)
+        col_1 = col_begin
+      )
   }
 
   data

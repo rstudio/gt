@@ -7,11 +7,6 @@ resolve_location.cells_stub <- function(loc, data_attr) {
   resolved <- resolve_cells_stub(data = stub_df, object = loc)
 
   loc$rows <- resolved$rows
-  # loc$rows <-
-  #   resolve_vars(
-  #     var_expr = loc[["rows"]],
-  #     var_names = stub_df$rowname,
-  #     data_df = stub_df)
 
   class(loc) <- c("resolved", class(loc))
 
@@ -25,7 +20,8 @@ to_output_location.cells_stub <- function(loc, data_attr) {
   rows_df <-
     get_row_reorder_df(
       arrange_groups = data_attr$arrange_groups,
-      stub_df = data_attr$stub_df)
+      stub_df = data_attr$stub_df
+    )
 
   loc$rows <- rows_df$rownum_final[loc$rows]
 

@@ -5,7 +5,7 @@ library(gt)
 many_styles_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_label(label = "cars") %>%
+  tab_stubhead(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(
@@ -39,52 +39,60 @@ many_styles_tbl <-
       ~sum(., na.rm = TRUE))
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "lightgray"),
+    style = cell_fill(color = "lightgray"),
     locations = list(
       cells_column_labels(columns = TRUE),
       cells_stub(rows = TRUE))
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "steelblue", text_color = "white"),
+    style = list(
+      cell_fill(color = "steelblue"),
+      cell_text(color = "white")
+      ),
     locations = cells_stub(rows = "Merc 240D")
   ) %>%
   tab_style(
-    style = cells_styles(text_align = "left"),
+    style = cell_text(align = "left"),
     locations = cells_title(groups = "title")
   ) %>%
   tab_style(
-    style = cells_styles(text_align = "left"),
+    style = cell_text(align = "left"),
     locations = cells_title(groups = "subtitle")
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "green", text_color = "white"),
+    style = list(
+      cell_fill(color = "green"),
+      cell_text(color = "white")
+      ),
     locations = cells_summary(
       groups = "Mercs",
       columns = "hp",
       rows = 2)
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "lightgreen"),
+    style = cell_fill(color = "lightgreen"),
     locations = cells_column_labels(groups = "gear_carb_cyl")
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "turquoise"),
+    style = cell_fill(color = "turquoise"),
     locations = cells_column_labels(columns = "gear")
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "pink"),
+    style = cell_fill(color = "pink"),
+
     locations = cells_column_labels(columns = "hp")
   ) %>%
   tab_style(
-    style = cells_styles(
-      bkgd_color = "lightgray",
-      text_style = "italic"),
+    style = list(
+      cell_fill(color = "lightgray"),
+      cell_text(style = "italic")
+      ),
     locations = cells_data(
       columns = "hp",
       rows = "Datsun 710")
   ) %>%
   tab_style(
-    style = cells_styles(bkgd_color = "yellow"),
+    style = cell_fill(color = "yellow"),
     locations = cells_data(
       columns = "disp",
       rows = "Mazda RX4")

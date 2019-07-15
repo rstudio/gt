@@ -53,7 +53,6 @@
 #' \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
 #'
 #' @family image addition functions
-#' @importFrom glue glue
 #' @export
 local_image <- function(filename,
                         height = 30) {
@@ -70,7 +69,8 @@ local_image <- function(filename,
   cid <-
     paste0(
       sample(letters, 12) %>% paste(collapse = ""), "__",
-      basename(filename))
+      basename(filename)
+    )
 
   # Create the image URI
   uri <- get_image_uri(filename)
@@ -175,7 +175,6 @@ local_image <- function(filename,
 #' \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 #'
 #' @family image addition functions
-#' @importFrom glue glue
 #' @export
 web_image <- function(url,
                       height = 30) {
@@ -271,20 +270,18 @@ ggplot_image <- function(plot_object,
 
   # Save PNG file to disk
   ggplot2::ggsave(
-    device = "png",
-    plot = plot_object,
     filename = "temp_ggplot.png",
+    plot = plot_object,
+    device = "png",
     dpi = 100,
     width = 5 * aspect_ratio,
-    height = 5)
+    height = 5
+  )
 
   # Wait longer for file to be written on async filesystems
   Sys.sleep(1)
 
-  image_html <-
-    local_image(
-      file = "temp_ggplot.png",
-      height = height)
+  image_html <- local_image(filename = "temp_ggplot.png", height = height)
 
   file.remove("temp_ggplot.png")
 
