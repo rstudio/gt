@@ -266,14 +266,15 @@ tab_spanner <- function(data,
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  # Apply the `label` value to the relevant components
-  # of the `grp_labels` list
-  grp_labels[column_names] <- label
+  # Create a list of lists for a repeating `label`, which preserves
+  # any attached class for `label`
+  labels <-
+    label %>%
+    rep_vec_as_list(length_out = length(grp_labels[column_names]))
 
-  # Ensure that the label classes are preserved
-  for (group_label_i in seq(grp_labels[column_names])) {
-    class(grp_labels[column_names][[group_label_i]]) <- class(label)
-  }
+  # Apply the `labels` values to the relevant components
+  # of the `grp_labels` list
+  grp_labels[column_names] <- labels
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
