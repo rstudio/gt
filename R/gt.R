@@ -76,13 +76,17 @@ gt <- function(data,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
+  # Stop if input `data` has no columns
+  if (ncol(data) == 0) {
+    stop("The input `data` table must have at least one column.",
+         call. = FALSE)
+  }
+
   opts_df <- gt_options_default()
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "table_id", id)
+    opts_df <- opts_df_set(opts_df, "table_id", id)
   }
 
   # If the option to place rownames in the stub
@@ -150,6 +154,13 @@ gt <- function(data,
     data[[groupname_col]] <- NULL
   }
 
+  # Stop if input `data` has no columns (after modifying
+  # `data` for groups)
+  if (ncol(data) == 0) {
+    stop("The `data` must have at least one column that isn't a 'group' column.",
+         call. = FALSE)
+  }
+
   # Take the input data and convert to a
   # data frame
   data_tbl <-
@@ -182,7 +193,11 @@ gt <- function(data,
     )[-1, ]
 
   # Create a prepopulated `rows_df` data frame
-  rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
+  if (nrow(data_tbl) > 0) {
+    rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
+  } else {
+    rows_df <- dplyr::tibble(rownums_start = NA_integer_)[-1, ]
+  }
 
   # Create a prepopulated `cols_df` data frame
   cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
@@ -192,17 +207,19 @@ gt <- function(data,
   # data frames that contain specialized formatting
   # directives that will be used during render time
   empty_df <- data_tbl
-  empty_df[] <- NA_character_
+  if (nrow(data_tbl) > 0) {
+    empty_df[] <- NA_character_
+  }
 
   # Create a data frame that represents the table's
   # columns (`boxh_df`); each row has a special
   # meaning and this will be used during render time
-  boxh_df <- empty_df[c(), , drop = FALSE]
-  boxh_df[1:3, ] = list(NA_character_)
-
-  # Assign rownames to the `boxh_df` for easier
-  # manipulation of rows
-  rownames(boxh_df) <- c("group_label", "column_label", "column_align")
+  boxh_df <-
+    matrix(data = NA_character_, nrow = 3, ncol = ncol(data_tbl)) %>%
+    as.data.frame() %>%
+    dplyr::mutate_all(as.character) %>%
+    magrittr::set_names(names(data_tbl)) %>%
+    magrittr::set_rownames(c("group_label", "column_label", "column_align"))
 
   # Apply initialized data frames as attributes
   # within the object
