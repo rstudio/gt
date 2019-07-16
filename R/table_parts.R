@@ -266,9 +266,10 @@ tab_spanner <- function(data,
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  # Apply the `label` value to the relevant components
-  # of the `grp_labels` list
-  grp_labels[column_names] <- label
+  # Apply the `label` value to the the `grp_labels` list
+  for (column_name in column_names) {
+    grp_labels[[column_name]] <- label
+  }
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels
