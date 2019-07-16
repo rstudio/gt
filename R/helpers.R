@@ -905,8 +905,40 @@ cell_borders <- function(selection,
   )
 
   list(cell_borders = style_vals)
+
+  cell_style_structure("cell_borders", style_vals)
 }
 
+cell_style_to_html.cell_borders <- function(style) {
+
+  css <- style %>% unclass()
+
+  directions <- css$selection
+
+  if (any(c("all", "everything") %in% directions)) {
+    directions <- c("left", "right", "top", "bottom")
+  }
+
+  multiple <- length(directions)
+
+  css$selection <- NULL
+
+  html_names <- c("color", "style", "width")
+
+  # Repeat the list components `multiple` times
+  css <- rep(css, multiple)
+
+  html_names <-
+    paste0(
+      "border-",
+      rep(directions, each = 3), "-",
+      html_names %>% rep(multiple)
+    )
+
+  names(css) <- html_names
+
+  css
+}
 
 cell_style_structure <- function(.subclass, obj) {
 
