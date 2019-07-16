@@ -32,7 +32,7 @@ test_that("the `cols_move()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("hp", "drat", "mpg", "cyl", "disp", "wt",
@@ -56,7 +56,7 @@ test_that("the `cols_move()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("hp", "drat", "mpg", "cyl", "disp", "wt",
@@ -80,7 +80,7 @@ test_that("the `cols_move()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("hp", "drat", "wt", "qsec", "vs", "am",
@@ -125,7 +125,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("gear", "carb", "mpg", "cyl", "disp", "hp", "drat", "wt",
@@ -149,7 +149,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("gear", "carb", "mpg", "cyl", "disp", "hp", "drat", "wt",
@@ -184,7 +184,7 @@ test_that("the `cols_move_to_end()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("mpg", "cyl", "disp", "hp", "drat", "wt",
@@ -208,7 +208,7 @@ test_that("the `cols_move_to_end()` function works correctly", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    rvest::html_nodes("[class='gt_col_heading gt_right']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
     rvest::html_text() %>%
     expect_equal(
       c("mpg", "cyl", "disp", "hp", "drat", "wt",

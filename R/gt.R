@@ -68,7 +68,6 @@
 #'
 #' @family table-part creation/modification functions
 #'
-#' @importFrom dplyr group_vars
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
@@ -96,7 +95,8 @@ gt <- function(data,
       data.frame(
         groupname = NA_character_,
         rowname = rownames(data),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
 
   } else {
 
@@ -104,7 +104,8 @@ gt <- function(data,
       data.frame(
         groupname = rep(NA_character_, nrow(data)),
         rowname = rep(NA_character_, nrow(data)),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
   }
 
   # If `rowname` is a column available in `data`,
@@ -158,8 +159,8 @@ gt <- function(data,
   # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
-  # Create empty `footnotes_df` and `styles_df` data frames
-  footnotes_df <- styles_df <-
+  # Create an empty `footnotes_df` data frame
+  footnotes_df <-
     dplyr::tibble(
       locname = NA_character_,
       locnum = NA_integer_,
@@ -169,17 +170,22 @@ gt <- function(data,
       text = NA_character_
     )[-1, ]
 
-  # Create a prepopulated `rows_df` data frame
-  rows_df <-
+  # Create an empty `styles_df` data frame
+  styles_df <-
     dplyr::tibble(
-      rownums_start = seq(nrow(data_tbl))
-    )
+      locname = NA_character_,
+      locnum = NA_integer_,
+      grpname = NA_character_,
+      colname = NA_character_,
+      rownum = NA_integer_,
+      styles = list()
+    )[-1, ]
+
+  # Create a prepopulated `rows_df` data frame
+  rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
 
   # Create a prepopulated `cols_df` data frame
-  cols_df <-
-    dplyr::tibble(
-      colnames_start = colnames(data_tbl)
-    )
+  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
 
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for

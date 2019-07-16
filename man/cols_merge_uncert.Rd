@@ -80,7 +80,8 @@ tab_1 <-
     col_uncert = vars(num)
   ) \%>\%
   cols_label(
-    currency = "value + uncert.")
+    currency = "value + uncert."
+  )
 
 }
 \seealso{
