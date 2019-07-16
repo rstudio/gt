@@ -75,7 +75,8 @@ expect_tab <- function(tab,
     non_group_cols <- base::setdiff(colnames(df), dplyr::group_vars(df))
 
     final_df <-
-      df %>% dplyr::ungroup() %>%
+      df %>%
+      dplyr::ungroup() %>%
       dplyr::select(non_group_cols)
 
   } else {

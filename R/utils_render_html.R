@@ -12,32 +12,6 @@ footnote_glyph_to_html <- function(footnote_glyph) {
     as.character()
 }
 
-#' Split the body content vector into a list structure
-#'
-#' Taking the `body_content` vector, split into list components with one item
-#' per row in the output table
-#' @noRd
-split_body_content <- function(body_content,
-                               n_cols) {
-
-  split(body_content, ceiling(seq_along(body_content) / n_cols))
-}
-
-#' Split the body content vector into a list structure
-#'
-#' Taking the `body_content` vector, split into list components with one item
-#' per row in the output table
-#' @noRd
-split_body_content <- function(body_content,
-                               n_cols) {
-
-  if (length(body_content) == 0) {
-    return(list(rep("", n_cols)))
-  }
-
-  split(body_content, ceiling(seq_along(body_content) / n_cols))
-}
-
 styles_to_html <- function(styles) {
 
   style_list <-
