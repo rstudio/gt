@@ -166,15 +166,11 @@ build_data <- function(data, context) {
 
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
-  groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+  groups_df <- replace_na_groups_df(groups_df, others_group)
 
   # Replace NA values in the `group` and `group_label` columns of
   # `group_rows_df`
-  if (!is.na(others_group)) {
-    groups_rows_df[
-      is.na(groups_rows_df[, "group"]),
-      c("group", "group_label")] <- others_group
-  }
+  groups_rows_df <- replace_na_groups_rows_df(groups_rows_df, others_group)
 
   data_attr$boxh_df <- boxh_df
   data_attr$stub_df <- stub_df

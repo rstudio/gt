@@ -53,7 +53,11 @@ rownum_translation <- function(output_df,
 initialize_output_df <- function(data_df) {
 
   output_df <- data_df
+
+  if (nrow(output_df) > 0) {
   output_df[] <- NA_character_
+  }
+
   output_df
 }
 
@@ -831,4 +835,36 @@ create_summary_rows <- function(n_rows,
   }) %>%
     unlist() %>%
     unname()
+}
+
+#' Suitably replace `NA` values in the `groups_df` data frame
+#'
+#' @param groups_df The `groups_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_df <- function(groups_df,
+                                 others_group) {
+
+  if (nrow(groups_df) > 0) {
+    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+  }
+
+  groups_df
+}
+
+#' Suitably replace `NA` values in the `groups_rows_df` data frame
+#'
+#' @param groups_rows_df The `groups_rows_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_rows_df <- function(groups_rows_df,
+                                      others_group) {
+
+  if (nrow(groups_rows_df) > 0) {
+    groups_rows_df[
+      is.na(groups_rows_df[, "group"]),
+      c("group", "group_label")] <- others_group
+  }
+
+  groups_rows_df
 }
