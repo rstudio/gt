@@ -58,7 +58,7 @@ also define several styles within a single call of \code{cells_styles()} and
 }
 \details{
 This function is now soft-deprecated, which means it will soon be removed.
-Please consider using the \code{\link[=cell_fill]{cell_fill()}} (where \code{bkgd_color} is \code{fill}) and
+Please consider using the \code{\link[=cell_fill]{cell_fill()}} (where \code{bkgd_color} is \code{color}) and
 \code{\link[=cell_text]{cell_text()}} (contains all other arguments here without the leading
 \code{text_}).
 }

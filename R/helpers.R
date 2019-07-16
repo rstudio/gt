@@ -559,7 +559,7 @@ currency <- function(...,
 #' [tab_style()] will reliably apply those styles to the targeted element.
 #'
 #' This function is now soft-deprecated, which means it will soon be removed.
-#' Please consider using the [cell_fill()] (where `bkgd_color` is `fill`) and
+#' Please consider using the [cell_fill()] (where `bkgd_color` is `color`) and
 #' [cell_text()] (contains all other arguments here without the leading
 #' `text_`).
 #'
