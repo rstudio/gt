@@ -597,9 +597,9 @@ set_footnote_glyphs_stub_groups <- function(footnotes_resolved,
     for (i in seq(nrow(footnotes_stub_groups_glyphs))) {
 
       row_index <-
-        which(groups_rows_df[, "group_label"] == footnotes_stub_groups_glyphs$grpname[i])
+        which(groups_rows_df[, "group"] == footnotes_stub_groups_glyphs$grpname[i])
 
-      text <- htmltools::htmlEscape(groups_rows_df[row_index, "group_label"])
+      text <- groups_rows_df[row_index, "group_label"]
 
       if (output == "html") {
 

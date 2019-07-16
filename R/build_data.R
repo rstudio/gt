@@ -70,13 +70,19 @@ build_data <- function(data, context) {
   others_group <- data_attr$others_group[[1]] %||% NA_character_
 
   # Get and process the `heading` object
-  heading <- data_attr$heading %>% process_heading(context)
+  heading <-
+    data_attr$heading %>%
+    process_heading(context = context)
 
   # Get and process the `stubhead` object
-  stubhead <- data_attr$stubhead %>% process_stubhead(context)
+  stubhead <-
+    data_attr$stubhead %>%
+    process_stubhead(context = context)
 
   # Get and process the `source_note` object
-  source_note <- data_attr$source_note %>% process_source_notes(context)
+  source_note <-
+    data_attr$source_note %>%
+    process_source_notes(context = context)
 
   # Get the `col_merge` object
   col_merge <- data_attr$col_merge
@@ -85,27 +91,55 @@ build_data <- function(data, context) {
   summary_list <- data_attr$summary
 
   # Initialize `output_df`
-  output_df <- initialize_output_df(data_df)
+  output_df <- initialize_output_df(data_df = data_df)
 
   # Create `output_df` with rendered values
-  output_df <- render_formats(output_df, data_df, formats, context)
+  output_df <-
+    render_formats(
+      output_df = output_df,
+      data_df = data_df,
+      formats = formats,
+      context = context
+    )
 
   # Move input data cells to `output_df` that didn't have
   # any rendering applied during `render_formats()`
-  output_df <- migrate_unformatted_to_output(data_df, output_df, context)
+  output_df <-
+    migrate_unformatted_to_output(
+      data_df = data_df,
+      output_df = output_df,
+      context = context
+    )
 
   # Get the reordering df (`rows_df`) for the data rows
-  rows_df <- get_row_reorder_df(arrange_groups, stub_df)
+  rows_df <-
+    get_row_reorder_df(
+      arrange_groups = arrange_groups,
+      stub_df = stub_df
+    )
 
   # Get the `columns_df` data frame for the data columns
-  columns_df <- get_column_reorder_df(cols_df, boxh_df)
+  columns_df <-
+    get_column_reorder_df(
+      cols_df = cols_df,
+      boxh_df = boxh_df
+    )
 
   # Reassemble the rows and columns of `data_df` in the correct order
-  output_df <- reassemble_output_df(output_df, rows_df, columns_df)
+  output_df <-
+    reassemble_output_df(
+      output_df = output_df,
+      rows_df = rows_df,
+      columns_df = columns_df
+    )
 
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns
-  groups_df <- get_groupnames_rownames_df(stub_df, rows_df)
+  groups_df <-
+    get_groupnames_rownames_df(
+      stub_df = stub_df,
+      rows_df = rows_df
+    )
 
   # Process column labels and migrate those to `boxh_df`
   boxh_df <- migrate_colnames_to_labels(boxh_df, col_labels, context)
@@ -115,15 +149,20 @@ build_data <- function(data, context) {
 
   # Assign default alignment for all columns that haven't had alignment
   # explicitly set
-  boxh_df <- set_default_alignments(boxh_df)
+  boxh_df <- set_default_alignments(boxh_df = boxh_df)
 
   # Get a `columns_spanners` vector, which has the unique, non-NA
   # spanner column labels
-  columns_spanners <- get_columns_spanners_vec(boxh_df)
+  columns_spanners <- get_columns_spanners_vec(boxh_df = boxh_df)
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+  groups_rows_df <-
+    get_groups_rows_df(
+      arrange_groups = arrange_groups,
+      groups_df = groups_df,
+      context = context
+    )
 
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
@@ -146,10 +185,13 @@ build_data <- function(data, context) {
 
   # Text transformation
   for (transform in transforms) {
-    data_attr <- text_transform_at_location(
-      loc = transform$resolved,
-      data_attr = data_attr,
-      fn = transform$fn)
+
+    data_attr <-
+      text_transform_at_location(
+        loc = transform$resolved,
+        data_attr = data_attr,
+        fn = transform$fn
+      )
   }
 
   output_df <- data_attr$output_df
@@ -158,7 +200,12 @@ build_data <- function(data, context) {
   # Perform any necessary column merge operations
   col_merge_output <-
     perform_col_merge(
-      col_merge, data_df, output_df, boxh_df, columns_df, context
+      col_merge = col_merge,
+      data_df = data_df,
+      output_df = output_df,
+      boxh_df = boxh_df,
+      columns_df = columns_df,
+      context = context
     )
 
   # Rewrite `output_df`, `boxh_df`, and `columns_df` as a result of merging
@@ -168,25 +215,32 @@ build_data <- function(data, context) {
 
   # Create the `list_of_summaries` list of lists
   list_of_summaries <-
-    create_summary_dfs(summary_list, data_df, stub_df, output_df, context)
+    create_summary_dfs(
+      summary_list = summary_list,
+      data_df = data_df,
+      stub_df = stub_df,
+      output_df = output_df,
+      context = context
+    )
 
   # Determine if there is a populated stub
-  stub_available <- is_stub_available(stub_df)
+  stub_available <- is_stub_available(stub_df = stub_df)
 
   # Determine if the title has been defined
-  title_defined <- is_title_defined(heading)
+  title_defined <- is_title_defined(heading = heading)
 
   # Determine if a subtitle has been defined
-  subtitle_defined <- is_subtitle_defined(heading)
+  subtitle_defined <- is_subtitle_defined(heading = heading)
 
   # Determine if there are any summaries present
-  summaries_present <- are_summaries_present(list_of_summaries)
+  summaries_present <-
+    are_summaries_present(list_of_summaries = list_of_summaries)
 
   # Determine if there are any spanners present
-  spanners_present <- are_spanners_present(boxh_df)
+  spanners_present <- are_spanners_present(boxh_df = boxh_df)
 
   # Get the available stub components, if any
-  stub_components <- get_stub_components(stub_df)
+  stub_components <- get_stub_components(stub_df = stub_df)
 
   # Define the `col_alignment` vector, which is a
   #   vector of column alignment values for all of
@@ -195,8 +249,8 @@ build_data <- function(data, context) {
     boxh_df["column_align", ] %>%
     unlist() %>% unname()
 
-  if (stub_component_is_rowname(stub_components) ||
-      stub_component_is_rowname_groupname(stub_components)) {
+  if (stub_component_is_rowname(stub_components = stub_components) ||
+      stub_component_is_rowname_groupname(stub_components = stub_components)) {
 
     # Combine reordered stub with output table
     output_df <- cbind(groups_df["rowname"], output_df)
@@ -216,17 +270,31 @@ build_data <- function(data, context) {
   # Resolve and tidy footnotes
   footnotes_resolved <-
     resolve_footnotes_styles(
-      output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = footnotes_df, styles_df = NULL
+      output_df = output_df,
+      boxh_df = boxh_df,
+      groups_rows_df = groups_rows_df,
+      opts_df = opts_df,
+      arrange_groups = arrange_groups,
+      columns_spanners = columns_spanners,
+      title_defined = title_defined,
+      subtitle_defined = subtitle_defined,
+      footnotes_df = footnotes_df,
+      styles_df = NULL
     )
 
   # Resolve the styles table
   styles_resolved <-
     resolve_footnotes_styles(
-      output_df, boxh_df, groups_rows_df, opts_df, arrange_groups,
-      columns_spanners, title_defined, subtitle_defined,
-      footnotes_df = NULL, styles_df = styles_df
+      output_df = output_df,
+      boxh_df = boxh_df,
+      groups_rows_df = groups_rows_df,
+      opts_df = opts_df,
+      arrange_groups = arrange_groups,
+      columns_spanners = columns_spanners,
+      title_defined = title_defined,
+      subtitle_defined = subtitle_defined,
+      footnotes_df = NULL,
+      styles_df = styles_df
     )
 
   list(
