@@ -225,10 +225,12 @@ get_columns_spanners_vec <- function(boxh_df) {
   columns_spanners[which(!is.na(columns_spanners))]
 }
 
-# Function to create a data frame with group information and the
-# associated row numbers in the rearranged representation
+#' Create a data frame with row group information
+#'
+#' @noRd
 get_groups_rows_df <- function(arrange_groups,
-                               groups_df) {
+                               groups_df,
+                               context) {
 
   ordering <- arrange_groups[[1]]
 
@@ -238,7 +240,8 @@ get_groups_rows_df <- function(arrange_groups,
       group_label = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   for (i in seq(ordering)) {
 
@@ -253,7 +256,8 @@ get_groups_rows_df <- function(arrange_groups,
     groups_rows_df[i, "row_end"] <- max(rows_matched)
   }
 
-  groups_rows_df
+  groups_rows_df %>%
+    dplyr::mutate(group_label = process_text(group_label, context))
 }
 
 # Function for merging pairs of columns together (in `output_df`) and

@@ -194,9 +194,8 @@ process_text <- function(text,
       text <-
         text %>%
         as.character() %>%
-        htmltools::htmlEscape() %>%
-        commonmark::markdown_html() %>%
-        stringr::str_replace_all("^<p>|</p>|\n", "")
+        vapply(commonmark::markdown_html, character(1)) %>%
+        stringr::str_replace_all(c("^<p>" = "", "</p>\n$" = ""))
 
       return(text)
 
