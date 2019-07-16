@@ -1362,8 +1362,6 @@ fmt_missing <- function(data,
 #'
 #' @family data formatting functions
 #' @import rlang
-#' @importFrom tibble rownames_to_column
-#' @importFrom dplyr filter arrange
 #' @export
 fmt <- function(data,
                 columns = NULL,
@@ -1402,10 +1400,12 @@ fmt <- function(data,
 
   # Create the `formatter_list`, which is a bundle of
   # formatting functions for specific columns and rows
-  formatter_list <- list(
-    func = fns,
-    cols = resolved_columns,
-    rows = resolved_rows_idx)
+  formatter_list <-
+    list(
+      func = fns,
+      cols = resolved_columns,
+      rows = resolved_rows_idx
+    )
 
   # Incorporate the `formatter_list` object as the next
   # list in the `formats` list of lists

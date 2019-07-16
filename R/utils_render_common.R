@@ -62,7 +62,7 @@ initialize_output_df <- function(data_df) {
 }
 
 #' Render any formatting directives available in the `formats` list
-#' @importFrom stats na.omit
+#'
 #' @noRd
 render_formats <- function(output_df,
                            data_df,
@@ -146,8 +146,8 @@ migrate_unformatted_to_output <- function(data_df,
   output_df
 }
 
-# Function to obtain a reordering df for the data rows
-#' @importFrom dplyr tibble
+#' Obtain a reordering df for the data rows
+#'
 #' @noRd
 get_row_reorder_df <- function(arrange_groups,
                                stub_df) {
@@ -162,7 +162,8 @@ get_row_reorder_df <- function(arrange_groups,
     return(
       dplyr::tibble(
         rownum_start = indices,
-        rownum_final = indices)
+        rownum_final = indices
+      )
     )
   }
 
@@ -179,9 +180,9 @@ get_row_reorder_df <- function(arrange_groups,
     rownum_final = indices)
 }
 
-# Function to obtain a reordering df for the table columns
+#' Obtain a reordering df for the table columns
+#'
 #' @noRd
-#' @importFrom dplyr tibble mutate full_join rename
 get_column_reorder_df <- function(cols_df,
                                   boxh_df) {
 
@@ -192,7 +193,8 @@ get_column_reorder_df <- function(cols_df,
   cols_df %>%
     dplyr::mutate(colnum_start = seq(nrow(cols_df))) %>%
     dplyr::full_join(
-      colnames_final_tbl, by = c("colnames_start" = "colnames_final")) %>%
+      colnames_final_tbl, by = c("colnames_start" = "colnames_final")
+    ) %>%
     dplyr::rename(column_names = colnames_start)
 }
 
@@ -333,14 +335,13 @@ perform_col_merge <- function(col_merge,
     columns_df = columns_df)
 }
 
-# Create a list of summary data frames given a `summary_list` (a list
-# of directives for making per-group summaries); the final list will
-# provide `display` and `data` versions of the summaries, named by group
+#' Create a list of summary data frames given a `summary_list`
+#'
+#' A `summary_list` is a list of directives for making per-group summaries); the
+#' final list will provide `display` and `data` versions of the summaries, named
+#' by group
+#'
 #' @import rlang
-#' @importFrom dplyr select mutate everything bind_rows filter group_by
-#' @importFrom dplyr summarize_all ungroup mutate_at slice
-#' @importFrom tidyr fill
-#' @importFrom stats setNames
 #' @noRd
 create_summary_dfs <- function(summary_list,
                                data_df,
@@ -490,10 +491,14 @@ create_summary_dfs <- function(summary_list,
           format_data <-
             do.call(
               summary_attrs$formatter,
-              append(list(
-                data.frame(x = x),
-                columns = "x"),
-                summary_attrs$formatter_options))
+              append(
+                list(
+                  data.frame(x = x),
+                  columns = "x"
+                ),
+                summary_attrs$formatter_options
+              )
+            )
 
           formatter <- attr(format_data, "formats")[[1]]$func
           fmt <- formatter[[context]] %||% formatter$default
@@ -502,7 +507,8 @@ create_summary_dfs <- function(summary_list,
       ) %>%
       dplyr::mutate_at(
         .vars = columns_excl,
-        .funs = function(x) {NA_character_})
+        .funs = function(x) {NA_character_}
+      )
 
     for (group in groups) {
 
@@ -701,13 +707,13 @@ process_heading <- function(heading, context) {
   }
 }
 
-# Process the `stubhead_caption` object
-process_stubhead_label <- function(caption, context) {
+# Process the `stubhead` object
+process_stubhead <- function(stubhead, context) {
 
-  if (!is.null(caption)) {
-    stubhead_label <- caption$stubhead_label %>% process_text(context)
+  if (!is.null(stubhead)) {
+    label <- stubhead$label %>% process_text(context)
 
-    return(list(stubhead_label = stubhead_label))
+    return(list(label = label))
   }
 }
 
