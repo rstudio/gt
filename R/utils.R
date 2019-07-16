@@ -199,7 +199,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -224,7 +224,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -246,7 +246,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is.html(text)) {
+    } else if (is_html(text)) {
 
       text <- text %>% as.character()
 
@@ -962,4 +962,12 @@ validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
 
 flatten_list <- function(x) {
   x %>% unlist(recursive = FALSE)
+}
+
+#' Convert a single-length vector to a repeating list of lists
+#'
+#' @noRd
+rep_vec_as_list <- function(x, length_out) {
+
+  rep_len(list(x), length_out)
 }
