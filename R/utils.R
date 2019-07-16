@@ -972,15 +972,3 @@ rep_vec_as_list <- function(x, length_out) {
 
   rep_len(list(x), length_out)
 }
-
-tidy_grepl <- function(x, pattern) {
-
-  vapply(
-    pattern,
-    FUN = function(pattern) {
-      grepl(pattern = pattern, x = x)
-    },
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
-  )
-}
