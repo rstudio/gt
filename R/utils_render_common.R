@@ -53,7 +53,11 @@ rownum_translation <- function(output_df,
 initialize_output_df <- function(data_df) {
 
   output_df <- data_df
+
+  if (nrow(output_df) > 0) {
   output_df[] <- NA_character_
+  }
+
   output_df
 }
 
@@ -225,10 +229,12 @@ get_columns_spanners_vec <- function(boxh_df) {
   columns_spanners[which(!is.na(columns_spanners))]
 }
 
-# Function to create a data frame with group information and the
-# associated row numbers in the rearranged representation
+#' Create a data frame with row group information
+#'
+#' @noRd
 get_groups_rows_df <- function(arrange_groups,
-                               groups_df) {
+                               groups_df,
+                               context) {
 
   ordering <- arrange_groups[[1]]
 
@@ -238,7 +244,8 @@ get_groups_rows_df <- function(arrange_groups,
       group_label = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   for (i in seq(ordering)) {
 
@@ -253,7 +260,8 @@ get_groups_rows_df <- function(arrange_groups,
     groups_rows_df[i, "row_end"] <- max(rows_matched)
   }
 
-  groups_rows_df
+  groups_rows_df %>%
+    dplyr::mutate(group_label = process_text(group_label, context))
 }
 
 # Function for merging pairs of columns together (in `output_df`) and
@@ -827,4 +835,36 @@ create_summary_rows <- function(n_rows,
   }) %>%
     unlist() %>%
     unname()
+}
+
+#' Suitably replace `NA` values in the `groups_df` data frame
+#'
+#' @param groups_df The `groups_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_df <- function(groups_df,
+                                 others_group) {
+
+  if (nrow(groups_df) > 0) {
+    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+  }
+
+  groups_df
+}
+
+#' Suitably replace `NA` values in the `groups_rows_df` data frame
+#'
+#' @param groups_rows_df The `groups_rows_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_rows_df <- function(groups_rows_df,
+                                      others_group) {
+
+  if (nrow(groups_rows_df) > 0) {
+    groups_rows_df[
+      is.na(groups_rows_df[, "group"]),
+      c("group", "group_label")] <- others_group
+  }
+
+  groups_rows_df
 }
