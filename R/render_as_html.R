@@ -47,9 +47,6 @@ render_as_html <- function(data) {
         output = "html"
       )
 
-    # Create an HTML fragment for the start of the table
-    table_start <- create_table_start_h(boxh_df)
-
     # Add footnote glyphs to the `summary` cells
     list_of_summaries <-
       apply_footnotes_to_summary(
@@ -122,9 +119,14 @@ render_as_html <- function(data) {
         n_cols = n_cols
       )
 
+    # Get attributes for the gt table
+    table_defs <- get_table_defs(boxh_df)
+
     # Compose the HTML table
     htmltools::tags$table(
       class = "gt_table",
+      style = table_defs$table_style,
+      table_defs$table_colgroups,
       heading_component,
       columns_component,
       body_component,
