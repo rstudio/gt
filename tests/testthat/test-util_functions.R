@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(126, 4))
+  css_tbl %>% dim() %>% expect_equal(c(128, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -402,10 +402,10 @@ test_that("the `inline_html_styles()` function works correctly", {
       paste0(
         "style=\"color: #000000; background-color: #FFFFFF; font-size: ",
         "16px; font-weight: initial; vertical-align: middle; padding: ",
-        "10px; margin: 10px; border-top-style: solid; border-top-width: ",
-        "2px; border-top-color: #A8A8A8; border-bottom-style: solid; ",
-        "border-bottom-width: 2px; border-bottom-color: #A8A8A8; ",
-        "text-align: center;\""
+        "10px; margin: 10px; overflow-x: hidden; border-top-style: solid; ",
+        "border-top-width: 2px; border-top-color: #A8A8A8; ",
+        "border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #A8A8A8; text-align: center;\""
       ),
       inlined_html
     )
@@ -428,15 +428,12 @@ test_that("the `inline_html_styles()` function works correctly", {
 
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
-  # TODO: this isn't quite right; we are missing some rules in the
-  # lines that have the `gt_striped` class (the `font-variant-numeric` and
-  # the `text-align` rules)
   expect_true(
     grepl(
       paste0(
         "style=\"padding: 8px; margin: 10px; vertical-align: middle; ",
-        "text-align: right; font-variant-numeric: tabular-nums; ",
-        "font-size: 10px;\""
+        "overflow-x: hidden; text-align: right; font-variant-numeric: ",
+        "tabular-nums; font-size: 10px;\""
       ),
       inlined_html
     )
