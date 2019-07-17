@@ -72,41 +72,40 @@ coalesce_glyphs <- function(fn_tbl,
     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
-# Create the opening HTML element of a table
-create_table_start_h <- function(boxh_df) {
+# Get the attributes for the table tag
+get_table_defs <- function(boxh_df) {
 
-  table_start <- "<!--gt table start-->\n<table class='gt_table'>\n"
+  if (!all(is.na(boxh_df["column_width", ] %>% unlist() %>% unname()))) {
 
-  if (!all(is.na(boxh_df["column_widths", ] %>% unlist() %>% unname()))) {
-
-    widths <- boxh_df["column_widths", ] %>% unlist() %>% unname()
+    widths <- boxh_df["column_width", ] %>% unlist() %>% unname()
 
     total_width <-
       widths %>%
       tidy_gsub("px", "") %>%
       as.numeric() %>%
-      sum(na.rm = TRUE)
+      sum(na.rm = TRUE) %>%
+      as.character() %>%
+      paste_right("px")
 
-    table_start <-
-      glue::glue(
-        paste0(
-          "<!--gt table start-->\n<table class='gt_table' ",
-          "style='table-layout:fixed;width:{total_width}px;'>\n"
-        )
-      ) %>%
-      as.character()
+    table_style <-
+      paste("table-layout: fixed", paste0("width: ", total_width), sep = "; ")
 
-    col_groups <-
-      paste_between(
-        x = glue::glue("<col style=\"width:{widths}\">") %>%
-          as.character() %>% paste(collapse = "\n") %>% paste_right("\n"),
-        x_2 = c("<colgroup>\n", "</colgroup>\n")
+    table_colgroups <-
+      htmltools::tags$colgroup(
+        lapply(widths, function(widths) {
+          htmltools::tags$col(style = paste0("width: ", widths))
+        })
       )
 
-    table_start <- table_start %>% paste_right(col_groups)
+  } else {
+    table_style <- NULL
+    table_colgroups <- NULL
   }
 
-  table_start
+  list(
+    table_style = table_style,
+    table_colgroups = table_colgroups
+  )
 }
 
 #' Create the heading component of a table
