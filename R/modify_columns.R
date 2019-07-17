@@ -178,9 +178,6 @@ cols_widths <- function(data,
                         .list = list2(...),
                         .others = px(100)) {
 
-  # TODO: use `dplyr::case_when()` API for this instead
-  # of paired expressions
-
   # Collect a named list of column widths
   widths_list <- .list
 
@@ -189,132 +186,51 @@ cols_widths <- function(data,
     return(data)
   }
 
-  # Extract the `col_labels` list from `data/boxh_df`
-  col_labels <- attr(data, "boxh_df", exact = TRUE) %>% names()
+  # Extract the `col_names` list from `data/boxh_df`
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
 
-  has_quosures <-
+  has_formulas <-
     vapply(
       seq_along(widths_list),
-      FUN = function(x) is_quosure(widths_list[[x]][[1]]),
+      FUN = function(x) rlang::is_formula(widths_list[[x]]),
       FUN.VALUE = logical(1)
-    ) %>% any()
+    ) %>%
+    any()
 
-  if (has_quosures) {
-
-    quosured_items <-
-      vapply(
-        seq_along(widths_list),
-        FUN = function(x) is_quosure(widths_list[[x]][[1]]),
-        FUN.VALUE = logical(1)
-      ) %>%
-      which()
-
-    nonquosured_items <-
-      vapply(
-        seq_along(widths_list),
-        FUN = function(x) is_character(widths_list[[x]][[1]]),
-        FUN.VALUE = logical(1)
-      ) %>%
-      which()
-
-    if (length(quosured_items) != length(nonquosured_items)) {
-      stop("Each group of column expressions must pair with a value",
-           call. = FALSE)
-    }
-
-    if (length(widths_list) %% 2 != 0) {
-      stop("Each group of column expressions must pair with a value",
-           call. = FALSE)
-    }
-
-    widths_list2 <- list()
-
-    for (quosure_i in quosured_items) {
-
-      quosures <- widths_list[[quosure_i]]
-
-      columns <- c()
-
-      for (quosure in quosures) {
-
-        quosure <- rlang::enquo(quosure)
-
-        quo_expr <- quosure %>% rlang::quo_get_expr() %>% as.character()
-
-        if (any(quo_expr %in% col_labels) &&
-            !any(c("starts_with", "ends_with", "contains",
-                   "matches", "one_of", "everything") %in% quo_expr[1])) {
-
-          columns <- c(columns, quo_expr)
-
-        } else {
-
-        columns <-
-          c(columns,
-            resolve_vars(
-              var_expr = !!quosure,
-              data = data
-            )
-          )
-        }
-      }
-
-      columns <- columns %>% unique()
-
-      value_columns <- widths_list[[quosure_i + 1]]
-
-      if (any(columns %in% names(widths_list2))) {
-
-        common_columns <-
-          columns %>% base::intersect(names(widths_list2))
-
-        widths_list2[common_columns] <- NULL
-      }
-
-      widths_list2 <-
-        c(widths_list2,
-          setNames(as.list(rep(value_columns, length(columns))), columns)
-        )
-    }
-
-    widths_list <- widths_list2
-  }
-
-  # Test for names being NULL
-  if (is.null(names(widths_list))) {
-    stop("Named arguments are required for `cols_widths()`.",
-         call. = FALSE)
-  }
-
-  # Test for any missing names
-  if (any(names(widths_list) == "")) {
-    stop("All arguments to `cols_widths()` must be named.",
-         call. = FALSE)
-  }
-
-  # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(widths_list) %in% col_labels)) {
-    stop("All column names provided must exist in the input `data` table.",
-         call. = FALSE)
-  }
-
-  # Filter the list of labels by the names in `col_labels`
-  widths_list <- widths_list[names(widths_list) %in% col_labels]
-
-  # If no labels remain after filtering, return the data
-  if (length(widths_list) == 0) {
+  if (!has_formulas) {
     return(data)
   }
 
-  column_names <- widths_list %>% names()
-  widths <- widths_list %>% unlist() %>% unname()
+  formula_items <-
+    vapply(
+      seq_along(widths_list),
+      FUN = function(x) rlang::is_formula(widths_list[[x]]),
+      FUN.VALUE = logical(1)
+    ) %>%
+    which()
 
-  # Set the alignment value for all columns in `columns`
-  attr(data, "boxh_df")["column_widths", column_names] <- widths
+  for (formula_i in formula_items) {
 
-  na_widths <- is.na(attr(data, "boxh_df")["column_widths", ]) %>% which()
+    formula_item <- widths_list[[formula_i]]
 
-  attr(data, "boxh_df")["column_widths", na_widths] <- .others
+    formula_item_l <- formula_item %>% rlang::f_lhs()
+
+    columns <-
+      resolve_vars(
+        var_expr = !!formula_item_l,
+        data = data
+      )
+
+    width <- formula_item %>% rlang::f_rhs() %>% rlang::eval_tidy()
+
+    boxh_df["column_width", ][columns] <- width
+  }
+
+  na_widths <- is.na(boxh_df["column_width", ]) %>% which()
+
+  boxh_df["column_width", ][na_widths] <- .others
+
+  attr(data, "boxh_df") <- boxh_df
 
   data
 }
