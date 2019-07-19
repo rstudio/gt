@@ -554,7 +554,7 @@ create_summary_dfs <- function(summary_list,
       summary_df_display_list[[i]] %>%
       dplyr::select(-groupname) %>%
       dplyr::group_by(rowname) %>%
-      dplyr::summarize_all(coalesce_by_column)
+      dplyr::summarize_all(last_non_na)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
@@ -866,7 +866,7 @@ replace_na_groups_rows_df <- function(groups_rows_df,
   groups_rows_df
 }
 
-coalesce_by_column <- function(vect) {
+last_non_na <- function(vect) {
 
   # Retrieve last non-NA value
   positions <- which(!is.na(vect))
