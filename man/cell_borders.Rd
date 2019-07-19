@@ -4,22 +4,21 @@
 \alias{cell_borders}
 \title{Helper for defining custom borders for table cells}
 \usage{
-cell_borders(selection, color = NULL, style = NULL, weight = NULL)
+cell_borders(sides = "all", color = "#000000", style = "solid",
+  weight = px(1))
 }
 \arguments{
-\item{selection}{The selection of borders to be modified. Options include
-\code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding
-the selected cells, we can use the \code{"all"} option.}
+\item{sides}{The border sides to be modified. Options include \code{"left"},
+\code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
+selected cells, we can use the \code{"all"} option.}
 
-\item{color}{The border color. If nothing is provided, then \code{"#000000"}
-(black) will be used as a default.}
+\item{color}{The border color. The default \code{"#000000"} (black) will be used
+as a default.}
 
 \item{style}{The border style. Can be one of either \code{"solid"} (the default),
-\code{"dashed"}, or \code{"dotted"}. If nothing is provided, then \code{"solid"} will be
-used as a default.}
+\code{"dashed"}, or \code{"dotted"}.}
 
-\item{weight}{The weight of the border lines. If nothing is provided, then
-\code{"1px"} will be used as a default.}
+\item{weight}{The weight of the border lines. The default value is \code{"1px"}.}
 }
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
