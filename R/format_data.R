@@ -80,6 +80,8 @@
 #'   the locales that are supported.
 #' @return An object of class `gt_tbl`.
 #' @examples
+#' library(tidyr)
+#'
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as numeric
 #' # with three decimal places and with no

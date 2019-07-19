@@ -42,6 +42,8 @@
 #'   function (see Details for information on these functions).
 #'
 #' @examples
+#' library(tidyr)
+#'
 #' # Use `sp500` to create a gt table; add
 #' # a header (with a title and a subtitle),
 #' # and then add a footnote to the subtitle
