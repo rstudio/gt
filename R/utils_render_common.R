@@ -554,10 +554,7 @@ create_summary_dfs <- function(summary_list,
       summary_df_display_list[[i]] %>%
       dplyr::select(-groupname) %>%
       dplyr::group_by(rowname) %>%
-      tidyr::fill(dplyr::everything(), .direction = "down") %>%
-      tidyr::fill(dplyr::everything(), .direction = "up") %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup()
+      dplyr::summarize_all(coalesce_by_column)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
@@ -867,4 +864,8 @@ replace_na_groups_rows_df <- function(groups_rows_df,
   }
 
   groups_rows_df
+}
+
+coalesce_by_column <- function(df) {
+  return(dplyr::coalesce(!!! as.list(df)))
 }
