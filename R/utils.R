@@ -914,9 +914,9 @@ stop_if_not_gt <- function(data) {
 #' Resolve the selection of border elements for a table cell
 #'
 #' @noRd
-resolve_selection <- function(selection) {
+resolve_border_side <- function(side) {
 
-  switch(selection,
+  switch(side,
          l = "left",
          left = "left",
          r = "right",
@@ -970,4 +970,11 @@ flatten_list <- function(x) {
 rep_vec_as_list <- function(x, length_out) {
 
   rep_len(list(x), length_out)
+}
+
+validate_length_one <- function(x, name) {
+  if (length(x) != 1) {
+    stop("The value for `", name, "` should have a length of one",
+         call. = FALSE)
+  }
 }

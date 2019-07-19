@@ -4,22 +4,22 @@
 \alias{cell_borders}
 \title{Helper for defining custom borders for table cells}
 \usage{
-cell_borders(selection, color = NULL, style = NULL, weight = NULL)
+cell_borders(sides = "all", color = "#000000", style = "solid",
+  weight = px(1))
 }
 \arguments{
-\item{selection}{The selection of borders to be modified. Options include
-\code{"left"}, \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding
-the selected cells, we can use the \code{"all"} option.}
+\item{sides}{The border sides to be modified. Options include \code{"left"},
+\code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
+selected cells, we can use the \code{"all"} option.}
 
-\item{color}{The border color. If nothing is provided, then \code{"#000000"}
-(black) will be used as a default.}
-
-\item{style}{The border style. Can be one of either \code{"solid"} (the default),
-\code{"dashed"}, or \code{"dotted"}. If nothing is provided, then \code{"solid"} will be
-used as a default.}
-
-\item{weight}{The weight of the border lines. If nothing is provided, then
-\code{"1px"} will be used as a default.}
+\item{color, style, weight}{The border color, style, and weight. The \code{color}
+can be defined with a color name or with a hexadecimal color code. The
+default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
+either \code{"solid"} (the default), \code{"dashed"}, or \code{"dotted"}. The \code{weight} of
+the border lines is to be given in pixel values (the \code{\link[=px]{px()}} helper function
+is useful for this. The default value for \code{weight} is \code{"1px"}. Borders for
+any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
+\code{style}, or \code{weight}.}
 }
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
@@ -29,6 +29,56 @@ cells. Specifically, the call to \code{cell_borders()} should be bound to the
 define which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.).
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
+}
+\examples{
+# Add horizontal border lines for
+# all table body rows in `exibble`
+tab_1 <-
+  exibble \%>\%
+    gt() \%>\%
+    tab_options(row.striping.include_table_body = FALSE) \%>\%
+    tab_style(
+      style = cell_borders(
+        sides = c("top", "bottom"),
+        color = "gray", weight = px(0.5), style = "solid"
+      ),
+      locations = cells_data(
+        columns = everything(),
+        rows = everything()
+      )
+    )
+
+# Incorporate different horizontal and
+# vertical borders at several locations;
+# this uses multiple `cell_borders()` and
+# `cells_data()` calls within `list()`s
+tab_2 <-
+  exibble \%>\%
+    gt() \%>\%
+    tab_style(
+      style = list(
+        cell_borders(
+          sides = c("top", "bottom"),
+          color = "red",
+          weight = px(2)
+        ),
+        cell_borders(
+          sides = c("left", "right"),
+          color = "blue",
+          weight = px(2)
+        )
+      ),
+      locations = list(
+        cells_data(
+          columns = vars(num),
+          rows = is.na(num)
+        ),
+        cells_data(
+          columns = vars(currency),
+          rows = is.na(currency)
+        )
+      )
+    )
 }
 \seealso{
 Other helper functions: \code{\link{cell_fill}},
