@@ -905,7 +905,7 @@ cell_borders <- function(sides = "all",
     style_vals <-
       list(
         side = side,
-        weight = weight,
+        width = weight,
         style = style,
         color = color
       )
