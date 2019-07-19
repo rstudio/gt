@@ -837,11 +837,14 @@ cell_style_to_html.cell_fill <- function(style) {
 #' @param sides The border sides to be modified. Options include `"left"`,
 #'   `"right"`, `"top"`, and `"bottom"`. For all borders surrounding the
 #'   selected cells, we can use the `"all"` option.
-#' @param color The border color. The default `"#000000"` (black) will be used
-#'   as a default.
-#' @param style The border style. Can be one of either `"solid"` (the default),
-#'   `"dashed"`, or `"dotted"`.
-#' @param weight The weight of the border lines. The default value is `"1px"`.
+#' @param color,style,weight The border color, style, and weight. The `color`
+#'   can be defined with a color name or with a hexadecimal color code. The
+#'   default `color` value is `"#000000"` (black). The `style` can be one of
+#'   either `"solid"` (the default), `"dashed"`, or `"dotted"`. The `weight` of
+#'   the border lines is to be given in pixel values (the [px()] helper function
+#'   is useful for this. The default value for `weight` is `"1px"`. Borders for
+#'   any defined `sides` can be removed by supplying `NULL` to any of `color`,
+#'   `style`, or `weight`.
 #'
 #' @family helper functions
 #' @export
@@ -862,7 +865,6 @@ cell_borders <- function(sides = "all",
     color <- "transparent"
   }
 
-  # TODO: change back to length 1 exactly
   validate_length_one(weight, "weight")
   validate_length_one(style, "style")
   validate_length_one(color, "color")

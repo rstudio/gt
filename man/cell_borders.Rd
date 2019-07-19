@@ -12,13 +12,14 @@ cell_borders(sides = "all", color = "#000000", style = "solid",
 \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
 selected cells, we can use the \code{"all"} option.}
 
-\item{color}{The border color. The default \code{"#000000"} (black) will be used
-as a default.}
-
-\item{style}{The border style. Can be one of either \code{"solid"} (the default),
-\code{"dashed"}, or \code{"dotted"}.}
-
-\item{weight}{The weight of the border lines. The default value is \code{"1px"}.}
+\item{color, style, weight}{The border color, style, and weight. The \code{color}
+can be defined with a color name or with a hexadecimal color code. The
+default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
+either \code{"solid"} (the default), \code{"dashed"}, or \code{"dotted"}. The \code{weight} of
+the border lines is to be given in pixel values (the \code{\link[=px]{px()}} helper function
+is useful for this. The default value for \code{weight} is \code{"1px"}. Borders for
+any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
+\code{style}, or \code{weight}.}
 }
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
