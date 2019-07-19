@@ -30,6 +30,56 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
+\examples{
+# Add horizontal border lines for
+# all table body rows in `exibble`
+tab_1 <-
+  exibble \%>\%
+    gt() \%>\%
+    tab_options(row.striping.include_table_body = FALSE) \%>\%
+    tab_style(
+      style = cell_borders(
+        sides = c("top", "bottom"),
+        color = "gray", weight = px(0.5), style = "solid"
+      ),
+      locations = cells_data(
+        columns = everything(),
+        rows = everything()
+      )
+    )
+
+# Incorporate different horizontal and
+# vertical borders at several locations;
+# this uses multiple `cell_borders()` and
+# `cells_data()` calls within `list()`s
+tab_2 <-
+  exibble \%>\%
+    gt() \%>\%
+    tab_style(
+      style = list(
+        cell_borders(
+          sides = c("top", "bottom"),
+          color = "red",
+          weight = px(2)
+        ),
+        cell_borders(
+          sides = c("left", "right"),
+          color = "blue",
+          weight = px(2)
+        )
+      ),
+      locations = list(
+        cells_data(
+          columns = vars(num),
+          rows = is.na(num)
+        ),
+        cells_data(
+          columns = vars(currency),
+          rows = is.na(currency)
+        )
+      )
+    )
+}
 \seealso{
 Other helper functions: \code{\link{cell_fill}},
   \code{\link{cell_text}}, \code{\link{cells_styles}},

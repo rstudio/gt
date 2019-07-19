@@ -846,6 +846,55 @@ cell_style_to_html.cell_fill <- function(style) {
 #'   any defined `sides` can be removed by supplying `NULL` to any of `color`,
 #'   `style`, or `weight`.
 #'
+#' @examples
+#' # Add horizontal border lines for
+#' # all table body rows in `exibble`
+#' tab_1 <-
+#'   exibble %>%
+#'     gt() %>%
+#'     tab_options(row.striping.include_table_body = FALSE) %>%
+#'     tab_style(
+#'       style = cell_borders(
+#'         sides = c("top", "bottom"),
+#'         color = "gray", weight = px(0.5), style = "solid"
+#'       ),
+#'       locations = cells_data(
+#'         columns = everything(),
+#'         rows = everything()
+#'       )
+#'     )
+#'
+#' # Incorporate different horizontal and
+#' # vertical borders at several locations;
+#' # this uses multiple `cell_borders()` and
+#' # `cells_data()` calls within `list()`s
+#' tab_2 <-
+#'   exibble %>%
+#'     gt() %>%
+#'     tab_style(
+#'       style = list(
+#'         cell_borders(
+#'           sides = c("top", "bottom"),
+#'           color = "red",
+#'           weight = px(2)
+#'         ),
+#'         cell_borders(
+#'           sides = c("left", "right"),
+#'           color = "blue",
+#'           weight = px(2)
+#'         )
+#'       ),
+#'       locations = list(
+#'         cells_data(
+#'           columns = vars(num),
+#'           rows = is.na(num)
+#'         ),
+#'         cells_data(
+#'           columns = vars(currency),
+#'           rows = is.na(currency)
+#'         )
+#'       )
+#'     )
 #' @family helper functions
 #' @export
 cell_borders <- function(sides = "all",
