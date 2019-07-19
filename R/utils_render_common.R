@@ -866,6 +866,14 @@ replace_na_groups_rows_df <- function(groups_rows_df,
   groups_rows_df
 }
 
-coalesce_by_column <- function(df) {
-  return(dplyr::coalesce(!!! as.list(df)))
+coalesce_by_column <- function(vect) {
+
+  # Retrieve last non-NA value
+  positions <- which(!is.na(vect))
+
+  if (length(positions) == 0) {
+    return(NA_character_)
+  } else {
+    return(vect[max(positions)])
+  }
 }
