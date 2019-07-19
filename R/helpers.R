@@ -42,6 +42,8 @@
 #'   function (see Details for information on these functions).
 #'
 #' @examples
+#' library(tidyr)
+#'
 #' # Use `sp500` to create a gt table; add
 #' # a header (with a title and a subtitle),
 #' # and then add a footnote to the subtitle
@@ -559,7 +561,7 @@ currency <- function(...,
 #' [tab_style()] will reliably apply those styles to the targeted element.
 #'
 #' This function is now soft-deprecated, which means it will soon be removed.
-#' Please consider using the [cell_fill()] (where `bkgd_color` is `fill`) and
+#' Please consider using the [cell_fill()] (where `bkgd_color` is `color`) and
 #' [cell_text()] (contains all other arguments here without the leading
 #' `text_`).
 #'
@@ -832,32 +834,98 @@ cell_style_to_html.cell_fill <- function(style) {
 #' With that selection, the `color`, `style`, and `weight` of the selected
 #' borders can then be modified.
 #'
-#' @param selection The selection of borders to be modified. Options include
-#'   `"left"`, `"right"`, `"top"`, and `"bottom"`. For all borders surrounding
-#'   the selected cells, we can use the `"all"` option.
-#' @param color The border color. If nothing is provided, then `"#000000"`
-#'   (black) will be used as a default.
-#' @param style The border style. Can be one of either `"solid"` (the default),
-#'   `"dashed"`, or `"dotted"`. If nothing is provided, then `"solid"` will be
-#'   used as a default.
-#' @param weight The weight of the border lines. If nothing is provided, then
-#'   `"1px"` will be used as a default.
+#' @param sides The border sides to be modified. Options include `"left"`,
+#'   `"right"`, `"top"`, and `"bottom"`. For all borders surrounding the
+#'   selected cells, we can use the `"all"` option.
+#' @param color,style,weight The border color, style, and weight. The `color`
+#'   can be defined with a color name or with a hexadecimal color code. The
+#'   default `color` value is `"#000000"` (black). The `style` can be one of
+#'   either `"solid"` (the default), `"dashed"`, or `"dotted"`. The `weight` of
+#'   the border lines is to be given in pixel values (the [px()] helper function
+#'   is useful for this. The default value for `weight` is `"1px"`. Borders for
+#'   any defined `sides` can be removed by supplying `NULL` to any of `color`,
+#'   `style`, or `weight`.
 #'
+#' @examples
+#' # Add horizontal border lines for
+#' # all table body rows in `exibble`
+#' tab_1 <-
+#'   exibble %>%
+#'     gt() %>%
+#'     tab_options(row.striping.include_table_body = FALSE) %>%
+#'     tab_style(
+#'       style = cell_borders(
+#'         sides = c("top", "bottom"),
+#'         color = "gray", weight = px(0.5), style = "solid"
+#'       ),
+#'       locations = cells_data(
+#'         columns = everything(),
+#'         rows = everything()
+#'       )
+#'     )
+#'
+#' # Incorporate different horizontal and
+#' # vertical borders at several locations;
+#' # this uses multiple `cell_borders()` and
+#' # `cells_data()` calls within `list()`s
+#' tab_2 <-
+#'   exibble %>%
+#'     gt() %>%
+#'     tab_style(
+#'       style = list(
+#'         cell_borders(
+#'           sides = c("top", "bottom"),
+#'           color = "red",
+#'           weight = px(2)
+#'         ),
+#'         cell_borders(
+#'           sides = c("left", "right"),
+#'           color = "blue",
+#'           weight = px(2)
+#'         )
+#'       ),
+#'       locations = list(
+#'         cells_data(
+#'           columns = vars(num),
+#'           rows = is.na(num)
+#'         ),
+#'         cells_data(
+#'           columns = vars(currency),
+#'           rows = is.na(currency)
+#'         )
+#'       )
+#'     )
 #' @family helper functions
 #' @export
-cell_borders <- function(selection,
-                         color = NULL,
-                         style = NULL,
-                         weight = NULL) {
+cell_borders <- function(sides = "all",
+                         color = "#000000",
+                         style = "solid",
+                         weight = px(1)) {
 
-  if (!any(selection %in% c(
+  if (is.null(weight)) {
+    weight <- "0"
+  }
+
+  if (is.null(style)) {
+    style <- "hidden"
+  }
+
+  if (is.null(color)) {
+    color <- "transparent"
+  }
+
+  validate_length_one(weight, "weight")
+  validate_length_one(style, "style")
+  validate_length_one(color, "color")
+
+  if (!any(sides %in% c(
     "left", "l",
     "right", "r",
     "top", "t",
     "bottom", "b",
     "all", "everything", "a"
   ))) {
-    stop("The `selection` vector for `cell_borders()` has to include one ",
+    stop("The `sides` vector for `cell_borders()` has to include one ",
          "or more of the following keywords (or short forms):\n",
          " * \"left\" (or: \"l\")\n",
          " * \"right\" (or: \"r\")\n",
@@ -868,53 +936,59 @@ cell_borders <- function(selection,
   }
 
   # Resolve the selection of borders into a vector of
-  # standardized directions
-  directions <-
+  # standardized sides
+  sides <-
     vapply(
-      selection, resolve_selection,
+      sides, resolve_border_side,
       FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
     unique()
 
   # Should the `all` selection appear in the
-  # `directions` vector, use all possible directions
-  if ("all" %in% directions) {
-    directions <- c("left", "right", "top", "bottom")
+  # `sides` vector, use all possible sides
+  if ("all" %in% sides) {
+    sides <- c("left", "right", "top", "bottom")
   }
 
-  # Resolve cell border styles with regard to
-  # non-specified values
-  color <- color %||% "#000000"
-  style <- style %||% "solid"
-  weight <- weight %||% px(1)
+  lapply(sides, function(side) {
 
-  # Get all assigned values for the functions' arguments
-  style_names <- formals(cell_borders) %>% names()
-  style_names <- mget(style_names)
+    style_vals <-
+      list(
+        side = side,
+        width = weight,
+        style = style,
+        color = color
+      )
 
-  # Filter list by only the non-NULL (e.g., assigned with
-  # value) elements
-  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+    validate_style_in(
+      style_vals, names(style_vals), "style",
+      c("solid", "dashed", "dotted")
+    )
 
-  # Get a vector of argument names (`style_names`) for
-  # validation purposes
-  style_names <- style_vals %>% names()
-
-  validate_style_in(
-    style_vals, style_names, "style",
-    c("solid", "dashed", "dotted")
-  )
-
-  list(cell_borders = style_vals)
+    cell_style_structure(paste0("cell_border_", side), style_vals, "cell_border")
+  }) %>%
+    as_style()
 }
 
+cell_style_to_html.cell_border <- function(style) {
 
-cell_style_structure <- function(.subclass, obj) {
+  css <- style %>% unclass()
+
+  side <- css$side
+
+  css$side <- NULL
+
+  names(css) <- paste0("border-", side, "-", names(css))
+
+  css
+}
+
+cell_style_structure <- function(name, obj, subclass = name) {
 
   style_obj <- list()
 
-  class(obj) <- c(.subclass, "cell_style")
+  class(obj) <- c(subclass, "cell_style")
 
-  style_obj[[.subclass]] <- obj
+  style_obj[[name]] <- obj
 
   class(style_obj) <- "cell_styles"
 
