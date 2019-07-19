@@ -554,10 +554,7 @@ create_summary_dfs <- function(summary_list,
       summary_df_display_list[[i]] %>%
       dplyr::select(-groupname) %>%
       dplyr::group_by(rowname) %>%
-      tidyr::fill(dplyr::everything(), .direction = "down") %>%
-      tidyr::fill(dplyr::everything(), .direction = "up") %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup()
+      dplyr::summarize_all(last_non_na)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
@@ -867,4 +864,16 @@ replace_na_groups_rows_df <- function(groups_rows_df,
   }
 
   groups_rows_df
+}
+
+last_non_na <- function(vect) {
+
+  # Retrieve last non-NA value
+  positions <- which(!is.na(vect))
+
+  if (length(positions) == 0) {
+    return(NA_character_)
+  } else {
+    return(vect[max(positions)])
+  }
 }
