@@ -166,10 +166,6 @@ cols_widths <- function(data,
       FUN.VALUE = logical(1)
     )
 
-  if (!(any(formulas))) {
-    return(data)
-  }
-
   formula_items <- formulas %>% which()
 
   for (formula_i in formula_items) {
