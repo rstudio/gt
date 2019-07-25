@@ -141,30 +141,9 @@ cols_align <- function(data,
 #'   ) %>%
 #'   gt() %>%
 #'   cols_widths(
-#'     num = px(150),
-#'     char = px(100),
-#'     date = px(200),
-#'     datetime = px(200),
-#'     .others = px(60)
-#'   )
-#'
-#' # We can take a different approach
-#' # in making the same table by using
-#' # paired `vars()`--`px()` expressions;
-#' # these are all unnamed and we need
-#' # to ensure alternation between the
-#' # `vars()` and `px()` expressions
-#' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(
-#'     num, char, date,
-#'     datetime, row
-#'   ) %>%
-#'   gt() %>%
-#'   cols_widths(
-#'     vars(num), px(150),
-#'     vars(ends_with("r")), px(100),
-#'     vars(starts_with("date")), px(200),
+#'     vars(num) ~ px(150),
+#'     ends_with("r") ~ px(100),
+#'     starts_with("date") ~ px(200),
 #'     .others = px(60)
 #'   )
 #'
