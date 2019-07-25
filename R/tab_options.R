@@ -274,6 +274,30 @@ tab_options <- function(data,
   data
 }
 
+#' Modify the set of footnote marks
+#'
+#' Alter the footnote marks for any footnotes that may be present in the table.
+#'
+#' @inheritParams fmt_number
+#' @param set The set of sequential figures or characters used to identify the
+#'   footnotes. We can either supply the keyword `"numbers"` (the default,
+#'   indicating that we want numeric glyphs), the keywords `"letters"` or
+#'   `"LETTERS"` (indicating that we want letters as glyphs, either lowercase or
+#'   uppercase), or, a vector of character values representing the series of
+#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
+#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
+#'   -> `**` -> `***`).
+#'
+#' @export
+tab_footnote_marks <- function(data,
+                               set = NULL) {
+
+  if (!is.null(set)) {
+    data <- data %>% tab_options(footnote.glyph = set)
+  }
+
+  data
+}
 preprocess_tab_option <- function(option, var_name, type) {
 
   # Perform pre-processing on the option depending on `type`
