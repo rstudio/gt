@@ -196,64 +196,28 @@ cols_widths <- function(data,
       FUN.VALUE = logical(1)
     )
 
-  named_vectors <-
-    vapply(
-      seq_along(widths_list),
-      FUN = function(x) {
-        x_item <- widths_list[x] %>% unlist()
-        is_named(x_item) && length(x_item) == 1
-      },
-      FUN.VALUE = logical(1)
-    )
-
-  if (!(any(formulas)) && !(any(named_vectors))) {
+  if (!(any(formulas))) {
     return(data)
   }
 
-  if (any(formulas)) {
+  formula_items <- formulas %>% which()
 
-    formula_items <- formulas %>% which()
+  for (formula_i in formula_items) {
 
-    for (formula_i in formula_items) {
+    formula_item <- widths_list[[formula_i]]
 
-      formula_item <- widths_list[[formula_i]]
+    formula_item_l <- formula_item %>% rlang::f_lhs()
 
-      formula_item_l <- formula_item %>% rlang::f_lhs()
+    # TODO: incorporate `tryCatch()` for objects not found
+    columns <-
+      resolve_vars(
+        var_expr = !!formula_item_l,
+        data = data
+      )
 
-      # TODO: incorporate `tryCatch()` for objects not found
-      columns <-
-        resolve_vars(
-          var_expr = !!formula_item_l,
-          data = data
-        )
+    width <- formula_item %>% rlang::f_rhs() %>% rlang::eval_tidy()
 
-      width <- formula_item %>% rlang::f_rhs() %>% rlang::eval_tidy()
-
-      boxh_df["column_width", ][columns] <- width
-    }
-  }
-
-  if (any(named_vectors)) {
-
-    vector_items <- named_vectors %>% which()
-
-    for (vector_i in vector_items) {
-
-      vector_item <- widths_list[vector_i]
-
-      vector_item_name <- names(vector_item)
-
-      # TODO: incorporate `tryCatch()` for objects not found
-      columns <-
-        resolve_vars(
-          var_expr = !!vector_item_name,
-          data = data
-        )
-
-      width <- vector_item %>% unname()
-
-      boxh_df["column_width", ][columns] <- width
-    }
+    boxh_df["column_width", ][columns] <- width
   }
 
   na_widths <- is.na(boxh_df["column_width", ]) %>% which()
