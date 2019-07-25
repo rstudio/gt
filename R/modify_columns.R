@@ -87,7 +87,7 @@ cols_align <- function(data,
 
 #' Set the widths of columns
 #'
-#' Manual adjustments to column widths can be performed using the
+#' Manual specifications of column widths can be performed using the
 #' `cols_widths()` function.  We choose which columns get specific widths (in
 #' pixels, usually by use of the [px()] helper function) and all other columns
 #' are assigned a default width value though the `.others` argument. Width

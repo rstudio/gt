@@ -30,7 +30,7 @@ By default, this is set as the expression \code{px(100)}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Manual adjustments to column widths can be performed using the
+Manual specifications of column widths can be performed using the
 \code{cols_widths()} function.  We choose which columns get specific widths (in
 pixels, usually by use of the \code{\link[=px]{px()}} helper function) and all other columns
 are assigned a default width value though the \code{.others} argument. Width
