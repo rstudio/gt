@@ -298,6 +298,26 @@ tab_footnote_marks <- function(data,
 
   data
 }
+
+#' @export
+footnote_symbols <- function(set_size = c("standard", "extended")) {
+
+  # (1) Low Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+  standard_symbols <- c("\U0204E", "\U02020", "\U02021", "\U000A7")
+
+  # (5) Double Vertical Line, (6) Paragraph Sign
+  extension <- c("\U02016", "\U000B6")
+
+  if (set_size == "standard") {
+    return(standard_symbols)
+  }
+
+  if (set_size == "extended") {
+    return(c(standard_symbols, extension))
+  }
+}
+
+
 preprocess_tab_option <- function(option, var_name, type) {
 
   # Perform pre-processing on the option depending on `type`
