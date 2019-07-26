@@ -119,9 +119,14 @@ render_as_html <- function(data) {
         n_cols = n_cols
       )
 
+    # Get attributes for the gt table
+    table_defs <- get_table_defs(boxh_df)
+
     # Compose the HTML table
     htmltools::tags$table(
       class = "gt_table",
+      style = table_defs$table_style,
+      table_defs$table_colgroups,
       heading_component,
       columns_component,
       body_component,
