@@ -299,6 +299,19 @@ tab_footnote_marks <- function(data,
   data
 }
 
+#' Footnote marks composed of symbols
+#'
+#' Using `footnote_symbols()` allows us to quickly define a set of footnote
+#' marks for any footnotes that may be in the table. The use of this function
+#' pairs well with the [tab_footnote_marks()] function, used for customizing the
+#' footnote marks (and provides easier access to the `footnote.glyph` argument
+#' of [tab_options()]).
+#'
+#' @inheritParams fmt_number
+#' @param type An option for whether the symbol set should be the `"standard"`
+#'   set (four symbols), or, the `"extended"` set (adds two more symbols, making
+#'   six).
+#'
 #' @export
 footnote_symbols <- function(type = c("standard", "extended")) {
 
