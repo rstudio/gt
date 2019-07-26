@@ -300,7 +300,7 @@ tab_footnote_marks <- function(data,
 }
 
 #' @export
-footnote_symbols <- function(set_size = c("standard", "extended")) {
+footnote_symbols <- function(type = c("standard", "extended")) {
 
   # (1) Low Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
   standard_symbols <- c("\U0204E", "\U02020", "\U02021", "\U000A7")
@@ -308,11 +308,11 @@ footnote_symbols <- function(set_size = c("standard", "extended")) {
   # (5) Double Vertical Line, (6) Paragraph Sign
   extension <- c("\U02016", "\U000B6")
 
-  if (set_size == "standard") {
+  if (type == "standard") {
     return(standard_symbols)
   }
 
-  if (set_size == "extended") {
+  if (type == "extended") {
     return(c(standard_symbols, extension))
   }
 }
