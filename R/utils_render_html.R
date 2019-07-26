@@ -50,6 +50,53 @@ coalesce_glyphs <- function(fn_tbl,
     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
+# Get the attributes for the table tag
+get_table_defs <- function(boxh_df) {
+
+  if (!all(is.na(boxh_df["column_width", ] %>% unlist() %>% unname()))) {
+
+    widths <- boxh_df["column_width", ] %>% unlist() %>% unname()
+
+    if (any(is.na(widths))) {
+
+      warning("Unset column widths found, setting to `100px`:\n",
+              " * Columns: ", str_catalog(names(boxh_df)[is.na(widths)]), ".\n",
+              "Set these column widths in `cols_width()` using `TRUE ~ px(100)`.",
+              call. = FALSE)
+
+      widths[is.na(widths)] <- px(100)
+    }
+
+    # Assumption is that all width values are `px` values
+    total_width <-
+      widths %>%
+      tidy_gsub("px", "") %>%
+      as.numeric() %>%
+      sum(na.rm = TRUE) %>%
+      as.character() %>%
+      paste_right("px")
+
+    table_style <-
+      paste("table-layout: fixed", paste0("width: ", total_width), sep = "; ")
+
+    table_colgroups <-
+      htmltools::tags$colgroup(
+        lapply(widths, function(width) {
+          htmltools::tags$col(style = paste0("width: ", width))
+        })
+      )
+
+  } else {
+    table_style <- NULL
+    table_colgroups <- NULL
+  }
+
+  list(
+    table_style = table_style,
+    table_colgroups = table_colgroups
+  )
+}
+
 #' Create the heading component of a table
 #'
 #' The table heading component contains the title and possibly a subtitle; if
