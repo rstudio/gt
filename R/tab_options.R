@@ -281,15 +281,56 @@ tab_options <- function(data,
 #' @inheritParams fmt_number
 #' @param set The set of sequential figures or characters used to identify the
 #'   footnotes. We can either supply the keyword `"numbers"` (the default,
-#'   indicating that we want numeric glyphs), the keywords `"letters"` or
-#'   `"LETTERS"` (indicating that we want letters as glyphs, either lowercase or
+#'   indicating that we want numeric marks), the keywords `"letters"` or
+#'   `"LETTERS"` (indicating that we want letters as marks, either lowercase or
 #'   uppercase), or, a vector of character values representing the series of
-#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
-#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
-#'   -> `**` -> `***`).
+#'   marks. A series of marks is recycled when its usage goes beyond the length
+#'   of the set. At each cycle, the marks are simply combined (e.g., `*` -> `**`
+#'   -> `***`). Alternatively, we can use the [symbol_marks()] function, which
+#'   generates a character vector of footnote marks in the form of symbols.
+#'
+#' @examples
+#' # Use `sza` to create a gt table,
+#' # adding three footnotes; call
+#' # `set_footnote_marks()` to specify
+#' # symbols (from `symbol_marks()`)
+#' # as the set of marks to use
+#' tab_1 <-
+#'   sza %>%
+#'   dplyr::group_by(latitude, tst) %>%
+#'   dplyr::summarize(
+#'     SZA.Max = max(sza),
+#'     SZA.Min = min(sza, na.rm = TRUE)
+#'   ) %>%
+#'   dplyr::ungroup() %>%
+#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
+#'   dplyr::select(-latitude) %>%
+#'   gt(rowname_col = "tst") %>%
+#'   cols_split_delim(".") %>%
+#'   fmt_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) %>%
+#'   tab_stubhead("TST") %>%
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_labels(groups = "SZA")
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) %>%
+#'   set_footnote_marks(set = symbol_marks())
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_set_footnote_marks_1.svg}{options: width=100\%}}
 #'
 #' @export
-tab_footnote_marks <- function(data,
+set_footnote_marks <- function(data,
                                set = NULL) {
 
   if (!is.null(set)) {
@@ -301,22 +342,22 @@ tab_footnote_marks <- function(data,
 
 #' Footnote marks composed of symbols
 #'
-#' Using `footnote_symbols()` allows us to quickly define a set of footnote
+#' Using `symbol_marks()` allows us to quickly define a set of footnote
 #' marks for any footnotes that may be in the table. The use of this function
-#' pairs well with the [tab_footnote_marks()] function, used for customizing the
+#' pairs well with the [set_footnote_marks()] function, used for customizing the
 #' footnote marks (and provides easier access to the `footnote.glyph` argument
 #' of [tab_options()]).
 #'
 #' @inheritParams fmt_number
 #' @param type An option for whether the symbol set should be the `"standard"`
-#'   set (four symbols), or, the `"extended"` set (adds two more symbols, making
-#'   six).
+#'   set (the default, with four symbols), or, the `"extended"` set (adds two
+#'   more symbols, making six).
 #'
 #' @export
-footnote_symbols <- function(type = c("standard", "extended")) {
+symbol_marks <- function(type = "standard") {
 
-  # (1) Low Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
-  standard_symbols <- c("\U0204E", "\U02020", "\U02021", "\U000A7")
+  # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+  standard_symbols <- c("\U0002A", "\U02020", "\U02021", "\U000A7")
 
   # (5) Double Vertical Line, (6) Paragraph Sign
   extension <- c("\U02016", "\U000B6")
@@ -329,7 +370,6 @@ footnote_symbols <- function(type = c("standard", "extended")) {
     return(c(standard_symbols, extension))
   }
 }
-
 
 preprocess_tab_option <- function(option, var_name, type) {
 
