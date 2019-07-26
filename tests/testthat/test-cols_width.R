@@ -1,4 +1,4 @@
-context("Ensuring that the `cols_widths()` function works as expected")
+context("Ensuring that the `cols_width()` function works as expected")
 
 # Create a table with four columns of values
 tbl <-
@@ -39,7 +39,7 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
-test_that("the function `cols_widths()` works correctly", {
+test_that("the function `cols_width()` works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -48,7 +48,7 @@ test_that("the function `cols_widths()` works correctly", {
   # all columns to `100px`
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       vars(col_1) ~ px(100),
       vars(col_2) ~ px(100),
       vars(col_3) ~ px(100),
@@ -72,10 +72,10 @@ test_that("the function `cols_widths()` works correctly", {
   # to `70px`
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       vars(col_1) ~ px(100),
       vars(col_2) ~ px(100),
-      .others = px(70)
+      TRUE ~ px(70)
     )
 
   # Expect that the first two column widths are
@@ -91,50 +91,39 @@ test_that("the function `cols_widths()` works correctly", {
     ) %>%
     expect_true()
 
-
   # Create a `tbl_html` object with `gt()` and size the
-  # first two columns to `100px` and let the remaining
-  # columns accept the default width of `100px`
+  # first two columns to `100px`; the uncaptured columns
+  # will get default width of `100px` (a warning will be
+  # given)
   tbl_html <-
-    gt(tbl) %>%
-    cols_widths(
-      vars(col_1) ~ px(150),
-      vars(col_2) ~ px(150)
+    suppressWarnings(
+      gt(tbl) %>%
+        cols_width(
+          vars(col_1) ~ px(150),
+          vars(col_2) ~ px(150)
+        )
     )
 
   # Expect that the first two column widths are
   # set to `150px`, and the rest are `100px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
-        "</colgroup>")
-    ) %>%
+  suppressWarnings(
+    tbl_html %>%
+      render_as_html() %>%
+      tidy_grepl(
+        paste0(
+          "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
+          "<col style=\"width: 150px\"/>\n\\s*?<col style",
+          "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
+          "</colgroup>")
+      )) %>%
     expect_true()
-
-  # Create a `tbl_html` object with `gt()` and don't
-  # explicitly assign sizes to any columns
-  tbl_html <-
-    gt(tbl) %>%
-    cols_widths()
-
-  # Expect that `<colgroup>` is not present in the
-  # HTML table since the function call didn't assign
-  # any width values
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl("<colgroup>") %>%
-    expect_false()
 
   # Create a `tbl_html` object with `gt()` and assign
   # a width of `150px` to all columns with the
   # `everything()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       everything() ~ px(150)
     )
 
@@ -155,7 +144,7 @@ test_that("the function `cols_widths()` works correctly", {
   # `starts_with()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       starts_with("col") ~ px(150)
     )
 
@@ -176,8 +165,9 @@ test_that("the function `cols_widths()` works correctly", {
   # `ends_with()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
-      ends_with("1") ~ px(150)
+    cols_width(
+      ends_with("1") ~ px(150),
+      TRUE ~ px(100)
     )
 
   # Expect that the first column width is set to
@@ -198,7 +188,7 @@ test_that("the function `cols_widths()` works correctly", {
   # `contains()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       contains("_") ~ px(150)
     )
 
@@ -219,7 +209,7 @@ test_that("the function `cols_widths()` works correctly", {
   # `matches()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       matches("col_[0-9]") ~ px(150)
     )
 
@@ -240,8 +230,9 @@ test_that("the function `cols_widths()` works correctly", {
   # `one_of()` column select helper
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
-      one_of(c("col_1", "col_2")) ~ px(150)
+    cols_width(
+      one_of(c("col_1", "col_2")) ~ px(150),
+      TRUE ~ px(100)
     )
 
   # Expect that the first two column widths are set to
@@ -260,15 +251,15 @@ test_that("the function `cols_widths()` works correctly", {
   # Create a `tbl_html` object with `gt()` and size the
   # first column to `175px` and the remaining columns
   # to `75px`; this uses multiple formulas with the first
-  # column in the RHS (the expectation is that the last
+  # column in the RHS (the expectation is that the first
   # formula will give the resultant width value)
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
-      vars(col_1) ~ px(125),
-      vars(col_1) ~ px(150),
+    cols_width(
       vars(col_1) ~ px(175),
-      .others = px(75)
+      vars(col_1) ~ px(150),
+      vars(col_1) ~ px(125),
+      TRUE ~ px(75)
     )
 
   # Expect that the first column width is set to
@@ -286,17 +277,18 @@ test_that("the function `cols_widths()` works correctly", {
 
   # Create a `tbl_html` object with `gt()` and size the
   # first column to `150px` and the remaining columns
-  # to `75px` in one call to `cols_widths()`, and, make
-  # a second call to `cols_widths()` that sets the
+  # to `75px` in one call to `cols_width()`, and, make
+  # a second call to `cols_width()` that sets the
   # first column to `250px`
   tbl_html <-
     gt(tbl) %>%
-    cols_widths(
+    cols_width(
       vars(col_1) ~ px(150),
-      .others = px(75)
+      TRUE ~ px(75)
     ) %>%
-    cols_widths(
-      vars(col_1) ~ px(250)
+    cols_width(
+      vars(col_1) ~ px(250),
+      TRUE ~ px(75)
     )
 
   # Expect that the first column width is set to
@@ -316,9 +308,15 @@ test_that("the function `cols_widths()` works correctly", {
   # in the dataset
   expect_error(
     gt(tbl) %>%
-      cols_widths(
+      cols_width(
         vars(col_10) ~ px(150),
-        .others = px(75)
+        TRUE ~ px(75)
       )
+  )
+
+  # Expect an error if no expressions given to `...`
+  expect_error(
+    gt(tbl) %>%
+      cols_width()
   )
 })
