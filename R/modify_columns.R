@@ -159,29 +159,34 @@ cols_widths <- function(data,
   # Extract the `col_names` list from `data/boxh_df`
   boxh_df <- attr(data, "boxh_df", exact = TRUE)
 
-  formulas <-
-    vapply(
-      seq_along(widths_list),
-      FUN = function(x) rlang::is_formula(widths_list[[x]]),
-      FUN.VALUE = logical(1)
+  all_formulas <-
+    all(
+      vapply(
+        seq_along(widths_list),
+        FUN = function(x) rlang::is_formula(widths_list[[x]]),
+        FUN.VALUE = logical(1)
+      )
     )
 
-  formula_items <- formulas %>% which()
+  if (!all_formulas) {
+    stop("Only two sided formulas should be provided to `...`",
+         call. = FALSE)
+  }
 
-  for (formula_i in formula_items) {
+  for (width_item in widths_list) {
 
-    formula_item <- widths_list[[formula_i]]
+    cols <- width_item %>% rlang::f_lhs()
 
-    formula_item_l <- formula_item %>% rlang::f_lhs()
-
-    # TODO: incorporate `tryCatch()` for objects not found
     columns <-
       resolve_vars(
-        var_expr = !!formula_item_l,
+        var_expr = !!cols,
         data = data
       )
 
-    width <- formula_item %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    width <-
+      width_item %>%
+      rlang::f_rhs() %>%
+      rlang::eval_tidy()
 
     boxh_df["column_width", ][columns] <- width
   }
