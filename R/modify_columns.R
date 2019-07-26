@@ -85,6 +85,120 @@ cols_align <- function(data,
   data
 }
 
+#' Set the widths of columns
+#'
+#' Manual specifications of column widths can be performed using the
+#' `cols_width()` function.  We choose which columns get specific widths (in
+#' pixels, usually by use of the [px()] helper function) and all other columns
+#' are assigned a default width value though the `.others` argument. Width
+#' assignments are supplied in `...` through two-sided formulas, where the
+#' left-hand side defines the target columns and the right-hand side is a single
+#' width value in pixels.
+#'
+#' Normally, column widths are automatically set to span across the width of the
+#' container (both table and container widths can be individually modified with
+#' the `table.width` and `container.width` options within [tab_options()]). When
+#' using `cols_width()` though, the `table.width` option is disregarded in
+#' favor of the pixel values set for each column.
+#'
+#' @inheritParams cols_align
+#' @param ... Expressions for the assignment of column widths for the table
+#'   columns in `data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
+#'   where the left-hand side corresponds to selections of columns and the
+#'   right-hand side evaluates to single-length character values in the form
+#'   `{##}px` (i.e., pixel dimensions); the [px()] helper function is best used
+#'   for this purpose. Column names should be enclosed in [vars()]. The
+#'   column-based select helpers [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], and [everything()] can be used in the LHS.
+#'   Subsequent expressions that operate on the columns assigned previously will
+#'   result in overwriting column width values (both in the same `cols_width()`
+#'   call and across separate calls).
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @return An object of class `gt_tbl`.
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # with named arguments in `...`, we
+#' # can specify the exact widths for
+#' # table columns (using `TRUE` will
+#' # capture all remaining columns)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(
+#'     num, char, date,
+#'     datetime, row
+#'   ) %>%
+#'   gt() %>%
+#'   cols_width(
+#'     vars(num) ~ px(150),
+#'     ends_with("r") ~ px(100),
+#'     starts_with("date") ~ px(200),
+#'     TRUE ~ px(60)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
+#'
+#' @family column modification functions
+#' @export
+cols_width <- function(data,
+                       ...,
+                       .list = list2(...)) {
+
+  # Collect a named list of column widths
+  widths_list <- .list
+
+  # If nothing is provided, return `data` unchanged
+  if (length(widths_list) == 0) {
+    stop("Nothing was provided to `...`:\n",
+         " * Use formula expressions to define custom column widths",
+         call. = FALSE)
+  }
+
+  # Extract the `col_names` list from `data/boxh_df`
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  all_formulas <-
+    all(
+      vapply(
+        widths_list,
+        FUN = function(width) rlang::is_formula(width),
+        FUN.VALUE = logical(1)
+      )
+    )
+
+  if (!all_formulas) {
+    stop("Only two-sided formulas should be provided to `...`",
+         call. = FALSE)
+  }
+
+  columns_used <- NULL
+
+  for (width_item in widths_list) {
+
+    cols <- width_item %>% rlang::f_lhs()
+
+    columns <-
+      resolve_vars(
+        var_expr = !!cols,
+        data = data
+      ) %>%
+      base::setdiff(columns_used)
+
+    columns_used <- c(columns_used, columns)
+
+    width <-
+      width_item %>%
+      rlang::f_rhs() %>%
+      rlang::eval_tidy()
+
+    boxh_df["column_width", ][columns] <- width
+  }
+
+  attr(data, "boxh_df") <- boxh_df
+
+  data
+}
+
 #' Relabel one or more columns
 #'
 #' Column labels can be modified from their default values (the names of the
@@ -179,7 +293,7 @@ cols_label <- function(data,
 
   # Stop function if any of the column names specified are not in `cols_labels`
   if (!all(names(labels_list) %in% names(col_labels))) {
-    stop("All columns names provided must exist in the input `data` table.")
+    stop("All column names provided must exist in the input `data` table.")
   }
 
   # Filter the list of labels by the names in `col_labels`
