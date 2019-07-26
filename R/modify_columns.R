@@ -88,7 +88,7 @@ cols_align <- function(data,
 #' Set the widths of columns
 #'
 #' Manual specifications of column widths can be performed using the
-#' `cols_widths()` function.  We choose which columns get specific widths (in
+#' `cols_width()` function.  We choose which columns get specific widths (in
 #' pixels, usually by use of the [px()] helper function) and all other columns
 #' are assigned a default width value though the `.others` argument. Width
 #' assignments are supplied in `...` through two-sided formulas, where the
@@ -98,7 +98,7 @@ cols_align <- function(data,
 #' Normally, column widths are automatically set to span across the width of the
 #' container (both table and container widths can be individually modified with
 #' the `table.width` and `container.width` options within [tab_options()]). When
-#' using `cols_widths()` though, the `table.width` option is disregarded in
+#' using `cols_width()` though, the `table.width` option is disregarded in
 #' favor of the pixel values set for each column.
 #'
 #' @inheritParams cols_align
@@ -111,19 +111,16 @@ cols_align <- function(data,
 #'   column-based select helpers [starts_with()], [ends_with()], [contains()],
 #'   [matches()], [one_of()], and [everything()] can be used in the LHS.
 #'   Subsequent expressions that operate on the columns assigned previously will
-#'   result in overwriting column width values (both in the same `cols_widths()`
+#'   result in overwriting column width values (both in the same `cols_width()`
 #'   call and across separate calls).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .others The width to set for all other columns not specified in `...`.
-#'   By default, this is set as the expression `px(100)`.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # with named arguments in `...`, we
 #' # can specify the exact widths for
-#' # table columns (the `.others` value
-#' # will provide a default width for
-#' # any unset columns)
+#' # table columns (using `TRUE` will
+#' # capture all remaining columns)
 #' tab_1 <-
 #'   exibble %>%
 #'   dplyr::select(
@@ -131,29 +128,30 @@ cols_align <- function(data,
 #'     datetime, row
 #'   ) %>%
 #'   gt() %>%
-#'   cols_widths(
+#'   cols_width(
 #'     vars(num) ~ px(150),
 #'     ends_with("r") ~ px(100),
 #'     starts_with("date") ~ px(200),
-#'     .others = px(60)
+#'     TRUE ~ px(60)
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_widths_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
 #' @export
-cols_widths <- function(data,
-                        ...,
-                        .list = list2(...),
-                        .others = px(100)) {
+cols_width <- function(data,
+                       ...,
+                       .list = list2(...)) {
 
   # Collect a named list of column widths
   widths_list <- .list
 
   # If nothing is provided, return `data` unchanged
   if (length(widths_list) == 0) {
-    return(data)
+    stop("Nothing was provided to `...`:\n",
+         " * Use formula expressions to define custom column widths",
+         call. = FALSE)
   }
 
   # Extract the `col_names` list from `data/boxh_df`
@@ -162,16 +160,18 @@ cols_widths <- function(data,
   all_formulas <-
     all(
       vapply(
-        seq_along(widths_list),
-        FUN = function(x) rlang::is_formula(widths_list[[x]]),
+        widths_list,
+        FUN = function(width) rlang::is_formula(width),
         FUN.VALUE = logical(1)
       )
     )
 
   if (!all_formulas) {
-    stop("Only two sided formulas should be provided to `...`",
+    stop("Only two-sided formulas should be provided to `...`",
          call. = FALSE)
   }
+
+  columns_used <- NULL
 
   for (width_item in widths_list) {
 
@@ -181,7 +181,10 @@ cols_widths <- function(data,
       resolve_vars(
         var_expr = !!cols,
         data = data
-      )
+      ) %>%
+      base::setdiff(columns_used)
+
+    columns_used <- c(columns_used, columns)
 
     width <-
       width_item %>%
@@ -190,10 +193,6 @@ cols_widths <- function(data,
 
     boxh_df["column_width", ][columns] <- width
   }
-
-  na_widths <- is.na(boxh_df["column_width", ]) %>% which()
-
-  boxh_df["column_width", ][na_widths] <- .others
 
   attr(data, "boxh_df") <- boxh_df
 
