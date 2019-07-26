@@ -57,6 +57,17 @@ get_table_defs <- function(boxh_df) {
 
     widths <- boxh_df["column_width", ] %>% unlist() %>% unname()
 
+    if (any(is.na(widths))) {
+
+      warning("Unset column widths found, setting to `100px`:\n",
+              " * Columns: ", str_catalog(names(boxh_df)[is.na(widths)]), ".\n",
+              "Set these column widths in `cols_width()` using `TRUE ~ px(100)`.",
+              call. = FALSE)
+
+      widths[is.na(widths)] <- px(100)
+    }
+
+    # Assumption is that all width values are `px` values
     total_width <-
       widths %>%
       tidy_gsub("px", "") %>%
@@ -70,8 +81,8 @@ get_table_defs <- function(boxh_df) {
 
     table_colgroups <-
       htmltools::tags$colgroup(
-        lapply(widths, function(widths) {
-          htmltools::tags$col(style = paste0("width: ", widths))
+        lapply(widths, function(width) {
+          htmltools::tags$col(style = paste0("width: ", width))
         })
       )
 
