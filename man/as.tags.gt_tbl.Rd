@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{as.tags.gt_tbl}
 \alias{as.tags.gt_tbl}
-\title{Convert a gt table to ab htmltools tagList}
+\title{Convert a \pkg{gt} table to an \pkg{htmltools} \code{tagList}}
 \usage{
 \method{as.tags}{gt_tbl}(x, ...)
 }
@@ -12,8 +12,9 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This converts a gt table object to an \pkg{htmltools} \code{\link[htmltools:tagList]{htmltools::tagList()}}
-object. The returned object is of the \code{shiny.tag.list} class and using
-\code{as.character()} with that will render the HTML, resulting in a length 1
-character vector that contains the HTML table.
+This converts a \pkg{gt} table object to an \pkg{htmltools}
+\code{\link[htmltools:tagList]{htmltools::tagList()}} object. The returned object is of the \code{shiny.tag.list}
+class and using \code{as.character()} with that will render the HTML, resulting in
+a length 1 character vector that contains the HTML table.
 }
+\keyword{internal}

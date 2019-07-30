@@ -3,6 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{as.tags}
 \alias{vars}
 \alias{starts_with}
 \alias{ends_with}
@@ -18,6 +19,8 @@ below to see their documentation.
 
 \describe{
   \item{dplyr}{\code{\link[dplyr]{vars}}}
+
+  \item{htmltools}{\code{\link[htmltools]{as.tags}}}
 
   \item{tidyselect}{\code{\link[tidyselect]{starts_with}}, \code{\link[tidyselect]{ends_with}}, \code{\link[tidyselect]{contains}}, \code{\link[tidyselect]{matches}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{everything}}}
 }}
