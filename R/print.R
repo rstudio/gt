@@ -41,8 +41,8 @@ knit_print.gt_tbl <- function(x, ...) {
 #'
 #' This converts a gt table object to an \pkg{htmltools} [htmltools::tagList()]
 #' object. The returned object is of the `shiny.tag.list` class and using
-#' `as.character()` with that will result in a length 1 character vector that
-#' contains the HTML table.
+#' `as.character()` with that will render the HTML, resulting in a length 1
+#' character vector that contains the HTML table.
 #'
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.

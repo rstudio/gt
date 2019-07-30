@@ -14,6 +14,6 @@ as.tags.gt_tbl(x, ...)
 \description{
 This converts a gt table object to an \pkg{htmltools} \code{\link[htmltools:tagList]{htmltools::tagList()}}
 object. The returned object is of the \code{shiny.tag.list} class and using
-\code{as.character()} with that will result in a length 1 character vector that
-contains the HTML table.
+\code{as.character()} with that will render the HTML, resulting in a length 1
+character vector that contains the HTML table.
 }
