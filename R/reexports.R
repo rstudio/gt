@@ -1,7 +1,3 @@
-#' @importFrom htmltools as.tags
-#' @export
-htmltools::as.tags
-
 #' @importFrom dplyr vars
 #' @export
 dplyr::vars

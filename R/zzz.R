@@ -103,6 +103,7 @@ gt_default_options <- list(
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
+  register_s3_method("htmltools", "as.tags", "gt_tbl")
 
   op <- options()
   toset <- !(names(gt_default_options) %in% names(op))

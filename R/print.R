@@ -47,9 +47,7 @@ knit_print.gt_tbl <- function(x, ...) {
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.
 #' @keywords internal
-#'
-#' @method as.tags gt_tbl
-#' @export
+#' @noRd
 as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the HTML table
