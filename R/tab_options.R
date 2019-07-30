@@ -279,21 +279,21 @@ tab_options <- function(data,
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #'
 #' @inheritParams fmt_number
-#' @param set The set of sequential figures or characters used to identify the
+#' @param marks The set of sequential figures or characters used to identify the
 #'   footnotes. We can either supply the keyword `"numbers"` (the default,
 #'   indicating that we want numeric marks), the keywords `"letters"` or
 #'   `"LETTERS"` (indicating that we want letters as marks, either lowercase or
 #'   uppercase), or, a vector of character values representing the series of
 #'   marks. A series of marks is recycled when its usage goes beyond the length
 #'   of the set. At each cycle, the marks are simply combined (e.g., `*` -> `**`
-#'   -> `***`). Alternatively, we can use the [symbol_marks()] function, which
+#'   -> `***`). Alternatively, we can use the [footnote_marks()] function, which
 #'   generates a character vector of footnote marks in the form of symbols.
 #'
 #' @examples
 #' # Use `sza` to create a gt table,
 #' # adding three footnotes; call
-#' # `set_footnote_marks()` to specify
-#' # symbols (from `symbol_marks()`)
+#' # `opt_footnote_marks()` to specify
+#' # symbols (from `footnote_marks()`)
 #' # as the set of marks to use
 #' tab_1 <-
 #'   sza %>%
@@ -324,17 +324,20 @@ tab_options <- function(data,
 #'     footnote = "The Lowest SZA.",
 #'     locations = cells_stub(rows = "1200")
 #'   ) %>%
-#'   set_footnote_marks(set = symbol_marks())
+#'   opt_footnote_marks(marks = footnote_marks())
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_set_footnote_marks_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
+#'
+#' @seealso The [footnote_marks()] function for a commonly used set of footnote
+#' symbols.
 #'
 #' @export
-set_footnote_marks <- function(data,
-                               set = NULL) {
+opt_footnote_marks <- function(data,
+                               marks = NULL) {
 
-  if (!is.null(set)) {
-    data <- data %>% tab_options(footnote.glyph = set)
+  if (!is.null(marks)) {
+    data <- data %>% tab_options(footnote.glyph = marks)
   }
 
   data
@@ -342,9 +345,9 @@ set_footnote_marks <- function(data,
 
 #' Footnote marks composed of symbols
 #'
-#' Using `symbol_marks()` allows us to quickly define a set of footnote
+#' Using `footnote_marks()` allows us to quickly define a set of footnote
 #' marks for any footnotes that may be in the table. The use of this function
-#' pairs well with the [set_footnote_marks()] function, used for customizing the
+#' pairs well with the [opt_footnote_marks()] function, used for customizing the
 #' footnote marks (and provides easier access to the `footnote.glyph` argument
 #' of [tab_options()]).
 #'
@@ -353,22 +356,25 @@ set_footnote_marks <- function(data,
 #'   set (the default, with four symbols), or, the `"extended"` set (adds two
 #'   more symbols, making six).
 #'
+#' @seealso The [opt_footnote_marks()] function for easily setting footnote
+#' marks.
+#'
 #' @export
-symbol_marks <- function(type = "standard") {
+footnote_marks <- function(type) {
 
-  # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
-  standard_symbols <- c("\U0002A", "\U02020", "\U02021", "\U000A7")
+  if (length(type) == 1) {
 
-  # (5) Double Vertical Line, (6) Paragraph Sign
-  extension <- c("\U02016", "\U000B6")
+    if (nchar(type) > 1) {
 
-  if (type == "standard") {
-    return(standard_symbols)
+      type <-
+        match.arg(
+          type,
+          c("standard", "extended", "letters", "LETTERS", "numbers")
+        )
+    }
   }
 
-  if (type == "extended") {
-    return(c(standard_symbols, extension))
-  }
+  type
 }
 
 preprocess_tab_option <- function(option, var_name, type) {
@@ -392,9 +398,6 @@ preprocess_tab_option <- function(option, var_name, type) {
                option
              }
            },
-           collapse_comma = {
-             paste0(option, collapse = ",")
-           },
            option
     )
 
@@ -404,9 +407,10 @@ preprocess_tab_option <- function(option, var_name, type) {
            option, len = 1, any.missing = FALSE, .var.name = var_name),
          overflow =,
          px =,
-         value =,
-         collapse_comma = checkmate::assert_character(
-           option, len = 1, any.missing = FALSE, .var.name = var_name)
+         value = checkmate::assert_character(
+           option, len = 1, any.missing = FALSE, .var.name = var_name),
+         values = checkmate::assert_character(
+           option, min.len = 1, any.missing = FALSE, .var.name = var_name),
   )
 
   option

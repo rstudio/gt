@@ -865,18 +865,24 @@ as_locations <- function(locations) {
 footnote_glyphs <- function(x,
                             glyphs) {
 
-  glyphs <- strsplit(glyphs, ",") %>% unlist()
-
   if (identical(glyphs, "numbers")) {
     return(as.character(x))
   }
 
   if (identical(glyphs, "LETTERS")) {
     glyphs <- LETTERS
-  }
-
-  if (identical(glyphs, "letters")) {
+  } else if (identical(glyphs, "letters")) {
     glyphs <- letters
+  } else if (identical(glyphs, "standard")) {
+    # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+    glyphs <- c("\U0002A", "\U02020", "\U02021", "\U000A7")
+  } else if (identical(glyphs, "extended")) {
+    glyphs <- c(
+      # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+      "\U0002A", "\U02020", "\U02021", "\U000A7",
+      # (5) Double Vertical Line, (6) Paragraph Sign
+      "\U02016", "\U000B6"
+    )
   }
 
   glyphs_rep <- floor((x - 1) / length(glyphs)) + 1
@@ -890,6 +896,7 @@ footnote_glyphs <- function(x,
   ) %>%
     unname()
 }
+
 
 #' Determine whether an object is a `gt_tbl`
 #'
