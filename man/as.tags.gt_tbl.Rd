@@ -4,7 +4,7 @@
 \alias{as.tags.gt_tbl}
 \title{Convert a gt table to ab htmltools tagList}
 \usage{
-as.tags.gt_tbl(x, ...)
+\method{as.tags}{gt_tbl}(x, ...)
 }
 \arguments{
 \item{x}{Object to be converted.}

@@ -47,6 +47,7 @@ knit_print.gt_tbl <- function(x, ...) {
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.
 #'
+#' @method as.tags gt_tbl
 #' @export
 as.tags.gt_tbl <- function(x, ...) {
 
