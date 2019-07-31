@@ -7,15 +7,17 @@
 footnote_marks(type)
 }
 \arguments{
-\item{type}{An option for whether the symbol set should be the \code{"standard"}
-set (the default, with four symbols), or, the \code{"extended"} set (adds two
-more symbols, making six).}
+\item{type}{An option for a preset type of footnote marks. This can be a
+traditional symbol set with a \code{"standard"} set (with four symbols), or, the
+\code{"extended"} set (adds two more symbols, making six). We can use lowercase
+\code{"letters"} or uppercase \code{"LETTERS"}. Finally, there is an option for
+using \code{"numbers"}.}
 }
 \description{
-Using \code{footnote_marks()} allows us to quickly define a set of footnote
-marks for any footnotes that may be in the table. The use of this function
-pairs well with the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}} function, used for customizing the
-footnote marks (and provides easier access to the \code{footnote.glyph} argument
+Using \code{footnote_marks()} allows us to quickly define a set of footnote marks
+for any footnotes that may be in the table. The use of this function pairs
+well with the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}} function, used for customizing the
+footnote marks (and provides easier access to the \code{footnote.marks} argument
 of \code{\link[=tab_options]{tab_options()}}).
 }
 \seealso{

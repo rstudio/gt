@@ -62,7 +62,9 @@ tab_1 <-
     footnote = "The Lowest SZA.",
     locations = cells_stub(rows = "1200")
   ) \%>\%
-  opt_footnote_marks(marks = footnote_marks())
+  opt_footnote_marks(
+    marks = footnote_marks("standard")
+  )
 
 }
 \seealso{

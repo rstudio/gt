@@ -156,13 +156,13 @@
 #'   dplyr::filter(ctry_origin == "United Kingdom") %>%
 #'   dplyr::select(mfr, model, year, hp) %>%
 #'   gt() %>%
-#'   tab_options(footnote.glyph = "*") %>%
 #'   tab_footnote(
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_data(
 #'       columns = vars(hp),
 #'       rows = hp == max(hp))
-#'   )
+#'   ) %>%
+#'   opt_footnote_marks(marks = "*")
 #'
 #' # Use `countrypops` to create a gt table; add
 #' # some styling to the summary data cells with

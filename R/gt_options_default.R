@@ -63,7 +63,7 @@ gt_options_default <- function() {
     "footnotes_border_top_width",         TRUE,  "footnote",         "px",      "2px",
     "footnotes_border_top_color",         TRUE,  "footnote",         "value",   "#A8A8A8",
     "footnote_sep",                      FALSE,  "footnote",         "value",   "<br />",
-    "footnote_glyph",                    FALSE,  "footnote",         "values",  "numbers",
+    "footnote_marks" ,                   FALSE,  "footnote",         "values",  "numbers",
     "footnote_font_size",                 TRUE,  "footnote",         "px",      "90%",
     "sourcenote_padding",                 TRUE,  "sourcenote",       "px",      "4px",
     "sourcenote_font_size",               TRUE,  "sourcenote",       "px",      "90%",

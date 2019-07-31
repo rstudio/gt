@@ -502,51 +502,51 @@ test_that("the `as_locations()` function works correctly", {
     as_locations(locations))
 })
 
-test_that("the `footnote_glyphs()` function works correctly", {
+test_that("the `process_footnote_marks()` function works correctly", {
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = as.character(1:10),
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = as.character(1:5)) %>%
+    marks = as.character(1:5)) %>%
     expect_equal(c("1", "2", "3", "4", "5", "11", "22", "33", "44", "55"))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "letters") %>%
+    marks = "letters") %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = letters) %>%
+    marks = letters) %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "LETTERS") %>%
+    marks = "LETTERS") %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = LETTERS) %>%
+    marks = LETTERS) %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = c("⁕", "‖", "†", "§", "¶")) %>%
+    marks = c("⁕", "‖", "†", "§", "¶")) %>%
     expect_equal(
       c("\u2055", "‖", "†", "§", "¶",
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))

@@ -570,11 +570,11 @@ test_that("the `tab_footnote()` function works correctly", {
         "4 Prices in USD.")
     )
 
-  # Expect that the two sets of footnote glyphs (1st set are
+  # Expect that the two sets of footnote marks (1st set are
   # throughout the table, 2nd set are in the footer) are in
   # the correct order
   tbl_html %>%
-    selection_text(selection = "[class='gt_footnote_glyph']") %>%
+    selection_text(selection = "[class='gt_footnote_marks']") %>%
     tidy_gsub("\n          ", "") %>%
     expect_equal(rep(as.character(1:4), 2))
 })
@@ -681,18 +681,18 @@ test_that("the `apply_footnotes_to_summary()` function works correctly", {
   # Expect formatted cell values with HTML footnote markup
   expect_equal(
     applied_footnotes$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
-    c("56,000.00<sup class=\"gt_footnote_glyph\">2</sup>",
-      "140,700.00<sup class=\"gt_footnote_glyph\">3</sup>")
+    c("56,000.00<sup class=\"gt_footnote_marks\">2</sup>",
+      "140,700.00<sup class=\"gt_footnote_marks\">3</sup>")
   )
 
   expect_equal(
     applied_footnotes$summary_df_display_list$Audi$msrp,
-    c("113,233.33<sup class=\"gt_footnote_glyph\">1</sup>", "108,900.00")
+    c("113,233.33<sup class=\"gt_footnote_marks\">1</sup>", "108,900.00")
   )
 
   expect_equal(
     applied_footnotes$summary_df_display_list$BMW$msrp,
-    c("116,066.67<sup class=\"gt_footnote_glyph\">1</sup>", "94,100.00")
+    c("116,066.67<sup class=\"gt_footnote_marks\">1</sup>", "94,100.00")
   )
 
 })

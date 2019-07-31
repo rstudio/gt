@@ -35,7 +35,7 @@ tab_options(data, container.width = NULL, container.height = NULL,
   grand_summary_row.background.color = NULL,
   grand_summary_row.padding = NULL,
   grand_summary_row.text_transform = NULL, footnote.sep = NULL,
-  footnote.glyph = NULL, footnote.font.size = NULL,
+  footnote.marks = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
   sourcenote.padding = NULL, row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL)
@@ -117,14 +117,14 @@ to apply text transformations to the label text in each summary row.}
 \item{footnote.sep}{the separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}
 
-\item{footnote.glyph}{The set of sequential figures or characters used to
-identify the footnotes. We can either supply the keyword \code{"numbers"} (the
-default, indicating that we want numeric glyphs), the keywords \code{"letters"}
-or \code{"LETTERS"} (indicating that we want letters as glyphs, either lowercase
-or uppercase), or, a vector of character values representing the series of
-glyphs. A series of glyphs is recycled when its usage goes beyond the
-length of the set. At each cycle, the glyphs are simply combined (e.g., \code{*}
--> \code{**} -> \code{***}).}
+\item{footnote.marks}{The set of sequential marks used to identify the
+footnotes. We can either supply the keyword \code{"numbers"} (the default,
+indicating that we want numeric marks), the keywords \code{"letters"} or
+\code{"LETTERS"} (indicating that we want letters as footnote marks, either
+lowercase or uppercase), or, a vector of character values representing the
+series of marks. A series of footnote marks is recycled when its usage goes
+beyond the length of the set. At each cycle, the marks are simply combined
+(e.g., \code{*} -> \code{**} -> \code{***}).}
 
 \item{footnote.padding, sourcenote.padding}{The amount of padding to apply to
 the footnote and source note sections.}
@@ -210,14 +210,14 @@ tab_3 <-
     table.background.color = "lightcyan"
   )
 
-# Use letters as the glyphs for footnote
+# Use letters as the marks for footnote
 # references; also, separate footnotes in
 # the footer by spaces instead of newlines
 tab_4 <-
   tab_1 \%>\%
   tab_options(
     footnote.sep = " ",
-    footnote.glyph = letters
+    footnote.marks = letters
   )
 
 # Change the padding of data rows to 5px

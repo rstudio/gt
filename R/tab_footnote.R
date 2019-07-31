@@ -2,21 +2,25 @@
 #'
 #' The `tab_footnote()` function can make it a painless process to add a
 #' footnote to a \pkg{gt} table. There are two components to a footnote: (1) a
-#' glyph that is attached to the targeted cell text, and (2) the footnote text
-#' (that starts with the corresponding glyph) that is placed in the table's
-#' footer area. Each call of `tab_footnote()` will add a different note, and one
-#' or more cells can be targeted via the location helper functions (e.g.,
-#' [cells_data()], [cells_column_labels()], etc.).
+#' footnote mark that is attached to the targeted cell text, and (2) the
+#' footnote text (that starts with the corresponding footnote mark) that is
+#' placed in the table's footer area. Each call of `tab_footnote()` will add a
+#' different note, and one or more cells can be targeted via the location helper
+#' functions (e.g., [cells_data()], [cells_column_labels()], etc.).
 #'
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
 #'
-#' \itemize{ \item `footnote.sep`: allows for a choice of the separator between
+#' \itemize{
+#'   \item `footnote.sep`: allows for a choice of the separator between
 #' consecutive footnotes in the table footer. By default, this is set to a
-#' linebreak. \item `footnote.glyph`: the set of sequential characters or
-#' numbers used to identify the footnotes. \item `footnote.font.size`: the size
-#' of the font used in the footnote section. \item `footnote.padding`: the
-#' amount of padding to apply between the footnote and source note sections in
+#' linebreak.
+#'   \item `footnote.marks`: the set of sequential characters or numbers used to
+#' identify the footnotes.
+#'   \item `footnote.font.size`: the size of the font used in the footnote
+#' section.
+#'   \item `footnote.padding`: the amount of padding to apply between the
+#' footnote and source note sections in
 #' the table footer. }
 #'
 #' @inheritParams fmt_number

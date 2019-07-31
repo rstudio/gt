@@ -1,8 +1,7 @@
-# Transform a footnote glyph to an RTF representation as a superscript
-footnote_glyph_to_rtf <- function(footnote_glyph) {
+# Transform a footnote mark to an RTF representation as a superscript
+footnote_mark_to_rtf <- function(mark) {
 
-  paste0(
-    "{\\super \\i ", footnote_glyph, "}")
+  paste0("{\\super \\i ", mark, "}")
 }
 
 #' @noRd
@@ -39,7 +38,7 @@ create_footnote_component_rtf <- function(footnotes_resolved,
       paste0(
         # "\\f2\\i\\fs14\\fsmilli7333 \\super \\strokec2 ", footnotes_tbl[["fs_id"]],
         # "\\f0\\i0\\fs22 \\nosupersub \\strokec2 ",
-        footnote_glyph_to_rtf(footnotes_tbl[["fs_id"]]),
+        footnote_mark_to_rtf(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>% remove_html(), "\\",
         collapse = separator), "\n")
 

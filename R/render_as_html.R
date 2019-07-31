@@ -15,23 +15,23 @@ render_as_html <- function(data) {
 
     # Composition of HTML -----------------------------------------------------
 
-    # Add footnote glyphs to elements of the table columns
+    # Add footnote marks to elements of the table columns
     boxh_df <-
-      set_footnote_glyphs_columns(
+      set_footnote_marks_columns(
         footnotes_resolved = footnotes_resolved,
         boxh_df = boxh_df,
         output = "html"
       )
 
-    # Add footnote glyphs to the stubhead label
+    # Add footnote marks to the stubhead label
     stubhead <-
-      set_footnote_glyphs_stubhead(
+      set_footnote_marks_stubhead(
         footnotes_resolved = footnotes_resolved,
         stubhead = stubhead,
         output = "html"
       )
 
-    # Add footnote glyphs to the `data` rows
+    # Add footnote marks to the `data` rows
     output_df <-
       apply_footnotes_to_output(
         output_df = output_df,
@@ -39,15 +39,15 @@ render_as_html <- function(data) {
         output = "html"
       )
 
-    # Add footnote glyphs to the stub group cells
+    # Add footnote marks to the stub group cells
     groups_rows_df <-
-      set_footnote_glyphs_stub_groups(
+      set_footnote_marks_stub_groups(
         footnotes_resolved = footnotes_resolved,
         groups_rows_df = groups_rows_df,
         output = "html"
       )
 
-    # Add footnote glyphs to the `summary` cells
+    # Add footnote marks to the `summary` cells
     list_of_summaries <-
       apply_footnotes_to_summary(
         list_of_summaries = list_of_summaries,

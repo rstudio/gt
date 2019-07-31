@@ -690,12 +690,12 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c(TRUE, FALSE))
 
-  # Modify the `footnote.glyph` option
-  tbl_html <- data %>% tab_options(footnote.glyph = "LETTERS")
+  # Modify the `footnote.marks` option
+  tbl_html <- data %>% tab_options(footnote.marks = "LETTERS")
 
   # Compare before and after values
-  c(opts_df_1 %>% opts_df_get("footnote_glyph"),
-    attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("footnote_glyph")
+  c(opts_df_1 %>% opts_df_get("footnote_marks"),
+    attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("footnote_marks")
   ) %>%
     expect_equal(c("numbers", "LETTERS"))
 
@@ -709,7 +709,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c("<br />", " "))
 })
 
-test_that("the `opts_df` getter/setter both function properly", {
+test_that("the `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `opts_df` table
   opts_df <- attr(data, "opts_df", exact = TRUE)

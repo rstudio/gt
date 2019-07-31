@@ -66,14 +66,14 @@
 #'   of padding in each row and in each type of summary row.
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.glyph The set of sequential figures or characters used to
-#'   identify the footnotes. We can either supply the keyword `"numbers"` (the
-#'   default, indicating that we want numeric glyphs), the keywords `"letters"`
-#'   or `"LETTERS"` (indicating that we want letters as glyphs, either lowercase
-#'   or uppercase), or, a vector of character values representing the series of
-#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
-#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
-#'   -> `**` -> `***`).
+#' @param footnote.marks The set of sequential marks used to identify the
+#'   footnotes. We can either supply the keyword `"numbers"` (the default,
+#'   indicating that we want numeric marks), the keywords `"letters"` or
+#'   `"LETTERS"` (indicating that we want letters as footnote marks, either
+#'   lowercase or uppercase), or, a vector of character values representing the
+#'   series of marks. A series of footnote marks is recycled when its usage goes
+#'   beyond the length of the set. At each cycle, the marks are simply combined
+#'   (e.g., `*` -> `**` -> `***`).
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub An option for whether to include the stub
@@ -135,14 +135,14 @@
 #'     table.background.color = "lightcyan"
 #'   )
 #'
-#' # Use letters as the glyphs for footnote
+#' # Use letters as the marks for footnote
 #' # references; also, separate footnotes in
 #' # the footer by spaces instead of newlines
 #' tab_4 <-
 #'   tab_1 %>%
 #'   tab_options(
 #'     footnote.sep = " ",
-#'     footnote.glyph = letters
+#'     footnote.marks = letters
 #'   )
 #'
 #' # Change the padding of data rows to 5px
@@ -223,7 +223,7 @@ tab_options <- function(data,
                         grand_summary_row.padding = NULL,
                         grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
-                        footnote.glyph = NULL,
+                        footnote.marks = NULL,
                         footnote.font.size = NULL,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
@@ -324,7 +324,9 @@ tab_options <- function(data,
 #'     footnote = "The Lowest SZA.",
 #'     locations = cells_stub(rows = "1200")
 #'   ) %>%
-#'   opt_footnote_marks(marks = footnote_marks())
+#'   opt_footnote_marks(
+#'     marks = footnote_marks("standard")
+#'   )
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
@@ -337,7 +339,7 @@ opt_footnote_marks <- function(data,
                                marks = NULL) {
 
   if (!is.null(marks)) {
-    data <- data %>% tab_options(footnote.glyph = marks)
+    data <- data %>% tab_options(footnote.marks = marks)
   }
 
   data
@@ -345,19 +347,21 @@ opt_footnote_marks <- function(data,
 
 #' Footnote marks composed of symbols
 #'
-#' Using `footnote_marks()` allows us to quickly define a set of footnote
-#' marks for any footnotes that may be in the table. The use of this function
-#' pairs well with the [opt_footnote_marks()] function, used for customizing the
-#' footnote marks (and provides easier access to the `footnote.glyph` argument
+#' Using `footnote_marks()` allows us to quickly define a set of footnote marks
+#' for any footnotes that may be in the table. The use of this function pairs
+#' well with the [opt_footnote_marks()] function, used for customizing the
+#' footnote marks (and provides easier access to the `footnote.marks` argument
 #' of [tab_options()]).
 #'
 #' @inheritParams fmt_number
-#' @param type An option for whether the symbol set should be the `"standard"`
-#'   set (the default, with four symbols), or, the `"extended"` set (adds two
-#'   more symbols, making six).
+#' @param type An option for a preset type of footnote marks. This can be a
+#'   traditional symbol set with a `"standard"` set (with four symbols), or, the
+#'   `"extended"` set (adds two more symbols, making six). We can use lowercase
+#'   `"letters"` or uppercase `"LETTERS"`. Finally, there is an option for
+#'   using `"numbers"`.
 #'
 #' @seealso The [opt_footnote_marks()] function for easily setting footnote
-#' marks.
+#'   marks.
 #'
 #' @export
 footnote_marks <- function(type) {
