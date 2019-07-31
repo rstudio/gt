@@ -66,14 +66,16 @@
 #'   of padding in each row and in each type of summary row.
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.marks The set of sequential marks used to identify the
-#'   footnotes. We can either supply the keyword `"numbers"` (the default,
-#'   indicating that we want numeric marks), the keywords `"letters"` or
-#'   `"LETTERS"` (indicating that we want letters as footnote marks, either
-#'   lowercase or uppercase), or, a vector of character values representing the
-#'   series of marks. A series of footnote marks is recycled when its usage goes
-#'   beyond the length of the set. At each cycle, the marks are simply combined
-#'   (e.g., `*` -> `**` -> `***`).
+#' @param footnote.marks The set of sequential marks used to reference and
+#'   identify each of the footnotes. We can supply a vector of that will
+#'   represent the series of marks. The series of footnote marks is recycled
+#'   when its usage goes beyond the length of the set. At each cycle, the marks
+#'   are simply combined (e.g., `*` -> `**` -> `***`). The option exists for
+#'   providing keywords for certain types of footnote marks. The keyword
+#'   `"numbers"` (the default, indicating that we want to use numeric marks). We
+#'   can use lowercase `"letters"` or uppercase `"LETTERS"`. There is the option
+#'   for using a traditional symbol set where `"standard"` provides four
+#'   symbols, and, `"extended"` adds two more symbols, making six.
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub An option for whether to include the stub
@@ -279,15 +281,16 @@ tab_options <- function(data,
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #'
 #' @inheritParams fmt_number
-#' @param marks The set of sequential figures or characters used to identify the
-#'   footnotes. We can either supply the keyword `"numbers"` (the default,
-#'   indicating that we want numeric marks), the keywords `"letters"` or
-#'   `"LETTERS"` (indicating that we want letters as marks, either lowercase or
-#'   uppercase), or, a vector of character values representing the series of
-#'   marks. A series of marks is recycled when its usage goes beyond the length
-#'   of the set. At each cycle, the marks are simply combined (e.g., `*` -> `**`
-#'   -> `***`). Alternatively, we can use the [footnote_marks()] function, which
-#'   generates a character vector of footnote marks in the form of symbols.
+#' @param marks The set of sequential marks used to reference and identify each
+#'   of the footnotes. We can supply a vector of that will represent the series
+#'   of marks. The series of footnote marks is recycled when its usage goes
+#'   beyond the length of the set. At each cycle, the marks are simply combined
+#'   (e.g., `*` -> `**` -> `***`). The option exists for providing keywords for
+#'   certain types of footnote marks. The keyword `"numbers"` (the default,
+#'   indicating that we want to use numeric marks). We can use lowercase
+#'   `"letters"` or uppercase `"LETTERS"`. There is the option for using a
+#'   traditional symbol set where `"standard"` provides four symbols, and,
+#'   `"extended"` adds two more symbols, making six.
 #'
 #' @examples
 #' # Use `sza` to create a gt table,
@@ -324,15 +327,10 @@ tab_options <- function(data,
 #'     footnote = "The Lowest SZA.",
 #'     locations = cells_stub(rows = "1200")
 #'   ) %>%
-#'   opt_footnote_marks(
-#'     marks = footnote_marks("standard")
-#'   )
+#'   opt_footnote_marks(marks = "standard")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
-#'
-#' @seealso The [footnote_marks()] function for a commonly used set of footnote
-#' symbols.
 #'
 #' @export
 opt_footnote_marks <- function(data,
@@ -343,42 +341,6 @@ opt_footnote_marks <- function(data,
   }
 
   data
-}
-
-#' Footnote marks composed of symbols
-#'
-#' Using `footnote_marks()` allows us to quickly define a set of footnote marks
-#' for any footnotes that may be in the table. The use of this function pairs
-#' well with the [opt_footnote_marks()] function, used for customizing the
-#' footnote marks (and provides easier access to the `footnote.marks` argument
-#' of [tab_options()]).
-#'
-#' @inheritParams fmt_number
-#' @param type An option for a preset type of footnote marks. This can be a
-#'   traditional symbol set with a `"standard"` set (with four symbols), or, the
-#'   `"extended"` set (adds two more symbols, making six). We can use lowercase
-#'   `"letters"` or uppercase `"LETTERS"`. Finally, there is an option for
-#'   using `"numbers"`.
-#'
-#' @seealso The [opt_footnote_marks()] function for easily setting footnote
-#'   marks.
-#'
-#' @export
-footnote_marks <- function(type) {
-
-  if (length(type) == 1) {
-
-    if (nchar(type) > 1) {
-
-      type <-
-        match.arg(
-          type,
-          c("standard", "extended", "letters", "LETTERS", "numbers")
-        )
-    }
-  }
-
-  type
 }
 
 preprocess_tab_option <- function(option, var_name, type) {
