@@ -314,8 +314,7 @@ tab_options <- function(data,
 #' # Use `sza` to create a gt table,
 #' # adding three footnotes; call
 #' # `opt_footnote_marks()` to specify
-#' # symbols (from `footnote_marks()`)
-#' # as the set of marks to use
+#' # which footnote marks to use
 #' tab_1 <-
 #'   sza %>%
 #'   dplyr::group_by(latitude, tst) %>%
