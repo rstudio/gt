@@ -272,7 +272,7 @@ gtcars %>%
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
     locations = cells_column_labels(columns = vars(drivetrain))
   ) %>%
-  opt_footnote_marks(marks = letters)
+  opt_footnote_marks(marks = "letters")
 ```
 
 ### `sp500`
