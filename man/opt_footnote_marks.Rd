@@ -22,6 +22,9 @@ traditional symbol set where \code{"standard"} provides four symbols, and,
 }
 \description{
 Alter the footnote marks for any footnotes that may be present in the table.
+Either a vector of marks can be provided (including Unicode characters), or,
+a specific keyword could be used to signify a preset sequence. This function
+serves as a shortcut for using \code{tab_options(footnote.marks = {marks})}
 }
 \section{Figures}{
 

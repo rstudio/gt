@@ -279,6 +279,9 @@ tab_options <- function(data,
 #' Modify the set of footnote marks
 #'
 #' Alter the footnote marks for any footnotes that may be present in the table.
+#' Either a vector of marks can be provided (including Unicode characters), or,
+#' a specific keyword could be used to signify a preset sequence. This function
+#' serves as a shortcut for using `tab_options(footnote.marks = {marks})`
 #'
 #' @inheritParams fmt_number
 #' @param marks The set of sequential marks used to reference and identify each
