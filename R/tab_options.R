@@ -283,17 +283,32 @@ tab_options <- function(data,
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnote.marks = {marks})`
 #'
+#' We can supply a vector of that will represent the series of marks.
+#' The series of footnote marks is recycled when its usage goes beyond the
+#' length of the set. At each cycle, the marks are simply doubled, tripled, and
+#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
+#' for certain types of footnote marks. The keywords are:
+#'
+#' \itemize{
+#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' subject to recycling behavior
+#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' vector
+#' which contains 26 lowercase letters of the Roman alphabet
+#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' which has 26 uppercase letters of the Roman alphabet
+#' \item `"standard"`: symbolic marks, four symbols in total
+#' \item `"extended"`: symbolic marks, extends the standard set by adding two
+#' more symbols, making six
+#' }
+#'
 #' @inheritParams fmt_number
-#' @param marks The set of sequential marks used to reference and identify each
-#'   of the footnotes. We can supply a vector of that will represent the series
-#'   of marks. The series of footnote marks is recycled when its usage goes
-#'   beyond the length of the set. At each cycle, the marks are simply combined
-#'   (e.g., `*` -> `**` -> `***`). The option exists for providing keywords for
-#'   certain types of footnote marks. The keyword `"numbers"` (the default,
-#'   indicating that we want to use numeric marks). We can use lowercase
-#'   `"letters"` or uppercase `"LETTERS"`. There is the option for using a
-#'   traditional symbol set where `"standard"` provides four symbols, and,
-#'   `"extended"` adds two more symbols, making six.
+#' @param marks Either a vector (that will represent the series of marks) or a
+#'   keyword that represents a preset sequence of marks. The valid keywords are:
+#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
+#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
+#'   four symbol marks), and `"extended"` (which adds two more symbols to the
+#'   standard set).
 #'
 #' @examples
 #' # Use `sza` to create a gt table,

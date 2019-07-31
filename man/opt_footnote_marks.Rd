@@ -9,22 +9,38 @@ opt_footnote_marks(data, marks = NULL)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{marks}{The set of sequential marks used to reference and identify each
-of the footnotes. We can supply a vector of that will represent the series
-of marks. The series of footnote marks is recycled when its usage goes
-beyond the length of the set. At each cycle, the marks are simply combined
-(e.g., \code{*} -> \code{**} -> \code{***}). The option exists for providing keywords for
-certain types of footnote marks. The keyword \code{"numbers"} (the default,
-indicating that we want to use numeric marks). We can use lowercase
-\code{"letters"} or uppercase \code{"LETTERS"}. There is the option for using a
-traditional symbol set where \code{"standard"} provides four symbols, and,
-\code{"extended"} adds two more symbols, making six.}
+\item{marks}{Either a vector (that will represent the series of marks) or a
+keyword that represents a preset sequence of marks. The valid keywords are:
+\code{"numbers"} (for numeric marks), \code{"letters"} and \code{"LETTERS"} (for lowercase
+and uppercase alphabetic marks), \code{"standard"} (for a traditional set of
+four symbol marks), and \code{"extended"} (which adds two more symbols to the
+standard set).}
 }
 \description{
 Alter the footnote marks for any footnotes that may be present in the table.
 Either a vector of marks can be provided (including Unicode characters), or,
 a specific keyword could be used to signify a preset sequence. This function
 serves as a shortcut for using \code{tab_options(footnote.marks = {marks})}
+}
+\details{
+We can supply a vector of that will represent the series of marks.
+The series of footnote marks is recycled when its usage goes beyond the
+length of the set. At each cycle, the marks are simply doubled, tripled, and
+so on (e.g., \code{*} -> \code{**} -> \code{***}). The option exists for providing keywords
+for certain types of footnote marks. The keywords are:
+
+\itemize{
+\item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
+subject to recycling behavior
+\item \code{"letters"}: miniscule alphabetic marks, internally uses the \code{letters}
+vector
+which contains 26 lowercase letters of the Roman alphabet
+\item \code{"LETTERS"}: majuscule alphabetic marks, using the \code{LETTERS} vector
+which has 26 uppercase letters of the Roman alphabet
+\item \code{"standard"}: symbolic marks, four symbols in total
+\item \code{"extended"}: symbolic marks, extends the standard set by adding two
+more symbols, making six
+}
 }
 \section{Figures}{
 
