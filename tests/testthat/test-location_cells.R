@@ -101,9 +101,10 @@ test_that("the `cells_column_labels()` function works correctly", {
 
   # Expect the RHS of the second component formula to
   # contain the vector provided
-  helper_cells_column_labels[[2]][2] %>%
+  helper_cells_column_labels[[2]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"group_1\", \"group_2\")")
+    expect_equal(c("c", "group_1", "group_2"))
 
   # Expect an error if values provided to both `columns` and `groups`
   expect_error(
@@ -135,9 +136,10 @@ test_that("the `cells_group()` function works correctly", {
   helper_cells_group[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_group[[1]][2] %>%
+  helper_cells_group[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"group_1\", \"group_2\")")
+    expect_equal(c("c", "group_1", "group_2"))
 })
 
 test_that("the `cells_stub()` function works correctly", {
@@ -163,9 +165,10 @@ test_that("the `cells_stub()` function works correctly", {
   helper_cells_stub[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_stub[[1]][2] %>%
+  helper_cells_stub[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"row_1\", \"row_2\")")
+    expect_equal(c("row_1", "row_2"))
 })
 
 test_that("the `cells_data()` function works correctly", {
@@ -191,9 +194,10 @@ test_that("the `cells_data()` function works correctly", {
   helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]][2] %>%
+  helper_cells_data[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+    expect_equal(c("c", "col_1", "col_2"))
 
   # Create a `cells_data` object with names provided to `columns` and `rows`
   helper_cells_data <-
@@ -222,15 +226,17 @@ test_that("the `cells_data()` function works correctly", {
   helper_cells_data[[2]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]][2] %>%
+  helper_cells_data[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+    expect_equal(c("c", "col_1", "col_2"))
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_data[[2]][2] %>%
+  helper_cells_data[[2]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"row_1\", \"row_2\")")
+    expect_equal(c("c", "row_1", "row_2"))
 })
 
 test_that("the `cells_summary()` function works correctly", {
@@ -267,15 +273,16 @@ test_that("the `cells_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_summary[[1]][2] %>%
-    as.character() %>%
+  helper_cells_summary[[1]] %>%
+    rlang::quo_expr() %>%
     expect_equal("group_a")
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_summary[[2]][2] %>%
+  helper_cells_summary[[2]] %>%
+    rlang::quo_expr() %>%
     as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+    expect_equal(c("c", "col_1", "col_2"))
 
   # Create a `cells_summary` object with
   # columns in `vars()` provided to `columns`
@@ -287,9 +294,10 @@ test_that("the `cells_summary()` function works correctly", {
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_summary[[2]][2] %>%
+  helper_cells_summary[[2]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("vars(col_1, col_2)")
+    expect_equal(c("vars", "col_1", "col_2"))
 })
 
 test_that("the `cells_grand_summary()` function works correctly", {
@@ -322,9 +330,10 @@ test_that("the `cells_grand_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_grand_summary[[1]][2] %>%
+  helper_cells_grand_summary[[1]] %>%
+    rlang::quo_expr() %>%
     as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+    expect_equal(c("c", "col_1", "col_2"))
 
   # Create a `cells_grand_summary` object with
   # columns in `vars()` provided to `columns`
@@ -335,9 +344,10 @@ test_that("the `cells_grand_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_grand_summary[[1]][2] %>%
+  helper_cells_grand_summary[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("vars(col_1, col_2)")
+    expect_equal(c("vars", "col_1", "col_2"))
 })
 
 test_that("the `cells_stubhead()` function works correctly", {
