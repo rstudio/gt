@@ -67,15 +67,16 @@
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnote.marks The set of sequential marks used to reference and
-#'   identify each of the footnotes. We can supply a vector of that will
-#'   represent the series of marks. The series of footnote marks is recycled
-#'   when its usage goes beyond the length of the set. At each cycle, the marks
-#'   are simply combined (e.g., `*` -> `**` -> `***`). The option exists for
-#'   providing keywords for certain types of footnote marks. The keyword
-#'   `"numbers"` (the default, indicating that we want to use numeric marks). We
-#'   can use lowercase `"letters"` or uppercase `"LETTERS"`. There is the option
-#'   for using a traditional symbol set where `"standard"` provides four
-#'   symbols, and, `"extended"` adds two more symbols, making six.
+#'   identify each of the footnotes (same input as the [opt_footnote_marks()]
+#'   function. We can supply a vector that represents the series of footnote
+#'   marks. This vector is recycled when its usage goes beyond the length of the
+#'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
+#'   `***`). The option exists for providing keywords for certain types of
+#'   footnote marks. The keyword `"numbers"` (the default, indicating that we
+#'   want to use numeric marks). We can use lowercase `"letters"` or uppercase
+#'   `"LETTERS"`. There is the option for using a traditional symbol set where
+#'   `"standard"` provides four symbols, and, `"extended"` adds two more
+#'   symbols, making six.
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub An option for whether to include the stub

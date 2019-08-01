@@ -118,15 +118,16 @@ to apply text transformations to the label text in each summary row.}
 the footnotes section. The default value produces a linebreak.}
 
 \item{footnote.marks}{The set of sequential marks used to reference and
-identify each of the footnotes. We can supply a vector of that will
-represent the series of marks. The series of footnote marks is recycled
-when its usage goes beyond the length of the set. At each cycle, the marks
-are simply combined (e.g., \code{*} -> \code{**} -> \code{***}). The option exists for
-providing keywords for certain types of footnote marks. The keyword
-\code{"numbers"} (the default, indicating that we want to use numeric marks). We
-can use lowercase \code{"letters"} or uppercase \code{"LETTERS"}. There is the option
-for using a traditional symbol set where \code{"standard"} provides four
-symbols, and, \code{"extended"} adds two more symbols, making six.}
+identify each of the footnotes (same input as the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}}
+function. We can supply a vector that represents the series of footnote
+marks. This vector is recycled when its usage goes beyond the length of the
+set. At each cycle, the marks are simply combined (e.g., \code{*} -> \code{**} ->
+\code{***}). The option exists for providing keywords for certain types of
+footnote marks. The keyword \code{"numbers"} (the default, indicating that we
+want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
+\code{"LETTERS"}. There is the option for using a traditional symbol set where
+\code{"standard"} provides four symbols, and, \code{"extended"} adds two more
+symbols, making six.}
 
 \item{footnote.padding, sourcenote.padding}{The amount of padding to apply to
 the footnote and source note sections.}
