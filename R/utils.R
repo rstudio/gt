@@ -966,23 +966,13 @@ flatten_list <- function(x) {
 
 #' Prepend a vector
 #'
-#' @param x The vector to be modified.
-#' @param values The values to be included in the modified vector.
-#' @param before A subscript, before which the values are to be appended.
+#' @inheritParams append
 #' @noRd
 prepend_vec <- function(x,
                         values,
-                        before = 1) {
+                        after = 0) {
 
-  n <- length(x)
-
-  stopifnot(before > 0 && before <= n)
-
-  if (before == 1) {
-    c(values, x)
-  } else {
-    c(x[1:(before - 1)], values, x[before:n])
-  }
+  append(x, values, after = after)
 }
 
 #' Convert a single-length vector to a repeating list of lists
