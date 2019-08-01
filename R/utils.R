@@ -964,6 +964,17 @@ flatten_list <- function(x) {
   x %>% unlist(recursive = FALSE)
 }
 
+#' Prepend a vector
+#'
+#' @inheritParams append
+#' @noRd
+prepend_vec <- function(x,
+                        values,
+                        after = 0) {
+
+  append(x, values, after = after)
+}
+
 #' Convert a single-length vector to a repeating list of lists
 #'
 #' @noRd

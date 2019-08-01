@@ -77,11 +77,11 @@ create_columns_component_l <- function(boxh_df,
   #   caption or nothing
   if (stub_available && length(stubhead) > 0) {
 
-    headings <- rlang::prepend(headings, stubhead$label)
+    headings <- prepend_vec(headings, stubhead$label)
 
   } else if (stub_available) {
 
-    headings <- rlang::prepend(headings, "")
+    headings <- prepend_vec(headings, "")
   }
 
   table_col_headings <-
