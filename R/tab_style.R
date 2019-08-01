@@ -172,7 +172,7 @@ set_style <- function(loc, data, style) {
 
 set_style.cells_title <- function(loc, data, style) {
 
-  if ((loc$groups %>% as.character())[-1] == "title") {
+  if ((loc$groups %>% rlang::as_name()) == "title") {
 
     attr(data, "styles_df") <-
       add_location_row_styles(
@@ -182,7 +182,7 @@ set_style.cells_title <- function(loc, data, style) {
         rownum = NA_character_, styles = list(style)
       )
 
-  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
+  } else if ((loc$groups  %>% rlang::as_name()) == "subtitle") {
 
     attr(data, "styles_df") <-
       add_location_row_styles(
@@ -229,7 +229,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   } else if (!is.null(loc$groups)) {
 
-    groups <- (loc$groups %>% as.character())[-1]
+    groups <- loc$groups %>% rlang::as_name()
 
     attr(data, "styles_df") <-
       add_location_row_styles(
@@ -245,7 +245,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_group <- function(loc, data, style) {
 
-  groups <- (loc$groups %>% as.character())[-1]
+  groups <- loc$groups %>% rlang::as_name()
 
   attr(data, "styles_df") <-
     add_location_row_styles(
