@@ -6,6 +6,12 @@ cache:
   packages: true
 warnings_are_errors: false
 
+# This library is required for installing the `rgl` pkg dependency
+addons:
+  apt:
+    packages:
+    - libglu1-mesa-dev
+
 r:
   - oldrel
   - release

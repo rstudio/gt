@@ -88,7 +88,7 @@ set_footnote <- function(loc, data, footnote) {
 
 set_footnote.cells_title <- function(loc, data, footnote) {
 
-  if ((loc$groups %>% as.character())[-1] == "title") {
+  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
 
     attr(data, "footnotes_df") <-
       add_location_row_footnotes(
@@ -98,7 +98,7 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         rownum = NA_character_, footnotes = footnote
       )
 
-  } else if ((loc$groups %>% as.character())[-1] == "subtitle") {
+  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
 
     attr(data, "footnotes_df") <-
       add_location_row_footnotes(
@@ -145,7 +145,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   } else if (!is.null(loc$groups)) {
 
-    groups <- (loc$groups %>% as.character())[-1]
+    groups <- loc$groups %>% rlang::eval_tidy()
 
     attr(data, "footnotes_df") <-
       add_location_row_footnotes(
@@ -161,7 +161,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
 set_footnote.cells_group <- function(loc, data, footnote) {
 
-  groups <- (loc$groups %>% as.character())[-1]
+  groups <- loc$groups %>% rlang::eval_tidy()
 
   attr(data, "footnotes_df") <-
     add_location_row_footnotes(
