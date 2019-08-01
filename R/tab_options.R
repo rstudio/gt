@@ -394,7 +394,7 @@ preprocess_tab_option <- function(option, var_name, type) {
          value = checkmate::assert_character(
            option, len = 1, any.missing = FALSE, .var.name = var_name),
          values = checkmate::assert_character(
-           option, min.len = 1, any.missing = FALSE, .var.name = var_name),
+           option, min.len = 1, any.missing = FALSE, .var.name = var_name)
   )
 
   option
