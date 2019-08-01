@@ -66,14 +66,17 @@
 #'   of padding in each row and in each type of summary row.
 #' @param footnote.sep the separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.glyph The set of sequential figures or characters used to
-#'   identify the footnotes. We can either supply the keyword `"numbers"` (the
-#'   default, indicating that we want numeric glyphs), the keywords `"letters"`
-#'   or `"LETTERS"` (indicating that we want letters as glyphs, either lowercase
-#'   or uppercase), or, a vector of character values representing the series of
-#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
-#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
-#'   -> `**` -> `***`).
+#' @param footnote.marks The set of sequential marks used to reference and
+#'   identify each of the footnotes (same input as the [opt_footnote_marks()]
+#'   function. We can supply a vector that represents the series of footnote
+#'   marks. This vector is recycled when its usage goes beyond the length of the
+#'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
+#'   `***`). The option exists for providing keywords for certain types of
+#'   footnote marks. The keyword `"numbers"` (the default, indicating that we
+#'   want to use numeric marks). We can use lowercase `"letters"` or uppercase
+#'   `"LETTERS"`. There is the option for using a traditional symbol set where
+#'   `"standard"` provides four symbols, and, `"extended"` adds two more
+#'   symbols, making six.
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
 #' @param row.striping.include_stub An option for whether to include the stub
@@ -135,14 +138,14 @@
 #'     table.background.color = "lightcyan"
 #'   )
 #'
-#' # Use letters as the glyphs for footnote
+#' # Use letters as the marks for footnote
 #' # references; also, separate footnotes in
 #' # the footer by spaces instead of newlines
 #' tab_4 <-
 #'   tab_1 %>%
 #'   tab_options(
 #'     footnote.sep = " ",
-#'     footnote.glyph = letters
+#'     footnote.marks = letters
 #'   )
 #'
 #' # Change the padding of data rows to 5px
@@ -223,7 +226,7 @@ tab_options <- function(data,
                         grand_summary_row.padding = NULL,
                         grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
-                        footnote.glyph = NULL,
+                        footnote.marks = NULL,
                         footnote.font.size = NULL,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
@@ -274,6 +277,90 @@ tab_options <- function(data,
   data
 }
 
+#' Modify the set of footnote marks
+#'
+#' Alter the footnote marks for any footnotes that may be present in the table.
+#' Either a vector of marks can be provided (including Unicode characters), or,
+#' a specific keyword could be used to signify a preset sequence. This function
+#' serves as a shortcut for using `tab_options(footnote.marks = {marks})`
+#'
+#' We can supply a vector of that will represent the series of marks.
+#' The series of footnote marks is recycled when its usage goes beyond the
+#' length of the set. At each cycle, the marks are simply doubled, tripled, and
+#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
+#' for certain types of footnote marks. The keywords are:
+#'
+#' \itemize{
+#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' subject to recycling behavior
+#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' vector
+#' which contains 26 lowercase letters of the Roman alphabet
+#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' which has 26 uppercase letters of the Roman alphabet
+#' \item `"standard"`: symbolic marks, four symbols in total
+#' \item `"extended"`: symbolic marks, extends the standard set by adding two
+#' more symbols, making six
+#' }
+#'
+#' @inheritParams fmt_number
+#' @param marks Either a vector (that will represent the series of marks) or a
+#'   keyword that represents a preset sequence of marks. The valid keywords are:
+#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
+#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
+#'   four symbol marks), and `"extended"` (which adds two more symbols to the
+#'   standard set).
+#'
+#' @examples
+#' # Use `sza` to create a gt table,
+#' # adding three footnotes; call
+#' # `opt_footnote_marks()` to specify
+#' # which footnote marks to use
+#' tab_1 <-
+#'   sza %>%
+#'   dplyr::group_by(latitude, tst) %>%
+#'   dplyr::summarize(
+#'     SZA.Max = max(sza),
+#'     SZA.Min = min(sza, na.rm = TRUE)
+#'   ) %>%
+#'   dplyr::ungroup() %>%
+#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
+#'   dplyr::select(-latitude) %>%
+#'   gt(rowname_col = "tst") %>%
+#'   cols_split_delim(".") %>%
+#'   fmt_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) %>%
+#'   tab_stubhead("TST") %>%
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_labels(groups = "SZA")
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) %>%
+#'   opt_footnote_marks(marks = "standard")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
+#'
+#' @export
+opt_footnote_marks <- function(data,
+                               marks = NULL) {
+
+  if (!is.null(marks)) {
+    data <- data %>% tab_options(footnote.marks = marks)
+  }
+
+  data
+}
+
 preprocess_tab_option <- function(option, var_name, type) {
 
   # Perform pre-processing on the option depending on `type`
@@ -295,9 +382,6 @@ preprocess_tab_option <- function(option, var_name, type) {
                option
              }
            },
-           collapse_comma = {
-             paste0(option, collapse = ",")
-           },
            option
     )
 
@@ -307,9 +391,10 @@ preprocess_tab_option <- function(option, var_name, type) {
            option, len = 1, any.missing = FALSE, .var.name = var_name),
          overflow =,
          px =,
-         value =,
-         collapse_comma = checkmate::assert_character(
-           option, len = 1, any.missing = FALSE, .var.name = var_name)
+         value = checkmate::assert_character(
+           option, len = 1, any.missing = FALSE, .var.name = var_name),
+         values = checkmate::assert_character(
+           option, min.len = 1, any.missing = FALSE, .var.name = var_name)
   )
 
   option

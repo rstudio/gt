@@ -245,20 +245,21 @@ as_rtf <- function(data) {
   # The styles table is not yet available for RTF
   styles_resolved <- NULL
 
-  # Add footnote glyphs to elements of the table columns
+  # Add footnote marks to elements of the table columns
   boxh_df <-
-    set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "rtf")
+    set_footnote_marks_columns(footnotes_resolved, boxh_df, output = "rtf")
 
-  # Add footnote glyphs to the `data` rows
+  # Add footnote marks to the `data` rows
   output_df <-
     apply_footnotes_to_output(output_df, footnotes_resolved, output = "rtf")
 
-  # Add footnote glyphs to stub group title elements
+  # Add footnote marks to stub group title elements
   groups_rows_df <-
-    set_footnote_glyphs_stub_groups(
-      footnotes_resolved, groups_rows_df, output = "rtf")
+    set_footnote_marks_stub_groups(
+      footnotes_resolved, groups_rows_df, output = "rtf"
+    )
 
-  # Add footnote glyphs to the `summary` rows
+  # Add footnote marks to the `summary` rows
   list_of_summaries <-
     apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
 

@@ -42,15 +42,15 @@ as_latex <- function(data) {
   # Use LaTeX-specific builders to generate the Latex table code
   with(built_data, {
 
-    # Add footnote glyphs to elements of the table columns
+    # Add footnote marks to elements of the table columns
     boxh_df <-
-      set_footnote_glyphs_columns(
+      set_footnote_marks_columns(
         footnotes_resolved = footnotes_resolved,
         boxh_df = boxh_df,
         output = "latex"
       )
 
-    # Add footnote glyphs to the `data` rows
+    # Add footnote marks to the `data` rows
     output_df <-
       apply_footnotes_to_output(
         output_df = output_df,
@@ -58,15 +58,15 @@ as_latex <- function(data) {
         output = "latex"
       )
 
-    # Add footnote glyphs to stub group title elements
+    # Add footnote marks to stub group title elements
     groups_rows_df <-
-      set_footnote_glyphs_stub_groups(
+      set_footnote_marks_stub_groups(
         footnotes_resolved = footnotes_resolved,
         groups_rows_df = groups_rows_df,
         output = "latex"
       )
 
-    # Add footnote glyphs to the `summary` rows
+    # Add footnote marks to the `summary` rows
     list_of_summaries <-
       apply_footnotes_to_summary(
         list_of_summaries = list_of_summaries,

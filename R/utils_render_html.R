@@ -1,14 +1,9 @@
-#' Transform a footnote glyph to an HTML representation
+#' Transform a footnote mark to an HTML representation
 #'
 #' @noRd
-footnote_glyph_to_html <- function(footnote_glyph) {
+footnote_mark_to_html <- function(mark) {
 
-  htmltools::tagList(
-    htmltools::tags$sup(
-      class = "gt_footnote_glyph",
-      footnote_glyph
-    )
-  ) %>%
+  htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark)) %>%
     as.character()
 }
 
@@ -33,15 +28,15 @@ cell_style_to_html.default <- function(style) {
   stop("Implement `cell_style_to_html()` for the object above.", call. = FALSE)
 }
 
-#' For a given location, reduce the footnote glyphs to a single string
+#' For a given location, reduce the footnote marks to a single string
 #'
 #' @param fn_tbl The table containing all of the resolved footnote information.
 #' @param locname The location name for the footnotes.
-#' @param delimiter The delimiter to use for the coalesced footnote glyphs.
+#' @param delimiter The delimiter to use for the coalesced footnote marks.
 #' @noRd
-coalesce_glyphs <- function(fn_tbl,
-                            locname,
-                            delimiter = ",") {
+coalesce_marks <- function(fn_tbl,
+                           locname,
+                           delimiter = ",") {
 
   locname_enquo <- rlang::enquo(locname)
 
@@ -117,22 +112,22 @@ create_heading_component <- function(heading,
     return("")
   }
 
-  # Get the footnote glyphs for the title
+  # Get the footnote marks for the title
   if ("title" %in% footnotes_resolved$locname) {
 
-    footnote_title_glyphs <-
+    footnote_title_marks <-
       footnotes_resolved %>%
-      coalesce_glyphs(locname = "title")
+      coalesce_marks(locname = "title")
 
-    footnote_title_glyphs <-
+    footnote_title_marks <-
       switch(output,
-             html = footnote_glyph_to_html(footnote_title_glyphs$fs_id_c),
-             latex = footnote_glyph_to_latex(footnote_title_glyphs$fs_id_c),
-             rtf = footnote_glyph_to_rtf(footnote_title_glyphs$fs_id_c),
+             html = footnote_mark_to_html(footnote_title_marks$fs_id_c),
+             latex = footnote_mark_to_latex(footnote_title_marks$fs_id_c),
+             rtf = footnote_mark_to_rtf(footnote_title_marks$fs_id_c),
              stop("The context (`", output, "`) is invalid"))
 
   } else {
-    footnote_title_glyphs <- ""
+    footnote_title_marks <- ""
   }
 
   # Get the style attrs for the title
@@ -154,22 +149,22 @@ create_heading_component <- function(heading,
     title_styles <- NA_character_
   }
 
-  # Get the footnote glyphs for the subtitle
+  # Get the footnote marks for the subtitle
   if (subtitle_defined & "title" %in% footnotes_resolved$locname) {
 
-    footnote_subtitle_glyphs <-
+    footnote_subtitle_marks <-
       footnotes_resolved %>%
-      coalesce_glyphs(locname = "subtitle")
+      coalesce_marks(locname = "subtitle")
 
-    footnote_subtitle_glyphs <-
+    footnote_subtitle_marks <-
       switch(output,
-             html = footnote_glyph_to_html(footnote_subtitle_glyphs$fs_id_c),
-             latex = footnote_glyph_to_latex(footnote_subtitle_glyphs$fs_id_c),
-             rtf = footnote_glyph_to_rtf(footnote_subtitle_glyphs$fs_id_c),
+             html = footnote_mark_to_html(footnote_subtitle_marks$fs_id_c),
+             latex = footnote_mark_to_latex(footnote_subtitle_marks$fs_id_c),
+             rtf = footnote_mark_to_rtf(footnote_subtitle_marks$fs_id_c),
              stop("The context (`", output, "`) is invalid"))
 
   } else {
-    footnote_subtitle_glyphs <- ""
+    footnote_subtitle_marks <- ""
   }
 
   # Get the style attrs for the subtitle
@@ -210,7 +205,7 @@ create_heading_component <- function(heading,
           class = paste(title_classes, collapse = " "),
           style = title_styles,
           htmltools::HTML(
-            heading$title %>% paste_right(footnote_title_glyphs)
+            heading$title %>% paste_right(footnote_title_marks)
           )
         )
       )
@@ -224,7 +219,7 @@ create_heading_component <- function(heading,
             class = paste(subtitle_classes, collapse = " "),
             style = subtitle_styles,
             htmltools::HTML(
-              heading$subtitle %>% paste_right(footnote_subtitle_glyphs)
+              heading$subtitle %>% paste_right(footnote_subtitle_marks)
             )
           )
         )
@@ -243,14 +238,14 @@ create_heading_component <- function(heading,
   if (output == "latex") {
 
     title_row <-
-      paste0(heading$title, footnote_title_glyphs) %>%
+      paste0(heading$title, footnote_title_marks) %>%
       paste_left("\\large ") %>%
       paste_right("\\\\ \n")
 
     if (subtitle_defined) {
 
       subtitle_row <-
-        paste0(heading$subtitle, footnote_subtitle_glyphs) %>%
+        paste0(heading$subtitle, footnote_subtitle_marks) %>%
         paste_left("\\small ") %>%
         paste_right("\\\\ \n")
 
@@ -269,16 +264,18 @@ create_heading_component <- function(heading,
 
       heading_component <-
         rtf_title_subtitle(
-          title = paste0(remove_html(heading$title), footnote_title_glyphs),
-          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_glyphs),
-          n_cols = n_cols)
+          title = paste0(remove_html(heading$title), footnote_title_marks),
+          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_marks),
+          n_cols = n_cols
+        )
 
     } else {
 
       heading_component <-
         rtf_title(
-          title = paste0(remove_html(heading$heading), footnote_title_glyphs),
-          n_cols = n_cols)
+          title = paste0(remove_html(heading$heading), footnote_title_marks),
+          n_cols = n_cols
+        )
     }
   }
 
@@ -870,7 +867,7 @@ create_footnote_component_h <- function(footnotes_resolved,
             htmltools::tags$p(
               class = "gt_footnote",
               htmltools::tags$sup(
-                class = "gt_footnote_glyph",
+                class = "gt_footnote_marks",
                 htmltools::tags$em(
                   x
                 )
