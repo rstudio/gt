@@ -38,8 +38,8 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'subtitle'
-  helper_cells_title[[1]][2] %>%
-    as.character() %>%
+  helper_cells_title[[1]] %>%
+    rlang::quo_get_expr() %>%
     expect_equal("subtitle")
 })
 
@@ -70,9 +70,10 @@ test_that("the `cells_column_labels()` function works correctly", {
   is.null(helper_cells_column_labels[[2]]) %>% expect_true()
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_column_labels[[1]][2] %>%
+  helper_cells_column_labels[[1]] %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+    expect_equal(c("c", "col_1", "col_2"))
 
   # Create a `cells_column_labels` object with names provided to `groups`
   helper_cells_column_labels <-
