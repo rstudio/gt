@@ -200,9 +200,7 @@ resolve_data_vals_idx <- function(var_expr,
     # Define function to get an expression from a
     # quosure and translate it to a character vector
     quo_get_expr_char <- function(x) {
-      x %>%
-        rlang::quo_get_expr() %>%
-        as.character()
+      rlang::as_name(x)
     }
 
     resolved <- vapply(resolved, quo_get_expr_char, character(1))
