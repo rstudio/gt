@@ -274,13 +274,13 @@ test_that("the `cells_summary()` function works correctly", {
   # Expect the RHS of the first component formula to contain
   # the vector provided
   helper_cells_summary[[1]] %>%
-    rlang::quo_expr() %>%
+    rlang::quo_squash() %>%
     expect_equal("group_a")
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
   helper_cells_summary[[2]] %>%
-    rlang::quo_expr() %>%
+    rlang::quo_squash() %>%
     as.character() %>%
     expect_equal(c("c", "col_1", "col_2"))
 
@@ -331,7 +331,7 @@ test_that("the `cells_grand_summary()` function works correctly", {
   # Expect the RHS of the first component formula to contain
   # the vector provided
   helper_cells_grand_summary[[1]] %>%
-    rlang::quo_expr() %>%
+    rlang::quo_get_expr() %>%
     as.character() %>%
     expect_equal(c("c", "col_1", "col_2"))
 
