@@ -161,7 +161,17 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
 set_footnote.cells_group <- function(loc, data, footnote) {
 
-  groups <- (loc$groups %>% as.character())[-1]
+  row_groups <- attr(data, "arrange_groups")$groups
+
+  # Resolve row groups
+  resolved_row_groups_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!loc$groups,
+      data = NULL,
+      vals = row_groups
+    )
+
+  groups <- row_groups[resolved_row_groups_idx]
 
   attr(data, "footnotes_df") <-
     add_location_row_footnotes(
