@@ -325,7 +325,7 @@ Let's bring it all together by putting together all the statements we developed 
     b. identifying the car with the highest horsepower
     c. stating the currency of the MSRP
 
-The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the glyph should be attached. It will handle the placement of the note glyph and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?gt::location_cells`.
+The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?location_cells`.
 
 What `cells_data()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
 

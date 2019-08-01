@@ -4,11 +4,10 @@ latex_packages <- function() {
   c("amsmath", "booktabs", "caption", "longtable")
 }
 
-# Transform a footnote glyph to a LaTeX representation as a superscript
-footnote_glyph_to_latex <- function(footnote_glyph) {
+# Transform a footnote mark to a LaTeX representation as a superscript
+footnote_mark_to_latex <- function(mark) {
 
-  paste0(
-    "\\textsuperscript{", footnote_glyph, "}")
+  paste0("\\textsuperscript{", mark, "}")
 }
 
 #' @noRd
@@ -229,7 +228,7 @@ create_footnote_component_l <- function(footnotes_resolved,
       "\\vspace{-5mm}\n",
       "\\begin{minipage}{\\linewidth}\n",
       paste0(
-        footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
+        footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>%
           unescape_html() %>%
           markdown_to_latex(), " \\\\ \n", collapse = ""),

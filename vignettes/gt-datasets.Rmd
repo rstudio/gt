@@ -233,7 +233,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 6. capitalize the `drivetrain` text
 7. format the prices as USD currency with commas and no decimal places shown
 8. relabel the column headings to provide nicer labels
-9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote glyphs are lowercase letters 
+9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote marks are lowercase letters 
 
 ```{r gtcars}
 # Create a gt table based on a preprocessed `gtcars`
@@ -259,6 +259,11 @@ gtcars %>%
     decimals = 0,
     use_seps = TRUE
   ) %>%
+  cols_label(
+    mfr = "Car",
+    drivetrain = "Drivetrain",
+    msrp = "MSRP"
+  ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
     locations = cells_column_labels(columns = vars(msrp))
@@ -267,12 +272,7 @@ gtcars %>%
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
     locations = cells_column_labels(columns = vars(drivetrain))
   ) %>%
-  tab_options(footnote.glyph = letters) %>%
-  cols_label(
-    mfr = "Car",
-    drivetrain = "Drivetrain",
-    msrp = "MSRP"
-  )
+  opt_footnote_marks(marks = "letters")
 ```
 
 ### `sp500`

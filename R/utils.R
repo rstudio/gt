@@ -859,37 +859,44 @@ as_locations <- function(locations) {
   locations
 }
 
-#' Create a vector of glyphs to use for footnotes
+#' Create a vector of marks to use for footnotes
 #'
 #' @noRd
-footnote_glyphs <- function(x,
-                            glyphs) {
+process_footnote_marks <- function(x,
+                                   marks) {
 
-  glyphs <- strsplit(glyphs, ",") %>% unlist()
-
-  if (identical(glyphs, "numbers")) {
+  if (identical(marks, "numbers")) {
     return(as.character(x))
   }
 
-  if (identical(glyphs, "LETTERS")) {
-    glyphs <- LETTERS
+  if (identical(marks, "LETTERS")) {
+    marks <- LETTERS
+  } else if (identical(marks, "letters")) {
+    marks <- letters
+  } else if (identical(marks, "standard")) {
+    # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+    marks <- c("\U0002A", "\U02020", "\U02021", "\U000A7")
+  } else if (identical(marks, "extended")) {
+    marks <- c(
+      # (1) Asterisk, (2) Dagger, (3) Double Dagger, (4) Section Sign
+      "\U0002A", "\U02020", "\U02021", "\U000A7",
+      # (5) Double Vertical Line, (6) Paragraph Sign
+      "\U02016", "\U000B6"
+    )
   }
 
-  if (identical(glyphs, "letters")) {
-    glyphs <- letters
-  }
+  marks_rep <- floor((x - 1) / length(marks)) + 1
 
-  glyphs_rep <- floor((x - 1) / length(glyphs)) + 1
-
-  glyphs_val <- glyphs[(x - 1) %% length(glyphs) + 1]
+  marks_val <- marks[(x - 1) %% length(marks) + 1]
 
   mapply(
-    glyphs_val, glyphs_rep,
+    marks_val, marks_rep,
     FUN = function(val_i, rep_i) {
       paste(rep(val_i, rep_i), collapse = "")}
   ) %>%
     unname()
 }
+
 
 #' Determine whether an object is a `gt_tbl`
 #'
