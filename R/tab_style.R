@@ -245,7 +245,17 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_group <- function(loc, data, style) {
 
-  groups <- loc$groups %>% rlang::eval_tidy()
+  row_groups <- attr(data, "arrange_groups")$groups
+
+  # Resolve row groups
+  resolved_row_groups_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!loc$groups,
+      data = NULL,
+      vals = row_groups
+    )
+
+  groups <- row_groups[resolved_row_groups_idx]
 
   attr(data, "styles_df") <-
     add_location_row_styles(
