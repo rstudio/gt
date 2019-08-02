@@ -263,7 +263,8 @@ tab_spanner <- function(data,
   # Get the columns supplied in `columns` as a character vector
   column_names <- resolve_vars(var_expr = !!columns, data = data)
 
-  # Get the `grp_labels` list from `data`
+  # Get the `boxh_df` and `grp_labels` from `data`
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
   # Apply the `label` value to the the `grp_labels` list
@@ -278,8 +279,9 @@ tab_spanner <- function(data,
   # the spanner heading
   if (gather && length(column_names) > 1) {
 
-    # Extract the internal `boxh_df` table
-    boxh_df <- attr(data, "boxh_df", exact = TRUE)
+    boxh_df["group_label", column_names] <- label
+
+    attr(data, "boxh_df") <- boxh_df
 
     # Get the sequence of columns available in `boxh_df`
     all_columns <- colnames(boxh_df)
@@ -301,6 +303,12 @@ tab_spanner <- function(data,
         columns = columns_sorted[-1],
         after = columns_sorted[1]
       )
+
+  } else {
+
+    boxh_df["group_label", column_names] <- label
+
+    attr(data, "boxh_df") <- boxh_df
   }
 
   data
