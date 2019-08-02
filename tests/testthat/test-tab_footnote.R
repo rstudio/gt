@@ -57,6 +57,8 @@ data_2 <-
   dplyr::ungroup() %>%
   dplyr::select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
+  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
+  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp)) %>%
   tab_footnote(
     footnote = "Prices in USD.",
     locations = cells_column_labels(columns = vars(msrp))
@@ -67,14 +69,12 @@ data_2 <-
   ) %>%
   tab_footnote(
     footnote = "The most important details.",
-    locations = cells_column_labels(groups = "specs and pricing")
+    locations = cells_column_labels(groups = starts_with("specs"))
   ) %>%
   tab_footnote(
     footnote = "German cars only.",
-    locations = cells_column_labels(groups = "make and model")
-  ) %>%
-  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
-  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp))
+    locations = cells_column_labels(groups = starts_with("make"))
+  )
 
 
 # Create a table from `gtcars` that has footnotes
