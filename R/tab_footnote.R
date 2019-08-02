@@ -149,7 +149,9 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   } else if (!is.null(loc$groups)) {
 
-    groups <- loc$groups %>% rlang::eval_tidy()
+    resolved <- resolve_cells_column_spanners(data = data, object = loc)
+
+    groups <- resolved$spanners
 
     attr(data, "footnotes_df") <-
       add_location_row_footnotes(
