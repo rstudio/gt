@@ -745,11 +745,19 @@ cols_split_delim <- function(data,
   # Escape any characters that require escaping
   delim <- gsub("\\.", "\\\\.", delim)
 
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+  grp_labels <- attr(data, "grp_labels", exact = TRUE)
+  col_labels <- attr(data, "col_labels", exact = TRUE)
+
   # Get all of the columns in the dataset
-  all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
+  all_cols <- colnames(boxh_df)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_vars(
+      var_expr = !!columns,
+      data = data
+    )
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
@@ -763,16 +771,24 @@ cols_split_delim <- function(data,
 
   colnames_has_delim <- grepl(paste0("[^.]", delim, "[^.]"), colnames)
 
-  if (any(colnames_has_delim)) {
-
-    split_colnames <- strsplit(colnames[colnames_has_delim], delim)
-
-    attr(data, "grp_labels")[colnames[colnames_has_delim]] <-
-      vapply(split_colnames, `[[`, character(1), 1)
-
-    attr(data, "col_labels")[colnames[colnames_has_delim]] <-
-      vapply(split_colnames, `[[`, character(1), 2)
+  if (!any(colnames_has_delim)) {
+    return(data)
   }
+
+  split_colnames <- strsplit(colnames[colnames_has_delim], delim)
+
+  grp_labels[colnames[colnames_has_delim]] <-
+    vapply(split_colnames, `[[`, character(1), 1)
+
+  col_labels[colnames[colnames_has_delim]] <-
+    vapply(split_colnames, `[[`, character(1), 2)
+
+  boxh_df["group_label", colnames[colnames_has_delim]] <-
+    vapply(split_colnames, `[[`, character(1), 1)
+
+  attr(data, "boxh_df") <- boxh_df
+  attr(data, "grp_labels") <- grp_labels
+  attr(data, "col_labels") <- col_labels
 
   data
 }
