@@ -1003,7 +1003,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' @export
 pct <- function(x) {
 
-  if (!inherits(x, "numeric") && !inherits(x, "integer")) {
+  if (mode(x) != "numeric") {
     stop("The supplied value must be numeric", call. = FALSE)
   }
 
@@ -1018,7 +1018,7 @@ pct <- function(x) {
 #' @export
 px <- function(x) {
 
-  if (!inherits(x, "numeric") && !inherits(x, "integer")) {
+  if (mode(x) != "numeric") {
     stop("The supplied value must be numeric", call. = FALSE)
   }
 
