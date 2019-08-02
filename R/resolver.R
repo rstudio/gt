@@ -113,6 +113,47 @@ resolve_cells_column_labels <- function(data,
   cells_resolved
 }
 
+#' Resolve the spanner values in the `cells_column_labels` object once it
+#' has access to the `data` object
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_column_labels()`
+#'   function.
+#' @noRd
+resolve_cells_column_spanners <- function(data,
+                                          object) {
+
+  #
+  # Resolution of spanners as column spanner names
+  #
+
+  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+
+  spanner_labels <-
+    boxh_df["group_label", ] %>%
+    unlist() %>%
+    unname() %>%
+    .[!is.na(.)] %>%
+    unique()
+
+  resolved_spanners_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!object$groups,
+      data = NULL,
+      vals = spanner_labels
+    )
+
+  resolved_spanners <- spanner_labels[resolved_spanners_idx]
+
+  # Create a list object
+  cells_resolved <- list(spanners = resolved_spanners)
+
+  # Apply the `columns_cells_resolved` class
+  attr(cells_resolved, "class") <- "columns_spanners_resolved"
+
+  cells_resolved
+}
+
 #' Resolve expressions to obtain column indices
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
