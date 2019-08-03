@@ -435,31 +435,31 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the stubhead label is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: blue; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #0000FFFF; color: white;']") %>%
     rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left]") %>%
     expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: yellow;']") %>%
+    rvest::html_nodes("[style='background-color: #FFFF00FF;']") %>%
     rvest::html_text("[class='gt_row gt_right']") %>%
     expect_equal("160.0 — 3.90")
 
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: lightgray; font-style: italic;']") %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3FF; font-style: italic;']") %>%
     rvest::html_text("[class='gt_row gt_center']") %>%
     expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: green; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #00FF00FF; color: white;']") %>%
     rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
     expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: purple; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #A020F0FF; color: white;']") %>%
     rvest::html_text("[class='gt_row gt_grand_summary_row gt_center']") %>%
     expect_equal("4,694.00")
 
@@ -487,13 +487,13 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the `hp` column label's cell has a pink background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: pink;']") %>%
+    rvest::html_nodes("[style='background-color: #FFC0CBFF;']") %>%
     rvest::html_text() %>%
     expect_equal("hp")
 
   # Expect that the `gear` column label's cell has a turquoise background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: turquoise;']") %>%
+    rvest::html_nodes("[style='background-color: #40E0D0FF;']") %>%
     rvest::html_text() %>%
     expect_equal("gear")
 
@@ -508,14 +508,14 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the `gear_carb_cyl` column spanner's
   # cell has a lightgreen background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: lightgreen;']") %>%
+    rvest::html_nodes("[style='background-color: #90EE90FF;']") %>%
     rvest::html_text() %>%
     expect_equal("gear_carb_cyl")
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: red; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #FF0000FF; color: white;']") %>%
     rvest::html_text() %>%
     expect_equal("Mazdas")
 
