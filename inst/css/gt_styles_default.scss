@@ -82,7 +82,7 @@
   }
 
   .gt_group_heading {
-    padding: 8px;
+    padding: $row_group_padding; /* row_group.padding */
     color: font-color($row_group_background_color);
     background-color: $row_group_background_color; /* row_group.background.color */
     font-size: $row_group_font_size; /* row_group.font.size */

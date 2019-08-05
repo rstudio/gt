@@ -17,10 +17,10 @@ tab_options(data, container.width = NULL, container.height = NULL,
   heading.border.bottom.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
-  column_labels.hidden = NULL, row_group.background.color = NULL,
-  row_group.font.size = NULL, row_group.font.weight = NULL,
-  row_group.border.top.style = NULL, row_group.border.top.width = NULL,
-  row_group.border.top.color = NULL,
+  column_labels.hidden = NULL, row_group.padding = NULL,
+  row_group.background.color = NULL, row_group.font.size = NULL,
+  row_group.font.weight = NULL, row_group.border.top.style = NULL,
+  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
   row_group.border.bottom.style = NULL,
   row_group.border.bottom.width = NULL,
   row_group.border.bottom.color = NULL,
@@ -87,7 +87,7 @@ the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\li
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{background colors for the parent element \code{table} and the following child
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, summary_row.background.color, grand_summary_row.background.color}{Background colors for the parent element \code{table} and the following child
 elements: \code{heading}, \code{columns}, \code{row_group}, \code{summary_row}, and
 \code{table_body}. A color name or a hexadecimal color code should be provided.}
 
@@ -95,7 +95,7 @@ elements: \code{heading}, \code{columns}, \code{row_group}, \code{summary_row}, 
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color of the heading's bottom border.}
 
-\item{column_labels.font.weight, row_group.font.weight}{the font weight of
+\item{column_labels.font.weight, row_group.font.weight}{The font weight of
 the \code{columns} and \code{row_group} text element.}
 
 \item{column_labels.hidden}{An option to hide the column labels.}
@@ -106,15 +106,14 @@ the \code{columns} and \code{row_group} text element.}
 
 \item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color}{The style, width, and color of the table body's top border.}
 
-\item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{the style, width, and color of the table body's bottom border.}
+\item{table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{The style, width, and color of the table body's bottom border.}
 
-\item{row.padding, summary_row.padding, grand_summary_row.padding}{the amount
-of padding in each row and in each type of summary row.}
+\item{row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding}{The amount of padding in each type of row.}
 
-\item{summary_row.text_transform, grand_summary_row.text_transform}{an option
+\item{summary_row.text_transform, grand_summary_row.text_transform}{An option
 to apply text transformations to the label text in each summary row.}
 
-\item{footnote.sep}{the separating characters between adjacent footnotes in
+\item{footnote.sep}{The separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}
 
 \item{footnote.marks}{The set of sequential marks used to reference and
