@@ -799,18 +799,24 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
 #'   gray) will be used as a default.
+#' @param alpha The alpha transparency value for the `color` as single value in
+#'   the range of `0` (fully transparent) to `1` (fully opaque). If not provided
+#'   the fill color will be fully opaque.
 #'
 #' @family helper functions
 #' @export
-cell_fill <- function(color = NULL) {
+cell_fill <- function(color = "#D3D3D3",
+                      alpha = 1) {
 
-  # Get all assigned values for the functions' arguments
-  style_names <- formals(cell_fill) %>% names()
-  style_names <- mget(style_names)
+  if (length(colors) != 1 || length(alpha) != 1) {
+    stop("The length of `colors` and `alpha` must be `1`",
+         call. = FALSE)
+  }
 
-  # Filter list by only the non-NULL (e.g., assigned with
-  # value) elements
-  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+  # Combine hexadecimal color with corresponding alpha
+  color <- normalize_color(colors = color, alpha = alpha)
+
+  style_vals <- list(color = color)
 
   cell_style_structure("cell_fill", style_vals)
 }
@@ -822,7 +828,6 @@ cell_style_to_html.cell_fill <- function(style) {
 
   css
 }
-
 
 #' Helper for defining custom borders for table cells
 #'

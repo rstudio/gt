@@ -808,9 +808,22 @@ tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   gsub(pattern, replacement, x, fixed = fixed)
 }
+
 tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
 
   sub(pattern, replacement, x, fixed = fixed)
+}
+
+tidy_grepl <- function(x, pattern) {
+
+  vapply(
+    pattern,
+    FUN = function(pattern) {
+      grepl(pattern = pattern, x = x)
+    },
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
 }
 
 #' An options setter for the `opts_df` data frame

@@ -99,7 +99,7 @@ test_that("a gt table can store the correct style statements", {
   attr(tbl_html, "styles_df", exact = TRUE)$styles %>%
     vapply(function(x) x[1]$cell_fill$color, character(1)) %>%
     unique() %>%
-    expect_equal("lightgray")
+    expect_equal("#D3D3D3FF")
 
   # Apply a `steelblue` background color with white text to a
   # single stub cell
@@ -121,7 +121,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect certain values for inside the single `styles` list
   attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_fill$color %>%
-    expect_equal("steelblue")
+    expect_equal("#4682B4FF")
   attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_text$color %>%
     expect_equal("white")
 
@@ -401,7 +401,7 @@ test_that("a gt table can store the correct style statements", {
     unname() %>%
     expect_equal(c(
       "data", "5", NA_character_, "disp", "1",
-      "yellow")
+      "#FFFF00FF")
     )
 
   attr(tbl_html, "styles_df", exact = TRUE)[2, ] %>%
@@ -409,29 +409,5 @@ test_that("a gt table can store the correct style statements", {
     unname() %>%
     expect_equal(c(
       "data", "5", NA_character_, "hp", "1",
-      "yellow"))
-
-  # Apply a left and right borders (solid, 2px) to the `carb`
-  # and `qsec` columns
-  # TODO: cell_borders() isn't available yet
-  # tbl_html <-
-  #   data %>%
-  #   tab_style(
-  #     style = cell_borders(selection = c("left", "right"), weight = px(2)),
-  #     locations = cells_data(columns = vars(carb, qsec))
-  #   )
-
-  # # Expect that the internal `styles_df` data frame will have 64 rows
-  # attr(tbl_html, "styles_df", exact = TRUE) %>%
-  #   nrow() %>%
-  #   expect_equal(64)
-  #
-  # # Expect the same style rules value for each of the targeted columns
-  # attr(tbl_html, "styles_df", exact = TRUE)[, "text"] %>%
-  #   unlist() %>%
-  #   unname() %>%
-  #   unique() %>%
-  #   expect_equal(
-  #     "border-left-style:solid;border-left-color:#000000;border-left-width:2px;border-right-style:solid;border-right-color:#000000;border-right-width:2px;"
-  #   )
+      "#FFFF00FF"))
 })

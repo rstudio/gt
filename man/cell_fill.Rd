@@ -4,11 +4,15 @@
 \alias{cell_fill}
 \title{Helper for defining custom fills for table cells}
 \usage{
-cell_fill(color = NULL)
+cell_fill(color = "#D3D3D3", alpha = 1)
 }
 \arguments{
 \item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light
 gray) will be used as a default.}
+
+\item{alpha}{The alpha transparency value for the \code{color} as single value in
+the range of \code{0} (fully transparent) to \code{1} (fully opaque). If not provided
+the fill color will be fully opaque.}
 }
 \description{
 The \code{cell_fill()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
