@@ -192,7 +192,7 @@ data_color <- function(data,
       color <- colors_cols[i]
 
       # Combine hexadecimal color with corresponding alpha
-      color <- normalize_color(color = color, alpha = alpha)
+      color <- normalize_color(colors = color, alpha = alpha)
 
       if (apply_to == "fill") {
 
