@@ -191,15 +191,8 @@ data_color <- function(data,
 
       color <- colors_cols[i]
 
-      # Get alpha as hexadecimal value
-      if (color %>% is_hex_col_w_alpha()) {
-        alpha_hex <- color %>% get_alpha_vec()
-      } else {
-        alpha_hex <- alpha %>% frac_alpha_to_hex()
-      }
-
       # Combine hexadecimal color with corresponding alpha
-      color <- color %>% paste_right(alpha_hex)
+      color <- normalize_color(color = color, alpha = alpha)
 
       if (apply_to == "fill") {
 
