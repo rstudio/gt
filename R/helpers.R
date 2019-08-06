@@ -805,30 +805,13 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @export
-cell_fill <- function(color = NULL,
-                      alpha = NULL) {
-
-  if (is.null(color)) {
-    color <- "#D3D3D3"
-  }
-
-  if (is.null(alpha)) {
-    alpha <- 1
-  }
-
-  # Get hexadecimal representation of `color`
-  color_hex <- color %>% get_hexcolor_vec()
-
-  if (color %>% is_hex_col_w_alpha()) {
-    alpha_hex <- color %>% get_alpha_vec()
-  } else {
-    alpha_hex <- alpha %>% frac_alpha_to_hex()
-  }
+cell_fill <- function(color = "#D3D3D3",
+                      alpha = 1) {
 
   # Combine hexadecimal color with corresponding alpha
-  color_val <- color_hex %>% paste_right(alpha_hex)
+  color <- normalize_color(color = color, alpha = alpha)
 
-  style_vals <- list(color = color_val)
+  style_vals <- list(color = color)
 
   cell_style_structure("cell_fill", style_vals)
 }
