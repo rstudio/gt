@@ -4,7 +4,7 @@
 \alias{cell_fill}
 \title{Helper for defining custom fills for table cells}
 \usage{
-cell_fill(color = NULL, alpha = NULL)
+cell_fill(color = "#D3D3D3", alpha = 1)
 }
 \arguments{
 \item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light

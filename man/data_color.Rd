@@ -4,7 +4,7 @@
 \alias{data_color}
 \title{Set data cell colors using a palette or a color function}
 \usage{
-data_color(data, columns, colors, alpha = NULL, apply_to = "fill",
+data_color(data, columns, colors, alpha = 1, apply_to = "fill",
   autocolor_text = TRUE)
 }
 \arguments{
