@@ -127,13 +127,9 @@
 data_color <- function(data,
                        columns,
                        colors,
-                       alpha = NULL,
+                       alpha = 1,
                        apply_to = "fill",
                        autocolor_text = TRUE) {
-
-  if (is.null(alpha)) {
-    alpha <- 1
-  }
 
   # Extract `data_df` from the gt object
   data_df <- attr(data, "data_df", exact = TRUE)
