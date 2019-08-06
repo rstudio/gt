@@ -42,12 +42,12 @@
 #'   the value is given in units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param column_labels.font.weight,row_group.font.weight the font weight of
+#' @param column_labels.font.weight,row_group.font.weight The font weight of
 #'   the `columns` and `row_group` text element.
-#' @param summary_row.text_transform,grand_summary_row.text_transform an option
+#' @param summary_row.text_transform,grand_summary_row.text_transform An option
 #'   to apply text transformations to the label text in each summary row.
 #' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
-#'   background colors for the parent element `table` and the following child
+#'   Background colors for the parent element `table` and the following child
 #'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
 #'   `table_body`. A color name or a hexadecimal color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
@@ -61,10 +61,10 @@
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color
 #'   The style, width, and color of the table body's top border.
 #' @param table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
-#'   the style, width, and color of the table body's bottom border.
-#' @param row.padding,summary_row.padding,grand_summary_row.padding the amount
-#'   of padding in each row and in each type of summary row.
-#' @param footnote.sep the separating characters between adjacent footnotes in
+#'   The style, width, and color of the table body's bottom border.
+#' @param row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding
+#'   The amount of padding in each type of row.
+#' @param footnote.sep The separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnote.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
@@ -203,6 +203,7 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.hidden = NULL,
+                        row_group.padding = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
                         row_group.font.weight = NULL,

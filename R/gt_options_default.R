@@ -35,6 +35,7 @@ gt_options_default <- function() {
     "columns_border_bottom_style",        TRUE,  "columns",          "value",   "solid",
     "columns_border_bottom_width",        TRUE,  "columns",          "px",      "2px",
     "columns_border_bottom_color",        TRUE,  "columns",          "value",   "#A8A8A8",
+    "row_group_padding",                  TRUE,  "row_group",        "px",      "8px",
     "row_group_background_color",         TRUE,  "row_group",        "value",   NA_character_,
     "row_group_font_size",                TRUE,  "row_group",        "px",      "16px",
     "row_group_font_weight",              TRUE,  "row_group",        "value",   "initial",
