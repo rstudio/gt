@@ -484,6 +484,26 @@ get_hexcolor_vec <- function(colors) {
   hexcolors
 }
 
+#' With any input color, transform to hexadecimal with alpha
+#'
+#' @noRd
+normalize_color <- function(color,
+                            alpha) {
+
+  # Get hexadecimal representation of `color`; this strips
+  # any alpha value that may be included
+  color_hex <- color %>% get_hexcolor_vec()
+
+  if (color %>% is_hex_col_w_alpha()) {
+    alpha_hex <- color %>% get_alpha_vec()
+  } else {
+    alpha_hex <- alpha %>% frac_alpha_to_hex()
+  }
+
+  # Combine hexadecimal color with corresponding alpha
+  color_hex %>% paste_right(alpha_hex)
+}
+
 #' Determining the best `light` and `dark` colors for contrast
 #'
 #' @noRd
