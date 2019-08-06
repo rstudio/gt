@@ -707,7 +707,7 @@ create_body_component_h <- function(output_df,
 
         styles_resolved_row <-
           styles_resolved %>%
-          dplyr::filter(rownum == i, locname == "data")
+          dplyr::filter(rownum == i, locname %in% c("stub", "data"))
 
         row_styles <-
           build_row_styles(
