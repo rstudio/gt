@@ -424,22 +424,23 @@ frac_alpha_to_hex <- function(alpha) {
 #' @noRd
 get_alpha_vec <- function(colors) {
 
-  alpha <- c()
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
 
-  for (color in colors) {
-
-    if (color %>% is_hex_col_no_alpha()) {
-      alpha <- c(alpha, "FF")
-    } else if (color %>% is_hex_col_w_alpha()) {
-      alpha <- c(alpha, toupper(sub(".*(..)$", "\\1", color)))
-    } else if (tolower(color) %in% grDevices::colors()) {
-      alpha <- c(alpha, "FF")
-    } else {
-      alpha <- c(alpha, NA_character_)
+      if (color %>% is_hex_col_no_alpha()) {
+        "FF"
+      } else if (color %>% is_hex_col_w_alpha()) {
+        toupper(sub(".*(..)$", "\\1", color))
+      } else if (tolower(color) %in% grDevices::colors()) {
+        "FF"
+      } else {
+        NA_character_
+      }
     }
-  }
-
-  alpha
+  )
 }
 
 #' Get the hexadecimal color representation of a color
@@ -447,50 +448,67 @@ get_alpha_vec <- function(colors) {
 #' @noRd
 get_hexcolor_vec <- function(colors) {
 
-  hexcolors <- c()
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
 
-  for (color in colors) {
+      if (color %>% is_hex_col_no_alpha()) {
 
-    if (color %>% is_hex_col_no_alpha()) {
-      hexcolors <- c(hexcolors, color %>% toupper())
-    } else if (color %>% is_hex_col_w_alpha()) {
-      hexcolors <- c(hexcolors, color %>% substring(1, 7) %>% toupper())
-    } else if (tolower(color) %in% grDevices::colors()) {
+        color %>%
+          toupper()
 
-      color_matrix <- grDevices::col2rgb(tolower(color))
-      color <- grDevices::rgb(
-        red = color_matrix[1, ]/255,
-        green = color_matrix[2, ]/255,
-        blue = color_matrix[3, ]/255
-      )
+      } else if (color %>% is_hex_col_w_alpha()) {
 
-      hexcolors <- c(hexcolors, color)
-    } else {
-      hexcolors <- c(hexcolors, NA_character_)
-    }
-  }
+        color %>%
+          substring(1, 7) %>%
+          toupper()
 
-  hexcolors
+      } else if (tolower(color) %in% grDevices::colors()) {
+
+        color_matrix <- grDevices::col2rgb(tolower(color))
+
+        grDevices::rgb(
+          red = color_matrix[1, ]/255,
+          green = color_matrix[2, ]/255,
+          blue = color_matrix[3, ]/255
+        )
+
+      } else {
+        NA_character_
+      }
+    })
 }
 
 #' With any input color, transform to hexadecimal with alpha
 #'
 #' @noRd
-normalize_color <- function(color,
+normalize_color <- function(colors,
                             alpha) {
 
-  # Get hexadecimal representation of `color`; this strips
-  # any alpha value that may be included
-  color_hex <- color %>% get_hexcolor_vec()
+  if (length(colors) == 0) {
+    stop("One or more colors must be provided", call. = FALSE)
+  }
 
-  if (color %>% is_hex_col_w_alpha()) {
-    alpha_hex <- color %>% get_alpha_vec()
-  } else {
-    alpha_hex <- alpha %>% frac_alpha_to_hex()
+  if (!(length(colors) == length(alpha) || length(alpha) == 1)) {
+    stop("The length of `alpha` must be the same length as `colors` or `1`",
+         call. = FALSE)
   }
 
   # Combine hexadecimal color with corresponding alpha
-  color_hex %>% paste_right(alpha_hex)
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+      if (!is_hex_col_w_alpha(color)) {
+        color <- paste0(get_hexcolor_vec(color), frac_alpha_to_hex(alpha))
+      }
+
+      color
+    }
+  )
 }
 
 #' Determining the best `light` and `dark` colors for contrast
