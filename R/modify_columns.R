@@ -777,14 +777,14 @@ cols_split_delim <- function(data,
 
   split_colnames <- strsplit(colnames[colnames_has_delim], delim)
 
-  grp_labels[colnames[colnames_has_delim]] <-
-    vapply(split_colnames, `[[`, character(1), 1)
+  group_label <- vapply(split_colnames, `[[`, character(1), 1)
+
+  boxh_df["group_label", colnames[colnames_has_delim]] <- group_label
+
+  grp_labels[colnames[colnames_has_delim]] <- group_label
 
   col_labels[colnames[colnames_has_delim]] <-
     vapply(split_colnames, `[[`, character(1), 2)
-
-  boxh_df["group_label", colnames[colnames_has_delim]] <-
-    vapply(split_colnames, `[[`, character(1), 1)
 
   attr(data, "boxh_df") <- boxh_df
   attr(data, "grp_labels") <- grp_labels
