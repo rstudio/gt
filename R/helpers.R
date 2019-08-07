@@ -20,12 +20,13 @@
 #' only available when there is a stub; a label in that location can be created
 #' by using the [tab_stubhead()] function.
 #'
-#' \item `cells_column_labels()`: targets labels in the column labels (the
-#' `columns` argument) or the spanner column labels (the `groups` argument) in
-#' the table's column labels part.
+#' \item `cells_column_labels()`: targets the column labels.
+#'
+#' \item `cells_column_spanners()`: targets the spanner column labels, which
+#' appear above the column labels.
 #'
 #' \item `cells_group()`: targets the row group labels in any available row
-#' groups using the `groups` argument.
+#' groups.
 #'
 #' \item `cells_stub()`: targets row labels in the table stub using the `rows`
 #' argument.
@@ -267,35 +268,33 @@ cells_stubhead <- function() {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns, groups) {
+cells_column_labels <- function(columns) {
 
-  if (
-    (!missing(columns) && !missing(groups)) ||
-    (missing(columns) && missing(groups))
-  ) {
-    stop("Value(s) must provided to either `columns` or `groups` but not both.")
-  }
-
-  # With input as `columns`
-  if (!missing(columns)) {
-
-    # Capture expression for the `columns` argument
-    col_expr <- rlang::enquo(columns)
-    group_expr <- NULL
-  }
-
-  # With input as `groups`
-  if (!missing(groups)) {
-
-    # Capture expression for the `groups` argument
-    col_expr <- NULL
-    group_expr <- rlang::enquo(groups)
-  }
+  # Capture expression for the `columns` argument
+  col_expr <- rlang::enquo(columns)
+  group_expr <- NULL
 
   # Create the `cells_column_labels` object
   structure(
-    list(columns = col_expr, groups = group_expr),
-    class = c("cells_column_labels", "location_cells"))
+    list(columns = col_expr),
+    class = c("cells_column_labels", "location_cells")
+  )
+}
+
+#' @rdname location_cells
+#' @import rlang
+#' @export
+cells_column_spanners <- function(groups) {
+
+  # Capture expression for the `groups` argument
+  col_expr <- NULL
+  group_expr <- rlang::enquo(groups)
+
+  # Create the `cells_column_spanners` object
+  structure(
+    list(groups = group_expr),
+    class = c("cells_column_spanners", "location_cells")
+  )
 }
 
 #' @rdname location_cells
@@ -339,10 +338,8 @@ cells_stub <- function(rows = NULL) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_data <- function(columns = NULL, # set default to TRUE
-                       rows = NULL# set default to TRUE
-                       #TODO: groups = NULL
-                       ) {
+cells_data <- function(columns = NULL,
+                       rows = NULL) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
