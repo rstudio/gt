@@ -5,6 +5,7 @@
 \alias{cells_title}
 \alias{cells_stubhead}
 \alias{cells_column_labels}
+\alias{cells_column_spanners}
 \alias{cells_group}
 \alias{cells_stub}
 \alias{cells_data}
@@ -16,7 +17,9 @@ cells_title(groups = c("title", "subtitle"))
 
 cells_stubhead()
 
-cells_column_labels(columns, groups)
+cells_column_labels(columns)
+
+cells_column_spanners(groups)
 
 cells_group(groups)
 
@@ -58,12 +61,13 @@ depending on the value given to the \code{groups} argument (\code{"title"} or
 only available when there is a stub; a label in that location can be created
 by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
 
-\item \code{cells_column_labels()}: targets labels in the column labels (the
-\code{columns} argument) or the spanner column labels (the \code{groups} argument) in
-the table's column labels part.
+\item \code{cells_column_labels()}: targets the column labels.
+
+\item \code{cells_column_spanners()}: targets the spanner column labels, which
+appear above the column labels.
 
 \item \code{cells_group()}: targets the row group labels in any available row
-groups using the \code{groups} argument.
+groups.
 
 \item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
 argument.
