@@ -319,8 +319,11 @@ create_columns_component_h <- function(boxh_df,
     styles_resolved %>%
     dplyr::filter(locname == "columns_columns")
 
-  # Get the headings
+  # Get the column labels
   headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
+
+  # Get the column names
+  col_names <- boxh_df %>% names()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
