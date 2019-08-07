@@ -211,34 +211,36 @@ set_style.cells_stubhead <- function(loc, data, style) {
 
 set_style.cells_column_labels <- function(loc, data, style) {
 
-  if (!is.null(loc$columns)) {
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
 
-    resolved <- resolve_cells_column_labels(data = data, object = loc)
+  cols <- resolved$columns
 
-    cols <- resolved$columns
+  colnames <- colnames(as.data.frame(data))[cols]
 
-    colnames <- colnames(as.data.frame(data))[cols]
+  attr(data, "styles_df") <-
+    add_location_row_styles(
+      data,
+      locname = "columns_columns", locnum = 4,
+      grpname = NA_character_, colname = colnames,
+      rownum = NA_character_, styles = list(style)
+    )
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "columns_columns", locnum = 4,
-        grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, styles = list(style)
-      )
+  data
+}
 
-  } else if (!is.null(loc$groups)) {
+set_style.cells_column_spanners <- function(loc, data, style) {
 
-    groups <- loc$groups %>% rlang::eval_tidy()
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "columns_groups", locnum = 3,
-        grpname = groups, colname = NA_character_,
-        rownum = NA_character_, styles = list(style)
-      )
-  }
+  groups <- resolved$spanners
+
+  attr(data, "styles_df") <-
+    add_location_row_styles(
+      data,
+      locname = "columns_groups", locnum = 3,
+      grpname = groups, colname = NA_character_,
+      rownum = NA_character_, styles = list(style)
+    )
 
   data
 }

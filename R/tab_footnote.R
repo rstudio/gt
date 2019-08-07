@@ -131,36 +131,36 @@ set_footnote.cells_stubhead <- function(loc, data, footnote) {
 
 set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
-  if (!is.null(loc$columns)) {
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
 
-    resolved <- resolve_cells_column_labels(data = data, object = loc)
+  cols <- resolved$columns
 
-    cols <- resolved$columns
+  colnames <- colnames(as.data.frame(data))[cols]
 
-    colnames <- colnames(as.data.frame(data))[cols]
+  attr(data, "footnotes_df") <-
+    add_location_row_footnotes(
+      data,
+      locname = "columns_columns", locnum = 4,
+      grpname = NA_character_, colname = colnames,
+      rownum = NA_character_, footnotes = footnote
+    )
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "columns_columns", locnum = 4,
-        grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, footnotes = footnote
-      )
+  data
+}
 
-  } else if (!is.null(loc$groups)) {
+set_footnote.cells_column_spanners <- function(loc, data, footnote) {
 
-    resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
-    groups <- resolved$spanners
+  groups <- resolved$spanners
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "columns_groups", locnum = 3,
-        grpname = groups, colname = NA_character_,
-        rownum = NA_character_, footnotes = footnote
-      )
-  }
+  attr(data, "footnotes_df") <-
+    add_location_row_footnotes(
+      data,
+      locname = "columns_groups", locnum = 3,
+      grpname = groups, colname = NA_character_,
+      rownum = NA_character_, footnotes = footnote
+    )
 
   data
 }
