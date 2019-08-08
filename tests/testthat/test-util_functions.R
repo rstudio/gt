@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(128, 4))
+  css_tbl %>% dim() %>% expect_equal(c(131, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -387,7 +387,7 @@ test_that("the `inline_html_styles()` function works correctly", {
         "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
         "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
         "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
-        "collapse; margin-left: auto; margin-right: auto; color: #000000; ",
+        "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
         "font-size: 16px; background-color: #FFFFFF; width: auto; ",
         "border-top-style: solid; border-top-width: 2px; border-top-color: ",
         "#A8A8A8; border-bottom-style: solid; border-bottom-width: 2px; ",
@@ -400,12 +400,12 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl(
       paste0(
-        "style=\"color: #000000; background-color: #FFFFFF; font-size: ",
+        "style=\"color: #333333; background-color: #FFFFFF; font-size: ",
         "16px; font-weight: initial; vertical-align: middle; padding: ",
-        "10px; margin: 10px; overflow-x: hidden; border-top-style: solid; ",
-        "border-top-width: 2px; border-top-color: #A8A8A8; ",
+        "5px; margin: 10px; overflow-x: hidden; border-top-style: solid; ",
+        "border-top-width: 2px; border-top-color: #D3D3D3; ",
         "border-bottom-style: solid; border-bottom-width: 2px; ",
-        "border-bottom-color: #A8A8A8; text-align: center;\""
+        "border-bottom-color: #D3D3D3; text-align: center;\""
       ),
       inlined_html
     )
@@ -431,9 +431,10 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl(
       paste0(
-        "style=\"padding: 8px; margin: 10px; vertical-align: middle; ",
-        "overflow-x: hidden; text-align: right; font-variant-numeric: ",
-        "tabular-nums; font-size: 10px;\""
+        "style=\"padding: 8px; margin: 10px; border-bottom-style: solid; ",
+        "border-bottom-width: thin; border-bottom-color: #D3D3D3; ",
+        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
+        "font-variant-numeric: tabular-nums; font-size: 10px;\""
       ),
       inlined_html
     )
