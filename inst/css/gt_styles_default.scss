@@ -112,7 +112,7 @@
   }
 
   .gt_striped {
-     background-color: darken($table_background_color, 5%);
+     background-color: $row_striping_background_color;
   }
 
   .gt_from_md > :first-child {

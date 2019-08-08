@@ -79,6 +79,8 @@
 #'   symbols, making six.
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
+#' @param row.striping.background_color The background color for striped table
+#'   body rows.
 #' @param row.striping.include_stub An option for whether to include the stub
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
@@ -232,6 +234,7 @@ tab_options <- function(data,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
                         sourcenote.padding = NULL,
+                        row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
 

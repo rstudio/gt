@@ -37,7 +37,8 @@ tab_options(data, container.width = NULL, container.height = NULL,
   grand_summary_row.text_transform = NULL, footnote.sep = NULL,
   footnote.marks = NULL, footnote.font.size = NULL,
   footnote.padding = NULL, sourcenote.font.size = NULL,
-  sourcenote.padding = NULL, row.striping.include_stub = NULL,
+  sourcenote.padding = NULL, row.striping.background_color = NULL,
+  row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL)
 }
 \arguments{
@@ -130,6 +131,9 @@ symbols, making six.}
 
 \item{footnote.padding, sourcenote.padding}{The amount of padding to apply to
 the footnote and source note sections.}
+
+\item{row.striping.background_color}{The background color for striped table
+body rows.}
 
 \item{row.striping.include_stub}{An option for whether to include the stub
 when striping rows.}

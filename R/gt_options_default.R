@@ -71,6 +71,7 @@ gt_options_default <- function() {
     "sourcenotes_border_top_style",       TRUE,  "sourcenote",       "value",   "solid",
     "sourcenotes_border_top_width",       TRUE,  "sourcenote",       "px",      "2px",
     "sourcenotes_border_top_color",       TRUE,  "sourcenote",       "value",   "#D3D3D3",
+    "row_striping_background_color",      TRUE,  "row",              "value",   "#8080800D",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", TRUE,
     )[-1, ]
