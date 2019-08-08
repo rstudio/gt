@@ -7,6 +7,8 @@ gt_options_default <- function() {
     "container_height",                  FALSE,  "container",        "px",      "auto",
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
+    "font_color",                         TRUE,  "table",            "value",   "#333333",
+    "font_color_light",                   TRUE,  "table",            "value",   "#FFFFFF",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_font_size",                    TRUE,  "table",            "px",      "16px",

@@ -42,6 +42,9 @@
 #'   the value is given in units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
+#' @param font.color The table font color, for text used throughout the table.
+#' @param font.color.light The table font color when text is required to be
+#'   light, due to darker background colors.
 #' @param column_labels.font.weight,row_group.font.weight The font weight of
 #'   the `columns` and `row_group` text element.
 #' @param summary_row.text_transform,grand_summary_row.text_transform An option
@@ -186,6 +189,8 @@ tab_options <- function(data,
                         container.height = NULL,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
+                        font.color = NULL,
+                        font.color.light = NULL,
                         table.width = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,

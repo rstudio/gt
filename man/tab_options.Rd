@@ -6,7 +6,8 @@
 \usage{
 tab_options(data, container.width = NULL, container.height = NULL,
   container.overflow.x = NULL, container.overflow.y = NULL,
-  table.width = NULL, table.align = NULL, table.margin.left = NULL,
+  font.color = NULL, font.color.light = NULL, table.width = NULL,
+  table.align = NULL, table.margin.left = NULL,
   table.margin.right = NULL, table.font.size = NULL,
   table.background.color = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
@@ -57,6 +58,11 @@ the container dimensions. Using \code{TRUE} (the default for both) means that
 horizontal or vertical scrolling is enabled to view the entire table in
 those directions. With \code{FALSE}, the table may be clipped if the table width
 or height exceeds the \code{container.width} or \code{container.height}.}
+
+\item{font.color}{The table font color, for text used throughout the table.}
+
+\item{font.color.light}{The table font color when text is required to be
+light, due to darker background colors.}
 
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
