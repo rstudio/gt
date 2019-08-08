@@ -292,7 +292,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(opts_df_1 %>% opts_df_get("heading_border_bottom_color"),
     attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("heading_border_bottom_color")
   ) %>%
-    expect_equal(c("#A8A8A8", "purple"))
+    expect_equal(c("#D3D3D3", "purple"))
 
   # Modify the `column_labels.font.size`
   tbl_html <- data %>% tab_options(column_labels.font.size = px(18))
@@ -400,7 +400,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(opts_df_1 %>% opts_df_get("row_group_border_top_color"),
     attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("row_group_border_top_color")
   ) %>%
-    expect_equal(c("#A8A8A8", "blue"))
+    expect_equal(c("#D3D3D3", "blue"))
 
   # Modify the `row_group.border.bottom.style`
   tbl_html <- data %>% tab_options(row_group.border.bottom.style = "dashed")
@@ -436,7 +436,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(opts_df_1 %>% opts_df_get("row_group_border_bottom_color"),
     attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("row_group_border_bottom_color")
   ) %>%
-    expect_equal(c("#A8A8A8", "orange"))
+    expect_equal(c("#D3D3D3", "orange"))
 
   # Modify the `table_body.border.top.style`
   tbl_html <- data %>% tab_options(table_body.border.top.style = "dotted")
@@ -472,7 +472,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(opts_df_1 %>% opts_df_get("table_body_border_top_color"),
     attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("table_body_border_top_color")
   ) %>%
-    expect_equal(c("#A8A8A8", "red"))
+    expect_equal(c("#D3D3D3", "red"))
 
   # Modify the `table_body.border.bottom.style`
   tbl_html <- data %>% tab_options(table_body.border.bottom.style = "dotted")
@@ -508,7 +508,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(opts_df_1 %>% opts_df_get("table_body_border_bottom_color"),
     attr(tbl_html, "opts_df", exact = TRUE) %>% opts_df_get("table_body_border_bottom_color")
   ) %>%
-    expect_equal(c("#A8A8A8", "red"))
+    expect_equal(c("#D3D3D3", "red"))
 
   # Modify the `row.padding`
   tbl_html <- data %>% tab_options(row.padding = px(8))
