@@ -8,6 +8,6 @@ $grand_summary_row_background_color: $table_background_color !default;
 @function font-color($color) {
   @return if(
     red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114 > 186,
-    #000000, #ffffff
+    #333333, #FFFFFF
   );
 }
