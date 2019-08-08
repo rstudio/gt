@@ -25,7 +25,7 @@
   .gt_title {
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; /* heading.title.font.size */
-    padding-top: 4px; /* heading.top.padding */
+    padding-top: 4px; /* heading.top.padding - not yet used */
     padding-bottom: 4px;
     border-bottom-color: $table_background_color;
     border-bottom-width: 0;
@@ -34,8 +34,8 @@
   .gt_subtitle {
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; /* heading.subtitle.font.size */
-    padding-top: 2px;
-    padding-bottom: 2px; /* heading.bottom.padding */
+    padding-top: 0;
+    padding-bottom: 4px; /* heading.bottom.padding - not yet used */
     border-top-color: $table_background_color;
     border-top-width: 0;
   }
@@ -49,7 +49,7 @@
   .gt_column_spanner {
     border-bottom-style: solid;
     border-bottom-width: 2px;
-    border-bottom-color: #A8A8A8;
+    border-bottom-color: #D3D3D3;
     padding-top: 4px;
     padding-bottom: 4px;
   }
@@ -60,7 +60,7 @@
     font-size: $column_labels_font_size; /* column_labels.font.size */
     font-weight: $column_labels_font_weight; /* column_labels.font.weight */
     vertical-align: middle;
-    padding: 10px;
+    padding: 5px;
     margin: 10px;
     overflow-x: hidden;
   }
@@ -126,6 +126,9 @@
   .gt_row {
     padding: $row_padding; /* row.padding */
     margin: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #D3D3D3;
     vertical-align: middle;
     overflow-x: hidden;
   }
@@ -133,7 +136,7 @@
   .gt_stub {
     border-right-style: solid;
     border-right-width: 2px;
-    border-right-color: #A8A8A8;
+    border-right-color: #D3D3D3;
     padding-left: 12px;
   }
 
@@ -154,13 +157,13 @@
   .gt_first_summary_row {
     border-top-style: solid;
     border-top-width: 2px;
-    border-top-color: #A8A8A8;
+    border-top-color: #D3D3D3;
   }
 
   .gt_first_grand_summary_row {
     border-top-style: double;
     border-top-width: 6px;
-    border-top-color: #A8A8A8;
+    border-top-color: #D3D3D3;
   }
 
   .gt_table_body {
