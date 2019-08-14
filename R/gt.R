@@ -232,6 +232,11 @@ gt <- function(data,
   attr(data_tbl, "rows_df") <- rows_df
   attr(data_tbl, "cols_df") <- cols_df
 
+  data_tbl <-
+    data_tbl %>%
+    dt_boxh_init() %>%
+    dt_spanners_init()
+
   data_tbl_colnames <- colnames(data_tbl)
 
   # Create a prepopulated `col_labels` list object, which
