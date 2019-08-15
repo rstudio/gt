@@ -1,13 +1,13 @@
-dt_boxh_key <- "_boxh"
+.dt_boxh_key <- "_boxh"
 
 dt_boxh_get <- function(data) {
 
-  attr(data, dt_boxh_key, exact = TRUE)
+  attr(data, .dt_boxh_key, exact = TRUE)
 }
 
 dt_boxh_set <- function(data, boxh) {
 
-  attr(data, dt_boxh_key) <- boxh
+  attr(data, .dt_boxh_key) <- boxh
   data
 }
 
