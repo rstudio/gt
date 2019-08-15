@@ -4,7 +4,7 @@
 \alias{cols_split_delim}
 \title{Create group names and column labels via delimited names}
 \usage{
-cols_split_delim(data, delim, columns = NULL)
+cols_split_delim(data, delim, columns = NULL, gather = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -16,6 +16,10 @@ the second component will be the column label.}
 
 \item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
+
+\item{gather}{An option to move the specified \code{columns} such that they are
+unified under the spanner column label. Ordering of the moved-into-place
+columns will be preserved in all cases.}
 }
 \value{
 An object of class \code{gt_tbl}.
