@@ -57,24 +57,14 @@ dt_boxh_edit <- function(data, var, ...) {
 
   var_name <- var
 
-  expr <- list(...)
+  val_list <- list(...)
 
-  check_names_dt_boxh_expr(expr)
+  check_names_dt_boxh_expr(val_list)
 
   check_vars_dt_boxh(var, dt_boxh)
 
-  for (expr_i in seq_along(expr)) {
-
-    expr_key <- names(expr)[expr_i]
-    expr_val <- expr[[expr_i]]
-
-    dt_boxh <-
-      dt_boxh %>%
-      dplyr::mutate_at(
-        .vars = expr_key,
-        .funs = ~dplyr::if_else(var == var_name, expr_val, .)
-      )
-  }
+  dt_boxh[which(dt_boxh$var == var_name), names(val_list)] <-
+    dplyr::as_tibble(val_list)
 
   dt_boxh %>%
     dt_boxh_set(boxh = ., data = data)
