@@ -712,6 +712,7 @@ cols_hide <- function(data,
 #' rendered output table).
 #'
 #' @inheritParams cols_align
+#' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
 #'   procedure. The first component of the split will become the group name and
@@ -719,6 +720,7 @@ cols_hide <- function(data,
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `iris` to create a gt table; split
 #' # any columns that are dot-separated
@@ -738,15 +740,13 @@ cols_hide <- function(data,
 #' @export
 cols_split_delim <- function(data,
                              delim,
-                             columns = NULL) {
+                             columns = NULL,
+                             gather = TRUE) {
 
   columns <- enquo(columns)
 
-  # Escape any characters that require escaping
-  delim <- gsub("\\.", "\\\\.", delim)
-
   # Get all of the columns in the dataset
-  all_cols <- colnames(attr(data, "boxh_df", exact = TRUE))
+  all_cols <- data %>% dt_boxh_get_vars()
 
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
@@ -761,17 +761,43 @@ cols_split_delim <- function(data,
     return(data)
   }
 
-  colnames_has_delim <- grepl(paste0("[^.]", delim, "[^.]"), colnames)
+  colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
 
   if (any(colnames_has_delim)) {
 
-    split_colnames <- strsplit(colnames[colnames_has_delim], delim)
+    colnames_with_delim <- colnames[colnames_has_delim]
 
-    attr(data, "grp_labels")[colnames[colnames_has_delim]] <-
-      vapply(split_colnames, `[[`, character(1), 1)
+    split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
 
-    attr(data, "col_labels")[colnames[colnames_has_delim]] <-
-      vapply(split_colnames, `[[`, character(1), 2)
+    spanners <- vapply(split_colnames, `[[`, character(1), 1)
+
+    new_labels <-
+      lapply(split_colnames, `[[`, -1) %>%
+      vapply(paste0, FUN.VALUE = character(1), collapse = delim)
+
+    for (i in seq_along(split_colnames)) {
+
+      spanners_i <- spanners[i]
+      new_labels_i <- new_labels[i]
+      var_i <- colnames_with_delim[i]
+
+      data <-
+        data %>%
+        dt_boxh_edit(var = var_i, column_label = new_labels_i)
+    }
+
+    spanner_var_list <- split(colnames_with_delim, spanners)
+
+    for (spanner_label in names(spanner_var_list)) {
+
+      data <-
+        data %>%
+        dt_spanners_add(
+          vars = spanner_var_list[[spanner_label]],
+          spanner_label = spanner_label,
+          gather = gather
+        )
+    }
   }
 
   data
