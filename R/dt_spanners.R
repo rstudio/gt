@@ -32,8 +32,8 @@ dt_spanners_add <- function(data, vars, spanner_label, gather) {
     dt_spanners_get() %>%
     dplyr::bind_rows(
       dplyr::tibble(
-        vars = vars,
-        spanner_label = spanner_label,
+        vars = list(vars),
+        spanner_label = list(spanner_label),
         gather = gather
       )
     ) %>%
