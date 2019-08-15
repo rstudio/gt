@@ -232,6 +232,7 @@ gt <- function(data,
   attr(data_tbl, "rows_df") <- rows_df
   attr(data_tbl, "cols_df") <- cols_df
 
+  # Initialize the `_boxh` and `_spanners` tibbles
   data_tbl <-
     data_tbl %>%
     dt_boxh_init() %>%
