@@ -70,6 +70,13 @@ dt_boxh_edit <- function(data, var, ...) {
     dt_boxh_set(boxh = ., data = data)
 }
 
+dt_boxh_get_vars <- function(data) {
+
+  data %>%
+    dt_boxh_get() %>%
+    magrittr::extract2("var")
+}
+
 check_names_dt_boxh_expr <- function(expr) {
 
   if (!all(names(expr) %in% c(
