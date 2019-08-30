@@ -73,6 +73,7 @@ gt <- function(data,
                rowname_col = "rowname",
                groupname_col = "groupname",
                rownames_to_stub = FALSE,
+               auto_align = TRUE,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
@@ -80,13 +81,6 @@ gt <- function(data,
   if (ncol(data) == 0) {
     stop("The input `data` table must have at least one column.",
          call. = FALSE)
-  }
-
-  opts_df <- gt_options_default()
-
-  # Add the table ID to the `id` parameter
-  if (!is.null(id)) {
-    opts_df <- opts_df_set(opts_df, "table_id", id)
   }
 
   # If the option to place rownames in the stub
@@ -170,28 +164,6 @@ gt <- function(data,
   # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
-  # Create an empty `footnotes_df` data frame
-  footnotes_df <-
-    dplyr::tibble(
-      locname = NA_character_,
-      locnum = NA_integer_,
-      grpname = NA_character_,
-      colname = NA_character_,
-      rownum = NA_integer_,
-      text = NA_character_
-    )[-1, ]
-
-  # Create an empty `styles_df` data frame
-  styles_df <-
-    dplyr::tibble(
-      locname = NA_character_,
-      locnum = NA_integer_,
-      grpname = NA_character_,
-      colname = NA_character_,
-      rownum = NA_integer_,
-      styles = list()
-    )[-1, ]
-
   # Create a prepopulated `rows_df` data frame
   if (nrow(data_tbl) > 0) {
     rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
@@ -199,64 +171,33 @@ gt <- function(data,
     rows_df <- dplyr::tibble(rownums_start = NA_integer_)[-1, ]
   }
 
-  # Create a prepopulated `cols_df` data frame
-  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
-
-  # Create an empty facsimile df based on
-  # `data_tbl`; this will serve as a template for
-  # data frames that contain specialized formatting
-  # directives that will be used during render time
-  empty_df <- data_tbl
-  if (nrow(data_tbl) > 0) {
-    empty_df[] <- NA_character_
-  }
-
-  # Create a data frame that represents the table's
-  # columns (`boxh_df`); each row has a special
-  # meaning and this will be used during render time
-  boxh_df <-
-    matrix(data = NA_character_, nrow = 4, ncol = ncol(data_tbl)) %>%
-    as.data.frame() %>%
-    dplyr::mutate_all(as.character) %>%
-    magrittr::set_names(names(data_tbl)) %>%
-    magrittr::set_rownames(
-      c("group_label", "column_label", "column_align", "column_width")
-    )
-
-  # Apply initialized data frames as attributes
-  # within the object
-  attr(data_tbl, "boxh_df") <- boxh_df
+  # Add the `stub_df` object as an attribute
   attr(data_tbl, "stub_df") <- stub_df
-  attr(data_tbl, "footnotes_df") <- footnotes_df
-  attr(data_tbl, "styles_df") <- styles_df
-  attr(data_tbl, "rows_df") <- rows_df
-  attr(data_tbl, "cols_df") <- cols_df
 
-  # Initialize the `_boxh` and `_spanners` tibbles
+  # Initialize the main objects
   data_tbl <-
     data_tbl %>%
+    dt_data_tbl_init() %>%
+    dt_heading_init() %>%
+    dt_spanners_init() %>%
     dt_boxh_init() %>%
-    dt_spanners_init()
+    dt_stubh_init() %>%
+    dt_source_notes_init() %>%
+    dt_footnotes_init() %>%
+    dt_styles_init() %>%
+    dt_summary_init() %>%
+    dt_options_init()
 
-  data_tbl_colnames <- colnames(data_tbl)
+  # Add the table ID to the `id` parameter
+  if (!is.null(id)) {
 
-  # Create a prepopulated `col_labels` list object, which
-  # contains names of all the columns which can be all be
-  # modified later
-  col_labels <- data_tbl_colnames
-  names(col_labels) <- data_tbl_colnames
-  col_labels <- as.list(col_labels)
-
-  attr(data_tbl, "col_labels") <- col_labels
-
-  # Create a prepopulated `grp_labels` list object, which
-  # contains names of all the column groups which can be all be
-  # modified later
-  grp_labels <- rep(NA_character_, length(colnames(data_tbl)))
-  names(grp_labels) <- data_tbl_colnames
-  grp_labels <- as.list(grp_labels)
-
-  attr(data_tbl, "grp_labels") <- grp_labels
+    data_tbl <-
+      data_tbl %>%
+      dt_options_set_value(
+        option = "table_id",
+        value = id
+      )
+  }
 
   # Create an `arrange_groups` list object, which contains
   # a vector of `groupname` values in the order of first
@@ -270,12 +211,6 @@ gt <- function(data,
       list(groups = character(0))
   }
 
-  # Apply the input data table as an attribute
-  attr(data_tbl, "data_df") <- data
-
-  # Apply the `opts_df` data frame as an attribute
-  attr(data_tbl, "opts_df") <- opts_df
-
   # Apply an empty `formats` list as an attribute
   attr(data_tbl, "formats") <- list()
 
@@ -286,6 +221,11 @@ gt <- function(data,
   # also keeping the `data.frame` class
   class(data_tbl) <- c("gt_tbl", class(data_tbl))
 
-  # Automatically align columns with `cols_align()`
-  data_tbl %>% cols_align()
+  if (isTRUE(auto_align)) {
+    data_tbl <-
+      data_tbl %>%
+      cols_align(align = "auto")
+  }
+
+  data_tbl
 }

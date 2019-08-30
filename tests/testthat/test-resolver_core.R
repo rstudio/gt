@@ -9,93 +9,93 @@ test_that("the `resolve_vars_idx()` function works correctly", {
 
   # Expect that passing in a single column name as a
   # string will return the correct column index position
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = "date",
-      data = tab), 4)
+  resolve_vars_idx(
+    var_expr = "date",
+    data = tab) %>%
+    expect_equal(4)
 
   # Expect that passing in multiple column names as
   # strings will return the correct column index positions
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = c("fctr", "date", "row", "group"),
-      data = tab), c(3, 4, 8, 9))
+  resolve_vars_idx(
+    var_expr = c("fctr", "date", "row", "group"),
+    data = tab) %>%
+    expect_equal(c(3, 4, 8, 9))
 
   # Expect that duplicate column names are disregarded
   # and that the column indices are always sorted
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = c("group", "row", "fctr", "date", "group", "date"),
-      data = tab), c(3, 4, 8, 9))
+  resolve_vars_idx(
+    var_expr = c("group", "row", "fctr", "date", "group", "date"),
+    data = tab) %>% expect_equal(c(9, 8, 3, 4))
 
   # Expect that using any column names that don't exist
   # in `data` will result in an error
   expect_error(
     resolve_vars_idx(
       var_expr = c("nums", "chars"),
-      data = tab))
+      data = tab)
+  )
 
   # Expect that passing in a single column index as a
   # number will return the correct column index position
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = 2,
-      data = tab), 2)
+  resolve_vars_idx(
+    var_expr = 2,
+    data = tab) %>%
+    expect_equal(2)
 
   # Expect that passing in a multiple column indices
   # as a numeric vector will return the correct
   # column index positions
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = c(1, 3, 4, 6),
-      data = tab), c(1, 3, 4, 6))
+  resolve_vars_idx(
+    var_expr = c(1, 3, 4, 6),
+    data = tab) %>%
+    expect_equal(c(1, 3, 4, 6))
 
   # Expect that duplicate column indices are disregarded
   # and that the column indices are always sorted
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = c(1, 6, 3, 4, 6, 1),
-      data = tab), c(1, 3, 4, 6))
+  resolve_vars_idx(
+    var_expr = c(1, 6, 3, 4, 6, 1),
+    data = tab) %>%
+    expect_equal(c(1, 3, 4, 6))
 
   # Expect that using any column indices that don't
   # exist in `data` will result in an error
   expect_error(
     resolve_vars_idx(
       var_expr = c(1, 3, 20),
-      data = tab))
+      data = tab)
+  )
 
   # Expect that passing in `TRUE` will return
   # all of the column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = TRUE,
-      data = tab), 1:9)
+  resolve_vars_idx(
+    var_expr = TRUE,
+    data = tab) %>%
+    expect_equal(1:9)
 
   # Expect that passing in `NULL` will return
   # all of the column indices (same effect as
   # providing `TRUE`)
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = NULL,
-      data = tab), 1:9)
+  resolve_vars_idx(
+    var_expr = NULL,
+    data = tab) %>%
+    expect_equal(1:9)
 
-  # Expect that passing in `FALSE` will return
-  # `integer(0)`
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = FALSE,
-      data = tab), integer(0))
+  # Expect that passing in `FALSE` will return `integer(0)`
+  resolve_vars_idx(
+    var_expr = FALSE,
+    data = tab) %>%
+    expect_equal(integer(0))
 
   # Expect that passing in a set of logical
   # values (equal in length to the number of
   # columns) will return those columns that
   # match on `TRUE`
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = c(
-        TRUE, TRUE, TRUE, FALSE, FALSE,
-        TRUE, TRUE, FALSE, FALSE),
-      data = tab), c(1, 2, 3, 6, 7))
+  resolve_vars_idx(
+    var_expr = c(
+      TRUE, TRUE, TRUE, FALSE, FALSE,
+      TRUE, TRUE, FALSE, FALSE),
+    data = tab) %>%
+    expect_equal(c(1, 2, 3, 6, 7))
 
   # Expect that passing in a set of logical
   # values where the length is not one nor
@@ -104,88 +104,87 @@ test_that("the `resolve_vars_idx()` function works correctly", {
   expect_error(
     resolve_vars_idx(
       var_expr = c(
-        TRUE, TRUE, TRUE, FALSE, FALSE,
-        TRUE, TRUE),
+        TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE),
       data = tab))
 
   # Expect that passing in a single column name
   # in `vars()` will return the correct column index position
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = vars(date),
-      data = tab), 4)
+  resolve_vars_idx(
+    var_expr = vars(date),
+    data = tab) %>%
+    expect_equal(4)
 
   # Expect that passing in multiple column names
   # inside `vars()` will return the correct column
   # index positions
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = vars(fctr, date, row, group),
-      data = tab), c(3, 4, 8, 9))
+  resolve_vars_idx(
+    var_expr = vars(fctr, date, row, group),
+    data = tab) %>%
+    expect_equal(c(3, 4, 8, 9))
 
   # Expect that duplicate column names inside `vars()`
-  # are disregarded and that the column indices are
-  # always sorted
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = vars(group, row, fctr, date, group, date),
-      data = tab), c(3, 4, 8, 9))
+  # are disregarded
+  resolve_vars_idx(
+    var_expr = vars(group, row, fctr, date, group, date),
+    data = tab) %>%
+    expect_equal(c(9, 8, 3, 4))
 
   # Expect that using any column names within `vars()`
   # that don't exist in `data` will result in an error
   expect_error(
     resolve_vars_idx(
       var_expr = vars(nums, chars),
-      data = tab))
+      data = tab)
+  )
 
   # Expect that the select helper `starts_with()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = starts_with("n"),
-      data = tab), 1)
+  resolve_vars_idx(
+    var_expr = starts_with("n"),
+    data = tab) %>%
+    expect_equal(1)
 
   # Expect that the select helper `ends_with()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = ends_with("e"),
-      data = tab), c(4, 5, 6))
+  resolve_vars_idx(
+    var_expr = ends_with("e"),
+    data = tab) %>%
+    expect_equal(c(4, 5, 6))
 
   # Expect that the select helper `contains()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = contains("t"),
-      data = tab), c(3, 4, 5, 6))
+  resolve_vars_idx(
+    var_expr = contains("t"),
+    data = tab) %>%
+    expect_equal(c(3, 4, 5, 6))
 
   # Expect that the select helper `matches()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = matches("et"),
-      data = tab), 6)
+  resolve_vars_idx(
+    var_expr = matches("et"),
+    data = tab) %>%
+    expect_equal(6)
 
   # Expect that the select helper `one_of()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = one_of(c("date", "time")),
-      data = tab), c(4, 5))
+  resolve_vars_idx(
+    var_expr = one_of(c("date", "time")),
+    data = tab) %>%
+    expect_equal(c(4, 5))
 
   # Expect that the select helper `everything()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = everything(),
-      data = tab), 1:9)
+  resolve_vars_idx(
+    var_expr = everything(),
+    data = tab) %>%
+    expect_equal(1:9)
 
   # Expect that the select helper `last_col()`
   # returns the expected column indices
-  expect_equal(
-    resolve_vars_idx(
-      var_expr = last_col(offset = 1),
-      data = tab), 8)
+  resolve_vars_idx(
+    var_expr = last_col(offset = 1),
+    data = tab) %>%
+    expect_equal(8)
 })
 
 test_that("the `resolve_data_vals_idx()` function works correctly", {
@@ -193,10 +192,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   # Create a `tab` object with `gt()`
   tab <-
     exibble %>%
-    gt(
-      groupname_col = "group",
-      rowname_col = "row"
-    )
+    gt(groupname_col = "group", rowname_col = "row")
 
   # Get the rownames from the `tab` gt object
   tab_rownames <- attr(tab, "stub_df", exact = TRUE)$rowname
@@ -223,7 +219,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
     resolve_data_vals_idx(
       var_expr = c("row_6", "row_4", "row_5", "row_4", "row_4"),
       data = tab,
-      vals = tab_rownames), c(4, 5, 6))
+      vals = tab_rownames), c(6, 4, 5))
 
   # Expect that using any row names that don't exist
   # in `data` will result in an error
@@ -340,7 +336,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
     resolve_data_vals_idx(
       var_expr = vars(row_6, row_1, row_3, row_3),
       data = tab,
-      vals = tab_rownames), c(1, 3, 6))
+      vals = tab_rownames), c(6, 1, 3))
 
   # Expect that using any row names within `vars()`
   # that don't exist in `data` will result in an error
@@ -433,7 +429,7 @@ test_that("the `resolve_vars()` function works correctly", {
   expect_equal(
     resolve_vars(
       var_expr = c("group", "row", "fctr", "date", "group", "date"),
-      data = tab), c("fctr", "date", "row", "group"))
+      data = tab), c("group", "row", "fctr", "date"))
 
   # Expect that using any column names that don't exist
   # in `data` will result in an error
@@ -537,7 +533,7 @@ test_that("the `resolve_vars()` function works correctly", {
   expect_equal(
     resolve_vars(
       var_expr = vars(group, row, fctr, date, group, date),
-      data = tab), c("fctr", "date", "row", "group"))
+      data = tab), c("group","row", "fctr", "date"))
 
   # Expect that using any column names within `vars()`
   # that don't exist in `data` will result in an error

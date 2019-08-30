@@ -131,12 +131,10 @@ data_color <- function(data,
                        apply_to = "fill",
                        autocolor_text = TRUE) {
 
-  # Extract `data_df` from the gt object
-  data_df <- attr(data, "data_df", exact = TRUE)
+  data_tbl <- dt_data_tbl_get(data = data)
 
-  # Collect the column names and column indices
-  # from `data_df`
-  colnames <- names(data_df)
+  # Collect the column names from `data_tbl`
+  colnames <- names(data_tbl)
 
   #
   # Resolution of columns as integer vectors providing the
@@ -148,7 +146,7 @@ data_color <- function(data,
 
   for (column in resolved_columns) {
 
-    data_vals <- data_df[[column]]
+    data_vals <- data_tbl[[column]]
 
     if (inherits(colors, "character")) {
 
@@ -183,7 +181,7 @@ data_color <- function(data,
     }
 
     color_fn <- rlang::enquo(color_fn)
-    color_fn <- rlang::eval_tidy(color_fn, data_df)
+    color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
     colors_cols <- color_fn(data_vals)
 
@@ -254,10 +252,10 @@ scale_apply_styles <- function(data,
                                styles,
                                rows_i) {
 
-  data_df <- attr(data, "data_df")
+  data_tbl <- dt_data_tbl_get(data = data)
 
   if (missing(rows_i)) {
-    rows_i <- seq(nrow(data_df))
+    rows_i <- seq(nrow(data_tbl))
   }
 
   if (length(styles) != length(rows_i)) {

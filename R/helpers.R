@@ -434,6 +434,10 @@ cells_grand_summary <- function(columns = NULL,
 #' @export
 md <- function(text) {
 
+  # if (text %>% tidy_grepl("\\.\\.[a-zA-Z0-9]*?\\.\\.")) {
+  #   text %>% tidy_gsub(pattern = "\\.\\.[a-zA-Z0-9]*?\\.\\.", "")
+  # }
+
   # Apply the `from_markdown` class
   class(text) <- "from_markdown"
   text

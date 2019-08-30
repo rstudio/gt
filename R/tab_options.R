@@ -243,8 +243,8 @@ tab_options <- function(data,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
 
-  # Extract the `opts_df` data frame object from `data`
-  opts_df <- attr(data, "opts_df", exact = TRUE)
+  # Extract the options table from `data`
+  opts_df <- dt_options_get(data = data)
 
   arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
   arg_vals <- mget(arg_names)
@@ -280,8 +280,8 @@ tab_options <- function(data,
         dplyr::anti_join(new_df, by = "parameter")
     )
 
-  # Write the modified `opts_df` to the `data` attribute
-  attr(data, "opts_df") <- opts_df
+  # Write the modified options table back to `data`
+  data <- dt_options_set(data = data, options = opts_df)
 
   data
 }

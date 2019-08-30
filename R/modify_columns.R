@@ -46,6 +46,8 @@ cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
                        columns = TRUE) {
 
+  data_tbl <- dt_data_tbl_get(data = data)
+
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
@@ -60,7 +62,7 @@ cols_align <- function(data,
     # names
     col_classes <-
       lapply(
-        attr(data, "data_df", exact = TRUE)[column_names], class) %>%
+        data_tbl[column_names], class) %>%
       lapply(`[[`, 1) %>%
       unlist()
 
@@ -77,10 +79,14 @@ cols_align <- function(data,
       "integer" = "center",
       "center") %>%
       unname()
+  } else {
+
+    align <- rep(align, length(column_names))
   }
 
-  # Set the alignment value for all columns in `columns`
-  attr(data, "boxh_df")["column_align", column_names] <- align
+  for (i in seq(column_names)) {
+    data <- data %>% dt_boxh_edit(var = column_names[i], column_align = align[i])
+  }
 
   data
 }
@@ -88,12 +94,11 @@ cols_align <- function(data,
 #' Set the widths of columns
 #'
 #' Manual specifications of column widths can be performed using the
-#' `cols_width()` function.  We choose which columns get specific widths (in
-#' pixels, usually by use of the [px()] helper function) and all other columns
-#' are assigned a default width value though the `.others` argument. Width
-#' assignments are supplied in `...` through two-sided formulas, where the
-#' left-hand side defines the target columns and the right-hand side is a single
-#' width value in pixels.
+#' `cols_width()` function. We choose which columns get specific widths (in
+#' pixels, usually by use of the [px()] helper function). Width assignments are
+#' supplied in `...` through two-sided formulas, where the left-hand side
+#' defines the target columns and the right-hand side is a single width value in
+#' pixels.
 #'
 #' Normally, column widths are automatically set to span across the width of the
 #' container (both table and container widths can be individually modified with
@@ -112,7 +117,9 @@ cols_align <- function(data,
 #'   [matches()], [one_of()], and [everything()] can be used in the LHS.
 #'   Subsequent expressions that operate on the columns assigned previously will
 #'   result in overwriting column width values (both in the same `cols_width()`
-#'   call and across separate calls).
+#'   call and across separate calls). All other columns can be assigned a
+#'   default width value by using `TRUE` or `everything()` on the left-hand
+#'   side.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @return An object of class `gt_tbl`.
 #' @examples
@@ -154,9 +161,6 @@ cols_width <- function(data,
          call. = FALSE)
   }
 
-  # Extract the `col_names` list from `data/boxh_df`
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
-
   all_formulas <-
     all(
       vapply(
@@ -191,10 +195,26 @@ cols_width <- function(data,
       rlang::f_rhs() %>%
       rlang::eval_tidy()
 
-    boxh_df["column_width", ][columns] <- width
+    for (column in columns) {
+      data <- data %>% dt_boxh_edit(var = column, column_width = list(width))
+    }
   }
 
-  attr(data, "boxh_df") <- boxh_df
+  unset_widths <-
+    data %>%
+    dt_boxh_get() %>%
+    .$column_width %>%
+    lapply(is.null) %>%
+    unlist()
+
+  if (any(unset_widths)) {
+
+    columns_unset <- (data %>% dt_boxh_get_vars())[unset_widths]
+
+    for (column in columns_unset) {
+      data <- data %>% dt_boxh_edit(var = column, column_width = list("100px"))
+    }
+  }
 
   data
 }
@@ -288,26 +308,31 @@ cols_label <- function(data,
     stop("All arguments to `cols_label()` must be named.", call. = FALSE)
   }
 
-  # Extract the `col_labels` list from `data`
-  col_labels <- attr(data, "col_labels", exact = TRUE)
-
   # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(labels_list) %in% names(col_labels))) {
+  if (!all(names(labels_list) %in% dt_boxh_get_vars(data = data))) {
     stop("All column names provided must exist in the input `data` table.")
   }
 
-  # Filter the list of labels by the names in `col_labels`
-  labels_list <- labels_list[names(labels_list) %in% names(col_labels)]
+  # Filter the list of labels by the var names in `data`
+  labels_list <-
+    labels_list[names(labels_list) %in% dt_boxh_get_vars(data = data)]
 
   # If no labels remain after filtering, return the data
   if (length(labels_list) == 0) {
     return(data)
   }
 
-  col_labels[names(labels_list)] <- labels_list
+  nm_labels_list <- names(labels_list)
 
-  # Set the `col_labels` attr with the `col_labels` object
-  attr(data, "col_labels") <- col_labels
+  for (i in seq_along(labels_list)) {
+
+    data <-
+      dt_boxh_edit_column_label(
+        data = data,
+        var = nm_labels_list[i],
+        column_label = labels_list[[i]]
+      )
+  }
 
   data
 }
@@ -370,11 +395,7 @@ cols_move <- function(data,
   # Get the `after` columns as a character vector
   after <- resolve_vars(var_expr = !!after, data = data)
 
-  # Extract the internal `boxh_df` table
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
-
-  # Extract the `data_df` df from `data`
-  data_df <- as.data.frame(data)
+  vars <- dt_boxh_get_vars(data = data)
 
   # Stop function if `after` contains multiple columns
   if (length(after) > 1) {
@@ -382,45 +403,34 @@ cols_move <- function(data,
          call. = FALSE)
   }
 
-  # Stop function if `after` doesn't exist in `data_df`
-  if (!(after %in% colnames(data_df))) {
+  # Stop function if `after` doesn't exist in `vars`
+  if (!(after %in% vars)) {
     stop("The column supplied to `after` doesn't exist in the input `data` table.",
          call. = FALSE)
   }
 
-  # Stop function if any of the `columns` doesn't exist in `data_df`
-  if (!all(columns %in% colnames(data_df))) {
-    stop("All `columns` must exist in the input `data` table.",
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
+
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist and be visible in the input `data` table.",
          call. = FALSE)
   }
 
-  # Filter the vector of column names by the
-  # column names actually in `boxh_df`
-  columns <- columns[which(columns %in% colnames(boxh_df))]
-
-  if (length(columns) == 0) {
-    return(data)
-  }
-
   # Get the remaining column names in the table
-  column_names <- base::setdiff(colnames(boxh_df), columns)
+  moving_columns <- setdiff(columns, after)
+  other_columns <- base::setdiff(vars, moving_columns)
 
   # Get the column index for where the set
   # of `columns` should be inserted after
-  column_index <- which(column_names == after)
+  after_index <- which(other_columns == after)
 
-  if (length(columns) > 0 & column_index != length(column_names)) {
+  new_vars <- append(other_columns, moving_columns, after = after_index)
 
-    attr(data, "boxh_df") <- attr(data, "boxh_df") %>%
-      dplyr::select(
-        column_names[1:column_index], columns,
-        column_names[(column_index + 1):length(column_names)])
-
-  } else if (length(columns) > 0 & column_index == length(column_names)) {
-
-    attr(data, "boxh_df") <- attr(data, "boxh_df") %>%
-      dplyr::select(column_names[1:column_index], columns)
-  }
+  data <- dt_boxh_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -485,30 +495,28 @@ cols_move_to_start <- function(data,
 
   columns <- enquo(columns)
 
+  vars <- dt_boxh_get_vars(data = data)
+
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
 
-  # Extract the internal `boxh_df` table
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
 
-  # Extract the `data_df` df from `data`
-  data_df <- as.data.frame(data)
-
-  # Stop function if any of the `columns` doesn't exist in `data_df`
-  if (!all(columns %in% colnames(data_df))) {
-    stop("All `columns` must exist in the input `data` table.",
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist and be visible in the input `data` table.",
          call. = FALSE)
   }
 
-  # Filter the vector of column names by the
-  # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(boxh_df))]
+  # Get the remaining column names in the table
+  other_columns <- base::setdiff(vars, columns)
 
-  if (length(columns) == 0) {
-    return(data)
-  }
+  new_vars <- append(other_columns, columns, after = 0)
 
-  attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns, everything())
+  data <- dt_boxh_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -572,33 +580,28 @@ cols_move_to_end <- function(data,
 
   columns <- enquo(columns)
 
+  vars <- dt_boxh_get_vars(data = data)
+
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
 
-  # Extract the internal `boxh_df` table
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
 
-  # Extract the `data_df` df from `data`
-  data_df <- as.data.frame(data)
-
-  # Stop function if any of the `columns` doesn't exist in `data_df`
-  if (!all(columns %in% colnames(data_df))) {
-    stop("All `columns` must exist in the input `data` table.",
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist and be visible in the input `data` table.",
          call. = FALSE)
   }
 
-  # Filter the vector of column names by the
-  # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(boxh_df))]
+  # Get the remaining column names in the table
+  other_columns <- base::setdiff(vars, columns)
 
-  if (length(columns) == 0) {
-    return(data)
-  }
+  new_vars <- append(other_columns, columns)
 
-  # Organize a vector of column names for `dplyr::select()`
-  columns <- c(base::setdiff(colnames(boxh_df), columns), columns)
-
-  attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
+  data <- dt_boxh_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -674,130 +677,21 @@ cols_hide <- function(data,
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
 
-  boxh_df <- attr(data, "boxh_df")
+  vars <- dt_boxh_get_vars(data = data)
 
-  # Filter the vector of column names by the
-  # column names actually in the input df
-  columns <- columns[which(columns %in% colnames(boxh_df))]
-
+  # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    return(data)
+    stop("Columns must be provided.", call. = FALSE)
   }
 
-  # Organize a vector of column names for `dplyr::select()`
-  columns <- c(base::setdiff(colnames(boxh_df), columns))
-
-  attr(data, "boxh_df") <- attr(data, "boxh_df") %>% dplyr::select(columns)
-
-  data
-}
-
-#' Create group names and column labels via delimited names
-#'
-#' This function will split selected delimited column names such that the first
-#' components (LHS) are promoted to being spanner column labels, and the
-#' secondary components (RHS) will become the column labels. Please note that
-#' reference to individual columns must continue to be the column names from the
-#' input table data (which are unique by necessity).
-#'
-#' If we look to the column names in the `iris` dataset as an example of how
-#' `cols_split_delim()` might be useful, we find the names `Sepal.Length`,
-#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
-#' easy to see that the `Sepal` and `Petal` can group together the repeated
-#' common `Length` and `Width` values. In your own datasets, we can avoid a
-#' lengthy relabeling with [cols_label()] if column names can be fashioned
-#' beforehand to contain both the spanner column label and the column label. An
-#' additional advantage is that the column names in the input table data remain
-#' unique even though there may eventually be repeated column labels in the
-#' rendered output table).
-#'
-#' @inheritParams cols_align
-#' @inheritParams tab_spanner
-#' @param delim The delimiter to use to split an input column name. The
-#'   delimiter supplied will be autoescaped for the internal splitting
-#'   procedure. The first component of the split will become the group name and
-#'   the second component will be the column label.
-#' @param columns An optional vector of column names that this operation should
-#'   be limited to. The default is to consider all columns in the table.
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `iris` to create a gt table; split
-#' # any columns that are dot-separated
-#' # between column spanner labels (first
-#' # part) and column labels (second part)
-#' tab_1 <-
-#'   iris %>%
-#'   dplyr::group_by(Species) %>%
-#'   dplyr::slice(1:4) %>%
-#'   gt() %>%
-#'   cols_split_delim(delim = ".")
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_split_delim_1.svg}{options: width=100\%}}
-#'
-#' @family column modification functions
-#' @export
-cols_split_delim <- function(data,
-                             delim,
-                             columns = NULL,
-                             gather = TRUE) {
-
-  columns <- enquo(columns)
-
-  # Get all of the columns in the dataset
-  all_cols <- data %>% dt_boxh_get_vars()
-
-  # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
-
-  if (!is.null(columns)) {
-    colnames <- base::intersect(all_cols, columns)
-  } else {
-    colnames <- all_cols
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
   }
 
-  if (length(colnames) == 0) {
-    return(data)
-  }
-
-  colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
-
-  if (any(colnames_has_delim)) {
-
-    colnames_with_delim <- colnames[colnames_has_delim]
-
-    split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
-
-    spanners <- vapply(split_colnames, `[[`, character(1), 1)
-
-    new_labels <-
-      lapply(split_colnames, `[[`, -1) %>%
-      vapply(paste0, FUN.VALUE = character(1), collapse = delim)
-
-    for (i in seq_along(split_colnames)) {
-
-      spanners_i <- spanners[i]
-      new_labels_i <- new_labels[i]
-      var_i <- colnames_with_delim[i]
-
-      data <-
-        data %>%
-        dt_boxh_edit(var = var_i, column_label = new_labels_i)
-    }
-
-    spanner_var_list <- split(colnames_with_delim, spanners)
-
-    for (spanner_label in names(spanner_var_list)) {
-
-      data <-
-        data %>%
-        dt_spanners_add(
-          vars = spanner_var_list[[spanner_label]],
-          spanner_label = spanner_label,
-          gather = gather
-        )
-    }
+  for (column in columns) {
+    data <- data %>% dt_boxh_edit(var = column, type = "hidden")
   }
 
   data
@@ -843,13 +737,13 @@ cols_split_delim <- function(data,
 #'   dplyr::select(-volume, -adj_close) %>%
 #'   gt() %>%
 #'   cols_merge(
-#'     col_1 = vars(open),
-#'     col_2 = vars(close),
+#'     columns = vars(open, close),
+#'     hide_columns = vars(close),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_merge(
-#'     col_1 = vars(low),
-#'     col_2 = vars(high),
+#'     columns = vars(low, high),
+#'     hide_columns = vars(high),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_label(
@@ -864,49 +758,43 @@ cols_split_delim <- function(data,
 #' @import rlang
 #' @export
 cols_merge <- function(data,
-                       col_1,
-                       col_2,
+                       columns,
+                       hide_columns = NULL,
                        pattern = "{1} {2}") {
 
-  col_1 <- enquo(col_1)
-  col_2 <- enquo(col_2)
+  columns <- enquo(columns)
 
-  # Get the columns supplied in `col_1` as a character vector
-  col_1 <- resolve_vars(var_expr = !!col_1, data = data)
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
 
-  # Get the columns supplied in `col_2` as a character vector
-  col_2 <- resolve_vars(var_expr = !!col_2, data = data)
+  if (!is.null(hide_columns)) {
 
-  # Create a named character vector using
-  # `col_1` and `col_2`
-  col_1 <- stats::setNames(col_1, nm = col_2)
+    hide_columns <- enquo(hide_columns)
 
-  # Create and store a list of column pairs
-  if ("col_merge" %in% names(attributes(data))) {
+    # Get the columns supplied in `hide_columns` as a character vector
+    hide_columns <- resolve_vars(var_expr = !!hide_columns, data = data)
 
-    if (col_1 %in% unname(attr(data, "col_merge")[["col_1"]]) |
-        col_2 %in% names(attr(data, "col_merge")[["col_1"]])) {
-      return(data)
+    hide_columns_from_supplied <- base::intersect(hide_columns, columns)
+
+    if (length(base::setdiff(hide_columns, columns) > 0)) {
+      warning("Only the columns supplied in `columns` will be hidden.\n",
+              " * use `cols_hide()` to hide any out of scope columns",
+              call. = FALSE)
     }
 
-    attr(data, "col_merge")[["pattern"]] <-
-      c(attr(data, "col_merge")[["pattern"]], pattern)
-
-    attr(data, "col_merge")[["sep"]] <-
-      c(attr(data, "col_merge")[["sep"]], "")
-
-    attr(data, "col_merge")[["col_1"]] <-
-      c(attr(data, "col_merge")[["col_1"]], col_1)
-
-  } else {
-
-    attr(data, "col_merge") <-
-      list(
-        pattern = pattern,
-        sep = "",
-        col_1 = col_1
-      )
+    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
   }
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = columns,
+        type = "merge",
+        pattern = pattern
+      )
+    )
 
   data
 }
@@ -985,52 +873,19 @@ cols_merge <- function(data,
 #' @export
 cols_merge_uncert <- function(data,
                               col_val,
-                              col_uncert) {
+                              col_uncert,
+                              autohide = TRUE) {
 
-  # Set the formatting pattern
-  pattern <- "{1} \u00B1 {2}"
+  # Use a predefined separator
+  sep <- " \u00B1 "
 
-  col_val <- enquo(col_val)
-  col_uncert <- enquo(col_uncert)
-
-  # Get the columns supplied in `col_val` as a character vector
-  col_val <- resolve_vars(var_expr = !!col_val, data = data)
-
-  # Get the columns supplied in `col_val` as a character vector
-  col_uncert <- resolve_vars(var_expr = !!col_uncert, data = data)
-
-  # Create a named character vector using
-  # `col_val` and `col_uncert`
-  col_val <- stats::setNames(col_val, nm = col_uncert)
-
-  # Create and store a list of column pairs
-  if ("col_merge" %in% names(attributes(data))) {
-
-    if (col_val %in% unname(attr(data, "col_merge")[["col_1"]]) |
-        col_uncert %in% names(attr(data, "col_merge")[["col_1"]])) {
-      return(data)
-    }
-
-    attr(data, "col_merge")[["pattern"]] <-
-      c(attr(data, "col_merge")[["pattern"]], pattern)
-
-    attr(data, "col_merge")[["sep"]] <-
-      c(attr(data, "col_merge")[["sep"]], "")
-
-    attr(data, "col_merge")[["col_1"]] <-
-      c(attr(data, "col_merge")[["col_1"]], col_val)
-
-  } else {
-
-    attr(data, "col_merge") <-
-      list(
-        pattern = pattern,
-        sep = "",
-        col_1 = col_val
-      )
-  }
-
-  data
+  cols_merge_range(
+    data = data,
+    col_begin = col_val,
+    col_end = col_uncert,
+    sep = sep,
+    autohide = autohide
+  )
 }
 
 #' Merge two columns to a value range column
@@ -1043,7 +898,7 @@ cols_merge_uncert <- function(data,
 #' the output table.
 #'
 #' This function could be somewhat replicated using [cols_merge()], however,
-#' `cols_merge_range()` employs the following specialized semantics for `NA`
+#' `cols_merge_range()` employs the following specialized operations for `NA`
 #' handling:
 #'
 #' \enumerate{
@@ -1089,7 +944,8 @@ cols_merge_uncert <- function(data,
 #'   gt() %>%
 #'   cols_merge_range(
 #'     col_begin = vars(mpg_c),
-#'     col_end = vars(mpg_h)) %>%
+#'     col_end = vars(mpg_h)
+#'   ) %>%
 #'   cols_label(
 #'     mpg_c = md("*MPG*")
 #'   )
@@ -1103,10 +959,11 @@ cols_merge_uncert <- function(data,
 cols_merge_range <- function(data,
                              col_begin,
                              col_end,
-                             sep = "---") {
+                             sep = "--",
+                             autohide = TRUE) {
 
   # Set the formatting pattern
-  pattern <- "{1} {sep} {2}"
+  pattern <- "{1}{sep}{2}"
 
   col_begin <- enquo(col_begin)
   col_end <- enquo(col_end)
@@ -1117,35 +974,22 @@ cols_merge_range <- function(data,
   # Get the columns supplied in `col_end` as a character vector
   col_end <- resolve_vars(var_expr = !!col_end, data = data)
 
-  # Create a named character vector using
-  # `col_begin` and `col_end`
-  col_begin <- stats::setNames(col_begin, nm = col_end)
+  columns <- c(col_begin, col_end)
 
-  # Create and store a list of column pairs
-  if ("col_merge" %in% names(attributes(data))) {
-
-    if (col_begin %in% unname(attr(data, "col_merge")[["col_1"]]) |
-        col_end %in% names(attr(data, "col_merge")[["col_1"]])) {
-      return(data)
-    }
-
-    attr(data, "col_merge")[["pattern"]] <-
-      c(attr(data, "col_merge")[["pattern"]], pattern)
-
-    attr(data, "col_merge")[["sep"]] <-
-      c(attr(data, "col_merge")[["sep"]], sep)
-
-    attr(data, "col_merge")[["col_1"]] <-
-      c(attr(data, "col_merge")[["col_1"]], col_begin)
-
-  } else {
-
-    attr(data, "col_merge") <-
-      list(
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = columns,
+        type = "merge_range",
         pattern = pattern,
-        sep = sep,
-        col_1 = col_begin
+        sep = sep
       )
+    )
+
+  if (isTRUE(autohide)) {
+    data <- data %>% cols_hide(columns = col_end)
   }
 
   data

@@ -79,7 +79,6 @@ many_styles_tbl <-
   ) %>%
   tab_style(
     style = cell_fill(color = "pink"),
-
     locations = cells_column_labels(columns = "hp")
   ) %>%
   tab_style(

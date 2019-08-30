@@ -185,6 +185,12 @@ process_text <- function(text,
     return(text)
   }
 
+  if (is.list(text)) {
+    if (context %in% names(text)) {
+     return(process_text(text[[context]], context))
+    }
+  }
+
   if (context == "html") {
 
     # Text processing for HTML output
@@ -824,29 +830,6 @@ tidy_grepl <- function(x, pattern) {
     FUN.VALUE = logical(1),
     USE.NAMES = FALSE
   )
-}
-
-#' An options setter for the `opts_df` data frame
-#'
-#' @param opts_df The `opts_df` data frame.
-#' @param option The option name; a unique value in the `parameter` column of
-#'   `opts_df`.
-#' @param value The value to set for the given `option`.
-#' @noRd
-opts_df_set <- function(opts_df, option, value) {
-
-  opts_df$value[[which(opts_df$parameter == option)]] <- value
-
-  opts_df
-}
-
-#' An options getter for the `opts_df` data frame
-#'
-#' @inheritParams opts_df_set
-#' @noRd
-opts_df_get <- function(opts_df, option) {
-
-  opts_df$value[[which(opts_df$parameter == option)]]
 }
 
 #' Upgrader function for `cells_*` objects

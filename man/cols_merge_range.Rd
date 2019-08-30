@@ -4,7 +4,7 @@
 \alias{cols_merge_range}
 \title{Merge two columns to a value range column}
 \usage{
-cols_merge_range(data, col_begin, col_end, sep = "---")
+cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -28,7 +28,7 @@ the output table.
 }
 \details{
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
-\code{cols_merge_range()} employs the following specialized semantics for \code{NA}
+\code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
 
 \enumerate{
@@ -74,7 +74,8 @@ tab_1 <-
   gt() \%>\%
   cols_merge_range(
     col_begin = vars(mpg_c),
-    col_end = vars(mpg_h)) \%>\%
+    col_end = vars(mpg_h)
+  ) \%>\%
   cols_label(
     mpg_c = md("*MPG*")
   )
@@ -86,7 +87,7 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}},
-  \code{\link{cols_width}}
+  \code{\link{cols_move}}, \code{\link{cols_width}},
+  \code{\link{tab_spanner_delim}}
 }
 \concept{column modification functions}

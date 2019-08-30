@@ -94,7 +94,29 @@ set_transform <- function(loc, data, fn) {
 # input, chr vector of same length as output), replace the contents in the
 # specified location with fn(contents). The `fn` may be invoked several times,
 # as the location may not be naturally vectorizable as a single call. The return
-# value is the transformed data_attr.
-text_transform_at_location <- function(loc, data_attr, fn = identity) {
+# value is the transformed `data`
+text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
+}
+
+text_transform_at_location.cells_data <- function(loc,
+                                                  data,
+                                                  fn = identity) {
+
+  output_tbl <- dt_output_tbl_get(data = data)
+
+  loc <- to_output_location(loc, data_attr)
+  output_tbl <- data_attr[["output_tbl"]]
+
+  # Do one vectorized operation per column
+  for (col in loc$colnames) {
+
+    if (col %in% colnames(output_tbl)) {
+      output_tbl[[col]][loc$rows] <- fn(output_tbl[[col]][loc$rows])
+    }
+  }
+
+  data_attr$output_tbl <- output_tbl
+
+  data_attr
 }

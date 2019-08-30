@@ -39,13 +39,13 @@ as_rtf <- function(data) {
   #   this will be one of the main objects going forward
   data_attr <- attributes(data)
 
-  # Check the names of objects in `data_attr`
-  checkmate::assert_names(
-    x = names(data_attr),
-    must.include = c(
-      "names", "row.names", "class", "boxh_df", "stub_df",
-      "footnotes_df", "styles_df", "rows_df", "cols_df",
-      "arrange_groups", "opts_df", "formats"))
+  # # Check the names of objects in `data_attr`
+  # checkmate::assert_names(
+  #   x = names(data_attr),
+  #   must.include = c(
+  #     "names", "row.names", "class", "boxh_df", "stub_df",
+  #     "footnotes_df", "styles_df", "rows_df", "cols_df",
+  #     "arrange_groups", "opts_df", "formats"))
 
   # Move original data frame to `data_df`
   data_df <- as.data.frame(data)
@@ -108,7 +108,7 @@ as_rtf <- function(data) {
   # Get the `summary_list` object
   summary_list <- data_attr$summary
 
-  # Initialize `output_df`
+  # Initialize `output_tbl`
   output_df <- initialize_output_df(data_df)
 
   # Create `output_df` with rendered values
@@ -125,7 +125,7 @@ as_rtf <- function(data) {
   columns_df <- get_column_reorder_df(cols_df, boxh_df)
 
   # Reassemble the rows and columns of `data_df` in the correct order
-  output_df <- reassemble_output_df(output_df, rows_df, columns_df)
+  output_df <- reassemble_output_tbl(output_df, rows_df, columns_df)
 
   # Get the `groups_df` data frame, which is a rearranged representation
   # of the stub `groupname` and `rowname` columns

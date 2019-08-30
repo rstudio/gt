@@ -1,14 +1,14 @@
 
 resolve_location.cells_column_labels <- function(loc, data_attr) {
 
-  data_df <- data_attr[["data_df"]]
+  data_tbl <- data_attr[["_data_tbl"]]
 
   if (!is.null(loc$columns)) {
 
     loc$colnames <-
       resolve_vars(
         var_expr = !!loc$columns,
-        data = data_df)
+        data = data_tbl)
   }
 
   # TODO: for now, when groups is set to TRUE, the

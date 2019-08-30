@@ -62,34 +62,36 @@ create_table_start_l <- function(col_alignment) {
 #' Create the columns component of a table
 #'
 #' @noRd
-create_columns_component_l <- function(boxh_df,
-                                       output_df,
-                                       stub_available,
-                                       spanners_present,
-                                       stubhead,
-                                       col_alignment) {
+create_columns_component_l <- function(data) {
+
+  boxh <- dt_boxh_get(data = data)
+  output_tbl <- dt_output_tbl_get(data = data)
+  stub_available <- attr(data, "stub_available", exact = TRUE)
+  spanners_present <- attr(data, "spanners_present", exact = TRUE)
+  stubh <- dt_stubh_get(data = data)
+
+  col_alignment <- boxh$column_align
 
   # Get the headings
-  headings <- boxh_df["column_label", ] %>% unlist() %>% unname()
+  headings <- boxh$column_label %>% unlist()
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
-  if (stub_available && length(stubhead) > 0) {
+  if (stub_available && length(stubh$label) > 0) {
 
-    headings <- prepend_vec(headings, stubhead$label)
+    headings <- prepend_vec(headings, stubh$label)
 
   } else if (stub_available) {
 
     headings <- prepend_vec(headings, "")
   }
 
-  table_col_headings <-
-    paste0(latex_heading_row(content = headings), collapse = "")
+  table_col_headings <- paste0(latex_heading_row(content = headings), collapse = "")
 
   if (spanners_present) {
 
     # Get vector of group labels (spanners)
-    spanners <- boxh_df["group_label", ] %>% unlist() %>% unname()
+    spanners <- dt_spanners_print(data = data)
 
     # Promote column labels to the group level wherever the
     # spanner label is NA
@@ -150,14 +152,19 @@ create_columns_component_l <- function(boxh_df,
 }
 
 #' @noRd
-create_body_component_l <- function(row_splits,
-                                    groups_rows_df,
-                                    col_alignment,
-                                    stub_available,
-                                    summaries_present,
-                                    list_of_summaries,
-                                    n_rows,
-                                    n_cols) {
+create_body_component_l <- function(data,
+                                    row_splits) {
+
+  boxh <- dt_boxh_get(data = data)
+  output_tbl <- dt_output_tbl_get(data = data)
+  groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
+  col_alignment <- col_alignment <- boxh$column_align
+  stub_available <- attr(data, "stub_available", exact = TRUE)
+  summaries_present <- attr(data, "summaries_present", exact = TRUE)
+  list_of_summaries <- attr(data, "list_of_summaries", exact = TRUE)
+
+  n_rows <- nrow(output_tbl)
+  n_cols <- ncol(output_tbl)
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group))) {
@@ -197,17 +204,19 @@ create_table_end_l <- function() {
 }
 
 #' @noRd
-create_footnote_component_l <- function(footnotes_resolved,
-                                        opts_df) {
+create_footnote_component_l <- function(data) {
+
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  opts_df <- dt_options_get(data = data)
 
   # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component
-  if (nrow(footnotes_resolved) == 0) {
+  if (nrow(footnotes_tbl) == 0) {
     return("")
   }
 
   footnotes_tbl <-
-    footnotes_resolved %>%
+    footnotes_tbl %>%
     dplyr::select(fs_id, text) %>%
     dplyr::distinct()
 
@@ -238,7 +247,9 @@ create_footnote_component_l <- function(footnotes_resolved,
 }
 
 #' @noRd
-create_source_note_component_l <- function(source_note) {
+create_source_note_component_l <- function(data) {
+
+  source_note <- dt_source_notes_get(data = data)
 
   # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component

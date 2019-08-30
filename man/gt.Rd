@@ -5,7 +5,7 @@
 \title{Create a \pkg{gt} table object}
 \usage{
 gt(data, rowname_col = "rowname", groupname_col = "groupname",
-  rownames_to_stub = FALSE, id = random_id(),
+  rownames_to_stub = FALSE, auto_align = TRUE, id = random_id(),
   stub_group.sep = getOption("gt.stub_group.sep", " - "))
 }
 \arguments{

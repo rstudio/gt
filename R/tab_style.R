@@ -174,22 +174,28 @@ set_style.cells_title <- function(loc, data, style) {
 
   if ((loc$groups %>% rlang::eval_tidy()) == "title") {
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "title", locnum = 1,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = list(style)
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "title",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 1,
+        rownum = NA_integer_,
+        styles = style
       )
 
   } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "subtitle", locnum = 2,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, styles = list(style)
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "subtitle",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 2,
+        rownum = NA_integer_,
+        styles = style
       )
   }
 
@@ -198,12 +204,15 @@ set_style.cells_title <- function(loc, data, style) {
 
 set_style.cells_stubhead <- function(loc, data, style) {
 
-  attr(data, "styles_df") <-
-    add_location_row_styles(
-      data,
-      locname = loc$groups, locnum = 2.5,
-      grpname = NA_character_, colname = NA_character_,
-      rownum = NA_character_, styles = list(style)
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = loc$groups,
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 2.5,
+      rownum = NA_integer_,
+      styles = style
     )
 
   data
@@ -219,24 +228,30 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
     colnames <- colnames(as.data.frame(data))[cols]
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "columns_columns", locnum = 4,
-        grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, styles = list(style)
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "columns_columns",
+        grpname = NA_character_,
+        colname = colnames,
+        locnum = 4,
+        rownum = NA_integer_,
+        styles = style
       )
 
   } else if (!is.null(loc$groups)) {
 
     groups <- loc$groups %>% rlang::eval_tidy()
 
-    attr(data, "styles_df") <-
-      add_location_row_styles(
-        data,
-        locname = "columns_groups", locnum = 3,
-        grpname = groups, colname = NA_character_,
-        rownum = NA_character_, styles = list(style)
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "columns_groups",
+        grpname = groups,
+        colname = NA_character_,
+        locnum = 3,
+        rownum = NA_integer_,
+        styles = style
       )
   }
 
@@ -257,12 +272,15 @@ set_style.cells_group <- function(loc, data, style) {
 
   groups <- row_groups[resolved_row_groups_idx]
 
-  attr(data, "styles_df") <-
-    add_location_row_styles(
-      data,
-      locname = "stub_groups", locnum = 5,
-      grpname = groups, colname = NA_character_,
-      rownum = NA_character_, styles = list(style)
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "stub_groups",
+      grpname = groups,
+      colname = NA_character_,
+      locnum = 5,
+      rownum = NA_integer_,
+      styles = style
     )
 
   data
@@ -277,12 +295,15 @@ set_style.cells_data <- function(loc, data, style) {
 
   colnames <- colnames(as.data.frame(data))[cols]
 
-  attr(data, "styles_df") <-
-    add_location_row_styles(
-      data,
-      locname = "data", locnum = 5,
-      grpname = NA_character_, colname = colnames,
-      rownum = rows, styles = list(style)
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "data",
+      grpname = NA_character_,
+      colname = colnames,
+      locnum = 5,
+      rownum = rows,
+      styles = style
     )
 
   data
@@ -294,12 +315,15 @@ set_style.cells_stub <- function(loc, data, style) {
 
   rows <- resolved$rows
 
-  attr(data, "styles_df") <-
-    add_location_row_styles(
-      data,
-      locname = "stub", locnum = 5,
-      grpname = NA_character_, colname = NA_character_,
-      rownum = rows, styles = list(style)
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "stub",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 5,
+      rownum = rows,
+      styles = style
     )
 
   data

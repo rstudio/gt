@@ -4,10 +4,19 @@
 \alias{cols_merge}
 \title{Merge two columns to a single column}
 \usage{
-cols_merge(data, col_1, col_2, pattern = "{1} {2}")
+cols_merge(data, columns, hide_columns = NULL, pattern = "{1} {2}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{columns}{An optional vector of column names for which the alignment
+should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}), then
+the chosen alignment affects all columns.}
+
+\item{pattern}{A formatting pattern that specifies the arrangement of the
+\code{col_1} and \code{col_1} values and any string literals. The \code{col_1} column is
+represented as \code{{1}} whereas \code{col_2} is \code{{2}}. All other characters are
+taken to be string literals.}
 
 \item{col_1}{A retained column that contains values to be merged with those
 in \code{col_2}.}
@@ -15,11 +24,6 @@ in \code{col_2}.}
 \item{col_2}{A column that contains values to be merged with those in
 \code{col_1}. This column will be discarded but is still useful as a reference
 in other \pkg{gt} functions.}
-
-\item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{col_1} and \code{col_1} values and any string literals. The \code{col_1} column is
-represented as \code{{1}} whereas \code{col_2} is \code{{2}}. All other characters are
-taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -58,13 +62,13 @@ tab_1 <-
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
   cols_merge(
-    col_1 = vars(open),
-    col_2 = vars(close),
+    columns = vars(open, close),
+    hide_columns = vars(close),
     pattern = "{1}&mdash;{2}"
   ) \%>\%
   cols_merge(
-    col_1 = vars(low),
-    col_2 = vars(high),
+    columns = vars(low, high),
+    hide_columns = vars(high),
     pattern = "{1}&mdash;{2}"
   ) \%>\%
   cols_label(
@@ -80,7 +84,7 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}},
-  \code{\link{cols_width}}
+  \code{\link{cols_move}}, \code{\link{cols_width}},
+  \code{\link{tab_spanner_delim}}
 }
 \concept{column modification functions}

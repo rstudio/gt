@@ -53,15 +53,12 @@ as.tags.gt_tbl <- function(x, ...) {
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
-  # Extract the `opts_df` data frame object from `x`
-  opts_df <- attr(x, "opts_df", exact = TRUE)
-
   # Get options related to the enclosing <div>
-  id <- opts_df_get(opts_df, option = "table_id")
-  container_overflow_x <- opts_df_get(opts_df, option = "container_overflow_x")
-  container_overflow_y <- opts_df_get(opts_df, option = "container_overflow_y")
-  container_width <- opts_df_get(opts_df, option = "container_width")
-  container_height <- opts_df_get(opts_df, option = "container_height")
+  id <- x %>% dt_options_get_value(option = "table_id")
+  container_overflow_x <- x %>% dt_options_get_value(option = "container_overflow_x")
+  container_overflow_y <- x %>% dt_options_get_value(option = "container_overflow_y")
+  container_width <- x %>% dt_options_get_value(option = "container_width")
+  container_height <- x %>% dt_options_get_value(option = "container_height")
 
   # If the ID hasn't been set, set `id` as NULL
   if (is.na(id)) {

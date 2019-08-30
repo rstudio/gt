@@ -103,6 +103,9 @@ summary_rows <- function(data,
   # Get the `stub_df` object from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
+  data <- is_stub_available(data)
+  stub_available <- attr(data, "stub_available")
+
   # Resolve the column names
   columns <- enquo(columns)
   columns <- resolve_vars(var_expr = !!columns, data = data)
@@ -110,7 +113,7 @@ summary_rows <- function(data,
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
-  if (!is_stub_available(stub_df) && is.null(groups)) {
+  if (!stub_available && is.null(groups)) {
 
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- ""
@@ -128,23 +131,18 @@ summary_rows <- function(data,
     summary_labels <- names(summary_labels)
   }
 
-  # Append list of summary inputs to the
-  # `summary` attribute
-  attr(data, "summary") <-
-    c(
-      attr(data, "summary"),
-      list(
-        list(
-          groups = groups,
-          columns = columns,
-          fns = fns,
-          summary_labels = summary_labels,
-          missing_text = missing_text,
-          formatter = formatter,
-          formatter_options = formatter_options
-        )
-      )
+  summary_list <-
+    list(
+      groups = groups,
+      columns = columns,
+      fns = fns,
+      summary_labels = summary_labels,
+      missing_text = missing_text,
+      formatter = formatter,
+      formatter_options = formatter_options
     )
+
+  data <- dt_summary_add(data = data, summary = summary_list)
 
   data
 }
@@ -179,7 +177,7 @@ add_summary_location_row <- function(loc,
     stub_df[, "groupname"] %>%
     unique()
 
-  summary_data <- attr(data, "summary", exact = TRUE)
+  summary_data <- dt_summary_get(data = data)
 
   summary_data_summaries <-
     vapply(
@@ -242,28 +240,28 @@ add_summary_location_row <- function(loc,
 
     if (df_type == "footnotes_df") {
 
-      attr(data, df_type) <-
-        add_location_row_footnotes(
-          data,
+      data <-
+        dt_footnotes_add(
+          data = data,
           locname = "summary_cells",
-          locnum = 5,
           grpname = group,
           colname = columns,
+          locnum = 5,
           rownum = rows,
           footnotes = style
         )
 
     } else {
 
-      attr(data, df_type) <-
-        add_location_row_styles(
-          data,
+      data <-
+        dt_styles_add(
+          data = data,
           locname = "summary_cells",
-          locnum = 5,
           grpname = group,
           colname = columns,
+          locnum = 5,
           rownum = rows,
-          styles = list(style)
+          styles = style
         )
     }
   }
@@ -276,14 +274,13 @@ add_grand_summary_location_row <- function(loc,
                                            style,
                                            df_type = "styles_df") {
 
-  summary_data <- attr(data, "summary", exact = TRUE)
+  summary_data <- dt_summary_get(data = data)
 
   grand_summary_labels <-
     lapply(summary_data, function(summary_data_item) {
       if (is.null(summary_data_item$groups)) {
         return(summary_data_item$summary_labels)
       }
-
       NULL
     }) %>%
     unlist() %>%
@@ -316,28 +313,28 @@ add_grand_summary_location_row <- function(loc,
 
   if (df_type == "footnotes_df") {
 
-    attr(data, df_type) <-
-      add_location_row_footnotes(
-        data,
+    data <-
+      dt_footnotes_add(
+        data = data,
         locname = "grand_summary_cells",
-        locnum = 6,
         grpname = grand_summary_col,
         colname = columns,
+        locnum = 6,
         rownum = rows,
         footnotes = style
       )
 
   } else {
 
-    attr(data, df_type) <-
-      add_location_row_styles(
-        data,
+    data <-
+      dt_styles_add(
+        data = data,
         locname = "grand_summary_cells",
-        locnum = 6,
         grpname = grand_summary_col,
         colname = columns,
+        locnum = 6,
         rownum = rows,
-        styles = list(style)
+        styles = style
       )
   }
 

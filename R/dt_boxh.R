@@ -37,9 +37,9 @@ dt_boxh_init <- function(data) {
     # row_group_label = lapply(seq_along(names(data)), function(x) NULL),
     # The presentation label, which is a list of labels by
     # render context (e.g., HTML, LaTeX, etc.)
-    column_label = empty_list,
+    column_label = as.list(names(data)),
     # The alignment of the column ("left", "right", "center")
-    column_align = NA_character_,
+    column_align = "center",
     # The width of the column in `px`
     column_width = empty_list,
     # The widths at which the column disappears from view (this is
@@ -70,11 +70,33 @@ dt_boxh_edit <- function(data, var, ...) {
     dt_boxh_set(boxh = ., data = data)
 }
 
+dt_boxh_edit_column_label <- function(data, var, column_label) {
+
+  dt_boxh_edit(data, var, column_label = list(column_label))
+}
+
 dt_boxh_get_vars <- function(data) {
 
   data %>%
     dt_boxh_get() %>%
     magrittr::extract2("var")
+}
+
+dt_boxh_get_vars_default <- function(data) {
+
+  data %>%
+    dt_boxh_get() %>%
+    dplyr::filter(type == "default") %>%
+    magrittr::extract2("var")
+}
+
+dt_boxh_get_vars_labels_default <- function(data) {
+
+  data %>%
+    dt_boxh_get() %>%
+    dplyr::filter(type == "default") %>%
+    magrittr::extract2("column_label") %>%
+    unlist()
 }
 
 check_names_dt_boxh_expr <- function(expr) {
@@ -93,4 +115,36 @@ check_vars_dt_boxh <- function(var, dt_boxh) {
     stop("The `var` value must be value in `dt_boxh$var`.",
          call. = FALSE)
   }
+}
+
+dt_boxh_build <- function(data, context) {
+
+  boxh <- dt_boxh_get(data)
+
+  boxh$column_label <-
+    lapply(boxh$column_label, function(label) process_text(label, context))
+
+  data <- dt_boxh_set(data = data, boxh = boxh)
+
+  data
+}
+
+dt_boxh_set_var_order <- function(data, vars) {
+
+  boxh <- dt_boxh_get(data)
+
+  if (length(vars) != nrow(boxh) ||
+      length(unique(vars)) != nrow(boxh) ||
+      !all(vars %in% boxh$var)
+      ) {
+    stop("The length of `vars` must be the same the number of rows in `_boxh.")
+  }
+
+  order_vars <- vapply(vars, function(x) {which(boxh$var == x)}, numeric(1))
+
+  boxh <- boxh[order_vars, ]
+
+  data <- dt_boxh_set(data = data, boxh = boxh)
+
+  data
 }

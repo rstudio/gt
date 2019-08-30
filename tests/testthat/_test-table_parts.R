@@ -42,7 +42,7 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
     expect_equal("test heading")
 
   # Expect that the number of rows with `class='gt_row gt_right'` is `3`
@@ -94,7 +94,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Expect that the `the mtcars` content appears first in
   # the `data-type='column_heading'` series
   (tbl_html %>%
-      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']"))[1] %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_left']")) %>%
     expect_equal("the mtcars")
 })
 

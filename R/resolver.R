@@ -57,10 +57,6 @@ resolve_cells_data <- function(data,
 resolve_cells_stub <- function(data,
                                object) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
-
-  # Get the `stub_df` data frame from `data`
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
   #
@@ -193,7 +189,7 @@ resolve_data_vals_idx <- function(var_expr,
   } else if (is.character(resolved)) {
 
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
-    resolved <- which(vals %in% resolved)
+    resolved <- resolve_vals(resolved = resolved, vals = vals)
 
   } else if (is_quosures(resolved)) {
 
@@ -204,11 +200,22 @@ resolve_data_vals_idx <- function(var_expr,
     }
 
     resolved <- vapply(resolved, quo_get_expr_char, character(1))
-    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
-    resolved <- which(vals %in% resolved)
+    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved)) %>% unname()
+    resolved <- resolve_vals(resolved = resolved, vals = vals)
   }
 
   resolved
+}
+
+resolve_vals <- function(resolved, vals) {
+
+  resolved_idx <- c()
+
+  for (res in resolved) {
+    resolved_idx <- c(resolved_idx, which(vals %in% res))
+  }
+
+  resolved_idx
 }
 
 #' Resolve expressions to obtain column names
@@ -222,10 +229,10 @@ resolve_vars <- function(var_expr,
   var_expr <- enquo(var_expr)
 
   # Obtain the data frame of the input table data
-  data_df <- as.data.frame(data)
+  data_tbl <- dt_data_tbl_get(data = data)
 
   # Collect column names from the input table data
-  column_names <- colnames(data_df)
+  column_names <- colnames(data_tbl)
 
   # Use `resolve_vars_idx()` to obtain a vector
   # column indices

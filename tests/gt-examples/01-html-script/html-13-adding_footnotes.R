@@ -19,21 +19,38 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl) %>%
+  gt(data = tbl, groupname_col = "date") %>%
+  tab_spanner(
+    label = "values",
+    columns = starts_with("value")
+  ) %>%
+  tab_footnote(
+    footnote = "Row group",
+    locations = cells_group(groups = "2018-02-10")
+  ) %>%
+  tab_footnote(
+    footnote = "Two sets of values",
+    locations = cells_column_labels(groups = "values")
+  ) %>%
   tab_footnote(
     footnote = "First data cell.",
-    locations = cells_data(columns = 1, rows = 1)) %>%
+    locations = cells_data(columns = 1, rows = 1)
+  ) %>%
   tab_footnote(
     footnote = "A stub cell.",
-    locations = cells_stub(rows = 1)) %>%
+    locations = cells_stub(rows = 1)
+  ) %>%
   tab_footnote(
     footnote = md("`value_1` is the second column of values."),
-    locations = cells_column_labels(columns = vars(value_1))) %>%
+    locations = cells_column_labels(columns = vars(value_1))
+  ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_data(columns = 2, rows = 9)) %>%
+    locations = cells_data(columns = 2, rows = 9)
+  ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = 2, rows = 4))
+    locations = cells_data(columns = 2, rows = 4)
+  )
 
 footnotes_tbl

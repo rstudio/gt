@@ -4,7 +4,7 @@
 \alias{cols_merge_uncert}
 \title{Merge two columns to a value & uncertainty column}
 \usage{
-cols_merge_uncert(data, col_val, col_uncert)
+cols_merge_uncert(data, col_val, col_uncert, autohide = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -90,7 +90,7 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_range}}, \code{\link{cols_merge}},
   \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}},
-  \code{\link{cols_width}}
+  \code{\link{cols_move}}, \code{\link{cols_width}},
+  \code{\link{tab_spanner_delim}}
 }
 \concept{column modification functions}

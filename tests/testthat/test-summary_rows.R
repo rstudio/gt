@@ -35,10 +35,12 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `1` since there was
@@ -103,10 +105,12 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect the `groups` provided in `summary[[1]]$groups`
   summary[[1]]$groups %>%
@@ -156,10 +160,12 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect the `groups` provided in `summary[[1]]$groups`
   summary[[1]]$groups %>%
@@ -210,10 +216,12 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect the `groups` provided in `summary[[1]]$groups`
   # to be `TRUE`
@@ -273,7 +281,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `2` since there
@@ -379,7 +387,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `2` since there
@@ -478,10 +486,12 @@ test_that("the `summary_rows()` can make grand summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `1` since there was
@@ -545,7 +555,8 @@ test_that("the `summary_rows()` can make grand summaries", {
         total = ~sum(., na.rm = TRUE),
         `std dev` = ~sd(., na.rm = TRUE)),
       formatter = fmt_number,
-      decimals = 3) %>%
+      decimals = 3
+    ) %>%
     summary_rows(
       groups = NULL,
       columns = vars(low, close),
@@ -554,10 +565,11 @@ test_that("the `summary_rows()` can make grand summaries", {
         total = ~sum(., na.rm = TRUE),
         `std dev` = ~sd(., na.rm = TRUE)),
       formatter = fmt_number,
-      decimals = 5)
+      decimals = 5
+    )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `2` since there
@@ -679,7 +691,8 @@ test_that("the `summary_rows()` can make grand summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
     ) %>%
     summary_rows(
       groups = NULL,
@@ -687,11 +700,12 @@ test_that("the `summary_rows()` can make grand summaries", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
     )
 
   # Extract the internal `summary` object
-  summary <- attr(gt_tbl, "summary", exact = TRUE)
+  summary <- dt_summary_get(data = gt_tbl)
 
   # Expect that the internal `summary` list
   # object has a length of `2` since there
@@ -792,13 +806,15 @@ test_that("`groups = FALSE` returns data unchanged", {
   expect_equal(
     tbl %>% as_raw_html(),
     tbl %>%
-    summary_rows(
-      groups = FALSE,
-      columns = vars(open, high, low, close),
-      fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))) %>%
+      summary_rows(
+        groups = FALSE,
+        columns = vars(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        )
+      ) %>%
       as_raw_html()
   )
 })
@@ -827,7 +843,8 @@ test_that("summary rows can be created when there is no stub", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
     )
 
   # Extract `output_df` in the HTML context and
@@ -871,7 +888,9 @@ test_that("extracting a summary from a gt table is possible", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))) %>%
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    ) %>%
     extract_summary()
 
   # Expect that the summary object is a list
@@ -955,7 +974,9 @@ test_that("extracting a summary from a gt table is possible", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE))) %>%
+        `std dev` = ~sd(., na.rm = TRUE)
+      )
+    ) %>%
     extract_summary()
 
   # Expect that the summary object is a list
@@ -998,8 +1019,4 @@ test_that("extracting a summary from a gt table is possible", {
     gt_tbl_summary_grand[[1]]$close,
     c(2023.06900, 20230.69000, 19.82022), tolerance = .002
   )
-
-  # Expect an error with `extract_summary()` if there
-  # are no summaries (i.e., `summary_rows()` wasn't used)
-  expect_error(tbl %>% extract_summary())
 })

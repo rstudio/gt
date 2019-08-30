@@ -69,7 +69,7 @@ gt_preview <- function(data,
   # If a preview table (head and tail) is requested,
   # then modify `data_tbl` to only include the head
   # and tail plus an ellipsis row
-  if (has_ellipsis_row) {
+  if (isTRUE(has_ellipsis_row)) {
 
     ellipsis_row <- top_n + 1
 
@@ -101,28 +101,27 @@ gt_preview <- function(data,
   gt_tbl <- gt(data, rownames_to_stub = FALSE)
 
   # Use a fixed-width font for the rownums, if they are included
-  if (incl_rownums) {
+  if (isTRUE(incl_rownums)) {
 
     gt_tbl <-
       gt_tbl %>%
       tab_style(
         style = cell_text(font = "Courier"),
-        locations = cells_stub())
+        locations = cells_stub()
+      )
   }
 
   # Add styling of ellipsis row, if it is present
-  if (has_ellipsis_row) {
+  if (isTRUE(has_ellipsis_row)) {
 
     gt_tbl <-
       gt_tbl %>%
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_data(rows = ellipsis_row)) #%>%
-      # tab_style(
-      #   style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
-      #   locations = cells_data(rows = ellipsis_row))
+        locations = cells_data(rows = ellipsis_row)
+      )
 
-    if (incl_rownums) {
+    if (isTRUE(incl_rownums)) {
 
       gt_tbl <-
         gt_tbl %>%
@@ -130,19 +129,10 @@ gt_preview <- function(data,
           style = list(
             cell_fill(color = "#E4E4E4"),
             cell_text(size = "12px")
-            ),
-          locations = cells_stub(rows = ellipsis_row)) #%>%
-        # tab_style(
-        #   style = "padding-top:1px;padding-bottom:1px;border-top:2px solid #D1D1D1;border-bottom:2px solid #D1D1D1;",
-        #   locations = cells_stub(rows = ellipsis_row))
+          ),
+          locations = cells_stub(rows = ellipsis_row)
+        )
 
-    } else {
-
-      gt_tbl <-
-        gt_tbl # %>%
-        # tab_style(
-        #   style = "padding-top:8px;padding-bottom:8px;",
-        #   locations = cells_data(rows = ellipsis_row))
     }
   }
 

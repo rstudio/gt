@@ -58,13 +58,11 @@
 #' @export
 extract_summary <- function(data) {
 
-  # Extract all attributes from the `data`
-  # object into `data_attr`
-  data_attr <- attributes(data)
+  summary <- dt_summary_get(data)
 
   # Stop function if there are no
   # directives to create summary rows
-  if (is.null(data_attr$summary)) {
+  if (is.null(summary)) {
     stop("There is no summary list to extract.\n",
          "Use the `summary_rows()` function to generate summaries.",
          call. = FALSE)
@@ -76,5 +74,5 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  built_data$list_of_summaries$summary_df_data_list
+  attr(built_data, "list_of_summaries", exact = TRUE)$summary_df_data_list
 }
