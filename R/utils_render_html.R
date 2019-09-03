@@ -75,20 +75,6 @@ get_table_defs <- function(data) {
       .$column_width %>%
       unlist()
 
-    # TODO: `is.na()` is the now wrong test for unset widths
-    # in a list column
-    if (any(is.na(widths))) {
-
-      warning("Unset column widths found, setting to `100px`:\n",
-              " * Columns: ",
-              str_catalog(dt_boxh_get_vars_default(data = data)[is.na(widths)]),
-              ".\n",
-              "Set these column widths in `cols_width()` using `TRUE ~ px(100)`.",
-              call. = FALSE)
-
-      widths[is.na(widths)] <- px(100)
-    }
-
     # Assumption is that all width values are `px` values
     total_width <-
       widths %>%
@@ -349,7 +335,8 @@ create_columns_component_h <- function(data) {
     dplyr::pull(column_align)
 
   # Get the column headings
-  headings <- dt_boxh_get_vars_labels_default(data = data)
+  headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
+  headings_labels <- dt_boxh_get_vars_labels_default(data = data)
 
   # Should the column labels be hidden?
   column_labels_hidden <-
@@ -376,10 +363,15 @@ create_columns_component_h <- function(data) {
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
-  if (stub_available && length(stubh$label) > 0) {
-    headings <- prepend_vec(headings, stubh$label)
-  } else if (stub_available) {
-    headings <- prepend_vec(headings, "")
+  if (isTRUE(stub_available) && length(stubh$label) > 0) {
+
+    headings_labels <- prepend_vec(headings_labels, stubh$label)
+    headings_vars <- prepend_vec(headings_vars, "::stub")
+
+  } else if (isTRUE(stub_available)) {
+
+    headings_labels <- prepend_vec(headings_labels, "")
+    headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
   # column_alignments <- paste0("gt_", col_alignment)
@@ -397,7 +389,7 @@ create_columns_component_h <- function(data) {
   if (!spanners_present) {
 
     # Create the cell for the stubhead label
-    if (stub_available) {
+    if (isTRUE(stub_available)) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -415,13 +407,14 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = stubhead_style,
-          htmltools::HTML(headings[1])
+          htmltools::HTML(headings_labels[1])
         )
 
-      headings <- headings[-1]
+      headings_vars <- headings_vars[-1]
+      headings_labels <- headings_labels[-1]
     }
 
-    for (i in seq(headings)) {
+    for (i in seq(headings_vars)) {
 
       styles_column <-
         column_style_attrs %>%
@@ -443,14 +436,14 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = column_style,
-          htmltools::HTML(headings[i])
+          htmltools::HTML(headings_labels[i])
         )
     }
 
     table_col_headings <- htmltools::tags$tr(table_col_headings)
   }
 
-  if (spanners_present) {
+  if (isTRUE(spanners_present)) {
 
     spanners <- dt_spanners_print(data = data)
 
@@ -458,7 +451,7 @@ create_columns_component_h <- function(data) {
     first_set <- second_set <- list()
 
     # Create the cell for the stubhead label
-    if (stub_available) {
+    if (isTRUE(stub_available)) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -476,13 +469,14 @@ create_columns_component_h <- function(data) {
           rowspan = 2,
           colspan = 1,
           style = stubhead_style,
-          htmltools::HTML(headings[1])
+          htmltools::HTML(headings_labels[1])
         )
 
-      headings <- headings[-1]
+      headings_vars <- headings_vars[-1]
+      headings_labels <- headings_labels[-1]
     }
 
-    for (i in seq(headings)) {
+    for (i in seq(headings_vars)) {
 
       if (is.na(spanners[i])) {
 
@@ -490,7 +484,7 @@ create_columns_component_h <- function(data) {
           styles_tbl %>%
           dplyr::filter(
             locname == "columns_columns",
-            colname == headings[i]
+            colname == headings_vars[i]
           )
 
         heading_style <-
@@ -508,10 +502,10 @@ create_columns_component_h <- function(data) {
             rowspan = 2,
             colspan = 1,
             style = heading_style,
-            htmltools::HTML(headings[i])
+            htmltools::HTML(headings_labels[i])
           )
 
-        headings_stack <- c(headings_stack, headings[i])
+        headings_stack <- c(headings_stack, headings_vars[i])
 
       } else if (!is.na(spanners[i])) {
 
@@ -575,11 +569,17 @@ create_columns_component_h <- function(data) {
       }
     }
 
-    remaining_headings <- headings[!(headings %in% headings_stack)]
+    remaining_headings <- headings_vars[!(headings_vars %in% headings_stack)]
 
-    remaining_headings_indices <- which(remaining_headings %in% headings)
+    remaining_headings_indices <- which(remaining_headings %in% headings_vars)
 
-    col_alignment <- col_alignment[-1][!(headings %in% headings_stack)]
+    remaining_headings_labels <-
+      boxh %>%
+      dplyr::filter(var %in% remaining_headings) %>%
+      dplyr::pull(column_label) %>%
+      unlist()
+
+    col_alignment <- col_alignment[-1][!(headings_vars %in% headings_stack)]
 
     if (length(remaining_headings) > 0) {
 
@@ -609,7 +609,7 @@ create_columns_component_h <- function(data) {
             ),
             rowspan = 1, colspan = 1,
             style = remaining_style,
-            htmltools::HTML(remaining_headings[j])
+            htmltools::HTML(remaining_headings_labels[j])
           )
 
       }
@@ -771,17 +771,18 @@ create_body_component_h <- function(data) {
             NULL
           }
 
-        extra_classes <- rep_len(list(striped_class_val), n_cols)
-
         if (stub_available) {
 
           alignment_classes <- c("gt_left", alignment_classes)
+          extra_classes <- rep_len(list(striped_class_val), n_cols)
 
           if (table_stub_striped) {
             extra_classes[[1]] <- c("gt_stub", extra_classes[[1]])
           } else {
             extra_classes[[1]] <- "gt_stub"
           }
+        } else {
+          extra_classes <- rep_len(list(striped_class_val), n_data_cols)
         }
 
         styles_row <-
@@ -795,7 +796,6 @@ create_body_component_h <- function(data) {
             n_cols = n_cols
           )
 
-        # TODO: `mapply()` results in warnings (one for each row)
         body_row <-
           htmltools::tags$tr(
             mapply(
@@ -846,7 +846,7 @@ create_body_component_h <- function(data) {
               styles_resolved = styles_tbl
             )
 
-            body_section <- append(body_section, summary_section)
+          body_section <- append(body_section, summary_section)
         }
 
         body_section
@@ -1038,12 +1038,14 @@ summary_row_tags <- function(group_id,
       summary_df[j, ] %>% unlist() %>% unname()
     }
 
-    alignment_classes <- paste0("gt_", col_alignment)
-
     stub_classes <- rep_len(list(NULL), n_cols)
 
-    if (stub_available) {
+    if (isTRUE(stub_available)) {
+
+      alignment_classes <- c("gt_right", paste0("gt_", col_alignment))
       stub_classes[[1]] <- "gt_stub"
+    } else {
+      alignment_classes <- paste0("gt_", col_alignment)
     }
 
     styles_resolved_group <-
@@ -1066,12 +1068,12 @@ summary_row_tags <- function(group_id,
           dplyr::filter(grprow == j)
       }
 
-    row_styles <-
-      build_row_styles(
-        styles_resolved_row = styles_resolved_row,
-        stub_available = stub_available,
-        n_cols = n_cols
-      )
+      row_styles <-
+        build_row_styles(
+          styles_resolved_row = styles_resolved_row,
+          stub_available = stub_available,
+          n_cols = n_cols
+        )
 
       summary_row_lines[[length(summary_row_lines) + 1]] <-
         htmltools::tags$tr(

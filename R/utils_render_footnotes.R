@@ -168,7 +168,8 @@ resolve_footnotes_styles <- function(data,
         by = c("grpname" = "group")
       ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
-      dplyr::select(-row, -row_end)
+      dplyr::select(-row, -row_end) %>%
+      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname))
 
     # Re-combine `tbl_not_summary_cells`
     # with `tbl_summary_cells`
@@ -586,7 +587,7 @@ apply_footnotes_to_output <- function(data,
 }
 
 #' @noRd
-set_footnote_marks_stub_groups <- function(data,
+set_footnote_marks_row_groups <- function(data,
                                            context = "html") {
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)

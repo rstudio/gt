@@ -211,6 +211,13 @@ cols_width <- function(data,
 
     columns_unset <- (data %>% dt_boxh_get_vars())[unset_widths]
 
+    warning("Unset column widths found, setting them to `100px`:\n",
+            " * columns: ",
+            str_catalog(columns_unset),
+            ".\n",
+            " * Set any remaining column widths in `cols_width()` with `everything() ~ px(100)`.",
+            call. = FALSE)
+
     for (column in columns_unset) {
       data <- data %>% dt_boxh_edit(var = column, column_width = list("100px"))
     }

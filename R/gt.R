@@ -77,6 +77,16 @@ gt <- function(data,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
+  gt_stub_params <-
+    list(
+      rowname_col = rowname_col,
+      groupname_col = groupname_col,
+      rownames_to_stub = rownames_to_stub,
+      stub_group.sep = stub_group.sep
+    )
+
+  vars_to_hide <- c()
+
   # Stop if input `data` has no columns
   if (ncol(data) == 0) {
     stop("The input `data` table must have at least one column.",
@@ -87,22 +97,24 @@ gt <- function(data,
   # is taken, then the `stub_df` data frame will
   # be pre-populated with rownames in the `rowname`
   # column; otherwise, this will be an empty df
-  if (rownames_to_stub) {
+  if (isTRUE(rownames_to_stub)) {
+
+    data_rownames <- rownames(data)
 
     stub_df <-
-      data.frame(
+      dplyr::tibble(
+        rownum_i = seq_len(nrow(data)),
         groupname = NA_character_,
-        rowname = rownames(data),
-        stringsAsFactors = FALSE
+        rowname = data_rownames,
       )
 
   } else {
 
     stub_df <-
-      data.frame(
+      dplyr::tibble(
+        rownum_i = seq_len(nrow(data)),
         groupname = rep(NA_character_, nrow(data)),
-        rowname = rep(NA_character_, nrow(data)),
-        stringsAsFactors = FALSE
+        rowname = rep(NA_character_, nrow(data))
       )
   }
 
@@ -114,8 +126,7 @@ gt <- function(data,
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- as.character(data[[rowname_col]])
 
-    # Remove the `rowname` column from `data`
-    data[[rowname_col]] <- NULL
+    vars_to_hide <- c(vars_to_hide, rowname_col)
   }
 
   # If `data` is a `grouped_df` then create groups from the
@@ -127,13 +138,16 @@ gt <- function(data,
     group_cols <- base::intersect(group_cols, colnames(data))
 
     group_labels <-
-      apply(data[, group_cols], 1, paste, collapse = stub_group.sep)
+      apply(
+        data[, group_cols],
+        MARGIN = 1,
+        paste, collapse = gt_stub_params$stub_group.sep
+      )
 
     # Place the `group_labels` values into `stub_df$groupname`
     stub_df[["groupname"]] <- group_labels
 
-    # Remove all columns in `group_cols` from `data`
-    data[, which(colnames(data) %in% group_cols)] <- NULL
+    vars_to_hide <- c(vars_to_hide, group_cols)
 
   } else if (groupname_col %in% colnames(data)) {
 
@@ -144,8 +158,7 @@ gt <- function(data,
     # Place the `groupname` values into `stub_df$groupname`
     stub_df[["groupname"]] <- as.character(data[[groupname_col]])
 
-    # Remove the `groupname` column from `data`
-    data[[groupname_col]] <- NULL
+    vars_to_hide <- c(vars_to_hide, groupname_col)
   }
 
   # Stop if input `data` has no columns (after modifying
@@ -155,38 +168,28 @@ gt <- function(data,
          call. = FALSE)
   }
 
-  # Take the input data and convert to a
-  # data frame
-  data_tbl <-
-    data %>%
-    as.data.frame(stringsAsFactors = FALSE)
-
-  # Reset the rownames in the `data_tbl` df
-  rownames(data_tbl) <- NULL
-
-  # Create a prepopulated `rows_df` data frame
-  if (nrow(data_tbl) > 0) {
-    rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
-  } else {
-    rows_df <- dplyr::tibble(rownums_start = NA_integer_)[-1, ]
-  }
-
-  # Add the `stub_df` object as an attribute
-  attr(data_tbl, "stub_df") <- stub_df
+  # Take the input data and convert to a tibble
+  data_tbl <- data %>% dplyr::as_tibble()
 
   # Initialize the main objects
   data_tbl <-
     data_tbl %>%
     dt_data_tbl_init() %>%
+    #dt_stub_tbl_init(gt_stub_params = gt_stub_params) %>%
     dt_heading_init() %>%
     dt_spanners_init() %>%
     dt_boxh_init() %>%
     dt_stubh_init() %>%
-    dt_source_notes_init() %>%
     dt_footnotes_init() %>%
+    dt_source_notes_init() %>%
+    dt_formats_init() %>%
     dt_styles_init() %>%
     dt_summary_init() %>%
+    #dt_transforms_init() %>%
     dt_options_init()
+
+  # Add the `stub_df` object as an attribute
+  attr(data_tbl, "stub_df") <- stub_df
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
@@ -211,12 +214,6 @@ gt <- function(data,
       list(groups = character(0))
   }
 
-  # Apply an empty `formats` list as an attribute
-  attr(data_tbl, "formats") <- list()
-
-  # Apply an empty `transforms` list as an attribute
-  attr(data_tbl, "transforms") <- list()
-
   # Apply the `gt_tbl` class to the object while
   # also keeping the `data.frame` class
   class(data_tbl) <- c("gt_tbl", class(data_tbl))
@@ -225,6 +222,12 @@ gt <- function(data,
     data_tbl <-
       data_tbl %>%
       cols_align(align = "auto")
+  }
+
+  if (length(vars_to_hide) > 0) {
+    data_tbl <-
+      data_tbl %>%
+      cols_hide(columns = vars_to_hide)
   }
 
   data_tbl

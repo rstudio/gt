@@ -136,7 +136,7 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday, October 15, 2017", "2013-02-22",
+    c("Sunday,&nbsp;October&nbsp;15,&nbsp;2017", "2013-02-22",
       "2014-09-22", "2018-01-10")
   )
 
@@ -147,7 +147,7 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday, October 15, 2017", "2013-02-22",
+    c("Sunday,&nbsp;October&nbsp;15,&nbsp;2017", "2013-02-22",
       "2014-09-22", "2018-01-10")
   )
 })
@@ -185,7 +185,7 @@ test_that("the `fmt_datetime()` function works with conditional `rows`", {
          time_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "html"))[["datetime"]],
-    c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
+    c("Thursday,&nbsp;March&nbsp;25,&nbsp;2010&nbsp;19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
   )
 
@@ -197,7 +197,7 @@ test_that("the `fmt_datetime()` function works with conditional `rows`", {
          time_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "html"))[["datetime"]],
-    c("Thursday, March 25, 2010 19:45", "2015-06-12 09:25",
+    c("Thursday,&nbsp;March&nbsp;25,&nbsp;2010&nbsp;19:45", "2015-06-12 09:25",
       "2016-01-15 14:38", "2012-08-07 12:31")
   )
 })

@@ -174,7 +174,8 @@ add_summary_location_row <- function(loc,
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
   row_groups <-
-    stub_df[, "groupname"] %>%
+    stub_df %>%
+    dplyr::pull(groupname) %>%
     unique()
 
   summary_data <- dt_summary_get(data = data)

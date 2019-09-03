@@ -28,7 +28,7 @@ colname_to_colnum <- function(data,
     if (is.na(col)) {
       col_nums <- c(col_nums, NA_integer_)
     } else {
-      col_nums <- c(col_nums, which(dt_boxh_get_vars(data = data) == col))
+      col_nums <- c(col_nums, which(dt_boxh_get_vars_default(data = data) == col))
     }
   }
 
@@ -58,8 +58,7 @@ render_formats <- function(data,
 
   output_tbl <- dt_output_tbl_get(data = data)
   data_tbl <- dt_data_tbl_get(data = data)
-
-  formats <- attr(data, "formats", exact = TRUE)
+  formats <- dt_formats_get(data = data)
 
   # Render input data to output data where formatting
   # is specified
@@ -145,6 +144,28 @@ migrate_unformatted_to_output <- function(data,
   data
 }
 
+#' Perform any text transformations
+#'
+#' @noRd
+perform_text_transforms <- function(data) {
+
+  #transforms <- attr(data, "transforms", exact = TRUE)
+
+  transforms <- dt_transforms_get(data = data)
+
+  for (transform in transforms) {
+
+    data <-
+      text_transform_at_location(
+        loc = transform$resolved,
+        data = data,
+        fn = transform$fn
+      )
+  }
+
+  data
+}
+
 #' Obtain a reordering df for the data rows
 #'
 #' @noRd
@@ -169,14 +190,15 @@ get_row_reorder_df <- function(arrange_groups,
   groups <- arrange_groups$groups
 
   indices <-
-    lapply(stub_df$group, `%in%`, x = groups) %>%
+    lapply(stub_df$groupname, `%in%`, x = groups) %>%
     lapply(which) %>%
     unlist() %>%
     order()
 
   dplyr::tibble(
     rownum_start = seq_along(indices),
-    rownum_final = indices)
+    rownum_final = indices
+  )
 }
 
 #' Obtain a reordering df for the table columns
@@ -243,7 +265,7 @@ reorder_stub_df <- function(data) {
       stub_df = stub_df
     )
 
-  stub_df <- stub_df[rows_df$rownum_final, c("groupname", "rowname")]
+  stub_df <- stub_df[rows_df$rownum_final, ]
 
   attr(data, "stub_df") <- stub_df
 
@@ -278,7 +300,10 @@ reorder_styles <- function(data) {
   stub_df <- attr(data, "stub_df", exact = TRUE)
   styles_tbl <- dt_styles_get(data = data)
 
-  rownum_final <- row.names(stub_df) %>% as.numeric()
+  rownum_final <-
+    stub_df %>%
+    dplyr::pull(rownum_i) %>%
+    as.numeric()
 
   for (i in seq_len(nrow(styles_tbl))) {
     if (!is.na(styles_tbl[i, ][["rownum"]])) {
@@ -330,9 +355,9 @@ get_groups_rows_df <- function(data,
   for (i in seq(ordering)) {
 
     if (!is.na(ordering[i])) {
-      rows_matched <- which(stub_df[, "groupname"] == ordering[i])
+      rows_matched <- which(stub_df$groupname == ordering[i])
     } else {
-      rows_matched <- which(is.na(stub_df[, "groupname"]))
+      rows_matched <- which(is.na(stub_df$groupname))
     }
 
     groups_rows_df[i, "group"] <- ordering[i]
@@ -634,7 +659,7 @@ create_summary_dfs <- function(data,
               )
             )
 
-          formatter <- attr(format_data, "formats")[[1]]$func
+          formatter <- attr(format_data, "_formats")[[1]]$func
           fmt <- formatter[[context]] %||% formatter$default
           fmt(x)
         }
@@ -706,21 +731,19 @@ create_summary_dfs <- function(data,
   data
 }
 
-# Assign center alignment for all columns that haven't had alignment
-# explicitly set
-# TODO: this needs to change to modify `_boxh`
-# TODO: this has been disabled until alignment have been given more thought
-set_default_alignments <- function(boxh_df) {
-
-  for (colname in colnames(boxh_df)) {
-
-    if (is.na(boxh_df["column_align", colname])) {
-      boxh_df["column_align", colname] <- "center"
-    }
-  }
-
-  boxh_df
-}
+# # Assign center alignment for all columns that haven't had alignment
+# # explicitly set
+# set_default_alignments <- function(boxh_df) {
+#
+#   for (colname in colnames(boxh_df)) {
+#
+#     if (is.na(boxh_df["column_align", colname])) {
+#       boxh_df["column_align", colname] <- "center"
+#     }
+#   }
+#
+#   boxh_df
+# }
 
 # Function to determine if there are any defined elements of a stub present
 is_stub_available <- function(data) {

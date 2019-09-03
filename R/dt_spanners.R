@@ -65,9 +65,7 @@ dt_spanners_print <- function(data) {
   vars_list <- rep(NA_character_, length(vars)) %>% magrittr::set_names(vars)
 
   for (i in seq_len(nrow(spanners))) {
-
     vars_list[spanners$vars[[i]]] <- spanners$built[[i]]
-
   }
 
   vars_list %>% unname()

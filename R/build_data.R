@@ -5,11 +5,7 @@ build_data <- function(data, context) {
 
   checkmate::assert_class(data, "gt_tbl")
 
-  # Extract all attributes from the data object into `data_attr`;
-  #   this will be one of the main objects going forward
-  data_attr <- attributes(data)
-
-  # # Check the names of objects in `data_attr`
+  # # Check the names of objects in `data`
   # checkmate::assert_names(
   #   x = names(data_attr),
   #   must.include = c(
@@ -32,7 +28,7 @@ build_data <- function(data, context) {
     render_formats(context = context) %>%
     migrate_unformatted_to_output(context = context) %>%
     perform_col_merge(context = context) %>%
-    #perform_text_transforms() %>% # TODO: make this work
+    perform_text_transforms() %>%
     reassemble_output_tbl() %>%
     reorder_stub_df() %>%
     reorder_footnotes() %>%
@@ -60,29 +56,8 @@ build_data <- function(data, context) {
       context = context
     )
 
-  # TODO: Fix text transform functionality
-  # data_attr$boxh_df <- boxh_df
-  # data_attr$stub_df <- stub_df
-  # data_attr$cols_df <- cols_df
-  # data_attr$data_df <- data_df
-  # data_attr$arrange_groups <- arrange_groups
-  # data_attr$output_df <- output_df
-  #
-  # # Text transformation
-  # for (transform in transforms) {
-  #
-  #   data_attr <-
-  #     text_transform_at_location(
-  #       loc = transform$resolved,
-  #       data_attr = data_attr,
-  #       fn = transform$fn
-  #     )
-  # }
-  #
-  # output_df <- data_attr$output_df
-  # boxh_df <- data_attr$boxh_df
-
   # Create the `list_of_summaries` list of lists
+  # TODO: create `dt_summaries_build()` function
   data <-
     create_summary_dfs(
       data = data,
@@ -126,8 +101,8 @@ build_data <- function(data, context) {
   # Add footnote marks to the `data` rows
   data <- apply_footnotes_to_output(data = data, context = context)
 
-  # Add footnote marks to the stub group cells
-  data <- set_footnote_marks_stub_groups(data = data, context = context)
+  # Add footnote marks to the row group cells
+  data <- set_footnote_marks_row_groups(data = data, context = context)
 
   # Add footnote marks to the `summary` cells
   # TODO: `context` is missing in `apply_footnotes_to_summary()`

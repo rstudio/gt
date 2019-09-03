@@ -860,17 +860,17 @@ test_that("summary rows can be created when there is no stub", {
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row gt_first_grand_summary_row\">average</td>")
+    "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\">average</td>")
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row\">total</td>")
+    "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">total</td>")
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row\">std dev</td>")
+    "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">std dev</td>")
 })
 
 test_that("extracting a summary from a gt table is possible", {
@@ -914,12 +914,12 @@ test_that("extracting a summary from a gt table is possible", {
   # tibbles in `gt_tbl_summary_groupwise`
   expect_equal(
     names(gt_tbl_summary_groupwise[[1]]),
-    c("groupname", "rowname", "open", "high", "low", "close")
+    c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   expect_equal(
     names(gt_tbl_summary_groupwise[[2]]),
-    c("groupname", "rowname", "open", "high", "low", "close")
+    c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in each of the tibbles
@@ -996,7 +996,7 @@ test_that("extracting a summary from a gt table is possible", {
   # tibble in `gt_tbl_summary_grand`
   expect_equal(
     names(gt_tbl_summary_grand[[1]]),
-    c("groupname", "rowname", "open", "high", "low", "close")
+    c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in the tibble

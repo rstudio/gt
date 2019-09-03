@@ -265,8 +265,6 @@ scale_apply_styles <- function(data,
          call. = FALSE)
   }
 
-  # TODO: this part should be vectorized, with `tab_style()`
-  # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
     if (apply_to == "fill") {

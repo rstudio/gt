@@ -122,7 +122,7 @@ as_rtf <- function(data) {
   rows_df <- get_row_reorder_df(arrange_groups, stub_df)
 
   # Get the `columns_df` data frame for the data columns
-  columns_df <- get_column_reorder_df(cols_df, boxh_df)
+  columns_df <- get_column_reorder_df(data = data)
 
   # Reassemble the rows and columns of `data_df` in the correct order
   output_df <- reassemble_output_tbl(output_df, rows_df, columns_df)
@@ -168,10 +168,12 @@ as_rtf <- function(data) {
 
   # Text transformation
   for (transform in transforms) {
-    data_attr <- text_transform_at_location(
-      loc = transform$resolved,
-      data_attr = data_attr,
-      fn = transform$fn)
+    data <-
+      text_transform_at_location(
+        loc = transform$resolved,
+        data = data,
+        fn = transform$fn
+      )
   }
 
   output_df <- data_attr$output_df

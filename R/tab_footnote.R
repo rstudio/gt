@@ -269,21 +269,7 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   )
 }
 
-add_location_row_styles <- function(data,
-                                    locname,
-                                    locnum,
-                                    grpname,
-                                    colname,
-                                    rownum,
-                                    styles) {
 
-  add_location_row(
-    data,
-    df_type = "styles_df",
-    locname, locnum, grpname, colname, rownum,
-    styles = styles
-  )
-}
 
 add_location_row_footnotes <- function(data,
                                        locname,

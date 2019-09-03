@@ -61,24 +61,31 @@ text_transform <- function(data,
                            fn) {
 
   # Resolve into a list of locations
-  locations <- as_locations(locations)
+  locations <- as_locations(locations = locations)
 
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_transform(loc, data, fn)
+    data <- set_transform(loc = loc, data = data, fn = fn)
   }
 
   data
 }
 
+# TODO: Create dt_* methods around transforms
 set_transform <- function(loc, data, fn) {
 
-  resolved <- resolve_location(loc, data_attr = attributes(data))
+  resolved <- resolve_location(loc = loc, data = data)
 
-  attr(data, "transforms") <-
+  transforms <-
+    list(
+      resolved = resolved,
+      fn = fn
+    )
+
+  attr(data, "_transforms") <-
     c(
-      attr(data, "transforms", exact = TRUE),
+      attr(data, "_transforms", exact = TRUE),
       list(
         list(
           resolved = resolved,
@@ -86,6 +93,8 @@ set_transform <- function(loc, data, fn) {
         )
       )
     )
+
+  #data <- dt_transforms_set(data = data, transforms = transforms)
 
   data
 }
@@ -105,8 +114,7 @@ text_transform_at_location.cells_data <- function(loc,
 
   output_tbl <- dt_output_tbl_get(data = data)
 
-  loc <- to_output_location(loc, data_attr)
-  output_tbl <- data_attr[["output_tbl"]]
+  loc <- to_output_location(loc = loc, data = data)
 
   # Do one vectorized operation per column
   for (col in loc$colnames) {
@@ -116,7 +124,59 @@ text_transform_at_location.cells_data <- function(loc,
     }
   }
 
-  data_attr$output_tbl <- output_tbl
+  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
 
-  data_attr
+  data
+}
+
+text_transform_at_location.cells_stub <- function(loc,
+                                                  data,
+                                                  func = identity) {
+
+  stub_df <- attr(data, "stub_df", exact = TRUE)
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  # Do one vectorized operation per
+  for (row in loc$rows) {
+
+    if (row %in% stub_df$rowname) {
+      stub_df[row, "rowname"] <- func(stub_df[row, "rowname"])
+    }
+  }
+
+  attr(data, "stub_df") <- stub_df
+
+  data
+}
+
+text_transform_at_location.cells_column_labels <- function(loc,
+                                                           data,
+                                                           fn = identity) {
+
+  boxh <- dt_boxh_get(data = data)
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  for (col in loc$columns) {
+
+    if (col %in% boxh$var) {
+
+      column_label_edited <-
+        boxh %>%
+        dplyr::filter(var == !!col) %>%
+        dplyr::pull(column_label) %>%
+        .[[1]] %>%
+        fn()
+
+      data <-
+        dt_boxh_edit(
+          data = data,
+          var = col,
+          column_label = list(column_label_edited)
+        )
+    }
+  }
+
+  data
 }

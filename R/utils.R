@@ -561,9 +561,6 @@ normalize_suffixing_inputs <- function(suffixing,
     # In the case that a character vector is provided
     # to `suffixing`, we first want to check if there
     # are any names provided
-    # TODO: found that the conditional below seems
-    # better than other solutions to determine whether
-    # the vector is even partially named
     if (!is.null(names(suffixing))) {
       stop("The character vector supplied to `suffixed` cannot contain names.",
            call. = FALSE)

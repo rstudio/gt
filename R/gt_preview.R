@@ -82,7 +82,8 @@ gt_preview <- function(data,
       rbind(
         data[seq(top_n), ],
         rep("", ncol(data)),
-        data[(nrow(data) + 1 - rev(seq(bottom_n))), ])
+        data[(nrow(data) + 1 - rev(seq(bottom_n))), ]
+      )
 
     # Relabel the rowname for the ellipsis row
     rownames(data)[ellipsis_row] <- paste(between_rownums, collapse = "..")
@@ -91,7 +92,7 @@ gt_preview <- function(data,
   # If we elect to include row numbers, then place the row
   # numbers in the `rowname` column so that `gt()` will pick
   # this up as row labels for inclusion into the table stub
-  if (incl_rownums) {
+  if (isTRUE(incl_rownums)) {
     data <-
       cbind(
         data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
@@ -111,14 +112,16 @@ gt_preview <- function(data,
       )
   }
 
-  # Add styling of ellipsis row, if it is present
+  visible_vars <- dt_boxh_get_vars_default(data = gt_tbl)
+
+  # Add styling to ellipsis row, if it is present
   if (isTRUE(has_ellipsis_row)) {
 
     gt_tbl <-
       gt_tbl %>%
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_data(rows = ellipsis_row)
+        locations = cells_data(columns = visible_vars, rows = ellipsis_row)
       )
 
     if (isTRUE(incl_rownums)) {
@@ -128,7 +131,7 @@ gt_preview <- function(data,
         tab_style(
           style = list(
             cell_fill(color = "#E4E4E4"),
-            cell_text(size = "12px")
+            cell_text(size = "10px")
           ),
           locations = cells_stub(rows = ellipsis_row)
         )

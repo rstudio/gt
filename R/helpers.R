@@ -295,7 +295,8 @@ cells_column_labels <- function(columns, groups) {
   # Create the `cells_column_labels` object
   structure(
     list(columns = col_expr, groups = group_expr),
-    class = c("cells_column_labels", "location_cells"))
+    class = c("cells_column_labels", "location_cells")
+  )
 }
 
 #' @rdname location_cells
@@ -339,10 +340,8 @@ cells_stub <- function(rows = NULL) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_data <- function(columns = NULL, # set default to TRUE
-                       rows = NULL# set default to TRUE
-                       #TODO: groups = NULL
-                       ) {
+cells_data <- function(columns = NULL,
+                       rows = NULL) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
@@ -352,7 +351,8 @@ cells_data <- function(columns = NULL, # set default to TRUE
   cells <-
     list(
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_data` and `location_cells` classes
   class(cells) <- c("cells_data", "location_cells")
@@ -378,7 +378,8 @@ cells_summary <- function(groups = NULL,
     list(
       groups = group_expr,
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_summary` and `location_cells` classes
   class(cells) <- c("cells_summary", "location_cells")

@@ -430,7 +430,8 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl(
       paste0(
-        "style=\"padding: 8px; margin: 10px; border-top-style: solid; ",
+        "style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; ",
+        "padding-right: 5px; margin: 10px; border-top-style: solid; ",
         "border-top-width: 1px; border-top-color: #D3D3D3; ",
         "vertical-align: middle; overflow-x: hidden; text-align: right; ",
         "font-variant-numeric: tabular-nums; font-size: 10px;\""
