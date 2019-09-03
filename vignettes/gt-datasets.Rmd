@@ -103,10 +103,10 @@ countrypops %>%
   tab_header(title = "Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
   tab_spanner(
     label = "Total Population",
-    columns = c("1995", "2005", "2015")
+    columns = vars(`1995`, `2005`, `2015`)
   ) %>%
   fmt_number(
-    columns = TRUE,
+    columns = vars(`1995`, `2005`, `2015`),
     decimals = 0,
     use_seps = TRUE
   )
@@ -246,8 +246,8 @@ gtcars %>%
   gt() %>%
   tab_header(title = "Select German Automobiles") %>%
   cols_merge(
-    col_1 = "mfr",
-    col_2 = "model"
+    columns = vars(mfr, model),
+    hide_columns = vars(model)
   ) %>%
   text_transform(
     locations = cells_data(columns = vars(drivetrain)),
@@ -256,8 +256,7 @@ gtcars %>%
   fmt_currency(
     columns = vars(msrp),
     currency = "USD",
-    decimals = 0,
-    use_seps = TRUE
+    decimals = 0
   ) %>%
   cols_label(
     mfr = "Car",
