@@ -102,10 +102,6 @@ gt <- function(data,
     #dt_transforms_init() %>%
     dt_options_init()
 
-
-  # # Add the `stub_df` object as an attribute
-  # attr(data_tbl, "stub_df") <- stub_df
-
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
 
