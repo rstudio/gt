@@ -3,17 +3,18 @@ context("Ensuring that the `gt()` function works as expected")
 test_that("a gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()`
-  tab <- gt(data = iris)
+  tab <- iris %>% gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, iris)
+  expect_tab(tab = tab, df = iris)
 
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
   expect_tab_colnames(
-    tab, df = iris,
+    tab = tab,
+    df = iris,
     rowname = "NA",
     groupname_is_na = TRUE
   )
@@ -37,7 +38,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, mtcars)
+  expect_tab(tab = tab, df = mtcars)
 
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
@@ -67,7 +68,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  # expect_tab(tab, data_r, has_rownames = TRUE)
+  expect_tab(tab = tab, df = data_r)
 
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
@@ -118,7 +119,7 @@ test_that("a gt table can be made from a table with no rows", {
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, data_e)
+  expect_tab(tab = tab, df = data_e)
 
   # Expect that the `stub_df` data frame is empty
   dt_stub_get(data = tab) %>%
@@ -132,5 +133,5 @@ test_that("a gt table can be made from a table with no rows", {
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, df = data_e %>% dplyr::group_by(group))
+  expect_tab(tab = tab, df = data_e %>% dplyr::group_by(group))
 })
