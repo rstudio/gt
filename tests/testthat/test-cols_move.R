@@ -22,7 +22,7 @@ test_that("the `cols_move()` function works correctly", {
 
   # Expect a particular ordering of columns in `_boxh`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("hp", "drat", "mpg", "cyl", "disp", "wt",
         "qsec", "vs", "am", "gear", "carb"))
@@ -46,7 +46,7 @@ test_that("the `cols_move()` function works correctly", {
 
   # Expect a particular ordering of columns in `_boxh`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("hp", "drat", "mpg", "cyl", "disp", "wt",
         "qsec", "vs", "am", "gear", "carb"))
@@ -70,7 +70,7 @@ test_that("the `cols_move()` function works correctly", {
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("hp", "drat", "wt", "qsec", "vs", "am",
         "gear", "carb", "mpg", "cyl", "disp"))
@@ -115,7 +115,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("gear", "carb", "mpg", "cyl", "disp", "hp", "drat", "wt",
         "qsec", "vs", "am"))
@@ -139,7 +139,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("gear", "carb", "mpg", "cyl", "disp", "hp", "drat", "wt",
         "qsec", "vs", "am"))
@@ -174,7 +174,7 @@ test_that("the `cols_move_to_end()` function works correctly", {
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("mpg", "cyl", "disp", "hp", "drat", "wt",
         "qsec", "vs", "am", "gear", "carb"))
@@ -198,7 +198,7 @@ test_that("the `cols_move_to_end()` function works correctly", {
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
-    dt_boxh_get_vars() %>%
+    dt_boxhead_get_vars() %>%
     expect_equal(
       c("mpg", "cyl", "disp", "hp", "drat", "wt",
         "qsec", "vs", "am", "gear", "carb"))

@@ -124,7 +124,7 @@ tab_spanner_delim <- function(data,
   columns <- enquo(columns)
 
   # Get all of the columns in the dataset
-  all_cols <- data %>% dt_boxh_get_vars()
+  all_cols <- data %>% dt_boxhead_get_vars()
 
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
@@ -161,7 +161,7 @@ tab_spanner_delim <- function(data,
 
       data <-
         data %>%
-        dt_boxh_edit(var = var_i, column_label = new_labels_i)
+        dt_boxhead_edit(var = var_i, column_label = new_labels_i)
     }
 
     spanner_var_list <- split(colnames_with_delim, spanners)

@@ -112,7 +112,7 @@ gt_preview <- function(data,
       )
   }
 
-  visible_vars <- dt_boxh_get_vars_default(data = gt_tbl)
+  visible_vars <- dt_boxhead_get_vars_default(data = gt_tbl)
 
   # Add styling to ellipsis row, if it is present
   if (isTRUE(has_ellipsis_row)) {

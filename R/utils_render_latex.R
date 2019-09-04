@@ -64,11 +64,11 @@ create_table_start_l <- function(col_alignment) {
 #' @noRd
 create_columns_component_l <- function(data) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
   output_tbl <- dt_output_tbl_get(data = data)
   stub_available <- attr(data, "stub_available", exact = TRUE)
   spanners_present <- attr(data, "spanners_present", exact = TRUE)
-  stubh <- dt_stubh_get(data = data)
+  stubh <- dt_stubhead_get(data = data)
 
   col_alignment <- boxh$column_align
 
@@ -155,7 +155,7 @@ create_columns_component_l <- function(data) {
 create_body_component_l <- function(data,
                                     row_splits) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
   output_tbl <- dt_output_tbl_get(data = data)
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
   col_alignment <- col_alignment <- boxh$column_align

@@ -1,17 +1,17 @@
-.dt_boxh_key <- "_boxh"
+.dt_boxhead_key <- "_boxhead"
 
-dt_boxh_get <- function(data) {
+dt_boxhead_get <- function(data) {
 
-  attr(data, .dt_boxh_key, exact = TRUE)
+  attr(data, .dt_boxhead_key, exact = TRUE)
 }
 
-dt_boxh_set <- function(data, boxh) {
+dt_boxhead_set <- function(data, boxh) {
 
-  attr(data, .dt_boxh_key) <- boxh
+  attr(data, .dt_boxhead_key) <- boxh
   data
 }
 
-dt_boxh_init <- function(data) {
+dt_boxhead_init <- function(data) {
 
   empty_list <- lapply(seq_along(names(data)), function(x) NULL)
 
@@ -46,92 +46,92 @@ dt_boxh_init <- function(data) {
     # HTML specific)
     hidden_px = empty_list
   ) %>%
-    dt_boxh_set(boxh = ., data = data)
+    dt_boxhead_set(boxh = ., data = data)
 }
 
-dt_boxh_edit <- function(data, var, ...) {
+dt_boxhead_edit <- function(data, var, ...) {
 
-  dt_boxh <-
+  dt_boxhead <-
     data %>%
-    dt_boxh_get()
+    dt_boxhead_get()
 
   var_name <- var
 
   val_list <- list(...)
 
-  check_names_dt_boxh_expr(val_list)
+  check_names_dt_boxhead_expr(val_list)
 
-  check_vars_dt_boxh(var, dt_boxh)
+  check_vars_dt_boxhead(var, dt_boxhead)
 
-  dt_boxh[which(dt_boxh$var == var_name), names(val_list)] <-
+  dt_boxhead[which(dt_boxhead$var == var_name), names(val_list)] <-
     dplyr::as_tibble(val_list)
 
-  dt_boxh %>%
-    dt_boxh_set(boxh = ., data = data)
+  dt_boxhead %>%
+    dt_boxhead_set(boxh = ., data = data)
 }
 
-dt_boxh_edit_column_label <- function(data, var, column_label) {
+dt_boxhead_edit_column_label <- function(data, var, column_label) {
 
-  dt_boxh_edit(data, var, column_label = list(column_label))
+  dt_boxhead_edit(data, var, column_label = list(column_label))
 }
 
-dt_boxh_get_vars <- function(data) {
+dt_boxhead_get_vars <- function(data) {
 
   data %>%
-    dt_boxh_get() %>%
+    dt_boxhead_get() %>%
     magrittr::extract2("var")
 }
 
-dt_boxh_get_vars_default <- function(data) {
+dt_boxhead_get_vars_default <- function(data) {
 
   data %>%
-    dt_boxh_get() %>%
+    dt_boxhead_get() %>%
     dplyr::filter(type == "default") %>%
     magrittr::extract2("var")
 }
 
-dt_boxh_get_vars_labels_default <- function(data) {
+dt_boxhead_get_vars_labels_default <- function(data) {
 
   data %>%
-    dt_boxh_get() %>%
+    dt_boxhead_get() %>%
     dplyr::filter(type == "default") %>%
     magrittr::extract2("column_label") %>%
     unlist()
 }
 
-check_names_dt_boxh_expr <- function(expr) {
+check_names_dt_boxhead_expr <- function(expr) {
 
   if (!all(names(expr) %in% c(
     "type", "column_label", "column_align", "column_width", "hidden_px"
   ))) {
-    stop("Expressions must use names available in `dt_boxh`.",
+    stop("Expressions must use names available in `dt_boxhead`.",
          call. = FALSE)
   }
 }
 
-check_vars_dt_boxh <- function(var, dt_boxh) {
+check_vars_dt_boxhead <- function(var, dt_boxhead) {
 
-  if (!(var %in% dt_boxh$var)) {
-    stop("The `var` value must be value in `dt_boxh$var`.",
+  if (!(var %in% dt_boxhead$var)) {
+    stop("The `var` value must be value in `dt_boxhead$var`.",
          call. = FALSE)
   }
 }
 
-dt_boxh_build <- function(data, context) {
+dt_boxhead_build <- function(data, context) {
 
-  boxh <- dt_boxh_get(data)
+  boxh <- dt_boxhead_get(data)
 
   boxh$column_label <-
     lapply(boxh$column_label, function(label) process_text(label, context))
 
-  data <- dt_boxh_set(data = data, boxh = boxh)
+  data <- dt_boxhead_set(data = data, boxh = boxh)
 
   data
 }
 
-dt_boxh_set_var_order <- function(data, vars) {
+dt_boxhead_set_var_order <- function(data, vars) {
 
-  boxh <- dt_boxh_get(data)
+  boxh <- dt_boxhead_get(data)
 
   if (length(vars) != nrow(boxh) ||
       length(unique(vars)) != nrow(boxh) ||
@@ -144,7 +144,7 @@ dt_boxh_set_var_order <- function(data, vars) {
 
   boxh <- boxh[order_vars, ]
 
-  data <- dt_boxh_set(data = data, boxh = boxh)
+  data <- dt_boxhead_set(data = data, boxh = boxh)
 
   data
 }

@@ -178,8 +178,8 @@ gt <- function(data,
     #dt_stub_tbl_init(gt_stub_params = gt_stub_params) %>%
     dt_heading_init() %>%
     dt_spanners_init() %>%
-    dt_boxh_init() %>%
-    dt_stubh_init() %>%
+    dt_boxhead_init() %>%
+    dt_stubhead_init() %>%
     dt_footnotes_init() %>%
     dt_source_notes_init() %>%
     dt_formats_init() %>%

@@ -60,7 +60,7 @@ dt_spanners_print <- function(data) {
     data %>%
     dt_spanners_get()
 
-  vars <- dt_boxh_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = data)
 
   vars_list <- rep(NA_character_, length(vars)) %>% magrittr::set_names(vars)
 

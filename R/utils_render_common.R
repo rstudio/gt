@@ -28,7 +28,7 @@ colname_to_colnum <- function(data,
     if (is.na(col)) {
       col_nums <- c(col_nums, NA_integer_)
     } else {
-      col_nums <- c(col_nums, which(dt_boxh_get_vars_default(data = data) == col))
+      col_nums <- c(col_nums, which(dt_boxhead_get_vars_default(data = data) == col))
     }
   }
 
@@ -207,7 +207,7 @@ get_row_reorder_df <- function(arrange_groups,
 get_column_reorder_df <- function(data) {
 
   data_tbl <- dt_data_tbl_get(data = data)
-  column_names <- dt_boxh_get_vars(data = data)
+  column_names <- dt_boxhead_get_vars(data = data)
 
   cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
 
@@ -818,7 +818,7 @@ get_stub_components <- function(data) {
 get_column_alignment <- function(data) {
 
   column_alignment <-
-    dt_boxh_get(data = data) %>%
+    dt_boxhead_get(data = data) %>%
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
 

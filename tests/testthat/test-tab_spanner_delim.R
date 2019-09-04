@@ -22,7 +22,7 @@ test_that("the `cols_split_delim()` function works correctly", {
 
   # Expect a particular ordering of column labels in `_boxh`
   tbl_html %>%
-    dt_boxh_get() %>%
+    dt_boxhead_get() %>%
     .$column_label %>%
     unlist() %>%
     expect_equal(c("Length", "Width", "Length", "Width", "Species"))

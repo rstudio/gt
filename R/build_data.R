@@ -36,10 +36,10 @@ build_data <- function(data, context) {
   # Use `dt_*_build()` methods
   data <-
     data %>%
-    dt_boxh_build(context = context) %>%
+    dt_boxhead_build(context = context) %>%
     dt_spanners_build(context = context) %>%
     dt_heading_build(context = context) %>%
-    dt_stubh_build(context = context) %>%
+    dt_stubhead_build(context = context) %>%
     dt_source_notes_build(context = context)
 
   # Get a `columns_spanners` vector, which has the unique, non-NA

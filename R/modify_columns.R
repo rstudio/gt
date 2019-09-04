@@ -85,7 +85,7 @@ cols_align <- function(data,
   }
 
   for (i in seq(column_names)) {
-    data <- data %>% dt_boxh_edit(var = column_names[i], column_align = align[i])
+    data <- data %>% dt_boxhead_edit(var = column_names[i], column_align = align[i])
   }
 
   data
@@ -196,20 +196,20 @@ cols_width <- function(data,
       rlang::eval_tidy()
 
     for (column in columns) {
-      data <- data %>% dt_boxh_edit(var = column, column_width = list(width))
+      data <- data %>% dt_boxhead_edit(var = column, column_width = list(width))
     }
   }
 
   unset_widths <-
     data %>%
-    dt_boxh_get() %>%
+    dt_boxhead_get() %>%
     .$column_width %>%
     lapply(is.null) %>%
     unlist()
 
   if (any(unset_widths)) {
 
-    columns_unset <- (data %>% dt_boxh_get_vars())[unset_widths]
+    columns_unset <- (data %>% dt_boxhead_get_vars())[unset_widths]
 
     warning("Unset column widths found, setting them to `100px`:\n",
             " * columns: ",
@@ -219,7 +219,7 @@ cols_width <- function(data,
             call. = FALSE)
 
     for (column in columns_unset) {
-      data <- data %>% dt_boxh_edit(var = column, column_width = list("100px"))
+      data <- data %>% dt_boxhead_edit(var = column, column_width = list("100px"))
     }
   }
 
@@ -316,13 +316,13 @@ cols_label <- function(data,
   }
 
   # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(labels_list) %in% dt_boxh_get_vars(data = data))) {
+  if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = data))) {
     stop("All column names provided must exist in the input `data` table.")
   }
 
   # Filter the list of labels by the var names in `data`
   labels_list <-
-    labels_list[names(labels_list) %in% dt_boxh_get_vars(data = data)]
+    labels_list[names(labels_list) %in% dt_boxhead_get_vars(data = data)]
 
   # If no labels remain after filtering, return the data
   if (length(labels_list) == 0) {
@@ -334,7 +334,7 @@ cols_label <- function(data,
   for (i in seq_along(labels_list)) {
 
     data <-
-      dt_boxh_edit_column_label(
+      dt_boxhead_edit_column_label(
         data = data,
         var = nm_labels_list[i],
         column_label = labels_list[[i]]
@@ -402,7 +402,7 @@ cols_move <- function(data,
   # Get the `after` columns as a character vector
   after <- resolve_vars(var_expr = !!after, data = data)
 
-  vars <- dt_boxh_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = data)
 
   # Stop function if `after` contains multiple columns
   if (length(after) > 1) {
@@ -437,7 +437,7 @@ cols_move <- function(data,
 
   new_vars <- append(other_columns, moving_columns, after = after_index)
 
-  data <- dt_boxh_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -502,7 +502,7 @@ cols_move_to_start <- function(data,
 
   columns <- enquo(columns)
 
-  vars <- dt_boxh_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
@@ -523,7 +523,7 @@ cols_move_to_start <- function(data,
 
   new_vars <- append(other_columns, columns, after = 0)
 
-  data <- dt_boxh_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -587,7 +587,7 @@ cols_move_to_end <- function(data,
 
   columns <- enquo(columns)
 
-  vars <- dt_boxh_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
@@ -608,7 +608,7 @@ cols_move_to_end <- function(data,
 
   new_vars <- append(other_columns, columns)
 
-  data <- dt_boxh_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -684,7 +684,7 @@ cols_hide <- function(data,
   # Get the columns supplied in `columns` as a character vector
   columns <- resolve_vars(var_expr = !!columns, data = data)
 
-  vars <- dt_boxh_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = data)
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -698,7 +698,7 @@ cols_hide <- function(data,
   }
 
   for (column in columns) {
-    data <- data %>% dt_boxh_edit(var = column, type = "hidden")
+    data <- data %>% dt_boxhead_edit(var = column, type = "hidden")
   }
 
   data

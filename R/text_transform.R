@@ -154,7 +154,7 @@ text_transform_at_location.cells_column_labels <- function(loc,
                                                            data,
                                                            fn = identity) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
@@ -170,7 +170,7 @@ text_transform_at_location.cells_column_labels <- function(loc,
         fn()
 
       data <-
-        dt_boxh_edit(
+        dt_boxhead_edit(
           data = data,
           var = col,
           column_label = list(column_label_edited)

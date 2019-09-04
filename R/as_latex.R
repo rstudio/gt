@@ -45,7 +45,7 @@ as_latex <- function(data) {
 
   n_cols <- ncol(output_tbl)
 
-  col_alignment <- dt_boxh_get(data = data) %>% .$column_align
+  col_alignment <- dt_boxhead_get(data = data) %>% .$column_align
 
   # Extraction of body content as a vector ----------------------------------
   body_content <- as.vector(t(output_tbl))

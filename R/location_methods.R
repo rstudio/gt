@@ -91,7 +91,7 @@ to_output_location.output_relative <- function(loc, data) {
 to_output_location.cells_data <- function(loc, data) {
 
   data_tbl <- dt_data_tbl_get(data = data)
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
 
   cols_df <- attr(data, "cols_df", exact = TRUE)
   arrange_groups <- attr(data, "arrange_groups", exact = TRUE)

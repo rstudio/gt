@@ -4,7 +4,7 @@
 resolve_footnotes_styles <- function(data,
                                      tbl_type) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
   spanners <- dt_spanners_get(data = data)
   output_tbl <- dt_output_tbl_get(data = data)
 
@@ -324,7 +324,7 @@ resolve_footnotes_styles <- function(data,
 set_footnote_marks_columns <- function(data,
                                        context = "html") {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   # If there are any footnotes to apply to the columns,
@@ -459,7 +459,7 @@ set_footnote_marks_columns <- function(data,
             TRUE ~ column_label
           ))
 
-        data <- dt_boxh_set(data = data, boxh = boxh)
+        data <- dt_boxhead_set(data = data, boxh = boxh)
       }
     }
   }
@@ -476,7 +476,7 @@ set_footnote_marks_stubhead <- function(data,
                                         context = "html") {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
-  stubhead <- dt_stubh_get(data = data)
+  stubhead <- dt_stubhead_get(data = data)
 
   label <- stubhead$label
 
@@ -515,7 +515,7 @@ set_footnote_marks_stubhead <- function(data,
     }
   }
 
-  dt_stubh_label(data = data, label = label)
+  dt_stubhead_label(data = data, label = label)
 }
 
 #' Apply footnotes to the data rows

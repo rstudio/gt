@@ -30,5 +30,5 @@
 tab_stubhead <- function(data,
                          label) {
 
-  data %>% dt_stubh_label(label = label)
+  data %>% dt_stubhead_label(label = label)
 }

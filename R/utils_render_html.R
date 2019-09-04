@@ -65,7 +65,7 @@ coalesce_marks <- function(fn_tbl,
 # Get the attributes for the table tag
 get_table_defs <- function(data) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
 
   if (boxh$column_width %>% unlist() %>% length() > 0) {
 
@@ -128,7 +128,7 @@ create_heading_component <- function(data,
 
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  n_data_cols <- dt_boxh_get_vars_default(data = data) %>% length()
+  n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
@@ -321,8 +321,8 @@ create_heading_component <- function(data,
 #' @noRd
 create_columns_component_h <- function(data) {
 
-  boxh <- dt_boxh_get(data = data)
-  stubh <- dt_stubh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
+  stubh <- dt_stubhead_get(data = data)
   output_tbl <- dt_output_tbl_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
@@ -336,7 +336,7 @@ create_columns_component_h <- function(data) {
 
   # Get the column headings
   headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
-  headings_labels <- dt_boxh_get_vars_labels_default(data = data)
+  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
   # Should the column labels be hidden?
   column_labels_hidden <-
@@ -636,7 +636,7 @@ create_columns_component_h <- function(data) {
 #' @noRd
 create_body_component_h <- function(data) {
 
-  boxh <- dt_boxh_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   output_tbl <- dt_output_tbl_get(data = data)
 
@@ -645,7 +645,7 @@ create_body_component_h <- function(data) {
   list_of_summaries <- attr(data, "list_of_summaries", exact = TRUE)
   summaries_present <- attr(data, "summaries_present", exact = TRUE)
 
-  n_data_cols <- dt_boxh_get_vars_default(data = data) %>% length()
+  n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(output_tbl)
 
   # Get the column alignments for the data columns (this
@@ -656,13 +656,13 @@ create_body_component_h <- function(data) {
     dplyr::pull(column_align)
 
   # Get the column headings for the visible (e.g., `default`) columns
-  headings <- dt_boxh_get_vars_default(data = data)
+  headings <- dt_boxhead_get_vars_default(data = data)
 
   # Define function to get a character vector of formatted cell
   # data (this includes the stub, if it is present)
   output_df_row_as_vec <- function(i) {
 
-    default_vars <- dt_boxh_get_vars_default(data = data)
+    default_vars <- dt_boxhead_get_vars_default(data = data)
 
     if ("rowname" %in% names(output_tbl)) {
       default_vars <- c("rowname", default_vars)
@@ -895,7 +895,7 @@ create_source_notes_component_h <- function(data) {
 
   stub_components <- attr(data, "stub_components", exact = TRUE)
 
-  n_data_cols <- dt_boxh_get_vars_default(data = data) %>% length()
+  n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
@@ -945,7 +945,7 @@ create_footnotes_component_h <- function(data) {
 
   stub_components <- attr(data, "stub_components", exact = TRUE)
 
-  n_data_cols <- dt_boxh_get_vars_default(data = data) %>% length()
+  n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
