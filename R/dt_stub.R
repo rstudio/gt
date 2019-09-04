@@ -110,8 +110,8 @@ dt_stub_init <- function(data,
 # Function to obtain a reordered version of `stub_df`
 reorder_stub_df <- function(data) {
 
-  arrange_groups <- attr(data, "arrange_groups", exact = TRUE)
   stub_df <- dt_stub_get(data = data)
+  arrange_groups <- dt_arrange_groups_get(data = data)
 
   rows_df <-
     get_row_reorder_df(
@@ -121,9 +121,7 @@ reorder_stub_df <- function(data) {
 
   stub_df <- stub_df[rows_df$rownum_final, ]
 
-  data <- dt_stub_set(data = data, stub = stub_df)
-
-  data
+  dt_stub_set(data = data, stub = stub_df)
 }
 
 dt_stub_groupname_has_na <- function(data) {

@@ -59,7 +59,7 @@ expect_tab <- function(tab,
   expect_s3_class(dt_footnotes_get(data = tab), "data.frame")
   expect_s3_class(dt_styles_get(data = tab), "data.frame")
   expect_s3_class(dt_options_get(data = tab), "data.frame")
-  expect_type(attr(tab, "arrange_groups"), "list")
+  expect_type(dt_arrange_groups_get(data = tab), "list")
   expect_type(dt_formats_get(data = tab), "list")
 
   dt_boxhead_get(data = tab) %>%
@@ -86,7 +86,7 @@ expect_tab <- function(tab,
     length() %>%
     expect_equal(0)
 
-  attr(tab, "arrange_groups") %>%
+  dt_arrange_groups_get(data = tab) %>%
     length() %>%
     expect_equal(1)
 
@@ -137,7 +137,7 @@ gt_attr_names <- function() {
   c(
     "names", "class", "row.names", "_data", "_body", "_boxhead", "_stub",
     "_heading", "_spanners", "_stubhead", "_footnotes", "_source_notes",
-    "_formats", "_styles", "_summary", "_options", "arrange_groups"
+    "_formats", "_styles", "_summary", "_options", "_arrange_groups"
   )
 }
 

@@ -264,7 +264,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_group <- function(loc, data, style) {
 
-  row_groups <- attr(data, "arrange_groups")$groups
+  row_groups <- dt_arrange_groups_vars(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-

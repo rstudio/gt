@@ -7,8 +7,8 @@
 #' @param group The name of the row group. This text will also serve as the row
 #'   group label.
 #' @param rows The rows to be made components of the row group. Can either be a
-#'   vector of row captions provided `c()`, a vector of row indices, or a helper
-#'   function focused on selections. The select helper functions are:
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()].
 #' @param others An option to set a default row group label for any rows not
@@ -67,6 +67,8 @@ tab_row_group <- function(data,
                           rows = NULL,
                           others = NULL) {
 
+  arrange_groups_vars <- dt_arrange_groups_vars(data = data)
+
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
@@ -93,33 +95,29 @@ tab_row_group <- function(data,
 
     data <- dt_stub_set(data = data, stub = stub_df)
 
-    # Insert the group into the `arrange_groups` component
-    if (!("arrange_groups" %in% names(attributes(data)))) {
+    if (dt_stub_groupname_has_na(data = data)) {
 
-      if (dt_stub_groupname_has_na(data = data)) {
-
-        attr(data, "arrange_groups") <-
-          list(groups = c(process_text(group[1]), NA_character_))
-
-      } else {
-        attr(data, "arrange_groups") <-
-          list(groups = process_text(group[1]))
-      }
+      data <-
+        dt_arrange_groups_set(
+          data = data, arrange_groups =
+            list(
+              groups =
+                c(arrange_groups_vars, process_text(group[1]), NA_character_) %>%
+                unique()
+            )
+        )
 
     } else {
 
-      if (dt_stub_groupname_has_na(data = data)) {
-
-        attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
-            process_text(group[1]), NA_character_) %>%
-          unique()
-
-      } else {
-        attr(data, "arrange_groups")[["groups"]] <-
-          c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],
-            process_text(group[1]))
-      }
+      data <-
+        dt_arrange_groups_set(
+          data = data, arrange_groups =
+            list(
+              groups =
+                c(arrange_groups_vars, process_text(group[1])) %>%
+                unique()
+            )
+        )
     }
   }
 

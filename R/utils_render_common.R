@@ -289,8 +289,8 @@ get_groups_rows_df <- function(data,
                                context) {
 
   stub_df <- dt_stub_get(data = data)
+  ordering <- dt_arrange_groups_vars(data = data)
 
-  ordering <- attr(data, "arrange_groups", exact = TRUE)[[1]]
   others_group <- attr(data, "others_group", exact = TRUE)
 
   groups_rows_df <-

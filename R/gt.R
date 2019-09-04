@@ -100,7 +100,8 @@ gt <- function(data,
     dt_styles_init() %>%
     dt_summary_init() %>%
     #dt_transforms_init() %>%
-    dt_options_init()
+    dt_options_init() %>%
+    dt_arrange_groups_init()
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
@@ -117,15 +118,15 @@ gt <- function(data,
   # a vector of `groupname` values in the order of first
   # appearance in `data`; if all `groupname` values are NA,
   # then use an empty character vector
-  stub_df <- dt_stub_get(data = data)
-
-  if (any(!is.na(stub_df[["groupname"]]))) {
-    attr(data, "arrange_groups") <-
-      list(groups = unique(stub_df[["groupname"]]))
-  } else {
-    attr(data, "arrange_groups") <-
-      list(groups = character(0))
-  }
+  # stub_df <- dt_stub_get(data = data)
+  #
+  # if (any(!is.na(stub_df[["groupname"]]))) {
+  #   attr(data, "arrange_groups") <-
+  #     list(groups = unique(stub_df[["groupname"]]))
+  # } else {
+  #   attr(data, "arrange_groups") <-
+  #     list(groups = character(0))
+  # }
 
   # Apply the `gt_tbl` class to the object while
   # also keeping the `data.frame` class
