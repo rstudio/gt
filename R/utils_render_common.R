@@ -267,21 +267,6 @@ reorder_styles <- function(data) {
   data
 }
 
-# Function to get a vector of columns group (spanner) names
-get_columns_spanners_vec <- function(data) {
-
-  boxh_df <- attr(data, "boxh_df", exact = TRUE)
-
-  columns_spanners <-
-    boxh_df["group_label", ] %>% unlist() %>% unname()
-
-  columns_spanners <- columns_spanners[which(!is.na(columns_spanners))]
-
-  attr(data, "column_spanners") <- columns_spanners
-
-  data
-}
-
 #' Create a data frame with row group information
 #'
 #' @noRd

@@ -41,10 +41,6 @@ build_data <- function(data, context) {
     dt_stubhead_build(context = context) %>%
     dt_source_notes_build(context = context)
 
-  # Get a `columns_spanners` vector, which has the unique, non-NA
-  # spanner column labels
-  data <- get_columns_spanners_vec(data = data)
-
   # TODO: Make `dt_groups.R`
   # Add in the `groups_rows_df` table, which provides information
   # on which rows the group row labels should appear above
@@ -83,7 +79,6 @@ build_data <- function(data, context) {
 
   # Resolution of footnotes and styles --------------------------------------
 
-  #
   # Resolve footnotes and styles
   data <-
     data %>%

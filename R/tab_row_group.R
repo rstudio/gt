@@ -86,9 +86,7 @@ tab_row_group <- function(data,
         vals = stub_df$rowname
       )
 
-    # Place the `group` label in the `groupname` column
-    # `stub_df`
-
+    # Place the `group` label in the `groupname` column `stub_df`
     stub_df <- dt_stub_get(data = data)
 
     stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])

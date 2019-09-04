@@ -32,13 +32,3 @@ dt_arrange_groups_vars <- function(data) {
 
   dt_arrange_groups_get(data = data) %>% .[[1]]
 }
-
-# dt_arrange_groups_add <- function(data, arrange_groups) {
-#
-#   data %>%
-#     dt_arrange_groups_get() %>%
-#     append(
-#       list(arrange_groups)
-#     ) %>%
-#     dt_arrange_groups_set(arrange_groups = ., data = data)
-# }
