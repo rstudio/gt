@@ -74,7 +74,7 @@ tab_row_group <- function(data,
   if (!is.null(group)) {
 
     # Get the `stub_df` data frame from `data`
-    stub_df <- attr(data, "stub_df", exact = TRUE)
+    stub_df <- dt_stub_get(data = data)
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
@@ -86,13 +86,17 @@ tab_row_group <- function(data,
 
     # Place the `group` label in the `groupname` column
     # `stub_df`
-    attr(data, "stub_df")[resolved_rows_idx, "groupname"] <-
-      process_text(group[1])
+
+    stub_df <- dt_stub_get(data = data)
+
+    stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])
+
+    data <- dt_stub_set(data = data, stub = stub_df)
 
     # Insert the group into the `arrange_groups` component
     if (!("arrange_groups" %in% names(attributes(data)))) {
 
-      if (any(is.na(attr(data, "stub_df", exact = TRUE)$groupname))) {
+      if (dt_stub_groupname_has_na(data = data)) {
 
         attr(data, "arrange_groups") <-
           list(groups = c(process_text(group[1]), NA_character_))
@@ -104,7 +108,7 @@ tab_row_group <- function(data,
 
     } else {
 
-      if (any(is.na(attr(data, "stub_df")$groupname))) {
+      if (dt_stub_groupname_has_na(data = data)) {
 
         attr(data, "arrange_groups")[["groups"]] <-
           c(attr(data, "arrange_groups", exact = TRUE)[["groups"]],

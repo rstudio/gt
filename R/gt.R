@@ -77,109 +77,22 @@ gt <- function(data,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
-  gt_stub_params <-
-    list(
+  # Initialize the main objects
+  data <-
+    # TODO: make this a `list()`
+    data %>%
+    dt_data_init(data_tbl = data) %>%
+    dt_body_init() %>%
+    dt_boxhead_init() %>%
+    dt_stub_init(
+      data_df = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
       rownames_to_stub = rownames_to_stub,
       stub_group.sep = stub_group.sep
-    )
-
-  vars_to_hide <- c()
-
-  # Stop if input `data` has no columns
-  if (ncol(data) == 0) {
-    stop("The input `data` table must have at least one column.",
-         call. = FALSE)
-  }
-
-  # If the option to place rownames in the stub
-  # is taken, then the `stub_df` data frame will
-  # be pre-populated with rownames in the `rowname`
-  # column; otherwise, this will be an empty df
-  if (isTRUE(rownames_to_stub)) {
-
-    data_rownames <- rownames(data)
-
-    stub_df <-
-      dplyr::tibble(
-        rownum_i = seq_len(nrow(data)),
-        groupname = NA_character_,
-        rowname = data_rownames,
-      )
-
-  } else {
-
-    stub_df <-
-      dplyr::tibble(
-        rownum_i = seq_len(nrow(data)),
-        groupname = rep(NA_character_, nrow(data)),
-        rowname = rep(NA_character_, nrow(data))
-      )
-  }
-
-  # If `rowname` is a column available in `data`,
-  # place that column's data into `stub_df` and
-  # remove it from `data`
-  if (rowname_col %in% colnames(data)) {
-
-    # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- as.character(data[[rowname_col]])
-
-    vars_to_hide <- c(vars_to_hide, rowname_col)
-  }
-
-  # If `data` is a `grouped_df` then create groups from the
-  # group columns; note that this will overwrite any values
-  # already in `stub_df$groupname`
-  if (inherits(data, "grouped_df")) {
-
-    group_cols <- dplyr::group_vars(data)
-    group_cols <- base::intersect(group_cols, colnames(data))
-
-    group_labels <-
-      apply(
-        data[, group_cols],
-        MARGIN = 1,
-        paste, collapse = gt_stub_params$stub_group.sep
-      )
-
-    # Place the `group_labels` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- group_labels
-
-    vars_to_hide <- c(vars_to_hide, group_cols)
-
-  } else if (groupname_col %in% colnames(data)) {
-
-    # If `groupname` is a column available in `data`,
-    # place that column's data into `stub_df` and
-    # remove it from `data`
-
-    # Place the `groupname` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- as.character(data[[groupname_col]])
-
-    vars_to_hide <- c(vars_to_hide, groupname_col)
-  }
-
-  # Stop if input `data` has no columns (after modifying
-  # `data` for groups)
-  if (ncol(data) == 0) {
-    stop("The `data` must have at least one column that isn't a 'group' column.",
-         call. = FALSE)
-  }
-
-  # Take the input data and convert to a tibble
-  data_tbl <- data %>% dplyr::as_tibble()
-
-  # Initialize the main objects
-  data_tbl <-
-    data_tbl %>%
-    dt_data_init(data_tbl = data_tbl) %>%
-    dt_body_init() %>%
-    #dt_stub_tbl_init(gt_stub_params = gt_stub_params) %>%
+    ) %>%
     dt_heading_init() %>%
     dt_spanners_init() %>%
-    dt_boxhead_init() %>%
     dt_stubhead_init() %>%
     dt_footnotes_init() %>%
     dt_source_notes_init() %>%
@@ -189,14 +102,15 @@ gt <- function(data,
     #dt_transforms_init() %>%
     dt_options_init()
 
-  # Add the `stub_df` object as an attribute
-  attr(data_tbl, "stub_df") <- stub_df
+
+  # # Add the `stub_df` object as an attribute
+  # attr(data_tbl, "stub_df") <- stub_df
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
 
-    data_tbl <-
-      data_tbl %>%
+    data <-
+      data %>%
       dt_options_set_value(
         option = "table_id",
         value = id
@@ -207,29 +121,25 @@ gt <- function(data,
   # a vector of `groupname` values in the order of first
   # appearance in `data`; if all `groupname` values are NA,
   # then use an empty character vector
+  stub_df <- dt_stub_get(data = data)
+
   if (any(!is.na(stub_df[["groupname"]]))) {
-    attr(data_tbl, "arrange_groups") <-
+    attr(data, "arrange_groups") <-
       list(groups = unique(stub_df[["groupname"]]))
   } else {
-    attr(data_tbl, "arrange_groups") <-
+    attr(data, "arrange_groups") <-
       list(groups = character(0))
   }
 
   # Apply the `gt_tbl` class to the object while
   # also keeping the `data.frame` class
-  class(data_tbl) <- c("gt_tbl", class(data_tbl))
+  class(data) <- c("gt_tbl", class(data))
 
   if (isTRUE(auto_align)) {
-    data_tbl <-
-      data_tbl %>%
+    data <-
+      data %>%
       cols_align(align = "auto")
   }
 
-  if (length(vars_to_hide) > 0) {
-    data_tbl <-
-      data_tbl %>%
-      cols_hide(columns = vars_to_hide)
-  }
-
-  data_tbl
+  data
 }

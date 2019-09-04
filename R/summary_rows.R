@@ -101,7 +101,7 @@ summary_rows <- function(data,
   }
 
   # Get the `stub_df` object from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   data <- is_stub_available(data)
   stub_available <- attr(data, "stub_available")
@@ -118,7 +118,7 @@ summary_rows <- function(data,
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- ""
 
-    attr(data, "stub_df") <- stub_df
+    data <- dt_stub_set(data = data, stub = stub_df)
   }
 
   # Derive the summary labels
@@ -171,7 +171,7 @@ add_summary_location_row <- function(loc,
                                      style,
                                      df_type = "styles_df") {
 
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   row_groups <-
     stub_df %>%

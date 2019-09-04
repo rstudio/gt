@@ -42,7 +42,8 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
   expect_tab_colnames(
-    tab, df = mtcars,
+    tab,
+    df = mtcars,
     rowname = "tibble",
     groupname_is_na = TRUE
   )
@@ -120,7 +121,7 @@ test_that("a gt table can be made from a table with no rows", {
   #expect_tab(tab, data_e)
 
   # Expect that the `stub_df` data frame is empty
-  attr(tab, "stub_df") %>%
+  dt_stub_get(data = tab) %>%
     nrow() %>%
     expect_equal(0)
 

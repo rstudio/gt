@@ -13,11 +13,14 @@ dt_boxhead_set <- function(data, boxh) {
 
 dt_boxhead_init <- function(data) {
 
-  empty_list <- lapply(seq_along(names(data)), function(x) NULL)
+  vars <- colnames(dt_data_get(data = data))
+
+  empty_list <- lapply(seq_along(vars), function(x) NULL)
+
 
   dplyr::tibble(
     # Matches to the name of the `data` column
-    var = names(data),
+    var = vars,
     # The mode of the column in the rendered table
     # - `default` appears as a column with values below
     # - `stub` appears as part of a table stub, set to the left
@@ -37,7 +40,7 @@ dt_boxhead_init <- function(data) {
     # row_group_label = lapply(seq_along(names(data)), function(x) NULL),
     # The presentation label, which is a list of labels by
     # render context (e.g., HTML, LaTeX, etc.)
-    column_label = as.list(names(data)),
+    column_label = as.list(vars),
     # The alignment of the column ("left", "right", "center")
     column_align = "center",
     # The width of the column in `px`
@@ -66,8 +69,18 @@ dt_boxhead_edit <- function(data, var, ...) {
   dt_boxhead[which(dt_boxhead$var == var_name), names(val_list)] <-
     dplyr::as_tibble(val_list)
 
-  dt_boxhead %>%
-    dt_boxhead_set(boxh = ., data = data)
+  dt_boxhead %>% dt_boxhead_set(data = data)
+}
+
+dt_boxhead_set_hidden <- function(data, vars) {
+
+  dt_boxhead <- dt_boxhead_get(data = data)
+
+  lapply(vars, function(var) check_vars_dt_boxhead(var = var, dt_boxhead = boxhead))
+
+  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
+
+  dt_boxhead %>% dt_boxhead_set(data = data)
 }
 
 dt_boxhead_edit_column_label <- function(data, var, column_label) {

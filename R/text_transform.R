@@ -133,11 +133,10 @@ text_transform_at_location.cells_stub <- function(loc,
                                                   data,
                                                   func = identity) {
 
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  # Do one vectorized operation per
   for (row in loc$rows) {
 
     if (row %in% stub_df$rowname) {
@@ -145,9 +144,7 @@ text_transform_at_location.cells_stub <- function(loc,
     }
   }
 
-  attr(data, "stub_df") <- stub_df
-
-  data
+  dt_stub_set(data = data, stub = stub_df)
 }
 
 text_transform_at_location.cells_column_labels <- function(loc,

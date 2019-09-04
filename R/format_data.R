@@ -1502,7 +1502,7 @@ fmt <- function(data,
                 fns) {
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors

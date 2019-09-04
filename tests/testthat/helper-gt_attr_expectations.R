@@ -8,20 +8,20 @@ expect_tab_colnames <- function(tab,
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(attr(tab, "stub_df")[["rowname"]])))
+      all(is.na(dt_stub_get(data = tab)[["rowname"]])))
 
   } else if (rowname == "col"){
 
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_equal(
-      attr(tab, "stub_df")[["rowname"]],
+      dt_stub_get(data = tab)[["rowname"]],
       df$rowname)
 
   } else if (rowname == "tibble") {
 
     expect_equal(
-      attr(tab, "stub_df")[["rowname"]],
+      dt_stub_get(data = tab)[["rowname"]],
       row.names(df))
   }
 
@@ -30,7 +30,7 @@ expect_tab_colnames <- function(tab,
     # Expect that the `groupname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(attr(tab, "stub_df")[["groupname"]])))
+      all(is.na(dt_stub_get(data = tab)[["groupname"]])))
 
   } else {
 
@@ -38,11 +38,12 @@ expect_tab_colnames <- function(tab,
     # the original dataset populate the `groupname` column
     # of the `stub_df` object
     expect_equal(
-      attr(tab, "stub_df")[["groupname"]],
+      dt_stub_get(data = tab)[["groupname"]],
       df[["groupname"]])
   }
 }
 
+# TODO: fix it
 expect_tab <- function(tab,
                        df,
                        has_rownames = FALSE,
@@ -56,8 +57,8 @@ expect_tab <- function(tab,
   expect_gt_attr_names(tab)
 
   # Expect that the attribute obejcts are of certain classes
-  expect_s3_class(attr(tab, "boxh_df"), "data.frame")
-  expect_s3_class(attr(tab, "stub_df"), "data.frame")
+  expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
+  expect_s3_class(dt_stub_get(data = tab), "data.frame")
   expect_s3_class(attr(tab, "footnotes_df"), "data.frame")
   expect_s3_class(attr(tab, "styles_df"), "data.frame")
   expect_s3_class(attr(tab, "rows_df"), "data.frame")
@@ -92,7 +93,7 @@ expect_tab <- function(tab,
   }
 
   expect_equal(dim(attr(tab, "boxh_df")), c(4, ncol(final_df)))
-  expect_equal(dim(attr(tab, "stub_df")), c(nrow(df), 2))
+  expect_equal(dim(dt_stub_get(data = tab)), c(nrow(df), 2))
   expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(nrow(df), 1))
@@ -122,7 +123,7 @@ expect_tab <- function(tab,
   # Expect that the column names of the `stub_df` object
   # are `groupname` and `rowname`
   expect_equal(
-    colnames(attr(tab, "stub_df")),
+    colnames(dt_stub_get(data = tab)),
     c("groupname", "rowname"))
 
   # Expect that the column names of the `boxh_df` object

@@ -13,7 +13,7 @@ resolve_location.resolved <- function(loc, data) {
 resolve_location.cells_data <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   loc$columns <-
     resolve_vars_idx(
@@ -58,7 +58,7 @@ resolve_location.cells_column_labels <- function(loc, data) {
 
 resolve_location.cells_stub <- function(loc, data) {
 
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
 
   resolved <- resolve_cells_stub(data = stub_df, object = loc)
 
@@ -92,10 +92,10 @@ to_output_location.cells_data <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
   boxh <- dt_boxhead_get(data = data)
+  stub_df <- dt_stub_get(data = data)
 
   cols_df <- attr(data, "cols_df", exact = TRUE)
   arrange_groups <- attr(data, "arrange_groups", exact = TRUE)
-  stub_df <- attr(data, "stub_df", exact = TRUE)
 
   loc <- resolve_location(loc = loc, data = data)
 
@@ -119,7 +119,7 @@ to_output_location.cells_data <- function(loc, data) {
 
 to_output_location.cells_stub <- function(loc, data) {
 
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_get(data = data)
   arrange_groups <- attr(data, "arrange_groups", exact = TRUE)
 
   loc <- resolve_location(loc = loc, data = data)
