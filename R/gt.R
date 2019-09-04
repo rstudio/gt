@@ -114,20 +114,6 @@ gt <- function(data,
       )
   }
 
-  # Create an `arrange_groups` list object, which contains
-  # a vector of `groupname` values in the order of first
-  # appearance in `data`; if all `groupname` values are NA,
-  # then use an empty character vector
-  # stub_df <- dt_stub_get(data = data)
-  #
-  # if (any(!is.na(stub_df[["groupname"]]))) {
-  #   attr(data, "arrange_groups") <-
-  #     list(groups = unique(stub_df[["groupname"]]))
-  # } else {
-  #   attr(data, "arrange_groups") <-
-  #     list(groups = character(0))
-  # }
-
   # Apply the `gt_tbl` class to the object while
   # also keeping the `data.frame` class
   class(data) <- c("gt_tbl", class(data))
