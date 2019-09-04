@@ -95,8 +95,6 @@ to_output_location.cells_data <- function(loc, data) {
   stub_df <- dt_stub_get(data = data)
   arrange_groups <- dt_arrange_groups_get(data = data)
 
-  cols_df <- attr(data, "cols_df", exact = TRUE)
-
   loc <- resolve_location(loc = loc, data = data)
 
   columns_df <- get_column_reorder_df(data = data)
