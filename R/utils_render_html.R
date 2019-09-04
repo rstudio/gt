@@ -323,7 +323,7 @@ create_columns_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
   stub_available <- attr(data, "stub_available", exact = TRUE)
@@ -638,7 +638,7 @@ create_body_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)
@@ -646,7 +646,7 @@ create_body_component_h <- function(data) {
   summaries_present <- attr(data, "summaries_present", exact = TRUE)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
-  n_rows <- nrow(output_tbl)
+  n_rows <- nrow(body)
 
   # Get the column alignments for the data columns (this
   # doesn't include the stub alignment)
@@ -664,11 +664,11 @@ create_body_component_h <- function(data) {
 
     default_vars <- dt_boxhead_get_vars_default(data = data)
 
-    if ("rowname" %in% names(output_tbl)) {
+    if ("rowname" %in% names(body)) {
       default_vars <- c("rowname", default_vars)
     }
 
-    output_tbl[i, default_vars] %>% unlist() %>% unname()
+    body[i, default_vars] %>% unlist() %>% unname()
   }
 
   # Determine whether the stub is available through analysis

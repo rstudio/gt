@@ -6,7 +6,7 @@ resolve_footnotes_styles <- function(data,
 
   boxh <- dt_boxhead_get(data = data)
   spanners <- dt_spanners_get(data = data)
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE) # Used also for `arrange_groups`
 
@@ -77,10 +77,11 @@ resolve_footnotes_styles <- function(data,
         )
     }
 
-    # Filter `tbl` by the remaining columns in `output_tbl`
+    # TODO: replace `colnames(body)` with dt_boxhead_vars_default
+    # Filter `tbl` by the remaining columns in `body`
     tbl <-
       tbl %>%
-      dplyr::filter(colname %in% c(NA_character_, colnames(output_tbl)))
+      dplyr::filter(colname %in% c(NA_character_, colnames(body)))
   }
 
   # Reorganize records that target the data rows
@@ -102,7 +103,7 @@ resolve_footnotes_styles <- function(data,
         tbl_data %>%
         dplyr::mutate(
           rownum = rownum_translation(
-            output_tbl = output_tbl,
+            body = body,
             rownum_start = rownum)
         )
 
@@ -524,7 +525,7 @@ set_footnote_marks_stubhead <- function(data,
 apply_footnotes_to_output <- function(data,
                                       context = "html") {
 
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   # `data` location
@@ -535,7 +536,7 @@ apply_footnotes_to_output <- function(data,
   if (nrow(footnotes_tbl_data) > 0) {
 
     if ("stub" %in% footnotes_tbl_data$locname &&
-        "rowname" %in% colnames(output_tbl)) {
+        "rowname" %in% colnames(body)) {
 
       footnotes_tbl_data[
         which(is.na(footnotes_tbl_data$colname)), "colname"] <- "rowname"
@@ -552,7 +553,7 @@ apply_footnotes_to_output <- function(data,
     for (i in seq(nrow(footnotes_data_marks))) {
 
       text <-
-        output_tbl[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]
+        body[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]
 
       if (context == "html") {
 
@@ -576,12 +577,12 @@ apply_footnotes_to_output <- function(data,
           )
       }
 
-      output_tbl[
+      body[
         footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]] <- text
     }
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }

@@ -112,19 +112,19 @@ text_transform_at_location.cells_data <- function(loc,
                                                   data,
                                                   fn = identity) {
 
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
   # Do one vectorized operation per column
   for (col in loc$colnames) {
 
-    if (col %in% colnames(output_tbl)) {
-      output_tbl[[col]][loc$rows] <- fn(output_tbl[[col]][loc$rows])
+    if (col %in% colnames(body)) {
+      body[[col]][loc$rows] <- fn(body[[col]][loc$rows])
     }
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }

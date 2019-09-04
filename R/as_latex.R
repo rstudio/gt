@@ -41,7 +41,7 @@ as_latex <- function(data) {
 
   # Composition of LaTeX ----------------------------------------------------
 
-  output_tbl <- dt_output_get(data = data)
+  output_tbl <- dt_body_get(data = data)
 
   n_cols <- ncol(output_tbl)
 

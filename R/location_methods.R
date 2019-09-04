@@ -107,7 +107,7 @@ to_output_location.cells_data <- function(loc, data) {
       stub_df = stub_df
     )
 
-  # We shouldn't need to do this, but `output_tbl` doesn't match up exactly to
+  # We shouldn't need to do this, but `body` doesn't match up exactly to
   # the colnum_final values due to groupnames/rownames
   loc$colnames <- colnames(data_tbl)[loc$columns]
   loc$columns <- columns_df$colnum_final[loc$columns]

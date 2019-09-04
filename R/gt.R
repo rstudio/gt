@@ -175,6 +175,7 @@ gt <- function(data,
   data_tbl <-
     data_tbl %>%
     dt_data_init(data_tbl = data_tbl) %>%
+    dt_body_init() %>%
     #dt_stub_tbl_init(gt_stub_params = gt_stub_params) %>%
     dt_heading_init() %>%
     dt_spanners_init() %>%

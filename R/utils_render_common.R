@@ -37,14 +37,14 @@ colname_to_colnum <- function(data,
 
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
-rownum_translation <- function(output_tbl,
+rownum_translation <- function(body,
                                rownum_start) {
 
   rownum_final <- c()
   for (rownum_s in rownum_start) {
     rownum_final <-
       c(rownum_final,
-        which(as.numeric(rownames(output_tbl)) == rownum_s))
+        which(as.numeric(rownames(body)) == rownum_s))
   }
 
   rownum_final
@@ -56,7 +56,7 @@ rownum_translation <- function(output_tbl,
 render_formats <- function(data,
                            context) {
 
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
   formats <- dt_formats_get(data = data)
 
@@ -84,32 +84,32 @@ render_formats <- function(data,
         # means we want to NOT make changes to those
         # particular cells' output (i.e. inherit the
         # results of the previous formatter).
-        output_tbl[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
+        body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }
 
-# Move input data cells to `output_tbl` that didn't have any rendering applied
+# Move input data cells to `body` that didn't have any rendering applied
 # during the `render_formats()` call
 migrate_unformatted_to_output <- function(data,
                                           context) {
 
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
 
-  for (colname in colnames(output_tbl)) {
+  for (colname in colnames(body)) {
 
-    row_index <- is.na(output_tbl[[colname]])
+    row_index <- is.na(body[[colname]])
 
     if (inherits(data_tbl[[colname]], "list")) {
 
       # Use `lapply()` so that all values could be treated independently
-      output_tbl[[colname]][row_index] <-
+      body[[colname]][row_index] <-
         lapply(
           data_tbl[[colname]][row_index],
           function(x) {
@@ -128,7 +128,7 @@ migrate_unformatted_to_output <- function(data,
     } else {
 
       # No `lapply()` used: all values will be treated cohesively
-      output_tbl[[colname]][row_index] <-
+      body[[colname]][row_index] <-
         format(
           data_tbl[[colname]][row_index],
           drop0trailing = FALSE,
@@ -139,7 +139,7 @@ migrate_unformatted_to_output <- function(data,
     }
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }
@@ -148,8 +148,6 @@ migrate_unformatted_to_output <- function(data,
 #'
 #' @noRd
 perform_text_transforms <- function(data) {
-
-  #transforms <- attr(data, "transforms", exact = TRUE)
 
   transforms <- dt_transforms_get(data = data)
 
@@ -221,36 +219,6 @@ get_column_reorder_df <- function(data) {
       colnames_final_tbl, by = c("colnames_start" = "colnames_final")
     ) %>%
     dplyr::rename(column_names = colnames_start)
-}
-
-# Function to reassemble the rows and columns of the `output_tbl`
-# in a revised order
-reassemble_output_tbl <- function(data) {
-
-  output_tbl <- dt_output_get(data = data)
-
-  arrange_groups <- attr(data, "arrange_groups", exact = TRUE)
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  # Get the reordering df (`rows_df`) for the data rows
-  rows_df <-
-    get_row_reorder_df(
-      arrange_groups = arrange_groups,
-      stub_df = stub_df
-    )
-
-  # Get the `columns_df` data frame for the data columns
-  columns_df <- get_column_reorder_df(data = data)
-
-  rows <- rows_df$rownum_final
-
-  cols <-
-    subset(columns_df, !is.na(colnum_final))[
-      order(subset(columns_df, !is.na(colnum_final))$colnum_final), ]$column_names
-
-  data <- dt_output_set(data = data, output_tbl = output_tbl[rows, cols, drop = FALSE])
-
-  data
 }
 
 # Function to obtain a reordered version of `stub_df`
@@ -395,7 +363,7 @@ perform_col_merge <- function(data,
                               context) {
 
   col_merge <- dt_col_merge_get(data = data)
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
 
   if (length(col_merge) == 0) {
     return(data)
@@ -425,8 +393,8 @@ perform_col_merge <- function(data,
           )
       }
 
-      output_tbl <-
-        output_tbl %>%
+      body <-
+        body %>%
         dplyr::mutate(
           !!mutated_column_sym := glue::glue(pattern) %>% as.character()
         )
@@ -466,12 +434,12 @@ perform_col_merge <- function(data,
       na_2_rows <- which(is.na(data_tbl %>% dplyr::pull(!!second_column_sym)))
 
       no_na_rows <-
-        seq_along(output_tbl %>% dplyr::pull(!!mutated_column_sym)) %>%
+        seq_along(body %>% dplyr::pull(!!mutated_column_sym)) %>%
         base::setdiff(na_1_rows) %>%
         base::setdiff(na_2_rows)
 
-      output_tbl <-
-        output_tbl %>%
+      body <-
+        body %>%
         dplyr::mutate(
           !!mutated_column_sym := dplyr::case_when(
             dplyr::row_number() %in% no_na_rows ~ glue::glue(pattern) %>% as.character(),
@@ -481,7 +449,7 @@ perform_col_merge <- function(data,
     }
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }
@@ -497,8 +465,10 @@ perform_col_merge <- function(data,
 create_summary_dfs <- function(data,
                                context) {
 
+  # TODO: is `dt_body_get()` necessary here? `dt_boxh_vars_default()` could be used
+
   summary_list <- dt_summary_get(data = data)
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
 
   stub_df <- attr(data, "stub_df", exact = TRUE)
@@ -591,7 +561,7 @@ create_summary_dfs <- function(data,
     }
 
     # Resolve the columns to exclude
-    columns_excl <- base::setdiff(colnames(output_tbl), columns)
+    columns_excl <- base::setdiff(colnames(body), columns)
 
     # Combine `groupname` with the table body data in order to
     # process data by groups
@@ -638,7 +608,7 @@ create_summary_dfs <- function(data,
 
     summary_dfs_data <-
       summary_dfs_data %>%
-      dplyr::select(groupname, rowname, colnames(output_tbl))
+      dplyr::select(groupname, rowname, colnames(body))
 
     # Format the displayed summary lines
     summary_dfs_display <-
@@ -837,7 +807,7 @@ get_column_alignment <- function(data) {
 
 combine_stub_with_data <- function(data) {
 
-  output_tbl <- dt_output_get(data = data)
+  body <- dt_body_get(data = data)
 
   stub_df <- attr(data, "stub_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)
@@ -848,10 +818,10 @@ combine_stub_with_data <- function(data) {
     rownames <- stub_df %>% dplyr::select(rowname)
 
     # Combine reordered stub with output table
-    output_tbl <- dplyr::bind_cols(rownames, output_tbl)
+    body <- dplyr::bind_cols(rownames, body)
   }
 
-  data <- dt_output_set(data = data, output_tbl = output_tbl)
+  data <- dt_body_set(data = data, body = body)
 
   data
 }

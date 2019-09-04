@@ -16,19 +16,18 @@ build_data <- function(data, context) {
   #     "formats", "transforms")
   # )
 
-  # Create `output_tbl` with rendered values; move
-  # input data cells to `output_tbl` that didn't have
+  # Create `body` with rendered values; move
+  # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;
-  # Reassemble the rows and columns of `output_tbl` in
+  # Reassemble the rows and columns of `body` in
   # the correct order
   data <-
     data %>%
-    dt_output_init() %>%
     render_formats(context = context) %>%
     migrate_unformatted_to_output(context = context) %>%
     perform_col_merge(context = context) %>%
     perform_text_transforms() %>%
-    reassemble_output_tbl() %>%
+    dt_body_reassemble() %>%
     reorder_stub_df() %>%
     reorder_footnotes() %>%
     reorder_styles()
