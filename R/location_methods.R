@@ -12,7 +12,7 @@ resolve_location.resolved <- function(loc, data) {
 
 resolve_location.cells_data <- function(loc, data) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
   loc$columns <-
@@ -34,7 +34,7 @@ resolve_location.cells_data <- function(loc, data) {
 
 resolve_location.cells_column_labels <- function(loc, data) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   if (!is.null(loc$columns)) {
 
@@ -90,7 +90,7 @@ to_output_location.output_relative <- function(loc, data) {
 
 to_output_location.cells_data <- function(loc, data) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
   boxh <- dt_boxhead_get(data = data)
 
   cols_df <- attr(data, "cols_df", exact = TRUE)

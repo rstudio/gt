@@ -323,7 +323,7 @@ create_columns_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
   stub_available <- attr(data, "stub_available", exact = TRUE)
@@ -638,7 +638,7 @@ create_body_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)

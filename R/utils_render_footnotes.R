@@ -6,7 +6,7 @@ resolve_footnotes_styles <- function(data,
 
   boxh <- dt_boxhead_get(data = data)
   spanners <- dt_spanners_get(data = data)
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE) # Used also for `arrange_groups`
 
@@ -524,7 +524,7 @@ set_footnote_marks_stubhead <- function(data,
 apply_footnotes_to_output <- function(data,
                                       context = "html") {
 
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   # `data` location
@@ -581,7 +581,7 @@ apply_footnotes_to_output <- function(data,
     }
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }

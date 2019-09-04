@@ -229,7 +229,7 @@ resolve_vars <- function(var_expr,
   var_expr <- enquo(var_expr)
 
   # Obtain the data frame of the input table data
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   # Collect column names from the input table data
   column_names <- colnames(data_tbl)

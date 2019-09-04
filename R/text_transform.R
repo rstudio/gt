@@ -112,7 +112,7 @@ text_transform_at_location.cells_data <- function(loc,
                                                   data,
                                                   fn = identity) {
 
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
@@ -124,7 +124,7 @@ text_transform_at_location.cells_data <- function(loc,
     }
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }

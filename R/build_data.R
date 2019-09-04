@@ -23,7 +23,7 @@ build_data <- function(data, context) {
   # the correct order
   data <-
     data %>%
-    dt_output_tbl_init() %>%
+    dt_output_init() %>%
     render_formats(context = context) %>%
     migrate_unformatted_to_output(context = context) %>%
     perform_col_merge(context = context) %>%

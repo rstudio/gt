@@ -7,11 +7,11 @@ dt_data_get <- function(data) {
 
 dt_data_set <- function(data, data_tbl) {
 
-  attr(data, .dt_data_key) <- data_tbl
+  attr(data, .dt_data_key) <- data_tbl %>% dplyr::as_tibble()
   data
 }
 
-dt_data_init <- function(data) {
+dt_data_init <- function(data, data_tbl = NULL) {
 
-  dt_data_set(data,  NULL)
+  dt_data_set(data, data_tbl)
 }

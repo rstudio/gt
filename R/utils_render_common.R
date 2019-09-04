@@ -56,8 +56,8 @@ rownum_translation <- function(output_tbl,
 render_formats <- function(data,
                            context) {
 
-  output_tbl <- dt_output_tbl_get(data = data)
-  data_tbl <- dt_data_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
+  data_tbl <- dt_data_get(data = data)
   formats <- dt_formats_get(data = data)
 
   # Render input data to output data where formatting
@@ -89,7 +89,7 @@ render_formats <- function(data,
     }
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }
@@ -99,8 +99,8 @@ render_formats <- function(data,
 migrate_unformatted_to_output <- function(data,
                                           context) {
 
-  output_tbl <- dt_output_tbl_get(data = data)
-  data_tbl <- dt_data_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   for (colname in colnames(output_tbl)) {
 
@@ -139,7 +139,7 @@ migrate_unformatted_to_output <- function(data,
     }
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }
@@ -206,7 +206,7 @@ get_row_reorder_df <- function(arrange_groups,
 #' @noRd
 get_column_reorder_df <- function(data) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
   column_names <- dt_boxhead_get_vars(data = data)
 
   cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
@@ -227,7 +227,7 @@ get_column_reorder_df <- function(data) {
 # in a revised order
 reassemble_output_tbl <- function(data) {
 
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   arrange_groups <- attr(data, "arrange_groups", exact = TRUE)
   stub_df <- attr(data, "stub_df", exact = TRUE)
@@ -248,7 +248,7 @@ reassemble_output_tbl <- function(data) {
     subset(columns_df, !is.na(colnum_final))[
       order(subset(columns_df, !is.na(colnum_final))$colnum_final), ]$column_names
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl[rows, cols, drop = FALSE])
+  data <- dt_output_set(data = data, output_tbl = output_tbl[rows, cols, drop = FALSE])
 
   data
 }
@@ -395,7 +395,7 @@ perform_col_merge <- function(data,
                               context) {
 
   col_merge <- dt_col_merge_get(data = data)
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   if (length(col_merge) == 0) {
     return(data)
@@ -460,7 +460,7 @@ perform_col_merge <- function(data,
           )
       }
 
-      data_tbl <- dt_data_tbl_get(data = data)
+      data_tbl <- dt_data_get(data = data)
 
       na_1_rows <- which(is.na(data_tbl %>% dplyr::pull(!!mutated_column_sym)))
       na_2_rows <- which(is.na(data_tbl %>% dplyr::pull(!!second_column_sym)))
@@ -481,7 +481,7 @@ perform_col_merge <- function(data,
     }
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }
@@ -498,8 +498,8 @@ create_summary_dfs <- function(data,
                                context) {
 
   summary_list <- dt_summary_get(data = data)
-  output_tbl <- dt_output_tbl_get(data = data)
-  data_tbl <- dt_data_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   stub_df <- attr(data, "stub_df", exact = TRUE)
 
@@ -837,7 +837,7 @@ get_column_alignment <- function(data) {
 
 combine_stub_with_data <- function(data) {
 
-  output_tbl <- dt_output_tbl_get(data = data)
+  output_tbl <- dt_output_get(data = data)
 
   stub_df <- attr(data, "stub_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)
@@ -851,7 +851,7 @@ combine_stub_with_data <- function(data) {
     output_tbl <- dplyr::bind_cols(rownames, output_tbl)
   }
 
-  data <- dt_output_tbl_set(data = data, output_tbl = output_tbl)
+  data <- dt_output_set(data = data, output_tbl = output_tbl)
 
   data
 }

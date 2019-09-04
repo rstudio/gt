@@ -6,7 +6,7 @@ test_that("the `gt_preview()` function works correctly", {
   gt_tbl <- gt_preview(mtcars)
 
   built_tbl <- gt_tbl %>% build_data(context = "html")
-  output_tbl <- dt_output_tbl_get(data = built_tbl)
+  output_tbl <- dt_output_get(data = built_tbl)
 
   # Expect that the output table has had rows removed
   (nrow(mtcars) > nrow(output_tbl)) %>%
@@ -28,7 +28,7 @@ test_that("the `gt_preview()` function works correctly", {
   gt_tbl <- gt_preview(mtcars, top_n = 10, bottom_n = 5)
 
   built_tbl <- gt_tbl %>% build_data(context = "html")
-  output_tbl <- dt_output_tbl_get(data = built_tbl)
+  output_tbl <- dt_output_get(data = built_tbl)
 
   # Expect a preview of the `mtcars` dataset with different `top_n`
   # and `bottom_n` values will result in a different row names
@@ -49,7 +49,7 @@ test_that("the `gt_preview()` function works correctly", {
   gt_tbl <- gt_preview(mtcars[1:5, ])
 
   built_tbl <- gt_tbl %>% build_data(context = "html")
-  output_tbl <- dt_output_tbl_get(data = built_tbl)
+  output_tbl <- dt_output_get(data = built_tbl)
 
   # Expect a preview of this shortened `mtcars` dataset won't
   # have an ellipsis row
@@ -74,7 +74,7 @@ test_that("the `gt_preview()` function works correctly", {
   gt_tbl <- gt_preview(tbl)
 
   built_tbl <- gt_tbl %>% build_data(context = "html")
-  output_tbl <- dt_output_tbl_get(data = built_tbl)
+  output_tbl <- dt_output_get(data = built_tbl)
 
   # Expect that columns named `rowname` or `groupname` will
   # gain a leading `.` to demote them from acting as magic columns
@@ -88,7 +88,7 @@ test_that("the `gt_preview()` function works correctly", {
   gt_tbl <- gt_preview(mtcars, incl_rownums = FALSE)
 
   built_tbl <- gt_tbl %>% build_data(context = "html")
-  output_tbl <- dt_output_tbl_get(data = built_tbl)
+  output_tbl <- dt_output_get(data = built_tbl)
 
   # Expect the column names to be equal to that of the
   # input data table

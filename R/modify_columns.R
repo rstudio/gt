@@ -46,7 +46,7 @@ cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
                        columns = TRUE) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)

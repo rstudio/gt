@@ -15,7 +15,7 @@ dt_output_init <- function(data) {
 
   output_tbl <- dt_data_get(data = data)
 
-  if (nrow(output_tbl) > 0) {
+  if (NROW(output_tbl) > 0) {
     output_tbl[] <- NA_character_
   }
 

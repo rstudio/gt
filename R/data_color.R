@@ -131,7 +131,7 @@ data_color <- function(data,
                        apply_to = "fill",
                        autocolor_text = TRUE) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
@@ -252,7 +252,7 @@ scale_apply_styles <- function(data,
                                styles,
                                rows_i) {
 
-  data_tbl <- dt_data_tbl_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   if (missing(rows_i)) {
     rows_i <- seq(nrow(data_tbl))
