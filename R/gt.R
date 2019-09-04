@@ -103,6 +103,9 @@ gt <- function(data,
     dt_options_init() %>%
     dt_arrange_groups_init()
 
+  # TODO: create dt method functions for: `groups_rows_df` (or combine with `arrange_groups`)
+  # TODO: combine `others_group` (character(1)) with `arrange_groups`
+
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
 
@@ -118,6 +121,8 @@ gt <- function(data,
   # also keeping the `data.frame` class
   class(data) <- c("gt_tbl", class(data))
 
+  # If automatic alignment of values is to be done, call
+  # the `cols_align()` function on data
   if (isTRUE(auto_align)) {
     data <-
       data %>%
