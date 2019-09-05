@@ -79,7 +79,7 @@ tab_spanner <- function(data,
 #' input table data (which are unique by necessity).
 #'
 #' If we look to the column names in the `iris` dataset as an example of how
-#' `cols_split_delim()` might be useful, we find the names `Sepal.Length`,
+#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
 #' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
 #' easy to see that the `Sepal` and `Petal` can group together the repeated
 #' common `Length` and `Width` values. In your own datasets, we can avoid a
@@ -112,7 +112,7 @@ tab_spanner <- function(data,
 #'   tab_spanner_delim(delim = ".")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_split_delim_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
 #'
 #' @family column modification functions
 #' @export

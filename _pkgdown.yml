@@ -37,6 +37,7 @@ reference:
     contents:
     - tab_header
     - tab_spanner
+    - tab_spanner_delim
     - tab_row_group
     - tab_stubhead_label
     - tab_footnote
@@ -82,9 +83,7 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`),
-      and using a column name delimiter to create labels in the column
-      spanner (`cols_split_delim()`).
+      together (`cols_merge*()`), moving columns around (`cols_move*()`)
     contents:
     - cols_align
     - cols_hide
@@ -95,7 +94,6 @@ reference:
     - cols_move
     - cols_move_to_end
     - cols_move_to_start
-    - cols_split_delim
 
   - title: Modify Rows
     desc: >

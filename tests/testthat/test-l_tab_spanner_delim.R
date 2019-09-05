@@ -1,9 +1,9 @@
-context("LaTeX -- Ensuring that the `cols_split_delim()` function works as expected")
+context("LaTeX -- Ensuring that the `tab_spanner_delim()` function works as expected")
 
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]
 
-test_that("the `cols_split_delim()` function works correctly", {
+test_that("the `tab_spanner_delim()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels

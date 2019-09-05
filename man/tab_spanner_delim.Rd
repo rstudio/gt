@@ -33,7 +33,7 @@ input table data (which are unique by necessity).
 }
 \details{
 If we look to the column names in the \code{iris} dataset as an example of how
-\code{cols_split_delim()} might be useful, we find the names \code{Sepal.Length},
+\code{tab_spanner_delim()} might be useful, we find the names \code{Sepal.Length},
 \code{Sepal.Width}, \code{Petal.Length}, \code{Petal.Width}. From this naming system, it's
 easy to see that the \code{Sepal} and \code{Petal} can group together the repeated
 common \code{Length} and \code{Width} values. In your own datasets, we can avoid a
@@ -45,7 +45,7 @@ rendered output table).
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_split_delim_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
 }
 
 \examples{
