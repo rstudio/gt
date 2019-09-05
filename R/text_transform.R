@@ -66,35 +66,8 @@ text_transform <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_transform(loc = loc, data = data, fn = fn)
+    data <- dt_transforms_add(data = data, loc = loc, fn = fn)
   }
-
-  data
-}
-
-# TODO: Create dt_* methods around transforms
-set_transform <- function(loc, data, fn) {
-
-  resolved <- resolve_location(loc = loc, data = data)
-
-  transforms <-
-    list(
-      resolved = resolved,
-      fn = fn
-    )
-
-  attr(data, "_transforms") <-
-    c(
-      attr(data, "_transforms", exact = TRUE),
-      list(
-        list(
-          resolved = resolved,
-          fn = fn
-        )
-      )
-    )
-
-  #data <- dt_transforms_set(data = data, transforms = transforms)
 
   data
 }

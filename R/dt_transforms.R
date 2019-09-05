@@ -7,7 +7,7 @@ dt_transforms_get <- function(data) {
 
 dt_transforms_set <- function(data, transforms) {
 
-  attr(data, .dt_transforms_key) <- list(transforms)
+  attr(data, .dt_transforms_key) <- transforms
   data
 }
 
@@ -17,14 +17,20 @@ dt_transforms_init <- function(data) {
     dt_transforms_set(transforms = ., data = data)
 }
 
-dt_transforms_add <- function(data, transforms) {
+dt_transforms_add <- function(data, loc, fn) {
 
-  transforms_a <- data %>% dt_transforms_get()
+  existing_transforms <- dt_transforms_get(data = data)
+  resolved <- resolve_location(loc = loc, data = data)
 
   transforms <-
     c(
-      transforms_a,
-      list(transforms)
+      existing_transforms,
+      list(
+        list(
+          resolved = resolved,
+          fn = fn
+        )
+      )
     )
 
   dt_transforms_set(data = data, transforms = transforms)
