@@ -99,12 +99,8 @@ gt <- function(data,
     dt_formats_init() %>%
     dt_styles_init() %>%
     dt_summary_init() %>%
-    #dt_transforms_init() %>%
     dt_options_init() %>%
     dt_arrange_groups_init()
-
-  # TODO: create dt method functions for: `groups_rows_df` (or combine with `arrange_groups`)
-  # TODO: combine `others_group` (character(1)) with `arrange_groups`
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
