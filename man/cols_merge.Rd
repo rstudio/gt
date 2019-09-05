@@ -2,48 +2,46 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_merge}
 \alias{cols_merge}
-\title{Merge two columns to a single column}
+\title{Merge data from two or more columns to a single column}
 \usage{
 cols_merge(data, columns, hide_columns = NULL, pattern = "{1} {2}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}), then
-the chosen alignment affects all columns.}
+\item{columns}{The columns that will participate in the merging process. The
+first column name provided will be the target column (i.e., undergo
+mutation) and the other columns will serve to provide input.}
+
+\item{hide_columns}{Any column names provided here will have their state
+changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
+already hidden. This is convenient if the purpose of these specified
+columns are only useful for providing string input to the target column.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{col_1} and \code{col_1} values and any string literals. The \code{col_1} column is
-represented as \code{{1}} whereas \code{col_2} is \code{{2}}. All other characters are
-taken to be string literals.}
-
-\item{col_1}{A retained column that contains values to be merged with those
-in \code{col_2}.}
-
-\item{col_2}{A column that contains values to be merged with those in
-\code{col_1}. This column will be discarded but is still useful as a reference
-in other \pkg{gt} functions.}
+\code{column} values and any string literals. We can use column names or numbers
+(corresponding to the position of columns provided in \code{columns}). The
+column names or indices are to be placed in curly braces (e.g., \code{{price}}
+or \code{{1}}). All characters outside of braces are taken to be string
+literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-This function takes any two columns and merges them into a single column,
-using a pattern that specifies how the values in the data cells are combined.
-We specify the columns to merge together in the \code{col_1} and \code{col_2} arguments
-and the string-combining pattern is specified in \code{pattern}. The column that
-is retained is that of \code{col_1} whereas the column specified in \code{col_2} is
-dropped from the output table.
+This function takes input from two or more columns and allows the contents to
+be merged them into a single column, using a pattern that specifies the
+formatting. We can specify which columns to merge together in the \code{columns}
+argument. The string-combining pattern is given in the \code{pattern} argument.
+The first column in the \code{columns} series operates as the target column (i.e.,
+will undergo mutation) whereas all following \code{columns} will be untouched.
 }
 \details{
 There are two other column-merging functions that offer specialized behavior
 that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}} and
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly, where the second
-column specified is dropped from the output table. For all of the
-\code{cols_merge*()} functions, column removal occurs late in the rendering
-lifecycle so those secondary columns are still usable as column references
-(e.g., inside expressions provided to \code{rows} in the \code{fmt*()} functions).
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly, where the
+non-target columns can be optionally hidden from the output table through the
+\code{hide_columns} or \code{autohide} options.
 }
 \section{Figures}{
 

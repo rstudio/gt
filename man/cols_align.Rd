@@ -17,7 +17,7 @@ according to the data type (see the Details section for specifics on which
 alignments are applied).}
 
 \item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}), then
+should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}, then
 the chosen alignment affects all columns.}
 }
 \value{

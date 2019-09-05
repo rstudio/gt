@@ -9,9 +9,16 @@ cols_merge_uncert(data, col_val, col_uncert, autohide = TRUE)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{col_val}{A single column name that contains the base values.}
+\item{col_val}{A single column name that contains the base values. This is
+the column where values will be mutated.}
 
-\item{col_uncert}{A single column name that contains the uncertainty values.}
+\item{col_uncert}{A single column name that contains the uncertainty values.
+These values will be combined with those in \code{col_val}. We have the option
+to automatically hide the \code{col_uncert} column through \code{autohide}.}
+
+\item{autohide}{An option to automatically hide the column specified as
+\code{col_uncert}. Any columns with their state changed to hidden will behave
+the same as before, they just won't be displayed in the finalized table.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -49,10 +56,8 @@ operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missin
 This function is part of a set of three column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_range]{cols_merge_range()}} function. These functions operate similarly, where the
-second column specified is dropped from the output table. For all of the
-\code{cols_merge*()} functions, column removal occurs late in the rendering
-lifecycle so those secondary columns are still usable as column references
-(e.g., inside expressions provided to \code{rows} in the \code{fmt*()} functions).
+non-target columns can be optionally hidden from the output table through the
+\code{hide_columns} or \code{autohide} options.
 }
 \section{Figures}{
 

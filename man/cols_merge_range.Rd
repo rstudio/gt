@@ -14,6 +14,10 @@ cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
 \item{col_end}{A column that contains values for the end of the range.}
 
 \item{sep}{The separator text that indicates the values are ranged.}
+
+\item{autohide}{An option to automatically hide the column specified as
+\code{col_end}. Any columns with their state changed to hidden will behave
+the same as before, they just won't be displayed in the finalized table.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -50,10 +54,8 @@ operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missin
 This function is part of a set of three column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate similarly, where the
-second column specified is dropped from the output table. For all of the
-\code{cols_merge*()} functions, column removal occurs late in the rendering
-lifecycle so those secondary columns are still usable as column references
-(e.g., inside expressions provided to \code{rows} in the \code{fmt*()} functions).
+non-target columns can be optionally hidden from the output table through the
+\code{hide_columns} or \code{autohide} options.
 }
 \section{Figures}{
 

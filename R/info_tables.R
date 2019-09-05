@@ -46,7 +46,15 @@ info_date_style <- function() {
     cols_label(date = "Formatted Date") %>%
     tab_header(
       title = "Preset Date Formats",
-      subtitle = md("Usable in the `fmt_date()` and `fmt_datetime()` functions"))
+      subtitle = md("Usable in the `fmt_date()` and `fmt_datetime()` functions")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
+    )
 }
 
 #' View a table with info on time styles
@@ -85,9 +93,16 @@ info_time_style <- function() {
     cols_label(time = "Formatted Time") %>%
     tab_header(
       title = "Preset Time Formats",
-      subtitle = md("Usable in the `fmt_time()` and `fmt_datetime()` functions"))
+      subtitle = md("Usable in the `fmt_time()` and `fmt_datetime()` functions")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
+    )
 }
-
 
 #' View a table with info on supported currencies
 #'
@@ -185,6 +200,13 @@ info_currencies <- function(type = c("code", "symbol"),
       tab_header(
         title = md("Currencies Supported in **gt**"),
         subtitle = md("Currency codes are used in the `fmt_currency()` function")
+      ) %>%
+      tab_style(
+        style = cell_text(align = "left"),
+        locations = list(
+          cells_title(groups = "title"),
+          cells_title(groups = "subtitle")
+        )
       )
 
     return(tab_1)
@@ -220,12 +242,18 @@ info_currencies <- function(type = c("code", "symbol"),
       tab_header(
         title = md("Currencies Supported in **gt**"),
         subtitle = md("Currency symbols are used in the `fmt_currency()` function")
+      ) %>%
+      tab_style(
+        style = cell_text(align = "left"),
+        locations = list(
+          cells_title(groups = "title"),
+          cells_title(groups = "subtitle")
+        )
       )
 
     return(tab_1)
   }
 }
-
 
 #' View a table with info on supported locales
 #'
@@ -293,8 +321,7 @@ info_locales <- function(begins_with = NULL) {
       columns = vars(group_sep, dec_sep)
     ) %>%
     cols_merge(
-      col_1 = vars(base_locale_id),
-      col_2 = vars(display_name),
+      columns = vars(base_locale_id, display_name),
       pattern = "<code>{1}</code><br><span style=font-size:11px>{2}</span>"
     ) %>%
     cols_label(
@@ -419,9 +446,7 @@ info_paletteer <- function(color_pkgs = NULL) {
         palettes_strips
       }
     ) %>%
-    cols_label(
-      length = ""
-    ) %>%
+    cols_label(length = "") %>%
     tab_stubhead(label = "Package and Palette Name") %>%
     tab_header(
       title = md("Palettes Made Easily Available with **paletteer**"),
@@ -438,7 +463,7 @@ info_paletteer <- function(color_pkgs = NULL) {
       style = list(
         cell_fill(color = "#E3E3E3"),
         cell_text(font = "Courier", size = "smaller", weight = "bold")
-        ),
+      ),
       locations = cells_stub(rows = TRUE)
     ) %>%
     tab_style(
@@ -451,13 +476,15 @@ info_paletteer <- function(color_pkgs = NULL) {
       row_group.font.weight = "600",
       row_group.font.size = "smaller"
     ) %>%
-    tab_source_note(source_note = md(
-      paste0(
-        "The **paletteer** package is maintained by Emil Hvitfeldt. More ",
-        "information can be found on [the **paletteer** site]",
-        "(https://emilhvitfeldt.github.io/paletteer/) and on the ",
-        "[**CRAN** info page]",
-        "(https://cran.r-project.org/web/packages/paletteer/index.html)."
+    tab_source_note(
+      source_note = md(
+        paste0(
+          "The **paletteer** package is maintained by Emil Hvitfeldt. More ",
+          "information can be found on [the **paletteer** site]",
+          "(https://emilhvitfeldt.github.io/paletteer/) and on the ",
+          "[**CRAN** info page]",
+          "(https://cran.r-project.org/web/packages/paletteer/index.html)."
+        )
       )
-    ))
+    )
 }

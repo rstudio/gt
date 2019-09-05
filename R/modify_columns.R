@@ -19,7 +19,7 @@
 #'   according to the data type (see the Details section for specifics on which
 #'   alignments are applied).
 #' @param columns An optional vector of column names for which the alignment
-#'   should be applied. If nothing is supplied, or if `columns` is `TRUE`), then
+#'   should be applied. If nothing is supplied, or if `columns` is `TRUE`, then
 #'   the chosen alignment affects all columns.
 #' @return An object of class `gt_tbl`.
 #' @examples
@@ -704,33 +704,35 @@ cols_hide <- function(data,
   data
 }
 
-#' Merge two columns to a single column
+#' Merge data from two or more columns to a single column
 #'
-#' This function takes any two columns and merges them into a single column,
-#' using a pattern that specifies how the values in the data cells are combined.
-#' We specify the columns to merge together in the `col_1` and `col_2` arguments
-#' and the string-combining pattern is specified in `pattern`. The column that
-#' is retained is that of `col_1` whereas the column specified in `col_2` is
-#' dropped from the output table.
+#' This function takes input from two or more columns and allows the contents to
+#' be merged them into a single column, using a pattern that specifies the
+#' formatting. We can specify which columns to merge together in the `columns`
+#' argument. The string-combining pattern is given in the `pattern` argument.
+#' The first column in the `columns` series operates as the target column (i.e.,
+#' will undergo mutation) whereas all following `columns` will be untouched.
 #'
 #' There are two other column-merging functions that offer specialized behavior
 #' that is optimized for common table tasks: [cols_merge_range()] and
-#' [cols_merge_uncert()]. These functions operate similarly, where the second
-#' column specified is dropped from the output table. For all of the
-#' `cols_merge*()` functions, column removal occurs late in the rendering
-#' lifecycle so those secondary columns are still usable as column references
-#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
+#' [cols_merge_uncert()]. These functions operate similarly, where the
+#' non-target columns can be optionally hidden from the output table through the
+#' `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
-#' @param col_1 A retained column that contains values to be merged with those
-#'   in `col_2`.
-#' @param col_2 A column that contains values to be merged with those in
-#'   `col_1`. This column will be discarded but is still useful as a reference
-#'   in other \pkg{gt} functions.
+#' @param columns The columns that will participate in the merging process. The
+#'   first column name provided will be the target column (i.e., undergo
+#'   mutation) and the other columns will serve to provide input.
+#' @param hide_columns Any column names provided here will have their state
+#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
+#'   already hidden. This is convenient if the purpose of these specified
+#'   columns are only useful for providing string input to the target column.
 #' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `col_1` and `col_1` values and any string literals. The `col_1` column is
-#'   represented as `{1}` whereas `col_2` is `{2}`. All other characters are
-#'   taken to be string literals.
+#'   `column` values and any string literals. We can use column names or numbers
+#'   (corresponding to the position of columns provided in `columns`). The
+#'   column names or indices are to be placed in curly braces (e.g., `{price}`
+#'   or `{1}`). All characters outside of braces are taken to be string
+#'   literals.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `sp500` to create a gt table;
@@ -839,14 +841,18 @@ cols_merge <- function(data,
 #' This function is part of a set of three column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
 #' [cols_merge_range()] function. These functions operate similarly, where the
-#' second column specified is dropped from the output table. For all of the
-#' `cols_merge*()` functions, column removal occurs late in the rendering
-#' lifecycle so those secondary columns are still usable as column references
-#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
+#' non-target columns can be optionally hidden from the output table through the
+#' `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
-#' @param col_val A single column name that contains the base values.
+#' @param col_val A single column name that contains the base values. This is
+#'   the column where values will be mutated.
 #' @param col_uncert A single column name that contains the uncertainty values.
+#'   These values will be combined with those in `col_val`. We have the option
+#'   to automatically hide the `col_uncert` column through `autohide`.
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_uncert`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table,
@@ -927,15 +933,16 @@ cols_merge_uncert <- function(data,
 #' This function is part of a set of three column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
 #' [cols_merge_uncert()] function. These functions operate similarly, where the
-#' second column specified is dropped from the output table. For all of the
-#' `cols_merge*()` functions, column removal occurs late in the rendering
-#' lifecycle so those secondary columns are still usable as column references
-#' (e.g., inside expressions provided to `rows` in the `fmt*()` functions).
+#' non-target columns can be optionally hidden from the output table through the
+#' `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
 #' @param col_end A column that contains values for the end of the range.
 #' @param sep The separator text that indicates the values are ranged.
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_end`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
 #' @return An object of class `gt_tbl`.
 #' @examples
 #' # Use `gtcars` to create a gt table,
