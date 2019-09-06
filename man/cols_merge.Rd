@@ -4,7 +4,8 @@
 \alias{cols_merge}
 \title{Merge data from two or more columns to a single column}
 \usage{
-cols_merge(data, columns, hide_columns = NULL, pattern = "{1} {2}")
+cols_merge(data, columns, hide_columns = columns[-1],
+  pattern = paste0("{", seq_along(columns), "}", collapse = " "))
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}

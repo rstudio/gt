@@ -18,15 +18,15 @@ cells_stubhead()
 
 cells_column_labels(columns, groups)
 
-cells_group(groups)
+cells_group(groups = TRUE)
 
-cells_stub(rows = NULL)
+cells_stub(rows = TRUE)
 
-cells_data(columns = NULL, rows = NULL)
+cells_data(columns = TRUE, rows = TRUE)
 
-cells_summary(groups = NULL, columns = NULL, rows = NULL)
+cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
 
-cells_grand_summary(columns = NULL, rows = NULL)
+cells_grand_summary(columns = TRUE, rows = TRUE)
 }
 \arguments{
 \item{columns, rows, groups}{Either a vector of names, a vector of indices,
