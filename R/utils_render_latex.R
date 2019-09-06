@@ -98,17 +98,6 @@ create_columns_component_l <- function(data) {
   #   return("")
   # }
 
-  # # If `stub_available` == TRUE, then replace with a set stubhead
-  # #   caption or nothing
-  # if (stub_available && length(stubh$label) > 0) {
-  #
-  #   headings <- prepend_vec(headings, stubh$label)
-  #
-  # } else if (stub_available) {
-  #
-  #   headings <- prepend_vec(headings, "")
-  # }
-
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
   if (isTRUE(stub_available) && length(stubh$label) > 0) {
