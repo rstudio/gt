@@ -33,7 +33,7 @@ as_rtf <- function(data) {
   checkmate::assert_class(data, "gt_tbl")
 
   # Build all table data objects through a common pipeline
-  data <- data %>% build_data(context = "latex")
+  data <- data %>% build_data(context = "rtf")
 
   # Composition of RTF ------------------------------------------------------
 
