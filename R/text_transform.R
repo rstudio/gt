@@ -104,7 +104,7 @@ text_transform_at_location.cells_data <- function(loc,
 
 text_transform_at_location.cells_stub <- function(loc,
                                                   data,
-                                                  func = identity) {
+                                                  fn = identity) {
 
   stub_df <- dt_stub_get(data = data)
 
@@ -113,7 +113,7 @@ text_transform_at_location.cells_stub <- function(loc,
   for (row in loc$rows) {
 
     if (row %in% stub_df$rowname) {
-      stub_df[row, "rowname"] <- func(stub_df[row, "rowname"])
+      stub_df[row, "rowname"] <- fn(stub_df[row, "rowname"])
     }
   }
 
