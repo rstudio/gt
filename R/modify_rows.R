@@ -83,5 +83,5 @@ row_group_order <- function(data,
   }
 
   # Create and store a list of row groups in the intended ordering
-  dt_arrange_groups_set(data = data, arrange_groups = list(groups = groups))
+  dt_arrange_groups_set(data = data, arrange_groups = groups, obj = "groups")
 }

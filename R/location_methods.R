@@ -91,17 +91,13 @@ to_output_location.cells_data <- function(loc, data) {
   data_tbl <- dt_data_get(data = data)
   boxh <- dt_boxhead_get(data = data)
   stub_df <- dt_stub_get(data = data)
-  arrange_groups <- dt_arrange_groups_get(data = data)
+  groups <- dt_arrange_groups_get(data = data, obj = "groups")
 
   loc <- resolve_location(loc = loc, data = data)
 
   columns_df <- get_column_reorder_df(data = data)
 
-  rows_df <-
-    get_row_reorder_df(
-      arrange_groups = arrange_groups,
-      stub_df = stub_df
-    )
+  rows_df <- get_row_reorder_df(groups = groups, stub_df = stub_df)
 
   # We shouldn't need to do this, but `body` doesn't match up exactly to
   # the colnum_final values due to groupnames/rownames
@@ -116,15 +112,11 @@ to_output_location.cells_data <- function(loc, data) {
 to_output_location.cells_stub <- function(loc, data) {
 
   stub_df <- dt_stub_get(data = data)
-  arrange_groups <- dt_arrange_groups_get(data = data)
+  groups <- dt_arrange_groups_get(data = data, obj = "groups")
 
   loc <- resolve_location(loc = loc, data = data)
 
-  rows_df <-
-    get_row_reorder_df(
-      arrange_groups = arrange_groups,
-      stub_df = stub_df
-    )
+  rows_df <- get_row_reorder_df(groups = groups, stub_df = stub_df)
 
   loc$rows <- rows_df$rownum_final[loc$rows]
 

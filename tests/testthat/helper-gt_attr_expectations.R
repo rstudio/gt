@@ -88,7 +88,7 @@ expect_tab <- function(tab,
 
   dt_arrange_groups_get(data = tab) %>%
     length() %>%
-    expect_equal(1)
+    expect_equal(2)
 
   # Expect that extracted df has the same column
   # names as the original dataset

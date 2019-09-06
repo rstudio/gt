@@ -97,24 +97,22 @@ tab_row_group <- function(data,
 
       data <-
         dt_arrange_groups_set(
-          data = data, arrange_groups =
-            list(
-              groups =
-                c(arrange_groups_vars, process_text(group[1]), NA_character_) %>%
-                unique()
-            )
+          data = data,
+          arrange_groups =
+            c(arrange_groups_vars,
+              process_text(group[1]), NA_character_
+            ) %>%
+            unique(), obj = "groups"
         )
 
     } else {
 
       data <-
         dt_arrange_groups_set(
-          data = data, arrange_groups =
-            list(
-              groups =
-                c(arrange_groups_vars, process_text(group[1])) %>%
-                unique()
-            )
+          data = data,
+          arrange_groups =
+          c(arrange_groups_vars, process_text(group[1])) %>%
+            unique(), obj = "groups"
         )
     }
   }
@@ -122,7 +120,8 @@ tab_row_group <- function(data,
   # Set a name for the `others` group if a
   # name is provided
   if (!is.null(others)) {
-    attr(data, "others_group") <- list(others = process_text(others[1]))
+    data <-
+      dt_arrange_groups_set(data = data, others[1] %>% process_text(), obj = "others")
   }
 
   data

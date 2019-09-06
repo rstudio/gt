@@ -111,11 +111,11 @@ dt_stub_init <- function(data,
 reorder_stub_df <- function(data) {
 
   stub_df <- dt_stub_get(data = data)
-  arrange_groups <- dt_arrange_groups_get(data = data)
+  groups <- dt_arrange_groups_get(data = data, obj = "groups")
 
   rows_df <-
     get_row_reorder_df(
-      arrange_groups = arrange_groups,
+      groups = groups,
       stub_df = stub_df
     )
 

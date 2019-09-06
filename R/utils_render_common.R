@@ -167,13 +167,13 @@ perform_text_transforms <- function(data) {
 #' Obtain a reordering df for the data rows
 #'
 #' @noRd
-get_row_reorder_df <- function(arrange_groups,
+get_row_reorder_df <- function(groups,
                                stub_df) {
 
   # If there are no group, there there is no reordering
   # so just return a data frame where the starting row
   # indices match the final row indices
-  if (length(arrange_groups$groups) == 0) {
+  if (length(groups) == 0) {
 
     indices <- seq_len(nrow(stub_df))
 
@@ -184,8 +184,6 @@ get_row_reorder_df <- function(arrange_groups,
       )
     )
   }
-
-  groups <- arrange_groups$groups
 
   indices <-
     lapply(stub_df$groupname, `%in%`, x = groups) %>%
@@ -275,7 +273,7 @@ get_groups_rows_df <- function(data,
   stub_df <- dt_stub_get(data = data)
   ordering <- dt_arrange_groups_vars(data = data)
 
-  others_group <- attr(data, "others_group", exact = TRUE)
+  others_group <- dt_arrange_groups_get(data = data, obj = "others")
 
   groups_rows_df <-
     data.frame(
@@ -307,7 +305,8 @@ get_groups_rows_df <- function(data,
 
   if (nrow(groups_rows_df) > 0) {
 
-    others_group <- others_group[[1]] %||% NA_character_
+    others_group <-
+      dt_arrange_groups_get(data = data, obj = "others") %||% NA_character_
 
     groups_rows_df[
       is.na(groups_rows_df[, "group"]),
