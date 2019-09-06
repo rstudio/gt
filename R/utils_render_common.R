@@ -227,9 +227,10 @@ reorder_footnotes <- function(data) {
   stub_df <- dt_stub_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
-  rownum_final <- row.names(stub_df) %>% as.numeric()
+  rownum_final <- stub_df$rownum_i %>% as.numeric()
 
   for (i in seq_len(nrow(footnotes_tbl))) {
+
     if (!is.na(footnotes_tbl[i, ][["rownum"]]) &&
         footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")) {
 
@@ -238,9 +239,7 @@ reorder_footnotes <- function(data) {
     }
   }
 
-  data <- dt_footnotes_set(data = data, footnotes = footnotes_tbl)
-
-  data
+  dt_footnotes_set(data = data, footnotes = footnotes_tbl)
 }
 
 # Function to recode the `rownum` value in the styles table
