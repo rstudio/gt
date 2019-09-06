@@ -228,37 +228,40 @@ resolve_footnotes_styles <- function(data,
         tbl_not_column_cells,
         tbl_column_cells
       )
-
   }
 
   # For the column spanner label cells, insert a
   # `colnum` based on `boxh_df`
   if ("columns_groups" %in% tbl[["locname"]]) {
 
-    # TODO: Need to resolve spanner cells into
-    # column numbers for sorting
+    vars_default <- seq_along(dt_boxhead_get_vars_default(data = data))
+    spanners_labels <- dt_spanners_print(data = data, include_hidden = FALSE)
 
-    # group_label_df <-
-    #   dplyr::tibble(
-    #     colnum = seq(nrow(boxh)),
-    #     grpname = boxh_df["group_label", ] %>% as.character()
-    #   ) %>%
-    #   dplyr::group_by(grpname) %>%
-    #   dplyr::summarize(colnum = min(colnum))
-    #
-    # tbl_not_col_spanner_cells <-
-    #   tbl %>%
-    #   dplyr::filter(locname != "columns_groups")
-    #
-    #
-    #
-    # # Re-combine `tbl_not_col_spanner_cells`
-    # # with `tbl_not_col_spanner_cells`
-    # tbl <-
-    #   dplyr::bind_rows(
-    #     tbl_not_col_spanner_cells,
-    #     tbl_column_spanner_cells
-    #   )
+    group_label_df <-
+      dplyr::tibble(
+        colnum = seq(vars_default),
+        grpname = spanners_labels
+      ) %>%
+      dplyr::group_by(grpname) %>%
+      dplyr::summarize(colnum = min(colnum))
+
+    tbl_not_col_spanner_cells <-
+      tbl %>%
+      dplyr::filter(locname != "columns_groups")
+
+    tbl_column_spanner_cells <-
+      tbl %>%
+      dplyr::select(-colnum) %>%
+      dplyr::filter(locname == "columns_groups") %>%
+      dplyr::inner_join(group_label_df, by = "grpname")
+
+    # Re-combine `tbl_not_col_spanner_cells`
+    # with `tbl_not_col_spanner_cells`
+    tbl <-
+      dplyr::bind_rows(
+        tbl_not_col_spanner_cells,
+        tbl_column_spanner_cells
+      )
   }
 
   # Sort the table rows

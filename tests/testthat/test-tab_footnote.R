@@ -57,6 +57,8 @@ data_2 <-
   dplyr::ungroup() %>%
   dplyr::select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
+  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
+  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp)) %>%
   tab_footnote(
     footnote = "Prices in USD.",
     locations = cells_column_labels(columns = vars(msrp))
@@ -72,10 +74,7 @@ data_2 <-
   tab_footnote(
     footnote = "German cars only.",
     locations = cells_column_labels(groups = "make and model")
-  ) %>%
-  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
-  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp))
-
+  )
 
 # Create a table from `gtcars` that has footnotes
 # in group summary and grand summary cells
@@ -582,27 +581,27 @@ test_that("the `tab_footnote()` function works correctly", {
     xml2::read_html()
 
   # # Expect that the footnote text elements are in the correct order
-  # tbl_html %>%
-  #   selection_text(selection = "[class='gt_footnote']") %>%
-  #   tidy_gsub("\n          ", "") %>%
-  #   expect_equal(
-  #     c(
-  #       "1 German cars only.",
-  #       "2 The most important details.",
-  #       "3 AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-  #       "4 Prices in USD.")
-  #   )
+  tbl_html %>%
+    selection_text(selection = "[class='gt_footnote']") %>%
+    tidy_gsub("\n          ", "") %>%
+    expect_equal(
+      c(
+        "1 German cars only.",
+        "2 The most important details.",
+        "3 AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
+        "4 Prices in USD.")
+    )
 
   # Expect that the two sets of footnote marks (1st set are
   # throughout the table, 2nd set are in the footer) are in
   # the correct order
-  # tbl_html %>%
-  #   selection_text(selection = "[class='gt_footnote_marks']") %>%
-  #   tidy_gsub("\n          ", "") %>%
-  #   expect_equal(rep(as.character(1:4), 2))
+  tbl_html %>%
+    selection_text(selection = "[class='gt_footnote_marks']") %>%
+    tidy_gsub("\n          ", "") %>%
+    expect_equal(rep(as.character(1:4), 2))
 })
 
-test_that("the `apply_footnotes_to_summary()` function works correctly", {
+test_that("the footnotes table is structured correctly", {
 
   # Extract `footnotes_resolved` and `list_of_summaries`
   footnotes_tbl <- dt_footnotes_get(data = data_3)
@@ -638,79 +637,77 @@ test_that("the `apply_footnotes_to_summary()` function works correctly", {
       "Maximum price across all cars.", "Minimum price across all cars.")
   )
 
-  # expect_equal(footnotes_tbl$colnum, rep(NA, 4))
+  expect_equal(footnotes_tbl$colnum, rep(NA_integer_, 4))
+})
 
-  # # Expect that the list of summaries has length `2`
-  # expect_equal(length(list_of_summaries), 2)
-  #
-  # # Expect specific names in the `list_of_summaries` list
-  # expect_equal(
-  #   names(list_of_summaries),
-  #   c("summary_df_data_list", "summary_df_display_list")
-  # )
-  #
-  # # Expect three tibbles in the `summary_df_data_list` component
-  # expect_equal(length(list_of_summaries$summary_df_data_list), 3)
-  #
-  # # Expect three tibbles in the `summary_df_display_list` component
-  # expect_equal(length(list_of_summaries$summary_df_display_list), 3)
-  #
-  # # Expect specific names for the subcomponents of the
-  # # `summary_df_data_list` and `summary_df_data_list`
-  # # parent components
-  # expect_equal(
-  #   names(list_of_summaries$summary_df_data_list),
-  #   c("BMW", "Audi", "::GRAND_SUMMARY")
-  # )
-  # expect_equal(
-  #   names(list_of_summaries$summary_df_display_list),
-  #   c("::GRAND_SUMMARY", "Audi", "BMW")
-  # )
-  #
-  # # Expect formatted cell values with no HTML footnote markup
-  # expect_equal(
-  #   list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
-  #   c("56,000.00", "140,700.00")
-  # )
-  #
-  # expect_equal(
-  #   list_of_summaries$summary_df_display_list$Audi$msrp,
-  #   c("113,233.33", "108,900.00")
-  # )
-  #
-  # expect_equal(
-  #   list_of_summaries$summary_df_display_list$BMW$msrp,
-  #   c("116,066.67", "94,100.00")
-  # )
-  #
-  # # Use the `apply_footnotes_to_summary()` function to modify
-  # # the cell values in the `list_of_summaries$summary_df_display_list`
-  # # subcomponent of `list_of_summaries`
-  # applied_footnotes <-
-  #   apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
-  #
-  # # Expect no change in the `summary_df_data_list` subcomponent
-  # # as a result of the transformation
-  # expect_equivalent(
-  #   list_of_summaries$summary_df_data_list,
-  #   applied_footnotes$summary_df_data_list
-  # )
-  #
-  # # Expect formatted cell values with HTML footnote markup
-  # expect_equal(
-  #   applied_footnotes$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
-  #   c("56,000.00<sup class=\"gt_footnote_marks\">2</sup>",
-  #     "140,700.00<sup class=\"gt_footnote_marks\">3</sup>")
-  # )
-  #
-  # expect_equal(
-  #   applied_footnotes$summary_df_display_list$Audi$msrp,
-  #   c("113,233.33<sup class=\"gt_footnote_marks\">1</sup>", "108,900.00")
-  # )
-  #
-  # expect_equal(
-  #   applied_footnotes$summary_df_display_list$BMW$msrp,
-  #   c("116,066.67<sup class=\"gt_footnote_marks\">1</sup>", "94,100.00")
-  # )
+test_that("the `list_of_summaries` table is structured correctly", {
 
+  tbl_attrs <-
+    gtcars %>%
+    dplyr::filter(ctry_origin == "Germany") %>%
+    dplyr::group_by(mfr) %>%
+    dplyr::top_n(3, msrp) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(mfr, model, drivetrain, msrp) %>%
+    gt(rowname_col = "model", groupname_col = "mfr") %>%
+    summary_rows(
+      groups = c("BMW", "Audi"),
+      columns = vars(msrp),
+      fns = list(
+        ~mean(., na.rm = TRUE),
+        ~min(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      columns = vars(msrp),
+      fns = list(
+        ~min(., na.rm = TRUE),
+        ~max(., na.rm = TRUE))
+    ) %>%
+    build_data(context = "html") %>%
+    attributes()
+
+  list_of_summaries <- tbl_attrs$list_of_summaries
+
+  # Expect that the list of summaries has length `2`
+  expect_equal(length(list_of_summaries), 2)
+
+  # Expect specific names in the `list_of_summaries` list
+  expect_equal(
+    names(list_of_summaries),
+    c("summary_df_data_list", "summary_df_display_list")
+  )
+
+  # Expect three tibbles in the `summary_df_data_list` component
+  expect_equal(length(list_of_summaries$summary_df_data_list), 3)
+
+  # Expect three tibbles in the `summary_df_display_list` component
+  expect_equal(length(list_of_summaries$summary_df_display_list), 3)
+
+  # Expect specific names for the subcomponents of the
+  # `summary_df_data_list` and `summary_df_data_list`
+  # parent components
+  expect_equal(
+    names(list_of_summaries$summary_df_data_list),
+    c("BMW", "Audi", "::GRAND_SUMMARY")
+  )
+  expect_equal(
+    names(list_of_summaries$summary_df_display_list),
+    c("::GRAND_SUMMARY", "Audi", "BMW")
+  )
+
+  # Expect formatted cell values with no HTML footnote markup
+  expect_equal(
+    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
+    c("56,000.00", "140,700.00")
+  )
+
+  expect_equal(
+    list_of_summaries$summary_df_display_list$Audi$msrp,
+    c("113,233.33", "108,900.00")
+  )
+
+  expect_equal(
+    list_of_summaries$summary_df_display_list$BMW$msrp,
+    c("116,066.67", "94,100.00")
+  )
 })
