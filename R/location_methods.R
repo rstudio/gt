@@ -58,9 +58,7 @@ resolve_location.cells_column_labels <- function(loc, data) {
 
 resolve_location.cells_stub <- function(loc, data) {
 
-  stub_df <- dt_stub_get(data = data)
-
-  resolved <- resolve_cells_stub(data = stub_df, object = loc)
+  resolved <- resolve_cells_stub(data = data, object = loc)
 
   loc$rows <- resolved$rows
 
