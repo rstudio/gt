@@ -34,11 +34,11 @@ dt_arrange_groups_init <- function(data) {
     groups <- character(0)
   }
 
-  arrange_groups <-
-    list(groups = groups, others = NA_character_)
-
-  arrange_groups %>%
-    dt_arrange_groups_set(arrange_groups = ., data = data)
+  list(
+    groups = groups,
+    others = NA_character_
+  ) %>%
+    dt_arrange_groups_set(arrange_groups = ., data = data, obj = NULL)
 }
 
 dt_arrange_groups_vars <- function(data) {
