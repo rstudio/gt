@@ -768,8 +768,8 @@ cols_hide <- function(data,
 #' @export
 cols_merge <- function(data,
                        columns,
-                       hide_columns = NULL,
-                       pattern = "{1} {2}") {
+                       hide_columns = columns[-1],
+                       pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
 
   columns <- enquo(columns)
 
