@@ -66,7 +66,7 @@ resolve_cells_stub <- function(data,
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$rows,
-      data = data,
+      data = NULL,
       vals = stub_df$rowname
     )
 
