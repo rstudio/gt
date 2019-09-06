@@ -26,6 +26,21 @@ resolve_footnotes_styles <- function(data,
     return(data)
   }
 
+  # Filter table to include only the `default` vars
+  # in the `data` and `columns_columns` locnames
+  tbl <-
+    dplyr::bind_rows(
+      tbl %>% dplyr::filter(!(locname %in% c("data", "columns_columns"))),
+      tbl %>%
+        dplyr::filter(locname %in% c("data", "columns_columns")) %>%
+        dplyr::filter(colname %in% dt_boxhead_get_vars_default(data = data))
+    )
+
+  # Return `data` unchanged if there are no rows in `tbl`
+  if (nrow(tbl) == 0) {
+    return(data)
+  }
+
   # Pare down to the relevant records
   if (nrow(tbl) > 0) {
 
