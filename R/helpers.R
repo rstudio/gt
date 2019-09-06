@@ -267,8 +267,10 @@ cells_stubhead <- function() {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns, groups) {
+cells_column_labels <- function(columns,
+                                groups) {
 
+  # TODO: set defaults to include everything (as below)
   if (
     (!missing(columns) && !missing(groups)) ||
     (missing(columns) && missing(groups))
@@ -302,7 +304,7 @@ cells_column_labels <- function(columns, groups) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_group <- function(groups) {
+cells_group <- function(groups = TRUE) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
@@ -319,11 +321,7 @@ cells_group <- function(groups) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_stub <- function(rows = NULL) {
-
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
+cells_stub <- function(rows = TRUE) {
 
   # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
@@ -340,8 +338,8 @@ cells_stub <- function(rows = NULL) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_data <- function(columns = NULL,
-                       rows = NULL) {
+cells_data <- function(columns = TRUE,
+                       rows = TRUE) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
@@ -363,9 +361,9 @@ cells_data <- function(columns = NULL,
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_summary <- function(groups = NULL,
-                          columns = NULL,
-                          rows = NULL) {
+cells_summary <- function(groups = TRUE,
+                          columns = TRUE,
+                          rows = TRUE) {
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
@@ -390,8 +388,8 @@ cells_summary <- function(groups = NULL,
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_grand_summary <- function(columns = NULL,
-                                rows = NULL) {
+cells_grand_summary <- function(columns = TRUE,
+                                rows = TRUE) {
 
   # Capture expressions for the `columns`
   # and `rows` arguments
