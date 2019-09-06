@@ -54,13 +54,15 @@ dt_spanners_build <- function(data, context) {
   data
 }
 
-dt_spanners_print <- function(data) {
+dt_spanners_print <- function(data, include_hidden = TRUE) {
 
-  spanners <-
-    data %>%
-    dt_spanners_get()
+  spanners <- data %>% dt_spanners_get()
 
-  vars <- dt_boxhead_get_vars(data = data)
+  if (!include_hidden) {
+    vars <- dt_boxhead_get_vars_default(data = data)
+  } else {
+    vars <- dt_boxhead_get_vars(data = data)
+  }
 
   vars_list <- rep(NA_character_, length(vars)) %>% magrittr::set_names(vars)
 
@@ -68,5 +70,5 @@ dt_spanners_print <- function(data) {
     vars_list[spanners$vars[[i]]] <- spanners$built[[i]]
   }
 
-  vars_list %>% unname()
+  vars_list[names(vars_list) %in% vars] %>% unname()
 }
