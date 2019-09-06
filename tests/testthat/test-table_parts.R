@@ -453,7 +453,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
-  # TODO: this summary cell is not styled
+  # TODO: this summary cell value is not correct (shows `885.00` instead of `943.00`)
   # tbl_html %>%
   #   rvest::html_nodes("[style='background-color: #00FF00FF; color: white;']") %>%
   #   rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
