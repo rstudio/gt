@@ -80,7 +80,7 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_footnote(loc, data, process_text(footnote))
+    data <- set_footnote(loc = loc, data = data, footnote = process_text(footnote))
   }
 
   data
