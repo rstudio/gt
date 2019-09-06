@@ -165,8 +165,7 @@ create_heading_component <- function(data,
   }
 
   # Get the style attrs for the title
-  if (context == "html" &&
-      "title" %in% styles_tbl$locname) {
+  if (context == "html" && "title" %in% styles_tbl$locname) {
 
     title_style_rows <-
       styles_tbl %>%
