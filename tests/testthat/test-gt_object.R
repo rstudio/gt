@@ -21,7 +21,9 @@ test_that("a gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `iris` dataset
-  tab <- gt(data = iris %>% dplyr::group_by(Species))
+  tab <-
+    iris %>% dplyr::group_by(Species) %>%
+    gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -33,7 +35,9 @@ test_that("a gt table can be made to use the rownames of a data frame", {
 
   # Create a `gt_tbl` object with `gt()` and use the
   # data frame's row names as row names in the stub
-  tab <- gt(data = mtcars, rownames_to_stub = TRUE)
+  tab <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE)
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -63,7 +67,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_r` dataset
-  tab <- gt(data = data_r)
+  tab <- data_r %>% gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -90,7 +94,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_rg` dataset
-  tab <- gt(data = data_rg)
+  tab <- data_rg %>% gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -114,7 +118,7 @@ test_that("a gt table can be made from a table with no rows", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_e` dataset
-  tab <- gt(data = data_e)
+  tab <- data_e %>% gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
@@ -128,7 +132,10 @@ test_that("a gt table can be made from a table with no rows", {
 
   # Create a `gt_tbl` object with `gt()` and a
   # grouped version of the `data_e` dataset
-  tab <- gt(data = data_e %>% dplyr::group_by(group))
+  tab <-
+    data_e %>%
+    dplyr::group_by(group) %>%
+    gt()
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the

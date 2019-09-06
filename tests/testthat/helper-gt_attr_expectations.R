@@ -54,13 +54,24 @@ expect_tab <- function(tab,
   expect_gt_attr_names(object = tab)
 
   # Expect that the attribute obejcts are of certain classes
+
+  expect_s3_class(dt_body_get(data = tab), "data.frame")
   expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
   expect_s3_class(dt_stub_get(data = tab), "data.frame")
+  expect_type(dt_heading_get(data = tab), "list")
+  expect_s3_class(dt_spanners_get(data = tab), "data.frame")
+  expect_type(dt_stubhead_get(data = tab), "list")
   expect_s3_class(dt_footnotes_get(data = tab), "data.frame")
+  expect_type(dt_source_notes_get(data = tab), "list")
+  expect_type(dt_formats_get(data = tab), "list")
   expect_s3_class(dt_styles_get(data = tab), "data.frame")
   expect_s3_class(dt_options_get(data = tab), "data.frame")
   expect_type(dt_arrange_groups_get(data = tab), "list")
-  expect_type(dt_formats_get(data = tab), "list")
+  expect_type(dt_transforms_get(data = tab), "list")
+
+  dt_body_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(nrow(df), ncol(df)))
 
   dt_boxhead_get(data = tab) %>%
     dim() %>%
@@ -70,9 +81,29 @@ expect_tab <- function(tab,
     dim() %>%
     expect_equal(c(nrow(df), 3))
 
+  dt_heading_get(data = tab) %>%
+    length() %>%
+    expect_equal(2)
+
+  dt_spanners_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(0, 4))
+
+  dt_stubhead_get(data = tab) %>%
+    length() %>%
+    expect_equal(1)
+
   dt_footnotes_get(data = tab) %>%
     dim() %>%
     expect_equal(c(0, 7))
+
+  dt_source_notes_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
+
+  dt_formats_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
 
   dt_styles_get(data = tab) %>%
     dim() %>%
@@ -82,13 +113,13 @@ expect_tab <- function(tab,
     dim() %>%
     expect_equal(c(73, 5))
 
-  dt_formats_get(data = tab) %>%
-    length() %>%
-    expect_equal(0)
-
   dt_arrange_groups_get(data = tab) %>%
     length() %>%
     expect_equal(2)
+
+  dt_transforms_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
 
   # Expect that extracted df has the same column
   # names as the original dataset
@@ -135,9 +166,11 @@ expect_attr_equal <- function(data, attr_val, y) {
 gt_attr_names <- function() {
 
   c(
-    "names", "class", "row.names", "_data", "_body", "_boxhead", "_stub",
-    "_heading", "_spanners", "_stubhead", "_footnotes", "_source_notes",
-    "_formats", "_styles", "_summary", "_options", "_arrange_groups"
+    "names", "class", "row.names",
+    "_data", "_body", "_boxhead", "_stub", "_heading", "_spanners",
+    "_stubhead", "_footnotes", "_source_notes",
+    "_formats", "_styles",
+    "_summary", "_options", "_arrange_groups", "_transforms"
   )
 }
 
