@@ -787,29 +787,6 @@ fmt_date <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = function(x) {
-
-        # If `x` is of the `Date` type, simply make
-        # that a character vector
-        if (inherits(x, "Date")) {
-          x <- as.character(x)
-        }
-
-        date <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_format_str)
-
-        if (date_style %in% 2:12) {
-          date <- date %>% tidy_gsub(., "^0", "")
-        }
-
-        date %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM") %>%
-          tidy_gsub("-", "&#8209;") %>%
-          tidy_gsub(" ", "&nbsp;")
-      },
       default = function(x) {
 
         # If `x` is of the `Date` type, simply make
@@ -932,22 +909,6 @@ fmt_time <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = function(x) {
-
-        time <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = time_format_str)
-
-        if (time_style %in% 3:5) {
-          time <- time %>% tidy_gsub(., "^0", "")
-        }
-
-        time %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM") %>%
-          tidy_gsub(" ", "&nbsp;")
-      },
       default = function(x) {
 
         time <-
@@ -1070,45 +1031,6 @@ fmt_datetime <- function(data,
     columns = !!columns,
     rows = !!rows,
     fns = list(
-      html = function(x) {
-
-        date <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-            strftime(format = date_format_str)
-
-        if (date_style %in% 2:12) {
-          date <- date %>% tidy_gsub(., "^0", "")
-        }
-
-        date <-
-            date %>%
-            tidy_gsub(" 0([0-9])", " \\1") %>%
-            tidy_gsub("pm$", "PM") %>%
-            tidy_gsub("am$", "AM") %>%
-            tidy_gsub("-", "&#8209;") %>%
-            tidy_gsub(" ", "&nbsp;")
-
-        time <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-            strftime(format = time_format_str)
-
-        if (time_style %in% 3:5) {
-          time <- time %>% tidy_gsub(., "^0", "")
-        }
-
-        time <-
-          time %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM") %>%
-          tidy_gsub(" ", "&nbsp;")
-
-        datetime <-
-          paste0(date, "&nbsp;", time) %>%
-          tidy_gsub("NA&nbsp;NA", "NA")
-
-        datetime
-      },
       default = function(x) {
 
         date <-

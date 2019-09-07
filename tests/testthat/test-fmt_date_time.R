@@ -45,63 +45,63 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 1) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("2017&#8209;10&#8209;15", "2013&#8209;02&#8209;22",
-      "2014&#8209;09&#8209;22", "2018&#8209;01&#8209;10"))
+    c("2017-10-15", "2013-02-22",
+      "2014-09-22", "2018-01-10"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 2) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday,&nbsp;October&nbsp;15,&nbsp;2017", "Friday,&nbsp;February&nbsp;22,&nbsp;2013",
-      "Monday,&nbsp;September&nbsp;22,&nbsp;2014", "Wednesday,&nbsp;January&nbsp;10,&nbsp;2018"))
+    c("Sunday, October 15, 2017", "Friday, February 22, 2013",
+      "Monday, September 22, 2014", "Wednesday, January 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 3) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sun,&nbsp;Oct&nbsp;15,&nbsp;2017", "Fri,&nbsp;Feb&nbsp;22,&nbsp;2013",
-      "Mon,&nbsp;Sep&nbsp;22,&nbsp;2014", "Wed,&nbsp;Jan&nbsp;10,&nbsp;2018"))
+    c("Sun, Oct 15, 2017", "Fri, Feb 22, 2013",
+      "Mon, Sep 22, 2014", "Wed, Jan 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 4) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday&nbsp;15&nbsp;October&nbsp;2017", "Friday&nbsp;22&nbsp;February&nbsp;2013",
-      "Monday&nbsp;22&nbsp;September&nbsp;2014", "Wednesday&nbsp;10&nbsp;January&nbsp;2018"))
+    c("Sunday 15 October 2017", "Friday 22 February 2013",
+      "Monday 22 September 2014", "Wednesday 10 January 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 5) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("October&nbsp;15,&nbsp;2017", "February&nbsp;22,&nbsp;2013",
-      "September&nbsp;22,&nbsp;2014", "January&nbsp;10,&nbsp;2018"))
+    c("October 15, 2017", "February 22, 2013",
+      "September 22, 2014", "January 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 6) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Oct&nbsp;15,&nbsp;2017", "Feb&nbsp;22,&nbsp;2013",
-      "Sep&nbsp;22,&nbsp;2014", "Jan&nbsp;10,&nbsp;2018"))
+    c("Oct 15, 2017", "Feb 22, 2013",
+      "Sep 22, 2014", "Jan 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 7) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;Oct&nbsp;2017", "22&nbsp;Feb&nbsp;2013",
-      "22&nbsp;Sep&nbsp;2014", "10&nbsp;Jan&nbsp;2018"))
+    c("15 Oct 2017", "22 Feb 2013",
+      "22 Sep 2014", "10 Jan 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 8) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;October&nbsp;2017", "22&nbsp;February&nbsp;2013",
-      "22&nbsp;September&nbsp;2014", "10&nbsp;January&nbsp;2018"))
+    c("15 October 2017", "22 February 2013",
+      "22 September 2014", "10 January 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 9) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;October", "22&nbsp;February", "22&nbsp;September", "10&nbsp;January"))
+    c("15 October", "22 February", "22 September", "10 January"))
 
   expect_equal(
     (tab %>%
@@ -151,63 +151,63 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 1) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("2017&#8209;10&#8209;15", "2013&#8209;02&#8209;22",
-      "2014&#8209;09&#8209;22", "2018&#8209;01&#8209;10"))
+    c("2017-10-15", "2013-02-22",
+      "2014-09-22", "2018-01-10"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 2) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday,&nbsp;October&nbsp;15,&nbsp;2017", "Friday,&nbsp;February&nbsp;22,&nbsp;2013",
-      "Monday,&nbsp;September&nbsp;22,&nbsp;2014", "Wednesday,&nbsp;January&nbsp;10,&nbsp;2018"))
+    c("Sunday, October 15, 2017", "Friday, February 22, 2013",
+      "Monday, September 22, 2014", "Wednesday, January 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 3) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sun,&nbsp;Oct&nbsp;15,&nbsp;2017", "Fri,&nbsp;Feb&nbsp;22,&nbsp;2013",
-      "Mon,&nbsp;Sep&nbsp;22,&nbsp;2014", "Wed,&nbsp;Jan&nbsp;10,&nbsp;2018"))
+    c("Sun, Oct 15, 2017", "Fri, Feb 22, 2013",
+      "Mon, Sep 22, 2014", "Wed, Jan 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 4) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday&nbsp;15&nbsp;October&nbsp;2017", "Friday&nbsp;22&nbsp;February&nbsp;2013",
-      "Monday&nbsp;22&nbsp;September&nbsp;2014", "Wednesday&nbsp;10&nbsp;January&nbsp;2018"))
+    c("Sunday 15 October 2017", "Friday 22 February 2013",
+      "Monday 22 September 2014", "Wednesday 10 January 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 5) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("October&nbsp;15,&nbsp;2017", "February&nbsp;22,&nbsp;2013",
-      "September&nbsp;22,&nbsp;2014", "January&nbsp;10,&nbsp;2018"))
+    c("October 15, 2017", "February 22, 2013",
+      "September 22, 2014", "January 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 6) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Oct&nbsp;15,&nbsp;2017", "Feb&nbsp;22,&nbsp;2013",
-      "Sep&nbsp;22,&nbsp;2014", "Jan&nbsp;10,&nbsp;2018"))
+    c("Oct 15, 2017", "Feb 22, 2013",
+      "Sep 22, 2014", "Jan 10, 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 7) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;Oct&nbsp;2017", "22&nbsp;Feb&nbsp;2013",
-      "22&nbsp;Sep&nbsp;2014", "10&nbsp;Jan&nbsp;2018"))
+    c("15 Oct 2017", "22 Feb 2013",
+      "22 Sep 2014", "10 Jan 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 8) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;October&nbsp;2017", "22&nbsp;February&nbsp;2013",
-      "22&nbsp;September&nbsp;2014", "10&nbsp;January&nbsp;2018"))
+    c("15 October 2017", "22 February 2013",
+      "22 September 2014", "10 January 2018"))
 
   expect_equal(
     (tab %>%
        fmt_date(columns = "date", date_style = 9) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15&nbsp;October", "22&nbsp;February", "22&nbsp;September", "10&nbsp;January"))
+    c("15 October", "22 February", "22 September", "10 January"))
 
   expect_equal(
     (tab %>%
