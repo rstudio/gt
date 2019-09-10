@@ -69,6 +69,7 @@ reference:
     - fmt_datetime
     - fmt_missing
     - fmt_passthrough
+    - fmt_markdown
     - text_transform
     - data_color
 
