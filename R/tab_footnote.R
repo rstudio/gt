@@ -180,7 +180,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
 set_footnote.cells_group <- function(loc, data, footnote) {
 
-  row_groups <- dt_arrange_groups_vars(data = data)
+  row_groups <- dt_stub_get_groups(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-

@@ -9,7 +9,7 @@ resolve_cells_data <- function(data,
 
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_get(data = data)
+  stub_df <- dt_stub_get_stub_df(data = data)
 
   #
   # Resolution of columns and rows as integer vectors
@@ -57,7 +57,7 @@ resolve_cells_data <- function(data,
 resolve_cells_stub <- function(data,
                                object) {
 
-  stub_df <- dt_stub_get(data = data)
+  stub_df <- dt_stub_get_stub_df(data = data)
 
   #
   # Resolution of rows as integer vectors

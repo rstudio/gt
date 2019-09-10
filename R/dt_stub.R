@@ -1,22 +1,60 @@
 .dt_stub_key <- "_stub"
 
-dt_stub_get <- function(data) {
+dt_stub_get <- function(data, obj = NULL) {
 
-  attr(data, .dt_stub_key, exact = TRUE)
+  if (is.null(obj)) {
+    attr(data, .dt_stub_key, exact = TRUE)
+  } else if (obj == "groups") {
+    attr(data, .dt_stub_key, exact = TRUE)$groups
+  } else if (obj == "others") {
+    attr(data, .dt_stub_key, exact = TRUE)$others
+  } else if (obj == "stub_df") {
+    attr(data, .dt_stub_key, exact = TRUE)$stub_df
+  }
 }
 
-dt_stub_set <- function(data, stub) {
+dt_stub_get_groups <- function(data) {
+  dt_stub_get(data = data, obj = "groups")
+}
+dt_stub_get_others <- function(data) {
+  dt_stub_get(data = data, obj = "others")
+}
+dt_stub_get_stub_df <- function(data) {
+  dt_stub_get(data = data, obj = "stub_df")
+}
 
-  attr(data, .dt_stub_key) <- stub
+dt_stub_set <- function(data, x, obj = NULL) {
+
+  if (is.null(obj)) {
+    attr(data, .dt_stub_key) <- x
+  } else if (obj == "groups") {
+    attr(data, .dt_stub_key)$groups <- x
+  } else if (obj == "others") {
+    attr(data, .dt_stub_key)$others <- x
+  } else if (obj == "stub_df") {
+    attr(data, .dt_stub_key)$stub_df <- x
+  }
+
   data
 }
 
-dt_stub_init <- function(data,
-                         data_df,
-                         rowname_col,
-                         groupname_col,
-                         rownames_to_stub,
-                         stub_group.sep) {
+dt_stub_set_groups <- function(data, groups) {
+  dt_stub_set(data = data, x = groups, obj = "groups")
+}
+dt_stub_set_others <- function(data, others) {
+  dt_stub_set(data = data, x = others, obj = "others")
+}
+dt_stub_set_stub_df <- function(data, stub_df) {
+  dt_stub_set(data = data, x = stub_df, obj = "stub_df")
+}
+
+dt_stub_init_stub_df <- function(data,
+                                 data_df,
+                                 rowname_col,
+                                 groupname_col,
+                                 rownames_to_stub,
+                                 stub_group.sep) {
+
   vars_to_hide <- c()
 
   # If the option to place rownames in the stub
@@ -96,7 +134,7 @@ dt_stub_init <- function(data,
 
   data <-
     data %>%
-    dt_stub_set(stub = stub_df)
+    dt_stub_set_stub_df(stub_df = stub_df)
 
   if (length(vars_to_hide) > 0) {
     data <-
@@ -107,11 +145,52 @@ dt_stub_init <- function(data,
   data
 }
 
+dt_stub_init <- function(data,
+                         data_df,
+                         rowname_col,
+                         groupname_col,
+                         rownames_to_stub,
+                         stub_group.sep) {
+
+  data <-
+    list(
+      stub_df = dplyr::tibble(),
+      groups = NA_character_,
+      others = NA_character_
+    ) %>%
+    dt_stub_set(data = data, obj = NULL)
+
+  data <-
+    dt_stub_init_stub_df(
+      data = data,
+      data_df = data_df,
+      rowname_col = rowname_col,
+      groupname_col = groupname_col,
+      rownames_to_stub = rownames_to_stub,
+      stub_group.sep = stub_group.sep
+    )
+
+  stub_df <- dt_stub_get_stub_df(data = data)
+
+  if (any(!is.na(stub_df[["groupname"]]))) {
+    groups <- unique(stub_df[["groupname"]])
+  } else {
+    groups <- character(0)
+  }
+
+  data <-
+    groups %>%
+    dt_stub_set_groups(data = data)
+
+  data
+}
+
 # Function to obtain a reordered version of `stub_df`
 reorder_stub_df <- function(data) {
 
-  stub_df <- dt_stub_get(data = data)
-  groups <- dt_arrange_groups_get(data = data, obj = "groups")
+  stub_df <- dt_stub_get_stub_df(data = data)
+
+  groups <- dt_stub_get_groups(data = data)
 
   rows_df <-
     get_row_reorder_df(
@@ -121,13 +200,12 @@ reorder_stub_df <- function(data) {
 
   stub_df <- stub_df[rows_df$rownum_final, ]
 
-  dt_stub_set(data = data, stub = stub_df)
+  stub_df %>% dt_stub_set_stub_df(data = data)
 }
 
 dt_stub_groupname_has_na <- function(data) {
 
-  stub_df <- dt_stub_get(data = data)
+  stub_df <- dt_stub_get_stub_df(data = data)
 
   any(is.na(stub_df$groupname))
 }
-

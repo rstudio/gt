@@ -103,7 +103,6 @@ gt <- function(data,
     dt_styles_init() %>%
     dt_summary_init() %>%
     dt_options_init() %>%
-    dt_arrange_groups_init() %>%
     dt_transforms_init()
 
   # Add the table ID to the `id` parameter

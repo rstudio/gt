@@ -106,7 +106,7 @@ text_transform_at_location.cells_stub <- function(loc,
                                                   data,
                                                   fn = identity) {
 
-  stub_df <- dt_stub_get(data = data)
+  stub_df <- dt_stub_get_stub_df(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
@@ -117,7 +117,7 @@ text_transform_at_location.cells_stub <- function(loc,
     }
   }
 
-  dt_stub_set(data = data, stub = stub_df)
+  dt_stub_set_stub_df(data = data, stub_df = stub_df)
 }
 
 text_transform_at_location.cells_column_labels <- function(loc,

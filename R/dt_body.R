@@ -28,9 +28,9 @@ dt_body_init <- function(data) {
 dt_body_reassemble <- function(data) {
 
   body <- dt_body_get(data = data)
-  stub_df <- dt_stub_get(data = data)
+  stub_df <- dt_stub_get_stub_df(data = data)
 
-  groups <- dt_arrange_groups_get(data = data, obj = "groups")
+  groups <- dt_stub_get_groups(data = data)
 
   # Get the reordering df (`rows_df`) for the data rows
   rows_df <-
