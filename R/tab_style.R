@@ -264,17 +264,17 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_group <- function(loc, data, style) {
 
-  row_groups <- dt_stub_get_groups(data = data)
+  stub_groups <- dt_stub_groups_get(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-
     resolve_data_vals_idx(
       var_expr = !!loc$groups,
       data = NULL,
-      vals = row_groups
+      vals = stub_groups
     )
 
-  groups <- row_groups[resolved_row_groups_idx]
+  groups <- stub_groups[resolved_row_groups_idx]
 
   data <-
     dt_styles_add(

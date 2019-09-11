@@ -126,7 +126,7 @@ test_that("a gt table can be made from a table with no rows", {
   expect_tab(tab = tab, df = data_e)
 
   # Expect that the `stub_df` data frame is empty
-  dt_stub_get_stub_df(data = tab) %>%
+  dt_stub_df_get(data = tab) %>%
     nrow() %>%
     expect_equal(0)
 

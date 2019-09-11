@@ -26,7 +26,7 @@ test_that("the `row_group_order()` function works correctly", {
 
   # Expect that the internal vector `arrange_groups` has the
   # groups in the order specified
-  dt_stub_get_groups(data = html_tbl) %>%
+  dt_stub_groups_get(data = html_tbl) %>%
     expect_equal(c("2018-02-11", "2018-02-10"))
 
   # Create a `tbl_html` that arranges the groups by the
@@ -38,7 +38,7 @@ test_that("the `row_group_order()` function works correctly", {
 
   # Expect that the internal vector `arrange_groups` has the
   # groups in the order specified
-  dt_stub_get_groups(data = html_tbl) %>%
+  dt_stub_groups_get(data = html_tbl) %>%
     expect_equal(c("2018-02-11", "2018-02-10"))
 
   # Expect an error if input for `groups` is not a character or

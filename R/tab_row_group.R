@@ -67,7 +67,7 @@ tab_row_group <- function(data,
                           rows = NULL,
                           others = NULL) {
 
-  arrange_groups_vars <- dt_stub_get_groups(data = data)
+  arrange_groups_vars <- dt_stub_groups_get(data = data)
 
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
@@ -76,7 +76,7 @@ tab_row_group <- function(data,
   if (!is.null(group)) {
 
     # Get the `stub_df` data frame from `data`
-    stub_df <- dt_stub_get_stub_df(data = data)
+    stub_df <- dt_stub_df_get(data = data)
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
@@ -87,28 +87,33 @@ tab_row_group <- function(data,
       )
 
     # Place the `group` label in the `groupname` column `stub_df`
-    stub_df <- dt_stub_get_stub_df(data = data)
+    stub_df <- dt_stub_df_get(data = data)
 
     stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])
 
-    data <- dt_stub_set_stub_df(data = data, stub_df = stub_df)
+    data <- dt_stub_df_set(data = data, stub_df = stub_df)
 
     if (dt_stub_groupname_has_na(data = data)) {
 
       data <-
-        dt_stub_set_groups(
+        dt_stub_groups_set(
           data = data,
-          groups =
-            c(arrange_groups_vars, process_text(group[1]), NA_character_) %>%
+          stub_groups = c(
+            arrange_groups_vars, process_text(group[1]), NA_character_
+          ) %>%
             unique()
         )
 
     } else {
 
       data <-
-        dt_stub_set_groups(
+        dt_stub_groups_set(
           data = data,
-          groups = c(arrange_groups_vars, process_text(group[1])) %>% unique()
+          stub_groups = c(
+            arrange_groups_vars,
+            process_text(group[1])
+          ) %>%
+            unique()
         )
     }
   }
@@ -117,7 +122,10 @@ tab_row_group <- function(data,
   # name is provided
   if (!is.null(others)) {
     data <-
-      dt_stub_set_others(data = data, others = others[1] %>% process_text())
+      dt_stub_others_set(
+        data = data,
+        stub_others = others[1] %>% process_text()
+        )
   }
 
   data

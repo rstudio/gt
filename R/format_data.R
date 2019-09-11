@@ -1424,7 +1424,7 @@ fmt <- function(data,
                 fns) {
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors

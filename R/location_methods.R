@@ -13,7 +13,7 @@ resolve_location.resolved <- function(loc, data) {
 resolve_location.cells_data <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   loc$columns <-
     resolve_vars_idx(
@@ -90,8 +90,8 @@ to_output_location.cells_data <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
   boxh <- dt_boxhead_get(data = data)
-  stub_df <- dt_stub_get_stub_df(data = data)
-  groups <- dt_stub_get_groups(data = data)
+  stub_df <- dt_stub_df_get(data = data)
+  groups <- dt_stub_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 
@@ -111,8 +111,8 @@ to_output_location.cells_data <- function(loc, data) {
 
 to_output_location.cells_stub <- function(loc, data) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
-  groups <- dt_stub_get_groups(data = data)
+  stub_df <- dt_stub_df_get(data = data)
+  groups <- dt_stub_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 

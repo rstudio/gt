@@ -87,13 +87,15 @@ gt <- function(data,
     dt_data_init(data_tbl = data) %>%
     dt_body_init() %>%
     dt_boxhead_init() %>%
-    dt_stub_init(
+    dt_stub_df_init(
       data_df = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
       rownames_to_stub = rownames_to_stub,
       stub_group.sep = stub_group.sep
     ) %>%
+    dt_stub_groups_init() %>%
+    dt_stub_others_init() %>%
     dt_heading_init() %>%
     dt_spanners_init() %>%
     dt_stubhead_init() %>%

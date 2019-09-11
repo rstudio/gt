@@ -195,7 +195,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
     gt(groupname_col = "group", rowname_col = "row")
 
   # Get the rownames from the `tab` gt object
-  tab_rownames <- dt_stub_get_stub_df(data = tab)$rowname
+  tab_rownames <- dt_stub_df_get(data = tab)$rowname
 
   # Expect that passing in a single row name as a
   # string will return the correct row index position

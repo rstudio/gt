@@ -8,20 +8,20 @@ expect_tab_colnames <- function(tab,
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_get_stub_df(data = tab)[["rowname"]])))
+      all(is.na(dt_stub_df_get(data = tab)[["rowname"]])))
 
   } else if (rowname == "col"){
 
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_equal(
-      dt_stub_get_stub_df(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["rowname"]],
       df$rowname)
 
   } else if (rowname == "tibble") {
 
     expect_equal(
-      dt_stub_get_stub_df(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["rowname"]],
       row.names(df))
   }
 
@@ -30,7 +30,7 @@ expect_tab_colnames <- function(tab,
     # Expect that the `groupname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_get_stub_df(data = tab)[["groupname"]])))
+      all(is.na(dt_stub_df_get(data = tab)[["groupname"]])))
 
   } else {
 
@@ -38,7 +38,7 @@ expect_tab_colnames <- function(tab,
     # the original dataset populate the `groupname` column
     # of the `stub_df` object
     expect_equal(
-      dt_stub_get_stub_df(data = tab)[["groupname"]],
+      dt_stub_df_get(data = tab)[["groupname"]],
       df[["groupname"]])
   }
 }
@@ -57,10 +57,10 @@ expect_tab <- function(tab,
 
   expect_s3_class(dt_body_get(data = tab), "data.frame")
   expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
-  expect_type(dt_stub_get(data = tab), "list")
-  expect_type(dt_stub_get_groups(data = tab), "character")
-  expect_type(dt_stub_get_others(data = tab), "character")
-  expect_s3_class(dt_stub_get_stub_df(data = tab), "data.frame")
+  expect_type(dt_stub_df_get(data = tab), "list")
+  expect_type(dt_stub_groups_get(data = tab), "character")
+  expect_type(dt_stub_others_get(data = tab), "character")
+  expect_s3_class(dt_stub_df_get(data = tab), "data.frame")
   expect_type(dt_heading_get(data = tab), "list")
   expect_s3_class(dt_spanners_get(data = tab), "data.frame")
   expect_type(dt_stubhead_get(data = tab), "list")
@@ -79,7 +79,7 @@ expect_tab <- function(tab,
     dim() %>%
     expect_equal(c(ncol(df), 6))
 
-  dt_stub_get_stub_df(data = tab) %>%
+  dt_stub_df_get(data = tab) %>%
     dim() %>%
     expect_equal(c(nrow(df), 3))
 
@@ -115,7 +115,7 @@ expect_tab <- function(tab,
     dim() %>%
     expect_equal(c(73, 5))
 
-  dt_stub_get_groups(data = tab) %>%
+  dt_stub_groups_get(data = tab) %>%
     length() %>%
     expect_equal(0)
 
@@ -146,7 +146,7 @@ expect_tab <- function(tab,
   # Expect that the column names of the `stub_df` object
   # are `rownum_i`, `groupname`, and `rowname`
   expect_equal(
-    colnames(dt_stub_get_stub_df(data = tab)),
+    colnames(dt_stub_df_get(data = tab)),
     c("rownum_i", "groupname", "rowname")
   )
 
@@ -169,9 +169,10 @@ gt_attr_names <- function() {
 
   c(
     "names", "class", "row.names",
-    "_data", "_body", "_boxhead", "_stub", "_heading", "_spanners",
-    "_stubhead", "_footnotes", "_source_notes",
-    "_formats", "_styles",
+    "_data", "_body", "_boxhead",
+    "_stub_df", "_stub_groups", "_stub_others",
+    "_heading", "_spanners", "_stubhead",
+    "_footnotes", "_source_notes", "_formats", "_styles",
     "_summary", "_options", "_transforms"
   )
 }

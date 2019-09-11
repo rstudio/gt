@@ -222,7 +222,7 @@ get_column_reorder_df <- function(data) {
 # Function to recode the `rownum` value in the footnotes table
 reorder_footnotes <- function(data) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   rownum_final <- stub_df$rownum_i %>% as.numeric()
@@ -243,7 +243,7 @@ reorder_footnotes <- function(data) {
 # Function to recode the `rownum` value in the styles table
 reorder_styles <- function(data) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
   rownum_final <-
@@ -270,10 +270,10 @@ reorder_styles <- function(data) {
 get_groups_rows_df <- function(data,
                                context) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
-  ordering <- dt_stub_get_groups(data = data)
+  stub_df <- dt_stub_df_get(data = data)
+  ordering <- dt_stub_groups_get(data = data)
 
-  others_group <- dt_stub_get_others(data = data)
+  others_group <- dt_stub_others_get(data = data)
 
   groups_rows_df <-
     data.frame(
@@ -305,7 +305,7 @@ get_groups_rows_df <- function(data,
 
   if (nrow(groups_rows_df) > 0) {
 
-    others_group <- dt_stub_get_others(data = data) %||% NA_character_
+    others_group <- dt_stub_others_get(data = data) %||% NA_character_
 
     groups_rows_df[
       is.na(groups_rows_df[, "group"]),
@@ -434,7 +434,7 @@ create_summary_dfs <- function(data,
   summary_list <- dt_summary_get(data = data)
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   # If the `summary_list` object is an empty list,
   # return an empty list as the `list_of_summaries`
@@ -681,7 +681,7 @@ create_summary_dfs <- function(data,
 # Function to determine if there are any defined elements of a stub present
 is_stub_available <- function(data) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   if (!all(is.na((stub_df)[["rowname"]]))) {
     available <- TRUE
@@ -731,7 +731,7 @@ are_spanners_present <- function(data) {
 # within the `stub_df` data frame
 get_stub_components <- function(data) {
 
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   stub_components <- c()
 
@@ -771,7 +771,7 @@ get_column_alignment <- function(data) {
 combine_stub_with_data <- function(data) {
 
   body <- dt_body_get(data = data)
-  stub_df <- dt_stub_get_stub_df(data = data)
+  stub_df <- dt_stub_df_get(data = data)
 
   stub_components <- attr(data, "stub_components", exact = TRUE)
 
