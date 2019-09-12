@@ -51,15 +51,13 @@ latex_group_row <- function(group_name,
 #' @noRd
 create_table_start_l <- function(data) {
 
-  stub_available <- attr(data, "stub_available", exact = TRUE)
-
   col_alignment <-
     dt_boxhead_get(data = data) %>%
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
 
   # TODO: ensure that number of alignment tabs is correct
-  if (stub_available) {
+  if (dt_stub_df_exists(data = data)) {
     col_alignment <- c("left", col_alignment)
   }
 
@@ -79,9 +77,8 @@ create_columns_component_l <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
-
-  stub_available <- attr(data, "stub_available", exact = TRUE)
-  spanners_present <- attr(data, "spanners_present", exact = TRUE)
+  stub_available <- dt_stub_df_exists(data = data)
+  spanners_present <- dt_spanners_exists(data = data)
 
   # Get the headings
   #headings <- boxh$column_label %>% unlist()
@@ -183,11 +180,11 @@ create_body_component_l <- function(data) {
   boxh <- dt_boxhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   body <- dt_body_get(data = data)
+  summaries_present <- dt_summary_exists(data = data)
+  list_of_summaries <- dt_summary_df_get(data = data)
 
   groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)
-  list_of_summaries <- attr(data, "list_of_summaries", exact = TRUE)
-  summaries_present <- attr(data, "summaries_present", exact = TRUE)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(body)

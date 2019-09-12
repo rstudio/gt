@@ -42,6 +42,13 @@ dt_spanners_add <- function(data, vars, spanner_label, gather) {
     dt_spanners_set(spanners = ., data = data)
 }
 
+dt_spanners_exists <- function(data) {
+
+  spanners <- dt_spanners_get(data = data)
+
+  nrow(spanners) > 0
+}
+
 dt_spanners_build <- function(data, context) {
 
   spanners <- dt_spanners_get(data)

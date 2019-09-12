@@ -677,7 +677,7 @@ apply_footnotes_to_summary <- function(data) {
 
   # TODO: `context` is missing in this function
 
-  list_of_summaries <- attr(data, "list_of_summaries", exact = TRUE)
+  list_of_summaries <- dt_summary_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   summary_df_list <- list_of_summaries$summary_df_display_list
@@ -749,7 +749,7 @@ apply_footnotes_to_summary <- function(data) {
       summary_df_list[[grand_summary_col]]
   }
 
-  attr(data, "list_of_summaries") <- list_of_summaries
+  data <- dt_summary_data_set(data = data, summary = list_of_summaries)
 
   data
 }

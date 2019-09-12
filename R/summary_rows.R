@@ -103,8 +103,7 @@ summary_rows <- function(data,
   # Get the `stub_df` object from `data`
   stub_df <- dt_stub_df_get(data = data)
 
-  data <- is_stub_available(data)
-  stub_available <- attr(data, "stub_available")
+  stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
   columns <- enquo(columns)
@@ -214,11 +213,14 @@ add_summary_location_row <- function(loc,
       unlist() %>%
       unique()
 
-    columns <-
-      resolve_vars(
+    col_idx <-
+      resolve_data_vals_idx(
         var_expr = !!loc$columns,
-        data = data
+        data = NULL,
+        vals = dt_boxhead_get_vars_default(data = data)
       )
+
+    columns <- dt_boxhead_get_vars_default(data = data)[col_idx]
 
     if (length(columns) == 0) {
       stop("The location requested could not be resolved:\n",

@@ -642,7 +642,7 @@ test_that("the footnotes table is structured correctly", {
 
 test_that("the `list_of_summaries` table is structured correctly", {
 
-  tbl_attrs <-
+  gtcars_built <-
     gtcars %>%
     dplyr::filter(ctry_origin == "Germany") %>%
     dplyr::group_by(mfr) %>%
@@ -663,51 +663,54 @@ test_that("the `list_of_summaries` table is structured correctly", {
         ~min(., na.rm = TRUE),
         ~max(., na.rm = TRUE))
     ) %>%
-    build_data(context = "html") %>%
-    attributes()
+    build_data(context = "html")
 
-  list_of_summaries <- tbl_attrs$list_of_summaries
+
+  gtcars_built_summary_df <- dt_summary_df_get(data = gtcars_built)
+
+  gtcars_built_summary_df_data <- dt_summary_df_data_get(data = gtcars_built)
+  gtcars_built_summary_df_display <- dt_summary_df_display_get(data = gtcars_built)
 
   # Expect that the list of summaries has length `2`
-  expect_equal(length(list_of_summaries), 2)
+  expect_equal(length(gtcars_built_summary_df), 2)
 
   # Expect specific names in the `list_of_summaries` list
   expect_equal(
-    names(list_of_summaries),
+    names(gtcars_built_summary_df),
     c("summary_df_data_list", "summary_df_display_list")
   )
 
   # Expect three tibbles in the `summary_df_data_list` component
-  expect_equal(length(list_of_summaries$summary_df_data_list), 3)
+  expect_equal(length(gtcars_built_summary_df_data$summary_df_data_list), 3)
 
   # Expect three tibbles in the `summary_df_display_list` component
-  expect_equal(length(list_of_summaries$summary_df_display_list), 3)
+  expect_equal(length(gtcars_built_summary_df_display$summary_df_display_list), 3)
 
   # Expect specific names for the subcomponents of the
   # `summary_df_data_list` and `summary_df_data_list`
   # parent components
   expect_equal(
-    names(list_of_summaries$summary_df_data_list),
+    names(gtcars_built_summary_df_data$summary_df_data_list),
     c("BMW", "Audi", "::GRAND_SUMMARY")
   )
   expect_equal(
-    names(list_of_summaries$summary_df_display_list),
+    names(gtcars_built_summary_df_display$summary_df_display_list),
     c("::GRAND_SUMMARY", "Audi", "BMW")
   )
 
   # Expect formatted cell values with no HTML footnote markup
   expect_equal(
-    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
+    gtcars_built_summary_df_display$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
     c("56,000.00", "140,700.00")
   )
 
   expect_equal(
-    list_of_summaries$summary_df_display_list$Audi$msrp,
+    gtcars_built_summary_df_display$summary_df_display_list$Audi$msrp,
     c("113,233.33", "108,900.00")
   )
 
   expect_equal(
-    list_of_summaries$summary_df_display_list$BMW$msrp,
+    gtcars_built_summary_df_display$summary_df_display_list$BMW$msrp,
     c("116,066.67", "94,100.00")
   )
 })

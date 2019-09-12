@@ -896,70 +896,70 @@ test_that("extracting a summary from a gt table is possible", {
   # Expect that the summary object is a list
   expect_is(gt_tbl_summary_groupwise, "list")
 
-  # Expect that the length of the list is `2`
-  expect_equal(length(gt_tbl_summary_groupwise), 2)
+  # Expect that the length of the list is `1`
+  expect_equal(length(gt_tbl_summary_groupwise), 1)
 
   # Expect specific names for the list components
   expect_equal(
-    names(gt_tbl_summary_groupwise),
+    names(gt_tbl_summary_groupwise$summary_df_data_list),
     c("W02", "W03")
   )
 
   # Expect that each component of the list inherits
   # from `tbl_df`
-  expect_is(gt_tbl_summary_groupwise[[1]], "tbl_df")
-  expect_is(gt_tbl_summary_groupwise[[2]], "tbl_df")
+  expect_is(gt_tbl_summary_groupwise$summary_df_data_list[[1]], "tbl_df")
+  expect_is(gt_tbl_summary_groupwise$summary_df_data_list[[2]], "tbl_df")
 
   # Expect specific column names for each of the
   # tibbles in `gt_tbl_summary_groupwise`
   expect_equal(
-    names(gt_tbl_summary_groupwise[[1]]),
+    names(gt_tbl_summary_groupwise$summary_df_data_list[[1]]),
     c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   expect_equal(
-    names(gt_tbl_summary_groupwise[[2]]),
+    names(gt_tbl_summary_groupwise$summary_df_data_list[[2]]),
     c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in each of the tibbles
   expect_equal(
-    gt_tbl_summary_groupwise[[1]]$open,
+    gt_tbl_summary_groupwise$summary_df_data_list[[1]]$open,
     c(2035.23998, 10176.19990, 23.65756), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[1]]$high,
+    gt_tbl_summary_groupwise$summary_df_data_list[[1]]$high,
     c(2048.56198, 10242.80990, 17.47612), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[1]]$low,
+    gt_tbl_summary_groupwise$summary_df_data_list[[1]]$low,
     c(2016.8540, 10084.2699, 18.5372), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[1]]$close,
+    gt_tbl_summary_groupwise$summary_df_data_list[[1]]$close,
     c(2031.2080, 10156.0400, 22.9171), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[2]]$open,
+    gt_tbl_summary_groupwise$summary_df_data_list[[2]]$open,
     c(2020.42200, 10102.11000, 20.17218), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[2]]$high,
+    gt_tbl_summary_groupwise$summary_df_data_list[[2]]$high,
     c(2033.28798, 10166.43990, 18.33064), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[2]]$low,
+    gt_tbl_summary_groupwise$summary_df_data_list[[2]]$low,
     c(1999.77198, 9998.85990, 15.20847), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_groupwise[[2]]$close,
+    gt_tbl_summary_groupwise$summary_df_data_list[[2]]$close,
     c(2014.9300, 10074.6500, 13.8957), tolerance = .002
   )
 
@@ -986,37 +986,37 @@ test_that("extracting a summary from a gt table is possible", {
   expect_equal(length(gt_tbl_summary_grand), 1)
 
   # Expect a specific name for the one list component
-  expect_equal(names(gt_tbl_summary_grand), "::GRAND_SUMMARY")
+  expect_equal(names(gt_tbl_summary_grand), "summary_df_data_list")
 
   # Expect that the single component of the list inherits
-  # from `tbl_df`
-  expect_is(gt_tbl_summary_grand[[1]], "tbl_df")
+  # from `list`
+  expect_is(gt_tbl_summary_grand[[1]], "list")
 
   # Expect specific column names for the
   # tibble in `gt_tbl_summary_grand`
   expect_equal(
-    names(gt_tbl_summary_grand[[1]]),
+    names(gt_tbl_summary_grand$summary_df_data_list[[1]]),
     c("groupname", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in the tibble
   expect_equal(
-    gt_tbl_summary_grand[[1]]$open,
+    gt_tbl_summary_grand$summary_df_data_list[[1]]$open,
     c(2027.83099, 20278.30990, 22.14929), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_grand[[1]]$high,
+    gt_tbl_summary_grand$summary_df_data_list[[1]]$high,
     c(2040.92498, 20409.24980, 18.70516), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_grand[[1]]$low,
+    gt_tbl_summary_grand$summary_df_data_list[[1]]$low,
     c(2008.31298, 20083.12980, 18.34602), tolerance = .002
   )
 
   expect_equal(
-    gt_tbl_summary_grand[[1]]$close,
+    gt_tbl_summary_grand$summary_df_data_list[[1]]$close,
     c(2023.06900, 20230.69000, 19.82022), tolerance = .002
   )
 })

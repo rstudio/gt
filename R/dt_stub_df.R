@@ -109,6 +109,15 @@ dt_stub_df_init <- function(data,
   data
 }
 
+dt_stub_df_exists <- function(data) {
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  available <- !all(is.na((stub_df)[["rowname"]]))
+
+  available
+}
+
 # Function to obtain a reordered version of `stub_df`
 reorder_stub_df <- function(data) {
 

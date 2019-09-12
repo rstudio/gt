@@ -173,7 +173,7 @@ gt_attr_names <- function() {
     "_stub_df", "_stub_groups", "_stub_others",
     "_heading", "_spanners", "_stubhead",
     "_footnotes", "_source_notes", "_formats", "_styles",
-    "_summary", "_options", "_transforms"
+    "_summary", "_options", "_transforms", "_has_built"
   )
 }
 

@@ -39,7 +39,8 @@ build_data <- function(data, context) {
     dt_spanners_build(context = context) %>%
     dt_heading_build(context = context) %>%
     dt_stubhead_build(context = context) %>%
-    dt_source_notes_build(context = context)
+    dt_source_notes_build(context = context) %>%
+    dt_summary_build(context = context)
 
   # TODO: Make `dt_groups.R`
   # Add in the `groups_rows_df` table, which provides information
@@ -49,23 +50,6 @@ build_data <- function(data, context) {
       data = data,
       context = context
     )
-
-  # Create the `list_of_summaries` list of lists
-  # TODO: create `dt_summaries_build()` function
-  data <-
-    create_summary_dfs(
-      data = data,
-      context = context
-    )
-
-  # Determine if there is a populated stub
-  data <- is_stub_available(data = data)
-
-  # Determine if there are any summaries present
-  data <- are_summaries_present(data = data)
-
-  # Determine if there are any spanners present
-  data <- are_spanners_present(data = data)
 
   # Get the available stub components, if any
   data <- get_stub_components(data = data)
@@ -100,6 +84,8 @@ build_data <- function(data, context) {
   # Add footnote marks to the `summary` cells
   # TODO: `context` is missing in `apply_footnotes_to_summary()`
   data <- apply_footnotes_to_summary(data = data)
+
+  data <- dt_has_built_set(data = data, value = TRUE)
 
   data
 }
