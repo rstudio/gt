@@ -34,24 +34,23 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
-    locations = cells_data(columns = 3, rows = 1)
+    locations = cells_data(columns = "value_1", rows = 1)
   ) %>%
   tab_footnote(
-    footnote = "Row group",
-    locations = cells_group(groups = "2018-02-10")
+    footnote = "The first row group",
+    locations = cells_group(groups = ends_with("10"))
   ) %>%
   tab_footnote(
     footnote = "Two sets of values",
-    locations = cells_column_spanners(spanners = "values")
+    locations = cells_column_spanners(spanners = starts_with("val"))
   ) %>%
   tab_footnote(
     footnote = "A stub cell.",
     locations = cells_stub(rows = 1)
   ) %>%
   tab_footnote(
-    footnote = md("`value_1` is the second column of values."),
+    footnote = md("`value_1` is the first column of values."),
     locations = cells_column_labels(columns = vars(value_1))
   )
-
 
 footnotes_tbl
