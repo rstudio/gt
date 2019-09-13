@@ -65,6 +65,7 @@ summary_extracted <-
 # row groups and a stub)
 tab_1 <-
   summary_extracted \%>\%
+  unlist(recursive = FALSE) \%>\%
   dplyr::bind_rows() \%>\%
   gt()
 
