@@ -335,7 +335,6 @@ down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 sp500 %>%
   dplyr::filter(date >= start_date & date <= end_date) %>%
   dplyr::select(-adj_close) %>%
-  dplyr::mutate(date = as.character(date)) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
@@ -374,9 +373,9 @@ sp500 %>%
 
 ### `pizzaplace`
 
-The `pizzaplace` dataset is unusual to say the least. It brings up more questions than answers. Why is it that the 'The Greek' pizza (`the_greek`) comes in `XL` and `XXL` sizes whilst (almost) all the other pizzas adhere to the `S`-`M`-`L` paradigm? Why is the 'Brie Carre' pizza (`brie_carre`) only small? Also, is any of this real, and, what is the nature of reality? (All of these questions are quite complicated---while I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
+The `pizzaplace` dataset is unusual to say the least. It brings up more questions than answers. Why is it that the 'The Greek' pizza (`the_greek`) comes in `XL` and `XXL` sizes whilst (almost) all the other pizzas adhere to the `S`-`M`-`L` paradigm? Why is the 'Brie Carre' pizza (`brie_carre`) only small? Also, is any of this real (?), and, what is the nature of reality? (All of these questions are quite complicated... however, while I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
 
-We have the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
+We have somehow obtained the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
 
 Let's learn more about how this fascinating dataset is structured: 
 

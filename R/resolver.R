@@ -95,9 +95,10 @@ resolve_cells_column_labels <- function(data,
   #
 
   resolved_columns <-
-    resolve_vars_idx(
+    resolve_data_vals_idx(
       var_expr = !!object$columns,
-      data = data
+      data = NULL,
+      vals = dt_boxhead_get_vars_default(data = data)
     )
 
   # Create a list object
@@ -108,6 +109,46 @@ resolve_cells_column_labels <- function(data,
 
   cells_resolved
 }
+
+#' Resolve the spanner values in the `cells_column_labels` object once it
+#' has access to the `data` object
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_column_labels()`
+#'   function.
+#' @noRd
+resolve_cells_column_spanners <- function(data,
+                                          object) {
+
+  #
+  # Resolution of spanners as column spanner names
+  #
+
+  spanner_labels <-
+    dt_spanners_get(data = data) %>%
+    .$spanner_label %>%
+    unlist() %>%
+    .[!is.na(.)] %>%
+    unique()
+
+  resolved_spanners_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!object$spanners,
+      data = NULL,
+      vals = spanner_labels
+    )
+
+  resolved_spanners <- spanner_labels[resolved_spanners_idx]
+
+  # Create a list object
+  cells_resolved <- list(spanners = resolved_spanners)
+
+  # Apply the `columns_cells_resolved` class
+  attr(cells_resolved, "class") <- "columns_spanners_resolved"
+
+  cells_resolved
+}
+
 
 #' Resolve expressions to obtain column indices
 #'

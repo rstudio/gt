@@ -140,40 +140,42 @@ set_footnote.cells_stubhead <- function(loc, data, footnote) {
 
 set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
-  if (!is.null(loc$columns)) {
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
 
-    resolved <- resolve_cells_column_labels(data = data, object = loc)
+  cols <- resolved$columns
 
-    cols <- resolved$columns
+  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
 
-    colnames <- colnames(as.data.frame(data))[cols]
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "columns_columns",
+      grpname = NA_character_,
+      colname = colnames,
+      locnum = 4,
+      rownum = NA_integer_,
+      footnotes = footnote
+    )
 
-    data <-
-      dt_footnotes_add(
-        data = data,
-        locname = "columns_columns",
-        grpname = NA_character_,
-        colname = colnames,
-        locnum = 4,
-        rownum = NA_integer_,
-        footnotes = footnote
-      )
+  data
+}
 
-  } else if (!is.null(loc$groups)) {
+set_footnote.cells_column_spanners <- function(loc, data, footnote) {
 
-    groups <- loc$groups %>% rlang::eval_tidy()
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
-    data <-
-      dt_footnotes_add(
-        data = data,
-        locname = "columns_groups",
-        grpname = groups,
-        colname = NA_character_,
-        locnum = 3,
-        rownum = NA_integer_,
-        footnotes = footnote
-      )
-  }
+  groups <- resolved$spanners
+
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "columns_groups",
+      grpname = groups,
+      colname = NA_character_,
+      locnum = 3,
+      rownum = NA_integer_,
+      footnotes = footnote
+    )
 
   data
 }

@@ -20,9 +20,10 @@
 #' only available when there is a stub; a label in that location can be created
 #' by using the [tab_stubhead()] function.
 #'
-#' \item `cells_column_labels()`: targets labels in the column labels (the
-#' `columns` argument) or the spanner column labels (the `groups` argument) in
-#' the table's column labels part.
+#' \item `cells_column_labels()`: targets the column labels.
+#'
+#' \item `cells_column_spanners()`: targets the spanner column labels, which
+#' appear above the column labels.
 #'
 #' \item `cells_group()`: targets the row group labels in any available row
 #' groups using the `groups` argument.
@@ -35,11 +36,18 @@
 #'
 #' \item `cells_summary()`: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
+#'
+#' \item `cells_grand_summary()`: targets cells of the table's grand summary
+#' using intersections of `columns` and `rows`
 #' }
 #'
-#' @param columns,rows,groups Either a vector of names, a vector of indices,
+#' @param columns,rows Either a vector of names, a vector of indices,
 #'   values provided by [vars()], values provided by `c()`, or a select helper
 #'   function (see Details for information on these functions).
+#' @param groups Used in the `cells_title()`, `cells_group()`, and
+#'   `cells_summary()` functions to specify which groups to target.
+#' @param spanners Used in the `cells_column_spanners()` function to indicate
+#'   which spanners to target.
 #'
 #' @examples
 #' library(tidyr)
@@ -267,36 +275,30 @@ cells_stubhead <- function() {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns,
-                                groups) {
+cells_column_spanners <- function(spanners) {
 
-  # TODO: set defaults to include everything (as below)
-  if (
-    (!missing(columns) && !missing(groups)) ||
-    (missing(columns) && missing(groups))
-  ) {
-    stop("Value(s) must provided to either `columns` or `groups` but not both.")
-  }
+  # Capture expression for the `spanners` argument
+  col_expr <- NULL
+  spanners_expr <- rlang::enquo(spanners)
 
-  # With input as `columns`
-  if (!missing(columns)) {
+  # Create the `cells_column_spanners` object
+  structure(
+    list(spanners = spanners_expr),
+    class = c("cells_column_spanners", "location_cells")
+  )
+}
 
-    # Capture expression for the `columns` argument
-    col_expr <- rlang::enquo(columns)
-    group_expr <- NULL
-  }
+#' @rdname location_cells
+#' @import rlang
+#' @export
+cells_column_labels <- function(columns) {
 
-  # With input as `groups`
-  if (!missing(groups)) {
-
-    # Capture expression for the `groups` argument
-    col_expr <- NULL
-    group_expr <- rlang::enquo(groups)
-  }
+  # Capture expression for the `columns` argument
+  columns_expr <- rlang::enquo(columns)
 
   # Create the `cells_column_labels` object
   structure(
-    list(columns = col_expr, groups = group_expr),
+    list(columns = columns_expr),
     class = c("cells_column_labels", "location_cells")
   )
 }

@@ -25,16 +25,24 @@ footnotes_tbl <-
     columns = starts_with("value")
   ) %>%
   tab_footnote(
+    footnote = "This is an even smaller number.",
+    locations = cells_data(columns = vars(value_1), rows = 9)
+  ) %>%
+  tab_footnote(
+    footnote = "This is a small number.",
+    locations = cells_data(columns = vars(value_2), rows = 4)
+  ) %>%
+  tab_footnote(
+    footnote = "First data cell.",
+    locations = cells_data(columns = 3, rows = 1)
+  ) %>%
+  tab_footnote(
     footnote = "Row group",
     locations = cells_group(groups = "2018-02-10")
   ) %>%
   tab_footnote(
     footnote = "Two sets of values",
-    locations = cells_column_labels(groups = "values")
-  ) %>%
-  tab_footnote(
-    footnote = "First data cell.",
-    locations = cells_data(columns = 1, rows = 1)
+    locations = cells_column_spanners(spanners = "values")
   ) %>%
   tab_footnote(
     footnote = "A stub cell.",
@@ -43,14 +51,7 @@ footnotes_tbl <-
   tab_footnote(
     footnote = md("`value_1` is the second column of values."),
     locations = cells_column_labels(columns = vars(value_1))
-  ) %>%
-  tab_footnote(
-    footnote = "This is an even smaller number.",
-    locations = cells_data(columns = 2, rows = 9)
-  ) %>%
-  tab_footnote(
-    footnote = "This is a small number.",
-    locations = cells_data(columns = 2, rows = 4)
   )
+
 
 footnotes_tbl

@@ -69,11 +69,11 @@ data_2 <-
   ) %>%
   tab_footnote(
     footnote = "The most important details.",
-    locations = cells_column_labels(groups = "specs and pricing")
+    locations = cells_column_spanners(spanners = "specs and pricing")
   ) %>%
   tab_footnote(
     footnote = "German cars only.",
-    locations = cells_column_labels(groups = "make and model")
+    locations = cells_column_spanners(spanners = "make and model")
   )
 
 # Create a table from `gtcars` that has footnotes
@@ -387,13 +387,14 @@ test_that("the `tab_footnote()` function works correctly", {
 
   # Expect certain values for each of the columns in the
   # double-row `footnotes_df` data frame
-  # expect_attr_equal(
-  #   tab, "footnotes_df",
-  #   c("summary_cells", "grand_summary_cells",
-  #     "5", "6", "Mercs", NA, "hp", "wt", "2", "2",
-  #     "Summary cell footnote.",
-  #     "Grand summary cell footnote.")
-  # )
+  expect_attr_equal(
+    tab, "_footnotes",
+    c("summary_cells", "grand_summary_cells",
+      "Mercs", "::GRAND_SUMMARY", "hp", "wt",
+      "5", "6", "2", "2", NA_character_, NA_character_,
+      "Summary cell footnote.",
+      "Grand summary cell footnote.")
+  )
 
   # Apply a footnote to the `Mazdas` stub group cell
   tab <-
@@ -423,7 +424,8 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Column group footnote.",
-      locations = cells_column_labels(groups = "gear_carb_cyl"))
+      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -446,7 +448,8 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Single column label footnote.",
-      locations = cells_column_labels(columns = "gear"))
+      locations = cells_column_labels(columns = "gear")
+    )
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row

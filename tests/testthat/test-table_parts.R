@@ -396,7 +396,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgreen"),
-      locations = cells_column_labels(groups = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gear_carb_cyl")
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),

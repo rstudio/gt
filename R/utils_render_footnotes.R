@@ -28,12 +28,14 @@ resolve_footnotes_styles <- function(data,
 
   # Filter table to include only the `default` vars
   # in the `data` and `columns_columns` locnames
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
   tbl <-
     dplyr::bind_rows(
       tbl %>% dplyr::filter(!(locname %in% c("data", "columns_columns"))),
       tbl %>%
         dplyr::filter(locname %in% c("data", "columns_columns")) %>%
-        dplyr::filter(colname %in% dt_boxhead_get_vars_default(data = data))
+        dplyr::filter(colname %in% default_vars)
     )
 
   # Return `data` unchanged if there are no rows in `tbl`
@@ -92,11 +94,12 @@ resolve_footnotes_styles <- function(data,
         )
     }
 
-    # TODO: replace `colnames(body)` with dt_boxhead_vars_default
     # Filter `tbl` by the remaining columns in `body`
     tbl <-
       tbl %>%
-      dplyr::filter(colname %in% c(NA_character_, colnames(body)))
+      dplyr::filter(
+        colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data))
+      )
   }
 
   # Reorganize records that target the data rows
@@ -436,7 +439,6 @@ set_footnote_marks_columns <- function(data,
       for (i in seq(nrow(footnotes_columns_column_marks))) {
 
         # TODO: make this work with column labels
-
         text <-
           boxh %>%
           dplyr::filter(var == footnotes_columns_column_marks$colname[i]) %>%
@@ -482,8 +484,6 @@ set_footnote_marks_columns <- function(data,
       }
     }
   }
-
-  data <- dt_footnotes_set(data = data, footnotes = footnotes_tbl)
 
   data
 }
