@@ -142,3 +142,20 @@ dt_stub_groupname_has_na <- function(data) {
 
   any(is.na(stub_df$groupname))
 }
+
+dt_stub_components <- function(data) {
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  stub_components <- c()
+
+  if (any(!is.na(stub_df[["rowname"]]))) {
+    stub_components <- c(stub_components, "rowname")
+  }
+
+  if (any(!is.na(stub_df[["groupname"]]))) {
+    stub_components <- c(stub_components, "groupname")
+  }
+
+  stub_components
+}

@@ -124,8 +124,7 @@ create_heading_component <- function(data,
 
   footnotes_tbl <- dt_footnotes_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
-  stub_components <- attr(data, "stub_components", exact = TRUE)
-
+  stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
@@ -640,8 +639,7 @@ create_body_component_h <- function(data) {
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
-
-  stub_components <- attr(data, "stub_components", exact = TRUE)
+  stub_components <- dt_stub_components(data = data)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(body)
@@ -891,7 +889,7 @@ create_source_notes_component_h <- function(data) {
     return("")
   }
 
-  stub_components <- attr(data, "stub_components", exact = TRUE)
+  stub_components <- dt_stub_components(data = data)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
 
@@ -941,7 +939,7 @@ create_footnotes_component_h <- function(data) {
     return("")
   }
 
-  stub_components <- attr(data, "stub_components", exact = TRUE)
+  stub_components <- dt_stub_components(data = data)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
 

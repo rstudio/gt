@@ -43,9 +43,6 @@ build_data <- function(data, context) {
     dt_summary_build(context = context) %>%
     dt_groups_rows_build(context = context)
 
-  # Get the available stub components, if any
-  data <- get_stub_components(data = data)
-
   # Define the `col_alignment` vector, which is a
   # vector of column alignment values for all of
   # the relevant columns in a table

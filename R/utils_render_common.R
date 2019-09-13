@@ -365,27 +365,6 @@ perform_col_merge <- function(data,
   data
 }
 
-# Function to get a vector of the stub components that are available
-# within the `stub_df` data frame
-get_stub_components <- function(data) {
-
-  stub_df <- dt_stub_df_get(data = data)
-
-  stub_components <- c()
-
-  if (any(!is.na(stub_df[["rowname"]]))) {
-    stub_components <- c(stub_components, "rowname")
-  }
-
-  if (any(!is.na(stub_df[["groupname"]]))) {
-    stub_components <- c(stub_components, "groupname")
-  }
-
-  attr(data, "stub_components") <- stub_components
-
-  data
-}
-
 get_column_alignment <- function(data) {
 
   column_alignment <-
@@ -393,7 +372,7 @@ get_column_alignment <- function(data) {
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
 
-  stub_components <- attr(data, "stub_components", exact = TRUE)
+  stub_components <- dt_stub_components(data = data)
 
   if (stub_component_is_rowname(stub_components = stub_components) ||
       stub_component_is_rowname_groupname(stub_components = stub_components)) {
@@ -410,8 +389,7 @@ combine_stub_with_data <- function(data) {
 
   body <- dt_body_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
-
-  stub_components <- attr(data, "stub_components", exact = TRUE)
+  stub_components <- dt_stub_components(data = data)
 
   if (stub_component_is_rowname(stub_components = stub_components) ||
       stub_component_is_rowname_groupname(stub_components = stub_components)) {
