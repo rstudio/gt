@@ -1,4 +1,3 @@
-#' @import sass
 #' @noRd
 compile_scss <- function(data, id = NULL) {
 
@@ -13,7 +12,7 @@ compile_scss <- function(data, id = NULL) {
   sass::sass(
     list(
       list(element_id = id),
-      as.list(setNames(gt_options_tbl$value, gt_options_tbl$parameter)),
+      as.list(stats::setNames(gt_options_tbl$value, gt_options_tbl$parameter)),
       sass::sass_file(system_file(file = "css/gt_colors.scss")),
       sass::sass_file(system_file(file = "css/gt_styles_default.scss")),
       glue::glue(
@@ -28,5 +27,7 @@ compile_scss <- function(data, id = NULL) {
         <<ifelse(has_id, '##{$element_id} {', '')>>
         @include gt_styles();
         <<ifelse(has_id, '}', '')>>
-        ")))
+        ")
+    )
+  )
 }

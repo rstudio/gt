@@ -7,9 +7,6 @@
 #' containing the LaTeX code.
 #'
 #' @param data A table object that is created using the [gt()] function.
-#' @import rlang
-#' @importFrom dplyr mutate group_by summarize ungroup rename arrange
-#' @importFrom stats setNames
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -45,22 +42,36 @@ as_latex <- function(data) {
   # Use LaTeX-specific builders to generate the Latex table code
   with(built_data, {
 
-    # Add footnote glyphs to elements of the table columns
+    # Add footnote marks to elements of the table columns
     boxh_df <-
-      set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "latex")
+      set_footnote_marks_columns(
+        footnotes_resolved = footnotes_resolved,
+        boxh_df = boxh_df,
+        output = "latex"
+      )
 
-    # Add footnote glyphs to the `data` rows
+    # Add footnote marks to the `data` rows
     output_df <-
-      apply_footnotes_to_output(output_df, footnotes_resolved, output = "latex")
+      apply_footnotes_to_output(
+        output_df = output_df,
+        footnotes_resolved = footnotes_resolved,
+        output = "latex"
+      )
 
-    # Add footnote glyphs to stub group title elements
+    # Add footnote marks to stub group title elements
     groups_rows_df <-
-      set_footnote_glyphs_stub_groups(
-        footnotes_resolved, groups_rows_df, output = "latex")
+      set_footnote_marks_stub_groups(
+        footnotes_resolved = footnotes_resolved,
+        groups_rows_df = groups_rows_df,
+        output = "latex"
+      )
 
-    # Add footnote glyphs to the `summary` rows
+    # Add footnote marks to the `summary` rows
     list_of_summaries <-
-      apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
+      apply_footnotes_to_summary(
+        list_of_summaries = list_of_summaries,
+        footnotes_resolved = footnotes_resolved
+      )
 
     # Extraction of body content as a vector ----------------------------------
     body_content <- as.vector(t(output_df))
@@ -71,24 +82,41 @@ as_latex <- function(data) {
     row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
 
     # Create a LaTeX fragment for the start of the table
-    table_start <- create_table_start_l(col_alignment)
+    table_start <- create_table_start_l(col_alignment = col_alignment)
 
     # Create the heading component of the table
     heading_component <-
       create_heading_component(
-        heading, footnotes_resolved, n_cols = n_cols, output = "latex")
+        heading = heading,
+        footnotes_resolved = footnotes_resolved,
+        styles_resolved = styles_resolved,
+        n_cols = n_cols,
+        subtitle_defined = subtitle_defined,
+        output = "latex"
+      )
 
     # Create the columns component of the table
     columns_component <-
       create_columns_component_l(
-        boxh_df, output_df, stub_available, spanners_present,
-        stubhead_label)
+        boxh_df = boxh_df,
+        output_df = output_df,
+        stub_available = stub_available,
+        spanners_present = spanners_present,
+        stubhead = stubhead
+      )
 
     # Create the body component of the table
     body_component <-
       create_body_component_l(
-        row_splits, groups_rows_df, col_alignment, stub_available,
-        summaries_present, list_of_summaries, n_rows, n_cols)
+        row_splits = row_splits,
+        groups_rows_df = groups_rows_df,
+        col_alignment = col_alignment,
+        stub_available = stub_available,
+        summaries_present = summaries_present,
+        list_of_summaries = list_of_summaries,
+        n_rows = n_rows,
+        n_cols = n_cols
+      )
 
     # Create a LaTeX fragment for the ending tabular statement
     table_end <- create_table_end_l()
@@ -96,11 +124,15 @@ as_latex <- function(data) {
     # Create the footnote component of the table
     footnote_component <-
       create_footnote_component_l(
-        footnotes_resolved, opts_df)
+        footnotes_resolved = footnotes_resolved,
+        opts_df = opts_df
+      )
 
     # Create the source note component of the table
     source_note_component <-
-      create_source_note_component_l(source_note)
+      create_source_note_component_l(
+        source_note = source_note
+      )
 
     # If the `rmarkdown` package is available, use the
     # `latex_dependency()` function to load latex packages

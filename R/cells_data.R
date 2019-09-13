@@ -1,4 +1,3 @@
-# cells_data
 
 resolve_location.cells_data <- function(loc, data_attr) {
 
@@ -30,12 +29,14 @@ to_output_location.cells_data <- function(loc, data_attr) {
   columns_df <-
     get_column_reorder_df(
       cols_df = data_attr$cols_df,
-      boxh_df = data_attr$boxh_df)
+      boxh_df = data_attr$boxh_df
+    )
 
   rows_df <-
     get_row_reorder_df(
       arrange_groups = data_attr$arrange_groups,
-      stub_df = data_attr$stub_df)
+      stub_df = data_attr$stub_df
+    )
 
   # We shouldn't need to do this, but output_df doesn't match up exactly to
   # the colnum_final values due to groupnames/rownames

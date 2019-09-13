@@ -68,7 +68,6 @@
 #'
 #' @family table-part creation/modification functions
 #'
-#' @importFrom dplyr group_vars
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
@@ -77,13 +76,17 @@ gt <- function(data,
                id = random_id(),
                stub_group.sep = getOption("gt.stub_group.sep", " - ")) {
 
+  # Stop if input `data` has no columns
+  if (ncol(data) == 0) {
+    stop("The input `data` table must have at least one column.",
+         call. = FALSE)
+  }
+
   opts_df <- gt_options_default()
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
-
-    opts_df <- opts_df_set(
-      opts_df, "table_id", id)
+    opts_df <- opts_df_set(opts_df, "table_id", id)
   }
 
   # If the option to place rownames in the stub
@@ -96,7 +99,8 @@ gt <- function(data,
       data.frame(
         groupname = NA_character_,
         rowname = rownames(data),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
 
   } else {
 
@@ -104,7 +108,8 @@ gt <- function(data,
       data.frame(
         groupname = rep(NA_character_, nrow(data)),
         rowname = rep(NA_character_, nrow(data)),
-        stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
   }
 
   # If `rowname` is a column available in `data`,
@@ -149,6 +154,13 @@ gt <- function(data,
     data[[groupname_col]] <- NULL
   }
 
+  # Stop if input `data` has no columns (after modifying
+  # `data` for groups)
+  if (ncol(data) == 0) {
+    stop("The `data` must have at least one column that isn't a 'group' column.",
+         call. = FALSE)
+  }
+
   # Take the input data and convert to a
   # data frame
   data_tbl <-
@@ -158,8 +170,8 @@ gt <- function(data,
   # Reset the rownames in the `data_tbl` df
   rownames(data_tbl) <- NULL
 
-  # Create empty `footnotes_df` and `styles_df` data frames
-  footnotes_df <- styles_df <-
+  # Create an empty `footnotes_df` data frame
+  footnotes_df <-
     dplyr::tibble(
       locname = NA_character_,
       locnum = NA_integer_,
@@ -169,35 +181,47 @@ gt <- function(data,
       text = NA_character_
     )[-1, ]
 
-  # Create a prepopulated `rows_df` data frame
-  rows_df <-
+  # Create an empty `styles_df` data frame
+  styles_df <-
     dplyr::tibble(
-      rownums_start = seq(nrow(data_tbl))
-    )
+      locname = NA_character_,
+      locnum = NA_integer_,
+      grpname = NA_character_,
+      colname = NA_character_,
+      rownum = NA_integer_,
+      styles = list()
+    )[-1, ]
+
+  # Create a prepopulated `rows_df` data frame
+  if (nrow(data_tbl) > 0) {
+    rows_df <- dplyr::tibble(rownums_start = seq(nrow(data_tbl)))
+  } else {
+    rows_df <- dplyr::tibble(rownums_start = NA_integer_)[-1, ]
+  }
 
   # Create a prepopulated `cols_df` data frame
-  cols_df <-
-    dplyr::tibble(
-      colnames_start = colnames(data_tbl)
-    )
+  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
 
   # Create an empty facsimile df based on
   # `data_tbl`; this will serve as a template for
   # data frames that contain specialized formatting
   # directives that will be used during render time
   empty_df <- data_tbl
-  empty_df[] <- NA_character_
+  if (nrow(data_tbl) > 0) {
+    empty_df[] <- NA_character_
+  }
 
   # Create a data frame that represents the table's
   # columns (`boxh_df`); each row has a special
   # meaning and this will be used during render time
-  boxh_df <- empty_df[c(), , drop = FALSE]
-  boxh_df[1:3, ] = list(NA_character_)
-
-  # Assign rownames to the `boxh_df` for easier
-  # manipulation of rows
-  rownames(boxh_df) <-
-    c("group_label", "column_label", "column_align")
+  boxh_df <-
+    matrix(data = NA_character_, nrow = 4, ncol = ncol(data_tbl)) %>%
+    as.data.frame() %>%
+    dplyr::mutate_all(as.character) %>%
+    magrittr::set_names(names(data_tbl)) %>%
+    magrittr::set_rownames(
+      c("group_label", "column_label", "column_align", "column_width")
+    )
 
   # Apply initialized data frames as attributes
   # within the object

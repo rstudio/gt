@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(110, 4))
+  css_tbl %>% dim() %>% expect_equal(c(131, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -374,42 +374,70 @@ test_that("the `inline_html_styles()` function works correctly", {
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that certain portions of `inlined_html` have
   # inlined CSS rules
   expect_true(
-    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
+        "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
+        "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
+        "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
+        "font-size: 16px; background-color: #FFFFFF; width: auto; ",
+        "border-top-style: solid; border-top-width: 2px; border-top-color: ",
+        "#A8A8A8; border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #A8A8A8;\""
+      ),
+      inlined_html
+    )
   )
 
   expect_true(
-    grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;vertical-align:middle;padding:10px;margin:10px;text-align:right;font-variant-numeric:tabular-nums;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"color: #333333; background-color: #FFFFFF; font-size: ",
+        "16px; font-weight: initial; vertical-align: middle; padding: ",
+        "5px; margin: 10px; overflow-x: hidden; border-top-style: solid; ",
+        "border-top-width: 2px; border-top-color: #D3D3D3; ",
+        "border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #D3D3D3; text-align: center;\""
+      ),
+      inlined_html
+    )
   )
 
   # Augment the gt table with custom styles
   data <-
     data %>%
     tab_style(
-      style = "font-size:10px;",
+      style = cell_text(size = px(10)),
       locations = cells_data(columns = TRUE)
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
   expect_true(
-    grepl("style=\"padding:8px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"padding: 8px; margin: 10px; border-top-style: solid; ",
+        "border-top-width: 1px; border-top-color: #D3D3D3; ",
+        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
+        "font-variant-numeric: tabular-nums; font-size: 10px;\""
+      ),
+      inlined_html
+    )
   )
 
   # Create a gt table with a custom style in the title and subtitle
@@ -421,26 +449,24 @@ test_that("the `inline_html_styles()` function works correctly", {
       subtitle = "The subtitle"
     ) %>%
     tab_style(
-      cells_styles(
-        text_align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
-          )
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the `colspan` attr is preserved in both <th> elements
   # and that the `text-align:left` rule is present
   expect_true(
-    grepl("th colspan='11' style=.*?text-align:left;", inlined_html)
+    grepl("th colspan=\"11\" style=.*?text-align: left;", inlined_html)
   )
 })
 
@@ -477,51 +503,51 @@ test_that("the `as_locations()` function works correctly", {
     as_locations(locations))
 })
 
-test_that("the `footnote_glyphs()` function works correctly", {
+test_that("the `process_footnote_marks()` function works correctly", {
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = as.character(1:10),
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = as.character(1:5)) %>%
+    marks = as.character(1:5)) %>%
     expect_equal(c("1", "2", "3", "4", "5", "11", "22", "33", "44", "55"))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "letters") %>%
+    marks = "letters") %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = letters) %>%
+    marks = letters) %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "LETTERS") %>%
+    marks = "LETTERS") %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = LETTERS) %>%
+    marks = LETTERS) %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = c("⁕", "‖", "†", "§", "¶")) %>%
+    marks = c("⁕", "‖", "†", "§", "¶")) %>%
     expect_equal(
       c("\u2055", "‖", "†", "§", "¶",
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))

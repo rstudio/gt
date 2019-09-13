@@ -111,6 +111,8 @@ argument. See the Arguments section for more information on this.
 }
 
 \examples{
+library(tidyr)
+
 # Use `exibble` to create a gt table;
 # format the `num` column as numeric
 # with three decimal places and with no

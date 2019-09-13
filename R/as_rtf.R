@@ -96,8 +96,8 @@ as_rtf <- function(data) {
   # Get the `heading` object
   heading <- data_attr$heading
 
-  # Get the `stubhead_label` object
-  stubhead_label <- data_attr$stubhead_label
+  # Get the `stubhead` object
+  stubhead <- data_attr$stubhead
 
   # Get the `source_note` object
   source_note <- data_attr$source_note
@@ -137,7 +137,7 @@ as_rtf <- function(data) {
 
   # Create the `groups_rows_df` data frame, which provides information
   # on which rows the group rows should appear above
-  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df)
+  groups_rows_df <- get_groups_rows_df(arrange_groups, groups_df, context)
 
   # Replace NA values in the `groupname` column if there is a reserved
   # label for the unlabeled group
@@ -242,20 +242,24 @@ as_rtf <- function(data) {
       columns_spanners, title_defined, subtitle_defined,
       footnotes_df = footnotes_df, styles_df = NULL)
 
-  # Add footnote glyphs to elements of the table columns
-  boxh_df <-
-    set_footnote_glyphs_columns(footnotes_resolved, boxh_df, output = "rtf")
+  # The styles table is not yet available for RTF
+  styles_resolved <- NULL
 
-  # Add footnote glyphs to the `data` rows
+  # Add footnote marks to elements of the table columns
+  boxh_df <-
+    set_footnote_marks_columns(footnotes_resolved, boxh_df, output = "rtf")
+
+  # Add footnote marks to the `data` rows
   output_df <-
     apply_footnotes_to_output(output_df, footnotes_resolved, output = "rtf")
 
-  # Add footnote glyphs to stub group title elements
+  # Add footnote marks to stub group title elements
   groups_rows_df <-
-    set_footnote_glyphs_stub_groups(
-      footnotes_resolved, groups_rows_df, output = "rtf")
+    set_footnote_marks_stub_groups(
+      footnotes_resolved, groups_rows_df, output = "rtf"
+    )
 
-  # Add footnote glyphs to the `summary` rows
+  # Add footnote marks to the `summary` rows
   list_of_summaries <-
     apply_footnotes_to_summary(list_of_summaries, footnotes_resolved)
 
@@ -272,7 +276,8 @@ as_rtf <- function(data) {
   # Create a heading component of the table and handle any available footnotes
   heading_component <-
     create_heading_component(
-      heading, footnotes_resolved, n_cols = n_cols, output = "rtf")
+      heading, footnotes_resolved, styles_resolved, n_cols,
+      subtitle_defined, output = "rtf")
 
   # Get the headings
   headings <- names(output_df)
@@ -288,11 +293,10 @@ as_rtf <- function(data) {
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0 &&
+  if (stub_available && length(stubhead) > 0 &&
       "rowname" %in% headings) {
 
-    headings[which(headings == "rowname")] <- stubhead_label$stubhead_label
+    headings[which(headings == "rowname")] <- stubhead$label
 
   } else if ("rowname" %in% headings) {
 

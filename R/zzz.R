@@ -23,7 +23,6 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-#' @importFrom utils globalVariables
 globalVariables(
   c(
     ".",
@@ -46,6 +45,7 @@ globalVariables(
     "green",
     "group_label",
     "grpname",
+    "grprow",
     "integrate_summary_lines",
     "locname",
     "locnum",
@@ -58,6 +58,7 @@ globalVariables(
     "red",
     "row_end",
     "rownum",
+    "styles",
     "styles_appended",
     "symbol",
     "text",
@@ -102,6 +103,7 @@ gt_default_options <- list(
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
+  register_s3_method("htmltools", "as.tags", "gt_tbl")
 
   op <- options()
   toset <- !(names(gt_default_options) %in% names(op))

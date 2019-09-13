@@ -69,18 +69,17 @@ tab_header <- function(data,
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
-#'   tab_stubhead_label(label = "car")
+#'   tab_stubhead(label = "car")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_label_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_stubhead_1.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
 #' @export
-tab_stubhead_label <- function(data,
-                               label) {
+tab_stubhead <- function(data,
+                         label) {
 
-  attr(data, "stubhead_label") <-
-    list(stubhead_label = label)
+  attr(data, "stubhead") <- list(label = label)
 
   data
 }
@@ -267,9 +266,10 @@ tab_spanner <- function(data,
   # Get the `grp_labels` list from `data`
   grp_labels <- attr(data, "grp_labels", exact = TRUE)
 
-  # Apply the `label` value to the relevant components
-  # of the `grp_labels` list
-  grp_labels[column_names] <- label
+  # Apply the `label` value to the the `grp_labels` list
+  for (column_name in column_names) {
+    grp_labels[[column_name]] <- label
+  }
 
   # Set the `grp_labels` attr with the `grp_labels` object
   attr(data, "grp_labels") <- grp_labels

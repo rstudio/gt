@@ -2,7 +2,7 @@
 #'
 #' @param data A table object that is created using the `gt()` function.
 #' @param object The list object created by the `cells_data()` function.
-#' @importFrom dplyr arrange distinct
+#' @import rlang
 #' @noRd
 resolve_cells_data <- function(data,
                                object) {
@@ -27,13 +27,16 @@ resolve_cells_data <- function(data,
     resolve_data_vals_idx(
       var_expr = !!object$rows,
       data = data,
-      # Collect the rownames from `stub_df`
       vals = stub_df$rowname
     )
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
-    expand.grid(resolved_columns_idx, resolved_rows_idx, stringsAsFactors = FALSE) %>%
+    expand.grid(
+      resolved_columns_idx,
+      resolved_rows_idx,
+      stringsAsFactors = FALSE
+    ) %>%
     dplyr::arrange(Var1) %>%
     dplyr::distinct()
 
@@ -64,7 +67,6 @@ resolve_cells_stub <- function(data,
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
-
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$rows,
@@ -99,7 +101,8 @@ resolve_cells_column_labels <- function(data,
   resolved_columns <-
     resolve_vars_idx(
       var_expr = !!object$columns,
-      data = data)
+      data = data
+    )
 
   # Create a list object
   cells_resolved <- list(columns = resolved_columns)
@@ -120,7 +123,7 @@ resolve_cells_column_labels <- function(data,
 resolve_vars_idx <- function(var_expr,
                              data) {
 
-  var_expr <- enquo(var_expr)
+  var_expr <- rlang::enquo(var_expr)
 
   resolve_data_vals_idx(
     var_expr = !!var_expr,
@@ -138,7 +141,6 @@ resolve_vars_idx <- function(var_expr,
 #' @param vals The names of columns or rows in `data`.
 #' @import tidyselect
 #' @import rlang
-#' @importFrom dplyr between
 #' @noRd
 resolve_data_vals_idx <- function(var_expr,
                                   data,
@@ -190,7 +192,6 @@ resolve_data_vals_idx <- function(var_expr,
 
   } else if (is.character(resolved)) {
 
-
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
     resolved <- which(vals %in% resolved)
 
@@ -199,15 +200,12 @@ resolve_data_vals_idx <- function(var_expr,
     # Define function to get an expression from a
     # quosure and translate it to a character vector
     quo_get_expr_char <- function(x) {
-      x %>%
-        rlang::quo_get_expr() %>%
-        as.character()
+      rlang::as_name(x)
     }
 
     resolved <- vapply(resolved, quo_get_expr_char, character(1))
     resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
     resolved <- which(vals %in% resolved)
-
   }
 
   resolved
@@ -222,6 +220,7 @@ resolve_vars <- function(var_expr,
                          data) {
 
   var_expr <- enquo(var_expr)
+
   # Obtain the data frame of the input table data
   data_df <- as.data.frame(data)
 

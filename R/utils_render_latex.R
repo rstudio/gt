@@ -4,11 +4,10 @@ latex_packages <- function() {
   c("amsmath", "booktabs", "caption", "longtable")
 }
 
-# Transform a footnote glyph to a LaTeX representation as a superscript
-footnote_glyph_to_latex <- function(footnote_glyph) {
+# Transform a footnote mark to a LaTeX representation as a superscript
+footnote_mark_to_latex <- function(mark) {
 
-  paste0(
-    "\\textsuperscript{", footnote_glyph, "}")
+  paste0("\\textsuperscript{", mark, "}")
 }
 
 #' @noRd
@@ -60,14 +59,14 @@ create_table_start_l <- function(col_alignment) {
     collapse = "")
 }
 
-# Create the columns component of a table
-#' @import rlang
+#' Create the columns component of a table
+#'
 #' @noRd
 create_columns_component_l <- function(boxh_df,
                                        output_df,
                                        stub_available,
                                        spanners_present,
-                                       stubhead_label,
+                                       stubhead,
                                        col_alignment) {
 
   # Get the headings
@@ -75,14 +74,13 @@ create_columns_component_l <- function(boxh_df,
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   #   caption or nothing
-  if (stub_available &&
-      length(stubhead_label) > 0) {
+  if (stub_available && length(stubhead) > 0) {
 
-    headings <- rlang::prepend(headings, stubhead_label$stubhead_label)
+    headings <- prepend_vec(headings, stubhead$label)
 
   } else if (stub_available) {
 
-    headings <- rlang::prepend(headings, "")
+    headings <- prepend_vec(headings, "")
   }
 
   table_col_headings <-
@@ -151,7 +149,6 @@ create_columns_component_l <- function(boxh_df,
   paste0("\\toprule\n", table_col_spanners, table_col_headings)
 }
 
-#' @importFrom dplyr mutate filter pull
 #' @noRd
 create_body_component_l <- function(row_splits,
                                     groups_rows_df,
@@ -199,7 +196,6 @@ create_table_end_l <- function() {
     collapse = "")
 }
 
-#' @importFrom stats setNames
 #' @noRd
 create_footnote_component_l <- function(footnotes_resolved,
                                         opts_df) {
@@ -232,7 +228,7 @@ create_footnote_component_l <- function(footnotes_resolved,
       "\\vspace{-5mm}\n",
       "\\begin{minipage}{\\linewidth}\n",
       paste0(
-        footnote_glyph_to_latex(footnotes_tbl[["fs_id"]]),
+        footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
         footnotes_tbl[["text"]] %>%
           unescape_html() %>%
           markdown_to_latex(), " \\\\ \n", collapse = ""),

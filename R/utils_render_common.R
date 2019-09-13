@@ -53,12 +53,16 @@ rownum_translation <- function(output_df,
 initialize_output_df <- function(data_df) {
 
   output_df <- data_df
+
+  if (nrow(output_df) > 0) {
   output_df[] <- NA_character_
+  }
+
   output_df
 }
 
 #' Render any formatting directives available in the `formats` list
-#' @importFrom stats na.omit
+#'
 #' @noRd
 render_formats <- function(output_df,
                            data_df,
@@ -142,8 +146,8 @@ migrate_unformatted_to_output <- function(data_df,
   output_df
 }
 
-# Function to obtain a reordering df for the data rows
-#' @importFrom dplyr tibble
+#' Obtain a reordering df for the data rows
+#'
 #' @noRd
 get_row_reorder_df <- function(arrange_groups,
                                stub_df) {
@@ -158,7 +162,8 @@ get_row_reorder_df <- function(arrange_groups,
     return(
       dplyr::tibble(
         rownum_start = indices,
-        rownum_final = indices)
+        rownum_final = indices
+      )
     )
   }
 
@@ -175,9 +180,9 @@ get_row_reorder_df <- function(arrange_groups,
     rownum_final = indices)
 }
 
-# Function to obtain a reordering df for the table columns
+#' Obtain a reordering df for the table columns
+#'
 #' @noRd
-#' @importFrom dplyr tibble mutate full_join rename
 get_column_reorder_df <- function(cols_df,
                                   boxh_df) {
 
@@ -188,7 +193,8 @@ get_column_reorder_df <- function(cols_df,
   cols_df %>%
     dplyr::mutate(colnum_start = seq(nrow(cols_df))) %>%
     dplyr::full_join(
-      colnames_final_tbl, by = c("colnames_start" = "colnames_final")) %>%
+      colnames_final_tbl, by = c("colnames_start" = "colnames_final")
+    ) %>%
     dplyr::rename(column_names = colnames_start)
 }
 
@@ -223,10 +229,12 @@ get_columns_spanners_vec <- function(boxh_df) {
   columns_spanners[which(!is.na(columns_spanners))]
 }
 
-# Function to create a data frame with group information and the
-# associated row numbers in the rearranged representation
+#' Create a data frame with row group information
+#'
+#' @noRd
 get_groups_rows_df <- function(arrange_groups,
-                               groups_df) {
+                               groups_df,
+                               context) {
 
   ordering <- arrange_groups[[1]]
 
@@ -236,7 +244,8 @@ get_groups_rows_df <- function(arrange_groups,
       group_label = rep(NA_character_, length(ordering)),
       row = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   for (i in seq(ordering)) {
 
@@ -251,7 +260,8 @@ get_groups_rows_df <- function(arrange_groups,
     groups_rows_df[i, "row_end"] <- max(rows_matched)
   }
 
-  groups_rows_df
+  groups_rows_df %>%
+    dplyr::mutate(group_label = process_text(group_label, context))
 }
 
 # Function for merging pairs of columns together (in `output_df`) and
@@ -329,14 +339,13 @@ perform_col_merge <- function(col_merge,
     columns_df = columns_df)
 }
 
-# Create a list of summary data frames given a `summary_list` (a list
-# of directives for making per-group summaries); the final list will
-# provide `display` and `data` versions of the summaries, named by group
+#' Create a list of summary data frames given a `summary_list`
+#'
+#' A `summary_list` is a list of directives for making per-group summaries); the
+#' final list will provide `display` and `data` versions of the summaries, named
+#' by group
+#'
 #' @import rlang
-#' @importFrom dplyr select mutate everything bind_rows filter group_by
-#' @importFrom dplyr summarize_all ungroup mutate_at slice
-#' @importFrom tidyr fill
-#' @importFrom stats setNames
 #' @noRd
 create_summary_dfs <- function(summary_list,
                                data_df,
@@ -486,10 +495,14 @@ create_summary_dfs <- function(summary_list,
           format_data <-
             do.call(
               summary_attrs$formatter,
-              append(list(
-                data.frame(x = x),
-                columns = "x"),
-                summary_attrs$formatter_options))
+              append(
+                list(
+                  data.frame(x = x),
+                  columns = "x"
+                ),
+                summary_attrs$formatter_options
+              )
+            )
 
           formatter <- attr(format_data, "formats")[[1]]$func
           fmt <- formatter[[context]] %||% formatter$default
@@ -498,7 +511,8 @@ create_summary_dfs <- function(summary_list,
       ) %>%
       dplyr::mutate_at(
         .vars = columns_excl,
-        .funs = function(x) {NA_character_})
+        .funs = function(x) {NA_character_}
+      )
 
     for (group in groups) {
 
@@ -540,10 +554,7 @@ create_summary_dfs <- function(summary_list,
       summary_df_display_list[[i]] %>%
       dplyr::select(-groupname) %>%
       dplyr::group_by(rowname) %>%
-      tidyr::fill(dplyr::everything(), .direction = "down") %>%
-      tidyr::fill(dplyr::everything(), .direction = "up") %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup()
+      dplyr::summarize_all(last_non_na)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
@@ -697,13 +708,13 @@ process_heading <- function(heading, context) {
   }
 }
 
-# Process the `stubhead_caption` object
-process_stubhead_label <- function(caption, context) {
+# Process the `stubhead` object
+process_stubhead <- function(stubhead, context) {
 
-  if (!is.null(caption)) {
-    stubhead_label <- caption$stubhead_label %>% process_text(context)
+  if (!is.null(stubhead)) {
+    label <- stubhead$label %>% process_text(context)
 
-    return(list(stubhead_label = stubhead_label))
+    return(list(label = label))
   }
 }
 
@@ -821,4 +832,48 @@ create_summary_rows <- function(n_rows,
   }) %>%
     unlist() %>%
     unname()
+}
+
+#' Suitably replace `NA` values in the `groups_df` data frame
+#'
+#' @param groups_df The `groups_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_df <- function(groups_df,
+                                 others_group) {
+
+  if (nrow(groups_df) > 0) {
+    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+  }
+
+  groups_df
+}
+
+#' Suitably replace `NA` values in the `groups_rows_df` data frame
+#'
+#' @param groups_rows_df The `groups_rows_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_rows_df <- function(groups_rows_df,
+                                      others_group) {
+
+  if (nrow(groups_rows_df) > 0) {
+    groups_rows_df[
+      is.na(groups_rows_df[, "group"]),
+      c("group", "group_label")] <- others_group
+  }
+
+  groups_rows_df
+}
+
+last_non_na <- function(vect) {
+
+  # Retrieve last non-NA value
+  positions <- which(!is.na(vect))
+
+  if (length(positions) == 0) {
+    return(NA_character_)
+  } else {
+    return(vect[max(positions)])
+  }
 }

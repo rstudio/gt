@@ -15,8 +15,9 @@ The \code{id} option in \code{\link[=gt]{gt()}} uses \code{random_id()} by defau
 optionally supply a custom \code{id} value, or, use \code{NULL} for no ID at all.
 }
 \seealso{
-Other helper functions: \code{\link{cells_styles}},
-  \code{\link{escape_latex}},
+Other helper functions: \code{\link{cell_borders}},
+  \code{\link{cell_fill}}, \code{\link{cell_text}},
+  \code{\link{cells_styles}}, \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
 }

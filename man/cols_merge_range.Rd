@@ -12,6 +12,8 @@ cols_merge_range(data, col_begin, col_end, sep = "---")
 \item{col_begin}{A column that contains values for the start of the range.}
 
 \item{col_end}{A column that contains values for the end of the range.}
+
+\item{sep}{The separator text that indicates the values are ranged.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,13 +36,12 @@ handling:
 \item \code{NA}s in \code{col_begin} result in missing values for the merged
 column (e.g., \code{NA} + \code{20.0} = \code{NA})
 
-\item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in
-a display of only the \code{col_begin} values only for the merged column
+\item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only
+the \code{col_begin} values only for the merged column
 (e.g., \code{12.0} + \code{NA} = \code{12.0})
 
-\item \code{NA}s both \code{col_begin} and \code{col_end} result in
-missing values for the merged column (e.g., \code{NA} + \code{NA} =
-\code{NA})
+\item \code{NA}s both in \code{col_begin} and \code{col_end} result in missing values for
+the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
@@ -85,6 +86,7 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+  \code{\link{cols_move}}, \code{\link{cols_split_delim}},
+  \code{\link{cols_width}}
 }
 \concept{column modification functions}

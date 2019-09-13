@@ -843,17 +843,17 @@ test_that("summary rows can be created when there is no stub", {
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class='gt_stub gt_row gt_grand_summary_row gt_first_grand_summary_row gt_left'>average</td>")
+    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row gt_first_grand_summary_row\">average</td>")
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class='gt_stub gt_row gt_grand_summary_row gt_left'>total</td>")
+    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row\">total</td>")
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class='gt_stub gt_row gt_grand_summary_row gt_left'>std dev</td>")
+    "<td class=\"gt_row gt_stub gt_left gt_grand_summary_row\">std dev</td>")
 })
 
 test_that("extracting a summary from a gt table is possible", {

@@ -70,8 +70,18 @@ expect_tab <- function(tab,
 
   # Expect that the attribute objects are of the
   # correct dimensions
+  if (dplyr::is_grouped_df(df)) {
 
-  final_df <- df
+    non_group_cols <- base::setdiff(colnames(df), dplyr::group_vars(df))
+
+    final_df <-
+      df %>%
+      dplyr::ungroup() %>%
+      dplyr::select(non_group_cols)
+
+  } else {
+    final_df <- df
+  }
 
   if (has_rownames) {
     final_df$rowname <- NULL
@@ -81,13 +91,13 @@ expect_tab <- function(tab,
     final_df$groupname <- NULL
   }
 
-  expect_equal(dim(attr(tab, "boxh_df")), c(3, ncol(final_df)))
+  expect_equal(dim(attr(tab, "boxh_df")), c(4, ncol(final_df)))
   expect_equal(dim(attr(tab, "stub_df")), c(nrow(df), 2))
   expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
   expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
   expect_equal(dim(attr(tab, "rows_df")), c(nrow(df), 1))
   expect_equal(dim(attr(tab, "cols_df")), c(ncol(final_df), 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 4)
+  expect_equal(ncol(attr(tab, "opts_df")), 5)
   expect_equal(length(attr(tab, "formats")), 0)
   expect_equal(length(attr(tab, "arrange_groups")), 1)
 

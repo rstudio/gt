@@ -59,7 +59,7 @@
 #'   option is ignored (each of the colorizing helper functions has its own
 #'   `alpha` argument).
 #' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `bkgd`) or the cell
+#'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
 #' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
@@ -123,13 +123,12 @@
 #'
 #' @family data formatting functions
 #' @import rlang
-#' @importFrom scales col_numeric col_factor
 #' @export
 data_color <- function(data,
                        columns,
                        colors,
-                       alpha = NULL,
-                       apply_to = "bkgd",
+                       alpha = 1,
+                       apply_to = "fill",
                        autocolor_text = TRUE) {
 
   # Extract `data_df` from the gt object
@@ -145,8 +144,7 @@ data_color <- function(data,
   #
   columns <- rlang::enquo(columns)
 
-  resolved_columns <-
-    resolve_vars(var_expr = !!columns, data = data)
+  resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
 
@@ -162,10 +160,12 @@ data_color <- function(data,
       } else if (is.character(data_vals)) {
 
         domain <- unique(data_vals)
+
         color_fn <-
           scales::col_factor(
             palette = colors[seq(domain)],
-            domain = domain)
+            domain = domain
+          )
 
       } else if (is.factor(data_vals)) {
 
@@ -174,7 +174,8 @@ data_color <- function(data,
         color_fn <-
           scales::col_factor(
             palette = colors[seq(levels)],
-            levels = levels(data_vals))
+            levels = levels(data_vals)
+          )
       }
 
     } else if (inherits(colors, "function")) {
@@ -190,15 +191,20 @@ data_color <- function(data,
 
       color <- colors_cols[i]
 
-      if (apply_to == "bkgd") {
+      # Combine hexadecimal color with corresponding alpha
+      color <- normalize_color(colors = color, alpha = alpha)
+
+      if (apply_to == "fill") {
 
         # Apply color value to the background of the cell
         data <-
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(bkgd_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
 
       } else if (apply_to == "text") {
 
@@ -207,14 +213,16 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
       }
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (apply_to == "bkgd" & autocolor_text) {
+      if (apply_to == "fill" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
@@ -226,8 +234,10 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color_text)),
-            rows_i = i)
+            apply_to = "text",
+            styles = list(list(color = color_text)),
+            rows_i = i
+          )
       }
     }
   }
@@ -240,6 +250,7 @@ data_color <- function(data,
 #' @noRd
 scale_apply_styles <- function(data,
                                column,
+                               apply_to,
                                styles,
                                rows_i) {
 
@@ -260,13 +271,30 @@ scale_apply_styles <- function(data,
   # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
-    data <-
-      data %>%
-      tab_style(
-        do.call(cells_styles, styles[[i]]),
-        cells_data(
-          columns = column,
-          rows = rows_i[[i]]))
+    if (apply_to == "fill") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_fill, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+
+    } else if (apply_to == "text") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_text, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+    }
   }
 
   data
@@ -334,7 +362,6 @@ scale_apply_styles <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
 #'
-#' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
                              steps) {
@@ -380,30 +407,112 @@ adjust_luminance <- function(colors,
   hcl_colors
 }
 
+is_hex_col_w_alpha <- function(color) {
+  color %>% tidy_grepl("^#[0-9A-Fa-f]{8}$")
+}
+
+is_hex_col_no_alpha <- function(color) {
+  color %>% tidy_grepl("^#[0-9A-Fa-f]{6}$")
+}
+
+frac_alpha_to_hex <- function(alpha) {
+  grDevices::rgb(0, 0, 0, alpha) %>% substr(8, 9)
+}
+
 #' Extract a vector of alpha values for a vector of colors
 #'
 #' @noRd
 get_alpha_vec <- function(colors) {
 
-  alpha <- c()
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
 
-  for (color in colors) {
-
-    if (grepl("^#[0-9A-Fa-f]{6}$", color)) {
-      alpha <- c(alpha, "FF")
-    } else if (grepl("^#[0-9A-Fa-f]{8}$", color)) {
-      alpha <- c(alpha, toupper(sub(".*(..)$", "\\1", color)))
-    } else {
-      alpha <- c(alpha, "FF")
+      if (color %>% is_hex_col_no_alpha()) {
+        "FF"
+      } else if (color %>% is_hex_col_w_alpha()) {
+        toupper(sub(".*(..)$", "\\1", color))
+      } else if (tolower(color) %in% grDevices::colors()) {
+        "FF"
+      } else {
+        NA_character_
+      }
     }
+  )
+}
+
+#' Get the hexadecimal color representation of a color
+#'
+#' @noRd
+get_hexcolor_vec <- function(colors) {
+
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+
+      if (color %>% is_hex_col_no_alpha()) {
+
+        color %>%
+          toupper()
+
+      } else if (color %>% is_hex_col_w_alpha()) {
+
+        color %>%
+          substring(1, 7) %>%
+          toupper()
+
+      } else if (tolower(color) %in% grDevices::colors()) {
+
+        color_matrix <- grDevices::col2rgb(tolower(color))
+
+        grDevices::rgb(
+          red = color_matrix[1, ]/255,
+          green = color_matrix[2, ]/255,
+          blue = color_matrix[3, ]/255
+        )
+
+      } else {
+        NA_character_
+      }
+    })
+}
+
+#' With any input color, transform to hexadecimal with alpha
+#'
+#' @noRd
+normalize_color <- function(colors,
+                            alpha) {
+
+  if (length(colors) == 0) {
+    stop("One or more colors must be provided", call. = FALSE)
   }
 
-  alpha
+  if (!(length(colors) == length(alpha) || length(alpha) == 1)) {
+    stop("The length of `alpha` must be the same length as `colors` or `1`",
+         call. = FALSE)
+  }
+
+  # Combine hexadecimal color with corresponding alpha
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+      if (!is_hex_col_w_alpha(color)) {
+        color <- paste0(get_hexcolor_vec(color), frac_alpha_to_hex(alpha))
+      }
+
+      color
+    }
+  )
 }
 
 #' Determining the best `light` and `dark` colors for contrast
 #'
-#' @importFrom grDevices col2rgb
 #' @noRd
 ideal_fgnd_color <- function(bgnd_colors,
                              light = "#FFFFFFFF",

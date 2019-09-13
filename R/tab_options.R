@@ -42,12 +42,15 @@
 #'   the value is given in units of pixels. The [px()] and [pct()] helper
 #'   functions can also be used to pass in numeric values and obtain values as
 #'   pixel or percent units.
-#' @param column_labels.font.weight,row_group.font.weight the font weight of
+#' @param font.color The table font color, for text used throughout the table.
+#' @param font.color.light The table font color when text is required to be
+#'   light, due to darker background colors.
+#' @param column_labels.font.weight,row_group.font.weight The font weight of
 #'   the `columns` and `row_group` text element.
-#' @param summary_row.text_transform,grand_summary_row.text_transform an option
+#' @param summary_row.text_transform,grand_summary_row.text_transform An option
 #'   to apply text transformations to the label text in each summary row.
 #' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
-#'   background colors for the parent element `table` and the following child
+#'   Background colors for the parent element `table` and the following child
 #'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
 #'   `table_body`. A color name or a hexadecimal color code should be provided.
 #' @param table.border.top.style,table.border.top.width,table.border.top.color
@@ -61,21 +64,26 @@
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color
 #'   The style, width, and color of the table body's top border.
 #' @param table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
-#'   the style, width, and color of the table body's bottom border.
-#' @param row.padding,summary_row.padding,grand_summary_row.padding the amount
-#'   of padding in each row and in each type of summary row.
-#' @param footnote.sep the separating characters between adjacent footnotes in
+#'   The style, width, and color of the table body's bottom border.
+#' @param row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding
+#'   The amount of padding in each type of row.
+#' @param footnote.sep The separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.glyph The set of sequential figures or characters used to
-#'   identify the footnotes. We can either supply the keyword `"numbers"` (the
-#'   default, indicating that we want numeric glyphs), the keywords `"letters"`
-#'   or `"LETTERS"` (indicating that we want letters as glyphs, either lowercase
-#'   or uppercase), or, a vector of character values representing the series of
-#'   glyphs. A series of glyphs is recycled when its usage goes beyond the
-#'   length of the set. At each cycle, the glyphs are simply combined (e.g., `*`
-#'   -> `**` -> `***`).
+#' @param footnote.marks The set of sequential marks used to reference and
+#'   identify each of the footnotes (same input as the [opt_footnote_marks()]
+#'   function. We can supply a vector that represents the series of footnote
+#'   marks. This vector is recycled when its usage goes beyond the length of the
+#'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
+#'   `***`). The option exists for providing keywords for certain types of
+#'   footnote marks. The keyword `"numbers"` (the default, indicating that we
+#'   want to use numeric marks). We can use lowercase `"letters"` or uppercase
+#'   `"LETTERS"`. There is the option for using a traditional symbol set where
+#'   `"standard"` provides four symbols, and, `"extended"` adds two more
+#'   symbols, making six.
 #' @param footnote.padding,sourcenote.padding The amount of padding to apply to
 #'   the footnote and source note sections.
+#' @param row.striping.background_color The background color for striped table
+#'   body rows.
 #' @param row.striping.include_stub An option for whether to include the stub
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
@@ -135,14 +143,14 @@
 #'     table.background.color = "lightcyan"
 #'   )
 #'
-#' # Use letters as the glyphs for footnote
+#' # Use letters as the marks for footnote
 #' # references; also, separate footnotes in
 #' # the footer by spaces instead of newlines
 #' tab_4 <-
 #'   tab_1 %>%
 #'   tab_options(
 #'     footnote.sep = " ",
-#'     footnote.glyph = letters
+#'     footnote.marks = letters
 #'   )
 #'
 #' # Change the padding of data rows to 5px
@@ -181,6 +189,8 @@ tab_options <- function(data,
                         container.height = NULL,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
+                        font.color = NULL,
+                        font.color.light = NULL,
                         table.width = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,
@@ -200,6 +210,7 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.hidden = NULL,
+                        row_group.padding = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
                         row_group.font.weight = NULL,
@@ -223,439 +234,207 @@ tab_options <- function(data,
                         grand_summary_row.padding = NULL,
                         grand_summary_row.text_transform = NULL,
                         footnote.sep = NULL,
-                        footnote.glyph = NULL,
+                        footnote.marks = NULL,
                         footnote.font.size = NULL,
                         footnote.padding = NULL,
                         sourcenote.font.size = NULL,
                         sourcenote.padding = NULL,
+                        row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
 
   # Extract the `opts_df` data frame object from `data`
   opts_df <- attr(data, "opts_df", exact = TRUE)
 
-  # container.width
-  if (!is.null(container.width)) {
-    if (is.numeric(container.width)) container.width <- px(container.width)
-    opts_df <- opts_df_set(opts_df, "container_width", container.width)
-  }
+  arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+  arg_vals <- mget(arg_names)
+  arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
+  arg_vals <- arg_vals %>% set_super_options()
 
-  # container.height
-  if (!is.null(container.height)) {
-    if (is.numeric(container.height)) container.height <- px(container.height)
-    opts_df <- opts_df_set(opts_df, "container_height", container.height)
-  }
+  new_df <-
+    dplyr::tibble(
+      parameter = names(arg_vals) %>% tidy_gsub(".", "_", fixed = TRUE),
+      value = unname(arg_vals)) %>%
+    dplyr::left_join(
+      opts_df %>% dplyr::select(parameter, type),
+      by = "parameter"
+    ) %>%
+    dplyr::mutate(
+      value = mapply(
+        preprocess_tab_option,
+        option = value, var_name = parameter, type = type,
+        SIMPLIFY = FALSE)
+    ) %>%
+    dplyr::select(-type)
 
-  # container.overflow.x
-  if (!is.null(container.overflow.x)) {
-    if (isTRUE(container.overflow.x)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_x", "auto")
-    }
-    if (isFALSE(container.overflow.x)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_x", "hidden")
-    }
-  }
-
-  # container.overflow.y
-  if (!is.null(container.overflow.y)) {
-    if (isTRUE(container.overflow.y)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_y", "auto")
-    }
-    if (isFALSE(container.overflow.y)) {
-      opts_df <- opts_df_set(opts_df, "container_overflow_y", "hidden")
-    }
-  }
-
-  # table.width
-  if (!is.null(table.width)) {
-    if (is.numeric(table.width)) table.width <- px(table.width)
-    opts_df <- opts_df_set(opts_df, "table_width", table.width)
-  }
-
-  # table.align
-  if (!is.null(table.align)) {
-
-    if (table.align == "center") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
-      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
-    }
-
-    if (table.align == "left") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "0")
-      opts_df <- opts_df_set(opts_df, "margin_right", "auto")
-    }
-
-    if (table.align == "right") {
-      opts_df <- opts_df_set(opts_df, "margin_left", "auto")
-      opts_df <- opts_df_set(opts_df, "margin_right", "0")
-    }
-  }
-
-  # table.margin.left
-  if (!is.null(table.margin.left)) {
-    if (is.numeric(table.margin.left)) {
-      table.margin.left <- px(table.margin.left)
-    }
-    opts_df <- opts_df_set(opts_df, "margin_left", table.margin.left)
-  }
-
-  # table.margin.right
-  if (!is.null(table.margin.right)) {
-    if (is.numeric(table.margin.right)) {
-      table.margin.right <- px(table.margin.right)
-    }
-    opts_df <- opts_df_set(opts_df, "margin_right", table.margin.right)
-  }
-
-  # table.font.size
-  if (!is.null(table.font.size)) {
-    if (is.numeric(table.font.size)) table.font.size <- px(table.font.size)
-    opts_df <- opts_df_set(opts_df, "table_font_size", table.font.size)
-  }
-
-  # table.background.color
-  if (!is.null(table.background.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_background_color", table.background.color)
-  }
-
-  # table.border.top.style
-  if (!is.null(table.border.top.style)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_style", table.border.top.style)
-  }
-
-  # table.border.top.width
-  if (!is.null(table.border.top.width)) {
-    if (is.numeric(table.border.top.width)) {
-      table.border.top.width <- px(table.border.top.width)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_width", table.border.top.width)
-  }
-
-  # table.border.top.color
-  if (!is.null(table.border.top.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "table_border_top_color", table.border.top.color)
-  }
-
-  # heading.background.color
-  if (!is.null(heading.background.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_background_color", heading.background.color)
-  }
-
-  # heading.title.font.size
-  if (!is.null(heading.title.font.size)) {
-    if (is.numeric(heading.title.font.size)) {
-      heading.title.font.size <- px(heading.title.font.size)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_title_font_size", heading.title.font.size)
-  }
-
-  # heading.subtitle.font.size
-  if (!is.null(heading.subtitle.font.size)) {
-    if (is.numeric(heading.subtitle.font.size)) {
-      heading.subtitle.font.size <- px(heading.subtitle.font.size)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_subtitle_font_size", heading.subtitle.font.size)
-  }
-
-  # heading.border.bottom.style
-  if (!is.null(heading.border.bottom.style)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_style", heading.border.bottom.style)
-  }
-
-  # heading.border.bottom.width
-  if (!is.null(heading.border.bottom.width)) {
-    if (is.numeric(heading.border.bottom.width)) {
-      heading.border.bottom.width <- px(heading.border.bottom.width)
-    }
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_width", heading.border.bottom.width)
-  }
-
-  # heading.border.bottom.color
-  if (!is.null(heading.border.bottom.color)) {
-    opts_df <- opts_df_set(
-      opts_df, "heading_border_bottom_color", heading.border.bottom.color)
-  }
-
-  # column_labels.background.color
-  if (!is.null(column_labels.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "column_labels_background_color", column_labels.background.color
-      )
-  }
-
-  # column_labels.font.size
-  if (!is.null(column_labels.font.size)) {
-    if (is.numeric(column_labels.font.size)) {
-      column_labels.font.size <- px(column_labels.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_font_size", column_labels.font.size)
-  }
-
-  # column_labels.font.weight
-  if (!is.null(column_labels.font.weight)) {
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_font_weight", column_labels.font.weight)
-  }
-
-  # column_labels.hidden
-  if (!is.null(column_labels.hidden)) {
-    opts_df <-
-      opts_df_set(opts_df, "column_labels_hidden", column_labels.hidden)
-  }
-
-  # row_group.background.color
-  if (!is.null(row_group.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_background_color", row_group.background.color
-      )
-  }
-
-  # row_group.font.size
-  if (!is.null(row_group.font.size)) {
-    if (is.numeric(row_group.font.size)) {
-      row_group.font.size <- px(row_group.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "row_group_font_size", row_group.font.size)
-  }
-
-  # row_group.font.weight
-  if (!is.null(row_group.font.weight)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_font_weight", row_group.font.weight)
-  }
-
-  # row_group.border.top.style
-  if (!is.null(row_group.border.top.style)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_style", row_group.border.top.style)
-  }
-
-  # row_group.border.top.width
-  if (!is.null(row_group.border.top.width)) {
-    if (is.numeric(row_group.border.top.width)) {
-      row_group.border.top.width <- px(row_group.border.top.width)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_width", row_group.border.top.width)
-  }
-
-  # row_group.border.top.color
-  if (!is.null(row_group.border.top.color)) {
-    opts_df <-
-      opts_df_set(opts_df, "row_group_border_top_color", row_group.border.top.color)
-  }
-
-  # row_group.border.bottom.style
-  if (!is.null(row_group.border.bottom.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_style", row_group.border.bottom.style
-      )
-  }
-
-  # row_group.border.bottom.width
-  if (!is.null(row_group.border.bottom.width)) {
-    if (is.numeric(row_group.border.bottom.width)) {
-      row_group.border.bottom.width <- px(row_group.border.bottom.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_width", row_group.border.bottom.width
-      )
-  }
-
-  # row_group.border.bottom.color
-  if (!is.null(row_group.border.bottom.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_group_border_bottom_color", row_group.border.bottom.color
-      )
-  }
-
-  # table_body.border.top.style
-  if (!is.null(table_body.border.top.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_style", table_body.border.top.style
-      )
-  }
-
-  # table_body.border.top.width
-  if (!is.null(table_body.border.top.width)) {
-    if (is.numeric(table_body.border.top.width)) {
-      table_body.border.top.width <- px(table_body.border.top.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_width", table_body.border.top.width
-      )
-  }
-
-  # table_body.border.top.color
-  if (!is.null(table_body.border.top.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_top_color", table_body.border.top.color
-      )
-  }
-
-  # table_body.border.bottom.style
-  if (!is.null(table_body.border.bottom.style)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_style", table_body.border.bottom.style
-      )
-  }
-
-  # table_body.border.bottom.width
-  if (!is.null(table_body.border.bottom.width)) {
-    if (is.numeric(table_body.border.bottom.width)) {
-      table_body.border.bottom.width <- px(table_body.border.bottom.width)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_width", table_body.border.bottom.width
-      )
-  }
-
-  # table_body.border.bottom.color
-  if (!is.null(table_body.border.bottom.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "table_body_border_bottom_color", table_body.border.bottom.color
-      )
-  }
-
-  # row.padding
-  if (!is.null(row.padding)) {
-    if (is.numeric(row.padding)) row.padding <- px(row.padding)
-    opts_df <- opts_df_set(opts_df, "row_padding", row.padding)
-  }
-
-  # summary_row.background.color
-  if (!is.null(summary_row.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "summary_row_background_color", summary_row.background.color
-      )
-  }
-
-  # summary_row.padding
-  if (!is.null(summary_row.padding)) {
-    if (is.numeric(summary_row.padding)) {
-      summary_row.padding <- px(summary_row.padding)
-    }
-    opts_df <- opts_df_set(opts_df, "summary_row_padding", summary_row.padding)
-  }
-
-  # summary_row.text_transform
-  if (!is.null(summary_row.text_transform)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "summary_row_text_transform", summary_row.text_transform
-      )
-  }
-
-  # grand_summary_row.background.color
-  if (!is.null(grand_summary_row.background.color)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_background_color", grand_summary_row.background.color
-      )
-  }
-
-  # grand_summary_row.padding
-  if (!is.null(grand_summary_row.padding)) {
-    if (is.numeric(grand_summary_row.padding)) {
-      grand_summary_row.padding <- px(grand_summary_row.padding)
-    }
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_padding", grand_summary_row.padding
-      )
-  }
-
-  # grand_summary_row.text_transform
-  if (!is.null(grand_summary_row.text_transform)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "grand_summary_row_text_transform", grand_summary_row.text_transform
-      )
-  }
-
-  # footnote.sep
-  if (!is.null(footnote.sep)) {
-    opts_df <- opts_df_set(opts_df, "footnote_sep", footnote.sep)
-  }
-
-  # footnote.glyph
-  if (!is.null(footnote.glyph)) {
-    footnote.glyph <- paste0(footnote.glyph, collapse = ",")
-    opts_df <- opts_df_set(opts_df, "footnote_glyph", footnote.glyph)
-  }
-
-  # footnote.font.size
-  if (!is.null(footnote.font.size)) {
-    if (is.numeric(footnote.font.size)) {
-      footnote.font.size <- px(footnote.font.size)
-    }
-    opts_df <- opts_df_set(opts_df, "footnote_font_size", footnote.font.size)
-  }
-
-  # footnote.padding
-  if (!is.null(footnote.padding)) {
-    if (is.numeric(footnote.padding)) footnote.padding <- px(footnote.padding)
-    opts_df <- opts_df_set(opts_df, "footnote_padding", footnote.padding)
-  }
-
-  # sourcenote.font.size
-  if (!is.null(sourcenote.font.size)) {
-    if (is.numeric(sourcenote.font.size)) {
-      sourcenote.font.size <- px(sourcenote.font.size)
-    }
-    opts_df <-
-      opts_df_set(opts_df, "sourcenote_font_size", sourcenote.font.size)
-  }
-
-  # sourcenote.padding
-  if (!is.null(sourcenote.padding)) {
-    if (is.numeric(sourcenote.padding)) {
-      sourcenote.padding <- px(sourcenote.padding)
-    }
-    opts_df <- opts_df_set(opts_df, "sourcenote_padding", sourcenote.padding)
-  }
-
-  # row.striping.include.stub
-  if (!is.null(row.striping.include_stub)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_striping_include_stub", row.striping.include_stub
-      )
-  }
-
-  # row.striping.include_table_body
-  if (!is.null(row.striping.include_table_body)) {
-    opts_df <-
-      opts_df_set(
-        opts_df, "row_striping_include_table_body", row.striping.include_table_body
-      )
-  }
+  # This rearranges the rows in the `opts_df` table, but this
+  # shouldn't be a problem
+  opts_df <-
+    dplyr::bind_rows(
+      new_df %>%
+        dplyr::inner_join(
+          opts_df %>% dplyr::select(-value),
+          by = "parameter"
+        ),
+      opts_df %>%
+        dplyr::anti_join(new_df, by = "parameter")
+    )
 
   # Write the modified `opts_df` to the `data` attribute
   attr(data, "opts_df") <- opts_df
 
   data
+}
+
+#' Modify the set of footnote marks
+#'
+#' Alter the footnote marks for any footnotes that may be present in the table.
+#' Either a vector of marks can be provided (including Unicode characters), or,
+#' a specific keyword could be used to signify a preset sequence. This function
+#' serves as a shortcut for using `tab_options(footnote.marks = {marks})`
+#'
+#' We can supply a vector of that will represent the series of marks.
+#' The series of footnote marks is recycled when its usage goes beyond the
+#' length of the set. At each cycle, the marks are simply doubled, tripled, and
+#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
+#' for certain types of footnote marks. The keywords are:
+#'
+#' \itemize{
+#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' subject to recycling behavior
+#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' vector
+#' which contains 26 lowercase letters of the Roman alphabet
+#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' which has 26 uppercase letters of the Roman alphabet
+#' \item `"standard"`: symbolic marks, four symbols in total
+#' \item `"extended"`: symbolic marks, extends the standard set by adding two
+#' more symbols, making six
+#' }
+#'
+#' @inheritParams fmt_number
+#' @param marks Either a vector (that will represent the series of marks) or a
+#'   keyword that represents a preset sequence of marks. The valid keywords are:
+#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
+#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
+#'   four symbol marks), and `"extended"` (which adds two more symbols to the
+#'   standard set).
+#'
+#' @examples
+#' # Use `sza` to create a gt table,
+#' # adding three footnotes; call
+#' # `opt_footnote_marks()` to specify
+#' # which footnote marks to use
+#' tab_1 <-
+#'   sza %>%
+#'   dplyr::group_by(latitude, tst) %>%
+#'   dplyr::summarize(
+#'     SZA.Max = max(sza),
+#'     SZA.Min = min(sza, na.rm = TRUE)
+#'   ) %>%
+#'   dplyr::ungroup() %>%
+#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
+#'   dplyr::select(-latitude) %>%
+#'   gt(rowname_col = "tst") %>%
+#'   cols_split_delim(".") %>%
+#'   fmt_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) %>%
+#'   tab_stubhead("TST") %>%
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_labels(groups = "SZA")
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) %>%
+#'   opt_footnote_marks(marks = "standard")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
+#'
+#' @export
+opt_footnote_marks <- function(data,
+                               marks = NULL) {
+
+  if (!is.null(marks)) {
+    data <- data %>% tab_options(footnote.marks = marks)
+  }
+
+  data
+}
+
+preprocess_tab_option <- function(option, var_name, type) {
+
+  # Perform pre-processing on the option depending on `type`
+  option <-
+    switch(type,
+           overflow = {
+             if (isTRUE(option)) {
+               "auto"
+             } else if (isFALSE(option)) {
+               "hidden"
+             } else {
+               option
+             }
+           },
+           px = {
+             if (is.numeric(option)) {
+               px(option)
+             } else {
+               option
+             }
+           },
+           option
+    )
+
+  # Perform checkmate assertions by `type`
+  switch(type,
+         logical = checkmate::assert_logical(
+           option, len = 1, any.missing = FALSE, .var.name = var_name),
+         overflow =,
+         px =,
+         value = checkmate::assert_character(
+           option, len = 1, any.missing = FALSE, .var.name = var_name),
+         values = checkmate::assert_character(
+           option, min.len = 1, any.missing = FALSE, .var.name = var_name)
+  )
+
+  option
+}
+
+set_super_options <- function(arg_vals) {
+
+  if ("table.align" %in% names(arg_vals)) {
+
+    table_align_val <- arg_vals$table.align
+
+    arg_vals$table.align <- NULL
+
+    if (!(table_align_val %in% c("left", "center", "right"))) {
+      stop("The chosen option for `table.align` (`", table_align_val, "`) is invalid\n",
+           " * We can use either of `left`, `center`, or `right`.",
+           call. = FALSE)
+    }
+
+    arg_vals$table.margin.left <- arg_vals$table.margin.left %||%
+      switch(table_align_val,
+             center = "auto",
+             left = "0",
+             right = "auto")
+
+    arg_vals$table.margin.right <- arg_vals$table.margin.right %||%
+      switch(table_align_val,
+             center = "auto",
+             left = "auto",
+             right = "0")
+  }
+
+  arg_vals
 }
