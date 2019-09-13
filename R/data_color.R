@@ -185,7 +185,7 @@ data_color <- function(data,
 
     colors_cols <- color_fn(data_vals)
 
-    for (i in seq(data_vals)) {
+    for (i in seq_along(data_vals)) {
 
       color <- colors_cols[i]
 
