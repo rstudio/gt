@@ -250,11 +250,11 @@ scale_apply_styles <- function(data,
                                column,
                                apply_to,
                                styles,
-                               rows_i) {
+                               rows_i = NULL) {
 
   data_tbl <- dt_data_get(data = data)
 
-  if (missing(rows_i)) {
+  if (is.null(rows_i)) {
     rows_i <- seq(nrow(data_tbl))
   }
 
