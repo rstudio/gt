@@ -1,3 +1,255 @@
+#' Upgrader function for `cells_*` objects
+#'
+#' Upgrade a `cells_*` object to a `list()` if only a single instance is
+#' provided.
+#' @param locations Any `cells_*` object.
+#' @noRd
+as_locations <- function(locations) {
+
+  if (!inherits(locations, "location_cells")) {
+
+    if (!is.list(locations) &&
+        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
+
+      stop("The `locations` object should be a list of `cells_*()`.",
+           .call = FALSE)
+    }
+  } else {
+    locations <- list(locations)
+  }
+
+  locations
+}
+
+add_location_row <- function(data,
+                             df_type,
+                             locname,
+                             locnum,
+                             grpname,
+                             colname,
+                             rownum,
+                             ...) {
+
+  dplyr::bind_rows(
+    attr(data, df_type, exact = TRUE),
+    dplyr::tibble(
+      locname = locname, locnum = locnum,
+      grpname = grpname, colname = colname,
+      rownum = rownum, ...)
+  )
+}
+
+add_location_row_styles <- function(data,
+                                    locname,
+                                    locnum,
+                                    grpname,
+                                    colname,
+                                    rownum,
+                                    styles) {
+
+  add_location_row(
+    data,
+    df_type = "styles_df",
+    locname, locnum, grpname, colname, rownum,
+    styles = styles
+  )
+}
+
+add_location_row_footnotes <- function(data,
+                                       locname,
+                                       locnum,
+                                       grpname,
+                                       colname,
+                                       rownum,
+                                       footnotes) {
+
+  add_location_row(
+    data,
+    df_type = "footnotes_df",
+    locname, locnum, grpname, colname, rownum,
+    text = footnotes
+  )
+}
+
+add_summary_location_row <- function(loc,
+                                     data,
+                                     style,
+                                     df_type = "styles_df") {
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  row_groups <-
+    stub_df %>%
+    dplyr::pull(groupname) %>%
+    unique()
+
+  summary_data <- dt_summary_get(data = data)
+
+  summary_data_summaries <-
+    vapply(
+      seq(summary_data),
+      function(x) !is.null(summary_data[[x]]$groups),
+      logical(1)
+    )
+
+  summary_data <- summary_data[summary_data_summaries]
+
+  groups <-
+    row_groups[resolve_data_vals_idx(
+      var_expr = !!loc$groups,
+      data = NULL,
+      vals = row_groups
+    )]
+
+  # Adding styles to intersections of group, row, and column; any
+  # that are missing at render time will be ignored
+  for (group in groups) {
+
+    summary_labels <-
+      lapply(
+        summary_data,
+        function(summary_data_item) {
+          if (isTRUE(summary_data_item$groups)) {
+            summary_data_item$summary_labels
+          } else if (group %in% summary_data_item$groups){
+            summary_data_item$summary_labels
+          }
+        }
+      ) %>%
+      unlist() %>%
+      unique()
+
+    col_idx <-
+      resolve_data_vals_idx(
+        var_expr = !!loc$columns,
+        data = NULL,
+        vals = dt_boxhead_get_vars_default(data = data)
+      )
+
+    columns <- dt_boxhead_get_vars_default(data = data)[col_idx]
+
+    if (length(columns) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `columns`",
+           call. = FALSE)
+    }
+
+    rows <-
+      resolve_data_vals_idx(
+        var_expr = !!loc$rows,
+        data = NULL,
+        vals = summary_labels
+      )
+
+    if (length(rows) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `rows`",
+           call. = FALSE)
+    }
+
+    if (df_type == "footnotes_df") {
+
+      data <-
+        dt_footnotes_add(
+          data = data,
+          locname = "summary_cells",
+          grpname = group,
+          colname = columns,
+          locnum = 5,
+          rownum = rows,
+          footnotes = style
+        )
+
+    } else {
+
+      data <-
+        dt_styles_add(
+          data = data,
+          locname = "summary_cells",
+          grpname = group,
+          colname = columns,
+          locnum = 5,
+          rownum = rows,
+          styles = style
+        )
+    }
+  }
+
+  data
+}
+
+add_grand_summary_location_row <- function(loc,
+                                           data,
+                                           style,
+                                           df_type = "styles_df") {
+
+  summary_data <- dt_summary_get(data = data)
+
+  grand_summary_labels <-
+    lapply(summary_data, function(summary_data_item) {
+      if (is.null(summary_data_item$groups)) {
+        return(summary_data_item$summary_labels)
+      }
+      NULL
+    }) %>%
+    unlist() %>%
+    unique()
+
+  columns <-
+    resolve_vars(
+      var_expr = !!loc$columns,
+      data = data
+    )
+
+  if (length(columns) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `columns`",
+         call. = FALSE)
+  }
+
+  rows <-
+    resolve_data_vals_idx(
+      var_expr = !!loc$rows,
+      data = NULL,
+      vals = grand_summary_labels
+    )
+
+  if (length(rows) == 0) {
+    stop("The location requested could not be resolved:\n",
+         " * Review the expression provided as `rows`",
+         call. = FALSE)
+  }
+
+  if (df_type == "footnotes_df") {
+
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "grand_summary_cells",
+        grpname = grand_summary_col,
+        colname = columns,
+        locnum = 6,
+        rownum = rows,
+        footnotes = style
+      )
+
+  } else {
+
+    data <-
+      dt_styles_add(
+        data = data,
+        locname = "grand_summary_cells",
+        grpname = grand_summary_col,
+        colname = columns,
+        locnum = 6,
+        rownum = rows,
+        styles = style
+      )
+  }
+
+  data
+}
+
 # Given a location (i.e. cells_*() function result), evaluate captured quosures
 # in the context of `data` and return an object with the `resolved` class added
 # to the front of the class list.

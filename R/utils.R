@@ -829,29 +829,6 @@ tidy_grepl <- function(x, pattern) {
   )
 }
 
-#' Upgrader function for `cells_*` objects
-#'
-#' Upgrade a `cells_*` object to a `list()` if only a single instance is
-#' provided.
-#' @param locations Any `cells_*` object.
-#' @noRd
-as_locations <- function(locations) {
-
-  if (!inherits(locations, "location_cells")) {
-
-    if (!is.list(locations) &&
-        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
-
-      stop("The `locations` object should be a list of `cells_*()`.",
-           .call = FALSE)
-    }
-  } else {
-    locations <- list(locations)
-  }
-
-  locations
-}
-
 #' Create a vector of marks to use for footnotes
 #'
 #' @noRd
