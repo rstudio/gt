@@ -13,6 +13,9 @@ Status](https://ci.appveyor.com/api/projects/status/github/rstudio/gt?branch=mas
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 
+
+<!-- triggering CLA -->
+
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
 a wide variety of useful tables with a cohesive set of table parts.
