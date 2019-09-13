@@ -62,20 +62,20 @@ dt_stub_df_init <- function(data,
   # already in `stub_df$groupname`
   if (inherits(data_df, "grouped_df")) {
 
-    group_cols <- dplyr::group_vars(data_df)
-    group_cols <- base::intersect(group_cols, colnames(data_df))
+    row_group_columns <- dplyr::group_vars(data_df)
+    row_group_columns <- base::intersect(row_group_columns, colnames(data_df))
 
-    group_labels <-
+    row_group_labels <-
       apply(
-        data_df[, group_cols],
+        data_df[, row_group_columns],
         MARGIN = 1,
         paste, collapse = stub_group.sep
       )
 
     # Place the `group_labels` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- group_labels
+    stub_df[["groupname"]] <- row_group_labels
 
-    vars_to_hide <- c(vars_to_hide, group_cols)
+    vars_to_hide <- c(vars_to_hide, row_group_columns)
 
   } else if (groupname_col %in% colnames(data_df)) {
 
