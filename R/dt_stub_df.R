@@ -159,3 +159,32 @@ dt_stub_components <- function(data) {
 
   stub_components
 }
+
+# Function that checks `stub_components` and determines whether just the
+# `rowname` part is available; TRUE indicates that we are working with a table
+# with rownames
+dt_stub_components_is_rowname <- function(stub_components) {
+
+  identical(stub_components, "rowname")
+}
+
+# Function that checks `stub_components` and determines whether just the
+# `groupname` part is available; TRUE indicates that we are working with a table
+# with groups but it doesn't have rownames
+dt_stub_components_is_groupname <- function(stub_components) {
+
+  identical(stub_components, "groupname")
+}
+
+# Function that checks `stub_components` and determines whether the
+# `rowname` and `groupname` parts are available; TRUE indicates that we are
+# working with a table with rownames and groups
+dt_stub_components_is_rowname_groupname <- function(stub_components) {
+
+  identical(stub_components, c("rowname", "groupname"))
+}
+
+dt_stub_components_has_rowname <- function(stub_components) {
+
+  isTRUE("rowname" %in% stub_components)
+}

@@ -23,10 +23,14 @@ build_data <- function(data, context) {
   # the correct order
   data <-
     data %>%
+    dt_body_build() %>%
     render_formats(context = context) %>%
     migrate_unformatted_to_output(context = context) %>%
     perform_col_merge(context = context) %>%
-    perform_text_transforms() %>%
+    perform_text_transforms()
+
+  data <-
+    data %>%
     dt_body_reassemble() %>%
     reorder_stub_df() %>%
     reorder_footnotes() %>%
@@ -43,7 +47,8 @@ build_data <- function(data, context) {
     dt_summary_build(context = context) %>%
     dt_groups_rows_build(context = context)
 
-  data <- combine_stub_with_data(data = data)
+
+  data <- data %>% dt_body_combine_stub()
 
   # Resolution of footnotes and styles --------------------------------------
 

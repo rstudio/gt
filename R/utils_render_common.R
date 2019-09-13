@@ -197,28 +197,6 @@ get_row_reorder_df <- function(groups,
   )
 }
 
-#' Obtain a reordering df for the table columns
-#'
-#' @noRd
-get_column_reorder_df <- function(data) {
-
-  data_tbl <- dt_data_get(data = data)
-  column_names <- dt_boxhead_get_vars(data = data)
-
-  cols_df <- dplyr::tibble(colnames_start = colnames(data_tbl))
-
-  colnames_final_tbl <-
-    dplyr::tibble(colnames_final = column_names) %>%
-    dplyr::mutate(colnum_final = seq(column_names))
-
-  cols_df %>%
-    dplyr::mutate(colnum_start = seq(nrow(cols_df))) %>%
-    dplyr::full_join(
-      colnames_final_tbl, by = c("colnames_start" = "colnames_final")
-    ) %>%
-    dplyr::rename(column_names = colnames_start)
-}
-
 # Function to recode the `rownum` value in the footnotes table
 reorder_footnotes <- function(data) {
 
@@ -363,50 +341,6 @@ perform_col_merge <- function(data,
   data <- dt_body_set(data = data, body = body)
 
   data
-}
-
-combine_stub_with_data <- function(data) {
-
-  body <- dt_body_get(data = data)
-  stub_df <- dt_stub_df_get(data = data)
-  stub_components <- dt_stub_components(data = data)
-
-  if (stub_component_is_rowname(stub_components = stub_components) ||
-      stub_component_is_rowname_groupname(stub_components = stub_components)) {
-
-    rownames <- stub_df %>% dplyr::select(rowname)
-
-    # Combine reordered stub with output table
-    body <- dplyr::bind_cols(rownames, body)
-  }
-
-  data <- dt_body_set(data = data, body = body)
-
-  data
-}
-
-# Function that checks `stub_components` and determines whether just the
-# `rowname` part is available; TRUE indicates that we are working with a table
-# with rownames
-stub_component_is_rowname <- function(stub_components) {
-
-  identical(stub_components, "rowname")
-}
-
-# Function that checks `stub_components` and determines whether just the
-# `groupname` part is available; TRUE indicates that we are working with a table
-# with groups but it doesn't have rownames
-stub_component_is_groupname <- function(stub_components) {
-
-  identical(stub_components, "groupname")
-}
-
-# Function that checks `stub_components` and determines whether the
-# `rowname` and `groupname` parts are available; TRUE indicates that we are
-# working with a table with rownames and groups
-stub_component_is_rowname_groupname <- function(stub_components) {
-
-  identical(stub_components, c("rowname", "groupname"))
 }
 
 # Function to build a vector of `group` rows in the table body

@@ -165,11 +165,11 @@ test_that("the `text_transform()` function works correctly", {
   # `columns` and `rows`
   transforms[[1]]$resolved %>%
     names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_equal(c("columns", "rows", "colnames"))
 
   transforms[[2]]$resolved %>%
     names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_equal(c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_data`, `location_cells`

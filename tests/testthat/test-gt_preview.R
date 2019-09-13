@@ -22,7 +22,7 @@ test_that("the `gt_preview()` function works correctly", {
   output_tbl[6, ] %>%
     unlist() %>%
     unname() %>%
-    expect_equal(c("6..31", "6..31", rep("", ncol(output_tbl) - 2)))
+    expect_equal(c("6..31", rep("", ncol(mtcars))))
 
   # Create a preview table with non-default `top_n` and `bottom_n` values
   gt_tbl <- gt_preview(mtcars, top_n = 10, bottom_n = 5)
@@ -43,7 +43,7 @@ test_that("the `gt_preview()` function works correctly", {
   output_tbl[11, ] %>%
     unlist() %>%
     unname() %>%
-    expect_equal(c("11..27", "11..27", rep("", ncol(output_tbl) - 2)))
+    expect_equal(c("11..27", rep("", ncol(mtcars))))
 
   # Create a preview table with a 5-row version of `mtcars`
   gt_tbl <- gt_preview(mtcars[1:5, ])
@@ -81,7 +81,7 @@ test_that("the `gt_preview()` function works correctly", {
   output_tbl %>%
     colnames() %>%
     expect_equal(
-      c("rowname", "rowname1", ".groupname", ".rowname", "value", "value_2")
+      c("rowname", ".groupname", ".rowname", "value", "value_2")
     )
 
   # Create a preview table that doesn't include row numbers

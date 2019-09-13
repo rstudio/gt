@@ -180,13 +180,13 @@ resolve_vars_idx <- function(var_expr,
 #' @import rlang
 #' @noRd
 resolve_data_vals_idx <- function(var_expr,
-                                  data,
+                                  data_tbl,
                                   vals) {
 
   var_expr <- enquo(var_expr)
 
-  if (!is.null(data)) {
-    data <- as.data.frame(data)
+  if (!is.null(data_tbl)) {
+    data_tbl <- as.data.frame(data_tbl)
   }
 
   # Translate variable expressions (e.g., logical
@@ -197,7 +197,7 @@ resolve_data_vals_idx <- function(var_expr,
       vals,
       rlang::eval_tidy(
         expr = var_expr,
-        data = data,
+        data = data_tbl,
         env = emptyenv()
       )
     )
@@ -221,7 +221,7 @@ resolve_data_vals_idx <- function(var_expr,
   } else if (is.numeric(resolved)) {
 
     if (any(!(resolved %in% seq_along(vals)))) {
-      stop("All column or row indices given must be present in `data`.",
+      stop("All column or row indices given must be present in `data_tbl`.",
            call. = FALSE)
     }
 

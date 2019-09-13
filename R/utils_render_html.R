@@ -131,13 +131,7 @@ create_heading_component <- function(data,
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  if (is.null(stub_components)) {
-    stub_available <- FALSE
-  } else if (stub_component_is_groupname(stub_components)) {
-    stub_available <- FALSE
-  } else {
-    stub_available <- TRUE
-  }
+  stub_available <- dt_stub_components_has_rowname(stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
@@ -662,13 +656,7 @@ create_body_component_h <- function(data) {
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  if (is.null(stub_components)) {
-    stub_available <- FALSE
-  } else if (stub_component_is_groupname(stub_components)) {
-    stub_available <- FALSE
-  } else {
-    stub_available <- TRUE
-  }
+  stub_available <- dt_stub_components_has_rowname(stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
@@ -888,13 +876,7 @@ create_source_notes_component_h <- function(data) {
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  if (is.null(stub_components)) {
-    stub_available <- FALSE
-  } else if (stub_component_is_groupname(stub_components)) {
-    stub_available <- FALSE
-  } else {
-    stub_available <- TRUE
-  }
+  stub_available <- dt_stub_components_has_rowname(stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
@@ -938,13 +920,7 @@ create_footnotes_component_h <- function(data) {
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  if (is.null(stub_components)) {
-    stub_available <- FALSE
-  } else if (stub_component_is_groupname(stub_components)) {
-    stub_available <- FALSE
-  } else {
-    stub_available <- TRUE
-  }
+  stub_available <- dt_stub_components_has_rowname(stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1

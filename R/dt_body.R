@@ -2,7 +2,13 @@
 
 dt_body_get <- function(data) {
 
-  attr(data, .dt_body_key, exact = TRUE)
+  ret <- attr(data, .dt_body_key, exact = TRUE)
+
+  if (is.null(ret)) {
+    stop("Must call `dt_body_build_init()` first.")
+  }
+
+  ret
 }
 
 dt_body_set <- function(data, body) {
@@ -11,9 +17,9 @@ dt_body_set <- function(data, body) {
   data
 }
 
-dt_body_init <- function(data) {
+dt_body_build_init <- function(data) {
 
-  body <- dt_data_get(data = data)
+  body <- dt_data_get(data = data)[, dt_boxhead_get_vars(data = data)]
 
   if (NROW(body) > 0) {
     body[] <- NA_character_
@@ -40,15 +46,37 @@ dt_body_reassemble <- function(data) {
     )
 
   # Get the `columns_df` data frame for the data columns
-  columns_df <- get_column_reorder_df(data = data)
+  #columns_df <- get_column_reorder_df(data = data)
 
   rows <- rows_df$rownum_final
 
-  cols <-
-    subset(columns_df, !is.na(colnum_final))[
-      order(subset(columns_df, !is.na(colnum_final))$colnum_final), ]$column_names
+  cols <- dt_boxhead_get_vars(data = data)
 
   data <- dt_body_set(data = data, body = body[rows, cols, drop = FALSE])
 
   data
+}
+
+dt_body_combine_stub <- function(data) {
+
+  body <- dt_body_get(data = data)
+  stub_df <- dt_stub_df_get(data = data)
+  stub_components <- dt_stub_components(data = data)
+
+  if (dt_stub_components_has_rowname(stub_components)) {
+
+    body <-
+      body %>%
+      dplyr::mutate(rowname = stub_df$rowname)
+  }
+
+  data <- dt_body_set(data = data, body = body)
+
+  data
+}
+
+dt_body_build <- function(data) {
+
+  data %>%
+  dt_body_build_init()
 }

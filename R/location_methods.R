@@ -217,10 +217,10 @@ resolve_location.cells_data <- function(loc, data) {
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
 
-  loc$columns <-
-    resolve_vars_idx(
+  loc$colnames <-
+    resolve_vars(
       var_expr = !!loc[["columns"]],
-      data = data_tbl
+      data = data
     )
 
   loc$rows <-
@@ -290,21 +290,16 @@ to_output_location.output_relative <- function(loc, data) {
 
 to_output_location.cells_data <- function(loc, data) {
 
-  data_tbl <- dt_data_get(data = data)
-  boxh <- dt_boxhead_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
   groups <- dt_stub_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 
-  columns_df <- get_column_reorder_df(data = data)
-
   rows_df <- get_row_reorder_df(groups = groups, stub_df = stub_df)
 
   # We shouldn't need to do this, but `body` doesn't match up exactly to
   # the colnum_final values due to groupnames/rownames
-  loc$colnames <- colnames(data_tbl)[loc$columns]
-  loc$columns <- columns_df$colnum_final[loc$columns]
+  #loc$colnames <- loc$colnames
   loc$rows <- rows_df$rownum_final[loc$rows]
 
   class(loc) <- c("output_relative", class(loc))

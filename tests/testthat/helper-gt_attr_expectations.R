@@ -55,7 +55,6 @@ expect_tab <- function(tab,
 
   # Expect that the attribute obejcts are of certain classes
 
-  expect_s3_class(dt_body_get(data = tab), "data.frame")
   expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
   expect_type(dt_stub_df_get(data = tab), "list")
   expect_type(dt_stub_groups_get(data = tab), "character")
@@ -70,10 +69,6 @@ expect_tab <- function(tab,
   expect_s3_class(dt_styles_get(data = tab), "data.frame")
   expect_s3_class(dt_options_get(data = tab), "data.frame")
   expect_type(dt_transforms_get(data = tab), "list")
-
-  dt_body_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(nrow(df), ncol(df)))
 
   dt_boxhead_get(data = tab) %>%
     dim() %>%
@@ -169,7 +164,7 @@ gt_attr_names <- function() {
 
   c(
     "names", "class", "row.names",
-    "_data", "_body", "_boxhead",
+    "_data", "_boxhead",
     "_stub_df", "_stub_groups", "_stub_others",
     "_heading", "_spanners", "_stubhead",
     "_footnotes", "_source_notes", "_formats", "_styles",
@@ -179,6 +174,8 @@ gt_attr_names <- function() {
 
 expect_gt_attr_names <- function(object) {
 
+  # The `groups` attribute appears when we call dplyr::group_by()
+  # on the input table
   expect_equal(
     sort(names(attributes(object)) %>% base::setdiff("groups")),
     sort(gt_attr_names())

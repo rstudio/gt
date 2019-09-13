@@ -85,7 +85,6 @@ gt <- function(data,
     # TODO: make this a `list()`
     data %>%
     dt_data_init(data_tbl = data) %>%
-    dt_body_init() %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
       data_df = data,
