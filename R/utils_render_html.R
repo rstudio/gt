@@ -371,14 +371,6 @@ create_columns_component_h <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
-  # column_alignments <- paste0("gt_", col_alignment)
-
-  # if (center_all_column_headers) {
-  #   column_label_alignments <- rep("center", length(col_alignment))
-  # }
-
-  column_label_alignments <- col_alignment
-
   stubhead_label_alignment <- "left"
 
   table_col_headings <- list()
@@ -428,7 +420,7 @@ create_columns_component_h <- function(data) {
         htmltools::tags$th(
           class = paste(
             c("gt_col_heading", "gt_columns_bottom_border", #"gt_columns_top_border",
-              paste0("gt_", column_label_alignments[i])),
+              paste0("gt_", col_alignment[i])),
             collapse = " "),
           rowspan = 1,
           colspan = 1,
@@ -576,7 +568,8 @@ create_columns_component_h <- function(data) {
       dplyr::pull(column_label) %>%
       unlist()
 
-    col_alignment <- col_alignment[-1][!(headings_vars %in% headings_stack)]
+    col_alignment <-
+      col_alignment[-1][!(headings_vars %in% headings_stack)]
 
     if (length(remaining_headings) > 0) {
 

@@ -43,11 +43,6 @@ build_data <- function(data, context) {
     dt_summary_build(context = context) %>%
     dt_groups_rows_build(context = context)
 
-  # Define the `col_alignment` vector, which is a
-  # vector of column alignment values for all of
-  # the relevant columns in a table
-  data <- get_column_alignment(data = data)
-
   data <- combine_stub_with_data(data = data)
 
   # Resolution of footnotes and styles --------------------------------------

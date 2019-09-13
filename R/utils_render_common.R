@@ -365,26 +365,6 @@ perform_col_merge <- function(data,
   data
 }
 
-get_column_alignment <- function(data) {
-
-  column_alignment <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
-
-  stub_components <- dt_stub_components(data = data)
-
-  if (stub_component_is_rowname(stub_components = stub_components) ||
-      stub_component_is_rowname_groupname(stub_components = stub_components)) {
-
-    column_alignment <- c("left", column_alignment)
-  }
-
-  attr(data, "column_alignment") <- column_alignment
-
-  data
-}
-
 combine_stub_with_data <- function(data) {
 
   body <- dt_body_get(data = data)
