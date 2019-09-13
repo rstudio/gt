@@ -30,7 +30,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = vars(value_2), rows = 4)
+    locations = cells_data(columns = vars(value_1), rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
