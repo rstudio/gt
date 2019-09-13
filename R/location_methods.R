@@ -21,56 +21,6 @@ as_locations <- function(locations) {
   locations
 }
 
-add_location_row <- function(data,
-                             df_type,
-                             locname,
-                             locnum,
-                             grpname,
-                             colname,
-                             rownum,
-                             ...) {
-
-  dplyr::bind_rows(
-    attr(data, df_type, exact = TRUE),
-    dplyr::tibble(
-      locname = locname, locnum = locnum,
-      grpname = grpname, colname = colname,
-      rownum = rownum, ...)
-  )
-}
-
-add_location_row_styles <- function(data,
-                                    locname,
-                                    locnum,
-                                    grpname,
-                                    colname,
-                                    rownum,
-                                    styles) {
-
-  add_location_row(
-    data,
-    df_type = "styles_df",
-    locname, locnum, grpname, colname, rownum,
-    styles = styles
-  )
-}
-
-add_location_row_footnotes <- function(data,
-                                       locname,
-                                       locnum,
-                                       grpname,
-                                       colname,
-                                       rownum,
-                                       footnotes) {
-
-  add_location_row(
-    data,
-    df_type = "footnotes_df",
-    locname, locnum, grpname, colname, rownum,
-    text = footnotes
-  )
-}
-
 add_summary_location_row <- function(loc,
                                      data,
                                      style,
