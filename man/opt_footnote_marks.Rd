@@ -75,7 +75,7 @@ tab_1 <-
   ) \%>\%
   tab_footnote(
     footnote = "Solar zenith angle.",
-    locations = cells_column_labels(groups = "SZA")
+    locations = cells_column_spanners(spanners = "SZA")
   ) \%>\%
   tab_footnote(
     footnote = "The Lowest SZA.",
