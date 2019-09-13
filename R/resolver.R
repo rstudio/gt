@@ -44,7 +44,7 @@ resolve_cells_data <- function(data,
   cells_resolved <- list(columns = expansion[[1]], rows = expansion[[2]])
 
   # Apply the `data_cells_resolved` class
-  attr(cells_resolved, "class") <- "data_cells_resolved"
+  class(cells_resolved) <- "data_cells_resolved"
 
   cells_resolved
 }
@@ -74,7 +74,7 @@ resolve_cells_stub <- function(data,
   cells_resolved <- list(rows = resolved_rows_idx)
 
   # Apply the `stub_cells_resolved` class
-  attr(cells_resolved, "class") <- "stub_cells_resolved"
+  class(cells_resolved) <- "stub_cells_resolved"
 
   cells_resolved
 }
@@ -105,7 +105,7 @@ resolve_cells_column_labels <- function(data,
   cells_resolved <- list(columns = resolved_columns)
 
   # Apply the `columns_cells_resolved` class
-  attr(cells_resolved, "class") <- "columns_cells_resolved"
+  class(cells_resolved) <- "columns_cells_resolved"
 
   cells_resolved
 }
@@ -144,7 +144,7 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved <- list(spanners = resolved_spanners)
 
   # Apply the `columns_cells_resolved` class
-  attr(cells_resolved, "class") <- "columns_spanners_resolved"
+  class(cells_resolved) <- "columns_spanners_resolved"
 
   cells_resolved
 }
