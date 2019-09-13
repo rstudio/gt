@@ -102,7 +102,7 @@
 #'     type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
-#'     sold = n(),
+#'     sold = dplyr::n(),
 #'     income = sum(price)
 #'   ) %>%
 #'   gt(rowname_col = "size") %>%

@@ -167,7 +167,7 @@ tab_3 <-
   ) \%>\%
   dplyr::group_by(name, size) \%>\%
   dplyr::summarize(
-    `Pizzas Sold` = n()
+    `Pizzas Sold` = dplyr::n()
   ) \%>\%
   gt(rowname_col = "size") \%>\%
   summary_rows(
