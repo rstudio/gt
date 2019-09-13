@@ -264,59 +264,6 @@ reorder_styles <- function(data) {
   data
 }
 
-#' Create a data frame with row group information
-#'
-#' @noRd
-get_groups_rows_df <- function(data,
-                               context) {
-
-  stub_df <- dt_stub_df_get(data = data)
-  ordering <- dt_stub_groups_get(data = data)
-
-  others_group <- dt_stub_others_get(data = data)
-
-  groups_rows_df <-
-    data.frame(
-      group = rep(NA_character_, length(ordering)),
-      group_label = rep(NA_character_, length(ordering)),
-      row = rep(NA_integer_, length(ordering)),
-      row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE
-    )
-
-  for (i in seq(ordering)) {
-
-    if (!is.na(ordering[i])) {
-      rows_matched <- which(stub_df$groupname == ordering[i])
-    } else {
-      rows_matched <- which(is.na(stub_df$groupname))
-    }
-
-    groups_rows_df[i, "group"] <- ordering[i]
-    groups_rows_df[i, "group_label"] <- ordering[i]
-
-    groups_rows_df[i, "row"] <- min(rows_matched)
-    groups_rows_df[i, "row_end"] <- max(rows_matched)
-  }
-
-  groups_rows_df <-
-    groups_rows_df %>%
-    dplyr::mutate(group_label = process_text(group_label, context))
-
-  if (nrow(groups_rows_df) > 0) {
-
-    others_group <- dt_stub_others_get(data = data) %||% NA_character_
-
-    groups_rows_df[
-      is.na(groups_rows_df[, "group"]),
-      c("group", "group_label")] <- others_group
-  }
-
-  attr(data, "groups_rows_df") <- groups_rows_df
-
-  data
-}
-
 #' Perform merging of column contents
 #'
 #' This merges column content together with a pattern and possibly with a `type`

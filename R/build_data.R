@@ -40,16 +40,8 @@ build_data <- function(data, context) {
     dt_heading_build(context = context) %>%
     dt_stubhead_build(context = context) %>%
     dt_source_notes_build(context = context) %>%
-    dt_summary_build(context = context)
-
-  # TODO: Make `dt_groups.R`
-  # Add in the `groups_rows_df` table, which provides information
-  # on which rows the group row labels should appear above
-  data <-
-    get_groups_rows_df(
-      data = data,
-      context = context
-    )
+    dt_summary_build(context = context) %>%
+    dt_groups_rows_build(context = context)
 
   # Get the available stub components, if any
   data <- get_stub_components(data = data)

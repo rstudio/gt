@@ -639,8 +639,8 @@ create_body_component_h <- function(data) {
   body <- dt_body_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
+  groups_rows_df <- dt_groups_rows_get(data = data)
 
-  groups_rows_df <- attr(data, "groups_rows_df", exact = TRUE)
   stub_components <- attr(data, "stub_components", exact = TRUE)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
