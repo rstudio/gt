@@ -16,18 +16,18 @@ dt_summary_df_data_get <- function(data) {
 
   dt_has_built_assert(data = data)
 
-  dt <- attr(data, .dt_summary_build_key, exact = TRUE)
+  dt <- dt_summary_df_get(data)
 
-  dt[1] %>% as.list()
+  dt["summary_df_data_list"] %>% as.list()
 }
 
 dt_summary_df_display_get <- function(data) {
 
   dt_has_built_assert(data = data)
 
-  dt <- attr(data, .dt_summary_build_key, exact = TRUE)
+  dt <- dt_summary_df_get(data)
 
-  dt[2] %>% as.list()
+  dt["summary_df_display_list"] %>% as.list()
 }
 
 dt_summary_set <- function(data, summary) {
