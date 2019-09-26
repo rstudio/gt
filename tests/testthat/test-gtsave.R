@@ -23,14 +23,14 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
 
   # Expect that the content of the file is HTML
   (path_1 %>%
-      readLines())[1] %>%
+      readLines()) %>% paste(collapse = "\n") %>%
     expect_match(
       "<!DOCTYPE html>",
       fixed = TRUE)
 
   # Expect that CSS styles are not inlined
   (path_1 %>%
-      readLines())[9] %>%
+      readLines()) %>% paste(collapse = "\n") %>%
     expect_match(
       "<style>html {",
       fixed = TRUE)
