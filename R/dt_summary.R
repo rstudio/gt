@@ -235,8 +235,11 @@ dt_summary_build <- function(data,
               )
             )
 
-          formatter <- attr(format_data, "_formats")[[1]]$func
-          fmt <- formatter[[context]] %||% formatter$default
+          fmt <-
+            dt_formats_summary_formatter(
+              data = format_data,
+              context = context)
+
           fmt(x)
         }
       ) %>%
