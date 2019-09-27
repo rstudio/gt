@@ -50,12 +50,11 @@ test_that("the `resolve_vars_idx()` function works correctly", {
     data = tab) %>%
     expect_equal(c(1, 3, 4, 6))
 
-  # Expect that duplicate column indices are disregarded
-  # and that the column indices are always sorted
+  # Expect the column indices are returned as is
   resolve_vars_idx(
     var_expr = c(1, 6, 3, 4, 6, 1),
     data = tab) %>%
-    expect_equal(c(1, 3, 4, 6))
+    expect_equal(c(1, 6, 3, 4, 6, 1))
 
   # Expect that using any column indices that don't
   # exist in `data` will result in an error
@@ -247,13 +246,14 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
       vals = tab_rownames), c(1, 3, 4, 6))
 
 
-  # Expect that duplicate row indices are disregarded
-  # and that the row indices are always sorted
+  # Expect the column indices are returned as is
   expect_equal(
     resolve_data_vals_idx(
       var_expr = c(1, 6, 3, 4, 6, 1),
       data = tab,
-      vals = tab_rownames), c(1, 3, 4, 6))
+      vals = tab_rownames),
+    c(1, 6, 3, 4, 6, 1)
+    )
 
   # Expect that using any row indices that don't
   # exist in `data` will result in an error
@@ -453,12 +453,11 @@ test_that("the `resolve_vars()` function works correctly", {
       var_expr = c(1, 3, 4, 6),
       data = tab), c("num", "fctr", "date", "datetime"))
 
-  # Expect that duplicate column indices are disregarded
-  # and that the column indices are always sorted
+  # Expect the column indices are returned as is
   expect_equal(
     resolve_vars(
       var_expr = c(1, 6, 3, 4, 6, 1),
-      data = tab), c("num", "fctr", "date", "datetime"))
+      data = tab), c("num", "datetime", "fctr", "date", "datetime", "num"))
 
   # Expect that using any column indices that don't
   # exist in `data` will result in an error

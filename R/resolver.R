@@ -225,7 +225,8 @@ resolve_data_vals_idx <- function(var_expr,
            call. = FALSE)
     }
 
-    resolved <- which(seq_along(vals) %in% resolved)
+    # `resolved` is already in terms of indices
+    # resolved <- resolved
 
   } else if (is.character(resolved)) {
 
