@@ -48,7 +48,7 @@ expect_tab <- function(tab,
 
   # Expect that the object has the correct classes
   expect_s3_class(tab, "gt_tbl")
-  expect_s3_class(tab, "data.frame")
+  expect_type(tab, "list")
 
   # Expect certain named attributes
   expect_gt_attr_names(object = tab)
@@ -163,7 +163,7 @@ expect_attr_equal <- function(data, attr_val, y) {
 gt_attr_names <- function() {
 
   c(
-    "names", "class", "row.names",
+    "class",
     "_data", "_boxhead",
     "_stub_df", "_stub_groups", "_stub_others",
     "_heading", "_spanners", "_stubhead",
