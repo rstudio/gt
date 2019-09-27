@@ -78,8 +78,7 @@ dt_stub_df_init <- function(data,
   } else if (groupname_col %in% colnames(data_df)) {
 
     # If `groupname` is a column available in `data`,
-    # place that column's data into `stub_df` and
-    # remove it from `data`
+    # place that column's data into `stub_df`
 
     # Place the `groupname` values into `stub_df$groupname`
     stub_df[["groupname"]] <- as.character(data_df[[groupname_col]])
@@ -185,4 +184,17 @@ dt_stub_components_is_rowname_groupname <- function(stub_components) {
 dt_stub_components_has_rowname <- function(stub_components) {
 
   isTRUE("rowname" %in% stub_components)
+}
+
+dt_stub_rowname_at_position <- function(data, i) {
+
+  stub_components <- dt_stub_components(data = data)
+
+  if (!(dt_stub_components_has_rowname(stub_components = stub_components))) {
+    return(NULL)
+  }
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  stub_df$rowname[[i]]
 }

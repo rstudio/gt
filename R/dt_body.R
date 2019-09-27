@@ -56,24 +56,6 @@ dt_body_reassemble <- function(data) {
   data
 }
 
-dt_body_combine_stub <- function(data) {
-
-  body <- dt_body_get(data = data)
-  stub_df <- dt_stub_df_get(data = data)
-  stub_components <- dt_stub_components(data = data)
-
-  if (dt_stub_components_has_rowname(stub_components)) {
-
-    body <-
-      body %>%
-      dplyr::mutate(rowname = stub_df$rowname)
-  }
-
-  data <- dt_body_set(data = data, body = body)
-
-  data
-}
-
 dt_body_build <- function(data) {
 
   data %>%

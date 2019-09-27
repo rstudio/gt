@@ -847,14 +847,6 @@ test_that("summary rows can be created when there is no stub", {
       )
     )
 
-  # Extract `output_df` in the HTML context and
-  # expect that the `rowname` column is entirely
-  # filled with empty strings
-  expect_equal(
-    (gt_tbl %>% render_formats_test("html"))[["rowname"]],
-    rep("", 5)
-  )
-
   # Expect that the grand summary row labels are
   # available in the rendered output table
   expect_match(

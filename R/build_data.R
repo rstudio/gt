@@ -47,9 +47,6 @@ build_data <- function(data, context) {
     dt_summary_build(context = context) %>%
     dt_groups_rows_build(context = context)
 
-
-  data <- data %>% dt_body_combine_stub()
-
   # Resolution of footnotes and styles --------------------------------------
 
   # Resolve footnotes and styles

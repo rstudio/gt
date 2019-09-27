@@ -641,22 +641,28 @@ create_body_component_h <- function(data) {
   # Get the column headings for the visible (e.g., `default`) columns
   headings <- dt_boxhead_get_vars_default(data = data)
 
+  # Determine whether the stub is available through analysis
+  # of the `stub_components`
+  stub_available <- dt_stub_components_has_rowname(stub_components)
+
   # Define function to get a character vector of formatted cell
   # data (this includes the stub, if it is present)
   output_df_row_as_vec <- function(i) {
 
     default_vars <- dt_boxhead_get_vars_default(data = data)
 
-    if ("rowname" %in% names(body)) {
-      default_vars <- c("rowname", default_vars)
+    default_vals <- body[i, default_vars] %>% unlist() %>% unname()
+
+    if (stub_available) {
+      default_vals <-
+        c(
+          dt_stub_rowname_at_position(data = data, i = i),
+          default_vals
+        )
     }
 
-    body[i, default_vars] %>% unlist() %>% unname()
+    default_vals
   }
-
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
