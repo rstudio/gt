@@ -77,9 +77,7 @@ dt_summary_build <- function(data,
   # return an empty list as the `list_of_summaries`
   if (length(summary_list) == 0) {
 
-    attr(data, .dt_summary_build_key) <- list()
-
-    return(data)
+    return(dt_summary_data_set(data = data, list()))
   }
 
   # Create empty lists that are to contain summary
@@ -305,7 +303,5 @@ dt_summary_build <- function(data,
       summary_df_display_list = summary_df_display_list
     )
 
-  attr(data, .dt_summary_build_key) <- list_of_summaries
-
-  data
+  dt_summary_data_set(data = data, list_of_summaries)
 }
