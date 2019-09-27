@@ -496,7 +496,7 @@ is_html <- function(x) {
 #' currency symbol will be `"ltc"`. For convenience, if we provide only a single
 #' string without a name, it will be taken as the `default` (i.e.,
 #' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
-#' we were to specify currency strings for muliple output contexts, names are
+#' we were to specify currency strings for multiple output contexts, names are
 #' required each and every context.
 #'
 #' @param ... One or more named arguments using output contexts as the names and

@@ -137,7 +137,7 @@ The default for `formatter` is set to `fmt_number` which is a sensible default f
 
 ### Using Multiple Calls of `summary_rows()` 
 
-We can re-use summary row labels and fill the otherwise empty summary cells with similar aggregations but perhaps with different formatting options. Here's an example where the `currency` column contains aggregrate values that share the same summary rows as for the `num` column, adds two more rows, and uses currency formatting:
+We can re-use summary row labels and fill the otherwise empty summary cells with similar aggregations but perhaps with different formatting options. Here's an example where the `currency` column contains aggregate values that share the same summary rows as for the `num` column, adds two more rows, and uses currency formatting:
 
 ```{r exibble_e}
 # Create groupwise summary rows as
