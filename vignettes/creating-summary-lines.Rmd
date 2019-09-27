@@ -40,7 +40,8 @@ We'll create a table stub with both row labels (using the `row` column) and row 
 exibble_a <-
   exibble %>%
   dplyr::select(-c(fctr, date, time, datetime)) %>%
-  gt(rowname_col = "row", groupname_col = "group")
+  gt(rowname_col = "row", groupname_col = "group") %>%
+  fmt_missing(columns = everything())
 
 exibble_a
 ```
@@ -316,7 +317,7 @@ exibble_i <-
     locations = cells_summary(
       groups = "grp_a",
       columns = vars(currency),
-      rows = starts_with("m")
+      rows = "max"
     )
   )
 
@@ -364,7 +365,7 @@ exibble_d %>%
     decimals = 1
   ) %>%
   fmt_missing(
-    columns = vars(char, currency)
+    columns = vars(char, currency, row, group)
   )
 ```
 
@@ -411,7 +412,6 @@ Because this is character value that's returned, we don't need formatting functi
 # minimal formatting of the aggregate values
 exibble_j <- 
   exibble_a %>%
-  gt() %>%
   grand_summary_rows(
     columns = vars(num, currency),
     fns = list(
