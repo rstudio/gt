@@ -169,8 +169,8 @@ resolve_vars_idx <- function(var_expr,
 
   resolve_data_vals_idx(
     var_expr = !!var_expr,
-    data = NULL,
-    vals = colnames(as.data.frame(data))
+    data_tbl = NULL,
+    vals = colnames(dt_data_get(data = data))
   )
 }
 
@@ -178,7 +178,7 @@ resolve_vars_idx <- function(var_expr,
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data The input table available in `data` (usually accessed through
+#' @param data_tbl The input table available in `data` (usually accessed through
 #'   `as.data.frame(data)`).
 #' @param vals The names of columns or rows in `data`.
 #' @import tidyselect

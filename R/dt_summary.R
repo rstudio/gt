@@ -221,24 +221,30 @@ dt_summary_build <- function(data,
         .vars = columns,
         .funs = function(x) {
 
+          # This creates a gt structure so that the
+          # formatter can be easily extracted by using
+          # the regular `dt_*()` methods
+          summary_data <- data.frame(x = x) %>% gt()
+
           format_data <-
             do.call(
               summary_attrs$formatter,
               append(
                 list(
-                  data.frame(x = x),
+                  summary_data,
                   columns = "x"
                 ),
                 summary_attrs$formatter_options
               )
             )
 
-          fmt <-
+          formatter <-
             dt_formats_summary_formatter(
               data = format_data,
-              context = context)
+              context = context
+            )
 
-          fmt(x)
+          formatter(x)
         }
       ) %>%
       dplyr::mutate_at(
