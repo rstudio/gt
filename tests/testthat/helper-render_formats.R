@@ -4,6 +4,5 @@ render_formats_test <- function(data,
 
   data %>%
     build_data(context = context) %>%
-    attributes() %>%
     .$`_body`
 }

@@ -58,7 +58,6 @@ test_that("the function `cols_label()` works correctly", {
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
   tbl_html %>%
-    attributes() %>%
     .$`_boxh` %>%
     .$column_label %>%
     unlist() %>%
@@ -80,14 +79,12 @@ test_that("the function `cols_label()` works correctly", {
   # Expect the original column names for `tbl` as values for
   # the column keys and for the column labels
   tbl_html %>%
-    attributes() %>%
     .$`_boxh` %>%
     .$var %>%
     unlist() %>%
     expect_equal(colnames(tbl))
 
   tbl_html %>%
-    attributes() %>%
     .$`_boxh` %>%
     .$column_label %>%
     unlist() %>%
@@ -115,7 +112,6 @@ test_that("the function `cols_label()` works correctly", {
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
   tbl_html %>%
-    attributes() %>%
     .$`_boxh` %>%
     .$column_label %>%
     unlist() %>%

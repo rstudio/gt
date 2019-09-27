@@ -154,7 +154,9 @@ expect_tab <- function(tab,
 
 expect_attr_equal <- function(data, attr_val, y) {
 
-  attr(data, attr_val, exact = TRUE) %>%
+  obj <- dt__get(data = data, key = attr_val)
+
+  obj %>%
     unlist() %>%
     unname() %>%
     expect_equal(y)
@@ -163,7 +165,6 @@ expect_attr_equal <- function(data, attr_val, y) {
 gt_attr_names <- function() {
 
   c(
-    "class",
     "_data", "_boxhead",
     "_stub_df", "_stub_groups", "_stub_others",
     "_heading", "_spanners", "_stubhead",
@@ -177,7 +178,7 @@ expect_gt_attr_names <- function(object) {
   # The `groups` attribute appears when we call dplyr::group_by()
   # on the input table
   expect_equal(
-    sort(names(attributes(object)) %>% base::setdiff("groups")),
+    sort(names(object)),
     sort(gt_attr_names())
   )
 }

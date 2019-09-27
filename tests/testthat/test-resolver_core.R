@@ -193,6 +193,9 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
     exibble %>%
     gt(groupname_col = "group", rowname_col = "row")
 
+  # Extract the data table from the gt object
+  data_tbl <- tab %>% dt_data_get()
+
   # Get the rownames from the `tab` gt object
   tab_rownames <- dt_stub_df_get(data = tab)$rowname
 
@@ -201,7 +204,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = "row_4",
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 4)
 
   # Expect that passing in multiple row names in a
@@ -209,7 +212,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = c("row_4", "row_5", "row_6"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(4, 5, 6))
 
   # Expect that duplicate row names are disregarded
@@ -217,7 +220,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = c("row_6", "row_4", "row_5", "row_4", "row_4"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(6, 4, 5))
 
   # Expect that using any row names that don't exist
@@ -225,7 +228,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_error(
     resolve_data_vals_idx(
       var_expr = c("row_5", "row_6", "row_20"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames))
 
   # Expect that passing in a single row index as a
@@ -233,7 +236,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = 8,
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 8)
 
   # Expect that passing in a multiple row indices
@@ -242,7 +245,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = c(1, 3, 4, 6),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(1, 3, 4, 6))
 
 
@@ -250,7 +253,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = c(1, 6, 3, 4, 6, 1),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames),
     c(1, 6, 3, 4, 6, 1)
     )
@@ -260,7 +263,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_error(
     resolve_data_vals_idx(
       var_expr = c(1, 3, 20),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames))
 
   # Expect that passing in `TRUE` will return
@@ -268,7 +271,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = TRUE,
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:8)
 
   # Expect that passing in `NULL` will return
@@ -277,7 +280,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = NULL,
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:8)
 
   # Expect that passing in `FALSE` will return
@@ -285,7 +288,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = FALSE,
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), integer(0))
 
   # Expect that passing in a set of logical
@@ -297,7 +300,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
       var_expr = c(
         TRUE, TRUE, TRUE, FALSE, FALSE,
         TRUE, TRUE, FALSE),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(1, 2, 3, 6, 7))
 
   # Expect that passing in a set of logical
@@ -309,7 +312,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
       var_expr = c(
         TRUE, TRUE, TRUE, FALSE, FALSE,
         TRUE, TRUE, FALSE, FALSE),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames))
 
   # Expect that passing in a single row name
@@ -317,7 +320,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = vars(row_2),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 2)
 
   # Expect that passing in multiple row names
@@ -326,7 +329,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = vars(row_1, row_3, row_5),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(1, 3, 5))
 
   # Expect that duplicate row names inside `vars()`
@@ -335,7 +338,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = vars(row_6, row_1, row_3, row_3),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(6, 1, 3))
 
   # Expect that using any row names within `vars()`
@@ -343,7 +346,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_error(
     resolve_data_vals_idx(
       var_expr = vars(row_1, row_20),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames))
 
   # Expect that the select helper `starts_with()`
@@ -351,7 +354,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = starts_with("r"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:8)
 
   # Expect that the select helper `ends_with()`
@@ -359,7 +362,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = ends_with("5"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 5)
 
   # Expect that the select helper `contains()`
@@ -367,7 +370,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = contains("ow"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:8)
 
   # Expect that the select helper `matches()`
@@ -375,7 +378,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = matches(".*ow.[1-5]"),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:5)
 
   # Expect that the select helper `one_of()`
@@ -383,7 +386,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = one_of(c("row_3", "row_5")),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), c(3, 5))
 
   # Expect that the select helper `everything()`
@@ -391,7 +394,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = everything(),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 1:8)
 
   # Expect that the select helper `last_col()`
@@ -399,7 +402,7 @@ test_that("the `resolve_data_vals_idx()` function works correctly", {
   expect_equal(
     resolve_data_vals_idx(
       var_expr = last_col(offset = 1),
-      data = tab,
+      data_tbl = data_tbl,
       vals = tab_rownames), 7)
 })
 
