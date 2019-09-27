@@ -1,14 +1,13 @@
 .dt_has_built_key <- "_has_built"
 
-dt_has_built_set <- function(data, value) {
-
-  attr(data, .dt_has_built_key) <- value
-  data
-}
-
 dt_has_built_get <- function(data) {
 
-  attr(data, .dt_has_built_key)
+  dt__get(data, .dt_has_built_key)
+}
+
+dt_has_built_set <- function(data, value) {
+
+  dt__set(data, .dt_has_built_key, value)
 }
 
 dt_has_built_init <- function(data) {

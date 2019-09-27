@@ -2,13 +2,12 @@
 
 dt_boxhead_get <- function(data) {
 
-  attr(data, .dt_boxhead_key, exact = TRUE)
+  dt__get(data, .dt_boxhead_key)
 }
 
 dt_boxhead_set <- function(data, boxh) {
 
-  attr(data, .dt_boxhead_key) <- boxh
-  data
+  dt__set(data, .dt_boxhead_key, boxh)
 }
 
 dt_boxhead_init <- function(data) {
@@ -16,7 +15,6 @@ dt_boxhead_init <- function(data) {
   vars <- colnames(dt_data_get(data = data))
 
   empty_list <- lapply(seq_along(vars), function(x) NULL)
-
 
   dplyr::tibble(
     # Matches to the name of the `data` column

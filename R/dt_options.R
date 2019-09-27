@@ -2,13 +2,12 @@
 
 dt_options_get <- function(data) {
 
-  attr(data, .dt_options_key, exact = TRUE)
+  dt__get(data, .dt_options_key)
 }
 
 dt_options_set <- function(data, options) {
 
-  attr(data, .dt_options_key) <- options
-  data
+  dt__set(data, .dt_options_key, options)
 }
 
 dt_options_init <- function(data) {

@@ -2,13 +2,12 @@
 
 dt_spanners_get <- function(data) {
 
-  attr(data, .dt_spanners_key, exact = TRUE)
+  dt__get(data, .dt_spanners_key)
 }
 
 dt_spanners_set <- function(data, spanners) {
 
-  attr(data, .dt_spanners_key) <- spanners
-  data
+  dt__set(data, .dt_spanners_key, spanners)
 }
 
 dt_spanners_init <- function(data) {

@@ -2,14 +2,12 @@
 
 dt_stub_others_get <- function(data) {
 
-  attr(data, .dt_stub_others_key, exact = TRUE)
+  dt__get(data, .dt_stub_others_key)
 }
 
 dt_stub_others_set <- function(data, stub_others) {
 
-  attr(data, .dt_stub_others_key) <- stub_others
-
-  data
+  dt__set(data, .dt_stub_others_key, stub_others)
 }
 
 dt_stub_others_init <- function(data) {

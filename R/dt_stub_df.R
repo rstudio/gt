@@ -2,14 +2,12 @@
 
 dt_stub_df_get <- function(data) {
 
-  attr(data, .dt_stub_df_key, exact = TRUE)
+  dt__get(data, .dt_stub_df_key)
 }
 
 dt_stub_df_set <- function(data, stub_df) {
 
-  attr(data, .dt_stub_df_key) <- stub_df
-
-  data
+  dt__set(data, .dt_stub_df_key, stub_df)
 }
 
 dt_stub_df_init <- function(data,

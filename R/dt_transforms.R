@@ -2,13 +2,12 @@
 
 dt_transforms_get <- function(data) {
 
-  attr(data, .dt_transforms_key, exact = TRUE)
+  dt__get(data, .dt_transforms_key)
 }
 
 dt_transforms_set <- function(data, transforms) {
 
-  attr(data, .dt_transforms_key) <- transforms
-  data
+  dt__set(data, .dt_transforms_key, transforms)
 }
 
 dt_transforms_init <- function(data) {

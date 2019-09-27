@@ -2,13 +2,12 @@
 
 dt_styles_get <- function(data) {
 
-  attr(data, .dt_styles_key, exact = TRUE)
+  dt__get(data, .dt_styles_key)
 }
 
 dt_styles_set <- function(data, styles) {
 
-  attr(data, .dt_styles_key) <- styles
-  data
+  dt__set(data, .dt_styles_key, styles)
 }
 
 dt_styles_init <- function(data) {

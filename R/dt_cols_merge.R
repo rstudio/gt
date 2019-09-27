@@ -2,13 +2,12 @@
 
 dt_col_merge_get <- function(data) {
 
-  attr(data, .dt_col_merge_key, exact = TRUE)
+  dt__get(data, .dt_col_merge_key)
 }
 
 dt_col_merge_set <- function(data, col_merge) {
 
-  attr(data, .dt_col_merge_key) <- col_merge
-  data
+  dt__set(data, .dt_col_merge_key, col_merge)
 }
 
 dt_col_merge_init <- function(data) {

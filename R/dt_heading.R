@@ -2,13 +2,12 @@
 
 dt_heading_get <- function(data) {
 
-  attr(data, .dt_heading_key, exact = TRUE)
+  dt__get(data, .dt_heading_key)
 }
 
 dt_heading_set <- function(data, heading) {
 
-  attr(data, .dt_heading_key) <- heading
-  data
+  dt__set(data, .dt_heading_key, heading)
 }
 
 dt_heading_init <- function(data) {

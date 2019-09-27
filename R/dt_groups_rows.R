@@ -2,7 +2,7 @@
 
 dt_groups_rows_get <- function(data) {
 
-  ret <- attr(data, .dt_groups_rows_key, exact = TRUE)
+  ret <- dt__get(data, .dt_groups_rows_key)
 
   if (is.null(ret)) {
     stop("Must call `dt_groups_rows_build()` first.")
@@ -13,8 +13,7 @@ dt_groups_rows_get <- function(data) {
 
 dt_groups_rows_set <- function(data, groups_rows) {
 
-  attr(data, .dt_groups_rows_key) <- groups_rows
-  data
+  dt__set(data, .dt_groups_rows_key, groups_rows)
 }
 
 dt_groups_rows_build <- function(data, context) {

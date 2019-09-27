@@ -2,13 +2,12 @@
 
 dt_source_notes_get <- function(data) {
 
-  attr(data, .dt_source_notes_key, exact = TRUE)
+  dt__get(data, .dt_source_notes_key)
 }
 
 dt_source_notes_set <- function(data, source_notes) {
 
-  attr(data, .dt_source_notes_key) <- source_notes
-  data
+  dt__set(data, .dt_source_notes_key, source_notes)
 }
 
 dt_source_notes_init <- function(data) {

@@ -2,13 +2,12 @@
 
 dt_data_get <- function(data) {
 
-  attr(data, .dt_data_key, exact = TRUE)
+  dt__get(data, .dt_data_key)
 }
 
 dt_data_set <- function(data, data_tbl) {
 
-  attr(data, .dt_data_key) <- data_tbl %>% dplyr::as_tibble()
-  data
+  dt__set(data, .dt_data_key, data_tbl %>% dplyr::as_tibble())
 }
 
 dt_data_init <- function(data, data_tbl = NULL) {

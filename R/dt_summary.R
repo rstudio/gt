@@ -4,12 +4,12 @@
 
 dt_summary_get <- function(data) {
 
-  attr(data, .dt_summary_key, exact = TRUE)
+  dt__get(data, .dt_summary_key)
 }
 
 dt_summary_df_get <- function(data) {
 
-  attr(data, .dt_summary_build_key, exact = TRUE)
+  dt__get(data, .dt_summary_build_key)
 }
 
 dt_summary_df_data_get <- function(data) {
@@ -32,14 +32,12 @@ dt_summary_df_display_get <- function(data) {
 
 dt_summary_set <- function(data, summary) {
 
-  attr(data, .dt_summary_key) <- summary
-  data
+  dt__set(data, .dt_summary_key, summary)
 }
 
 dt_summary_data_set <- function(data, summary) {
 
-  attr(data, .dt_summary_build_key) <- summary
-  data
+  dt__set(data, .dt_summary_build_key, summary)
 }
 
 dt_summary_init <- function(data) {

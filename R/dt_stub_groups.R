@@ -2,14 +2,12 @@
 
 dt_stub_groups_get <- function(data) {
 
-  attr(data, .dt_stub_groups_key, exact = TRUE)
+  dt__get(data, .dt_stub_groups_key)
 }
 
 dt_stub_groups_set <- function(data, stub_groups) {
 
-  attr(data, .dt_stub_groups_key) <- stub_groups
-
-  data
+  dt__set(data, .dt_stub_groups_key, stub_groups)
 }
 
 dt_stub_groups_init <- function(data) {

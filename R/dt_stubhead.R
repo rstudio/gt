@@ -2,13 +2,12 @@
 
 dt_stubhead_get <- function(data) {
 
-  attr(data, .dt_stubhead_key, exact = TRUE)
+  dt__get(data, .dt_stubhead_key)
 }
 
 dt_stubhead_set <- function(data, stubhead) {
 
-  attr(data, .dt_stubhead_key) <- stubhead
-  data
+  dt__set(data, .dt_stubhead_key, stubhead)
 }
 
 dt_stubhead_init <- function(data) {

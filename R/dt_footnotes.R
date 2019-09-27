@@ -2,13 +2,12 @@
 
 dt_footnotes_get <- function(data) {
 
-  attr(data, .dt_footnotes_key, exact = TRUE)
+  dt__get(data, .dt_footnotes_key)
 }
 
 dt_footnotes_set <- function(data, footnotes) {
 
-  attr(data, .dt_footnotes_key) <- footnotes
-  data
+  dt__set(data, .dt_footnotes_key, footnotes)
 }
 
 dt_footnotes_init <- function(data) {

@@ -2,7 +2,7 @@
 
 dt_body_get <- function(data) {
 
-  ret <- attr(data, .dt_body_key, exact = TRUE)
+  ret <- dt__get(data, .dt_body_key)
 
   if (is.null(ret)) {
     stop("Must call `dt_body_build_init()` first.")
@@ -13,8 +13,7 @@ dt_body_get <- function(data) {
 
 dt_body_set <- function(data, body) {
 
-  attr(data, .dt_body_key) <- body %>% dplyr::as_tibble()
-  data
+  dt__set(data, .dt_body_key, body %>% dplyr::as_tibble())
 }
 
 dt_body_build_init <- function(data) {

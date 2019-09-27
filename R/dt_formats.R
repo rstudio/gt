@@ -2,13 +2,12 @@
 
 dt_formats_get <- function(data) {
 
-  attr(data, .dt_formats_key, exact = TRUE)
+  dt__get(data, .dt_formats_key)
 }
 
 dt_formats_set <- function(data, formats) {
 
-  attr(data, .dt_formats_key) <- formats
-  data
+  dt__set(data, .dt_formats_key, formats)
 }
 
 dt_formats_init <- function(data) {
