@@ -41,7 +41,12 @@ resolve_cells_data <- function(data,
     dplyr::distinct()
 
   # Create a list object
-  cells_resolved <- list(columns = expansion[[1]], rows = expansion[[2]])
+  cells_resolved <-
+    list(
+      columns = expansion[[1]],
+      colnames = resolve_vars(var_expr = expansion[[1]], data = data),
+      rows = expansion[[2]]
+    )
 
   # Apply the `data_cells_resolved` class
   class(cells_resolved) <- "data_cells_resolved"
