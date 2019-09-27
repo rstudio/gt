@@ -2,6 +2,12 @@ context("Ensuring that the `gt_preview()` function works as expected")
 
 test_that("the `gt_preview()` function works correctly", {
 
+  # Ensure that gt objects still work with `gt_preview()`
+  expect_equivalent(
+    gt_preview(mtcars),
+    gt_preview(mtcars %>% gt())
+  )
+
   # Create a basic preview of the `mtcars` dataset
   gt_tbl <- gt_preview(mtcars)
 

@@ -154,13 +154,11 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved
 }
 
-
 #' Resolve expressions to obtain column indices
 #'
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data The input table available in `data` (usually accessed through
-#'   `as.data.frame(data)`).
+#' @param data The gt object.
 #' @noRd
 resolve_vars_idx <- function(var_expr,
                              data) {
@@ -179,7 +177,7 @@ resolve_vars_idx <- function(var_expr,
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
 #' @param data_tbl The input table available in `data` (usually accessed through
-#'   `as.data.frame(data)`).
+#'   `dt_data_get(data)`).
 #' @param vals The names of columns or rows in `data`.
 #' @import tidyselect
 #' @import rlang

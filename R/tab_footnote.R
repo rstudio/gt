@@ -215,7 +215,7 @@ set_footnote.cells_data <- function(loc, data, footnote) {
   cols <- resolved$columns
   rows <- resolved$rows
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  colnames <- resolved$colnames
 
   data <-
     dt_footnotes_add(

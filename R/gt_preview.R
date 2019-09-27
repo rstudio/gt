@@ -43,6 +43,10 @@ gt_preview <- function(data,
                        bottom_n = 1,
                        incl_rownums = TRUE) {
 
+  if (is_gt(data)) {
+    data <- dt_data_get(data = data)
+  }
+
   # Convert the table to a data frame
   data <- as.data.frame(data, stringsAsFactors = FALSE)
 
