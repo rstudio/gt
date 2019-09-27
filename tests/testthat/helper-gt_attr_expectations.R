@@ -121,20 +121,20 @@ expect_tab <- function(tab,
   # Expect that extracted df has the same column
   # names as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% colnames(),
+    tab %>% dt_data_get() %>% colnames(),
     colnames(df))
 
   # Expect that extracted df has the same column
   # classes as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% sapply(class) %>% as.character(),
+    tab %>% dt_data_get() %>% sapply(class) %>% as.character(),
     df %>% as.data.frame() %>% sapply(class) %>% as.character()
   )
 
   # Expect that extracted df has the same number of
   # rows as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% nrow(),
+    tab %>% dt_data_get() %>% nrow(),
     nrow(df)
   )
 

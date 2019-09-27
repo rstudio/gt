@@ -77,6 +77,7 @@ tab_row_group <- function(data,
 
     # Get the `stub_df` data frame from `data`
     stub_df <- dt_stub_df_get(data = data)
+    data_tbl <- dt_data_get(data = data)
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
