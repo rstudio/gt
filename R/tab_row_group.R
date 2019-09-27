@@ -82,7 +82,7 @@ tab_row_group <- function(data,
     resolved_rows_idx <-
       resolve_data_vals_idx(
         var_expr = !!row_expr,
-        data = data,
+        data_tbl = data_tbl,
         vals = stub_df$rowname
       )
 

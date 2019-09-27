@@ -188,7 +188,7 @@ set_footnote.cells_group <- function(loc, data, footnote) {
   resolved_row_groups_idx <-
     resolve_data_vals_idx(
       var_expr = !!loc$groups,
-      data = NULL,
+      data_tbl = NULL,
       vals = row_groups
     )
 

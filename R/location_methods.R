@@ -47,7 +47,7 @@ add_summary_location_row <- function(loc,
   groups <-
     row_groups[resolve_data_vals_idx(
       var_expr = !!loc$groups,
-      data = NULL,
+      data_tbl = NULL,
       vals = row_groups
     )]
 
@@ -72,7 +72,7 @@ add_summary_location_row <- function(loc,
     col_idx <-
       resolve_data_vals_idx(
         var_expr = !!loc$columns,
-        data = NULL,
+        data_tbl = NULL,
         vals = dt_boxhead_get_vars_default(data = data)
       )
 
@@ -87,7 +87,7 @@ add_summary_location_row <- function(loc,
     rows <-
       resolve_data_vals_idx(
         var_expr = !!loc$rows,
-        data = NULL,
+        data_tbl = NULL,
         vals = summary_labels
       )
 
@@ -160,7 +160,7 @@ add_grand_summary_location_row <- function(loc,
   rows <-
     resolve_data_vals_idx(
       var_expr = !!loc$rows,
-      data = NULL,
+      data_tbl = NULL,
       vals = grand_summary_labels
     )
 
@@ -226,7 +226,7 @@ resolve_location.cells_data <- function(loc, data) {
   loc$rows <-
     resolve_data_vals_idx(
       var_expr = !!loc[["rows"]],
-      data = data_tbl,
+      data_tbl = data_tbl,
       vals = stub_df$rowname
     )
 

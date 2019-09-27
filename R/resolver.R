@@ -10,6 +10,7 @@ resolve_cells_data <- function(data,
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors
@@ -26,7 +27,7 @@ resolve_cells_data <- function(data,
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$rows,
-      data = data,
+      data_tbl = data_tbl,
       vals = stub_df$rowname
     )
 
@@ -71,7 +72,7 @@ resolve_cells_stub <- function(data,
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$rows,
-      data = NULL,
+      data_tbl = NULL,
       vals = stub_df$rowname
     )
 
@@ -102,7 +103,7 @@ resolve_cells_column_labels <- function(data,
   resolved_columns <-
     resolve_data_vals_idx(
       var_expr = !!object$columns,
-      data = NULL,
+      data_tbl = NULL,
       vals = dt_boxhead_get_vars_default(data = data)
     )
 
@@ -139,7 +140,7 @@ resolve_cells_column_spanners <- function(data,
   resolved_spanners_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$spanners,
-      data = NULL,
+      data_tbl = NULL,
       vals = spanner_labels
     )
 

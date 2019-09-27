@@ -1425,6 +1425,7 @@ fmt <- function(data,
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors
@@ -1443,7 +1444,7 @@ fmt <- function(data,
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!rows,
-      data = data,
+      data_tbl = data_tbl,
       vals = stub_df$rowname
     )
 
