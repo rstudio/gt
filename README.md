@@ -101,9 +101,7 @@ that make it possible to create highly customized tables.
 </p>
 
 Want to try this out? First and foremost, the **gt** package is used in
-an R environment, so, if you don’t have an R installation, it can be
-obtained from the [**Comprehensive R Archive Network
-(CRAN)**](https://cran.r-project.org/). For the best experience in
+an R environment. For the best experience in
 working with R, use the [**RStudio Desktop
 IDE**](https://www.rstudio.com/products/rstudio/).
 
