@@ -82,7 +82,6 @@ gt <- function(data,
 
   # Initialize the main objects
   data <-
-    # TODO: make this a `list()`
     list() %>%
     dt_data_init(data_tbl = data) %>%
     dt_boxhead_init() %>%
