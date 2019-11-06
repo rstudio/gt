@@ -1,7 +1,7 @@
 
 # Create a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
-  c("amsmath", "booktabs", "caption", "longtable")
+  c("amsmath", "booktabs", "caption", "longtable", "tabu")
 }
 
 # Transform a footnote mark to a LaTeX representation as a superscript
@@ -53,8 +53,11 @@ create_table_start_l <- function(col_alignment) {
 
   paste0(
     "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
-    "\\begin{longtable}{",
-    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+    "\\tabulinesep=3pt",
+    "\\begin{longtabu} to \\textwidth{",
+    col_alignment %>% substr(1, 1) %>% purrr::map_chr(function(.) {
+      paste0("X[", ., "]")
+    }) %>% paste(collapse = ""),
     "}\n",
     collapse = "")
 }
@@ -192,7 +195,7 @@ create_table_end_l <- function() {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{longtable}\n",
+    "\\end{longtabu}\n",
     collapse = "")
 }
 

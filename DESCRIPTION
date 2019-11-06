@@ -12,6 +12,7 @@ Authors@R: c(
     person("Joe", "Cheng", , "joe@rstudio.com", "aut"),
     person("Barret", "Schloerke", , "barret@rstudio.com", "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
+    person("Anna", "Nevison", ,"annan@metrumrg.com", "ctb"),
     person("RStudio", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
