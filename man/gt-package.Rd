@@ -30,6 +30,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Anna Nevison \email{annan@metrumrg.com} [contributor]
   \item RStudio [copyright holder, funder]
 }
 

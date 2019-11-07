@@ -240,14 +240,14 @@ create_heading_component <- function(heading,
     title_row <-
       paste0(heading$title, footnote_title_marks) %>%
       paste_left("\\large ") %>%
-      paste_right("\\\\ \n")
+      paste_right("\\linebreak \n")
 
     if (subtitle_defined) {
 
       subtitle_row <-
         paste0(heading$subtitle, footnote_subtitle_marks) %>%
         paste_left("\\small ") %>%
-        paste_right("\\\\ \n")
+        paste_right("\\linebreak \n")
 
     } else {
       subtitle_row <- ""
@@ -255,7 +255,7 @@ create_heading_component <- function(heading,
 
     heading_component <-
       paste0(title_row, subtitle_row) %>%
-      paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
+      paste_between(x_2 = c("\\caption*{\n", "} \\tabularnewline"))
   }
 
   if (output == "rtf") {
