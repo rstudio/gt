@@ -16,5 +16,6 @@ Create a display table based on `pressure` (Vapor Pressure of Mercury as a Funct
 gt(data = pressure) %>%
   fmt_scientific(
     columns = vars(pressure),
-    decimals = 2)
+    decimals = 2
+  )
 ```

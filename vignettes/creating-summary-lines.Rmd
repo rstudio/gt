@@ -40,7 +40,8 @@ We'll create a table stub with both row labels (using the `row` column) and row 
 exibble_a <-
   exibble %>%
   dplyr::select(-c(fctr, date, time, datetime)) %>%
-  gt(rowname_col = "row", groupname_col = "group")
+  gt(rowname_col = "row", groupname_col = "group") %>%
+  fmt_missing(columns = everything())
 
 exibble_a
 ```
@@ -137,7 +138,7 @@ The default for `formatter` is set to `fmt_number` which is a sensible default f
 
 ### Using Multiple Calls of `summary_rows()` 
 
-We can re-use summary row labels and fill the otherwise empty summary cells with similar aggregations but perhaps with different formatting options. Here's an example where the `currency` column contains aggregrate values that share the same summary rows as for the `num` column, adds two more rows, and uses currency formatting:
+We can re-use summary row labels and fill the otherwise empty summary cells with similar aggregations but perhaps with different formatting options. Here's an example where the `currency` column contains aggregate values that share the same summary rows as for the `num` column, adds two more rows, and uses currency formatting:
 
 ```{r exibble_e}
 # Create groupwise summary rows as
@@ -316,7 +317,7 @@ exibble_i <-
     locations = cells_summary(
       groups = "grp_a",
       columns = vars(currency),
-      rows = starts_with("m")
+      rows = "max"
     )
   )
 
@@ -327,28 +328,22 @@ exibble_i
 
 For a reproducible workflow, we do not want to have situations where any data created or modified cannot be accessed. While having summarized values be created in a **gt** pipeline presents advantages to readability and intent of analysis, it is recognized that the output table itself is essentially 'read only', as the input data undergoes processing and movement to an entirely different format.
 
-However, the object created still contains data and we can obtain the summary data from a **gt** table object using the `extract_summary()` function. Taking the `gt_summary` object, we get a data frame containing the summary data while preserving the correct data types:
+However, the object created still contains data and we can obtain the summary data from a **gt** table object using the `extract_summary()` function. Taking the `gt_summary` object, we get a list of tibbles containing the summary data while preserving the correct data types:
 
 ```{r summary_list}
 # Extract the summary data from `exibble_d`
-# to a data frame object
+# to a list  object
 summary_list <- exibble_d %>% extract_summary()
-
-# This is a list with two elements named
-# `grp_a` and `grp_b` (matches the row
-# group labels for those groups that got
-# groupwise summaries)
-names(summary_list)
 ```
 
 ```{r summary_list_grp_a}
 # Print out the summary for the `grp_a` group
-summary_list[["grp_a"]]
+summary_list %>% .$summary_df_data_list %>% .$grp_a
 ```
 
 ```{r summary_list_grp_b}
 # Print out the summary for the `grp_b` group
-summary_list[["grp_b"]]
+summary_list %>% .$summary_df_data_list %>% .$grp_b
 ```
 
 The output tibbles within the list always contain the `groupname` and `rowname` columns. The `groupname` column is filled with the name of the stub group that was given to `summary_rows()`. The `rowname` column contains the descriptive stub labels for the summary rows (recall that values are either supplied explicitly in `summary_rows()`, or, are generated from the function names). The remaining columns are those from the original dataset.
@@ -360,17 +355,17 @@ The output data from `extract_summary()` can be reintroduced to a reproducible w
 # of summary data frames, extract the summaries,
 # and then combine them; input that into `gt()`,
 # and format the `num` column with `fmt_number()`
-do.call(
-  dplyr::bind_rows,
-  exibble_d %>% extract_summary()
-) %>%
+exibble_d %>%
+  extract_summary() %>%
+  unlist(recursive = FALSE) %>%
+  dplyr::bind_rows() %>%
   gt() %>%
   fmt_number(
     columns = vars(num),
     decimals = 1
   ) %>%
   fmt_missing(
-    columns = vars(char, currency)
+    columns = vars(char, currency, row, group)
   )
 ```
 
@@ -417,7 +412,6 @@ Because this is character value that's returned, we don't need formatting functi
 # minimal formatting of the aggregate values
 exibble_j <- 
   exibble_a %>%
-  gt() %>%
   grand_summary_rows(
     columns = vars(num, currency),
     fns = list(

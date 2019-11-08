@@ -2,5 +2,7 @@
 render_formats_test <- function(data,
                                 context) {
 
-  data %>% build_data(context) %>% .subset2("output_df")
+  data %>%
+    build_data(context = context) %>%
+    .$`_body`
 }

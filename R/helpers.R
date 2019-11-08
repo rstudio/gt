@@ -20,9 +20,10 @@
 #' only available when there is a stub; a label in that location can be created
 #' by using the [tab_stubhead()] function.
 #'
-#' \item `cells_column_labels()`: targets labels in the column labels (the
-#' `columns` argument) or the spanner column labels (the `groups` argument) in
-#' the table's column labels part.
+#' \item `cells_column_labels()`: targets the column labels.
+#'
+#' \item `cells_column_spanners()`: targets the spanner column labels, which
+#' appear above the column labels.
 #'
 #' \item `cells_group()`: targets the row group labels in any available row
 #' groups using the `groups` argument.
@@ -35,11 +36,18 @@
 #'
 #' \item `cells_summary()`: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
+#'
+#' \item `cells_grand_summary()`: targets cells of the table's grand summary
+#' using intersections of `columns` and `rows`
 #' }
 #'
-#' @param columns,rows,groups Either a vector of names, a vector of indices,
+#' @param columns,rows Either a vector of names, a vector of indices,
 #'   values provided by [vars()], values provided by `c()`, or a select helper
 #'   function (see Details for information on these functions).
+#' @param groups Used in the `cells_title()`, `cells_group()`, and
+#'   `cells_summary()` functions to specify which groups to target.
+#' @param spanners Used in the `cells_column_spanners()` function to indicate
+#'   which spanners to target.
 #'
 #' @examples
 #' library(tidyr)
@@ -105,7 +113,7 @@
 #'   ) %>%
 #'   dplyr::group_by(name, size) %>%
 #'   dplyr::summarize(
-#'     `Pizzas Sold` = n()
+#'     `Pizzas Sold` = dplyr::n()
 #'   ) %>%
 #'   gt(rowname_col = "size") %>%
 #'   summary_rows(
@@ -267,41 +275,38 @@ cells_stubhead <- function() {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns, groups) {
+cells_column_spanners <- function(spanners) {
 
-  if (
-    (!missing(columns) && !missing(groups)) ||
-    (missing(columns) && missing(groups))
-  ) {
-    stop("Value(s) must provided to either `columns` or `groups` but not both.")
-  }
+  # Capture expression for the `spanners` argument
+  col_expr <- NULL
+  spanners_expr <- rlang::enquo(spanners)
 
-  # With input as `columns`
-  if (!missing(columns)) {
-
-    # Capture expression for the `columns` argument
-    col_expr <- rlang::enquo(columns)
-    group_expr <- NULL
-  }
-
-  # With input as `groups`
-  if (!missing(groups)) {
-
-    # Capture expression for the `groups` argument
-    col_expr <- NULL
-    group_expr <- rlang::enquo(groups)
-  }
-
-  # Create the `cells_column_labels` object
+  # Create the `cells_column_spanners` object
   structure(
-    list(columns = col_expr, groups = group_expr),
-    class = c("cells_column_labels", "location_cells"))
+    list(spanners = spanners_expr),
+    class = c("cells_column_spanners", "location_cells")
+  )
 }
 
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_group <- function(groups) {
+cells_column_labels <- function(columns) {
+
+  # Capture expression for the `columns` argument
+  columns_expr <- rlang::enquo(columns)
+
+  # Create the `cells_column_labels` object
+  structure(
+    list(columns = columns_expr),
+    class = c("cells_column_labels", "location_cells")
+  )
+}
+
+#' @rdname location_cells
+#' @import rlang
+#' @export
+cells_group <- function(groups = TRUE) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
@@ -318,11 +323,7 @@ cells_group <- function(groups) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_stub <- function(rows = NULL) {
-
-  if (is.null(rows)) {
-    rows <- TRUE
-  }
+cells_stub <- function(rows = TRUE) {
 
   # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
@@ -339,10 +340,8 @@ cells_stub <- function(rows = NULL) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_data <- function(columns = NULL, # set default to TRUE
-                       rows = NULL# set default to TRUE
-                       #TODO: groups = NULL
-                       ) {
+cells_data <- function(columns = TRUE,
+                       rows = TRUE) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
@@ -352,7 +351,8 @@ cells_data <- function(columns = NULL, # set default to TRUE
   cells <-
     list(
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_data` and `location_cells` classes
   class(cells) <- c("cells_data", "location_cells")
@@ -363,9 +363,9 @@ cells_data <- function(columns = NULL, # set default to TRUE
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_summary <- function(groups = NULL,
-                          columns = NULL,
-                          rows = NULL) {
+cells_summary <- function(groups = TRUE,
+                          columns = TRUE,
+                          rows = TRUE) {
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
@@ -378,7 +378,8 @@ cells_summary <- function(groups = NULL,
     list(
       groups = group_expr,
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_summary` and `location_cells` classes
   class(cells) <- c("cells_summary", "location_cells")
@@ -389,8 +390,8 @@ cells_summary <- function(groups = NULL,
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_grand_summary <- function(columns = NULL,
-                                rows = NULL) {
+cells_grand_summary <- function(columns = TRUE,
+                                rows = TRUE) {
 
   # Capture expressions for the `columns`
   # and `rows` arguments
@@ -433,6 +434,10 @@ cells_grand_summary <- function(columns = NULL,
 #' @family helper functions
 #' @export
 md <- function(text) {
+
+  # if (text %>% tidy_grepl("\\.\\.[a-zA-Z0-9]*?\\.\\.")) {
+  #   text %>% tidy_gsub(pattern = "\\.\\.[a-zA-Z0-9]*?\\.\\.", "")
+  # }
 
   # Apply the `from_markdown` class
   class(text) <- "from_markdown"
@@ -491,7 +496,7 @@ is_html <- function(x) {
 #' currency symbol will be `"ltc"`. For convenience, if we provide only a single
 #' string without a name, it will be taken as the `default` (i.e.,
 #' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
-#' we were to specify currency strings for muliple output contexts, names are
+#' we were to specify currency strings for multiple output contexts, names are
 #' required each and every context.
 #'
 #' @param ... One or more named arguments using output contexts as the names and

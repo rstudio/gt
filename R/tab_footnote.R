@@ -80,7 +80,7 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_footnote(loc, data, process_text(footnote))
+    data <- set_footnote(loc = loc, data = data, footnote = process_text(footnote))
   }
 
   data
@@ -94,22 +94,28 @@ set_footnote.cells_title <- function(loc, data, footnote) {
 
   if ((loc$groups %>% rlang::eval_tidy()) == "title") {
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "title", locnum = 1,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, footnotes = footnote
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "title",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 1,
+        rownum = NA_integer_,
+        footnotes = footnote
       )
 
   } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "subtitle", locnum = 2,
-        grpname = NA_character_, colname = NA_character_,
-        rownum = NA_character_, footnotes = footnote
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "subtitle",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 2,
+        rownum = NA_integer_,
+        footnotes = footnote
       )
   }
 
@@ -118,12 +124,15 @@ set_footnote.cells_title <- function(loc, data, footnote) {
 
 set_footnote.cells_stubhead <- function(loc, data, footnote) {
 
-  attr(data, "footnotes_df") <-
-    add_location_row_footnotes(
-      data,
-      locname = loc$groups, locnum = 2.5,
-      grpname = NA_character_, colname = NA_character_,
-      rownum = NA_character_, footnotes = footnote
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = loc$groups,
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 2.5,
+      rownum = NA_integer_,
+      footnotes = footnote
     )
 
   data
@@ -131,58 +140,69 @@ set_footnote.cells_stubhead <- function(loc, data, footnote) {
 
 set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
-  if (!is.null(loc$columns)) {
+  resolved <- resolve_cells_column_labels(data = data, object = loc)
 
-    resolved <- resolve_cells_column_labels(data = data, object = loc)
+  cols <- resolved$columns
 
-    cols <- resolved$columns
+  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
 
-    colnames <- colnames(as.data.frame(data))[cols]
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "columns_columns",
+      grpname = NA_character_,
+      colname = colnames,
+      locnum = 4,
+      rownum = NA_integer_,
+      footnotes = footnote
+    )
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "columns_columns", locnum = 4,
-        grpname = NA_character_, colname = colnames,
-        rownum = NA_character_, footnotes = footnote
-      )
+  data
+}
 
-  } else if (!is.null(loc$groups)) {
+set_footnote.cells_column_spanners <- function(loc, data, footnote) {
 
-    groups <- loc$groups %>% rlang::eval_tidy()
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
-    attr(data, "footnotes_df") <-
-      add_location_row_footnotes(
-        data,
-        locname = "columns_groups", locnum = 3,
-        grpname = groups, colname = NA_character_,
-        rownum = NA_character_, footnotes = footnote
-      )
-  }
+  groups <- resolved$spanners
+
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "columns_groups",
+      grpname = groups,
+      colname = NA_character_,
+      locnum = 3,
+      rownum = NA_integer_,
+      footnotes = footnote
+    )
 
   data
 }
 
 set_footnote.cells_group <- function(loc, data, footnote) {
 
-  row_groups <- attr(data, "arrange_groups")$groups
+  row_groups <- dt_stub_groups_get(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-
     resolve_data_vals_idx(
       var_expr = !!loc$groups,
-      data = NULL,
+      data_tbl = NULL,
       vals = row_groups
     )
 
   groups <- row_groups[resolved_row_groups_idx]
 
-  attr(data, "footnotes_df") <-
-    add_location_row_footnotes(
-      data,
-      locname = "stub_groups", locnum = 5,
-      grpname = groups, colname = NA_character_,
-      rownum = NA_character_, footnotes = footnote
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "stub_groups",
+      grpname = groups,
+      colname = NA_character_,
+      locnum = 5,
+      rownum = NA_integer_,
+      footnotes = footnote
     )
 
   data
@@ -195,14 +215,17 @@ set_footnote.cells_data <- function(loc, data, footnote) {
   cols <- resolved$columns
   rows <- resolved$rows
 
-  colnames <- colnames(as.data.frame(data))[cols]
+  colnames <- resolved$colnames
 
-  attr(data, "footnotes_df") <-
-    add_location_row_footnotes(
-      data,
-      locname = "data", locnum = 5,
-      grpname = NA_character_, colname = colnames,
-      rownum = rows, footnotes = footnote
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "data",
+      grpname = NA_character_,
+      colname = colnames,
+      locnum = 5,
+      rownum = rows,
+      footnotes = footnote
     )
 
   data
@@ -214,12 +237,15 @@ set_footnote.cells_stub <- function(loc, data, footnote) {
 
   rows <- resolved$rows
 
-  attr(data, "footnotes_df") <-
-    add_location_row_footnotes(
-      data,
-      locname = "stub", locnum = 5,
-      grpname = NA_character_, colname = NA_character_,
-      rownum = rows, footnotes = footnote
+  data <-
+    dt_footnotes_add(
+      data = data,
+      locname = "stub",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 5,
+      rownum = rows,
+      footnotes = footnote
     )
 
   data
@@ -242,55 +268,5 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
     data = data,
     style = footnote,
     df_type = "footnotes_df"
-  )
-}
-
-add_location_row_styles <- function(data,
-                                    locname,
-                                    locnum,
-                                    grpname,
-                                    colname,
-                                    rownum,
-                                    styles) {
-
-  add_location_row(
-    data,
-    df_type = "styles_df",
-    locname, locnum, grpname, colname, rownum,
-    styles = styles
-  )
-}
-
-add_location_row_footnotes <- function(data,
-                                       locname,
-                                       locnum,
-                                       grpname,
-                                       colname,
-                                       rownum,
-                                       footnotes) {
-
-  add_location_row(
-    data,
-    df_type = "footnotes_df",
-    locname, locnum, grpname, colname, rownum,
-    text = footnotes
-  )
-}
-
-add_location_row <- function(data,
-                             df_type,
-                             locname,
-                             locnum,
-                             grpname,
-                             colname,
-                             rownum,
-                             ...) {
-
-  dplyr::bind_rows(
-    attr(data, df_type, exact = TRUE),
-    dplyr::tibble(
-      locname = locname, locnum = locnum,
-      grpname = grpname, colname = colname,
-      rownum = rownum, ...)
   )
 }

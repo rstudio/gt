@@ -4,6 +4,7 @@
 \alias{location_cells}
 \alias{cells_title}
 \alias{cells_stubhead}
+\alias{cells_column_spanners}
 \alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
@@ -16,20 +17,28 @@ cells_title(groups = c("title", "subtitle"))
 
 cells_stubhead()
 
-cells_column_labels(columns, groups)
+cells_column_spanners(spanners)
 
-cells_group(groups)
+cells_column_labels(columns)
 
-cells_stub(rows = NULL)
+cells_group(groups = TRUE)
 
-cells_data(columns = NULL, rows = NULL)
+cells_stub(rows = TRUE)
 
-cells_summary(groups = NULL, columns = NULL, rows = NULL)
+cells_data(columns = TRUE, rows = TRUE)
 
-cells_grand_summary(columns = NULL, rows = NULL)
+cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
+
+cells_grand_summary(columns = TRUE, rows = TRUE)
 }
 \arguments{
-\item{columns, rows, groups}{Either a vector of names, a vector of indices,
+\item{groups}{Used in the \code{cells_title()}, \code{cells_group()}, and
+\code{cells_summary()} functions to specify which groups to target.}
+
+\item{spanners}{Used in the \code{cells_column_spanners()} function to indicate
+which spanners to target.}
+
+\item{columns, rows}{Either a vector of names, a vector of indices,
 values provided by \code{\link[=vars]{vars()}}, values provided by \code{c()}, or a select helper
 function (see Details for information on these functions).}
 }
@@ -58,9 +67,10 @@ depending on the value given to the \code{groups} argument (\code{"title"} or
 only available when there is a stub; a label in that location can be created
 by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
 
-\item \code{cells_column_labels()}: targets labels in the column labels (the
-\code{columns} argument) or the spanner column labels (the \code{groups} argument) in
-the table's column labels part.
+\item \code{cells_column_labels()}: targets the column labels.
+
+\item \code{cells_column_spanners()}: targets the spanner column labels, which
+appear above the column labels.
 
 \item \code{cells_group()}: targets the row group labels in any available row
 groups using the \code{groups} argument.
@@ -73,6 +83,9 @@ intersections of \code{columns} and \code{rows}.
 
 \item \code{cells_summary()}: targets summary cells in the table body using the
 \code{groups} argument and intersections of \code{columns} and \code{rows}.
+
+\item \code{cells_grand_summary()}: targets cells of the table's grand summary
+using intersections of \code{columns} and \code{rows}
 }
 }
 \section{Figures}{
@@ -154,7 +167,7 @@ tab_3 <-
   ) \%>\%
   dplyr::group_by(name, size) \%>\%
   dplyr::summarize(
-    `Pizzas Sold` = n()
+    `Pizzas Sold` = dplyr::n()
   ) \%>\%
   gt(rowname_col = "size") \%>\%
   summary_rows(

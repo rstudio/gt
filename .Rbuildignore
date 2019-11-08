@@ -16,3 +16,4 @@ tests/examples
 tests/manual_tests
 ^vignettes/videos$
 ^vignettes/images/apng$
+^TODOS

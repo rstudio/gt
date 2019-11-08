@@ -3,7 +3,7 @@ title: "latex-05-airquality"
 output: 
   - pdf_document
 ---
-  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -20,6 +20,7 @@ gt(data = airquality) %>%
     decimals = 2) %>%
   tab_spanner(
     label = "Measurement Period",
-    columns = vars(Month, Day)) %>%
+    columns = vars(Month, Day)
+  ) %>%
   fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
 ```

@@ -4,7 +4,7 @@ library(gt)
 
 iris_tbl <-
   gt(data = iris) %>%
-  cols_split_delim(delim = ".") %>%
+  tab_spanner_delim(delim = ".") %>%
   cols_move_to_start(columns = vars(Species)) %>%
   fmt_number(
     columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),

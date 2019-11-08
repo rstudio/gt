@@ -654,7 +654,12 @@ fmt_currency <- function(data,
   validate_currency(currency = currency)
 
   # Get the number of decimal places
-  decimals <- get_currency_decimals(currency = currency, decimals, use_subunits)
+  decimals <-
+    get_currency_decimals(
+      currency = currency,
+      decimals = decimals,
+      use_subunits = use_subunits
+    )
 
   fmt_symbol(
     data = data,
@@ -777,25 +782,34 @@ fmt_date <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        default = function(x) {
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      default = function(x) {
 
-          # If `x` is of the `Date` type, simply make
-          # that a character vector
-          if (inherits(x, "Date")) {
-            x <- as.character(x)
-          }
+        # If `x` is of the `Date` type, simply make
+        # that a character vector
+        if (inherits(x, "Date")) {
+          x <- as.character(x)
+        }
 
+        date <-
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-            strftime(format = date_format_str) %>%
-            tidy_gsub("^0", "") %>%
-            tidy_gsub(" 0([0-9])", " \\1") %>%
-            tidy_gsub("pm$", "PM") %>%
-            tidy_gsub("am$", "AM")
-        }))
+          strftime(format = date_format_str)
+
+        if (date_style %in% 2:12) {
+          date <- date %>% tidy_gsub(., "^0", "")
+        }
+
+        date %>%
+          tidy_gsub(" 0([0-9])", " \\1") %>%
+          tidy_gsub("pm$", "PM") %>%
+          tidy_gsub("am$", "AM")
+      }
+    )
+  )
 }
 
 #' Format values as times
@@ -890,19 +904,28 @@ fmt_time <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        default = function(x) {
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      default = function(x) {
 
+        time <-
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-            strftime(format = time_format_str) %>%
-            tidy_gsub("^0", "") %>%
-            tidy_gsub(" 0([0-9])", " \\1") %>%
-            tidy_gsub("pm$", "PM") %>%
-            tidy_gsub("am$", "AM")
-        }))
+          strftime(format = time_format_str)
+
+        if (time_style %in% 3:5) {
+          time <- time %>% tidy_gsub(., "^0", "")
+        }
+
+        time %>%
+          tidy_gsub(" 0([0-9])", " \\1") %>%
+          tidy_gsub("pm$", "PM") %>%
+          tidy_gsub("am$", "AM")
+      }
+    )
+  )
 }
 
 #' Format values as date-times
@@ -989,14 +1012,13 @@ fmt_datetime <- function(data,
                          time_style = 2) {
 
   # Transform `date_style` to `date_format`
-  date_format <- get_date_format(date_style = date_style)
+  date_format_str <- get_date_format(date_style = date_style)
 
   # Transform `time_style` to `time_format`
-  time_format <- get_time_format(time_style = time_style)
+  time_format_str <- get_time_format(time_style = time_style)
 
   # Combine into a single datetime format string
-  date_time_format_str <-
-    paste0(date_format, " ", time_format)
+  # date_time_format_str <- paste0(date_format, " ", time_format)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -1004,19 +1026,49 @@ fmt_datetime <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        default = function(x) {
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      default = function(x) {
 
+        date <-
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-            strftime(format = date_time_format_str) %>%
-            tidy_gsub("^0", "") %>%
-            tidy_gsub(" 0([0-9])", " \\1") %>%
-            tidy_gsub("pm$", "PM") %>%
-            tidy_gsub("am$", "AM")
-        }))
+          strftime(format = date_format_str)
+
+        if (date_style %in% 2:12) {
+          date <- date %>% tidy_gsub(., "^0", "")
+        }
+
+        date <-
+          date %>%
+          tidy_gsub(" 0([0-9])", " \\1") %>%
+          tidy_gsub("pm$", "PM") %>%
+          tidy_gsub("am$", "AM")
+
+        time <-
+          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
+          strftime(format = time_format_str)
+
+        if (time_style %in% 3:5) {
+          time <- time %>% tidy_gsub(., "^0", "")
+        }
+
+        time <-
+          time %>%
+          tidy_gsub(" 0([0-9])", " \\1") %>%
+          tidy_gsub("pm$", "PM") %>%
+          tidy_gsub("am$", "AM")
+
+        datetime <-
+          paste(date, time) %>%
+          tidy_gsub("NA NA", "NA")
+
+        datetime
+      }
+    )
+  )
 }
 
 #' Format Markdown text
@@ -1171,64 +1223,63 @@ fmt_passthrough <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        html = function(x) {
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      html = function(x) {
 
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
 
-          # TODO: Deal with NA values in x
-          # Handle formatting of pattern
-          x_str <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x
-            )
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
 
-          if (escape) {
-            x_str <- x_str %>% process_text(context = "html")
-          }
-
-          x_str
-        },
-        latex = function(x) {
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # TODO: Deal with NA values in x
-          # Handle formatting of pattern
-          x_str <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x
-            )
-
-          if (escape) {
-            x_str <- x_str %>% process_text(context = "latex")
-          }
-
-          x_str
-        },
-        default = function(x) {
-
-          # Create `x_str` with same length as `x`
-          x_str <- rep(NA_character_, length(x))
-
-          # TODO: Deal with NA values in x
-          # Handle formatting of pattern
-          x_str <-
-            apply_pattern_fmt_x(
-              pattern,
-              values = x
-            )
-
-          x_str
+        if (escape) {
+          x_str <- x_str %>% process_text(context = "html")
         }
-      ))
+
+        x_str
+      },
+      latex = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- x_str %>% process_text(context = "latex")
+        }
+
+        x_str
+      },
+      default = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        x_str
+      }
+    )
+  )
 }
 
 #' Format missing values
@@ -1282,35 +1333,37 @@ fmt_missing <- function(data,
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
-  fmt(data = data,
-      columns = !!columns,
-      rows = !!rows,
-      fns = list(
-        html = function(x) {
+  fmt(
+    data = data,
+    columns = !!columns,
+    rows = !!rows,
+    fns = list(
+      html = function(x) {
 
-          missing_text <-
-            context_missing_text(
-              missing_text = missing_text,
-              context = "html"
-            )
+        missing_text <-
+          context_missing_text(
+            missing_text = missing_text,
+            context = "html"
+          )
 
-          # Any values of `x` that are `NA` get
-          # `missing_text` as output; any values that
-          # are not missing get `NA` as their output
-          # (meaning, the existing output for that
-          # value, if it exists, should be inherited)
-          ifelse(is.na(x), missing_text, NA_character_)
-        },
-        default = function(x) {
+        # Any values of `x` that are `NA` get
+        # `missing_text` as output; any values that
+        # are not missing get `NA` as their output
+        # (meaning, the existing output for that
+        # value, if it exists, should be inherited)
+        ifelse(is.na(x), missing_text, NA_character_)
+      },
+      default = function(x) {
 
-          # Any values of `x` that are `NA` get
-          # `missing_text` as output; any values that
-          # are not missing get `NA` as their output
-          # (meaning, the existing output for that
-          # value, if it exists, should be inherited)
-          ifelse(is.na(x), missing_text, NA_character_)
-        }
-      ))
+        # Any values of `x` that are `NA` get
+        # `missing_text` as output; any values that
+        # are not missing get `NA` as their output
+        # (meaning, the existing output for that
+        # value, if it exists, should be inherited)
+        ifelse(is.na(x), missing_text, NA_character_)
+      }
+    )
+  )
 }
 
 #' Set a column format with a formatter function
@@ -1371,7 +1424,8 @@ fmt <- function(data,
                 fns) {
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors
@@ -1390,7 +1444,7 @@ fmt <- function(data,
   resolved_rows_idx <-
     resolve_data_vals_idx(
       var_expr = !!rows,
-      data = data,
+      data_tbl = data_tbl,
       vals = stub_df$rowname
     )
 
@@ -1409,10 +1463,5 @@ fmt <- function(data,
       rows = resolved_rows_idx
     )
 
-  # Incorporate the `formatter_list` object as the next
-  # list in the `formats` list of lists
-  next_index <- length(attr(data, "formats", exact = TRUE)) + 1
-  attr(data, "formats")[[next_index]] <- formatter_list
-
-  data
+  dt_formats_add(data = data, formats = formatter_list)
 }

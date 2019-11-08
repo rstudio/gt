@@ -31,13 +31,13 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the columns with class `col_heading left`
   # are those columns that were aligned left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(c("mpg", "cyl", "drat"))
 
   # Expect that all other columns are center-aligned
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "drat")))
 
@@ -52,13 +52,13 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the columns with class `gt_col_heading gt_left`
   # are those columns that were aligned left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(c("mpg", "cyl", "disp"))
 
-  # Expect that all other columns are center-aligned
+  # Expect that all other columns are right-aligned
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(base::setdiff(colnames(mtcars_short), c("mpg", "cyl", "disp")))
 
@@ -91,7 +91,7 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the columns with class `col_heading left`
   # includes all columns in `mtcars_short`
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
 
@@ -106,7 +106,7 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the columns with class `col_heading left`
   # includes all columns in `mtcars_short`
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal(colnames(mtcars_short))
 
@@ -121,7 +121,7 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the `Date` column is left-formatted because
   # the column is of the `character` class
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
     rvest::html_text() %>%
     expect_equal("Date")
 })

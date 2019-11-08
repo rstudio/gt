@@ -8,20 +8,20 @@ expect_tab_colnames <- function(tab,
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(attr(tab, "stub_df")[["rowname"]])))
+      all(is.na(dt_stub_df_get(data = tab)[["rowname"]])))
 
   } else if (rowname == "col"){
 
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_equal(
-      attr(tab, "stub_df")[["rowname"]],
+      dt_stub_df_get(data = tab)[["rowname"]],
       df$rowname)
 
   } else if (rowname == "tibble") {
 
     expect_equal(
-      attr(tab, "stub_df")[["rowname"]],
+      dt_stub_df_get(data = tab)[["rowname"]],
       row.names(df))
   }
 
@@ -30,7 +30,7 @@ expect_tab_colnames <- function(tab,
     # Expect that the `groupname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(attr(tab, "stub_df")[["groupname"]])))
+      all(is.na(dt_stub_df_get(data = tab)[["groupname"]])))
 
   } else {
 
@@ -38,102 +38,125 @@ expect_tab_colnames <- function(tab,
     # the original dataset populate the `groupname` column
     # of the `stub_df` object
     expect_equal(
-      attr(tab, "stub_df")[["groupname"]],
+      dt_stub_df_get(data = tab)[["groupname"]],
       df[["groupname"]])
   }
 }
 
 expect_tab <- function(tab,
-                       df,
-                       has_rownames = FALSE,
-                       has_groupnames = FALSE) {
+                       df) {
 
   # Expect that the object has the correct classes
   expect_s3_class(tab, "gt_tbl")
-  expect_s3_class(tab, "data.frame")
+  expect_type(tab, "list")
 
   # Expect certain named attributes
-  expect_gt_attr_names(tab)
+  expect_gt_attr_names(object = tab)
 
   # Expect that the attribute obejcts are of certain classes
-  expect_s3_class(attr(tab, "boxh_df"), "data.frame")
-  expect_s3_class(attr(tab, "stub_df"), "data.frame")
-  expect_s3_class(attr(tab, "footnotes_df"), "data.frame")
-  expect_s3_class(attr(tab, "styles_df"), "data.frame")
-  expect_s3_class(attr(tab, "rows_df"), "data.frame")
-  expect_s3_class(attr(tab, "cols_df"), "data.frame")
-  expect_s3_class(attr(tab, "opts_df"), "data.frame")
-  expect_type(attr(tab, "col_labels"), "list")
-  expect_type(attr(tab, "grp_labels"), "list")
-  expect_type(attr(tab, "arrange_groups"), "list")
-  expect_type(attr(tab, "formats"), "list")
 
-  # Expect that the attribute objects are of the
-  # correct dimensions
-  if (dplyr::is_grouped_df(df)) {
+  expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
+  expect_type(dt_stub_df_get(data = tab), "list")
+  expect_type(dt_stub_groups_get(data = tab), "character")
+  expect_type(dt_stub_others_get(data = tab), "character")
+  expect_s3_class(dt_stub_df_get(data = tab), "data.frame")
+  expect_type(dt_heading_get(data = tab), "list")
+  expect_s3_class(dt_spanners_get(data = tab), "data.frame")
+  expect_type(dt_stubhead_get(data = tab), "list")
+  expect_s3_class(dt_footnotes_get(data = tab), "data.frame")
+  expect_type(dt_source_notes_get(data = tab), "list")
+  expect_type(dt_formats_get(data = tab), "list")
+  expect_s3_class(dt_styles_get(data = tab), "data.frame")
+  expect_s3_class(dt_options_get(data = tab), "data.frame")
+  expect_type(dt_transforms_get(data = tab), "list")
 
-    non_group_cols <- base::setdiff(colnames(df), dplyr::group_vars(df))
+  dt_boxhead_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(ncol(df), 6))
 
-    final_df <-
-      df %>%
-      dplyr::ungroup() %>%
-      dplyr::select(non_group_cols)
+  dt_stub_df_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(nrow(df), 3))
 
-  } else {
-    final_df <- df
-  }
+  dt_heading_get(data = tab) %>%
+    length() %>%
+    expect_equal(2)
 
-  if (has_rownames) {
-    final_df$rowname <- NULL
-  }
+  dt_spanners_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(0, 4))
 
-  if (has_groupnames) {
-    final_df$groupname <- NULL
-  }
+  dt_stubhead_get(data = tab) %>%
+    length() %>%
+    expect_equal(1)
 
-  expect_equal(dim(attr(tab, "boxh_df")), c(4, ncol(final_df)))
-  expect_equal(dim(attr(tab, "stub_df")), c(nrow(df), 2))
-  expect_equal(dim(attr(tab, "footnotes_df")), c(0, 6))
-  expect_equal(dim(attr(tab, "styles_df")), c(0, 6))
-  expect_equal(dim(attr(tab, "rows_df")), c(nrow(df), 1))
-  expect_equal(dim(attr(tab, "cols_df")), c(ncol(final_df), 1))
-  expect_equal(ncol(attr(tab, "opts_df")), 5)
-  expect_equal(length(attr(tab, "formats")), 0)
-  expect_equal(length(attr(tab, "arrange_groups")), 1)
+  dt_footnotes_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(0, 7))
+
+  dt_source_notes_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
+
+  dt_formats_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
+
+  dt_styles_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(0, 7))
+
+  dt_options_get(data = tab) %>%
+    dim() %>%
+    expect_equal(c(73, 5))
+
+  dt_stub_groups_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
+
+  dt_transforms_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
 
   # Expect that extracted df has the same column
   # names as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% colnames(),
-    colnames(final_df))
+    tab %>% dt_data_get() %>% colnames(),
+    colnames(df))
 
   # Expect that extracted df has the same column
   # classes as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% sapply(class) %>% as.character(),
-    final_df %>% as.data.frame() %>% sapply(class) %>% as.character())
+    tab %>% dt_data_get() %>% sapply(class) %>% as.character(),
+    df %>% as.data.frame() %>% sapply(class) %>% as.character()
+  )
 
   # Expect that extracted df has the same number of
   # rows as the original dataset
   expect_equal(
-    tab %>% as.data.frame() %>% nrow(),
-    nrow(df))
+    tab %>% dt_data_get() %>% nrow(),
+    nrow(df)
+  )
 
   # Expect that the column names of the `stub_df` object
-  # are `groupname` and `rowname`
+  # are `rownum_i`, `groupname`, and `rowname`
   expect_equal(
-    colnames(attr(tab, "stub_df")),
-    c("groupname", "rowname"))
+    colnames(dt_stub_df_get(data = tab)),
+    c("rownum_i", "groupname", "rowname")
+  )
 
   # Expect that the column names of the `boxh_df` object
   # are the same as those of the original dataset
-  expect_equal(
-    colnames(attr(tab, "boxh_df")),
-    colnames(final_df))
+  dt_boxhead_get(data = tab) %>%
+    dplyr::pull(var) %>%
+    expect_equal(colnames(df))
 }
 
 expect_attr_equal <- function(data, attr_val, y) {
-  attr(data, attr_val, exact = TRUE) %>%
+
+  obj <- dt__get(data = data, key = attr_val)
+
+  obj %>%
     unlist() %>%
     unname() %>%
     expect_equal(y)
@@ -141,17 +164,21 @@ expect_attr_equal <- function(data, attr_val, y) {
 
 gt_attr_names <- function() {
 
-  c("names", "row.names", "class",
-    "boxh_df", "stub_df", "footnotes_df", "styles_df",
-    "rows_df", "cols_df", "col_labels", "grp_labels",
-    "arrange_groups", "data_df", "opts_df",
-    "formats", "transforms")
+  c(
+    "_data", "_boxhead",
+    "_stub_df", "_stub_groups", "_stub_others",
+    "_heading", "_spanners", "_stubhead",
+    "_footnotes", "_source_notes", "_formats", "_styles",
+    "_summary", "_options", "_transforms", "_has_built"
+  )
 }
 
 expect_gt_attr_names <- function(object) {
 
+  # The `groups` attribute appears when we call dplyr::group_by()
+  # on the input table
   expect_equal(
-    sort(names(attributes(object))),
+    sort(names(object)),
     sort(gt_attr_names())
   )
 }

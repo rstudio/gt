@@ -19,21 +19,38 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl) %>%
-  tab_footnote(
-    footnote = "First data cell.",
-    locations = cells_data(columns = 1, rows = 1)) %>%
-  tab_footnote(
-    footnote = "A stub cell.",
-    locations = cells_stub(rows = 1)) %>%
-  tab_footnote(
-    footnote = md("`value_1` is the second column of values."),
-    locations = cells_column_labels(columns = vars(value_1))) %>%
+  gt(data = tbl, groupname_col = "date") %>%
+  tab_spanner(
+    label = "values",
+    columns = starts_with("value")
+  ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_data(columns = 2, rows = 9)) %>%
+    locations = cells_data(columns = vars(value_1), rows = 9)
+  ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = 2, rows = 4))
+    locations = cells_data(columns = vars(value_1), rows = 4)
+  ) %>%
+  tab_footnote(
+    footnote = "First data cell.",
+    locations = cells_data(columns = "value_1", rows = 1)
+  ) %>%
+  tab_footnote(
+    footnote = "The first row group",
+    locations = cells_group(groups = ends_with("10"))
+  ) %>%
+  tab_footnote(
+    footnote = "Two sets of values",
+    locations = cells_column_spanners(spanners = starts_with("val"))
+  ) %>%
+  tab_footnote(
+    footnote = "A stub cell.",
+    locations = cells_stub(rows = 1)
+  ) %>%
+  tab_footnote(
+    footnote = md("`value_1` is the first column of values."),
+    locations = cells_column_labels(columns = vars(value_1))
+  )
 
 footnotes_tbl
