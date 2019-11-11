@@ -318,3 +318,46 @@ is_adjacent_separate <- function(group_1,
 
   return(TRUE)
 }
+
+str_catalog <- function(item_vector,
+                        conj = "and",
+                        surround = c("\"", "`"),
+                        sep = ",",
+                        oxford = TRUE) {
+
+  item_count <- length(item_vector)
+
+  surround_str_1 <- rev(surround) %>% paste(collapse = "")
+  surround_str_2 <- surround %>% paste(collapse = "")
+
+  cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
+
+  if (item_count == 1) {
+
+    return(cat_str)
+
+  } else if (item_count == 2) {
+
+    return(paste(cat_str[1], conj, cat_str[2]))
+
+  } else {
+
+    separators <- rep(paste_right(sep, " "), item_count - 1)
+
+    if (!oxford) {
+      separators[length(separators)] <- ""
+    }
+
+    separators[length(separators)] <-
+      separators[length(separators)] %>%
+      paste_right(conj) %>% paste_right(" ")
+
+    separators[length(separators) + 1] <- ""
+
+    cat_str <-
+      paste0(cat_str, separators) %>%
+      paste(collapse = "")
+
+    return(cat_str)
+  }
+}

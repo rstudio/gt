@@ -47,7 +47,7 @@ countrypops_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -103,10 +103,10 @@ countrypops %>%
   tab_header(title = "Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
   tab_spanner(
     label = "Total Population",
-    columns = c("1995", "2005", "2015")
+    columns = vars(`1995`, `2005`, `2015`)
   ) %>%
   fmt_number(
-    columns = TRUE,
+    columns = vars(`1995`, `2005`, `2015`),
     decimals = 0,
     use_seps = TRUE
   )
@@ -131,7 +131,7 @@ sza_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -172,7 +172,7 @@ sza %>%
     columns = TRUE,
     missing_text = ""
   ) %>%
-  tab_stubhead_label(label = html("month<br>(20&deg;N)")) %>%
+  tab_stubhead(label = html("month<br>(20&deg;N)")) %>%
   tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(
     column_labels.font.size = "smaller",
@@ -205,7 +205,7 @@ gtcars_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -233,7 +233,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 6. capitalize the `drivetrain` text
 7. format the prices as USD currency with commas and no decimal places shown
 8. relabel the column headings to provide nicer labels
-9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote glyphs are lowercase letters 
+9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote marks are lowercase letters 
 
 ```{r gtcars}
 # Create a gt table based on a preprocessed `gtcars`
@@ -246,8 +246,8 @@ gtcars %>%
   gt() %>%
   tab_header(title = "Select German Automobiles") %>%
   cols_merge(
-    col_1 = "mfr",
-    col_2 = "model"
+    columns = vars(mfr, model),
+    hide_columns = vars(model)
   ) %>%
   text_transform(
     locations = cells_data(columns = vars(drivetrain)),
@@ -256,8 +256,12 @@ gtcars %>%
   fmt_currency(
     columns = vars(msrp),
     currency = "USD",
-    decimals = 0,
-    use_seps = TRUE
+    decimals = 0
+  ) %>%
+  cols_label(
+    mfr = "Car",
+    drivetrain = "Drivetrain",
+    msrp = "MSRP"
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
@@ -267,12 +271,7 @@ gtcars %>%
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
     locations = cells_column_labels(columns = vars(drivetrain))
   ) %>%
-  tab_options(footnote.glyph = letters) %>%
-  cols_label(
-    mfr = "Car",
-    drivetrain = "Drivetrain",
-    msrp = "MSRP"
-  )
+  opt_footnote_marks(marks = "letters")
 ```
 
 ### `sp500`
@@ -292,7 +291,7 @@ sp500_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -336,7 +335,6 @@ down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 sp500 %>%
   dplyr::filter(date >= start_date & date <= end_date) %>%
   dplyr::select(-adj_close) %>%
-  dplyr::mutate(date = as.character(date)) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
@@ -375,9 +373,9 @@ sp500 %>%
 
 ### `pizzaplace`
 
-The `pizzaplace` dataset is unusual to say the least. It brings up more questions than answers. Why is it that the 'The Greek' pizza (`the_greek`) comes in `XL` and `XXL` sizes whilst (almost) all the other pizzas adhere to the `S`-`M`-`L` paradigm? Why is the 'Brie Carre' pizza (`brie_carre`) only small? Also, is any of this real, and, what is the nature of reality? (All of these questions are quite complicated---while I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
+The `pizzaplace` dataset is unusual to say the least. It brings up more questions than answers. Why is it that the 'The Greek' pizza (`the_greek`) comes in `XL` and `XXL` sizes whilst (almost) all the other pizzas adhere to the `S`-`M`-`L` paradigm? Why is the 'Brie Carre' pizza (`brie_carre`) only small? Also, is any of this real (?), and, what is the nature of reality? (All of these questions are quite complicated... however, while I can doubt the existence of the material world, I cannot doubt the existence of myself as someone thinking about all the delicious pizzas on offer at `pizzaplace`.)
 
-We have the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
+We have somehow obtained the 2015 sales from the pizzaplace, where each row is a pizza sold. There are 32 different types of pizza in 4 different categories: `classic`, `chicken`, `supreme`, and `veggie`. It was a great year of sales, personal problems notwithstanding. A kitchen fire in late September did not help with the morale situation. Nevertheless, $817,860 in sales for the year! That was indeed something to be cheerful about.
 
 Let's learn more about how this fascinating dataset is structured: 
 
@@ -395,7 +393,7 @@ pizzaplace_ddtab <-
 ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))
@@ -481,7 +479,7 @@ exibble_ddtab <-
   ) %>%
   gt() %>%
   tab_style(
-    style = cells_styles(text_font = "Courier"),
+    style = cell_text(font = "Courier"),
     locations = list(
       cells_data(columns = "Column"),
       cells_data(columns = "Type"))

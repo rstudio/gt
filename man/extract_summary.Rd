@@ -7,17 +7,16 @@
 extract_summary(data)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link[=gt]{gt()}}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \value{
-a list of data frames containing summary data.
+A list of data frames containing summary data.
 }
 \description{
-Get a list of summary row data frames from a \code{gt_tbl} object where
-summary rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The
-output data frames contain the \code{groupname} and \code{rowname} columns,
-whereby \code{rowname} contains descriptive stub labels for the summary rows.
+Get a list of summary row data frames from a \code{gt_tbl} object where summary
+rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The output data frames
+contain the \code{groupname} and \code{rowname} columns, whereby \code{rowname} contains
+descriptive stub labels for the summary rows.
 }
 \section{Figures}{
 
@@ -66,6 +65,7 @@ summary_extracted <-
 # row groups and a stub)
 tab_1 <-
   summary_extracted \%>\%
+  unlist(recursive = FALSE) \%>\%
   dplyr::bind_rows() \%>\%
   gt()
 

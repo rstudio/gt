@@ -18,8 +18,8 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'title'
-  helper_cells_title[[1]][2] %>%
-    as.character() %>%
+  helper_cells_title[[1]] %>%
+    rlang::eval_tidy() %>%
     expect_equal("title")
 
   # Create a `cells_title` object with the `subtitle` option
@@ -38,8 +38,8 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'subtitle'
-  helper_cells_title[[1]][2] %>%
-    as.character() %>%
+  helper_cells_title[[1]] %>%
+    rlang::eval_tidy() %>%
     expect_equal("subtitle")
 })
 
@@ -53,62 +53,52 @@ test_that("the `cells_column_labels()` function works correctly", {
   helper_cells_column_labels %>%
     expect_is(c("cells_column_labels", "location_cells"))
 
-  # Expect the length of the object to be `2`
+  # Expect the length of the object to be `1`
   helper_cells_column_labels %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(1)
 
-  # Expect that the object has the names `columns` and `groups`
+  # Expect that the object has the name `columns`
   helper_cells_column_labels %>%
     names() %>%
-    expect_equal(c("columns", "groups"))
+    expect_equal("columns")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_column_labels[[1]] %>% expect_is(c("quosure", "formula"))
 
-  # Expect the second list component to be NULL
-  is.null(helper_cells_column_labels[[2]]) %>% expect_true()
-
-  # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_column_labels[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+  # Expect the RHS of the formula to contain the vector provided
+  helper_cells_column_labels[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_column_labels` object with names provided to `groups`
-  helper_cells_column_labels <-
-    cells_column_labels(groups = c("group_1", "group_2"))
+  helper_cells_column_spanners <-
+    cells_column_spanners(spanners = c("group_1", "group_2"))
 
-  # Expect this has the `cells_column_labels` and `location_cells` classes
-  helper_cells_column_labels %>%
-    expect_is(c("cells_column_labels", "location_cells"))
+  # Expect this has the `cells_column_spanners` and `location_cells` classes
+  helper_cells_column_spanners %>%
+    expect_is(c("cells_column_spanners", "location_cells"))
 
-  # Expect the length of the object to be `2`
-  helper_cells_column_labels %>%
+  # Expect the length of the object to be `1`
+  helper_cells_column_spanners %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(1)
 
-  # Expect that the object has the names `columns` and `groups`
-  helper_cells_column_labels %>%
+  # Expect that the object has the name `spanners`
+  helper_cells_column_spanners %>%
     names() %>%
-    expect_equal(c("columns", "groups"))
+    expect_equal("spanners")
 
-  # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_column_labels[[2]] %>% expect_is(c("quosure", "formula"))
+  # Expect the first list component to have the `quosure` and `formula` classes
+  helper_cells_column_spanners[[1]] %>% expect_is(c("quosure", "formula"))
 
-  # Expect the first list component to be NULL
-  is.null(helper_cells_column_labels[[1]]) %>% expect_true()
+  # Expect the first list component to be not be NULL
+  is.null(helper_cells_column_spanners[[1]]) %>% expect_false()
 
-  # Expect the RHS of the second component formula to
-  # contain the vector provided
-  helper_cells_column_labels[[2]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"group_1\", \"group_2\")")
-
-  # Expect an error if values provided to both `columns` and `groups`
-  expect_error(
-    cells_column_labels(
-      columns = c("col_1", "col_2"),
-      groups = c("group_1", "group_2")))
+  # Expect the RHS to contain the vector provided
+  helper_cells_column_spanners[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("group_1", "group_2"))
 })
 
 test_that("the `cells_group()` function works correctly", {
@@ -134,9 +124,9 @@ test_that("the `cells_group()` function works correctly", {
   helper_cells_group[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_group[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"group_1\", \"group_2\")")
+  helper_cells_group[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("group_1", "group_2"))
 })
 
 test_that("the `cells_stub()` function works correctly", {
@@ -162,9 +152,9 @@ test_that("the `cells_stub()` function works correctly", {
   helper_cells_stub[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_stub[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"row_1\", \"row_2\")")
+  helper_cells_stub[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("row_1", "row_2"))
 })
 
 test_that("the `cells_data()` function works correctly", {
@@ -190,9 +180,9 @@ test_that("the `cells_data()` function works correctly", {
   helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+  helper_cells_data[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_data` object with names provided to `columns` and `rows`
   helper_cells_data <-
@@ -221,15 +211,15 @@ test_that("the `cells_data()` function works correctly", {
   helper_cells_data[[2]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+  helper_cells_data[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("col_1", "col_2"))
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_data[[2]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"row_1\", \"row_2\")")
+  helper_cells_data[[2]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("row_1", "row_2"))
 })
 
 test_that("the `cells_summary()` function works correctly", {
@@ -266,15 +256,15 @@ test_that("the `cells_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_summary[[1]][2] %>%
-    as.character() %>%
+  helper_cells_summary[[1]] %>%
+    rlang::eval_tidy() %>%
     expect_equal("group_a")
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_summary[[2]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+  helper_cells_summary[[2]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_summary` object with
   # columns in `vars()` provided to `columns`
@@ -286,9 +276,10 @@ test_that("the `cells_summary()` function works correctly", {
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_summary[[2]][2] %>%
-    as.character() %>%
-    expect_equal("vars(col_1, col_2)")
+  helper_cells_summary[[2]] %>%
+    rlang::eval_tidy() %>%
+    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
+    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_grand_summary()` function works correctly", {
@@ -321,9 +312,9 @@ test_that("the `cells_grand_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_grand_summary[[1]][2] %>%
-    as.character() %>%
-    expect_equal("c(\"col_1\", \"col_2\")")
+  helper_cells_grand_summary[[1]] %>%
+    rlang::eval_tidy() %>%
+    expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_grand_summary` object with
   # columns in `vars()` provided to `columns`
@@ -334,8 +325,35 @@ test_that("the `cells_grand_summary()` function works correctly", {
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
-  helper_cells_grand_summary[[1]][2] %>%
-    as.character() %>%
-    expect_equal("vars(col_1, col_2)")
+  helper_cells_grand_summary[[1]] %>%
+    rlang::eval_tidy() %>%
+    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
+    expect_equal(c("col_1", "col_2"))
 })
 
+test_that("the `cells_stubhead()` function works correctly", {
+
+  # Create a `cells_stubhead` object
+  helper_cells_stubhead <- cells_stubhead()
+
+  # Expect this has the `cells_stubhead` and `location_cells` classes
+  helper_cells_stubhead %>%
+    expect_is(c("cells_stubhead", "location_cells"))
+
+  # Expect the length of the object to be `1`
+  helper_cells_stubhead %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect that the object has the single name `groups`
+  helper_cells_stubhead %>%
+    names() %>%
+    expect_equal("groups")
+
+  # Expect the first list component to have the `character`
+  helper_cells_stubhead[[1]] %>% expect_is("character")
+
+  # Expect a specific value for the single list component
+  helper_cells_stubhead[[1]] %>%
+    expect_equal("stubhead")
+})

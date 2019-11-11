@@ -27,19 +27,23 @@ summary_tbl <-
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
-      ~sd(., na.rm = TRUE))) %>%
+      ~sd(., na.rm = TRUE))
+  ) %>%
   tab_footnote(
     footnote = "Note for Summary A.",
     locations = cells_summary(
-      groups = "A", columns = 1, rows = 1)) %>%
+      groups = "A", columns = 1, rows = 1)
+  ) %>%
   tab_footnote(
     footnote = "Note for Summary C.",
     locations = cells_summary(
-      groups = "C", columns = 1, rows = 1)) %>%
+      groups = "C", columns = 1, rows = 1)
+  ) %>%
   fmt_missing(columns = vars(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
-    row_group.background.color = "lightblue")
+    row_group.background.color = "lightblue"
+  )
 
 summary_tbl
 

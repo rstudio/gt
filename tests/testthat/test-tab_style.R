@@ -4,7 +4,7 @@ context("Ensuring that the `tab_style()` function works as expected")
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = c("gear", "carb")) %>%
-  tab_stubhead_label(label = "cars") %>%
+  tab_stubhead(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(
@@ -80,116 +80,132 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgray"),
+      style = cell_fill(color = "lightgray"),
       locations = list(
         cells_column_labels(columns = TRUE),
-        cells_stub(rows = TRUE)))
+        cells_stub(rows = TRUE))
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # its `locname` column entirely populated with `cells_column_labels`
   # and `stub`
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal(c("columns_columns", "stub"))
 
   # Expect that the internal `styles_df` data frame will have
-  # its `text` column entirely populated with the style statement
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    dplyr::pull(text) %>%
+  # its `cell_fill:color` property entirely populated with `lightgray`
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    vapply(function(x) x[1]$cell_fill$color, character(1)) %>%
     unique() %>%
-    expect_equal("background-color:lightgray;")
+    expect_equal("#D3D3D3FF")
 
   # Apply a `steelblue` background color with white text to a
   # single stub cell
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(
-        bkgd_color = "steelblue",
-        text_color = "white"),
-      locations = cells_stub(rows = "Merc 240D"))
+      style = list(
+        cell_fill(color = "steelblue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stub(rows = "Merc 240D")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("stub", "5", NA_character_, NA_character_, "8",
-      "background-color:steelblue;color:white;"))
+  # Expect certain values for inside the single `styles` list
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_fill %>%
+    .$color %>%
+    expect_equal("#4682B4FF")
+
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$color %>%
+    expect_equal("white")
 
   # Apply left-alignment to the table title
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "title"))
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "title")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("title", "1", NA_character_, NA_character_, NA_character_,
-      "text-align:left;"))
+  # Expect a specific value inside the single `styles` list
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$align %>%
+    expect_equal("left")
 
   # Apply left-alignment to the table subtitle
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
-      locations = cells_title(groups = "subtitle"))
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "subtitle")
+    )
 
-  # Expect that the internal `styles_df` data frame will have
-  # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  # Expect certain values for inside the single `styles` list
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("subtitle", "2", NA_character_, NA_character_, NA_character_,
-      "text-align:left;"))
+  # Expect a specific value inside the single `styles` list
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$align %>%
+    expect_equal("left")
 
   # Apply a green background with white text to a single cell in
   # a group summary section
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "green", text_color = "white"),
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
       locations = cells_summary(
-        groups = "Mercs", columns = "hp", rows = 2))
+        groups = "Mercs",
+        columns = "hp", rows = 2)
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("summary_cells", "5", "Mercs", "hp", "2",
-      "background-color:green;color:white;"))
 
   # Expect an error if columns couldn't be resolved
   expect_error(
     data %>%
       tab_style(
-        style = cells_styles(bkgd_color = "green", text_color = "white"),
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
         locations = cells_summary(
           groups = "Mercs", columns = starts_with("x"), rows = 2)
       )
@@ -199,7 +215,10 @@ test_that("a gt table can store the correct style statements", {
   expect_error(
     data %>%
       tab_style(
-        style = cells_styles(bkgd_color = "green", text_color = "white"),
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
         locations = cells_summary(
           groups = "Mercs", columns = starts_with("m"), rows = starts_with("x"))
       )
@@ -210,29 +229,28 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "red", text_color = "white"),
+      style = list(
+        cell_fill(color = "red"),
+        cell_text(color = "white")
+      ),
       locations = cells_grand_summary(
         columns = "hp", rows = vars(sum))
     )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("grand_summary_cells", "6", NA, "hp", "2",
-      "background-color:red;color:white;"))
 
   # Expect an error if columns couldn't be resolved
   expect_error(
     data %>%
       tab_style(
-        style = cells_styles(bkgd_color = "red", text_color = "white"),
+        style = list(
+          cell_fill(color = "red"),
+          cell_text(color = "white")
+        ),
         locations = cells_grand_summary(
           columns = starts_with("x"), rows = 2)
       )
@@ -242,7 +260,10 @@ test_that("a gt table can store the correct style statements", {
   expect_error(
     data %>%
       tab_style(
-        style = cells_styles(bkgd_color = "red", text_color = "white"),
+        style = list(
+          cell_fill(color = "red"),
+          cell_text(color = "white")
+        ),
         locations = cells_grand_summary(
           columns = starts_with("m"), rows = starts_with("x"))
       )
@@ -252,115 +273,88 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_group(groups = "Mazdas"))
+      style = cell_fill(color = "yellow"),
+      locations = cells_group(groups = "Mazdas")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("stub_groups", "5", "Mazdas", NA_character_, NA_character_,
-      "background-color:yellow;"))
 
   # Apply a `lightgreen` background to the `gear_carb_cyl`
   # column spanner cell
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_column_labels(groups = "gear_carb_cyl"))
+      style = cell_fill(color = "lightgreen"),
+      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("columns_groups", "3", "gear_carb_cyl", NA_character_, NA_character_,
-      "background-color:lightgreen;"))
 
   # Apply a `turquoise` background to a single column label
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_column_labels(columns = "gear"))
+      style = cell_fill(color = "turquoise"),
+      locations = cells_column_labels(columns = "gear")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("columns_columns", "4", NA_character_, "gear", NA_character_,
-      "background-color:turquoise;"))
 
   # Apply a `turquoise` background to a single column label
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "pink"),
-      locations = cells_column_labels(columns = "hp"))
+      style = cell_fill(color = "pink"),
+      locations = cells_column_labels(columns = "hp")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("columns_columns", "4", NA_character_, "hp", NA_character_,
-      "background-color:pink;"))
 
   # Apply a `lightgray` background to five rows of a single column
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
-      locations = cells_data(columns = "hp", rows = 1:5))
+      style = list(
+        cell_fill(color = "lightgray"),
+        cell_text(style = "italic")
+      ),
+      locations = cells_data(columns = "hp", rows = 1:5)
+    )
 
   # Expect that the internal `styles_df` data frame will have five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(5)
 
   # Expect that the `rownum` values in `styles_df` will be 1:5
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(rownum) %>%
     expect_equal(1:5)
 
-  # Expect that the style `text` in `styles_df` will be the same for
-  # all five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
-    dplyr::pull(text) %>%
-    unique() %>%
-    expect_equal("background-color:lightgray;font-style:italic;")
-
   # Expect that the `location` in `styles_df` is 'data' for all five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal("data")
 
   # Expect that the `colname` in `styles_df` is 'hp' for all five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(colname) %>%
     unique() %>%
     expect_equal("hp")
@@ -369,77 +363,70 @@ test_that("a gt table can store the correct style statements", {
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4"))
+      style = cell_fill(color = "yellow"),
+      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("data", "5", NA_character_, "disp", "1",
-      "background-color:yellow;"))
 
   # Expect an error in `tab_style` when a value for `rows` isn't
   # in the table
   expect_error(
     data %>%
       tab_style(
-        style = cells_styles(bkgd_color = "yellow"),
-        locations = cells_data(columns = "disp", rows = "Mazda RX7")))
+        style = cell_fill(color = "yellow"),
+        locations = cells_data(columns = "disp", rows = "Mazda RX7")
+      )
+  )
 
   # Apply a `yellow` background a single data cell; this time, use `vars()`
   # to specify the `rows`
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = "disp", rows = vars(`Mazda RX4`)))
+      style = cell_fill(color = "yellow"),
+      locations = cells_data(columns = "disp", rows = vars(`Mazda RX4`))
+    )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
-
-  # Expect certain values for each of the columns in the
-  # single-row `styles_df` data frame
-  expect_attr_equal(
-    tbl_html, "styles_df",
-    c("data", "5", NA_character_, "disp", "1",
-      "background-color:yellow;"))
 
   # Apply a `yellow` background a single data cell; this time, use `vars()`
   # to specify the `columns`
   tbl_html <-
     data %>%
     tab_style(
-      style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = vars(disp, hp), rows = "Mazda RX4"))
+      style = cell_fill(color = "yellow"),
+      locations = cells_data(columns = vars(disp, hp), rows = "Mazda RX4")
+    )
 
   # Expect that the internal `styles_df` data frame will have two rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(2)
 
   # Expect certain values for each of the columns in the two rows
   # of the `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE)[1, ] %>%
+  dt_styles_get(data = tbl_html) %>%
+    .[1, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", "5", NA_character_, "disp", "1",
-      "background-color:yellow;"))
+      "data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00FF")
+    )
 
-  attr(tbl_html, "styles_df", exact = TRUE)[2, ] %>%
+  dt_styles_get(data = tbl_html) %>%
+    .[2, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", "5", NA_character_, "hp", "1",
-      "background-color:yellow;"))
+      "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00FF")
+    )
 })

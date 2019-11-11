@@ -20,8 +20,8 @@ used as fallbacks.}
 \item{text_size}{The size of the font. Can be provided as a number that is
 assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper
 function. We can also use one of the following absolute size keywords:
-\code{xx-small}, \code{x-small}, \code{small}, \code{medium}, \code{large}, \code{x-large}, or
-\code{xx-large}.}
+\code{"xx-small"}, \code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"},
+or \code{"xx-large"}.}
 
 \item{text_align}{The text alignment. Can be one of either \code{"center"},
 \code{"left"}, \code{"right"}, or \code{"justify"}.}
@@ -36,10 +36,11 @@ support the numeric mapping of weight.}
 
 \item{text_stretch}{Allows for text to either be condensed or expanded. We
 can use the following text-based keywords to describe the degree of
-condensation/expansion: \code{ultra-condensed}, \code{extra-condensed}, \code{condensed},
-\code{semi-condensed}, \code{normal}, \code{semi-expanded}, \code{expanded}, \code{extra-expanded},
-and \code{ultra-expanded}. Alternatively, we can supply percentage values from
-\code{0\\\%} to \code{200\\\%}, inclusive. Negative percentage values are not allowed.}
+condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
+\code{"condensed"}, \code{"semi-condensed"}, \code{"normal"}, \code{"semi-expanded"},
+\code{"expanded"}, \code{"extra-expanded"}, and \code{"ultra-expanded"}. Alternatively, we
+can supply percentage values from \code{0\\\%} to \code{200\\\%}, inclusive. Negative
+percentage values are not allowed.}
 
 \item{text_indent}{The indentation of the text.}
 
@@ -49,17 +50,22 @@ we can use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 \item{text_transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
 }
-\value{
-A character vector containing formatted styles.
-}
 \description{
 This helper function is to be used with the \code{\link[=tab_style]{tab_style()}} function, which
 itself allows for the setting of custom styles to one or more cells. We can
-also define several styles within a single call of \code{cells_styles} and
+also define several styles within a single call of \code{cells_styles()} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
+\details{
+This function is now soft-deprecated, which means it will soon be removed.
+Please consider using the \code{\link[=cell_fill]{cell_fill()}} (where \code{bkgd_color} is \code{color}) and
+\code{\link[=cell_text]{cell_text()}} (contains all other arguments here without the leading
+\code{text_}).
+}
 \seealso{
-Other helper functions: \code{\link{escape_latex}},
+Other helper functions: \code{\link{cell_borders}},
+  \code{\link{cell_fill}}, \code{\link{cell_text}},
+  \code{\link{escape_latex}},
   \code{\link{gt_latex_dependencies}}, \code{\link{html}},
   \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
   \code{\link{random_id}}

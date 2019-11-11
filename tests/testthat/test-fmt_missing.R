@@ -7,7 +7,8 @@ test_that("the `fmt_missing()` function works correctly", {
     data.frame(
       num_1 = c(NA, 74, NA, 93, NA, 76, NA),
       num_2 = c(34, 74, 23, 93, 35, 76, 57),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
@@ -17,18 +18,18 @@ test_that("the `fmt_missing()` function works correctly", {
   expect_is(tab, c("gt_tbl", "data.frame"))
 
   # Expect certain named attributes
-  expect_true(
-    all(
-      names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "grp_labels",
-          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
+  # expect_true(
+  #   all(
+  #     names(attributes(tab)) %in%
+  #       c("names", "class", "row.names",
+  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
+  #         "rows_df", "cols_df", "col_labels", "grp_labels",
+  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  num_1 <- (tab %>% as.data.frame())[["num_1"]]
-  num_2 <- (tab %>% as.data.frame())[["num_2"]]
+  num_1 <- (tab %>% dt_data_get())[["num_1"]]
+  num_2 <- (tab %>% dt_data_get())[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset

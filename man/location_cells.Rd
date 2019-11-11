@@ -3,6 +3,8 @@
 \name{location_cells}
 \alias{location_cells}
 \alias{cells_title}
+\alias{cells_stubhead}
+\alias{cells_column_spanners}
 \alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
@@ -13,20 +15,30 @@
 \usage{
 cells_title(groups = c("title", "subtitle"))
 
-cells_column_labels(columns, groups)
+cells_stubhead()
 
-cells_group(groups)
+cells_column_spanners(spanners)
 
-cells_stub(rows = NULL)
+cells_column_labels(columns)
 
-cells_data(columns = NULL, rows = NULL)
+cells_group(groups = TRUE)
 
-cells_summary(groups = NULL, columns = NULL, rows = NULL)
+cells_stub(rows = TRUE)
 
-cells_grand_summary(columns = NULL, rows = NULL)
+cells_data(columns = TRUE, rows = TRUE)
+
+cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
+
+cells_grand_summary(columns = TRUE, rows = TRUE)
 }
 \arguments{
-\item{columns, rows, groups}{Either a vector of names, a vector of indices,
+\item{groups}{Used in the \code{cells_title()}, \code{cells_group()}, and
+\code{cells_summary()} functions to specify which groups to target.}
+
+\item{spanners}{Used in the \code{cells_column_spanners()} function to indicate
+which spanners to target.}
+
+\item{columns, rows}{Either a vector of names, a vector of indices,
 values provided by \code{\link[=vars]{vars()}}, values provided by \code{c()}, or a select helper
 function (see Details for information on these functions).}
 }
@@ -37,9 +49,9 @@ a list object of class \code{location_cells}.
 These helper functions are used to target individual cells in different
 locations (e.g., the stub, the column labels, the title, etc.). They can be
 used in any of these functions (which all have a \code{locations} argument):
-\code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and \code{\link[=text_transform]{text_transform()}} Furthermore, multiple
-locations can be targeted by enclosing several \code{cells_*()} helper functions
-in a list.
+\code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and \code{\link[=text_transform]{text_transform()}}. Furthermore,
+multiple locations can be targeted by enclosing several \code{cells_*()} helper
+functions in a \code{\link[=list]{list()}}.
 }
 \details{
 The following helper functions can be used to target cells (roughly in order
@@ -51,22 +63,29 @@ from the top to the bottom of a table):
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
 
-\item \code{cells_column_labels()}: targets labels in the column labels (the
-\code{columns} argument) or the spanner column labels (the \code{groups}
-argument) in the table's column labels part.
+\item \code{cells_stubhead()}: targets the stubhead location, a cell of which is
+only available when there is a stub; a label in that location can be created
+by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
 
-\item \code{cells_group()}: targets the row group labels in any available
-row groups using the \code{groups} argument.
+\item \code{cells_column_labels()}: targets the column labels.
 
-\item \code{cells_stub()}: targets row labels in the table stub using the
-\code{rows} argument.
+\item \code{cells_column_spanners()}: targets the spanner column labels, which
+appear above the column labels.
+
+\item \code{cells_group()}: targets the row group labels in any available row
+groups using the \code{groups} argument.
+
+\item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
+argument.
 
 \item \code{cells_data()}: targets data cells in the table body using
 intersections of \code{columns} and \code{rows}.
 
-\item \code{cells_summary()}: targets summary cells in the table body using
-the \code{groups} argument and intersections of \code{columns} and
-\code{rows}.
+\item \code{cells_summary()}: targets summary cells in the table body using the
+\code{groups} argument and intersections of \code{columns} and \code{rows}.
+
+\item \code{cells_grand_summary()}: targets cells of the table's grand summary
+using intersections of \code{columns} and \code{rows}
 }
 }
 \section{Figures}{
@@ -85,6 +104,8 @@ the \code{groups} argument and intersections of \code{columns} and
 }
 
 \examples{
+library(tidyr)
+
 # Use `sp500` to create a gt table; add
 # a header (with a title and a subtitle),
 # and then add a footnote to the subtitle
@@ -146,7 +167,7 @@ tab_3 <-
   ) \%>\%
   dplyr::group_by(name, size) \%>\%
   dplyr::summarize(
-    `Pizzas Sold` = n()
+    `Pizzas Sold` = dplyr::n()
   ) \%>\%
   gt(rowname_col = "size") \%>\%
   summary_rows(
@@ -180,9 +201,10 @@ tab_4 <-
     missing_text = ""
   ) \%>\%
   tab_style(
-    style = cells_styles(
-      bkgd_color = "darkblue",
-      text_color = "white"),
+    style = list(
+      cell_fill(color = "darkblue"),
+      cell_text(color = "white")
+      ),
     locations = cells_stub(rows = TRUE)
   )
 
@@ -196,13 +218,13 @@ tab_5 <-
   dplyr::filter(ctry_origin == "United Kingdom") \%>\%
   dplyr::select(mfr, model, year, hp) \%>\%
   gt() \%>\%
-  tab_options(footnote.glyph = "*") \%>\%
   tab_footnote(
     footnote = "Highest horsepower.",
     locations = cells_data(
       columns = vars(hp),
       rows = hp == max(hp))
-  )
+  ) \%>\%
+  opt_footnote_marks(marks = "*")
 
 # Use `countrypops` to create a gt table; add
 # some styling to the summary data cells with
@@ -234,18 +256,20 @@ tab_6 <-
     decimals = 0
   ) \%>\%
   tab_style(
-    style = cells_styles(
-      text_style = "italic",
-      bkgd_color = "lightblue"),
+    style = list(
+      cell_text(style = "italic"),
+      cell_fill(color = "lightblue")
+      ),
     locations = cells_summary(
       groups = "1960s",
       columns = vars(population),
       rows = 1)
   ) \%>\%
   tab_style(
-    style = cells_styles(
-      text_style = "italic",
-      bkgd_color = "lightgreen"),
+    style = list(
+      cell_text(style = "italic"),
+      cell_fill(color = "lightgreen")
+      ),
     locations = cells_summary(
       groups = "1960s",
       columns = vars(population),

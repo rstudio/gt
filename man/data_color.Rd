@@ -4,7 +4,7 @@
 \alias{data_color}
 \title{Set data cell colors using a palette or a color function}
 \usage{
-data_color(data, columns, colors, alpha = NULL, apply_to = "bkgd",
+data_color(data, columns, colors, alpha = 1, apply_to = "fill",
   autocolor_text = TRUE)
 }
 \arguments{
@@ -28,7 +28,7 @@ option is ignored (each of the colorizing helper functions has its own
 \code{alpha} argument).}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
-include the cell background (the default, given as \code{bkgd}) or the cell
+include the cell background (the default, given as \code{fill}) or the cell
 text (\code{text}).}
 
 \item{autocolor_text}{An option to let \pkg{gt} modify the coloring of text
@@ -127,7 +127,7 @@ tab_2 <-
     type \%in\% c("chicken", "supreme")) \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
-    sold = n(),
+    sold = dplyr::n(),
     income = sum(price)
   ) \%>\%
   gt(rowname_col = "size") \%>\%

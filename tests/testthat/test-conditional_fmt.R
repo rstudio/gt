@@ -30,7 +30,6 @@ time_tbl <-
 # `data_tbl` dataset
 tab_time <- gt(data = time_tbl)
 
-
 test_that("the `fmt_number()` function works with conditional `rows`", {
 
   expect_equal(

@@ -1,12 +1,11 @@
 #' Extract a summary list from a \pkg{gt} object
 #'
-#' Get a list of summary row data frames from a `gt_tbl` object where
-#' summary rows were added via the [summary_rows()] function. The
-#' output data frames contain the `groupname` and `rowname` columns,
-#' whereby `rowname` contains descriptive stub labels for the summary rows.
-#' @param data a table object that is created using the [gt()]
-#'   function.
-#' @return a list of data frames containing summary data.
+#' Get a list of summary row data frames from a `gt_tbl` object where summary
+#' rows were added via the [summary_rows()] function. The output data frames
+#' contain the `groupname` and `rowname` columns, whereby `rowname` contains
+#' descriptive stub labels for the summary rows.
+#' @param data A table object that is created using the [gt()] function.
+#' @return A list of data frames containing summary data.
 #' @examples
 #' # Use `sp500` to create a gt table with
 #' # row groups; create summary rows by row
@@ -49,6 +48,7 @@
 #' # row groups and a stub)
 #' tab_1 <-
 #'   summary_extracted %>%
+#'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
 #'   gt()
 #'
@@ -59,13 +59,9 @@
 #' @export
 extract_summary <- function(data) {
 
-  # Extract all attributes from the `data`
-  # object into `data_attr`
-  data_attr <- attributes(data)
-
   # Stop function if there are no
   # directives to create summary rows
-  if (is.null(data_attr$summary)) {
+  if (!dt_summary_exists(data = data)) {
     stop("There is no summary list to extract.\n",
          "Use the `summary_rows()` function to generate summaries.",
          call. = FALSE)
@@ -77,5 +73,5 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  built_data$list_of_summaries$summary_df_data_list
+  dt_summary_df_data_get(data = built_data) %>% as.list()
 }

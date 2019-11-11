@@ -37,17 +37,28 @@ knit_print.gt_tbl <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
-#' @importFrom htmltools tags HTML tagList
+#' Convert a \pkg{gt} table to an \pkg{htmltools} `tagList`
+#'
+#' This converts a \pkg{gt} table object to an \pkg{htmltools}
+#' [htmltools::tagList()] object. The returned object is of the `shiny.tag.list`
+#' class and using `as.character()` with that will render the HTML, resulting in
+#' a length 1 character vector that contains the HTML table.
+#'
+#' @param x Object to be converted.
+#' @param ... Any additional parameters.
+#' @keywords internal
+#' @noRd
 as.tags.gt_tbl <- function(x, ...) {
 
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
-  # Extract the `opts_df` data frame object from `x`
-  opts_df <- attr(x, "opts_df", exact = TRUE)
-
-  # Get the table ID from `opts_df`
-  id <- opts_df_get(opts_df, option = "table_id")
+  # Get options related to the enclosing <div>
+  id <- x %>% dt_options_get_value(option = "table_id")
+  container_overflow_x <- x %>% dt_options_get_value(option = "container_overflow_x")
+  container_overflow_y <- x %>% dt_options_get_value(option = "container_overflow_y")
+  container_width <- x %>% dt_options_get_value(option = "container_width")
+  container_height <- x %>% dt_options_get_value(option = "container_height")
 
   # If the ID hasn't been set, set `id` as NULL
   if (is.na(id)) {
@@ -58,10 +69,19 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_scss(data = x, id = id)
 
   # Attach the dependency to the HTML table
-  html_tbl <- htmltools::tagList(
-    htmltools::tags$style(htmltools::HTML(css)),
-    tags$div(id = id, style = htmltools::css(`overflow-x` = "auto"), htmltools::HTML(html_table))
-  )
+  html_tbl <-
+    htmltools::tagList(
+      htmltools::tags$style(htmltools::HTML(css)),
+      htmltools::tags$div(
+        id = id,
+        style = htmltools::css(
+          `overflow-x` = container_overflow_x,
+          `overflow-y` = container_overflow_y,
+          width = container_width,
+          height = container_height
+        ),
+        htmltools::HTML(html_table))
+    )
 
   html_tbl
 }

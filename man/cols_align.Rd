@@ -17,7 +17,7 @@ according to the data type (see the Details section for specifics on which
 alignments are applied).}
 
 \item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}), then
+should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}, then
 the chosen alignment affects all columns.}
 }
 \value{
@@ -64,6 +64,7 @@ Other column modification functions: \code{\link{cols_hide}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+  \code{\link{cols_move}}, \code{\link{cols_width}},
+  \code{\link{tab_spanner_delim}}
 }
 \concept{column modification functions}

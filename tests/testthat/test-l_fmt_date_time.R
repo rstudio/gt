@@ -232,13 +232,13 @@ test_that("the `fmt_time()` function works correctly", {
     (tbl_latex %>%
        fmt_time(columns = "time", time_style = 1) %>%
        render_formats_test(context = "latex"))[["time"]],
-    c("12:35:23", "15:01:34", "9:45:23", "1:32:00"))
+    c("12:35:23", "15:01:34", "09:45:23", "01:32:00"))
 
   expect_equal(
     (tbl_latex %>%
        fmt_time(columns = "time", time_style = 2) %>%
        render_formats_test(context = "latex"))[["time"]],
-    c("12:35", "15:01", "9:45", "1:32"))
+    c("12:35", "15:01", "09:45", "01:32"))
 
   expect_equal(
     (tbl_latex %>%
@@ -283,14 +283,14 @@ test_that("the `fmt_datetime()` function works correctly", {
        fmt_datetime(columns = "datetime", date_style = 1, time_style = 1) %>%
        render_formats_test(context = "latex"))[["datetime"]],
     c("2017-06-10 12:35:23", "2017-07-12 15:01:34",
-      "2017-08-05 9:45:23", "2017-10-23 1:32:00"))
+      "2017-08-05 09:45:23", "2017-10-23 01:32:00"))
 
   expect_equal(
     (tbl_latex %>%
        fmt_datetime(columns = "datetime", date_style = 2, time_style = 2) %>%
        render_formats_test(context = "latex"))[["datetime"]],
     c("Saturday, June 10, 2017 12:35", "Wednesday, July 12, 2017 15:01",
-      "Saturday, August 5, 2017 9:45", "Monday, October 23, 2017 1:32"))
+      "Saturday, August 5, 2017 09:45", "Monday, October 23, 2017 01:32"))
 
   expect_equal(
     (tbl_latex %>%

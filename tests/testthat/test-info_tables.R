@@ -12,7 +12,7 @@ test_that("the `info_date_style()` function works correctly", {
   # specific dimensions
   expect_equal(
     info_date_style() %>%
-      as.data.frame() %>%
+      dt_data_get() %>%
       dim(),
     c(14, 3))
 })
@@ -29,7 +29,7 @@ test_that("the `info_time_style()` function works correctly", {
   # specific dimensions
   expect_equal(
     info_time_style() %>%
-      as.data.frame() %>%
+      dt_data_get() %>%
       dim(),
     c(5, 3))
 })
