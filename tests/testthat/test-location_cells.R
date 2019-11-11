@@ -53,62 +53,52 @@ test_that("the `cells_column_labels()` function works correctly", {
   helper_cells_column_labels %>%
     expect_is(c("cells_column_labels", "location_cells"))
 
-  # Expect the length of the object to be `2`
+  # Expect the length of the object to be `1`
   helper_cells_column_labels %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(1)
 
-  # Expect that the object has the names `columns` and `groups`
+  # Expect that the object has the name `columns`
   helper_cells_column_labels %>%
     names() %>%
-    expect_equal(c("columns", "groups"))
+    expect_equal("columns")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_column_labels[[1]] %>% expect_is(c("quosure", "formula"))
 
-  # Expect the second list component to be NULL
-  is.null(helper_cells_column_labels[[2]]) %>% expect_true()
-
-  # Expect the RHS of the first component formula to contain the vector provided
+  # Expect the RHS of the formula to contain the vector provided
   helper_cells_column_labels[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_column_labels` object with names provided to `groups`
-  helper_cells_column_labels <-
-    cells_column_labels(groups = c("group_1", "group_2"))
+  helper_cells_column_spanners <-
+    cells_column_spanners(spanners = c("group_1", "group_2"))
 
-  # Expect this has the `cells_column_labels` and `location_cells` classes
-  helper_cells_column_labels %>%
-    expect_is(c("cells_column_labels", "location_cells"))
+  # Expect this has the `cells_column_spanners` and `location_cells` classes
+  helper_cells_column_spanners %>%
+    expect_is(c("cells_column_spanners", "location_cells"))
 
-  # Expect the length of the object to be `2`
-  helper_cells_column_labels %>%
+  # Expect the length of the object to be `1`
+  helper_cells_column_spanners %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(1)
 
-  # Expect that the object has the names `columns` and `groups`
-  helper_cells_column_labels %>%
+  # Expect that the object has the name `spanners`
+  helper_cells_column_spanners %>%
     names() %>%
-    expect_equal(c("columns", "groups"))
+    expect_equal("spanners")
 
-  # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_column_labels[[2]] %>% expect_is(c("quosure", "formula"))
+  # Expect the first list component to have the `quosure` and `formula` classes
+  helper_cells_column_spanners[[1]] %>% expect_is(c("quosure", "formula"))
 
-  # Expect the first list component to be NULL
-  is.null(helper_cells_column_labels[[1]]) %>% expect_true()
+  # Expect the first list component to be not be NULL
+  is.null(helper_cells_column_spanners[[1]]) %>% expect_false()
 
-  # Expect the RHS of the second component formula to
-  # contain the vector provided
-  helper_cells_column_labels[[2]] %>%
+  # Expect the RHS to contain the vector provided
+  helper_cells_column_spanners[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("group_1", "group_2"))
-
-  # Expect an error if values provided to both `columns` and `groups`
-  expect_error(
-    cells_column_labels(
-      columns = c("col_1", "col_2"),
-      groups = c("group_1", "group_2")))
 })
 
 test_that("the `cells_group()` function works correctly", {

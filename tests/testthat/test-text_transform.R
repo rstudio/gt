@@ -34,10 +34,13 @@ test_that("the `text_transform()` function works correctly", {
 
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
-      fn = function(x) paste0(x, " mpg"))
+      fn = function(x) paste0(x, " mpg")
+    )
 
   # Expect that all data values in the `mpg` column have 'mpg'
   # at the end
@@ -50,12 +53,15 @@ test_that("the `text_transform()` function works correctly", {
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column with a slightly more
   # complex function
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         paste0(x, " ", ifelse(x >= 20, "(good)", "(bad)"))
-      })
+      }
+    )
 
   # Expect that all data values in the `mpg` column
   # have either '(good)' or '(bad)' at the end
@@ -68,12 +74,15 @@ test_that("the `text_transform()` function works correctly", {
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column with a function that
   # returns a single numeric value
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         ifelse(x >= 20, 25, 15)
-      })
+      }
+    )
 
   # Expect that all data values in the `mpg` column
   # are either '15' or '25'
@@ -97,7 +106,8 @@ test_that("the `text_transform()` function works correctly", {
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "per gallon")
-      })
+      }
+    )
 
   # Expect that all data values in the `mpg` column have 'mpg'
   # at the end
@@ -109,17 +119,21 @@ test_that("the `text_transform()` function works correctly", {
 
   # Call two `text_transform()`s and expect them to be later
   # executed in the correct order
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "miles")
-      }) %>%
+      }
+    ) %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "per gallon")
-      })
+      }
+    )
 
   # Expect that all data values in the `mpg` column have 'mpg'
   # at the end
@@ -130,7 +144,7 @@ test_that("the `text_transform()` function works correctly", {
     expect_match(".*miles per gallon$")
 
   # Extract the internal `transforms` attr
-  transforms <- attr(tbl_html, "transforms", exact = TRUE)
+  transforms <- dt_transforms_get(data = tbl_html)
 
   # Expect two components to be held within `transforms`
   transforms %>%
@@ -151,11 +165,11 @@ test_that("the `text_transform()` function works correctly", {
   # `columns` and `rows`
   transforms[[1]]$resolved %>%
     names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_equal(c("columns", "rows", "colnames"))
 
   transforms[[2]]$resolved %>%
     names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_equal(c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_data`, `location_cells`
@@ -181,10 +195,13 @@ test_that("the `text_transform()` function works correctly", {
 
   # Call `text_transform()` with the custom function `round_mult()`
   # as input to `fn`
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     text_transform(
       locations = cells_data(columns = vars(mpg)),
-      fn = round_mult)
+      fn = round_mult
+    )
 
   # Expect values rounded to the default `0.25` interval
   tbl_html %>%

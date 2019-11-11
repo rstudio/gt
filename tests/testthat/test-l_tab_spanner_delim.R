@@ -1,15 +1,15 @@
-context("LaTeX -- Ensuring that the `cols_split_delim()` function works as expected")
+context("LaTeX -- Ensuring that the `tab_spanner_delim()` function works as expected")
 
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]
 
-test_that("the `cols_split_delim()` function works correctly", {
+test_that("the `tab_spanner_delim()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels
   tbl_latex <-
     gt(iris_short) %>%
-    cols_split_delim(delim = ".")
+    tab_spanner_delim(delim = ".")
 
   # Expect a characteristic pattern
   grepl(
@@ -26,9 +26,10 @@ test_that("the `cols_split_delim()` function works correctly", {
   # the splitting only to the `Sepal.Length` and `Sepal.Width` columns
   tbl_latex <-
     gt(iris_short) %>%
-    cols_split_delim(
+    tab_spanner_delim(
       delim = ".",
-      columns = c("Sepal.Length", "Sepal.Width"))
+      columns = c("Sepal.Length", "Sepal.Width")
+    )
 
   # Expect a characteristic pattern
   grepl(
@@ -46,9 +47,10 @@ test_that("the `cols_split_delim()` function works correctly", {
   # columns using the `vars()` helper
   tbl_latex <-
     gt(iris_short) %>%
-    cols_split_delim(
+    tab_spanner_delim(
       delim = ".",
-      columns = vars(Sepal.Length, Sepal.Width))
+      columns = vars(Sepal.Length, Sepal.Width)
+    )
 
   # Expect a characteristic pattern
   grepl(

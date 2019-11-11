@@ -16,17 +16,17 @@ test_that("the `fmt_date()` function works correctly", {
   expect_is(tab, c("gt_tbl", "data.frame"))
 
   # Expect certain named attributes
-  expect_true(
-    all(
-      names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "grp_labels",
-          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
+  # expect_true(
+  #   all(
+  #     names(attributes(tab)) %in%
+  #       c("names", "class", "row.names",
+  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
+  #         "rows_df", "cols_df", "col_labels", "grp_labels",
+  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  date <- (tab %>% as.data.frame())[["date"]]
+  date <- (tab %>% dt_data_get())[["date"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -45,7 +45,8 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 1) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10"))
+    c("2017-10-15", "2013-02-22",
+      "2014-09-22", "2018-01-10"))
 
   expect_equal(
     (tab %>%
@@ -86,7 +87,8 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 7) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15 Oct 2017", "22 Feb 2013", "22 Sep 2014", "10 Jan 2018"))
+    c("15 Oct 2017", "22 Feb 2013",
+      "22 Sep 2014", "10 Jan 2018"))
 
   expect_equal(
     (tab %>%
@@ -149,7 +151,8 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 1) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10"))
+    c("2017-10-15", "2013-02-22",
+      "2014-09-22", "2018-01-10"))
 
   expect_equal(
     (tab %>%
@@ -190,7 +193,8 @@ test_that("the `fmt_date()` function works correctly", {
     (tab %>%
        fmt_date(columns = "date", date_style = 7) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("15 Oct 2017", "22 Feb 2013", "22 Sep 2014", "10 Jan 2018"))
+    c("15 Oct 2017", "22 Feb 2013",
+      "22 Sep 2014", "10 Jan 2018"))
 
   expect_equal(
     (tab %>%
@@ -252,17 +256,17 @@ test_that("the `fmt_time()` function works correctly", {
   expect_is(tab, c("gt_tbl", "data.frame"))
 
   # Expect certain named attributes
-  expect_true(
-    all(
-      names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "grp_labels",
-          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
+  # expect_true(
+  #   all(
+  #     names(attributes(tab)) %in%
+  #       c("names", "class", "row.names",
+  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
+  #         "rows_df", "cols_df", "col_labels", "grp_labels",
+  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  time <- (tab %>% as.data.frame())[["time"]]
+  time <- (tab %>% dt_data_get())[["time"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -281,13 +285,13 @@ test_that("the `fmt_time()` function works correctly", {
     (tab %>%
        fmt_time(columns = "time", time_style = 1) %>%
        render_formats_test(context = "default"))[["time"]],
-    c("12:35:23", "15:01:34", "9:45:23", "1:32:00"))
+    c("12:35:23", "15:01:34", "09:45:23", "01:32:00"))
 
   expect_equal(
     (tab %>%
        fmt_time(columns = "time", time_style = 2) %>%
        render_formats_test(context = "default"))[["time"]],
-    c("12:35", "15:01", "9:45", "1:32"))
+    c("12:35", "15:01", "09:45", "01:32"))
 
   expect_equal(
     (tab %>%
@@ -327,17 +331,17 @@ test_that("the `fmt_datetime()` function works correctly", {
   expect_is(tab, c("gt_tbl", "data.frame"))
 
   # Expect certain named attributes
-  expect_true(
-    all(
-      names(attributes(tab)) %in%
-        c("names", "class", "row.names",
-          "boxh_df", "stub_df", "footnotes_df", "styles_df",
-          "rows_df", "cols_df", "col_labels", "grp_labels",
-          "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
+  # expect_true(
+  #   all(
+  #     names(attributes(tab)) %in%
+  #       c("names", "class", "row.names",
+  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
+  #         "rows_df", "cols_df", "col_labels", "grp_labels",
+  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  datetime <- (tab %>% as.data.frame())[["datetime"]]
+  datetime <- (tab %>% dt_data_get())[["datetime"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -350,7 +354,8 @@ test_that("the `fmt_datetime()` function works correctly", {
       fmt_datetime(
         columns = "num_1",
         date_style = 1,
-        time_style = 1))
+        time_style = 1)
+  )
 
   #
   # Format `time` in various date formats and verify the output
@@ -361,14 +366,14 @@ test_that("the `fmt_datetime()` function works correctly", {
        fmt_datetime(columns = "datetime", date_style = 1, time_style = 1) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c("2017-06-10 12:35:23", "2017-07-12 15:01:34",
-      "2017-08-05 9:45:23", "2017-10-23 1:32:00"))
+      "2017-08-05 09:45:23", "2017-10-23 01:32:00"))
 
   expect_equal(
     (tab %>%
        fmt_datetime(columns = "datetime", date_style = 2, time_style = 2) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c("Saturday, June 10, 2017 12:35", "Wednesday, July 12, 2017 15:01",
-      "Saturday, August 5, 2017 9:45", "Monday, October 23, 2017 1:32"))
+      "Saturday, August 5, 2017 09:45", "Monday, October 23, 2017 01:32"))
 
   expect_equal(
     (tab %>%

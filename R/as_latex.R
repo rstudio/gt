@@ -37,128 +37,53 @@
 as_latex <- function(data) {
 
   # Build all table data objects through a common pipeline
-  built_data <- data %>% build_data(context = "latex")
+  data <- data %>% build_data(context = "latex")
 
-  # Use LaTeX-specific builders to generate the Latex table code
-  with(built_data, {
+  # Composition of LaTeX ----------------------------------------------------
 
-    # Add footnote marks to elements of the table columns
-    boxh_df <-
-      set_footnote_marks_columns(
-        footnotes_resolved = footnotes_resolved,
-        boxh_df = boxh_df,
-        output = "latex"
-      )
+  # Create a LaTeX fragment for the start of the table
+  table_start <- create_table_start_l(data = data)
 
-    # Add footnote marks to the `data` rows
-    output_df <-
-      apply_footnotes_to_output(
-        output_df = output_df,
-        footnotes_resolved = footnotes_resolved,
-        output = "latex"
-      )
+  # Create the heading component
+  heading_component <- create_heading_component(data = data, context = "latex")
 
-    # Add footnote marks to stub group title elements
-    groups_rows_df <-
-      set_footnote_marks_stub_groups(
-        footnotes_resolved = footnotes_resolved,
-        groups_rows_df = groups_rows_df,
-        output = "latex"
-      )
+  # Create the columns component
+  columns_component <- create_columns_component_l(data = data)
 
-    # Add footnote marks to the `summary` rows
-    list_of_summaries <-
-      apply_footnotes_to_summary(
-        list_of_summaries = list_of_summaries,
-        footnotes_resolved = footnotes_resolved
-      )
+  # Create the body component
+  body_component <- create_body_component_l(data = data)
 
-    # Extraction of body content as a vector ----------------------------------
-    body_content <- as.vector(t(output_df))
+  # Create the source notes component
+  source_notes_component <- create_source_note_component_l(data = data)
 
-    # Composition of LaTeX ----------------------------------------------------
+  # Create the footnotes component
+  footnotes_component <- create_footnotes_component_l(data = data)
 
-    # Split `body_content` by slices of rows
-    row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
+  # Create a LaTeX fragment for the ending tabular statement
+  table_end <- create_table_end_l()
 
-    # Create a LaTeX fragment for the start of the table
-    table_start <- create_table_start_l(col_alignment = col_alignment)
+  # If the `rmarkdown` package is available, use the
+  # `latex_dependency()` function to load latex packages
+  # without requiring the user to do so
+  if (requireNamespace("rmarkdown", quietly = TRUE)) {
 
-    # Create the heading component of the table
-    heading_component <-
-      create_heading_component(
-        heading = heading,
-        footnotes_resolved = footnotes_resolved,
-        styles_resolved = styles_resolved,
-        n_cols = n_cols,
-        subtitle_defined = subtitle_defined,
-        output = "latex"
-      )
+    latex_packages <-
+      lapply(latex_packages(), rmarkdown::latex_dependency)
 
-    # Create the columns component of the table
-    columns_component <-
-      create_columns_component_l(
-        boxh_df = boxh_df,
-        output_df = output_df,
-        stub_available = stub_available,
-        spanners_present = spanners_present,
-        stubhead = stubhead
-      )
+  } else {
+    latex_packages <- NULL
+  }
 
-    # Create the body component of the table
-    body_component <-
-      create_body_component_l(
-        row_splits = row_splits,
-        groups_rows_df = groups_rows_df,
-        col_alignment = col_alignment,
-        stub_available = stub_available,
-        summaries_present = summaries_present,
-        list_of_summaries = list_of_summaries,
-        n_rows = n_rows,
-        n_cols = n_cols
-      )
-
-    # Create a LaTeX fragment for the ending tabular statement
-    table_end <- create_table_end_l()
-
-    # Create the footnote component of the table
-    footnote_component <-
-      create_footnote_component_l(
-        footnotes_resolved = footnotes_resolved,
-        opts_df = opts_df
-      )
-
-    # Create the source note component of the table
-    source_note_component <-
-      create_source_note_component_l(
-        source_note = source_note
-      )
-
-    # If the `rmarkdown` package is available, use the
-    # `latex_dependency()` function to load latex packages
-    # without requiring the user to do so
-    if (requireNamespace("rmarkdown", quietly = TRUE)) {
-
-      latex_packages <-
-        lapply(latex_packages(), rmarkdown::latex_dependency)
-
-    } else {
-      latex_packages <- NULL
-    }
-
-    # Compose the LaTeX table
-    latex_table <-
-      paste0(
-        table_start,
-        heading_component,
-        columns_component,
-        body_component,
-        table_end,
-        footnote_component,
-        source_note_component,
-        collapse = "") %>%
-      knitr::asis_output(meta = latex_packages)
-
-    latex_table
-  })
+  # Compose the LaTeX table
+  paste0(
+    table_start,
+    heading_component,
+    columns_component,
+    body_component,
+    table_end,
+    footnotes_component,
+    source_notes_component,
+    collapse = ""
+  ) %>%
+    knitr::asis_output(meta = latex_packages)
 }

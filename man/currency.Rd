@@ -33,7 +33,7 @@ rendered as HTML and we use \code{currency(latex = "LTC", default = "ltc")}, the
 currency symbol will be \code{"ltc"}. For convenience, if we provide only a single
 string without a name, it will be taken as the \code{default} (i.e.,
 \code{currency("ltc")} is equivalent to \code{currency(default = "ltc")}). However, if
-we were to specify currency strings for muliple output contexts, names are
+we were to specify currency strings for multiple output contexts, names are
 required each and every context.
 }
 \examples{
