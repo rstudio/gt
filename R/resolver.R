@@ -1,165 +1,293 @@
 #' Resolve the `cells_data` object once it has access to the `data` object
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{cells_data()} function.
-#' @importFrom dplyr arrange distinct
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_data()` function.
+#' @import rlang
 #' @noRd
 resolve_cells_data <- function(data,
                                object) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  # Obtain the `columns` and `rows` components of
-  # object created by the `cells_data()` function
-  object_columns <- object$columns
-  object_rows <- object$rows
-
-  # Collect the column names from `data_df`
-  colnames <- names(data_df)
-
-  # Collect the rownames from `stub_df`
-  rownames <- stub_df$rowname
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as integer vectors
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars(object_columns, colnames, data_df)
-  resolved_rows <- resolve_vars(object_rows, rownames, data_df)
+  resolved_columns_idx <-
+    resolve_vars_idx(
+      var_expr = !!object$columns,
+      data = data
+    )
+
+  # Get the resolved rows
+  resolved_rows_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!object$rows,
+      data_tbl = data_tbl,
+      vals = stub_df$rowname
+    )
 
   # Get all possible combinations with `expand.grid()`
   expansion <-
-    expand.grid(resolved_columns, resolved_rows, stringsAsFactors = FALSE) %>%
+    expand.grid(
+      resolved_columns_idx,
+      resolved_rows_idx,
+      stringsAsFactors = FALSE
+    ) %>%
     dplyr::arrange(Var1) %>%
     dplyr::distinct()
 
   # Create a list object
-  cells_resolved <- list(columns = expansion[[1]], rows = expansion[[2]])
+  cells_resolved <-
+    list(
+      columns = expansion[[1]],
+      colnames = resolve_vars(var_expr = expansion[[1]], data = data),
+      rows = expansion[[2]]
+    )
 
   # Apply the `data_cells_resolved` class
-  attr(cells_resolved, "class") <- "data_cells_resolved"
+  class(cells_resolved) <- "data_cells_resolved"
 
   cells_resolved
 }
 
 #' Resolve the `cells_stub` object once it has access to the `data` object
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{cells_stub()} function.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_stub()` function.
 #' @noRd
 resolve_cells_stub <- function(data,
                                object) {
 
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  # Obtain the `columns` and `rows` components of
-  # object created by the `cells_stub()` function
-  object_rows <- object$rows
-
-  # Collect the rownames from `stub_df`
-  rownames <- stub_df$rowname
+  stub_df <- dt_stub_df_get(data = data)
 
   #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
-
-  resolved_rows <- resolve_vars(object_rows, rownames, data_df)
+  resolved_rows_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!object$rows,
+      data_tbl = NULL,
+      vals = stub_df$rowname
+    )
 
   # Create a list object
-  cells_resolved <- list(rows = resolved_rows)
+  cells_resolved <- list(rows = resolved_rows_idx)
 
   # Apply the `stub_cells_resolved` class
-  attr(cells_resolved, "class") <- "stub_cells_resolved"
+  class(cells_resolved) <- "stub_cells_resolved"
 
   cells_resolved
 }
 
 #' Resolve the `cells_column_labels` object once it has access to the `data`
 #' object
-#' @param data a table object that is created using the \code{gt()} function.
-#' @param object the list object created by the \code{cells_column_labels()}
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
 resolve_cells_column_labels <- function(data,
-                                  object) {
-
-  # Get the `data_df` data frame from `data`
-  data_df <- as.data.frame(data)
-
-  # Collect the column names from `data_df`
-  colnames <- names(data_df)
-
-  # Obtain the `columns` component of object created
-  # by the `cells_column_labels()` function
-  object_columns <- object$columns
+                                        object) {
 
   #
   # Resolution of columns as integer vectors
   # providing the positions of the matched variables
   #
 
-  resolved_columns <- resolve_vars(object_columns, colnames, data_df)
+  resolved_columns <-
+    resolve_data_vals_idx(
+      var_expr = !!object$columns,
+      data_tbl = NULL,
+      vals = dt_boxhead_get_vars_default(data = data)
+    )
 
   # Create a list object
   cells_resolved <- list(columns = resolved_columns)
 
   # Apply the `columns_cells_resolved` class
-  attr(cells_resolved, "class") <- "columns_cells_resolved"
+  class(cells_resolved) <- "columns_cells_resolved"
 
   cells_resolved
 }
 
-#' Resolve variables for rows and columns using expressions
+#' Resolve the spanner values in the `cells_column_labels` object once it
+#' has access to the `data` object
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_column_labels()`
+#'   function.
+#' @noRd
+resolve_cells_column_spanners <- function(data,
+                                          object) {
+
+  #
+  # Resolution of spanners as column spanner names
+  #
+
+  spanner_labels <-
+    dt_spanners_get(data = data) %>%
+    .$spanner_label %>%
+    unlist() %>%
+    .[!is.na(.)] %>%
+    unique()
+
+  resolved_spanners_idx <-
+    resolve_data_vals_idx(
+      var_expr = !!object$spanners,
+      data_tbl = NULL,
+      vals = spanner_labels
+    )
+
+  resolved_spanners <- spanner_labels[resolved_spanners_idx]
+
+  # Create a list object
+  cells_resolved <- list(spanners = resolved_spanners)
+
+  # Apply the `columns_cells_resolved` class
+  class(cells_resolved) <- "columns_spanners_resolved"
+
+  cells_resolved
+}
+
+#' Resolve expressions to obtain column indices
+#'
+#' @param var_expr An expression to evaluate. This is passed directly to
+#'   `rlang::eval_tidy()` as a value for the `expr` argument.
+#' @param data The gt object.
+#' @noRd
+resolve_vars_idx <- function(var_expr,
+                             data) {
+
+  var_expr <- rlang::enquo(var_expr)
+
+  resolve_data_vals_idx(
+    var_expr = !!var_expr,
+    data_tbl = NULL,
+    vals = colnames(dt_data_get(data = data))
+  )
+}
+
+#' Resolve expressions to obtain row indices
+#'
+#' @param var_expr An expression to evaluate. This is passed directly to
+#'   `rlang::eval_tidy()` as a value for the `expr` argument.
+#' @param data_tbl The input table available in `data` (usually accessed through
+#'   `dt_data_get(data)`).
+#' @param vals The names of columns or rows in `data`.
 #' @import tidyselect
 #' @import rlang
 #' @noRd
-resolve_vars <- function(var_expr, var_names, data_df) {
+resolve_data_vals_idx <- function(var_expr,
+                                  data_tbl,
+                                  vals) {
 
-  stopifnot(rlang::is_quosure(var_expr))
+  var_expr <- enquo(var_expr)
 
+  if (!is.null(data_tbl)) {
+    data_tbl <- as.data.frame(data_tbl)
+  }
+
+  # Translate variable expressions (e.g., logical
+  # values, select helpers, expressions in `vars()`,
+  # etc.) to the appropriate output
   resolved <-
     tidyselect::with_vars(
-      var_names, rlang::eval_tidy(var_expr, data_df, env = NULL))
+      vals,
+      rlang::eval_tidy(
+        expr = var_expr,
+        data = data_tbl,
+        env = emptyenv()
+      )
+    )
 
+  # With the `resolved` output, check types and
+  # process inputs to reliably output as a vector
+  # of column indices based on `vals`
   if (is.null(resolved)) {
 
-    resolved <- seq_along(var_names)
+    resolved <- seq_along(vals)
 
   } else if (is.logical(resolved)) {
 
-    resolved <- which(rlang::rep_along(var_names, resolved))
+    if (!(length(resolved) == 1 || length(resolved) == length(vals))) {
+      stop("The number of logical values must either be one or the total ",
+           "number of columns or rows", call. = FALSE)
+    }
+
+    resolved <- which(rlang::rep_along(vals, resolved))
+
+  } else if (is.numeric(resolved)) {
+
+    if (any(!(resolved %in% seq_along(vals)))) {
+      stop("All column or row indices given must be present in `data_tbl`.",
+           call. = FALSE)
+    }
+
+    # `resolved` is already in terms of indices
+    # resolved <- resolved
 
   } else if (is.character(resolved)) {
 
-    if (!all(resolved %in% var_names)) {
-      stop("One or more column names provided not available in the table",
-           call. = FALSE)
-    }
-
-    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
-    resolved <- which(var_names %in% resolved)
+    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
+    resolved <- resolve_vals(resolved = resolved, vals = vals)
 
   } else if (is_quosures(resolved)) {
 
-    resolved <-
-      vapply(resolved, function(x) as.character(quo_get_expr(x)), character(1))
-
-    if (!all(resolved %in% var_names)) {
-      stop("One or more column names provided not available in the table",
-           call. = FALSE)
+    # Define function to get an expression from a
+    # quosure and translate it to a character vector
+    quo_get_expr_char <- function(x) {
+      rlang::as_name(x)
     }
 
-    resolved <- tidyselect::vars_select(var_names, !!!rlang::syms(resolved))
-    resolved <- which(var_names %in% resolved)
+    resolved <- vapply(resolved, quo_get_expr_char, character(1))
+    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved)) %>% unname()
+    resolved <- resolve_vals(resolved = resolved, vals = vals)
   }
 
   resolved
+}
+
+resolve_vals <- function(resolved, vals) {
+
+  resolved_idx <- c()
+
+  for (res in resolved) {
+    resolved_idx <- c(resolved_idx, which(vals %in% res))
+  }
+
+  resolved_idx
+}
+
+#' Resolve expressions to obtain column names
+#'
+#' @param var_expr The immutable column names from the input table.
+#' @param data A table object that is created using the [gt()] function.
+#' @noRd
+resolve_vars <- function(var_expr,
+                         data) {
+
+  var_expr <- enquo(var_expr)
+
+  # Obtain the data frame of the input table data
+  data_tbl <- dt_data_get(data = data)
+
+  # Collect column names from the input table data
+  column_names <- colnames(data_tbl)
+
+  # Use `resolve_vars_idx()` to obtain a vector
+  # column indices
+  columns_idx <-
+    resolve_vars_idx(
+      var_expr = !!var_expr,
+      data = data
+    )
+
+  # Translate the column indices to column names
+  column_names[columns_idx]
 }

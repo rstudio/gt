@@ -7,38 +7,36 @@
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
 \arguments{
-\item{data}{a \code{data.frame} object or a tibble.}
+\item{data}{A \code{data.frame} object or a tibble.}
 
-\item{top_n}{this value will be used as the number of rows from the top of
-the table to display. The default, \code{5}, will show the first five rows
-of the table.}
-
-\item{bottom_n}{the value will be used as the number of rows from the bottom
-of the table to display. The default, \code{1}, will show the final row of
+\item{top_n}{This value will be used as the number of rows from the top of
+the table to display. The default, \code{5}, will show the first five rows of
 the table.}
 
-\item{incl_rownums}{an option to include the row numbers for \code{data} in
-the table stub. By default, this is \code{TRUE}.}
+\item{bottom_n}{The value will be used as the number of rows from the bottom
+of the table to display. The default, \code{1}, will show the final row of the
+table.}
+
+\item{incl_rownums}{An option to include the row numbers for \code{data} in the
+table stub. By default, this is \code{TRUE}.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Sometimes you may want to see just a small portion of your input data. We can
-use \code{gt_preview()} in place of \code{\link{gt}()} to get the first x
-rows of data and the last y rows of data (which can be set by the
-\code{top_n} and \code{bottom_n} arguments). It's not advised to use
-additional \pkg{gt} API functions to further modify the output of
-\code{gt_preview()}. Furthermore, you cannot pass a \pkg{gt} object to
-\code{gt_preview()}.
+use \code{gt_preview()} in place of \code{\link[=gt]{gt()}} to get the first x rows of data and the
+last y rows of data (which can be set by the \code{top_n} and \code{bottom_n}
+arguments). It's not advised to use additional \pkg{gt} API functions to
+further modify the output of \code{gt_preview()}. Furthermore, you cannot pass a
+\pkg{gt} object to \code{gt_preview()}.
 }
 \details{
-Any grouped data or magic columns such as \code{rowname} and \code{groupname}
-will be ignored by \code{gt_preview()} and, as such, one cannot add a stub or
-group rows in the output table. By default, the output table will include row
-numbers in a stub (including a range of row numbers for the omitted rows).
-This row numbering option can be deactivated by setting \code{incl_rownums}
-to \code{FALSE}.
+Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
+ignored by \code{gt_preview()} and, as such, one cannot add a stub or group rows
+in the output table. By default, the output table will include row numbers in
+a stub (including a range of row numbers for the omitted rows). This row
+numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
 \section{Figures}{
 
@@ -61,6 +59,6 @@ Other table-part creation/modification functions: \code{\link{gt}},
   \code{\link{tab_footnote}}, \code{\link{tab_header}},
   \code{\link{tab_options}}, \code{\link{tab_row_group}},
   \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
-  \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}
+  \code{\link{tab_stubhead}}, \code{\link{tab_style}}
 }
 \concept{table-part creation/modification functions}

@@ -1,71 +1,71 @@
 #' Set data cell colors using a palette or a color function
 #'
 #' It's possible to add color to data cells according to their values. The
-#' \code{data_color()} function colors all rows of any \code{columns} supplied.
-#' There are two ways to define how cells are colored: (1) through the use of a
-#' supplied color palette, and (2) through use of a color mapping function
-#' available from the \code{scales} package. The first method colorizes cell
-#' data according to whether values are character or numeric. The second method
-#' provides more control over how cells are colored since we provide an explicit
-#' color function and thus other requirements such as bin counts, cut points, or
-#' a numeric domain. Finally, we can choose whether to apply the cell-specific
+#' `data_color()` function colors all rows of any `columns` supplied. There are
+#' two ways to define how cells are colored: (1) through the use of a supplied
+#' color palette, and (2) through use of a color mapping function available from
+#' the `scales` package. The first method colorizes cell data according to
+#' whether values are character or numeric. The second method provides more
+#' control over how cells are colored since we provide an explicit color
+#' function and thus other requirements such as bin counts, cut points, or a
+#' numeric domain. Finally, we can choose whether to apply the cell-specific
 #' colors to either the cell background or the cell text.
 #'
-#' The \code{col_*()} functions from the scales package can be used in the
-#' \code{colors} argument. These functions map data values (\code{numeric} or
-#' \code{factor}/\code{character}) to colors according to the provided palette.
+#' The `col_*()` functions from the scales package can be used in the `colors`
+#' argument. These functions map data values (`numeric` or `factor`/`character`)
+#' to colors according to the provided palette.
 #'
 #' \itemize{
-#' \item \code{\link[scales]{col_numeric}()}: provides a simple linear mapping
+#' \item [scales::col_numeric()]: provides a simple linear mapping
 #' from continuous numeric data to an interpolated palette.
-#' \item \code{\link[scales]{col_bin}()}: provides a mapping of continuous
+#' \item [scales::col_bin()]: provides a mapping of continuous
 #' numeric data to value-based bins. This internally uses the
-#' \code{\link[base]{cut}()} function.
-#' \item \code{\link[scales]{col_quantile}()}: provides a mapping of continuous
+#' [base::cut()] function.
+#' \item [scales::col_quantile()]: provides a mapping of continuous
 #' numeric data to quantiles. This internally uses the
-#' \code{\link[stats]{quantile}()} function.
-#' \item \code{\link[scales]{col_factor}()}: provides a mapping of factors to
+#' [stats::quantile()] function.
+#' \item [scales::col_factor()]: provides a mapping of factors to
 #' colors. If the palette is discrete and has a different number of colors than
 #' the number of factors, interpolation is used.
 #' }
 #'
 #' By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
 #' when colorizing the background of data cells. This option can be disabled by
-#' setting \code{autocolor_text} to \code{FALSE}.
+#' setting `autocolor_text` to `FALSE`.
 #'
 #' Choosing the right color palette can often be difficult because it's both
 #' hard to discover suitable palettes and then obtain the vector of colors. To
 #' make this process easier we can elect to use the \pkg{paletteer} package,
 #' which makes a wide range of palettes from various R packages readily
-#' available. The \code{\link{info_paletteer}()} information table allows us to
-#' easily inspect all of the discrete color palettes available in
-#' \pkg{paletteer}. We only then need to specify the \code{package} and
-#' \code{palette} when calling the \code{paletteer::paletteer_d()} function,
-#' and, we get the palette as a vector of hexadecimal colors.
+#' available. The [info_paletteer()] information table allows us to easily
+#' inspect all of the discrete color palettes available in \pkg{paletteer}. We
+#' only then need to specify the `package` and `palette` when calling the
+#' `paletteer::paletteer_d()` function, and, we get the palette as a vector of
+#' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
-#' @param columns the columns wherein changes to cell data colors should occur.
-#' @param colors either a color mapping function from the \code{scales} package
+#' @param columns The columns wherein changes to cell data colors should occur.
+#' @param colors Either a color mapping function from the `scales` package
 #'   or a vector of colors to use for each distinct value or level in each of
-#'   the provided \code{columns}. The color mapping functions are:
-#'   \code{scales::col_quantile()}, \code{scales::col_bin()},
-#'   \code{scales::col_numeric()}, and \code{scales::col_factor()}. If providing
+#'   the provided `columns`. The color mapping functions are:
+#'   `scales::col_quantile()`, `scales::col_bin()`,
+#'   `scales::col_numeric()`, and `scales::col_factor()`. If providing
 #'   a vector of colors as a palette, each color value provided must either be a
-#'   color name (in the set of colors provided by \code{grDevices::colors()}) or
+#'   color name (in the set of colors provided by `grDevices::colors()`) or
 #'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param alpha an optional, fixed alpha transparency value that will be applied
-#'   to all of the \code{colors} provided if they are provided as a vector of
-#'   colors. If using a colorizing helper function for \code{colors} then this
+#' @param alpha An optional, fixed alpha transparency value that will be applied
+#'   to all of the `colors` provided if they are provided as a vector of
+#'   colors. If using a colorizing helper function for `colors` then this
 #'   option is ignored (each of the colorizing helper functions has its own
-#'   \code{alpha} argument).
-#' @param apply_to which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as \code{bkgd}) or the cell
-#'   text (\code{text}).
-#' @param autocolor_text an option to let \pkg{gt} modify the coloring of text
+#'   `alpha` argument).
+#' @param apply_to Which style element should the colors be applied to? Options
+#'   include the cell background (the default, given as `fill`) or the cell
+#'   text (`text`).
+#' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
-#'   \code{TRUE}.
-#' @return an object of class \code{gt_tbl}.
+#'   `TRUE`.
+#' @return An object of class `gt_tbl`.
 #' @examples
 #' # library(paletteer)
 #'
@@ -102,7 +102,7 @@
 #'     type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
-#'     sold = n(),
+#'     sold = dplyr::n(),
 #'     income = sum(price)
 #'   ) %>%
 #'   gt(rowname_col = "size") %>%
@@ -123,21 +123,18 @@
 #'
 #' @family data formatting functions
 #' @import rlang
-#' @importFrom scales col_numeric col_factor
 #' @export
 data_color <- function(data,
                        columns,
                        colors,
-                       alpha = NULL,
-                       apply_to = "bkgd",
+                       alpha = 1,
+                       apply_to = "fill",
                        autocolor_text = TRUE) {
 
-  # Extract `data_df` from the gt object
-  data_df <- attr(data, "data_df", exact = TRUE)
+  data_tbl <- dt_data_get(data = data)
 
-  # Collect the column names and column indices
-  # from `data_df`
-  colnames <- names(data_df)
+  # Collect the column names from `data_tbl`
+  colnames <- names(data_tbl)
 
   #
   # Resolution of columns as integer vectors providing the
@@ -145,15 +142,11 @@ data_color <- function(data,
   #
   columns <- rlang::enquo(columns)
 
-  resolved_columns <-
-    resolve_vars(var_expr = columns, var_names = colnames, data_df = data_df)
-
-  # Translate the column indices to column names
-  resolved_columns <- colnames[resolved_columns]
+  resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
 
-    data_vals <- data_df[[column]]
+    data_vals <- data_tbl[[column]]
 
     if (inherits(colors, "character")) {
 
@@ -165,10 +158,12 @@ data_color <- function(data,
       } else if (is.character(data_vals)) {
 
         domain <- unique(data_vals)
+
         color_fn <-
           scales::col_factor(
             palette = colors[seq(domain)],
-            domain = domain)
+            domain = domain
+          )
 
       } else if (is.factor(data_vals)) {
 
@@ -177,7 +172,8 @@ data_color <- function(data,
         color_fn <-
           scales::col_factor(
             palette = colors[seq(levels)],
-            levels = levels(data_vals))
+            levels = levels(data_vals)
+          )
       }
 
     } else if (inherits(colors, "function")) {
@@ -185,23 +181,28 @@ data_color <- function(data,
     }
 
     color_fn <- rlang::enquo(color_fn)
-    color_fn <- rlang::eval_tidy(color_fn, data_df)
+    color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
     colors_cols <- color_fn(data_vals)
 
-    for (i in seq(data_vals)) {
+    for (i in seq_along(data_vals)) {
 
       color <- colors_cols[i]
 
-      if (apply_to == "bkgd") {
+      # Combine hexadecimal color with corresponding alpha
+      color <- normalize_color(colors = color, alpha = alpha)
+
+      if (apply_to == "fill") {
 
         # Apply color value to the background of the cell
         data <-
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(bkgd_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
 
       } else if (apply_to == "text") {
 
@@ -210,14 +211,16 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color)),
-            rows_i = i)
+            apply_to = apply_to,
+            styles = list(list(color = color)),
+            rows_i = i
+          )
       }
 
       # If the `autocolor_text` option is TRUE then the coloring
       # of text will be modified to achieve the highest contrast
       # possible
-      if (apply_to == "bkgd" & autocolor_text) {
+      if (apply_to == "fill" & autocolor_text) {
 
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
@@ -229,8 +232,10 @@ data_color <- function(data,
           scale_apply_styles(
             data,
             column = column,
-            styles = list(list(text_color = color_text)),
-            rows_i = i)
+            apply_to = "text",
+            styles = list(list(color = color_text)),
+            rows_i = i
+          )
       }
     }
   }
@@ -238,16 +243,19 @@ data_color <- function(data,
   data
 }
 
-# Apply color scale styles to the gt table data
+#' Apply color scale styles to the gt table data
+#'
+#' @noRd
 scale_apply_styles <- function(data,
                                column,
+                               apply_to,
                                styles,
-                               rows_i) {
+                               rows_i = NULL) {
 
-  data_df <- attr(data, "data_df")
+  data_tbl <- dt_data_get(data = data)
 
-  if (missing(rows_i)) {
-    rows_i <- seq(nrow(data_df))
+  if (is.null(rows_i)) {
+    rows_i <- seq(nrow(data_tbl))
   }
 
   if (length(styles) != length(rows_i)) {
@@ -257,17 +265,32 @@ scale_apply_styles <- function(data,
          call. = FALSE)
   }
 
-  # TODO: this part should be vectorized, with `tab_style()`
-  # taking a vector of style property values.
   for (i in seq_along(rows_i)) {
 
-    data <-
-      data %>%
-      tab_style(
-        do.call(cells_styles, styles[[i]]),
-        cells_data(
-          columns = column,
-          rows = rows_i[[i]]))
+    if (apply_to == "fill") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_fill, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+
+    } else if (apply_to == "text") {
+
+      data <-
+        data %>%
+        tab_style(
+          do.call(cell_text, styles[[i]]),
+          cells_data(
+            columns = column,
+            rows = rows_i[[i]]
+          )
+        )
+    }
   }
 
   data
@@ -281,17 +304,17 @@ scale_apply_styles <- function(data,
 #' apply greater darkening or lightening for those colors in the midrange
 #' compared to any very dark or very light colors in the input palette.
 #'
-#' This function can be useful when combined with the \code{\link{data_color}()}
-#' function's \code{palette} argument, which can use a vector of colors or any
-#' of the \code{col_*} functions from the \pkg{scales} package (all of which
-#' have a \code{palette} argument).
+#' This function can be useful when combined with the [data_color()] function's
+#' `palette` argument, which can use a vector of colors or any of the `col_*`
+#' functions from the \pkg{scales} package (all of which have a `palette`
+#' argument).
 #'
-#' @param colors a vector of colors that will undergo an adjustment in
+#' @param colors A vector of colors that will undergo an adjustment in
 #'   luminance. Each color value provided must either be a color name (in the
-#'   set of colors provided by \code{grDevices::colors()}) or a hexadecimal
-#'   string in the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param steps a positive or negative factor by which the luminance will be
-#'   adjusted. Must be a number between \code{-2.0} and \code{2.0}.
+#'   set of colors provided by `grDevices::colors()`) or a hexadecimal string in
+#'   the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param steps A positive or negative factor by which the luminance will be
+#'   adjusted. Must be a number between `-2.0` and `2.0`.
 #' @examples
 #' # Get a palette of 8 pastel colors from
 #' # the RColorBrewer package
@@ -335,7 +358,6 @@ scale_apply_styles <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
 #'
-#' @importFrom grDevices col2rgb convertColor hcl
 #' @export
 adjust_luminance <- function(colors,
                              steps) {
@@ -381,28 +403,112 @@ adjust_luminance <- function(colors,
   hcl_colors
 }
 
-# Extract a vector of alpha values for a vector of colors
-get_alpha_vec <- function(colors) {
-
-  alpha <- c()
-
-  for (color in colors) {
-
-    if (grepl("^#[0-9A-Fa-f]{6}$", color)) {
-      alpha <- c(alpha, "FF")
-    } else if (grepl("^#[0-9A-Fa-f]{8}$", color)) {
-      alpha <- c(alpha, toupper(sub(".*(..)$", "\\1", color)))
-    } else {
-      alpha <- c(alpha, "FF")
-    }
-  }
-
-  alpha
+is_hex_col_w_alpha <- function(color) {
+  color %>% tidy_grepl("^#[0-9A-Fa-f]{8}$")
 }
 
-# Function for determining the best `light` and `dark` colors to appear above a
-# background color
-#' @importFrom grDevices col2rgb
+is_hex_col_no_alpha <- function(color) {
+  color %>% tidy_grepl("^#[0-9A-Fa-f]{6}$")
+}
+
+frac_alpha_to_hex <- function(alpha) {
+  grDevices::rgb(0, 0, 0, alpha) %>% substr(8, 9)
+}
+
+#' Extract a vector of alpha values for a vector of colors
+#'
+#' @noRd
+get_alpha_vec <- function(colors) {
+
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+
+      if (color %>% is_hex_col_no_alpha()) {
+        "FF"
+      } else if (color %>% is_hex_col_w_alpha()) {
+        toupper(sub(".*(..)$", "\\1", color))
+      } else if (tolower(color) %in% grDevices::colors()) {
+        "FF"
+      } else {
+        NA_character_
+      }
+    }
+  )
+}
+
+#' Get the hexadecimal color representation of a color
+#'
+#' @noRd
+get_hexcolor_vec <- function(colors) {
+
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+
+      if (color %>% is_hex_col_no_alpha()) {
+
+        color %>%
+          toupper()
+
+      } else if (color %>% is_hex_col_w_alpha()) {
+
+        color %>%
+          substring(1, 7) %>%
+          toupper()
+
+      } else if (tolower(color) %in% grDevices::colors()) {
+
+        color_matrix <- grDevices::col2rgb(tolower(color))
+
+        grDevices::rgb(
+          red = color_matrix[1, ]/255,
+          green = color_matrix[2, ]/255,
+          blue = color_matrix[3, ]/255
+        )
+
+      } else {
+        NA_character_
+      }
+    })
+}
+
+#' With any input color, transform to hexadecimal with alpha
+#'
+#' @noRd
+normalize_color <- function(colors,
+                            alpha) {
+
+  if (length(colors) == 0) {
+    stop("One or more colors must be provided", call. = FALSE)
+  }
+
+  if (!(length(colors) == length(alpha) || length(alpha) == 1)) {
+    stop("The length of `alpha` must be the same length as `colors` or `1`",
+         call. = FALSE)
+  }
+
+  # Combine hexadecimal color with corresponding alpha
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+      if (!is_hex_col_w_alpha(color)) {
+        color <- paste0(get_hexcolor_vec(color), frac_alpha_to_hex(alpha))
+      }
+
+      color
+    }
+  )
+}
+
+#' Determining the best `light` and `dark` colors for contrast
+#'
 #' @noRd
 ideal_fgnd_color <- function(bgnd_colors,
                              light = "#FFFFFFFF",

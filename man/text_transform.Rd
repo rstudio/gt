@@ -7,26 +7,23 @@
 text_transform(data, locations, fn)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{\link{gt}()}
-function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{locations}{the cell or set of cells to be associated with the text
+\item{locations}{The cell or set of cells to be associated with the text
 transformation. Supplying any of the \code{cells_*()} helper functions is a
 useful way to target the location cells that are associated with the
-footnote text. These helper functions are: \code{\link{cells_title}()},
-\code{\link{cells_column_labels}()}, \code{\link{cells_group}()},
-\code{\link{cells_stub}()}, \code{\link{cells_data}()}, and
-\code{\link{cells_summary}()}. Please see the help article
-\link{location_cells} for more information on how these helper functions
-can be used. Additionally, we can enclose several \code{cells_*()} calls
-within a \code{list()} if we wish to link the footnote text to different
-types of locations (e.g., cell data values, stub group headings, the table
-title, etc.).}
+footnote text. These helper functions are: \code{\link[=cells_title]{cells_title()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}},
+and \code{\link[=cells_summary]{cells_summary()}}. Please see the help article \link{location_cells}
+for more information on how these helper functions can be used.
+Additionally, we can enclose several \code{cells_*()} calls within a \code{list()} if
+we wish to link the footnote text to different types of locations (e.g.,
+cell data values, stub group headings, the table title, etc.).}
 
-\item{fn}{the function to use for text transformation.}
+\item{fn}{The function to use for text transformation.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Perform targeted text transformation with a function
@@ -79,9 +76,10 @@ tab_1 <-
 \seealso{
 Other data formatting functions: \code{\link{data_color}},
   \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}, \code{\link{fmt}}
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{fmt}}
 }
 \concept{data formatting functions}

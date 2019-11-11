@@ -141,7 +141,7 @@ Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns u
 tab <- 
   tab %>%
   tab_spanner(
-    label = md("*Performance*"),
+    label = "Performance",
     columns = vars(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
   )
 
@@ -168,18 +168,18 @@ Labeling columns essentially means that we are choosing display-friendly labels 
 tab <- 
   tab %>%
   cols_merge(
-    col_1 = vars(mpg_c),
-    col_2 = vars(mpg_h),
+    vars(mpg_c, mpg_h),
+    hide_columns = vars(mpg_h),
     pattern = "{1}c<br>{2}h"
     ) %>%
   cols_merge(
-    col_1 = vars(hp),
-    col_2 = vars(hp_rpm),
+    vars(hp_rpm),
+    hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_merge(
-    col_1 = vars(trq),
-    col_2 = vars(trq_rpm),
+    vars(trq, trq_rpm),
+    hide_columns = vars(trq_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_label(
@@ -232,8 +232,7 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = cells_styles(
-      text_size = px(12)),
+    style = cell_text(size = px(12)),
     locations = cells_data(
       columns = vars(trim, trsmn, mpg_c, hp, trq))
   )
@@ -326,14 +325,13 @@ Let's bring it all together by putting together all the statements we developed 
     b. identifying the car with the highest horsepower
     c. stating the currency of the MSRP
 
-The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the glyph should be attached. It will handle the placement of the note glyph and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?gt::location_cells`.
+The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?location_cells`.
 
 What `cells_data()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
 
 In terms of structuring the code, we're taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the `tab_footnote()` statements first (again, any in order) and expect the same output table.
 
 ```{r tab_footnote}
-
 # Use dplyr functions to get the car with the best city gas mileage;
 # this will be used to target the correct cell for a footnote
 best_gas_mileage_city <- 
@@ -370,22 +368,22 @@ tab <-
     after = vars(trim)
   ) %>%
   tab_spanner(
-    label = md("*Performance*"),
+    label = "Performance",
     columns = vars(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
   ) %>%
   cols_merge(
-    col_1 = vars(mpg_c),
-    col_2 = vars(mpg_h),
+    vars(mpg_c, mpg_h),
+    hide_columns = vars(mpg_h),
     pattern = "{1}c<br>{2}h"
   ) %>%
   cols_merge(
-    col_1 = vars(hp),
-    col_2 = vars(hp_rpm),
+    vars(hp, hp_rpm),
+    hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_merge(
-    col_1 = vars(trq),
-    col_2 = vars(trq_rpm),
+    vars(trq, trq_rpm),
+    hide_columns = vars(trq_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_label(
@@ -407,8 +405,10 @@ tab <-
     columns = vars(mpg_c, hp, trq)
   ) %>%
   tab_style(
-    style = cells_styles(text_size = px(12)),
-    locations = cells_data(columns = vars(trim, trsmn, mpg_c, hp, trq))
+    style = cell_text(size = px(12)),
+    locations = cells_data(
+      columns = vars(trim, trsmn, mpg_c, hp, trq)
+    )
   ) %>%
   text_transform(
     locations = cells_data(columns = vars(trsmn)),
@@ -449,8 +449,7 @@ tab <-
   ) %>%
   tab_footnote(
     footnote = "All prices in U.S. dollars (USD).",
-    locations = cells_column_labels(
-      columns = vars(msrp))
+    locations = cells_column_labels(columns = vars(msrp))
   )
 
 # Show the table

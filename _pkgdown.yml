@@ -37,6 +37,7 @@ reference:
     contents:
     - tab_header
     - tab_spanner
+    - tab_spanner_delim
     - tab_row_group
     - tab_stubhead_label
     - tab_footnote
@@ -69,6 +70,7 @@ reference:
     - fmt_datetime
     - fmt_missing
     - fmt_passthrough
+    - fmt_markdown
     - text_transform
     - data_color
 
@@ -82,9 +84,7 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`),
-      and using a column name delimiter to create labels in the column
-      spanner (`cols_split_delim()`).
+      together (`cols_merge*()`), moving columns around (`cols_move*()`)
     contents:
     - cols_align
     - cols_hide
@@ -95,7 +95,6 @@ reference:
     - cols_move
     - cols_move_to_end
     - cols_move_to_start
-    - cols_split_delim
 
   - title: Modify Rows
     desc: >
@@ -115,12 +114,12 @@ reference:
       <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
       </a>
       <br /><br />
-      There is one function that will add rows to a **gt** table and that
-      is the `summary_rows()` function. It's useful for adding summary rows
-      to any table that has row groups and a stub (which is required for
-      summary row labels).
+      There are two function that will add rows to a **gt** table:
+      `summary_rows()` and `grand_summary_rows()`. These are useful for adding
+      groupwise and grand summary rows.
     contents:
     - summary_rows
+    - grand_summary_rows
 
   - title: Export Table
     desc: >
@@ -171,6 +170,7 @@ reference:
     - html
     - px
     - pct
+    - currency
     - escape_latex
     - adjust_luminance
 

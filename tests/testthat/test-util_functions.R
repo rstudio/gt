@@ -80,54 +80,46 @@ test_that("the `get_time_format()` function works correctly", {
       c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
 })
 
-test_that("the `is_currency_valid()` function works correctly", {
+test_that("the `validate_currency()` function works correctly", {
 
   # Expect that specific currency names supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currency_symbols$curr_symbol, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currency_symbols$curr_symbol, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency names supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("thaler", "tetarteron"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("thaler", "tetarteron"), validate_currency))
+
 
   # Expect that specific currency codes supplied to
-  # `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_code, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # `validate_currency()` will all return NULL
+  expect_null(
+    lapply(currencies$curr_code, validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c("AAA", "ZZZ"), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will result in an error
+  expect_error(lapply(c("AAA", "ZZZ"), validate_currency))
 
   # Expect that specific currency codes (3-number)
-  # supplied to `is_currency_valid()` will all return TRUE
-  lapply(currencies$curr_number, is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  # supplied to `validate_currency()` will return NULL
+  expect_null(
+    lapply(currencies$curr_number, validate_currency) %>%
+      unlist()
+  )
 
-  lapply(as.numeric(currencies$curr_number), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_true()
+  expect_null(
+    lapply(as.numeric(currencies$curr_number), validate_currency) %>%
+      unlist()
+  )
 
   # Expect that invalid currency codes supplied to
-  # `is_currency_valid()` will all return FALSE
-  lapply(c(999, 998), is_currency_valid) %>%
-    unlist() %>%
-    all() %>%
-    expect_false()
+  # `validate_currency()` will return an error
+  expect_error(lapply(c(999, 998), validate_currency))
 })
 
 test_that("the `get_currency_str()` function works correctly", {
@@ -214,11 +206,10 @@ test_that("the `get_currency_str()` function works correctly", {
   get_currency_str(currency = "hryvnia", fallback_to_code = TRUE) %>%
     expect_equal("&#8372;")
 
-  # Expect an NA value when the currency can't be
+  # Expect the input value when the currency can't be
   # interpreted as a valid currency
   get_currency_str(currency = "thaler") %>%
-    is.na() %>%
-    expect_true()
+    expect_equal("thaler")
 })
 
 test_that("the `get_currency_exponent()` function works correctly", {
@@ -258,26 +249,6 @@ test_that("the `get_currency_exponent()` function works correctly", {
     get_currency_exponent) %>%
     unlist() %>%
     expect_equal(rep(0, 7))
-})
-
-test_that("the `get_locale_sep_mark()` function works correctly", {
-
-  # Expect that `get_locale_sep_mark()` will return
-  # different group separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_sep_mark) %>%
-    unlist() %>%
-    expect_equal(c(" ", " ", ",", " ", " ", " ", ",", "."))
-})
-
-test_that("the `get_locale_dec_mark()` function works correctly", {
-
-  # Expect that `get_locale_dec_mark()` will return
-  # different decimal separator symbols with specific locale IDs
-  lapply(c("af", "be", "en_GB", "et", "fr_FR", "ru", "th", "de"),
-         get_locale_dec_mark) %>%
-    unlist() %>%
-    expect_equal(c(",", ",", ".", ",", ",", ",", ".", ","))
 })
 
 test_that("the `process_text()` function works correctly", {
@@ -320,21 +291,30 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = html_text) %>% expect_is(c("html", "character"))
 })
 
-test_that("the `get_pre_post_txt()` function works correctly", {
+test_that("the `apply_pattern_fmt_x()` function works correctly", {
 
-  # Expect that various patterns will yield the expected
-  # length-2 character vectors
-  get_pre_post_txt(pattern = "{x}") %>%
-    expect_equal(c("", ""))
+  # Set formatted values in a character vector
+  x <- c("23.4%", "32.6%", "9.15%")
 
-  get_pre_post_txt(pattern = "a {x} b") %>%
-    expect_equal(c("a ", " b"))
+  # Expect that the default pattern `{x}` does not
+  # modify the values in `x`
+  apply_pattern_fmt_x(pattern = "{x}", values = x) %>%
+    expect_equal(x)
 
-  get_pre_post_txt(pattern = "\\a {x} \\b") %>%
-    expect_equal(c("\\a ", " \\b"))
+  # Expect that a pattern that appends literal text
+  # will work
+  apply_pattern_fmt_x(pattern = "{x}:n", values = x) %>%
+    expect_equal(paste0(x, ":n"))
 
-  get_pre_post_txt(pattern = "{x}....") %>%
-    expect_equal(c("", "...."))
+  # Expect that a pattern that appends and prepends
+  # literal text will work
+  apply_pattern_fmt_x(pattern = "+{x}:n", values = x) %>%
+    expect_equal(paste0("+", x, ":n"))
+
+  # Expect that multiple instances of `{x}` will
+  # create copies of `x` within the output strings
+  apply_pattern_fmt_x(pattern = "{x}, ({x})", values = x) %>%
+    expect_equal(paste0(x, ", (", x, ")"))
 })
 
 test_that("the `remove_html()` function works correctly", {
@@ -380,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(101, 4))
+  css_tbl %>% dim() %>% expect_equal(c(148, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -394,42 +374,70 @@ test_that("the `inline_html_styles()` function works correctly", {
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that certain portions of `inlined_html` have
   # inlined CSS rules
   expect_true(
-    grepl("style=\"font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;display:table;border-collapse:collapse;margin-left:auto;margin-right:auto;color:#000000;font-size:16px;background-color:#FFFFFF;width:auto;border-top-style:solid;border-top-width:2px;border-top-color:#A8A8A8;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
+        "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
+        "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
+        "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
+        "font-size: 16px; background-color: #FFFFFF; width: auto; ",
+        "border-top-style: solid; border-top-width: 2px; border-top-color: ",
+        "#A8A8A8; border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #A8A8A8;\""
+      ),
+      inlined_html
+    )
   )
 
   expect_true(
-    grepl("style=\"color:#000000;background-color:#FFFFFF;font-size:16px;font-weight:initial;vertical-align:middle;padding:10px;margin:10px;text-align:right;font-variant-numeric:tabular-nums;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"color: #333333; background-color: #FFFFFF; font-size: ",
+        "16px; font-weight: initial; vertical-align: middle; padding: ",
+        "5px; margin: 10px; overflow-x: hidden; border-bottom-style: ",
+        "solid; border-bottom-width: 2px; border-bottom-color: ",
+        "#D3D3D3; text-align: right; font-variant-numeric: tabular-nums;\""
+      ),
+      inlined_html
+    )
   )
 
   # Augment the gt table with custom styles
   data <-
     data %>%
     tab_style(
-      style = "font-size:10px;",
+      style = cell_text(size = px(10)),
       locations = cells_data(columns = TRUE)
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the style rule from `tab_style` is a listed value along with
   # the inlined rules derived from the CSS classes
   expect_true(
-    grepl("style=\"padding:10px;margin:10px;vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums;font-size:10px;\"", inlined_html)
+    grepl(
+      paste0(
+        "style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; ",
+        "padding-right: 5px; margin: 10px; border-top-style: solid; ",
+        "border-top-width: 1px; border-top-color: #D3D3D3; ",
+        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
+        "font-variant-numeric: tabular-nums; font-size: 10px;\""
+      ),
+      inlined_html
+    )
   )
 
   # Create a gt table with a custom style in the title and subtitle
@@ -441,26 +449,24 @@ test_that("the `inline_html_styles()` function works correctly", {
       subtitle = "The subtitle"
     ) %>%
     tab_style(
-      cells_styles(
-        text_align = "left"),
-        locations = list(
-          cells_title(groups = "title"),
-          cells_title(groups = "subtitle")
-          )
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
+      )
     )
 
   # Get the CSS tibble and the raw HTML
   css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html()
+  html <- data %>% as_raw_html(inline_css = FALSE)
 
   # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <-
-    inline_html_styles(html, css_tbl = css_tbl)
+  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
 
   # Expect that the `colspan` attr is preserved in both <th> elements
   # and that the `text-align:left` rule is present
   expect_true(
-    grepl("th colspan='11' style=.*?text-align:left;", inlined_html)
+    grepl("th colspan=\"11\" style=.*?text-align: left;", inlined_html)
   )
 })
 
@@ -497,51 +503,51 @@ test_that("the `as_locations()` function works correctly", {
     as_locations(locations))
 })
 
-test_that("the `footnote_glyphs()` function works correctly", {
+test_that("the `process_footnote_marks()` function works correctly", {
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = as.character(1:10),
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "numbers") %>%
+    marks = "numbers") %>%
     expect_equal(as.character(1:10))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = as.character(1:5)) %>%
+    marks = as.character(1:5)) %>%
     expect_equal(c("1", "2", "3", "4", "5", "11", "22", "33", "44", "55"))
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "letters") %>%
+    marks = "letters") %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = letters) %>%
+    marks = letters) %>%
     expect_equal(letters[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = "LETTERS") %>%
+    marks = "LETTERS") %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = LETTERS) %>%
+    marks = LETTERS) %>%
     expect_equal(LETTERS[1:10])
 
-  footnote_glyphs(
+  process_footnote_marks(
     x = 1:10,
-    glyphs = c("⁕", "‖", "†", "§", "¶")) %>%
+    marks = c("⁕", "‖", "†", "§", "¶")) %>%
     expect_equal(
       c("\u2055", "‖", "†", "§", "¶",
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))

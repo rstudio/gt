@@ -20,7 +20,7 @@ mtcars_tbl <-
   cols_move_to_end(columns = vars(am, gear)) %>%
   cols_hide(columns = vars(carb)) %>%
   cols_move(
-    columns = vars(wt, carb, qsec),
+    columns = vars(wt, qsec),
     after = vars(gear)) %>%
   tab_row_group(
     group = "Mercs",
@@ -56,7 +56,7 @@ mtcars_tbl <-
   tab_source_note(
     source_note = md("Original Data: *Motor Trend Magazine* (1974).")
   ) %>%
-  tab_stubhead_label(label = md("*car*")) %>%
+  tab_stubhead(label = md("*car*")) %>%
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
     locations = cells_data(
