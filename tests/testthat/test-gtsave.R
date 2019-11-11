@@ -24,16 +24,14 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
   # Expect that the content of the file is HTML
   (path_1 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    expect_match(
-      "<!DOCTYPE html>",
-      fixed = TRUE)
+    tidy_grepl("<!DOCTYPE html>") %>%
+    expect_true()
 
   # Expect that CSS styles are not inlined
   (path_1 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    expect_match(
-      "<style>html {",
-      fixed = TRUE)
+    tidy_grepl("<style>html \\{") %>%
+    expect_true()
 
   # Create a filename with path, having the
   # .htm extension
@@ -55,18 +53,16 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
   expect_true(file.exists(path_2))
 
   # Expect that the content of the file is HTML
-  (path_2 %>%
-      readLines())[1] %>%
-    expect_match(
-      "<!DOCTYPE html>",
-      fixed = TRUE)
+  (path_1 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<!DOCTYPE html>") %>%
+    expect_true()
 
   # Expect that CSS styles are not inlined
-  (path_2 %>%
-      readLines())[9] %>%
-    expect_match(
-      "<style>html {",
-      fixed = TRUE)
+  (path_1 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<style>html \\{") %>%
+    expect_true()
 
   # Create a filename with path, having the
   # .html extension
@@ -85,17 +81,16 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
     gtsave(filename = path_3, inline_css = TRUE)
 
   # Expect that the content of the file is HTML
-  (path_3 %>%
-      readLines())[1] %>%
-    expect_match(
-      "<!DOCTYPE html>",
-      fixed = TRUE)
+  (path_1 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<!DOCTYPE html>") %>%
+    expect_true()
 
-  # Expect that CSS styles are indeed inlined
-  (path_3 %>%
-      readLines())[9] %>%
-    expect_match(
-      "<table style.*")
+  # Expect that CSS styles are not inlined
+  (path_1 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<style>html \\{") %>%
+    expect_true()
 })
 
 # test_that("the `gtsave()` function creates a LaTeX file based on the extension", {
