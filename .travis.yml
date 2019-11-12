@@ -39,19 +39,15 @@ jobs:
       r: release
       cache:
         packages: false
-      if: |
-        branch IN (master, travis) AND \
-        type = push AND \
-        repo = rstudio/gt
-      r_binary_packages:
-        - pkgdown
-        - remotes
+      if: branch IN (master, travis) AND repo = rstudio/gt AND type = push
       script:
-        - Rscript -e "remotes::install_local()"
-        - Rscript -e "pkgdown::build_site()"
-        - Rscript -e "remove.packages('gt')"
+      - Rscript -e "remotes::install_cran(c('pkgdown', 'devtools'))"
+      - Rscript -e "devtools::install()"
+      - Rscript -e "pkgdown::build_site()"
+      - Rscript -e "remove.packages(devtools::as.package('.')$package)"
       deploy:
         provider: pages
+        script: Rscript -e 'devtools::install()'
         local-dir: docs
         skip-cleanup: true
         keep-history: false
