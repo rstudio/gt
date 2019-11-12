@@ -101,7 +101,9 @@ summary_rows <- function(data,
   }
 
   # Get the `stub_df` object from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_df_get(data = data)
+
+  stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
   columns <- enquo(columns)
@@ -110,12 +112,12 @@ summary_rows <- function(data,
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
-  if (!is_stub_available(stub_df) && is.null(groups)) {
+  if (!stub_available && is.null(groups)) {
 
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- ""
 
-    attr(data, "stub_df") <- stub_df
+    data <- dt_stub_df_set(data = data, stub_df = stub_df)
   }
 
   # Derive the summary labels
@@ -128,23 +130,18 @@ summary_rows <- function(data,
     summary_labels <- names(summary_labels)
   }
 
-  # Append list of summary inputs to the
-  # `summary` attribute
-  attr(data, "summary") <-
-    c(
-      attr(data, "summary"),
-      list(
-        list(
-          groups = groups,
-          columns = columns,
-          fns = fns,
-          summary_labels = summary_labels,
-          missing_text = missing_text,
-          formatter = formatter,
-          formatter_options = formatter_options
-        )
-      )
+  summary_list <-
+    list(
+      groups = groups,
+      columns = columns,
+      fns = fns,
+      summary_labels = summary_labels,
+      missing_text = missing_text,
+      formatter = formatter,
+      formatter_options = formatter_options
     )
+
+  data <- dt_summary_add(data = data, summary = summary_list)
 
   data
 }
@@ -166,180 +163,4 @@ grand_summary_rows <- function(data,
     missing_text = missing_text,
     formatter = formatter,
     ...)
-}
-
-add_summary_location_row <- function(loc,
-                                     data,
-                                     style,
-                                     df_type = "styles_df") {
-
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  row_groups <-
-    stub_df[, "groupname"] %>%
-    unique()
-
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  summary_data_summaries <-
-    vapply(
-      seq(summary_data),
-      function(x) !is.null(summary_data[[x]]$groups),
-      logical(1)
-    )
-
-  summary_data <- summary_data[summary_data_summaries]
-
-  groups <-
-    row_groups[resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data = NULL,
-      vals = row_groups
-    )]
-
-  # Adding styles to intersections of group, row, and column; any
-  # that are missing at render time will be ignored
-  for (group in groups) {
-
-    summary_labels <-
-      lapply(
-        summary_data,
-        function(summary_data_item) {
-          if (isTRUE(summary_data_item$groups)) {
-            summary_data_item$summary_labels
-          } else if (group %in% summary_data_item$groups){
-            summary_data_item$summary_labels
-          }
-        }
-      ) %>%
-      unlist() %>%
-      unique()
-
-    columns <-
-      resolve_vars(
-        var_expr = !!loc$columns,
-        data = data
-      )
-
-    if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
-    }
-
-    rows <-
-      resolve_data_vals_idx(
-        var_expr = !!loc$rows,
-        data = NULL,
-        vals = summary_labels
-      )
-
-    if (length(rows) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `rows`",
-           call. = FALSE)
-    }
-
-    if (df_type == "footnotes_df") {
-
-      attr(data, df_type) <-
-        add_location_row_footnotes(
-          data,
-          locname = "summary_cells",
-          locnum = 5,
-          grpname = group,
-          colname = columns,
-          rownum = rows,
-          footnotes = style
-        )
-
-    } else {
-
-      attr(data, df_type) <-
-        add_location_row_styles(
-          data,
-          locname = "summary_cells",
-          locnum = 5,
-          grpname = group,
-          colname = columns,
-          rownum = rows,
-          styles = list(style)
-        )
-    }
-  }
-
-  data
-}
-
-add_grand_summary_location_row <- function(loc,
-                                           data,
-                                           style,
-                                           df_type = "styles_df") {
-
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  grand_summary_labels <-
-    lapply(summary_data, function(summary_data_item) {
-      if (is.null(summary_data_item$groups)) {
-        return(summary_data_item$summary_labels)
-      }
-
-      NULL
-    }) %>%
-    unlist() %>%
-    unique()
-
-  columns <-
-    resolve_vars(
-      var_expr = !!loc$columns,
-      data = data
-    )
-
-  if (length(columns) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `columns`",
-         call. = FALSE)
-  }
-
-  rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$rows,
-      data = NULL,
-      vals = grand_summary_labels
-    )
-
-  if (length(rows) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `rows`",
-         call. = FALSE)
-  }
-
-  if (df_type == "footnotes_df") {
-
-    attr(data, df_type) <-
-      add_location_row_footnotes(
-        data,
-        locname = "grand_summary_cells",
-        locnum = 6,
-        grpname = grand_summary_col,
-        colname = columns,
-        rownum = rows,
-        footnotes = style
-      )
-
-  } else {
-
-    attr(data, df_type) <-
-      add_location_row_styles(
-        data,
-        locname = "grand_summary_cells",
-        locnum = 6,
-        grpname = grand_summary_col,
-        colname = columns,
-        rownum = rows,
-        styles = list(style)
-      )
-  }
-
-  data
 }

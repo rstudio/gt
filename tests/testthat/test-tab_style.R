@@ -89,14 +89,15 @@ test_that("a gt table can store the correct style statements", {
   # Expect that the internal `styles_df` data frame will have
   # its `locname` column entirely populated with `cells_column_labels`
   # and `stub`
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal(c("columns_columns", "stub"))
 
   # Expect that the internal `styles_df` data frame will have
   # its `cell_fill:color` property entirely populated with `lightgray`
-  attr(tbl_html, "styles_df", exact = TRUE)$styles %>%
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
     vapply(function(x) x[1]$cell_fill$color, character(1)) %>%
     unique() %>%
     expect_equal("#D3D3D3FF")
@@ -115,14 +116,23 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect certain values for inside the single `styles` list
-  attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_fill$color %>%
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_fill %>%
+    .$color %>%
     expect_equal("#4682B4FF")
-  attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_text$color %>%
+
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$color %>%
     expect_equal("white")
 
   # Apply left-alignment to the table title
@@ -135,12 +145,16 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect a specific value inside the single `styles` list
-  attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_text$align %>%
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$align %>%
     expect_equal("left")
 
   # Apply left-alignment to the table subtitle
@@ -152,12 +166,16 @@ test_that("a gt table can store the correct style statements", {
     )
 
   # Expect certain values for inside the single `styles` list
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
   # Expect a specific value inside the single `styles` list
-  attr(tbl_html, "styles_df", exact = TRUE)$styles[[1]]$cell_text$align %>%
+  dt_styles_get(data = tbl_html) %>%
+    .$styles %>%
+    .[[1]] %>%
+    .$cell_text %>%
+    .$align %>%
     expect_equal("left")
 
   # Apply a green background with white text to a single cell in
@@ -176,7 +194,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -221,7 +239,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -261,7 +279,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -271,12 +289,12 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "lightgreen"),
-      locations = cells_column_labels(groups = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gear_carb_cyl")
     )
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -290,7 +308,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -304,7 +322,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -320,23 +338,23 @@ test_that("a gt table can store the correct style statements", {
     )
 
   # Expect that the internal `styles_df` data frame will have five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(5)
 
   # Expect that the `rownum` values in `styles_df` will be 1:5
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(rownum) %>%
     expect_equal(1:5)
 
   # Expect that the `location` in `styles_df` is 'data' for all five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(locname) %>%
     unique() %>%
     expect_equal("data")
 
   # Expect that the `colname` in `styles_df` is 'hp' for all five rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     dplyr::pull(colname) %>%
     unique() %>%
     expect_equal("hp")
@@ -351,7 +369,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -376,7 +394,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Expect that the internal `styles_df` data frame will have
   # a single row
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
@@ -390,24 +408,25 @@ test_that("a gt table can store the correct style statements", {
     )
 
   # Expect that the internal `styles_df` data frame will have two rows
-  attr(tbl_html, "styles_df", exact = TRUE) %>%
+  dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(2)
 
   # Expect certain values for each of the columns in the two rows
   # of the `styles_df` data frame
-  attr(tbl_html, "styles_df", exact = TRUE)[1, ] %>%
+  dt_styles_get(data = tbl_html) %>%
+    .[1, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", "5", NA_character_, "disp", "1",
-      "#FFFF00FF")
+      "data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00FF")
     )
 
-  attr(tbl_html, "styles_df", exact = TRUE)[2, ] %>%
+  dt_styles_get(data = tbl_html) %>%
+    .[2, ] %>%
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", "5", NA_character_, "hp", "1",
-      "#FFFF00FF"))
+      "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00FF")
+    )
 })

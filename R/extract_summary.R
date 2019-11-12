@@ -48,6 +48,7 @@
 #' # row groups and a stub)
 #' tab_1 <-
 #'   summary_extracted %>%
+#'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
 #'   gt()
 #'
@@ -58,13 +59,9 @@
 #' @export
 extract_summary <- function(data) {
 
-  # Extract all attributes from the `data`
-  # object into `data_attr`
-  data_attr <- attributes(data)
-
   # Stop function if there are no
   # directives to create summary rows
-  if (is.null(data_attr$summary)) {
+  if (!dt_summary_exists(data = data)) {
     stop("There is no summary list to extract.\n",
          "Use the `summary_rows()` function to generate summaries.",
          call. = FALSE)
@@ -76,5 +73,5 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  built_data$list_of_summaries$summary_df_data_list
+  dt_summary_df_data_get(data = built_data) %>% as.list()
 }

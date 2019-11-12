@@ -19,7 +19,9 @@ column-based select helpers \code{\link[=starts_with]{starts_with()}}, \code{\li
 \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS.
 Subsequent expressions that operate on the columns assigned previously will
 result in overwriting column width values (both in the same \code{cols_width()}
-call and across separate calls).}
+call and across separate calls). All other columns can be assigned a
+default width value by using \code{TRUE} or \code{everything()} on the left-hand
+side.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
@@ -28,12 +30,11 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Manual specifications of column widths can be performed using the
-\code{cols_width()} function.  We choose which columns get specific widths (in
-pixels, usually by use of the \code{\link[=px]{px()}} helper function) and all other columns
-are assigned a default width value though the \code{.others} argument. Width
-assignments are supplied in \code{...} through two-sided formulas, where the
-left-hand side defines the target columns and the right-hand side is a single
-width value in pixels.
+\code{cols_width()} function. We choose which columns get specific widths (in
+pixels, usually by use of the \code{\link[=px]{px()}} helper function). Width assignments are
+supplied in \code{...} through two-sided formulas, where the left-hand side
+defines the target columns and the right-hand side is a single width value in
+pixels.
 }
 \details{
 Normally, column widths are automatically set to span across the width of the
@@ -75,6 +76,6 @@ Other column modification functions: \code{\link{cols_align}},
   \code{\link{cols_merge_uncert}},
   \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
   \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+  \code{\link{cols_move}}, \code{\link{tab_spanner_delim}}
 }
 \concept{column modification functions}

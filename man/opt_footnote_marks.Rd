@@ -63,7 +63,7 @@ tab_1 <-
   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) \%>\%
   dplyr::select(-latitude) \%>\%
   gt(rowname_col = "tst") \%>\%
-  cols_split_delim(".") \%>\%
+  tab_spanner_delim(delim = ".") \%>\%
   fmt_missing(
     columns = everything(),
     missing_text = "90+"
@@ -75,7 +75,7 @@ tab_1 <-
   ) \%>\%
   tab_footnote(
     footnote = "Solar zenith angle.",
-    locations = cells_column_labels(groups = "SZA")
+    locations = cells_column_spanners(spanners = "SZA")
   ) \%>\%
   tab_footnote(
     footnote = "The Lowest SZA.",

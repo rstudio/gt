@@ -1,4 +1,16 @@
-gt_options_default <- function() {
+.dt_options_key <- "_options"
+
+dt_options_get <- function(data) {
+
+  dt__get(data, .dt_options_key)
+}
+
+dt_options_set <- function(data, options) {
+
+  dt__set(data, .dt_options_key, options)
+}
+
+dt_options_init <- function(data) {
 
   dplyr::tribble(
     ~parameter,                          ~scss,  ~category,          ~type,     ~value,
@@ -76,5 +88,27 @@ gt_options_default <- function() {
     "row_striping_background_color",      TRUE,  "row",              "value",   "#8080800D",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", TRUE,
-    )[-1, ]
+  )[-1, ] %>%
+    dt_options_set(options = ., data = data)
+}
+
+dt_options_set_value <- function(data, option, value) {
+
+  dt_options <-
+    data %>%
+    dt_options_get()
+
+  dt_options$value[[which(dt_options$parameter == option)]] <- value
+
+  dt_options %>%
+    dt_options_set(options = ., data = data)
+}
+
+dt_options_get_value <- function(data, option) {
+
+  dt_options <-
+    data %>%
+    dt_options_get()
+
+  dt_options$value[[which(dt_options$parameter == option)]]
 }

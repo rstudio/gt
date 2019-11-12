@@ -3,7 +3,7 @@ compile_scss <- function(data, id = NULL) {
 
   # Obtain the SCSS options table from `data`
   gt_options_tbl <-
-    attr(data, "opts_df", exact = TRUE) %>%
+    dt_options_get(data = data) %>%
     subset(scss) %>%
     subset(!is.na(value))
 

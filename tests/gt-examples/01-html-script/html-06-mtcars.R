@@ -20,7 +20,7 @@ mtcars_tbl <-
   cols_move_to_end(columns = vars(am, gear)) %>%
   cols_hide(columns = vars(carb)) %>%
   cols_move(
-    columns = vars(wt, carb, qsec),
+    columns = vars(wt, qsec),
     after = vars(gear)) %>%
   tab_row_group(
     group = "Mercs",

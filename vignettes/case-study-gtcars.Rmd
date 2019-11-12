@@ -168,18 +168,18 @@ Labeling columns essentially means that we are choosing display-friendly labels 
 tab <- 
   tab %>%
   cols_merge(
-    col_1 = vars(mpg_c),
-    col_2 = vars(mpg_h),
+    vars(mpg_c, mpg_h),
+    hide_columns = vars(mpg_h),
     pattern = "{1}c<br>{2}h"
     ) %>%
   cols_merge(
-    col_1 = vars(hp),
-    col_2 = vars(hp_rpm),
+    vars(hp_rpm),
+    hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_merge(
-    col_1 = vars(trq),
-    col_2 = vars(trq_rpm),
+    vars(trq, trq_rpm),
+    hide_columns = vars(trq_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_label(
@@ -372,18 +372,18 @@ tab <-
     columns = vars(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
   ) %>%
   cols_merge(
-    col_1 = vars(mpg_c),
-    col_2 = vars(mpg_h),
+    vars(mpg_c, mpg_h),
+    hide_columns = vars(mpg_h),
     pattern = "{1}c<br>{2}h"
   ) %>%
   cols_merge(
-    col_1 = vars(hp),
-    col_2 = vars(hp_rpm),
+    vars(hp, hp_rpm),
+    hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_merge(
-    col_1 = vars(trq),
-    col_2 = vars(trq_rpm),
+    vars(trq, trq_rpm),
+    hide_columns = vars(trq_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
   cols_label(
@@ -449,8 +449,7 @@ tab <-
   ) %>%
   tab_footnote(
     footnote = "All prices in U.S. dollars (USD).",
-    locations = cells_column_labels(
-      columns = vars(msrp))
+    locations = cells_column_labels(columns = vars(msrp))
   )
 
 # Show the table

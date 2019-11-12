@@ -71,7 +71,7 @@ many_styles_tbl <-
   ) %>%
   tab_style(
     style = cell_fill(color = "lightgreen"),
-    locations = cells_column_labels(groups = "gear_carb_cyl")
+    locations = cells_column_spanners(spanners = "gear_carb_cyl")
   ) %>%
   tab_style(
     style = cell_fill(color = "turquoise"),
@@ -79,7 +79,6 @@ many_styles_tbl <-
   ) %>%
   tab_style(
     style = cell_fill(color = "pink"),
-
     locations = cells_column_labels(columns = "hp")
   ) %>%
   tab_style(

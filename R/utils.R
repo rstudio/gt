@@ -185,6 +185,12 @@ process_text <- function(text,
     return(text)
   }
 
+  if (is.list(text)) {
+    if (context %in% names(text)) {
+     return(process_text(text[[context]], context))
+    }
+  }
+
   if (context == "html") {
 
     # Text processing for HTML output
@@ -555,9 +561,6 @@ normalize_suffixing_inputs <- function(suffixing,
     # In the case that a character vector is provided
     # to `suffixing`, we first want to check if there
     # are any names provided
-    # TODO: found that the conditional below seems
-    # better than other solutions to determine whether
-    # the vector is even partially named
     if (!is.null(names(suffixing))) {
       stop("The character vector supplied to `suffixed` cannot contain names.",
            call. = FALSE)
@@ -824,52 +827,6 @@ tidy_grepl <- function(x, pattern) {
     FUN.VALUE = logical(1),
     USE.NAMES = FALSE
   )
-}
-
-#' An options setter for the `opts_df` data frame
-#'
-#' @param opts_df The `opts_df` data frame.
-#' @param option The option name; a unique value in the `parameter` column of
-#'   `opts_df`.
-#' @param value The value to set for the given `option`.
-#' @noRd
-opts_df_set <- function(opts_df, option, value) {
-
-  opts_df$value[[which(opts_df$parameter == option)]] <- value
-
-  opts_df
-}
-
-#' An options getter for the `opts_df` data frame
-#'
-#' @inheritParams opts_df_set
-#' @noRd
-opts_df_get <- function(opts_df, option) {
-
-  opts_df$value[[which(opts_df$parameter == option)]]
-}
-
-#' Upgrader function for `cells_*` objects
-#'
-#' Upgrade a `cells_*` object to a `list()` if only a single instance is
-#' provided.
-#' @param locations Any `cells_*` object.
-#' @noRd
-as_locations <- function(locations) {
-
-  if (!inherits(locations, "location_cells")) {
-
-    if (!is.list(locations) &&
-        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
-
-      stop("The `locations` object should be a list of `cells_*()`.",
-           .call = FALSE)
-    }
-  } else {
-    locations <- list(locations)
-  }
-
-  locations
 }
 
 #' Create a vector of marks to use for footnotes

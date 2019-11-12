@@ -48,11 +48,8 @@ row_group_order <- function(data,
          call. = FALSE)
   }
 
-  # Get the current arrangement of `groups`
-  arrange_groups <-
-    attr(data, "arrange_groups", exact = TRUE) %>%
-    unlist() %>%
-    unname()
+  # Get the current arrangement of the row groups
+  arrange_groups <- dt_stub_groups_get(data = data)
 
   if (inherits(groups, "character")) {
 
@@ -86,7 +83,5 @@ row_group_order <- function(data,
   }
 
   # Create and store a list of row groups in the intended ordering
-  attr(data, "arrange_groups") <- list(groups = groups)
-
-  data
+  dt_stub_groups_set(data = data, stub_groups = groups)
 }
