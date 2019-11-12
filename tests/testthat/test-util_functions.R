@@ -401,7 +401,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     grepl(
       paste0(
         "style=\"color: #333333; background-color: #FFFFFF; font-size: ",
-        "16px; font-weight: initial; vertical-align: middle; padding: ",
+        "100%; font-weight: initial; vertical-align: middle; padding: ",
         "5px; margin: 10px; overflow-x: hidden; border-bottom-style: ",
         "solid; border-bottom-width: 2px; border-bottom-color: ",
         "#D3D3D3; text-align: right; font-variant-numeric: tabular-nums;\""

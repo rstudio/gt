@@ -301,7 +301,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "column_labels_font_size"),
     dt_options_get_value(data = tbl_html, option = "column_labels_font_size")
   ) %>%
-    expect_equal(c("16px", "18px"))
+    expect_equal(c("100%", "18px"))
 
   # Modify the `column_labels.font.size` option using just a numeric value
   tbl_html <- data %>% tab_options(column_labels.font.size = 18)
@@ -310,7 +310,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "column_labels_font_size"),
     dt_options_get_value(data = tbl_html, option = "column_labels_font_size")
   ) %>%
-    expect_equal(c("16px", "18px"))
+    expect_equal(c("100%", "18px"))
 
   # Modify the `column_labels.font.weight`
   tbl_html <- data %>% tab_options(column_labels.font.weight = "bold")
@@ -346,7 +346,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "row_group_font_size"),
     dt_options_get_value(data = tbl_html, option = "row_group_font_size")
   ) %>%
-    expect_equal(c("16px", "18px"))
+    expect_equal(c("100%", "18px"))
 
   # Modify the `row_group.font.size` option using just a numeric value
   tbl_html <- data %>% tab_options(row_group.font.size = 18)
@@ -355,7 +355,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "row_group_font_size"),
     dt_options_get_value(data = tbl_html, option = "row_group_font_size")
   ) %>%
-    expect_equal(c("16px", "18px"))
+    expect_equal(c("100%", "18px"))
 
   # Modify the `row_group.font.weight`
   tbl_html <- data %>% tab_options(row_group.font.weight = "800")
