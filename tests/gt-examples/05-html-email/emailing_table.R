@@ -114,7 +114,7 @@ pizza_tab_email <-
     heading.subtitle.font.size = "x-small",
     row_group.font.size = "small",
     column_labels.font.size = "small",
-    row.padding = "5px"
+    data_row.padding = "5px"
     ) %>%
   cols_label(
     pies = "Pizzas",

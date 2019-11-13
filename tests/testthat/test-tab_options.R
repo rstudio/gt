@@ -511,20 +511,20 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c("#D3D3D3", "red"))
 
   # Modify the `row.padding`
-  tbl_html <- data %>% tab_options(row.padding = px(8))
+  tbl_html <- data %>% tab_options(data_row.padding = px(8))
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "row_padding"),
-    dt_options_get_value(data = tbl_html, option = "row_padding")
+  c(dt_options_get_value(data = data, option = "data_row_padding"),
+    dt_options_get_value(data = tbl_html, option = "data_row_padding")
   ) %>%
     expect_equal(c("8px", "8px"))
 
   # Modify the `row.padding` option using just a numeric value
-  tbl_html <- data %>% tab_options(row.padding = 6)
+  tbl_html <- data %>% tab_options(data_row.padding = 6)
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "row_padding"),
-    dt_options_get_value(data = tbl_html, option = "row_padding")
+  c(dt_options_get_value(data = data, option = "data_row_padding"),
+    dt_options_get_value(data = tbl_html, option = "data_row_padding")
   ) %>%
     expect_equal(c("8px", "6px"))
 
@@ -601,74 +601,74 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c("inherit", "lowercase"))
 
   # Modify the `footnote.font.size`
-  tbl_html <- data %>% tab_options(footnote.font.size = px(12))
+  tbl_html <- data %>% tab_options(footnotes.font.size = px(12))
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_font_size"),
-    dt_options_get_value(data = tbl_html, option = "footnote_font_size")
+  c(dt_options_get_value(data = data, option = "footnotes_font_size"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_font_size")
   ) %>%
     expect_equal(c("90%", "12px"))
 
   # Modify the `footnote.font.size` option using just a numeric value
-  tbl_html <- data %>% tab_options(footnote.font.size = 12)
+  tbl_html <- data %>% tab_options(footnotes.font.size = 12)
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_font_size"),
-    dt_options_get_value(data = tbl_html, option = "footnote_font_size")
+  c(dt_options_get_value(data = data, option = "footnotes_font_size"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_font_size")
   ) %>%
     expect_equal(c("90%", "12px"))
 
   # Modify the `footnote.padding`
-  tbl_html <- data %>% tab_options(footnote.padding = px(3))
+  tbl_html <- data %>% tab_options(footnotes.padding = px(3))
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_padding"),
-    dt_options_get_value(data = tbl_html, option = "footnote_padding")
+  c(dt_options_get_value(data = data, option = "footnotes_padding"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_padding")
   ) %>%
     expect_equal(c("4px", "3px"))
 
   # Modify the `footnote.padding` option using just a numeric value
-  tbl_html <- data %>% tab_options(footnote.padding = 3)
+  tbl_html <- data %>% tab_options(footnotes.padding = 3)
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_padding"),
-    dt_options_get_value(data = tbl_html, option = "footnote_padding")
+  c(dt_options_get_value(data = data, option = "footnotes_padding"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_padding")
   ) %>%
     expect_equal(c("4px", "3px"))
 
-  # Modify the `sourcenote.font.size`
-  tbl_html <- data %>% tab_options(sourcenote.font.size = px(12))
+  # Modify the `source_notes.font.size`
+  tbl_html <- data %>% tab_options(source_notes.font.size = px(12))
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "sourcenote_font_size"),
-    dt_options_get_value(data = tbl_html, option = "sourcenote_font_size")
+  c(dt_options_get_value(data = data, option = "source_notes_font_size"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_font_size")
   ) %>%
     expect_equal(c("90%", "12px"))
 
-  # Modify the `sourcenote.font.size` option using just a numeric value
-  tbl_html <- data %>% tab_options(sourcenote.font.size = 12)
+  # Modify the `source_notes.font.size` option using just a numeric value
+  tbl_html <- data %>% tab_options(source_notes.font.size = 12)
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "sourcenote_font_size"),
-    dt_options_get_value(data = tbl_html, option = "sourcenote_font_size")
+  c(dt_options_get_value(data = data, option = "source_notes_font_size"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_font_size")
   ) %>%
     expect_equal(c("90%", "12px"))
 
-  # Modify the `sourcenote.padding`
-  tbl_html <- data %>% tab_options(sourcenote.padding = px(3))
+  # Modify the `source_notes.padding`
+  tbl_html <- data %>% tab_options(source_notes.padding = px(3))
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "sourcenote_padding"),
-    dt_options_get_value(data = tbl_html, option = "sourcenote_padding")
+  c(dt_options_get_value(data = data, option = "source_notes_padding"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_padding")
   ) %>%
     expect_equal(c("4px", "3px"))
 
-  # Modify the `sourcenote.padding` option using just a numeric value
-  tbl_html <- data %>% tab_options(sourcenote.padding = 3)
+  # Modify the `source_notes.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(source_notes.padding = 3)
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "sourcenote_padding"),
-    dt_options_get_value(data = tbl_html, option = "sourcenote_padding")
+  c(dt_options_get_value(data = data, option = "source_notes_padding"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_padding")
   ) %>%
     expect_equal(c("4px", "3px"))
 
@@ -691,20 +691,20 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c(TRUE, FALSE))
 
   # Modify the `footnote.marks` option
-  tbl_html <- data %>% tab_options(footnote.marks = "LETTERS")
+  tbl_html <- data %>% tab_options(footnotes.marks = "LETTERS")
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_marks"),
-    dt_options_get_value(data = tbl_html, option = "footnote_marks")
+  c(dt_options_get_value(data = data, option = "footnotes_marks"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_marks")
   ) %>%
     expect_equal(c("numbers", "LETTERS"))
 
-  # Modify the `footnote.sep` option
-  tbl_html <- data %>% tab_options(footnote.sep = " ")
+  # Modify the `footnotes.sep` option
+  tbl_html <- data %>% tab_options(footnotes.sep = " ")
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnote_sep"),
-    dt_options_get_value(data = tbl_html, option = "footnote_sep")
+  c(dt_options_get_value(data = data, option = "footnotes_sep"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_sep")
   ) %>%
     expect_equal(c("<br />", " "))
 })
@@ -715,16 +715,16 @@ test_that("the `opts_df` getter/setter functions properly", {
   dt_options_get(data = data) %>% expect_is("tbl_df")
 
   # Get a value
-  dt_options_get_value(data = data, option = "footnote_font_size") %>%
+  dt_options_get_value(data = data, option = "footnotes_font_size") %>%
     expect_equal("90%")
 
   # Set a value, then immediately get it
   dt_options_set_value(
     data = data,
-    option = "footnote_font_size",
+    option = "footnotes_font_size",
     value = "60%"
   ) %>%
-    dt_options_get_value(option = "footnote_font_size") %>%
+    dt_options_get_value(option = "footnotes_font_size") %>%
     expect_equal("60%")
 })
 

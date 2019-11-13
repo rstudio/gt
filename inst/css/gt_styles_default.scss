@@ -25,6 +25,7 @@
   .gt_title {
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; /* heading.title.font.size */
+    font-weight: $heading_title_font_weight; /* heading.title.font.weight */
     padding-top: 4px; /* heading.top.padding - not yet used */
     padding-bottom: 4px;
     border-bottom-color: $table_background_color;
@@ -34,6 +35,7 @@
   .gt_subtitle {
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; /* heading.subtitle.font.size */
+    font-weight: $heading_subtitle_font_weight; /* heading.subtitle.font.weight */
     padding-top: 0;
     padding-bottom: 4px; /* heading.bottom.padding - not yet used */
     border-top-color: $table_background_color;
@@ -54,27 +56,25 @@
     padding-bottom: 4px;
   }
 
+  .gt_col_headings {
+    border-top-style: $column_labels_border_top_style;
+    border-top-width: $column_labels_border_top_width;
+    border-top-color: $column_labels_border_top_color;
+    border-bottom-style: $column_labels_border_bottom_style;
+    border-bottom-width: $column_labels_border_bottom_width;
+    border-bottom-color: $column_labels_border_bottom_color;
+  }
+
   .gt_col_heading {
     color: font-color($column_labels_background_color);
     background-color: $column_labels_background_color; /* column_labels.background.color */
     font-size: $column_labels_font_size; /* column_labels.font.size */
     font-weight: $column_labels_font_weight; /* column_labels.font.weight */
+    text-transform: $column_labels_text_transform; /* column_labels.text_transform */
     vertical-align: middle;
     padding: 5px;
     margin: 10px;
     overflow-x: hidden;
-  }
-
-  .gt_columns_top_border {
-    border-top-style: $columns_border_top_style;
-    border-top-width: $columns_border_top_width;
-    border-top-color: $columns_border_top_color;
-  }
-
-  .gt_columns_bottom_border {
-    border-bottom-style: $columns_border_bottom_style;
-    border-bottom-width: $columns_border_bottom_width;
-    border-bottom-color: $columns_border_bottom_color;
   }
 
   .gt_sep_right {
@@ -87,6 +87,7 @@
     background-color: $row_group_background_color; /* row_group.background.color */
     font-size: $row_group_font_size; /* row_group.font.size */
     font-weight: $row_group_font_weight; /* row_group.font.weight */
+    text-transform: $row_group_text_transform; /* row_group.text_transform */
     border-top-style: $row_group_border_top_style; /* row_group.border.top.style */
     border-top-width: $row_group_border_top_width; /* row_group.border.top.width */
     border-top-color: $row_group_border_top_color; /* row_group.border.top.color */
@@ -124,33 +125,49 @@
   }
 
   .gt_row {
-    padding-top: $row_padding; /* row.padding */
-    padding-bottom: $row_padding; /* row.padding */
+    color: font-color($data_row_background_color);
+    background-color: $data_row_background_color;
+    padding-top: $data_row_padding; /* data_row.padding */
+    padding-bottom: $data_row_padding; /* data_row.padding */
     padding-left: 5px;
     padding-right: 5px;
     margin: 10px;
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: #D3D3D3;
+    border-top-style: $table_body_hlines_style; /* table_body.hlines.style */
+    border-top-width: $table_body_hlines_width; /* table_body.hlines.width */
+    border-top-color: $table_body_hlines_color; /* table_body.hlines.color */
     vertical-align: middle;
     overflow-x: hidden;
   }
 
   .gt_stub {
-    border-right-style: solid;
-    border-right-width: 2px;
-    border-right-color: #D3D3D3;
+    color: font-color($stub_background_color);
+    background-color: $stub_background_color; /* stub.background.color */
+    font-weight: $stub_font_weight; /* stub.font.weight */
+    text-transform: $stub_text_transform; /* stub.text_transform */
+    border-right-style: $stub_border_style; /* stub.border.style */
+    border-right-width: $stub_border_width; /* stub.border.width */
+    border-right-color: $stub_border_color; /* stub.border.color */
     padding-left: 12px;
   }
 
   .gt_summary_row {
     color: font-color($summary_row_background_color);
     background-color: $summary_row_background_color; /* summary_row.background.color */
+    text-transform: $summary_row_text_transform; /* summary_row.text_transform */
     padding-top: $summary_row_padding; /* summary_row.padding */
     padding-bottom: $summary_row_padding; /* summary_row.padding */
     padding-left: 5px;
     padding-right: 5px;
-    text-transform: $summary_row_text_transform; /* summary_row.text_transform */
+  }
+
+  .gt_first_summary_row {
+    padding-top: $summary_row_padding; /* summary_row.padding */
+    padding-bottom: $summary_row_padding; /* summary_row.padding */
+    padding-left: 5px;
+    padding-right: 5px;
+    border-top-style: $summary_row_border_style; /* summary_row.border.style */
+    border-top-width: $summary_row_border_width; /* summary_row.border.width */
+    border-top-color: $summary_row_border_color; /* summary_row.border.color */
   }
 
   .gt_grand_summary_row {
@@ -163,24 +180,14 @@
     text-transform: $grand_summary_row_text_transform; /* grand_summary_row.text_transform */
   }
 
-  .gt_first_summary_row {
-    padding-top: $summary_row_padding; /* summary_row.padding */
-    padding-bottom: $summary_row_padding; /* summary_row.padding */
-    padding-left: 5px;
-    padding-right: 5px;
-    border-top-style: solid;
-    border-top-width: 2px;
-    border-top-color: #D3D3D3;
-  }
-
   .gt_first_grand_summary_row {
     padding-top: $grand_summary_row_padding; /* grand_summary_row.padding */
     padding-bottom: $grand_summary_row_padding; /* grand_summary_row.padding */
     padding-left: 5px;
     padding-right: 5px;
-    border-top-style: double;
-    border-top-width: 6px;
-    border-top-color: #D3D3D3;
+    border-top-style: $grand_summary_row_border_style; /* grand_summary_row.border.style */
+    border-top-width: $grand_summary_row_border_width; /* grand_summary_row.border.width */
+    border-top-color: $grand_summary_row_border_color; /* grand_summary_row.border.color */
   }
 
   .gt_table_body {
@@ -193,60 +200,64 @@
   }
 
   .gt_footnotes {
-    border-top-style: $footnotes_border_top_style; /* footnotes.border.top.style */
-    border-top-width: $footnotes_border_top_width; /* footnotes.border.top.width */
-    border-top-color: $footnotes_border_top_color; /* footnotes.border.top.color */
+    color: font-color($footnotes_background_color);
+    background-color: $footnotes_background_color; /* footnotes.background.color */
+    border-bottom-style: $footnotes_border_style; /* footnotes.border.style */
+    border-bottom-width: $footnotes_border_width; /* footnotes.border.width */
+    border-bottom-color: $footnotes_border_color; /* footnotes.border.color */
   }
 
   .gt_footnote {
-    font-size: $footnote_font_size; /* footnote.font.size */
-    margin: $footnote_margin;
-    padding: $footnote_padding; /* footnote.padding */
+    margin: $footnotes_margin;
+    font-size: $footnotes_font_size; /* footnotes.font.size */
+    padding: $footnotes_padding; /* footnotes.padding */
   }
 
   .gt_sourcenotes {
-    border-top-style: $sourcenotes_border_top_style; /* sourcenotes.border.top.style */
-    border-top-width: $sourcenotes_border_top_width; /* sourcenotes.border.top.width */
-    border-top-color: $sourcenotes_border_top_color; /* sourcenotes.border.top.color */
+    color: font-color($source_notes_background_color);
+    background-color: $source_notes_background_color; /* source_notes.background.color */
+    border-bottom-style: $source_notes_border_style; /* source_notes.border.style */
+    border-bottom-width: $source_notes_border_width; /* source_notes.border.width */
+    border-bottom-color: $source_notes_border_color; /* source_notes.border.color */
   }
 
   .gt_sourcenote {
-    font-size: $sourcenote_font_size; /* sourcenote.font.size */
-    padding: $sourcenote_padding; /* sourcenote.padding */
-  }
-
-  .gt_center {
-    text-align:center;
+    font-size: $source_notes_font_size; /* source_notes.font.size */
+    padding: $source_notes_padding; /* source_notes.padding */
   }
 
   .gt_left {
-    text-align:left;
+    text-align: left;
+  }
+
+  .gt_center {
+    text-align: center;
   }
 
   .gt_right {
-    text-align:right;
-    font-variant-numeric:tabular-nums;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
   }
 
   .gt_font_normal {
-    font-weight:normal;
+    font-weight: normal;
   }
 
   .gt_font_bold {
-    font-weight:bold;
+    font-weight: bold;
   }
 
   .gt_font_italic {
-    font-style:italic;
+    font-style: italic;
   }
 
   .gt_super {
-    font-size:65%;
+    font-size: 65%;
   }
 
   .gt_footnote_marks {
-    font-style:italic;
-    font-size:65%;
+    font-style: italic;
+    font-size: 65%;
   }
 
 }

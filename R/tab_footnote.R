@@ -12,16 +12,16 @@
 #' parameters in the [tab_options()] function:
 #'
 #' \itemize{
-#'   \item `footnote.sep`: allows for a choice of the separator between
+#'   \item `footnotes.sep`: allows for a choice of the separator between
 #' consecutive footnotes in the table footer. By default, this is set to a
 #' linebreak.
-#'   \item `footnote.marks`: the set of sequential characters or numbers used to
+#'   \item `footnotes.marks`: the set of sequential characters or numbers used to
 #' identify the footnotes.
-#'   \item `footnote.font.size`: the size of the font used in the footnote
+#'   \item `footnotes.font.size`: the size of the font used in the footnote
 #' section.
-#'   \item `footnote.padding`: the amount of padding to apply between the
-#' footnote and source note sections in
-#' the table footer. }
+#'   \item `footnotes.padding`: the amount of padding to apply between the
+#' footnote and source note sections in the table footer.
+#' }
 #'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use

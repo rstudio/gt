@@ -20,7 +20,7 @@ standard set).}
 Alter the footnote marks for any footnotes that may be present in the table.
 Either a vector of marks can be provided (including Unicode characters), or,
 a specific keyword could be used to signify a preset sequence. This function
-serves as a shortcut for using \code{tab_options(footnote.marks = {marks})}
+serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 }
 \details{
 We can supply a vector of that will represent the series of marks.

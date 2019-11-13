@@ -21,9 +21,9 @@
 #'   given in units of pixels. The [px()] and [pct()] helper functions can also
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units.
-#' @param table.align The alignment of the table in its container. By default,
-#'   this is `"center"`. Other options are `"left"` and `"right"`. This will
-#'   automatically set `table.margin.left` and `table.margin.right` to the
+#' @param table.align The horizontal alignment of the table in its container. By
+#'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
+#'   will automatically set `table.margin.left` and `table.margin.right` to the
 #'   appropriate values.
 #' @param table.margin.left,table.margin.right The size of the margins on the
 #'   left and right of the table within the container. Can be specified as a
@@ -33,43 +33,82 @@
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units. Using `table.margin.left` or `table.margin.right` will overwrite any
 #'   values set by `table.align`.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnote.font.size,sourcenote.font.size
-#'   Font sizes for the parent text element `table` and the following child
-#'   elements: `heading.title`, `heading.subtitle`, `columns`, `row_group`,
-#'   `footnote`, and `sourcenote`. Can be specified as a single-length character
-#'   vector with units of pixels (e.g., `12px`) or as a percentage (e.g.,
-#'   `80\%`). If provided as a single-length numeric vector, it is assumed that
-#'   the value is given in units of pixels. The [px()] and [pct()] helper
-#'   functions can also be used to pass in numeric values and obtain values as
-#'   pixel or percent units.
-#' @param font.color The table font color, for text used throughout the table.
-#' @param font.color.light The table font color when text is required to be
-#'   light, due to darker background colors.
-#' @param column_labels.font.weight,row_group.font.weight The font weight of
-#'   the `columns` and `row_group` text element.
-#' @param summary_row.text_transform,grand_summary_row.text_transform An option
-#'   to apply text transformations to the label text in each summary row.
-#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,summary_row.background.color,grand_summary_row.background.color
+#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,stub.background.color,data_row.background.color,summary_row.background.color,grand_summary_row.background.color,footnotes.background.color,source_notes.background.color
 #'   Background colors for the parent element `table` and the following child
-#'   elements: `heading`, `columns`, `row_group`, `summary_row`, and
-#'   `table_body`. A color name or a hexadecimal color code should be provided.
-#' @param table.border.top.style,table.border.top.width,table.border.top.color
-#'   The style, width, and color of the table's top border.
+#'   elements: `heading`, `column_labels`, `row_group`, `stub`, `data_row`,
+#'   `summary_row`, `grand_summary_row`, `footnotes`, and `source_notes`. A
+#'   color name or a hexadecimal color code should be provided.
+#' @param table.font.color,table.font.color.light
+#'   The text color used throughout the table. There are two variants:
+#'   `table.font.color` is for text overlaid on lighter background colors, and
+#'   `table.font.color.light` is automatically used when text needs to be
+#'   overlaid on darker background colors. A color name or a hexadecimal color
+#'   code should be provided.
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnotes.font.size,source_notes.font.size
+#'   The font sizes for the parent text element `table` and the following child
+#'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
+#'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
+#'   single-length character vector with units of pixels (e.g., `12px`) or as a
+#'   percentage (e.g., `80\%`). If provided as a single-length numeric vector,
+#'   it is assumed that the value is given in units of pixels. The [px()] and
+#'   [pct()] helper functions can also be used to pass in numeric values and
+#'   obtain values as pixel or percentage units.
+#' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
+#'   The font weights of the `heading.title`, `heading.subtitle`,
+#'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
+#'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
+#'   numeric value between `1` and `1000`, inclusive. Note that only variable
+#'   fonts may support the numeric mapping of weight.
+#' @param column_labels.text_transform,row_group.text_transform,stub.text_transform,summary_row.text_transform,grand_summary_row.text_transform
+#'   Options to apply text transformations to the `column_labels`, `row_group`,
+#'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"` keywords can be used.
+#' @param data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
+#'   The amount of vertical padding to incorporate in the `data_row`,
+#'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
+#'   `source_notes` locations.
+#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color
+#'   The style, width, and color properties of the table's absolute top and
+#'   absolute bottom borders.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
-#'   The style, width, and color of the heading's bottom border.
-#' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color
-#'   The style, width, and color of the row group's top border.
-#' @param row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color
-#'   The style, width, and color of the row group's bottom border.
-#' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color
-#'   The style, width, and color of the table body's top border.
-#' @param table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
-#'   The style, width, and color of the table body's bottom border.
-#' @param row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding
-#'   The amount of padding in each type of row.
-#' @param footnote.sep The separating characters between adjacent footnotes in
+#'   The style, width, and color properties of the header's bottom border. This
+#'   border shares space with that of the `column_labels` location. If the
+#'   `width` of this border is larger, then it will be the visible border.
+#' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
+#'   The style, width, and color properties for the top border of the
+#'   `column_labels` location. This border shares space with that of the
+#'   `heading` location. If dthe `width` of this border is larger, then it will
+#'   be the visible border.
+#' @param column_labels.border.bottom.style,column_labels.border.bottom.width,column_labels.border.bottom.color
+#'   The style, width, and color properties for the bottom border of the
+#'   `column_labels` location.
+#' @param column_labels.hidden An option to hide the column labels. If providing
+#'   `TRUE` then the entire `column_labels` location won't be seen and the table
+#'   header (if present) will collapse downward.
+#' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color
+#'   The style, width, and color properties for all top and bottom borders of
+#'   the `row_group` location.
+#' @param table_body.hlines.style,table_body.hlines.width,table_body.hlines.color
+#'   The style, width, and color properties for all horizontal lines in the
+#'   `table_body`.
+#' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color,table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
+#'   The style, width, and color properties for all top and bottom borders of
+#'   the `table_body` location.
+#' @param stub.border.style,stub.border.width,stub.border.color
+#'   The style, width, and color properties for the vertical border of the table
+#'   stub.
+#' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
+#'   The style, width, and color properties for all horizontal borders of the
+#'   `summary_row` location.
+#' @param grand_summary_row.border.style,grand_summary_row.border.width,grand_summary_row.border.color
+#'   The style, width, and color properties for the top borders of the
+#'   `grand_summary_row` location.
+#' @param footnotes.border.style,footnotes.border.width,footnotes.border.color
+#'   The style, width, and color properties for the bottom border of the
+#'   `footnotes` location.
+#' @param footnotes.sep The separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
-#' @param footnote.marks The set of sequential marks used to reference and
+#' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
 #'   function. We can supply a vector that represents the series of footnote
 #'   marks. This vector is recycled when its usage goes beyond the length of the
@@ -80,15 +119,15 @@
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
-#' @param footnote.padding,sourcenote.padding The amount of padding to apply to
-#'   the footnote and source note sections.
+#' @param source_notes.border.style,source_notes.border.width,source_notes.border.color
+#'   The style, width, and color properties for the bottom border of the
+#'   `source_notes` location.
 #' @param row.striping.background_color The background color for striped table
-#'   body rows.
+#'   body rows. A color name or a hexadecimal color code should be provided.
 #' @param row.striping.include_stub An option for whether to include the stub
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @param column_labels.hidden An option to hide the column labels.
 #' @return an object of class `gt_tbl`.
 #' @examples
 #' # Use `exibble` to create a gt table with
@@ -149,15 +188,15 @@
 #' tab_4 <-
 #'   tab_1 %>%
 #'   tab_options(
-#'     footnote.sep = " ",
-#'     footnote.marks = letters
+#'     footnotes.sep = " ",
+#'     footnotes.marks = letters
 #'   )
 #'
 #' # Change the padding of data rows to 5px
 #' tab_5 <-
 #'   tab_1 %>%
 #'   tab_options(
-#'     row.padding = px(5)
+#'     data_row.padding = px(5)
 #'   )
 #'
 #' # Reduce the size of the title and the
@@ -183,65 +222,108 @@
 #' \if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
 #'
 #' @family table-part creation/modification functions
+#'
 #' @export
 tab_options <- function(data,
                         container.width = NULL,
                         container.height = NULL,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
-                        font.color = NULL,
-                        font.color.light = NULL,
                         table.width = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
-                        table.font.size = NULL,
                         table.background.color = NULL,
+                        table.font.color = NULL,
+                        table.font.color.light = NULL,
+                        table.font.size = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
+                        table.border.bottom.style = NULL,
+                        table.border.bottom.width = NULL,
+                        table.border.bottom.color = NULL,
                         heading.background.color = NULL,
                         heading.title.font.size = NULL,
+                        heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
+                        heading.subtitle.font.weight = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
                         column_labels.background.color = NULL,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
+                        column_labels.text_transform = NULL,
+                        column_labels.border.top.style = NULL,
+                        column_labels.border.top.width = NULL,
+                        column_labels.border.top.color = NULL,
+                        column_labels.border.bottom.style = NULL,
+                        column_labels.border.bottom.width = NULL,
+                        column_labels.border.bottom.color = NULL,
                         column_labels.hidden = NULL,
-                        row_group.padding = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
                         row_group.font.weight = NULL,
+                        row_group.text_transform = NULL,
+                        row_group.padding = NULL,
                         row_group.border.top.style = NULL,
                         row_group.border.top.width = NULL,
                         row_group.border.top.color = NULL,
                         row_group.border.bottom.style = NULL,
                         row_group.border.bottom.width = NULL,
                         row_group.border.bottom.color = NULL,
+                        table_body.hlines.style = NULL,
+                        table_body.hlines.width = NULL,
+                        table_body.hlines.color = NULL,
                         table_body.border.top.style = NULL,
                         table_body.border.top.width = NULL,
                         table_body.border.top.color = NULL,
                         table_body.border.bottom.style = NULL,
                         table_body.border.bottom.width = NULL,
                         table_body.border.bottom.color = NULL,
-                        row.padding = NULL,
+                        stub.background.color = NULL,
+                        stub.font.weight = NULL,
+                        stub.text_transform = NULL,
+                        stub.border.style = NULL,
+                        stub.border.width = NULL,
+                        stub.border.color = NULL,
+                        data_row.background.color = NULL,
+                        data_row.padding = NULL,
                         summary_row.background.color = NULL,
-                        summary_row.padding = NULL,
                         summary_row.text_transform = NULL,
+                        summary_row.padding = NULL,
+                        summary_row.border.style = NULL,
+                        summary_row.border.width = NULL,
+                        summary_row.border.color = NULL,
                         grand_summary_row.background.color = NULL,
-                        grand_summary_row.padding = NULL,
                         grand_summary_row.text_transform = NULL,
-                        footnote.sep = NULL,
-                        footnote.marks = NULL,
-                        footnote.font.size = NULL,
-                        footnote.padding = NULL,
-                        sourcenote.font.size = NULL,
-                        sourcenote.padding = NULL,
+                        grand_summary_row.padding = NULL,
+                        grand_summary_row.border.style = NULL,
+                        grand_summary_row.border.width = NULL,
+                        grand_summary_row.border.color = NULL,
+                        footnotes.background.color = NULL,
+                        footnotes.font.size = NULL,
+                        footnotes.padding = NULL,
+                        footnotes.border.style = NULL,
+                        footnotes.border.width = NULL,
+                        footnotes.border.color = NULL,
+                        footnotes.sep = NULL,
+                        footnotes.marks = NULL,
+                        source_notes.background.color = NULL,
+                        source_notes.font.size = NULL,
+                        source_notes.padding = NULL,
+                        source_notes.border.style = NULL,
+                        source_notes.border.width = NULL,
+                        source_notes.border.color = NULL,
                         row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
+
+  # TODO: add documentation for new arguments
+  # TODO: add tests for the new arguments
+  # TODO: add helper functions to divide the options into those by location
+  # TODO: add helper functions to divide the options into those by parameter
 
   # Extract the options table from `data`
   opts_df <- dt_options_get(data = data)
@@ -291,7 +373,7 @@ tab_options <- function(data,
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #' Either a vector of marks can be provided (including Unicode characters), or,
 #' a specific keyword could be used to signify a preset sequence. This function
-#' serves as a shortcut for using `tab_options(footnote.marks = {marks})`
+#' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
@@ -364,7 +446,7 @@ opt_footnote_marks <- function(data,
                                marks = NULL) {
 
   if (!is.null(marks)) {
-    data <- data %>% tab_options(footnote.marks = marks)
+    data <- data %>% tab_options(footnotes.marks = marks)
   }
 
   data
