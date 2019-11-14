@@ -352,8 +352,6 @@ tab_options <- function(data,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
 
-  # TODO: add documentation for new arguments
-  # TODO: add tests for the new arguments
   # TODO: add helper functions to divide the options into those by location
   # TODO: add helper functions to divide the options into those by parameter
 
