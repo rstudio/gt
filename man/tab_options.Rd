@@ -18,7 +18,8 @@ tab_options(data, container.width = NULL, container.height = NULL,
   heading.subtitle.font.weight = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
-  heading.border.bottom.color = NULL,
+  heading.border.bottom.color = NULL, heading.border.lr.style = NULL,
+  heading.border.lr.width = NULL, heading.border.lr.color = NULL,
   column_labels.background.color = NULL,
   column_labels.font.size = NULL, column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
@@ -28,16 +29,25 @@ tab_options(data, container.width = NULL, container.height = NULL,
   column_labels.border.bottom.style = NULL,
   column_labels.border.bottom.width = NULL,
   column_labels.border.bottom.color = NULL,
-  column_labels.hidden = NULL, row_group.background.color = NULL,
-  row_group.font.size = NULL, row_group.font.weight = NULL,
-  row_group.text_transform = NULL, row_group.padding = NULL,
-  row_group.border.top.style = NULL, row_group.border.top.width = NULL,
-  row_group.border.top.color = NULL,
+  column_labels.border.lr.style = NULL,
+  column_labels.border.lr.width = NULL,
+  column_labels.border.lr.color = NULL, column_labels.hidden = NULL,
+  row_group.background.color = NULL, row_group.font.size = NULL,
+  row_group.font.weight = NULL, row_group.text_transform = NULL,
+  row_group.padding = NULL, row_group.border.top.style = NULL,
+  row_group.border.top.width = NULL, row_group.border.top.color = NULL,
   row_group.border.bottom.style = NULL,
   row_group.border.bottom.width = NULL,
-  row_group.border.bottom.color = NULL, table_body.hlines.style = NULL,
+  row_group.border.bottom.color = NULL,
+  row_group.border.left.style = NULL,
+  row_group.border.left.width = NULL,
+  row_group.border.left.color = NULL,
+  row_group.border.right.style = NULL,
+  row_group.border.right.width = NULL,
+  row_group.border.right.color = NULL, table_body.hlines.style = NULL,
   table_body.hlines.width = NULL, table_body.hlines.color = NULL,
-  table_body.border.top.style = NULL,
+  table_body.vlines.style = NULL, table_body.vlines.width = NULL,
+  table_body.vlines.color = NULL, table_body.border.top.style = NULL,
   table_body.border.top.width = NULL,
   table_body.border.top.color = NULL,
   table_body.border.bottom.style = NULL,
@@ -45,8 +55,8 @@ tab_options(data, container.width = NULL, container.height = NULL,
   table_body.border.bottom.color = NULL, stub.background.color = NULL,
   stub.font.weight = NULL, stub.text_transform = NULL,
   stub.border.style = NULL, stub.border.width = NULL,
-  stub.border.color = NULL, data_row.background.color = NULL,
-  data_row.padding = NULL, summary_row.background.color = NULL,
+  stub.border.color = NULL, data_row.padding = NULL,
+  summary_row.background.color = NULL,
   summary_row.text_transform = NULL, summary_row.padding = NULL,
   summary_row.border.style = NULL, summary_row.border.width = NULL,
   summary_row.border.color = NULL,
@@ -57,12 +67,19 @@ tab_options(data, container.width = NULL, container.height = NULL,
   grand_summary_row.border.width = NULL,
   grand_summary_row.border.color = NULL,
   footnotes.background.color = NULL, footnotes.font.size = NULL,
-  footnotes.padding = NULL, footnotes.border.style = NULL,
-  footnotes.border.width = NULL, footnotes.border.color = NULL,
-  footnotes.sep = NULL, footnotes.marks = NULL,
-  source_notes.background.color = NULL, source_notes.font.size = NULL,
-  source_notes.padding = NULL, source_notes.border.style = NULL,
-  source_notes.border.width = NULL, source_notes.border.color = NULL,
+  footnotes.padding = NULL, footnotes.border.bottom.style = NULL,
+  footnotes.border.bottom.width = NULL,
+  footnotes.border.bottom.color = NULL,
+  footnotes.border.lr.style = NULL, footnotes.border.lr.width = NULL,
+  footnotes.border.lr.color = NULL, footnotes.sep = NULL,
+  footnotes.marks = NULL, source_notes.background.color = NULL,
+  source_notes.font.size = NULL, source_notes.padding = NULL,
+  source_notes.border.bottom.style = NULL,
+  source_notes.border.bottom.width = NULL,
+  source_notes.border.bottom.color = NULL,
+  source_notes.border.lr.style = NULL,
+  source_notes.border.lr.width = NULL,
+  source_notes.border.lr.color = NULL,
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL)
@@ -105,10 +122,10 @@ be used to pass in numeric values and obtain values as pixel or percent
 units. Using \code{table.margin.left} or \code{table.margin.right} will overwrite any
 values set by \code{table.align}.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, stub.background.color, data_row.background.color, summary_row.background.color, grand_summary_row.background.color, footnotes.background.color, source_notes.background.color}{Background colors for the parent element \code{table} and the following child
-elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \code{data_row},
-\code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A
-color name or a hexadecimal color code should be provided.}
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, stub.background.color, summary_row.background.color, grand_summary_row.background.color, footnotes.background.color, source_notes.background.color}{Background colors for the parent element \code{table} and the following child
+elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \code{summary_row},
+\code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
+hexadecimal color code should be provided.}
 
 \item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
 \code{table.font.color} is for text overlaid on lighter background colors, and
@@ -138,6 +155,9 @@ fonts may support the numeric mapping of weight.}
 border shares space with that of the \code{column_labels} location. If the
 \code{width} of this border is larger, then it will be the visible border.}
 
+\item{heading.border.lr.style, heading.border.lr.width, heading.border.lr.color}{The style, width, and color properties for the left and right borders of
+the \code{heading} location.}
+
 \item{column_labels.text_transform, row_group.text_transform, stub.text_transform, summary_row.text_transform, grand_summary_row.text_transform}{Options to apply text transformations to the \code{column_labels}, \code{row_group},
 \code{stub}, \code{summary_row}, and \code{grand_summary_row} text elements. Either of the
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"} keywords can be used.}
@@ -150,15 +170,18 @@ be the visible border.}
 \item{column_labels.border.bottom.style, column_labels.border.bottom.width, column_labels.border.bottom.color}{The style, width, and color properties for the bottom border of the
 \code{column_labels} location.}
 
+\item{column_labels.border.lr.style, column_labels.border.lr.width, column_labels.border.lr.color}{The style, width, and color properties for the left and right borders of
+the \code{column_labels} location.}
+
 \item{column_labels.hidden}{An option to hide the column labels. If providing
 \code{TRUE} then the entire \code{column_labels} location won't be seen and the table
 header (if present) will collapse downward.}
 
-\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color}{The style, width, and color properties for all top and bottom borders of
-the \code{row_group} location.}
+\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{The style, width, and color properties for all top, bottom, left, and right
+borders of the \code{row_group} location.}
 
-\item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color}{The style, width, and color properties for all horizontal lines in the
-\code{table_body}.}
+\item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{The style, width, and color properties for all horizontal lines ('hlines')
+and vertical lines ('vlines') in the \code{table_body}.}
 
 \item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color, table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{The style, width, and color properties for all top and bottom borders of
 the \code{table_body} location.}
@@ -176,8 +199,11 @@ stub.}
 \item{grand_summary_row.border.style, grand_summary_row.border.width, grand_summary_row.border.color}{The style, width, and color properties for the top borders of the
 \code{grand_summary_row} location.}
 
-\item{footnotes.border.style, footnotes.border.width, footnotes.border.color}{The style, width, and color properties for the bottom border of the
+\item{footnotes.border.bottom.style, footnotes.border.bottom.width, footnotes.border.bottom.color}{The style, width, and color properties for the bottom border of the
 \code{footnotes} location.}
+
+\item{footnotes.border.lr.style, footnotes.border.lr.width, footnotes.border.lr.color}{The style, width, and color properties for the left and right borders of
+the \code{footnotes} location.}
 
 \item{footnotes.sep}{The separating characters between adjacent footnotes in
 the footnotes section. The default value produces a linebreak.}
@@ -194,8 +220,11 @@ want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
 \code{"standard"} provides four symbols, and, \code{"extended"} adds two more
 symbols, making six.}
 
-\item{source_notes.border.style, source_notes.border.width, source_notes.border.color}{The style, width, and color properties for the bottom border of the
+\item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{The style, width, and color properties for the bottom border of the
 \code{source_notes} location.}
+
+\item{source_notes.border.lr.style, source_notes.border.lr.width, source_notes.border.lr.color}{The style, width, and color properties for the left and right borders of
+the \code{source_notes} location.}
 
 \item{row.striping.background_color}{The background color for striped table
 body rows. A color name or a hexadecimal color code should be provided.}

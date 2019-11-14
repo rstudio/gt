@@ -108,7 +108,7 @@ expect_tab <- function(tab,
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(97, 5))
+    expect_equal(c(117, 5))
 
   dt_stub_groups_get(data = tab) %>%
     length() %>%

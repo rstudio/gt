@@ -81,6 +81,24 @@ test_that("the internal `opts_df` table can be correctly modified", {
   # Check that specific suggested packages are available
   check_suggests()
 
+  # Modify the `container.width` option using a numeric value
+  tbl_html <- data %>% tab_options(container.width = 300)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "container_width"),
+    dt_options_get_value(data = tbl_html, option = "container_width")
+  ) %>%
+    expect_equal(c("auto", "300px"))
+
+  # Modify the `container.height` option using a numeric value
+  tbl_html <- data %>% tab_options(container.height = 300)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "container_height"),
+    dt_options_get_value(data = tbl_html, option = "container_height")
+  ) %>%
+    expect_equal(c("auto", "300px"))
+
   # Modify the `table.width`
   tbl_html <- data %>% tab_options(table.width = pct(50))
 
@@ -98,24 +116,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "table_width")
   ) %>%
     expect_equal(c("auto", "500px"))
-
-  # Modify the `container.height` option using a numeric value
-  tbl_html <- data %>% tab_options(container.height = 300)
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "container_height"),
-    dt_options_get_value(data = tbl_html, option = "container_height")
-  ) %>%
-    expect_equal(c("auto", "300px"))
-
-  # Modify the `container.width` option using a numeric value
-  tbl_html <- data %>% tab_options(container.width = 300)
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "container_width"),
-    dt_options_get_value(data = tbl_html, option = "container_width")
-  ) %>%
-    expect_equal(c("auto", "300px"))
 
   # Modify the `table.align` option (using the `"left"` option)
   tbl_html <- data %>% tab_options(table.align = "left")
@@ -150,6 +150,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("auto", "auto", "auto", "0"))
 
+  # Modify the `table.background.color`
+  tbl_html <- data %>% tab_options(table.background.color = "yellow")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_background_color"),
+    dt_options_get_value(data = tbl_html, option = "table_background_color")
+  ) %>%
+    expect_equal(c("#FFFFFF", "yellow"))
+
   # Modify the `table.font.size`
   tbl_html <- data %>% tab_options(table.font.size = px(14))
 
@@ -167,15 +176,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "table_font_size")
   ) %>%
     expect_equal(c("16px", "14px"))
-
-  # Modify the `table.background.color`
-  tbl_html <- data %>% tab_options(table.background.color = "yellow")
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "table_background_color"),
-    dt_options_get_value(data = tbl_html, option = "table_background_color")
-  ) %>%
-    expect_equal(c("#FFFFFF", "yellow"))
 
   # Modify the `table.border.top.style`
   tbl_html <- data %>% tab_options(table.border.top.style = "dashed")
@@ -213,6 +213,42 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("#A8A8A8", "orange"))
 
+  # Modify the `table.border.bottom.style`
+  tbl_html <- data %>% tab_options(table.border.bottom.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_border_bottom_style"),
+    dt_options_get_value(data = tbl_html, option = "table_border_bottom_style")
+  ) %>%
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `table.border.bottom.width`
+  tbl_html <- data %>% tab_options(table.border.bottom.width = px(3))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "table_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `table.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table.border.bottom.width = 3)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "table_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `table.border.bottom.color`
+  tbl_html <- data %>% tab_options(table.border.bottom.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_border_bottom_color"),
+    dt_options_get_value(data = tbl_html, option = "table_border_bottom_color")
+  ) %>%
+    expect_equal(c("#A8A8A8", "orange"))
+
   # Modify the `heading.background.color`
   tbl_html <- data %>% tab_options(heading.background.color = "lightblue")
 
@@ -240,6 +276,20 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("125%", "18px"))
 
+
+  # TODO: The following doesn't work because the .gt_font_normal class is
+  # applied to the title and subtitle and has higher precedence than
+  # .gt_title/.gt_subtitle
+
+  # # Modify the `heading.title.font.weight`
+  # tbl_html <- data %>% tab_options(heading.title.font.weight = "bolder")
+  #
+  # # Compare before and after values
+  # c(dt_options_get_value(data = data, option = "heading_title_font_weight"),
+  #   dt_options_get_value(data = tbl_html, option = "heading_title_font_weight")
+  # ) %>%
+  #   expect_equal(c("normal", "bolder"))
+
   # Modify the `heading.subtitle.font.size`
   tbl_html <- data %>% tab_options(heading.subtitle.font.size = px(14))
 
@@ -257,6 +307,20 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "heading_subtitle_font_size")
   ) %>%
     expect_equal(c("85%", "14px"))
+
+
+  # TODO: The following doesn't work because the .gt_font_normal class is
+  # applied to the title and subtitle and has higher precedence than
+  # .gt_title/.gt_subtitle
+
+  # # Modify the `heading.subtitle.font.weight`
+  # tbl_html <- data %>% tab_options(heading.subtitle.font.weight = "bolder")
+  #
+  # # Compare before and after values
+  # c(dt_options_get_value(data = data, option = "heading_subtitle_font_weight"),
+  #   dt_options_get_value(data = tbl_html, option = "heading_subtitle_font_weight")
+  # ) %>%
+  #   expect_equal(c("normal", "bolder"))
 
   # Modify the `heading.border.bottom.style`
   tbl_html <- data %>% tab_options(heading.border.bottom.style = "dashed")
@@ -294,6 +358,51 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("#D3D3D3", "purple"))
 
+  # Modify the `heading.border.lr.style`
+  tbl_html <- data %>% tab_options(heading.border.lr.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_border_lr_style"),
+    dt_options_get_value(data = tbl_html, option = "heading_border_lr_style")
+  ) %>%
+    expect_equal(c("hidden", "dashed"))
+
+  # Modify the `heading.border.lr.width`
+  tbl_html <- data %>% tab_options(heading.border.lr.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "heading_border_lr_width")
+  ) %>%
+    expect_equal(c("1px", "5px"))
+
+  # Modify the `heading.border.lr.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(heading.border.lr.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "heading_border_lr_width")
+  ) %>%
+    expect_equal(c("1px", "5px"))
+
+  # Modify the `heading.border.lr.color`
+  tbl_html <- data %>% tab_options(heading.border.lr.color = "purple")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_border_lr_color"),
+    dt_options_get_value(data = tbl_html, option = "heading_border_lr_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "purple"))
+
+  # Modify the `column_labels.background.color`
+  tbl_html <- data %>% tab_options(column_labels.background.color = "lightgray")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_background_color"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_background_color")
+  ) %>%
+    expect_equal(c(NA_character_, "lightgray"))
+
   # Modify the `column_labels.font.size`
   tbl_html <- data %>% tab_options(column_labels.font.size = px(18))
 
@@ -321,14 +430,122 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("initial", "bold"))
 
-  # Modify the `column_labels.background.color`
-  tbl_html <- data %>% tab_options(column_labels.background.color = "lightgray")
+  # Modify the `column_labels.text_transform`
+  tbl_html <- data %>% tab_options(column_labels.text_transform = "uppercase")
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "column_labels_background_color"),
-    dt_options_get_value(data = tbl_html, option = "column_labels_background_color")
+  c(dt_options_get_value(data = data, option = "column_labels_text_transform"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_text_transform")
   ) %>%
-    expect_equal(c(NA_character_, "lightgray"))
+    expect_equal(c("inherit", "uppercase"))
+
+  # Modify the `column_labels.border.top.style`
+  tbl_html <- data %>% tab_options(column_labels.border.top.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_top_style"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_top_style")
+  ) %>%
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `column_labels.border.top.width`
+  tbl_html <- data %>% tab_options(column_labels.border.top.width = px(3))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_top_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_top_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `column_labels.border.top.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(column_labels.border.top.width = 3)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_top_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_top_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `column_labels.border.top.color`
+  tbl_html <- data %>% tab_options(column_labels.border.top.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_top_color"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_top_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `column_labels.border.bottom.style`
+  tbl_html <- data %>% tab_options(column_labels.border.bottom.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_bottom_style"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_bottom_style")
+  ) %>%
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `column_labels.border.bottom.width`
+  tbl_html <- data %>% tab_options(column_labels.border.bottom.width = px(3))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `column_labels.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(column_labels.border.bottom.width = 3)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "3px"))
+
+  # Modify the `column_labels.border.bottom.color`
+  tbl_html <- data %>% tab_options(column_labels.border.bottom.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_bottom_color"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_bottom_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `column_labels.border.lr.style`
+  tbl_html <- data %>% tab_options(column_labels.border.lr.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_lr_style"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_lr_style")
+  ) %>%
+    expect_equal(c("none", "dashed"))
+
+  # Modify the `column_labels.border.lr.width`
+  tbl_html <- data %>% tab_options(column_labels.border.lr.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_lr_width")
+  ) %>%
+    expect_equal(c("1px", "5px"))
+
+  # Modify the `column_labels.border.lr.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(column_labels.border.lr.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_lr_width")
+  ) %>%
+    expect_equal(c("1px", "5px"))
+
+  # Modify the `column_labels.border.lr.color`
+  tbl_html <- data %>% tab_options(column_labels.border.lr.color = "purple")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_border_lr_color"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_border_lr_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "purple"))
 
   # Modify the `row_group.background.color`
   tbl_html <- data %>% tab_options(row_group.background.color = "green")
@@ -365,6 +582,33 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "row_group_font_weight")
   ) %>%
     expect_equal(c("initial", "800"))
+
+  # Modify the `row_group.text_transform`
+  tbl_html <- data %>% tab_options(row_group.text_transform = "uppercase")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_text_transform"),
+    dt_options_get_value(data = tbl_html, option = "row_group_text_transform")
+  ) %>%
+    expect_equal(c("inherit", "uppercase"))
+
+  # Modify the `row_group.padding`
+  tbl_html <- data %>% tab_options(row_group.padding = px(12))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_padding"),
+    dt_options_get_value(data = tbl_html, option = "row_group_padding")
+  ) %>%
+    expect_equal(c("8px", "12px"))
+
+  # Modify the `row_group.padding` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.padding = 12)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_padding"),
+    dt_options_get_value(data = tbl_html, option = "row_group_padding")
+  ) %>%
+    expect_equal(c("8px", "12px"))
 
   # Modify the `row_group.border.top.style`
   tbl_html <- data %>% tab_options(row_group.border.top.style = "dashed")
@@ -435,6 +679,150 @@ test_that("the internal `opts_df` table can be correctly modified", {
   # Compare before and after values
   c(dt_options_get_value(data = data, option = "row_group_border_bottom_color"),
     dt_options_get_value(data = tbl_html, option = "row_group_border_bottom_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `row_group.border.left.style`
+  tbl_html <- data %>% tab_options(row_group.border.left.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_left_style"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_left_style")
+  ) %>%
+    expect_equal(c("none", "dashed"))
+
+  # Modify the `row_group.border.left.width`
+  tbl_html <- data %>% tab_options(row_group.border.left.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_left_width"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_left_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `row_group.border.left.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.border.left.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_left_width"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_left_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `row_group.border.left.color`
+  tbl_html <- data %>% tab_options(row_group.border.left.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_left_color"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_left_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `row_group.border.right.style`
+  tbl_html <- data %>% tab_options(row_group.border.right.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_right_style"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_right_style")
+  ) %>%
+    expect_equal(c("none", "dashed"))
+
+  # Modify the `row_group.border.right.width`
+  tbl_html <- data %>% tab_options(row_group.border.right.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_right_width"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_right_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `row_group.border.right.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(row_group.border.right.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_right_width"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_right_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `row_group.border.right.color`
+  tbl_html <- data %>% tab_options(row_group.border.right.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "row_group_border_right_color"),
+    dt_options_get_value(data = tbl_html, option = "row_group_border_right_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `table_body.hlines.style`
+  tbl_html <- data %>% tab_options(table_body.hlines.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_hlines_style"),
+    dt_options_get_value(data = tbl_html, option = "table_body_hlines_style")
+  ) %>%
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `table_body.hlines.width`
+  tbl_html <- data %>% tab_options(table_body.hlines.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_hlines_width"),
+    dt_options_get_value(data = tbl_html, option = "table_body_hlines_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `table_body.hlines.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table_body.hlines.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_hlines_width"),
+    dt_options_get_value(data = tbl_html, option = "table_body_hlines_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `table_body.hlines.color`
+  tbl_html <- data %>% tab_options(table_body.hlines.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_hlines_color"),
+    dt_options_get_value(data = tbl_html, option = "table_body_hlines_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `table_body.vlines.style`
+  tbl_html <- data %>% tab_options(table_body.vlines.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_vlines_style"),
+    dt_options_get_value(data = tbl_html, option = "table_body_vlines_style")
+  ) %>%
+    expect_equal(c("none", "dashed"))
+
+  # Modify the `table_body.vlines.width`
+  tbl_html <- data %>% tab_options(table_body.vlines.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_vlines_width"),
+    dt_options_get_value(data = tbl_html, option = "table_body_vlines_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `table_body.vlines.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(table_body.vlines.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_vlines_width"),
+    dt_options_get_value(data = tbl_html, option = "table_body_vlines_width")
+  ) %>%
+    expect_equal(c("1px", "4px"))
+
+  # Modify the `table_body.vlines.color`
+  tbl_html <- data %>% tab_options(table_body.vlines.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "table_body_vlines_color"),
+    dt_options_get_value(data = tbl_html, option = "table_body_vlines_color")
   ) %>%
     expect_equal(c("#D3D3D3", "orange"))
 
@@ -510,7 +898,70 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("#D3D3D3", "red"))
 
-  # Modify the `row.padding`
+  # Modify the `stub.background.color`
+  tbl_html <- data %>% tab_options(stub.background.color = "yellow")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_background_color"),
+    dt_options_get_value(data = tbl_html, option = "stub_background_color")
+  ) %>%
+    expect_equal(c(NA_character_, "yellow"))
+
+  # Modify the `stub.font.weight`
+  tbl_html <- data %>% tab_options(stub.font.weight = "bold")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_font_weight"),
+    dt_options_get_value(data = tbl_html, option = "stub_font_weight")
+  ) %>%
+    expect_equal(c("initial", "bold"))
+
+  # Modify the `stub.text_transform`
+  tbl_html <- data %>% tab_options(stub.text_transform = "uppercase")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_text_transform"),
+    dt_options_get_value(data = tbl_html, option = "stub_text_transform")
+  ) %>%
+    expect_equal(c("inherit", "uppercase"))
+
+  # Modify the `stub.border.style`
+  tbl_html <- data %>% tab_options(stub.border.style = "dashed")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_border_style"),
+    dt_options_get_value(data = tbl_html, option = "stub_border_style")
+  ) %>%
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `stub.border.width`
+  tbl_html <- data %>% tab_options(stub.border.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_border_width"),
+    dt_options_get_value(data = tbl_html, option = "stub_border_width")
+  ) %>%
+    expect_equal(c("2px", "4px"))
+
+  # Modify the `stub.border.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(stub.border.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_border_width"),
+    dt_options_get_value(data = tbl_html, option = "stub_border_width")
+  ) %>%
+    expect_equal(c("2px", "4px"))
+
+  # Modify the `stub.border.color`
+  tbl_html <- data %>% tab_options(stub.border.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "stub_border_color"),
+    dt_options_get_value(data = tbl_html, option = "stub_border_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `data_row.padding`
   tbl_html <- data %>% tab_options(data_row.padding = px(8))
 
   # Compare before and after values
@@ -519,7 +970,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("8px", "8px"))
 
-  # Modify the `row.padding` option using just a numeric value
+  # Modify the `data_row.padding` option using just a numeric value
   tbl_html <- data %>% tab_options(data_row.padding = 6)
 
   # Compare before and after values
@@ -536,6 +987,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "summary_row_background_color")
   ) %>%
     expect_equal(c(NA_character_, "pink"))
+
+  # Modify the `summary_row.text_transform`
+  tbl_html <- data %>% tab_options(summary_row.text_transform = "lowercase")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "summary_row_text_transform"),
+    dt_options_get_value(data = tbl_html, option = "summary_row_text_transform")
+  ) %>%
+    expect_equal(c("inherit", "lowercase"))
 
   # Modify the `summary_row.padding`
   tbl_html <- data %>% tab_options(summary_row.padding = px(4))
@@ -555,14 +1015,41 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("8px", "4px"))
 
-  # Modify the `summary_row.text_transform`
-  tbl_html <- data %>% tab_options(summary_row.text_transform = "lowercase")
+  # Modify the `summary_row.border.style`
+  tbl_html <- data %>% tab_options(summary_row.border.style = "dashed")
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "summary_row_text_transform"),
-    dt_options_get_value(data = tbl_html, option = "summary_row_text_transform")
+  c(dt_options_get_value(data = data, option = "summary_row_border_style"),
+    dt_options_get_value(data = tbl_html, option = "summary_row_border_style")
   ) %>%
-    expect_equal(c("inherit", "lowercase"))
+    expect_equal(c("solid", "dashed"))
+
+  # Modify the `summary_row.border.width`
+  tbl_html <- data %>% tab_options(summary_row.border.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "summary_row_border_width"),
+    dt_options_get_value(data = tbl_html, option = "summary_row_border_width")
+  ) %>%
+    expect_equal(c("2px", "4px"))
+
+  # Modify the `summary_row.border.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(summary_row.border.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "summary_row_border_width"),
+    dt_options_get_value(data = tbl_html, option = "summary_row_border_width")
+  ) %>%
+    expect_equal(c("2px", "4px"))
+
+  # Modify the `summary_row.border.color`
+  tbl_html <- data %>% tab_options(summary_row.border.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "summary_row_border_color"),
+    dt_options_get_value(data = tbl_html, option = "summary_row_border_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
 
   # Modify the `grand_summary_row.background.color`
   tbl_html <- data %>% tab_options(grand_summary_row.background.color = "pink")
@@ -572,6 +1059,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "grand_summary_row_background_color")
   ) %>%
     expect_equal(c(NA_character_, "pink"))
+
+  # Modify the `grand_summary_row.text_transform`
+  tbl_html <- data %>% tab_options(grand_summary_row.text_transform = "lowercase")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "grand_summary_row_text_transform"),
+    dt_options_get_value(data = tbl_html, option = "grand_summary_row_text_transform")
+  ) %>%
+    expect_equal(c("inherit", "lowercase"))
 
   # Modify the `grand_summary_row.padding`
   tbl_html <- data %>% tab_options(grand_summary_row.padding = px(4))
@@ -591,16 +1087,52 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("8px", "4px"))
 
-  # Modify the `grand_summary_row.text_transform`
-  tbl_html <- data %>% tab_options(grand_summary_row.text_transform = "lowercase")
+  # Modify the `grand_summary_row.border.style`
+  tbl_html <- data %>% tab_options(grand_summary_row.border.style = "dashed")
 
   # Compare before and after values
-  c(dt_options_get_value(data = data, option = "grand_summary_row_text_transform"),
-    dt_options_get_value(data = tbl_html, option = "grand_summary_row_text_transform")
+  c(dt_options_get_value(data = data, option = "grand_summary_row_border_style"),
+    dt_options_get_value(data = tbl_html, option = "grand_summary_row_border_style")
   ) %>%
-    expect_equal(c("inherit", "lowercase"))
+    expect_equal(c("double", "dashed"))
 
-  # Modify the `footnote.font.size`
+  # Modify the `grand_summary_row.border.width`
+  tbl_html <- data %>% tab_options(grand_summary_row.border.width = px(4))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "grand_summary_row_border_width"),
+    dt_options_get_value(data = tbl_html, option = "grand_summary_row_border_width")
+  ) %>%
+    expect_equal(c("6px", "4px"))
+
+  # Modify the `grand_summary_row.border.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(grand_summary_row.border.width = 4)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "grand_summary_row_border_width"),
+    dt_options_get_value(data = tbl_html, option = "grand_summary_row_border_width")
+  ) %>%
+    expect_equal(c("6px", "4px"))
+
+  # Modify the `grand_summary_row.border.color`
+  tbl_html <- data %>% tab_options(grand_summary_row.border.color = "orange")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "grand_summary_row_border_color"),
+    dt_options_get_value(data = tbl_html, option = "grand_summary_row_border_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "orange"))
+
+  # Modify the `footnotes.background.color`
+  tbl_html <- data %>% tab_options(footnotes.background.color = "pink")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_background_color"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_background_color")
+  ) %>%
+    expect_equal(c(NA_character_, "pink"))
+
+  # Modify the `footnotes.font.size`
   tbl_html <- data %>% tab_options(footnotes.font.size = px(12))
 
   # Compare before and after values
@@ -609,7 +1141,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("90%", "12px"))
 
-  # Modify the `footnote.font.size` option using just a numeric value
+  # Modify the `footnotes.font.size` option using just a numeric value
   tbl_html <- data %>% tab_options(footnotes.font.size = 12)
 
   # Compare before and after values
@@ -618,7 +1150,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("90%", "12px"))
 
-  # Modify the `footnote.padding`
+  # Modify the `footnotes.padding`
   tbl_html <- data %>% tab_options(footnotes.padding = px(3))
 
   # Compare before and after values
@@ -627,7 +1159,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("4px", "3px"))
 
-  # Modify the `footnote.padding` option using just a numeric value
+  # Modify the `footnotes.padding` option using just a numeric value
   tbl_html <- data %>% tab_options(footnotes.padding = 3)
 
   # Compare before and after values
@@ -635,6 +1167,87 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "footnotes_padding")
   ) %>%
     expect_equal(c("4px", "3px"))
+
+  # Modify the `footnotes.border.bottom.style`
+  tbl_html <- data %>% tab_options(footnotes.border.bottom.style = "dotted")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_bottom_style"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_bottom_style")
+  ) %>%
+    expect_equal(c("solid", "dotted"))
+
+  # Modify the `footnotes.border.bottom.width`
+  tbl_html <- data %>% tab_options(footnotes.border.bottom.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `footnotes.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(footnotes.border.bottom.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `footnotes.border.bottom.color`
+  tbl_html <- data %>% tab_options(footnotes.border.bottom.color = "red")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_bottom_color"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_bottom_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "red"))
+
+  # Modify the `footnotes.border.lr.style`
+  tbl_html <- data %>% tab_options(footnotes.border.lr.style = "dotted")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_lr_style"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_lr_style")
+  ) %>%
+    expect_equal(c("none", "dotted"))
+
+  # Modify the `footnotes.border.lr.width`
+  tbl_html <- data %>% tab_options(footnotes.border.lr.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_lr_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `footnotes.border.lr.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(footnotes.border.lr.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_lr_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `footnotes.border.lr.color`
+  tbl_html <- data %>% tab_options(footnotes.border.lr.color = "red")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_border_lr_color"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_border_lr_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "red"))
+
+  # Modify the `source_notes.background.color`
+  tbl_html <- data %>% tab_options(source_notes.background.color = "pink")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_background_color"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_background_color")
+  ) %>%
+    expect_equal(c(NA_character_, "pink"))
 
   # Modify the `source_notes.font.size`
   tbl_html <- data %>% tab_options(source_notes.font.size = px(12))
@@ -672,6 +1285,87 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c("4px", "3px"))
 
+  # Modify the `source_notes.border.bottom.style`
+  tbl_html <- data %>% tab_options(source_notes.border.bottom.style = "dotted")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_bottom_style"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_bottom_style")
+  ) %>%
+    expect_equal(c("solid", "dotted"))
+
+  # Modify the `source_notes.border.bottom.width`
+  tbl_html <- data %>% tab_options(source_notes.border.bottom.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `source_notes.border.bottom.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(source_notes.border.bottom.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_bottom_width"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_bottom_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `source_notes.border.bottom.color`
+  tbl_html <- data %>% tab_options(source_notes.border.bottom.color = "red")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_bottom_color"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_bottom_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "red"))
+
+  # Modify the `source_notes.border.lr.style`
+  tbl_html <- data %>% tab_options(source_notes.border.lr.style = "dotted")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_lr_style"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_lr_style")
+  ) %>%
+    expect_equal(c("none", "dotted"))
+
+  # Modify the `source_notes.border.lr.width`
+  tbl_html <- data %>% tab_options(source_notes.border.lr.width = px(5))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_lr_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `source_notes.border.lr.width` option using just a numeric value
+  tbl_html <- data %>% tab_options(source_notes.border.lr.width = 5)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_lr_width"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_lr_width")
+  ) %>%
+    expect_equal(c("2px", "5px"))
+
+  # Modify the `source_notes.border.lr.color`
+  tbl_html <- data %>% tab_options(source_notes.border.lr.color = "red")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_border_lr_color"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_border_lr_color")
+  ) %>%
+    expect_equal(c("#D3D3D3", "red"))
+
+  # Modify the `source_notes.background.color`
+  tbl_html <- data %>% tab_options(source_notes.background.color = "pink")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_background_color"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_background_color")
+  ) %>%
+    expect_equal(c(NA_character_, "pink"))
+
   # Modify the `row.striping.include_stub` option
   tbl_html <- data %>% tab_options(row.striping.include_stub = TRUE)
 
@@ -690,15 +1384,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c(TRUE, FALSE))
 
-  # Modify the `footnote.marks` option
-  tbl_html <- data %>% tab_options(footnotes.marks = "LETTERS")
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnotes_marks"),
-    dt_options_get_value(data = tbl_html, option = "footnotes_marks")
-  ) %>%
-    expect_equal(c("numbers", "LETTERS"))
-
   # Modify the `footnotes.sep` option
   tbl_html <- data %>% tab_options(footnotes.sep = " ")
 
@@ -707,6 +1392,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "footnotes_sep")
   ) %>%
     expect_equal(c("<br />", " "))
+
+  # Modify the `footnotes.marks` option
+  tbl_html <- data %>% tab_options(footnotes.marks = "LETTERS")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_marks"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_marks")
+  ) %>%
+    expect_equal(c("numbers", "LETTERS"))
 })
 
 test_that("the `opts_df` getter/setter functions properly", {

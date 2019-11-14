@@ -33,11 +33,11 @@
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units. Using `table.margin.left` or `table.margin.right` will overwrite any
 #'   values set by `table.align`.
-#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,stub.background.color,data_row.background.color,summary_row.background.color,grand_summary_row.background.color,footnotes.background.color,source_notes.background.color
+#' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,stub.background.color,summary_row.background.color,grand_summary_row.background.color,footnotes.background.color,source_notes.background.color
 #'   Background colors for the parent element `table` and the following child
-#'   elements: `heading`, `column_labels`, `row_group`, `stub`, `data_row`,
-#'   `summary_row`, `grand_summary_row`, `footnotes`, and `source_notes`. A
-#'   color name or a hexadecimal color code should be provided.
+#'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
+#'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
+#'   hexadecimal color code should be provided.
 #' @param table.font.color,table.font.color.light
 #'   The text color used throughout the table. There are two variants:
 #'   `table.font.color` is for text overlaid on lighter background colors, and
@@ -74,6 +74,9 @@
 #'   The style, width, and color properties of the header's bottom border. This
 #'   border shares space with that of the `column_labels` location. If the
 #'   `width` of this border is larger, then it will be the visible border.
+#' @param heading.border.lr.style,heading.border.lr.width,heading.border.lr.color
+#'   The style, width, and color properties for the left and right borders of
+#'   the `heading` location.
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
@@ -82,15 +85,18 @@
 #' @param column_labels.border.bottom.style,column_labels.border.bottom.width,column_labels.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `column_labels` location.
+#' @param column_labels.border.lr.style,column_labels.border.lr.width,column_labels.border.lr.color
+#'   The style, width, and color properties for the left and right borders of
+#'   the `column_labels` location.
 #' @param column_labels.hidden An option to hide the column labels. If providing
 #'   `TRUE` then the entire `column_labels` location won't be seen and the table
 #'   header (if present) will collapse downward.
-#' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color
-#'   The style, width, and color properties for all top and bottom borders of
-#'   the `row_group` location.
-#' @param table_body.hlines.style,table_body.hlines.width,table_body.hlines.color
-#'   The style, width, and color properties for all horizontal lines in the
-#'   `table_body`.
+#' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color,row_group.border.left.style,row_group.border.left.width,row_group.border.left.color,row_group.border.right.style,row_group.border.right.width,row_group.border.right.color
+#'   The style, width, and color properties for all top, bottom, left, and right
+#'   borders of the `row_group` location.
+#' @param table_body.hlines.style,table_body.hlines.width,table_body.hlines.color,table_body.vlines.style,table_body.vlines.width,table_body.vlines.color
+#'   The style, width, and color properties for all horizontal lines ('hlines')
+#'   and vertical lines ('vlines') in the `table_body`.
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color,table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
 #'   The style, width, and color properties for all top and bottom borders of
 #'   the `table_body` location.
@@ -103,9 +109,12 @@
 #' @param grand_summary_row.border.style,grand_summary_row.border.width,grand_summary_row.border.color
 #'   The style, width, and color properties for the top borders of the
 #'   `grand_summary_row` location.
-#' @param footnotes.border.style,footnotes.border.width,footnotes.border.color
+#' @param footnotes.border.bottom.style,footnotes.border.bottom.width,footnotes.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `footnotes` location.
+#' @param footnotes.border.lr.style,footnotes.border.lr.width,footnotes.border.lr.color
+#'   The style, width, and color properties for the left and right borders of
+#'   the `footnotes` location.
 #' @param footnotes.sep The separating characters between adjacent footnotes in
 #'   the footnotes section. The default value produces a linebreak.
 #' @param footnotes.marks The set of sequential marks used to reference and
@@ -119,9 +128,12 @@
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
-#' @param source_notes.border.style,source_notes.border.width,source_notes.border.color
+#' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `source_notes` location.
+#' @param source_notes.border.lr.style,source_notes.border.lr.width,source_notes.border.lr.color
+#'   The style, width, and color properties for the left and right borders of
+#'   the `source_notes` location.
 #' @param row.striping.background_color The background color for striped table
 #'   body rows. A color name or a hexadecimal color code should be provided.
 #' @param row.striping.include_stub An option for whether to include the stub
@@ -251,6 +263,9 @@ tab_options <- function(data,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
+                        heading.border.lr.style = NULL,
+                        heading.border.lr.width = NULL,
+                        heading.border.lr.color = NULL,
                         column_labels.background.color = NULL,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
@@ -261,6 +276,9 @@ tab_options <- function(data,
                         column_labels.border.bottom.style = NULL,
                         column_labels.border.bottom.width = NULL,
                         column_labels.border.bottom.color = NULL,
+                        column_labels.border.lr.style = NULL,
+                        column_labels.border.lr.width = NULL,
+                        column_labels.border.lr.color = NULL,
                         column_labels.hidden = NULL,
                         row_group.background.color = NULL,
                         row_group.font.size = NULL,
@@ -273,9 +291,18 @@ tab_options <- function(data,
                         row_group.border.bottom.style = NULL,
                         row_group.border.bottom.width = NULL,
                         row_group.border.bottom.color = NULL,
+                        row_group.border.left.style = NULL,
+                        row_group.border.left.width = NULL,
+                        row_group.border.left.color = NULL,
+                        row_group.border.right.style = NULL,
+                        row_group.border.right.width = NULL,
+                        row_group.border.right.color = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,
+                        table_body.vlines.style = NULL,
+                        table_body.vlines.width = NULL,
+                        table_body.vlines.color = NULL,
                         table_body.border.top.style = NULL,
                         table_body.border.top.width = NULL,
                         table_body.border.top.color = NULL,
@@ -288,7 +315,6 @@ tab_options <- function(data,
                         stub.border.style = NULL,
                         stub.border.width = NULL,
                         stub.border.color = NULL,
-                        data_row.background.color = NULL,
                         data_row.padding = NULL,
                         summary_row.background.color = NULL,
                         summary_row.text_transform = NULL,
@@ -305,17 +331,23 @@ tab_options <- function(data,
                         footnotes.background.color = NULL,
                         footnotes.font.size = NULL,
                         footnotes.padding = NULL,
-                        footnotes.border.style = NULL,
-                        footnotes.border.width = NULL,
-                        footnotes.border.color = NULL,
+                        footnotes.border.bottom.style = NULL,
+                        footnotes.border.bottom.width = NULL,
+                        footnotes.border.bottom.color = NULL,
+                        footnotes.border.lr.style = NULL,
+                        footnotes.border.lr.width = NULL,
+                        footnotes.border.lr.color = NULL,
                         footnotes.sep = NULL,
                         footnotes.marks = NULL,
                         source_notes.background.color = NULL,
                         source_notes.font.size = NULL,
                         source_notes.padding = NULL,
-                        source_notes.border.style = NULL,
-                        source_notes.border.width = NULL,
-                        source_notes.border.color = NULL,
+                        source_notes.border.bottom.style = NULL,
+                        source_notes.border.bottom.width = NULL,
+                        source_notes.border.bottom.color = NULL,
+                        source_notes.border.lr.style = NULL,
+                        source_notes.border.lr.width = NULL,
+                        source_notes.border.lr.color = NULL,
                         row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {
