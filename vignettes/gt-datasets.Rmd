@@ -177,7 +177,7 @@ sza %>%
   tab_options(
     column_labels.font.size = "smaller",
     table.font.size = "smaller",
-    row.padding = px(3)
+    data_row.padding = px(3)
   )
 ```
 
@@ -530,6 +530,6 @@ exibble %>%
     column_labels.font.size = "small",
     table.font.size = "small",
     row_group.font.size = "small",
-    row.padding = px(3)
+    data_row.padding = px(3)
   )
 ```
