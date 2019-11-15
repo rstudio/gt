@@ -94,13 +94,13 @@ gt(tbl) %>%
     table_body.border.bottom.style = "solid",       # Bottom line of table body - style
     table_body.border.bottom.width = px(5),         # Bottom line of table body - width
     table_body.border.bottom.color = "turquoise",   # Bottom line of table body - color
-    row.padding = px(8),                       # Padding of all data rows (stub & table body)
+    data_row.padding = px(8),                       # Padding of all data rows (stub & table body)
     summary_row.background.color = "pink", # -- background color of all summary rows (stub & table body)
     summary_row.padding = px(3),               # padding of all summary rows (stub & table body)
     summary_row.text_transform = "lowercase",  # text transform on all summary row labels
     footnote.font.size = px(12),               # text size of the footnotes block
     footnote.padding = px(3),                  # padding of the footnotes block
-    sourcenote.font.size = px(12),             # text size of the source notes block
-    sourcenote.padding = px(3)                 # padding of the source note block
+    source_notes.font.size = px(12),           # text size of the source notes block
+    source_notes.padding = px(3)               # padding of the source note block
   )
 ```
