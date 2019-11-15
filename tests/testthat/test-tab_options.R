@@ -1175,7 +1175,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "footnotes_border_bottom_style"),
     dt_options_get_value(data = tbl_html, option = "footnotes_border_bottom_style")
   ) %>%
-    expect_equal(c("solid", "dotted"))
+    expect_equal(c("none", "dotted"))
 
   # Modify the `footnotes.border.bottom.width`
   tbl_html <- data %>% tab_options(footnotes.border.bottom.width = px(5))
@@ -1292,7 +1292,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "source_notes_border_bottom_style"),
     dt_options_get_value(data = tbl_html, option = "source_notes_border_bottom_style")
   ) %>%
-    expect_equal(c("solid", "dotted"))
+    expect_equal(c("none", "dotted"))
 
   # Modify the `source_notes.border.bottom.width`
   tbl_html <- data %>% tab_options(source_notes.border.bottom.width = px(5))
