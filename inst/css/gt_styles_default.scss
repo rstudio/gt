@@ -12,9 +12,15 @@
     border-top-style: $table_border_top_style; /* table.border.top.style */
     border-top-width: $table_border_top_width; /* table.border.top.width */
     border-top-color: $table_border_top_color; /* table.border.top.color */
+    border-right-style: $table_border_right_style; /* table.border.right.style */
+    border-right-width: $table_border_right_width; /* table.border.right.width */
+    border-right-color: $table_border_right_color; /* table.border.right.color */
     border-bottom-style: $table_border_bottom_style; /* table.border.bottom.style */
     border-bottom-width: $table_border_bottom_width; /* table.border.bottom.width */
     border-bottom-color: $table_border_bottom_color; /* table.border.bottom.color */
+    border-left-style: $table_border_left_style; /* table.border.left.style */
+    border-left-width: $table_border_left_width; /* table.border.left.width */
+    border-left-color: $table_border_left_color; /* table.border.left.color */
   }
 
   .gt_heading {

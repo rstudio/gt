@@ -11,8 +11,11 @@ tab_options(data, container.width = NULL, container.height = NULL,
   table.font.color = NULL, table.font.color.light = NULL,
   table.font.size = NULL, table.border.top.style = NULL,
   table.border.top.width = NULL, table.border.top.color = NULL,
-  table.border.bottom.style = NULL, table.border.bottom.width = NULL,
-  table.border.bottom.color = NULL, heading.background.color = NULL,
+  table.border.right.style = NULL, table.border.right.width = NULL,
+  table.border.right.color = NULL, table.border.bottom.style = NULL,
+  table.border.bottom.width = NULL, table.border.bottom.color = NULL,
+  table.border.left.style = NULL, table.border.left.width = NULL,
+  table.border.left.color = NULL, heading.background.color = NULL,
   heading.title.font.size = NULL, heading.title.font.weight = NULL,
   heading.subtitle.font.size = NULL,
   heading.subtitle.font.weight = NULL,
@@ -142,8 +145,8 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
-\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color}{The style, width, and color properties of the table's absolute top and
-absolute bottom borders.}
+\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top, right,
+bottom, and left borders.}
 
 \item{heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the \code{heading.title}, \code{heading.subtitle},
 \code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based

@@ -2,6 +2,7 @@
 #'
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
+#'
 #' @inheritParams fmt_number
 #' @param container.width,container.height The width and height of the table's
 #'   container. Can be specified as a single-length character with units of
@@ -67,9 +68,9 @@
 #'   The amount of vertical padding to incorporate in the `data_row`,
 #'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
 #'   `source_notes` locations.
-#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color
-#'   The style, width, and color properties of the table's absolute top and
-#'   absolute bottom borders.
+#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
+#'   The style, width, and color properties of the table's absolute top, right,
+#'   bottom, and left borders.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
 #'   The style, width, and color properties of the header's bottom border. This
 #'   border shares space with that of the `column_labels` location. If the
@@ -252,9 +253,15 @@ tab_options <- function(data,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
+                        table.border.right.style = NULL,
+                        table.border.right.width = NULL,
+                        table.border.right.color = NULL,
                         table.border.bottom.style = NULL,
                         table.border.bottom.width = NULL,
                         table.border.bottom.color = NULL,
+                        table.border.left.style = NULL,
+                        table.border.left.width = NULL,
+                        table.border.left.color = NULL,
                         heading.background.color = NULL,
                         heading.title.font.size = NULL,
                         heading.title.font.weight = NULL,
@@ -394,90 +401,6 @@ tab_options <- function(data,
 
   # Write the modified options table back to `data`
   data <- dt_options_set(data = data, options = opts_df)
-
-  data
-}
-
-#' Modify the set of footnote marks
-#'
-#' Alter the footnote marks for any footnotes that may be present in the table.
-#' Either a vector of marks can be provided (including Unicode characters), or,
-#' a specific keyword could be used to signify a preset sequence. This function
-#' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
-#'
-#' We can supply a vector of that will represent the series of marks.
-#' The series of footnote marks is recycled when its usage goes beyond the
-#' length of the set. At each cycle, the marks are simply doubled, tripled, and
-#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
-#' for certain types of footnote marks. The keywords are:
-#'
-#' \itemize{
-#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
-#' subject to recycling behavior
-#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
-#' vector
-#' which contains 26 lowercase letters of the Roman alphabet
-#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
-#' which has 26 uppercase letters of the Roman alphabet
-#' \item `"standard"`: symbolic marks, four symbols in total
-#' \item `"extended"`: symbolic marks, extends the standard set by adding two
-#' more symbols, making six
-#' }
-#'
-#' @inheritParams fmt_number
-#' @param marks Either a vector (that will represent the series of marks) or a
-#'   keyword that represents a preset sequence of marks. The valid keywords are:
-#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
-#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
-#'   four symbol marks), and `"extended"` (which adds two more symbols to the
-#'   standard set).
-#'
-#' @examples
-#' # Use `sza` to create a gt table,
-#' # adding three footnotes; call
-#' # `opt_footnote_marks()` to specify
-#' # which footnote marks to use
-#' tab_1 <-
-#'   sza %>%
-#'   dplyr::group_by(latitude, tst) %>%
-#'   dplyr::summarize(
-#'     SZA.Max = max(sza),
-#'     SZA.Min = min(sza, na.rm = TRUE)
-#'   ) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
-#'   dplyr::select(-latitude) %>%
-#'   gt(rowname_col = "tst") %>%
-#'   tab_spanner_delim(delim = ".") %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = "90+"
-#'   ) %>%
-#'   tab_stubhead("TST") %>%
-#'   tab_footnote(
-#'     footnote = "True solar time.",
-#'     locations = cells_stubhead()
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "Solar zenith angle.",
-#'     locations = cells_column_spanners(spanners = "SZA")
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "The Lowest SZA.",
-#'     locations = cells_stub(rows = "1200")
-#'   ) %>%
-#'   opt_footnote_marks(marks = "standard")
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
-#'
-#' @export
-opt_footnote_marks <- function(data,
-                               marks = NULL) {
-
-  if (!is.null(marks)) {
-    data <- data %>% tab_options(footnotes.marks = marks)
-  }
 
   data
 }

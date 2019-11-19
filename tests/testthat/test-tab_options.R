@@ -365,7 +365,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "heading_border_lr_style"),
     dt_options_get_value(data = tbl_html, option = "heading_border_lr_style")
   ) %>%
-    expect_equal(c("hidden", "dashed"))
+    expect_equal(c("none", "dashed"))
 
   # Modify the `heading.border.lr.width`
   tbl_html <- data %>% tab_options(heading.border.lr.width = px(5))
