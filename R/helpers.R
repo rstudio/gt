@@ -695,6 +695,8 @@ cells_styles <- function(bkgd_color = NULL,
 #'   numeric mapping of weight.
 #' @param align The text alignment. Can be one of either `"center"`, `"left"`,
 #'   `"right"`, or `"justify"`.
+#' @param v_align The vertical alignment of the text in the cell. Options are
+#'   `"center"`, `"top"`, or `"bottom"`.
 #' @param stretch Allows for text to either be condensed or expanded. We can use
 #'   one of the following text-based keywords to describe the degree of
 #'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
@@ -714,6 +716,7 @@ cell_text <- function(color = NULL,
                       font = NULL,
                       size = NULL,
                       align = NULL,
+                      v_align = NULL,
                       style = NULL,
                       weight = NULL,
                       stretch = NULL,
@@ -740,6 +743,11 @@ cell_text <- function(color = NULL,
   validate_style_in(
     style_vals, style_names, "align",
     c("center", "left", "right", "justify")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "v_align",
+    c("center", "top", "bottom")
   )
 
   validate_style_in(
@@ -781,6 +789,7 @@ cell_style_to_html.cell_text <- function(style) {
       font = "font-family",
       size = "font-size",
       align = "text-align",
+      v_align = "vertical-align",
       style = "font-style",
       weight = "font-weight",
       stretch = "font-stretch",
