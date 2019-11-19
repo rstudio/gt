@@ -47,7 +47,7 @@ Suggests:
     rvest,
     shiny,
     tidyr,
-    webshot,
+    webshot2,
     xml2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
