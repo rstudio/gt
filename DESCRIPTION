@@ -49,5 +49,7 @@ Suggests:
     tidyr,
     webshot2,
     xml2
+Remotes:
+    rstudio/webshot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
