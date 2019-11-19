@@ -24,7 +24,7 @@ or \code{"xx-large"}.}
 \code{"right"}, or \code{"justify"}.}
 
 \item{v_align}{The vertical alignment of the text in the cell. Options are
-\code{"center"}, \code{"top"}, or \code{"bottom"}.}
+\code{"middle"}, \code{"top"}, or \code{"bottom"}.}
 
 \item{style}{The text style. Can be one of either \code{"center"}, \code{"normal"},
 \code{"italic"}, or \code{"oblique"}.}

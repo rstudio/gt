@@ -696,7 +696,7 @@ cells_styles <- function(bkgd_color = NULL,
 #' @param align The text alignment. Can be one of either `"center"`, `"left"`,
 #'   `"right"`, or `"justify"`.
 #' @param v_align The vertical alignment of the text in the cell. Options are
-#'   `"center"`, `"top"`, or `"bottom"`.
+#'   `"middle"`, `"top"`, or `"bottom"`.
 #' @param stretch Allows for text to either be condensed or expanded. We can use
 #'   one of the following text-based keywords to describe the degree of
 #'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
@@ -747,7 +747,7 @@ cell_text <- function(color = NULL,
 
   validate_style_in(
     style_vals, style_names, "v_align",
-    c("center", "top", "bottom")
+    c("middle", "top", "bottom")
   )
 
   validate_style_in(
