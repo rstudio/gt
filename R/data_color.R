@@ -415,6 +415,10 @@ frac_alpha_to_hex <- function(alpha) {
   grDevices::rgb(0, 0, 0, alpha) %>% substr(8, 9)
 }
 
+is_rgba_col <- function(color) {
+  color %>% tidy_grepl("^rgba\\([0-9]+?,[0-9]+?,[0-9]+?,[0-9\\.]+?\\)$")
+}
+
 #' Extract a vector of alpha values for a vector of colors
 #'
 #' @noRd
@@ -437,6 +441,70 @@ get_alpha_vec <- function(colors) {
       }
     }
   )
+}
+
+#' Get the rgba color representation of a color
+#'
+#' @noRd
+get_rgba_vec <- function(colors) {
+
+  build_rgba_string <- function(color, alpha_val) {
+
+    grDevices::col2rgb(color)[, 1] %>%
+      unname() %>%
+      append(alpha_val) %>%
+      paste(collapse = ",") %>%
+      paste_left("rgba(") %>%
+      paste_right(")")
+  }
+
+  vapply(
+    colors,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(color) {
+
+      if (color %>% is_hex_col_no_alpha()) {
+
+        build_rgba_string(color = color, alpha_val = 1)
+
+      } else if (color %>% is_hex_col_w_alpha()) {
+
+        alpha_dec <-
+          (
+            color %>%
+              substring(8, 9) %>%
+              paste_left("0x") %>%
+              strtoi()
+          ) / 256
+
+        build_rgba_string(color = color, alpha_val = alpha_dec)
+
+      } else if (tolower(color) %in% grDevices::colors()) {
+
+        build_rgba_string(color = tolower(color), alpha_val = 1)
+
+      } else {
+        NA_character_
+      }
+    })
+}
+
+rgba2hex <- function(rgba_col) {
+
+  channels <-
+    rgba_col %>%
+    tidy_gsub(pattern = "(rgba\\(|\\))", "") %>%
+    strsplit(",") %>%
+    unlist() %>%
+    as.numeric()
+
+  hex_color <-
+    grDevices::rgb(
+      red = channels[1]/255,
+      green = channels[2]/255,
+      blue = channels[3]/255
+    )
 }
 
 #' Get the hexadecimal color representation of a color
@@ -483,6 +551,7 @@ get_hexcolor_vec <- function(colors) {
 normalize_color <- function(colors,
                             alpha) {
 
+
   if (length(colors) == 0) {
     stop("One or more colors must be provided", call. = FALSE)
   }
@@ -492,27 +561,51 @@ normalize_color <- function(colors,
          call. = FALSE)
   }
 
-  # Combine hexadecimal color with corresponding alpha
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
-      if (!is_hex_col_w_alpha(color)) {
-        color <- paste0(get_hexcolor_vec(color), frac_alpha_to_hex(alpha))
-      }
+  normalized_colors <-
+      colors %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(color) {
 
-      color
-    }
-  )
+          if (!is_hex_col_w_alpha(color)) {
+            color <- get_hexcolor_vec(color)
+          }
+          color
+        }
+      )
+
+  if (alpha != 1) {
+
+    normalized_colors <-
+      normalized_colors %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(color) {
+
+          get_rgba_vec(color) %>%
+            tidy_gsub(
+              pattern = ",[0-9\\.])",
+              replacement = paste0(",", alpha, ")")
+            )
+        }
+      )
+  }
+
+  normalized_colors
 }
 
 #' Determining the best `light` and `dark` colors for contrast
 #'
 #' @noRd
 ideal_fgnd_color <- function(bgnd_colors,
-                             light = "#FFFFFFFF",
-                             dark = "#000000FF") {
+                             light = "#FFFFFF",
+                             dark = "#000000") {
+
+  if (is_rgba_col(bgnd_colors)) {
+    bgnd_colors <- rgba2hex(rgba_col = bgnd_colors)
+  }
 
   yiq_contrasted_threshold <- 128
   colors <- grDevices::col2rgb(bgnd_colors)

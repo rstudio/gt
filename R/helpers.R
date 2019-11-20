@@ -813,13 +813,14 @@ cell_style_to_html.cell_text <- function(style) {
 cell_fill <- function(color = "#D3D3D3",
                       alpha = 1) {
 
-  if (length(colors) != 1 || length(alpha) != 1) {
+  if (length(color) != 1 || length(alpha) != 1) {
     stop("The length of `colors` and `alpha` must be `1`",
          call. = FALSE)
   }
 
-  # Combine hexadecimal color with corresponding alpha
-  color <- normalize_color(colors = color, alpha = alpha)
+  if (!is_rgba_col(color)) {
+    color <- normalize_color(colors = color, alpha = alpha)
+  }
 
   style_vals <- list(color = color)
 
