@@ -5,8 +5,8 @@
 \title{Helper for defining custom text styles for table cells}
 \usage{
 cell_text(color = NULL, font = NULL, size = NULL, align = NULL,
-  style = NULL, weight = NULL, stretch = NULL, indent = NULL,
-  decorate = NULL, transform = NULL)
+  v_align = NULL, style = NULL, weight = NULL, stretch = NULL,
+  indent = NULL, decorate = NULL, transform = NULL)
 }
 \arguments{
 \item{color}{The text color.}
@@ -22,6 +22,9 @@ or \code{"xx-large"}.}
 
 \item{align}{The text alignment. Can be one of either \code{"center"}, \code{"left"},
 \code{"right"}, or \code{"justify"}.}
+
+\item{v_align}{The vertical alignment of the text in the cell. Options are
+\code{"middle"}, \code{"top"}, or \code{"bottom"}.}
 
 \item{style}{The text style. Can be one of either \code{"center"}, \code{"normal"},
 \code{"italic"}, or \code{"oblique"}.}
