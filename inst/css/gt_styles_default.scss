@@ -25,6 +25,7 @@
 
   .gt_heading {
     background-color: $heading_background_color; /* heading.background.color */
+    text-align: $heading_align; /* heading.align */
     border-bottom-color: $table_background_color; /* table.background.color */
     border-left-style: $heading_border_lr_style; /* heading.border.lr.style */
     border-left-width: $heading_border_lr_width; /* heading.border.lr.width */
@@ -170,6 +171,7 @@
   .gt_stub {
     color: font-color($stub_background_color);
     background-color: $stub_background_color; /* stub.background.color */
+    font-size: $stub_font_size; /* stub.font.size */
     font-weight: $stub_font_weight; /* stub.font.weight */
     text-transform: $stub_text_transform; /* stub.text_transform */
     border-right-style: $stub_border_style; /* stub.border.style */

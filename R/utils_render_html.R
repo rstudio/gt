@@ -214,7 +214,7 @@ create_heading_component <- function(data,
 
   if (context == "html") {
 
-    title_classes <- c("gt_heading", "gt_title", "gt_font_normal", "gt_center")
+    title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
     subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
 

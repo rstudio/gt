@@ -42,6 +42,7 @@ dt_options_init <- function(data) {
     "table_border_left_width",            TRUE,  "table",            "px",      "2px",
     "table_border_left_color",            TRUE,  "table",            "value",   "#A8A8A8",
     "heading_background_color",           TRUE,  "heading",          "value",   NA_character_,
+    "heading_align",                      TRUE,  "heading",          "value",   "center",
     "heading_title_font_size",            TRUE,  "heading",          "px",      "125%",
     "heading_title_font_weight",          TRUE,  "heading",          "value",   "initial",
     "heading_subtitle_font_size",         TRUE,  "heading",          "px",      "85%",
@@ -97,6 +98,7 @@ dt_options_init <- function(data) {
     "table_body_border_bottom_color",     TRUE,  "table_body",       "value",   "#D3D3D3",
     "data_row_padding",                   TRUE,  "data_row",         "px",      "8px",
     "stub_background_color",              TRUE,  "stub",             "value",   NA_character_,
+    "stub_font_size",                     TRUE,  "stub",             "px",      "100%",
     "stub_font_weight",                   TRUE,  "stub",             "value",   "initial",
     "stub_text_transform",                TRUE,  "stub",             "value",   "inherit",
     "stub_border_style",                  TRUE,  "stub",             "value",   "solid",
@@ -137,7 +139,7 @@ dt_options_init <- function(data) {
     "source_notes_border_lr_color",       TRUE,  "source_notes",     "value",   "#D3D3D3",
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
-    "row_striping_include_table_body",   FALSE,  "row",              "logical", TRUE,
+    "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
   )[-1, ] %>%
     dt_options_set(options = ., data = data)
 }

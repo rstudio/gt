@@ -16,8 +16,8 @@ tab_options(data, container.width = NULL, container.height = NULL,
   table.border.bottom.width = NULL, table.border.bottom.color = NULL,
   table.border.left.style = NULL, table.border.left.width = NULL,
   table.border.left.color = NULL, heading.background.color = NULL,
-  heading.title.font.size = NULL, heading.title.font.weight = NULL,
-  heading.subtitle.font.size = NULL,
+  heading.align = NULL, heading.title.font.size = NULL,
+  heading.title.font.weight = NULL, heading.subtitle.font.size = NULL,
   heading.subtitle.font.weight = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
@@ -56,10 +56,10 @@ tab_options(data, container.width = NULL, container.height = NULL,
   table_body.border.bottom.style = NULL,
   table_body.border.bottom.width = NULL,
   table_body.border.bottom.color = NULL, stub.background.color = NULL,
-  stub.font.weight = NULL, stub.text_transform = NULL,
-  stub.border.style = NULL, stub.border.width = NULL,
-  stub.border.color = NULL, data_row.padding = NULL,
-  summary_row.background.color = NULL,
+  stub.font.size = NULL, stub.font.weight = NULL,
+  stub.text_transform = NULL, stub.border.style = NULL,
+  stub.border.width = NULL, stub.border.color = NULL,
+  data_row.padding = NULL, summary_row.background.color = NULL,
   summary_row.text_transform = NULL, summary_row.padding = NULL,
   summary_row.border.style = NULL, summary_row.border.width = NULL,
   summary_row.border.color = NULL,
@@ -136,9 +136,9 @@ hexadecimal color code should be provided.}
 overlaid on darker background colors. A color name or a hexadecimal color
 code should be provided.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
-\code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
+\code{row_group}, \code{stub}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \code{12px}) or as a
 percentage (e.g., \code{80\\\%}). If provided as a single-length numeric vector,
 it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
@@ -147,6 +147,9 @@ obtain values as pixel or percentage units.}
 
 \item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top, right,
 bottom, and left borders.}
+
+\item{heading.align}{Controls the horizontal alignment of the heading title
+and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
 
 \item{heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the \code{heading.title}, \code{heading.subtitle},
 \code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based

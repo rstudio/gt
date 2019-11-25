@@ -45,10 +45,10 @@
 #'   `table.font.color.light` is automatically used when text needs to be
 #'   overlaid on darker background colors. A color name or a hexadecimal color
 #'   code should be provided.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnotes.font.size,source_notes.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,stub.font.size,footnotes.font.size,source_notes.font.size
 #'   The font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
-#'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
+#'   `row_group`, `stub`, `footnotes`, and `source_notes`. Can be specified as a
 #'   single-length character vector with units of pixels (e.g., `12px`) or as a
 #'   percentage (e.g., `80\%`). If provided as a single-length numeric vector,
 #'   it is assumed that the value is given in units of pixels. The [px()] and
@@ -60,6 +60,8 @@
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Note that only variable
 #'   fonts may support the numeric mapping of weight.
+#' @param heading.align Controls the horizontal alignment of the heading title
+#'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
 #' @param column_labels.text_transform,row_group.text_transform,stub.text_transform,summary_row.text_transform,grand_summary_row.text_transform
 #'   Options to apply text transformations to the `column_labels`, `row_group`,
 #'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
@@ -263,6 +265,7 @@ tab_options <- function(data,
                         table.border.left.width = NULL,
                         table.border.left.color = NULL,
                         heading.background.color = NULL,
+                        heading.align = NULL,
                         heading.title.font.size = NULL,
                         heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
@@ -317,6 +320,7 @@ tab_options <- function(data,
                         table_body.border.bottom.width = NULL,
                         table_body.border.bottom.color = NULL,
                         stub.background.color = NULL,
+                        stub.font.size = NULL,
                         stub.font.weight = NULL,
                         stub.text_transform = NULL,
                         stub.border.style = NULL,

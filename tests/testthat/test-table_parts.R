@@ -42,20 +42,20 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("test heading")
 
-  # Expect that the number of rows with `class='gt_row gt_right'` is `3`
+  # Expect that the number of rows with `class='gt_row gt_right'` is `5`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(3)
+    expect_equal(5)
 
-  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `2`
+  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `0`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right gt_striped']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(2)
+    expect_equal(0)
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
@@ -69,12 +69,12 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text(selection = "[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("test title")
 
   # Expect that the `table_heading` content is 'test subtitle'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
 })
 
@@ -520,13 +520,13 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the table title is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal gt_center'][style='text-align: left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Title")
 
   # Expect that the table subtitle is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border'][style='text-align: left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Subtitle")
 })

@@ -99,6 +99,90 @@ opt_remove_top_bottom_borders <- function(data) {
     tab_options(table.border.bottom.style = "hidden")
 }
 
+#' Option to add row striping
+#'
+#' @inheritParams fmt_number
+#'
+#' @family table option functions
+#'
+#' @export
+opt_add_row_striping <- function(data) {
+
+  data %>% tab_options(row.striping.include_table_body = TRUE)
+}
+
+#' Option to remove row striping
+#'
+#' @inheritParams fmt_number
+#'
+#' @family table option functions
+#'
+#' @export
+opt_remove_row_striping <- function(data) {
+
+  data %>% tab_options(row.striping.include_table_body = FALSE)
+}
+
+#' Option to align the table header
+#'
+#' @inheritParams fmt_number
+#'
+#' @family table option functions
+#'
+#' @export
+opt_align_table_header <- function(data, align = "center") {
+
+  data %>% tab_options(heading.align = align)
+}
+
+#' Option to use all caps in select table locations
+#'
+#' @inheritParams fmt_number
+#' @param locations Which locations should undergo this text transformation? By
+#'   default it includes all of the `"column_labels"`, the `"stub"`, and the
+#'   `"row_group"` locations. However, we could just choose one or two of those.
+#'
+#' @family table option functions
+#'
+#' @export
+opt_all_caps <- function(data,
+                         locations = c("column_labels", "stub", "row_group")) {
+
+  # Ensure that all named locations are valid
+  if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
+    stop("The available locations are `column_labels`, `stub`, and `row_group`.",
+         call. = FALSE)
+  }
+
+  if ("column_labels" %in% locations) {
+    data <-
+      data %>%
+      tab_options(column_labels.text_transform = "uppercase") %>%
+      tab_options(column_labels.font.size = pct(80)) %>%
+      tab_options(column_labels.font.weight = "bolder")
+  }
+
+  if ("stub" %in% locations) {
+
+    data <-
+      data %>%
+      tab_options(stub.text_transform = "uppercase") %>%
+      tab_options(stub.font.size = pct(80)) %>%
+      tab_options(stub.font.weight = "bolder")
+  }
+
+  if ("row_group" %in% locations) {
+
+    data <-
+      data %>%
+      tab_options(row_group.text_transform = "uppercase") %>%
+      tab_options(row_group.font.size = pct(80)) %>%
+      tab_options(row_group.font.weight = "bolder")
+  }
+
+  data
+}
+
 
 #' Option to wrap an outline around the entire table
 #'
@@ -109,10 +193,10 @@ opt_remove_top_bottom_borders <- function(data) {
 #' @family table option functions
 #'
 #' @export
-opt_table_outline <- function(data,
-                              style = "solid",
-                              width = px(3),
-                              color = "#D3D3D3") {
+opt_add_table_outline <- function(data,
+                                  style = "solid",
+                                  width = px(3),
+                                  color = "#D3D3D3") {
 
   data %>%
     tab_options(
@@ -150,5 +234,31 @@ opt_table_outline <- function(data,
       source_notes.border.lr.style = style,
       source_notes.border.lr.width = width,
       source_notes.border.lr.color = color
+    )
+}
+
+#' Option to completely remove any table outlines
+#'
+#' @inheritParams fmt_number
+#'
+#' @family table option functions
+#'
+#' @export
+opt_remove_table_outline <- function(data) {
+
+  data %>%
+    tab_options(
+      table.border.top.style = "none",
+      table.border.bottom.style = "none",
+      table.border.left.style = "none",
+      table.border.right.style = "none",
+      heading.border.lr.style = "none",
+      column_labels.border.lr.style = "none",
+      row_group.border.left.style = "none",
+      row_group.border.right.style = "none",
+      table_body.border.top.style = "none",
+      table_body.border.bottom.style = "none",
+      footnotes.border.lr.style = "none",
+      source_notes.border.lr.style = "none"
     )
 }
