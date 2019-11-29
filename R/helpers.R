@@ -235,12 +235,18 @@
 #'
 #' \if{html}{\figure{man_location_cells_6.svg}{options: width=100\%}}
 #'
+#' @family helper functions
+#'
 #' @name location_cells
+#'
 #' @return a list object of class `location_cells`.
 NULL
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_title <- function(groups = c("title", "subtitle")) {
 
@@ -259,6 +265,9 @@ cells_title <- function(groups = c("title", "subtitle")) {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_stubhead <- function() {
 
@@ -274,6 +283,9 @@ cells_stubhead <- function() {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_column_spanners <- function(spanners) {
 
@@ -290,6 +302,9 @@ cells_column_spanners <- function(spanners) {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_column_labels <- function(columns) {
 
@@ -305,6 +320,9 @@ cells_column_labels <- function(columns) {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_group <- function(groups = TRUE) {
 
@@ -322,6 +340,9 @@ cells_group <- function(groups = TRUE) {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_stub <- function(rows = TRUE) {
 
@@ -339,6 +360,9 @@ cells_stub <- function(rows = TRUE) {
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_data <- function(columns = TRUE,
                        rows = TRUE) {
@@ -362,6 +386,9 @@ cells_data <- function(columns = TRUE,
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_summary <- function(groups = TRUE,
                           columns = TRUE,
@@ -389,6 +416,9 @@ cells_summary <- function(groups = TRUE,
 
 #' @rdname location_cells
 #' @import rlang
+#'
+#' @family helper functions
+#'
 #' @export
 cells_grand_summary <- function(columns = TRUE,
                                 rows = TRUE) {
@@ -416,7 +446,9 @@ cells_grand_summary <- function(columns = TRUE,
 #' @param text The text that is understood to contain Markdown formatting.
 #' @return A character object that is tagged for a Markdown-to-HTML
 #'   transformation.
+#'
 #' @return a character object of class `from_markdown`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # when adding a title, use the `md()`
@@ -432,6 +464,7 @@ cells_grand_summary <- function(columns = TRUE,
 #' \if{html}{\figure{man_md_1.svg}{options: width=100\%}}
 #'
 #' @family helper functions
+#'
 #' @export
 md <- function(text) {
 
@@ -445,11 +478,14 @@ md <- function(text) {
 }
 
 #' Interpret input text as HTML-formatted text
+#'
 #' @param text,... The text that is understood to be HTML text, which is to be
 #'   preserved.
 #' @return A character object that is tagged as an HTML fragment that is not to
 #'   be sanitized.
+#'
 #' @return a character object of class `html`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # when adding a title, use the `html()`
@@ -465,6 +501,7 @@ md <- function(text) {
 #' \if{html}{\figure{man_html_1.svg}{options: width=100\%}}
 #'
 #' @family helper functions
+#'
 #' @export
 html <- function(text, ...) {
 
@@ -478,7 +515,7 @@ is_html <- function(x) {
   inherits(x, "html") && isTRUE(attr(x, "html"))
 }
 
-#' Supply a custom currency symbol to `fmt_currency()`
+#' Helper for supplying a custom currency symbol to `fmt_currency()`
 #'
 #' The `currency()` helper function makes it easy to specify a context-aware
 #' currency symbol to `currency` argument of [fmt_currency()]. Since \pkg{gt}
@@ -502,7 +539,9 @@ is_html <- function(x) {
 #' @param ... One or more named arguments using output contexts as the names and
 #'   currency symbol text as the values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#'
 #' @return a list object of class `gt_currency`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `currency` column to have
@@ -518,6 +557,9 @@ is_html <- function(x) {
 #'       default = "f"),
 #'     decimals = 2
 #'   )
+#'
+#' @family helper functions
+#'
 #' @export
 currency <- function(...,
                      .list = list2(...)) {
@@ -556,6 +598,104 @@ currency <- function(...,
   class(currency_list) <- "gt_currency"
 
   currency_list
+}
+
+#' Helper for defining background colors in `preset_location_colors()`
+#'
+#' We can define background colors at different table locations with
+#' `location_colors()`, creating a `location_color_list` object that can be used
+#' with the [preset_location_colors()] function. Colors can be supplied for as
+#' many locations as desired, and they include the `heading`, the
+#' `column_labels`, the `row_groups`, the `stub`, the `body`, the
+#' `summary_rows`, the `grand_summary_rows`, the `footnotes`, the
+#' `source_notes`, and finally the color of the `row_striping`. Locations with
+#' no colors provided will default to white. Row striping is not enabled by
+#' default in \pkg{gt} so even if a color is provided for the `row_striping`
+#' location, we still need to enable its visibility with the
+#' [opt_add_row_striping()] function.
+#'
+#' @param heading,column_labels,row_groups,stub,body,summary_rows,grand_summary_rows,footnotes,source_notes,row_striping
+#' Locations that can accept a background color. If not provided, the color will
+#' be set to `"white"`.
+#'
+#' @return an object of class `location_color_list`. This is to be used with the
+#'   [preset_location_colors()] function.
+#'
+#' @examples
+#' # Create a location color list by using
+#' # the `location_colors()` function; opt
+#' # to color only a few of the available
+#' # table locations
+#' loc_colors <-
+#'   location_colors(
+#'     column_labels = "#FFE7F5",
+#'     stub = "#EDF4FF",
+#'     body = "#FFFFE8",
+#'     summary_rows = "#E3FFFC",
+#'     grand_summary_rows = "#F5EAFF"
+#'   )
+#'
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `loc_colors` object to supply colors
+#' # to the specified locations
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   preset_location_colors(colors = loc_colors)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_location_colors_1.svg}{options: width=100\%}}
+#'
+#' @family helper functions
+#'
+#' @export
+location_colors <- function(heading = NULL,
+                            column_labels = NULL,
+                            row_groups = NULL,
+                            stub = NULL,
+                            body = NULL,
+                            summary_rows = NULL,
+                            grand_summary_rows = NULL,
+                            footnotes = NULL,
+                            source_notes = NULL,
+                            row_striping = NULL) {
+
+  # Create the partial location color list
+  arg_names <- formals(location_colors) %>% names() %>% base::setdiff("row_striping")
+  color_list <- mget(arg_names)
+
+  # Replace all NULL values with `white`
+  color_list <- color_list %>% lapply(function(x) if (is.null(x)) "white" else x)
+
+  # Add in the `row_striping` option, whether a color
+  # was provided or not
+  color_list <- c(color_list, list("row_striping" = row_striping))
+
+  class(color_list) <- "location_color_list"
+
+  color_list
 }
 
 #' Helper for defining custom styles for table cells
@@ -601,6 +741,7 @@ currency <- function(...,
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
 #'
 #' @family helper functions
+#'
 #' @export
 cells_styles <- function(bkgd_color = NULL,
                          text_color = NULL,
@@ -711,6 +852,7 @@ cells_styles <- function(bkgd_color = NULL,
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
 #'
 #' @family helper functions
+#'
 #' @export
 cell_text <- function(color = NULL,
                       font = NULL,
@@ -818,6 +960,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'   the fill color will be fully opaque.
 #'
 #' @family helper functions
+#'
 #' @export
 cell_fill <- function(color = "#D3D3D3",
                       alpha = 1) {
@@ -914,7 +1057,9 @@ cell_style_to_html.cell_fill <- function(style) {
 #'         )
 #'       )
 #'     )
+#'
 #' @family helper functions
+#'
 #' @export
 cell_borders <- function(sides = "all",
                          color = "#000000",
@@ -1014,26 +1159,14 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
-#' Helper for providing a numeric value as percentage
-#' @param x the numeric value to format as a string percentage for some
-#'   [tab_options()] arguments that can take percentage values
-#'   (e.g., `table.width`).
-#' @family helper functions
-#' @export
-pct <- function(x) {
-
-  if (mode(x) != "numeric") {
-    stop("The supplied value must be numeric", call. = FALSE)
-  }
-
-  paste0(x, "%")
-}
-
 #' Helper for providing a numeric value as pixels value
+#'
 #' @param x the numeric value to format as a string (e.g., `"12px"`) for
 #'   some [tab_options()] arguments that can take values as units of
 #'   pixels (e.g., `table.font.size`).
+#'
 #' @family helper functions
+#'
 #' @export
 px <- function(x) {
 
@@ -1044,6 +1177,24 @@ px <- function(x) {
   paste0(x, "px")
 }
 
+#' Helper for providing a numeric value as percentage
+#'
+#' @param x the numeric value to format as a string percentage for some
+#'   [tab_options()] arguments that can take percentage values
+#'   (e.g., `table.width`).
+#'
+#' @family helper functions
+#'
+#' @export
+pct <- function(x) {
+
+  if (mode(x) != "numeric") {
+    stop("The supplied value must be numeric", call. = FALSE)
+  }
+
+  paste0(x, "%")
+}
+
 #' Helper for creating a random `id` for a \pkg{gt} table
 #'
 #' This helper function is to be used with `id` argument of the [gt()] function.
@@ -1051,7 +1202,9 @@ px <- function(x) {
 #' optionally supply a custom `id` value, or, use `NULL` for no ID at all.
 #'
 #' @param n The number of lowercase letters to use for the random ID.
+#'
 #' @family helper functions
+#'
 #' @export
 random_id <- function(n = 10) {
 
@@ -1063,9 +1216,12 @@ random_id <- function(n = 10) {
 #' Text may contain several characters with special meanings in LaTeX. This
 #' function will transform a character vector so that it is safe to use within
 #' LaTeX tables.
+#'
 #' @param text a character vector containing the text that is to be
 #'   LaTeX-escaped.
+#'
 #' @family helper functions
+#'
 #' @export
 escape_latex <- function(text) {
 
@@ -1079,12 +1235,12 @@ escape_latex <- function(text) {
 #' Get the LaTeX dependencies required for a gt table
 #'
 #' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
-#' including a \pkg{gt} table can be problematic if we don't have knowledge
-#' of the LaTeX dependencies. For the most part, these dependencies are the
-#' LaTeX packages that are required for rendering a \pkg{gt} table. The
-#' `gt_latex_dependencies()` function provides an object that can be
-#' used to provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work
-#' and not yield errors due to missing packages.
+#' including a \pkg{gt} table can be problematic if we don't have knowledge of
+#' the LaTeX dependencies. For the most part, these dependencies are the LaTeX
+#' packages that are required for rendering a \pkg{gt} table. The
+#' `gt_latex_dependencies()` function provides an object that can be used to
+#' provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work and not
+#' yield errors due to missing packages.
 #'
 #' Here is an example Rnw document that shows how the
 #' `gt_latex_dependencies()` can be used in conjunction with a \pkg{gt}
@@ -1111,7 +1267,9 @@ escape_latex <- function(text) {
 #'
 #' \end{document}
 #' }
+#'
 #' @family helper functions
+#'
 #' @export
 gt_latex_dependencies <- function() {
 
