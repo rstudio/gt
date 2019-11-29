@@ -33,13 +33,13 @@ reference:
       labels (row group labels, column spanner labels, the stubhead label).
       We can modify the look of table parts more generally with
       `tab_options()` and perform styling on targeted table locations with
-      `tab_style()`
+      `tab_style()`.
     contents:
     - tab_header
     - tab_spanner
     - tab_spanner_delim
     - tab_row_group
-    - tab_stubhead_label
+    - tab_stubhead
     - tab_footnote
     - tab_source_note
     - tab_options
@@ -92,6 +92,7 @@ reference:
     - cols_merge
     - cols_merge_range
     - cols_merge_uncert
+    - cols_width
     - cols_move
     - cols_move_to_end
     - cols_move_to_start
@@ -114,12 +115,50 @@ reference:
       <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
       </a>
       <br /><br />
-      There are two function that will add rows to a **gt** table:
-      `summary_rows()` and `grand_summary_rows()`. These are useful for adding
-      groupwise and grand summary rows.
+      There are two functions that will add rows to a **gt** table:
+      `summary_rows()` and `grand_summary_rows()`. These functions will both add
+      summary rows but one will do it in a groupwise fashion while the other
+      will create grand summary rows.
     contents:
     - summary_rows
     - grand_summary_rows
+
+  - title: Use Table Presets
+    desc: >
+      Table presets apply a set of options to achieve some sort of unified look.
+      The `preset_colorized()` and `preset_location_colors()` both take minimal
+      input but add colors and sometimes different line styles. These are very
+      fast and convenient ways to add a bit of color and formatting to your
+      table. The `preset_fully_lined()` and `preset_lineless()` functions
+      operate at different extremes: one puts lines everywhere and the other
+      removes every possible line.
+    contents:
+    - preset_colorized
+    - preset_location_colors
+    - preset_fully_lined
+    - preset_lineless
+
+  - title: Use Table Option Functions
+    desc: >
+      Sure, `tab_options()` is available to tweak every imaginable aspect of a
+      table (and `tab_style()` allows for more highly selective targeting of
+      styles) but it can all take a fair amount of typing. The suite of
+      `opt_*()` functions allows us to manipulate several table options at once
+      for otherwise common tasks. We can add row striping with
+      `opt_add_row_striping()`. We can add a table outline, or take it away,
+      with either `opt_add_table_outline()` or `opt_remove_table_outline()`.
+      The top and bottom borders? Gone with `opt_remove_top_bottom_borders()`.
+      Certain text elements can be rendered in all caps with `opt_all_caps()`.
+      And, we can have fine control over the sequence of footnote marks by
+      using `opt_footnote_marks()`.
+    contents:
+    - opt_add_row_striping
+    - opt_add_table_outline
+    - opt_remove_table_outline
+    - opt_remove_top_bottom_borders
+    - opt_align_table_header
+    - opt_all_caps
+    - opt_footnote_marks
 
   - title: Export Table
     desc: >
@@ -134,6 +173,7 @@ reference:
       function and wish you had that summary data in a tibble? You can get
       it out with `extract_summary()`.
     contents:
+    - gtsave
     - as_raw_html
     - as_latex
     - as_rtf
@@ -163,16 +203,21 @@ reference:
       `tab_footnote()`, `tab_spanner()`, `tab_stubhead_label()`, and
       `tab_source_note()` functions.
     contents:
-    - location_cells
-    - cells_styles
     - vars
     - md
     - html
     - px
     - pct
+    - location_cells
     - currency
-    - escape_latex
+    - cell_text
+    - cell_fill
+    - cell_borders
+    - location_colors
     - adjust_luminance
+    - random_id
+    - gt_latex_dependencies
+    - escape_latex
 
   - title: Image Addition
     desc: >
@@ -203,6 +248,8 @@ reference:
     - info_time_style
     - info_paletteer
     - info_currencies
+    - info_locales
+    - info_preset_colorized
 
   - title: Datasets
     desc: >
