@@ -78,6 +78,7 @@ globalVariables(
     "rowname",
     "scss",
     "selector",
+    "style",
     "text_col",
     "time",
     "type",

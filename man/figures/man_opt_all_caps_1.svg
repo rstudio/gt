@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="361.244mm" height="215.194mm"
+ viewBox="0 0 1024 610"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<title>Qt Svg Document</title>
+<desc>Generated with Qt</desc>
+<defs>
+</defs>
+<g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
+
+<g fill="#ffffff" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,610 L0,610 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,610 L0,610 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M0,0 L1024,0 L1024,610 L0,610 L0,0"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,8 L838,8 L838,602 L185,602 L185,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,9 L838,9 L838,41 L185,41 L185,9"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,41 L838,41 L838,62 L185,62 L185,41"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,62 L248,62 L248,89 L185,89 L185,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,62 L337,62 L337,89 L248,89 L248,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,62 L421,62 L421,89 L337,89 L337,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,62 L474,62 L474,89 L421,89 L421,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,62 L566,62 L566,89 L474,89 L474,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,62 L616,62 L616,89 L566,89 L566,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,62 L752,62 L752,89 L616,89 L616,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,62 L838,62 L838,89 L752,89 L752,62"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,89 L838,89 L838,122 L185,122 L185,89"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,122 L248,122 L248,158 L185,158 L185,122"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,158 L248,158 L248,193 L185,193 L185,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,193 L248,193 L248,228 L185,228 L185,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,228 L248,228 L248,264 L185,264 L185,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,264 L248,264 L248,299 L185,299 L185,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,264 L337,264 L337,299 L248,299 L248,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,264 L421,264 L421,299 L337,299 L337,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,264 L474,264 L474,299 L421,299 L421,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,264 L566,264 L566,299 L474,299 L474,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,264 L616,264 L616,299 L566,299 L566,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,264 L752,264 L752,299 L616,299 L616,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,264 L838,264 L838,299 L752,299 L752,264"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,299 L248,299 L248,335 L185,335 L185,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,299 L337,299 L337,335 L248,335 L248,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,299 L421,299 L421,335 L337,335 L337,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,299 L474,299 L474,335 L421,335 L421,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,299 L566,299 L566,335 L474,335 L474,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,299 L616,299 L616,335 L566,335 L566,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,299 L752,299 L752,335 L616,335 L616,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,299 L838,299 L838,335 L752,335 L752,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,335 L838,335 L838,368 L185,368 L185,335"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,368 L248,368 L248,403 L185,403 L185,368"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,403 L248,403 L248,438 L185,438 L185,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,438 L248,438 L248,473 L185,473 L185,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,473 L248,473 L248,511 L185,511 L185,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,511 L248,511 L248,549 L185,549 L185,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,511 L337,511 L337,549 L248,549 L248,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,511 L421,511 L421,549 L337,549 L337,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,511 L474,511 L474,549 L421,549 L421,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,511 L566,511 L566,549 L474,549 L474,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,511 L616,511 L616,549 L566,549 L566,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,511 L752,511 L752,549 L616,549 L616,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,511 L838,511 L838,549 L752,549 L752,511"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,576 L838,576 L838,601 L185,601 L185,576"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,549 L838,549 L838,576 L185,576 L185,549"/>
+</g>
+
+<g fill="#d3d3d3" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,158 L249,158 L249,159 L185,159 L185,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,158 L337,158 L337,159 L247,159 L247,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,158 L421,158 L421,159 L337,159 L337,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,158 L474,158 L474,159 L421,159 L421,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,158 L566,158 L566,159 L474,159 L474,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,158 L616,158 L616,159 L566,159 L566,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,158 L752,158 L752,159 L616,159 L616,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,158 L838,158 L838,159 L752,159 L752,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,158 L249,158 L249,159 L185,159 L185,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,193 L249,193 L249,194 L185,194 L185,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,158 L337,158 L337,159 L247,159 L247,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,193 L337,193 L337,194 L247,194 L247,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,158 L421,158 L421,159 L337,159 L337,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,193 L421,193 L421,194 L337,194 L337,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,158 L474,158 L474,159 L421,159 L421,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,193 L474,193 L474,194 L421,194 L421,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,158 L566,158 L566,159 L474,159 L474,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,193 L566,193 L566,194 L474,194 L474,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,158 L616,158 L616,159 L566,159 L566,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,193 L616,193 L616,194 L566,194 L566,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,158 L752,158 L752,159 L616,159 L616,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,193 L752,193 L752,194 L616,194 L616,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,158 L838,158 L838,159 L752,159 L752,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,193 L838,193 L838,194 L752,194 L752,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,193 L249,193 L249,194 L185,194 L185,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,228 L249,228 L249,229 L185,229 L185,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,193 L337,193 L337,194 L247,194 L247,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,228 L337,228 L337,229 L247,229 L247,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,193 L421,193 L421,194 L337,194 L337,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,228 L421,228 L421,229 L337,229 L337,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,193 L474,193 L474,194 L421,194 L421,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,228 L474,228 L474,229 L421,229 L421,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,193 L566,193 L566,194 L474,194 L474,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,228 L566,228 L566,229 L474,229 L474,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,193 L616,193 L616,194 L566,194 L566,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,228 L616,228 L616,229 L566,229 L566,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,193 L752,193 L752,194 L616,194 L616,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,228 L752,228 L752,229 L616,229 L616,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,193 L838,193 L838,194 L752,194 L752,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,228 L838,228 L838,229 L752,229 L752,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,228 L249,228 L249,229 L185,229 L185,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,228 L337,228 L337,229 L247,229 L247,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,228 L421,228 L421,229 L337,229 L337,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,228 L474,228 L474,229 L421,229 L421,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,228 L566,228 L566,229 L474,229 L474,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,228 L616,228 L616,229 L566,229 L566,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,228 L752,228 L752,229 L616,229 L616,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,228 L838,228 L838,229 L752,229 L752,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,299 L249,299 L249,300 L185,300 L185,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,299 L337,299 L337,300 L247,300 L247,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,299 L421,299 L421,300 L337,300 L337,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,299 L474,299 L474,300 L421,300 L421,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,299 L566,299 L566,300 L474,300 L474,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,299 L616,299 L616,300 L566,300 L566,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,299 L752,299 L752,300 L616,300 L616,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,299 L838,299 L838,300 L752,300 L752,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,299 L249,299 L249,300 L185,300 L185,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,299 L337,299 L337,300 L247,300 L247,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,299 L421,299 L421,300 L337,300 L337,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,299 L474,299 L474,300 L421,300 L421,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,299 L566,299 L566,300 L474,300 L474,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,299 L616,299 L616,300 L566,300 L566,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,299 L752,299 L752,300 L616,300 L616,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,299 L838,299 L838,300 L752,300 L752,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,403 L249,403 L249,404 L185,404 L185,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,403 L337,403 L337,404 L247,404 L247,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,403 L421,403 L421,404 L337,404 L337,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,403 L474,403 L474,404 L421,404 L421,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,403 L566,403 L566,404 L474,404 L474,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,403 L616,403 L616,404 L566,404 L566,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,403 L752,403 L752,404 L616,404 L616,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,403 L838,403 L838,404 L752,404 L752,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,403 L249,403 L249,404 L185,404 L185,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,438 L249,438 L249,439 L185,439 L185,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,403 L337,403 L337,404 L247,404 L247,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,438 L337,438 L337,439 L247,439 L247,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,403 L421,403 L421,404 L337,404 L337,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,438 L421,438 L421,439 L337,439 L337,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,403 L474,403 L474,404 L421,404 L421,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,438 L474,438 L474,439 L421,439 L421,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,403 L566,403 L566,404 L474,404 L474,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,438 L566,438 L566,439 L474,439 L474,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,403 L616,403 L616,404 L566,404 L566,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,438 L616,438 L616,439 L566,439 L566,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,403 L752,403 L752,404 L616,404 L616,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,438 L752,438 L752,439 L616,439 L616,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,403 L838,403 L838,404 L752,404 L752,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,438 L838,438 L838,439 L752,439 L752,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,438 L249,438 L249,439 L185,439 L185,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,473 L249,473 L249,474 L185,474 L185,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,438 L337,438 L337,439 L247,439 L247,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,473 L337,473 L337,474 L247,474 L247,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,438 L421,438 L421,439 L337,439 L337,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,473 L421,473 L421,474 L337,474 L337,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,438 L474,438 L474,439 L421,439 L421,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,473 L474,473 L474,474 L421,474 L421,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,438 L566,438 L566,439 L474,439 L474,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,473 L566,473 L566,474 L474,474 L474,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,438 L616,438 L616,439 L566,439 L566,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,473 L616,473 L616,474 L566,474 L566,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,438 L752,438 L752,439 L616,439 L616,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,473 L752,473 L752,474 L616,474 L616,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,438 L838,438 L838,439 L752,439 L752,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,473 L838,473 L838,474 L752,474 L752,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,473 L249,473 L249,474 L185,474 L185,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,473 L337,473 L337,474 L247,474 L247,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,473 L421,473 L421,474 L337,474 L337,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,473 L474,473 L474,474 L421,474 L421,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,473 L566,473 L566,474 L474,474 L474,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,473 L616,473 L616,474 L566,474 L566,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,473 L752,473 L752,474 L616,474 L616,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,473 L838,473 L838,474 L752,474 L752,473"/>
+</g>
+
+<g fill="#a8a8a8" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,8 L838,8 L838,10 L185,10 L185,8"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,600 L838,600 L838,602 L185,602 L185,600"/>
+</g>
+
+<g fill="#d3d3d3" fill-opacity="1" stroke="none" transform="matrix(1,0,0,1,0,0)"
+font-family="Helvetica" font-size="12" font-weight="400" font-style="normal" 
+>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,548 L249,548 L249,550 L185,550 L185,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,548 L337,548 L337,550 L247,550 L247,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,548 L421,548 L421,550 L337,550 L337,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,548 L474,548 L474,550 L421,550 L421,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,548 L566,548 L566,550 L474,550 L474,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,548 L616,548 L616,550 L566,550 L566,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,548 L752,548 L752,550 L616,550 L616,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,548 L838,548 L838,550 L752,550 L752,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,548 L838,548 L838,550 L185,550 L185,548"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,61 L838,61 L838,63 L185,63 L185,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,61 L248,61 L248,63 L185,63 L185,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,88 L248,88 L248,90 L185,90 L185,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,61 L337,61 L337,63 L248,63 L248,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M248,88 L337,88 L337,90 L248,90 L248,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,61 L421,61 L421,63 L337,63 L337,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,88 L421,88 L421,90 L337,90 L337,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,61 L474,61 L474,63 L421,63 L421,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,88 L474,88 L474,90 L421,90 L421,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,61 L566,61 L566,63 L474,63 L474,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,88 L566,88 L566,90 L474,90 L474,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,61 L616,61 L616,63 L566,63 L566,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,88 L616,88 L616,90 L566,90 L566,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,61 L752,61 L752,63 L616,63 L616,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,88 L752,88 L752,90 L616,90 L616,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,61 L838,61 L838,63 L752,63 L752,61"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,88 L838,88 L838,90 L752,90 L752,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,88 L838,88 L838,90 L185,90 L185,88"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,121 L838,121 L838,123 L185,123 L185,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,121 L249,121 L249,123 L185,123 L185,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,121 L249,121 L249,159 L247,159 L247,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,121 L337,121 L337,123 L247,123 L247,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,121 L249,121 L249,159 L247,159 L247,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,121 L421,121 L421,123 L337,123 L337,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,121 L474,121 L474,123 L421,123 L421,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,121 L566,121 L566,123 L474,123 L474,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,121 L616,121 L616,123 L566,123 L566,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,121 L752,121 L752,123 L616,123 L616,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,121 L838,121 L838,123 L752,123 L752,121"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,158 L249,158 L249,194 L247,194 L247,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,158 L249,158 L249,194 L247,194 L247,158"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,193 L249,193 L249,229 L247,229 L247,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,193 L249,193 L249,229 L247,229 L247,193"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,263 L249,263 L249,265 L185,265 L185,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,228 L249,228 L249,265 L247,265 L247,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,263 L337,263 L337,265 L247,265 L247,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,228 L249,228 L249,265 L247,265 L247,228"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,263 L421,263 L421,265 L337,265 L337,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,263 L474,263 L474,265 L421,265 L421,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,263 L566,263 L566,265 L474,265 L474,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,263 L616,263 L616,265 L566,265 L566,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,263 L752,263 L752,265 L616,265 L616,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,263 L838,263 L838,265 L752,265 L752,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,263 L249,263 L249,265 L185,265 L185,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,263 L249,263 L249,300 L247,300 L247,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,263 L337,263 L337,265 L247,265 L247,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,263 L249,263 L249,300 L247,300 L247,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,263 L421,263 L421,265 L337,265 L337,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,263 L474,263 L474,265 L421,265 L421,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,263 L566,263 L566,265 L474,265 L474,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,263 L616,263 L616,265 L566,265 L566,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,263 L752,263 L752,265 L616,265 L616,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,263 L838,263 L838,265 L752,265 L752,263"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,334 L249,334 L249,336 L185,336 L185,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,299 L249,299 L249,336 L247,336 L247,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,334 L337,334 L337,336 L247,336 L247,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,299 L249,299 L249,336 L247,336 L247,299"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,334 L421,334 L421,336 L337,336 L337,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,334 L474,334 L474,336 L421,336 L421,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,334 L566,334 L566,336 L474,336 L474,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,334 L616,334 L616,336 L566,336 L566,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,334 L752,334 L752,336 L616,336 L616,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,334 L838,334 L838,336 L752,336 L752,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,334 L838,334 L838,336 L185,336 L185,334"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,367 L838,367 L838,369 L185,369 L185,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,367 L249,367 L249,369 L185,369 L185,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,367 L249,367 L249,404 L247,404 L247,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,367 L337,367 L337,369 L247,369 L247,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,367 L249,367 L249,404 L247,404 L247,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,367 L421,367 L421,369 L337,369 L337,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,367 L474,367 L474,369 L421,369 L421,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,367 L566,367 L566,369 L474,369 L474,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,367 L616,367 L616,369 L566,369 L566,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,367 L752,367 L752,369 L616,369 L616,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,367 L838,367 L838,369 L752,369 L752,367"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,403 L249,403 L249,439 L247,439 L247,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,403 L249,403 L249,439 L247,439 L247,403"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,438 L249,438 L249,474 L247,474 L247,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,438 L249,438 L249,474 L247,474 L247,438"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,473 L249,473 L249,514 L247,514 L247,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,473 L249,473 L249,514 L247,514 L247,473"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,508 L249,508 L249,550 L247,550 L247,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,508 L249,508 L249,550 L247,550 L247,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,508 L249,508 L249,510 L185,510 L185,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,512 L249,512 L249,514 L185,514 L185,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,508 L337,508 L337,510 L247,510 L247,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,512 L337,512 L337,514 L247,514 L247,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,508 L421,508 L421,510 L337,510 L337,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,512 L421,512 L421,514 L337,514 L337,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,508 L474,508 L474,510 L421,510 L421,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,512 L474,512 L474,514 L421,514 L421,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,508 L566,508 L566,510 L474,510 L474,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,512 L566,512 L566,514 L474,514 L474,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,508 L616,508 L616,510 L566,510 L566,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,512 L616,512 L616,514 L566,514 L566,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,508 L752,508 L752,510 L616,510 L616,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,512 L752,512 L752,514 L616,514 L616,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,508 L838,508 L838,510 L752,510 L752,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,512 L838,512 L838,514 L752,514 L752,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,508 L249,508 L249,510 L185,510 L185,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M185,512 L249,512 L249,514 L185,514 L185,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,508 L337,508 L337,510 L247,510 L247,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M247,512 L337,512 L337,514 L247,514 L247,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,508 L421,508 L421,510 L337,510 L337,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M337,512 L421,512 L421,514 L337,514 L337,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,508 L474,508 L474,510 L421,510 L421,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M421,512 L474,512 L474,514 L421,514 L421,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,508 L566,508 L566,510 L474,510 L474,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M474,512 L566,512 L566,514 L474,514 L474,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,508 L616,508 L616,510 L566,510 L566,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M566,512 L616,512 L616,514 L566,514 L566,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,508 L752,508 L752,510 L616,510 L616,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M616,512 L752,512 L752,514 L616,514 L616,512"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,508 L838,508 L838,510 L752,510 L752,508"/>
+<path vector-effect="non-scaling-stroke" fill-rule="evenodd" d="M752,512 L838,512 L838,514 L752,514 L752,512"/>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="423" y="32" font-family="Arial" font-size="20" font-weight="400" font-style="normal" 
+ >The title of the table</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="452" y="54" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ >The table's subtitle</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="303" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >NUM</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >CHAR</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="430.5" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >FCTR</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >DATE</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >TIME</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >DATETIME</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="761" y="80" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >CURRENCY</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="193" y="110" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >GRP_A</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="145" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_1</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="254" y="146" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1.111e-01</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="10" font-weight="400" font-style="italic" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="326" y="140" font-family="Arial" font-size="10" font-weight="400" font-style="italic" 
+ >1</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >apricot</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="434" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >one</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-01-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >13:35</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-01-01 02:22</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="784" y="145" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >49.950</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="180" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_2</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2.222e+00</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >banana</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="435" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >two</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-02-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >14:40</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-02-02 14:33</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="784" y="181" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >17.950</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="215" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_3</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >3.333e+01</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >coconut</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="429.5" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >three</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-03-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >15:45</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-03-03 03:44</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="793" y="216" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1.390</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="250" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_4</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >4.444e+02</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >durian</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="434" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >four</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-04-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >16:50</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-04-04 15:55</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="757" y="251" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >65100.000</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="218" y="286" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >min</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="301" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >0.11</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="439.5" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="802" y="287" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1.39</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="216" y="321" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >max</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="283" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >444.40</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="439.5" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="762" y="322" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >65,100.00</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="193" y="356" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >GRP_B</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="390" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_5</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >5.550e+03</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="435" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >five</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-05-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >17:55</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-05-05 04:00</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="766" y="391" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >1325.810</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="425" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_6</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="309" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >fig</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="437.5" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >six</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-06-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-06-06 16:11</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="784" y="426" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >13.255</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="460" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_7</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >7.770e+05</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >grapefruit</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="426" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >seven</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >19:10</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2018-07-07 05:22</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="810" y="461" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="197" y="495" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >ROW_8</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="256" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >8.880e+06</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >honeydew</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="430" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >eight</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >2015-08-15</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >20:20</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >NA</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="793" y="496" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >0.440</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="215" y="535" font-family="Arial" font-size="13" font-weight="700" font-style="normal" 
+ >total</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="316" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="342" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="439.5" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="479" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="571" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="621" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >—</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="762" y="536" font-family="Arial" font-size="16" font-weight="400" font-style="normal" 
+ >66,508.79</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="189" y="593" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ >This is a source note.</text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="9" font-weight="400" font-style="italic" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="190" y="563" font-family="Arial" font-size="9" font-weight="400" font-style="italic" 
+ >1</text>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="195" y="563" font-family="Arial" font-size="9" font-weight="400" font-style="italic" 
+ > </text>
+</g>
+
+<g fill="#333333" fill-opacity="1" stroke="#333333" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"
+font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+>
+<text fill="#333333" fill-opacity="1" stroke="none" xml:space="preserve" x="198" y="568" font-family="Arial" font-size="14" font-weight="400" font-style="normal" 
+ >This is a footnote. </text>
+</g>
+</g>
+</svg>

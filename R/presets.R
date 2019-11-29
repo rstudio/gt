@@ -8,13 +8,22 @@
 #' there are seven `color` variations that each use a range of five color tints.
 #' Each of the color tints have been fine-tuned to maximize the contrast between
 #' text and its background. In total, There are 42 combinations of `style` and
-#' `color`.
+#' `color`. We can use the [info_preset_colorized()] function to get an
+#' information table which has the names and previews for each of the color list
+#' keywords.
+#'
+#' A preset function incorporates the idea of a 'table reset' in that all of the
+#' options values available in [tab_options()] will be first reset to their
+#' default values. A preset function will then apply the appropriate options
+#' values to achieve the desired look. So, any additional tweaks through the use
+#' of [tab_options()] or any of the `opt_*()` functions should be done after
+#' calling a `preset_*()` function such as this one.
 #'
 #' @inheritParams fmt_number
 #' @param style Six numbered styles are available. Simply provide a number from
 #'   `1` (the default) to `6` to choose a distinct look.
 #' @param color There are seven color variations: `"blue"` (the default),
-#'   `"orange"`, `"aqua"`, `"magenta"`, `"green"`, `"red"`, and `"gray"`.
+#'   `"orange"`, `"aqua"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
 #'
 #' @return an object of class `gt_tbl`.
 #'
@@ -68,12 +77,12 @@ preset_colorized <- function(data,
 
   if (!(length(color) == 1 && color %in% names(preset_colors))) {
     stop("The `color` value must be one of seven specific colors:\n",
-         " * `\"blue\"`, `\"orange\"`, `\"aqua\"`, `\"magenta\"`, `\"green\"`, ",
+         " * `\"blue\"`, `\"orange\"`, `\"aqua\"`, `\"pink\"`, `\"green\"`, ",
          "`\"red\"`, or `\"gray\"`",
          call. = FALSE)
   }
 
-
+  # Get the set of parameters based on the `style` and `color` values
   params <-
     get_colorized_params(
       styles_colors_params = styles_colors_params,
@@ -85,90 +94,7 @@ preset_colorized <- function(data,
   #       only resets the table style parameters in `_options`
   tbl_colorized <-
     data %>%
-    tab_options(
-      table.background.color = "#FFFFFF",
-      table.font.color = "#333333",
-      table.font.color.light = "#FFFFFF",
-      table.font.size = "16px",
-      table.border.top.style = "solid",
-      table.border.top.width = "2px",
-      table.border.bottom.style = "solid",
-      table.border.bottom.width = "2px",
-      heading.background.color = "#FFFFFF",
-      heading.title.font.size = "125%",
-      heading.title.font.weight = "initial",
-      heading.subtitle.font.size = "85%",
-      heading.subtitle.font.weight = "initial",
-      heading.border.bottom.style = "solid",
-      heading.border.bottom.width = "2px",
-      heading.border.lr.style = "none",
-      heading.border.lr.width = "1px",
-      heading.border.lr.color = "#D3D3D3",
-      column_labels.font.size = "100%",
-      column_labels.font.weight = "initial",
-      column_labels.text_transform = "inherit",
-      column_labels.border.top.style = "solid",
-      column_labels.border.top.width = "2px",
-      column_labels.border.bottom.style = "solid",
-      column_labels.border.bottom.width = "2px",
-      column_labels.border.lr.style = "none",
-      column_labels.border.lr.width = "1px",
-      column_labels.border.lr.color = "#D3D3D3",
-      column_labels.hidden = FALSE,
-      row_group.background.color = "#FFFFFF",
-      row_group.font.size = "100%",
-      row_group.font.weight = "initial",
-      row_group.text_transform = "inherit",
-      row_group.padding = "8px",
-      row_group.border.top.style = "solid",
-      row_group.border.top.width = "2px",
-      row_group.border.bottom.style = "solid",
-      row_group.border.bottom.width = "2px",
-      row_group.border.left.style = "none",
-      row_group.border.left.width = "1px",
-      row_group.border.left.color = "#D3D3D3",
-      row_group.border.right.style = "none",
-      row_group.border.right.width = "1px",
-      row_group.border.right.color = "#D3D3D3",
-      table_body.hlines.width = "1px",
-      table_body.vlines.width = "1px",
-      table_body.border.top.style = "solid",
-      table_body.border.top.width = "2px",
-      table_body.border.bottom.style = "solid",
-      table_body.border.bottom.width = "2px",
-      stub.font.weight = "initial",
-      stub.text_transform = "inherit",
-      stub.border.width = "2px",
-      data_row.padding = "8px",
-      summary_row.text_transform = "inherit",
-      summary_row.padding = "8px",
-      summary_row.border.style = "solid",
-      summary_row.border.width = "2px",
-      grand_summary_row.text_transform = "inherit",
-      grand_summary_row.padding = "8px",
-      grand_summary_row.border.style = "double",
-      grand_summary_row.border.width = "6px",
-      footnotes.background.color = "#FFFFFF",
-      footnotes.font.size = "90%",
-      footnotes.padding = "4px",
-      footnotes.border.bottom.style = "none",
-      footnotes.border.bottom.width = "2px",
-      footnotes.border.bottom.color = "#D3D3D3",
-      footnotes.border.lr.style = "none",
-      footnotes.border.lr.width = "2px",
-      footnotes.border.lr.color = "#D3D3D3",
-      source_notes.background.color = "#FFFFFF",
-      source_notes.font.size = "90%",
-      source_notes.padding = "4px",
-      source_notes.border.bottom.style = "none",
-      source_notes.border.bottom.width = "2px",
-      source_notes.border.bottom.color = "#D3D3D3",
-      source_notes.border.lr.style = "none",
-      source_notes.border.lr.width = "2px",
-      source_notes.border.lr.color = "#D3D3D3",
-      row.striping.include_stub = FALSE,
-      row.striping.include_table_body = FALSE
-    ) %>%
+    dt_options_init() %>%
     tab_options(
       table.border.top.color = params$table_hlines_color,
       table.border.bottom.color = params$table_hlines_color,
@@ -191,7 +117,7 @@ preset_colorized <- function(data,
       table_body.vlines.color = params$data_vlines_color,
       summary_row.background.color = params$summary_row_background_color,
       grand_summary_row.background.color = params$grand_summary_row_background_color,
-      row.striping.background_color = params$row_striping_background_color,
+      row.striping.background_color = params$row_striping_background_color
     )
 
   if (!is.na(params$table_outline_color)) {
@@ -204,12 +130,222 @@ preset_colorized <- function(data,
   tbl_colorized
 }
 
+#' Use preset table with background colors at different locations
+#'
+#' This preset function applies background colors to different locations in the
+#' table. It relies either on a keyword for a color list, or, a
+#' `location_color_list` object. Alternatively, a `location_color_list`
+#' object can be generated with the [location_colors()] function.
+#'
+#' A preset function incorporates the idea of a 'table reset' in that all of the
+#' options values available in [tab_options()] will be first reset to their
+#' default values. A preset function will then apply the appropriate options
+#' values to achieve the desired look. So, any additional tweaks through the use
+#' of [tab_options()] or any of the `opt_*()` functions should be done after
+#' calling a `preset_*()` function such as this one.
+#'
+#' @inheritParams fmt_number
+#' @param colors A valid keyword for a color list, or, a `location_color_list`
+#'   object. The color list keywords are: `"blues"`, `"grays"`, `"purples"`,
+#'   `"pinks"`, `"greens"`, `"pastels"`, `"moonlight"`, `"beach"`,
+#'   `"cappuccino"`, `"space_gray"`, and `"sand_and_sky"`. A
+#'   `location_color_list` can be made by using the [location_colors()]
+#'   function.
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `preset_location_colors()` function
+#' # to add `"space_gray"` background colors
+#' # to various table locations
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   preset_location_colors(colors = "space_gray")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_preset_location_colors_1.svg}{options: width=100\%}}
+#'
+#' @family table preset functions
+#'
+#' @export
+preset_location_colors <- function(data,
+                                   colors = "blues") {
+
+  if (!(is.character(colors) &&
+        length(colors) == 1 &&
+        colors %in% names(colors_for_locations)) &&
+      !inherits(colors, "location_color_list")) {
+
+    stop("A `location_color_list` object must be supplied to `colors`:\n",
+         " * Several of these are supplied; use `info_location_colors()` to find out more\n",
+         " * It can be created by using the `location_colors()` function",
+         call. = FALSE)
+  }
+
+  if (is.character(colors)) {
+    colors <- colors_for_locations[[colors]]
+  }
+
+  # TODO: develop a function that performs a table reset; it
+  #       only resets the table style parameters in `_options`
+  tbl_location_colors <-
+    data %>%
+    dt_options_init() %>%
+    tab_options(
+      heading.background.color = colors$heading,
+      column_labels.background.color = colors$column_labels,
+      row_group.background.color = colors$row_groups,
+      stub.background.color = colors$stub,
+      table.background.color = colors$body,
+      summary_row.background.color = colors$summary_rows,
+      grand_summary_row.background.color = colors$grand_summary_rows,
+      footnotes.background.color = colors$footnotes,
+      source_notes.background.color = colors$source_notes
+    )
+
+  if (!is.null(colors$row_striping)) {
+
+    tbl_location_colors <-
+      tbl_location_colors %>%
+      tab_options(row.striping.background_color = colors$row_striping)
+  }
+
+  tbl_location_colors
+}
+
+#' A helper function for `preset_location_colors()`
+#'
+#' We can define background colors at different table locations with
+#' `location_colors()`, creating a `location_color_list` object that can be used
+#' with the [preset_location_colors()] function. Colors can be supplied for as
+#' many locations as desired, and they include the `heading`, the
+#' `column_labels`, the `row_groups`, the `stub`, the `body`, the
+#' `summary_rows`, the `grand_summary_rows`, the `footnotes`, the
+#' `source_notes`, and finally the color of the `row_striping`. Locations with
+#' no colors provided will default to white. Row striping is not enabled by
+#' default in \pkg{gt} so even if a color is provided for the `row_striping`
+#' location, we still need to enable its visibility with the
+#' [opt_add_row_striping()] function.
+#'
+#' @param heading,column_labels,row_groups,stub,body,summary_rows,grand_summary_rows,footnotes,source_notes,row_striping
+#' Locations that can accept a background color. If not provided, the color will
+#' be set to `"white"`.
+#'
+#' @return an object of class `location_color_list`. This is to be used with the
+#'   [preset_location_colors()] function.
+#'
+#' @examples
+#' # Create a location color list by using
+#' # the `location_colors()` function; opt
+#' # to color only a few of the available
+#' # table locations
+#' loc_colors <-
+#'   location_colors(
+#'     column_labels = "#FFE7F5",
+#'     stub = "#EDF4FF",
+#'     body = "#FFFFE8",
+#'     summary_rows = "#E3FFFC",
+#'     grand_summary_rows = "#F5EAFF"
+#'   )
+#'
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `loc_colors` object to supply colors
+#' # to the specified locations
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   preset_location_colors(colors = loc_colors)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_location_colors_1.svg}{options: width=100\%}}
+#'
+#' @export
+location_colors <- function(heading = NULL,
+                            column_labels = NULL,
+                            row_groups = NULL,
+                            stub = NULL,
+                            body = NULL,
+                            summary_rows = NULL,
+                            grand_summary_rows = NULL,
+                            footnotes = NULL,
+                            source_notes = NULL,
+                            row_striping = NULL) {
+
+  # Create the partial location color list
+  arg_names <- formals(location_colors) %>% names() %>% base::setdiff("row_striping")
+  color_list <- mget(arg_names)
+
+  # Replace all NULL values with `white`
+  color_list <- color_list %>% lapply(function(x) if (is.null(x)) "white" else x)
+
+  # Add in the `row_striping` option, whether a color
+  # was provided or not
+  color_list <- c(color_list, list("row_striping" = row_striping))
+
+  class(color_list) <- "location_color_list"
+
+  color_list
+}
+
 #' Use a preset table look with no lines
 #'
-#' This preset function effectively produces a table where all possible lines
-#' and row striping are not visible. This is great as a blank slate for additive
-#' styling with [tab_options()] or [tab_style()]. Or, use it in those cases
-#' where you are using \pkg{gt} tables mostly for layout purposes.
+#' This preset function effectively produces a table with no visible lines. This
+#' is great as a blank slate for additive styling with [tab_options()] or
+#' [tab_style()]. Or, use it in those cases where you are using \pkg{gt} tables
+#' mostly for layout purposes.
+#'
+#' A preset function incorporates the idea of a 'table reset' in that all of the
+#' options values available in [tab_options()] will be first reset to their
+#' default values. A preset function will then apply the appropriate options
+#' values to achieve the desired look. So, any additional tweaks through the use
+#' of [tab_options()] or any of the `opt_*()` functions should be done after
+#' calling a `preset_*()` function such as this one.
 #'
 #' @inheritParams fmt_number
 #'
@@ -257,92 +393,8 @@ preset_lineless <- function(data) {
   # TODO: develop a function that performs a table reset; it
   #       only resets the table style parameters in `_options`
   data %>%
+    dt_options_init() %>%
     tab_options(
-      table.background.color = "#FFFFFF",
-      table.font.color = "#333333",
-      table.font.color.light = "#FFFFFF",
-      table.font.size = "16px",
-      table.border.top.style = "solid",
-      table.border.top.width = "2px",
-      table.border.bottom.style = "solid",
-      table.border.bottom.width = "2px",
-      heading.background.color = "#FFFFFF",
-      heading.title.font.size = "125%",
-      heading.title.font.weight = "initial",
-      heading.subtitle.font.size = "85%",
-      heading.subtitle.font.weight = "initial",
-      heading.border.bottom.style = "solid",
-      heading.border.bottom.width = "2px",
-      heading.border.lr.style = "none",
-      heading.border.lr.width = "1px",
-      heading.border.lr.color = "#D3D3D3",
-      column_labels.font.size = "100%",
-      column_labels.font.weight = "initial",
-      column_labels.text_transform = "inherit",
-      column_labels.border.top.style = "solid",
-      column_labels.border.top.width = "2px",
-      column_labels.border.bottom.style = "solid",
-      column_labels.border.bottom.width = "2px",
-      column_labels.border.lr.style = "none",
-      column_labels.border.lr.width = "1px",
-      column_labels.border.lr.color = "#D3D3D3",
-      column_labels.hidden = FALSE,
-      row_group.background.color = "#FFFFFF",
-      row_group.font.size = "100%",
-      row_group.font.weight = "initial",
-      row_group.text_transform = "inherit",
-      row_group.padding = "8px",
-      row_group.border.top.style = "solid",
-      row_group.border.top.width = "2px",
-      row_group.border.bottom.style = "solid",
-      row_group.border.bottom.width = "2px",
-      row_group.border.left.style = "none",
-      row_group.border.left.width = "1px",
-      row_group.border.left.color = "#D3D3D3",
-      row_group.border.right.style = "none",
-      row_group.border.right.width = "1px",
-      row_group.border.right.color = "#D3D3D3",
-      table_body.hlines.width = "1px",
-      table_body.vlines.width = "1px",
-      table_body.border.top.style = "solid",
-      table_body.border.top.width = "2px",
-      table_body.border.bottom.style = "solid",
-      table_body.border.bottom.width = "2px",
-      stub.font.weight = "initial",
-      stub.text_transform = "inherit",
-      stub.border.width = "2px",
-      data_row.padding = "8px",
-      summary_row.text_transform = "inherit",
-      summary_row.padding = "8px",
-      summary_row.border.style = "solid",
-      summary_row.border.width = "2px",
-      grand_summary_row.text_transform = "inherit",
-      grand_summary_row.padding = "8px",
-      grand_summary_row.border.style = "double",
-      grand_summary_row.border.width = "6px",
-      footnotes.background.color = "#FFFFFF",
-      footnotes.font.size = "90%",
-      footnotes.padding = "4px",
-      footnotes.border.bottom.style = "none",
-      footnotes.border.bottom.width = "2px",
-      footnotes.border.bottom.color = "#D3D3D3",
-      footnotes.border.lr.style = "none",
-      footnotes.border.lr.width = "2px",
-      footnotes.border.lr.color = "#D3D3D3",
-      source_notes.background.color = "#FFFFFF",
-      source_notes.font.size = "90%",
-      source_notes.padding = "4px",
-      source_notes.border.bottom.style = "none",
-      source_notes.border.bottom.width = "2px",
-      source_notes.border.bottom.color = "#D3D3D3",
-      source_notes.border.lr.style = "none",
-      source_notes.border.lr.width = "2px",
-      source_notes.border.lr.color = "#D3D3D3",
-      row.striping.include_stub = FALSE,
-      row.striping.include_table_body = FALSE
-    ) %>%
-    tab_options(
-      row.striping.include_table_body = FALSE,
       table.border.top.style = "none",
       heading.border.bottom.style = "none",
       column_labels.border.top.style = "none",
@@ -361,6 +413,154 @@ preset_lineless <- function(data) {
     )
 }
 
+#' Use a preset table look with no lines
+#'
+#' This preset function yields a table where all possible lines are visible.
+#' This is great if you want to start off with lots of lines and subtract just a
+#' few of them with [tab_options()] or [tab_style()]. Or, use it in those cases
+#' where you absolutely need to have boundaries between pieces of information.
+#'
+#' A preset function incorporates the idea of a 'table reset' in that all of the
+#' options values available in [tab_options()] will be first reset to their
+#' default values. A preset function will then apply the appropriate options
+#' values to achieve the desired look. So, any additional tweaks through the use
+#' of [tab_options()] or any of the `opt_*()` functions should be done after
+#' calling a `preset_*()` function such as this one.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `preset_fully_lined()` function to
+#' # haves lines everywhere there can possibly
+#' # be lines
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   preset_fully_lined()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_preset_fully_lined_1.svg}{options: width=100\%}}
+#'
+#' @family table preset functions
+#'
+#' @export
+preset_fully_lined <- function(data) {
+
+  # TODO: develop a function that performs a table reset; it
+  #       only resets the table style parameters in `_options`
+  data %>%
+    dt_options_init() %>%
+    tab_options(
+      table.border.top.style = "solid",
+      table.border.left.style = "solid",
+      table.border.right.style = "solid",
+      heading.border.bottom.style = "solid",
+      heading.border.lr.style = "solid",
+      column_labels.border.top.style = "solid",
+      column_labels.border.bottom.style = "solid",
+      column_labels.border.lr.style = "solid",
+      row_group.border.top.style = "solid",
+      row_group.border.bottom.style = "solid",
+      row_group.border.left.style = "solid",
+      row_group.border.right.style = "solid",
+      stub.border.style = "solid",
+      table_body.border.top.style = "solid",
+      table_body.border.bottom.style = "solid",
+      table_body.hlines.style = "solid",
+      table_body.vlines.style = "solid",
+      summary_row.border.style = "solid",
+      footnotes.border.bottom.style = "solid",
+      footnotes.border.lr.style = "solid",
+      source_notes.border.lr.style = "solid",
+      table.border.bottom.style = "solid"
+    )
+}
+
+# Colors for the `preset_location_colors()` function
+colors_for_locations <-
+  list(
+    blues = location_colors(
+      column_labels = "#1976D2", row_groups = "#BDBDBD",
+      stub = "#2196F3", body = "#BBDEFB",
+      summary_rows = "#757575", grand_summary_rows = "#607D8B"
+    ),
+    grays = location_colors(
+      column_labels = "#616161", row_groups = "#BDBDBD",
+      stub = "#9E9E9E", body = "#F5F5F5",
+      summary_rows = "#757575", grand_summary_rows = "#212121"
+    ),
+    purples = location_colors(
+      column_labels = "#7B1FA2", row_groups = "#BDBDBD",
+      stub = "#9C27B0", body = "#E1BEE7",
+      summary_rows = "#757575", grand_summary_rows = "#7C4DFF"
+    ),
+    pinks = location_colors(
+      column_labels = "#C2185B", row_groups = "#BDBDBD",
+      stub = "#E91E63", body = "#F8BBD0",
+      summary_rows = "#757575", grand_summary_rows = "#9E9E9E"
+    ),
+    greens = location_colors(
+      column_labels = "#388E3C", row_groups = "#BDBDBD",
+      stub = "#4CAF50", body = "#C8E6C9",
+      summary_rows = "#757575", grand_summary_rows = "#8BC34A"
+    ),
+    pastels = location_colors(
+      column_labels = "#FFDEF2", row_groups = "#FFF0E4",
+      stub = "#E2EEFF", body = "#FFFFE3",
+      summary_rows = "#DDFFFC", grand_summary_rows = "#F2E2FF"
+    ),
+    moonlight = location_colors(
+      column_labels = "#0E9AA7", row_groups = "#DDDDDD",
+      stub = "#3DA4AB", body = "#F6CD61",
+      summary_rows = "#FE8A71", grand_summary_rows = "#4A4E4D"
+    ),
+    beach = location_colors(
+      column_labels = "#2AB7CA", row_groups = "#E6E6EA",
+      stub = "#E6E6EA", body = "#F4F4F8",
+      summary_rows = "#FED766", grand_summary_rows = "#FE4A49"
+    ),
+    cappuccino = location_colors(
+      column_labels = "#854442", row_groups = "#FFF4E6",
+      stub = "#BE9B7B", body = "#FFF4E6",
+      summary_rows = "#4B3832", grand_summary_rows = "#3C2F2F"
+    ),
+    space_gray = location_colors(
+      column_labels = "#65737E", row_groups = "#DDDDDD",
+      stub = "#A7ADBA", body = "#C0C5CE",
+      summary_rows = "#4F5B66", grand_summary_rows = "#343D46"
+    ),
+    sand_and_sky = location_colors(
+      column_labels = "#FFeFD7", row_groups = "#FFFEF9",
+      stub = "#FFF6E9", body = "#FFFEF9",
+      summary_rows = "#E3F0FF", grand_summary_rows = "#D2E7FF"
+    )
+  )
+
 # Colors for the `preset_colorized()` function
 preset_colors <-
   list(
@@ -368,11 +568,12 @@ preset_colors <-
     blue =    c("#EDF7FC", "#89D3FE", "#00A1FF", "#0076BA", "#004D80"),
     orange =  c("#FFFFDB", "#FEFC66", "#FAE231", "#F8BA00", "#FF9400"),
     aqua =    c("#EBFBF9", "#A5FEF2", "#14E6CF", "#01A99D", "#007C77"),
-    magenta = c("#FCF2F7", "#FF8CC6", "#EF5FA7", "#CB2A7B", "#99195F"),
+    pink =    c("#FCF2F7", "#FF8CC6", "#EF5FA7", "#CB2A7B", "#99195F"),
     green =   c("#EDF6E8", "#9AFD69", "#60D937", "#1EB100", "#027101"),
     red =     c("#FEEDEC", "#FF968D", "#FF644E", "#ED220D", "#B51800")
   )
 
+# Function for getting a vector of preset colors at a specified 'level'
 get_all_preset_colors_at_index <- function(index) {
 
   preset_colors %>%
@@ -383,6 +584,8 @@ get_all_preset_colors_at_index <- function(index) {
     )
 }
 
+# A tibble that contains all style and color parameters for the
+# themed tables generated by the `preset_colorized()` function
 styles_colors_params <-
   dplyr::tibble() %>%
   dplyr::bind_rows(
@@ -517,4 +720,3 @@ get_colorized_params <- function(styles_colors_params,
     dplyr::filter(style == style_filter, color == color_filter) %>%
     as.list()
 }
-

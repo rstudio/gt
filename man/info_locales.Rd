@@ -37,6 +37,7 @@ tab_1 <- info_locales(begins_with = "v")
 Other information functions: \code{\link{info_currencies}},
   \code{\link{info_date_style}},
   \code{\link{info_paletteer}},
+  \code{\link{info_preset_colorized}},
   \code{\link{info_time_style}}
 }
 \concept{information functions}

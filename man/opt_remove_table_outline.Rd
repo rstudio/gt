@@ -9,8 +9,56 @@ opt_remove_table_outline(data)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
-Option to completely remove any table outlines
+This function removes any table outlines that may exist around the entire
+table. It don't annihilate the \code{width} and \code{color} attributes but simply sets
+the relevant line styles to \code{"none"}.
+}
+\details{
+This function serves as a convenient shortcut for a large number of options
+from the \code{\link[=tab_options]{tab_options()}} function. The complementary \code{opt_*()} function is
+\code{\link[=opt_add_table_outline]{opt_add_table_outline()}}, which adds a table outline.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_opt_remove_table_outline_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table with
+# a number of table parts added; apply a
+# table preset and then remove the table
+# outlines with `opt_remove_table_outline()`
+tab_1 <-
+  exibble \%>\%
+  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  summary_rows(
+    groups = "grp_a",
+    columns = vars(num, currency),
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )) \%>\%
+  grand_summary_rows(
+    columns = vars(currency),
+    fns = list(
+      total = ~sum(., na.rm = TRUE)
+    )) \%>\%
+  tab_source_note(source_note = "This is a source note.") \%>\%
+  tab_footnote(
+    footnote = "This is a footnote.",
+    locations = cells_data(columns = 1, rows = 1)
+  ) \%>\%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) \%>\%
+  preset_colorized(style = 5, color = "blue") \%>\%
+  opt_remove_table_outline()
+
 }
 \seealso{
 Other table option functions: \code{\link{opt_add_row_striping}},
@@ -18,7 +66,6 @@ Other table option functions: \code{\link{opt_add_row_striping}},
   \code{\link{opt_align_table_header}},
   \code{\link{opt_all_caps}},
   \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_row_striping}},
   \code{\link{opt_remove_top_bottom_borders}}
 }
 \concept{table option functions}

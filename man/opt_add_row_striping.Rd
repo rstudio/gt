@@ -9,15 +9,62 @@ opt_add_row_striping(data)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
-Option to add row striping
+By default, a \pkg{gt} table does not have row striping enabled. However,
+this function allows us to easily enable striped rows in the table body.
+Presets enabled from use of the \code{\link[=preset_colorized]{preset_colorized()}} function have row
+striping styles that also aren't displayed by default and so using
+\code{opt_add_row_striping()} after enabling the preset will reveal the specially
+styled row striping.
+}
+\details{
+This function serves as a convenient shortcut for \code{<gt_tbl> \%>\% tab_options(row.striping.include_table_body = TRUE)}.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_opt_add_row_striping_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table with
+# a number of table parts added; next, we
+# add row striping to every second row with
+# the `opt_add_row_striping()` function
+tab_1 <-
+  exibble \%>\%
+  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  summary_rows(
+    groups = "grp_a",
+    columns = vars(num, currency),
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )) \%>\%
+  grand_summary_rows(
+    columns = vars(currency),
+    fns = list(
+      total = ~sum(., na.rm = TRUE)
+    )) \%>\%
+  tab_source_note(source_note = "This is a source note.") \%>\%
+  tab_footnote(
+    footnote = "This is a footnote.",
+    locations = cells_data(columns = 1, rows = 1)
+  ) \%>\%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) \%>\%
+  opt_add_row_striping()
+
 }
 \seealso{
 Other table option functions: \code{\link{opt_add_table_outline}},
   \code{\link{opt_align_table_header}},
   \code{\link{opt_all_caps}},
   \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_row_striping}},
   \code{\link{opt_remove_table_outline}},
   \code{\link{opt_remove_top_bottom_borders}}
 }

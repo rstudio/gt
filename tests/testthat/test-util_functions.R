@@ -391,10 +391,10 @@ test_that("the `inline_html_styles()` function works correctly", {
         "font-size: 16px; background-color: #FFFFFF; width: auto; ",
         "border-top-style: solid; border-top-width: 2px; ",
         "border-top-color: #A8A8A8; border-right-style: none; ",
-        "border-right-width: 2px; border-right-color: #A8A8A8; ",
+        "border-right-width: 2px; border-right-color: #D3D3D3; ",
         "border-bottom-style: solid; border-bottom-width: 2px; ",
         "border-bottom-color: #A8A8A8; border-left-style: none; ",
-        "border-left-width: 2px; border-left-color: #A8A8A8;"
+        "border-left-width: 2px; border-left-color: #D3D3D3;"
       ),
       inlined_html
     )

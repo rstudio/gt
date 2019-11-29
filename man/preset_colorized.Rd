@@ -13,7 +13,7 @@ preset_colorized(data, style = 1, color = "blue")
 \code{1} (the default) to \code{6} to choose a distinct look.}
 
 \item{color}{There are seven color variations: \code{"blue"} (the default),
-\code{"orange"}, \code{"aqua"}, \code{"magenta"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+\code{"orange"}, \code{"aqua"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -27,7 +27,17 @@ summary sections, and, some even have vertical lines. In addition to \code{style
 there are seven \code{color} variations that each use a range of five color tints.
 Each of the color tints have been fine-tuned to maximize the contrast between
 text and its background. In total, There are 42 combinations of \code{style} and
-\code{color}.
+\code{color}. We can use the \code{\link[=info_preset_colorized]{info_preset_colorized()}} function to get an
+information table which has the names and previews for each of the color list
+keywords.
+}
+\details{
+A preset function incorporates the idea of a 'table reset' in that all of the
+options values available in \code{\link[=tab_options]{tab_options()}} will be first reset to their
+default values. A preset function will then apply the appropriate options
+values to achieve the desired look. So, any additional tweaks through the use
+of \code{\link[=tab_options]{tab_options()}} or any of the \code{opt_*()} functions should be done after
+calling a \code{preset_*()} function such as this one.
 }
 \section{Figures}{
 
@@ -69,6 +79,8 @@ tab_1 <-
 
 }
 \seealso{
-Other table preset functions: \code{\link{preset_lineless}}
+Other table preset functions: \code{\link{preset_fully_lined}},
+  \code{\link{preset_lineless}},
+  \code{\link{preset_location_colors}}
 }
 \concept{table preset functions}

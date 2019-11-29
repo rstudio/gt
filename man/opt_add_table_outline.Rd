@@ -11,17 +11,64 @@ opt_add_table_outline(data, style = "solid", width = px(3),
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{style, width, color}{The style, width, and color properties for the table
-border.}
+outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and
+\code{"#D3D3D3"}.}
+}
+\value{
+an object of class \code{gt_tbl}.
 }
 \description{
-Option to wrap an outline around the entire table
+This function puts an outline of consistent \code{style}, \code{width}, and \code{color}
+around the entire table. It'll write over any existing outside lines so long
+as the \code{width} is larger that of the existing lines.
+}
+\details{
+This function serves as a convenient shortcut for a large number of options
+from the \code{\link[=tab_options]{tab_options()}} function. The complementary \code{opt_*()} function is
+\code{\link[=opt_remove_table_outline]{opt_remove_table_outline()}}, which removes any table outlines.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_opt_add_table_outline_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table with
+# a number of table parts added; have an
+# outline wrap around the entire table by
+# using `opt_add_table_outline()`
+tab_1 <-
+  exibble \%>\%
+  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  summary_rows(
+    groups = "grp_a",
+    columns = vars(num, currency),
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )) \%>\%
+  grand_summary_rows(
+    columns = vars(currency),
+    fns = list(
+      total = ~sum(., na.rm = TRUE)
+    )) \%>\%
+  tab_source_note(source_note = "This is a source note.") \%>\%
+  tab_footnote(
+    footnote = "This is a footnote.",
+    locations = cells_data(columns = 1, rows = 1)
+  ) \%>\%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) \%>\%
+  opt_add_table_outline()
+
 }
 \seealso{
 Other table option functions: \code{\link{opt_add_row_striping}},
   \code{\link{opt_align_table_header}},
   \code{\link{opt_all_caps}},
   \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_row_striping}},
   \code{\link{opt_remove_table_outline}},
   \code{\link{opt_remove_top_bottom_borders}}
 }

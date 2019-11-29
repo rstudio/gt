@@ -273,6 +273,7 @@ info_currencies <- function(type = c("code", "symbol"),
 #' @param begins_with Providing a single letter will filter locales to only
 #'   those that begin with that letter in their base locale ID. The default
 #'   (`NULL`) will produce a table with all locales displayed.
+#'
 #' @examples
 #' # Get a table of info on all of
 #' # the locales where the base
@@ -280,6 +281,7 @@ info_currencies <- function(type = c("code", "symbol"),
 #' tab_1 <- info_locales(begins_with = "v")
 #'
 #' @family information functions
+#'
 #' @export
 info_locales <- function(begins_with = NULL) {
 
@@ -402,6 +404,7 @@ info_locales <- function(begins_with = NULL) {
 #'   palettes should be displayed in the information table. If this is
 #'   `NULL` (the default) then all of the discrete palettes from all of the
 #'   color packages represented in \pkg{paletteer} will be displayed.
+#'
 #' @examples
 #' # Get a table of info on just the
 #' # `ggthemes` color palette (easily
@@ -414,6 +417,7 @@ info_locales <- function(begins_with = NULL) {
 #' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
 #'
 #' @family information functions
+#'
 #' @export
 info_paletteer <- function(color_pkgs = NULL) {
 
@@ -441,7 +445,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     dplyr::mutate(`Color Count and Palette` = NA) %>%
     gt(groupname_col = "package", rowname_col = "palette") %>%
     text_transform(
-      locations = cells_data("Color Count and Palette"),
+      locations = cells_data(columns = "Color Count and Palette"),
       fn = function(x) {
         palettes_strips
       }
@@ -485,6 +489,67 @@ info_paletteer <- function(color_pkgs = NULL) {
           "[**CRAN** info page]",
           "(https://cran.r-project.org/web/packages/paletteer/index.html)."
         )
+      )
+    )
+}
+
+#' View a table with info on preset table styles and colors
+#'
+#' The [preset_colorized()] function lets us quickly change the appearance of a
+#' standard \pkg{gt} table, allowing us the choice between six different styles
+#' each with seven color options. The `info_preset_colorized()` function can be
+#' used to show us 49 different table schematics, one for each combination of
+#' `style` and `color` that can be used in [preset_colorized()]. This
+#' essentially serves as a quick reference for all of the line styles and colors
+#' contained in each distinct look.
+#'
+#' @examples
+#' # Get a table of info on all of
+#' # the colorized table presets that
+#' # are available by use of the
+#' # `preset_colorized()` function
+#' tab_1 <- info_preset_colorized()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_info_preset_colorized_1.svg}{options: width=100\%}}
+#'
+#' @family information functions
+#'
+#' @export
+info_preset_colorized <- function() {
+
+  preset_colorized_tbl %>%
+    dplyr::mutate(style = paste0("<br>Style **", style, "**")) %>%
+    gt() %>%
+    fmt_markdown(columns = everything()) %>%
+    cols_width(
+      vars(preview) ~ px(500),
+      TRUE ~ px(60)
+    ) %>%
+    cols_align(align = "center") %>%
+    tab_options(column_labels.hidden = TRUE) %>%
+    tab_header(
+      title = md("Preset Table Styles and Colors Offered in **gt**"),
+      subtitle = md(
+        paste0("These preset table looks can be made with the `preset_colorized()` function.<br>",
+               "Six styles, each come in
+               <span style=\"color: #004D80;\">blue</span>,
+               <span style=\"color: #FF9400;\">orange</span>,
+               <span style=\"color: #007C77;\">aqua</span>,
+               <span style=\"color: #99195F;\">pink</span>,
+               <span style=\"color: #027101;\">green</span>,
+               <span style=\"color: #B51800;\">red</span>, and
+               <span style=\"color: #000000;\">gray</span>."))
+    ) %>%
+    tab_style(
+      style = cell_text(v_align = "top"),
+      locations = cells_data()
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = list(
+        cells_title(groups = "title"),
+        cells_title(groups = "subtitle")
       )
     )
 }

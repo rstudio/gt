@@ -13,10 +13,18 @@ preset_lineless(data)
 an object of class \code{gt_tbl}.
 }
 \description{
-This preset function effectively produces a table where all possible lines
-and row striping are not visible. This is great as a blank slate for additive
-styling with \code{\link[=tab_options]{tab_options()}} or \code{\link[=tab_style]{tab_style()}}. Or, use it in those cases
-where you are using \pkg{gt} tables mostly for layout purposes.
+This preset function effectively produces a table with no visible lines. This
+is great as a blank slate for additive styling with \code{\link[=tab_options]{tab_options()}} or
+\code{\link[=tab_style]{tab_style()}}. Or, use it in those cases where you are using \pkg{gt} tables
+mostly for layout purposes.
+}
+\details{
+A preset function incorporates the idea of a 'table reset' in that all of the
+options values available in \code{\link[=tab_options]{tab_options()}} will be first reset to their
+default values. A preset function will then apply the appropriate options
+values to achieve the desired look. So, any additional tweaks through the use
+of \code{\link[=tab_options]{tab_options()}} or any of the \code{opt_*()} functions should be done after
+calling a \code{preset_*()} function such as this one.
 }
 \section{Figures}{
 
@@ -56,6 +64,8 @@ tab_1 <-
 
 }
 \seealso{
-Other table preset functions: \code{\link{preset_colorized}}
+Other table preset functions: \code{\link{preset_colorized}},
+  \code{\link{preset_fully_lined}},
+  \code{\link{preset_location_colors}}
 }
 \concept{table preset functions}

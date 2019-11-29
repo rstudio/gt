@@ -16,6 +16,9 @@ and uppercase alphabetic marks), \code{"standard"} (for a traditional set of
 four symbol marks), and \code{"extended"} (which adds two more symbols to the
 standard set).}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
 Alter the footnote marks for any footnotes that may be present in the table.
 Either a vector of marks can be provided (including Unicode characters), or,
@@ -89,7 +92,6 @@ Other table option functions: \code{\link{opt_add_row_striping}},
   \code{\link{opt_add_table_outline}},
   \code{\link{opt_align_table_header}},
   \code{\link{opt_all_caps}},
-  \code{\link{opt_remove_row_striping}},
   \code{\link{opt_remove_table_outline}},
   \code{\link{opt_remove_top_bottom_borders}}
 }

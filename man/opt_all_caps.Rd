@@ -13,15 +13,61 @@ opt_all_caps(data, locations = c("column_labels", "stub", "row_group"))
 default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the
 \code{"row_group"} locations. However, we could just choose one or two of those.}
 }
+\value{
+an object of class \code{gt_tbl}.
+}
 \description{
-Option to use all caps in select table locations
+Sometimes an all-capitalized look is suitable for a table. With the
+\code{opt_all_caps()} function, we can transform characters in the column labels,
+the stub, and in all row groups in this way (and there's control over which
+of these locations are transformed).
+}
+\details{
+This function serves as a convenient shortcut for \code{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
+}
+\section{Figures}{
+
+\if{html}{\figure{man_opt_all_caps_1.svg}{options: width=100\%}}
+}
+
+\examples{
+# Use `exibble` to create a gt table with
+# a number of table parts added; all text
+# in the column labels, the stub, and in
+# all row groups is to be transformed to
+# all caps using `opt_all_caps()`
+tab_1 <-
+  exibble \%>\%
+  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  summary_rows(
+    groups = "grp_a",
+    columns = vars(num, currency),
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )) \%>\%
+  grand_summary_rows(
+    columns = vars(currency),
+    fns = list(
+      total = ~sum(., na.rm = TRUE)
+    )) \%>\%
+  tab_source_note(source_note = "This is a source note.") \%>\%
+  tab_footnote(
+    footnote = "This is a footnote.",
+    locations = cells_data(columns = 1, rows = 1)
+  ) \%>\%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) \%>\%
+  opt_all_caps()
+
 }
 \seealso{
 Other table option functions: \code{\link{opt_add_row_striping}},
   \code{\link{opt_add_table_outline}},
   \code{\link{opt_align_table_header}},
   \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_row_striping}},
   \code{\link{opt_remove_table_outline}},
   \code{\link{opt_remove_top_bottom_borders}}
 }

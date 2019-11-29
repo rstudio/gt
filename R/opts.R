@@ -32,6 +32,8 @@
 #'   four symbol marks), and `"extended"` (which adds two more symbols to the
 #'   standard set).
 #'
+#' @return an object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `sza` to create a gt table,
 #' # adding three footnotes; call
@@ -84,10 +86,56 @@ opt_footnote_marks <- function(data,
   data
 }
 
-
 #' Option to remove the top and bottom borders
 #'
+#' The top and bottom borders of a gt table can be removed entirely by using the
+#' `opt_remove_top_bottom_borders()` function. The definition of what
+#' constitutes a top and bottom border depends on which table parts are present
+#' at the top and bottom (e.g., header, table columns, a footnote block, etc.).
+#' Regardless of the available parts, there won't be any top of bottom
+#' horizontal lines after using this function.
+#'
+#' This function serves as a convenient shortcut for `<gt_tbl> %>%
+#' tab_options(table.border.top.style = "hidden") %>%
+#' tab_options(table.border.bottom.style = "hidden")`.
+#'
 #' @inheritParams fmt_number
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; next, we
+#' # remove the top and bottom borders with
+#' # `opt_remove_top_bottom_borders()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_remove_top_bottom_borders()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_remove_top_bottom_borders_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
@@ -101,7 +149,53 @@ opt_remove_top_bottom_borders <- function(data) {
 
 #' Option to add row striping
 #'
+#' By default, a \pkg{gt} table does not have row striping enabled. However,
+#' this function allows us to easily enable striped rows in the table body.
+#' Presets enabled from use of the [preset_colorized()] function have row
+#' striping styles that also aren't displayed by default and so using
+#' `opt_add_row_striping()` after enabling the preset will reveal the specially
+#' styled row striping.
+#'
+#' This function serves as a convenient shortcut for `<gt_tbl> %>%
+#' tab_options(row.striping.include_table_body = TRUE)`.
+#'
 #' @inheritParams fmt_number
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; next, we
+#' # add row striping to every second row with
+#' # the `opt_add_row_striping()` function
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_add_row_striping()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_add_row_striping_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
@@ -111,36 +205,129 @@ opt_add_row_striping <- function(data) {
   data %>% tab_options(row.striping.include_table_body = TRUE)
 }
 
-#' Option to remove row striping
-#'
-#' @inheritParams fmt_number
-#'
-#' @family table option functions
-#'
-#' @export
-opt_remove_row_striping <- function(data) {
-
-  data %>% tab_options(row.striping.include_table_body = FALSE)
-}
-
 #' Option to align the table header
 #'
+#' By default, a table header added to a \pkg{gt} table has center alignment
+#' for both the title and the subtitle elements. This function allows us to
+#' easily set the horizontal alignment of the title and subtitle to the left
+#' or right by using the `"align"` argument.
+#'
+#' This function serves as a convenient shortcut for `<gt_tbl> %>%
+#' tab_options(heading.align = <align>)`.
+#'
 #' @inheritParams fmt_number
+#' @param align The alignment of the title and subtitle elements in the table
+#' header. Options are `"center"` (the default), `"left"`, or `"right"`.
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; the header
+#' # (consisting of the title and the subtitle)
+#' # are to be aligned to the left with the
+#' # `opt_align_table_header()` function
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_align_table_header(align = "left")
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_align_table_header_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
 #' @export
 opt_align_table_header <- function(data, align = "center") {
 
+  # Ensure that the value for `align` is valid
+  if (!is.character(align) && length(align) != 1) {
+    stop("The value for `align` must be a single character value.",
+         call. = FALSE)
+  }
+
+  # Ensure that an allowed value for `align` is provided
+  if (!(align %in% c("left", "center", "right"))) {
+    stop("The allowed values for `align` are `left`, `center`, and `right`.",
+         call. = FALSE)
+  }
+
   data %>% tab_options(heading.align = align)
 }
 
 #' Option to use all caps in select table locations
 #'
+#' Sometimes an all-capitalized look is suitable for a table. With the
+#' `opt_all_caps()` function, we can transform characters in the column labels,
+#' the stub, and in all row groups in this way (and there's control over which
+#' of these locations are transformed).
+#'
+#' This function serves as a convenient shortcut for `<gt_tbl> %>%
+#' tab_options(<location>.text_transform = "uppercase", <location>.font.size =
+#' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
+#'
 #' @inheritParams fmt_number
 #' @param locations Which locations should undergo this text transformation? By
 #'   default it includes all of the `"column_labels"`, the `"stub"`, and the
 #'   `"row_group"` locations. However, we could just choose one or two of those.
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; all text
+#' # in the column labels, the stub, and in
+#' # all row groups is to be transformed to
+#' # all caps using `opt_all_caps()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_all_caps()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_all_caps_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
@@ -183,12 +370,56 @@ opt_all_caps <- function(data,
   data
 }
 
-
 #' Option to wrap an outline around the entire table
+#'
+#' This function puts an outline of consistent `style`, `width`, and `color`
+#' around the entire table. It'll write over any existing outside lines so long
+#' as the `width` is larger that of the existing lines.
+#'
+#' This function serves as a convenient shortcut for a large number of options
+#' from the [tab_options()] function. The complementary `opt_*()` function is
+#' [opt_remove_table_outline()], which removes any table outlines.
 #'
 #' @inheritParams fmt_number
 #' @param style,width,color The style, width, and color properties for the table
-#'   border.
+#'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
+#'   `"#D3D3D3"`.
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; have an
+#' # outline wrap around the entire table by
+#' # using `opt_add_table_outline()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_add_table_outline()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_add_table_outline_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
@@ -239,7 +470,52 @@ opt_add_table_outline <- function(data,
 
 #' Option to completely remove any table outlines
 #'
+#' This function removes any table outlines that may exist around the entire
+#' table. It don't annihilate the `width` and `color` attributes but simply sets
+#' the relevant line styles to `"none"`.
+#'
+#' This function serves as a convenient shortcut for a large number of options
+#' from the [tab_options()] function. The complementary `opt_*()` function is
+#' [opt_add_table_outline()], which adds a table outline.
+#'
 #' @inheritParams fmt_number
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; apply a
+#' # table preset and then remove the table
+#' # outlines with `opt_remove_table_outline()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_data(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   preset_colorized(style = 5, color = "blue") %>%
+#'   opt_remove_table_outline()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_remove_table_outline_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
