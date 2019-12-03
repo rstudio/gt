@@ -191,20 +191,15 @@ dt_summary_build <- function(data,
     agg_funs <- fns %>% lapply(rlang::as_closure)
 
     summary_dfs_data <-
-
       seq_along(agg_funs) %>%
       lapply(
         function(j) {
-
-          label <- labels[j]
-          agg_fun <- agg_funs[[j]]
-
           select_data_tbl %>%
-            dplyr::filter(groupname %in% groups) %>%
+            dplyr::filter(groupname %in% !!groups) %>%
             dplyr::group_by(groupname) %>%
-            dplyr::summarize_all(.funs = agg_fun) %>%
+            dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
             dplyr::ungroup() %>%
-            dplyr::mutate(rowname = label) %>%
+            dplyr::mutate(rowname = !!labels[j]) %>%
             dplyr::select(groupname, rowname, dplyr::everything())
         }
       ) %>%
