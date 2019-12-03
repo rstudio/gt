@@ -122,8 +122,8 @@ summary_rows <- function(data,
 
   # Derive the summary labels
   summary_labels <-
-    fns %>%
     vapply(
+      fns,
       FUN.VALUE = character(1),
       FUN = derive_summary_label
     )
