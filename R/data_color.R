@@ -499,12 +499,11 @@ rgba2hex <- function(rgba_col) {
     unlist() %>%
     as.numeric()
 
-  hex_color <-
-    grDevices::rgb(
-      red = channels[1]/255,
-      green = channels[2]/255,
-      blue = channels[3]/255
-    )
+  grDevices::rgb(
+    red = channels[1] / 255,
+    green = channels[2] / 255,
+    blue = channels[3] / 255
+  )
 }
 
 #' Get the hexadecimal color representation of a color
