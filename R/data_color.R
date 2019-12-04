@@ -183,14 +183,16 @@ data_color <- function(data,
     color_fn <- rlang::enquo(color_fn)
     color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
-    colors_cols <- color_fn(data_vals)
+    # Evaluate the color function with the data values
+    color_vals <- color_fn(data_vals)
+
+    # Process the color values, combining with an
+    # alpha value if necessary
+    color_vals <- process_color(colors = color_vals, alpha = alpha)
 
     for (i in seq_along(data_vals)) {
 
-      color <- colors_cols[i]
-
-      # Combine hexadecimal color with corresponding alpha
-      color <- process_color(colors = color, alpha = alpha)
+      color <- color_vals[i]
 
       if (apply_to == "fill") {
 
