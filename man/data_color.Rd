@@ -4,8 +4,14 @@
 \alias{data_color}
 \title{Set data cell colors using a palette or a color function}
 \usage{
-data_color(data, columns, colors, alpha = 1, apply_to = "fill",
-  autocolor_text = TRUE)
+data_color(
+  data,
+  columns,
+  colors,
+  alpha = 1,
+  apply_to = "fill",
+  autocolor_text = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -52,7 +58,7 @@ numeric domain. Finally, we can choose whether to apply the cell-specific
 colors to either the cell background or the cell text.
 }
 \details{
-The \code{col_*()} functions from the scales package can be used in the \code{colors}
+The \verb{col_*()} functions from the scales package can be used in the \code{colors}
 argument. These functions map data values (\code{numeric} or \code{factor}/\code{character})
 to colors according to the provided palette.
 
@@ -143,12 +149,18 @@ tab_2 <-
 
 }
 \seealso{
-Other data formatting functions: \code{\link{fmt_currency}},
-  \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
-  \code{\link{fmt_markdown}}, \code{\link{fmt_missing}},
-  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other data formatting functions: 
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
 }
 \concept{data formatting functions}

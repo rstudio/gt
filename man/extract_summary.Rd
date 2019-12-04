@@ -71,7 +71,9 @@ tab_1 <-
 
 }
 \seealso{
-Other table export functions: \code{\link{as_latex}},
-  \code{\link{as_raw_html}}, \code{\link{as_rtf}}
+Other table export functions: 
+\code{\link{as_latex}()},
+\code{\link{as_raw_html}()},
+\code{\link{as_rtf}()}
 }
 \concept{table export functions}

@@ -27,8 +27,10 @@ tab_1 <- info_time_style()
 
 }
 \seealso{
-Other information functions: \code{\link{info_currencies}},
-  \code{\link{info_date_style}},
-  \code{\link{info_locales}}, \code{\link{info_paletteer}}
+Other information functions: 
+\code{\link{info_currencies}()},
+\code{\link{info_date_style}()},
+\code{\link{info_locales}()},
+\code{\link{info_paletteer}()}
 }
 \concept{information functions}

@@ -13,7 +13,7 @@ prices in USD; the \code{close} price is adjusted for splits}
 \item{adj_close}{The close price adjusted for both dividends and splits}
 }}
 \source{
-Data collected from \url{https://finance.yahoo.com/quote/\\\%5EGSPC/history/}.
+Data collected from \url{https://finance.yahoo.com/quote/\\\\\%5EGSPC/history/}.
 }
 \usage{
 sp500
@@ -21,7 +21,7 @@ sp500
 \description{
 This dataset provides daily price indicators for the S&P 500 index from the
 beginning of 1950 to the end of 2015. The index includes 500 leading
-companies and captures about 80\% coverage of available market capitalization.
+companies and captures about 80\\% coverage of available market capitalization.
 }
 \examples{
 # Here is a glimpse at the data

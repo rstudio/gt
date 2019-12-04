@@ -26,7 +26,7 @@ serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 We can supply a vector of that will represent the series of marks.
 The series of footnote marks is recycled when its usage goes beyond the
 length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., \code{*} -> \code{**} -> \code{***}). The option exists for providing keywords
+so on (e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords
 for certain types of footnote marks. The keywords are:
 
 \itemize{

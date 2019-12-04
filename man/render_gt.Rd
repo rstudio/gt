@@ -4,8 +4,15 @@
 \alias{render_gt}
 \title{A \pkg{gt} display table render function for use in Shiny}
 \usage{
-render_gt(expr, width = NULL, height = NULL, align = NULL,
-  env = parent.frame(), quoted = FALSE, outputArgs = list())
+render_gt(
+  expr,
+  width = NULL,
+  height = NULL,
+  align = NULL,
+  env = parent.frame(),
+  quoted = FALSE,
+  outputArgs = list()
+)
 }
 \arguments{
 \item{expr}{An expression that creates a \pkg{gt} table object. For sake of
@@ -84,6 +91,7 @@ shinyApp(ui, server)
 }
 }
 \seealso{
-Other Shiny functions: \code{\link{gt_output}}
+Other Shiny functions: 
+\code{\link{gt_output}()}
 }
 \concept{Shiny functions}
