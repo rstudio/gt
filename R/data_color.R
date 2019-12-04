@@ -190,7 +190,7 @@ data_color <- function(data,
       color <- colors_cols[i]
 
       # Combine hexadecimal color with corresponding alpha
-      color <- normalize_color(colors = color, alpha = alpha)
+      color <- process_color(colors = color, alpha = alpha)
 
       if (apply_to == "fill") {
 
@@ -225,7 +225,7 @@ data_color <- function(data,
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
         # text color
-        color_text <- ideal_fgnd_color(color)
+        color_text <- ideal_fgnd_color(bgnd_color = color)
 
         # Apply color value to the text of the cell
         data <-
@@ -369,18 +369,18 @@ adjust_luminance <- function(colors,
   }
 
   # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors)) / 255
+  rgb_mat <- farver::decode_colour(colour = colors, alpha = TRUE)
 
-  # Obtain the alpha values
-  alpha <- get_alpha_vec(colors)
+  # Retain the alpha values
+  alpha <- rgb_mat[, "alpha"]
 
-  # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix, "sRGB", "Luv")
+  # Get a matrix of values in the HCL color space
+  hcl_mat <- farver::convert_colour(colour = rgb_mat, from = "rgb", to = "hcl")
 
-  # Apply calculations to obtain values in the HCL color space
-  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
-  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
-  l <- luv_matrix[, "L"]
+  # Extract values in the HCL color space
+  h <- hcl_mat[, "h"]
+  c <- hcl_mat[, "c"]
+  l <- hcl_mat[, "l"]
 
   # Scale luminance to occupy [0, 1]
   y <- l / 100.
@@ -391,109 +391,55 @@ adjust_luminance <- function(colors,
   # Calculate new luminance values based on a fixed step-change in `x`
   y_2 <- 1 / (1 + exp(-(x + steps)))
 
-  # Rescale new luminance values to [0, 100]
+  # Rescale the new luminance values to [0, 100]
   l <- y_2 * 100.
 
   # Obtain hexadecimal colors from the modified HCL color values
-  hcl_colors <- grDevices::hcl(h, c, l, alpha = NULL)
-
-  # Apply alpha values to the hexadecimal colors
-  hcl_colors <- paste0(hcl_colors, alpha)
-
-  hcl_colors
+  grDevices::hcl(h, c, l, alpha = alpha)
 }
 
-is_hex_col_w_alpha <- function(color) {
-  color %>% tidy_grepl("^#[0-9A-Fa-f]{8}$")
-}
 
-is_hex_col_no_alpha <- function(color) {
-  color %>% tidy_grepl("^#[0-9A-Fa-f]{6}$")
-}
-
-frac_alpha_to_hex <- function(alpha) {
-  grDevices::rgb(0, 0, 0, alpha) %>% substr(8, 9)
-}
-
+#' Is a string a color value in rgba() format?
+#'
+#' The input for this is a character vector of length 1. The output is a single
+#' logical value.
+#'
+#' @noRd
 is_rgba_col <- function(color) {
   color %>% tidy_grepl("^rgba\\([0-9]+?,[0-9]+?,[0-9]+?,[0-9\\.]+?\\)$")
 }
 
-#' Extract a vector of alpha values for a vector of colors
+#' For a background color, which foreground color provides better contrast?
+#'
+#' The input for this function is a single color value in rgba() format. The
+#' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
-get_alpha_vec <- function(colors) {
+ideal_fgnd_color <- function(bgnd_color,
+                             light = "#FFFFFF",
+                             dark = "#000000") {
 
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
+  # Normalize color to a #RRGGBB (stripping the alpha channel)
+  bgnd_color <- process_color(colors = bgnd_color, alpha = 1)
 
-      if (color %>% is_hex_col_no_alpha()) {
-        "FF"
-      } else if (color %>% is_hex_col_w_alpha()) {
-        toupper(sub(".*(..)$", "\\1", color))
-      } else if (tolower(color) %in% grDevices::colors()) {
-        "FF"
-      } else {
-        NA_character_
-      }
-    }
-  )
+  # Determine the ideal color for the chosen background color
+  yiq_contrasted_threshold <- 128
+  colors <- grDevices::col2rgb(bgnd_color)
+  score <- colSums(colors * c(299, 587, 144)) / 1000
+  ifelse(score >= yiq_contrasted_threshold, dark, light)
 }
 
-#' Get the rgba color representation of a color
+#' Convert a single color in the rgba() string format to hexadecimal (#RRGGBBAA)
+#'
+#' This function will accept a single color in the rgba() string format (e.g.,
+#' "`rgba(255,170,0,0.5)`") and output a color in the hexadecimal format with an
+#' alpha component (#RRGGBBAA).
 #'
 #' @noRd
-get_rgba_vec <- function(colors) {
-
-  build_rgba_string <- function(color, alpha_val) {
-
-    grDevices::col2rgb(color)[, 1] %>%
-      unname() %>%
-      append(alpha_val) %>%
-      paste(collapse = ",") %>%
-      paste_left("rgba(") %>%
-      paste_right(")")
-  }
-
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
-
-      if (color %>% is_hex_col_no_alpha()) {
-
-        build_rgba_string(color = color, alpha_val = 1)
-
-      } else if (color %>% is_hex_col_w_alpha()) {
-
-        alpha_dec <-
-          (
-            color %>%
-              substring(8, 9) %>%
-              paste_left("0x") %>%
-              strtoi()
-          ) / 256
-
-        build_rgba_string(color = color, alpha_val = alpha_dec)
-
-      } else if (tolower(color) %in% grDevices::colors()) {
-
-        build_rgba_string(color = tolower(color), alpha_val = 1)
-
-      } else {
-        NA_character_
-      }
-    })
-}
-
-rgba2hex <- function(rgba_col) {
+rgba_to_hex <- function(color) {
 
   channels <-
-    rgba_col %>%
+    color %>%
     tidy_gsub(pattern = "(rgba\\(|\\))", "") %>%
     strsplit(",") %>%
     unlist() %>%
@@ -502,112 +448,61 @@ rgba2hex <- function(rgba_col) {
   grDevices::rgb(
     red = channels[1] / 255,
     green = channels[2] / 255,
-    blue = channels[3] / 255
+    blue = channels[3] / 255,
+    alpha = channels[4]
   )
 }
 
-#' Get the hexadecimal color representation of a color
+#' With a vector of input colors return normalized color strings
+#'
+#' Input colors can be color names (e.g., `"green"`, `"steelblue"`, etc.),
+#' colors in hexadecimal format with or without an alpha component (either
+#' #RRGGBB or #RRGGBBAA), or color strings in the rgba() string format
+#' (e.g., "`rgba(255,170,0,0.5)`"). Output is the same length vector as the
+#' input but it will contain a mixture of either #RRGGBB colors (if the input
+#' alpha value for a color is 1) or rgba() string format colors (if the input
+#' alpha value for a color is not 1).
 #'
 #' @noRd
-get_hexcolor_vec <- function(colors) {
+process_color <- function(colors, alpha = NULL) {
 
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
+  col_matrix_to_rgba <- function(color_matrix) {
 
-      if (color %>% is_hex_col_no_alpha()) {
-
-        color %>%
-          toupper()
-
-      } else if (color %>% is_hex_col_w_alpha()) {
-
-        color %>%
-          substring(1, 7) %>%
-          toupper()
-
-      } else if (tolower(color) %in% grDevices::colors()) {
-
-        color_matrix <- grDevices::col2rgb(tolower(color))
-
-        grDevices::rgb(
-          red = color_matrix[1, ]/255,
-          green = color_matrix[2, ]/255,
-          blue = color_matrix[3, ]/255
-        )
-
-      } else {
-        NA_character_
-      }
-    })
-}
-
-#' With any input color, transform to hexadecimal with alpha
-#'
-#' @noRd
-normalize_color <- function(colors,
-                            alpha) {
-
-
-  if (length(colors) == 0) {
-    stop("One or more colors must be provided", call. = FALSE)
+    color_matrix %>%
+      as.data.frame() %>%
+      dplyr::mutate(
+        rgba = paste0("rgba(", r, ",", g, ",", b, ",", round(alpha, 2), ")")
+      ) %>%
+      dplyr::pull(rgba)
   }
 
-  if (!(length(colors) == length(alpha) || length(alpha) == 1)) {
-    stop("The length of `alpha` must be the same length as `colors` or `1`",
-         call. = FALSE)
+  color_matrix <-
+    vapply(
+      colors,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(color) {
+        if (is_rgba_col(color)) color <- rgba_to_hex(color = color)
+        color
+      }) %>%
+    farver::decode_colour(alpha = TRUE)
+
+  if (!is.null(alpha)) {
+    color_matrix[, 4] <- alpha
   }
 
-  normalized_colors <-
-      colors %>%
-      vapply(
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(color) {
+  colors <- rep(NA_character_, nrow(color_matrix))
 
-          if (!is_hex_col_w_alpha(color)) {
-            color <- get_hexcolor_vec(color)
-          }
-          color
-        }
-      )
+  colors_no_alpha <- unname(color_matrix[, 4] == 1 & !is.na(color_matrix[, 1]))
+  colors_w_alpha  <- unname(color_matrix[, 4] != 1 & !is.na(color_matrix[, 1]))
 
-  if (alpha != 1) {
+  colors[colors_no_alpha] <-
+    color_matrix[colors_no_alpha, , drop = FALSE] %>%
+    farver::encode_colour()
 
-    normalized_colors <-
-      normalized_colors %>%
-      vapply(
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(color) {
+  colors[colors_w_alpha] <-
+    color_matrix[colors_w_alpha, , drop = FALSE] %>%
+    col_matrix_to_rgba()
 
-          get_rgba_vec(color) %>%
-            tidy_gsub(
-              pattern = ",[0-9\\.])",
-              replacement = paste0(",", alpha, ")")
-            )
-        }
-      )
-  }
-
-  normalized_colors
-}
-
-#' Determining the best `light` and `dark` colors for contrast
-#'
-#' @noRd
-ideal_fgnd_color <- function(bgnd_colors,
-                             light = "#FFFFFF",
-                             dark = "#000000") {
-
-  if (is_rgba_col(bgnd_colors)) {
-    bgnd_colors <- rgba2hex(rgba_col = bgnd_colors)
-  }
-
-  yiq_contrasted_threshold <- 128
-  colors <- grDevices::col2rgb(bgnd_colors)
-  score <- colSums(colors * c(299, 587, 144)) / 1000
-  ifelse(score >= yiq_contrasted_threshold, dark, light)
+  colors
 }
