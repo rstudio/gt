@@ -610,3 +610,384 @@ expect_error(
 )
 })
 
+test_that("the correct color values are obtained when using a color fn", {
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_factor()` fn on the month column
+  # (which is of the `character` class)
+  tbl_html_1 <-
+    test_tbl %>%
+    dplyr::mutate(month = as.character(month)) %>%
+    gt() %>%
+    data_color(
+      columns = vars(month),
+      colors = scales::col_factor(
+        palette = c(
+          "red", "orange", "green", "blue"),
+        domain = levels(test_tbl$month)
+      ),
+      autocolor_text = TRUE
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 12 unique color values to have been generated and
+  # used (because this relates to a numeric mapping)
+  tbl_html_1 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(12)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_1 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_1 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_factor()` fn on the month column
+  # (which is of the `character` class); this time, set `alpha`
+  # to `0.5`
+  tbl_html_2 <-
+    test_tbl %>%
+    dplyr::mutate(month = as.character(month)) %>%
+    gt() %>%
+    data_color(
+      columns = vars(month),
+      colors = scales::col_factor(
+        palette = c("red", "orange", "green", "blue"),
+        domain = levels(test_tbl$month)
+      ),
+      autocolor_text = TRUE,
+      alpha = 0.5
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect color values to be entirely in the rgba() CSS value form
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
+
+  # Expect the same test result by using `is_rgba_col()`
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    is_rgba_col() %>%
+    all() %>%
+    expect_true()
+
+  # Expect that all alpha values are 0.5 (or "80" as a hex value)
+  (
+    tbl_html_2 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  ) %>%
+    rgba_to_hex() %>%
+    substring(8, 9) %>%
+    unique() %>%
+    expect_equal("80")
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_factor()` fn on the month column
+  # (which is of the `character` class); this time, set `alpha`
+  # to `1.0`
+  tbl_html_3 <-
+    test_tbl %>%
+    dplyr::mutate(month = as.character(month)) %>%
+    gt() %>%
+    data_color(
+      columns = vars(month),
+      colors = scales::col_factor(
+        palette = c("red", "orange", "green", "blue"),
+        domain = levels(test_tbl$month)
+      ),
+      autocolor_text = TRUE,
+      alpha = 1
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 12 unique color values to have been generated and
+  # used (because this relates to a numeric mapping)
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(12)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_3 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+
+  # Expect all color values to be identical to those from
+  # `tbl_html_1`
+  expect_identical(
+    tbl_html_3 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .),
+    tbl_html_1 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  )
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_factor()` fn on the month column
+  # (which is of the `factor` class)
+  tbl_html_4 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(month),
+      colors = scales::col_factor(
+        palette = c("red", "orange", "green", "blue"),
+        domain = levels(test_tbl$month)
+      ),
+      autocolor_text = TRUE,
+      alpha = 1
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 12 unique color values to have been generated and
+  # used (because this relates to a numeric mapping)
+  tbl_html_4 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(12)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_4 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_4 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+
+  # Expect all color values to be identical to those from
+  # `tbl_html_1`
+  expect_identical(
+    tbl_html_4 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .),
+    tbl_html_1 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  )
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_numeric()` fn on the `min_sza` column
+  # (which is of the `numeric` class)
+  tbl_html_5 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(min_sza),
+      colors = scales::col_numeric(
+        palette = c("red", "orange", "green", "blue"),
+        domain = c(0, 90)
+      ),
+      autocolor_text = TRUE,
+      alpha = 1
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 12 unique color values to have been generated and
+  # used (because this relates to a numeric mapping)
+  tbl_html_5 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(12)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_5 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_5 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_numeric()` fn on the `min_sza` column
+  # (which is of the `numeric` class); this time, use an
+  # alpha value of `0.5`
+  tbl_html_6 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(min_sza),
+      colors = scales::col_numeric(
+        palette = c("red", "orange", "green", "blue"),
+        domain = c(0, 90)
+      ),
+      autocolor_text = TRUE,
+      alpha = 0.5
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect color values to be entirely in the rgba() CSS value form
+  tbl_html_6 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
+
+  # Expect the same test result by using `is_rgba_col()`
+  tbl_html_6 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    is_rgba_col() %>%
+    all() %>%
+    expect_true()
+
+  # Expect that all alpha values are 0.5 (or "80" as a hex value)
+  (
+    tbl_html_6 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*)", "", .)
+  ) %>%
+    rgba_to_hex() %>%
+    substring(8, 9) %>%
+    unique() %>%
+    expect_equal("80")
+
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_quantile()` fn on the `min_sza` column
+  # (which is of the `numeric` class)
+  tbl_html_7 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(min_sza),
+      colors = scales::col_quantile(
+        palette = c("red", "orange", "green", "blue"),
+        domain = c(0, 90)
+      ),
+      autocolor_text = TRUE
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 3 unique color values to have been generated and
+  # used (because this relates to a numeric mapping on quantiles)
+  tbl_html_7 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(3)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_7 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_7 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+
+
+  # Create a `tbl_html` object by using `data_color` with the
+  # `scales::col_bin()` fn on the `min_sza` column
+  # (which is of the `numeric` class)
+  tbl_html_8 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(min_sza),
+      colors = scales::col_bin(
+        palette = c("red", "orange", "green", "blue"),
+        domain = c(0, 90),
+        bins = 4
+      ),
+      autocolor_text = TRUE
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 3 unique color values to have been generated and
+  # used (because this relates to a numeric mapping on quantiles)
+  tbl_html_8 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(3)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_8 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Expect that the text colors vary between #000000 and #FFFFFF
+  # since the `autocolor_text` option is TRUE (the default case)
+  (
+    (tbl_html_8 %>%
+       selection_value("style") %>%
+       gsub("(.*: |;$)", "", .)) %in%
+      c("#000000", "#FFFFFF")
+  ) %>%
+    all() %>%
+    expect_true()
+})
