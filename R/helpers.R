@@ -828,7 +828,7 @@ cell_fill <- function(color = "#D3D3D3",
   }
 
   if (!is_rgba_col(color)) {
-    color <- process_color(colors = color, alpha = alpha)
+    color <- html_color(colors = color, alpha = alpha)
   }
 
   style_vals <- list(color = color)

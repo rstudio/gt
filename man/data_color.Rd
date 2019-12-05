@@ -8,7 +8,7 @@ data_color(
   data,
   columns,
   colors,
-  alpha = 1,
+  alpha = NULL,
   apply_to = "fill",
   autocolor_text = TRUE
 )
@@ -28,10 +28,11 @@ color name (in the set of colors provided by \code{grDevices::colors()}) or
 a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
 
 \item{alpha}{An optional, fixed alpha transparency value that will be applied
-to all of the \code{colors} provided if they are provided as a vector of
-colors. If using a colorizing helper function for \code{colors} then this
-option is ignored (each of the colorizing helper functions has its own
-\code{alpha} argument).}
+to all of the \code{colors} provided if they are provided as a vector of colors.
+If using a colorizing helper function for \code{colors} (usually from the
+\pkg{scales} package, see Details section) then this option is ignored
+(each of the colorizing helper functions from \pkg{scales} package has its
+own \code{alpha} argument).}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{fill}) or the cell
