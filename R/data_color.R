@@ -373,18 +373,18 @@ adjust_luminance <- function(colors,
   }
 
   # Get a matrix of values in the RGB color space
-  rgb_mat <- farver::decode_colour(colour = colors, alpha = TRUE)
+  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
 
-  # Retain the alpha values
-  alpha <- rgb_mat[, "alpha"]
+  # Obtain the alpha values
+  alpha <- rgb_matrix[, "alpha"]
 
-  # Get a matrix of values in the HCL color space
-  hcl_mat <- farver::convert_colour(colour = rgb_mat, from = "rgb", to = "hcl")
+  # Get a matrix of values in the Luv color space
+  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
 
-  # Extract values in the HCL color space
-  h <- hcl_mat[, "h"]
-  c <- hcl_mat[, "c"]
-  l <- hcl_mat[, "l"]
+  # Apply calculations to obtain values in the HCL color space
+  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
+  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
+  l <- luv_matrix[, "L"]
 
   # Scale luminance to occupy [0, 1]
   y <- l / 100.
@@ -445,10 +445,9 @@ ideal_fgnd_color <- function(bgnd_color,
 #' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal
 #'
 #' This function will accept colors in mixed formats and convert any in the
-#' rgba() string format (e.g., "`rgba(255,170,0,0.5)`") to hexadecimal format
-#' preserving the alpha information (#RRGGBBAA) if available (otherwise
-#' generating #RRGGBB color values). This function is required for the
-#' `ideal_fgnd_color()` function.
+#' rgba() string format (e.g., "`rgba(255,170,0,0.5)`") to a hexadecimal format
+#' the preserves the alpha information (#RRGGBBAA). This function is required
+#' for the `ideal_fgnd_color()` function.
 #'
 #' @noRd
 rgba_to_hex <- function(colors) {
@@ -471,13 +470,15 @@ rgba_to_hex <- function(colors) {
       byrow = TRUE
     )
 
-  alpha_vals <- color_matrix[, "alpha"] %>% unname()
+  alpha <- color_matrix[, "alpha"] %>% unname()
 
+  # Convert color matrix to hexadecimal colors in the #RRGGBBAA format
   colors_to_hex <-
-    farver::encode_colour(
-      colour = color_matrix,
-      from = "rgb",
-      alpha = alpha_vals
+    grDevices::rgb(
+      red = color_matrix[, "r"] / 255,
+      green = color_matrix[, "g"] / 255,
+      blue = color_matrix[, "b"] / 255,
+      alpha = alpha
     )
 
   colors_vec[colors_rgba] <- colors_to_hex
@@ -509,34 +510,37 @@ html_color <- function(colors, alpha = NULL) {
 
     paste0(
       "rgba(",
-      color_matrix[, "r"], ",",
-      color_matrix[, "g"], ",",
-      color_matrix[, "b"], ",",
+      color_matrix[, "red"], ",",
+      color_matrix[, "green"], ",",
+      color_matrix[, "blue"], ",",
       round(color_matrix[, "alpha"], 2),
       ")"
     )
   }
 
   # Create a color matrix with an `alpha` column
-  color_matrix <-
-    farver::decode_colour(colour = colors, alpha = TRUE, to = "rgb")
+  color_matrix <- t(grDevices::col2rgb(col = colors, alpha = TRUE))
+  color_matrix[, "alpha"] <- color_matrix[, "alpha"] / 255
 
   # If `alpha` has a value, replace all pre-existing
   # alpha values in the color matrix with `alpha`
   if (!is.null(alpha)) {
-    color_matrix[, 4] <- alpha
+    color_matrix[, "alpha"] <- alpha
   }
 
   # Generate a vector for the finalized HTML color values
   colors_html <- rep(NA_character_, nrow(color_matrix))
 
   # Determine which of the input colors have an alpha of `1`
-  colors_alpha_1 <- color_matrix[, 4] == 1
+  colors_alpha_1 <- color_matrix[, "alpha"] == 1
 
   # Generate #RRGGBB color values for `colors_html`
   colors_html[colors_alpha_1] <-
-    color_matrix[colors_alpha_1, , drop = FALSE] %>%
-    farver::encode_colour()
+    grDevices::rgb(
+      red = color_matrix[colors_alpha_1, "red", drop = FALSE] / 255,
+      green = color_matrix[colors_alpha_1, "green", drop = FALSE] / 255,
+      blue = color_matrix[colors_alpha_1, "blue", drop = FALSE] / 255
+    )
 
   # Generate rgba() color values for `colors_html`
   colors_html[!colors_alpha_1] <-

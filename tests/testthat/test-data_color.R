@@ -1023,18 +1023,18 @@ test_that("the various color utility functions work correctly", {
     expect_false()
 
   # Expect that the `rgba_to_hex()` function reliably returns
-  # color strings in the hexadecimal format of either #RRGGBB or #RRGGBBAA
+  # color strings in the hexadecimal format of #RRGGBBAA
   # when supplied rgba() format strings
   expect_equal(
     rgba_to_hex(colors = c_rgba),
-    c("#FFAA0080", "#FFBB34", "#14FF00")
+    c("#FFAA0080", "#FFBB34FF", "#14FF00FF")
   )
 
   # Expect that the `rgba_to_hex()` utility function will pass through *any*
   # strings that don't conform to the rgba() string format
   expect_equal(
     rgba_to_hex(colors = c(c_rgba, c_hex, "test")),
-    c("#FFAA0080", "#FFBB34", "#14FF00", c_hex, "test")
+    c("#FFAA0080", "#FFBB34FF", "#14FF00FF", c_hex, "test")
   )
 
   # Expect that the `html_color()` utility function will reliably return
@@ -1101,9 +1101,6 @@ test_that("the various color utility functions work correctly", {
     html_color(colors = c(c_name, c_hex, c_hex_a, "#FF0033100"))
   )
   expect_error(
-    html_color(colors = c(c_name, c_hex, c_hex_a, 1:2))
-  )
-  expect_error(
     html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
   )
   expect_error(
@@ -1164,40 +1161,39 @@ test_that("the various color utility functions work correctly", {
   # vector and adjust the steps several times in either direction
   expect_equal(
     adjust_luminance(colors = c_hex, steps = 0),
-    paste0(c_hex, "FF")
+    c("#FFAA04FF", "#FFBB35FF", "#AE552EFF", "#910019FF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = -0.5),
-    c("#E08F00FF", "#E4A200FF", "#8C3700FF", "#770000FF")
+    c("#E18F00FF", "#E5A200FF", "#8C3700FF", "#780000FF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = -1.0),
-    c("#BD7000FF", "#C48500FF", "#711B00FF", "#670000FF")
+    c("#BE7000FF", "#C48500FF", "#711B00FF", "#670000FF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = -1.5),
-    c("#9A5100FF", "#A16500FF", "#5C0000FF", "#5D0000FF")
+    c("#9A5100FF", "#A16500FF", "#5D0000FF", "#5D0000FF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = -2.0),
-    c("#7A3600FF", "#7F4800FF", "#4F0000FF", "#560000FF")
+    c("#7A3600FF", "#804800FF", "#4F0000FF", "#560000FF")
   )
-
   expect_equal(
     adjust_luminance(colors = c_hex, steps = +0.5),
-    c("#FFC041FF", "#FFCE53FF", "#D07555FF", "#B0313CFF")
+    c("#FFC042FF", "#FFCE54FF", "#D17555FF", "#B0313CFF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = +1.0),
-    c("#FFCF59FF", "#FFDB65FF", "#F19375FF", "#D3555DFF")
+    c("#FFCF5AFF", "#FFDB66FF", "#F29375FF", "#D4555DFF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = +1.5),
-    c("#FFDA68FF", "#FFE471FF", "#FFAD90FF", "#F7767DFF")
+    c("#FFDA68FF", "#FFE471FF", "#FFAD90FF", "#F8767EFF")
   )
   expect_equal(
     adjust_luminance(colors = c_hex, steps = +2.0),
-    c("#FFE171FF", "#FFE978FF", "#FFC0A4FF", "#FF929AFF")
+    c("#FFE171FF", "#FFE978FF", "#FFC0A4FF", "#FF939AFF")
   )
 
   # Expect specific and reproducible output color values in the #RRGGBBAA
@@ -1206,15 +1202,85 @@ test_that("the various color utility functions work correctly", {
   # vector and adjust the steps several times in either direction
   expect_equal(
     adjust_luminance(colors = c_hex_a, steps = 0),
-    c_hex_a
+    c("#FF245D60", "#AB253A70", "#F3F307FF", "#D2D72310")
   )
   expect_equal(
     adjust_luminance(colors = c_hex_a, steps = -0.5),
-    c("#D7003A60", "#8C001A70", "#E8E800FF", "#BBC00010")
+    c("#D8003A60", "#8C001A70", "#E8E800FF", "#BCC00010")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = -1.0),
+    c("#B4001260", "#75000070", "#D7D700FF", "#9FA40010")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = -1.5),
+    c("#97000060", "#66000070", "#C0C000FF", "#80840010")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = -2.0),
+    c("#83000060", "#5E000070", "#A4A400FF", "#61650010")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = +0.5),
+    c("#FF537E60", "#CE4B5B70", "#FBFA2AFF", "#E3E84610")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = +1.0),
+    c("#FF729960", "#F26D7B70", "#FFFF36FF", "#EEF35810")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = +1.5),
+    c("#FF8AAE60", "#FF8B9970", "#FFFF3DFF", "#F6FB6210")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_hex_a, steps = +2.0),
+    c("#FF9ABE60", "#FFA3B070", "#FFFF41FF", "#FBFF6910")
+  )
+
+  # Expect specific and reproducible output color values in the #RRGGBBAA
+  # hexadecimal color format when adjusting color palettes with
+  # `adjust_luminance()`; use the function with some colors in the
+  # `c_name` vector and adjust the steps several times in either direction
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = 0),
+    c("#FF0202FF", "#FF6347FF", "#CE6889FF", "#2FCD33FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = -0.5),
+    c("#D60000FF", "#D94013FF", "#AC466AFF", "#00AF00FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = -1.0),
+    c("#B10000FF", "#B31500FF", "#8D224DFF", "#008E00FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = -1.5),
+    c("#920000FF", "#920000FF", "#750037FF", "#006E00FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = -2.0),
+    c("#7C0000FF", "#790000FF", "#660027FF", "#005400FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = +0.5),
+    c("#FF4445FF", "#FF826AFF", "#EF88A8FF", "#54E657FF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = +1.0),
+    c("#FF6767FF", "#FF9A84FF", "#FFA3C2FF", "#6BF86DFF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = +1.5),
+    c("#FF8080FF", "#FFAC96FF", "#FFB7D6FF", "#7AFF7CFF")
+  )
+  expect_equal(
+    adjust_luminance(colors = c_name[1:4], steps = +2.0),
+    c("#FF9191FF", "#FFB8A3FF", "#FFC6E5FF", "#83FF85FF")
   )
 
   # Expect an error if step values are greater than 2 or
   # less than -2
   expect_error(adjust_luminance(colors = c_hex, steps = -2.1))
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
+
 })

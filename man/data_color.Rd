@@ -18,21 +18,18 @@ data_color(
 
 \item{columns}{The columns wherein changes to cell data colors should occur.}
 
-\item{colors}{Either a color mapping function from the \code{scales} package
-or a vector of colors to use for each distinct value or level in each of
-the provided \code{columns}. The color mapping functions are:
-\code{scales::col_quantile()}, \code{scales::col_bin()},
-\code{scales::col_numeric()}, and \code{scales::col_factor()}. If providing
-a vector of colors as a palette, each color value provided must either be a
-color name (in the set of colors provided by \code{grDevices::colors()}) or
-a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{Either a color mapping function from the \code{scales} package or a
+vector of colors to use for each distinct value or level in each of the
+provided \code{columns}. The color mapping functions are:
+\code{\link[scales:col_quantile]{scales::col_quantile()}}, \code{\link[scales:col_bin]{scales::col_bin()}}, \code{\link[scales:col_numeric]{scales::col_numeric()}}, and
+\code{\link[scales:col_factor]{scales::col_factor()}}. If providing a vector of colors as a palette, each
+color value provided must either be a color name (in the set of colors
+provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal string in the form of
+"#RRGGBB" or "#RRGGBBAA".}
 
 \item{alpha}{An optional, fixed alpha transparency value that will be applied
-to all of the \code{colors} provided if they are provided as a vector of colors.
-If using a colorizing helper function for \code{colors} (usually from the
-\pkg{scales} package, see Details section) then this option is ignored
-(each of the colorizing helper functions from \pkg{scales} package has its
-own \code{alpha} argument).}
+to all of the \code{colors} provided (regardless of whether a color palette was
+directly supplied or generated through a color mapping function).}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{fill}) or the cell
@@ -59,22 +56,21 @@ numeric domain. Finally, we can choose whether to apply the cell-specific
 colors to either the cell background or the cell text.
 }
 \details{
-The \verb{col_*()} functions from the scales package can be used in the \code{colors}
-argument. These functions map data values (\code{numeric} or \code{factor}/\code{character})
-to colors according to the provided palette.
+The \verb{col_*()} color mapping functions from the scales package can be used in
+the \code{colors} argument. These functions map data values (\code{numeric} or
+\code{factor}/\code{character}) to colors according to the provided palette.
 
 \itemize{
-\item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping
-from continuous numeric data to an interpolated palette.
-\item \code{\link[scales:col_bin]{scales::col_bin()}}: provides a mapping of continuous
-numeric data to value-based bins. This internally uses the
-\code{\link[base:cut]{base::cut()}} function.
+\item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping from
+continuous numeric data to an interpolated palette.
+\item \code{\link[scales:col_bin]{scales::col_bin()}}: provides a mapping of continuous numeric data to
+value-based bins. This internally uses the \code{\link[base:cut]{base::cut()}} function.
 \item \code{\link[scales:col_quantile]{scales::col_quantile()}}: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
 \code{\link[stats:quantile]{stats::quantile()}} function.
-\item \code{\link[scales:col_factor]{scales::col_factor()}}: provides a mapping of factors to
-colors. If the palette is discrete and has a different number of colors than
-the number of factors, interpolation is used.
+\item \code{\link[scales:col_factor]{scales::col_factor()}}: provides a mapping of factors to colors. If the
+palette is discrete and has a different number of colors than the number of
+factors, interpolation is used.
 }
 
 By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
@@ -88,7 +84,7 @@ which makes a wide range of palettes from various R packages readily
 available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
 inspect all of the discrete color palettes available in \pkg{paletteer}. We
 only then need to specify the \code{package} and \code{palette} when calling the
-\code{paletteer::paletteer_d()} function, and, we get the palette as a vector of
+\code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
 hexadecimal colors.
 }
 \section{Figures}{
