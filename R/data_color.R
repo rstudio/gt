@@ -11,22 +11,21 @@
 #' numeric domain. Finally, we can choose whether to apply the cell-specific
 #' colors to either the cell background or the cell text.
 #'
-#' The `col_*()` functions from the scales package can be used in the `colors`
-#' argument. These functions map data values (`numeric` or `factor`/`character`)
-#' to colors according to the provided palette.
+#' The `col_*()` color mapping functions from the scales package can be used in
+#' the `colors` argument. These functions map data values (`numeric` or
+#' `factor`/`character`) to colors according to the provided palette.
 #'
 #' \itemize{
-#' \item [scales::col_numeric()]: provides a simple linear mapping
-#' from continuous numeric data to an interpolated palette.
-#' \item [scales::col_bin()]: provides a mapping of continuous
-#' numeric data to value-based bins. This internally uses the
-#' [base::cut()] function.
+#' \item [scales::col_numeric()]: provides a simple linear mapping from
+#' continuous numeric data to an interpolated palette.
+#' \item [scales::col_bin()]: provides a mapping of continuous numeric data to
+#' value-based bins. This internally uses the [base::cut()] function.
 #' \item [scales::col_quantile()]: provides a mapping of continuous
 #' numeric data to quantiles. This internally uses the
 #' [stats::quantile()] function.
-#' \item [scales::col_factor()]: provides a mapping of factors to
-#' colors. If the palette is discrete and has a different number of colors than
-#' the number of factors, interpolation is used.
+#' \item [scales::col_factor()]: provides a mapping of factors to colors. If the
+#' palette is discrete and has a different number of colors than the number of
+#' factors, interpolation is used.
 #' }
 #'
 #' By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
@@ -40,25 +39,22 @@
 #' available. The [info_paletteer()] information table allows us to easily
 #' inspect all of the discrete color palettes available in \pkg{paletteer}. We
 #' only then need to specify the `package` and `palette` when calling the
-#' `paletteer::paletteer_d()` function, and, we get the palette as a vector of
+#' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
 #' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
 #' @param columns The columns wherein changes to cell data colors should occur.
-#' @param colors Either a color mapping function from the `scales` package
-#'   or a vector of colors to use for each distinct value or level in each of
-#'   the provided `columns`. The color mapping functions are:
-#'   `scales::col_quantile()`, `scales::col_bin()`,
-#'   `scales::col_numeric()`, and `scales::col_factor()`. If providing
-#'   a vector of colors as a palette, each color value provided must either be a
-#'   color name (in the set of colors provided by `grDevices::colors()`) or
-#'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param colors Either a color mapping function from the `scales` package or a
+#'   vector of colors to use for each distinct value or level in each of the
+#'   provided `columns`. The color mapping functions are:
+#'   [scales::col_quantile()], [scales::col_bin()], [scales::col_numeric()], and
+#'   [scales::col_factor()]. If providing a vector of colors as a palette, each
+#'   color value provided must either be a color name (in the set of colors
+#'   provided by [grDevices::colors()]) or a hexadecimal string in the form of
+#'   "#RRGGBB" or "#RRGGBBAA".
 #' @param alpha An optional, fixed alpha transparency value that will be applied
-#'   to all of the `colors` provided if they are provided as a vector of colors.
-#'   If using a colorizing helper function for `colors` (usually from the
-#'   \pkg{scales} package, see Details section) then this option is ignored
-#'   (each of the colorizing helper functions from \pkg{scales} package has its
-#'   own `alpha` argument).
+#'   to all of the `colors` provided (regardless of whether a color palette was
+#'   directly supplied or generated through a color mapping function).
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
