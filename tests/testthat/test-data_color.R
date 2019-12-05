@@ -902,7 +902,6 @@ test_that("the correct color values are obtained when using a color fn", {
     unique() %>%
     expect_equal("80")
 
-
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_quantile()` fn on the `min_sza` column
   # (which is of the `numeric` class)
@@ -945,7 +944,6 @@ test_that("the correct color values are obtained when using a color fn", {
   ) %>%
     all() %>%
     expect_true()
-
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_bin()` fn on the `min_sza` column
@@ -1282,5 +1280,167 @@ test_that("the various color utility functions work correctly", {
   # less than -2
   expect_error(adjust_luminance(colors = c_hex, steps = -2.1))
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
+})
 
+test_that("the `cell_fill()` function accepts colors of various types", {
+
+  # Create a `tbl_html` object by using `tab_style` with
+  # the `cell_fill()` helper function and a color name
+  tbl_html_1 <-
+    test_tbl %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "tomato"),
+      locations = cells_data(columns = vars(month))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single color to have been generated and used
+  tbl_html_1 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_1 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Create a `tbl_html` object by using `tab_style` with
+  # the `cell_fill()` helper function and a hexadecimal color
+  # value in the #RRGGBB format
+  tbl_html_2 <-
+    test_tbl %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "#FFAA00"),
+      locations = cells_data(columns = vars(month))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single color to have been generated and used
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect all color values to be of the #RRGGBB form
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    expect_match("^#[0-9A-F]{6}$")
+
+  # Create a `tbl_html` object by using `tab_style` with
+  # the `cell_fill()` helper function and a hexadecimal color
+  # value in the #RRGGBBAA format
+  tbl_html_3 <-
+    test_tbl %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "#FF235D60"),
+      locations = cells_data(columns = vars(month))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single color to have been generated and used
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect all color values to be of the rgba() string format
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
+
+  # Create a `tbl_html` object by using `tab_style` with
+  # the `cell_fill()` helper function and a hexadecimal color
+  # value in the #RRGGBB format, and, set `alpha` to `0.5`
+  # inside `cell_fill()`
+  tbl_html_4 <-
+    test_tbl %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "#FF235D", alpha = 0.5),
+      locations = cells_data(columns = vars(month))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single color to have been generated and used
+  tbl_html_4 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect all color values to be of the rgba() string format
+  tbl_html_4 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
+
+  # Expect that all alpha values are 0.5 (or "80" as a hex value)
+  (
+    tbl_html_4 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*|;)", "", .)
+  ) %>%
+    rgba_to_hex() %>%
+    substring(8, 9) %>%
+    unique() %>%
+    expect_equal("80")
+
+  # Create a `tbl_html` object by using `tab_style` with
+  # the `cell_fill()` helper function and a hexadecimal color
+  # value in the #RRGGBBAA format, and, set `alpha` to `0.5`
+  # inside `cell_fill()` (that is expected to override the
+  # alpha value that is part of the supplied `color`)
+  tbl_html_5 <-
+    test_tbl %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "#F3F300EE", alpha = 0.5),
+      locations = cells_data(columns = vars(month))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single color to have been generated and used
+  tbl_html_5 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    unique() %>%
+    length() %>%
+    expect_equal(1)
+
+  # Expect all color values to be of the rgba() string format
+  tbl_html_5 %>%
+    selection_value("style") %>%
+    gsub("(?:background-color: |;)", "", .) %>%
+    expect_match("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$")
+
+  # Expect that all alpha values are 0.5 (or "80" as a hex value and
+  # *not* "EE")
+  (
+    tbl_html_5 %>%
+      selection_value("style") %>%
+      gsub("(background-color: |; color: .*|;)", "", .)
+  ) %>%
+    rgba_to_hex() %>%
+    substring(8, 9) %>%
+    unique() %>%
+    expect_equal("80")
 })

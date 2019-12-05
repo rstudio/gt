@@ -813,18 +813,22 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
 #'   gray) will be used as a default.
-#' @param alpha The alpha transparency value for the `color` as single value in
-#'   the range of `0` (fully transparent) to `1` (fully opaque). If not provided
-#'   the fill color will be fully opaque.
+#' @param alpha An optional alpha transparency value for the `color` as single
+#'   value in the range of `0` (fully transparent) to `1` (fully opaque). If not
+#'   provided the fill color will either be fully opaque or use alpha
+#'   information from the color value if it is supplied in the #RRGGBBAA format.
 #'
 #' @family helper functions
 #' @export
 cell_fill <- function(color = "#D3D3D3",
-                      alpha = 1) {
+                      alpha = NULL) {
 
-  if (length(color) != 1 || length(alpha) != 1) {
-    stop("The length of `colors` and `alpha` must be `1`",
-         call. = FALSE)
+  if (length(color) != 1) {
+    stop("The length of the `color` vector must be `1`", call. = FALSE)
+  }
+
+  if (!is.null(alpha) && length(alpha) != 1) {
+    stop("If provided, `alpha` must be a single value", call. = FALSE)
   }
 
   if (!is_rgba_col(color)) {
