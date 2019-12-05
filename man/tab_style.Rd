@@ -105,7 +105,7 @@ tab_2 <-
   ) \%>\%
   tab_style(
     style = list(
-      cell_fill(color = "crimson"),
+      cell_fill(color = "red"),
       cell_text(color = "white")
       ),
     locations = cells_data(
