@@ -43,7 +43,9 @@ tab_latex \%>\%
 
 }
 \seealso{
-Other table export functions: \code{\link{as_raw_html}},
-  \code{\link{as_rtf}}, \code{\link{extract_summary}}
+Other table export functions: 
+\code{\link{as_raw_html}()},
+\code{\link{as_rtf}()},
+\code{\link{extract_summary}()}
 }
 \concept{table export functions}

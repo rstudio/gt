@@ -33,9 +33,9 @@ within. We can easily experiment with a local PNG or SVG image that's
 available in the \pkg{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
 that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 
-\code{<img cid=<random CID> src=<data URI> style=\"height:30px;\">}
+\verb{<img cid=<random CID> src=<data URI> style=\\"height:30px;\\">}
 
-where a height of \code{30px} is a default height chosen to work well within the
+where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.
 }
 \section{Figures}{
@@ -69,7 +69,9 @@ tab_1 <-
 
 }
 \seealso{
-Other image addition functions: \code{\link{ggplot_image}},
-  \code{\link{test_image}}, \code{\link{web_image}}
+Other image addition functions: 
+\code{\link{ggplot_image}()},
+\code{\link{test_image}()},
+\code{\link{web_image}()}
 }
 \concept{image addition functions}

@@ -4,8 +4,12 @@
 \alias{cols_merge}
 \title{Merge data from two or more columns to a single column}
 \usage{
-cols_merge(data, columns, hide_columns = columns[-1],
-  pattern = paste0("{", seq_along(columns), "}", collapse = " "))
+cols_merge(
+  data,
+  columns,
+  hide_columns = columns[-1],
+  pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -77,13 +81,16 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_width}},
-  \code{\link{tab_spanner_delim}}
+Other column modification functions: 
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_width}()},
+\code{\link{tab_spanner_delim}()}
 }
 \concept{column modification functions}

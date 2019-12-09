@@ -100,7 +100,7 @@ test_that("a gt table can store the correct style statements", {
     .$styles %>%
     vapply(function(x) x[1]$cell_fill$color, character(1)) %>%
     unique() %>%
-    expect_equal("#D3D3D3FF")
+    expect_equal("#D3D3D3")
 
   # Apply a `steelblue` background color with white text to a
   # single stub cell
@@ -126,7 +126,7 @@ test_that("a gt table can store the correct style statements", {
     .[[1]] %>%
     .$cell_fill %>%
     .$color %>%
-    expect_equal("#4682B4FF")
+    expect_equal("#4682B4")
 
   dt_styles_get(data = tbl_html) %>%
     .$styles %>%
@@ -419,7 +419,7 @@ test_that("a gt table can store the correct style statements", {
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00FF")
+      "data", NA_character_, "disp", "5", "1", NA_character_, "#FFFF00")
     )
 
   dt_styles_get(data = tbl_html) %>%
@@ -427,6 +427,6 @@ test_that("a gt table can store the correct style statements", {
     unlist() %>%
     unname() %>%
     expect_equal(c(
-      "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00FF")
+      "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00")
     )
 })

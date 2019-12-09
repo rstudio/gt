@@ -4,8 +4,7 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, escape = TRUE,
-  pattern = "{x}")
+fmt_passthrough(data, columns, rows = NULL, escape = TRUE, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -21,7 +20,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\code{[colname_1] > 100 & [colname_2] < 50}).}
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{escape}{An option to escape text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
@@ -38,7 +37,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Format by passing data through no other transformation other than: (1)
-coercing to \code{character} (as all the \code{fmt_*()} functions do), and (2) applying
+coercing to \code{character} (as all the \verb{fmt_*()} functions do), and (2) applying
 text via the \code{pattern} argument (the default is to apply nothing). All of
 this is useful when don't want to modify the input data other than to
 decorate it within a pattern. Also, this function is useful when used as the
@@ -75,12 +74,18 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other data formatting functions: 
+\code{\link{data_color}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
 }
 \concept{data formatting functions}

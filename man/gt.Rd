@@ -4,9 +4,15 @@
 \alias{gt}
 \title{Create a \pkg{gt} table object}
 \usage{
-gt(data, rowname_col = "rowname", groupname_col = "groupname",
-  rownames_to_stub = FALSE, auto_align = TRUE, id = random_id(),
-  stub_group.sep = getOption("gt.stub_group.sep", " - "))
+gt(
+  data,
+  rowname_col = "rowname",
+  groupname_col = "groupname",
+  rownames_to_stub = FALSE,
+  auto_align = TRUE,
+  id = random_id(),
+  stub_group.sep = getOption("gt.stub_group.sep", " - ")
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} object or a tibble.}
@@ -93,10 +99,15 @@ tab_2 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: \code{\link{gt_preview}},
-  \code{\link{tab_footnote}}, \code{\link{tab_header}},
-  \code{\link{tab_options}}, \code{\link{tab_row_group}},
-  \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
-  \code{\link{tab_stubhead}}, \code{\link{tab_style}}
+Other table-part creation/modification functions: 
+\code{\link{gt_preview}()},
+\code{\link{tab_footnote}()},
+\code{\link{tab_header}()},
+\code{\link{tab_options}()},
+\code{\link{tab_row_group}()},
+\code{\link{tab_source_note}()},
+\code{\link{tab_spanner}()},
+\code{\link{tab_stubhead}()},
+\code{\link{tab_style}()}
 }
 \concept{table-part creation/modification functions}

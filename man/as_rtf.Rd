@@ -35,7 +35,9 @@ tab_rtf \%>\% cat()
 
 }
 \seealso{
-Other table export functions: \code{\link{as_latex}},
-  \code{\link{as_raw_html}}, \code{\link{extract_summary}}
+Other table export functions: 
+\code{\link{as_latex}()},
+\code{\link{as_raw_html}()},
+\code{\link{extract_summary}()}
 }
 \concept{table export functions}
