@@ -155,6 +155,22 @@ data_color <- function(data,
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 
+        # At the time of this writing, scales has a bug where palettes in the
+        # form of colors (as opposed to functions or palette names) use
+        # interpolation when the number of colors is greater than the number
+        # of levels. Instead, colors should be subsetted. scales does the right
+        # thing for palette names though, so we need to screen those cases out.
+        if (length(colors) > 1) {
+          nlvl <- if (is.factor(data_vals)) {
+            nlevels(data_vals)
+          } else {
+            nlevels(factor(data_vals))
+          }
+          if (length(colors) > nlvl) {
+            colors <- colors[seq_len(nlvl)]
+          }
+        }
+
         color_fn <-
           scales::col_factor(
             palette = colors,

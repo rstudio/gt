@@ -560,7 +560,7 @@ test_that("the correct color values are obtained when defining a palette", {
     xml2::read_html() %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
-    expect_equal(c("#808080", rep("#FF6E00", 9)))
+    expect_equal(c("#808080", rep("#FF0000", 9)))
 
   tbl %>%
     gt() %>%
