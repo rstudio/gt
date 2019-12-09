@@ -11,22 +11,21 @@
 #' numeric domain. Finally, we can choose whether to apply the cell-specific
 #' colors to either the cell background or the cell text.
 #'
-#' The `col_*()` functions from the scales package can be used in the `colors`
-#' argument. These functions map data values (`numeric` or `factor`/`character`)
-#' to colors according to the provided palette.
+#' The `col_*()` color mapping functions from the scales package can be used in
+#' the `colors` argument. These functions map data values (`numeric` or
+#' `factor`/`character`) to colors according to the provided palette.
 #'
 #' \itemize{
-#' \item [scales::col_numeric()]: provides a simple linear mapping
-#' from continuous numeric data to an interpolated palette.
-#' \item [scales::col_bin()]: provides a mapping of continuous
-#' numeric data to value-based bins. This internally uses the
-#' [base::cut()] function.
+#' \item [scales::col_numeric()]: provides a simple linear mapping from
+#' continuous numeric data to an interpolated palette.
+#' \item [scales::col_bin()]: provides a mapping of continuous numeric data to
+#' value-based bins. This internally uses the [base::cut()] function.
 #' \item [scales::col_quantile()]: provides a mapping of continuous
 #' numeric data to quantiles. This internally uses the
 #' [stats::quantile()] function.
-#' \item [scales::col_factor()]: provides a mapping of factors to
-#' colors. If the palette is discrete and has a different number of colors than
-#' the number of factors, interpolation is used.
+#' \item [scales::col_factor()]: provides a mapping of factors to colors. If the
+#' palette is discrete and has a different number of colors than the number of
+#' factors, interpolation is used.
 #' }
 #'
 #' By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
@@ -40,24 +39,22 @@
 #' available. The [info_paletteer()] information table allows us to easily
 #' inspect all of the discrete color palettes available in \pkg{paletteer}. We
 #' only then need to specify the `package` and `palette` when calling the
-#' `paletteer::paletteer_d()` function, and, we get the palette as a vector of
+#' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
 #' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
 #' @param columns The columns wherein changes to cell data colors should occur.
-#' @param colors Either a color mapping function from the `scales` package
-#'   or a vector of colors to use for each distinct value or level in each of
-#'   the provided `columns`. The color mapping functions are:
-#'   `scales::col_quantile()`, `scales::col_bin()`,
-#'   `scales::col_numeric()`, and `scales::col_factor()`. If providing
-#'   a vector of colors as a palette, each color value provided must either be a
-#'   color name (in the set of colors provided by `grDevices::colors()`) or
-#'   a hexadecimal string in the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param colors Either a color mapping function from the `scales` package or a
+#'   vector of colors to use for each distinct value or level in each of the
+#'   provided `columns`. The color mapping functions are:
+#'   [scales::col_quantile()], [scales::col_bin()], [scales::col_numeric()], and
+#'   [scales::col_factor()]. If providing a vector of colors as a palette, each
+#'   color value provided must either be a color name (in the set of colors
+#'   provided by [grDevices::colors()]) or a hexadecimal string in the form of
+#'   "#RRGGBB" or "#RRGGBBAA".
 #' @param alpha An optional, fixed alpha transparency value that will be applied
-#'   to all of the `colors` provided if they are provided as a vector of
-#'   colors. If using a colorizing helper function for `colors` then this
-#'   option is ignored (each of the colorizing helper functions has its own
-#'   `alpha` argument).
+#'   to all of the `colors` provided (regardless of whether a color palette was
+#'   directly supplied or generated through a color mapping function).
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
@@ -127,7 +124,7 @@
 data_color <- function(data,
                        columns,
                        colors,
-                       alpha = 1,
+                       alpha = NULL,
                        apply_to = "fill",
                        autocolor_text = TRUE) {
 
@@ -136,12 +133,9 @@ data_color <- function(data,
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
 
-  #
   # Resolution of columns as integer vectors providing the
   # positions of the matched variables
-  #
   columns <- rlang::enquo(columns)
-
   resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
 
   for (column in resolved_columns) {
@@ -152,45 +146,63 @@ data_color <- function(data,
 
       if (is.numeric(data_vals)) {
 
-        domain <- c(min(data_vals), max(data_vals))
-        color_fn <- scales::col_numeric(palette = colors, domain = domain)
+        color_fn <-
+          scales::col_numeric(
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
+          )
 
-      } else if (is.character(data_vals)) {
+      } else if (is.character(data_vals) || is.factor(data_vals)) {
 
-        domain <- unique(data_vals)
+        # At the time of this writing, scales has a bug where palettes in the
+        # form of colors (as opposed to functions or palette names) use
+        # interpolation when the number of colors is greater than the number
+        # of levels. Instead, colors should be subsetted. scales does the right
+        # thing for palette names though, so we need to screen those cases out.
+        if (length(colors) > 1) {
+          nlvl <- if (is.factor(data_vals)) {
+            nlevels(data_vals)
+          } else {
+            nlevels(factor(data_vals))
+          }
+          if (length(colors) > nlvl) {
+            colors <- colors[seq_len(nlvl)]
+          }
+        }
 
         color_fn <-
           scales::col_factor(
-            palette = colors[seq(domain)],
-            domain = domain
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
           )
+      } else {
 
-      } else if (is.factor(data_vals)) {
-
-        levels <- unique(levels(data_vals))
-
-        color_fn <-
-          scales::col_factor(
-            palette = colors[seq(levels)],
-            levels = levels(data_vals)
-          )
+        stop("Don't know how to map colors to a column of class ", class(data_vals)[1], ".",
+             call. = FALSE)
       }
 
     } else if (inherits(colors, "function")) {
       color_fn <- colors
+
+    } else {
+      stop("The `colors` arg must be either a character vector of colors or a function", call. = FALSE)
     }
 
     color_fn <- rlang::enquo(color_fn)
     color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
-    colors_cols <- color_fn(data_vals)
+    # Evaluate the color function with the data values
+    color_vals <- color_fn(data_vals)
+
+    # Process the color values, combining with a
+    # fixed alpha value if necessary
+    color_vals <- html_color(colors = color_vals, alpha = alpha)
 
     for (i in seq_along(data_vals)) {
 
-      color <- colors_cols[i]
-
-      # Combine hexadecimal color with corresponding alpha
-      color <- normalize_color(colors = color, alpha = alpha)
+      color <- color_vals[i]
 
       if (apply_to == "fill") {
 
@@ -225,7 +237,7 @@ data_color <- function(data,
         # Apply the `ideal_fgnd_color()` function to
         # the background color value to obtain a suitable
         # text color
-        color_text <- ideal_fgnd_color(color)
+        color_text <- ideal_fgnd_color(bgnd_color = color)
 
         # Apply color value to the text of the cell
         data <-
@@ -369,13 +381,13 @@ adjust_luminance <- function(colors,
   }
 
   # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors)) / 255
+  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
 
   # Obtain the alpha values
-  alpha <- get_alpha_vec(colors)
+  alpha <- rgb_matrix[, "alpha"]
 
   # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix, "sRGB", "Luv")
+  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
 
   # Apply calculations to obtain values in the HCL color space
   h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
@@ -391,131 +403,157 @@ adjust_luminance <- function(colors,
   # Calculate new luminance values based on a fixed step-change in `x`
   y_2 <- 1 / (1 + exp(-(x + steps)))
 
-  # Rescale new luminance values to [0, 100]
+  # Rescale the new luminance values to [0, 100]
   l <- y_2 * 100.
 
   # Obtain hexadecimal colors from the modified HCL color values
-  hcl_colors <- grDevices::hcl(h, c, l, alpha = NULL)
-
-  # Apply alpha values to the hexadecimal colors
-  hcl_colors <- paste0(hcl_colors, alpha)
-
-  hcl_colors
+  grDevices::hcl(h, c, l, alpha = alpha)
 }
 
-is_hex_col_w_alpha <- function(color) {
-  color %>% tidy_grepl("^#[0-9A-Fa-f]{8}$")
-}
 
-is_hex_col_no_alpha <- function(color) {
-  color %>% tidy_grepl("^#[0-9A-Fa-f]{6}$")
-}
-
-frac_alpha_to_hex <- function(alpha) {
-  grDevices::rgb(0, 0, 0, alpha) %>% substr(8, 9)
-}
-
-#' Extract a vector of alpha values for a vector of colors
+#' Are color values in rgba() format?
+#'
+#' The input for this is a character vector that should contain color strings.
+#' While users won't directly supply colors in rgba() format, the `html_color()`
+#' function can produce these types of color values and this utility function is
+#' used in `rgba_to_hex()` to help convert colors *back* to hexadecimal
+#' (ultimately for the `ideal_fgnd_color()` function). The output of
+#' `is_rgba_col()` is a vector of logical values (the same length as the input
+#' `colors` vector).
 #'
 #' @noRd
-get_alpha_vec <- function(colors) {
+is_rgba_col <- function(colors) {
 
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
-
-      if (color %>% is_hex_col_no_alpha()) {
-        "FF"
-      } else if (color %>% is_hex_col_w_alpha()) {
-        toupper(sub(".*(..)$", "\\1", color))
-      } else if (tolower(color) %in% grDevices::colors()) {
-        "FF"
-      } else {
-        NA_character_
-      }
-    }
-  )
+  grepl("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$", colors)
 }
 
-#' Get the hexadecimal color representation of a color
+#' For a background color, which foreground color provides better contrast?
+#'
+#' The input for this function is a single color value in rgba() format. The
+#' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
-get_hexcolor_vec <- function(colors) {
+ideal_fgnd_color <- function(bgnd_color,
+                             light = "#FFFFFF",
+                             dark = "#000000") {
 
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
+  # Normalize color to hexadecimal color if it is in the rgba() string format
+  bgnd_color <- rgba_to_hex(colors = bgnd_color)
 
-      if (color %>% is_hex_col_no_alpha()) {
+  # Normalize color to a #RRGGBB (stripping the alpha channel)
+  bgnd_color <- html_color(colors = bgnd_color, alpha = 1)
 
-        color %>%
-          toupper()
-
-      } else if (color %>% is_hex_col_w_alpha()) {
-
-        color %>%
-          substring(1, 7) %>%
-          toupper()
-
-      } else if (tolower(color) %in% grDevices::colors()) {
-
-        color_matrix <- grDevices::col2rgb(tolower(color))
-
-        grDevices::rgb(
-          red = color_matrix[1, ]/255,
-          green = color_matrix[2, ]/255,
-          blue = color_matrix[3, ]/255
-        )
-
-      } else {
-        NA_character_
-      }
-    })
-}
-
-#' With any input color, transform to hexadecimal with alpha
-#'
-#' @noRd
-normalize_color <- function(colors,
-                            alpha) {
-
-  if (length(colors) == 0) {
-    stop("One or more colors must be provided", call. = FALSE)
-  }
-
-  if (!(length(colors) == length(alpha) || length(alpha) == 1)) {
-    stop("The length of `alpha` must be the same length as `colors` or `1`",
-         call. = FALSE)
-  }
-
-  # Combine hexadecimal color with corresponding alpha
-  vapply(
-    colors,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    function(color) {
-      if (!is_hex_col_w_alpha(color)) {
-        color <- paste0(get_hexcolor_vec(color), frac_alpha_to_hex(alpha))
-      }
-
-      color
-    }
-  )
-}
-
-#' Determining the best `light` and `dark` colors for contrast
-#'
-#' @noRd
-ideal_fgnd_color <- function(bgnd_colors,
-                             light = "#FFFFFFFF",
-                             dark = "#000000FF") {
-
+  # Determine the ideal color for the chosen background color
   yiq_contrasted_threshold <- 128
-  colors <- grDevices::col2rgb(bgnd_colors)
+  colors <- grDevices::col2rgb(bgnd_color)
   score <- colSums(colors * c(299, 587, 144)) / 1000
   ifelse(score >= yiq_contrasted_threshold, dark, light)
+}
+
+#' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal
+#'
+#' This function will accept colors in mixed formats and convert any in the
+#' rgba() string format (e.g., "`rgba(255,170,0,0.5)`") to a hexadecimal format
+#' the preserves the alpha information (#RRGGBBAA). This function is required
+#' for the `ideal_fgnd_color()` function.
+#'
+#' @noRd
+rgba_to_hex <- function(colors) {
+
+  colors_vec <- rep(NA_character_, length(colors))
+
+  colors_rgba <- is_rgba_col(colors = colors)
+
+  colors_vec[!colors_rgba] <- colors[!colors_rgba]
+
+  color_matrix <-
+    colors[colors_rgba] %>%
+    gsub(pattern = "(rgba\\(|\\))", replacement = "", x = .) %>%
+    strsplit(",") %>%
+    unlist() %>%
+    as.numeric() %>%
+    matrix(
+      ., ncol = 4,
+      dimnames = list(c(), c("r", "g", "b", "alpha")),
+      byrow = TRUE
+    )
+
+  alpha <- color_matrix[, "alpha"] %>% unname()
+
+  # Convert color matrix to hexadecimal colors in the #RRGGBBAA format
+  colors_to_hex <-
+    grDevices::rgb(
+      red = color_matrix[, "r"] / 255,
+      green = color_matrix[, "g"] / 255,
+      blue = color_matrix[, "b"] / 255,
+      alpha = alpha
+    )
+
+  colors_vec[colors_rgba] <- colors_to_hex
+
+  colors_vec
+}
+
+#' With a vector of input colors return normalized color strings
+#'
+#' Input colors can be color names (e.g., `"green"`, `"steelblue"`, etc.) or
+#' colors in hexadecimal format with or without an alpha component (either
+#' #RRGGBB or #RRGGBBAA). Output is the same length vector as the
+#' input but it will contain a mixture of either #RRGGBB colors (if the input
+#' alpha value for a color is 1) or rgba() string format colors (if the input
+#' alpha value for a color is not 1).
+#'
+#' @noRd
+html_color <- function(colors, alpha = NULL) {
+
+  # Stop function if there are any NA values in `colors`
+  if (any(is.na(colors))) {
+    stop("No values supplied in `colors` should be NA")
+  }
+
+  # Utility function for creating rgba() color values
+  # from an RGBA color matrix (already subsetted to those
+  # rows where alpha < 1)
+  col_matrix_to_rgba <- function(color_matrix) {
+
+    paste0(
+      "rgba(",
+      color_matrix[, "red"], ",",
+      color_matrix[, "green"], ",",
+      color_matrix[, "blue"], ",",
+      round(color_matrix[, "alpha"], 2),
+      ")"
+    )
+  }
+
+  # Create a color matrix with an `alpha` column
+  color_matrix <- t(grDevices::col2rgb(col = colors, alpha = TRUE))
+  color_matrix[, "alpha"] <- color_matrix[, "alpha"] / 255
+
+  # If `alpha` has a value, replace all pre-existing
+  # alpha values in the color matrix with `alpha`
+  if (!is.null(alpha)) {
+    color_matrix[, "alpha"] <- alpha
+  }
+
+  # Generate a vector for the finalized HTML color values
+  colors_html <- rep(NA_character_, nrow(color_matrix))
+
+  # Determine which of the input colors have an alpha of `1`
+  colors_alpha_1 <- color_matrix[, "alpha"] == 1
+
+  # Generate #RRGGBB color values for `colors_html`
+  colors_html[colors_alpha_1] <-
+    grDevices::rgb(
+      red = color_matrix[colors_alpha_1, "red", drop = FALSE] / 255,
+      green = color_matrix[colors_alpha_1, "green", drop = FALSE] / 255,
+      blue = color_matrix[colors_alpha_1, "blue", drop = FALSE] / 255
+    )
+
+  # Generate rgba() color values for `colors_html`
+  colors_html[!colors_alpha_1] <-
+    color_matrix[!colors_alpha_1, , drop = FALSE] %>%
+    col_matrix_to_rgba()
+
+  colors_html
 }

@@ -36,12 +36,12 @@ places (e.g., in the header, within footnote text, etc.) we need to use
 \details{
 By itself, the function creates an HTML image tag with an image URI embedded
 within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot
-object, and using it within \code{ggplot_image(plot_object = <plot object>}
+object, and using it within \verb{ggplot_image(plot_object = <plot object>}
 evaluates to:
 
-\code{<img cid=<random CID> src=<data URI> style=\"height:100px;\">}
+\verb{<img cid=<random CID> src=<data URI> style=\\"height:100px;\\">}
 
-where a height of \code{100px} is a default height chosen to work well within the
+where a height of \verb{100px} is a default height chosen to work well within the
 heights of most table rows. There is the option to modify the aspect ratio of
 the plot (the default \code{aspect_ratio} is \code{1.0}) and this is useful for
 elongating any given plot to fit better within the table construct.
@@ -86,7 +86,9 @@ tab_1 <-
 
 }
 \seealso{
-Other image addition functions: \code{\link{local_image}},
-  \code{\link{test_image}}, \code{\link{web_image}}
+Other image addition functions: 
+\code{\link{local_image}()},
+\code{\link{test_image}()},
+\code{\link{web_image}()}
 }
 \concept{image addition functions}

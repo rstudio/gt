@@ -38,17 +38,6 @@
 #'           x <= 20  ~ "small"),
 #'         ")")
 #'     }
-#'   ) %>%
-#'   text_transform(
-#'     locations = cells_data(
-#'       columns = vars(currency)),
-#'     fn = function(x) {
-#'
-#'       ifelse(
-#'         grepl(",", x),
-#'         gsub("\\.\\d\\d", "", x),
-#'         x)
-#'     }
 #'   )
 #'
 #' @section Figures:

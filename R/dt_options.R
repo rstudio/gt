@@ -129,7 +129,7 @@ dt_options_init <- function(data) {
     "source_notes_border_lr_style",       TRUE,  "source_notes",     "value",   "none",
     "source_notes_border_lr_width",       TRUE,  "source_notes",     "px",      "2px",
     "source_notes_border_lr_color",       TRUE,  "source_notes",     "value",   "#D3D3D3",
-    "row_striping_background_color",      TRUE,  "row",              "value",   "#8080800D",
+    "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", TRUE,
   )[-1, ] %>%

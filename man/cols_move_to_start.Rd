@@ -67,12 +67,16 @@ tab_2 <-
 
 }
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move}}, \code{\link{cols_width}},
-  \code{\link{tab_spanner_delim}}
+Other column modification functions: 
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move}()},
+\code{\link{cols_width}()},
+\code{\link{tab_spanner_delim}()}
 }
 \concept{column modification functions}
