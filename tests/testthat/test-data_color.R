@@ -540,6 +540,56 @@ test_that("the correct color values are obtained when defining a palette", {
     all() %>%
     expect_true()
 
+
+  # Expect that NAs in column values will result in default colors
+  tbl <-
+    countrypops %>%
+    dplyr::filter(country_name == "Mongolia") %>%
+    dplyr::select(-contains("code")) %>%
+    tail(10)
+
+  tbl[1, ] <- NA
+
+  tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(country_name),
+      colors = c("red", "orange", "green", "blue")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_equal(c("#808080", rep("#FF6E00", 9)))
+
+  tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(year),
+      colors = c("red", "orange", "green", "blue")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_equal(
+      c("#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
+        "#62F600", "#6FC972", "#7978BD", "#0000FF"))
+
+  tbl %>%
+    gt() %>%
+    data_color(
+      columns = vars(population),
+      colors = c("red", "orange", "green", "blue")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .) %>%
+    expect_equal(
+      c("#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
+        "#5FF600", "#72C477", "#7773C1", "#0000FF"))
+
   # Expect an error when using an invalid color name in `colors`
   expect_error(
     test_tbl %>%

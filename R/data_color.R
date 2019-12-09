@@ -146,40 +146,32 @@ data_color <- function(data,
 
       if (is.numeric(data_vals)) {
 
-        domain <- c(min(data_vals), max(data_vals))
-
         color_fn <-
           scales::col_numeric(
             palette = colors,
-            domain = domain,
+            domain = data_vals,
             alpha = TRUE
           )
 
-      } else if (is.character(data_vals)) {
-
-        domain <- unique(data_vals)
+      } else if (is.character(data_vals) || is.factor(data_vals)) {
 
         color_fn <-
           scales::col_factor(
-            palette = colors[seq(domain)],
-            domain = domain,
+            palette = colors,
+            domain = data_vals,
             alpha = TRUE
           )
+      } else {
 
-      } else if (is.factor(data_vals)) {
-
-        levels <- unique(levels(data_vals))
-
-        color_fn <-
-          scales::col_factor(
-            palette = colors[seq(levels)],
-            levels = levels(data_vals),
-            alpha = TRUE
-          )
+        stop("Don't know how to map colors to a column of class ", class(data_vals)[1], ".",
+             call. = FALSE)
       }
 
     } else if (inherits(colors, "function")) {
       color_fn <- colors
+
+    } else {
+      stop("The `colors` arg must be either a character vector of colors or a function", call. = FALSE)
     }
 
     color_fn <- rlang::enquo(color_fn)
