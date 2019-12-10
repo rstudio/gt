@@ -14,13 +14,13 @@ the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style t
 retain HTML elements in the footnote text.}
 
 \item{locations}{The cell or set of cells to be associated with the footnote.
-Supplying any of the \code{cells_*()} helper functions is a useful way to target
+Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the footnote text. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}},
 \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_data]{cells_data()}}, \code{\link[=cells_summary]{cells_summary()}}, and
 \code{\link[=cells_grand_summary]{cells_grand_summary()}}. Please see the help article \link{location_cells}
 for more information on how these helper functions can be used.
-Additionally, we can enclose several \code{cells_*()} calls within a \code{list()} if
+Additionally, we can enclose several \verb{cells_*()} calls within a \code{list()} if
 we wish to link the footnote text to different types of locations (e.g.,
 cell data values, stub group headings, the table title, etc.).}
 }
@@ -86,10 +86,15 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: \code{\link{gt_preview}},
-  \code{\link{gt}}, \code{\link{tab_header}},
-  \code{\link{tab_options}}, \code{\link{tab_row_group}},
-  \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
-  \code{\link{tab_stubhead}}, \code{\link{tab_style}}
+Other table-part creation/modification functions: 
+\code{\link{gt_preview}()},
+\code{\link{gt}()},
+\code{\link{tab_header}()},
+\code{\link{tab_options}()},
+\code{\link{tab_row_group}()},
+\code{\link{tab_source_note}()},
+\code{\link{tab_spanner}()},
+\code{\link{tab_stubhead}()},
+\code{\link{tab_style}()}
 }
 \concept{table-part creation/modification functions}
