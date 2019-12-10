@@ -29,9 +29,9 @@ It all begins with preprocessed **table data** (be it a tibble or a data frame).
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
-The **gt** API is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create an HTML **gt Table** from the included `sp500` dataset:
+The **gt** package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create an HTML **gt Table** from the included `sp500` dataset:
 
-```r
+```{r sp500_example, eval=FALSE}
 library(gt)
 library(tidyverse)
 library(glue)
@@ -66,7 +66,7 @@ sp500 %>%
 
 <p align="center"><img src="man/figures/gt_sp500_table.svg" width="1200px"></p>
 
-There are six datasets included in **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful for experimenting with the API.
+There are six datasets included in **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful for experimenting with the package functions.
 
 <p align="center"><img src="man/figures/gt_datasets.svg" width="800px"></p>
 
@@ -84,7 +84,7 @@ Want to try this out? Take the **gt** Test Drive on RStudio Cloud:
 
 You can install the development version of **gt** from **GitHub**:
 
-```{r eval=FALSE}
+```{r install_github, eval=FALSE}
 remotes::install_github("rstudio/gt")
 ```
 
@@ -98,7 +98,7 @@ If you encounter a bug, have usage questions, or want to share ideas to make thi
 
 #### Code of Conduct
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you agree to abide by its terms
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you agree to abide by its terms.
 
 #### License
 

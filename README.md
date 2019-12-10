@@ -35,10 +35,10 @@ you need for the task at hand.
 
 </p>
 
-The **gt** API is designed to be both straightforward yet powerful. The
-emphasis is on simple functions for the everyday display table needs.
-Here is a brief example of how to use **gt** to create an HTML **gt
-Table** from the included `sp500` dataset:
+The **gt** package is designed to be both straightforward yet powerful.
+The emphasis is on simple functions for the everyday display table
+needs. Here is a brief example of how to use **gt** to create an HTML
+**gt Table** from the included `sp500` dataset:
 
 ``` r
 library(gt)
@@ -81,7 +81,7 @@ sp500 %>%
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
-for experimenting with the API.
+for experimenting with the package functions.
 
 <p align="center">
 
@@ -128,7 +128,7 @@ make this package better, feel free to file an
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
-agree to abide by its terms
+agree to abide by its terms.
 
 #### License
 
