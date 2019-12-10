@@ -136,32 +136,6 @@ reference:
     - opt_all_caps
     - opt_footnote_marks
 
-  - title: Export Table
-    desc: >
-      There may come a day when you need to export a **gt** table to some
-      specific format. We have functions for getting the HTML content of
-      a **gt** table (`as_raw_html()`), getting LaTeX code (`as_latex()`),
-      and getting rich text (`as_rtf()`). Did you use the `summary_rows()`
-      function and wish you had that summary data in a tibble? You can get
-      it out with `extract_summary()`.
-    contents:
-    - gtsave
-    - as_raw_html
-    - as_latex
-    - as_rtf
-    - extract_summary
-
-  - title: Shiny Functions
-    desc: >
-      Shiny is great for building interactive web apps with R. There's
-      really nothing quite like it. The **gt** package includes two
-      functions that work nicely with Shiny: a table render function
-      `render_gt()` (for the `server`) and a table output element
-      `gt_output()` (for the `ui`).
-    contents:
-    - render_gt
-    - gt_output
-
   - title: Helper Functions
     desc: >
       A small assortment of helper functions is available in the **gt**
@@ -191,7 +165,7 @@ reference:
     - gt_latex_dependencies
     - escape_latex
 
-  - title: Image Addition
+  - title: Image Functions
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -204,7 +178,7 @@ reference:
     - ggplot_image
     - test_image
 
-  - title: Information
+  - title: Information Functions
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
@@ -221,10 +195,10 @@ reference:
 
   - title: Datasets
     desc: >
-      The **gt** package is equipped with six datasets. Use them to
-      experiment with the API, they come in all shapes and sizes. Many
-      examples in the internal help documents use these datasets to
-      quickly demonstrate key features of **gt**.
+      The **gt** package is equipped with six datasets that come in all shapes
+      and sizes. Use them to experiment with the package. Many examples in the
+      internal help documents use these datasets to quickly demonstrate the key
+      features of **gt**.
     contents:
     - countrypops
     - sza
@@ -232,6 +206,32 @@ reference:
     - sp500
     - pizzaplace
     - exibble
+
+  - title: Shiny Functions
+    desc: >
+      Shiny is great for building interactive web apps with R. There's
+      really nothing quite like it. The **gt** package includes two
+      functions that work nicely with Shiny: a table render function
+      `render_gt()` (for the `server`) and a table output element
+      `gt_output()` (for the `ui`).
+    contents:
+    - render_gt
+    - gt_output
+
+  - title: Export Functions
+    desc: >
+      There may come a day when you need to export a **gt** table to some
+      specific format. A great function for that is `gtsave()`, which allows
+      us to save as an HTML file or an image file. Some other functions give us
+      table code as a character vector (e.g., `as_raw_html()`). Did you use the
+      `summary_rows()` function and wish you had that summary data in a tibble?
+      You can get it out with `extract_summary()`.
+    contents:
+    - gtsave
+    - as_raw_html
+    - as_latex
+    - as_rtf
+    - extract_summary
 
 navbar:
   type: default
