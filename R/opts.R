@@ -88,8 +88,8 @@ opt_footnote_marks <- function(data,
 
 #' Option to remove the top and bottom borders
 #'
-#' The top and bottom borders of a gt table can be removed entirely by using the
-#' `opt_remove_top_bottom_borders()` function. The definition of what
+#' The top and bottom borders of a \pkg{gt} table can be removed entirely by
+#' using the `opt_remove_top_bottom_borders()` function. The definition of what
 #' constitutes a top and bottom border depends on which table parts are present
 #' at the top and bottom (e.g., header, table columns, a footnote block, etc.).
 #' Regardless of the available parts, there won't be any top of bottom
@@ -471,7 +471,7 @@ opt_add_table_outline <- function(data,
 #' Option to completely remove any table outlines
 #'
 #' This function removes any table outlines that may exist around the entire
-#' table. It don't annihilate the `width` and `color` attributes but simply sets
+#' table. It won't annihilate the `width` and `color` attributes but simply sets
 #' the relevant line styles to `"none"`.
 #'
 #' This function serves as a convenient shortcut for a large number of options

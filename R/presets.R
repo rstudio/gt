@@ -58,7 +58,8 @@
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   preset_colorized(style = 6, color = "aqua")
+#'   preset_colorized(style = 6, color = "aqua") %>%
+#'   opt_add_row_striping()
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_preset_colorized_1.svg}{options: width=100\%}}

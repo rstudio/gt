@@ -14,7 +14,7 @@ an object of class \code{gt_tbl}.
 }
 \description{
 This function removes any table outlines that may exist around the entire
-table. It don't annihilate the \code{width} and \code{color} attributes but simply sets
+table. It won't annihilate the \code{width} and \code{color} attributes but simply sets
 the relevant line styles to \code{"none"}.
 }
 \details{

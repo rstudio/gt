@@ -13,8 +13,8 @@ opt_remove_top_bottom_borders(data)
 an object of class \code{gt_tbl}.
 }
 \description{
-The top and bottom borders of a gt table can be removed entirely by using the
-\code{opt_remove_top_bottom_borders()} function. The definition of what
+The top and bottom borders of a \pkg{gt} table can be removed entirely by
+using the \code{opt_remove_top_bottom_borders()} function. The definition of what
 constitutes a top and bottom border depends on which table parts are present
 at the top and bottom (e.g., header, table columns, a footnote block, etc.).
 Regardless of the available parts, there won't be any top of bottom
