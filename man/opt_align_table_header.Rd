@@ -22,7 +22,7 @@ easily set the horizontal alignment of the title and subtitle to the left
 or right by using the \code{"align"} argument.
 }
 \details{
-This function serves as a convenient shortcut for \code{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
+This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
 }
 \section{Figures}{
 
@@ -63,11 +63,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_add_table_outline}},
-  \code{\link{opt_all_caps}},
-  \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_table_outline}},
-  \code{\link{opt_remove_top_bottom_borders}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_add_table_outline}()},
+\code{\link{opt_all_caps}()},
+\code{\link{opt_footnote_marks}()},
+\code{\link{opt_remove_table_outline}()},
+\code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{currency}
 \alias{currency}
-\title{Supply a custom currency symbol to \code{fmt_currency()}}
+\title{Helper for supplying a custom currency symbol to \code{fmt_currency()}}
 \usage{
 currency(..., .list = list2(...))
 }
@@ -51,4 +51,22 @@ tab_1 <-
       default = "f"),
     decimals = 2
   )
+
 }
+\seealso{
+Other helper functions: 
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{cells_styles}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{location_cells}},
+\code{\link{location_colors}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
+}
+\concept{helper functions}

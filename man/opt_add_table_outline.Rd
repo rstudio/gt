@@ -4,8 +4,7 @@
 \alias{opt_add_table_outline}
 \title{Option to wrap an outline around the entire table}
 \usage{
-opt_add_table_outline(data, style = "solid", width = px(3),
-  color = "#D3D3D3")
+opt_add_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -24,7 +23,7 @@ as the \code{width} is larger that of the existing lines.
 }
 \details{
 This function serves as a convenient shortcut for a large number of options
-from the \code{\link[=tab_options]{tab_options()}} function. The complementary \code{opt_*()} function is
+from the \code{\link[=tab_options]{tab_options()}} function. The complementary \verb{opt_*()} function is
 \code{\link[=opt_remove_table_outline]{opt_remove_table_outline()}}, which removes any table outlines.
 }
 \section{Figures}{
@@ -65,11 +64,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_align_table_header}},
-  \code{\link{opt_all_caps}},
-  \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_table_outline}},
-  \code{\link{opt_remove_top_bottom_borders}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_align_table_header}()},
+\code{\link{opt_all_caps}()},
+\code{\link{opt_footnote_marks}()},
+\code{\link{opt_remove_table_outline}()},
+\code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}

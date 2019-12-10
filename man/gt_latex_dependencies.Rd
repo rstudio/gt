@@ -8,12 +8,12 @@ gt_latex_dependencies()
 }
 \description{
 When working with Rnw (Sweave) files or otherwise writing LaTeX code,
-including a \pkg{gt} table can be problematic if we don't have knowledge
-of the LaTeX dependencies. For the most part, these dependencies are the
-LaTeX packages that are required for rendering a \pkg{gt} table. The
-\code{gt_latex_dependencies()} function provides an object that can be
-used to provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work
-and not yield errors due to missing packages.
+including a \pkg{gt} table can be problematic if we don't have knowledge of
+the LaTeX dependencies. For the most part, these dependencies are the LaTeX
+packages that are required for rendering a \pkg{gt} table. The
+\code{gt_latex_dependencies()} function provides an object that can be used to
+provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work and not
+yield errors due to missing packages.
 }
 \details{
 Here is an example Rnw document that shows how the
@@ -48,8 +48,11 @@ Other helper functions:
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
 \code{\link{cells_styles}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{html}()},
+\code{\link{location_cells}},
+\code{\link{location_colors}()},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},

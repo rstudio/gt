@@ -41,9 +41,12 @@ Other helper functions:
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
 \code{\link{cells_styles}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{location_cells}},
+\code{\link{location_colors}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()}

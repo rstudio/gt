@@ -19,7 +19,7 @@ the relevant line styles to \code{"none"}.
 }
 \details{
 This function serves as a convenient shortcut for a large number of options
-from the \code{\link[=tab_options]{tab_options()}} function. The complementary \code{opt_*()} function is
+from the \code{\link[=tab_options]{tab_options()}} function. The complementary \verb{opt_*()} function is
 \code{\link[=opt_add_table_outline]{opt_add_table_outline()}}, which adds a table outline.
 }
 \section{Figures}{
@@ -61,11 +61,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_add_table_outline}},
-  \code{\link{opt_align_table_header}},
-  \code{\link{opt_all_caps}},
-  \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_top_bottom_borders}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_add_table_outline}()},
+\code{\link{opt_align_table_header}()},
+\code{\link{opt_all_caps}()},
+\code{\link{opt_footnote_marks}()},
+\code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}

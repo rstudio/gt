@@ -21,7 +21,7 @@ Regardless of the available parts, there won't be any top of bottom
 horizontal lines after using this function.
 }
 \details{
-This function serves as a convenient shortcut for \code{<gt_tbl> \%>\% tab_options(table.border.top.style = "hidden") \%>\% tab_options(table.border.bottom.style = "hidden")}.
+This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(table.border.top.style = "hidden") \%>\% tab_options(table.border.bottom.style = "hidden")}.
 }
 \section{Figures}{
 
@@ -61,11 +61,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_add_table_outline}},
-  \code{\link{opt_align_table_header}},
-  \code{\link{opt_all_caps}},
-  \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_table_outline}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_add_table_outline}()},
+\code{\link{opt_align_table_header}()},
+\code{\link{opt_all_caps}()},
+\code{\link{opt_footnote_marks}()},
+\code{\link{opt_remove_table_outline}()}
 }
 \concept{table option functions}

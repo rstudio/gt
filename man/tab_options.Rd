@@ -21,10 +21,17 @@ tab_options(
   table.border.top.style = NULL,
   table.border.top.width = NULL,
   table.border.top.color = NULL,
+  table.border.right.style = NULL,
+  table.border.right.width = NULL,
+  table.border.right.color = NULL,
   table.border.bottom.style = NULL,
   table.border.bottom.width = NULL,
   table.border.bottom.color = NULL,
+  table.border.left.style = NULL,
+  table.border.left.width = NULL,
+  table.border.left.color = NULL,
   heading.background.color = NULL,
+  heading.align = NULL,
   heading.title.font.size = NULL,
   heading.title.font.weight = NULL,
   heading.subtitle.font.size = NULL,
@@ -79,6 +86,7 @@ tab_options(
   table_body.border.bottom.width = NULL,
   table_body.border.bottom.color = NULL,
   stub.background.color = NULL,
+  stub.font.size = NULL,
   stub.font.weight = NULL,
   stub.text_transform = NULL,
   stub.border.style = NULL,
@@ -173,7 +181,7 @@ code should be provided.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
-\code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
+\code{row_group}, \code{stub}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \verb{12px}) or as a
 percentage (e.g., \verb{80\\\%}). If provided as a single-length numeric vector,
 it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
@@ -379,7 +387,7 @@ tab_6 <-
 
 }
 \seealso{
-Other table-part creation/modification functions:
+Other table-part creation/modification functions: 
 \code{\link{gt_preview}()},
 \code{\link{gt}()},
 \code{\link{tab_footnote}()},

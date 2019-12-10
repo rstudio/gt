@@ -30,8 +30,8 @@ A preset function incorporates the idea of a 'table reset' in that all of the
 options values available in \code{\link[=tab_options]{tab_options()}} will be first reset to their
 default values. A preset function will then apply the appropriate options
 values to achieve the desired look. So, any additional tweaks through the use
-of \code{\link[=tab_options]{tab_options()}} or any of the \code{opt_*()} functions should be done after
-calling a \code{preset_*()} function such as this one.
+of \code{\link[=tab_options]{tab_options()}} or any of the \verb{opt_*()} functions should be done after
+calling a \verb{preset_*()} function such as this one.
 }
 \section{Figures}{
 
@@ -72,8 +72,9 @@ tab_1 <-
 
 }
 \seealso{
-Other table preset functions: \code{\link{preset_colorized}},
-  \code{\link{preset_fully_lined}},
-  \code{\link{preset_lineless}}
+Other table preset functions: 
+\code{\link{preset_colorized}()},
+\code{\link{preset_fully_lined}()},
+\code{\link{preset_lineless}()}
 }
 \concept{table preset functions}

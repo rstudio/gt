@@ -88,11 +88,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_add_table_outline}},
-  \code{\link{opt_align_table_header}},
-  \code{\link{opt_all_caps}},
-  \code{\link{opt_remove_table_outline}},
-  \code{\link{opt_remove_top_bottom_borders}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_add_table_outline}()},
+\code{\link{opt_align_table_header}()},
+\code{\link{opt_all_caps}()},
+\code{\link{opt_remove_table_outline}()},
+\code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}

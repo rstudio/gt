@@ -23,7 +23,7 @@ the stub, and in all row groups in this way (and there's control over which
 of these locations are transformed).
 }
 \details{
-This function serves as a convenient shortcut for \code{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
+This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
 }
 \section{Figures}{
 
@@ -64,11 +64,12 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: \code{\link{opt_add_row_striping}},
-  \code{\link{opt_add_table_outline}},
-  \code{\link{opt_align_table_header}},
-  \code{\link{opt_footnote_marks}},
-  \code{\link{opt_remove_table_outline}},
-  \code{\link{opt_remove_top_bottom_borders}}
+Other table option functions: 
+\code{\link{opt_add_row_striping}()},
+\code{\link{opt_add_table_outline}()},
+\code{\link{opt_align_table_header}()},
+\code{\link{opt_footnote_marks}()},
+\code{\link{opt_remove_table_outline}()},
+\code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}
