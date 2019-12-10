@@ -498,7 +498,7 @@ info_paletteer <- function(color_pkgs = NULL) {
 #' The [preset_colorized()] function lets us quickly change the appearance of a
 #' standard \pkg{gt} table, allowing us the choice between six different styles
 #' each with seven color options. The `info_preset_colorized()` function can be
-#' used to show us 49 different table schematics, one for each combination of
+#' used to show us 42 different table schematics, one for each combination of
 #' `style` and `color` that can be used in [preset_colorized()]. This
 #' essentially serves as a quick reference for all of the line styles and colors
 #' contained in each distinct look.
