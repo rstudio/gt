@@ -98,8 +98,17 @@ that make it possible to create highly customized tables.
 
 </p>
 
-Want to try this out? You can install the development version of **gt**
-from **GitHub**:
+Want to try this out? Take the **gt** Test Drive on RStudio Cloud:
+
+<p align="center">
+
+<a href="https://rstudio.cloud/project/779965">
+<img src="man/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px">
+</a>
+
+</p>
+
+You can install the development version of **gt** from **GitHub**:
 
 ``` r
 remotes::install_github("rstudio/gt")

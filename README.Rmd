@@ -74,7 +74,15 @@ Beyond this simple example, there are many functions available in **gt** that ma
 
 <p align="center"><img src="man/figures/gt_functions.svg" width="100%"></p>
 
-Want to try this out? You can install the development version of **gt** from **GitHub**:
+Want to try this out? Take the **gt** Test Drive on RStudio Cloud:
+
+<p align="center">
+<a href="https://rstudio.cloud/project/779965">
+<img src="man/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px">
+</a>
+</p>
+
+You can install the development version of **gt** from **GitHub**:
 
 ```{r eval=FALSE}
 remotes::install_github("rstudio/gt")
