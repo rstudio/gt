@@ -6,10 +6,6 @@ home:
 reference:
   - title: Create Table
     desc: >
-      <a href="https://rstudio.cloud/project/159889">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
       creating a stub (`rowname_col`) and row groups (`groupname_col`). We
@@ -23,10 +19,6 @@ reference:
 
   - title: Create/Modify Parts
     desc: >
-      <a href="https://rstudio.cloud/project/160008">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       A **gt** table can contain a few useful parts for conveying additional
       information. These include a header (with a titles and subtitle), a
       footer (with footnotes and source notes), and additional areas for
@@ -47,10 +39,6 @@ reference:
 
   - title: Format Data
     desc: >
-      <a href="https://rstudio.cloud/project/160011">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
       argument. We get to apply these functions exactly once to each data
@@ -76,10 +64,6 @@ reference:
 
   - title: Modify Columns
     desc: >
-      <a href="https://rstudio.cloud/project/160017">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       The `cols_*()` functions allow for modifications that act on entire
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
@@ -99,10 +83,6 @@ reference:
 
   - title: Modify Rows
     desc: >
-      <a href="https://rstudio.cloud/project/160465">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       The only function currently that modifies entire rows is the
       `row_group_order()` function. It lets us modify the ordering of any
       row groups in the table.
@@ -111,10 +91,6 @@ reference:
 
   - title: Add Rows
     desc: >
-      <a href="https://rstudio.cloud/project/160468">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       There are two functions that will add rows to a **gt** table:
       `summary_rows()` and `grand_summary_rows()`. These functions will both add
       summary rows but one will do it in a groupwise fashion while the other
@@ -162,10 +138,6 @@ reference:
 
   - title: Export Table
     desc: >
-      <a href="https://rstudio.cloud/project/174361">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       There may come a day when you need to export a **gt** table to some
       specific format. We have functions for getting the HTML content of
       a **gt** table (`as_raw_html()`), getting LaTeX code (`as_latex()`),
@@ -221,10 +193,6 @@ reference:
 
   - title: Image Addition
     desc: >
-      <a href="https://rstudio.cloud/project/161121">
-      <img src="https://github.com/rstudio/gt/raw/master/man/figures/rstudio-cloud-example.png" alt="RStudio Cloud Example" width="180px">
-      </a>
-      <br /><br />
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
       insert images into data cells, (2) use any function that creates
