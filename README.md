@@ -16,8 +16,8 @@ status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https:/
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
 a wide variety of useful tables with a cohesive set of table parts.
-These include the *table header*, the *stub*, the *stub head*, the
-*column labels*, the *table body*, and the *table footer*.
+These include the *table header*, the *stub*, the *column labels* and
+*spanner column labels*, the *table body*, and the *table footer*.
 
 <p align="center">
 
@@ -27,9 +27,7 @@ These include the *table header*, the *stub*, the *stub head*, the
 
 It all begins with preprocessed **table data** (be it a tibble or a data
 frame). You decide how to compose your **gt table** with the elements
-you need for the task at hand. Output can either be in the form of
-**HTML**, **LaTeX**, or **RTF**. All work beautifully inside **R
-Markdown** documents.
+you need for the task at hand.
 
 <p align="center">
 
@@ -77,7 +75,7 @@ sp500 %>%
 
 <p align="center">
 
-<img src="man/figures/gt_sp500_table.svg" width="800px">
+<img src="man/figures/gt_sp500_table.svg" width="1200px">
 
 </p>
 
@@ -100,15 +98,8 @@ that make it possible to create highly customized tables.
 
 </p>
 
-Want to try this out? First and foremost, the **gt** package is used in
-an R environment, so, if you don’t have an R installation, it can be
-obtained from the [**Comprehensive R Archive Network
-(CRAN)**](https://cran.r-project.org/). For the best experience in
-working with R, use the [**RStudio Desktop
-IDE**](https://www.rstudio.com/products/rstudio/).
-
-You can install the development version of **gt** from **GitHub**. Use
-the following in the R console to install **gt**.
+Want to try this out? You can install the development version of **gt**
+from **GitHub**:
 
 ``` r
 remotes::install_github("rstudio/gt")
@@ -124,28 +115,12 @@ make this package better, feel free to file an
 
 -----
 
-<h4 align="center">
-
-Code of Conduct
-
-</h4>
-
-<h6 align="center">
+#### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
-agree to abide by its terms.
+agree to abide by its terms
 
-</h6>
-
-<h4 align="center">
-
-License
-
-</h4>
-
-<h6 align="center">
+#### License
 
 MIT © RStudio, Inc.
-
-</h6>
