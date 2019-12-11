@@ -178,34 +178,37 @@ test_that("the `fmt_number()` function works correctly", {
 
   # Expect that a column with NAs will work fine with `fmt_number()`,
   # it'll just produce NA values
-  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10)) %>% gt()
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_number()`
-  expect_s3_class(
-    na_col_tbl %>%
-      fmt_number(columns = vars(a)),
-    "gt_tbl"
+  expect_error(
+    na_col_tbl %>% fmt_number(columns = vars(a)) %>% as_raw_html(), NA
   )
-  expect_s3_class(
+  expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), rows = 1:5),
-    "gt_tbl"
+      fmt_number(columns = vars(a), rows = 1:5) %>% as_raw_html(), NA
   )
-  expect_s3_class(
+  expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), scale_by = 100),
-    "gt_tbl"
+      fmt_number(columns = vars(a), scale_by = 100) %>% as_raw_html(), NA
   )
-  expect_s3_class(
+  expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), suffixing = TRUE),
-    "gt_tbl"
+      fmt_number(columns = vars(a), suffixing = TRUE) %>% as_raw_html(), NA
   )
-  expect_s3_class(
+  expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), pattern = "a{x}b"),
-    "gt_tbl"
+      fmt_number(columns = vars(a), pattern = "a{x}b") %>% as_raw_html(), NA
+  )
+
+  # Expect that two columns being formatted (one entirely NA) will work
+  expect_equal(
+    (na_col_tbl %>%
+       fmt_number(columns = vars(a)) %>%
+       fmt_number(columns = vars(b)) %>% render_formats_test("html"))[["b"]],
+    c("1.00", "2.00", "3.00", "4.00", "5.00", "6.00", "7.00", "8.00",
+      "9.00", "10.00")
   )
 })
 

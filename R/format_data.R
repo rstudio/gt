@@ -162,11 +162,6 @@ fmt_number <- function(data,
       pattern = pattern,
       format_fn = function(x, context) {
 
-        # Return `x` if the length of it is zero
-        if (length(x) == 0) {
-          return(x)
-        }
-
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
