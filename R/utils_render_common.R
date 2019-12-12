@@ -113,12 +113,12 @@ migrate_unformatted_to_output <- function(data,
         lapply(
           data_tbl[[colname]][row_index],
           function(x) {
+
+            if (is.numeric(x)) {
+              x <- format(x, drop0trailing = FALSE, trim = TRUE, justify = "none")
+            }
+
             x %>%
-              format(
-                drop0trailing = FALSE,
-                trim = TRUE,
-                justify = "none"
-              ) %>%
               tidy_gsub("\\s+$", "") %>%
               process_text(context) %>%
               paste(collapse = ", ")
@@ -128,14 +128,13 @@ migrate_unformatted_to_output <- function(data,
     } else {
 
       # No `lapply()` used: all values will be treated cohesively
-      body[[colname]][row_index] <-
-        format(
-          data_tbl[[colname]][row_index],
-          drop0trailing = FALSE,
-          trim = TRUE,
-          justify = "none"
-        ) %>%
-        process_text(context)
+      vals <- data_tbl[[colname]][row_index]
+
+      if (is.numeric(vals)) {
+        vals <- format(vals, drop0trailing = FALSE, trim = TRUE, justify = "none")
+      }
+
+      body[[colname]][row_index] <- vals %>% process_text(context)
     }
   }
 
