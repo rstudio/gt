@@ -968,6 +968,7 @@ validate_length_one <- function(x, name) {
 }
 
 # print8 <- function(x) {
+#   force(x)
 #
 #   old_ctype <- Sys.getlocale("LC_CTYPE")
 #   Sys.setlocale("LC_CTYPE", "en_CA.UTF-8")
