@@ -296,7 +296,7 @@ test_that("a gt table's row group labels are HTML escaped", {
     gt(groupname_col = "group") %>%
     tab_footnote(
       footnote = "footnote",
-      locations = cells_group(groups = "x > 30")
+      locations = cells_row_groups(groups = "x > 30")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -422,7 +422,7 @@ test_that("a gt table contains custom styles at the correct locations", {
         cell_fill(color = "red"),
         cell_text(color = "white")
       ),
-      locations = cells_group(groups = "Mazdas")
+      locations = cells_row_groups(groups = "Mazdas")
     ) %>%
     tab_style(
       style = list(

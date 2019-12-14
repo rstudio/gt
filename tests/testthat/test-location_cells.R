@@ -101,30 +101,30 @@ test_that("the `cells_column_labels()` function works correctly", {
     expect_equal(c("group_1", "group_2"))
 })
 
-test_that("the `cells_group()` function works correctly", {
+test_that("the `cells_row_groups()` function works correctly", {
 
-  # Create a `cells_group` object with names provided to `groups`
-  helper_cells_group <- cells_group(groups = c("group_1", "group_2"))
+  # Create a `cells_row_groups` object with names provided to `groups`
+  helper_cells_row_groups <- cells_row_groups(groups = c("group_1", "group_2"))
 
-  # Expect this has the `cells_group` and `location_cells` classes
-  helper_cells_group %>%
-    expect_is(c("cells_group", "location_cells"))
+  # Expect this has the `cells_row_groups` and `location_cells` classes
+  helper_cells_row_groups %>%
+    expect_is(c("cells_row_groups", "location_cells"))
 
   # Expect the length of the object to be `1`
-  helper_cells_group %>%
+  helper_cells_row_groups %>%
     length() %>%
     expect_equal(1)
 
   # Expect that the object has within it the name `groups`
-  helper_cells_group %>%
+  helper_cells_row_groups %>%
     names() %>%
     expect_equal("groups")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_group[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_row_groups[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_group[[1]] %>%
+  helper_cells_row_groups[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("group_1", "group_2"))
 })

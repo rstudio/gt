@@ -17,7 +17,7 @@
 #' \item `cells_column_spanners()`: targets the spanner column labels, which
 #' appear above the column labels.
 #' \item `cells_column_labels()`: targets the column labels.
-#' \item `cells_group()`: targets the row group labels in any available row
+#' \item `cells_row_groups()`: targets the row group labels in any available row
 #' groups using the `groups` argument.
 #' \item `cells_stub()`: targets row labels in the table stub using the `rows`
 #' argument.
@@ -32,7 +32,7 @@
 #' @param columns,rows Either a vector of names, a vector of indices,
 #'   values provided by [vars()], values provided by `c()`, or a select helper
 #'   function (see Details for information on these functions).
-#' @param groups Used in the `cells_title()`, `cells_group()`, and
+#' @param groups Used in the `cells_title()`, `cells_row_groups()`, and
 #'   `cells_summary()` functions to specify which groups to target.
 #' @param spanners Used in the `cells_column_spanners()` function to indicate
 #'   which spanners to target.
@@ -95,7 +95,7 @@
 #' # `summary_rows()` function and then add a
 #' # footnote to the "peppr_salami" row group
 #' # label with `tab_footnote()` and with
-#' # `cells_group()` in `locations`
+#' # `cells_row_groups()` in `locations`
 #' tab_3 <-
 #'   pizzaplace %>%
 #'   dplyr::filter(
@@ -116,7 +116,7 @@
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "The Pepper-Salami.",
-#'     cells_group(groups = "peppr_salami")
+#'     cells_row_groups(groups = "peppr_salami")
 #'   )
 #'
 #' # Use `sza` to create a gt table; color
@@ -297,16 +297,16 @@ cells_column_labels <- function(columns) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_group <- function(groups = TRUE) {
+cells_row_groups <- function(groups = TRUE) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
 
-  # Create the `cells_group` object
+  # Create the `cells_row_groups` object
   cells <- list(groups = group_expr)
 
-  # Apply the `cells_group` and `location_cells` classes
-  class(cells) <- c("cells_group", "location_cells")
+  # Apply the `cells_row_groups` and `location_cells` classes
+  class(cells) <- c("cells_row_groups", "location_cells")
 
   cells
 }

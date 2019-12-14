@@ -274,7 +274,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_group(groups = "Mazdas")
+      locations = cells_row_groups(groups = "Mazdas")
     )
 
   # Expect that the internal `styles_df` data frame will have

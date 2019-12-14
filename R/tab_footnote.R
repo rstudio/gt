@@ -30,13 +30,14 @@
 #' @param locations The cell or set of cells to be associated with the footnote.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
-#'   functions are: [cells_title()], [cells_column_labels()], [cells_group()],
-#'   [cells_stub()], [cells_stubhead()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Please see the help article \link{location_cells}
-#'   for more information on how these helper functions can be used.
-#'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
-#'   we wish to link the footnote text to different types of locations (e.g.,
-#'   cell data values, stub group headings, the table title, etc.).
+#'   functions are: [cells_title()], [cells_column_labels()],
+#'   [cells_row_groups()], [cells_stub()], [cells_stubhead()], [cells_body()],
+#'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
+#'   \link{location_cells} for more information on how these helper functions
+#'   can be used. Additionally, we can enclose several `cells_*()` calls within
+#'   a `list()` if we wish to link the footnote text to different types of
+#'   locations (e.g., cell data values, stub group headings, the table title,
+#'   etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -183,7 +184,7 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote) {
   data
 }
 
-set_footnote.cells_group <- function(loc, data, footnote) {
+set_footnote.cells_row_groups <- function(loc, data, footnote) {
 
   row_groups <- dt_stub_groups_get(data = data)
 

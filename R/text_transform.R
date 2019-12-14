@@ -5,12 +5,13 @@
 #'   transformation. Supplying any of the `cells_*()` helper functions is a
 #'   useful way to target the location cells that are associated with the
 #'   footnote text. These helper functions are: [cells_title()],
-#'   [cells_column_labels()], [cells_group()], [cells_stub()], [cells_body()],
-#'   and [cells_summary()]. Please see the help article \link{location_cells}
-#'   for more information on how these helper functions can be used.
-#'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
-#'   we wish to link the footnote text to different types of locations (e.g.,
-#'   cell data values, stub group headings, the table title, etc.).
+#'   [cells_column_labels()], [cells_row_groups()], [cells_stub()],
+#'   [cells_body()], and [cells_summary()]. Please see the help article
+#'   \link{location_cells} for more information on how these helper functions
+#'   can be used. Additionally, we can enclose several `cells_*()` calls within
+#'   a `list()` if we wish to link the footnote text to different types of
+#'   locations (e.g., cell data values, stub group headings, the table title,
+#'   etc.).
 #' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.

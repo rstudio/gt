@@ -401,7 +401,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Group cell footnote.",
-      locations = cells_group(groups = "Mazdas"))
+      locations = cells_row_groups(groups = "Mazdas"))
 
   # Expect that the internal `footnotes_df` data frame
   # will have a single row

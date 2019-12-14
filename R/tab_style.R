@@ -28,7 +28,7 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the style application. These
 #'   helper functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_group()], [cells_stub()], [cells_stubhead()], [cells_body()],
+#'   [cells_row_groups()], [cells_stub()], [cells_stubhead()], [cells_body()],
 #'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
 #'   [location_cells] for more information on how these helper functions can be
 #'   used. Additionally, we can enclose several `cells_*()` calls within a
@@ -267,7 +267,7 @@ set_style.cells_column_spanners <- function(loc, data, style) {
   data
 }
 
-set_style.cells_group <- function(loc, data, style) {
+set_style.cells_row_groups <- function(loc, data, style) {
 
   stub_groups <- dt_stub_groups_get(data = data)
 

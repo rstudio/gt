@@ -6,7 +6,7 @@
 \alias{cells_stubhead}
 \alias{cells_column_spanners}
 \alias{cells_column_labels}
-\alias{cells_group}
+\alias{cells_row_groups}
 \alias{cells_stub}
 \alias{cells_body}
 \alias{cells_summary}
@@ -21,7 +21,7 @@ cells_column_spanners(spanners)
 
 cells_column_labels(columns)
 
-cells_group(groups = TRUE)
+cells_row_groups(groups = TRUE)
 
 cells_stub(rows = TRUE)
 
@@ -32,7 +32,7 @@ cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
 cells_grand_summary(columns = TRUE, rows = TRUE)
 }
 \arguments{
-\item{groups}{Used in the \code{cells_title()}, \code{cells_group()}, and
+\item{groups}{Used in the \code{cells_title()}, \code{cells_row_groups()}, and
 \code{cells_summary()} functions to specify which groups to target.}
 
 \item{spanners}{Used in the \code{cells_column_spanners()} function to indicate
@@ -63,7 +63,7 @@ by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
 \item \code{cells_column_spanners()}: targets the spanner column labels, which
 appear above the column labels.
 \item \code{cells_column_labels()}: targets the column labels.
-\item \code{cells_group()}: targets the row group labels in any available row
+\item \code{cells_row_groups()}: targets the row group labels in any available row
 groups using the \code{groups} argument.
 \item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
 argument.
@@ -146,7 +146,7 @@ tab_2 <-
 # `summary_rows()` function and then add a
 # footnote to the "peppr_salami" row group
 # label with `tab_footnote()` and with
-# `cells_group()` in `locations`
+# `cells_row_groups()` in `locations`
 tab_3 <-
   pizzaplace \%>\%
   dplyr::filter(
@@ -167,7 +167,7 @@ tab_3 <-
   ) \%>\%
   tab_footnote(
     footnote = "The Pepper-Salami.",
-    cells_group(groups = "peppr_salami")
+    cells_row_groups(groups = "peppr_salami")
   )
 
 # Use `sza` to create a gt table; color
