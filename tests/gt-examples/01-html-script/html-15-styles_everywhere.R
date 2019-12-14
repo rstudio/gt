@@ -48,7 +48,7 @@ many_styles_tbl <-
     style = list(
       cell_fill(color = "steelblue"),
       cell_text(color = "white")
-      ),
+    ),
     locations = cells_stub(rows = "Merc 240D")
   ) %>%
   tab_style(
@@ -63,7 +63,7 @@ many_styles_tbl <-
     style = list(
       cell_fill(color = "green"),
       cell_text(color = "white")
-      ),
+    ),
     locations = cells_summary(
       groups = "Mercs",
       columns = "hp",
@@ -85,7 +85,7 @@ many_styles_tbl <-
     style = list(
       cell_fill(color = "lightgray"),
       cell_text(style = "italic")
-      ),
+    ),
     locations = cells_body(
       columns = "hp",
       rows = "Datsun 710")

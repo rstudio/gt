@@ -1,8 +1,7 @@
 library(gt)
+library(tidyverse)
 
 # Create a display table where individual table cells are styled
-
-# Input table
 tbl <-
   dplyr::tribble(
     ~groupname, ~rowname, ~value,  ~value_2,
@@ -13,7 +12,8 @@ tbl <-
     "B",        "1",      190.9,   832.5,
     "B",        "2",      743.3,   281.2,
     "B",        "3",      252.3,   732.5,
-    "B",        "4",      344.7,   281.2)
+    "B",        "4",      344.7,   281.2
+  )
 
 # Create a display table
 cell_styles_tbl <-

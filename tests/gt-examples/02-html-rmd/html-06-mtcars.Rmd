@@ -6,11 +6,10 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
 ```
 
-Create a display table based on `mtcars`; Motor Trend Car Road Tests
+Create a display table based on `mtcars`.
 
 ```{r}
 gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -29,7 +28,9 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_move_to_start(columns = vars(hp)) %>%
   cols_move_to_end(columns = vars(am, gear)) %>%
   cols_hide(columns = vars(carb)) %>%
-  cols_move(columns = vars(wt, carb, qsec), after = vars(gear)) %>%
+  cols_move(
+    columns = vars(wt, qsec),
+    after = vars(gear)) %>%
   tab_row_group(
     group = "Mercs",
     rows = c(

@@ -1,7 +1,6 @@
 library(gt)
 
-# Create a display table based on `mtcars`; Motor Trend Car Road Tests
-
+# Create a display table based on `mtcars`
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_align(
