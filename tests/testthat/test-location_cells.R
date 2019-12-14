@@ -157,67 +157,68 @@ test_that("the `cells_stub()` function works correctly", {
     expect_equal(c("row_1", "row_2"))
 })
 
-test_that("the `cells_data()` function works correctly", {
+test_that("the `cells_body()` function works correctly", {
 
-  # Create a `cells_data` object with names provided to `columns`
-  helper_cells_data <- cells_data(columns = c("col_1", "col_2"))
+  # Create a `cells_body` object with names provided to `columns`
+  helper_cells_body <- cells_body(columns = c("col_1", "col_2"))
 
-  # Expect this has the `cells_data` and `location_cells` classes
-  helper_cells_data %>%
-    expect_is(c("cells_data", "location_cells"))
+  # Expect this has the `cells_body` and `location_cells` classes
+  helper_cells_body %>%
+    expect_is(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_data %>%
+  helper_cells_body %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `rows`
-  helper_cells_data %>%
+  helper_cells_body %>%
     names() %>%
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]] %>%
+  helper_cells_body[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("col_1", "col_2"))
 
-  # Create a `cells_data` object with names provided to `columns` and `rows`
-  helper_cells_data <-
-    cells_data(
+  # Create a `cells_body` object with names provided to `columns` and `rows`
+  helper_cells_body <-
+    cells_body(
       columns = c("col_1", "col_2"),
-      rows = c("row_1", "row_2"))
+      rows = c("row_1", "row_2")
+    )
 
-  # Expect this has the `cells_data` and `location_cells` classes
-  helper_cells_data %>%
-    expect_is(c("cells_data", "location_cells"))
+  # Expect this has the `cells_body` and `location_cells` classes
+  helper_cells_body %>%
+    expect_is(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_data %>%
+  helper_cells_body %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `rows`
-  helper_cells_data %>%
+  helper_cells_body %>%
     names() %>%
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_data[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[2]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]] %>%
+  helper_cells_body[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("col_1", "col_2"))
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_data[[2]] %>%
+  helper_cells_body[[2]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("row_1", "row_2"))
 })

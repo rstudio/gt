@@ -130,7 +130,7 @@ pizza_tab_email <-
     ) %>%
   tab_footnote(
     footnote = "The small-sized classic pizzas sold the most.",
-    locations = cells_data(columns = 1, rows = 1)
+    locations = cells_body(columns = 1, rows = 1)
     ) %>%
   as_raw_html()
 

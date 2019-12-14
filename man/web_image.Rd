@@ -63,7 +63,7 @@ tab_1 <-
   ) \%>\%
   gt() \%>\%
   text_transform(
-    locations = cells_data(vars(image)),
+    locations = cells_body(vars(image)),
     fn = function(x) {
       web_image(
         url = r_png_url,

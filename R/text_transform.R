@@ -5,7 +5,7 @@
 #'   transformation. Supplying any of the `cells_*()` helper functions is a
 #'   useful way to target the location cells that are associated with the
 #'   footnote text. These helper functions are: [cells_title()],
-#'   [cells_column_labels()], [cells_group()], [cells_stub()], [cells_data()],
+#'   [cells_column_labels()], [cells_group()], [cells_stub()], [cells_body()],
 #'   and [cells_summary()]. Please see the help article \link{location_cells}
 #'   for more information on how these helper functions can be used.
 #'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
@@ -30,7 +30,7 @@
 #'   fmt_number(columns = vars(num)) %>%
 #'   fmt_currency(columns = vars(currency)) %>%
 #'   text_transform(
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(num)),
 #'     fn = function(x) {
 #'
@@ -74,7 +74,7 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-text_transform_at_location.cells_data <- function(loc,
+text_transform_at_location.cells_body <- function(loc,
                                                   data,
                                                   fn = identity) {
 

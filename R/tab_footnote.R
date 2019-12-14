@@ -6,7 +6,7 @@
 #' footnote text (that starts with the corresponding footnote mark) that is
 #' placed in the table's footer area. Each call of `tab_footnote()` will add a
 #' different note, and one or more cells can be targeted via the location helper
-#' functions (e.g., [cells_data()], [cells_column_labels()], etc.).
+#' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
@@ -31,7 +31,7 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
 #'   functions are: [cells_title()], [cells_column_labels()], [cells_group()],
-#'   [cells_stub()], [cells_stubhead()], [cells_data()], [cells_summary()], and
+#'   [cells_stub()], [cells_stubhead()], [cells_body()], [cells_summary()], and
 #'   [cells_grand_summary()]. Please see the help article \link{location_cells}
 #'   for more information on how these helper functions can be used.
 #'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
@@ -211,9 +211,9 @@ set_footnote.cells_group <- function(loc, data, footnote) {
   data
 }
 
-set_footnote.cells_data <- function(loc, data, footnote) {
+set_footnote.cells_body <- function(loc, data, footnote) {
 
-  resolved <- resolve_cells_data(data = data, object = loc)
+  resolved <- resolve_cells_body(data = data, object = loc)
 
   cols <- resolved$columns
   rows <- resolved$rows

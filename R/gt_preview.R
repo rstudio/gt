@@ -128,7 +128,7 @@ gt_preview <- function(data,
       gt_tbl %>%
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_data(columns = visible_vars, rows = ellipsis_row)
+        locations = cells_body(columns = visible_vars, rows = ellipsis_row)
       )
 
     if (isTRUE(incl_rownums)) {

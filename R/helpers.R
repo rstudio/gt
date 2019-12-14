@@ -21,7 +21,7 @@
 #' groups using the `groups` argument.
 #' \item `cells_stub()`: targets row labels in the table stub using the `rows`
 #' argument.
-#' \item `cells_data()`: targets data cells in the table body using
+#' \item `cells_body()`: targets data cells in the table body using
 #' intersections of `columns` and `rows`.
 #' \item `cells_summary()`: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
@@ -146,7 +146,7 @@
 #'
 #' # Use `gtcars` to create a gt table; add
 #' # a footnote that targets a single data cell
-#' # with `tab_footnote()`, using `cells_data()`
+#' # with `tab_footnote()`, using `cells_body()`
 #' # in `locations` (`rows = hp == max(hp)` will
 #' # target a single row in the `hp` column)
 #' tab_5 <-
@@ -156,7 +156,7 @@
 #'   gt() %>%
 #'   tab_footnote(
 #'     footnote = "Highest horsepower.",
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(hp),
 #'       rows = hp == max(hp))
 #'   ) %>%
@@ -331,22 +331,22 @@ cells_stub <- function(rows = TRUE) {
 #' @rdname location_cells
 #' @import rlang
 #' @export
-cells_data <- function(columns = TRUE,
+cells_body <- function(columns = TRUE,
                        rows = TRUE) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
   row_expr <- rlang::enquo(rows)
 
-  # Create the `cells_data` object
+  # Create the `cells_body` object
   cells <-
     list(
       columns = col_expr,
       rows = row_expr
     )
 
-  # Apply the `cells_data` and `location_cells` classes
-  class(cells) <- c("cells_data", "location_cells")
+  # Apply the `cells_body` and `location_cells` classes
+  class(cells) <- c("cells_body", "location_cells")
 
   cells
 }
@@ -773,7 +773,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'         sides = c("top", "bottom"),
 #'         color = "gray", weight = px(0.5), style = "solid"
 #'       ),
-#'       locations = cells_data(
+#'       locations = cells_body(
 #'         columns = everything(),
 #'         rows = everything()
 #'       )
@@ -782,7 +782,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #' # Incorporate different horizontal and
 #' # vertical borders at several locations;
 #' # this uses multiple `cell_borders()` and
-#' # `cells_data()` calls within `list()`s
+#' # `cells_body()` calls within `list()`s
 #' tab_2 <-
 #'   exibble %>%
 #'     gt() %>%
@@ -800,11 +800,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #'         )
 #'       ),
 #'       locations = list(
-#'         cells_data(
+#'         cells_body(
 #'           columns = vars(num),
 #'           rows = is.na(num)
 #'         ),
-#'         cells_data(
+#'         cells_body(
 #'           columns = vars(currency),
 #'           rows = is.na(currency)
 #'         )

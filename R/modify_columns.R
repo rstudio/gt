@@ -683,7 +683,7 @@ cols_move_to_end <- function(data,
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(year),
 #'       rows = population > 3000000)
 #'   )

@@ -26,15 +26,15 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_data(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = vars(value_1), rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = vars(value_1), rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
-    locations = cells_data(columns = "value_1", rows = 1)
+    locations = cells_body(columns = "value_1", rows = 1)
   ) %>%
   tab_footnote(
     footnote = "The first row group",

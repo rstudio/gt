@@ -28,9 +28,10 @@ cell_styles_tbl <-
       cell_fill(color = "orange"),
       cell_text(color = "white")
     ),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(value, value_2),
-      rows = 1)
+      rows = 1
+    )
   )
 
 cell_styles_tbl

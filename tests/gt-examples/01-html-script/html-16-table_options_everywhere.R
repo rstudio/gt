@@ -35,19 +35,19 @@ many_options_tbl <-
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_data(columns = 1, rows = 1)
+    locations = cells_body(columns = 1, rows = 1)
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_data(columns = 2, rows = 2)
+    locations = cells_body(columns = 2, rows = 2)
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_data(columns = 3, rows = 3)
+    locations = cells_body(columns = 3, rows = 3)
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_data(columns = 4, rows = 4)
+    locations = cells_body(columns = 4, rows = 4)
   ) %>%
   tab_source_note("A source note for the table.") %>%
   tab_options(
@@ -85,8 +85,8 @@ many_options_tbl <-
     summary_row.background.color = "pink", # -- background color of all summary rows (stub & table body)
     summary_row.padding = px(3),               # padding of all summary rows (stub & table body)
     summary_row.text_transform = "lowercase",  # text transform on all summary row labels
-    footnote.font.size = px(12),               # text size of the footnotes block
-    footnote.padding = px(3),                  # padding of the footnotes block
+    footnotes.font.size = px(12),               # text size of the footnotes block
+    footnotes.padding = px(3),                  # padding of the footnotes block
     source_notes.font.size = px(12),             # text size of the source notes block
     source_notes.padding = px(3)                 # padding of the source note block
   )

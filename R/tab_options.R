@@ -165,13 +165,13 @@
 #'   fmt_currency(columns = vars(currency)) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(num),
 #'       rows = num > 1000)
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(currency),
 #'       rows = currency > 1000)
 #'   ) %>%

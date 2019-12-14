@@ -1341,7 +1341,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "tomato"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1368,7 +1368,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FFAA00"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1395,7 +1395,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D60"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1423,7 +1423,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D", alpha = 0.5),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1463,7 +1463,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#F3F300EE", alpha = 0.5),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()

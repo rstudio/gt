@@ -41,7 +41,7 @@ tab_1 <-
         sides = c("top", "bottom"),
         color = "gray", weight = px(0.5), style = "solid"
       ),
-      locations = cells_data(
+      locations = cells_body(
         columns = everything(),
         rows = everything()
       )
@@ -50,7 +50,7 @@ tab_1 <-
 # Incorporate different horizontal and
 # vertical borders at several locations;
 # this uses multiple `cell_borders()` and
-# `cells_data()` calls within `list()`s
+# `cells_body()` calls within `list()`s
 tab_2 <-
   exibble \%>\%
     gt() \%>\%
@@ -68,11 +68,11 @@ tab_2 <-
         )
       ),
       locations = list(
-        cells_data(
+        cells_body(
           columns = vars(num),
           rows = is.na(num)
         ),
-        cells_data(
+        cells_body(
           columns = vars(currency),
           rows = is.na(currency)
         )

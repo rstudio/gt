@@ -288,7 +288,7 @@ scale_apply_styles <- function(data,
         data %>%
         tab_style(
           do.call(cell_fill, styles[[i]]),
-          cells_data(
+          cells_body(
             columns = column,
             rows = rows_i[[i]]
           )
@@ -300,7 +300,7 @@ scale_apply_styles <- function(data,
         data %>%
         tab_style(
           do.call(cell_text, styles[[i]]),
-          cells_data(
+          cells_body(
             columns = column,
             rows = rows_i[[i]]
           )

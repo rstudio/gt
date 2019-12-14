@@ -411,11 +411,11 @@ test_that("a gt table contains custom styles at the correct locations", {
         cell_fill(color = "lightgray"),
         cell_text(style = "italic")
       ),
-      locations = cells_data(columns = "hp", rows = "Datsun 710")
+      locations = cells_body(columns = "hp", rows = "Datsun 710")
     ) %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+      locations = cells_body(columns = "disp", rows = "Mazda RX4")
     ) %>%
     tab_style(
       style = list(

@@ -17,7 +17,7 @@ retain HTML elements in the footnote text.}
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the footnote text. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_data]{cells_data()}}, \code{\link[=cells_summary]{cells_summary()}}, and
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
 \code{\link[=cells_grand_summary]{cells_grand_summary()}}. Please see the help article \link{location_cells}
 for more information on how these helper functions can be used.
 Additionally, we can enclose several \verb{cells_*()} calls within a \code{list()} if
@@ -34,7 +34,7 @@ footnote mark that is attached to the targeted cell text, and (2) the
 footnote text (that starts with the corresponding footnote mark) that is
 placed in the table's footer area. Each call of \code{tab_footnote()} will add a
 different note, and one or more cells can be targeted via the location helper
-functions (e.g., \code{\link[=cells_data]{cells_data()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.).
+functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.).
 }
 \details{
 The formatting of the footnotes can be controlled through the use of various

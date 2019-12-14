@@ -89,13 +89,13 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
     style = cells_styles(
       bkgd_color = "lightgray",
       text_style = "italic"),
-    locations = cells_data(
+    locations = cells_body(
       columns = "hp",
       rows = "Datsun 710")
   ) %>%
   tab_style(
     style = cells_styles(bkgd_color = "yellow"),
-    locations = cells_data(
+    locations = cells_body(
       columns = "disp",
       rows = "Mazda RX4")
   )

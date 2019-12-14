@@ -35,7 +35,7 @@ gt(tbl) %>%
     style = cells_styles(
       bkgd_color = "orange",
       text_color = "white"),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(value, value_2),
       rows = 1)
   ) %>%

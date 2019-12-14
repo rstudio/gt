@@ -353,7 +353,7 @@ info_locales <- function(begins_with = NULL) {
     ) %>%
     tab_style(
       style = cell_text(size = px(32)),
-      locations = cells_data(columns = vars(group_sep, dec_sep))
+      locations = cells_body(columns = vars(group_sep, dec_sep))
     ) %>%
     tab_options(data_row.padding = "5px")
 }
@@ -448,7 +448,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     dplyr::mutate(`Color Count and Palette` = NA) %>%
     gt(groupname_col = "package", rowname_col = "palette") %>%
     text_transform(
-      locations = cells_data("Color Count and Palette"),
+      locations = cells_body("Color Count and Palette"),
       fn = function(x) {
         palettes_strips
       }
@@ -475,7 +475,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     ) %>%
     tab_style(
       style = cell_text(font = "Courier"),
-      locations = cells_data(columns = vars(length))
+      locations = cells_body(columns = vars(length))
     ) %>%
     tab_options(
       row_group.background.color = "#FFFFF0",

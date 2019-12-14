@@ -212,7 +212,7 @@ resolve_location.resolved <- function(loc, data) {
   loc
 }
 
-resolve_location.cells_data <- function(loc, data) {
+resolve_location.cells_body <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
@@ -288,7 +288,7 @@ to_output_location.output_relative <- function(loc, data) {
   loc
 }
 
-to_output_location.cells_data <- function(loc, data) {
+to_output_location.cells_body <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
   groups <- dt_stub_groups_get(data = data)

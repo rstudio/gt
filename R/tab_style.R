@@ -28,7 +28,7 @@
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the style application. These
 #'   helper functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_group()], [cells_stub()], [cells_stubhead()], [cells_data()],
+#'   [cells_group()], [cells_stub()], [cells_stubhead()], [cells_body()],
 #'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
 #'   [location_cells] for more information on how these helper functions can be
 #'   used. Additionally, we can enclose several `cells_*()` calls within a
@@ -55,7 +55,7 @@
 #'       cell_fill(color = "lightcyan"),
 #'       cell_text(weight = "bold")
 #'       ),
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(num),
 #'       rows = num >= 5000)
 #'   ) %>%
@@ -64,7 +64,7 @@
 #'       cell_fill(color = "#F9E3D6"),
 #'       cell_text(style = "italic")
 #'       ),
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(currency),
 #'       rows = currency < 100)
 #'   )
@@ -82,7 +82,7 @@
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_fill(color = "lightgreen"),
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       rows = close > open)
 #'   ) %>%
 #'   tab_style(
@@ -90,7 +90,7 @@
 #'       cell_fill(color = "red"),
 #'       cell_text(color = "white")
 #'       ),
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       rows = open > close)
 #'   )
 #'
@@ -102,8 +102,8 @@
 #' @family Create or Modify Parts
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
-#'   defining custom styles and [cells_data()] as a useful helper function for
-#'   targeting one or more data cells to be styled.
+#'   defining custom styles and [cells_body()] as one of many useful helper
+#'   functions for targeting the locations to be styled.
 #'
 #' @export
 tab_style <- function(data,
@@ -295,9 +295,9 @@ set_style.cells_group <- function(loc, data, style) {
   data
 }
 
-set_style.cells_data <- function(loc, data, style) {
+set_style.cells_body <- function(loc, data, style) {
 
-  resolved <- resolve_cells_data(data = data, object = loc)
+  resolved <- resolve_cells_body(data = data, object = loc)
 
   cols <- resolved$columns
   rows <- resolved$rows

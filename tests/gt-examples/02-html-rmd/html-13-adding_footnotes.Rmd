@@ -35,7 +35,7 @@ tbl <-
 gt(data = tbl) %>%
   tab_footnote(
     footnote = "First data cell.",
-    locations = cells_data(columns = 1, rows = 1)) %>%
+    locations = cells_body(columns = 1, rows = 1)) %>%
   tab_footnote(
     footnote = "A stub cell.",
     locations = cells_stub(rows = 1)) %>%
@@ -44,8 +44,8 @@ gt(data = tbl) %>%
     locations = cells_column_labels(columns = vars(value_1))) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_data(columns = 2, rows = 9)) %>%
+    locations = cells_body(columns = 2, rows = 9)) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = 2, rows = 4))
+    locations = cells_body(columns = 2, rows = 4))
 ```

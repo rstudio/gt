@@ -8,7 +8,7 @@
 \alias{cells_column_labels}
 \alias{cells_group}
 \alias{cells_stub}
-\alias{cells_data}
+\alias{cells_body}
 \alias{cells_summary}
 \alias{cells_grand_summary}
 \title{Helpers for targeting cells in different locations}
@@ -25,7 +25,7 @@ cells_group(groups = TRUE)
 
 cells_stub(rows = TRUE)
 
-cells_data(columns = TRUE, rows = TRUE)
+cells_body(columns = TRUE, rows = TRUE)
 
 cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
 
@@ -67,7 +67,7 @@ appear above the column labels.
 groups using the \code{groups} argument.
 \item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
 argument.
-\item \code{cells_data()}: targets data cells in the table body using
+\item \code{cells_body()}: targets data cells in the table body using
 intersections of \code{columns} and \code{rows}.
 \item \code{cells_summary()}: targets summary cells in the table body using the
 \code{groups} argument and intersections of \code{columns} and \code{rows}.
@@ -197,7 +197,7 @@ tab_4 <-
 
 # Use `gtcars` to create a gt table; add
 # a footnote that targets a single data cell
-# with `tab_footnote()`, using `cells_data()`
+# with `tab_footnote()`, using `cells_body()`
 # in `locations` (`rows = hp == max(hp)` will
 # target a single row in the `hp` column)
 tab_5 <-
@@ -207,7 +207,7 @@ tab_5 <-
   gt() \%>\%
   tab_footnote(
     footnote = "Highest horsepower.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(hp),
       rows = hp == max(hp))
   ) \%>\%

@@ -18,7 +18,7 @@ calls must be enclosed in a \code{\link[=list]{list()}}.}
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the style application. These
 helper functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
-\code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_data]{cells_data()}},
+\code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_body]{cells_body()}},
 \code{\link[=cells_summary]{cells_summary()}}, and \code{\link[=cells_grand_summary]{cells_grand_summary()}}. Please see the help article
 \link{location_cells} for more information on how these helper functions can be
 used. Additionally, we can enclose several \verb{cells_*()} calls within a
@@ -73,7 +73,7 @@ tab_1 <-
       cell_fill(color = "lightcyan"),
       cell_text(weight = "bold")
       ),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(num),
       rows = num >= 5000)
   ) \%>\%
@@ -82,7 +82,7 @@ tab_1 <-
       cell_fill(color = "#F9E3D6"),
       cell_text(style = "italic")
       ),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(currency),
       rows = currency < 100)
   )
@@ -100,7 +100,7 @@ tab_2 <-
   gt() \%>\%
   tab_style(
     style = cell_fill(color = "lightgreen"),
-    locations = cells_data(
+    locations = cells_body(
       rows = close > open)
   ) \%>\%
   tab_style(
@@ -108,15 +108,15 @@ tab_2 <-
       cell_fill(color = "red"),
       cell_text(color = "white")
       ),
-    locations = cells_data(
+    locations = cells_body(
       rows = open > close)
   )
 
 }
 \seealso{
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} as helpers for
-defining custom styles and \code{\link[=cells_data]{cells_data()}} as a useful helper function for
-targeting one or more data cells to be styled.
+defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper
+functions for targeting the locations to be styled.
 
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
