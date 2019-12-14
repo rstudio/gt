@@ -695,6 +695,8 @@ cells_styles <- function(bkgd_color = NULL,
 #'   numeric mapping of weight.
 #' @param align The text alignment. Can be one of either `"center"`, `"left"`,
 #'   `"right"`, or `"justify"`.
+#' @param v_align The vertical alignment of the text in the cell. Options are
+#'   `"middle"`, `"top"`, or `"bottom"`.
 #' @param stretch Allows for text to either be condensed or expanded. We can use
 #'   one of the following text-based keywords to describe the degree of
 #'   condensation/expansion: `"ultra-condensed"`, `"extra-condensed"`,
@@ -714,6 +716,7 @@ cell_text <- function(color = NULL,
                       font = NULL,
                       size = NULL,
                       align = NULL,
+                      v_align = NULL,
                       style = NULL,
                       weight = NULL,
                       stretch = NULL,
@@ -740,6 +743,11 @@ cell_text <- function(color = NULL,
   validate_style_in(
     style_vals, style_names, "align",
     c("center", "left", "right", "justify")
+  )
+
+  validate_style_in(
+    style_vals, style_names, "v_align",
+    c("middle", "top", "bottom")
   )
 
   validate_style_in(
@@ -781,6 +789,7 @@ cell_style_to_html.cell_text <- function(style) {
       font = "font-family",
       size = "font-size",
       align = "text-align",
+      v_align = "vertical-align",
       style = "font-style",
       weight = "font-weight",
       stretch = "font-stretch",
@@ -804,22 +813,27 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @param color The fill color. If nothing is provided, then `"#D3D3D3"` (light
 #'   gray) will be used as a default.
-#' @param alpha The alpha transparency value for the `color` as single value in
-#'   the range of `0` (fully transparent) to `1` (fully opaque). If not provided
-#'   the fill color will be fully opaque.
+#' @param alpha An optional alpha transparency value for the `color` as single
+#'   value in the range of `0` (fully transparent) to `1` (fully opaque). If not
+#'   provided the fill color will either be fully opaque or use alpha
+#'   information from the color value if it is supplied in the #RRGGBBAA format.
 #'
 #' @family helper functions
 #' @export
 cell_fill <- function(color = "#D3D3D3",
-                      alpha = 1) {
+                      alpha = NULL) {
 
-  if (length(colors) != 1 || length(alpha) != 1) {
-    stop("The length of `colors` and `alpha` must be `1`",
-         call. = FALSE)
+  if (length(color) != 1) {
+    stop("The length of the `color` vector must be `1`", call. = FALSE)
   }
 
-  # Combine hexadecimal color with corresponding alpha
-  color <- normalize_color(colors = color, alpha = alpha)
+  if (!is.null(alpha) && length(alpha) != 1) {
+    stop("If provided, `alpha` must be a single value", call. = FALSE)
+  }
+
+  if (!is_rgba_col(color)) {
+    color <- html_color(colors = color, alpha = alpha)
+  }
 
   style_vals <- list(color = color)
 

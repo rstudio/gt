@@ -73,8 +73,10 @@ tab_1 <-
 
 }
 \seealso{
-Other information functions: \code{\link{info_currencies}},
-  \code{\link{info_date_style}},
-  \code{\link{info_locales}}, \code{\link{info_time_style}}
+Other information functions: 
+\code{\link{info_currencies}()},
+\code{\link{info_date_style}()},
+\code{\link{info_locales}()},
+\code{\link{info_time_style}()}
 }
 \concept{information functions}

@@ -288,7 +288,7 @@ create_footnotes_component_l <- function(data) {
   # Get the separator option from `opts_df`
   separator <-
     opts_df %>%
-    dplyr::filter(parameter == "footnote_sep") %>%
+    dplyr::filter(parameter == "footnotes_sep") %>%
     dplyr::pull(value)
 
   # Convert an HTML break tag to a Latex line break

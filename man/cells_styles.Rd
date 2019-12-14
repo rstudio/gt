@@ -4,10 +4,19 @@
 \alias{cells_styles}
 \title{Helper for defining custom styles for table cells}
 \usage{
-cells_styles(bkgd_color = NULL, text_color = NULL, text_font = NULL,
-  text_size = NULL, text_align = NULL, text_style = NULL,
-  text_weight = NULL, text_stretch = NULL, text_indent = NULL,
-  text_decorate = NULL, text_transform = NULL)
+cells_styles(
+  bkgd_color = NULL,
+  text_color = NULL,
+  text_font = NULL,
+  text_size = NULL,
+  text_align = NULL,
+  text_style = NULL,
+  text_weight = NULL,
+  text_stretch = NULL,
+  text_indent = NULL,
+  text_decorate = NULL,
+  text_transform = NULL
+)
 }
 \arguments{
 \item{bkgd_color}{The background color of the cell.}
@@ -39,7 +48,7 @@ can use the following text-based keywords to describe the degree of
 condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 \code{"condensed"}, \code{"semi-condensed"}, \code{"normal"}, \code{"semi-expanded"},
 \code{"expanded"}, \code{"extra-expanded"}, and \code{"ultra-expanded"}. Alternatively, we
-can supply percentage values from \code{0\\\%} to \code{200\\\%}, inclusive. Negative
+can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
 \item{text_indent}{The indentation of the text.}
@@ -63,11 +72,16 @@ Please consider using the \code{\link[=cell_fill]{cell_fill()}} (where \code{bkg
 \code{text_}).
 }
 \seealso{
-Other helper functions: \code{\link{cell_borders}},
-  \code{\link{cell_fill}}, \code{\link{cell_text}},
-  \code{\link{escape_latex}},
-  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
-  \code{\link{random_id}}
+Other helper functions: 
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
 }
 \concept{helper functions}

@@ -349,7 +349,7 @@ info_locales <- function(begins_with = NULL) {
       style = cell_text(size = px(32)),
       locations = cells_data(columns = vars(group_sep, dec_sep))
     ) %>%
-    tab_options(row.padding = "5px")
+    tab_options(data_row.padding = "5px")
 }
 
 #' View a table with info on color palettes

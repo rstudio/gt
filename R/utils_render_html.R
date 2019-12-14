@@ -256,6 +256,7 @@ create_heading_component <- function(data,
 
     heading_component <-
       htmltools::tags$thead(
+        class = "gt_header",
         title_row,
         subtitle_row
       )
@@ -611,8 +612,10 @@ create_columns_component_h <- function(data) {
     }
   }
 
-  # Return the shiny tag object
-  table_col_headings
+  htmltools::tags$thead(
+    class = "gt_col_headings",
+    table_col_headings
+  )
 }
 
 #' Create the table body component (HTML)
@@ -859,7 +862,7 @@ create_body_component_h <- function(data) {
     body_rows <- c(body_rows, grand_summary_section)
   }
 
-  htmltools::tags$body(
+  htmltools::tags$tbody(
     class = "gt_table_body",
     body_rows
   )
@@ -940,7 +943,7 @@ create_footnotes_component_h <- function(data) {
     dplyr::distinct()
 
   # Get the footnote separator option
-  separator <- dt_options_get_value(data = data, option = "footnote_sep")
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
 
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]

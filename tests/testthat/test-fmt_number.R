@@ -21,15 +21,6 @@ test_that("the `fmt_number()` function works correctly", {
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
 
-  # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c("names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
-
   # Extract vectors from the table object for comparison
   # to the original dataset
   char_1 <- (tab %>% dt_data_get())[["char_1"]]
@@ -198,6 +189,41 @@ test_that("the `fmt_number()` function works correctly", {
        fmt_number(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
+
+  # Expect that a column with NAs will work fine with `fmt_number()`,
+  # it'll just produce NA values
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+
+  # Expect a returned object of class `gt_tbl` with various
+  # uses of `fmt_number()`
+  expect_error(
+    na_col_tbl %>% fmt_number(columns = vars(a)) %>% as_raw_html(), NA
+  )
+  expect_error(
+    na_col_tbl %>%
+      fmt_number(columns = vars(a), rows = 1:5) %>% as_raw_html(), NA
+  )
+  expect_error(
+    na_col_tbl %>%
+      fmt_number(columns = vars(a), scale_by = 100) %>% as_raw_html(), NA
+  )
+  expect_error(
+    na_col_tbl %>%
+      fmt_number(columns = vars(a), suffixing = TRUE) %>% as_raw_html(), NA
+  )
+  expect_error(
+    na_col_tbl %>%
+      fmt_number(columns = vars(a), pattern = "a{x}b") %>% as_raw_html(), NA
+  )
+
+  # Expect that two columns being formatted (one entirely NA) will work
+  expect_equal(
+    (na_col_tbl %>%
+       fmt_number(columns = vars(a)) %>%
+       fmt_number(columns = vars(b)) %>% render_formats_test("html"))[["b"]],
+    c("1.00", "2.00", "3.00", "4.00", "5.00", "6.00", "7.00", "8.00",
+      "9.00", "10.00")
+  )
 })
 
 test_that("the `fmt_number()` function can scale/suffix larger numbers", {

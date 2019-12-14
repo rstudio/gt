@@ -865,6 +865,125 @@ test_that("summary rows can be created when there is no stub", {
     "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">std dev</td>")
 })
 
+test_that("summary row labels are added in narrow and wide tables", {
+
+  tbl <-
+    dplyr::tibble(
+      groups = c(rep("one", 5), rep("two", 5)),
+      rows = 1:10 %>% as.character(),
+      a = 1:10,
+      b = 11:20,
+      c = 21:30,
+      d = 31:40,
+      e = 41:50,
+      f = 51:60,
+      g = 61:70,
+      h = 71:80,
+      i = 81:90,
+      j = 91:100,
+      k = 101:110,
+      l = 111:120,
+      m = 121:130,
+      n = 131:140,
+      o = 141:150,
+      p = 151:160,
+      q = 161:170,
+      r = 171:180,
+      s = 181:190,
+      t = 191:200
+    )
+
+  # Generate a narrow gt table (4 columns)
+  narrow_gt_tbl <-
+    tbl %>%
+    dplyr::select(c("groups", "rows", letters[1:4])) %>%
+    gt(rowname_col = "rows", groupname_col = "groups") %>%
+    summary_rows(
+      groups = "one",
+      columns = letters[1:4],
+      fns = list(
+        the_sum = ~sum(.),
+        mean = ~mean(.)
+      )
+    ) %>%
+    grand_summary_rows(
+      columns = letters[1:4],
+      fns = list(
+        the_sum = ~sum(.),
+        mean = ~mean(.)
+      )
+    ) %>%
+    tab_header(
+      title = "The Table Title",
+      subtitle = "The Table Subtitle"
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "title")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  # Generate a wide gt table (20 columns)
+  wide_gt_tbl <-
+    tbl %>%
+    dplyr::select(c("groups", "rows", letters[1:(ncol(tbl) - 2)])) %>%
+    gt(rowname_col = "rows", groupname_col = "groups") %>%
+    summary_rows(
+      groups = "one",
+      columns = letters[1:(ncol(tbl) - 2)],
+      fns = list(
+        the_sum = ~sum(.),
+        mean = ~mean(.)
+      )
+    ) %>%
+    grand_summary_rows(
+      columns = letters[1:(ncol(tbl) - 2)],
+      fns = list(
+        the_sum = ~sum(.),
+        mean = ~mean(.)
+      )
+    ) %>%
+    tab_header(
+      title = "The Table Title",
+      subtitle = "The Table Subtitle"
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "title")
+    ) %>%
+    tab_style(
+      style = cell_text(align = "left"),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  # Expect that the row labels for the groupwise and grand summaries in
+  # both tables have `"the_sum"` and `"mean"`
+  expect_match(
+    narrow_gt_tbl %>%
+      as_raw_html(inline_css = FALSE),
+    paste0(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row\">mean</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">mean</td>.*?"
+    )
+  )
+
+  expect_match(
+    wide_gt_tbl %>%
+      as_raw_html(inline_css = FALSE),
+    paste0(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row\">mean</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">mean</td>.*?"
+    )
+  )
+})
+
 test_that("extracting a summary from a gt table is possible", {
 
   # Create a table with summary rows for

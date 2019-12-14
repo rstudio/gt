@@ -436,19 +436,19 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the stubhead label is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #0000FFFF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #0000FF; color: white;']") %>%
     rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left]") %>%
     expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #FFFF00FF;']") %>%
+    rvest::html_nodes("[style='background-color: #FFFF00;']") %>%
     rvest::html_text("[class='gt_row gt_right']") %>%
     expect_equal("160.0–3.90")
 
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #D3D3D3FF; font-style: italic;']") %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3; font-style: italic;']") %>%
     rvest::html_text("[class='gt_row gt_center']") %>%
     expect_equal("93")
 
@@ -461,60 +461,60 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #A020F0FF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #A020F0; color: white;']") %>%
     rvest::html_text("[class='gt_row gt_grand_summary_row gt_center']") %>%
     expect_equal("4,694.00")
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
   # styled with a lightgrey background
   (tbl_html %>%
-    rvest::html_nodes("[style='background-color: #D3D3D3FF;']") %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
     rvest::html_text())[1:5] %>%
     expect_equal(c("disp", "wt", "qsec", "am", "carb"))
 
   # Expect that most stub cells are styled with a lightgray background
   (tbl_html %>%
-    rvest::html_nodes("[style='background-color: #D3D3D3FF;']") %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
     rvest::html_text())[1:6] %>%
     expect_equal(c("disp", "wt", "qsec", "am", "carb", "cyls"))
 
   # Expect that most stub cells are styled with a lightgray background
   tbl_html %>%
-    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3FF;']") %>%
+    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)
 
   # Expect that the `hp` column label's cell has a pink background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #FFC0CBFF;']") %>%
+    rvest::html_nodes("[style='background-color: #FFC0CB;']") %>%
     rvest::html_text() %>%
     expect_equal("hp")
 
   # Expect that the `gear` column label's cell has a turquoise background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #40E0D0FF;']") %>%
+    rvest::html_nodes("[style='background-color: #40E0D0;']") %>%
     rvest::html_text() %>%
     expect_equal("gear")
 
   # Expect that the row caption `Merc 240D` has a cell background that
   # is ultimately steelblue, and, the font the white
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #4682B4FF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #4682B4; color: white;']") %>%
     rvest::html_text() %>%
     expect_equal("Merc 240D")
 
   # Expect that the `gear_carb_cyl` column spanner's
   # cell has a lightgreen background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #90EE90FF;']") %>%
+    rvest::html_nodes("[style='background-color: #90EE90;']") %>%
     rvest::html_text() %>%
     expect_equal("gear_carb_cyl")
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #FF0000FF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #FF0000; color: white;']") %>%
     rvest::html_text() %>%
     expect_equal("Mazdas")
 
