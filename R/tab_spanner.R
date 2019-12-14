@@ -3,13 +3,16 @@
 #' Set a spanner column label by mapping it to columns already in the table.
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
+#'
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # Group several columns related to car
@@ -33,7 +36,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_tab_spanner_1.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create or Modify Parts
+#'
 #' @export
 tab_spanner <- function(data,
                         label,
@@ -97,6 +101,7 @@ tab_spanner <- function(data,
 #'   the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @examples
@@ -114,7 +119,8 @@ tab_spanner <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Create or Modify Parts
+#'
 #' @export
 tab_spanner_delim <- function(data,
                               delim,

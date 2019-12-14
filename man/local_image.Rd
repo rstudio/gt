@@ -12,7 +12,7 @@ local_image(filename, height = 30)
 \item{height}{The absolute height (px) of the image in the table cell.}
 }
 \value{
-a character object with an HTML fragment that can be placed inside of
+A character object with an HTML fragment that can be placed inside of
 a cell.
 }
 \description{
@@ -30,7 +30,7 @@ need to use \code{local_image()} within the \code{\link[=html]{html()}} helper f
 \details{
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
-available in the \pkg{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
+available in the \strong{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
 that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 
 \verb{<img cid=<random CID> src=<data URI> style=\\"height:30px;\\">}
@@ -69,9 +69,9 @@ tab_1 <-
 
 }
 \seealso{
-Other image addition functions: 
+Other Image Addition Functions: 
 \code{\link{ggplot_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{image addition functions}
+\concept{Image Addition Functions}

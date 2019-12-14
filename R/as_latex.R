@@ -1,4 +1,4 @@
-#' Output a \pkg{gt} object as LaTeX
+#' Output a gt object as LaTeX
 #'
 #' Get the LaTeX content from a `gt_tbl` object as a `knit_asis` object. This
 #' object contains the LaTeX code and attributes that serve as LaTeX
@@ -7,6 +7,7 @@
 #' containing the LaTeX code.
 #'
 #' @param data A table object that is created using the [gt()] function.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -32,7 +33,8 @@
 #'   as.character() %>%
 #'   cat()
 #'
-#' @family table export functions
+#' @family Export Functions
+#'
 #' @export
 as_latex <- function(data) {
 

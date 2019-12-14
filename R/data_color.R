@@ -4,7 +4,7 @@
 #' `data_color()` function colors all rows of any `columns` supplied. There are
 #' two ways to define how cells are colored: (1) through the use of a supplied
 #' color palette, and (2) through use of a color mapping function available from
-#' the `scales` package. The first method colorizes cell data according to
+#' the **scales** package. The first method colorizes cell data according to
 #' whether values are character or numeric. The second method provides more
 #' control over how cells are colored since we provide an explicit color
 #' function and thus other requirements such as bin counts, cut points, or a
@@ -28,24 +28,24 @@
 #' factors, interpolation is used.
 #' }
 #'
-#' By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
+#' By default, **gt** will choose the ideal text color (for maximal contrast)
 #' when colorizing the background of data cells. This option can be disabled by
 #' setting `autocolor_text` to `FALSE`.
 #'
 #' Choosing the right color palette can often be difficult because it's both
 #' hard to discover suitable palettes and then obtain the vector of colors. To
-#' make this process easier we can elect to use the \pkg{paletteer} package,
+#' make this process easier we can elect to use the **paletteer** package,
 #' which makes a wide range of palettes from various R packages readily
 #' available. The [info_paletteer()] information table allows us to easily
-#' inspect all of the discrete color palettes available in \pkg{paletteer}. We
+#' inspect all of the discrete color palettes available in **paletteer**. We
 #' only then need to specify the `package` and `palette` when calling the
 #' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
 #' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
 #' @param columns The columns wherein changes to cell data colors should occur.
-#' @param colors Either a color mapping function from the `scales` package or a
-#'   vector of colors to use for each distinct value or level in each of the
+#' @param colors Either a color mapping function from the **scales** package or
+#'   a vector of colors to use for each distinct value or level in each of the
 #'   provided `columns`. The color mapping functions are:
 #'   [scales::col_quantile()], [scales::col_bin()], [scales::col_numeric()], and
 #'   [scales::col_factor()]. If providing a vector of colors as a palette, each
@@ -58,11 +58,13 @@
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
-#' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
+#' @param autocolor_text An option to let **gt** modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
 #'   `TRUE`.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # library(paletteer)
 #'
@@ -118,7 +120,8 @@
 #'
 #' \if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#'
 #' @import rlang
 #' @export
 data_color <- function(data,
@@ -318,7 +321,7 @@ scale_apply_styles <- function(data,
 #'
 #' This function can be useful when combined with the [data_color()] function's
 #' `palette` argument, which can use a vector of colors or any of the `col_*`
-#' functions from the \pkg{scales} package (all of which have a `palette`
+#' functions from the **scales** package (all of which have a `palette`
 #' argument).
 #'
 #' @param colors A vector of colors that will undergo an adjustment in
@@ -327,6 +330,9 @@ scale_apply_styles <- function(data,
 #'   the form of "#RRGGBB" or "#RRGGBBAA".
 #' @param steps A positive or negative factor by which the luminance will be
 #'   adjusted. Must be a number between `-2.0` and `2.0`.
+#'
+#' @return A vector of color values.
+#'
 #' @examples
 #' # Get a palette of 8 pastel colors from
 #' # the RColorBrewer package
@@ -369,6 +375,8 @@ scale_apply_styles <- function(data,
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
+#'
+#' @family Helper Functions
 #'
 #' @export
 adjust_luminance <- function(colors,

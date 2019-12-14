@@ -16,16 +16,18 @@ function will transform a character vector so that it is safe to use within
 LaTeX tables.
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{currency}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{location_cells}},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

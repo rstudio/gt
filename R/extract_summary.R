@@ -1,11 +1,14 @@
-#' Extract a summary list from a \pkg{gt} object
+#' Extract a summary list from a **gt** object
 #'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
 #' contain the `groupname` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
+#'
 #' @param data A table object that is created using the [gt()] function.
+#'
 #' @return A list of data frames containing summary data.
+#'
 #' @examples
 #' # Use `sp500` to create a gt table with
 #' # row groups; create summary rows by row
@@ -55,7 +58,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_extract_summary_1.svg}{options: width=100\%}}
 #'
-#' @family table export functions
+#' @family Export Functions
+#'
 #' @export
 extract_summary <- function(data) {
 

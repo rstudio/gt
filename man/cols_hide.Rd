@@ -28,7 +28,7 @@ of those columns is not necessary.
 The hiding of columns is internally a rendering directive, so, all columns
 that are 'hidden' are still accessible and useful in any expression provided
 to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with many
-\pkg{gt} functions) can be placed anywhere in a pipeline of \pkg{gt} function
+\strong{gt} functions) can be placed anywhere in a pipeline of \strong{gt} function
 calls (acting as a promise to hide columns when the timing is right). However
 there's perhaps greater readability when placing this call closer to the end
 of such a pipeline.
@@ -75,7 +75,7 @@ tab_2 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_range}()},
@@ -84,7 +84,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

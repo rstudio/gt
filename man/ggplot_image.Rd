@@ -22,7 +22,7 @@ A character object with an HTML fragment that can be placed inside of
 a cell.
 }
 \description{
-We can add a \pkg{ggplot2} plot inside of a table with the help of the
+We can add a \strong{ggplot2} plot inside of a table with the help of the
 \code{ggplot_image()} function. The function provides a convenient way to generate
 an HTML fragment with a \code{ggplot} object. Because this function is currently
 HTML-based, it is only useful for HTML table output. To use this function
@@ -86,9 +86,9 @@ tab_1 <-
 
 }
 \seealso{
-Other image addition functions: 
+Other Image Addition Functions: 
 \code{\link{local_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{image addition functions}
+\concept{Image Addition Functions}

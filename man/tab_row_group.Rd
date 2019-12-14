@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_row_group.R
 \name{tab_row_group}
 \alias{tab_row_group}
-\title{Add a row group}
+\title{Add a row group to a \strong{gt} table}
 \usage{
 tab_row_group(data, group = NULL, rows = NULL, others = NULL)
 }
@@ -78,15 +78,14 @@ tab_2 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

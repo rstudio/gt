@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt.R
 \name{gt}
 \alias{gt}
-\title{Create a \pkg{gt} table object}
+\title{Create a \strong{gt} table object}
 \usage{
 gt(
   data,
@@ -42,11 +42,10 @@ in the displayed stub row group label.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{gt()} function creates a \pkg{gt} table object when provided with table
-data. Using this function is the first step in a typical \pkg{gt} workflow.
-Once we have the \pkg{gt} table object, we can perform styling
-transformations before rendering to a display table of various formats (e.g.,
-HTML, LaTeX, RTF).
+The \code{gt()} function creates a \strong{gt} table object when provided with table
+data. Using this function is the first step in a typical \strong{gt} workflow.
+Once we have the \strong{gt} table object, we can perform styling transformations
+before rendering to a display table of various formats.
 }
 \details{
 There are a few data ingest options we can consider at this stage. We can
@@ -99,15 +98,7 @@ tab_2 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{tab_footnote}()},
-\code{\link{tab_header}()},
-\code{\link{tab_options}()},
-\code{\link{tab_row_group}()},
-\code{\link{tab_source_note}()},
-\code{\link{tab_spanner}()},
-\code{\link{tab_stubhead}()},
-\code{\link{tab_style}()}
+Other Create Table: 
+\code{\link{gt_preview}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create Table}

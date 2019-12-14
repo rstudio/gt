@@ -1,7 +1,7 @@
 #' Add a table footnote
 #'
 #' The `tab_footnote()` function can make it a painless process to add a
-#' footnote to a \pkg{gt} table. There are two components to a footnote: (1) a
+#' footnote to a **gt** table. There are two components to a footnote: (1) a
 #' footnote mark that is attached to the targeted cell text, and (2) the
 #' footnote text (that starts with the corresponding footnote mark) that is
 #' placed in the table's footer area. Each call of `tab_footnote()` will add a
@@ -15,8 +15,8 @@
 #'   \item `footnotes.sep`: allows for a choice of the separator between
 #' consecutive footnotes in the table footer. By default, this is set to a
 #' linebreak.
-#'   \item `footnotes.marks`: the set of sequential characters or numbers used to
-#' identify the footnotes.
+#'   \item `footnotes.marks`: the set of sequential characters or numbers used
+#' to identify the footnotes.
 #'   \item `footnotes.font.size`: the size of the font used in the footnote
 #' section.
 #'   \item `footnotes.padding`: the amount of padding to apply between the
@@ -37,7 +37,9 @@
 #'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
 #'   we wish to link the footnote text to different types of locations (e.g.,
 #'   cell data values, stub group headings, the table title, etc.).
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `sza` to create a gt table; color
 #' # the `sza` column using the `data_color()`
@@ -68,7 +70,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_tab_footnote_1.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create or Modify Parts
+#'
 #' @export
 tab_footnote <- function(data,
                          footnote,

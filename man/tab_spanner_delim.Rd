@@ -62,16 +62,14 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
-\code{\link{cols_align}()},
-\code{\link{cols_hide}()},
-\code{\link{cols_label}()},
-\code{\link{cols_merge_range}()},
-\code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
-\code{\link{cols_move_to_end}()},
-\code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
-\code{\link{cols_width}()}
+Other Create or Modify Parts: 
+\code{\link{tab_footnote}()},
+\code{\link{tab_header}()},
+\code{\link{tab_options}()},
+\code{\link{tab_row_group}()},
+\code{\link{tab_source_note}()},
+\code{\link{tab_spanner}()},
+\code{\link{tab_stubhead}()},
+\code{\link{tab_style}()}
 }
-\concept{column modification functions}
+\concept{Create or Modify Parts}

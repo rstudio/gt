@@ -13,7 +13,7 @@
 #'
 #' By itself, the function creates an HTML image tag with an image URI embedded
 #' within. We can easily experiment with a local PNG or SVG image that's
-#' available in the \pkg{gt} package using the [test_image()] function. Using
+#' available in the **gt** package using the [test_image()] function. Using
 #' that, the call `local_image(file = test_image(type = "png"))` evaluates to:
 #'
 #' `<img cid=<random CID> src=<data URI> style=\"height:30px;\">`
@@ -23,8 +23,10 @@
 #'
 #' @param filename A path to an image file.
 #' @param height The absolute height (px) of the image in the table cell.
-#' @return a character object with an HTML fragment that can be placed inside of
+#'
+#' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
+#'
 #' @examples
 #' # Create a tibble that contains heights
 #' # of an image in pixels (one column as a
@@ -52,7 +54,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
 #'
-#' @family image addition functions
+#' @family Image Addition Functions
+#'
 #' @export
 local_image <- function(filename,
                         height = 30) {
@@ -104,8 +107,10 @@ local_image <- function(filename,
 #'
 #' @param url A url that resolves to an image file.
 #' @param height The absolute height (px) of the image in the table cell.
+#'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
+#'
 #' @examples
 #' # Get the PNG-based logo for the R
 #' # Project from an image URL
@@ -175,7 +180,8 @@ local_image <- function(filename,
 #'
 #' \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 #'
-#' @family image addition functions
+#' @family Image Addition Functions
+#'
 #' @export
 web_image <- function(url,
                       height = 30) {
@@ -190,7 +196,7 @@ web_image <- function(url,
 
 #' Helper function for adding a ggplot
 #'
-#' We can add a \pkg{ggplot2} plot inside of a table with the help of the
+#' We can add a **ggplot2** plot inside of a table with the help of the
 #' `ggplot_image()` function. The function provides a convenient way to generate
 #' an HTML fragment with a `ggplot` object. Because this function is currently
 #' HTML-based, it is only useful for HTML table output. To use this function
@@ -220,8 +226,10 @@ web_image <- function(url,
 #'   will either compress (`aspect_ratio` < `1.0`) or expand
 #'   (`aspect_ratio` > `1.0`) the plot horizontally. The default value
 #'   of `1.0` will neither compress nor expand the plot.
+#'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
+#'
 #' @examples
 #' library(ggplot2)
 #'
@@ -258,7 +266,8 @@ web_image <- function(url,
 #' @section Figures:
 #' \if{html}{\figure{man_ggplot_image_1.svg}{options: width=100\%}}
 #'
-#' @family image addition functions
+#' @family Image Addition Functions
+#'
 #' @importFrom ggplot2 ggsave
 #' @export
 ggplot_image <- function(plot_object,
@@ -291,14 +300,18 @@ ggplot_image <- function(plot_object,
 
 #' Generate a path to a test image
 #'
-#' Two test images are available within the \pkg{gt} package. Both contain the
+#' Two test images are available within the **gt** package. Both contain the
 #' same imagery (sized at 200px by 200px) but one is a PNG file while the other
 #' is an SVG file. This function is most useful when paired with [local_image()]
 #' since we test various sizes of the test image within that function.
 #'
 #' @param type The type of the image, which can either be `png` (the default) or
 #'   `svg`.
-#' @family image addition functions
+#'
+#' @return A character vector with a single path to an image file.
+#'
+#' @family Image Addition Functions
+#'
 #' @export
 test_image <- function(type = c("png", "svg")) {
 

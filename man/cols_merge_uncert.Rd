@@ -37,14 +37,11 @@ This function could be somewhat replicated using \code{\link[=cols_merge]{cols_m
 handling:
 
 \enumerate{
-
 \item \code{NA}s in \code{col_val} result in missing values for the merged
 column (e.g., \code{NA} + \code{0.1} = \code{NA})
-
 \item \code{NA}s in \code{col_uncert} (but not \code{col_val}) result in
 base values only for the merged column (e.g.,
 \code{12.0} + \code{NA} = \code{12.0})
-
 \item \code{NA}s both \code{col_val} and \code{col_uncert} result in
 missing values for the merged column (e.g., \code{NA} + \code{NA} =
 \code{NA})
@@ -90,7 +87,7 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -99,7 +96,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

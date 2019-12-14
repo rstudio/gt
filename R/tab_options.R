@@ -2,6 +2,7 @@
 #'
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
+#'
 #' @inheritParams fmt_number
 #' @param container.width,container.height The width and height of the table's
 #'   container. Can be specified as a single-length character with units of
@@ -140,7 +141,9 @@
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @return an object of class `gt_tbl`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # all the main parts added; we can use this
@@ -233,7 +236,7 @@
 #'
 #' \if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create or Modify Parts
 #'
 #' @export
 tab_options <- function(data,
@@ -431,6 +434,8 @@ tab_options <- function(data,
 #'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
 #'   four symbol marks), and `"extended"` (which adds two more symbols to the
 #'   standard set).
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @examples
 #' # Use `sza` to create a gt table,

@@ -21,10 +21,10 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Column labels can be modified from their default values (the names of the
-columns from the input table data). When you create a \pkg{gt} table object
+columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names aren't often appealing as
-column labels in a \pkg{gt} output table. The \code{cols_label()} function
+column labels in a \strong{gt} output table. The \code{cols_label()} function
 provides the flexibility to relabel one or more columns and we even have the
 option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
 labels from Markdown or using HTML.
@@ -32,11 +32,11 @@ labels from Markdown or using HTML.
 \details{
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \pkg{gt} have
+a tibble or data frame must be unique whereas column labels in \strong{gt} have
 no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
 different spanner column labels). Thus, we can still easily distinguish
-between columns in other \pkg{gt} function calls (e.g., in all of the
+between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
@@ -80,7 +80,7 @@ tab_2 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_merge_range}()},
@@ -89,7 +89,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

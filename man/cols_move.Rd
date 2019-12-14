@@ -21,12 +21,12 @@ An object of class \code{gt_tbl}.
 \description{
 On those occasions where you need to move columns this way or that way, we
 can make use of the \code{cols_move()} function. While it's true that the movement
-of columns can be done upstream of \pkg{gt}'s API, it is much easier and less
-error prone to use the function provided here. The movement procedure here
-takes one or more specified columns (in the \code{columns} argument) and places
-them to the right of a different column (the \code{after} argument). The ordering
-of the \code{columns} to be moved is preserved, as is the ordering of all other
-columns in the table.
+of columns can be done upstream of \strong{gt}, it is much easier and less error
+prone to use the function provided here. The movement procedure here takes
+one or more specified columns (in the \code{columns} argument) and places them to
+the right of a different column (the \code{after} argument). The ordering of the
+\code{columns} to be moved is preserved, as is the ordering of all other columns
+in the table.
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table and none of
@@ -58,7 +58,7 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -67,7 +67,6 @@ Other column modification functions:
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

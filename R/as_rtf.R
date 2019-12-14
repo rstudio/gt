@@ -1,10 +1,11 @@
-#' Output a \pkg{gt} object as RTF
+#' Output a **gt** object as RTF
 #'
 #' Get the RTF content from a `gt_tbl` object as as a single-element character
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
 #' @param data a table object that is created using the `gt()` function.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
@@ -20,17 +21,12 @@
 #'   ) %>%
 #'   as_rtf()
 #'
-#' # `tab_rtf` is a single element character
-#' # vector
-#' tab_rtf %>% cat()
+#' @family Export Functions
 #'
-#' @family table export functions
 #' @import rlang
 #' @import checkmate
 #' @export
 as_rtf <- function(data) {
-
-  checkmate::assert_class(data, "gt_tbl")
 
   # Build all table data objects through a common pipeline
   data <- data %>% build_data(context = "rtf")

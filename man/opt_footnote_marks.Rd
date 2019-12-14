@@ -16,6 +16,9 @@ and uppercase alphabetic marks), \code{"standard"} (for a traditional set of
 four symbol marks), and \code{"extended"} (which adds two more symbols to the
 standard set).}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 Alter the footnote marks for any footnotes that may be present in the table.
 Either a vector of marks can be provided (including Unicode characters), or,

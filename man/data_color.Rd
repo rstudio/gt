@@ -18,8 +18,8 @@ data_color(
 
 \item{columns}{The columns wherein changes to cell data colors should occur.}
 
-\item{colors}{Either a color mapping function from the \code{scales} package or a
-vector of colors to use for each distinct value or level in each of the
+\item{colors}{Either a color mapping function from the \strong{scales} package or
+a vector of colors to use for each distinct value or level in each of the
 provided \code{columns}. The color mapping functions are:
 \code{\link[scales:col_quantile]{scales::col_quantile()}}, \code{\link[scales:col_bin]{scales::col_bin()}}, \code{\link[scales:col_numeric]{scales::col_numeric()}}, and
 \code{\link[scales:col_factor]{scales::col_factor()}}. If providing a vector of colors as a palette, each
@@ -35,7 +35,7 @@ directly supplied or generated through a color mapping function).}
 include the cell background (the default, given as \code{fill}) or the cell
 text (\code{text}).}
 
-\item{autocolor_text}{An option to let \pkg{gt} modify the coloring of text
+\item{autocolor_text}{An option to let \strong{gt} modify the coloring of text
 within cells undergoing background coloring. This will in some cases yield
 more optimal text-to-background color contrast. By default, this is set to
 \code{TRUE}.}
@@ -48,7 +48,7 @@ It's possible to add color to data cells according to their values. The
 \code{data_color()} function colors all rows of any \code{columns} supplied. There are
 two ways to define how cells are colored: (1) through the use of a supplied
 color palette, and (2) through use of a color mapping function available from
-the \code{scales} package. The first method colorizes cell data according to
+the \strong{scales} package. The first method colorizes cell data according to
 whether values are character or numeric. The second method provides more
 control over how cells are colored since we provide an explicit color
 function and thus other requirements such as bin counts, cut points, or a
@@ -73,16 +73,16 @@ palette is discrete and has a different number of colors than the number of
 factors, interpolation is used.
 }
 
-By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
+By default, \strong{gt} will choose the ideal text color (for maximal contrast)
 when colorizing the background of data cells. This option can be disabled by
 setting \code{autocolor_text} to \code{FALSE}.
 
 Choosing the right color palette can often be difficult because it's both
 hard to discover suitable palettes and then obtain the vector of colors. To
-make this process easier we can elect to use the \pkg{paletteer} package,
+make this process easier we can elect to use the \strong{paletteer} package,
 which makes a wide range of palettes from various R packages readily
 available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
-inspect all of the discrete color palettes available in \pkg{paletteer}. We
+inspect all of the discrete color palettes available in \strong{paletteer}. We
 only then need to specify the \code{package} and \code{palette} when calling the
 \code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
 hexadecimal colors.
@@ -146,7 +146,7 @@ tab_2 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
@@ -160,4 +160,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

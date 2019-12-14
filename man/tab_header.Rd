@@ -18,7 +18,7 @@ text.}
 An object of class \code{gt_tbl}.
 }
 \description{
-We can add a table header to the \pkg{gt} table with a title and even a
+We can add a table header to the \strong{gt} table with a title and even a
 subtitle. A table header is an optional table part that is positioned above
 the column labels. We have the flexibility to use Markdown formatting for the
 header's title and subtitle. Furthermore, if the table is intended for HTML
@@ -45,15 +45,14 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

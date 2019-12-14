@@ -17,7 +17,7 @@ retain HTML elements in the text.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Add a label to the stubhead of a \pkg{gt} table. The stubhead is the lone
+Add a label to the stubhead of a \strong{gt} table. The stubhead is the lone
 element that is positioned left of the column labels, and above the stub. If
 a stub does not exist, then there is no stubhead (so no change will be made
 when using this function in that case). We have the flexibility to use
@@ -42,15 +42,14 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

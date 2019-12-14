@@ -33,13 +33,10 @@ An object of class \code{gt_tbl}.
 Format input date values that are either of the \code{Date} type, or, are
 character-based and expressed according to the ISO 8601 date format
 (\code{YYYY-MM-DD}). Once the appropriate data cells are targeted with \code{columns}
-(and, optionally, \code{rows}), we can simply apply a preset date style (see table
-in \code{\link[=info_date_style]{info_date_style()}} for info) to format the dates.
-}
-\details{
-The following date styles are available for simpler formatting of ISO dates
-(all using the input date of \code{2000-02-29} in the example output dates):
-
+(and, optionally, \code{rows}), we can simply apply a preset date style to format
+the dates. The following date styles are available for simpler formatting of
+ISO dates (all using the input date of \code{2000-02-29} in the example output
+dates):
 \enumerate{
 \item iso: \code{2000-02-29}
 \item wday_month_day_year: \verb{Tuesday, February 29, 2000}
@@ -56,10 +53,10 @@ The following date styles are available for simpler formatting of ISO dates
 \item year.mn.day: \code{2000/02/29}
 \item y.mn.day: \code{0/02/29}
 }
-
 We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
 the possible inputs to \code{date_style}.
-
+}
+\details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
@@ -112,7 +109,7 @@ tab_2 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -126,4 +123,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

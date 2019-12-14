@@ -115,4 +115,4 @@ tab_1 <-
   )
 
 }
-\concept{row addition functions}
+\concept{Add Rows}

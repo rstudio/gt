@@ -91,11 +91,11 @@ globalVariables(
     )
   )
 
-#' \pkg{gt} package options
+#' **gt** package options
 #'
 #' @section Package options:
 #'
-#' \pkg{gt} uses the following [options()] to configure behavior:
+#' **gt** uses the following [options()] to configure behavior:
 #'
 #' \itemize{
 #'   \item `gt.stub_group.sep`: a separator between groups for the

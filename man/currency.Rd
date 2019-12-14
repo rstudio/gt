@@ -13,14 +13,14 @@ currency symbol text as the values.}
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
 \value{
-a list object of class \code{gt_currency}.
+A list object of class \code{gt_currency}.
 }
 \description{
 The \code{currency()} helper function makes it easy to specify a context-aware
-currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \pkg{gt}
-can render tables to several output formats, \code{currency()} allows for
-different variations of the custom symbol based on the output context (which
-are \code{html}, \code{latex}, \code{rtf}, and \code{default}). The number of decimal places for
+currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \strong{gt} can
+render tables to several output formats, \code{currency()} allows for different
+variations of the custom symbol based on the output context (which are
+\code{html}, \code{latex}, \code{rtf}, and \code{default}). The number of decimal places for
 the custom currency defaults to \code{2}, however, a value set for the \code{decimals}
 argument of \code{\link[=fmt_currency]{fmt_currency()}} will take precedence.
 }
@@ -51,4 +51,21 @@ tab_1 <-
       default = "f"),
     decimals = 2
   )
+
 }
+\seealso{
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{location_cells}},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
+}
+\concept{Helper Functions}

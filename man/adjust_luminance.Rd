@@ -15,6 +15,9 @@ the form of "#RRGGBB" or "#RRGGBBAA".}
 \item{steps}{A positive or negative factor by which the luminance will be
 adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
 }
+\value{
+A vector of color values.
+}
 \description{
 This function can brighten or darken a palette of colors by an arbitrary
 number of steps, which is defined by a real number between -2.0 and 2.0. The
@@ -25,7 +28,7 @@ compared to any very dark or very light colors in the input palette.
 \details{
 This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's
 \code{palette} argument, which can use a vector of colors or any of the \verb{col_*}
-functions from the \pkg{scales} package (all of which have a \code{palette}
+functions from the \strong{scales} package (all of which have a \code{palette}
 argument).
 }
 \section{Figures}{
@@ -74,3 +77,19 @@ tab_1 <-
   )
 
 }
+\seealso{
+Other Helper Functions: 
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{currency}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{location_cells}},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
+}
+\concept{Helper Functions}

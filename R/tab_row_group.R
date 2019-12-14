@@ -1,8 +1,9 @@
-#' Add a row group
+#' Add a row group to a **gt** table
 #'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
 #' through use of a select helper function like `starts_with()`.
+#'
 #' @inheritParams fmt_number
 #' @param group The name of the row group. This text will also serve as the row
 #'   group label.
@@ -19,7 +20,9 @@
 #'   that haven't been placed into a row group (where one or more row groups
 #'   already exist), those rows will be automatically placed into a row group
 #'   without a label.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table and
 #' # add two row groups with the labels:
@@ -59,7 +62,8 @@
 #'
 #' \if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create or Modify Parts
+#'
 #' @import rlang
 #' @export
 tab_row_group <- function(data,

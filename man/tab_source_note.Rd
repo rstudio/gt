@@ -17,7 +17,7 @@ retain HTML elements in the text.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Add a source note to the footer part of the \pkg{gt} table. A source note is
+Add a source note to the footer part of the \strong{gt} table. A source note is
 useful for citing the data included in the table. Several can be added to the
 footer, simply use multiple calls of \code{tab_source_note()} and they will be
 inserted in the order provided. We can use Markdown formatting for the note,
@@ -43,15 +43,14 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

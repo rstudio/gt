@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_rtf.R
 \name{as_rtf}
 \alias{as_rtf}
-\title{Output a \pkg{gt} object as RTF}
+\title{Output a \strong{gt} object as RTF}
 \usage{
 as_rtf(data)
 }
@@ -29,15 +29,12 @@ tab_rtf <-
   ) \%>\%
   as_rtf()
 
-# `tab_rtf` is a single element character
-# vector
-tab_rtf \%>\% cat()
-
 }
 \seealso{
-Other table export functions: 
+Other Export Functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
-\code{\link{extract_summary}()}
+\code{\link{extract_summary}()},
+\code{\link{gtsave}()}
 }
-\concept{table export functions}
+\concept{Export Functions}

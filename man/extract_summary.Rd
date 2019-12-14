@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_summary.R
 \name{extract_summary}
 \alias{extract_summary}
-\title{Extract a summary list from a \pkg{gt} object}
+\title{Extract a summary list from a \strong{gt} object}
 \usage{
 extract_summary(data)
 }
@@ -71,9 +71,10 @@ tab_1 <-
 
 }
 \seealso{
-Other table export functions: 
+Other Export Functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
-\code{\link{as_rtf}()}
+\code{\link{as_rtf}()},
+\code{\link{gtsave}()}
 }
-\concept{table export functions}
+\concept{Export Functions}

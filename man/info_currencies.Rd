@@ -53,10 +53,10 @@ tab_2 <- info_currencies(type = "symbol")
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_date_style}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{information functions}
+\concept{Information Functions}

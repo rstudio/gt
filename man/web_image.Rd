@@ -109,9 +109,9 @@ tab_2 <-
 
 }
 \seealso{
-Other image addition functions: 
+Other Image Addition Functions: 
 \code{\link{ggplot_image}()},
 \code{\link{local_image}()},
 \code{\link{test_image}()}
 }
-\concept{image addition functions}
+\concept{Image Addition Functions}

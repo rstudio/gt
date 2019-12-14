@@ -2,22 +2,22 @@
 % Please edit documentation in R/helpers.R
 \name{gt_latex_dependencies}
 \alias{gt_latex_dependencies}
-\title{Get the LaTeX dependencies required for a gt table}
+\title{Get the LaTeX dependencies required for a \strong{gt} table}
 \usage{
 gt_latex_dependencies()
 }
 \description{
 When working with Rnw (Sweave) files or otherwise writing LaTeX code,
-including a \pkg{gt} table can be problematic if we don't have knowledge
+including a \strong{gt} table can be problematic if we don't have knowledge
 of the LaTeX dependencies. For the most part, these dependencies are the
-LaTeX packages that are required for rendering a \pkg{gt} table. The
+LaTeX packages that are required for rendering a \strong{gt} table. The
 \code{gt_latex_dependencies()} function provides an object that can be
-used to provide the LaTeX in an Rnw file, allowing \pkg{gt} tables to work
+used to provide the LaTeX in an Rnw file, allowing \strong{gt} tables to work
 and not yield errors due to missing packages.
 }
 \details{
 Here is an example Rnw document that shows how the
-\code{gt_latex_dependencies()} can be used in conjunction with a \pkg{gt}
+\code{gt_latex_dependencies()} can be used in conjunction with a \strong{gt}
 table:
 
 \preformatted{
@@ -43,16 +43,18 @@ exibble %>% gt()
 }
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{html}()},
+\code{\link{location_cells}},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

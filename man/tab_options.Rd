@@ -274,7 +274,7 @@ when striping rows.}
 table body when striping rows.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Modify the options available in a table. These options are named by the
@@ -376,15 +376,14 @@ tab_6 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

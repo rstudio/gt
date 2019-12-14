@@ -11,7 +11,7 @@
 \alias{cells_data}
 \alias{cells_summary}
 \alias{cells_grand_summary}
-\title{Helpers for targeting multiple cells in different locations}
+\title{Helpers for targeting cells in different locations}
 \usage{
 cells_title(groups = c("title", "subtitle"))
 
@@ -51,39 +51,26 @@ locations (e.g., the stub, the column labels, the title, etc.). They can be
 used in any of these functions (which all have a \code{locations} argument):
 \code{\link[=tab_footnote]{tab_footnote()}}, \code{\link[=tab_style]{tab_style()}}, and \code{\link[=text_transform]{text_transform()}}. Furthermore,
 multiple locations can be targeted by enclosing several \verb{cells_*()} helper
-functions in a \code{\link[=list]{list()}}.
-}
-\details{
-The following helper functions can be used to target cells (roughly in order
-from the top to the bottom of a table):
-
+functions in a \code{\link[=list]{list()}}. The following helper functions can be used to target
+cells (roughly in order from the top to the bottom of a table):
 \itemize{
-
 \item \code{cells_title()}: targets the table title or the table subtitle
 depending on the value given to the \code{groups} argument (\code{"title"} or
 \code{"subtitle"}).
-
 \item \code{cells_stubhead()}: targets the stubhead location, a cell of which is
 only available when there is a stub; a label in that location can be created
 by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-
-\item \code{cells_column_labels()}: targets the column labels.
-
 \item \code{cells_column_spanners()}: targets the spanner column labels, which
 appear above the column labels.
-
+\item \code{cells_column_labels()}: targets the column labels.
 \item \code{cells_group()}: targets the row group labels in any available row
 groups using the \code{groups} argument.
-
 \item \code{cells_stub()}: targets row labels in the table stub using the \code{rows}
 argument.
-
 \item \code{cells_data()}: targets data cells in the table body using
 intersections of \code{columns} and \code{rows}.
-
 \item \code{cells_summary()}: targets summary cells in the table body using the
 \code{groups} argument and intersections of \code{columns} and \code{rows}.
-
 \item \code{cells_grand_summary()}: targets cells of the table's grand summary
 using intersections of \code{columns} and \code{rows}
 }
@@ -277,3 +264,19 @@ tab_6 <-
   )
 
 }
+\seealso{
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{currency}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
+}
+\concept{Helper Functions}

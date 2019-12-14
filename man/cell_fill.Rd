@@ -22,16 +22,18 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
+\code{\link{location_cells}},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

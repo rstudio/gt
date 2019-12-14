@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_latex.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a \pkg{gt} object as LaTeX}
+\title{Output a gt object as LaTeX}
 \usage{
 as_latex(data)
 }
@@ -43,9 +43,10 @@ tab_latex \%>\%
 
 }
 \seealso{
-Other table export functions: 
+Other Export Functions: 
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
-\code{\link{extract_summary}()}
+\code{\link{extract_summary}()},
+\code{\link{gtsave}()}
 }
-\concept{table export functions}
+\concept{Export Functions}

@@ -1,19 +1,19 @@
-#' A \pkg{gt} display table render function for use in Shiny
+#' A **gt** display table render function for use in Shiny
 #'
-#' With `render_gt()` we can create a reactive \pkg{gt} table that works
+#' With `render_gt()` we can create a reactive **gt** table that works
 #' wonderfully once assigned to an output slot (with [gt_output()]). This
 #' function is to be used within Shiny's `server()` component. We have some
-#' options for controlling the size of the container holding the \pkg{gt} table.
+#' options for controlling the size of the container holding the **gt** table.
 #' The `width` and `height` arguments allow for sizing the container, and the
 #' `align` argument allows us to align the table within the container (some
 #' other fine-grained options for positioning are available in the
 #' [tab_options()] function).
 #'
-#' We need to ensure that we have the \pkg{shiny} package installed first. This
+#' We need to ensure that we have the **shiny** package installed first. This
 #' is easily by using `install.packages("shiny")`. More information on creating
 #' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 #'
-#' @param expr An expression that creates a \pkg{gt} table object. For sake of
+#' @param expr An expression that creates a **gt** table object. For sake of
 #'   convenience, a data frame or tibble can be used here (it will be
 #'   automatically introduced to [gt()] with its default options).
 #' @param width,height The width and height of the table's container. Either can
@@ -67,7 +67,9 @@
 #' \dontrun{
 #' shinyApp(ui, server)
 #' }
+#'
 #' @family Shiny functions
+#'
 #' @export
 render_gt <- function(expr,
                       width = NULL,
@@ -130,18 +132,18 @@ render_gt <- function(expr,
   )
 }
 
-#' Create a \pkg{gt} display table output element for Shiny
+#' Create a **gt** display table output element for Shiny
 #'
-#' Using `gt_output()` we can render a reactive \pkg{gt} table, a process
+#' Using `gt_output()` we can render a reactive **gt** table, a process
 #' initiated by using the [render_gt()] function in the `server` component of a
 #' Shiny app. The `gt_output()` call is to be used in the Shiny `ui` component,
 #' the position and context wherein this call is made determines the where the
-#' \pkg{gt} table is rendered on the app page. It's important to note that the
+#' **gt** table is rendered on the app page. It's important to note that the
 #' ID given during the [render_gt()] call is needed as the `outputId` in
 #' `gt_output()` (e.g., **server**: `output$<id> <- render_gt(...)`; **ui**:
 #' `gt_output(outputId = "<id>"`).
 #'
-#' We need to ensure that we have the \pkg{shiny} package installed first. This
+#' We need to ensure that we have the **shiny** package installed first. This
 #' is easily by using `install.packages("shiny")`. More information on creating
 #' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 #'
@@ -183,7 +185,9 @@ render_gt <- function(expr,
 #' \dontrun{
 #' shinyApp(ui, server)
 #' }
+#'
 #' @family Shiny functions
+#'
 #' @export
 gt_output <- function(outputId) {
 

@@ -35,7 +35,8 @@
 #'   `list()` if we wish to apply styles to different types of locations (e.g.,
 #'   cell data values, stub group headings, the table title, etc.).
 #'
-#' @return an object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # add styles that are to be applied
@@ -98,10 +99,12 @@
 #'
 #' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create or Modify Parts
+#'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_data()] as a useful helper function for
 #'   targeting one or more data cells to be styled.
+#'
 #' @export
 tab_style <- function(data,
                       style,

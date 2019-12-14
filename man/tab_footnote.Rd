@@ -29,7 +29,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 The \code{tab_footnote()} function can make it a painless process to add a
-footnote to a \pkg{gt} table. There are two components to a footnote: (1) a
+footnote to a \strong{gt} table. There are two components to a footnote: (1) a
 footnote mark that is attached to the targeted cell text, and (2) the
 footnote text (that starts with the corresponding footnote mark) that is
 placed in the table's footer area. Each call of \code{tab_footnote()} will add a
@@ -44,8 +44,8 @@ parameters in the \code{\link[=tab_options]{tab_options()}} function:
 \item \code{footnotes.sep}: allows for a choice of the separator between
 consecutive footnotes in the table footer. By default, this is set to a
 linebreak.
-\item \code{footnotes.marks}: the set of sequential characters or numbers used to
-identify the footnotes.
+\item \code{footnotes.marks}: the set of sequential characters or numbers used
+to identify the footnotes.
 \item \code{footnotes.font.size}: the size of the font used in the footnote
 section.
 \item \code{footnotes.padding}: the amount of padding to apply between the
@@ -86,15 +86,14 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}

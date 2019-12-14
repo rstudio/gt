@@ -41,7 +41,9 @@
 #'   values are to be in the form of named vectors. For example, when using the
 #'   default `formatter` function, [fmt_number()], options such as `decimals`,
 #'   `use_seps`, and `locale` can be used.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `sp500` to create a gt table with
 #' # row groups; create summary rows (`min`,
@@ -77,8 +79,10 @@
 #' @section Figures:
 #' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
 #'
-#' @family row addition functions
+#' @family Add Rows
+#'
 #' @rdname summary_rows
+#'
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
@@ -150,7 +154,10 @@ summary_rows <- function(data,
   data
 }
 
+#' @family Add Rows
+#'
 #' @rdname summary_rows
+#'
 #' @export
 grand_summary_rows <- function(data,
                                columns = TRUE,

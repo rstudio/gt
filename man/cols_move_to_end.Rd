@@ -19,9 +19,9 @@ An object of class \code{gt_tbl}.
 \description{
 It's possible to move a set of columns to the end of the column series, we
 only need to specify which \code{columns} are to be moved. While this can be done
-upstream of \pkg{gt}'s API, this function makes to process much easier and
-it's less error prone. The ordering of the \code{columns} that are moved to the
-end is preserved (same with the ordering of all other columns in the table).
+upstream of \strong{gt}, this function makes to process much easier and it's less
+error prone. The ordering of the \code{columns} that are moved to the end is
+preserved (same with the ordering of all other columns in the table).
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table. If you need to
@@ -66,7 +66,7 @@ tab_2 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -75,7 +75,6 @@ Other column modification functions:
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

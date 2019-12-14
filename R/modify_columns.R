@@ -3,10 +3,10 @@
 #' The individual alignments of columns (which includes the column labels and
 #' all of their data cells) can be modified. We have the option to align text to
 #' the `left`, the `center`, and the `right`. In a less explicit manner, we can
-#' allow \pkg{gt} to automatically choose the alignment of each column based on
+#' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' When you create a \pkg{gt} table object using [gt()], automatic alignment of
+#' When you create a **gt** table object using [gt()], automatic alignment of
 #' column labels and their data cells is performed. By default, left-alignment
 #' is applied to columns of class `character`, `Date`, or `POSIXct`;
 #' center-alignment is for columns of class `logical`, `factor`, or `list`; and
@@ -21,7 +21,9 @@
 #' @param columns An optional vector of column names for which the alignment
 #'   should be applied. If nothing is supplied, or if `columns` is `TRUE`, then
 #'   the chosen alignment affects all columns.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # align the `population` column data to
@@ -40,7 +42,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @export
 cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
@@ -121,7 +124,9 @@ cols_align <- function(data,
 #'   default width value by using `TRUE` or `everything()` on the left-hand
 #'   side.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # with named arguments in `...`, we
@@ -145,7 +150,8 @@ cols_align <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @export
 cols_width <- function(data,
                        ...,
@@ -229,21 +235,21 @@ cols_width <- function(data,
 #' Relabel one or more columns
 #'
 #' Column labels can be modified from their default values (the names of the
-#' columns from the input table data). When you create a \pkg{gt} table object
+#' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
 #' serves as a good first approximation, column names aren't often appealing as
-#' column labels in a \pkg{gt} output table. The `cols_label()` function
+#' column labels in a **gt** output table. The `cols_label()` function
 #' provides the flexibility to relabel one or more columns and we even have the
 #' option to use the [md()] or [html()] helper functions for rendering column
 #' labels from Markdown or using HTML.
 #'
 #' It's important to note that while columns can be freely relabeled, we
 #' continue to refer to columns by their original column names. Column names in
-#' a tibble or data frame must be unique whereas column labels in \pkg{gt} have
+#' a tibble or data frame must be unique whereas column labels in **gt** have
 #' no requirement for uniqueness (which is useful for labeling columns as, say,
 #' measurement units that may be repeated several times---usually under
 #' different spanner column labels). Thus, we can still easily distinguish
-#' between columns in other \pkg{gt} function calls (e.g., in all of the
+#' between columns in other **gt** function calls (e.g., in all of the
 #' `fmt*()` functions) even though we may lose distinguishability in column
 #' labels once they have been relabeled.
 #'
@@ -253,7 +259,9 @@ cols_width <- function(data,
 #'   optionally wrap the column labels with [md()] (to interpret text as
 #'   Markdown) or [html()] (to interpret text as HTML).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # label all the table's columns to
@@ -290,7 +298,8 @@ cols_width <- function(data,
 #'
 #' \if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_label <- function(data,
@@ -348,12 +357,12 @@ cols_label <- function(data,
 #'
 #' On those occasions where you need to move columns this way or that way, we
 #' can make use of the `cols_move()` function. While it's true that the movement
-#' of columns can be done upstream of \pkg{gt}'s API, it is much easier and less
-#' error prone to use the function provided here. The movement procedure here
-#' takes one or more specified columns (in the `columns` argument) and places
-#' them to the right of a different column (the `after` argument). The ordering
-#' of the `columns` to be moved is preserved, as is the ordering of all other
-#' columns in the table.
+#' of columns can be done upstream of **gt**, it is much easier and less error
+#' prone to use the function provided here. The movement procedure here takes
+#' one or more specified columns (in the `columns` argument) and places them to
+#' the right of a different column (the `after` argument). The ordering of the
+#' `columns` to be moved is preserved, as is the ordering of all other columns
+#' in the table.
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
@@ -367,7 +376,9 @@ cols_label <- function(data,
 #'   position. The order of the remaining columns will be preserved.
 #' @param after A column name used to anchor the insertion of the moved columns.
 #'   All of the moved columns will be placed to the right of this column.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, position
@@ -386,7 +397,8 @@ cols_label <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_move <- function(data,
@@ -446,7 +458,7 @@ cols_move <- function(data,
 #'
 #' We can easily move set of columns to the beginning of the column series and
 #' we only need to specify which `columns`. It's possible to do this upstream of
-#' \pkg{gt}'s API, however, it is easier with this function and it presents less
+#' **gt**, however, it is easier with this function and it presents less
 #' possibility for error. The ordering of the `columns` that are moved to the
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
@@ -461,7 +473,9 @@ cols_move <- function(data,
 #' @param columns The column names to move to the left-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
 #'   with the remaining columns).
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, move the
@@ -494,7 +508,8 @@ cols_move <- function(data,
 #'
 #' \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_move_to_start <- function(data,
@@ -532,9 +547,9 @@ cols_move_to_start <- function(data,
 #'
 #' It's possible to move a set of columns to the end of the column series, we
 #' only need to specify which `columns` are to be moved. While this can be done
-#' upstream of \pkg{gt}'s API, this function makes to process much easier and
-#' it's less error prone. The ordering of the `columns` that are moved to the
-#' end is preserved (same with the ordering of all other columns in the table).
+#' upstream of **gt**, this function makes to process much easier and it's less
+#' error prone. The ordering of the `columns` that are moved to the end is
+#' preserved (same with the ordering of all other columns in the table).
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
 #' place one or columns at the start of the column series, the
@@ -546,7 +561,9 @@ cols_move_to_start <- function(data,
 #' @param columns The column names to move to the right-most side of the table.
 #'   The order in which columns are provided will be preserved (as is the case
 #'   with the remaining columns).
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # With the remaining columns, move the
@@ -579,7 +596,8 @@ cols_move_to_start <- function(data,
 #'
 #' \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_move_to_end <- function(data,
@@ -625,7 +643,7 @@ cols_move_to_end <- function(data,
 #' The hiding of columns is internally a rendering directive, so, all columns
 #' that are 'hidden' are still accessible and useful in any expression provided
 #' to a `rows` argument. Furthermore, the `cols_hide()` function (as with many
-#' \pkg{gt} functions) can be placed anywhere in a pipeline of \pkg{gt} function
+#' **gt** functions) can be placed anywhere in a pipeline of **gt** function
 #' calls (acting as a promise to hide columns when the timing is right). However
 #' there's perhaps greater readability when placing this call closer to the end
 #' of such a pipeline.
@@ -634,7 +652,9 @@ cols_move_to_end <- function(data,
 #' @param columns The column names to hide from the output display table. The
 #'   order of the remaining columns will be preserved. Values provided that do
 #'   not correspond to column names will be disregarded.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `countrypops` to create a gt table;
 #' # Hide the columns `country_code_2` and
@@ -673,7 +693,8 @@ cols_move_to_end <- function(data,
 #'
 #' \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_hide <- function(data,
@@ -733,7 +754,9 @@ cols_hide <- function(data,
 #'   column names or indices are to be placed in curly braces (e.g., `{price}`
 #'   or `{1}`). All characters outside of braces are taken to be string
 #'   literals.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `sp500` to create a gt table;
 #' # merge the `open` & `close` columns
@@ -763,7 +786,8 @@ cols_hide <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_merge <- function(data,
@@ -822,14 +846,11 @@ cols_merge <- function(data,
 #' handling:
 #'
 #' \enumerate{
-#'
 #' \item `NA`s in `col_val` result in missing values for the merged
 #' column (e.g., `NA` + `0.1` = `NA`)
-#'
 #' \item `NA`s in `col_uncert` (but not `col_val`) result in
 #' base values only for the merged column (e.g.,
 #' `12.0` + `NA` = `12.0`)
-#'
 #' \item `NA`s both `col_val` and `col_uncert` result in
 #' missing values for the merged column (e.g., `NA` + `NA` =
 #' `NA`)
@@ -853,7 +874,9 @@ cols_merge <- function(data,
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_uncert`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table,
 #' # keeping only the `currency` and `num`
@@ -881,7 +904,8 @@ cols_merge <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_merge_uncert <- function(data,
@@ -915,14 +939,11 @@ cols_merge_uncert <- function(data,
 #' handling:
 #'
 #' \enumerate{
-#'
 #' \item `NA`s in `col_begin` result in missing values for the merged
 #' column (e.g., `NA` + `20.0` = `NA`)
-#'
 #' \item `NA`s in `col_end` (but not `col_begin`) result in a display of only
 #' the `col_begin` values only for the merged column
 #' (e.g., `12.0` + `NA` = `12.0`)
-#'
 #' \item `NA`s both in `col_begin` and `col_end` result in missing values for
 #' the merged column (e.g., `NA` + `NA` = `NA`)
 #' }
@@ -943,7 +964,9 @@ cols_merge_uncert <- function(data,
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_end`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table,
 #' # keeping only the `model`, `mpg_c`,
@@ -967,7 +990,8 @@ cols_merge_uncert <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
 #'
-#' @family column modification functions
+#' @family Modify Columns
+#'
 #' @import rlang
 #' @export
 cols_merge_range <- function(data,

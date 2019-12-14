@@ -1,4 +1,5 @@
 #' Perform targeted text transformation with a function
+#'
 #' @inheritParams cols_align
 #' @param locations The cell or set of cells to be associated with the text
 #'   transformation. Supplying any of the `cells_*()` helper functions is a
@@ -11,7 +12,9 @@
 #'   we wish to link the footnote text to different types of locations (e.g.,
 #'   cell data values, stub group headings, the table title, etc.).
 #' @param fn The function to use for text transformation.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # transform the formatted text in the
@@ -43,7 +46,8 @@
 #' @section Figures:
 #' \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#'
 #' @export
 text_transform <- function(data,
                            locations,

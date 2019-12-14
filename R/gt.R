@@ -1,10 +1,9 @@
-#' Create a \pkg{gt} table object
+#' Create a **gt** table object
 #'
-#' The `gt()` function creates a \pkg{gt} table object when provided with table
-#' data. Using this function is the first step in a typical \pkg{gt} workflow.
-#' Once we have the \pkg{gt} table object, we can perform styling
-#' transformations before rendering to a display table of various formats (e.g.,
-#' HTML, LaTeX, RTF).
+#' The `gt()` function creates a **gt** table object when provided with table
+#' data. Using this function is the first step in a typical **gt** workflow.
+#' Once we have the **gt** table object, we can perform styling transformations
+#' before rendering to a display table of various formats.
 #'
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
@@ -36,7 +35,9 @@
 #' @param stub_group.sep The separator to use between consecutive group names (a
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
 #'   in the displayed stub row group label.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Create a table object using the
 #' # `exibble` dataset; use the `row`
@@ -69,7 +70,7 @@
 #'
 #' \if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create Table
 #'
 #' @export
 gt <- function(data,

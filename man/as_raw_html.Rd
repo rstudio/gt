@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_raw_html.R
 \name{as_raw_html}
 \alias{as_raw_html}
-\title{Get the HTML content of a \pkg{gt} table}
+\title{Get the HTML content of a \strong{gt} table}
 \usage{
 as_raw_html(data, inline_css = TRUE)
 }
@@ -46,9 +46,10 @@ tab_html \%>\%
 
 }
 \seealso{
-Other table export functions: 
+Other Export Functions: 
 \code{\link{as_latex}()},
 \code{\link{as_rtf}()},
-\code{\link{extract_summary}()}
+\code{\link{extract_summary}()},
+\code{\link{gtsave}()}
 }
-\concept{table export functions}
+\concept{Export Functions}

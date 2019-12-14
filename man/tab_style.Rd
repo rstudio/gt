@@ -26,7 +26,7 @@ used. Additionally, we can enclose several \verb{cells_*()} calls within a
 cell data values, stub group headings, the table title, etc.).}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 With the \code{tab_style()} function we can target specific cells and apply styles
@@ -118,15 +118,14 @@ tab_2 <-
 defining custom styles and \code{\link[=cells_data]{cells_data()}} as a useful helper function for
 targeting one or more data cells to be styled.
 
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{gt}()},
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create or Modify Parts}
