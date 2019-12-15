@@ -33,7 +33,7 @@
 #'   [location_cells] for more information on how these helper functions can be
 #'   used. Additionally, we can enclose several `cells_*()` calls within a
 #'   `list()` if we wish to apply styles to different types of locations (e.g.,
-#'   cell data values, stub group headings, the table title, etc.).
+#'   body cells, row group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -269,22 +269,22 @@ set_style.cells_column_spanners <- function(loc, data, style) {
 
 set_style.cells_row_groups <- function(loc, data, style) {
 
-  stub_groups <- dt_stub_groups_get(data = data)
+  row_groups <- dt_row_groups_get(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-
     resolve_data_vals_idx(
       var_expr = !!loc$groups,
       data_tbl = NULL,
-      vals = stub_groups
+      vals = row_groups
     )
 
-  groups <- stub_groups[resolved_row_groups_idx]
+  groups <- row_groups[resolved_row_groups_idx]
 
   data <-
     dt_styles_add(
       data = data,
-      locname = "stub_groups",
+      locname = "row_groups",
       grpname = groups,
       colname = NA_character_,
       locnum = 5,

@@ -10,8 +10,7 @@
 #'   \link{location_cells} for more information on how these helper functions
 #'   can be used. Additionally, we can enclose several `cells_*()` calls within
 #'   a `list()` if we wish to link the footnote text to different types of
-#'   locations (e.g., cell data values, stub group headings, the table title,
-#'   etc.).
+#'   locations (e.g., body cells, row group labels, the table title, etc.).
 #' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.

@@ -71,7 +71,7 @@ tab_row_group <- function(data,
                           rows = NULL,
                           others = NULL) {
 
-  arrange_groups_vars <- dt_stub_groups_get(data = data)
+  arrange_groups_vars <- dt_row_groups_get(data = data)
 
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
@@ -101,9 +101,9 @@ tab_row_group <- function(data,
     if (dt_stub_groupname_has_na(data = data)) {
 
       data <-
-        dt_stub_groups_set(
+        dt_row_groups_set(
           data = data,
-          stub_groups = c(
+          row_groups = c(
             arrange_groups_vars, process_text(group[1]), NA_character_
           ) %>%
             unique()
@@ -112,9 +112,9 @@ tab_row_group <- function(data,
     } else {
 
       data <-
-        dt_stub_groups_set(
+        dt_row_groups_set(
           data = data,
-          stub_groups = c(
+          row_groups = c(
             arrange_groups_vars,
             process_text(group[1])
           ) %>%

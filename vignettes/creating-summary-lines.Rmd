@@ -346,7 +346,7 @@ summary_list %>% .$summary_df_data_list %>% .$grp_a
 summary_list %>% .$summary_df_data_list %>% .$grp_b
 ```
 
-The output tibbles within the list always contain the `groupname` and `rowname` columns. The `groupname` column is filled with the name of the stub group that was given to `summary_rows()`. The `rowname` column contains the descriptive stub labels for the summary rows (recall that values are either supplied explicitly in `summary_rows()`, or, are generated from the function names). The remaining columns are those from the original dataset.
+The output tibbles within the list always contain the `groupname` and `rowname` columns. The `groupname` column is filled with the name of the row group that was given to `summary_rows()`. The `rowname` column contains the descriptive stub labels for the summary rows (recall that values are either supplied explicitly in `summary_rows()`, or, are generated from the function names). The remaining columns are those from the original dataset.
 
 The output data from `extract_summary()` can be reintroduced to a reproducible workflow and serve as downstream inputs or undergo validation. Perhaps interestingly, the output tibbles are structured in a way that facilitates direct input back to `gt()` (i.e., it has the magic `groupname` and `rowname` columns). This can produce a new, standalone summary table where the summary rows are now data rows:
 

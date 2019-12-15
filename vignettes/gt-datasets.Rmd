@@ -419,7 +419,7 @@ Let's make a reporting table from the `pizzaplace` dataset with these requiremen
 4. format the numeric `sold` column to use commas and no decimal places
 5. format the currency values (`income`) to be in `USD` currency
 5. add a summary for each grouping that provides total sell counts and revenue amounts 
-6. color the stub group rows and summary cells to add a little pizzazz
+6. color the row groups and summary cells to add a little pizzazz
 
 ```{r pizzaplace}
 # Create a gt table based on a preprocessed `pizzaplace`

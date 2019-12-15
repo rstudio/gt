@@ -291,7 +291,7 @@ to_output_location.output_relative <- function(loc, data) {
 to_output_location.cells_body <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
-  groups <- dt_stub_groups_get(data = data)
+  groups <- dt_row_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 
@@ -309,7 +309,7 @@ to_output_location.cells_body <- function(loc, data) {
 to_output_location.cells_stub <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
-  groups <- dt_stub_groups_get(data = data)
+  groups <- dt_row_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 

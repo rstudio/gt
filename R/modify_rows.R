@@ -53,7 +53,7 @@ row_group_order <- function(data,
   }
 
   # Get the current arrangement of the row groups
-  arrange_groups <- dt_stub_groups_get(data = data)
+  arrange_groups <- dt_row_groups_get(data = data)
 
   if (inherits(groups, "character")) {
 
@@ -87,5 +87,5 @@ row_group_order <- function(data,
   }
 
   # Create and store a list of row groups in the intended ordering
-  dt_stub_groups_set(data = data, stub_groups = groups)
+  dt_row_groups_set(data = data, row_groups = groups)
 }

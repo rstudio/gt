@@ -396,7 +396,7 @@ test_that("the `tab_footnote()` function works correctly", {
       "Grand summary cell footnote.")
   )
 
-  # Apply a footnote to the `Mazdas` stub group cell
+  # Apply a footnote to the `Mazdas` row group cell
   tab <-
     data %>%
     tab_footnote(
@@ -415,7 +415,7 @@ test_that("the `tab_footnote()` function works correctly", {
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("stub_groups", "Mazdas", NA_character_, "5", NA_character_,
+      c("row_groups", "Mazdas", NA_character_, "5", NA_character_,
         NA_character_, "Group cell footnote.")
     )
 

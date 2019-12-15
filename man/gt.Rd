@@ -11,7 +11,7 @@ gt(
   rownames_to_stub = FALSE,
   auto_align = TRUE,
   id = random_id(),
-  stub_group.sep = getOption("gt.stub_group.sep", " - ")
+  row_group.sep = getOption("gt.row_group.sep", " - ")
 )
 }
 \arguments{
@@ -34,7 +34,7 @@ calls \code{cols_align(align = "auto")} for all columns.}
 the \code{\link[=random_id]{random_id()}} function. If set to \code{NULL} then no table ID will be
 applied.}
 
-\item{stub_group.sep}{The separator to use between consecutive group names (a
+\item{row_group.sep}{The separator to use between consecutive group names (a
 possibility when providing \code{data} as a \code{grouped_df} with multiple groups)
 in the displayed stub row group label.}
 }
@@ -59,7 +59,7 @@ of data in a table and the data in the \code{rowname_col} are unique labels
 Row groups can also be created by passing a \code{grouped_df} to \code{gt()} by using
 the \code{\link[dplyr:group_by]{dplyr::group_by()}} function on the table data. In this way, two or more
 columns of categorical data can be used to make row groups. The
-\code{stub_group.sep} argument allows for control in how the row group label will
+\code{row_group.sep} argument allows for control in how the row group label will
 appear in the display table.
 }
 \section{Figures}{

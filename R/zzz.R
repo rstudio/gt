@@ -96,17 +96,15 @@ globalVariables(
 #' @section Package options:
 #'
 #' **gt** uses the following [options()] to configure behavior:
-#'
 #' \itemize{
-#'   \item `gt.stub_group.sep`: a separator between groups for the
-#'   stub group label.
-#'
+#'   \item `gt.row_group.sep`: a separator between groups for the row group
+#'   label.
 #' }
 #' @name gt-options
 NULL
 
 gt_default_options <- list(
-  gt.stub_group.sep = " - ",
+  gt.row_group.sep = " - ",
   gt.html_tag_check = TRUE
 )
 

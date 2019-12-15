@@ -235,7 +235,7 @@ test_that("a gt table contains the correct placement of row groups", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the two stub groups
+  # Expect that the inner HTML content for the two row groups
   # is 'Mazda' and an empty string
   c(tbl_html %>%
       selection_text("[class='gt_group_heading']"),
@@ -260,7 +260,7 @@ test_that("a gt table contains the correct placement of row groups", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the three stub groups
+  # Expect that the inner HTML content for the three row groups
   # is in the prescribed order
   c(tbl_html %>%
       selection_text("[class='gt_empty_group_heading']"),

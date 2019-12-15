@@ -269,7 +269,7 @@ test_that("a gt table can store the correct style statements", {
       )
   )
 
-  # Apply a `yellow` background to the `Mazdas` stub group cell
+  # Apply a `yellow` background to the `Mazdas` row group cell
   tbl_html <-
     data %>%
     tab_style(

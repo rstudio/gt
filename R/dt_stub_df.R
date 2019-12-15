@@ -15,7 +15,7 @@ dt_stub_df_init <- function(data,
                             rowname_col,
                             groupname_col,
                             rownames_to_stub,
-                            stub_group.sep) {
+                            row_group.sep) {
 
   vars_to_hide <- c()
 
@@ -67,7 +67,7 @@ dt_stub_df_init <- function(data,
       apply(
         data_df[, row_group_columns],
         MARGIN = 1,
-        paste, collapse = stub_group.sep
+        paste, collapse = row_group.sep
       )
 
     # Place the `group_labels` values into `stub_df$groupname`
@@ -120,11 +120,11 @@ reorder_stub_df <- function(data) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  stub_groups <- dt_stub_groups_get(data = data)
+  row_groups <- dt_row_groups_get(data = data)
 
   rows_df <-
     get_row_reorder_df(
-      groups = stub_groups,
+      groups = row_groups,
       stub_df = stub_df
     )
 

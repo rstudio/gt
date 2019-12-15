@@ -36,8 +36,7 @@
 #'   \link{location_cells} for more information on how these helper functions
 #'   can be used. Additionally, we can enclose several `cells_*()` calls within
 #'   a `list()` if we wish to link the footnote text to different types of
-#'   locations (e.g., cell data values, stub group headings, the table title,
-#'   etc.).
+#'   locations (e.g., body cells, row group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -186,7 +185,7 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote) {
 
 set_footnote.cells_row_groups <- function(loc, data, footnote) {
 
-  row_groups <- dt_stub_groups_get(data = data)
+  row_groups <- dt_row_groups_get(data = data)
 
   # Resolve row groups
   resolved_row_groups_idx <-
@@ -201,7 +200,7 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
   data <-
     dt_footnotes_add(
       data = data,
-      locname = "stub_groups",
+      locname = "row_groups",
       grpname = groups,
       colname = NA_character_,
       locnum = 5,

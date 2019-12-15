@@ -10,11 +10,9 @@
 
 
 \strong{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
-
 \itemize{
-\item \code{gt.stub_group.sep}: a separator between groups for the
-stub group label.
-
+\item \code{gt.row_group.sep}: a separator between groups for the row group
+label.
 }
 }
 

@@ -22,8 +22,7 @@ functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_col
 \link{location_cells} for more information on how these helper functions
 can be used. Additionally, we can enclose several \verb{cells_*()} calls within
 a \code{list()} if we wish to link the footnote text to different types of
-locations (e.g., cell data values, stub group headings, the table title,
-etc.).}
+locations (e.g., body cells, row group labels, the table title, etc.).}
 }
 \value{
 An object of class \code{gt_tbl}.
