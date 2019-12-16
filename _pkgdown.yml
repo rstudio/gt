@@ -49,7 +49,6 @@ reference:
       for post-processing of any data, and we provide a function for that
       transformation.
     contents:
-    - fmt
     - fmt_number
     - fmt_scientific
     - fmt_percent
@@ -57,9 +56,10 @@ reference:
     - fmt_date
     - fmt_time
     - fmt_datetime
-    - fmt_missing
-    - fmt_passthrough
     - fmt_markdown
+    - fmt_passthrough
+    - fmt_missing
+    - fmt
     - text_transform
     - data_color
 
@@ -72,15 +72,15 @@ reference:
       together (`cols_merge*()`), moving columns around (`cols_move*()`)
     contents:
     - cols_align
-    - cols_hide
+    - cols_width
     - cols_label
-    - cols_merge
+    - cols_move_to_start
+    - cols_move_to_end
+    - cols_move
+    - cols_hide
     - cols_merge_range
     - cols_merge_uncert
-    - cols_width
-    - cols_move
-    - cols_move_to_end
-    - cols_move_to_start
+    - cols_merge
 
   - title: Modify Rows
     desc: >
@@ -113,7 +113,6 @@ reference:
       `tab_footnote()`, `tab_spanner()`, `tab_stubhead_label()`, and
       `tab_source_note()` functions.
     contents:
-    - vars
     - md
     - html
     - px
@@ -125,8 +124,8 @@ reference:
     - cell_borders
     - adjust_luminance
     - random_id
-    - gt_latex_dependencies
     - escape_latex
+    - gt_latex_dependencies
 
   - title: Image Functions
     desc: >
@@ -153,9 +152,9 @@ reference:
     contents:
     - info_date_style
     - info_time_style
-    - info_paletteer
     - info_currencies
     - info_locales
+    - info_paletteer
 
   - title: Datasets
     desc: >
