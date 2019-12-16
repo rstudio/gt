@@ -1,12 +1,9 @@
-#' Add summary rows using aggregation functions
+#' Add groupwise summary rows using aggregation functions
 #'
-#' Add groupwise summary rows (with `summary_rows()`) to one or more row groups
-#' by using the input data already provided in the [gt()] function alongside any
-#' suitable aggregation functions. Or, add a grand summary (with
-#' `grand_summary_rows()`) that incorporates all available data, regardless of
-#' grouping. You choose how to format the values in the resulting summary cells
-#' by use of a `formatter` function (e.g, `fmt_number`) and any relevant
-#' options.
+#' Add summary rows to one or more row groups by using the table data and any
+#' suitable aggregation functions. You choose how to format the values in the
+#' resulting summary cells by use of a `formatter` function (e.g, `fmt_number`,
+#' etc.) and any relevant options.
 #'
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
@@ -83,8 +80,6 @@
 #' @section Function ID:
 #' 6-1
 #'
-#' @rdname summary_rows
-#'
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
@@ -156,9 +151,58 @@ summary_rows <- function(data,
   data
 }
 
-#' @family Add Rows
+#' Add grand summary rows using aggregation functions
 #'
-#' @rdname summary_rows
+#' Add grand summary rows to the **gt** table by using applying aggregation
+#' functions to the table data. The summary rows incorporate all of the
+#' available data, regardless of whether some of the data are part of row
+#' groups. You choose how to format the values in the resulting summary cells by
+#' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
+#'
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where grand
+#' summary rows were added via `grand_summary_rows()`.
+#'
+#' @inheritParams summary_rows
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `sp500` to create a gt table with
+#' # row groups; create grand summary rows
+#' # (`min`, `max`, `avg`) for the table
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::filter(
+#'     date >= "2015-01-05" &
+#'       date <="2015-01-16"
+#'   ) %>%
+#'   dplyr::arrange(date) %>%
+#'   dplyr::mutate(
+#'     week = paste0(
+#'       "W", strftime(date, format = "%V"))
+#'   ) %>%
+#'   dplyr::select(-adj_close, -volume) %>%
+#'   gt(
+#'     rowname_col = "date",
+#'     groupname_col = "week"
+#'   ) %>%
+#'   grand_summary_rows(
+#'     columns = vars(open, high, low, close),
+#'     fns = list(
+#'       min = ~min(.),
+#'       max = ~max(.),
+#'       avg = ~mean(.)),
+#'     formatter = fmt_number,
+#'     use_seps = FALSE
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_grand_summary_rows_1.svg}{options: width=100\%}}
+#'
+#' @family Add Rows
+#' @section Function ID:
+#' 6-2
 #'
 #' @export
 grand_summary_rows <- function(data,
