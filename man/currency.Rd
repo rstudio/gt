@@ -38,7 +38,7 @@ required each and every context.
 }
 \section{Function ID}{
 
-7-6
+7-14
 }
 
 \examples{
@@ -64,10 +64,18 @@ Other Helper Functions:
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
-\code{\link{location_cells}},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},

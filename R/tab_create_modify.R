@@ -449,13 +449,13 @@ tab_stubhead <- function(data,
 #' @param locations The cell or set of cells to be associated with the footnote.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
-#'   functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_row_groups()], [cells_stub()], [cells_stubhead()], [cells_body()],
-#'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
-#'   \link{location_cells} for more information on how these helper functions
-#'   can be used. Additionally, we can enclose several `cells_*()` calls within
-#'   a `list()` if we wish to link the footnote text to different types of
-#'   locations (e.g., body cells, row group labels, the table title, etc.).
+#'   functions are: [cells_title()], [cells_stubhead()],
+#'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
+#'   [cells_stub()], [cells_body()], [cells_summary()], and
+#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
+#'   calls within a `list()` if we wish to link the footnote text to different
+#'   types of locations (e.g., body cells, row group labels, the table title,
+#'   etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -763,16 +763,15 @@ tab_source_note <- function(data,
 #'   [cell_borders()] helper functions can be used here to more easily generate
 #'   valid styles. If using more than one helper function to define styles, all
 #'   calls must be enclosed in a [list()].
-#' @param locations the cell or set of cells to be associated with the style
+#' @param locations the cell or set of cells to be associated with the style.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
-#'   the location cells that are associated with the style application. These
-#'   helper functions are: [cells_title()], [cells_column_labels()],
-#'   [cells_row_groups()], [cells_stub()], [cells_stubhead()], [cells_body()],
-#'   [cells_summary()], and [cells_grand_summary()]. Please see the help article
-#'   [location_cells] for more information on how these helper functions can be
-#'   used. Additionally, we can enclose several `cells_*()` calls within a
-#'   `list()` if we wish to apply styles to different types of locations (e.g.,
-#'   body cells, row group labels, the table title, etc.).
+#'   the location cells that are associated with the styling. These helper
+#'   functions are: [cells_title()], [cells_stubhead()],
+#'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
+#'   [cells_stub()], [cells_body()], [cells_summary()], and
+#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
+#'   calls within a `list()` if we wish to apply styling to different types of
+#'   locations (e.g., body cells, row group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'

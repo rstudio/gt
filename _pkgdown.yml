@@ -117,7 +117,15 @@ reference:
     - html
     - px
     - pct
-    - location_cells
+    - cells_title
+    - cells_stubhead
+    - cells_column_spanners
+    - cells_column_labels
+    - cells_row_groups
+    - cells_stub
+    - cells_body
+    - cells_summary
+    - cells_grand_summary
     - currency
     - cell_text
     - cell_fill

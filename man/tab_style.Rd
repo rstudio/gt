@@ -14,16 +14,15 @@ tab_style(data, style, locations)
 valid styles. If using more than one helper function to define styles, all
 calls must be enclosed in a \code{\link[=list]{list()}}.}
 
-\item{locations}{the cell or set of cells to be associated with the style
+\item{locations}{the cell or set of cells to be associated with the style.
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
-the location cells that are associated with the style application. These
-helper functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_body]{cells_body()}},
-\code{\link[=cells_summary]{cells_summary()}}, and \code{\link[=cells_grand_summary]{cells_grand_summary()}}. Please see the help article
-\link{location_cells} for more information on how these helper functions can be
-used. Additionally, we can enclose several \verb{cells_*()} calls within a
-\code{list()} if we wish to apply styles to different types of locations (e.g.,
-body cells, row group labels, the table title, etc.).}
+the location cells that are associated with the styling. These helper
+functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
+\code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
+\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \verb{cells_*()}
+calls within a \code{list()} if we wish to apply styling to different types of
+locations (e.g., body cells, row group labels, the table title, etc.).}
 }
 \value{
 An object of class \code{gt_tbl}.

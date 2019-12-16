@@ -10,15 +10,9 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Supplying any of the \verb{cells_*()} helper functions is a
-useful way to target the location cells that are associated with the
-footnote text. These helper functions are: \code{\link[=cells_title]{cells_title()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_body]{cells_body()}}, and \code{\link[=cells_summary]{cells_summary()}}. Please see the help article
-\link{location_cells} for more information on how these helper functions
-can be used. Additionally, we can enclose several \verb{cells_*()} calls within
-a \code{list()} if we wish to link the footnote text to different types of
-locations (e.g., body cells, row group labels, the table title, etc.).}
+transformation. Only the \code{\link[=cells_body]{cells_body()}} helper function can be used here.
+We can enclose several \code{\link[=cells_body]{cells_body()}} calls within a \code{list()} if we wish to
+make the transformation happen at different body cell locations.}
 
 \item{fn}{The function to use for text transformation.}
 }

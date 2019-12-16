@@ -2,6 +2,7 @@
 #'
 #' Upgrade a `cells_*` object to a `list()` if only a single instance is
 #' provided.
+#'
 #' @param locations Any `cells_*` object.
 #' @noRd
 as_locations <- function(locations) {
