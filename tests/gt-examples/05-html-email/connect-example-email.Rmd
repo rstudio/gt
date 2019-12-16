@@ -1,0 +1,22 @@
+---
+title: "Email Document"
+output: blastula::blastula_email
+---
+
+```{r packages, include=FALSE}
+library(tidyverse)
+```
+
+# Diamonds and Real Estate in Dallas
+
+We can include parts from the parent `"connect-example-main.Rmd"` document by adding an empty R Markdown code chunk with a matching name (in this case `diamonds_plot`). This is great because we can reuse parts from the main report document.
+
+```{r diamonds_plot, echo=FALSE}
+```
+
+The `diamonds` table can be included in the same way:
+
+```{r diamonds_table, echo=FALSE}
+```
+
+Note that the `echo = FALSE` parameter was added to each of the the code chunks to prevent printing of the **R** code that generated the object.
