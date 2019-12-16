@@ -14,6 +14,11 @@ pixels (e.g., \code{table.font.size}).}
 \description{
 Helper for providing a numeric value as pixels value
 }
+\section{Function ID}{
+
+7-3
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

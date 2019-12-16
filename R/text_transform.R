@@ -47,6 +47,8 @@
 #' \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-12
 #'
 #' @export
 text_transform <- function(data,

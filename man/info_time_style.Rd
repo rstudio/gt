@@ -18,6 +18,11 @@ number codes, the format names, and example outputs using a fixed time
 \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-2
+}
+
 \examples{
 # Get a table of info on the different
 # time-formatting styles (which are used

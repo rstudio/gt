@@ -14,6 +14,11 @@ This helper function is to be used with \code{id} argument of the \code{\link[=g
 The \code{id} option in \code{\link[=gt]{gt()}} uses \code{random_id()} by default however we can
 optionally supply a custom \code{id} value, or, use \code{NULL} for no ID at all.
 }
+\section{Function ID}{
+
+7-11
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

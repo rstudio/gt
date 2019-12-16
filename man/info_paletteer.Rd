@@ -63,6 +63,11 @@ are shown by default with \code{info_paletteer()}:
 \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-5
+}
+
 \examples{
 # Get a table of info on just the
 # `ggthemes` color palette (easily

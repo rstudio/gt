@@ -51,6 +51,11 @@ elongating any given plot to fit better within the table construct.
 \if{html}{\figure{man_ggplot_image_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+8-3
+}
+
 \examples{
 library(ggplot2)
 

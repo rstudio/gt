@@ -18,6 +18,11 @@ codes, the format names, and example outputs using a fixed date
 \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-1
+}
+
 \examples{
 # Get a table of info on the different
 # date-formatting styles (which are used

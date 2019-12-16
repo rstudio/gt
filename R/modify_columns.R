@@ -43,6 +43,8 @@
 #' \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-1
 #'
 #' @export
 cols_align <- function(data,
@@ -151,6 +153,8 @@ cols_align <- function(data,
 #' \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-2
 #'
 #' @export
 cols_width <- function(data,
@@ -299,6 +303,8 @@ cols_width <- function(data,
 #' \if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-3
 #'
 #' @import rlang
 #' @export
@@ -349,107 +355,6 @@ cols_label <- function(data,
         column_label = labels_list[[i]]
       )
   }
-
-  data
-}
-
-#' Move one or more columns
-#'
-#' On those occasions where you need to move columns this way or that way, we
-#' can make use of the `cols_move()` function. While it's true that the movement
-#' of columns can be done upstream of **gt**, it is much easier and less error
-#' prone to use the function provided here. The movement procedure here takes
-#' one or more specified columns (in the `columns` argument) and places them to
-#' the right of a different column (the `after` argument). The ordering of the
-#' `columns` to be moved is preserved, as is the ordering of all other columns
-#' in the table.
-#'
-#' The columns supplied in `columns` must all exist in the table and none of
-#' them can be in the `after` argument. The `after` column must also exist and
-#' only one column should be provided here. If you need to place one or columns
-#' at the beginning of the column series, the [cols_move_to_start()] function
-#' should be used. Similarly, if those columns to move should be placed at the
-#' end of the column series then use [cols_move_to_end()].
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to move to as a group to a different
-#'   position. The order of the remaining columns will be preserved.
-#' @param after A column name used to anchor the insertion of the moved columns.
-#'   All of the moved columns will be placed to the right of this column.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, position
-#' # `population` after `country_name`
-#' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
-#'   cols_move(
-#'     columns = vars(population),
-#'     after = vars(country_name)
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
-#'
-#' @family Modify Columns
-#'
-#' @import rlang
-#' @export
-cols_move <- function(data,
-                      columns,
-                      after) {
-
-  columns <- enquo(columns)
-  after <- enquo(after)
-
-  # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
-
-  # Get the `after` columns as a character vector
-  after <- resolve_vars(var_expr = !!after, data = data)
-
-  vars <- dt_boxhead_get_vars(data = data)
-
-  # Stop function if `after` contains multiple columns
-  if (length(after) > 1) {
-    stop("Only one column name should be supplied to `after`.",
-         call. = FALSE)
-  }
-
-  # Stop function if `after` doesn't exist in `vars`
-  if (!(after %in% vars)) {
-    stop("The column supplied to `after` doesn't exist in the input `data` table.",
-         call. = FALSE)
-  }
-
-  # Stop function if no `columns` are provided
-  if (length(columns) == 0) {
-    stop("Columns must be provided.", call. = FALSE)
-  }
-
-  # Stop function if any of the `columns` don't exist in `vars`
-  if (!all(columns %in% vars)) {
-    stop("All `columns` must exist and be visible in the input `data` table.",
-         call. = FALSE)
-  }
-
-  # Get the remaining column names in the table
-  moving_columns <- setdiff(columns, after)
-  other_columns <- base::setdiff(vars, moving_columns)
-
-  # Get the column index for where the set
-  # of `columns` should be inserted after
-  after_index <- which(other_columns == after)
-
-  new_vars <- append(other_columns, moving_columns, after = after_index)
-
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
 
   data
 }
@@ -509,6 +414,8 @@ cols_move <- function(data,
 #' \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-4
 #'
 #' @import rlang
 #' @export
@@ -597,6 +504,8 @@ cols_move_to_start <- function(data,
 #' \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-5
 #'
 #' @import rlang
 #' @export
@@ -625,6 +534,109 @@ cols_move_to_end <- function(data,
   other_columns <- base::setdiff(vars, columns)
 
   new_vars <- append(other_columns, columns)
+
+  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+
+  data
+}
+
+#' Move one or more columns
+#'
+#' On those occasions where you need to move columns this way or that way, we
+#' can make use of the `cols_move()` function. While it's true that the movement
+#' of columns can be done upstream of **gt**, it is much easier and less error
+#' prone to use the function provided here. The movement procedure here takes
+#' one or more specified columns (in the `columns` argument) and places them to
+#' the right of a different column (the `after` argument). The ordering of the
+#' `columns` to be moved is preserved, as is the ordering of all other columns
+#' in the table.
+#'
+#' The columns supplied in `columns` must all exist in the table and none of
+#' them can be in the `after` argument. The `after` column must also exist and
+#' only one column should be provided here. If you need to place one or columns
+#' at the beginning of the column series, the [cols_move_to_start()] function
+#' should be used. Similarly, if those columns to move should be placed at the
+#' end of the column series then use [cols_move_to_end()].
+#'
+#' @inheritParams cols_align
+#' @param columns The column names to move to as a group to a different
+#'   position. The order of the remaining columns will be preserved.
+#' @param after A column name used to anchor the insertion of the moved columns.
+#'   All of the moved columns will be placed to the right of this column.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # With the remaining columns, position
+#' # `population` after `country_name`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_move(
+#'     columns = vars(population),
+#'     after = vars(country_name)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-6
+#'
+#' @import rlang
+#' @export
+cols_move <- function(data,
+                      columns,
+                      after) {
+
+  columns <- enquo(columns)
+  after <- enquo(after)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
+  # Get the `after` columns as a character vector
+  after <- resolve_vars(var_expr = !!after, data = data)
+
+  vars <- dt_boxhead_get_vars(data = data)
+
+  # Stop function if `after` contains multiple columns
+  if (length(after) > 1) {
+    stop("Only one column name should be supplied to `after`.",
+         call. = FALSE)
+  }
+
+  # Stop function if `after` doesn't exist in `vars`
+  if (!(after %in% vars)) {
+    stop("The column supplied to `after` doesn't exist in the input `data` table.",
+         call. = FALSE)
+  }
+
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
+
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist and be visible in the input `data` table.",
+         call. = FALSE)
+  }
+
+  # Get the remaining column names in the table
+  moving_columns <- setdiff(columns, after)
+  other_columns <- base::setdiff(vars, moving_columns)
+
+  # Get the column index for where the set
+  # of `columns` should be inserted after
+  after_index <- which(other_columns == after)
+
+  new_vars <- append(other_columns, moving_columns, after = after_index)
 
   data <- dt_boxhead_set_var_order(data, vars = new_vars)
 
@@ -694,6 +706,8 @@ cols_move_to_end <- function(data,
 #' \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-7
 #'
 #' @import rlang
 #' @export
@@ -721,113 +735,6 @@ cols_hide <- function(data,
   for (column in columns) {
     data <- data %>% dt_boxhead_edit(var = column, type = "hidden")
   }
-
-  data
-}
-
-#' Merge data from two or more columns to a single column
-#'
-#' This function takes input from two or more columns and allows the contents to
-#' be merged them into a single column, using a pattern that specifies the
-#' formatting. We can specify which columns to merge together in the `columns`
-#' argument. The string-combining pattern is given in the `pattern` argument.
-#' The first column in the `columns` series operates as the target column (i.e.,
-#' will undergo mutation) whereas all following `columns` will be untouched.
-#'
-#' There are two other column-merging functions that offer specialized behavior
-#' that is optimized for common table tasks: [cols_merge_range()] and
-#' [cols_merge_uncert()]. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
-#'
-#' @inheritParams cols_align
-#' @param columns The columns that will participate in the merging process. The
-#'   first column name provided will be the target column (i.e., undergo
-#'   mutation) and the other columns will serve to provide input.
-#' @param hide_columns Any column names provided here will have their state
-#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
-#'   already hidden. This is convenient if the purpose of these specified
-#'   columns are only useful for providing string input to the target column.
-#' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `column` values and any string literals. We can use column names or numbers
-#'   (corresponding to the position of columns provided in `columns`). The
-#'   column names or indices are to be placed in curly braces (e.g., `{price}`
-#'   or `{1}`). All characters outside of braces are taken to be string
-#'   literals.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `sp500` to create a gt table;
-#' # merge the `open` & `close` columns
-#' # together, and, the `low` & `high`
-#' # columns (putting an em dash between
-#' # both); rename the columns
-#' tab_1 <-
-#'   sp500 %>%
-#'   dplyr::slice(50:55) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
-#'   cols_merge(
-#'     columns = vars(open, close),
-#'     hide_columns = vars(close),
-#'     pattern = "{1}&mdash;{2}"
-#'   ) %>%
-#'   cols_merge(
-#'     columns = vars(low, high),
-#'     hide_columns = vars(high),
-#'     pattern = "{1}&mdash;{2}"
-#'   ) %>%
-#'   cols_label(
-#'     open = "open/close",
-#'     low = "low/high"
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
-#'
-#' @family Modify Columns
-#'
-#' @import rlang
-#' @export
-cols_merge <- function(data,
-                       columns,
-                       hide_columns = columns[-1],
-                       pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
-
-  columns <- enquo(columns)
-
-  # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
-
-  if (!is.null(hide_columns)) {
-
-    hide_columns <- enquo(hide_columns)
-
-    # Get the columns supplied in `hide_columns` as a character vector
-    hide_columns <- resolve_vars(var_expr = !!hide_columns, data = data)
-
-    hide_columns_from_supplied <- base::intersect(hide_columns, columns)
-
-    if (length(base::setdiff(hide_columns, columns) > 0)) {
-      warning("Only the columns supplied in `columns` will be hidden.\n",
-              " * use `cols_hide()` to hide any out of scope columns",
-              call. = FALSE)
-    }
-
-    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
-  }
-
-  # Create an entry and add it to the `_col_merge` attribute
-  data <-
-    dt_col_merge_add(
-      data = data,
-      col_merge = dt_col_merge_entry(
-        vars = columns,
-        type = "merge",
-        pattern = pattern
-      )
-    )
 
   data
 }
@@ -905,6 +812,8 @@ cols_merge <- function(data,
 #' \if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-8
 #'
 #' @import rlang
 #' @export
@@ -991,6 +900,8 @@ cols_merge_uncert <- function(data,
 #' \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
 #'
 #' @family Modify Columns
+#' @section Function ID:
+#' 4-9
 #'
 #' @import rlang
 #' @export
@@ -1029,6 +940,115 @@ cols_merge_range <- function(data,
   if (isTRUE(autohide)) {
     data <- data %>% cols_hide(columns = col_end)
   }
+
+  data
+}
+
+#' Merge data from two or more columns to a single column
+#'
+#' This function takes input from two or more columns and allows the contents to
+#' be merged them into a single column, using a pattern that specifies the
+#' formatting. We can specify which columns to merge together in the `columns`
+#' argument. The string-combining pattern is given in the `pattern` argument.
+#' The first column in the `columns` series operates as the target column (i.e.,
+#' will undergo mutation) whereas all following `columns` will be untouched.
+#'
+#' There are two other column-merging functions that offer specialized behavior
+#' that is optimized for common table tasks: [cols_merge_range()] and
+#' [cols_merge_uncert()]. These functions operate similarly, where the
+#' non-target columns can be optionally hidden from the output table through the
+#' `hide_columns` or `autohide` options.
+#'
+#' @inheritParams cols_align
+#' @param columns The columns that will participate in the merging process. The
+#'   first column name provided will be the target column (i.e., undergo
+#'   mutation) and the other columns will serve to provide input.
+#' @param hide_columns Any column names provided here will have their state
+#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
+#'   already hidden. This is convenient if the purpose of these specified
+#'   columns are only useful for providing string input to the target column.
+#' @param pattern A formatting pattern that specifies the arrangement of the
+#'   `column` values and any string literals. We can use column names or numbers
+#'   (corresponding to the position of columns provided in `columns`). The
+#'   column names or indices are to be placed in curly braces (e.g., `{price}`
+#'   or `{1}`). All characters outside of braces are taken to be string
+#'   literals.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `sp500` to create a gt table;
+#' # merge the `open` & `close` columns
+#' # together, and, the `low` & `high`
+#' # columns (putting an em dash between
+#' # both); rename the columns
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::slice(50:55) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   cols_merge(
+#'     columns = vars(open, close),
+#'     hide_columns = vars(close),
+#'     pattern = "{1}&mdash;{2}"
+#'   ) %>%
+#'   cols_merge(
+#'     columns = vars(low, high),
+#'     hide_columns = vars(high),
+#'     pattern = "{1}&mdash;{2}"
+#'   ) %>%
+#'   cols_label(
+#'     open = "open/close",
+#'     low = "low/high"
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-10
+#'
+#' @import rlang
+#' @export
+cols_merge <- function(data,
+                       columns,
+                       hide_columns = columns[-1],
+                       pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
+
+  columns <- enquo(columns)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
+  if (!is.null(hide_columns)) {
+
+    hide_columns <- enquo(hide_columns)
+
+    # Get the columns supplied in `hide_columns` as a character vector
+    hide_columns <- resolve_vars(var_expr = !!hide_columns, data = data)
+
+    hide_columns_from_supplied <- base::intersect(hide_columns, columns)
+
+    if (length(base::setdiff(hide_columns, columns) > 0)) {
+      warning("Only the columns supplied in `columns` will be hidden.\n",
+              " * use `cols_hide()` to hide any out of scope columns",
+              call. = FALSE)
+    }
+
+    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
+  }
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = columns,
+        type = "merge",
+        pattern = pattern
+      )
+    )
 
   data
 }

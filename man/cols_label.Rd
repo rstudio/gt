@@ -47,6 +47,11 @@ labels once they have been relabeled.
 \if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-3
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # label all the table's columns to

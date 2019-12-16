@@ -24,6 +24,11 @@ Interpret input text as HTML-formatted text
 \if{html}{\figure{man_html_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+7-2
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # when adding a title, use the `html()`

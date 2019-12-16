@@ -19,6 +19,11 @@ same imagery (sized at 200px by 200px) but one is a PNG file while the other
 is an SVG file. This function is most useful when paired with \code{\link[=local_image]{local_image()}}
 since we test various sizes of the test image within that function.
 }
+\section{Function ID}{
+
+8-4
+}
+
 \seealso{
 Other Image Addition Functions: 
 \code{\link{ggplot_image}()},

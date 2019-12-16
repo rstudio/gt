@@ -90,6 +90,11 @@ using intersections of \code{columns} and \code{rows}
 \if{html}{\figure{man_location_cells_6.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+7-5
+}
+
 \examples{
 library(tidyr)
 

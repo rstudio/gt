@@ -82,6 +82,11 @@ rows were added via \code{summary_rows()}.
 \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+6-1
+}
+
 \examples{
 # Use `sp500` to create a gt table with
 # row groups; create summary rows (`min`,

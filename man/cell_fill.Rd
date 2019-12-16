@@ -21,6 +21,11 @@ function, which itself allows for the setting of custom styles to one or more
 cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
+\section{Function ID}{
+
+7-8
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

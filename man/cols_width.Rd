@@ -48,6 +48,11 @@ favor of the pixel values set for each column.
 \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-2
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # with named arguments in `...`, we

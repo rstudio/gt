@@ -167,6 +167,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-4
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `currency` column to have

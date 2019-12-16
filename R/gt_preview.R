@@ -39,6 +39,8 @@
 #' \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
 #'
 #' @family Create Table
+#' @section Function ID:
+#' 1-2
 #'
 #' @export
 gt_preview <- function(data,

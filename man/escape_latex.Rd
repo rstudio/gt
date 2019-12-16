@@ -15,6 +15,11 @@ Text may contain several characters with special meanings in LaTeX. This
 function will transform a character vector so that it is safe to use within
 LaTeX tables.
 }
+\section{Function ID}{
+
+7-12
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

@@ -94,6 +94,11 @@ hexadecimal colors.
 \if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-13
+}
+
 \examples{
 # library(paletteer)
 

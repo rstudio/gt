@@ -80,6 +80,8 @@
 #' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
 #'
 #' @family Add Rows
+#' @section Function ID:
+#' 6-1
 #'
 #' @rdname summary_rows
 #'

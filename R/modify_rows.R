@@ -39,6 +39,8 @@
 #' \if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
 #'
 #' @family Modify Rows
+#' @section Function ID:
+#' 5-1
 #'
 #' @export
 row_group_order <- function(data,

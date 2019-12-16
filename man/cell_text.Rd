@@ -66,6 +66,11 @@ itself allows for the setting of custom styles to one or more cells. We can
 also define several styles within a single call of \code{cell_text()} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
+\section{Function ID}{
+
+7-7
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

@@ -53,6 +53,11 @@ non-target columns can be optionally hidden from the output table through the
 \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-10
+}
+
 \examples{
 # Use `sp500` to create a gt table;
 # merge the `open` & `close` columns

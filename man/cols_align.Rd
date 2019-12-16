@@ -41,6 +41,11 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-1
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # align the `population` column data to

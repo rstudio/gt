@@ -43,6 +43,11 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+1-2
+}
+
 \examples{
 # Use `gtcars` to create a gt table
 # preview (with only a few of its

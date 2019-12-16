@@ -69,6 +69,8 @@
 #' }
 #'
 #' @family Shiny functions
+#' @section Function ID:
+#' 11-1
 #'
 #' @export
 render_gt <- function(expr,
@@ -187,6 +189,8 @@ render_gt <- function(expr,
 #' }
 #'
 #' @family Shiny functions
+#' @section Function ID:
+#' 11-2
 #'
 #' @export
 gt_output <- function(outputId) {

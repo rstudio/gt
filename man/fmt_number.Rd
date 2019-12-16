@@ -120,6 +120,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-1
+}
+
 \examples{
 library(tidyr)
 

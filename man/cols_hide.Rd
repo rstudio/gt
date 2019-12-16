@@ -40,6 +40,11 @@ of such a pipeline.
 \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-7
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # Hide the columns `country_code_2` and

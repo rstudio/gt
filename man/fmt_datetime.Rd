@@ -82,6 +82,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-7
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # keep only the `datetime` column;

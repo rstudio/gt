@@ -103,6 +103,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-3
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `num` column to have

@@ -36,6 +36,11 @@ string without a name, it will be taken as the \code{default} (i.e.,
 we were to specify currency strings for multiple output contexts, names are
 required each and every context.
 }
+\section{Function ID}{
+
+7-6
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `currency` column to have

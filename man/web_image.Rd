@@ -43,6 +43,11 @@ heights of most table rows.
 \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+8-1
+}
+
 \examples{
 # Get the PNG-based logo for the R
 # Project from an image URL

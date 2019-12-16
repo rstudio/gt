@@ -24,6 +24,11 @@ We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 }
+\section{Function ID}{
+
+11-2
+}
+
 \examples{
 library(shiny)
 

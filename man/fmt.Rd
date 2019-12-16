@@ -56,6 +56,11 @@ more information on this.
 \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-11
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the numeric values in the `num`

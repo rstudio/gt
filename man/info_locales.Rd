@@ -27,6 +27,11 @@ letter corresponding to the base locale ID to \code{begins_with}. This will filt
 locales in the info table to just the set that begins with the supplied
 letter.
 }
+\section{Function ID}{
+
+9-4
+}
+
 \examples{
 # Get a table of info on all of
 # the locales where the base

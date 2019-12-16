@@ -124,6 +124,8 @@
 #' \if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-1
 #'
 #' @import rlang
 #' @export
@@ -234,6 +236,8 @@ fmt_number <- function(data,
 #' \if{html}{\figure{man_fmt_scientific_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-2
 #'
 #' @import rlang
 #' @export
@@ -489,6 +493,8 @@ fmt_symbol <- function(data,
 #' \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-3
 #'
 #' @import rlang
 #' @export
@@ -635,6 +641,8 @@ fmt_percent <- function(data,
 #' \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-4
 #'
 #' @import rlang
 #' @export
@@ -774,6 +782,8 @@ fmt_currency <- function(data,
 #' \if{html}{\figure{man_fmt_date_2.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-5
 #'
 #' @import rlang
 #' @export
@@ -895,6 +905,8 @@ fmt_date <- function(data,
 #' \if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -1006,6 +1018,8 @@ fmt_time <- function(data,
 #' \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1141,6 +1155,8 @@ fmt_datetime <- function(data,
 #' \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1218,6 +1234,8 @@ fmt_markdown <- function(data,
 #' \if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1332,6 +1350,8 @@ fmt_passthrough <- function(data,
 #' \if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1429,6 +1449,8 @@ fmt_missing <- function(data,
 #' \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-11
 #'
 #' @import rlang
 #' @export

@@ -41,6 +41,11 @@ end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_en
 \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-6
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # With the remaining columns, position

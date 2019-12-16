@@ -33,6 +33,11 @@ Perform targeted text transformation with a function
 \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-12
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # transform the formatted text in the

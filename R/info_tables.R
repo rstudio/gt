@@ -17,6 +17,8 @@
 #' \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
 #'
 #' @family Information Functions
+#' @section Function ID:
+#' 9-1
 #'
 #' @export
 info_date_style <- function() {
@@ -77,6 +79,8 @@ info_date_style <- function() {
 #' \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
 #'
 #' @family Information Functions
+#' @section Function ID:
+#' 9-2
 #'
 #' @export
 info_time_style <- function() {
@@ -148,6 +152,8 @@ info_time_style <- function() {
 #' \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
 #'
 #' @family Information Functions
+#' @section Function ID:
+#' 9-3
 #'
 #' @export
 info_currencies <- function(type = c("code", "symbol"),
@@ -285,6 +291,8 @@ info_currencies <- function(type = c("code", "symbol"),
 #' tab_1 <- info_locales(begins_with = "v")
 #'
 #' @family Information Functions
+#' @section Function ID:
+#' 9-4
 #'
 #' @export
 info_locales <- function(begins_with = NULL) {
@@ -420,6 +428,8 @@ info_locales <- function(begins_with = NULL) {
 #' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
 #'
 #' @family Information Functions
+#' @section Function ID:
+#' 9-5
 #'
 #' @export
 info_paletteer <- function(color_pkgs = NULL) {

@@ -40,6 +40,11 @@ supplied letter.
 \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-3
+}
+
 \examples{
 # Get a table of info on all of
 # the currencies where the three-

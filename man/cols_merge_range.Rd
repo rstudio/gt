@@ -59,6 +59,11 @@ non-target columns can be optionally hidden from the output table through the
 \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-9
+}
+
 \examples{
 # Use `gtcars` to create a gt table,
 # keeping only the `model`, `mpg_c`,

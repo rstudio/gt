@@ -37,6 +37,11 @@ column.
 \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-5
+}
+
 \examples{
 # Use `countrypops` to create a gt table;
 # With the remaining columns, move the

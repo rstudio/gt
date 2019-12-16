@@ -23,6 +23,11 @@ Interpret input text as Markdown-formatted text
 \if{html}{\figure{man_md_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+7-1
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # when adding a title, use the `md()`

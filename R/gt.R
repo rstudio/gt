@@ -71,6 +71,8 @@
 #' \if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
 #'
 #' @family Create Table
+#' @section Function ID:
+#' 1-1
 #'
 #' @export
 gt <- function(data,

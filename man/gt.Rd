@@ -69,6 +69,11 @@ appear in the display table.
 \if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+1-1
+}
+
 \examples{
 # Create a table object using the
 # `exibble` dataset; use the `row`

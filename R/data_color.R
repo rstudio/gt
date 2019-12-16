@@ -121,6 +121,8 @@
 #' \if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
 #'
 #' @family Format Data
+#' @section Function ID:
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -310,114 +312,6 @@ scale_apply_styles <- function(data,
 
   data
 }
-
-#' Adjust the luminance for a palette of colors
-#'
-#' This function can brighten or darken a palette of colors by an arbitrary
-#' number of steps, which is defined by a real number between -2.0 and 2.0. The
-#' transformation of a palette by a fixed step in this function will tend to
-#' apply greater darkening or lightening for those colors in the midrange
-#' compared to any very dark or very light colors in the input palette.
-#'
-#' This function can be useful when combined with the [data_color()] function's
-#' `palette` argument, which can use a vector of colors or any of the `col_*`
-#' functions from the **scales** package (all of which have a `palette`
-#' argument).
-#'
-#' @param colors A vector of colors that will undergo an adjustment in
-#'   luminance. Each color value provided must either be a color name (in the
-#'   set of colors provided by `grDevices::colors()`) or a hexadecimal string in
-#'   the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param steps A positive or negative factor by which the luminance will be
-#'   adjusted. Must be a number between `-2.0` and `2.0`.
-#'
-#' @return A vector of color values.
-#'
-#' @examples
-#' # Get a palette of 8 pastel colors from
-#' # the RColorBrewer package
-#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
-#'
-#' # Create lighter and darker variants
-#' # of the base palette (one step lower, one
-#' # step higher)
-#' pal_darker  <- pal %>% adjust_luminance(-1.0)
-#' pal_lighter <- pal %>% adjust_luminance(+1.0)
-#'
-#' # Create a tibble and make a gt table
-#' # from it; color each column in order of
-#' # increasingly darker palettes (with
-#' # `data_color()`)
-#' tab_1 <-
-#'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
-#'   gt() %>%
-#'   data_color(
-#'     columns = vars(a),
-#'     colors = scales::col_numeric(
-#'       palette = pal_lighter,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = vars(b),
-#'     colors = scales::col_numeric(
-#'       palette = pal,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = vars(c),
-#'     colors = scales::col_numeric(
-#'       palette = pal_darker,
-#'       domain = c(1, 8)
-#'     )
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
-#'
-#' @family Helper Functions
-#'
-#' @export
-adjust_luminance <- function(colors,
-                             steps) {
-
-  # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
-    stop("The value provided for `steps` (", steps, ") must be between `-2.0` and `+2.0`.",
-         call. = FALSE)
-  }
-
-  # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
-
-  # Obtain the alpha values
-  alpha <- rgb_matrix[, "alpha"]
-
-  # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
-
-  # Apply calculations to obtain values in the HCL color space
-  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
-  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
-  l <- luv_matrix[, "L"]
-
-  # Scale luminance to occupy [0, 1]
-  y <- l / 100.
-
-  # Obtain `x` positions of luminance values along a sigmoid function
-  x <- log(-(y / (y - 1)))
-
-  # Calculate new luminance values based on a fixed step-change in `x`
-  y_2 <- 1 / (1 + exp(-(x + steps)))
-
-  # Rescale the new luminance values to [0, 100]
-  l <- y_2 * 100.
-
-  # Obtain hexadecimal colors from the modified HCL color values
-  grDevices::hcl(h, c, l, alpha = alpha)
-}
-
 
 #' Are color values in rgba() format?
 #'

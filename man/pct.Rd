@@ -14,6 +14,11 @@ pct(x)
 \description{
 Helper for providing a numeric value as percentage
 }
+\section{Function ID}{
+
+7-4
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

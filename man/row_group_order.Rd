@@ -33,6 +33,11 @@ remaining row groups will follow in their original ordering.
 \if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+5-1
+}
+
 \examples{
 # Use `exibble` to create a gt table
 # with a stub and with row groups;

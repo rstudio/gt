@@ -29,6 +29,11 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
+\section{Function ID}{
+
+7-9
+}
+
 \examples{
 # Add horizontal border lines for
 # all table body rows in `exibble`

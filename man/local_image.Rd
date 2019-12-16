@@ -43,6 +43,11 @@ heights of most table rows.
 \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+8-2
+}
+
 \examples{
 # Create a tibble that contains heights
 # of an image in pixels (one column as a

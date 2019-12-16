@@ -42,6 +42,11 @@ exibble %>% gt()
 \end{document}
 }
 }
+\section{Function ID}{
+
+7-13
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
