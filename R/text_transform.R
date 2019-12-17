@@ -2,9 +2,10 @@
 #'
 #' @inheritParams cols_align
 #' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()] helper function can be used here.
-#'   We can enclose several [cells_body()] calls within a `list()` if we wish to
-#'   make the transformation happen at different body cell locations.
+#'   transformation. Only the [cells_body()], [cells_stub()], and
+#'   [cells_column_labels()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.
@@ -27,7 +28,6 @@
 #'     locations = cells_body(
 #'       columns = vars(num)),
 #'     fn = function(x) {
-#'
 #'       paste0(
 #'         x, " (",
 #'         dplyr::case_when(
