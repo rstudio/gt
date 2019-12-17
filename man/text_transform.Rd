@@ -10,9 +10,10 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}} helper function can be used here.
-We can enclose several \code{\link[=cells_body]{cells_body()}} calls within a \code{list()} if we wish to
-make the transformation happen at different body cell locations.}
+transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, and
+\code{\link[=cells_column_labels]{cells_column_labels()}} helper functions can be used here. We can enclose
+several of these calls within a \code{list()} if we wish to make the
+transformation happen at different locations.}
 
 \item{fn}{The function to use for text transformation.}
 }
@@ -50,7 +51,6 @@ tab_1 <-
     locations = cells_body(
       columns = vars(num)),
     fn = function(x) {
-
       paste0(
         x, " (",
         dplyr::case_when(
