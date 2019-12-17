@@ -532,6 +532,26 @@ cells_row_groups <- function(groups = TRUE) {
   cells
 }
 
+#' @noRd
+#' @export
+cells_group <- function(groups = TRUE) {
+
+  warning("The `cells_group()` function is deprecated and will soon be removed\n",
+          " * Use the `cells_row_groups()` function instead",
+          call. = FALSE)
+
+  # Capture expression for the `groups` argument
+  group_expr <- rlang::enquo(groups)
+
+  # Create the `cells_row_groups` object
+  cells <- list(groups = group_expr)
+
+  # Apply the `cells_row_groups` and `location_cells` classes
+  class(cells) <- c("cells_row_groups", "location_cells")
+
+  cells
+}
+
 #' Location helper for targeting cells in the table stub
 #'
 #' The `cells_stub()` function is used to target the table's stub cells and it
@@ -690,6 +710,32 @@ cells_stub <- function(rows = TRUE) {
 #' @export
 cells_body <- function(columns = TRUE,
                        rows = TRUE) {
+
+  # Capture expressions for the `columns` and `rows` arguments
+  col_expr <- rlang::enquo(columns)
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `cells_body` object
+  cells <-
+    list(
+      columns = col_expr,
+      rows = row_expr
+    )
+
+  # Apply the `cells_body` and `location_cells` classes
+  class(cells) <- c("cells_body", "location_cells")
+
+  cells
+}
+
+#' @noRd
+#' @export
+cells_data <- function(columns = TRUE,
+                       rows = TRUE) {
+
+  warning("The `cells_data()` function is deprecated and will soon be removed\n",
+          " * Use the `cells_body()` function instead",
+          call. = FALSE)
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
