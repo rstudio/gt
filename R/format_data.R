@@ -475,18 +475,20 @@ fmt_symbol <- function(data,
 #' @return An object of class `gt_tbl`.
 #'
 #' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column to have
-#' # percentage values in the first five
-#' # of its rows
+#' # Use `pizzaplace` to create a gt table;
+#' # format the `frac_of_quota` column to
+#' # display values as percentages
 #' tab_1 <-
-#'   exibble %>%
-#'   gt() %>%
+#'   pizzaplace %>%
+#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
+#'   dplyr::group_by(month) %>%
+#'   dplyr::summarize(pizzas_sold = n()) %>%
+#'   dplyr::ungroup() %>%
+#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
+#'   gt(rowname_col = "month") %>%
 #'   fmt_percent(
-#'     columns = vars(num),
-#'     rows = 1:5,
-#'     decimals = 1,
-#'     drop_trailing_zeros = TRUE
+#'     columns = vars(frac_of_quota),
+#'     decimals = 1
 #'   )
 #'
 #' @section Figures:
