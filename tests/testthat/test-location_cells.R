@@ -539,7 +539,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_group(groups = "A")
+      locations = cells_row_groups(groups = "A")
     )
 
   # Expect that the styling was applied to the correct row group
@@ -562,7 +562,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_group(groups = "B")
+      locations = cells_row_groups(groups = "B")
     )
 
   # Expect that the styling was applied to the correct row group
@@ -585,7 +585,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_group(groups = TRUE)
+      locations = cells_row_groups(groups = TRUE)
     )
 
   # Expect that the styling was applied to the correct row group
@@ -731,7 +731,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_data()
+      locations = cells_body()
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%
