@@ -1,14 +1,14 @@
 library(gt)
+library(tidyverse)
 
 # Create a table with spanner column labels
-
-# Input table
 tbl <-
   dplyr::tribble(
     ~v_1, ~v_2, ~v_3, ~v_4, ~v_5,
     20.4, 36.1, 34.2, 21.6, 23.1,
     25.8, 14.3, 13.7, 12.9, 75.9,
-    16.3, 34.3, 15.1, 93.2, 12.1)
+    16.3, 34.3, 15.1, 93.2, 12.1
+  )
 
 # Create a display table
 gt_tbl <-

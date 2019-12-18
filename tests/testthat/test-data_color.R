@@ -36,7 +36,9 @@ selection_text <- function(html, selection) {
 test_that("the correct color values are obtained when defining a palette", {
 
   # Obtain a palette of 12 colors in #RRGGBB format
-  pal_12 <- paletteer::paletteer_d(package = "rcartocolor", palette = "Vivid")
+  pal_12 <-
+    paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
+    gsub("FF$", "", .)
 
   # Create a `tbl_html` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class)
@@ -1341,7 +1343,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "tomato"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1368,7 +1370,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FFAA00"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1395,7 +1397,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D60"),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1423,7 +1425,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D", alpha = 0.5),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1463,7 +1465,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#F3F300EE", alpha = 0.5),
-      locations = cells_data(columns = vars(month))
+      locations = cells_body(columns = vars(month))
     ) %>%
     render_as_html() %>%
     xml2::read_html()

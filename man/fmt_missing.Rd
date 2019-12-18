@@ -46,6 +46,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-10
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # NA values in different columns will
@@ -65,7 +70,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -79,4 +84,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

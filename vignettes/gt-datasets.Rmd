@@ -49,8 +49,8 @@ countrypops_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -133,8 +133,8 @@ sza_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -207,8 +207,8 @@ gtcars_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -250,7 +250,7 @@ gtcars %>%
     hide_columns = vars(model)
   ) %>%
   text_transform(
-    locations = cells_data(columns = vars(drivetrain)),
+    locations = cells_body(columns = vars(drivetrain)),
     fn = function(x) toupper(x)
   ) %>%
   fmt_currency(
@@ -293,8 +293,8 @@ sp500_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -354,13 +354,13 @@ sp500 %>%
     pattern = "{x}B"
   ) %>%
   text_transform(
-    locations = cells_data(
+    locations = cells_body(
       columns = "close",
       rows = close > open),
     fn = function(x) paste(x, up_arrow)
   ) %>%
   text_transform(
-    locations = cells_data(
+    locations = cells_body(
       columns = "close",
       rows = close < open),
     fn = function(x) paste(x, down_arrow)
@@ -395,8 +395,8 @@ pizzaplace_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -419,7 +419,7 @@ Let's make a reporting table from the `pizzaplace` dataset with these requiremen
 4. format the numeric `sold` column to use commas and no decimal places
 5. format the currency values (`income`) to be in `USD` currency
 5. add a summary for each grouping that provides total sell counts and revenue amounts 
-6. color the stub group rows and summary cells to add a little pizzazz
+6. color the row groups and summary cells to add a little pizzazz
 
 ```{r pizzaplace}
 # Create a gt table based on a preprocessed `pizzaplace`
@@ -481,8 +481,8 @@ exibble_ddtab <-
   tab_style(
     style = cell_text(font = "Courier"),
     locations = list(
-      cells_data(columns = "Column"),
-      cells_data(columns = "Type"))
+      cells_body(columns = "Column"),
+      cells_body(columns = "Type"))
   ) %>%
   tab_options(
     table.width = pct(80),

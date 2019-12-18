@@ -172,7 +172,7 @@ test_that("the `tab_footnote()` function works with `md()`/`html()`", {
   tab %>%
     tab_footnote(
       footnote = "Footnote",
-      locations = cells_data(columns = 1, rows = 1)
+      locations = cells_body(columns = 1, rows = 1)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = "Footnote") %>%
@@ -183,7 +183,7 @@ test_that("the `tab_footnote()` function works with `md()`/`html()`", {
   tab %>%
     tab_footnote(
       footnote = md("**Footnote**"),
-      locations = cells_data(columns = 1, rows = 1)
+      locations = cells_body(columns = 1, rows = 1)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = "<strong>Footnote</strong>") %>%
@@ -194,7 +194,7 @@ test_that("the `tab_footnote()` function works with `md()`/`html()`", {
   tab %>%
     tab_footnote(
       footnote = html("<strong>Footnote</strong>"),
-      locations = cells_data(columns = 1, rows = 1)
+      locations = cells_body(columns = 1, rows = 1)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = "<strong>Footnote</strong>") %>%

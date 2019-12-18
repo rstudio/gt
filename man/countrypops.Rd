@@ -26,9 +26,24 @@ and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
 \code{population} value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
 for \code{populations} indicate the non-existence of the country during that year.
 }
+\section{Function ID}{
+
+10-1
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `countrypops`
 dplyr::glimpse(countrypops)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{Datasets}
 \keyword{datasets}

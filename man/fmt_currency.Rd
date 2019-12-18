@@ -122,7 +122,7 @@ the locales that are supported.}
 An object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform currency-based
+With numeric values in a \strong{gt} table, we can perform currency-based
 formatting. This function supports both automatic formatting with a
 three-letter or numeric currency code. We can also specify a custom currency
 that is formatted according to the output context with the \code{\link[=currency]{currency()}}
@@ -150,11 +150,10 @@ currency values
 \item locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
 }
-}
-\details{
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
 the possible inputs to the \code{currency} argument.
-
+}
+\details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
@@ -166,6 +165,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_currency_1.svg}{options: width=100\%}}
 
 \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-4
 }
 
 \examples{
@@ -199,7 +203,7 @@ tab_2 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
@@ -213,4 +217,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

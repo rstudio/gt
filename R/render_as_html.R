@@ -1,9 +1,11 @@
-#' Transform a \pkg{gt} table object to an HTML table
+#' Transform a **gt** table object to an HTML table
 #'
 #' Take a `gt_tbl` table object and transform it to an HTML table.
+#'
 #' @param data A table object that is created using the `gt()` function.
+#'
 #' @return A character object with an HTML table.
-#' @family table export functions
+#'
 #' @noRd
 render_as_html <- function(data) {
 

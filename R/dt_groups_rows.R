@@ -19,7 +19,7 @@ dt_groups_rows_set <- function(data, groups_rows) {
 dt_groups_rows_build <- function(data, context) {
 
   stub_df <- dt_stub_df_get(data = data)
-  ordering <- dt_stub_groups_get(data = data)
+  ordering <- dt_row_groups_get(data = data)
 
   others_group <- dt_stub_others_get(data = data)
 

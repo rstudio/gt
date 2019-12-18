@@ -235,7 +235,7 @@ test_that("a gt table contains the correct placement of row groups", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the two stub groups
+  # Expect that the inner HTML content for the two row groups
   # is 'Mazda' and an empty string
   c(tbl_html %>%
       selection_text("[class='gt_group_heading']"),
@@ -260,7 +260,7 @@ test_that("a gt table contains the correct placement of row groups", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the three stub groups
+  # Expect that the inner HTML content for the three row groups
   # is in the prescribed order
   c(tbl_html %>%
       selection_text("[class='gt_empty_group_heading']"),
@@ -296,7 +296,7 @@ test_that("a gt table's row group labels are HTML escaped", {
     gt(groupname_col = "group") %>%
     tab_footnote(
       footnote = "footnote",
-      locations = cells_group(groups = "x > 30")
+      locations = cells_row_groups(groups = "x > 30")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -411,18 +411,18 @@ test_that("a gt table contains custom styles at the correct locations", {
         cell_fill(color = "lightgray"),
         cell_text(style = "italic")
       ),
-      locations = cells_data(columns = "hp", rows = "Datsun 710")
+      locations = cells_body(columns = "hp", rows = "Datsun 710")
     ) %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+      locations = cells_body(columns = "disp", rows = "Mazda RX4")
     ) %>%
     tab_style(
       style = list(
         cell_fill(color = "red"),
         cell_text(color = "white")
       ),
-      locations = cells_group(groups = "Mazdas")
+      locations = cells_row_groups(groups = "Mazdas")
     ) %>%
     tab_style(
       style = list(

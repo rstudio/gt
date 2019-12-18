@@ -16,7 +16,10 @@
 #' @section Figures:
 #' \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
 #'
-#' @family information functions
+#' @family Information Functions
+#' @section Function ID:
+#' 9-1
+#'
 #' @export
 info_date_style <- function() {
 
@@ -75,7 +78,10 @@ info_date_style <- function() {
 #' @section Figures:
 #' \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
 #'
-#' @family information functions
+#' @family Information Functions
+#' @section Function ID:
+#' 9-2
+#'
 #' @export
 info_time_style <- function() {
 
@@ -145,7 +151,10 @@ info_time_style <- function() {
 #'
 #' \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
 #'
-#' @family information functions
+#' @family Information Functions
+#' @section Function ID:
+#' 9-3
+#'
 #' @export
 info_currencies <- function(type = c("code", "symbol"),
                             begins_with = NULL) {
@@ -268,18 +277,23 @@ info_currencies <- function(type = c("code", "symbol"),
 #' There are 712 locales, which means that a very long display table is provided
 #' by default. To trim down the output table size, we can provide an initial
 #' letter corresponding to the base locale ID to `begins_with`. This will filter
-#' locales in the info table to just the set beginning with the supplied letter.
+#' locales in the info table to just the set that begins with the supplied
+#' letter.
 #'
 #' @param begins_with Providing a single letter will filter locales to only
 #'   those that begin with that letter in their base locale ID. The default
 #'   (`NULL`) will produce a table with all locales displayed.
+#'
 #' @examples
 #' # Get a table of info on all of
 #' # the locales where the base
 #' # locale ID begins with a "v"
 #' tab_1 <- info_locales(begins_with = "v")
 #'
-#' @family information functions
+#' @family Information Functions
+#' @section Function ID:
+#' 9-4
+#'
 #' @export
 info_locales <- function(begins_with = NULL) {
 
@@ -347,7 +361,7 @@ info_locales <- function(begins_with = NULL) {
     ) %>%
     tab_style(
       style = cell_text(size = px(32)),
-      locations = cells_data(columns = vars(group_sep, dec_sep))
+      locations = cells_body(columns = vars(group_sep, dec_sep))
     ) %>%
     tab_options(data_row.padding = "5px")
 }
@@ -355,53 +369,53 @@ info_locales <- function(begins_with = NULL) {
 #' View a table with info on color palettes
 #'
 #' While the [data_color()] function allows us to flexibly color data cells in
-#' our \pkg{gt} table, the harder part of this process is discovering and
+#' our **gt** table, the harder part of this process is discovering and
 #' choosing color palettes that are suitable for the table output. We can make
-#' this process much easier in two ways: (1) by using the \pkg{paletteer}
+#' this process much easier in two ways: (1) by using the **paletteer**
 #' package, which makes a wide range of palettes from various R packages readily
 #' available, and (2) calling the `info_paletteer()` function to give us an
 #' information table that serves as a quick reference for all of the discrete
-#' color palettes available in \pkg{paletteer}.
+#' color palettes available in **paletteer**.
 #'
 #' The palettes displayed are organized by package and by palette name. These
 #' values are required when obtaining a palette (as a vector of hexadecimal
 #' colors), from the the `paletteer::paletteer_d()` function. Once we are
 #' familiar with the names of the color palette packages (e.g.,
-#' \pkg{RColorBrewer}, \pkg{ggthemes}, \pkg{wesanderson}), we can narrow down
+#' **RColorBrewer**, **ggthemes**, **wesanderson**), we can narrow down
 #' the content of this information table by supplying a vector of such package
 #' names to `color_pkgs`.
 #'
-#' Colors from the following color packages (all supported by \pkg{paletteer})
+#' Colors from the following color packages (all supported by **paletteer**)
 #' are shown by default with `info_paletteer()`:
 #' \itemize{
-#' \item awtools, 5 palettes
-#' \item dichromat, 17 palettes
-#' \item dutchmasters, 6 palettes
-#' \item ggpomological, 2 palettes
-#' \item ggsci, 42 palettes
-#' \item ggthemes, 31 palettes
-#' \item ghibli, 27 palettes
-#' \item grDevices, 1 palette
-#' \item jcolors, 13 palettes
-#' \item LaCroixColoR, 21 palettes
-#' \item NineteenEightyR, 12 palettes
-#' \item nord, 16 palettes
-#' \item ochRe, 16 palettes
-#' \item palettetown, 389 palettes
-#' \item pals, 8 palettes
-#' \item Polychrome, 7 palettes
-#' \item quickpalette, 17 palettes
-#' \item rcartocolor, 34 palettes
-#' \item RColorBrewer, 35 palettes
-#' \item Redmonder, 41 palettes
-#' \item wesanderson, 19 palettes
-#' \item yarrr, 21 palettes
+#' \item **awtools**, 5 palettes
+#' \item **dichromat**, 17 palettes
+#' \item **dutchmasters**, 6 palettes
+#' \item **ggpomological**, 2 palettes
+#' \item **ggsci**, 42 palettes
+#' \item **ggthemes**, 31 palettes
+#' \item **ghibli**, 27 palettes
+#' \item **grDevices**, 1 palette
+#' \item **jcolors**, 13 palettes
+#' \item **LaCroixColoR**, 21 palettes
+#' \item **NineteenEightyR**, 12 palettes
+#' \item **nord**, 16 palettes
+#' \item **ochRe**, 16 palettes
+#' \item **palettetown**, 389 palettes
+#' \item **pals**, 8 palettes
+#' \item **Polychrome**, 7 palettes
+#' \item **quickpalette**, 17 palettes
+#' \item **rcartocolor**, 34 palettes
+#' \item **RColorBrewer**, 35 palettes
+#' \item **Redmonder**, 41 palettes
+#' \item **wesanderson**, 19 palettes
+#' \item **yarrr**, 21 palettes
 #' }
 #'
 #' @param color_pkgs A vector of color packages that determines which sets of
 #'   palettes should be displayed in the information table. If this is
 #'   `NULL` (the default) then all of the discrete palettes from all of the
-#'   color packages represented in \pkg{paletteer} will be displayed.
+#'   color packages represented in **paletteer** will be displayed.
 #' @examples
 #' # Get a table of info on just the
 #' # `ggthemes` color palette (easily
@@ -413,7 +427,10 @@ info_locales <- function(begins_with = NULL) {
 #' @section Figures:
 #' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
 #'
-#' @family information functions
+#' @family Information Functions
+#' @section Function ID:
+#' 9-5
+#'
 #' @export
 info_paletteer <- function(color_pkgs = NULL) {
 
@@ -441,7 +458,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     dplyr::mutate(`Color Count and Palette` = NA) %>%
     gt(groupname_col = "package", rowname_col = "palette") %>%
     text_transform(
-      locations = cells_data("Color Count and Palette"),
+      locations = cells_body("Color Count and Palette"),
       fn = function(x) {
         palettes_strips
       }
@@ -468,7 +485,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     ) %>%
     tab_style(
       style = cell_text(font = "Courier"),
-      locations = cells_data(columns = vars(length))
+      locations = cells_body(columns = vars(length))
     ) %>%
     tab_options(
       row_group.background.color = "#FFFFF0",

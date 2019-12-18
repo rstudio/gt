@@ -65,7 +65,7 @@ the locales that are supported.}
 An object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform formatting so that the
+With numeric values in a \strong{gt} table, we can perform formatting so that the
 targeted values are rendered in scientific notation. Furthermore, there is
 fine control with the following options:
 \itemize{
@@ -88,6 +88,11 @@ argument. See the Arguments section for more information on this.
 \section{Figures}{
 
 \if{html}{\figure{man_fmt_scientific_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-2
 }
 
 \examples{
@@ -113,7 +118,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -127,4 +132,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

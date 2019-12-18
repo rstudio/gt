@@ -10,15 +10,10 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Supplying any of the \verb{cells_*()} helper functions is a
-useful way to target the location cells that are associated with the
-footnote text. These helper functions are: \code{\link[=cells_title]{cells_title()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}},
-and \code{\link[=cells_summary]{cells_summary()}}. Please see the help article \link{location_cells}
-for more information on how these helper functions can be used.
-Additionally, we can enclose several \verb{cells_*()} calls within a \code{list()} if
-we wish to link the footnote text to different types of locations (e.g.,
-cell data values, stub group headings, the table title, etc.).}
+transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, and
+\code{\link[=cells_column_labels]{cells_column_labels()}} helper functions can be used here. We can enclose
+several of these calls within a \code{list()} if we wish to make the
+transformation happen at different locations.}
 
 \item{fn}{The function to use for text transformation.}
 }
@@ -31,6 +26,11 @@ Perform targeted text transformation with a function
 \section{Figures}{
 
 \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-12
 }
 
 \examples{
@@ -48,10 +48,9 @@ tab_1 <-
   fmt_number(columns = vars(num)) \%>\%
   fmt_currency(columns = vars(currency)) \%>\%
   text_transform(
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(num)),
     fn = function(x) {
-
       paste0(
         x, " (",
         dplyr::case_when(
@@ -63,7 +62,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -77,4 +76,4 @@ Other data formatting functions:
 \code{\link{fmt_time}()},
 \code{\link{fmt}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

@@ -121,9 +121,24 @@ Red Onions, Feta Cheese, Garlic)
 Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 }
 }
+\section{Function ID}{
+
+10-5
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `pizzaplace`
 dplyr::glimpse(pizzaplace)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{Datasets}
 \keyword{datasets}
