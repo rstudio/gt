@@ -74,8 +74,6 @@ dt_boxhead_set_hidden <- function(data, vars) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  lapply(vars, function(var) check_vars_dt_boxhead(var = var, dt_boxhead = boxhead))
-
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
 
   dt_boxhead %>% dt_boxhead_set(data = data)
