@@ -697,11 +697,8 @@ cols_hide <- function(data,
          call. = FALSE)
   }
 
-  for (column in columns) {
-    data <- data %>% dt_boxhead_edit(var = column, type = "hidden")
-  }
-
-  data
+  # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
+  data %>% dt_boxhead_set_hidden(vars = columns)
 }
 
 #' Merge data from two or more columns to a single column
