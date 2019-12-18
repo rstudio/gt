@@ -532,7 +532,10 @@ cells_row_groups <- function(groups = TRUE) {
   cells
 }
 
-#' @noRd
+#' Location helper for targeting row groups (deprecated)
+#'
+#' @inheritParams cells_row_groups
+#'
 #' @export
 cells_group <- function(groups = TRUE) {
 
@@ -719,7 +722,10 @@ cells_body <- function(columns = TRUE,
   cells
 }
 
-#' @noRd
+#' Location helper for targeting data cells in the table body (deprecated)
+#'
+#' @inheritParams cells_body
+#'
 #' @export
 cells_data <- function(columns = TRUE,
                        rows = TRUE) {
