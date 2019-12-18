@@ -13,7 +13,7 @@ md(text)
 A character object that is tagged for a Markdown-to-HTML
 transformation.
 
-a character object of class \code{from_markdown}.
+A character object of class \code{from_markdown}.
 }
 \description{
 Interpret input text as Markdown-formatted text
@@ -21,6 +21,11 @@ Interpret input text as Markdown-formatted text
 \section{Figures}{
 
 \if{html}{\figure{man_md_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-1
 }
 
 \examples{
@@ -36,11 +41,21 @@ tab_1 <-
 
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -48,4 +63,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

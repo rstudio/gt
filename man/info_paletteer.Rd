@@ -10,57 +10,62 @@ info_paletteer(color_pkgs = NULL)
 \item{color_pkgs}{A vector of color packages that determines which sets of
 palettes should be displayed in the information table. If this is
 \code{NULL} (the default) then all of the discrete palettes from all of the
-color packages represented in \pkg{paletteer} will be displayed.}
+color packages represented in \strong{paletteer} will be displayed.}
 }
 \description{
 While the \code{\link[=data_color]{data_color()}} function allows us to flexibly color data cells in
-our \pkg{gt} table, the harder part of this process is discovering and
+our \strong{gt} table, the harder part of this process is discovering and
 choosing color palettes that are suitable for the table output. We can make
-this process much easier in two ways: (1) by using the \pkg{paletteer}
+this process much easier in two ways: (1) by using the \strong{paletteer}
 package, which makes a wide range of palettes from various R packages readily
 available, and (2) calling the \code{info_paletteer()} function to give us an
 information table that serves as a quick reference for all of the discrete
-color palettes available in \pkg{paletteer}.
+color palettes available in \strong{paletteer}.
 }
 \details{
 The palettes displayed are organized by package and by palette name. These
 values are required when obtaining a palette (as a vector of hexadecimal
 colors), from the the \code{paletteer::paletteer_d()} function. Once we are
 familiar with the names of the color palette packages (e.g.,
-\pkg{RColorBrewer}, \pkg{ggthemes}, \pkg{wesanderson}), we can narrow down
+\strong{RColorBrewer}, \strong{ggthemes}, \strong{wesanderson}), we can narrow down
 the content of this information table by supplying a vector of such package
 names to \code{color_pkgs}.
 
-Colors from the following color packages (all supported by \pkg{paletteer})
+Colors from the following color packages (all supported by \strong{paletteer})
 are shown by default with \code{info_paletteer()}:
 \itemize{
-\item awtools, 5 palettes
-\item dichromat, 17 palettes
-\item dutchmasters, 6 palettes
-\item ggpomological, 2 palettes
-\item ggsci, 42 palettes
-\item ggthemes, 31 palettes
-\item ghibli, 27 palettes
-\item grDevices, 1 palette
-\item jcolors, 13 palettes
-\item LaCroixColoR, 21 palettes
-\item NineteenEightyR, 12 palettes
-\item nord, 16 palettes
-\item ochRe, 16 palettes
-\item palettetown, 389 palettes
-\item pals, 8 palettes
-\item Polychrome, 7 palettes
-\item quickpalette, 17 palettes
-\item rcartocolor, 34 palettes
-\item RColorBrewer, 35 palettes
-\item Redmonder, 41 palettes
-\item wesanderson, 19 palettes
-\item yarrr, 21 palettes
+\item \strong{awtools}, 5 palettes
+\item \strong{dichromat}, 17 palettes
+\item \strong{dutchmasters}, 6 palettes
+\item \strong{ggpomological}, 2 palettes
+\item \strong{ggsci}, 42 palettes
+\item \strong{ggthemes}, 31 palettes
+\item \strong{ghibli}, 27 palettes
+\item \strong{grDevices}, 1 palette
+\item \strong{jcolors}, 13 palettes
+\item \strong{LaCroixColoR}, 21 palettes
+\item \strong{NineteenEightyR}, 12 palettes
+\item \strong{nord}, 16 palettes
+\item \strong{ochRe}, 16 palettes
+\item \strong{palettetown}, 389 palettes
+\item \strong{pals}, 8 palettes
+\item \strong{Polychrome}, 7 palettes
+\item \strong{quickpalette}, 17 palettes
+\item \strong{rcartocolor}, 34 palettes
+\item \strong{RColorBrewer}, 35 palettes
+\item \strong{Redmonder}, 41 palettes
+\item \strong{wesanderson}, 19 palettes
+\item \strong{yarrr}, 21 palettes
 }
 }
 \section{Figures}{
 
 \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+9-5
 }
 
 \examples{
@@ -73,10 +78,10 @@ tab_1 <-
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_locales}()},
 \code{\link{info_time_style}()}
 }
-\concept{information functions}
+\concept{Information Functions}

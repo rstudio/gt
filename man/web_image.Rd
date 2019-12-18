@@ -43,6 +43,11 @@ heights of most table rows.
 \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+8-1
+}
+
 \examples{
 # Get the PNG-based logo for the R
 # Project from an image URL
@@ -63,7 +68,7 @@ tab_1 <-
   ) \%>\%
   gt() \%>\%
   text_transform(
-    locations = cells_data(vars(image)),
+    locations = cells_body(vars(image)),
     fn = function(x) {
       web_image(
         url = r_png_url,
@@ -109,9 +114,9 @@ tab_2 <-
 
 }
 \seealso{
-Other image addition functions: 
+Other Image Addition Functions: 
 \code{\link{ggplot_image}()},
 \code{\link{local_image}()},
 \code{\link{test_image}()}
 }
-\concept{image addition functions}
+\concept{Image Addition Functions}

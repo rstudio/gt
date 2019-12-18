@@ -33,13 +33,9 @@ An object of class \code{gt_tbl}.
 Format input time values that are character-based and expressed according to
 the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells are
 targeted with \code{columns} (and, optionally, \code{rows}), we can simply apply a
-preset time style (see table in \code{\link[=info_time_style]{info_time_style()}} for info) to format the
-times.
-}
-\details{
-The following time styles are available for simpler formatting of ISO times
-(all using the input time of \code{14:35:00} in the example output times):
-
+preset time style to format the times. The following time styles are
+available for simpler formatting of ISO times (all using the input time of
+\code{14:35:00} in the example output times):
 \enumerate{
 \item hms: \code{14:35:00}
 \item hm: \code{14:35}
@@ -47,10 +43,10 @@ The following time styles are available for simpler formatting of ISO times
 \item hm_p: \verb{2:35 PM}
 \item h_p: \verb{2 PM}
 }
-
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
-
+}
+\details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
@@ -62,6 +58,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
 
 \if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-6
 }
 
 \examples{
@@ -103,7 +104,7 @@ tab_2 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -117,4 +118,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

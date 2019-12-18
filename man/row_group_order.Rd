@@ -20,7 +20,7 @@ preserving the original ordering.}
 An object of class \code{gt_tbl}.
 }
 \description{
-We can modify the display order of any row groups in a \pkg{gt} object with
+We can modify the display order of any row groups in a \strong{gt} object with
 the \code{row_group_order()} function. The \code{groups} argument can either take a
 vector of row group names or a numeric vector of row group indices; whichever
 is provided, the row groups will adhere to this revised ordering. It isn't
@@ -31,6 +31,11 @@ remaining row groups will follow in their original ordering.
 \section{Figures}{
 
 \if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+5-1
 }
 
 \examples{
@@ -51,4 +56,4 @@ tab_1 <-
     )
 
 }
-\concept{row modification functions}
+\concept{Modify Rows}

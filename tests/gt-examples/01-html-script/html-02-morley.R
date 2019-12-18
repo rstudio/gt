@@ -1,7 +1,6 @@
 library(gt)
 
-# Create a display table based on `morley` Michelson Speed of Light Data
-
+# Create a display table based on `morley`
 morley_tbl <-
   gt(data = morley) %>%
   fmt_number(

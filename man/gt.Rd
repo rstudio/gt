@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt.R
 \name{gt}
 \alias{gt}
-\title{Create a \pkg{gt} table object}
+\title{Create a \strong{gt} table object}
 \usage{
 gt(
   data,
@@ -11,7 +11,7 @@ gt(
   rownames_to_stub = FALSE,
   auto_align = TRUE,
   id = random_id(),
-  stub_group.sep = getOption("gt.stub_group.sep", " - ")
+  row_group.sep = getOption("gt.row_group.sep", " - ")
 )
 }
 \arguments{
@@ -34,7 +34,7 @@ calls \code{cols_align(align = "auto")} for all columns.}
 the \code{\link[=random_id]{random_id()}} function. If set to \code{NULL} then no table ID will be
 applied.}
 
-\item{stub_group.sep}{The separator to use between consecutive group names (a
+\item{row_group.sep}{The separator to use between consecutive group names (a
 possibility when providing \code{data} as a \code{grouped_df} with multiple groups)
 in the displayed stub row group label.}
 }
@@ -42,11 +42,10 @@ in the displayed stub row group label.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{gt()} function creates a \pkg{gt} table object when provided with table
-data. Using this function is the first step in a typical \pkg{gt} workflow.
-Once we have the \pkg{gt} table object, we can perform styling
-transformations before rendering to a display table of various formats (e.g.,
-HTML, LaTeX, RTF).
+The \code{gt()} function creates a \strong{gt} table object when provided with table
+data. Using this function is the first step in a typical \strong{gt} workflow.
+Once we have the \strong{gt} table object, we can perform styling transformations
+before rendering to a display table of various formats.
 }
 \details{
 There are a few data ingest options we can consider at this stage. We can
@@ -60,7 +59,7 @@ of data in a table and the data in the \code{rowname_col} are unique labels
 Row groups can also be created by passing a \code{grouped_df} to \code{gt()} by using
 the \code{\link[dplyr:group_by]{dplyr::group_by()}} function on the table data. In this way, two or more
 columns of categorical data can be used to make row groups. The
-\code{stub_group.sep} argument allows for control in how the row group label will
+\code{row_group.sep} argument allows for control in how the row group label will
 appear in the display table.
 }
 \section{Figures}{
@@ -68,6 +67,11 @@ appear in the display table.
 \if{html}{\figure{man_gt_1.svg}{options: width=100\%}}
 
 \if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+1-1
 }
 
 \examples{
@@ -99,15 +103,7 @@ tab_2 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt_preview}()},
-\code{\link{tab_footnote}()},
-\code{\link{tab_header}()},
-\code{\link{tab_options}()},
-\code{\link{tab_row_group}()},
-\code{\link{tab_source_note}()},
-\code{\link{tab_spanner}()},
-\code{\link{tab_stubhead}()},
-\code{\link{tab_style}()}
+Other Create Table: 
+\code{\link{gt_preview}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create Table}

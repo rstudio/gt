@@ -10,16 +10,24 @@ test_image(type = c("png", "svg"))
 \item{type}{The type of the image, which can either be \code{png} (the default) or
 \code{svg}.}
 }
+\value{
+A character vector with a single path to an image file.
+}
 \description{
-Two test images are available within the \pkg{gt} package. Both contain the
+Two test images are available within the \strong{gt} package. Both contain the
 same imagery (sized at 200px by 200px) but one is a PNG file while the other
 is an SVG file. This function is most useful when paired with \code{\link[=local_image]{local_image()}}
 since we test various sizes of the test image within that function.
 }
+\section{Function ID}{
+
+8-4
+}
+
 \seealso{
-Other image addition functions: 
+Other Image Addition Functions: 
 \code{\link{ggplot_image}()},
 \code{\link{local_image}()},
 \code{\link{web_image}()}
 }
-\concept{image addition functions}
+\concept{Image Addition Functions}

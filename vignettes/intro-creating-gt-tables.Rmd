@@ -119,7 +119,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `cells_data()` can be used with the `location` argument to specify which data cells should be the target of the footnote. The `cells_data()` helper has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
+Footnotes live inside the **Footer** part and their footnote marks are attached to cell data. Footnotes are added with the `tab_footnote()` function. The helper function `cells_body()` can be used with the `location` argument to specify which data cells should be the target of the footnote. The `cells_body()` helper has the two arguments `columns` and `rows`. For each of these, we can supply (1) a vector of colnames or rownames, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row labels within `c()`, or (4) a select helper function (`starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, and `everything()`). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
 
 Here is a simple example on how a footnotes can be added to a table cell. Let's add a footnote that references the `North America` and `South America` cells in the `name` column:
 
@@ -130,7 +130,7 @@ gt_tbl <-
   gt_tbl %>%
   tab_footnote(
     footnote = "The Americas.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(name),
       rows = 3:4)
   )
@@ -156,13 +156,13 @@ gt_tbl <-
   gt_tbl %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(size),
       rows = name == largest)
   ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(size),
       rows = size == min(size))
   )
@@ -171,7 +171,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-We were able to supply the reference locations in the table by using the `cells_data()` helper function and supplying the necessary targeting through the `columns` and `rows` arguments. Other `cells_*()` functions have similar interfaces and they allow us to target cells in different parts of the table.
+We were able to supply the reference locations in the table by using the `cells_body()` helper function and supplying the necessary targeting through the `columns` and `rows` arguments. Other `cells_*()` functions have similar interfaces and they allow us to target cells in different parts of the table.
 
 ### The Stub
 
@@ -225,13 +225,13 @@ gt_tbl <-
   ) %>%
   tab_footnote(
     footnote = md("The **largest** by area."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(size),
       rows = largest)
   ) %>%
   tab_footnote(
     footnote = "The lowest by population.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(size),
       rows = contains("arc"))
   )

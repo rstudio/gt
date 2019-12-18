@@ -34,9 +34,24 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 \code{grp_b}) for experimenting with the \code{\link[=gt]{gt()}} function's \code{rowname_col} and
 \code{groupname_col} arguments.
 }
+\section{Function ID}{
+
+10-6
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `exibble`
 dplyr::glimpse(exibble)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{countrypops}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{Datasets}
 \keyword{datasets}

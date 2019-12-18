@@ -41,6 +41,11 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-8
+}
+
 \examples{
 # Create a few Markdown-based
 # text snippets
@@ -90,7 +95,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -104,4 +109,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

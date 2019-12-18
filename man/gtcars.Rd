@@ -47,9 +47,24 @@ these cars, comfort is emphasized over all-out performance. Nevertheless, the
 driving experience should also mean motoring at speed, doing so in style and
 safety.
 }
+\section{Function ID}{
+
+10-3
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `gtcars`
 dplyr::glimpse(gtcars)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{Datasets}
 \keyword{datasets}
