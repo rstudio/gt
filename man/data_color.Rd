@@ -143,10 +143,10 @@ tab_2 <-
     columns = vars(sold, income),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
-        package = "ggsci",
-        palette = "red_material"
-        ),
-      domain = NULL)
+        palette = "ggsci::red_material"
+        ) \%>\% as.character(),
+      domain = NULL
+      )
   )
 
 }

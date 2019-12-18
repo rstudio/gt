@@ -36,7 +36,9 @@ selection_text <- function(html, selection) {
 test_that("the correct color values are obtained when defining a palette", {
 
   # Obtain a palette of 12 colors in #RRGGBB format
-  pal_12 <- paletteer::paletteer_d(package = "rcartocolor", palette = "Vivid")
+  pal_12 <-
+    paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
+    gsub("FF$", "", .)
 
   # Create a `tbl_html` object by using `data_color` with the #RRGGBB
   # colors on the month column (which is of the `character` class)
