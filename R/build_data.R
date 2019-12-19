@@ -5,17 +5,6 @@ build_data <- function(data, context) {
 
   checkmate::assert_class(data, "gt_tbl")
 
-  # # Check the names of objects in `data`
-  # checkmate::assert_names(
-  #   x = names(data_attr),
-  #   must.include = c(
-  #     "_boxh", "_spanners",
-  #     "names", "row.names", "class", "stub_df",
-  #     "footnotes_df", "styles_df", "rows_df", "cols_df",
-  #     "arrange_groups", "opts_df",
-  #     "formats", "transforms")
-  # )
-
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;

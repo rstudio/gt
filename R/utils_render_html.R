@@ -660,12 +660,6 @@ create_body_component_h <- function(data) {
 
       stub_var <- dt_boxhead_get_var_stub(data = data)
 
-      # TODO: Need to get the stub column name but using
-      #  stub_components[1] may not cut it (if there is also a group column, or.
-      #  *just* a group column)
-      #  * an idea is to give `names` to the stub components (e.g.,
-      #  `"rowname_col"` and `"groupname_column"`): that would diambiguate
-      #  -- update: implemented with `dt_boxhead_get_var_stub()`
       default_vals <- c(body[[i, stub_var]], default_vals)
     }
 
