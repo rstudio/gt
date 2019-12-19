@@ -234,3 +234,166 @@ test_that("a gt table can use UTF-8 chars in any system locale", {
     )
   }
 })
+
+test_that("gt table can be made with grouped data -- one group", {
+
+  # Use `dplyr::group_by()` to add a group to an
+  # incoming table; create the gt object and build
+  # its data under an `html` context
+  built_tbl <-
+    exibble %>%
+    dplyr::group_by(group) %>%
+    gt() %>%
+    build_data(context = "html")
+
+  # Expect that groups are available in the gt object
+  built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
+
+  built_tbl$`_groups_rows` %>%
+    expect_equal(
+      data.frame(
+        group = c("grp_a", "grp_b"),
+        group_label = c("grp_a", "grp_b"),
+        row = c(1, 5),
+        row_end = c(4, 8),
+        stringsAsFactors = FALSE
+      )
+    )
+
+  built_tbl$`_boxhead` %>% .[, 1:2] %>%
+    expect_equal(
+      dplyr::tibble(
+        var = colnames(exibble),
+        type = c(rep("default", 8), "row_group")
+      )
+    )
+
+  built_tbl$`_stub_df` %>%
+    expect_equal(
+      dplyr::tibble(
+        rownum_i = 1:8,
+        groupname = c(rep("grp_a", 4), rep("grp_b", 4)),
+        rowname = NA_character_
+      )
+    )
+
+  # Render the HTML table and read the HTML with `xml2`
+  html_tbl <-
+    exibble %>%
+    dplyr::group_by(group) %>%
+    gt(auto_align = FALSE) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 8 column labels in the rendered HTML table
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
+    rvest::html_text() %>%
+    expect_equal(colnames(exibble) %>% setdiff("group"))
+
+  # Expect two labels in group heading rows (above each row group)
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_group_heading']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("grp_a", "grp_b"))
+
+  # Expect the first row of data to match that which is expected
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_row gt_center']") %>%
+    rvest::html_text() %>%
+    .[1:8] %>%
+    expect_equal(
+      c(
+        "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
+        "2018-01-01 02:22", "49.950", "row_1"
+      )
+    )
+})
+
+test_that("gt table can be made with grouped data - two groups", {
+
+  # Use `dplyr::group_by()` to add two groups to an
+  # incoming table; create the gt object and build
+  # its data under an `html` context
+  built_tbl <-
+    exibble %>%
+    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort()) %>%
+    dplyr::group_by(group, group_2) %>%
+    gt() %>%
+    build_data(context = "html")
+
+  table_groups <-
+    c("grp_a - grp_1", "grp_a - grp_2", "grp_b - grp_3", "grp_b - grp_4")
+
+  # Expect that groups are available in the gt object
+  built_tbl$`_row_groups` %>%
+    expect_equal(table_groups)
+
+  built_tbl$`_groups_rows` %>%
+    expect_equal(
+      data.frame(
+        group = table_groups,
+        group_label = table_groups,
+        row = c(1, 3, 5, 7),
+        row_end = c(2, 4, 6, 8),
+        stringsAsFactors = FALSE
+      )
+    )
+
+  built_tbl$`_boxhead` %>% .[, 1:2] %>%
+    expect_equal(
+      dplyr::tibble(
+        var = colnames(
+          exibble %>%
+            dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort())
+          ),
+        type = c(rep("default", 8), rep("row_group", 2))
+      )
+    )
+
+  built_tbl$`_stub_df` %>%
+    expect_equal(
+      dplyr::tibble(
+        rownum_i = 1:8,
+        groupname = rep(table_groups, 2) %>% sort(),
+        rowname = NA_character_
+      )
+    )
+
+  # Render the HTML table and read the HTML with `xml2`
+  html_tbl <-
+    exibble %>%
+    dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort()) %>%
+    dplyr::group_by(group, group_2) %>%
+    gt(auto_align = FALSE) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect 8 column labels in the rendered HTML table
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
+    rvest::html_text() %>%
+    expect_equal(colnames(exibble) %>% setdiff("group"))
+
+  # Expect four labels in group heading rows (above each row group)
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_group_heading']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "grp_a - grp_1", "grp_a - grp_2", "grp_b - grp_3", "grp_b - grp_4"
+      )
+    )
+
+  # Expect the first row of data to match that which is expected
+  html_tbl %>%
+    rvest::html_nodes("[class='gt_row gt_center']") %>%
+    rvest::html_text() %>%
+    .[1:8] %>%
+    expect_equal(
+      c(
+        "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
+        "2018-01-01 02:22", "49.950", "row_1"
+      )
+    )
+})
