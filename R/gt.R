@@ -86,7 +86,10 @@ gt <- function(data,
   # Initialize the main objects
   data <-
     list() %>%
-    dt_data_init(data_tbl = data, rownames_to_stub = rownames_to_stub) %>%
+    dt_data_init(
+      data_tbl = data,
+      rownames_to_stub = rownames_to_stub
+    ) %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
       data_tbl = data,
@@ -110,13 +113,7 @@ gt <- function(data,
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
-
-    data <-
-      data %>%
-      dt_options_set_value(
-        option = "table_id",
-        value = id
-      )
+    data <- data %>% dt_options_set_value( option = "table_id", value = id)
   }
 
   # Apply the `gt_tbl` class to the object while
@@ -126,9 +123,7 @@ gt <- function(data,
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
   if (isTRUE(auto_align)) {
-    data <-
-      data %>%
-      cols_align(align = "auto")
+    data <- data %>% cols_align(align = "auto")
   }
 
   data
