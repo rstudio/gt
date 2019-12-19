@@ -52,9 +52,7 @@ dt_boxhead_init <- function(data) {
 
 dt_boxhead_edit <- function(data, var, ...) {
 
-  dt_boxhead <-
-    data %>%
-    dt_boxhead_get()
+  dt_boxhead <- data %>% dt_boxhead_get()
 
   var_name <- var
 
@@ -66,6 +64,38 @@ dt_boxhead_edit <- function(data, var, ...) {
 
   dt_boxhead[which(dt_boxhead$var == var_name), names(val_list)] <-
     dplyr::as_tibble(val_list)
+
+  dt_boxhead %>% dt_boxhead_set(data = data)
+}
+
+dt_boxhead_add_var <- function(data,
+                               var,
+                               type,
+                               column_label = list(var),
+                               column_align = "left",
+                               column_width = list(NULL),
+                               hidden_px = list(NULL),
+                               add_where = "top") {
+
+  dt_boxhead <- data %>% dt_boxhead_get()
+
+  dt_boxhead_row <-
+    dplyr::tibble(
+      var = var,
+      type = type,
+      column_label = column_label,
+      column_align = column_align,
+      column_width = column_width,
+      hidden_px = hidden_px
+    )
+
+  if (add_where == "top") {
+    dt_boxhead <- dplyr::bind_rows(dt_boxhead_row, dt_boxhead)
+  } else if (add_where == "bottom") {
+    dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
+  } else {
+    stop("The `add_where` value must be either `top` or `bottom`.")
+  }
 
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
@@ -116,10 +146,16 @@ dt_boxhead_get_vars_default <- function(data) {
 
 dt_boxhead_get_var_stub <- function(data) {
 
-  data %>%
+  boxh_df <-
+    data %>%
     dt_boxhead_get() %>%
-    dplyr::filter(type == "stub") %>%
-    magrittr::extract2("var")
+    dplyr::filter(type == "stub")
+
+  if (nrow(boxh_df) > 0){
+    return(boxh_df %>% magrittr::extract2("var"))
+  } else {
+    return(NA_character_)
+  }
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {

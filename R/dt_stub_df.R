@@ -14,7 +14,8 @@ dt_stub_df_init <- function(data,
                             data_tbl,
                             rowname_col,
                             groupname_col,
-                            stub_group.sep) {
+                            row_group.sep,
+                            row_group_columns = NULL) {
 
   data_tbl <- dt_data_get(data = data)
 
@@ -40,10 +41,7 @@ dt_stub_df_init <- function(data,
   # If `data` is a `grouped_df` then create groups from the
   # group columns; note that this will overwrite any values
   # already in `stub_df$groupname`
-  if (inherits(data_tbl, "grouped_df")) {
-
-    row_group_columns <- dplyr::group_vars(data_tbl)
-    row_group_columns <- base::intersect(row_group_columns, colnames(data_tbl))
+  if (!is.null(row_group_columns)) {
 
     row_group_labels <-
       apply(
@@ -55,12 +53,9 @@ dt_stub_df_init <- function(data,
     # Place the `group_labels` values into `stub_df$groupname`
     stub_df[["groupname"]] <- row_group_labels
 
-    data <- data %>% dt_boxhead_set_row_group(vars = row_group_labels)
+    data <- data %>% dt_boxhead_set_row_group(vars = row_group_columns)
 
   } else if (groupname_col %in% colnames(data_tbl)) {
-
-    # If `groupname` is a column available in `data`,
-    # place that column's data into `stub_df`
 
     # Place the `groupname` values into `stub_df$groupname`
     stub_df[["groupname"]] <- as.character(data_tbl[[groupname_col]])

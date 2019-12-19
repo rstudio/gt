@@ -83,6 +83,12 @@ gt <- function(data,
                id = random_id(),
                row_group.sep = getOption("gt.row_group.sep", " - ")) {
 
+  if (inherits(data, "grouped_df")) {
+    row_group_columns <- dplyr::group_vars(data) %>% base::intersect(colnames(data))
+  } else {
+    row_group_columns <- NULL
+  }
+
   # Initialize the main objects
   data <-
     list() %>%
@@ -95,7 +101,8 @@ gt <- function(data,
       data_tbl = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      stub_group.sep = stub_group.sep
+      row_group.sep = row_group.sep,
+      row_group_columns = row_group_columns
     ) %>%
     dt_row_groups_init() %>%
     dt_stub_others_init() %>%
