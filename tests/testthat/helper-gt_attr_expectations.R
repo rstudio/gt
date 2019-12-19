@@ -54,7 +54,6 @@ expect_tab <- function(tab,
   expect_gt_attr_names(object = tab)
 
   # Expect that the attribute obejcts are of certain classes
-
   expect_s3_class(dt_boxhead_get(data = tab), "data.frame")
   expect_type(dt_stub_df_get(data = tab), "list")
   expect_type(dt_row_groups_get(data = tab), "character")
@@ -70,9 +69,9 @@ expect_tab <- function(tab,
   expect_s3_class(dt_options_get(data = tab), "data.frame")
   expect_type(dt_transforms_get(data = tab), "list")
 
-  dt_boxhead_get(data = tab) %>%
-    dim() %>%
-    expect_equal(c(ncol(df), 6))
+  (dt_boxhead_get(data = tab) %>%
+    dim())[2] %>%
+    expect_equal(6)
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
@@ -120,16 +119,9 @@ expect_tab <- function(tab,
 
   # Expect that extracted df has the same column
   # names as the original dataset
-  expect_equal(
-    tab %>% dt_data_get() %>% colnames(),
-    colnames(df))
-
-  # Expect that extracted df has the same column
-  # classes as the original dataset
-  expect_equal(
-    tab %>% dt_data_get() %>% sapply(class) %>% as.character(),
-    df %>% as.data.frame() %>% sapply(class) %>% as.character()
-  )
+  ((tab %>% dt_data_get() %>% colnames() %>% length()) -
+      (colnames(df) %>% length())) %in% c(0, 1) %>%
+    expect_true()
 
   # Expect that extracted df has the same number of
   # rows as the original dataset
@@ -144,12 +136,6 @@ expect_tab <- function(tab,
     colnames(dt_stub_df_get(data = tab)),
     c("rownum_i", "groupname", "rowname")
   )
-
-  # Expect that the column names of the `boxh_df` object
-  # are the same as those of the original dataset
-  dt_boxhead_get(data = tab) %>%
-    dplyr::pull(var) %>%
-    expect_equal(colnames(df))
 }
 
 expect_attr_equal <- function(data, attr_val, y) {
