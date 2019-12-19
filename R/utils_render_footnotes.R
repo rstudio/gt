@@ -552,10 +552,12 @@ apply_footnotes_to_output <- function(data,
   if (nrow(footnotes_tbl_data) > 0) {
 
     if ("stub" %in% footnotes_tbl_data$locname &&
-        "rowname" %in% colnames(body)) {
+        !is.na(dt_boxhead_get_var_stub(data))) {
+
+      boxhead_var_stub <- dt_boxhead_get_var_stub(data)
 
       footnotes_tbl_data[
-        which(is.na(footnotes_tbl_data$colname)), "colname"] <- "rowname"
+        which(is.na(footnotes_tbl_data$colname)), "colname"] <- boxhead_var_stub
     }
 
     footnotes_data_marks <-
