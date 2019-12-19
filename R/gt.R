@@ -21,9 +21,13 @@
 #'
 #' @param data A `data.frame` object or a tibble.
 #' @param rowname_col The column name in the input `data` table to use as row
-#'   captions to be placed in the display table stub.
+#'   captions to be placed in the display table stub. If the `rownames_to_stub`
+#'   option is `TRUE` then any column name provided to `rowname_col` will be
+#'   ignored.
 #' @param groupname_col The column name in the input `data` table to use as
-#'   group labels for generation of stub row groups.
+#'   group labels for generation of stub row groups. If the input `data` table
+#'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
+#'   or associated `group_by*()` functions) then any input here is ignored.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
