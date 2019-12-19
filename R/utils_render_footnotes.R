@@ -231,8 +231,8 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "columns_columns") %>%
       dplyr::inner_join(
         dplyr::tibble(
-          colnum = seq(nrow(boxh)),
-          colname = boxh$var
+          colnum = seq(default_vars),
+          colname = default_vars
         ),
         by = "colname"
       )
