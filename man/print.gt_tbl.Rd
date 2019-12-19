@@ -8,6 +8,10 @@
 }
 \arguments{
 \item{x}{An object of class \code{gt_tbl}.}
+
+\item{...}{Any additional parameters.}
+
+\item{view}{The value for \code{print()}s \code{browse} argument.}
 }
 \description{
 This facilitates printing of the HTML table to the R console.

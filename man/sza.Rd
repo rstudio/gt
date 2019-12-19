@@ -42,9 +42,24 @@ example, at a latitude of 50 degrees N at the start of January, the noontime
 SZA is 73.0 but a different observer at 20 degrees N would measure the
 noontime SZA to be 43.0 degrees.
 }
+\section{Function ID}{
+
+10-2
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `sza`
 dplyr::glimpse(sza)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}}
+}
+\concept{Datasets}
 \keyword{datasets}

@@ -69,10 +69,10 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
-With numeric values in a \pkg{gt} table, we can perform percentage-based
+With numeric values in a \strong{gt} table, we can perform percentage-based
 formatting. It is assumed the input numeric values are in a fractional format
 since the numbers will be automatically multiplied by \code{100} before decorating
 with a percent sign. For more control over percentage formatting, we can use
@@ -103,24 +103,31 @@ argument. See the Arguments section for more information on this.
 \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+3-3
+}
+
 \examples{
-# Use `exibble` to create a gt table;
-# format the `num` column to have
-# percentage values in the first five
-# of its rows
+# Use `pizzaplace` to create a gt table;
+# format the `frac_of_quota` column to
+# display values as percentages
 tab_1 <-
-  exibble \%>\%
-  gt() \%>\%
+  pizzaplace \%>\%
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
+  dplyr::group_by(month) \%>\%
+  dplyr::summarize(pizzas_sold = n()) \%>\%
+  dplyr::ungroup() \%>\%
+  dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
+  gt(rowname_col = "month") \%>\%
   fmt_percent(
-    columns = vars(num),
-    rows = 1:5,
-    decimals = 1,
-    drop_trailing_zeros = TRUE
+    columns = vars(frac_of_quota),
+    decimals = 1
   )
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -134,4 +141,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

@@ -38,7 +38,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) paste0(x, " mpg")
     )
 
@@ -57,7 +57,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) {
         paste0(x, " ", ifelse(x >= 20, "(good)", "(bad)"))
       }
@@ -78,7 +78,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) {
         ifelse(x >= 20, 25, 15)
       }
@@ -103,7 +103,7 @@ test_that("the `text_transform()` function works correctly", {
       decimals = 4,
       pattern = "{x} miles") %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "per gallon")
       }
@@ -123,13 +123,13 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "miles")
       }
     ) %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = function(x) {
         paste(x, "per gallon")
       }
@@ -172,12 +172,12 @@ test_that("the `text_transform()` function works correctly", {
     expect_equal(c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
-  # names and `resolved`, `cells_data`, `location_cells`
+  # names and `resolved`, `cells_body`, `location_cells`
   transforms[[1]]$resolved %>%
-    expect_is(c("resolved", "cells_data", "location_cells"))
+    expect_is(c("resolved", "cells_body", "location_cells"))
 
   transforms[[2]]$resolved %>%
-    expect_is(c("resolved", "cells_data", "location_cells"))
+    expect_is(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
   transforms[[1]]$fn %>%
@@ -199,7 +199,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_data(columns = vars(mpg)),
+      locations = cells_body(columns = vars(mpg)),
       fn = round_mult
     )
 

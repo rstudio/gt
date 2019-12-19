@@ -29,6 +29,11 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
+\section{Function ID}{
+
+7-17
+}
+
 \examples{
 # Add horizontal border lines for
 # all table body rows in `exibble`
@@ -41,7 +46,7 @@ tab_1 <-
         sides = c("top", "bottom"),
         color = "gray", weight = px(0.5), style = "solid"
       ),
-      locations = cells_data(
+      locations = cells_body(
         columns = everything(),
         rows = everything()
       )
@@ -50,7 +55,7 @@ tab_1 <-
 # Incorporate different horizontal and
 # vertical borders at several locations;
 # this uses multiple `cell_borders()` and
-# `cells_data()` calls within `list()`s
+# `cells_body()` calls within `list()`s
 tab_2 <-
   exibble \%>\%
     gt() \%>\%
@@ -68,22 +73,33 @@ tab_2 <-
         )
       ),
       locations = list(
-        cells_data(
+        cells_body(
           columns = vars(num),
           rows = is.na(num)
         ),
-        cells_data(
+        cells_body(
           columns = vars(currency),
           rows = is.na(currency)
         )
       )
     )
+
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -92,4 +108,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

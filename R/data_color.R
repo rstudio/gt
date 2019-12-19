@@ -4,7 +4,7 @@
 #' `data_color()` function colors all rows of any `columns` supplied. There are
 #' two ways to define how cells are colored: (1) through the use of a supplied
 #' color palette, and (2) through use of a color mapping function available from
-#' the `scales` package. The first method colorizes cell data according to
+#' the **scales** package. The first method colorizes cell data according to
 #' whether values are character or numeric. The second method provides more
 #' control over how cells are colored since we provide an explicit color
 #' function and thus other requirements such as bin counts, cut points, or a
@@ -28,24 +28,24 @@
 #' factors, interpolation is used.
 #' }
 #'
-#' By default, \pkg{gt} will choose the ideal text color (for maximal contrast)
+#' By default, **gt** will choose the ideal text color (for maximal contrast)
 #' when colorizing the background of data cells. This option can be disabled by
 #' setting `autocolor_text` to `FALSE`.
 #'
 #' Choosing the right color palette can often be difficult because it's both
 #' hard to discover suitable palettes and then obtain the vector of colors. To
-#' make this process easier we can elect to use the \pkg{paletteer} package,
+#' make this process easier we can elect to use the **paletteer** package,
 #' which makes a wide range of palettes from various R packages readily
 #' available. The [info_paletteer()] information table allows us to easily
-#' inspect all of the discrete color palettes available in \pkg{paletteer}. We
+#' inspect all of the discrete color palettes available in **paletteer**. We
 #' only then need to specify the `package` and `palette` when calling the
 #' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
 #' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
 #' @param columns The columns wherein changes to cell data colors should occur.
-#' @param colors Either a color mapping function from the `scales` package or a
-#'   vector of colors to use for each distinct value or level in each of the
+#' @param colors Either a color mapping function from the **scales** package or
+#'   a vector of colors to use for each distinct value or level in each of the
 #'   provided `columns`. The color mapping functions are:
 #'   [scales::col_quantile()], [scales::col_bin()], [scales::col_numeric()], and
 #'   [scales::col_factor()]. If providing a vector of colors as a palette, each
@@ -58,11 +58,13 @@
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `fill`) or the cell
 #'   text (`text`).
-#' @param autocolor_text An option to let \pkg{gt} modify the coloring of text
+#' @param autocolor_text An option to let **gt** modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
 #'   `TRUE`.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # library(paletteer)
 #'
@@ -107,10 +109,10 @@
 #'     columns = vars(sold, income),
 #'     colors = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
-#'         package = "ggsci",
-#'         palette = "red_material"
-#'         ),
-#'       domain = NULL)
+#'         palette = "ggsci::red_material"
+#'         ) %>% as.character(),
+#'       domain = NULL
+#'       )
 #'   )
 #'
 #' @section Figures:
@@ -118,7 +120,10 @@
 #'
 #' \if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-13
+#'
 #' @import rlang
 #' @export
 data_color <- function(data,
@@ -285,7 +290,7 @@ scale_apply_styles <- function(data,
         data %>%
         tab_style(
           do.call(cell_fill, styles[[i]]),
-          cells_data(
+          cells_body(
             columns = column,
             rows = rows_i[[i]]
           )
@@ -297,7 +302,7 @@ scale_apply_styles <- function(data,
         data %>%
         tab_style(
           do.call(cell_text, styles[[i]]),
-          cells_data(
+          cells_body(
             columns = column,
             rows = rows_i[[i]]
           )
@@ -307,109 +312,6 @@ scale_apply_styles <- function(data,
 
   data
 }
-
-#' Adjust the luminance for a palette of colors
-#'
-#' This function can brighten or darken a palette of colors by an arbitrary
-#' number of steps, which is defined by a real number between -2.0 and 2.0. The
-#' transformation of a palette by a fixed step in this function will tend to
-#' apply greater darkening or lightening for those colors in the midrange
-#' compared to any very dark or very light colors in the input palette.
-#'
-#' This function can be useful when combined with the [data_color()] function's
-#' `palette` argument, which can use a vector of colors or any of the `col_*`
-#' functions from the \pkg{scales} package (all of which have a `palette`
-#' argument).
-#'
-#' @param colors A vector of colors that will undergo an adjustment in
-#'   luminance. Each color value provided must either be a color name (in the
-#'   set of colors provided by `grDevices::colors()`) or a hexadecimal string in
-#'   the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param steps A positive or negative factor by which the luminance will be
-#'   adjusted. Must be a number between `-2.0` and `2.0`.
-#' @examples
-#' # Get a palette of 8 pastel colors from
-#' # the RColorBrewer package
-#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
-#'
-#' # Create lighter and darker variants
-#' # of the base palette (one step lower, one
-#' # step higher)
-#' pal_darker  <- pal %>% adjust_luminance(-1.0)
-#' pal_lighter <- pal %>% adjust_luminance(+1.0)
-#'
-#' # Create a tibble and make a gt table
-#' # from it; color each column in order of
-#' # increasingly darker palettes (with
-#' # `data_color()`)
-#' tab_1 <-
-#'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
-#'   gt() %>%
-#'   data_color(
-#'     columns = vars(a),
-#'     colors = scales::col_numeric(
-#'       palette = pal_lighter,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = vars(b),
-#'     colors = scales::col_numeric(
-#'       palette = pal,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = vars(c),
-#'     colors = scales::col_numeric(
-#'       palette = pal_darker,
-#'       domain = c(1, 8)
-#'     )
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
-#'
-#' @export
-adjust_luminance <- function(colors,
-                             steps) {
-
-  # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
-    stop("The value provided for `steps` (", steps, ") must be between `-2.0` and `+2.0`.",
-         call. = FALSE)
-  }
-
-  # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
-
-  # Obtain the alpha values
-  alpha <- rgb_matrix[, "alpha"]
-
-  # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
-
-  # Apply calculations to obtain values in the HCL color space
-  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
-  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
-  l <- luv_matrix[, "L"]
-
-  # Scale luminance to occupy [0, 1]
-  y <- l / 100.
-
-  # Obtain `x` positions of luminance values along a sigmoid function
-  x <- log(-(y / (y - 1)))
-
-  # Calculate new luminance values based on a fixed step-change in `x`
-  y_2 <- 1 / (1 + exp(-(x + steps)))
-
-  # Rescale the new luminance values to [0, 100]
-  l <- y_2 * 100.
-
-  # Obtain hexadecimal colors from the modified HCL color values
-  grDevices::hcl(h, c, l, alpha = alpha)
-}
-
 
 #' Are color values in rgba() format?
 #'

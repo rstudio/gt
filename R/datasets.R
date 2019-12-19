@@ -22,6 +22,11 @@
 #' # Here is a glimpse at the data
 #' # available in `countrypops`
 #' dplyr::glimpse(countrypops)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-1
+#'
 "countrypops"
 
 #' Twice hourly solar zenith angles by month & latitude
@@ -63,6 +68,11 @@
 #' # Here is a glimpse at the data
 #' # available in `sza`
 #' dplyr::glimpse(sza)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-2
+#'
 "sza"
 
 #' Deluxe automobiles from the 2014-2017 period
@@ -108,6 +118,11 @@
 #' # Here is a glimpse at the data
 #' # available in `gtcars`
 #' dplyr::glimpse(gtcars)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-3
+#'
 "gtcars"
 
 #' Daily S&P 500 Index data from 1950 to 2015
@@ -130,6 +145,11 @@
 #' # Here is a glimpse at the data
 #' # available in `sp500`
 #' dplyr::glimpse(sp500)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-4
+#'
 "sp500"
 
 #' A year of pizza sales from a pizza place
@@ -251,6 +271,11 @@
 #' # Here is a glimpse at the data
 #' # available in `pizzaplace`
 #' dplyr::glimpse(pizzaplace)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-5
+#'
 "pizzaplace"
 
 #' A toy example tibble for testing with gt: exibble
@@ -286,4 +311,9 @@
 #' # Here is a glimpse at the data
 #' # available in `exibble`
 #' dplyr::glimpse(exibble)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-6
+#'
 "exibble"

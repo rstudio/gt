@@ -23,9 +23,24 @@ This dataset provides daily price indicators for the S&P 500 index from the
 beginning of 1950 to the end of 2015. The index includes 500 leading
 companies and captures about 80\\% coverage of available market capitalization.
 }
+\section{Function ID}{
+
+10-4
+}
+
 \examples{
 # Here is a glimpse at the data
 # available in `sp500`
 dplyr::glimpse(sp500)
+
 }
+\seealso{
+Other Datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sza}}
+}
+\concept{Datasets}
 \keyword{datasets}

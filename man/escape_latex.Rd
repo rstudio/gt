@@ -15,12 +15,27 @@ Text may contain several characters with special meanings in LaTeX. This
 function will transform a character vector so that it is safe to use within
 LaTeX tables.
 }
+\section{Function ID}{
+
+7-20
+}
+
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
@@ -28,4 +43,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

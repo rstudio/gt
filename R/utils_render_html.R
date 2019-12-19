@@ -718,7 +718,7 @@ create_body_component_h <- function(data) {
 
           styles_row <-
             styles_tbl %>%
-            dplyr::filter(locname == "stub_groups", grpname == group_label)
+            dplyr::filter(locname == "row_groups", grpname == group_label)
 
           row_style <-
             if (nrow(styles_row) > 0) {

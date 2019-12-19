@@ -1,8 +1,7 @@
 library(gt)
+library(tidyverse)
 
 # Create a table with footnotes in various cell types
-
-# Input table
 tbl <-
   dplyr::tribble(
     ~date,        ~rowname,  ~value_1,  ~value_2,
@@ -15,7 +14,8 @@ tbl <-
     "2018-02-11", "7",       63.1,        2.3,
     "2018-02-11", "8",       25.8,      184.3,
     "2018-02-11", "9",        5.2,      197.2,
-    "2018-02-11", "10",      55.3,      284.6)
+    "2018-02-11", "10",      55.3,      284.6
+  )
 
 # Create a display table
 footnotes_tbl <-
@@ -26,19 +26,19 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_data(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = vars(value_1), rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_data(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = vars(value_1), rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
-    locations = cells_data(columns = "value_1", rows = 1)
+    locations = cells_body(columns = "value_1", rows = 1)
   ) %>%
   tab_footnote(
     footnote = "The first row group",
-    locations = cells_group(groups = ends_with("10"))
+    locations = cells_row_groups(groups = ends_with("10"))
   ) %>%
   tab_footnote(
     footnote = "Two sets of values",

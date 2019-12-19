@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_preview.R
 \name{gt_preview}
 \alias{gt_preview}
-\title{Preview a \pkg{gt} table object}
+\title{Preview a \strong{gt} table object}
 \usage{
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
@@ -27,9 +27,9 @@ An object of class \code{gt_tbl}.
 Sometimes you may want to see just a small portion of your input data. We can
 use \code{gt_preview()} in place of \code{\link[=gt]{gt()}} to get the first x rows of data and the
 last y rows of data (which can be set by the \code{top_n} and \code{bottom_n}
-arguments). It's not advised to use additional \pkg{gt} API functions to
-further modify the output of \code{gt_preview()}. Furthermore, you cannot pass a
-\pkg{gt} object to \code{gt_preview()}.
+arguments). It's not advised to use additional \strong{gt} functions to further
+modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong{gt}
+object to \code{gt_preview()}.
 }
 \details{
 Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
@@ -41,6 +41,11 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 \section{Figures}{
 
 \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+1-2
 }
 
 \examples{
@@ -55,15 +60,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table-part creation/modification functions: 
-\code{\link{gt}()},
-\code{\link{tab_footnote}()},
-\code{\link{tab_header}()},
-\code{\link{tab_options}()},
-\code{\link{tab_row_group}()},
-\code{\link{tab_source_note}()},
-\code{\link{tab_spanner}()},
-\code{\link{tab_stubhead}()},
-\code{\link{tab_style}()}
+Other Create Table: 
+\code{\link{gt}()}
 }
-\concept{table-part creation/modification functions}
+\concept{Create Table}

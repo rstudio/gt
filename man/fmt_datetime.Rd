@@ -37,15 +37,10 @@ An object of class \code{gt_tbl}.
 Format input date-time values that are character-based and expressed
 according to the ISO 8601 date-time format (\verb{YYYY-MM-DD HH:MM:SS}). Once the
 appropriate data cells are targeted with \code{columns} (and, optionally, \code{rows}),
-we can simply apply preset date and time styles (see tables in
-\code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} for more info) to format the
-data-time values.
-}
-\details{
-The following date styles are available for simpler formatting of the date
-portion (all using the input date of \code{2000-02-29} in the example output
+we can simply apply preset date and time styles to format the date-time
+values. The following date styles are available for simpler formatting of the
+date portion (all using the input date of \code{2000-02-29} in the example output
 dates):
-
 \enumerate{
 \item iso: \code{2000-02-29}
 \item wday_month_day_year: \verb{Tuesday, February 29, 2000}
@@ -62,10 +57,8 @@ dates):
 \item year.mn.day: \code{2000/02/29}
 \item y.mn.day: \code{0/02/29}
 }
-
 The following time styles are available for simpler formatting of the time
 portion (all using the input time of \code{14:35:00} in the example output times):
-
 \enumerate{
 \item hms: \code{14:35:00}
 \item hm: \code{14:35}
@@ -73,11 +66,11 @@ portion (all using the input time of \code{14:35:00} in the example output times
 \item hm_p: \verb{2:35 PM}
 \item h_p: \verb{2 PM}
 }
-
 We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions as
 useful references for all of the possible inputs to \code{date_style} and
 \code{time_style}.
-
+}
+\details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
@@ -87,6 +80,11 @@ argument. See the Arguments section for more information on this.
 \section{Figures}{
 
 \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-7
 }
 
 \examples{
@@ -107,7 +105,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
@@ -121,4 +119,4 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

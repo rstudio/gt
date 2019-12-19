@@ -53,6 +53,11 @@ non-target columns can be optionally hidden from the output table through the
 \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+4-10
+}
+
 \examples{
 # Use `sp500` to create a gt table;
 # merge the `open` & `close` columns
@@ -81,7 +86,7 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -90,7 +95,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

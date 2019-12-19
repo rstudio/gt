@@ -219,7 +219,7 @@ tab
 
 We can change the alignment of data in columns with `cols_align()`. For our table, let's center-align the `mpg_c`, `hp`, and `trq` columns. All other columns will maintain their default alignments.
 
-It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cells_styles()` helper function, which contains arguments for all the styles that are supported (use `?cells_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_data` and then supply our target columns to the `columns` argument.
+It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cells_styles()` helper function, which contains arguments for all the styles that are supported (use `?cells_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_body` and then supply our target columns to the `columns` argument.
 
 ```{r align_style}
 # Center-align three columns in the gt table
@@ -233,7 +233,7 @@ tab <-
   ) %>%
   tab_style(
     style = cell_text(size = px(12)),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(trim, trsmn, mpg_c, hp, trq))
   )
 
@@ -243,17 +243,17 @@ tab
 
 ### Text Transforms
 
-A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_data()` location helper function, we supply a function to the `fn` argument that processes a vector of text. If we intend to render as an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here will build strings that read better in a display table.
+A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_body()` location helper function, we supply a function to the `fn` argument that processes a vector of text. If we intend to render as an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here will build strings that read better in a display table.
 
 ```{r text_transform_html}
 # Transform the column of text in `trsmn` using
 # a custom function within `text_transform()`;
 # here `x` represents a character vector defined
-# in the `cells_data()` function
+# in the `cells_body()` function
 tab <- 
   tab %>%
   text_transform(
-    locations = cells_data(columns = vars(trsmn)),
+    locations = cells_body(columns = vars(trsmn)),
     fn = function(x) {
       
       # The first character of `x` always
@@ -325,9 +325,9 @@ Let's bring it all together by putting together all the statements we developed 
     b. identifying the car with the highest horsepower
     c. stating the currency of the MSRP
 
-The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_data()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_data()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells, help is available at `?location_cells`.
+The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_body()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_body()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells so refer to the documentation for examples of how they work in practice.
 
-What `cells_data()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
+What `cells_body()` expects is `columns` (column names, which can be conveniently provided in `vars()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = vars(msrp)`.
 
 In terms of structuring the code, we're taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the `tab_footnote()` statements first (again, any in order) and expect the same output table.
 
@@ -406,12 +406,12 @@ tab <-
   ) %>%
   tab_style(
     style = cell_text(size = px(12)),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(trim, trsmn, mpg_c, hp, trq)
     )
   ) %>%
   text_transform(
-    locations = cells_data(columns = vars(trsmn)),
+    locations = cells_body(columns = vars(trsmn)),
     fn = function(x) {
       
       speed <- substr(x, 1, 1)
@@ -437,13 +437,13 @@ tab <-
   ) %>%
   tab_footnote(
     footnote = md("Best gas mileage (city) of all the **gtcars**."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(mpg_c),
       rows = best_gas_mileage_city)
   ) %>%
   tab_footnote(
     footnote = md("The highest horsepower of all the **gtcars**."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(hp),
       rows = highest_horsepower)
   ) %>%
