@@ -83,13 +83,12 @@ gt <- function(data,
   # Initialize the main objects
   data <-
     list() %>%
-    dt_data_init(data_tbl = data) %>%
+    dt_data_init(data_tbl = data, rownames_to_stub = rownames_to_stub) %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
-      data_df = data,
+      data_tbl = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      rownames_to_stub = rownames_to_stub,
       stub_group.sep = stub_group.sep
     ) %>%
     dt_stub_groups_init() %>%

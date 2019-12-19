@@ -75,7 +75,22 @@ dt_boxhead_set_hidden <- function(data, vars) {
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
+  dt_boxhead %>% dt_boxhead_set(data = data)
+}
 
+dt_boxhead_set_stub <- function(data, vars) {
+
+  dt_boxhead <- dt_boxhead_get(data = data)
+
+  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "stub"
+  dt_boxhead %>% dt_boxhead_set(data = data)
+}
+
+dt_boxhead_set_row_group <- function(data, vars) {
+
+  dt_boxhead <- dt_boxhead_get(data = data)
+
+  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "row_group"
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
 
@@ -96,6 +111,14 @@ dt_boxhead_get_vars_default <- function(data) {
   data %>%
     dt_boxhead_get() %>%
     dplyr::filter(type == "default") %>%
+    magrittr::extract2("var")
+}
+
+dt_boxhead_get_var_stub <- function(data) {
+
+  data %>%
+    dt_boxhead_get() %>%
+    dplyr::filter(type == "stub") %>%
     magrittr::extract2("var")
 }
 

@@ -11,61 +11,43 @@ dt_stub_df_set <- function(data, stub_df) {
 }
 
 dt_stub_df_init <- function(data,
-                            data_df,
+                            data_tbl,
                             rowname_col,
                             groupname_col,
-                            rownames_to_stub,
                             stub_group.sep) {
 
-  vars_to_hide <- c()
+  data_tbl <- dt_data_get(data = data)
 
-  # If the option to place rownames in the stub
-  # is taken, then the `stub_df` data frame will
-  # be pre-populated with rownames in the `rowname`
-  # column; otherwise, this will be an empty df
-  if (isTRUE(rownames_to_stub)) {
-
-    data_rownames <- rownames(data_df)
-
-    stub_df <-
-      dplyr::tibble(
-        rownum_i = seq_len(nrow(data_df)),
-        groupname = NA_character_,
-        rowname = data_rownames,
-      )
-
-  } else {
-
-    stub_df <-
-      dplyr::tibble(
-        rownum_i = seq_len(nrow(data_df)),
-        groupname = rep(NA_character_, nrow(data_df)),
-        rowname = rep(NA_character_, nrow(data_df))
-      )
-  }
+  # Create the `stub_df` table
+  stub_df <-
+    dplyr::tibble(
+      rownum_i = seq_len(nrow(data_tbl)),
+      groupname = rep(NA_character_, nrow(data_tbl)),
+      rowname = rep(NA_character_, nrow(data_tbl))
+    )
 
   # If `rowname` is a column available in `data`,
   # place that column's data into `stub_df` and
   # remove it from `data`
-  if (rowname_col %in% colnames(data_df)) {
+  if (rowname_col %in% colnames(data_tbl)) {
 
     # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- as.character(data_df[[rowname_col]])
+    stub_df[["rowname"]] <- as.character(data_tbl[[rowname_col]])
 
-    vars_to_hide <- c(vars_to_hide, rowname_col)
+    data <- data %>% dt_boxhead_set_stub(vars = rowname_col)
   }
 
   # If `data` is a `grouped_df` then create groups from the
   # group columns; note that this will overwrite any values
   # already in `stub_df$groupname`
-  if (inherits(data_df, "grouped_df")) {
+  if (inherits(data_tbl, "grouped_df")) {
 
-    row_group_columns <- dplyr::group_vars(data_df)
-    row_group_columns <- base::intersect(row_group_columns, colnames(data_df))
+    row_group_columns <- dplyr::group_vars(data_tbl)
+    row_group_columns <- base::intersect(row_group_columns, colnames(data_tbl))
 
     row_group_labels <-
       apply(
-        data_df[, row_group_columns],
+        data_tbl[, row_group_columns],
         MARGIN = 1,
         paste, collapse = stub_group.sep
       )
@@ -73,37 +55,27 @@ dt_stub_df_init <- function(data,
     # Place the `group_labels` values into `stub_df$groupname`
     stub_df[["groupname"]] <- row_group_labels
 
-    vars_to_hide <- c(vars_to_hide, row_group_columns)
+    data <- data %>% dt_boxhead_set_row_group(vars = row_group_labels)
 
-  } else if (groupname_col %in% colnames(data_df)) {
+  } else if (groupname_col %in% colnames(data_tbl)) {
 
     # If `groupname` is a column available in `data`,
     # place that column's data into `stub_df`
 
     # Place the `groupname` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- as.character(data_df[[groupname_col]])
+    stub_df[["groupname"]] <- as.character(data_tbl[[groupname_col]])
 
-    vars_to_hide <- c(vars_to_hide, groupname_col)
+    data <- data %>% dt_boxhead_set_row_group(vars = groupname_col)
   }
 
   # Stop if input `data` has no columns (after modifying
   # `data` for groups)
-  if (ncol(data_df) == 0) {
+  if (ncol(data_tbl) == 0) {
     stop("The `data` must have at least one column that isn't a 'group' column.",
          call. = FALSE)
   }
 
-  data <-
-    data %>%
-    dt_stub_df_set(stub_df = stub_df)
-
-  if (length(vars_to_hide) > 0) {
-    data <-
-      data %>%
-      cols_hide(columns = vars_to_hide)
-  }
-
-  data
+  data %>% dt_stub_df_set(stub_df = stub_df)
 }
 
 dt_stub_df_exists <- function(data) {
