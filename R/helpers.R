@@ -82,6 +82,23 @@ is_html <- function(x) {
 #'   some [tab_options()] arguments that can take values as units of
 #'   pixels (e.g., `table.font.size`).
 #'
+#' @return A character vector with a single value in pixel units.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # use the `px()` helper to define the
+#' # font size for the column labels
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = cell_text(size = px(20)),
+#'     locations = cells_column_labels(columns = TRUE)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_px_1.svg}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-3
@@ -101,6 +118,23 @@ px <- function(x) {
 #' @param x the numeric value to format as a string percentage for some
 #'   [tab_options()] arguments that can take percentage values
 #'   (e.g., `table.width`).
+#'
+#' @return A character vector with a single value in percentage units.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # use the `pct()` helper to define the
+#' # font size for the column labels
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = cell_text(size = pct(75)),
+#'     locations = cells_column_labels(columns = TRUE)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_pct_1.svg}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1007,6 +1041,9 @@ cells_grand_summary <- function(columns = TRUE,
 #'     decimals = 2
 #'   )
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_currency_1.svg}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-14
@@ -1083,11 +1120,45 @@ currency <- function(...,
 #'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
 #'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
 #'   percentage values are not allowed.
-#' @param indent The indentation of the text.
+#' @param indent The indentation of the text. Can be provided as a number that
+#'   is assumed to represent `px` values (or could be wrapped in the [px()])
+#'   helper function. Alternatively, this can be given as a percentage (easily
+#'   constructed with [pct()]).
 #' @param decorate allows for text decoration effect to be applied. Here, we can
 #'   use `"overline"`, `"line-through"`, or `"underline"`.
 #' @param transform Allows for the transformation of text. Options are
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#'
+#' @return A list object of class `cell_styles`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # add styles with `tab_style()` and
+#' # the `cell_text()` helper function
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num, currency),
+#'     decimals = 1
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_body(
+#'       columns = vars(num),
+#'       rows = num >= 5000)
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(style = "italic"),
+#'     locations = cells_body(
+#'       columns = vars(currency),
+#'       rows = currency < 100
+#'     )
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cell_text_1.svg}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1200,6 +1271,37 @@ cell_style_to_html.cell_text <- function(style) {
 #'   provided the fill color will either be fully opaque or use alpha
 #'   information from the color value if it is supplied in the #RRGGBBAA format.
 #'
+#' @return A list object of class `cell_styles`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # add styles with `tab_style()` and
+#' # the `cell_fill()` helper function
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = vars(num, currency),
+#'     decimals = 1
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_fill(color = "lightblue"),
+#'     locations = cells_body(
+#'       columns = vars(num),
+#'       rows = num >= 5000)
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_fill(color = "gray85"),
+#'     locations = cells_body(
+#'       columns = vars(currency),
+#'       rows = currency < 100
+#'     )
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cell_fill_1.svg}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-16
@@ -1255,6 +1357,8 @@ cell_style_to_html.cell_fill <- function(style) {
 #'   any defined `sides` can be removed by supplying `NULL` to any of `color`,
 #'   `style`, or `weight`.
 #'
+#' @return A list object of class `cell_styles`.
+#'
 #' @examples
 #' # Add horizontal border lines for
 #' # all table body rows in `exibble`
@@ -1265,7 +1369,9 @@ cell_style_to_html.cell_fill <- function(style) {
 #'     tab_style(
 #'       style = cell_borders(
 #'         sides = c("top", "bottom"),
-#'         color = "gray", weight = px(0.5), style = "solid"
+#'         color = "#BBBBBB",
+#'         weight = px(1.5),
+#'         style = "solid"
 #'       ),
 #'       locations = cells_body(
 #'         columns = everything(),
@@ -1284,12 +1390,12 @@ cell_style_to_html.cell_fill <- function(style) {
 #'       style = list(
 #'         cell_borders(
 #'           sides = c("top", "bottom"),
-#'           color = "red",
+#'           color = "#FF0000",
 #'           weight = px(2)
 #'         ),
 #'         cell_borders(
 #'           sides = c("left", "right"),
-#'           color = "blue",
+#'           color = "#0000FF",
 #'           weight = px(2)
 #'         )
 #'       ),
@@ -1304,6 +1410,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #'         )
 #'       )
 #'     )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cell_borders_1.svg}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cell_borders_2.svg}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1525,6 +1636,8 @@ adjust_luminance <- function(colors,
 #'
 #' @param n The number of lowercase letters to use for the random ID.
 #'
+#' @return A character vector containing a single, random ID.
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-19
@@ -1543,6 +1656,8 @@ random_id <- function(n = 10) {
 #'
 #' @param text a character vector containing the text that is to be
 #'   LaTeX-escaped.
+#'
+#' @return A character vector.
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1593,6 +1708,8 @@ escape_latex <- function(text) {
 #'
 #' \end{document}
 #' }
+#'
+#' @return An object of class `knit_asis`.
 #'
 #' @family Helper Functions
 #' @section Function ID:

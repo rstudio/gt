@@ -11,14 +11,35 @@ pct(x)
 \code{\link[=tab_options]{tab_options()}} arguments that can take percentage values
 (e.g., \code{table.width}).}
 }
+\value{
+A character vector with a single value in percentage units.
+}
 \description{
 Helper for providing a numeric value as percentage
 }
+\section{Figures}{
+
+\if{html}{\figure{man_pct_1.svg}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-4
 }
 
+\examples{
+# Use `exibble` to create a gt table;
+# use the `pct()` helper to define the
+# font size for the column labels
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cell_text(size = pct(75)),
+    locations = cells_column_labels(columns = TRUE)
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
