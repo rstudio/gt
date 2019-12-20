@@ -1,10 +1,15 @@
 #' Interpret input text as Markdown-formatted text
 #'
-#' @param text The text that is understood to contain Markdown formatting.
-#' @return A character object that is tagged for a Markdown-to-HTML
-#'   transformation.
+#' Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
+#' footnotes, source notes, the table title, etc.) and expect it to render to
+#' HTML as Markdown does. There is the [html()] helper that allows you to ferry
+#' in HTML but this function `md()`... it's almost like a two-for-one deal (you
+#' get to use Markdown plus any HTML fragments *at the same time*).
 #'
-#' @return A character object of class `from_markdown`.
+#' @param text The text that is understood to contain Markdown formatting.
+#'
+#' @return A character object of class `from_markdown`. It's tagged as being
+#'   Markdown text and it will undergo conversion to HTML.
 #'
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -38,12 +43,17 @@ md <- function(text) {
 
 #' Interpret input text as HTML-formatted text
 #'
+#' For certain pieces of text (like in column labels or table headings) we may
+#' want to express them as raw HTML. In fact, with HTML, anything goes so it can
+#' be much more than just text. The `html()` function will guard the input HTML
+#' against escaping, so, your HTML tags will come through as HTML when
+#' rendered... to HTML.
+#'
 #' @param text,... The text that is understood to be HTML text, which is to be
 #'   preserved.
-#' @return A character object that is tagged as an HTML fragment that is not to
-#'   be sanitized.
 #'
-#' @return A character object of class `html`.
+#' @return A character object of class `html`. It's tagged as an HTML fragment
+#'   that is not to be sanitized.
 #'
 #' @examples
 #' # Use `exibble` to create a gt table;
@@ -77,6 +87,12 @@ is_html <- function(x) {
 }
 
 #' Helper for providing a numeric value as pixels value
+#'
+#' For certain parameters, a length value is required. Examples include the
+#' setting of font sizes (e.g., in [cell_text()]) and thicknesses of lines
+#' (e.g., in [cell_borders()]). Setting a length in pixels with `px()` allows
+#' for an absolute definition of size as opposed to the analogous helper
+#' function [pct()].
 #'
 #' @param x the numeric value to format as a string (e.g., `"12px"`) for
 #'   some [tab_options()] arguments that can take values as units of
@@ -114,6 +130,15 @@ px <- function(x) {
 }
 
 #' Helper for providing a numeric value as percentage
+#'
+#' A percentage value acts as a length value that is relative to an initial
+#' state. For instance an 80 percent value for something will size the target
+#' to 80 percent the size of its 'previous' value. This type of sizing is
+#' useful for sizing up or down a length value with an intuitive measure. This
+#' helper function can be used for the setting of font sizes (e.g., in
+#' [cell_text()]) and altering the thicknesses of lines (e.g., in
+#' [cell_borders()]). Should a more exact definition of size be required, the
+#' analogous helper function [pct()] will be more useful.
 #'
 #' @param x the numeric value to format as a string percentage for some
 #'   [tab_options()] arguments that can take percentage values

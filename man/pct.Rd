@@ -15,7 +15,14 @@ pct(x)
 A character vector with a single value in percentage units.
 }
 \description{
-Helper for providing a numeric value as percentage
+A percentage value acts as a length value that is relative to an initial
+state. For instance an 80 percent value for something will size the target
+to 80 percent the size of its 'previous' value. This type of sizing is
+useful for sizing up or down a length value with an intuitive measure. This
+helper function can be used for the setting of font sizes (e.g., in
+\code{\link[=cell_text]{cell_text()}}) and altering the thicknesses of lines (e.g., in
+\code{\link[=cell_borders]{cell_borders()}}). Should a more exact definition of size be required, the
+analogous helper function \code{\link[=pct]{pct()}} will be more useful.
 }
 \section{Figures}{
 

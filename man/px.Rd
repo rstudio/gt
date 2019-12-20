@@ -15,7 +15,11 @@ pixels (e.g., \code{table.font.size}).}
 A character vector with a single value in pixel units.
 }
 \description{
-Helper for providing a numeric value as pixels value
+For certain parameters, a length value is required. Examples include the
+setting of font sizes (e.g., in \code{\link[=cell_text]{cell_text()}}) and thicknesses of lines
+(e.g., in \code{\link[=cell_borders]{cell_borders()}}). Setting a length in pixels with \code{px()} allows
+for an absolute definition of size as opposed to the analogous helper
+function \code{\link[=pct]{pct()}}.
 }
 \section{Figures}{
 
