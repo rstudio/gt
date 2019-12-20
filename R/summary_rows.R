@@ -89,6 +89,9 @@ summary_rows <- function(data,
                          formatter = fmt_number,
                          ...) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
@@ -211,6 +214,9 @@ grand_summary_rows <- function(data,
                                missing_text = "---",
                                formatter = fmt_number,
                                ...) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   summary_rows(
     data,

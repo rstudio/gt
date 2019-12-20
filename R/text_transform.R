@@ -49,6 +49,9 @@ text_transform <- function(data,
                            locations,
                            fn) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
 

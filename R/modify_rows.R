@@ -46,6 +46,9 @@
 row_group_order <- function(data,
                             groups) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Stop function if `groups` is not a `character` or
   #   `numeric` object
   if (!inherits(groups, c("character", "numeric"))) {

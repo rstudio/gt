@@ -142,6 +142,9 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
@@ -251,6 +254,9 @@ fmt_scientific <- function(data,
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Set default values
   suffixing <- FALSE
@@ -513,6 +519,9 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -665,6 +674,9 @@ fmt_currency <- function(data,
                          incl_space = FALSE,
                          locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -794,6 +806,9 @@ fmt_date <- function(data,
                      rows = NULL,
                      date_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
@@ -917,6 +932,9 @@ fmt_time <- function(data,
                      rows = NULL,
                      time_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
@@ -1030,6 +1048,9 @@ fmt_datetime <- function(data,
                          rows = NULL,
                          date_style = 2,
                          time_style = 2) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Transform `date_style` to `date_format`
   date_format_str <- get_date_format(date_style = date_style)
@@ -1166,6 +1187,9 @@ fmt_markdown <- function(data,
                          columns,
                          rows = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows`
   columns <- rlang::enquo(columns)
   rows <- rlang::enquo(rows)
@@ -1246,6 +1270,9 @@ fmt_passthrough <- function(data,
                             rows = NULL,
                             escape = TRUE,
                             pattern = "{x}") {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -1362,6 +1389,9 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -1460,6 +1490,9 @@ fmt <- function(data,
                 columns = NULL,
                 rows = NULL,
                 fns) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)

@@ -879,7 +879,8 @@ is_gt <- function(data) {
 
 #' Stop any function if object is not a `gt_tbl` object
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data The input `data` object that is to be validated.
+#'
 #' @noRd
 stop_if_not_gt <- function(data) {
 

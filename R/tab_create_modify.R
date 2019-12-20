@@ -40,6 +40,9 @@ tab_header <- function(data,
                        title,
                        subtitle = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   data %>% dt_heading_title_subtitle(title = title, subtitle = subtitle)
 }
 
@@ -90,6 +93,9 @@ tab_spanner <- function(data,
                         label,
                         columns,
                         gather = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE)
@@ -175,6 +181,9 @@ tab_spanner_delim <- function(data,
                               delim,
                               columns = NULL,
                               gather = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   columns <- enquo(columns)
 
@@ -311,6 +320,9 @@ tab_row_group <- function(data,
                           rows = NULL,
                           others = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   arrange_groups_vars <- dt_row_groups_get(data = data)
 
   # Capture the `rows` expression
@@ -414,6 +426,9 @@ tab_row_group <- function(data,
 tab_stubhead <- function(data,
                          label) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   data %>% dt_stubhead_label(label = label)
 }
 
@@ -497,6 +512,9 @@ tab_stubhead <- function(data,
 tab_footnote <- function(data,
                          footnote,
                          locations) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
@@ -734,6 +752,9 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 tab_source_note <- function(data,
                             source_note) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   data %>% dt_source_notes_add(source_note = source_note)
 }
 
@@ -849,6 +870,9 @@ tab_source_note <- function(data,
 tab_style <- function(data,
                       style,
                       locations) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
@@ -1460,6 +1484,9 @@ tab_options <- function(data,
   # TODO: add helper functions to divide the options into those by location
   # TODO: add helper functions to divide the options into those by parameter
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Extract the options table from `data`
   opts_df <- dt_options_get(data = data)
 
@@ -1585,6 +1612,9 @@ tab_options <- function(data,
 #' @export
 opt_footnote_marks <- function(data,
                                marks = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   if (!is.null(marks)) {
     data <- data %>% tab_options(footnotes.marks = marks)
