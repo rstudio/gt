@@ -93,16 +93,20 @@ gt <- function(data,
     row_group_columns <- NULL
   }
 
+  if (rownames_to_stub) {
+    # Just a column name that's unlikely to collide with user data
+    rowname_col <- "__GT_ROWNAME_PRIVATE__"
+  }
+
   # Initialize the main objects
   data <-
     list() %>%
     dt_data_init(
       data_tbl = data,
-      rownames_to_stub = rownames_to_stub
+      rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
     ) %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
-      data_tbl = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
       row_group.sep = row_group.sep,

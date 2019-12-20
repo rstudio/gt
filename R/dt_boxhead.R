@@ -49,14 +49,6 @@ dt_boxhead_init <- function(data) {
       hidden_px = empty_list
     )
 
-  if ("rowname" %in% boxh_df$var) {
-    # The `rowname` column can be created by `dt_data_init()` when
-    # rownames_to_stub is `TRUE`; we need to identify it as a
-    # `stub`-type column right here
-    boxh_df[which(boxh_df$var %in% "rowname"), "type"] <- "stub"
-    boxh_df[which(boxh_df$var %in% "rowname"), "column_align"] <- "left"
-  }
-
   boxh_df %>% dt_boxhead_set(boxh = ., data = data)
 }
 
@@ -122,7 +114,8 @@ dt_boxhead_set_stub <- function(data, var) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% var), "type"] <- "stub"
+  dt_boxhead[which(dt_boxhead$var == var), "type"] <- "stub"
+  dt_boxhead[which(dt_boxhead$var == var), "column_align"] <- "left"
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
 
@@ -131,6 +124,7 @@ dt_boxhead_set_row_group <- function(data, vars) {
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "row_group"
+  dt_boxhead[which(dt_boxhead$var %in% vars), "column_align"] <- "left"
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
 

@@ -11,7 +11,6 @@ dt_stub_df_set <- function(data, stub_df) {
 }
 
 dt_stub_df_init <- function(data,
-                            data_tbl,
                             rowname_col,
                             groupname_col,
                             row_group.sep,
@@ -32,17 +31,7 @@ dt_stub_df_init <- function(data,
   # remove it from `data`
   if (rowname_col %in% colnames(data_tbl)) {
 
-    # Only include `rowname_col` if there already isn't
-    # a column acting as the stub (i.e., the `gt()` option
-    # `rownames_to_stub` value isn't `TRUE`)
-    if (is.na(dt_boxhead_get_var_stub(data = data))) {
-
-      data <- data %>% dt_boxhead_set_stub(var = rowname_col)
-
-    } else {
-
-      rowname_col <- dt_boxhead_get_var_stub(data = data)
-    }
+    data <- data %>% dt_boxhead_set_stub(var = rowname_col)
 
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- as.character(data_tbl[[rowname_col]])
