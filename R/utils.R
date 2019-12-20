@@ -968,6 +968,16 @@ validate_length_one <- function(x, name) {
   }
 }
 
+column_classes_are_valid <- function(data, columns, valid_classes) {
+
+  col_classes <-
+    dt_data_get(data = data) %>%
+    dplyr::select(resolve_vars(var_expr = !!columns, data = data)) %>%
+    vapply(class, FUN.VALUE = character(1), USE.NAMES = FALSE)
+
+  all(col_classes %in% valid_classes)
+}
+
 # print8 <- function(x) {
 #   force(x)
 #
