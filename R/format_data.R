@@ -161,7 +161,7 @@ fmt_number <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_number()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -285,7 +285,7 @@ fmt_scientific <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -541,7 +541,7 @@ fmt_percent <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -703,7 +703,7 @@ fmt_currency <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -845,7 +845,7 @@ fmt_date <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = c("Date", "character"))) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
     stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
          call. = FALSE)
   }
@@ -978,7 +978,7 @@ fmt_time <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = "character")) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
     stop("The `fmt_date()` function can only be used on `columns` with `character` values",
          call. = FALSE)
   }
@@ -1105,7 +1105,7 @@ fmt_datetime <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, columns, valid_classes = "character")) {
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
     stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
          call. = FALSE)
   }
