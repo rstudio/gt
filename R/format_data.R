@@ -98,8 +98,8 @@
 #'   )
 #'
 #' # Use `countrypops` to create a gt
-#' # table; format all columns to use
-#' # large-number suffixing
+#' # table; format all numeric columns
+#' # to use large-number suffixing
 #' tab_2 <-
 #'   countrypops %>%
 #'   dplyr::select(country_code_3, year, population) %>%
