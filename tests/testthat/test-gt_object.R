@@ -496,7 +496,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
       dplyr::tibble(
-        var = c("rowname", colnames(mtcars)),
+        var = c("__GT_ROWNAME_PRIVATE__", colnames(mtcars)),
         type = c("stub", rep("default", 11))
       )
     )
@@ -568,7 +568,7 @@ test_that("The default column name `rowname` will be overridden by `rownames_to_
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
       dplyr::tibble(
-        var = c("rowname", colnames(exibble), "rowname.gt"),
+        var = c("__GT_ROWNAME_PRIVATE__", colnames(exibble), "rowname"),
         type = c("stub", rep("default", 10))
       )
     )
@@ -596,7 +596,7 @@ test_that("The default column name `rowname` will be overridden by `rownames_to_
   html_tbl %>%
     rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
     rvest::html_text() %>%
-    expect_equal(c(colnames(exibble), "rowname.gt"))
+    expect_equal(c(colnames(exibble), "rowname"))
 
   # Expect no labels in group heading rows (above each row group)
   html_tbl %>%
@@ -615,13 +615,6 @@ test_that("The default column name `rowname` will be overridden by `rownames_to_
         "2018-01-01 02:22", "49.950", "row_1", "grp_a", "test"
       )
     )
-
-  # Expect a warning when making a gt table in this manner
-  expect_warning(
-    exibble %>%
-      dplyr::mutate(rowname = "test") %>%
-      gt(rownames_to_stub = TRUE)
-  )
 })
 
 test_that("The default column name `groupname` will be overridden by `groupname_col`", {
