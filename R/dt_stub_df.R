@@ -37,7 +37,7 @@ dt_stub_df_init <- function(data,
     # `rownames_to_stub` value isn't `TRUE`)
     if (is.na(dt_boxhead_get_var_stub(data = data))) {
 
-      data <- data %>% dt_boxhead_set_stub(vars = rowname_col)
+      data <- data %>% dt_boxhead_set_stub(var = rowname_col)
 
     } else {
 

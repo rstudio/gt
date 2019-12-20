@@ -118,11 +118,11 @@ dt_boxhead_set_hidden <- function(data, vars) {
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
 
-dt_boxhead_set_stub <- function(data, vars) {
+dt_boxhead_set_stub <- function(data, var) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "stub"
+  dt_boxhead[which(dt_boxhead$var %in% var), "type"] <- "stub"
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
 
