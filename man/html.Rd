@@ -11,13 +11,15 @@ html(text, ...)
 preserved.}
 }
 \value{
-A character object that is tagged as an HTML fragment that is not to
-be sanitized.
-
-A character object of class \code{html}.
+A character object of class \code{html}. It's tagged as an HTML fragment
+that is not to be sanitized.
 }
 \description{
-Interpret input text as HTML-formatted text
+For certain pieces of text (like in column labels or table headings) we may
+want to express them as raw HTML. In fact, with HTML, anything goes so it can
+be much more than just text. The \code{html()} function will guard the input HTML
+against escaping, so, your HTML tags will come through as HTML when
+rendered... to HTML.
 }
 \section{Figures}{
 

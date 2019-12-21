@@ -6,6 +6,9 @@
 \usage{
 gt_latex_dependencies()
 }
+\value{
+An object of class \code{knit_asis}.
+}
 \description{
 When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 including a \strong{gt} table can be problematic if we don't have knowledge
