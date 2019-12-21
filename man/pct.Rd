@@ -11,14 +11,42 @@ pct(x)
 \code{\link[=tab_options]{tab_options()}} arguments that can take percentage values
 (e.g., \code{table.width}).}
 }
-\description{
-Helper for providing a numeric value as percentage
+\value{
+A character vector with a single value in percentage units.
 }
+\description{
+A percentage value acts as a length value that is relative to an initial
+state. For instance an 80 percent value for something will size the target
+to 80 percent the size of its 'previous' value. This type of sizing is
+useful for sizing up or down a length value with an intuitive measure. This
+helper function can be used for the setting of font sizes (e.g., in
+\code{\link[=cell_text]{cell_text()}}) and altering the thicknesses of lines (e.g., in
+\code{\link[=cell_borders]{cell_borders()}}). Should a more exact definition of size be required, the
+analogous helper function \code{\link[=pct]{pct()}} will be more useful.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_pct_1.svg}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-4
 }
 
+\examples{
+# Use `exibble` to create a gt table;
+# use the `pct()` helper to define the
+# font size for the column labels
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cell_text(size = pct(75)),
+    locations = cells_column_labels(columns = TRUE)
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

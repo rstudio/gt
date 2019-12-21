@@ -10,6 +10,9 @@ escape_latex(text)
 \item{text}{a character vector containing the text that is to be
 LaTeX-escaped.}
 }
+\value{
+A character vector.
+}
 \description{
 Text may contain several characters with special meanings in LaTeX. This
 function will transform a character vector so that it is safe to use within

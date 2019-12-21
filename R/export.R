@@ -88,8 +88,8 @@ gtsave <- function(data,
                    path = NULL,
                    ...) {
 
-  # Input object validation
-  stop_if_not_gt(data)
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
@@ -297,6 +297,9 @@ gtsave_filename <- function(path, filename) {
 as_raw_html <- function(data,
                         inline_css = TRUE) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Generation of the HTML table
   html_table <- render_as_html(data = data)
 
@@ -352,6 +355,9 @@ as_raw_html <- function(data,
 #'
 #' @export
 as_latex <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
   data <- data %>% build_data(context = "latex")
@@ -434,6 +440,9 @@ as_latex <- function(data) {
 #'
 #' @export
 as_rtf <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
   data <- data %>% build_data(context = "rtf")
@@ -547,6 +556,9 @@ as_rtf <- function(data) {
 #'
 #' @export
 extract_summary <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Stop function if there are no
   # directives to create summary rows

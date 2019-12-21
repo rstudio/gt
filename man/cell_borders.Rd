@@ -20,6 +20,9 @@ is useful for this. The default value for \code{weight} is \code{"1px"}. Borders
 any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
 \code{style}, or \code{weight}.}
 }
+\value{
+A list object of class \code{cell_styles}.
+}
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more
@@ -29,6 +32,13 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cell_borders_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_cell_borders_2.svg}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-17
@@ -44,7 +54,9 @@ tab_1 <-
     tab_style(
       style = cell_borders(
         sides = c("top", "bottom"),
-        color = "gray", weight = px(0.5), style = "solid"
+        color = "#BBBBBB",
+        weight = px(1.5),
+        style = "solid"
       ),
       locations = cells_body(
         columns = everything(),
@@ -63,12 +75,12 @@ tab_2 <-
       style = list(
         cell_borders(
           sides = c("top", "bottom"),
-          color = "red",
+          color = "#FF0000",
           weight = px(2)
         ),
         cell_borders(
           sides = c("left", "right"),
-          color = "blue",
+          color = "#0000FF",
           weight = px(2)
         )
       ),

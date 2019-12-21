@@ -9,6 +9,9 @@ random_id(n = 10)
 \arguments{
 \item{n}{The number of lowercase letters to use for the random ID.}
 }
+\value{
+A character vector containing a single, random ID.
+}
 \description{
 This helper function is to be used with \code{id} argument of the \code{\link[=gt]{gt()}} function.
 The \code{id} option in \code{\link[=gt]{gt()}} uses \code{random_id()} by default however we can

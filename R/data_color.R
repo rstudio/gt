@@ -133,6 +133,10 @@ data_color <- function(data,
                        apply_to = "fill",
                        autocolor_text = TRUE) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
   # Collect the column names from `data_tbl`
