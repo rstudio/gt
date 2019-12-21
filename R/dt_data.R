@@ -14,17 +14,10 @@ dt_data_set <- function(data, data_tbl) {
 # should be turned into a column with the name !!rownames_to_column
 dt_data_init <- function(data, data_tbl, rownames_to_column = NA) {
 
-  # If the option to place rownames in the stub
-  # is taken, then the `stub_df` data frame will
-  # be pre-populated with rownames in the `rowname`
-  # column; otherwise, this will be an empty df
   if (!is.na(rownames_to_column)) {
 
     data_rownames <- rownames(data_tbl)
 
-    # In the rare instance there is a column named
-    # `rowname` modify the name slightly and provide
-    # a warning about the change
     if (rownames_to_column %in% colnames(data_tbl)) {
 
       stop("Reserved column name `", rownames_to_column, "` was detected in ",
