@@ -383,3 +383,31 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
        render_formats_test(context = "html"))[["num"]],
     "999.99990")
 })
+
+test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
+
+  # Create an input data frame with a single column
+  data_tbl <-
+    data.frame(
+      num = c(
+        -0.5, -0.05, -0.04, -0.03, -0.02, -0.01,
+        0,
+        0.01, 0.02, 0.03, 0.04, 0.05, 0.5),
+      stringsAsFactors = FALSE)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data = data_tbl)
+
+  # Format the `num` column to 2 decimal places, have the
+  # `suffixing` option set to TRUE; we shouldn't expect to
+  # see any suffixes
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", decimals = 2, suffixing = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("&minus;0.50", "&minus;0.05", "&minus;0.04", "&minus;0.03",
+      "&minus;0.02", "&minus;0.01", "0.00", "0.01", "0.02", "0.03",
+      "0.04", "0.05", "0.50")
+  )
+})
