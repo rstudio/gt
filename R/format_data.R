@@ -98,12 +98,11 @@
 #'   )
 #'
 #' # Use `countrypops` to create a gt
-#' # table; format all columns to use
-#' # large-number suffixing
+#' # table; format all numeric columns
+#' # to use large-number suffixing
 #' tab_2 <-
 #'   countrypops %>%
-#'   dplyr::select(
-#'     country_code_3, year, population) %>%
+#'   dplyr::select(country_code_3, year, population) %>%
 #'   dplyr::filter(
 #'     country_code_3 %in% c(
 #'       "CHN", "IND", "USA", "PAK", "IDN")
@@ -113,7 +112,7 @@
 #'   dplyr::arrange(desc(`2015`)) %>%
 #'   gt(rowname_col = "country_code_3") %>%
 #'   fmt_number(
-#'     columns = TRUE,
+#'     columns = 2:9,
 #'     decimals = 2,
 #'     suffixing = TRUE
 #'   )
@@ -142,6 +141,9 @@ fmt_number <- function(data,
                        dec_mark = ".",
                        locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
@@ -156,6 +158,13 @@ fmt_number <- function(data,
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -252,6 +261,9 @@ fmt_scientific <- function(data,
                            dec_mark = ".",
                            locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Set default values
   suffixing <- FALSE
   use_seps <- TRUE
@@ -270,6 +282,13 @@ fmt_scientific <- function(data,
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -513,9 +532,19 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   fmt_symbol(
     data = data,
@@ -665,9 +694,19 @@ fmt_currency <- function(data,
                          incl_space = FALSE,
                          locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -794,12 +833,22 @@ fmt_date <- function(data,
                      rows = NULL,
                      date_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
+    stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -917,12 +966,22 @@ fmt_time <- function(data,
                      rows = NULL,
                      time_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+    stop("The `fmt_date()` function can only be used on `columns` with `character` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1031,18 +1090,25 @@ fmt_datetime <- function(data,
                          date_style = 2,
                          time_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `date_style` to `date_format`
   date_format_str <- get_date_format(date_style = date_style)
 
   # Transform `time_style` to `time_format`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Combine into a single datetime format string
-  # date_time_format_str <- paste0(date_format, " ", time_format)
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+    stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1166,6 +1232,9 @@ fmt_markdown <- function(data,
                          columns,
                          rows = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows`
   columns <- rlang::enquo(columns)
   rows <- rlang::enquo(rows)
@@ -1246,6 +1315,9 @@ fmt_passthrough <- function(data,
                             rows = NULL,
                             escape = TRUE,
                             pattern = "{x}") {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -1362,6 +1434,9 @@ fmt_missing <- function(data,
                         rows = NULL,
                         missing_text = "---") {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
@@ -1460,6 +1535,9 @@ fmt <- function(data,
                 columns = NULL,
                 rows = NULL,
                 fns) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)

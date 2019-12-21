@@ -51,6 +51,10 @@ cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
                        columns = TRUE) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
   # Get the `align` value, this stops the function if there is no match
@@ -160,6 +164,9 @@ cols_align <- function(data,
 cols_width <- function(data,
                        ...,
                        .list = list2(...)) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Collect a named list of column widths
   widths_list <- .list
@@ -312,6 +319,9 @@ cols_label <- function(data,
                        ...,
                        .list = list2(...)) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Collect a named list of column labels
   labels_list <- .list
 
@@ -422,6 +432,9 @@ cols_label <- function(data,
 cols_move_to_start <- function(data,
                                columns) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   columns <- enquo(columns)
 
   vars <- dt_boxhead_get_vars(data = data)
@@ -512,6 +525,9 @@ cols_move_to_start <- function(data,
 cols_move_to_end <- function(data,
                              columns) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   columns <- enquo(columns)
 
   vars <- dt_boxhead_get_vars(data = data)
@@ -593,6 +609,9 @@ cols_move_to_end <- function(data,
 cols_move <- function(data,
                       columns,
                       after) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   columns <- enquo(columns)
   after <- enquo(after)
@@ -714,6 +733,9 @@ cols_move <- function(data,
 cols_hide <- function(data,
                       columns) {
 
+  # Perform input object validation
+  # stop_if_not_gt(data = data)
+
   columns <- enquo(columns)
 
   # Get the columns supplied in `columns` as a character vector
@@ -822,6 +844,9 @@ cols_merge_uncert <- function(data,
                               col_uncert,
                               autohide = TRUE) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Use a predefined separator
   sep <- " \u00B1 "
 
@@ -910,6 +935,9 @@ cols_merge_range <- function(data,
                              col_end,
                              sep = "--",
                              autohide = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Set the formatting pattern
   pattern <- "{1}{sep}{2}"
@@ -1015,6 +1043,9 @@ cols_merge <- function(data,
                        columns,
                        hide_columns = columns[-1],
                        pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   columns <- enquo(columns)
 

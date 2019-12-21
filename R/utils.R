@@ -879,7 +879,8 @@ is_gt <- function(data) {
 
 #' Stop any function if object is not a `gt_tbl` object
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data The input `data` object that is to be validated.
+#'
 #' @noRd
 stop_if_not_gt <- function(data) {
 
@@ -965,6 +966,17 @@ validate_length_one <- function(x, name) {
     stop("The value for `", name, "` should have a length of one",
          call. = FALSE)
   }
+}
+
+column_classes_are_valid <- function(data, columns, valid_classes) {
+
+  dt_data_get(data = data) %>%
+    dplyr::select(resolve_vars(var_expr = {{columns}}, data = data)) %>%
+    vapply(
+      FUN.VALUE = logical(1), USE.NAMES = FALSE,
+      FUN = function(x) any(class(x) %in% valid_classes)
+    ) %>%
+    all()
 }
 
 # print8 <- function(x) {

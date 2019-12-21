@@ -142,12 +142,11 @@ tab_1 <-
   )
 
 # Use `countrypops` to create a gt
-# table; format all columns to use
-# large-number suffixing
+# table; format all numeric columns
+# to use large-number suffixing
 tab_2 <-
   countrypops \%>\%
-  dplyr::select(
-    country_code_3, year, population) \%>\%
+  dplyr::select(country_code_3, year, population) \%>\%
   dplyr::filter(
     country_code_3 \%in\% c(
       "CHN", "IND", "USA", "PAK", "IDN")
@@ -157,7 +156,7 @@ tab_2 <-
   dplyr::arrange(desc(`2015`)) \%>\%
   gt(rowname_col = "country_code_3") \%>\%
   fmt_number(
-    columns = TRUE,
+    columns = 2:9,
     decimals = 2,
     suffixing = TRUE
   )
