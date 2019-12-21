@@ -4,7 +4,7 @@ library(tidyverse)
 # Create a table with options applied to every type of table part
 tbl <-
   dplyr::tribble(
-    ~groupname,    ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
+    ~date,         ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
     "2018-02-10",  "1",       767.6,  928.1,  382.0,  674.5,
     "2018-02-10",  "2",       403.3,  461.5,   15.1,  242.8,
     "2018-02-10",  "3",       686.4,   54.1,  282.7,   56.3,
@@ -19,7 +19,8 @@ tbl <-
 
 # Create a display table
 many_options_tbl <-
-  gt(tbl) %>%
+  tbl %>%
+  gt(groupname_col = "date") %>%
   tab_header(
     title = "The Title",
     subtitle = "The Subtitle"
