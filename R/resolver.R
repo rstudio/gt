@@ -161,17 +161,35 @@ resolve_cells_column_spanners <- function(data,
 #' @param var_expr An expression to evaluate. This is passed directly to
 #'   `rlang::eval_tidy()` as a value for the `expr` argument.
 #' @param data The gt object.
+#' @param body_only If FALSE, then the results may include stub and group names.
 #' @noRd
 resolve_vars_idx <- function(var_expr,
-                             data) {
+                             data,
+                             body_only = TRUE) {
 
   var_expr <- rlang::enquo(var_expr)
 
-  resolve_data_vals_idx(
+  cols <- colnames(dt_data_get(data = data))
+
+  idx <- resolve_data_vals_idx(
     var_expr = !!var_expr,
     data_tbl = NULL,
-    vals = colnames(dt_data_get(data = data))
+    vals = cols
   )
+
+  if (body_only) {
+    stub_var <- dt_boxhead_get_var_stub(data)
+    if (!is.na(stub_var)) {
+      stub_idx <- which(cols == stub_var)
+      idx <- idx[idx != stub_idx]
+    }
+
+    group_rows_vars <- dt_boxhead_get_vars_groups(data)
+    group_rows_vars_idx <- which(cols %in% group_rows_vars)
+    idx <- idx[!(idx %in% group_rows_vars_idx)]
+  }
+
+  idx
 }
 
 #' Resolve expressions to obtain row indices

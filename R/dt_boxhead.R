@@ -149,17 +149,23 @@ dt_boxhead_get_vars_default <- function(data) {
 }
 
 dt_boxhead_get_var_stub <- function(data) {
+  res <- dt_boxhead_get_var_by_type(data, "stub")
+  if (length(res) == 0)
+    NA_character_
+  else
+    res
+}
 
-  boxh_df <-
-    data %>%
+dt_boxhead_get_vars_groups <- function(data) {
+  dt_boxhead_get_var_by_type(data, "row_group")
+}
+
+dt_boxhead_get_var_by_type <- function(data, type) {
+
+  data %>%
     dt_boxhead_get() %>%
-    dplyr::filter(type == "stub")
-
-  if (nrow(boxh_df) > 0){
-    return(boxh_df %>% magrittr::extract2("var"))
-  } else {
-    return(NA_character_)
-  }
+    dplyr::filter(type == !!type) %>%
+    magrittr::extract2("var")
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {
