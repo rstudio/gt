@@ -472,6 +472,7 @@ num_suffix <- function(x,
   # index here
   i <- floor(log(abs(x), base = base))
   i <- pmin(i, length(suffixes))
+  i <- pmax(i, 0)
 
   # Replace any -Inf, Inf, or zero values
   # with NA (required for the `non_na_index()`
