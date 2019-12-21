@@ -11,14 +11,39 @@ px(x)
 some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
 pixels (e.g., \code{table.font.size}).}
 }
-\description{
-Helper for providing a numeric value as pixels value
+\value{
+A character vector with a single value in pixel units.
 }
+\description{
+For certain parameters, a length value is required. Examples include the
+setting of font sizes (e.g., in \code{\link[=cell_text]{cell_text()}}) and thicknesses of lines
+(e.g., in \code{\link[=cell_borders]{cell_borders()}}). Setting a length in pixels with \code{px()} allows
+for an absolute definition of size as opposed to the analogous helper
+function \code{\link[=pct]{pct()}}.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_px_1.svg}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-3
 }
 
+\examples{
+# Use `exibble` to create a gt table;
+# use the `px()` helper to define the
+# font size for the column labels
+tab_1 <-
+  exibble \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cell_text(size = px(20)),
+    locations = cells_column_labels(columns = TRUE)
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
