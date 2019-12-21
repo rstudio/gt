@@ -10,13 +10,15 @@ md(text)
 \item{text}{The text that is understood to contain Markdown formatting.}
 }
 \value{
-A character object that is tagged for a Markdown-to-HTML
-transformation.
-
-A character object of class \code{from_markdown}.
+A character object of class \code{from_markdown}. It's tagged as being
+Markdown text and it will undergo conversion to HTML.
 }
 \description{
-Interpret input text as Markdown-formatted text
+Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
+footnotes, source notes, the table title, etc.) and expect it to render to
+HTML as Markdown does. There is the \code{\link[=html]{html()}} helper that allows you to ferry
+in HTML but this function \code{md()}... it's almost like a two-for-one deal (you
+get to use Markdown plus any HTML fragments \emph{at the same time}).
 }
 \section{Figures}{
 

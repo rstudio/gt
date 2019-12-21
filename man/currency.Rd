@@ -36,6 +36,11 @@ string without a name, it will be taken as the \code{default} (i.e.,
 we were to specify currency strings for multiple output contexts, names are
 required each and every context.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_currency_1.svg}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-14
