@@ -356,7 +356,9 @@ tab_row_group <- function(data,
         dt_row_groups_set(
           data = data,
           row_groups = c(
-            arrange_groups_vars, process_text(group[1]), NA_character_
+            process_text(group[1]),
+            arrange_groups_vars,
+            NA_character_
           ) %>%
             unique()
         )
@@ -367,8 +369,8 @@ tab_row_group <- function(data,
         dt_row_groups_set(
           data = data,
           row_groups = c(
-            arrange_groups_vars,
-            process_text(group[1])
+            process_text(group[1]),
+            arrange_groups_vars
           ) %>%
             unique()
         )

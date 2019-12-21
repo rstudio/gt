@@ -5,7 +5,7 @@ test_that("the `row_group_order()` function works correctly", {
   # Create a table with group names, rownames, and four columns of values
   tbl <-
     dplyr::tribble(
-      ~groupname,    ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
+      ~dates,        ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
       "2018-02-10",  "1",       767.6,  928.1,  382.0,  674.5,
       "2018-02-10",  "2",       403.3,  461.5,   15.1,  242.8,
       "2018-02-10",  "3",       686.4,   54.1,  282.7,   56.3,
@@ -15,12 +15,14 @@ test_that("the `row_group_order()` function works correctly", {
       "2018-02-11",  "7",       349.7,  307.1,  566.7,  542.9,
       "2018-02-11",  "8",        63.7,  504.3,  152.0,  724.5,
       "2018-02-11",  "9",       105.4,  729.8,  962.4,  336.4,
-      "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2)
+      "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2
+    )
 
   # Create a `tbl_latex` object that arranges the groups by the
   # latter calendar date first
   tbl_latex <-
-    gt(tbl) %>%
+    tbl %>%
+    gt(groupname_col = "dates") %>%
     row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect a characteristic pattern
@@ -35,7 +37,8 @@ test_that("the `row_group_order()` function works correctly", {
   # Create a `tbl_latex` object that arranges the groups by the
   # latter calendar date first using group indices
   tbl_latex <-
-    gt(tbl) %>%
+    tbl %>%
+    gt(groupname_col = "dates") %>%
     row_group_order(groups = c(2, 1))
 
   # Expect a characteristic pattern

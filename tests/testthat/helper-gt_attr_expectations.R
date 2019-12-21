@@ -8,7 +8,8 @@ expect_tab_colnames <- function(tab,
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["rowname"]])))
+      all(is.na(dt_stub_df_get(data = tab)[["rowname"]]))
+    )
 
   } else if (rowname == "col"){
 
@@ -16,13 +17,15 @@ expect_tab_colnames <- function(tab,
     # object is entirely filled with NAs
     expect_equal(
       dt_stub_df_get(data = tab)[["rowname"]],
-      df$rowname)
+      df$rowname
+    )
 
   } else if (rowname == "tibble") {
 
     expect_equal(
       dt_stub_df_get(data = tab)[["rowname"]],
-      row.names(df))
+      row.names(df)
+    )
   }
 
   if (groupname_is_na) {
@@ -30,16 +33,8 @@ expect_tab_colnames <- function(tab,
     # Expect that the `groupname` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["groupname"]])))
-
-  } else {
-
-    # Expect that the values from the `groupname` column in
-    # the original dataset populate the `groupname` column
-    # of the `stub_df` object
-    expect_equal(
-      dt_stub_df_get(data = tab)[["groupname"]],
-      df[["groupname"]])
+      all(dt_stub_df_get(data = tab)[["groupname"]] == "")
+    )
   }
 }
 
@@ -108,10 +103,6 @@ expect_tab <- function(tab,
   dt_options_get(data = tab) %>%
     dim() %>%
     expect_equal(c(117, 5))
-
-  dt_row_groups_get(data = tab) %>%
-    length() %>%
-    expect_equal(0)
 
   dt_transforms_get(data = tab) %>%
     length() %>%

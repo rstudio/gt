@@ -7,7 +7,7 @@
 gt(
   data,
   rowname_col = "rowname",
-  groupname_col = "groupname",
+  groupname_col = dplyr::group_vars(data),
   rownames_to_stub = FALSE,
   auto_align = TRUE,
   id = random_id(),

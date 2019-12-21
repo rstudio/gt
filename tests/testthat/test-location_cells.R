@@ -9,9 +9,9 @@ check_suggests <- function() {
 # Create a minimal `tbl` for testing HTML output
 tbl <-
   dplyr::tribble(
-    ~groupname, ~rowname, ~value_1,  ~value_2, ~value_3,
-    "A",        "1",      361.1,     260.1,     3.8,
-    "B",        "2",      344.7,     281.2,     2.4
+    ~group, ~row, ~value_1, ~value_2, ~value_3,
+    "A",    "1",  361.1,    260.1,     3.8,
+    "B",    "2",  344.7,    281.2,     2.4
   )
 
 # Gets the HTML attr value from a single key
@@ -394,7 +394,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to the title
   gt_tbl_cells_title_1 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_header(title = "The Title", subtitle = "The Subtitle") %>%
     tab_style(
       style = list(
@@ -418,7 +418,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to the subtitle
   gt_tbl_cells_title_2 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_header(title = "The Title", subtitle = "The Subtitle") %>%
     tab_style(
       style = list(
@@ -442,7 +442,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to the title and the subtitle
   gt_tbl_cells_title_3 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_header(title = "The Title", subtitle = "The Subtitle") %>%
     tab_style(
       style = list(
@@ -478,7 +478,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to the column spanner label
   gt_tbl_cells_column_spanners <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     cols_move_to_end(columns = vars(value_1)) %>%
     tab_spanner(label = "spanner", columns = vars(value_1, value_3)) %>%
     tab_style(
@@ -502,7 +502,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to two column labels
   gt_tbl_cells_column_labels <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     cols_move_to_end(columns = vars(value_1)) %>%
     tab_style(
       style = list(
@@ -533,7 +533,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to first row group
   gt_tbl_cells_row_group_1 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -556,7 +556,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to second row group
   gt_tbl_cells_row_group_2 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -579,7 +579,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to all row groups (with `TRUE`)
   gt_tbl_cells_row_group_3 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -606,7 +606,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to first stub row
   gt_tbl_cells_stub_1 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -629,7 +629,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to first stub row (using the row name)
   gt_tbl_cells_stub_1b <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -652,7 +652,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to second stub row
   gt_tbl_cells_stub_2 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -675,7 +675,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to second stub row (using the row name)
   gt_tbl_cells_stub_2b <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -698,7 +698,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Create a gt table with styling applied to all stub rows
   gt_tbl_cells_stub_3 <-
     tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -725,7 +725,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Expect that styling to all cells is performed
   # by default with `cells_data()`
   tbl %>%
-    gt() %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),

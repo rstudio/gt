@@ -101,24 +101,25 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   data_rg <-
     data.frame(
       rowname = letters[1:10],
-      groupname = c("A", "A", "A", "B", "B", "B", "C", "C", "D", "D"),
+      groups = c("A", "A", "A", "B", "B", "B", "C", "C", "D", "D"),
       value = 1:10,
       stringsAsFactors = FALSE
     )
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_rg` dataset
-  tab <- data_rg %>% gt()
+  tab <- data_rg %>% gt(groupname_col = "groups")
 
   # Expect that the `gt_tbl` object has all of the
   # usual components and that they have all of the
   # expected dimensions and features
-  #expect_tab(tab, data_rg, has_groupnames = TRUE, has_rownames = TRUE)
+  expect_tab(tab = tab, df = data_rg)
 
   # Expect that the `stub_df` data frame is correctly
   # formed given the input rownames and groupnames
   expect_tab_colnames(
-    tab, df = data_rg,
+    tab = tab,
+    df = data_rg,
     rowname = "col",
     groupname_is_na = FALSE
   )
@@ -398,12 +399,12 @@ test_that("gt table can be made with grouped data - two groups", {
     )
 })
 
-test_that("The `gt()` groupname_col arg will be overridden by grouped data", {
+test_that("The `gt()` groupname_col arg will override any grouped data", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and provide
   # a value for the `groupname_col` arg (which we
-  # expect will be ignored in favor of the tbl groups)
+  # expect will be used over tbl groups)
   built_tbl <-
     exibble %>%
     dplyr::group_by(group) %>%
@@ -411,15 +412,25 @@ test_that("The `gt()` groupname_col arg will be overridden by grouped data", {
     build_data(context = "html")
 
   # Expect that groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
+  built_tbl$`_row_groups` %>%
+    expect_equal(
+      c(
+        "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+        "2015-05-15", "2015-06-15", "NA", "2015-08-15"
+      )
+    )
 
   built_tbl$`_groups_rows` %>%
     expect_equal(
       data.frame(
-        group = c("grp_a", "grp_b"),
-        group_label = c("grp_a", "grp_b"),
-        row = c(1, 5),
-        row_end = c(4, 8),
+        group = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
+        group_label = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
+        row = 1:8,
+        row_end = 1:8,
         stringsAsFactors = FALSE
       )
     )
@@ -428,7 +439,7 @@ test_that("The `gt()` groupname_col arg will be overridden by grouped data", {
     expect_equal(
       dplyr::tibble(
         var = colnames(exibble),
-        type = c(rep("default", 8), "row_group")
+        type = c(rep("default", 3), "row_group", rep("default", 5))
       )
     )
 
@@ -436,7 +447,9 @@ test_that("The `gt()` groupname_col arg will be overridden by grouped data", {
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = c(rep("grp_a", 4), rep("grp_b", 4)),
+        groupname = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
         rowname = NA_character_
       )
     )
@@ -486,12 +499,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0))
-
-  # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    nrow() %>%
-    expect_equal(0)
+  built_tbl$`_row_groups` %>% expect_equal("")
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -505,7 +513,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:10,
-        groupname = NA_character_,
+        groupname = "",
         rowname = rownames(mtcars)[1:10]
       )
     )
@@ -542,28 +550,19 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     )
 })
 
-test_that("The default column name `rowname` will be overridden by `rownames_to_stub = TRUE`", {
+test_that("The `rowname` column will be safely included when `rownames_to_stub = TRUE`", {
 
   # Create a gt object where rownames will be used as
-  # stub labels, and, provide a column named `rowname`
-  # which (when rownames_to_stub = FALSE) is taken to be
-  # the rowname column; here, the rownames derived from
-  # the input data will instead reside in the stub
+  # stub labels, provide a column named `rowname`, and
+  # use `rownames_to_stub = FALSE`
   built_tbl <-
-    suppressWarnings(
-      exibble %>%
-        dplyr::mutate(rowname = "test") %>%
-        gt(rownames_to_stub = TRUE) %>%
-        build_data(context = "html")
-    )
+    exibble %>%
+    dplyr::mutate(rowname = "test") %>%
+    gt(rownames_to_stub = TRUE) %>%
+    build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0))
-
-  # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    nrow() %>%
-    expect_equal(0)
+  built_tbl$`_row_groups` %>% expect_equal("")
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -577,20 +576,18 @@ test_that("The default column name `rowname` will be overridden by `rownames_to_
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = NA_character_,
+        groupname = "",
         rowname = as.character(1:8)
       )
     )
 
   # Render the HTML table and read the HTML with `xml2`
   html_tbl <-
-    suppressWarnings(
-      exibble %>%
-        dplyr::mutate(rowname = "test") %>%
-        gt(rownames_to_stub = TRUE, auto_align = FALSE) %>%
-        render_as_html() %>%
-        xml2::read_html()
-    )
+    exibble %>%
+    dplyr::mutate(rowname = "test") %>%
+    gt(rownames_to_stub = TRUE, auto_align = FALSE) %>%
+    render_as_html() %>%
+    xml2::read_html()
 
   # Expect 10 column labels in the rendered HTML table
   html_tbl %>%
@@ -613,82 +610,6 @@ test_that("The default column name `rowname` will be overridden by `rownames_to_
       c(
         "1.111e-01", "apricot", "one", "2015-01-15", "13:35",
         "2018-01-01 02:22", "49.950", "row_1", "grp_a", "test"
-      )
-    )
-})
-
-test_that("The default column name `groupname` will be overridden by `groupname_col`", {
-
-  # Create a gt object with data having the magic
-  # column name of `groupname`; in the `gt()` call,
-  # specify the `groupname_col` (we expect that the
-  # specification will override the magic column name)
-  built_tbl <-
-    exibble %>%
-    dplyr::mutate(groupname = paste0(1:8, "a")) %>%
-    gt(groupname_col = "group") %>%
-    build_data(context = "html")
-
-  # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
-
-  # Expect no rows in `_groups_rows`
-  built_tbl$`_groups_rows` %>%
-    expect_equal(
-      data.frame(
-        group = c("grp_a", "grp_b"),
-        group_label = c("grp_a", "grp_b"),
-        row = c(1, 5),
-        row_end = c(4, 8),
-        stringsAsFactors = FALSE
-      )
-    )
-
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
-    expect_equal(
-      dplyr::tibble(
-        var = c(colnames(exibble), "groupname"),
-        type = c(rep("default", 8), "row_group", "default")
-      )
-    )
-
-  built_tbl$`_stub_df` %>%
-    expect_equal(
-      dplyr::tibble(
-        rownum_i = 1:8,
-        groupname = c(rep("grp_a", 4), rep("grp_b", 4)),
-        rowname = NA_character_
-      )
-    )
-
-  # Render the HTML table and read the HTML with `xml2`
-  html_tbl <-
-    exibble %>%
-    dplyr::mutate(groupname = paste0(1:8, "a")) %>%
-    gt(groupname_col = "group", auto_align = FALSE) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect 9 column labels in the rendered HTML table
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_center']") %>%
-    rvest::html_text() %>%
-    expect_equal(c(colnames(exibble)[1:8], "groupname"))
-
-  # Expect no labels in group heading rows (above each row group)
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_group_heading']") %>%
-    rvest::html_text() %>%
-    expect_equal(c("grp_a", "grp_b"))
-
-  # Expect the first row of data to match that which is expected
-  html_tbl %>%
-    rvest::html_nodes("[class='gt_row gt_center']") %>%
-    rvest::html_text() %>%
-    .[1:9] %>%
-    expect_equal(
-      c("1.111e-01", "apricot", "one", "2015-01-15", "13:35",
-        "2018-01-01 02:22",  "49.950", "row_1", "1a"
       )
     )
 })

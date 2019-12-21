@@ -247,7 +247,8 @@ test_that("a gt table contains the correct placement of row groups", {
   # contains a three row groups and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_html <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
       group = "Mercs",
       rows = contains("Merc")
@@ -256,7 +257,7 @@ test_that("a gt table contains the correct placement of row groups", {
       group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
-    row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
+    row_group_order(groups = c("", "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
 
