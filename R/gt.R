@@ -81,17 +81,11 @@
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
-               groupname_col = "groupname",
+               groupname_col = dplyr::group_vars(data),
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = random_id(),
                row_group.sep = getOption("gt.row_group.sep", " - ")) {
-
-  if (inherits(data, "grouped_df")) {
-    row_group_columns <- dplyr::group_vars(data) %>% base::intersect(colnames(data))
-  } else {
-    row_group_columns <- NULL
-  }
 
   if (rownames_to_stub) {
     # Just a column name that's unlikely to collide with user data
@@ -109,8 +103,7 @@ gt <- function(data,
     dt_stub_df_init(
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      row_group.sep = row_group.sep,
-      row_group_columns = row_group_columns
+      row_group.sep = row_group.sep
     ) %>%
     dt_row_groups_init() %>%
     dt_stub_others_init() %>%
