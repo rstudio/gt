@@ -173,7 +173,7 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*Mazda RX4 & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4",
       ".*Mazda RX4 Wag & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}",
+      ".*.multicolumn\\{1\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
       ".*.midrule",
       ".*"),
     tbl_latex %>%
@@ -193,7 +193,7 @@ test_that("a gt table contains the correct placement of row groups", {
       group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
-    row_group_order(groups = c("", "Mazda", "Mercs"))
+    row_group_order(groups = c(NA, "Mazda", "Mercs"))
 
   # Expect a characteristic pattern
   grepl(
@@ -201,7 +201,7 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*.toprule",
       ".*& mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{\\}",
+      ".*.multicolumn\\{1\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
       ".*.midrule",
       ".*.multicolumn\\{1\\}\\{l\\}\\{Mazda\\}",
       ".*.midrule",

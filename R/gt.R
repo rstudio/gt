@@ -91,6 +91,9 @@ gt <- function(data,
     # Just a column name that's unlikely to collide with user data
     rowname_col <- "__GT_ROWNAME_PRIVATE__"
   }
+  if (length(groupname_col) == 0) {
+    groupname_col <- NULL
+  }
 
   # Initialize the main objects
   data <-

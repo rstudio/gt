@@ -39,7 +39,9 @@ dt_stub_df_init <- function(data,
   # If `data` is a `grouped_df` then create groups from the
   # group columns; note that this will overwrite any values
   # already in `stub_df$groupname`
-  if (!is.null(groupname_col)) {
+  if (!is.null(groupname_col) &&
+      length(groupname_col) > 0 &&
+      all(groupname_col %in% colnames(data_tbl))) {
 
     row_group_labels <-
       apply(

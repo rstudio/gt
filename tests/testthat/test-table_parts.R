@@ -257,7 +257,7 @@ test_that("a gt table contains the correct placement of row groups", {
       group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
-    row_group_order(groups = c("", "Mazda", "Mercs")) %>%
+    row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
 

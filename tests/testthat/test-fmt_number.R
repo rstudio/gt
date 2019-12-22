@@ -411,3 +411,27 @@ test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
       "0.04", "0.05", "0.50")
   )
 })
+
+test_that("rownames and groupnames aren't included in columns = TRUE", {
+  mtcars1 <- cbind(mtcars, chardata = row.names(mtcars))
+
+  # This fails; can't apply numeric formatting to the "chardata" col
+  expect_error(mtcars1 %>% gt() %>% fmt_number(columns = TRUE))
+
+
+  # These succeed; the "chardata" col no longer counts as a resolvable column
+  # if it's a rowname_col or groupname_col, yet it's still visible as a column
+  # in the `rows` expression
+
+  expect_error(regexp = NA,
+    mtcars1 %>%
+      gt(rowname_col = "chardata") %>%
+      fmt_number(columns = TRUE, rows = chardata == "Mazda RX4")
+  )
+
+  expect_error(regexp = NA,
+    mtcars1 %>%
+      gt(groupname_col = "chardata") %>%
+      fmt_number(columns = TRUE, rows = chardata == "Mazda RX4")
+  )
+})

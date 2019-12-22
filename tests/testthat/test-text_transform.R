@@ -48,7 +48,7 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match("(|.* mpg$)")
+    expect_match(".* mpg$")
 
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column with a slightly more
@@ -69,7 +69,7 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match("(|.*(\\(good\\)|\\(bad\\))$)")
+    expect_match(".*(\\(good\\)|\\(bad\\))$")
 
   # Create a `tbl_html` object with `gt()` and transform
   # all values in the `mpg` column with a function that
@@ -91,7 +91,7 @@ test_that("the `text_transform()` function works correctly", {
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
     unique() %>%
-    expect_equal(c("", "25", "15"))
+    expect_equal(c("25", "15"))
 
   # Create a `tbl_html` object with `gt()`, format `mpg` values
   # with `fmt_number()` (using a pattern) and further transform
@@ -117,7 +117,7 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match("(|.*miles per gallon$)")
+    expect_match(".*miles per gallon$")
 
   # Call two `text_transform()`s and expect them to be later
   # executed in the correct order
@@ -143,7 +143,7 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match("(|.*miles per gallon$)")
+    expect_match(".*miles per gallon$")
 
   # Extract the internal `transforms` attr
   transforms <- dt_transforms_get(data = tbl_html)
@@ -210,5 +210,5 @@ test_that("the `text_transform()` function works correctly", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
-    expect_match("(|.*\\.(00|25|50|75)$)")
+    expect_match(".*\\.(00|25|50|75)$")
 })

@@ -499,7 +499,12 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal("")
+  built_tbl$`_row_groups` %>% expect_equal(character(0))
+
+  # Expect no rows in `_groups_rows`
+  built_tbl$`_groups_rows` %>%
+    nrow() %>%
+    expect_equal(0)
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -513,7 +518,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:10,
-        groupname = "",
+        groupname = NA_character_,
         rowname = rownames(mtcars)[1:10]
       )
     )
@@ -562,7 +567,12 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal("")
+  built_tbl$`_row_groups` %>% expect_equal(character(0))
+
+  # Expect no rows in `_groups_rows`
+  built_tbl$`_groups_rows` %>%
+    nrow() %>%
+    expect_equal(0)
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -576,7 +586,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = "",
+        groupname = NA_character_,
         rowname = as.character(1:8)
       )
     )
