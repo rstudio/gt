@@ -734,7 +734,7 @@ cols_hide <- function(data,
                       columns) {
 
   # Perform input object validation
-  # stop_if_not_gt(data = data)
+  stop_if_not_gt(data = data)
 
   columns <- enquo(columns)
 
@@ -754,11 +754,8 @@ cols_hide <- function(data,
          call. = FALSE)
   }
 
-  for (column in columns) {
-    data <- data %>% dt_boxhead_edit(var = column, type = "hidden")
-  }
-
-  data
+  # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
+  data %>% dt_boxhead_set_hidden(vars = columns)
 }
 
 #' Merge two columns to a value & uncertainty column

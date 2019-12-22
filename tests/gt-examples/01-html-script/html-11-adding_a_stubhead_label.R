@@ -4,7 +4,7 @@ library(tidyverse)
 # Create a table that has a stubhead label
 tbl <-
   dplyr::tribble(
-    ~groupname, ~rowname, ~value_1, ~value_2,
+    ~groups, ~rowname, ~value_1, ~value_2,
     "A",        "1",      361.1,    260.1,
     "A",        "2",      184.3,    84.4,
     "A",        "3",      342.3,    126.3,
@@ -19,7 +19,8 @@ tbl <-
 
 # Create a display table
 sh_caption_tbl <-
-  gt(data = tbl) %>%
+  tbl %>%
+  gt(groupname_col = "groups") %>%
   tab_stubhead(label = "groups")
 
 sh_caption_tbl

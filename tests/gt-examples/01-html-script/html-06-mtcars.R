@@ -71,7 +71,7 @@ mtcars_tbl <-
   tab_footnote(
     footnote = "Excellent gas mileage.",
     locations = cells_body(
-      columns = 1,
+      columns = vars(mpg),
       rows = "Toyota Corolla")
   ) %>%
   tab_footnote(

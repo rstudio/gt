@@ -118,6 +118,24 @@ summary_rows <- function(data,
   # the stub is necessary for summary row labels
   if (!stub_available && is.null(groups)) {
 
+    data <-
+      data %>%
+      dt_boxhead_add_var(
+        var = "rowname",
+        type = "stub",
+        column_label = list("rowname"),
+        column_align = "left",
+        column_width = list(NULL),
+        hidden_px = list(NULL),
+        add_where = "top"
+      )
+
+    # Add the `"rowname"` column into `_data`
+    data$`_data` <-
+      data$`_data` %>%
+      dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
+      dplyr::select(rowname, dplyr::everything())
+
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- ""
 

@@ -21,9 +21,13 @@
 #'
 #' @param data A `data.frame` object or a tibble.
 #' @param rowname_col The column name in the input `data` table to use as row
-#'   captions to be placed in the display table stub.
+#'   captions to be placed in the display table stub. If the `rownames_to_stub`
+#'   option is `TRUE` then any column name provided to `rowname_col` will be
+#'   ignored.
 #' @param groupname_col The column name in the input `data` table to use as
-#'   group labels for generation of stub row groups.
+#'   group labels for generation of stub row groups. If the input `data` table
+#'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
+#'   or associated `group_by*()` functions) then any input here is ignored.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
@@ -77,22 +81,31 @@
 #' @export
 gt <- function(data,
                rowname_col = "rowname",
-               groupname_col = "groupname",
+               groupname_col = dplyr::group_vars(data),
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = random_id(),
                row_group.sep = getOption("gt.row_group.sep", " - ")) {
 
+  if (rownames_to_stub) {
+    # Just a column name that's unlikely to collide with user data
+    rowname_col <- "__GT_ROWNAME_PRIVATE__"
+  }
+  if (length(groupname_col) == 0) {
+    groupname_col <- NULL
+  }
+
   # Initialize the main objects
   data <-
     list() %>%
-    dt_data_init(data_tbl = data) %>%
+    dt_data_init(
+      data_tbl = data,
+      rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
+    ) %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
-      data_df = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      rownames_to_stub = rownames_to_stub,
       row_group.sep = row_group.sep
     ) %>%
     dt_row_groups_init() %>%
@@ -111,13 +124,7 @@ gt <- function(data,
 
   # Add the table ID to the `id` parameter
   if (!is.null(id)) {
-
-    data <-
-      data %>%
-      dt_options_set_value(
-        option = "table_id",
-        value = id
-      )
+    data <- data %>% dt_options_set_value( option = "table_id", value = id)
   }
 
   # Apply the `gt_tbl` class to the object while
@@ -127,9 +134,7 @@ gt <- function(data,
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
   if (isTRUE(auto_align)) {
-    data <-
-      data %>%
-      cols_align(align = "auto")
+    data <- data %>% cols_align(align = "auto")
   }
 
   data

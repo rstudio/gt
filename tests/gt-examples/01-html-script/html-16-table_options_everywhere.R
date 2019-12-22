@@ -4,7 +4,7 @@ library(tidyverse)
 # Create a table with options applied to every type of table part
 tbl <-
   dplyr::tribble(
-    ~groupname,    ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
+    ~date,         ~rowname, ~col_1, ~col_2, ~col_3, ~col_4,
     "2018-02-10",  "1",       767.6,  928.1,  382.0,  674.5,
     "2018-02-10",  "2",       403.3,  461.5,   15.1,  242.8,
     "2018-02-10",  "3",       686.4,   54.1,  282.7,   56.3,
@@ -19,7 +19,8 @@ tbl <-
 
 # Create a display table
 many_options_tbl <-
-  gt(tbl) %>%
+  tbl %>%
+  gt(groupname_col = "date") %>%
   tab_header(
     title = "The Title",
     subtitle = "The Subtitle"
@@ -35,19 +36,27 @@ many_options_tbl <-
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_body(columns = 1, rows = 1)
+    locations = cells_body(
+      columns = vars(col_1), rows = 1
+    )
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_body(columns = 2, rows = 2)
+    locations = cells_body(
+      columns = vars(col_2), rows = 2
+    )
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_body(columns = 3, rows = 3)
+    locations = cells_body(
+      columns = vars(col_3), rows = 3
+    )
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_body(columns = 4, rows = 4)
+    locations = cells_body(
+      columns = vars(col_4), rows = 4
+    )
   ) %>%
   tab_source_note("A source note for the table.") %>%
   tab_options(

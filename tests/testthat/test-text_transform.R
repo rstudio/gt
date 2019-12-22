@@ -97,7 +97,9 @@ test_that("the `text_transform()` function works correctly", {
   # with `fmt_number()` (using a pattern) and further transform
   # all values in the `mpg` column; this shows that `text_transform()`
   # takes `x` that has gone through all formatting functions first
-  tbl_html <- gt(mtcars_short) %>%
+  tbl_html <-
+    mtcars_short %>%
+    gt() %>%
     fmt_number(
       columns = vars(mpg),
       decimals = 4,

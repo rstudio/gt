@@ -36,6 +36,7 @@ test_that("all exported functions validate the incoming `data` object", {
   expect_error(exibble %>% cols_move_to_start(), regexp = regexp_stop)
   expect_error(exibble %>% cols_move_to_end(), regexp = regexp_stop)
   expect_error(exibble %>% cols_move(), regexp = regexp_stop)
+  expect_error(exibble %>% cols_hide(), regexp = regexp_stop)
   expect_error(exibble %>% cols_merge_uncert(), regexp = regexp_stop)
   expect_error(exibble %>% cols_merge_range(), regexp = regexp_stop)
   expect_error(exibble %>% cols_merge(), regexp = regexp_stop)

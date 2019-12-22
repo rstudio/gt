@@ -155,7 +155,8 @@ test_that("a gt table contains the correct placement of row groups", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a row groups in a specified order
   tbl_latex <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
       group = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
