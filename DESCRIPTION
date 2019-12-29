@@ -34,7 +34,7 @@ Imports:
     magrittr (>= 1.5),
     rlang (>= 0.3.0),
     sass (>= 0.1.1),
-    scales (>= 1.0.0),
+    scales (>= 1.1.0),
     stringr (>= 1.3.1),
     tibble (>= 1.4.2),
     tidyselect (>= 0.2.5)
