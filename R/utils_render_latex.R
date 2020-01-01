@@ -240,6 +240,7 @@ create_body_component_l <- function(data) {
       cbind(body)
   }
 
+
   # Split `body_content` by slices of rows and create data rows
   body_content <- as.vector(t(body[, default_vars]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
