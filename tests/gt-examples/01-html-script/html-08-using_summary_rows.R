@@ -1,4 +1,5 @@
 library(gt)
+library(tidyverse)
 
 # Create a table that creates a stub and
 # row groups based on magic column names
@@ -16,7 +17,8 @@ tbl <-
     "B",        "3",      252.3,   732.5,
     "B",        "4",      344.7,   NA,
     "C",        "1",      197.2,   818.0,
-    "C",        "2",      284.3,   394.4)
+    "C",        "2",      284.3,   394.4
+  )
 
 # Create a display table with summary rows
 summary_tbl <-
@@ -27,7 +29,8 @@ summary_tbl <-
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
-      ~sd(., na.rm = TRUE))
+      ~sd(., na.rm = TRUE)
+    )
   ) %>%
   tab_footnote(
     footnote = "Note for Summary A.",

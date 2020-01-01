@@ -16,8 +16,8 @@ status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https:/
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
 a wide variety of useful tables with a cohesive set of table parts.
-These include the *table header*, the *stub*, the *stub head*, the
-*column labels*, the *table body*, and the *table footer*.
+These include the *table header*, the *stub*, the *column labels* and
+*spanner column labels*, the *table body*, and the *table footer*.
 
 <p align="center">
 
@@ -26,10 +26,12 @@ These include the *table header*, the *stub*, the *stub head*, the
 </p>
 
 It all begins with preprocessed **table data** (be it a tibble or a data
-frame). You decide how to compose your **gt table** with the elements
-you need for the task at hand. Output can either be in the form of
-**HTML**, **LaTeX**, or **RTF**. All work beautifully inside **R
-Markdown** documents.
+frame). You then decide how to compose your **gt table** with the
+elements and formatting you need for the task at hand. Finally, the
+table is rendered by printing it at the console, including it in an R
+Markdown document, or exporting to a file using `gtsave()`. Currently,
+**gt** supports **HTML** output, with **LaTeX** and **RTF** planned for
+the future.
 
 <p align="center">
 
@@ -37,10 +39,10 @@ Markdown** documents.
 
 </p>
 
-The **gt** API is designed to be both straightforward yet powerful. The
-emphasis is on simple functions for the everyday display table needs.
-Here is a brief example of how to use **gt** to create an HTML **gt
-Table** from the included `sp500` dataset:
+The **gt** package is designed to be both straightforward yet powerful.
+The emphasis is on simple functions for the everyday display table
+needs. Here is a brief example of how to use **gt** to create a table
+from the included `sp500` dataset:
 
 ``` r
 library(gt)
@@ -77,13 +79,13 @@ sp500 %>%
 
 <p align="center">
 
-<img src="man/figures/gt_sp500_table.svg" width="800px">
+<img src="man/figures/gt_sp500_table.svg" width="1200px">
 
 </p>
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
-for experimenting with the API.
+for experimenting with the package functions.
 
 <p align="center">
 
@@ -92,23 +94,26 @@ for experimenting with the API.
 </p>
 
 Beyond this simple example, there are many functions available in **gt**
-that make it possible to create highly customized tables.
+for creating super-customized tables.
 
 <p align="center">
 
-<img src="man/figures/gt_functions.svg" width="100%">
+<img src="man/figures/gt_function_reference.png" width="100%">
 
 </p>
 
-Want to try this out? First and foremost, the **gt** package is used in
-an R environment, so, if you don’t have an R installation, it can be
-obtained from the [**Comprehensive R Archive Network
-(CRAN)**](https://cran.r-project.org/). For the best experience in
-working with R, use the [**RStudio Desktop
-IDE**](https://www.rstudio.com/products/rstudio/).
+Want to try this out? Take the **gt** Test Drive on **RStudio Cloud**.
+It’s full of ready-to-run examples.
 
-You can install the development version of **gt** from **GitHub**. Use
-the following in the R console to install **gt**.
+<p align="center">
+
+<a href="https://rstudio.cloud/project/779965">
+<img src="man/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px">
+</a>
+
+</p>
+
+You can install the development version of **gt** from **GitHub**:
 
 ``` r
 remotes::install_github("rstudio/gt")
@@ -124,28 +129,12 @@ make this package better, feel free to file an
 
 -----
 
-<h4 align="center">
-
-Code of Conduct
-
-</h4>
-
-<h6 align="center">
+#### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
 agree to abide by its terms.
 
-</h6>
-
-<h4 align="center">
-
-License
-
-</h4>
-
-<h6 align="center">
+#### License
 
 MIT © RStudio, Inc.
-
-</h6>

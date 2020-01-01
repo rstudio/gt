@@ -52,7 +52,10 @@ condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
-\item{indent}{The indentation of the text.}
+\item{indent}{The indentation of the text. Can be provided as a number that
+is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
+helper function. Alternatively, this can be given as a percentage (easily
+constructed with \code{\link[=pct]{pct()}}).}
 
 \item{decorate}{allows for text decoration effect to be applied. Here, we can
 use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
@@ -60,17 +63,67 @@ use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 \item{transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
 }
+\value{
+A list object of class \code{cell_styles}.
+}
 \description{
 This helper function is to be used with the \code{\link[=tab_style]{tab_style()}} function, which
 itself allows for the setting of custom styles to one or more cells. We can
 also define several styles within a single call of \code{cell_text()} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cell_text_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-15
+}
+
+\examples{
+# Use `exibble` to create a gt table;
+# add styles with `tab_style()` and
+# the `cell_text()` helper function
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num, currency),
+    decimals = 1
+  ) \%>\%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(
+      columns = vars(num),
+      rows = num >= 5000)
+  ) \%>\%
+  tab_style(
+    style = cell_text(style = "italic"),
+    locations = cells_body(
+      columns = vars(currency),
+      rows = currency < 100
+    )
+  )
+
+}
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -79,4 +132,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

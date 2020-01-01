@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{render_gt}
 \alias{render_gt}
-\title{A \pkg{gt} display table render function for use in Shiny}
+\title{A \strong{gt} display table render function for use in Shiny}
 \usage{
 render_gt(
   expr,
@@ -15,7 +15,7 @@ render_gt(
 )
 }
 \arguments{
-\item{expr}{An expression that creates a \pkg{gt} table object. For sake of
+\item{expr}{An expression that creates a \strong{gt} table object. For sake of
 convenience, a data frame or tibble can be used here (it will be
 automatically introduced to \code{\link[=gt]{gt()}} with its default options).}
 
@@ -39,20 +39,25 @@ call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in a
 document.}
 }
 \description{
-With \code{render_gt()} we can create a reactive \pkg{gt} table that works
+With \code{render_gt()} we can create a reactive \strong{gt} table that works
 wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
 function is to be used within Shiny's \code{server()} component. We have some
-options for controlling the size of the container holding the \pkg{gt} table.
+options for controlling the size of the container holding the \strong{gt} table.
 The \code{width} and \code{height} arguments allow for sizing the container, and the
 \code{align} argument allows us to align the table within the container (some
 other fine-grained options for positioning are available in the
 \code{\link[=tab_options]{tab_options()}} function).
 }
 \details{
-We need to ensure that we have the \pkg{shiny} package installed first. This
+We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 }
+\section{Function ID}{
+
+11-1
+}
+
 \examples{
 library(shiny)
 
@@ -89,6 +94,7 @@ server <- function(input,
 \dontrun{
 shinyApp(ui, server)
 }
+
 }
 \seealso{
 Other Shiny functions: 

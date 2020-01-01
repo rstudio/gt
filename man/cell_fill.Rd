@@ -15,17 +15,67 @@ value in the range of \code{0} (fully transparent) to \code{1} (fully opaque). I
 provided the fill color will either be fully opaque or use alpha
 information from the color value if it is supplied in the #RRGGBBAA format.}
 }
+\value{
+A list object of class \code{cell_styles}.
+}
 \description{
 The \code{cell_fill()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more
 cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cell_fill_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-16
+}
+
+\examples{
+# Use `exibble` to create a gt table;
+# add styles with `tab_style()` and
+# the `cell_fill()` helper function
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = vars(num, currency),
+    decimals = 1
+  ) \%>\%
+  tab_style(
+    style = cell_fill(color = "lightblue"),
+    locations = cells_body(
+      columns = vars(num),
+      rows = num >= 5000)
+  ) \%>\%
+  tab_style(
+    style = cell_fill(color = "gray85"),
+    locations = cells_body(
+      columns = vars(currency),
+      rows = currency < 100
+    )
+  )
+
+}
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -34,4 +84,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

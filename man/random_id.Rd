@@ -2,24 +2,42 @@
 % Please edit documentation in R/helpers.R
 \name{random_id}
 \alias{random_id}
-\title{Helper for creating a random \code{id} for a \pkg{gt} table}
+\title{Helper for creating a random \code{id} for a \strong{gt} table}
 \usage{
 random_id(n = 10)
 }
 \arguments{
 \item{n}{The number of lowercase letters to use for the random ID.}
 }
+\value{
+A character vector containing a single, random ID.
+}
 \description{
 This helper function is to be used with \code{id} argument of the \code{\link[=gt]{gt()}} function.
 The \code{id} option in \code{\link[=gt]{gt()}} uses \code{random_id()} by default however we can
 optionally supply a custom \code{id} value, or, use \code{NULL} for no ID at all.
 }
+\section{Function ID}{
+
+7-19
+}
+
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -27,4 +45,4 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

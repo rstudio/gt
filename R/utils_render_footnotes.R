@@ -80,15 +80,15 @@ resolve_footnotes_styles <- function(data,
         )
     }
 
-    # Filter by `grpname` in stub groups
-    if ("stub_groups" %in% tbl[["locname"]]) {
+    # Filter by `grpname` in row groups
+    if ("row_groups" %in% tbl[["locname"]]) {
 
       tbl <-
         dplyr::bind_rows(
           tbl %>%
-            dplyr::filter(locname != "stub_groups"),
+            dplyr::filter(locname != "row_groups"),
           tbl %>%
-            dplyr::filter(locname == "stub_groups") %>%
+            dplyr::filter(locname == "row_groups") %>%
             dplyr::filter(grpname %in% groups_rows_df$group)
         )
     }
@@ -143,17 +143,16 @@ resolve_footnotes_styles <- function(data,
       dplyr::mutate(colnum = NA_integer_)
   }
 
-  # For the stub groups, insert a `rownum` based
-  # on `groups_rows_df`
-  if ("stub_groups" %in% tbl[["locname"]]) {
+  # For the row groups, insert a `rownum` based on `groups_rows_df`
+  if ("row_groups" %in% tbl[["locname"]]) {
 
-    tbl_not_stub_groups <-
+    tbl_not_row_groups <-
       tbl %>%
-      dplyr::filter(locname != "stub_groups")
+      dplyr::filter(locname != "row_groups")
 
-    tbl_stub_groups <-
+    tbl_row_groups <-
       tbl %>%
-      dplyr::filter(locname == "stub_groups") %>%
+      dplyr::filter(locname == "row_groups") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
         by = c("grpname" = "group")
@@ -162,11 +161,11 @@ resolve_footnotes_styles <- function(data,
       dplyr::mutate(colnum = 1) %>%
       dplyr::select(-row, -row_end)
 
-    # Re-combine `tbl_not_stub_groups`
-    # with `tbl_stub_groups`
+    # Re-combine `tbl_not_row_groups`
+    # with `tbl_row_groups`
     tbl <-
       dplyr::bind_rows(
-        tbl_not_stub_groups, tbl_stub_groups
+        tbl_not_row_groups, tbl_row_groups
       )
   }
 
@@ -232,8 +231,8 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "columns_columns") %>%
       dplyr::inner_join(
         dplyr::tibble(
-          colnum = seq(nrow(boxh)),
-          colname = boxh$var
+          colnum = seq(default_vars),
+          colname = default_vars
         ),
         by = "colname"
       )
@@ -611,24 +610,24 @@ set_footnote_marks_row_groups <- function(data,
   groups_rows_df <- dt_groups_rows_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
-  footnotes_stub_groups_tbl <-
+  footnotes_row_groups_tbl <-
     footnotes_tbl %>%
-    dplyr::filter(locname == "stub_groups")
+    dplyr::filter(locname == "row_groups")
 
-  if (nrow(footnotes_stub_groups_tbl) > 0) {
+  if (nrow(footnotes_row_groups_tbl) > 0) {
 
-    footnotes_stub_groups_marks <-
-      footnotes_stub_groups_tbl %>%
+    footnotes_row_groups_marks <-
+      footnotes_row_groups_tbl %>%
       dplyr::group_by(grpname) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
       dplyr::select(grpname, fs_id_coalesced) %>%
       dplyr::distinct()
 
-    for (i in seq(nrow(footnotes_stub_groups_marks))) {
+    for (i in seq(nrow(footnotes_row_groups_marks))) {
 
       row_index <-
-        which(groups_rows_df[, "group"] == footnotes_stub_groups_marks$grpname[i])
+        which(groups_rows_df[, "group"] == footnotes_row_groups_marks$grpname[i])
 
       text <- groups_rows_df[row_index, "group_label"]
 
@@ -638,7 +637,7 @@ set_footnote_marks_row_groups <- function(data,
           paste0(
             text,
             footnote_mark_to_html(
-              footnotes_stub_groups_marks$fs_id_coalesced[i])
+              footnotes_row_groups_marks$fs_id_coalesced[i])
           )
 
       } else if (context == "rtf") {
@@ -647,7 +646,7 @@ set_footnote_marks_row_groups <- function(data,
           paste0(
             text,
             footnote_mark_to_rtf(
-              footnotes_stub_groups_marks$fs_id_coalesced[i])
+              footnotes_row_groups_marks$fs_id_coalesced[i])
           )
 
       } else if (context == "latex") {
@@ -656,7 +655,7 @@ set_footnote_marks_row_groups <- function(data,
           paste0(
             text,
             footnote_mark_to_latex(
-              footnotes_stub_groups_marks$fs_id_coalesced[i])
+              footnotes_row_groups_marks$fs_id_coalesced[i])
           )
       }
 

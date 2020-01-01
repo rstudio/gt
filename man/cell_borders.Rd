@@ -20,6 +20,9 @@ is useful for this. The default value for \code{weight} is \code{"1px"}. Borders
 any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
 \code{style}, or \code{weight}.}
 }
+\value{
+A list object of class \code{cell_styles}.
+}
 \description{
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more
@@ -29,6 +32,18 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cell_borders_1.svg}{options: width=100\%}}
+
+\if{html}{\figure{man_cell_borders_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-17
+}
+
 \examples{
 # Add horizontal border lines for
 # all table body rows in `exibble`
@@ -39,9 +54,11 @@ tab_1 <-
     tab_style(
       style = cell_borders(
         sides = c("top", "bottom"),
-        color = "gray", weight = px(0.5), style = "solid"
+        color = "#BBBBBB",
+        weight = px(1.5),
+        style = "solid"
       ),
-      locations = cells_data(
+      locations = cells_body(
         columns = everything(),
         rows = everything()
       )
@@ -50,7 +67,7 @@ tab_1 <-
 # Incorporate different horizontal and
 # vertical borders at several locations;
 # this uses multiple `cell_borders()` and
-# `cells_data()` calls within `list()`s
+# `cells_body()` calls within `list()`s
 tab_2 <-
   exibble \%>\%
     gt() \%>\%
@@ -58,32 +75,43 @@ tab_2 <-
       style = list(
         cell_borders(
           sides = c("top", "bottom"),
-          color = "red",
+          color = "#FF0000",
           weight = px(2)
         ),
         cell_borders(
           sides = c("left", "right"),
-          color = "blue",
+          color = "#0000FF",
           weight = px(2)
         )
       ),
       locations = list(
-        cells_data(
+        cells_body(
           columns = vars(num),
           rows = is.na(num)
         ),
-        cells_data(
+        cells_body(
           columns = vars(currency),
           rows = is.na(currency)
         )
       )
     )
+
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -92,4 +120,4 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

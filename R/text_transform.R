@@ -1,17 +1,15 @@
 #' Perform targeted text transformation with a function
+#'
 #' @inheritParams cols_align
 #' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Supplying any of the `cells_*()` helper functions is a
-#'   useful way to target the location cells that are associated with the
-#'   footnote text. These helper functions are: [cells_title()],
-#'   [cells_column_labels()], [cells_group()], [cells_stub()], [cells_data()],
-#'   and [cells_summary()]. Please see the help article \link{location_cells}
-#'   for more information on how these helper functions can be used.
-#'   Additionally, we can enclose several `cells_*()` calls within a `list()` if
-#'   we wish to link the footnote text to different types of locations (e.g.,
-#'   cell data values, stub group headings, the table title, etc.).
+#'   transformation. Only the [cells_body()], [cells_stub()], and
+#'   [cells_column_labels()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #' @param fn The function to use for text transformation.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # transform the formatted text in the
@@ -27,10 +25,9 @@
 #'   fmt_number(columns = vars(num)) %>%
 #'   fmt_currency(columns = vars(currency)) %>%
 #'   text_transform(
-#'     locations = cells_data(
+#'     locations = cells_body(
 #'       columns = vars(num)),
 #'     fn = function(x) {
-#'
 #'       paste0(
 #'         x, " (",
 #'         dplyr::case_when(
@@ -43,11 +40,17 @@
 #' @section Figures:
 #' \if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-12
+#'
 #' @export
 text_transform <- function(data,
                            locations,
                            fn) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
@@ -70,7 +73,7 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-text_transform_at_location.cells_data <- function(loc,
+text_transform_at_location.cells_body <- function(loc,
                                                   data,
                                                   fn = identity) {
 

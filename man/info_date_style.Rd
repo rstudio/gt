@@ -18,6 +18,11 @@ codes, the format names, and example outputs using a fixed date
 \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-1
+}
+
 \examples{
 # Get a table of info on the different
 # date-formatting styles (which are used
@@ -27,10 +32,10 @@ tab_1 <- info_date_style()
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{information functions}
+\concept{Information Functions}

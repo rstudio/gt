@@ -1,12 +1,13 @@
 #' Modify the ordering of any row groups
 #'
-#' We can modify the display order of any row groups in a \pkg{gt} object with
+#' We can modify the display order of any row groups in a **gt** object with
 #' the `row_group_order()` function. The `groups` argument can either take a
 #' vector of row group names or a numeric vector of row group indices; whichever
 #' is provided, the row groups will adhere to this revised ordering. It isn't
 #' necessary to provide all row group names in `groups`, rather, what is
 #' provided will assume the specified ordering at the top of the table and the
 #' remaining row groups will follow in their original ordering.
+#'
 #' @inheritParams cols_align
 #' @param groups A vector of row group names, or, a numeric vector of indices
 #'   corresponding to the new ordering. Either vector must correspond to
@@ -14,7 +15,9 @@
 #'   not required to have all of the row group names or available index
 #'   positions within it; any omitted values will be added to the end while
 #'   preserving the original ordering.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table
 #' # with a stub and with row groups;
@@ -35,10 +38,16 @@
 #' @section Figures:
 #' \if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
 #'
-#' @family row modification functions
+#' @family Modify Rows
+#' @section Function ID:
+#' 5-1
+#'
 #' @export
 row_group_order <- function(data,
                             groups) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Stop function if `groups` is not a `character` or
   #   `numeric` object
@@ -49,7 +58,7 @@ row_group_order <- function(data,
   }
 
   # Get the current arrangement of the row groups
-  arrange_groups <- dt_stub_groups_get(data = data)
+  arrange_groups <- dt_row_groups_get(data = data)
 
   if (inherits(groups, "character")) {
 
@@ -83,5 +92,5 @@ row_group_order <- function(data,
   }
 
   # Create and store a list of row groups in the intended ordering
-  dt_stub_groups_set(data = data, stub_groups = groups)
+  dt_row_groups_set(data = data, row_groups = groups)
 }

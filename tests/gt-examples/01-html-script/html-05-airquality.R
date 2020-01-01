@@ -1,8 +1,6 @@
 library(gt)
 
-# Create a display table based on `airquality` New York Air
-# Quality Measurements
-
+# Create a display table based on `airquality`
 airquality_tbl <-
   gt(data = airquality) %>%
   cols_move_to_start(columns = vars(Month, Day)) %>%
@@ -15,7 +13,6 @@ airquality_tbl <-
     label = "Measurement Period",
     columns = vars(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
+  fmt_missing(columns = vars(Ozone, Solar.R, Wind, Temp))
 
-# Display the table in the Viewer
 airquality_tbl

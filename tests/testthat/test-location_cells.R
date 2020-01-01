@@ -1,5 +1,29 @@
 context("Ensuring that the `cells_*()` functions work as expected")
 
+# Function to skip tests if Suggested packages not available on system
+check_suggests <- function() {
+  skip_if_not_installed("rvest")
+  skip_if_not_installed("xml2")
+}
+
+# Create a minimal `tbl` for testing HTML output
+tbl <-
+  dplyr::tribble(
+    ~groupname, ~rowname, ~value_1,  ~value_2, ~value_3,
+    "A",        "1",      361.1,     260.1,     3.8,
+    "B",        "2",      344.7,     281.2,     2.4
+  )
+
+# Gets the HTML attr value from a single key
+selection_value <- function(html, key) {
+
+  selection <- paste0("[", key, "]")
+
+  html %>%
+    rvest::html_nodes(selection) %>%
+    rvest::html_attr(key)
+}
+
 test_that("the `cells_title()` function works correctly", {
 
   # Create a `cells_title` object with the `title` option
@@ -101,30 +125,30 @@ test_that("the `cells_column_labels()` function works correctly", {
     expect_equal(c("group_1", "group_2"))
 })
 
-test_that("the `cells_group()` function works correctly", {
+test_that("the `cells_row_groups()` function works correctly", {
 
-  # Create a `cells_group` object with names provided to `groups`
-  helper_cells_group <- cells_group(groups = c("group_1", "group_2"))
+  # Create a `cells_row_groups` object with names provided to `groups`
+  helper_cells_row_groups <- cells_row_groups(groups = c("group_1", "group_2"))
 
-  # Expect this has the `cells_group` and `location_cells` classes
-  helper_cells_group %>%
-    expect_is(c("cells_group", "location_cells"))
+  # Expect this has the `cells_row_groups` and `location_cells` classes
+  helper_cells_row_groups %>%
+    expect_is(c("cells_row_groups", "location_cells"))
 
   # Expect the length of the object to be `1`
-  helper_cells_group %>%
+  helper_cells_row_groups %>%
     length() %>%
     expect_equal(1)
 
   # Expect that the object has within it the name `groups`
-  helper_cells_group %>%
+  helper_cells_row_groups %>%
     names() %>%
     expect_equal("groups")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_group[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_row_groups[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_group[[1]] %>%
+  helper_cells_row_groups[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("group_1", "group_2"))
 })
@@ -157,67 +181,68 @@ test_that("the `cells_stub()` function works correctly", {
     expect_equal(c("row_1", "row_2"))
 })
 
-test_that("the `cells_data()` function works correctly", {
+test_that("the `cells_body()` function works correctly", {
 
-  # Create a `cells_data` object with names provided to `columns`
-  helper_cells_data <- cells_data(columns = c("col_1", "col_2"))
+  # Create a `cells_body` object with names provided to `columns`
+  helper_cells_body <- cells_body(columns = c("col_1", "col_2"))
 
-  # Expect this has the `cells_data` and `location_cells` classes
-  helper_cells_data %>%
-    expect_is(c("cells_data", "location_cells"))
+  # Expect this has the `cells_body` and `location_cells` classes
+  helper_cells_body %>%
+    expect_is(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_data %>%
+  helper_cells_body %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `rows`
-  helper_cells_data %>%
+  helper_cells_body %>%
     names() %>%
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]] %>%
+  helper_cells_body[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("col_1", "col_2"))
 
-  # Create a `cells_data` object with names provided to `columns` and `rows`
-  helper_cells_data <-
-    cells_data(
+  # Create a `cells_body` object with names provided to `columns` and `rows`
+  helper_cells_body <-
+    cells_body(
       columns = c("col_1", "col_2"),
-      rows = c("row_1", "row_2"))
+      rows = c("row_1", "row_2")
+    )
 
-  # Expect this has the `cells_data` and `location_cells` classes
-  helper_cells_data %>%
-    expect_is(c("cells_data", "location_cells"))
+  # Expect this has the `cells_body` and `location_cells` classes
+  helper_cells_body %>%
+    expect_is(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
-  helper_cells_data %>%
+  helper_cells_body %>%
     length() %>%
     expect_equal(2)
 
   # Expect that the object has the names `columns` and `rows`
-  helper_cells_data %>%
+  helper_cells_body %>%
     names() %>%
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_data[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_data[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[2]] %>% expect_is(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
-  helper_cells_data[[1]] %>%
+  helper_cells_body[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("col_1", "col_2"))
 
   # Expect the RHS of the second component formula to contain
   # the vector provided
-  helper_cells_data[[2]] %>%
+  helper_cells_body[[2]] %>%
     rlang::eval_tidy() %>%
     expect_equal(c("row_1", "row_2"))
 })
@@ -356,4 +381,362 @@ test_that("the `cells_stubhead()` function works correctly", {
   # Expect a specific value for the single list component
   helper_cells_stubhead[[1]] %>%
     expect_equal("stubhead")
+})
+
+test_that("styles are correctly applied to HTML output with location functions", {
+
+  check_suggests()
+
+  #
+  # cells_title()
+  #
+
+  # Create a gt table with styling applied to the title
+  gt_tbl_cells_title_1 <-
+    tbl %>%
+    gt() %>%
+    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_title(groups = "title")
+    )
+
+  # Expect that the title has the style applied
+  gt_tbl_cells_title_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style>The Subtitle</th>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to the subtitle
+  gt_tbl_cells_title_2 <-
+    tbl %>%
+    gt() %>%
+    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(10), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  # Expect that the subtitle has the style applied
+  gt_tbl_cells_title_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style>The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to the title and the subtitle
+  gt_tbl_cells_title_3 <-
+    tbl %>%
+    gt() %>%
+    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(10), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_title(groups = "title")
+    ) %>%
+    tab_header(title = "The Title", subtitle = "The Subtitle") %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(10), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_title(groups = "subtitle")
+    )
+
+  # Expect that the title and the subtitle have styles applied
+  gt_tbl_cells_title_3 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_column_spanners()
+  #
+
+  # Create a gt table with styling applied to the column spanner label
+  gt_tbl_cells_column_spanners <-
+    tbl %>%
+    gt() %>%
+    cols_move_to_end(columns = vars(value_1)) %>%
+    tab_spanner(label = "spanner", columns = vars(value_1, value_3)) %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_column_spanners(spanners = "spanner")
+    )
+
+  # Expect that the styling was applied to the correct column labels
+  gt_tbl_cells_column_spanners %>%
+    render_as_html() %>%
+    tidy_grepl("<th class=\".*? gt_column_spanner\".*?style=\"color: white; font-size: 20px; background-color: #FFA500;\">spanner</th>") %>%
+    expect_true()
+
+  #
+  # cells_column_labels()
+  #
+
+  # Create a gt table with styling applied to two column labels
+  gt_tbl_cells_column_labels <-
+    tbl %>%
+    gt() %>%
+    cols_move_to_end(columns = vars(value_1)) %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_column_labels(
+        columns = vars(value_1, value_3))
+    )
+
+  # Expect that the styling was applied to the correct column labels
+  gt_tbl_cells_column_labels %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">value_2</th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">value_3</th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">value_1</th>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_group()
+  #
+
+  # Create a gt table with styling applied to first row group
+  gt_tbl_cells_row_group_1 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_row_groups(groups = "A")
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_row_group_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td colspan=\"4\" class=\"gt_group_heading\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">A</td>.*",
+        "<td colspan=\"4\" class=\"gt_group_heading\">B</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to second row group
+  gt_tbl_cells_row_group_2 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_row_groups(groups = "B")
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_row_group_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td colspan=\"4\" class=\"gt_group_heading\">A</td>.*",
+        "<td colspan=\"4\" class=\"gt_group_heading\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">B</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to all row groups (with `TRUE`)
+  gt_tbl_cells_row_group_3 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_row_groups(groups = TRUE)
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_row_group_3 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td colspan=\"4\" class=\"gt_group_heading\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">A</td>.*",
+        "<td colspan=\"4\" class=\"gt_group_heading\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">B</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_stub()
+  #
+
+  # Create a gt table with styling applied to first stub row
+  gt_tbl_cells_stub_1 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_stub(rows = 1)
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_stub_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to first stub row (using the row name)
+  gt_tbl_cells_stub_1b <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_stub(rows = "1")
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_stub_1b %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to second stub row
+  gt_tbl_cells_stub_2 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_stub(rows = 2)
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_stub_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">2</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to second stub row (using the row name)
+  gt_tbl_cells_stub_2b <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_stub(rows = "2")
+    )
+
+  # Expect that the styling was applied to the correct row group
+  gt_tbl_cells_stub_2b %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">2</td>"
+      )
+    ) %>%
+    expect_true()
+
+  # Create a gt table with styling applied to all stub rows
+  gt_tbl_cells_stub_3 <-
+    tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_stub(rows = TRUE)
+    )
+
+  # Expect that the styling was applied to both row groups
+  gt_tbl_cells_stub_3 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_left gt_stub\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">2</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_group()
+  #
+
+  # Expect that styling to all cells is performed
+  # by default with `cells_data()`
+  tbl %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_text(size = px(20), color = "white"),
+        cell_fill(color = "#FFA500")
+      ),
+      locations = cells_body()
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_value("style") %>%
+    expect_equal(
+      rep("color: white; font-size: 20px; background-color: #FFA500;", 6)
+    )
 })

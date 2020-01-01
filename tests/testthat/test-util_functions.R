@@ -418,7 +418,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     data %>%
     tab_style(
       style = cell_text(size = px(10)),
-      locations = cells_data(columns = TRUE)
+      locations = cells_body(columns = TRUE)
     )
 
   # Get the CSS tibble and the raw HTML
@@ -478,9 +478,9 @@ test_that("the `inline_html_styles()` function works correctly", {
 
 test_that("the `as_locations()` function works correctly", {
 
-  # Define `locations` as a `cells_data` object
+  # Define `locations` as a `cells_body` object
   locations <-
-    cells_data(
+    cells_body(
       columns = vars(hp),
       rows = c("Datsun 710", "Valiant"))
 
@@ -496,7 +496,7 @@ test_that("the `as_locations()` function works correctly", {
   # Expect certain structural features for this `locations_list` object
   locations_list %>% length() %>% expect_equal(1)
   locations_list[[1]] %>% length() %>% expect_equal(2)
-  locations_list[[1]] %>% expect_is(c("cells_data", "location_cells"))
+  locations_list[[1]] %>% expect_is(c("cells_body", "location_cells"))
 
   # Define locations as a named vector
   locations <-
