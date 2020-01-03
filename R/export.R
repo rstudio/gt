@@ -311,7 +311,7 @@ as_raw_html <- function(data,
       inline_html_styles(css_tbl = get_css_tbl(data))
   }
 
-  html_table
+  htmltools::HTML(html_table)
 }
 
 #' Output a gt object as LaTeX
