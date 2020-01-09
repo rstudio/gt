@@ -1,5 +1,5 @@
 #' @noRd
-compile_scss <- function(data, id = NULL) {
+compile_scss <- function(data, id = NULL, output = NULL) {
 
   # Obtain the SCSS options table from `data`
   gt_options_tbl <-
@@ -28,6 +28,7 @@ compile_scss <- function(data, id = NULL) {
         @include gt_styles();
         <<ifelse(has_id, '}', '')>>
         ")
-    )
+    ),
+    output = output
   )
 }

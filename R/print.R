@@ -75,16 +75,20 @@ as.tags.gt_tbl <- function(x, ...) {
     id <- NULL
   }
 
+  temp <- tempfile(fileext = ".css")
+
   # Compile the SCSS as CSS
-  css <- compile_scss(data = x, id = id)
+  css <- compile_scss(data = x, id = id, output = temp)
 
   # Attach the dependency to the HTML table
   html_tbl <-
     htmltools::tagList(
-      htmltools::tags$head(
-        htmltools::tags$style(
-          htmltools::HTML(css)
-        )
+      htmltools::htmlDependency(
+        name = paste0("gt-", random_id()),
+        version = utils::packageVersion("gt"),
+        src = dirname(temp),
+        stylesheet = basename(temp),
+        all_files = FALSE
       ),
       htmltools::tags$div(
         id = id,
