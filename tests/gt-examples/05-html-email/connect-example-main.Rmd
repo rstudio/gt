@@ -35,7 +35,7 @@ diamonds %>%
   scale_y_continuous(labels = scales::dollar)
 ```
 
-The above created a plot. Below is code that generates a **gt** table with the diamond data. Note that we need to use the `as_raw_html()` on the **gt** object to ensure that styles are preserved when emailing.
+The above created a plot. Below is code that generates a **gt** table with the diamond data. Note that we need to use the `as_raw_html()` function on the **gt** object to ensure that styles are preserved when emailing.
 
 ```{r diamonds_table}
 
