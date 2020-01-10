@@ -38,12 +38,9 @@ dplyr::glimpse(countrypops)
 
 }
 \seealso{
-Other Datasets: 
-\code{\link{exibble}},
-\code{\link{gtcars}},
-\code{\link{pizzaplace}},
-\code{\link{sp500}},
-\code{\link{sza}}
+Other Datasets: \code{\link{exibble}},
+  \code{\link{gtcars}}, \code{\link{pizzaplace}},
+  \code{\link{sp500}}, \code{\link{sza}}
 }
 \concept{Datasets}
 \keyword{datasets}

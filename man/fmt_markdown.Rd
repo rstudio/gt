@@ -20,7 +20,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -95,18 +95,12 @@ tab_1 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
+  \code{\link{fmt_date}}, \code{\link{fmt_missing}},
+  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{Format Data}

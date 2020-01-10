@@ -269,7 +269,7 @@ create_heading_component <- function(data,
       paste_left("\\large ") %>%
       paste_right("\\\\ \n")
 
-    if (subtitle_defined) {
+    if (dt_heading_has_subtitle(data = data, context='latex')) {
 
       subtitle_row <-
         paste0(heading$subtitle, footnote_subtitle_marks) %>%

@@ -54,12 +54,9 @@ dplyr::glimpse(sza)
 
 }
 \seealso{
-Other Datasets: 
-\code{\link{countrypops}},
-\code{\link{exibble}},
-\code{\link{gtcars}},
-\code{\link{pizzaplace}},
-\code{\link{sp500}}
+Other Datasets: \code{\link{countrypops}},
+  \code{\link{exibble}}, \code{\link{gtcars}},
+  \code{\link{pizzaplace}}, \code{\link{sp500}}
 }
 \concept{Datasets}
 \keyword{datasets}

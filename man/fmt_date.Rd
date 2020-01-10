@@ -20,7 +20,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{date_style}{The date style to use. Supply a number (from \code{1} to \code{14})
 that corresponds to the preferred date style. Use \code{\link[=info_date_style]{info_date_style()}} to
@@ -39,14 +39,14 @@ ISO dates (all using the input date of \code{2000-02-29} in the example output
 dates):
 \enumerate{
 \item iso: \code{2000-02-29}
-\item wday_month_day_year: \verb{Tuesday, February 29, 2000}
-\item wd_m_day_year: \verb{Tue, Feb 29, 2000}
-\item wday_day_month_year: \verb{Tuesday 29 February 2000}
-\item month_day_year: \verb{February 29, 2000}
-\item m_day_year: \verb{Feb 29, 2000}
-\item day_m_year: \verb{29 Feb 2000}
-\item day_month_year: \verb{29 February 2000}
-\item day_month: \verb{29 February}
+\item wday_month_day_year: \code{Tuesday, February 29, 2000}
+\item wd_m_day_year: \code{Tue, Feb 29, 2000}
+\item wday_day_month_year: \code{Tuesday 29 February 2000}
+\item month_day_year: \code{February 29, 2000}
+\item m_day_year: \code{Feb 29, 2000}
+\item day_m_year: \code{29 Feb 2000}
+\item day_month_year: \code{29 February 2000}
+\item day_month: \code{29 February}
 \item year: \code{2000}
 \item month: \code{February}
 \item day: \code{29}
@@ -114,18 +114,12 @@ tab_2 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
+  \code{\link{fmt_markdown}}, \code{\link{fmt_missing}},
+  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{Format Data}

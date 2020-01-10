@@ -4,24 +4,11 @@
 \alias{fmt_currency}
 \title{Format values as currencies}
 \usage{
-fmt_currency(
-  data,
-  columns,
-  rows = NULL,
-  currency = "USD",
-  use_subunits = TRUE,
-  accounting = FALSE,
-  decimals = NULL,
-  use_seps = TRUE,
-  scale_by = 1,
-  suffixing = FALSE,
-  pattern = "{x}",
-  sep_mark = ",",
-  dec_mark = ".",
-  placement = "left",
-  incl_space = FALSE,
-  locale = NULL
-)
+fmt_currency(data, columns, rows = NULL, currency = "USD",
+  use_subunits = TRUE, accounting = FALSE, decimals = NULL,
+  use_seps = TRUE, scale_by = 1, suffixing = FALSE,
+  pattern = "{x}", sep_mark = ",", dec_mark = ".",
+  placement = "left", incl_space = FALSE, locale = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -37,7 +24,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
@@ -79,7 +66,7 @@ This value will be ignored if using any of the \code{suffixing} options (i.e.,
 where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \verb{1.92M}). This option can accept a
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can accept a
 logical value, where \code{FALSE} (the default) will not perform this
 transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
 billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
@@ -101,9 +88,9 @@ characters are taken to be string literals.}
 
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+of \code{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
 
 \item{placement}{The placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
@@ -203,18 +190,12 @@ tab_2 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_datetime}}, \code{\link{fmt_date}},
+  \code{\link{fmt_markdown}}, \code{\link{fmt_missing}},
+  \code{\link{fmt_number}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{Format Data}

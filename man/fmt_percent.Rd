@@ -4,20 +4,10 @@
 \alias{fmt_percent}
 \title{Format values as a percentage}
 \usage{
-fmt_percent(
-  data,
-  columns,
-  rows = NULL,
-  decimals = 2,
-  drop_trailing_zeros = FALSE,
-  use_seps = TRUE,
-  pattern = "{x}",
-  sep_mark = ",",
-  dec_mark = ".",
-  incl_space = FALSE,
-  placement = "right",
-  locale = NULL
-)
+fmt_percent(data, columns, rows = NULL, decimals = 2,
+  drop_trailing_zeros = FALSE, use_seps = TRUE, pattern = "{x}",
+  sep_mark = ",", dec_mark = ".", incl_space = FALSE,
+  placement = "right", locale = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -33,7 +23,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
@@ -51,9 +41,9 @@ characters are taken to be string literals.}
 
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+of \code{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
@@ -127,18 +117,12 @@ tab_1 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{fmt}}, \code{\link{text_transform}}
 }
 \concept{Format Data}

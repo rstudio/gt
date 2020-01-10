@@ -20,7 +20,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
 }
@@ -29,7 +29,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 The \code{fmt()} function provides greater control in formatting raw data values
-than any of the specialized \verb{fmt_*()} functions that are available in
+than any of the specialized \code{fmt_*()} functions that are available in
 \strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
 precision in targeting data cells, the \code{fns} argument allows you to define
 one or more functions for manipulating the raw data.
@@ -44,7 +44,7 @@ we recommended including the \code{default} function as a fallback if all contex
 aren't provided.
 }
 \details{
-As with all of the \verb{fmt_*()} functions, targeting of values is done through
+As with all of the \code{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
 entire columns are selected). A number of helper functions exist to make
 targeting more effective. Conditional formatting is possible by providing a
@@ -79,18 +79,12 @@ tab_1 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
+  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
+  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
+  \code{\link{text_transform}}
 }
 \concept{Format Data}

@@ -37,7 +37,7 @@ no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
 different spanner column labels). Thus, we can still easily distinguish
 between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
+\code{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
 \section{Figures}{
@@ -85,15 +85,11 @@ tab_2 <-
 
 }
 \seealso{
-Other Modify Columns: 
-\code{\link{cols_align}()},
-\code{\link{cols_hide}()},
-\code{\link{cols_merge_range}()},
-\code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
-\code{\link{cols_move_to_end}()},
-\code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
-\code{\link{cols_width}()}
+Other Modify Columns: \code{\link{cols_align}},
+  \code{\link{cols_hide}}, \code{\link{cols_merge_range}},
+  \code{\link{cols_merge_uncert}},
+  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_width}}
 }
 \concept{Modify Columns}

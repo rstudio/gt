@@ -31,9 +31,9 @@ header, within footnote text, etc.) we need to use \code{web_image()} within the
 By itself, the function creates an HTML image tag, so, the call
 \code{web_image("http://some.web.site/image.png")} evaluates to:
 
-\verb{<img src=\\"http://some.web.site/image.png\\" style=\\"height:30px;\\">}
+\code{<img src=\"http://some.web.site/image.png\" style=\"height:30px;\">}
 
-where a height of \verb{30px} is a default height chosen to work well within the
+where a height of \code{30px} is a default height chosen to work well within the
 heights of most table rows.
 }
 \section{Figures}{
@@ -114,9 +114,7 @@ tab_2 <-
 
 }
 \seealso{
-Other Image Addition Functions: 
-\code{\link{ggplot_image}()},
-\code{\link{local_image}()},
-\code{\link{test_image}()}
+Other Image Addition Functions: \code{\link{ggplot_image}},
+  \code{\link{local_image}}, \code{\link{test_image}}
 }
 \concept{Image Addition Functions}

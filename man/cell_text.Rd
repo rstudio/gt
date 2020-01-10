@@ -4,19 +4,9 @@
 \alias{cell_text}
 \title{Helper for defining custom text styles for table cells}
 \usage{
-cell_text(
-  color = NULL,
-  font = NULL,
-  size = NULL,
-  align = NULL,
-  v_align = NULL,
-  style = NULL,
-  weight = NULL,
-  stretch = NULL,
-  indent = NULL,
-  decorate = NULL,
-  transform = NULL
-)
+cell_text(color = NULL, font = NULL, size = NULL, align = NULL,
+  v_align = NULL, style = NULL, weight = NULL, stretch = NULL,
+  indent = NULL, decorate = NULL, transform = NULL)
 }
 \arguments{
 \item{color}{The text color.}
@@ -49,7 +39,7 @@ one of the following text-based keywords to describe the degree of
 condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 \code{"condensed"}, \code{"semi-condensed"}, \code{"normal"}, \code{"semi-expanded"},
 \code{"expanded"}, \code{"extra-expanded"}, or \code{"ultra-expanded"}. Alternatively, we
-can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
+can supply percentage values from \code{0\\\%} to \code{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
 \item{indent}{The indentation of the text. Can be provided as a number that
@@ -110,26 +100,18 @@ tab_1 <-
 
 }
 \seealso{
-Other Helper Functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cells_body}()},
-\code{\link{cells_column_labels}()},
-\code{\link{cells_column_spanners}()},
-\code{\link{cells_grand_summary}()},
-\code{\link{cells_row_groups}()},
-\code{\link{cells_stubhead}()},
-\code{\link{cells_stub}()},
-\code{\link{cells_summary}()},
-\code{\link{cells_title}()},
-\code{\link{currency}()},
-\code{\link{escape_latex}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{md}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()}
+Other Helper Functions: \code{\link{adjust_luminance}},
+  \code{\link{cell_borders}}, \code{\link{cell_fill}},
+  \code{\link{cells_body}},
+  \code{\link{cells_column_labels}},
+  \code{\link{cells_column_spanners}},
+  \code{\link{cells_grand_summary}},
+  \code{\link{cells_row_groups}},
+  \code{\link{cells_stubhead}}, \code{\link{cells_stub}},
+  \code{\link{cells_summary}}, \code{\link{cells_title}},
+  \code{\link{currency}}, \code{\link{escape_latex}},
+  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
+  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
+  \code{\link{random_id}}
 }
 \concept{Helper Functions}

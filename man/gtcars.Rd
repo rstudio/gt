@@ -59,12 +59,9 @@ dplyr::glimpse(gtcars)
 
 }
 \seealso{
-Other Datasets: 
-\code{\link{countrypops}},
-\code{\link{exibble}},
-\code{\link{pizzaplace}},
-\code{\link{sp500}},
-\code{\link{sza}}
+Other Datasets: \code{\link{countrypops}},
+  \code{\link{exibble}}, \code{\link{pizzaplace}},
+  \code{\link{sp500}}, \code{\link{sza}}
 }
 \concept{Datasets}
 \keyword{datasets}

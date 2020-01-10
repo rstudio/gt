@@ -4,20 +4,10 @@
 \alias{fmt_number}
 \title{Format numeric values}
 \usage{
-fmt_number(
-  data,
-  columns,
-  rows = NULL,
-  decimals = 2,
-  drop_trailing_zeros = FALSE,
-  use_seps = TRUE,
-  scale_by = 1,
-  suffixing = FALSE,
-  pattern = "{x}",
-  sep_mark = ",",
-  dec_mark = ".",
-  locale = NULL
-)
+fmt_number(data, columns, rows = NULL, decimals = 2,
+  drop_trailing_zeros = FALSE, use_seps = TRUE, scale_by = 1,
+  suffixing = FALSE, pattern = "{x}", sep_mark = ",",
+  dec_mark = ".", locale = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -33,7 +23,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\code{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
@@ -51,7 +41,7 @@ This value will be ignored if using any of the \code{suffixing} options (i.e.,
 where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \verb{1.92M}). This option can accept a
+(e.g., \code{1924000} can be transformed to \code{1.92M}). This option can accept a
 logical value, where \code{FALSE} (the default) will not perform this
 transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
 billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
@@ -73,9 +63,9 @@ characters are taken to be string literals.}
 
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+of \code{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -163,18 +153,12 @@ tab_2 <-
 
 }
 \seealso{
-Other Format Data: 
-\code{\link{data_color}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{text_transform}()}
+Other Format Data: \code{\link{data_color}},
+  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
+  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
+  \code{\link{fmt_missing}}, \code{\link{fmt_passthrough}},
+  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
+  \code{\link{fmt_time}}, \code{\link{fmt}},
+  \code{\link{text_transform}}
 }
 \concept{Format Data}

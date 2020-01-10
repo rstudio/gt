@@ -38,17 +38,24 @@ dt_heading_build <- function(data, context) {
   dt_heading_set(data = data, heading = heading)
 }
 
-dt_heading_has_title <- function(data) {
+dt_heading_has_title <- function(data, context='HTML') {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading$title) > 0 && !is.null(heading$title)
+  if(context == 'latex'){
+    length(heading$title) > 0 && !is.null(heading$title)
+  } else {
+    length(heading) > 0 && !is.null(heading$title)
+  }
 }
 
-dt_heading_has_subtitle <- function(data) {
+dt_heading_has_subtitle <- function(data, context='HTML') {
 
   heading <- dt_heading_get(data = data)
-
-  length(heading$subtitle) > 0 && !is.null(heading$subtitle)
+  if(context == 'latex'){
+    length(heading$subtitle) > 0 && !is.null(heading$subtitle)
+  } else {
+    length(heading) > 0 && !is.null(heading$subtitle)
+  }
 }
 

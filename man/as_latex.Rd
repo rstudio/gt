@@ -48,10 +48,8 @@ tab_latex \%>\%
 
 }
 \seealso{
-Other Export Functions: 
-\code{\link{as_raw_html}()},
-\code{\link{as_rtf}()},
-\code{\link{extract_summary}()},
-\code{\link{gtsave}()}
+Other Export Functions: \code{\link{as_raw_html}},
+  \code{\link{as_rtf}}, \code{\link{extract_summary}},
+  \code{\link{gtsave}}
 }
 \concept{Export Functions}

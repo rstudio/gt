@@ -4,7 +4,8 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = c("auto", "left", "center", "right"), columns = TRUE)
+cols_align(data, align = c("auto", "left", "center", "right"),
+  columns = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -63,15 +64,11 @@ tab_1 <-
 
 }
 \seealso{
-Other Modify Columns: 
-\code{\link{cols_hide}()},
-\code{\link{cols_label}()},
-\code{\link{cols_merge_range}()},
-\code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
-\code{\link{cols_move_to_end}()},
-\code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
-\code{\link{cols_width}()}
+Other Modify Columns: \code{\link{cols_hide}},
+  \code{\link{cols_label}}, \code{\link{cols_merge_range}},
+  \code{\link{cols_merge_uncert}},
+  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
+  \code{\link{cols_move_to_start}},
+  \code{\link{cols_move}}, \code{\link{cols_width}}
 }
 \concept{Modify Columns}
