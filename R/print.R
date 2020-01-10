@@ -81,11 +81,7 @@ as.tags.gt_tbl <- function(x, ...) {
   # Attach the dependency to the HTML table
   html_tbl <-
     htmltools::tagList(
-      htmltools::tags$head(
-        htmltools::tags$style(
-          htmltools::HTML(css)
-        )
-      ),
+      htmltools::tags$style(htmltools::HTML(css)),
       htmltools::tags$div(
         id = id,
         style = htmltools::css(
@@ -94,7 +90,8 @@ as.tags.gt_tbl <- function(x, ...) {
           width = container_width,
           height = container_height
         ),
-        htmltools::HTML(html_table))
+        htmltools::HTML(html_table)
+      )
     )
 
   html_tbl

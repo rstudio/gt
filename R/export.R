@@ -263,7 +263,9 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param inline_css An option to supply styles to table elements as inlined CSS
-#'   styles.
+#'   styles. This is useful when including the table HTML as part of an HTML
+#'   email message body, since inlined styles are largely supported in email
+#'   clients over using CSS in a `<style>` block.
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
