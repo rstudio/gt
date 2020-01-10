@@ -25,10 +25,6 @@ diamonds %>%
   filter(cut != "Fair", carat < 3) %>%
   ggplot() +
   geom_point(aes(x = carat, y = mean_price)) +
-  stat_smooth(
-    aes(x = carat, y = mean_price),
-    method = "gam"
-  ) +
   facet_wrap(facets = vars(cut)) +
   labs(
     title = "Diamond Prices",
@@ -39,7 +35,7 @@ diamonds %>%
   scale_y_continuous(labels = scales::dollar)
 ```
 
-The above created a plot. Below is code that generates a **gt** table with the diamond data:
+The above created a plot. Below is code that generates a **gt** table with the diamond data. Note that we need to use the `as_raw_html()` function on the **gt** object to ensure that styles are preserved when emailing.
 
 ```{r diamonds_table}
 
@@ -62,7 +58,8 @@ diamonds %>%
     columns = vars(price),
     currency = "USD",
     decimals = 0
-  )
+  ) %>%
+  as_raw_html()
 ```
 
 We can create an email using **RStudio Connect**, one that aligns with the content from this report. We do this with the `render_connect_email()` and `attach_connect_email()` functions from the **blastula** package. The email subdocument (`"connect-example-email.Rmd"`) is used to craft the contents of the email, drawing upon results available in this document.

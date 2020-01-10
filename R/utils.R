@@ -739,7 +739,7 @@ inline_html_styles <- function(html, css_tbl) {
 
     class_names <-
       matching_css_style %>%
-      stringr::str_extract("(?<=\\\").*(?=\\\")")
+      stringr::str_extract("(?<=\\\").*?(?=\\\")")
 
     existing_style <-
       matching_css_style %>%
@@ -768,7 +768,7 @@ inline_html_styles <- function(html, css_tbl) {
     class_names <-
       html %>%
       stringr::str_extract(pattern = cls_pattern) %>%
-      stringr::str_extract("(?<=\\\").*(?=\\\")")
+      stringr::str_extract("(?<=\\\").*?(?=\\\")")
 
     if (is.na(class_names)) {
       break
