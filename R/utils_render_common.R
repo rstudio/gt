@@ -413,6 +413,8 @@ create_summary_rows <- function(n_rows,
       list_of_summaries$summary_df_display_list[[group]] %>%
       as.data.frame(stringsAsFactors = FALSE)
 
+    if (!"rowname" %in% summary_vars) summary_vars <- c("rowname", summary_vars)
+
     summary_df <-
       summary_df[, summary_vars]
 
