@@ -231,7 +231,7 @@ create_body_component_l <- function(data) {
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
 
   if (stub_available) {
-    default_vars <- c("::rowname", default_vars)
+    body_vars <- c("::rowname", default_vars)
 
     body <-
       dt_stub_df_get(data = data) %>%
@@ -242,7 +242,7 @@ create_body_component_l <- function(data) {
 
 
   # Split `body_content` by slices of rows and create data rows
-  body_content <- as.vector(t(body[, default_vars]))
+  body_content <- as.vector(t(body[, body_vars]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
   data_rows <- create_data_rows(n_rows, row_splits, context = "latex")
 
@@ -254,6 +254,7 @@ create_body_component_l <- function(data) {
       groups_rows_df = groups_rows_df,
       stub_available = stub_available,
       summaries_present = summaries_present,
+      summary_vars = default_vars,
       context = "latex"
     )
 

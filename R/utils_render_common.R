@@ -389,6 +389,7 @@ create_summary_rows <- function(n_rows,
                                 groups_rows_df,
                                 stub_available,
                                 summaries_present,
+                                summary_vars,
                                 context = "latex") {
 
   lapply(seq(n_rows), function(x) {
@@ -411,6 +412,9 @@ create_summary_rows <- function(n_rows,
     summary_df <-
       list_of_summaries$summary_df_display_list[[group]] %>%
       as.data.frame(stringsAsFactors = FALSE)
+
+    summary_df <-
+      summary_df[, summary_vars]
 
     body_content_summary <-
       as.vector(t(summary_df))
