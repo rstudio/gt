@@ -238,6 +238,8 @@ create_body_component_l <- function(data) {
       dplyr::select(rowname) %>%
       dplyr::rename(`::rowname` = rowname) %>%
       cbind(body)
+  } else {
+    body_vars <- default_vars
   }
 
 
