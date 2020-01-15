@@ -119,4 +119,20 @@ gt_default_options <- list(
 
   invisible()
 }
+
+.onAttach <- function(libname, pkgname) {
+  setHook(packageEvent("gt", "attach"), function(...) {
+    packageStartupMessage(rule())
+    packageStartupMessage(
+      "You have loaded gt after mrggt - this is likely ",
+      "to cause problems.\nIf you need functions from both gt and mrggt, ",
+      "please load gt first, then mrggt:\nlibrary(gt); library(mrggt)"
+    )
+    packageStartupMessage(rule())
+  })
+}
+
+.onDetach <- function(libpath) {
+  setHook(packageEvent("gt", "attach"), NULL, "replace")
+}
 #nocov end

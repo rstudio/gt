@@ -1,5 +1,5 @@
 Type: Package
-Package: gt
+Package: mrggt
 Version: 0.1.0
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data using with an easy-to-use

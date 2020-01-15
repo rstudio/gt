@@ -364,6 +364,10 @@ as_latex <- function(data) {
 
   # Composition of LaTeX ----------------------------------------------------
 
+  #Create a LaTeX fragment that defines the possible colors being used in table
+  styles_tbl <- dt_styles_get(data = data)
+  color_def <- define_colors_latex(styles_tbl)
+
   # Create a LaTeX fragment for the start of the table
   table_start <- create_table_start_l(data = data)
 
@@ -399,13 +403,14 @@ as_latex <- function(data) {
 
   # Compose the LaTeX table
   paste0(
+    color_def,
     table_start,
     heading_component,
     columns_component,
     body_component,
-    table_end,
     footnotes_component,
     source_notes_component,
+    table_end,
     collapse = ""
   ) %>%
     knitr::asis_output(meta = latex_packages)

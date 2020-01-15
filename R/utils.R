@@ -627,7 +627,7 @@ derive_summary_label <- function(fn) {
 #' this package.
 #' @noRd
 system_file <- function(file) {
-  system.file(file, package = "gt")
+  system.file(file, package = "mrggt")
 }
 #nocov end
 
