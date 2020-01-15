@@ -90,7 +90,8 @@ as.tags.gt_tbl <- function(x, ...) {
           width = container_width,
           height = container_height
         ),
-        htmltools::HTML(html_table))
+        htmltools::HTML(html_table)
+      )
     )
 
   html_tbl
