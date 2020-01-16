@@ -11,6 +11,7 @@
 
 # ----------------------------- Build Style by location ------------------------------------
 ## row_groups
+#' @noRd
 style_group_rows_latex <- function(group_name, styles_df){
   to_style <- styles_df[styles_df$locname == 'row_groups',]
   if(group_name %in% to_style$grpname){
@@ -21,6 +22,7 @@ style_group_rows_latex <- function(group_name, styles_df){
 }
 
 ## stubhead
+#' @noRd
 style_stubhead_l <- function(style_df, stubhead) {
   to_style <- style_df[style_df$locname == 'stubhead', ]
   if(dim(to_style)[1] > 0){
@@ -31,6 +33,7 @@ style_stubhead_l <- function(style_df, stubhead) {
 }
 
 ## columns_columns
+#' @noRd
 latex_style_headings <- function(label, styles_df, key) {
   to_style <- styles_df[styles_df$locname == 'columns_columns', ]
   changed_label <- key[[label]]
@@ -42,6 +45,7 @@ latex_style_headings <- function(label, styles_df, key) {
 }
 
 ## columns_groups
+#' @noRd
 latex_style_spanners <- function(label, styles_df) {
   to_style <- styles_df[styles_df$locname == 'columns_groups', ]
   if(label %in% to_style$grpname){
@@ -58,6 +62,7 @@ latex_style_spanners <- function(label, styles_df) {
 }
 
 ## data & stub
+#' @noRd
 style_data_latex <- function(row_splits, styles_df){
   to_style <- styles_df[styles_df$locname == 'data',]
   if(dim(to_style)[1] > 0){
@@ -86,6 +91,7 @@ style_data_latex <- function(row_splits, styles_df){
 
 
 # -----------------------------  Font Size Helper Functions  -------------------------------
+#' @noRd
 latex_size_preset_values <- function(stringv){
   sizes <-
     list(
@@ -102,7 +108,7 @@ latex_size_preset_values <- function(stringv){
   sizes[[best_match]]
 }
 
-
+#' @noRd
 latex_size_custom_values <- function(floatv){
   baselineskip <- as.character(1.2*floatv)
   size <- as.character(floatv)
@@ -110,7 +116,7 @@ latex_size_custom_values <- function(floatv){
   return(rlang::quo(paste0(exp2, x, '}')))
 }
 
-
+#' @noRd
 latex_format_text_size = function(string){
   stripped <- gsub('px', '', string, fixed=TRUE)
   dblv <- suppressWarnings(as.double(stripped))
@@ -122,13 +128,14 @@ latex_format_text_size = function(string){
   func
 }
 
-
+#' @noRd
 latex_condensed_custom_values <- function(floatv){
   percent_condensed <- as.character(floatv/100)
   exp2 <- paste0('\\scalebox{', percent_condensed , '}{')
   return(rlang::quo(paste0(exp2, x, '}')))
 }
 
+#' @noRd
 latex_condensed_preset <- function(stringv){
   sizes <-
     list(
@@ -146,7 +153,7 @@ latex_condensed_preset <- function(stringv){
   sizes[[best_match]]
 }
 
-
+#' @noRd
 latex_format_condensed_size <- function(string){
   stripped <- gsub('%', '', string, fixed=TRUE)
   dblv <- suppressWarnings(as.double(stripped))
@@ -161,6 +168,7 @@ latex_format_condensed_size <- function(string){
 
 # ------------------------  Highlight/Text Color Helper Functions  -------------------------
 
+#' @noRd
 latex_style_color <- function(color, cell_type){
   if(cell_type == 'cell_text'){
     if(startsWith(color, '#')){
@@ -177,11 +185,13 @@ latex_style_color <- function(color, cell_type){
   }
 }
 
+#' @noRd
 create_color_definition <- function(color){
   s <- col2rgb(color)
   paste0("\\definecolor{", gsub('#', '', color), "}{rgb}{", s[1]/255, ",", s[2]/255, ",", s[3]/255, "} \n")
 }
 
+#' @noRd
 define_colors_latex <- function(styles_df){
   v<-purrr::flatten(purrr::flatten(styles_df$styles))
   x <- as.data.frame(list(names = names(v), values = unlist(v, use.names=FALSE)))
@@ -196,6 +206,7 @@ define_colors_latex <- function(styles_df){
 # ------------------------------------------------------------------------------------------
 
 #### ------------------------LaTeX main Style Functions ------------------------------------
+#' @noRd
 latex_style_function_list <- function() {
   weight <- list(bold = rlang::quo(paste0('\\textbf{', x, '}')),
                  bolder = rlang::quo(paste0('\\textbf{', x, '}')))
@@ -226,7 +237,7 @@ latex_style_function_list <- function() {
   cell_styling
 }
 
-
+#' @noRd
 get_latex_function_styles <- function(styles_list) {
   cell_styling <- latex_style_function_list()
   operation_vec <- list(NA)
@@ -251,7 +262,7 @@ get_latex_function_styles <- function(styles_list) {
   operation_vec
 }
 
-
+#' @noRd
 latex_style_it <- function(value, styles) {
   funclist <- get_latex_function_styles(styles)
   funclist <- funclist[!is.na(funclist)]
@@ -264,24 +275,33 @@ latex_style_it <- function(value, styles) {
 
 # ------------------------------------------------------------------------------------------
 # --------------------------------  LaTeX Math  --------------------------------------------
-
+#' @noRd
 fmt_latex_symbols <- function(x){
   if(grepl('%', x)){
     x <- gsub('%', '\\%', x, fixed = TRUE)
   }
+  if(grepl('CHECKMARK', x)){
+    x <- gsub('CHECKMARK', '\\checkmark', x, fixed = TRUE)
+  }
+  if(grepl('>', x)){
+    x <- gsub('>', '$>$', x, fixed = TRUE)
+  }
+  if(grepl('<', x)){
+    x <- gsub('<', '$<$', x, fixed = TRUE)
+  }
   x
 }
 
+#' @noRd
 fmt_latex_math <- function(x){
   if(grepl('!@', x)){
     vect <- unlist(qdapRegex::rm_between(x, '<', '>', extract=TRUE))
     swap <- list('!@' = '',
-                 '*' = '\\',
-                 '<' = '',
-                 '>' = '')
+                 '*' = '\\')
     if(length(vect[!is.na(vect)]) > 0){
     text_vect <- purrr::map_chr(vect, function(.){paste0('\\text{', ., '}')})
-    names(text_vect) <- vect
+    with_indicator <- purrr::map_chr(vect, function(.){paste0('<', ., '>')})
+    names(text_vect) <- with_indicator
     swap <- append(text_vect, swap)
     }
     for(i in names(swap)){
@@ -290,4 +310,39 @@ fmt_latex_math <- function(x){
     return(paste0('$', x, '$'))
   }
   fmt_latex_symbols(x)
+}
+
+
+latex_shrink <- function(latex_code, percent_shrink) {
+  #Shrink the column widths
+  tex_split <-
+    unlist(stringr::str_split(latex_code %>% as.character(), '\n'))
+  col_width_row <-
+    tex_split[startsWith(tex_split, '\\begin{longtable}')]
+  shrink_width <-
+    as.double(unlist(
+      qdapRegex::rm_between(col_width_row, 'p{', 'cm}', extract = TRUE)
+    )) * percent_shrink
+  new_col_row <-
+    paste0('\\begin{longtable}{',
+           paste(paste0(
+             "p{", as.character(shrink_width), "cm}"
+           ), collapse = ''),
+           "}")
+  tex_split[startsWith(tex_split, '\\begin{longtable}')] <-
+    new_col_row
+
+  #Shrink the caption width
+  cap_width_row <-
+    tex_split[startsWith(tex_split, '\\setlength\\LTcapwidth')]
+  shrink_cap <-
+    as.double(unlist(
+      qdapRegex::rm_between(cap_width_row, '{', 'cm}', extract = TRUE)
+    )) * percent_shrink
+  new_cap_row <-
+    paste0('\\setlength\\LTcapwidth{', shrink_cap, 'cm}')
+  tex_split[startsWith(tex_split, '\\setlength\\LTcapwidth')] <-
+    new_cap_row
+
+  paste(tex_split, collapse = '\n')
 }

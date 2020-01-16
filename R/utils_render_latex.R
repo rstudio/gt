@@ -38,11 +38,13 @@ latex_heading_row <- function(content) {
 #' @noRd
 latex_group_row <- function(group_name,
                             top_border = TRUE,
-                            bottom_border = TRUE) {
+                            bottom_border = TRUE,
+                            n_cols) {
 
+  multi <- paste0("\\multicolumn{", n_cols, "}{l}{")
   paste0(
     ifelse(top_border, "\\midrule\n", ""),
-    "\\multicolumn{1}{l}{", group_name,
+    multi, group_name,
     "} \\\\ \n",
     ifelse(bottom_border, "\\midrule\n", ""),
     collapse = "")
@@ -263,7 +265,7 @@ create_body_component_l <- function(data) {
   }
 
   groups_rows_df$group_label <- purrr::map_chr(groups_rows_df$group_label, function(.){style_group_rows_latex(fmt_latex_math(.),  styles_tbl)})
-  group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
+  group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex", n_cols = n_cols)
 
   if (stub_available) {
     default_vars <- c("::rowname", default_vars)
