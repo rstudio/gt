@@ -48,7 +48,7 @@ dt_options_init <- function(data) {
     "heading_border_lr_color",            TRUE,  "heading",          "value",   "#D3D3D3",
     "column_labels_background_color",     TRUE,  "column_labels",    "value",   NA_character_,
     "column_labels_font_size",            TRUE,  "column_labels",    "px",      "100%",
-    "column_labels_font_weight",          TRUE,  "column_labels",    "value",   "initial",
+    "column_labels_font_weight",          TRUE,  "column_labels",    "value",   "normal",
     "column_labels_text_transform",       TRUE,  "column_labels",    "value",   "inherit",
     "column_labels_border_top_style",     TRUE,  "column_labels",    "value",   "solid",
     "column_labels_border_top_width",     TRUE,  "column_labels",    "px",      "2px",

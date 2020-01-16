@@ -428,7 +428,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "column_labels_font_weight"),
     dt_options_get_value(data = tbl_html, option = "column_labels_font_weight")
   ) %>%
-    expect_equal(c("initial", "bold"))
+    expect_equal(c("normal", "bold"))
 
   # Modify the `column_labels.text_transform`
   tbl_html <- data %>% tab_options(column_labels.text_transform = "uppercase")

@@ -3,7 +3,6 @@ library(blastula)
 library(tidyverse)
 library(glue)
 library(scales)
-library(emo)
 
 # Create short labels for months (displays
 # better for small plots in email messages)
@@ -124,7 +123,7 @@ pizza_tab_email <-
     income = "Income"
   ) %>%
   tab_header(
-    title = paste0("My ", emo::ji("pizza"), " sales in 2015"),
+    title = paste0("My pizza sales in 2015"),
     subtitle = "Split by the type of pizza and the size"
   ) %>%
   as_raw_html()

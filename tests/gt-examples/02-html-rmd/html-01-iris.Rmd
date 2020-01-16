@@ -26,4 +26,5 @@ gt(data = iris) %>%
   ) %>%
   tab_source_note(
     source_note = md("The data were collected by *Anderson* (1935).")
+  )
 ```
