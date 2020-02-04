@@ -306,7 +306,7 @@ context_missing_text <- function(missing_text,
                missing_text
              }
            },
-         latex = missing_text,
+         latex =
          {
            if (missing_text == "---") {
              "\u2014"
