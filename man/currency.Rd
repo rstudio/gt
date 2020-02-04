@@ -13,14 +13,14 @@ currency symbol text as the values.}
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
 \value{
-a list object of class \code{gt_currency}.
+A list object of class \code{gt_currency}.
 }
 \description{
 The \code{currency()} helper function makes it easy to specify a context-aware
-currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \pkg{gt}
-can render tables to several output formats, \code{currency()} allows for
-different variations of the custom symbol based on the output context (which
-are \code{html}, \code{latex}, \code{rtf}, and \code{default}). The number of decimal places for
+currency symbol to \code{currency} argument of \code{\link[=fmt_currency]{fmt_currency()}}. Since \strong{gt} can
+render tables to several output formats, \code{currency()} allows for different
+variations of the custom symbol based on the output context (which are
+\code{html}, \code{latex}, \code{rtf}, and \code{default}). The number of decimal places for
 the custom currency defaults to \code{2}, however, a value set for the \code{decimals}
 argument of \code{\link[=fmt_currency]{fmt_currency()}} will take precedence.
 }
@@ -36,6 +36,16 @@ string without a name, it will be taken as the \code{default} (i.e.,
 we were to specify currency strings for multiple output contexts, names are
 required each and every context.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_currency_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-14
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `currency` column to have
@@ -54,19 +64,26 @@ tab_1 <-
 
 }
 \seealso{
-Other helper functions: 
+Other Helper Functions:
+\code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
-\code{\link{cells_styles}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
-\code{\link{location_cells}},
-\code{\link{location_colors}()},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{helper functions}
+\concept{Helper Functions}

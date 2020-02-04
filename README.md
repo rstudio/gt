@@ -26,8 +26,12 @@ These include the *table header*, the *stub*, the *column labels* and
 </p>
 
 It all begins with preprocessed **table data** (be it a tibble or a data
-frame). You decide how to compose your **gt table** with the elements
-you need for the task at hand.
+frame). You then decide how to compose your **gt table** with the
+elements and formatting you need for the task at hand. Finally, the
+table is rendered by printing it at the console, including it in an R
+Markdown document, or exporting to a file using `gtsave()`. Currently,
+**gt** supports **HTML** output, with **LaTeX** and **RTF** planned for
+the future.
 
 <p align="center">
 
@@ -37,8 +41,8 @@ you need for the task at hand.
 
 The **gt** package is designed to be both straightforward yet powerful.
 The emphasis is on simple functions for the everyday display table
-needs. Here is a brief example of how to use **gt** to create an HTML
-**gt Table** from the included `sp500` dataset:
+needs. Here is a brief example of how to use **gt** to create a table
+from the included `sp500` dataset:
 
 ``` r
 library(gt)
@@ -90,15 +94,16 @@ for experimenting with the package functions.
 </p>
 
 Beyond this simple example, there are many functions available in **gt**
-that make it possible to create highly customized tables.
+for creating super-customized tables.
 
 <p align="center">
 
-<img src="man/figures/gt_functions.svg" width="100%">
+<img src="man/figures/gt_function_reference.png" width="100%">
 
 </p>
 
-Want to try this out? Take the **gt** Test Drive on RStudio Cloud:
+Want to try this out? Take the **gt** Test Drive on **RStudio Cloud**.
+It’s full of ready-to-run examples.
 
 <p align="center">
 

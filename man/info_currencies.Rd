@@ -40,6 +40,11 @@ supplied letter.
 \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-3
+}
+
 \examples{
 # Get a table of info on all of
 # the currencies where the three-
@@ -53,11 +58,11 @@ tab_2 <- info_currencies(type = "symbol")
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_date_style}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_preset_colorized}()},
 \code{\link{info_time_style}()}
 }
-\concept{information functions}
+\concept{Information Functions}

@@ -2,6 +2,7 @@
 #'
 #' Upgrade a `cells_*` object to a `list()` if only a single instance is
 #' provided.
+#'
 #' @param locations Any `cells_*` object.
 #' @noRd
 as_locations <- function(locations) {
@@ -212,7 +213,7 @@ resolve_location.resolved <- function(loc, data) {
   loc
 }
 
-resolve_location.cells_data <- function(loc, data) {
+resolve_location.cells_body <- function(loc, data) {
 
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
@@ -288,10 +289,10 @@ to_output_location.output_relative <- function(loc, data) {
   loc
 }
 
-to_output_location.cells_data <- function(loc, data) {
+to_output_location.cells_body <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
-  groups <- dt_stub_groups_get(data = data)
+  groups <- dt_row_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 
@@ -309,7 +310,7 @@ to_output_location.cells_data <- function(loc, data) {
 to_output_location.cells_stub <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
-  groups <- dt_stub_groups_get(data = data)
+  groups <- dt_row_groups_get(data = data)
 
   loc <- resolve_location(loc = loc, data = data)
 

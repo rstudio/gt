@@ -19,7 +19,7 @@ An object of class \code{gt_tbl}.
 \description{
 We can easily move set of columns to the beginning of the column series and
 we only need to specify which \code{columns}. It's possible to do this upstream of
-\pkg{gt}'s API, however, it is easier with this function and it presents less
+\strong{gt}, however, it is easier with this function and it presents less
 possibility for error. The ordering of the \code{columns} that are moved to the
 start is preserved (same with the ordering of all other columns in the
 table).
@@ -36,6 +36,11 @@ column.
 \if{html}{\figure{man_cols_move_to_start_1.svg}{options: width=100\%}}
 
 \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+4-4
 }
 
 \examples{
@@ -67,7 +72,7 @@ tab_2 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -76,7 +81,6 @@ Other column modification functions:
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

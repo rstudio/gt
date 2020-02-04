@@ -26,11 +26,11 @@ An object of class \code{gt_tbl}.
 The individual alignments of columns (which includes the column labels and
 all of their data cells) can be modified. We have the option to align text to
 the \code{left}, the \code{center}, and the \code{right}. In a less explicit manner, we can
-allow \pkg{gt} to automatically choose the alignment of each column based on
+allow \strong{gt} to automatically choose the alignment of each column based on
 the data type (with the \code{auto} option).
 }
 \details{
-When you create a \pkg{gt} table object using \code{\link[=gt]{gt()}}, automatic alignment of
+When you create a \strong{gt} table object using \code{\link[=gt]{gt()}}, automatic alignment of
 column labels and their data cells is performed. By default, left-alignment
 is applied to columns of class \code{character}, \code{Date}, or \code{POSIXct};
 center-alignment is for columns of class \code{logical}, \code{factor}, or \code{list}; and
@@ -39,6 +39,11 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 \section{Figures}{
 
 \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+4-1
 }
 
 \examples{
@@ -58,7 +63,7 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_range}()},
@@ -67,7 +72,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

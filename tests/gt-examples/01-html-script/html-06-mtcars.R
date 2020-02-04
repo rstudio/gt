@@ -1,7 +1,6 @@
 library(gt)
 
-# Create a display table based on `mtcars`; Motor Trend Car Road Tests
-
+# Create a display table based on `mtcars`
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_align(
@@ -59,25 +58,25 @@ mtcars_tbl <-
   tab_stubhead(label = md("*car*")) %>%
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(qsec),
       rows = "Ford Pantera L")
   ) %>%
   tab_footnote(
     footnote = "Massive hp.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(hp),
       rows = "Maserati Bora")
   ) %>%
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    locations = cells_data(
-      columns = 1,
+    locations = cells_body(
+      columns = vars(mpg),
       rows = "Toyota Corolla")
   ) %>%
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(qsec),
       rows = "Merc 230")
   ) %>%

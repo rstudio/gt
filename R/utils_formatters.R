@@ -645,6 +645,10 @@ num_fmt_factory <- function(context,
     # Create a possibly shorter vector of non-NA `x` values
     x_vals <- x[non_na_x]
 
+    if (length(x_vals) == 0) {
+      return(character(0))
+    }
+
     # Apply a series of transformations to `x_str_vals`
     x_str_vals <-
       x_vals %>%

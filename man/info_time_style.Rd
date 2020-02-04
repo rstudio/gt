@@ -18,6 +18,11 @@ number codes, the format names, and example outputs using a fixed time
 \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-2
+}
+
 \examples{
 # Get a table of info on the different
 # time-formatting styles (which are used
@@ -27,11 +32,11 @@ tab_1 <- info_time_style()
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_preset_colorized}()}
 }
-\concept{information functions}
+\concept{Information Functions}

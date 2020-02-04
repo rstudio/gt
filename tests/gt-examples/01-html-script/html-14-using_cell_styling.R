@@ -1,19 +1,19 @@
 library(gt)
+library(tidyverse)
 
 # Create a display table where individual table cells are styled
-
-# Input table
 tbl <-
   dplyr::tribble(
-    ~groupname, ~rowname, ~value,  ~value_2,
-    "A",        "1",      361.1,   260.1,
-    "A",        "2",      184.3,   84.4,
-    "A",        "3",      342.3,   126.3,
-    "A",        "4",      234.9,   37.1,
-    "B",        "1",      190.9,   832.5,
-    "B",        "2",      743.3,   281.2,
-    "B",        "3",      252.3,   732.5,
-    "B",        "4",      344.7,   281.2)
+    ~rowname, ~value,  ~value_2,
+    "1",      361.1,   260.1,
+    "2",      184.3,   84.4,
+    "3",      342.3,   126.3,
+    "4",      234.9,   37.1,
+    "1",      190.9,   832.5,
+    "2",      743.3,   281.2,
+    "3",      252.3,   732.5,
+    "4",      344.7,   281.2
+  )
 
 # Create a display table
 cell_styles_tbl <-
@@ -28,9 +28,10 @@ cell_styles_tbl <-
       cell_fill(color = "orange"),
       cell_text(color = "white")
     ),
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(value, value_2),
-      rows = 1)
+      rows = 1
+    )
   )
 
 cell_styles_tbl

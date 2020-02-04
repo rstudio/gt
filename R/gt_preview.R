@@ -1,11 +1,11 @@
-#' Preview a \pkg{gt} table object
+#' Preview a **gt** table object
 #'
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
-#' arguments). It's not advised to use additional \pkg{gt} API functions to
-#' further modify the output of `gt_preview()`. Furthermore, you cannot pass a
-#' \pkg{gt} object to `gt_preview()`.
+#' arguments). It's not advised to use additional **gt** functions to further
+#' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
+#' object to `gt_preview()`.
 #'
 #' Any grouped data or magic columns such as `rowname` and `groupname` will be
 #' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
@@ -22,7 +22,9 @@
 #'   table.
 #' @param incl_rownums An option to include the row numbers for `data` in the
 #'   table stub. By default, this is `TRUE`.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table
 #' # preview (with only a few of its
@@ -36,7 +38,10 @@
 #' @section Figures:
 #' \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
 #'
-#' @family table-part creation/modification functions
+#' @family Create Table
+#' @section Function ID:
+#' 1-2
+#'
 #' @export
 gt_preview <- function(data,
                        top_n = 5,
@@ -125,7 +130,7 @@ gt_preview <- function(data,
       gt_tbl %>%
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
-        locations = cells_data(columns = visible_vars, rows = ellipsis_row)
+        locations = cells_body(columns = visible_vars, rows = ellipsis_row)
       )
 
     if (isTRUE(incl_rownums)) {

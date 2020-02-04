@@ -30,22 +30,20 @@ An object of class \code{gt_tbl}.
 \description{
 The \code{fmt()} function provides greater control in formatting raw data values
 than any of the specialized \verb{fmt_*()} functions that are available in
-\pkg{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
+\strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
 precision in targeting data cells, the \code{fns} argument allows you to define
 one or more functions for manipulating the raw data.
-}
-\details{
 If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
-
 If you require formatting of \code{x} that depends on the output format, a list of
 functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
 This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
 we recommended including the \code{default} function as a fallback if all contexts
 aren't provided.
-
+}
+\details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
 entire columns are selected). A number of helper functions exist to make
@@ -56,6 +54,11 @@ more information on this.
 \section{Figures}{
 
 \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-11
 }
 
 \examples{
@@ -76,7 +79,7 @@ tab_1 <-
 
 }
 \seealso{
-Other data formatting functions: 
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -90,4 +93,4 @@ Other data formatting functions:
 \code{\link{fmt_time}()},
 \code{\link{text_transform}()}
 }
-\concept{data formatting functions}
+\concept{Format Data}

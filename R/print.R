@@ -1,8 +1,13 @@
 #' Print the table
 #'
 #' This facilitates printing of the HTML table to the R console.
+#'
 #' @param x An object of class `gt_tbl`.
+#' @param ... Any additional parameters.
+#' @param view The value for `print()`s `browse` argument.
+#'
 #' @keywords internal
+#'
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
@@ -20,8 +25,12 @@ knitr_is_rtf_output <- function() {
 #' Knit print the table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
+#'
 #' @param x An object of class `gt_tbl`.
+#' @param ... Any additional parameters.
+#'
 #' @keywords internal
+#' @noRd
 knit_print.gt_tbl <- function(x, ...) {
 
   if (knitr_is_rtf_output()) {
@@ -37,15 +46,16 @@ knit_print.gt_tbl <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
-#' Convert a \pkg{gt} table to an \pkg{htmltools} `tagList`
+#' Convert a **gt** table to an **htmltools** `tagList`
 #'
-#' This converts a \pkg{gt} table object to an \pkg{htmltools}
+#' This converts a **gt** table object to an **htmltools**
 #' [htmltools::tagList()] object. The returned object is of the `shiny.tag.list`
 #' class and using `as.character()` with that will render the HTML, resulting in
 #' a length 1 character vector that contains the HTML table.
 #'
 #' @param x Object to be converted.
 #' @param ... Any additional parameters.
+#'
 #' @keywords internal
 #' @noRd
 as.tags.gt_tbl <- function(x, ...) {
@@ -80,7 +90,8 @@ as.tags.gt_tbl <- function(x, ...) {
           width = container_width,
           height = container_height
         ),
-        htmltools::HTML(html_table))
+        htmltools::HTML(html_table)
+      )
     )
 
   html_tbl

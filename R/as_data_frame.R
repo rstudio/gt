@@ -1,3 +1,12 @@
+#' Transform a **gt** object to a data frame
+#'
+#' This facilitates conversion of the `gt_tbl` object to a data frame.
+#'
+#' @param x An object of class `gt_tbl`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#'
 #' @export
 as.data.frame.gt_tbl <- function(x, ...) {
 

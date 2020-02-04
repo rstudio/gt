@@ -33,19 +33,19 @@ data <-
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
-    locations = cells_data(columns = 1, rows = 1)
+    locations = cells_body(columns = 1, rows = 1)
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
-    locations = cells_data(columns = 2, rows = 2)
+    locations = cells_body(columns = 2, rows = 2)
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
-    locations = cells_data(columns = 3, rows = 3)
+    locations = cells_body(columns = 3, rows = 3)
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
-    locations = cells_data(columns = 4, rows = 4)
+    locations = cells_body(columns = 4, rows = 4)
   ) %>%
   tab_source_note("A source note for the table.")
 
@@ -428,7 +428,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
   c(dt_options_get_value(data = data, option = "column_labels_font_weight"),
     dt_options_get_value(data = tbl_html, option = "column_labels_font_weight")
   ) %>%
-    expect_equal(c("initial", "bold"))
+    expect_equal(c("normal", "bold"))
 
   # Modify the `column_labels.text_transform`
   tbl_html <- data %>% tab_options(column_labels.text_transform = "uppercase")

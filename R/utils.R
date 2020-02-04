@@ -472,6 +472,7 @@ num_suffix <- function(x,
   # index here
   i <- floor(log(abs(x), base = base))
   i <- pmin(i, length(suffixes))
+  i <- pmax(i, 0)
 
   # Replace any -Inf, Inf, or zero values
   # with NA (required for the `non_na_index()`
@@ -738,7 +739,7 @@ inline_html_styles <- function(html, css_tbl) {
 
     class_names <-
       matching_css_style %>%
-      stringr::str_extract("(?<=\\\").*(?=\\\")")
+      stringr::str_extract("(?<=\\\").*?(?=\\\")")
 
     existing_style <-
       matching_css_style %>%
@@ -767,7 +768,7 @@ inline_html_styles <- function(html, css_tbl) {
     class_names <-
       html %>%
       stringr::str_extract(pattern = cls_pattern) %>%
-      stringr::str_extract("(?<=\\\").*(?=\\\")")
+      stringr::str_extract("(?<=\\\").*?(?=\\\")")
 
     if (is.na(class_names)) {
       break
@@ -879,7 +880,8 @@ is_gt <- function(data) {
 
 #' Stop any function if object is not a `gt_tbl` object
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data The input `data` object that is to be validated.
+#'
 #' @noRd
 stop_if_not_gt <- function(data) {
 
@@ -966,3 +968,24 @@ validate_length_one <- function(x, name) {
          call. = FALSE)
   }
 }
+
+column_classes_are_valid <- function(data, columns, valid_classes) {
+
+  dt_data_get(data = data) %>%
+    dplyr::select(resolve_vars(var_expr = {{columns}}, data = data)) %>%
+    vapply(
+      FUN.VALUE = logical(1), USE.NAMES = FALSE,
+      FUN = function(x) any(class(x) %in% valid_classes)
+    ) %>%
+    all()
+}
+
+# print8 <- function(x) {
+#   force(x)
+#
+#   old_ctype <- Sys.getlocale("LC_CTYPE")
+#   Sys.setlocale("LC_CTYPE", "en_CA.UTF-8")
+#   on.exit(Sys.setlocale("LC_CTYPE", old_ctype), add = TRUE)
+#
+#   print(x)
+# }

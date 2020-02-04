@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{gt_output}
 \alias{gt_output}
-\title{Create a \pkg{gt} display table output element for Shiny}
+\title{Create a \strong{gt} display table output element for Shiny}
 \usage{
 gt_output(outputId)
 }
@@ -10,20 +10,25 @@ gt_output(outputId)
 \item{outputId}{An output variable from which to read the table.}
 }
 \description{
-Using \code{gt_output()} we can render a reactive \pkg{gt} table, a process
+Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
 initiated by using the \code{\link[=render_gt]{render_gt()}} function in the \code{server} component of a
 Shiny app. The \code{gt_output()} call is to be used in the Shiny \code{ui} component,
 the position and context wherein this call is made determines the where the
-\pkg{gt} table is rendered on the app page. It's important to note that the
+\strong{gt} table is rendered on the app page. It's important to note that the
 ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
 \code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
 \verb{gt_output(outputId = "<id>"}).
 }
 \details{
-We need to ensure that we have the \pkg{shiny} package installed first. This
+We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 }
+\section{Function ID}{
+
+11-2
+}
+
 \examples{
 library(shiny)
 
@@ -60,6 +65,7 @@ server <- function(input,
 \dontrun{
 shinyApp(ui, server)
 }
+
 }
 \seealso{
 Other Shiny functions: 

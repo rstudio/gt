@@ -36,14 +36,11 @@ This function could be somewhat replicated using \code{\link[=cols_merge]{cols_m
 handling:
 
 \enumerate{
-
 \item \code{NA}s in \code{col_begin} result in missing values for the merged
 column (e.g., \code{NA} + \code{20.0} = \code{NA})
-
 \item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only
 the \code{col_begin} values only for the merged column
 (e.g., \code{12.0} + \code{NA} = \code{12.0})
-
 \item \code{NA}s both in \code{col_begin} and \code{col_end} result in missing values for
 the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
@@ -60,6 +57,11 @@ non-target columns can be optionally hidden from the output table through the
 \section{Figures}{
 
 \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+4-9
 }
 
 \examples{
@@ -84,7 +86,7 @@ tab_1 <-
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -93,7 +95,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}

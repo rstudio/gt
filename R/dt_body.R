@@ -35,29 +35,19 @@ dt_body_reassemble <- function(data) {
   body <- dt_body_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
 
-  groups <- dt_stub_groups_get(data = data)
+  groups <- dt_row_groups_get(data = data)
 
   # Get the reordering df (`rows_df`) for the data rows
-  rows_df <-
-    get_row_reorder_df(
-      groups = groups,
-      stub_df = stub_df
-    )
-
-  # Get the `columns_df` data frame for the data columns
-  #columns_df <- get_column_reorder_df(data = data)
+  rows_df <- get_row_reorder_df(groups = groups, stub_df = stub_df)
 
   rows <- rows_df$rownum_final
 
   cols <- dt_boxhead_get_vars(data = data)
 
-  data <- dt_body_set(data = data, body = body[rows, cols, drop = FALSE])
-
-  data
+  dt_body_set(data = data, body = body[rows, cols, drop = FALSE])
 }
 
 dt_body_build <- function(data) {
 
-  data %>%
-  dt_body_build_init()
+  dt_body_build_init(data = data)
 }

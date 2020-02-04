@@ -6,15 +6,13 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
-library(dplyr)
 ```
 
-Create a display table based on `morley` Michelson Speed of Light Data
+Create a display table based on `morley`.
 
 ```{r}
-gt(data = morley %>% dplyr::mutate(Speed = as.numeric(Speed))) %>%
+gt(data = morley) %>%
   fmt_number(
     columns = vars(Speed),
     decimals = 0,

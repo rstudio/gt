@@ -269,12 +269,12 @@ test_that("a gt table can store the correct style statements", {
       )
   )
 
-  # Apply a `yellow` background to the `Mazdas` stub group cell
+  # Apply a `yellow` background to the `Mazdas` row group cell
   tbl_html <-
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_group(groups = "Mazdas")
+      locations = cells_row_groups(groups = "Mazdas")
     )
 
   # Expect that the internal `styles_df` data frame will have
@@ -334,7 +334,7 @@ test_that("a gt table can store the correct style statements", {
         cell_fill(color = "lightgray"),
         cell_text(style = "italic")
       ),
-      locations = cells_data(columns = "hp", rows = 1:5)
+      locations = cells_body(columns = "hp", rows = 1:5)
     )
 
   # Expect that the internal `styles_df` data frame will have five rows
@@ -364,7 +364,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+      locations = cells_body(columns = "disp", rows = "Mazda RX4")
     )
 
   # Expect that the internal `styles_df` data frame will have
@@ -379,7 +379,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
       tab_style(
         style = cell_fill(color = "yellow"),
-        locations = cells_data(columns = "disp", rows = "Mazda RX7")
+        locations = cells_body(columns = "disp", rows = "Mazda RX7")
       )
   )
 
@@ -389,7 +389,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_data(columns = "disp", rows = vars(`Mazda RX4`))
+      locations = cells_body(columns = "disp", rows = vars(`Mazda RX4`))
     )
 
   # Expect that the internal `styles_df` data frame will have
@@ -404,7 +404,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_data(columns = vars(disp, hp), rows = "Mazda RX4")
+      locations = cells_body(columns = vars(disp, hp), rows = "Mazda RX4")
     )
 
   # Expect that the internal `styles_df` data frame will have two rows

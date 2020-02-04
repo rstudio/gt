@@ -1,6 +1,6 @@
 #' Format numeric values
 #'
-#' With numeric values in a \pkg{gt} table, we can perform number-based
+#' With numeric values in a **gt** table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
 #' over numeric formatting with the following options:
@@ -78,7 +78,9 @@
 #'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
 #'   We can use the [info_locales()] function as a useful reference for all of
 #'   the locales that are supported.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' library(tidyr)
 #'
@@ -96,12 +98,11 @@
 #'   )
 #'
 #' # Use `countrypops` to create a gt
-#' # table; format all columns to use
-#' # large-number suffixing
+#' # table; format all numeric columns
+#' # to use large-number suffixing
 #' tab_2 <-
 #'   countrypops %>%
-#'   dplyr::select(
-#'     country_code_3, year, population) %>%
+#'   dplyr::select(country_code_3, year, population) %>%
 #'   dplyr::filter(
 #'     country_code_3 %in% c(
 #'       "CHN", "IND", "USA", "PAK", "IDN")
@@ -111,7 +112,7 @@
 #'   dplyr::arrange(desc(`2015`)) %>%
 #'   gt(rowname_col = "country_code_3") %>%
 #'   fmt_number(
-#'     columns = TRUE,
+#'     columns = 2:9,
 #'     decimals = 2,
 #'     suffixing = TRUE
 #'   )
@@ -121,7 +122,10 @@
 #'
 #' \if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-1
+#'
 #' @import rlang
 #' @export
 fmt_number <- function(data,
@@ -136,6 +140,9 @@ fmt_number <- function(data,
                        sep_mark = ",",
                        dec_mark = ".",
                        locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -152,6 +159,13 @@ fmt_number <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -161,8 +175,6 @@ fmt_number <- function(data,
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
-
-        x_str <- character(length(x))
 
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
@@ -185,7 +197,7 @@ fmt_number <- function(data,
 
 #' Format values to scientific notation
 #'
-#' With numeric values in a \pkg{gt} table, we can perform formatting so that the
+#' With numeric values in a **gt** table, we can perform formatting so that the
 #' targeted values are rendered in scientific notation. Furthermore, there is
 #' fine control with the following options:
 #' \itemize{
@@ -205,7 +217,9 @@ fmt_number <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `num` column as partially
@@ -230,7 +244,10 @@ fmt_number <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_scientific_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-2
+#'
 #' @import rlang
 #' @export
 fmt_scientific <- function(data,
@@ -243,6 +260,9 @@ fmt_scientific <- function(data,
                            sep_mark = ",",
                            dec_mark = ".",
                            locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Set default values
   suffixing <- FALSE
@@ -262,6 +282,13 @@ fmt_scientific <- function(data,
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -433,7 +460,7 @@ fmt_symbol <- function(data,
 
 #' Format values as a percentage
 #'
-#' With numeric values in a \pkg{gt} table, we can perform percentage-based
+#' With numeric values in a **gt** table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are in a fractional format
 #' since the numbers will be automatically multiplied by `100` before decorating
 #' with a percent sign. For more control over percentage formatting, we can use
@@ -463,26 +490,33 @@ fmt_symbol <- function(data,
 #'   and the percent sign. The default is to not introduce a space character.
 #' @param placement The placement of the percent sign. This can be either be
 #'   `right` (the default) or `left`.
-#' @return an object of class `gt_tbl`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column to have
-#' # percentage values in the first five
-#' # of its rows
+#' # Use `pizzaplace` to create a gt table;
+#' # format the `frac_of_quota` column to
+#' # display values as percentages
 #' tab_1 <-
-#'   exibble %>%
-#'   gt() %>%
+#'   pizzaplace %>%
+#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
+#'   dplyr::group_by(month) %>%
+#'   dplyr::summarize(pizzas_sold = n()) %>%
+#'   dplyr::ungroup() %>%
+#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
+#'   gt(rowname_col = "month") %>%
 #'   fmt_percent(
-#'     columns = vars(num),
-#'     rows = 1:5,
-#'     decimals = 1,
-#'     drop_trailing_zeros = TRUE
+#'     columns = vars(frac_of_quota),
+#'     decimals = 1
 #'   )
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-3
+#'
 #' @import rlang
 #' @export
 fmt_percent <- function(data,
@@ -498,9 +532,19 @@ fmt_percent <- function(data,
                         placement = "right",
                         locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   fmt_symbol(
     data = data,
@@ -524,7 +568,7 @@ fmt_percent <- function(data,
 
 #' Format values as currencies
 #'
-#' With numeric values in a \pkg{gt} table, we can perform currency-based
+#' With numeric values in a **gt** table, we can perform currency-based
 #' formatting. This function supports both automatic formatting with a
 #' three-letter or numeric currency code. We can also specify a custom currency
 #' that is formatted according to the output context with the [currency()]
@@ -552,7 +596,6 @@ fmt_percent <- function(data,
 #' \item locale-based formatting: providing a locale ID will result in
 #' currency formatting specific to the chosen locale
 #' }
-#'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
@@ -591,7 +634,9 @@ fmt_percent <- function(data,
 #'   `left` (the default) or `right`.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the currency symbol. The default is to not introduce a space character.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the `currency` column to have
@@ -626,7 +671,10 @@ fmt_percent <- function(data,
 #'
 #' \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-4
+#'
 #' @import rlang
 #' @export
 fmt_currency <- function(data,
@@ -646,9 +694,19 @@ fmt_currency <- function(data,
                          incl_space = FALSE,
                          locale = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -686,12 +744,10 @@ fmt_currency <- function(data,
 #' Format input date values that are either of the `Date` type, or, are
 #' character-based and expressed according to the ISO 8601 date format
 #' (`YYYY-MM-DD`). Once the appropriate data cells are targeted with `columns`
-#' (and, optionally, `rows`), we can simply apply a preset date style (see table
-#' in [info_date_style()] for info) to format the dates.
-#'
-#' The following date styles are available for simpler formatting of ISO dates
-#' (all using the input date of `2000-02-29` in the example output dates):
-#'
+#' (and, optionally, `rows`), we can simply apply a preset date style to format
+#' the dates. The following date styles are available for simpler formatting of
+#' ISO dates (all using the input date of `2000-02-29` in the example output
+#' dates):
 #' \enumerate{
 #' \item iso: `2000-02-29`
 #' \item wday_month_day_year: `Tuesday, February 29, 2000`
@@ -708,7 +764,6 @@ fmt_currency <- function(data,
 #' \item year.mn.day: `2000/02/29`
 #' \item y.mn.day: `0/02/29`
 #' }
-#'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
 #'
@@ -722,7 +777,9 @@ fmt_currency <- function(data,
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
 #'   that corresponds to the preferred date style. Use [info_date_style()] to
 #'   see the different numbered and named date presets.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -765,7 +822,10 @@ fmt_currency <- function(data,
 #'
 #' \if{html}{\figure{man_fmt_date_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-5
+#'
 #' @import rlang
 #' @export
 fmt_date <- function(data,
@@ -773,12 +833,22 @@ fmt_date <- function(data,
                      rows = NULL,
                      date_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
+    stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -817,12 +887,9 @@ fmt_date <- function(data,
 #' Format input time values that are character-based and expressed according to
 #' the ISO 8601 time format (`HH:MM:SS`). Once the appropriate data cells are
 #' targeted with `columns` (and, optionally, `rows`), we can simply apply a
-#' preset time style (see table in [info_time_style()] for info) to format the
-#' times.
-#'
-#' The following time styles are available for simpler formatting of ISO times
-#' (all using the input time of `14:35:00` in the example output times):
-#'
+#' preset time style to format the times. The following time styles are
+#' available for simpler formatting of ISO times (all using the input time of
+#' `14:35:00` in the example output times):
 #' \enumerate{
 #' \item hms: `14:35:00`
 #' \item hm: `14:35`
@@ -830,7 +897,6 @@ fmt_date <- function(data,
 #' \item hm_p: `2:35 PM`
 #' \item h_p: `2 PM`
 #' }
-#'
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
 #'
@@ -844,7 +910,9 @@ fmt_date <- function(data,
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
 #'   that corresponds to the preferred time style. Use [info_time_style()] to
 #'   see the different numbered and named time presets.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `date` and `time` columns;
@@ -887,7 +955,10 @@ fmt_date <- function(data,
 #'
 #' \if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
 #' @import rlang
 #' @export
 fmt_time <- function(data,
@@ -895,12 +966,22 @@ fmt_time <- function(data,
                      rows = NULL,
                      time_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+    stop("The `fmt_date()` function can only be used on `columns` with `character` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -933,14 +1014,10 @@ fmt_time <- function(data,
 #' Format input date-time values that are character-based and expressed
 #' according to the ISO 8601 date-time format (`YYYY-MM-DD HH:MM:SS`). Once the
 #' appropriate data cells are targeted with `columns` (and, optionally, `rows`),
-#' we can simply apply preset date and time styles (see tables in
-#' [info_date_style()] and [info_time_style()] for more info) to format the
-#' data-time values.
-#'
-#' The following date styles are available for simpler formatting of the date
-#' portion (all using the input date of `2000-02-29` in the example output
+#' we can simply apply preset date and time styles to format the date-time
+#' values. The following date styles are available for simpler formatting of the
+#' date portion (all using the input date of `2000-02-29` in the example output
 #' dates):
-#'
 #' \enumerate{
 #' \item iso: `2000-02-29`
 #' \item wday_month_day_year: `Tuesday, February 29, 2000`
@@ -957,10 +1034,8 @@ fmt_time <- function(data,
 #' \item year.mn.day: `2000/02/29`
 #' \item y.mn.day: `0/02/29`
 #' }
-#'
 #' The following time styles are available for simpler formatting of the time
 #' portion (all using the input time of `14:35:00` in the example output times):
-#'
 #' \enumerate{
 #' \item hms: `14:35:00`
 #' \item hm: `14:35`
@@ -968,7 +1043,6 @@ fmt_time <- function(data,
 #' \item hm_p: `2:35 PM`
 #' \item h_p: `2 PM`
 #' }
-#'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
 #' useful references for all of the possible inputs to `date_style` and
 #' `time_style`.
@@ -982,7 +1056,9 @@ fmt_time <- function(data,
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `datetime` column;
@@ -1002,7 +1078,10 @@ fmt_time <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-7
+#'
 #' @import rlang
 #' @export
 fmt_datetime <- function(data,
@@ -1011,18 +1090,25 @@ fmt_datetime <- function(data,
                          date_style = 2,
                          time_style = 2) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Transform `date_style` to `date_format`
   date_format_str <- get_date_format(date_style = date_style)
 
   # Transform `time_style` to `time_format`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Combine into a single datetime format string
-  # date_time_format_str <- paste0(date_format, " ", time_format)
-
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+    stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
+         call. = FALSE)
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1083,7 +1169,9 @@ fmt_datetime <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Create a few Markdown-based
 #' # text snippets
@@ -1134,12 +1222,18 @@ fmt_datetime <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-8
+#'
 #' @import rlang
 #' @export
 fmt_markdown <- function(data,
                          columns,
                          rows = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Capture expression in `rows`
   columns <- rlang::enquo(columns)
@@ -1188,7 +1282,9 @@ fmt_markdown <- function(data,
 #'   escaping would be performed during rendering. By default this is set to
 #'   `TRUE` and setting to `FALSE` is useful in the case where LaTeX-formatted
 #'   text should be passed through to the output LaTeX table unchanged.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # keep only the `char` column;
@@ -1208,7 +1304,10 @@ fmt_markdown <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-9
+#'
 #' @import rlang
 #' @export
 fmt_passthrough <- function(data,
@@ -1216,6 +1315,9 @@ fmt_passthrough <- function(data,
                             rows = NULL,
                             escape = TRUE,
                             pattern = "{x}") {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -1298,7 +1400,9 @@ fmt_passthrough <- function(data,
 #' @inheritParams fmt_number
 #' @param missing_text The text to be used in place of `NA` values in the
 #'   rendered table.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # NA values in different columns will
@@ -1319,13 +1423,19 @@ fmt_passthrough <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-10
+#'
 #' @import rlang
 #' @export
 fmt_missing <- function(data,
                         columns,
                         rows = NULL,
                         missing_text = "---") {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Capture expression in `rows` and `columns`
   rows <- rlang::enquo(rows)
@@ -1370,15 +1480,13 @@ fmt_missing <- function(data,
 #'
 #' The `fmt()` function provides greater control in formatting raw data values
 #' than any of the specialized `fmt_*()` functions that are available in
-#' \pkg{gt}. Along with the `columns` and `rows` arguments that provide some
+#' **gt**. Along with the `columns` and `rows` arguments that provide some
 #' precision in targeting data cells, the `fns` argument allows you to define
 #' one or more functions for manipulating the raw data.
-#'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
 #' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 #' RTF).
-#'
 #' If you require formatting of `x` that depends on the output format, a list of
 #' functions can be provided for the `html`, `latex`, and `default` contexts.
 #' This can be in the form of `fns = list(html = function(x) ..., latex =
@@ -1395,7 +1503,9 @@ fmt_missing <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
+#'
 #' @return An object of class `gt_tbl`.
+#'
 #' @examples
 #' # Use `exibble` to create a gt table;
 #' # format the numeric values in the `num`
@@ -1415,13 +1525,19 @@ fmt_missing <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
 #'
-#' @family data formatting functions
+#' @family Format Data
+#' @section Function ID:
+#' 3-11
+#'
 #' @import rlang
 #' @export
 fmt <- function(data,
                 columns = NULL,
                 rows = NULL,
                 fns) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)

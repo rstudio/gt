@@ -24,8 +24,14 @@ formatting of each locale.
 There are 712 locales, which means that a very long display table is provided
 by default. To trim down the output table size, we can provide an initial
 letter corresponding to the base locale ID to \code{begins_with}. This will filter
-locales in the info table to just the set beginning with the supplied letter.
+locales in the info table to just the set that begins with the supplied
+letter.
 }
+\section{Function ID}{
+
+9-4
+}
+
 \examples{
 # Get a table of info on all of
 # the locales where the base
@@ -34,11 +40,11 @@ tab_1 <- info_locales(begins_with = "v")
 
 }
 \seealso{
-Other information functions: 
+Other Information Functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_preset_colorized}()},
 \code{\link{info_time_style}()}
 }
-\concept{information functions}
+\concept{Information Functions}

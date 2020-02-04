@@ -657,11 +657,10 @@ create_body_component_h <- function(data) {
     default_vals <- body[i, default_vars] %>% unlist() %>% unname()
 
     if (stub_available) {
-      default_vals <-
-        c(
-          dt_stub_rowname_at_position(data = data, i = i),
-          default_vals
-        )
+
+      stub_var <- dt_boxhead_get_var_stub(data = data)
+
+      default_vals <- c(body[[i, stub_var]], default_vals)
     }
 
     default_vals
@@ -713,7 +712,7 @@ create_body_component_h <- function(data) {
 
           styles_row <-
             styles_tbl %>%
-            dplyr::filter(locname == "stub_groups", grpname == group_label)
+            dplyr::filter(locname == "row_groups", grpname == group_label)
 
           row_style <-
             if (nrow(styles_row) > 0) {

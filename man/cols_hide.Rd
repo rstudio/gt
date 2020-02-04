@@ -28,7 +28,7 @@ of those columns is not necessary.
 The hiding of columns is internally a rendering directive, so, all columns
 that are 'hidden' are still accessible and useful in any expression provided
 to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with many
-\pkg{gt} functions) can be placed anywhere in a pipeline of \pkg{gt} function
+\strong{gt} functions) can be placed anywhere in a pipeline of \strong{gt} function
 calls (acting as a promise to hide columns when the timing is right). However
 there's perhaps greater readability when placing this call closer to the end
 of such a pipeline.
@@ -38,6 +38,11 @@ of such a pipeline.
 \if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
 
 \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+4-7
 }
 
 \examples{
@@ -68,14 +73,14 @@ tab_2 <-
   ) \%>\%
   tab_footnote(
     footnote = "Population above 3,000,000.",
-    locations = cells_data(
+    locations = cells_body(
       columns = vars(year),
       rows = population > 3000000)
   )
 
 }
 \seealso{
-Other column modification functions: 
+Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_range}()},
@@ -84,7 +89,6 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_width}()},
-\code{\link{tab_spanner_delim}()}
+\code{\link{cols_width}()}
 }
-\concept{column modification functions}
+\concept{Modify Columns}
