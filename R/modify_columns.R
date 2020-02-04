@@ -797,6 +797,7 @@ cols_hide <- function(data,
 #' @param col_uncert A single column name that contains the uncertainty values.
 #'   These values will be combined with those in `col_val`. We have the option
 #'   to automatically hide the `col_uncert` column through `autohide`.
+#' @param sep The separator text that contains the uncertainty mark.
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_uncert`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
@@ -839,14 +840,13 @@ cols_hide <- function(data,
 cols_merge_uncert <- function(data,
                               col_val,
                               col_uncert,
+                              sep = " +/- ",
                               autohide = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Use a predefined separator
-  sep <- " \u00B1 "
-
+  # Use the `cols_merge_range()` function
   cols_merge_range(
     data = data,
     col_begin = col_val,
