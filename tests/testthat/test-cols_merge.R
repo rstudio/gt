@@ -134,7 +134,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_uncert()` and use the `vars()` helper
@@ -157,7 +157,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_uncert()` and use the `vars()` helper
@@ -184,7 +184,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
     expect_equal("{1}{sep}{2}")
@@ -196,7 +196,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 })
 
 test_that("the `cols_merge_range()` function works correctly", {
