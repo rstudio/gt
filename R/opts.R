@@ -126,7 +126,7 @@ opt_footnote_marks <- function(data,
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -186,7 +186,7 @@ opt_remove_top_bottom_borders <- function(data) {
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -245,7 +245,7 @@ opt_add_row_striping <- function(data) {
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -318,7 +318,7 @@ opt_align_table_header <- function(data, align = "center") {
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -410,7 +410,7 @@ opt_all_caps <- function(data,
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -505,7 +505,7 @@ opt_add_table_outline <- function(data,
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",

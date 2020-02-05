@@ -28,12 +28,4 @@ contained in each distinct look.
 tab_1 <- info_preset_colorized()
 
 }
-\seealso{
-Other information functions: 
-\code{\link{info_currencies}()},
-\code{\link{info_date_style}()},
-\code{\link{info_locales}()},
-\code{\link{info_paletteer}()},
-\code{\link{info_time_style}()}
-}
 \concept{information functions}

@@ -443,7 +443,8 @@ test_that("the `inline_html_styles()` function works correctly", {
         "border-left-width: 1px; border-left-color: #D3D3D3; ",
         "border-right-style: none; border-right-width: 1px; ",
         "border-right-color: #D3D3D3; vertical-align: middle; ",
-        "overflow-x: hidden; font-size: 10px;"
+        "overflow-x: hidden; text-align: right; ",
+        "font-variant-numeric: tabular-nums; font-size: 10px;"
       ),
       inlined_html
     )

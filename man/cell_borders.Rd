@@ -98,7 +98,7 @@ tab_2 <-
 
 }
 \seealso{
-Other Helper Functions:
+Other Helper Functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
@@ -115,8 +115,6 @@ Other Helper Functions:
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
-\code{\link{location_cells}},
-\code{\link{location_colors}()},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},

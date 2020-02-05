@@ -181,15 +181,15 @@ code should be provided.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
-\code{row_group}, \code{stub}, \code{footnotes}, and \code{source_notes}. Can be specified as a
+\code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \verb{12px}) or as a
 percentage (e.g., \verb{80\\\%}). If provided as a single-length numeric vector,
 it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
-\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top, right,
-bottom, and left borders.}
+\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top and
+absolute bottom borders.}
 
 \item{heading.align}{Controls the horizontal alignment of the heading title
 and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}

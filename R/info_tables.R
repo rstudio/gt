@@ -556,7 +556,7 @@ info_preset_colorized <- function() {
     ) %>%
     tab_style(
       style = cell_text(v_align = "top"),
-      locations = cells_data()
+      locations = cells_body()
     ) %>%
     tab_style(
       style = cell_text(align = "left"),

@@ -1171,7 +1171,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   `table.font.color.light` is automatically used when text needs to be
 #'   overlaid on darker background colors. A color name or a hexadecimal color
 #'   code should be provided.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnotes.font.size,source_notes.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,stub.font.size,footnotes.font.size,source_notes.font.size
 #'   The font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
 #'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
@@ -1180,6 +1180,8 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percentage units.
+#' @param heading.align Controls the horizontal alignment of the heading title
+#'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
 #' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
 #'   The font weights of the `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
@@ -1194,7 +1196,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   The amount of vertical padding to incorporate in the `data_row`,
 #'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
 #'   `source_notes` locations.
-#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color
+#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
@@ -1383,10 +1385,17 @@ tab_options <- function(data,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
+                        table.border.right.style = NULL,
+                        table.border.right.width = NULL,
+                        table.border.right.color = NULL,
                         table.border.bottom.style = NULL,
                         table.border.bottom.width = NULL,
                         table.border.bottom.color = NULL,
+                        table.border.left.style = NULL,
+                        table.border.left.width = NULL,
+                        table.border.left.color = NULL,
                         heading.background.color = NULL,
+                        heading.align = NULL,
                         heading.title.font.size = NULL,
                         heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
@@ -1441,6 +1450,7 @@ tab_options <- function(data,
                         table_body.border.bottom.width = NULL,
                         table_body.border.bottom.color = NULL,
                         stub.background.color = NULL,
+                        stub.font.size = NULL,
                         stub.font.weight = NULL,
                         stub.text_transform = NULL,
                         stub.border.style = NULL,

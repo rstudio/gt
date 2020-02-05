@@ -34,13 +34,18 @@ many locations as desired, and they include the \code{heading}, the
 \code{summary_rows}, the \code{grand_summary_rows}, the \code{footnotes}, the
 \code{source_notes}, and finally the color of the \code{row_striping}. Locations with
 no colors provided will default to white. Row striping is not enabled by
-default in \pkg{gt} so even if a color is provided for the \code{row_striping}
+default in \strong{gt} so even if a color is provided for the \code{row_striping}
 location, we still need to enable its visibility with the
 \code{\link[=opt_add_row_striping]{opt_add_row_striping()}} function.
 }
 \section{Figures}{
 
 \if{html}{\figure{man_location_colors_1.svg}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+7-22
 }
 
 \examples{
@@ -79,7 +84,7 @@ tab_1 <-
   tab_source_note(source_note = "This is a source note.") \%>\%
   tab_footnote(
     footnote = "This is a footnote.",
-    locations = cells_data(columns = 1, rows = 1)
+    locations = cells_body(columns = 1, rows = 1)
   ) \%>\%
   tab_header(
     title = "The title of the table",
@@ -87,21 +92,5 @@ tab_1 <-
   ) \%>\%
   preset_location_colors(colors = loc_colors)
 
-}
-\seealso{
-Other helper functions: 
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
-\code{\link{cells_styles}()},
-\code{\link{currency}()},
-\code{\link{escape_latex}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{location_cells}},
-\code{\link{md}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()}
 }
 \concept{helper functions}

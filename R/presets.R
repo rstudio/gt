@@ -52,7 +52,7 @@
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -179,7 +179,7 @@ preset_colorized <- function(data,
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -279,7 +279,7 @@ preset_location_colors <- function(data,
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
@@ -360,7 +360,7 @@ preset_lineless <- function(data) {
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
-#'     locations = cells_data(columns = 1, rows = 1)
+#'     locations = cells_body(columns = 1, rows = 1)
 #'   ) %>%
 #'   tab_header(
 #'     title = "The title of the table",
