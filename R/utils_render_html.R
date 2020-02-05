@@ -176,7 +176,7 @@ create_heading_component <- function(data,
   }
 
   # Get the footnote marks for the subtitle
-  if (subtitle_defined & "title" %in% footnotes_tbl$locname) {
+  if (subtitle_defined & "subtitle" %in% footnotes_tbl$locname) {
 
     footnote_subtitle_marks <-
       footnotes_tbl %>%
