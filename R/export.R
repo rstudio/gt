@@ -401,6 +401,7 @@ as_latex <- function(data) {
     latex_packages <- NULL
   }
 
+  reset_latex_cache()
   # Compose the LaTeX table
   paste0(
     color_def,

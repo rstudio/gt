@@ -289,6 +289,9 @@ fmt_latex_symbols <- function(x){
   if(grepl('<', x)){
     x <- gsub('<', '$<$', x, fixed = TRUE)
   }
+  if(grepl('textsuperscript{', x, fixed=TRUE)){
+    x <- gsub('textsuperscript{', '\\textsuperscript{', x, fixed = TRUE)
+  }
   x
 }
 
@@ -297,7 +300,11 @@ fmt_latex_math <- function(x){
   if(grepl('!@', x)){
     vect <- unlist(qdapRegex::rm_between(x, '<', '>', extract=TRUE))
     swap <- list('!@' = '',
-                 '*' = '\\')
+                 '*' = '\\',
+                 'CHECKMARK' = '\\text{\\checkmark}',
+                 'textsuperscript{' = '\\textsuperscript{',
+                 '%' = '\\%',
+                 '|' = '\\vert')
     if(length(vect[!is.na(vect)]) > 0){
     text_vect <- purrr::map_chr(vect, function(.){paste0('\\text{', ., '}')})
     with_indicator <- purrr::map_chr(vect, function(.){paste0('<', ., '>')})

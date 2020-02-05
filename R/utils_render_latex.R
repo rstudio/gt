@@ -136,6 +136,7 @@ create_columns_component_l <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
+
   table_col_headings <-
     paste0(latex_heading_row(content = headings_labels), collapse = "")
 
@@ -182,20 +183,28 @@ create_columns_component_l <- function(data) {
               spanners_lengths$values[i],
               "} "))
 
+        spanner_border <- paste0(
+          "\\cmidrule(lr){",
+          sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
+          "-",
+          sum(spanners_lengths$lengths[1:i]),
+          "}")
+
+        #don't add line underneath empty spanners
+        if(spanners_lengths$values[i] == ''){
+          spanner_border <- ''
+        }
+
         cmidrule <-
-          c(cmidrule,
-            paste0(
-              "\\cmidrule(lr){",
-              sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
-              "-",
-              sum(spanners_lengths$lengths[1:i]),
-              "}"))
+          c(cmidrule, spanner_border)
+
 
       } else {
         multicol <- c(multicol, "& ")
       }
 
     }
+
 
     multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
     cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
@@ -263,6 +272,7 @@ create_body_component_l <- function(data) {
       dplyr::mutate(
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
+  print(groups_rows_df)
 
   groups_rows_df$group_label <- purrr::map_chr(groups_rows_df$group_label, function(.){style_group_rows_latex(fmt_latex_math(.),  styles_tbl)})
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex", n_cols = n_cols)
@@ -285,6 +295,7 @@ create_body_component_l <- function(data) {
   row_splits <- style_data_latex(row_splits, styles_tbl)
   data_rows <- create_data_rows(n_rows, row_splits, context = "latex")
 
+
   summary_rows <-
     create_summary_rows(
       n_rows = n_rows,
@@ -297,7 +308,7 @@ create_body_component_l <- function(data) {
     )
 
   summary_rows <- purrr::map_chr(summary_rows, fmt_latex_math)
-  paste0(paste(collapse = "", paste0(group_rows, data_rows, summary_rows)), "\\bottomrule\n \\\\ \n")
+  paste0(paste(collapse = "", paste0(group_rows, data_rows, summary_rows)), "\\bottomrule\n")
 }
 
 #' @noRd
@@ -338,9 +349,17 @@ create_footnotes_component_l <- function(data) {
     tidy_gsub("&nbsp;", " ")
 
   # Create the footnotes block
+  if(latex_cache$footnotes.align == 'c'){
+    align <- '\\centering\n'
+  } else {
+    align <- ''
+  }
+
   paste0(
+    "\\\\ \n",
     "\\vspace{-5mm}\n",
     "\\begin{minipage}{18cm}\n",
+    align,
     paste0(
       footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
       footnotes_tbl[["footnotes"]] %>%
@@ -362,12 +381,19 @@ create_source_note_component_l <- function(data) {
     return("")
   }
 
-  source_note <- source_note[[1]]
+  #keep vector of source notes and just stack on top of eachother in final
+  #source_note <- source_note[[1]]
+  if(latex_cache$sourcenotes.align == 'c'){
+    align <- '\\centering\n'
+  } else {
+    align <- ''
+  }
 
   # Create the source notes block
   source_note_component <-
     paste0(
-      "\\begin{minipage}{18cm}\n",
+      "\\\\ \n \\begin{minipage}{18cm}\n",
+      align,
       paste0(
         source_note %>% as.character(), "\\\\ \n", collapse = ""),
       "\\end{minipage}\n", collapse = "")
