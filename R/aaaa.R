@@ -29,5 +29,4 @@ latex_tab.options <- function(shrink = NULL,
   latex_cache$column.sep <- column.sep
   latex_cache$footnotes.align <- footnotes.align
   latex_cache$sourcenotes.align <- sourcenotes.align
-  print(rlang::caller_env())
 }

@@ -272,7 +272,6 @@ create_body_component_l <- function(data) {
       dplyr::mutate(
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
-  print(groups_rows_df)
 
   groups_rows_df$group_label <- purrr::map_chr(groups_rows_df$group_label, function(.){style_group_rows_latex(fmt_latex_math(.),  styles_tbl)})
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex", n_cols = n_cols)

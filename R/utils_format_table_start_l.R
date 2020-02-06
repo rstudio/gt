@@ -1,27 +1,4 @@
-remove_checkmark <- function(element){
-  if(grepl('CHECKMARK', element, fixed = TRUE)){
-    element <- gsub('CHECKMARK', 'c', element, fixed = TRUE)
-  }
-  element
-}
-
-remove_predefined_tex_calls <- function(element, math_detect = TRUE) {
-
-  if (grepl('textsuperscript', element, fixed = TRUE)) {
-
-    if (math_detect == TRUE) {
-      element <- gsub('\\textsuperscript', '', element, fixed = TRUE)
-
-    } else {
-      element <- gsub('\\textsuperscript{', '', element, fixed = TRUE)
-      element <- gsub('}', '', element, fixed = TRUE)
-    }
-
-  }
-  remove_checkmark(element)
-}
-
-strip_math <- function(element){
+strip_math <- function(.){
   characters <- list(
     '!@' = '',
     '*' = '',
@@ -37,18 +14,22 @@ strip_math <- function(element){
     'tau' = 't',
     'cdot' = '.'
   )
-
-  if(grepl('!@', element, fixed = TRUE)){
-
+  if(grepl('!@', ., fixed = TRUE)){
     for(x in names(characters)){
-      element <- gsub(x, characters[[x]], element, fixed = TRUE)
+      . <- gsub(x, characters[[x]], ., fixed = TRUE)
     }
-    element <- remove_predefined_tex_calls(element)
-
-  } else {
-    element <- remove_predefined_tex_calls(element, math_detect = FALSE)
+    if(grepl('textsuperscript', ., fixed = TRUE)){
+      . <- gsub('\\textsuperscript', '', ., fixed = TRUE)
+    }
   }
-  element
+  if(grepl('CHECKMARK', ., fixed = TRUE)){
+    . <- gsub('CHECKMARK', 'c', ., fixed = TRUE)
+  }
+  if(grepl('textsuperscript{', ., fixed = TRUE)){
+    . <- gsub('\\textsuperscript{', '', ., fixed = TRUE)
+    . <- gsub('}', '', ., fixed = TRUE)
+  }
+  .
 }
 
 z_score <- function(x, group){
@@ -58,15 +39,30 @@ z_score <- function(x, group){
   (x - mean(group)) / sd(group)
 }
 
+is_dimensional <- function(test_element){
+  if(is.null(dim(test_element))){
+    return(FALSE)
+  }
+  TRUE
+}
+
 
 recalculate_outlier_widths <- function(required_widths_df) {
   adjusted_max_widths <- c()
   unadjusted_max_widths <- c()
   diff_required_adjusted_maxes <- c()
-  n_cols <- dim(required_widths_df)[2]
+  n_cols <- length(required_widths_df)
+  if(is_dimensional(required_widths_df)){
+    n_cols <- dim(required_widths_df)[2]
+  }
 
   for (col in seq(1, n_cols)) {
-    indiv_col <- required_widths_df[, col]
+    indiv_col <- required_widths_df[[col]]
+
+    if(is_dimensional(required_widths_df)){
+      indiv_col <- required_widths_df[, col]
+    }
+
     maxw_indiv_col <- max(indiv_col)
 
     if(typeof(indiv_col) == 'list'){
@@ -153,37 +149,32 @@ type_setting <- function(type_size) {
   sizing_options[[as.character(type_size)]]
 }
 
-
-
-tbl_components_for_sizing <- function(data) {
+get_data_rows_l <- function(data) {
   body <- dt_body_get(data = data)
   default_vars <- dt_boxhead_get_vars_default(data = data)
-
-  collabels <- dt_boxhead_get_vars_labels_default(data = data)
-  stubh <- dt_stubhead_get(data = data)
+  n_data_cols <-
+    dt_boxhead_get_vars_default(data = data) %>% length()
   stub_components <- dt_stub_components(data = data)
   stub_available <- dt_stub_components_has_rowname(stub_components)
-  n_cols <- length(collabels)
+
+  if (stub_available) {
+    n_cols <- n_data_cols + 1
+  } else {
+    n_cols <- n_data_cols
+  }
 
   if ("rowname" %in% names(body)) {
     default_vars <- c("rowname", default_vars)
   }
 
   if (stub_available) {
-    n_cols <- n_cols + 1
     default_vars <- c("::rowname", default_vars)
 
     body <-
-      stubh %>%
+      dt_stub_df_get(data = data) %>%
       dplyr::select(rowname) %>%
       dplyr::rename(`::rowname` = rowname) %>%
       cbind(body)
-
-    if(length(stubh$label) > 0){
-      collabels <- append(stubh$label, collabels)
-    } else {
-      collabels <- append('', collabels)
-    }
   }
 
   body_content <- as.vector(t(body[, default_vars]))
@@ -192,13 +183,33 @@ tbl_components_for_sizing <- function(data) {
   data_rows <-
     do.call(rbind, lapply(row_splits, function(x)
       as.data.frame(t(x))))
-
   data_rows <- apply(data_rows, c(1, 2), strip_math)
-  collabels <- purrr::map_chr(collabels, function(.){strip_math(.)})
+  data_rows
+}
 
-  list(data_rows = data_rows,
-       collabels = collabels,
-       full_tbl = rbind(collabels, data_rows))
+get_collabels_l <- function(data) {
+  stubh <- dt_stubhead_get(data = data)
+  stub_available <- dt_stub_df_exists(data = data)
+  collabels <- dt_boxhead_get_vars_labels_default(data = data)
+
+  if (isTRUE(stub_available) && length(stubh$label) > 0) {
+    collabels <- append(stubh$label, collabels)
+  } else if (isTRUE(stub_available)) {
+    collabels <- append('', collabels)
+  }
+  purrr::map_chr(collabels, function(.){strip_math(.)})
+}
+
+
+construct_sizing_params <- function(data) {
+  collabels <- get_collabels_l(data = data)
+  data_rows <- get_data_rows_l(data = data)
+  full_tbl <- rbind(collabels, data_rows)
+
+  list(
+    components = list(data_rows, collabels, full_tbl),
+    labels = c('data_rows', 'collabels', 'full_tbl')
+  )
 }
 
 
@@ -218,16 +229,16 @@ validate_maxwidth_per_column <- function(max_required_widths) {
 }
 
 
+
 max_width_required_per_column <- function(tbl_sizing_data) {
   with(tbl_sizing_data, {
-    required_widths_df <-
-      apply(tbl_component, c(1, 2), find_chr_length, fontsize)
-
-    if (drop_outliers) {
+    if(is_dimensional(tbl_component)){
+      required_widths_df <- apply(tbl_component, c(1, 2), find_chr_length, fontsize)
       maxwidth <- remove_outliers(required_widths_df = required_widths_df)
     } else {
-      maxwidth <- apply(required_widths_df, 2, max)
+      maxwidth <- purrr::map_dbl(tbl_component, find_chr_length, fontsize)
     }
+
     validate_maxwidth_per_column(max_required_widths = maxwidth)
   })
 }
@@ -242,8 +253,11 @@ find_valid_fontsizing <- function(tbl_sizing_data) {
     maxwidth <- max_width_required_per_column(tbl_sizing_data)
 
     if (!is.null(maxwidth)) {
-      valid <- list(type_size = type_setting(fs), colwidths = maxwidth)
+      valid <- list(type_size = fs, colwidths = maxwidth)
     }
+  }
+  if(is.null(valid)){
+    valid <- list(type_size = NULL, colwidths = NULL)
   }
   valid
 }
@@ -259,116 +273,119 @@ fmt_header_latex <- function(sizing_columns){
 
 get_type_settings <- function(sizing_params) {
   components <- sizing_params$components
-  drop_outliers <- sizing_params$drop_outliers
   list_labels <- sizing_params$labels
 
   sizing_options <- list()
   for (i in seq(1, length(components))) {
-    tbl_sizing_data <- list(tbl_component = components[[i]],
-                            drop_outliers = drop_outliers[i])
+
     sizing_options[[list_labels[i]]] <-
-      find_valid_fontsizing(tbl_sizing_data = tbl_sizing_data)
+      find_valid_fontsizing(tbl_sizing_data = list(tbl_component = components[[i]]))
+
   }
   sizing_options
 }
 
-calculate_typesetting_options <- function(data) {
-  tbl_components_data <- tbl_components_for_sizing(data = data)
-  with(tbl_components_data, {
+no_settings_found <- function(sizing_params, best_type_settings){
+  with(best_type_settings, {
 
-    list(
-        components = list(data_rows, collabels, full_tbl),
-        drop_outliers = c(TRUE, FALSE, TRUE),
-        labels = c('data_rows', 'collabels', 'full_tbl')
-      )
+    if(is.null(collabels$type_size) && is.null(data_rows$type_size)){
+      type_size <- type_setting(5)
+      sizing_columns <- rep(17.6/length(sizing_params$components[[2]]), length(sizing_params$components[[2]]))
+
+    } else{
+
+      #if the collabels are really big, but the data fits avg smallest size with the size that data will fit
+      #avoids shrinking data really small to accommodate very long collabels
+      if(is.null(collabels$type_size)){
+        type_size <- round(mean(c(data_rows$type_size, 5)), 0)
+        tbl_component <- sizing_params$components[[1]]
+        sizing_columns <- max_width_required_per_column(tbl_sizing_data = list(tbl_component = tbl_component,
+                                                                             fontsize = type_size))
+        type_size <- type_setting(type_size)
+
+        #if the data is big and collabels are small, just make it smallest font with even spaced columns
+      } else {
+        type_size <- type_setting(5)
+        sizing_columns <- rep(17.6/length(sizing_params$components[[2]]), length(sizing_params$components[[2]]))
+      }
+    }
+    list(type_size = type_size,
+         header = fmt_header_latex(sizing_columns = sizing_columns))
   })
 }
 
-calculate_typesetting_options <- function(data){
+default_typesetting_option <- function(data){
   sizing_params <- construct_sizing_params(data = data)
-  type_setting <- get_type_settings(sizing_params = sizing_params)
-}
+  best_type_settings <- get_type_settings(sizing_params = sizing_params)
 
+  with(best_type_settings, {
 
-default_setting <- function(data){
-  #possibilities:
-  # small labels, small data
-  # small labels, normal data
-  # normal labels, small data
-  # normal labels, normal data
+    if(is.null(collabels$type_size) | is.null(data_rows$type_size)){
 
-  #width based on data
-  valid <- best_type_setting_datarows_l(data = data)
+      table_fmt <- no_settings_found(sizing_params = sizing_params,
+                                     best_type_settings = best_type_settings)
+    } else {
 
-  #get the largest size option available
-  if (length(valid) != 0) {
-    largest_type_size <- as.character(max(as.integer(names(valid))))
-    type_size <- type_setting(largest_type_size)
-    sizing_columns <- valid[[largest_type_size]]
+    type_sizing <- c(full_tbl$type_size, collabels$type_size, data_rows$type_size)
 
-    #normal data
-    if (is.na(type_size)) {
+    #if they are all the same, use the colwidth calculated from full table
+    if(length(unique(type_sizing) == 1)){
+      type_size <- type_setting(full_tbl$type_size)
+      sizing_columns <- full_tbl$colwidths
 
-      #width based on labels
-      heading_row <- best_type_setting_collabels_l(data = data)
+    } else {
 
-      #normal labels
-      if (is.na(heading_row$type_size)) {
+      #long column labels, small data
+      if(data_rows$type_size > collabels$type_size){
 
-        #bind labels+data and recalculate max width needed at normal pt
-        col_size_labels <- heading_row$header
-        together <- rbind(sizing_columns, col_size_labels)
-        sizing_columns <- apply(together, 2, max)
+        #if they are very different sizes, avg them
+        #avoids shrinking data really tiny to accomodate long labels- ok if labels line break a little
+        if(data_rows$type_size - collabels$type_size > 1){
 
-        #if width needed greater than page width, go back recalculate for smaller font
-        if(sum(sizing_columns) > 17.6){
-          heading_row <- best_type_setting_all_l(data = data)
-          sizing_columns <- heading_row$header
-          type_size <- heading_row$type_size
+          type_size <- round(mean(c(data_rows$type_size, collabels$type_size)), 0)
+          tbl_component <- sizing_params$components[[1]]
+          sizing_columns <- max_width_required_per_column(tbl_sizing_data = list(tbl_component = tbl_component,
+                                                               fontsize = type_size))
+          type_size <- type_setting(type_size)
+
+          #if they are about the same just use the collabel size
+        } else {
+
+          type_size <- type_setting(collabels$type_size)
+          sizing_columns <- collabels$colwidths
+
         }
 
-        #if width needed less than page width, find diff and distribute evenly
-        if(sum(sizing_columns) < 17.6){
-          diff <- 17.6 - sum(sizing_columns)
-          distribute <- diff/length(sizing_columns)
-          sizing_columns <- purrr::map_dbl(sizing_columns, function(.){.+distribute})
-        }
-
-        #if equal, just use the max width needed by each column for sizing
-
-        #if normal data and small labels
+      #small column labels, long data
       } else {
-        sizing_columns <- heading_row$header
-        type_size <- heading_row$type_size
+        #always avoid line breaks in the data frame because that creates messy tables.
+        type_size <- type_setting(data_rows$type_size)
+        sizing_columns <- data_rows$colwidths
 
       }
+
     }
-
-
-    header <- fmt_header_latex(sizing_columns = sizing_columns)
-
-  } else {
-    stop('no typeset available')
-    header <- NULL
-    type_size <- NULL
-
-  }
-
-  list(header = header,
-       type_size = type_size)
-
+    table_fmt <-list(type_size = type_size,
+       header = fmt_header_latex(sizing_columns = sizing_columns))
+    }
+    table_fmt
+  })
 }
 
+
 no_line_breaks <- function(data){
-  settings <- best_type_setting_all_l(data = data, remove_outliers = FALSE)
-  list(header = fmt_header_latex(sizing_columns = settings$header),
-       type_size = settings$type_size)
+  sizing_params <- construct_sizing_params(data = data)
+  settings <- get_type_settings(sizing_params = sizing_params)
+  type_size <- type_setting(settings$full_tbl$type_size)
+  sizing_columns <- settings$full_tbl$colwidths
+  list(header = fmt_header_latex(sizing_columns = sizing_columns),
+       type_size = type_size)
 }
 
 calc_column_width_l <- function(data) {
 
   if (latex_cache$line.breaks){
-    default_setting(data = data)
+    default_typesetting_option(data = data)
   } else {
     no_line_breaks(data = data)
   }
