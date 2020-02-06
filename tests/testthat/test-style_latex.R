@@ -117,3 +117,36 @@ test_that("latex math styling", {
   expect_true(grepl('$ \\beta_{\\text{abc}}$', tbl_gt, fixed = TRUE))
 }
 )
+
+test_that("colored box styling", {
+
+  tbl_colored <- dplyr::tribble( ~grpname, ~count, ~color,
+                              'apple', 1, 'red',
+                              'banana', 2, 'yellow')
+  tbl_gt <-
+    gt(data = tbl_colored) %>%
+    tab_style(
+      style = cell_fill(color = "#d3d3d3"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'a')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #color definition must be included in code
+  expect_true(grepl('\\definecolor{D3D3D3}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #coloring around values in the apple row
+  expect_true(grepl('\\cellcolor{D3D3D3}{apple}', tbl_gt, fixed = TRUE) && grepl('\\cellcolor{D3D3D3}{1}', tbl_gt, fixed = TRUE) && grepl('\\cellcolor{D3D3D3}{red}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #no coloring on around values in the banana row
+  expect_false(grepl('\\cellcolor{D3D3D3}{banana}', tbl_gt, fixed = TRUE))
+  expect_false(grepl('\\cellcolor{D3D3D3}{2}', tbl_gt, fixed = TRUE))
+  expect_false(grepl('\\cellcolor{D3D3D3}{yellow}', tbl_gt, fixed = TRUE))
+}
+)
