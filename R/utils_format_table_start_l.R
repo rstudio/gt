@@ -1,5 +1,37 @@
+strip_nonmath <- function(.){
+  if(grepl('textsuperscript{', ., fixed = TRUE)){
+    . <- gsub('\\textsuperscript{', '', ., fixed = TRUE)
+    . <- gsub('}', '', ., fixed = TRUE)
+  }
+  if(grepl('CHECKMARK', ., fixed = TRUE)){
+    . <- gsub('CHECKMARK', 'c', ., fixed = TRUE)
+  }
+  .
+}
+
+#math notation with subscripts makes subscripted text smaller
+#reduces subscripted text to 55% of original width for more accurate col sizing
+subscript_special <- function(.) {
+  vect <- unlist(qdapRegex::rm_between(., '_{', '}', extract = TRUE))
+  if (length(vect[!is.na(vect)]) > 0) {
+    text_vect <-
+      purrr::map_chr(vect, function(.) {
+        substr(., 1, round(nchar(.) * .55, 0))
+      })
+    with_indicator <-
+      purrr::map_chr(vect, function(.) {
+        paste0('_{', ., '}')
+      })
+    names(text_vect) <- with_indicator
+    for (x in names(text_vect)) {
+      . <- gsub(x, text_vect[[x]], ., fixed = TRUE)
+    }
+  }
+  .
+}
+
 strip_math <- function(.){
-  characters <- list(
+  characters_math <- list(
     '!@' = '',
     '*' = '',
     '{' = '',
@@ -12,24 +44,21 @@ strip_math <- function(.){
     'beta' = 'B',
     'mu' = 'u',
     'tau' = 't',
-    'cdot' = '.'
+    'cdot' = '.',
+    '\\' = '',
+    'textsuperscript' = '',
+    'CHECKMARK' = 'c'
   )
+
   if(grepl('!@', ., fixed = TRUE)){
-    for(x in names(characters)){
-      . <- gsub(x, characters[[x]], ., fixed = TRUE)
+    . <- subscript_special(.)
+    for(x in names(characters_math)){
+      . <- gsub(x, characters_math[[x]], ., fixed = TRUE)
     }
-    if(grepl('textsuperscript', ., fixed = TRUE)){
-      . <- gsub('\\textsuperscript', '', ., fixed = TRUE)
-    }
+  } else {
+    . <- strip_nonmath(.)
   }
-  if(grepl('CHECKMARK', ., fixed = TRUE)){
-    . <- gsub('CHECKMARK', 'c', ., fixed = TRUE)
-  }
-  if(grepl('textsuperscript{', ., fixed = TRUE)){
-    . <- gsub('\\textsuperscript{', '', ., fixed = TRUE)
-    . <- gsub('}', '', ., fixed = TRUE)
-  }
-  .
+  . <- trimws(.)
 }
 
 z_score <- function(x, group){
@@ -45,7 +74,6 @@ is_dimensional <- function(test_element){
   }
   TRUE
 }
-
 
 recalculate_outlier_widths <- function(required_widths_df) {
   adjusted_max_widths <- c()
