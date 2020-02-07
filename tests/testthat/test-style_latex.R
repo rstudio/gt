@@ -201,5 +201,117 @@ test_that("latex preset font sizing", {
   #Expect a fixed pattern
   #only fontsize in banana row has been changed
   expect_equal(length(unlist(gregexpr('\\footnotesize', tbl_gt, fixed = TRUE))), 3)
+
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "small"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'g')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row grape and columns color, count, and grpname are now small (small in latex)
+  expect_true(grepl('{\\small purple}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\small grape}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\small 3}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in grape row has been changed
+  expect_equal(length(unlist(gregexpr('\\small', tbl_gt, fixed = TRUE))), 3)
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "medium"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'p')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row pear and columns color, count, and grpname are now medium (large in latex)
+  expect_true(grepl('{\\large green}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\large pear}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\large 4}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in pear row has been changed
+  expect_equal(length(unlist(gregexpr('\\large', tbl_gt, fixed = TRUE))), 3)
+
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "large"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'o')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row orange and columns color, count, and grpname are now large (large in latex)
+  expect_true(grepl('{\\large orange}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\large 5}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in orange row has been changed
+  expect_equal(length(unlist(gregexpr('\\large', tbl_gt, fixed = TRUE))), 3)
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "x-large"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'a')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row apple and columns color, count, and grpname are now x-large (LARGE in latex)
+  expect_true(grepl('{\\LARGE red}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\LARGE apple}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\LARGE 1}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in apple row has been changed
+  expect_equal(length(unlist(gregexpr('\\LARGE', tbl_gt, fixed = TRUE))), 3)
+
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "xx-large"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'b')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row banana and columns color, count, and grpname are now xx-large (huge in latex)
+  expect_true(grepl('{\\huge banana}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\huge yellow}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\huge 2}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in banana row has been changed
+  expect_equal(length(unlist(gregexpr('\\huge', tbl_gt, fixed = TRUE))), 3)
 }
 )
