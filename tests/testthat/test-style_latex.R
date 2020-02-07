@@ -3,7 +3,7 @@ context("LaTeX -- Ensuring that LaTeX styling works as expected")
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:2, ]
 
-test_that("bold text styling", {
+test_that("latex bold text styling", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # all column labels are bolded
@@ -118,7 +118,7 @@ test_that("latex math styling", {
 }
 )
 
-test_that("colored box styling", {
+test_that("latex colored box styling", {
 
   tbl_colored <- dplyr::tribble( ~grpname, ~count, ~color,
                               'apple', 1, 'red',
@@ -148,5 +148,58 @@ test_that("colored box styling", {
   expect_false(grepl('\\cellcolor{D3D3D3}{banana}', tbl_gt, fixed = TRUE))
   expect_false(grepl('\\cellcolor{D3D3D3}{2}', tbl_gt, fixed = TRUE))
   expect_false(grepl('\\cellcolor{D3D3D3}{yellow}', tbl_gt, fixed = TRUE))
+}
+)
+
+test_that("latex preset font sizing", {
+
+  tbl_fruit <- dplyr::tribble( ~grpname, ~count, ~color,
+                                              'apple', 1, 'red',
+                                              'banana', 2, 'yellow',
+                                              'grape', 3, 'purple',
+                                              'pear', 4, 'green',
+                                              'orange', 5, 'orange')
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "xx-small"),
+      locations = cells_body(
+        columns = vars(color),
+        rows = startsWith(grpname, 'a')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row apple and column color is now xxsmall (scriptsize in latex)
+  expect_true(grepl('{\\scriptsize red}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #other column columns are still normal size
+  expect_equal(length(unlist(gregexpr('\\scriptsize', tbl_gt, fixed = TRUE))), 1)
+
+
+  tbl_gt <-
+    gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_text(size = "x-small"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'b')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #row banana and columns color, count, and grpname are now xsmall (footnotesize in latex)
+  expect_true(grepl('{\\footnotesize yellow}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\footnotesize banana}', tbl_gt, fixed = TRUE))
+  expect_true(grepl('{\\footnotesize 2}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #only fontsize in banana row has been changed
+  expect_equal(length(unlist(gregexpr('\\footnotesize', tbl_gt, fixed = TRUE))), 3)
 }
 )
