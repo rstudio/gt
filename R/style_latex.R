@@ -103,9 +103,15 @@ latex_size_preset_values <- function(stringv){
       xlarge = rlang::quo(paste0('{\\LARGE ', x, '}')),
       xxlarge = rlang::quo(paste0('{\\huge ', x, '}'))
     )
-  stringVector <- names(sizes)
-  best_match <- stringVector[stringdist::amatch(stringv, stringVector, maxDist=Inf)]
-  sizes[[best_match]]
+
+  stringv <- tolower(gsub('-', '', stringv, fixed =TRUE))
+  size <- sizes[[stringv]]
+  if(is.null(sizes[[stringv]])){
+    stringVector <- names(sizes)
+    best_match <- stringVector[stringdist::amatch(stringv, stringVector, maxDist=Inf)]
+    size <- sizes[[best_match]]
+  }
+  size
 }
 
 #' @noRd
@@ -241,18 +247,29 @@ latex_style_function_list <- function() {
 get_latex_function_styles <- function(styles_list) {
   cell_styling <- latex_style_function_list()
   operation_vec <- list(NA)
+
   for (nm in names(styles_list)) {
+
     for (nm2 in names(styles_list[[nm]])) {
+
       if(nm2 == 'size'){
+
         operation <- latex_format_text_size(styles_list[[nm]][[nm2]])
+
       } else {
+
         if(nm2 == 'color'){
           operation <- latex_style_color(styles_list[[nm]][[nm2]], nm)
+
         } else {
+
           if(nm2 == 'stretch'){
             operation <- latex_format_condensed_size(styles_list[[nm]][[nm2]])
+
           } else {
+
             operation <- cell_styling[[nm]][[nm2]][[styles_list[[nm]][[nm2]]]]
+
           }
         }
       }
