@@ -16,7 +16,11 @@ the column where values will be mutated.}
 These values will be combined with those in \code{col_val}. We have the option
 to automatically hide the \code{col_uncert} column through \code{autohide}.}
 
-\item{sep}{The separator text that contains the uncertainty mark.}
+\item{sep}{The separator text that contains the uncertainty mark. The
+default value of \code{" +/- "} indicates that an appropriate plus/minus mark
+will be used depending on the output context. Should you want this special
+symbol to be taken literally, it can be supplied within the base \code{\link[=I]{I()}}
+function.}
 
 \item{autohide}{An option to automatically hide the column specified as
 \code{col_uncert}. Any columns with their state changed to hidden will behave

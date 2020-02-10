@@ -298,24 +298,24 @@ context_missing_text <- function(missing_text,
   switch(context,
          html =
            {
-             if (missing_text == "---") {
+             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
                "&mdash;"
-             } else if (missing_text == "--") {
+             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
                "&ndash;"
              } else {
                missing_text
              }
            },
          latex =
-         {
-           if (missing_text == "---") {
-             "\u2014"
-           } else if (missing_text == "--") {
-             "\u2013"
-           } else {
-             missing_text
-           }
-         })
+           {
+             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+               "\u2014"
+             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+               "\u2013"
+             } else {
+               missing_text
+             }
+           })
 }
 context_dash_mark <- context_missing_text
 
@@ -329,7 +329,8 @@ context_plusminus_mark <- function(plusminus_mark,
   switch(context,
          html =
            {
-             if (plusminus_mark == " +/- ") {
+             if (!inherits(plusminus_mark, "AsIs") &&
+                 plusminus_mark == " +/- ") {
                " &plusmn; "
              } else {
                plusminus_mark
@@ -337,7 +338,8 @@ context_plusminus_mark <- function(plusminus_mark,
            },
          latex =
          {
-           if (plusminus_mark == " +/- ") {
+           if (!inherits(plusminus_mark, "AsIs") &&
+               plusminus_mark == " +/- ") {
              " \u00B1 "
            } else {
              plusminus_mark
