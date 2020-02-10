@@ -101,7 +101,8 @@ gt <- function(data,
       !is.null(groupname_col) &&
       any(rowname_col %in% groupname_col)) {
 
-    stop("Any values provided to `rowname_col` and `groupname_col` cannot be shared.",
+    stop("The value \"", rowname_col, "\" appears in both `rowname_col` and ",
+         "`groupname_col`. These arguments must not have any values in common.",
          call. = FALSE)
   }
 
