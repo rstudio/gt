@@ -1,7 +1,29 @@
 
 # Create a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
-  c("amsmath", "booktabs", "caption", "longtable", "xcolor")
+  c("amsmath", "booktabs", "caption", "longtable", "xcolor", "amssymb", "color", "colortbl", "array", "mathptmx", "tikz")
+}
+
+# If the `rmarkdown` package is available, use the
+# `latex_dependency()` function to load latex packages
+# without requiring the user to do so
+create_knit_meta <- function(shrink = FALSE){
+if (requireNamespace("rmarkdown", quietly = TRUE)) {
+
+  latex_packages <-
+    lapply(latex_packages(), rmarkdown::latex_dependency)
+
+  if(!shrink){
+    latex_packages[[4]]$extra_lines <- c('\\setlength\\LTleft{-.75cm}', '\\setlength\\LTright{0pt plus 1fill minus 1fill}', '\\setlength\\LTcapwidth{18cm}')
+  }
+
+  latex_packages[[3]]$options <- c('singlelinecheck=off')
+  latex_packages[[11]]$extra_lines <- c('\\def\\checkmark{\\tikz\\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}')
+
+} else {
+  latex_packages <- NULL
+}
+  latex_packages
 }
 
 # Transform a footnote mark to a LaTeX representation as a superscript
@@ -60,9 +82,9 @@ create_table_start_l <- function(data){
   }
   paste0(
     header$type_size,
-    '\\setlength\\LTleft{-2.5cm}\n',
-    '\\setlength\\LTright{0pt plus 1fill minus 1fill}\n',
-    '\\setlength\\LTcapwidth{18cm}\n',
+  #  '\\setlength\\LTleft{-2.5cm}\n',
+  #  '\\setlength\\LTright{0pt plus 1fill minus 1fill}\n',
+  #  '\\setlength\\LTcapwidth{18cm}\n',
     separation,
     '\\captionsetup[table]{labelformat=empty,skip=0pt}\n',
     header$header

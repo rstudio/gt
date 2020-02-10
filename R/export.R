@@ -389,17 +389,7 @@ as_latex <- function(data) {
   # Create a LaTeX fragment for the ending tabular statement
   table_end <- create_table_end_l()
 
-  # If the `rmarkdown` package is available, use the
-  # `latex_dependency()` function to load latex packages
-  # without requiring the user to do so
-  if (requireNamespace("rmarkdown", quietly = TRUE)) {
-
-    latex_packages <-
-      lapply(latex_packages(), rmarkdown::latex_dependency)
-
-  } else {
-    latex_packages <- NULL
-  }
+  latex_packages <- create_knit_meta()
 
   reset_latex_cache()
   # Compose the LaTeX table
