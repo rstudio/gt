@@ -1,3 +1,5 @@
+library('tidyverse')
+library('mrggt')
 summary_single_table <- tribble( ~grpname, ~ NOAE, ~g_1, ~g_2, ~g_3, ~ g_4, ~g_5,
                                  '!@ something_{<something>} CHECKMARK', 39, 5, 7, 1, 1, 1,
                                  '!@ VENUS_{<something>} | VENUS_{<something>} ', 9, 3, 0, 2, 0, 0,

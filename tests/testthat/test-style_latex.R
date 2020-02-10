@@ -191,7 +191,6 @@ test_that("latex preset font sizing", {
     ) %>%
     as_latex() %>%
     as.character()
-
   #Expect a fixed pattern
   #row banana and columns color, count, and grpname are now xsmall (footnotesize in latex)
   expect_true(grepl('{\\footnotesize yellow}', tbl_gt, fixed = TRUE))
@@ -313,5 +312,38 @@ test_that("latex preset font sizing", {
   #Expect a fixed pattern
   #only fontsize in banana row has been changed
   expect_equal(length(unlist(gregexpr('\\huge', tbl_gt, fixed = TRUE))), 3)
+}
+)
+
+test_that("latex colored font styling", {
+
+  tbl_colored <- dplyr::tribble( ~grpname, ~count, ~color,
+                                 'apple', 1, 'red',
+                                 'banana', 2, 'yellow')
+  tbl_gt <-
+    gt(data = tbl_colored) %>%
+    tab_style(
+      style = cell_text(color = "#d3d3d3"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'a')
+      )
+    ) %>%
+    as_latex() %>%
+    as.character()
+
+  #Expect a fixed pattern
+  #color definition must be included in code
+  expect_true(grepl('\\definecolor{d3d3d3}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #font coloring around values in the apple row
+  expect_true(grepl('\\textcolor{d3d3d3}{apple}', tbl_gt, fixed = TRUE) && grepl('\\textcolor{d3d3d3}{1}', tbl_gt, fixed = TRUE) && grepl('\\textcolor{d3d3d3}{red}', tbl_gt, fixed = TRUE))
+
+  #Expect a fixed pattern
+  #no font coloring on around values in the banana row
+  expect_false(grepl('\\textcolor{d3d3d3}{banana}', tbl_gt, fixed = TRUE))
+  expect_false(grepl('\\textcolor{d3d3d3}{2}', tbl_gt, fixed = TRUE))
+  expect_false(grepl('\\textcolor{d3d3d3}{yellow}', tbl_gt, fixed = TRUE))
 }
 )
