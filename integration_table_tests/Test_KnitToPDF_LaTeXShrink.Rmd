@@ -1,0 +1,54 @@
+---
+title: "Testing Knitr Functionality & LaTeX Shrink"
+output: 
+  pdf_document
+
+---
+```{r, message = FALSE}
+library('tidyverse')
+library('mrggt')
+```
+
+```{r results = 'asis'}
+tbl_fruit <- dplyr::tribble( ~grpname, ~count, ~color,
+                                              'apple', 1, 'red',
+                                              'CHECKMARK', 2, 'yellow',
+                                              '!@ *beta_{<hi>}', 3, 'purple',
+                                              'pear', 4, 'green',
+                                              'orange', 5, 'orange')
+
+```
+
+```{r results = 'asis'}
+tbl <- gt(data = tbl_fruit) %>%
+    tab_style(
+      style = cell_fill(color = "#d3d3d3"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'a')
+      )
+    ) %>%
+    tab_style(
+      style = cell_text(size = "x-large"),
+      locations = cells_body(
+        columns = everything(),
+        rows = startsWith(grpname, 'p')
+      )
+    ) %>%
+    as_latex()
+
+tbl
+
+```
+
+```{r results = 'asis'}
+tbl %>% latex_shrink(percent_shrink = .4, align = 'c')
+```
+
+```{r results = 'asis'}
+tbl %>% latex_shrink(percent_shrink = .4, align = 'l')
+```
+
+```{r results = 'asis'}
+tbl %>% latex_shrink(percent_shrink = .4, align = 'r')
+```
