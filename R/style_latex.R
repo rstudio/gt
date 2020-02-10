@@ -335,17 +335,27 @@ get_latex_function_styles <- function(styles_list) {
   operation_vec <- list(NA)
 
   for (nm in names(styles_list)) {
+
     for (nm2 in names(styles_list[[nm]])) {
+
       if(nm2 == 'size'){
+
         operation <- latex_format_text_size(styles_list[[nm]][[nm2]])
+
       } else {
+
         if(nm2 == 'color'){
           operation <- latex_style_color(styles_list[[nm]][[nm2]], nm)
+
         } else {
+
           if(nm2 == 'stretch'){
             operation <- latex_format_condensed_size(styles_list[[nm]][[nm2]])
+
           } else {
+
             operation <- cell_styling[[nm]][[nm2]][[styles_list[[nm]][[nm2]]]]
+
           }
         }
       }
