@@ -28,7 +28,7 @@ dt_stub_df_init <- function(data,
   # If `rowname` is a column available in `data`,
   # place that column's data into `stub_df` and
   # remove it from `data`
-  if (rowname_col %in% colnames(data_tbl)) {
+  if (!is.null(rowname_col) && rowname_col %in% colnames(data_tbl)) {
 
     data <- data %>% dt_boxhead_set_stub(var = rowname_col)
 

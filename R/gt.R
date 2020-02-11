@@ -95,6 +95,17 @@ gt <- function(data,
     groupname_col <- NULL
   }
 
+  # Stop function if `rowname_col` and `groupname_col`
+  # have the same string values
+  if (!is.null(rowname_col) &&
+      !is.null(groupname_col) &&
+      any(rowname_col %in% groupname_col)) {
+
+    stop("The value \"", rowname_col, "\" appears in both `rowname_col` and ",
+         "`groupname_col`. These arguments must not have any values in common.",
+         call. = FALSE)
+  }
+
   # Initialize the main objects
   data <-
     list() %>%
