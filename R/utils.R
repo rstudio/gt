@@ -810,12 +810,32 @@ split_scientific_notn <- function(x_str) {
 #' @noRd
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
-  gsub(pattern, replacement, x, fixed = fixed)
+  if (!utf8_aware_sub) {
+    # See variable definition for utf8_aware_sub for more info
+    x <- enc2utf8(as.character(x))
+    replacement <- enc2utf8(as.character(replacement))
+
+    res <- gsub(pattern, replacement, x, fixed = fixed)
+    Encoding(res) <- "UTF-8"
+    res
+  } else {
+    gsub(pattern, replacement, x, fixed = fixed)
+  }
 }
 
 tidy_sub <- function(x, pattern, replacement, fixed = FALSE) {
 
-  sub(pattern, replacement, x, fixed = fixed)
+  if (!utf8_aware_sub) {
+    # See variable definition for utf8_aware_sub for more info
+    x <- enc2utf8(as.character(x))
+    replacement <- enc2utf8(as.character(replacement))
+
+    res <- sub(pattern, replacement, x, fixed = fixed)
+    Encoding(res) <- "UTF-8"
+    res
+  } else {
+    sub(pattern, replacement, x, fixed = fixed)
+  }
 }
 
 tidy_grepl <- function(x, pattern) {
