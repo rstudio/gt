@@ -797,6 +797,11 @@ cols_hide <- function(data,
 #' @param col_uncert A single column name that contains the uncertainty values.
 #'   These values will be combined with those in `col_val`. We have the option
 #'   to automatically hide the `col_uncert` column through `autohide`.
+#' @param sep The separator text that contains the uncertainty mark. The
+#'   default value of `" +/- "` indicates that an appropriate plus/minus mark
+#'   will be used depending on the output context. Should you want this special
+#'   symbol to be taken literally, it can be supplied within the base [I()]
+#'   function.
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_uncert`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
@@ -839,14 +844,13 @@ cols_hide <- function(data,
 cols_merge_uncert <- function(data,
                               col_val,
                               col_uncert,
+                              sep = " +/- ",
                               autohide = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Use a predefined separator
-  sep <- " \u00B1 "
-
+  # Use the `cols_merge_range()` function
   cols_merge_range(
     data = data,
     col_begin = col_val,
@@ -891,7 +895,11 @@ cols_merge_uncert <- function(data,
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
 #' @param col_end A column that contains values for the end of the range.
-#' @param sep The separator text that indicates the values are ranged.
+#' @param sep The separator text that indicates the values are ranged. The
+#'   default value of `"--"` indicates that an en dash will be used for the
+#'   range separator. Using `"---"` will be taken to mean that an em dash should
+#'   be used. Should you want these special symbols to be taken literally, they
+#'   can be supplied within the base [I()] function.
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_end`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.

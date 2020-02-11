@@ -558,3 +558,9 @@ test_that("the `process_footnote_marks()` function works correctly", {
       c("\u2055", "‖", "†", "§", "¶",
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))
 })
+
+test_that("the `tidy_gsub()/tidy_gsub()` functions work with Unicode chars", {
+
+  expect_true(identical(tidy_sub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
+  expect_true(identical(tidy_gsub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
+})

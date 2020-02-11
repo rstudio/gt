@@ -623,3 +623,31 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       )
     )
 })
+
+test_that("Any shared names in `rowname_col` and `groupname_col` will be disallowed", {
+
+  # Expect an error if there are any shared names across `rowname_col`
+  # and `groupname_col`
+  expect_error(
+    exibble %>%
+      gt(rowname_col = "row", groupname_col = "row")
+  )
+  expect_error(
+    exibble %>%
+      gt(rowname_col = "group", groupname_col = "group")
+  )
+  expect_error(
+    exibble %>%
+      gt(rowname_col = "rowname", groupname_col = "rowname")
+  )
+  expect_error(
+    exibble %>%
+      dplyr::group_by(group) %>%
+      gt(rowname_col = "group")
+  )
+  expect_error(
+    exibble %>%
+      dplyr::group_by(date, row) %>%
+      gt(rowname_col = "row")
+  )
+})
