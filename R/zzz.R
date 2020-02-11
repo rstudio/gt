@@ -108,6 +108,12 @@ gt_default_options <- list(
   gt.html_tag_check = TRUE
 )
 
+# R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
+# replacement is UTF-8, the UTF-8 bytes are inserted into the result but the
+# result is not marked as UTF-8.
+# Example: gsub("a", "\u00B1", "a", fixed = TRUE)
+utf8_aware_sub <- NULL
+
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
@@ -116,6 +122,8 @@ gt_default_options <- list(
   op <- options()
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
+
+  utf8_aware_sub <<- identical("UTF-8", Encoding(sub(".", "\u00B1", ".", fixed = TRUE)))
 
   invisible()
 }

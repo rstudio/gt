@@ -298,7 +298,10 @@ perform_col_merge <- function(data,
 
       columns <- col_merge[[i]]$vars
 
-      sep <- col_merge[[i]]$sep %>% context_dash_mark(context = context)
+      sep <-
+        col_merge[[i]]$sep %>%
+        context_dash_mark(context = context) %>%
+        context_plusminus_mark(context = context)
 
       pattern <-
         col_merge[[i]]$pattern %>%
