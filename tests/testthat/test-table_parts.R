@@ -118,7 +118,8 @@ test_that("a gt table contains the expected spanner column labels", {
   # is `perimeter`
   tbl_html %>%
     selection_text("[colspan='2']") %>%
-    expect_equal("perimeter")
+    grepl("perimeter", .) %>%
+    expect_true()
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
@@ -135,8 +136,9 @@ test_that("a gt table contains the expected spanner column labels", {
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
   tbl_html %>%
-    selection_text("[class='gt_col_heading gt_center gt_columns_top_border gt_column_spanner']") %>%
-    expect_equal("perimeter")
+    selection_text("[class='gt_center gt_columns_top_border']") %>%
+    grepl("perimeter", .) %>%
+    expect_true()
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
@@ -510,7 +512,8 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #90EE90;']") %>%
     rvest::html_text() %>%
-    expect_equal("gear_carb_cyl")
+    grepl("gear_carb_cyl", .) %>%
+    expect_true()
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text

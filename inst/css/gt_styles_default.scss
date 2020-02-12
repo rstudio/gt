@@ -54,14 +54,6 @@
     border-bottom-color: $heading_border_bottom_color; /* heading.border.bottom.color */
   }
 
-  .gt_column_spanner {
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: #D3D3D3;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
   .gt_col_headings {
     border-top-style: $column_labels_border_top_style; /* column_labels.border.top.style */
     border-top-width: $column_labels_border_top_width; /* column_labels.border.top.width */
@@ -83,14 +75,29 @@
     font-size: $column_labels_font_size; /* column_labels.font.size */
     font-weight: $column_labels_font_weight; /* column_labels.font.weight */
     text-transform: $column_labels_text_transform; /* column_labels.text_transform */
-    vertical-align: middle;
-    padding: 5px;
-    margin: 10px;
+    vertical-align: bottom;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
     overflow-x: hidden;
   }
 
-  .gt_sep_right {
-    border-right: 5px solid #{$column_labels_background_color};
+  .gt_column_spanner {
+    color: font-color($column_labels_background_color);
+    background-color: $column_labels_background_color; /* column_labels.background.color */
+    font-size: $column_labels_font_size; /* column_labels.font.size */
+    font-weight: $column_labels_font_weight; /* column_labels.font.weight */
+    text-transform: $column_labels_text_transform; /* column_labels.text_transform */
+    vertical-align: bottom;
+    border-bottom-style: $column_labels_border_bottom_style; /* column_labels.border.bottom.style */
+    border-bottom-width: $column_labels_border_bottom_width; /* column_labels.border.bottom.width */
+    border-bottom-color: $column_labels_border_bottom_color; /* column_labels.border.bottom.color */
+    padding-top: 4px;
+    padding-bottom: 4px;
+    overflow-x: hidden;
+    display: inline-block;
+    width: 97%;
   }
 
   .gt_group_heading {
