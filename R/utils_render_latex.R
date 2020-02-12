@@ -115,10 +115,11 @@ create_columns_component_l <- function(data) {
 
     # Get vector of group labels (spanners)
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    is_spanner <- !is.na(spanners)
 
     # Promote column labels to the group level wherever the
     # spanner label is NA
-    spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
+    spanners[!is_spanner] <- headings_vars[is.na(spanners)]
 
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
@@ -131,7 +132,7 @@ create_columns_component_l <- function(data) {
 
     for (i in seq(spanners_lengths$lengths)) {
 
-      if (spanners_lengths$lengths[i] > 1) {
+      if (spanners_lengths$lengths[i] > 1 || is_spanner[i]) {
 
         if (length(multicol) > 0 &&
             grepl("\\\\multicolumn", multicol[length(multicol)])) {
