@@ -535,7 +535,7 @@ create_columns_component_h <- function(data) {
           first_set[[length(first_set) + 1]] <-
             htmltools::tags$th(
               class = paste(
-                c("gt_center", "gt_columns_top_border"),
+                c("gt_center", "gt_columns_top_border", "gt_column_spanner_outer"),
                 collapse = " "
               ),
               rowspan = 1,
