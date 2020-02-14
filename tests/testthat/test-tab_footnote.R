@@ -119,6 +119,35 @@ data_3 <-
       rows = starts_with("mi"))
   )
 
+# Create a table from `sp500` that has footnotes
+# in the title and the subtitle cells
+data_4 <-
+  sp500 %>%
+  dplyr::filter(
+    date >= "2015-01-05" &
+      date <="2015-01-10"
+  ) %>%
+  dplyr::select(
+    -c(adj_close, volume, high, low)
+  ) %>%
+  gt() %>%
+  tab_header(
+    title = "S&P 500",
+    subtitle = "Open and Close Values"
+  ) %>%
+  tab_footnote(
+    footnote = "All values in USD.",
+    locations = list(
+      cells_title(groups = "subtitle")
+    )
+  ) %>%
+  tab_footnote(
+    footnote = "Standard and Poor 500.",
+    locations = list(
+      cells_title(groups = "title")
+    )
+  )
+
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -583,7 +612,7 @@ test_that("the `tab_footnote()` function works correctly", {
     render_as_html() %>%
     xml2::read_html()
 
-  # # Expect that the footnote text elements are in the correct order
+  # Expect that the footnote text elements are in the correct order
   tbl_html %>%
     selection_text(selection = "[class='gt_footnote']") %>%
     tidy_gsub("\n          ", "") %>%
@@ -633,14 +662,58 @@ test_that("the footnotes table is structured correctly", {
   expect_equal(footnotes_tbl$locnum, c(5, 5, 6, 6))
   expect_equal(footnotes_tbl$grpname, c("BMW", "Audi", "::GRAND_SUMMARY", "::GRAND_SUMMARY"))
   expect_equal(footnotes_tbl$colname, rep("msrp", 4))
-
+  expect_equal(footnotes_tbl$colnum, rep(NA_integer_, 4))
   expect_equal(
     footnotes_tbl$footnotes,
     c("Average price for BMW and Audi.", "Average price for BMW and Audi.",
       "Maximum price across all cars.", "Minimum price across all cars.")
   )
 
-  expect_equal(footnotes_tbl$colnum, rep(NA_integer_, 4))
+  # Extract `footnotes_resolved`
+  footnotes_tbl <- dt_footnotes_get(data = data_4)
+
+  # Expect that the `footnotes_resolved` object inherits
+  # from `tbl_df`
+  expect_is(footnotes_tbl, "tbl_df")
+
+  # Expect that there are specific column names in
+  # this tibble
+  expect_equal(
+    colnames(footnotes_tbl),
+    c("locname", "grpname", "colname", "locnum", "rownum",
+      "colnum", "footnotes")
+  )
+
+  # Expect that there are 2 rows in this tibble
+  expect_equal(nrow(footnotes_tbl), 2)
+
+  # Expect specific values to be in `footnotes_resolved`
+  expect_equal(footnotes_tbl$locname, c("subtitle", "title"))
+  expect_equal(footnotes_tbl$grpname, c(NA_character_, NA_character_))
+  expect_equal(footnotes_tbl$colname, c(NA_character_, NA_character_))
+  expect_equal(footnotes_tbl$locnum, c(2, 1))
+  expect_equal(footnotes_tbl$rownum, c(NA_integer_, NA_integer_))
+  expect_equal(footnotes_tbl$colnum, c(NA_integer_, NA_integer_))
+  expect_equal(
+    footnotes_tbl$footnotes,
+    c("All values in USD.", "Standard and Poor 500.")
+  )
+
+  # Create a `tbl_html` object from the `data_4` object
+  tbl_html <-
+    data_4 %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the title and subtitle have the correct
+  # footnote glyphs applied
+  tbl_html %>%
+    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    expect_equal("S&P 5001")
+
+  tbl_html %>%
+    selection_text(selection = "[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    expect_equal("Open and Close Values2")
 })
 
 test_that("the `list_of_summaries` table is structured correctly", {
