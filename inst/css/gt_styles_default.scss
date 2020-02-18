@@ -76,32 +76,33 @@
     font-weight: $column_labels_font_weight; // column_labels.font.weight
     text-transform: $column_labels_text_transform; // column_labels.text_transform
     vertical-align: bottom;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 5px;
+    padding-bottom: 6px;
     padding-left: 5px;
     padding-right: 5px;
     overflow-x: hidden;
   }
 
-  .gt_column_spanner {
+  .gt_column_spanner_outer {
     color: font-color($column_labels_background_color);
     background-color: $column_labels_background_color; // column_labels.background.color
     font-size: $column_labels_font_size; // column_labels.font.size
     font-weight: $column_labels_font_weight; // column_labels.font.weight
     text-transform: $column_labels_text_transform; // column_labels.text_transform
-    vertical-align: bottom;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .gt_column_spanner {
     border-bottom-style: $column_labels_border_bottom_style; // column_labels.border.bottom.style
     border-bottom-width: $column_labels_border_bottom_width; // column_labels.border.bottom.width
     border-bottom-color: $column_labels_border_bottom_color; // column_labels.border.bottom.color
-    padding-top: 4px;
-    padding-bottom: 4px;
+    vertical-align: bottom;
+    padding-top: 5px;
+    padding-bottom: 6px;
     overflow-x: hidden;
     display: inline-block;
     width: 97%;
-  }
-
-  .gt_column_spanner_outer {
-    background-color: $column_labels_background_color; // column_labels.background.color
   }
 
   .gt_group_heading {
