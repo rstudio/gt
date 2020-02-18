@@ -142,6 +142,13 @@ data_color <- function(data,
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
 
+  #Throw error if NA is passed to colors
+  if(is.vector(colors) & length(colors) > 1){
+    if(NA %in% colors){
+      stop('NA not a valid color definition')
+    }
+  }
+
   # Resolution of columns as integer vectors providing the
   # positions of the matched variables
   columns <- rlang::enquo(columns)
@@ -159,7 +166,7 @@ data_color <- function(data,
           scales::col_numeric(
             palette = colors,
             domain = data_vals,
-            alpha = TRUE
+            #alpha = TRUE
           )
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
@@ -183,8 +190,8 @@ data_color <- function(data,
         color_fn <-
           scales::col_factor(
             palette = colors,
-            domain = data_vals,
-            alpha = TRUE
+            domain = data_vals
+            #alpha = TRUE
           )
       } else {
 

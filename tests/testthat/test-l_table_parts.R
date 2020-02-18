@@ -28,7 +28,7 @@ test_that("a gt table contains the expected heading components", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*.large test title",
+      ".*.large .*.centering test title",
       ".*.small test subtitle",
       ".*"),
     tbl_latex %>% as_latex() %>% as.character()
@@ -168,12 +168,12 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*.toprule",
       ".*& mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{Mazda\\}",
+      ".*.multicolumn\\{12\\}\\{l\\}\\{Mazda\\}",
       ".*.midrule",
       ".*Mazda RX4 & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4",
       ".*Mazda RX4 Wag & 21.0 & 6 & 160.0 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
+      ".*.multicolumn\\{12\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
       ".*.midrule",
       ".*"),
     tbl_latex %>%
@@ -201,12 +201,12 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*.toprule",
       ".*& mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
+      ".*.multicolumn\\{12\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{Mazda\\}",
+      ".*.multicolumn\\{12\\}\\{l\\}\\{Mazda\\}",
       ".*.midrule",
       ".*.midrule",
-      ".*.multicolumn\\{1\\}\\{l\\}\\{Mercs\\}",
+      ".*.multicolumn\\{12\\}\\{l\\}\\{Mercs\\}",
       ".*.midrule",
       ".*"),
     tbl_latex %>%

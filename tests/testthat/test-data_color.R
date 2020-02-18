@@ -37,7 +37,7 @@ test_that("the correct color values are obtained when defining a palette", {
 
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
-    paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
+    paletteer::paletteer_d('rcartocolor', 'Vivid') %>% as.character() %>%
     gsub("FF$", "", .)
 
   # Create a `tbl_html` object by using `data_color` with the #RRGGBB
@@ -576,7 +576,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
       c("#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
-        "#62F600", "#6FC972", "#7978BD", "#0000FF"))
+        "#62F600", "#6EC972", "#7878BD", "#0000FF"))
 
   tbl %>%
     gt() %>%
@@ -589,8 +589,8 @@ test_that("the correct color values are obtained when defining a palette", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
-      c("#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
-        "#5FF600", "#72C477", "#7773C1", "#0000FF"))
+      c("#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BDD500",
+        "#5FF600", "#71C477", "#7773C1", "#0000FF"))
 
   # Expect an error when using an invalid color name in `colors`
   expect_error(
@@ -857,14 +857,19 @@ test_that("the correct color values are obtained when using a color fn", {
 
   # Expect all color values to be identical to those from
   # `tbl_html_1`
-  expect_identical(
-    tbl_html_4 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .),
-    tbl_html_1 %>%
-      selection_value("style") %>%
-      gsub("(background-color: |; color: .*)", "", .)
-  )
+  # these will be identical, but not in order.
+  tbl_4_colors <- tbl_html_4 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .)
+
+  tbl_1_colors <- tbl_html_1 %>%
+    selection_value("style") %>%
+    gsub("(background-color: |; color: .*)", "", .)
+
+  expect_true(all(tbl_1_colors %in% tbl_4_colors))
+  expect_true(all(tbl_4_colors %in% tbl_1_colors))
+  expect_true(length(tbl_4_colors) == length(tbl_1_colors))
+
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_numeric()` fn on the `min_sza` column

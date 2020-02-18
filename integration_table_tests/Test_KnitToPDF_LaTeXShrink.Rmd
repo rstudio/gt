@@ -2,6 +2,8 @@
 title: "Testing Knitr Functionality & LaTeX Shrink"
 output: 
   pdf_document
+geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
+  
 
 ---
 ```{r, message = FALSE}
