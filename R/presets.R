@@ -302,6 +302,7 @@ preset_lineless <- function(data) {
     tab_options(
       table.border.top.style = "none",
       heading.border.bottom.style = "none",
+      column_labels.vlines.style = "none",
       column_labels.border.top.style = "none",
       column_labels.border.bottom.style = "none",
       row_group.border.top.style = "none",
@@ -386,6 +387,7 @@ preset_fully_lined <- function(data) {
       table.border.right.style = "solid",
       heading.border.bottom.style = "solid",
       heading.border.lr.style = "solid",
+      column_labels.vlines.style = "solid",
       column_labels.border.top.style = "solid",
       column_labels.border.bottom.style = "solid",
       column_labels.border.lr.style = "solid",

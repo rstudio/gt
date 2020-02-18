@@ -46,6 +46,9 @@ tab_options(
   column_labels.font.size = NULL,
   column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
+  column_labels.vlines.style = NULL,
+  column_labels.vlines.width = NULL,
+  column_labels.vlines.color = NULL,
   column_labels.border.top.style = NULL,
   column_labels.border.top.width = NULL,
   column_labels.border.top.color = NULL,
@@ -210,6 +213,9 @@ the \code{heading} location.}
 \item{column_labels.text_transform, row_group.text_transform, stub.text_transform, summary_row.text_transform, grand_summary_row.text_transform}{Options to apply text transformations to the \code{column_labels}, \code{row_group},
 \code{stub}, \code{summary_row}, and \code{grand_summary_row} text elements. Either of the
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"} keywords can be used.}
+
+\item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{The style, width, and color properties for all vertical lines ('vlines')
+of the the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{The style, width, and color properties for the top border of the
 \code{column_labels} location. This border shares space with that of the

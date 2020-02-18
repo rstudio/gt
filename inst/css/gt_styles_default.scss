@@ -90,6 +90,12 @@
     font-size: $column_labels_font_size; /* column_labels.font.size */
     font-weight: $column_labels_font_weight; /* column_labels.font.weight */
     text-transform: $column_labels_text_transform; /* column_labels.text_transform */
+    border-left-style:  $column_labels_vlines_style; /* column_labels.vlines.style */
+    border-left-width:  $column_labels_vlines_width; /* column_labels.vlines.width */
+    border-left-color:  $column_labels_vlines_color; /* column_labels.vlines.color */
+    border-right-style: $column_labels_vlines_style; /* column_labels.vlines.style */
+    border-right-width: $column_labels_vlines_width; /* column_labels.vlines.width */
+    border-right-color: $column_labels_vlines_color; /* column_labels.vlines.color */
     vertical-align: middle;
     padding: 5px;
     margin: 10px;

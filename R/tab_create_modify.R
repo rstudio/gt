@@ -1206,6 +1206,9 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param heading.border.lr.style,heading.border.lr.width,heading.border.lr.color
 #'   The style, width, and color properties for the left and right borders of
 #'   the `heading` location.
+#' @param column_labels.vlines.style,column_labels.vlines.width,column_labels.vlines.color
+#'   The style, width, and color properties for all vertical lines ('vlines')
+#'   of the the `column_labels`.
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
@@ -1410,6 +1413,9 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.text_transform = NULL,
+                        column_labels.vlines.style = NULL,
+                        column_labels.vlines.width = NULL,
+                        column_labels.vlines.color = NULL,
                         column_labels.border.top.style = NULL,
                         column_labels.border.top.width = NULL,
                         column_labels.border.top.color = NULL,
