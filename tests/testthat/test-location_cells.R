@@ -494,8 +494,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th class=\"gt_center gt_columns_top_border\" rowspan=\"1\" ",
-        "colspan=\"2\" style=\"color: white; font-size: 20px; ",
+        "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
+        "rowspan=\"1\" colspan=\"2\" style=\"color: white; font-size: 20px; ",
         "background-color: #FFA500;\">.*?<span class=\"gt_column_spanner\">",
         "spanner</span>"
         )

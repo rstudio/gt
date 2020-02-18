@@ -136,7 +136,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
   tbl_html %>%
-    selection_text("[class='gt_center gt_columns_top_border']") %>%
+    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
     grepl("perimeter", .) %>%
     expect_true()
 
