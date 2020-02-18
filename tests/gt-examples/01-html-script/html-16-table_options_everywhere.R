@@ -74,7 +74,7 @@ many_options_tbl <-
     heading.border.bottom.color = "purple",   # Bottom line of heading - color
     column_labels.font.size = px(16),                # Column labels - font size
     column_labels.font.weight = "normal",            # Column labels - font weight
-    column_labels.background.color = "lightgray",    # Column labels background color
+    column_labels.background.color = "olivedrab",    # Column labels background color
     row_group.background.color = "green",        # Row group background color
     row_group.font.size = px(14),                # Row group labels - font size
     row_group.font.weight = "800",               # Row group labels - font weight
