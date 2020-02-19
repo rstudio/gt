@@ -134,7 +134,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_uncert()` and use the `vars()` helper
@@ -157,7 +157,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_uncert()` and use the `vars()` helper
@@ -184,7 +184,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
     expect_equal("{1}{sep}{2}")
@@ -196,7 +196,37 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
-    expect_equal(" ± ")
+    expect_equal(" +/- ")
+
+  # Create a `tbl_html` object with `gt()`; merge two
+  # columns with `cols_merge_uncert()` but use the `I()`
+  # function to keep the separator text as is
+  tbl_html <-
+    tbl %>%
+    gt() %>%
+    cols_merge_uncert(
+      col_val = vars(col_1),
+      col_uncert = vars(col_2),
+      sep = I(" +/- ")
+    )
+
+  # Expect that merging statements are stored in `col_merge`\
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
+    expect_equal("{1}{sep}{2}")
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
+    expect_equal(c("col_1", "col_2"))
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
+    expect_equal("merge_range")
+
+  # Get the separator object
+  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+
+  # Expect that `sep` has the `AsIs` class
+  expect_is(sep, "AsIs")
+  expect_equal(as.character(sep), " +/- ")
+  expect_equal(sep, I(" +/- "))
 })
 
 test_that("the `cols_merge_range()` function works correctly", {
@@ -288,4 +318,64 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
     expect_equal("--")
+
+  # Create a `tbl_html` object with `gt()`; merge two
+  # columns with `cols_merge_range()` but use the `I()`
+  # function to keep the `--` separator text as is
+  tbl_html <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(col_2),
+      sep = I("--")
+    )
+
+  # Expect that merging statements are stored in `col_merge`\
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
+    expect_equal("{1}{sep}{2}")
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
+    expect_equal(c("col_1", "col_2"))
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
+    expect_equal("merge_range")
+
+  # Get the separator object
+  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+
+  # Expect that `sep` has the `AsIs` class
+  expect_is(sep, "AsIs")
+  expect_equal(as.character(sep), "--")
+  expect_equal(sep, I("--"))
+
+  # Create a `tbl_html` object with `gt()`; merge two
+  # columns with `cols_merge_range()` but use the `I()`
+  # function to keep the `---` separator text as is
+  tbl_html <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(col_2),
+      sep = I("---")
+    )
+
+  # Expect that merging statements are stored in `col_merge`\
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
+    expect_equal("{1}{sep}{2}")
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
+    expect_equal(c("col_1", "col_2"))
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
+    expect_equal("merge_range")
+
+  # Get the separator object
+  sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
+
+  # Expect that `sep` has the `AsIs` class
+  expect_is(sep, "AsIs")
+  expect_equal(as.character(sep), "---")
+  expect_equal(sep, I("---"))
 })

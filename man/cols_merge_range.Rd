@@ -13,7 +13,11 @@ cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
 
 \item{col_end}{A column that contains values for the end of the range.}
 
-\item{sep}{The separator text that indicates the values are ranged.}
+\item{sep}{The separator text that indicates the values are ranged. The
+default value of \code{"--"} indicates that an en dash will be used for the
+range separator. Using \code{"---"} will be taken to mean that an em dash should
+be used. Should you want these special symbols to be taken literally, they
+can be supplied within the base \code{\link[=I]{I()}} function.}
 
 \item{autohide}{An option to automatically hide the column specified as
 \code{col_end}. Any columns with their state changed to hidden will behave
