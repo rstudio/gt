@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 
 # Create a table based on `mtcars`, add all of the different types of
 # table parts, and add styles in every type of part

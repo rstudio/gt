@@ -7,7 +7,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(gt)
+library(mrggt)
 ```
 
 Create a display table based on `pressure` (Vapor Pressure of Mercury as a Function of Temperature).

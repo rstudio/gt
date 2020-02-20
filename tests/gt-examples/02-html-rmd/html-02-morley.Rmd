@@ -6,7 +6,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(gt)
+library(mrggt)
 ```
 
 Create a display table based on `morley`.

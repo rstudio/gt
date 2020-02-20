@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 library(tidyverse)
 
 # Create a table that creates a stub and

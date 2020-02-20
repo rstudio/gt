@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 library(blastula)
 library(tidyverse)
 library(glue)

@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 library(tidyverse)
 
 # Create a table with options applied to every type of table part
