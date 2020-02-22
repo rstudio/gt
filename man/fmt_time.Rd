@@ -20,7 +20,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\code{[colname_1] > 100 & [colname_2] < 50}).}
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
 that corresponds to the preferred time style. Use \code{\link[=info_time_style]{info_time_style()}} to
@@ -39,9 +39,9 @@ available for simpler formatting of ISO times (all using the input time of
 \enumerate{
 \item hms: \code{14:35:00}
 \item hm: \code{14:35}
-\item hms_p: \code{2:35:00 PM}
-\item hm_p: \code{2:35 PM}
-\item h_p: \code{2 PM}
+\item hms_p: \verb{2:35:00 PM}
+\item hm_p: \verb{2:35 PM}
+\item h_p: \verb{2 PM}
 }
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
@@ -104,12 +104,18 @@ tab_2 <-
 
 }
 \seealso{
-Other Format Data: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other Format Data: 
+\code{\link{data_color}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
 }
 \concept{Format Data}

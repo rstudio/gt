@@ -10,10 +10,10 @@ cols_width(data, ..., .list = list2(...))
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{Expressions for the assignment of column widths for the table
-columns in \code{data}. Two-sided formulas (e.g, \code{<LHS> ~ <RHS>}) can be used,
+columns in \code{data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
-\code{{##}px} (i.e., pixel dimensions); the \code{\link[=px]{px()}} helper function is best used
+\verb{\{##\}px} (i.e., pixel dimensions); the \code{\link[=px]{px()}} helper function is best used
 for this purpose. Column names should be enclosed in \code{\link[=vars]{vars()}}. The
 column-based select helpers \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
 \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS.
@@ -75,11 +75,15 @@ tab_1 <-
 
 }
 \seealso{
-Other Modify Columns: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}}, \code{\link{cols_move}}
+Other Modify Columns: 
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()}
 }
 \concept{Modify Columns}

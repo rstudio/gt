@@ -51,17 +51,26 @@ exibble %>% gt()
 }
 
 \seealso{
-Other Helper Functions: \code{\link{adjust_luminance}},
-  \code{\link{cell_borders}}, \code{\link{cell_fill}},
-  \code{\link{cell_text}}, \code{\link{cells_body}},
-  \code{\link{cells_column_labels}},
-  \code{\link{cells_column_spanners}},
-  \code{\link{cells_grand_summary}},
-  \code{\link{cells_row_groups}},
-  \code{\link{cells_stubhead}}, \code{\link{cells_stub}},
-  \code{\link{cells_summary}}, \code{\link{cells_title}},
-  \code{\link{currency}}, \code{\link{escape_latex}},
-  \code{\link{html}}, \code{\link{md}}, \code{\link{pct}},
-  \code{\link{px}}, \code{\link{random_id}}
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
+\code{\link{escape_latex}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
 }
 \concept{Helper Functions}

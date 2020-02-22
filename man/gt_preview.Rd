@@ -60,6 +60,7 @@ tab_1 <-
 
 }
 \seealso{
-Other Create Table: \code{\link{gt}}
+Other Create Table: 
+\code{\link{gt}()}
 }
 \concept{Create Table}

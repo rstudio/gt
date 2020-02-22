@@ -27,7 +27,7 @@ The \code{cols_merge_range()} function is a specialized variant of the
 \code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that constitute
 a range of values (\code{col_begin} and \code{col_end}) and merges them into a single
 column. What results is a column containing both values separated by a long
-dash (e.g., \code{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
+dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
 the output table.
 }
 \details{
@@ -86,11 +86,15 @@ tab_1 <-
 
 }
 \seealso{
-Other Modify Columns: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_width}}
+Other Modify Columns: 
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_width}()}
 }
 \concept{Modify Columns}
