@@ -62,7 +62,7 @@ strip_math <- function(.){
 }
 
 z_score <- function(x, group){
-  if(sd(group) == 0 | is.na(sd(group))){
+  if(stats::sd(group) == 0 | is.na(stats::sd(group))){
     return(0)
   }
   (x - mean(group)) / sd(group)
