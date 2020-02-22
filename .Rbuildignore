@@ -17,3 +17,4 @@ tests/manual_tests
 ^vignettes/videos$
 ^vignettes/images/apng$
 ^TODOS
+integration_table_tests/

@@ -65,7 +65,7 @@ z_score <- function(x, group){
   if(stats::sd(group) == 0 | is.na(stats::sd(group))){
     return(0)
   }
-  (x - mean(group)) / sd(group)
+  (x - mean(group)) / stats::sd(group)
 }
 
 is_dimensional <- function(test_element){
