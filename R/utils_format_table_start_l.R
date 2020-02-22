@@ -106,7 +106,7 @@ recalculate_outlier_widths <- function(required_widths_df) {
     z <- z_score(maxw_indiv_col, indiv_col)
 
     if (z > 4) {
-      new_max <- sd(indiv_col)*4 + mean(indiv_col)
+      new_max <- stats::sd(indiv_col)*4 + mean(indiv_col)
       diff <- maxw_indiv_col - new_max
       adjusted_max_widths <- append(adjusted_max_widths, new_max)
       diff_required_adjusted_maxes <- append(diff_required_adjusted_maxes, diff)

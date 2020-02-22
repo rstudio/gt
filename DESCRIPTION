@@ -12,7 +12,7 @@ Authors@R: c(
     person("Joe", "Cheng", , "joe@rstudio.com", "aut"),
     person("Barret", "Schloerke", , "barret@rstudio.com", "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
-    person("Anna-Christina", "Nevison", , "annan@metrumrg.com", c("aut", "cre")),
+    person("Anna-Christina", "Nevison", , "annan@metrumrg.com", c("aut")),
     person("RStudio", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
@@ -42,7 +42,10 @@ Imports:
     purrr (>= 0.3.3),
     matrixStats (>= 0.55.0),
     qdapRegex (>= 0.7.2),
-    stringdist (>= 0.9.5.5)
+    stringdist (>= 0.9.5.5),
+    grDevices,
+    stats,
+    cli
 Suggests:
     knitr,
     paletteer,

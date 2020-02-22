@@ -25,6 +25,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 
 globalVariables(
   c(
+    "x",
     ".",
     "are_groups_present",
     "arrange_dfs",
@@ -122,13 +123,13 @@ gt_default_options <- list(
 
 .onAttach <- function(libname, pkgname) {
   setHook(packageEvent("gt", "attach"), function(...) {
-    packageStartupMessage(rule())
+    packageStartupMessage(cli::rule())
     packageStartupMessage(
       "You have loaded gt after mrggt - this is likely ",
       "to cause problems.\nIf you need functions from both gt and mrggt, ",
       "please load gt first, then mrggt:\nlibrary(gt); library(mrggt)"
     )
-    packageStartupMessage(rule())
+    packageStartupMessage(cli::rule())
   })
 }
 

@@ -261,7 +261,7 @@ latex_style_color <- function(color, cell_type){
 #user inputted hex colors must be translated to rgb
 #' @noRd
 create_color_definition <- function(color){
-  s <- col2rgb(color)
+  s <- grDevices::col2rgb(color)
   paste0(
     "\\definecolor{",
     gsub('#', '', color),
