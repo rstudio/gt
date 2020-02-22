@@ -27,6 +27,7 @@ Authors:
 \itemize{
   \item Joe Cheng \email{joe@rstudio.com}
   \item Barret Schloerke \email{barret@rstudio.com} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
+  \item Anna-Christina Nevison \email{annan@metrumrg.com}
 }
 
 Other contributors:
