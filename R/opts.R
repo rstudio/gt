@@ -261,6 +261,9 @@ opt_add_row_striping <- function(data) {
 #' @export
 opt_align_table_header <- function(data, align = "center") {
 
+  # FIXME: use a vector of choices for `align` along with `match.arg()`
+  #   -> `align = c("center", "left", "right")`
+
   # Ensure that the value for `align` is valid
   if (!is.character(align) && length(align) != 1) {
     stop("The value for `align` must be a single character value.",
@@ -273,6 +276,8 @@ opt_align_table_header <- function(data, align = "center") {
          call. = FALSE)
   }
 
+  # FIXME: don't use `%>%` for such small pipelines
+  # TODO: create issue to correct this everywhere
   data %>% tab_options(heading.align = align)
 }
 
@@ -334,6 +339,15 @@ opt_align_table_header <- function(data, align = "center") {
 #' @export
 opt_all_caps <- function(data,
                          locations = c("column_labels", "stub", "row_group")) {
+
+  # FIXME: the `locations` arg may be confusing since (1) it is a collection
+  # of locations (with an interface quite different from all other uses of
+  # the `locations` arg), and (2) it appears as though you select one option but
+  # that's incorrect (it's *which* of the locations should the option be applied)
+  # - probably better to have separate args with TRUE/FALSE:
+  #   -> `column_labels = TRUE`,
+  #   -> `stub = TRUE`
+  #   -> `row_group = TRUE`
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
@@ -428,6 +442,11 @@ opt_add_table_outline <- function(data,
                                   style = "solid",
                                   width = px(3),
                                   color = "#D3D3D3") {
+
+  # TODO: What is accepted in `style` isn't really well defined across
+  # the function docs; it might be useful to have a htmltools-style
+  # builder function like `tags` but for the permissible styles
+  # e.g,. `gt_styles$solid`
 
   data %>%
     tab_options(

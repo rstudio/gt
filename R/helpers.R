@@ -1848,6 +1848,13 @@ location_colors <- function(heading = NULL,
   arg_names <- formals(location_colors) %>% names() %>% base::setdiff("row_striping")
   color_list <- mget(arg_names)
 
+  # TODO: Design consideration: I'm not sure if `white` is the right choice
+  #   here; using "none" or "initial" or NULL (and having `preset_location_colors()`
+  #   use the gt default) might be better; though, if we are using
+  #   `preset_location_colors()` there is the expectation of *some* colors
+  #   being applied (and it might be strange to have transparent cells and
+  #   opaque cells)
+
   # Replace all NULL values with `white`
   color_list <- color_list %>% lapply(function(x) if (is.null(x)) "white" else x)
 

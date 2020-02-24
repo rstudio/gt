@@ -531,6 +531,8 @@ info_paletteer <- function(color_pkgs = NULL) {
 #' @export
 info_preset_colorized <- function() {
 
+  # FIXME: use the `opt_align_table_header()` function here in place of
+  # the last `tab_style()` call
   preset_colorized_tbl %>%
     dplyr::mutate(style = paste0("<br>Style **", style, "**")) %>%
     gt() %>%

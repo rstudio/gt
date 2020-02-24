@@ -71,6 +71,15 @@ preset_colorized <- function(data,
                              style = 1,
                              color = "blue") {
 
+  # TODO: for the `style` and `color` args, we can only choose one option of a
+  # set of options for each (and we must choose one from each)
+  # using a vector + `match.arg()` seems like the right thing to do, but, there
+  # are quite a few options for `color` that would make the vector quite long
+  # - in terms of function signature design, where do we draw the line on this?
+
+  # TODO: this less-optimal design is seen in other functions as well, like:
+  # `fmt_date()` and `fmt_time()`
+
   if (!(length(style) == 1 && style %in% 1:6)) {
     stop("The `style` value must be a number in the range of 1 to 6",
          call. = FALSE)
@@ -91,11 +100,12 @@ preset_colorized <- function(data,
       color = color
     )
 
-  # TODO: develop a function that performs a table reset; it
-  #       only resets the table style parameters in `_options`
+  # TODO: develop a function that performs a selective options reset; it
+  #       should only reset the parameters in `_options` that have to do
+  #       with styling
   tbl_colorized <-
     data %>%
-    dt_options_init() %>%
+    dt_options_init() %>% # <- this unfortunately resets other options like footnote glyphs
     tab_options(
       table.border.top.color = params$table_hlines_color,
       table.border.bottom.color = params$table_hlines_color,
@@ -196,6 +206,14 @@ preset_colorized <- function(data,
 preset_location_colors <- function(data,
                                    colors = "blues") {
 
+  # TODO: having `colors` accept a keyword or `location_color_list` is
+  # surprising and confusing; also, if using a keyword, we don't have
+  # any knowledge of what the acceptable ones are from the function signature
+  # (there are 11 of them)
+  # A better idea might be to always accept a `location_color_list` and
+  # augment the `location_colors()` helper function to accept keywords
+  # for predefined `location_color_list`s
+
   if (!(is.character(colors) &&
         length(colors) == 1 &&
         colors %in% names(colors_for_locations)) &&
@@ -211,11 +229,12 @@ preset_location_colors <- function(data,
     colors <- colors_for_locations[[colors]]
   }
 
-  # TODO: develop a function that performs a table reset; it
-  #       only resets the table style parameters in `_options`
+  # TODO: develop a function that performs a selective options reset; it
+  #       should only reset the parameters in `_options` that have to do
+  #       with styling; this is the same problem as seen in `preset_colorized()`
   tbl_location_colors <-
     data %>%
-    dt_options_init() %>%
+    dt_options_init() %>% # <- this unfortunately resets other options like footnote glyphs
     tab_options(
       heading.background.color = colors$heading,
       column_labels.background.color = colors$column_labels,
@@ -295,10 +314,11 @@ preset_location_colors <- function(data,
 #' @export
 preset_lineless <- function(data) {
 
-  # TODO: develop a function that performs a table reset; it
-  #       only resets the table style parameters in `_options`
+  # TODO: develop a function that performs a selective options reset; it
+  #       should only reset the parameters in `_options` that have to do
+  #       with styling; this is the same problem as seen in `preset_colorized()`
   data %>%
-    dt_options_init() %>%
+    dt_options_init() %>% # <- this unfortunately resets other options like footnote glyphs
     tab_options(
       table.border.top.style = "none",
       heading.border.bottom.style = "none",
@@ -377,10 +397,11 @@ preset_lineless <- function(data) {
 #' @export
 preset_fully_lined <- function(data) {
 
-  # TODO: develop a function that performs a table reset; it
-  #       only resets the table style parameters in `_options`
+  # TODO: develop a function that performs a selective options reset; it
+  #       should only reset the parameters in `_options` that have to do
+  #       with styling; this is the same problem as seen in `preset_colorized()`
   data %>%
-    dt_options_init() %>%
+    dt_options_init() %>% # <- this unfortunately resets other options like footnote glyphs
     tab_options(
       table.border.top.style = "solid",
       table.border.left.style = "solid",
@@ -409,6 +430,7 @@ preset_fully_lined <- function(data) {
 }
 
 # Colors for the `preset_location_colors()` function
+# A preset `location_color_list` is obtained with `colors_for_locations[[<preset_name>]]`
 colors_for_locations <-
   list(
     blues = location_colors(
@@ -481,6 +503,7 @@ preset_colors <-
   )
 
 # Function for getting a vector of preset colors at a specified 'level'
+# (a level refers to the color brightness and they range from 1 to 5)
 get_all_preset_colors_at_index <- function(index) {
 
   preset_colors %>%
@@ -493,11 +516,18 @@ get_all_preset_colors_at_index <- function(index) {
 
 # A tibble that contains all style and color parameters for the
 # themed tables generated by the `preset_colorized()` function
+
+# TODO: this should instead be a list since the tibble data structure
+# is not useful; the `styles_colors_params` object is used by
+# `get_colorized_params()` which in turn is called by `preset_colorized()`
+# TODO: the inner `tibble`s are also not useful, their just turned into lists
+# in `get_colorized_params()`
+
 styles_colors_params <-
   dplyr::tibble() %>%
   dplyr::bind_rows(
     dplyr::tibble( # style 1
-      color = preset_colors %>% names(),
+      color = preset_colors %>% names(), # TODO: don't use a `%>%` here or like below
       style = 1,
       table_hlines_color = get_all_preset_colors_at_index(5),
       location_hlines_color = get_all_preset_colors_at_index(4),
