@@ -4,7 +4,7 @@
 \alias{opt_align_table_header}
 \title{Option to align the table header}
 \usage{
-opt_align_table_header(data, align = "center")
+opt_align_table_header(data, align = c("center", "left", "right"))
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -13,16 +13,14 @@ opt_align_table_header(data, align = "center")
 header. Options are \code{"center"} (the default), \code{"left"}, or \code{"right"}.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 By default, a table header added to a \pkg{gt} table has center alignment
 for both the title and the subtitle elements. This function allows us to
 easily set the horizontal alignment of the title and subtitle to the left
-or right by using the \code{"align"} argument.
-}
-\details{
-This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
+or right by using the \code{"align"} argument. This function serves as a
+convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
 }
 \section{Figures}{
 
@@ -68,6 +66,8 @@ Other table option functions:
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }

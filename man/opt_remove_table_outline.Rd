@@ -10,7 +10,7 @@ opt_remove_table_outline(data)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 This function removes any table outlines that may exist around the entire
@@ -67,6 +67,8 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
 \concept{table option functions}

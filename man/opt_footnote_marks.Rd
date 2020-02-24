@@ -19,7 +19,7 @@ four symbol marks), and \code{"extended"} (which adds two more symbols to the
 standard set).}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 
 An object of class \code{gt_tbl}.
 }
@@ -164,6 +164,8 @@ Other table option functions:
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 

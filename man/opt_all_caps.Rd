@@ -14,7 +14,7 @@ default it includes all of the \code{"column_labels"}, the \code{"stub"}, and th
 \code{"row_group"} locations. However, we could just choose one or two of those.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 Sometimes an all-capitalized look is suitable for a table. With the
@@ -69,6 +69,8 @@ Other table option functions:
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }

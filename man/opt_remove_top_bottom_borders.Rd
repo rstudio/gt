@@ -10,18 +10,16 @@ opt_remove_top_bottom_borders(data)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
-The top and bottom borders of a \pkg{gt} table can be removed entirely by
+The top and bottom borders of a \strong{gt} table can be removed entirely by
 using the \code{opt_remove_top_bottom_borders()} function. The definition of what
 constitutes a top and bottom border depends on which table parts are present
 at the top and bottom (e.g., header, table columns, a footnote block, etc.).
 Regardless of the available parts, there won't be any top of bottom
-horizontal lines after using this function.
-}
-\details{
-This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(table.border.top.style = "hidden") \%>\% tab_options(table.border.bottom.style = "hidden")}.
+horizontal lines after using this function. This function serves as a
+convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(table.border.top.style = "hidden") \%>\% tab_options(table.border.bottom.style = "hidden")}.
 }
 \section{Figures}{
 
@@ -67,6 +65,8 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()}
 }
 \concept{table option functions}

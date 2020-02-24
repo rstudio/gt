@@ -14,7 +14,7 @@ outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), 
 \code{"#D3D3D3"}.}
 }
 \value{
-an object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}.
 }
 \description{
 This function puts an outline of consistent \code{style}, \code{width}, and \code{color}
@@ -69,6 +69,8 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_fully_lined}()},
+\code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
