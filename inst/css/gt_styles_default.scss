@@ -91,6 +91,14 @@
     text-transform: $column_labels_text_transform; // column_labels.text_transform
     padding-top: 0;
     padding-bottom: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .gt_column_spanner_outer:first-child {
+    padding-left: 0;
+  }
+  .gt_column_spanner_outer:last-child {
+    padding-right: 0;
   }
 
   .gt_column_spanner {
@@ -102,7 +110,7 @@
     padding-bottom: 6px;
     overflow-x: hidden;
     display: inline-block;
-    width: 97%;
+    width: 100%;
   }
 
   .gt_group_heading {
