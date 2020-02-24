@@ -492,7 +492,14 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Expect that the styling was applied to the correct column labels
   gt_tbl_cells_column_spanners %>%
     render_as_html() %>%
-    tidy_grepl("<th class=\".*? gt_column_spanner\".*?style=\"color: white; font-size: 20px; background-color: #FFA500;\">spanner</th>") %>%
+    tidy_grepl(
+      paste0(
+        "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
+        "rowspan=\"1\" colspan=\"2\" style=\"color: white; font-size: 20px; ",
+        "background-color: #FFA500;\">.*?<span class=\"gt_column_spanner\">",
+        "spanner</span>"
+        )
+      ) %>%
     expect_true()
 
   #
