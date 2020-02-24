@@ -141,12 +141,11 @@ opt_footnote_marks <- function(data,
 #' @export
 opt_remove_top_bottom_borders <- function(data) {
 
-  data %>%
-    tab_options(
-      data,
-      table.border.top.style = "hidden",
-      table.border.bottom.style = "hidden"
-    )
+  tab_options(
+    data,
+    table.border.top.style = "hidden",
+    table.border.bottom.style = "hidden"
+  )
 }
 
 #' Option to remove all lines from a table
@@ -220,10 +219,6 @@ opt_lineless <- function(data) {
   )
 }
 
-opts_line_style <- function(all = NULL, table_border = all, column_labels = all, heading = all)
-  opts_line_style(table_border = "solid")
-opts_line_style(all = "none", column_labels = "solid")
-opts_line_style("solid")
 
 #' Option to create lines everywhere in a table
 #'
@@ -355,10 +350,7 @@ opt_fully_lined <- function(data) {
 #' @export
 opt_add_row_striping <- function(data) {
 
-  tab_options(
-    data,
-    row.striping.include_table_body = TRUE
-  )
+  tab_options(data, row.striping.include_table_body = TRUE)
 }
 
 #' Option to align the table header
@@ -499,29 +491,36 @@ opt_all_caps <- function(data,
   }
 
   if ("column_labels" %in% locations) {
+
     data <-
-      data %>%
-      tab_options(column_labels.text_transform = "uppercase") %>%
-      tab_options(column_labels.font.size = pct(80)) %>%
-      tab_options(column_labels.font.weight = "bolder")
+      tab_options(
+        data,
+        column_labels.text_transform = "uppercase",
+        column_labels.font.size = pct(80),
+        column_labels.font.weight = "bolder"
+      )
   }
 
   if ("stub" %in% locations) {
 
     data <-
-      data %>%
-      tab_options(stub.text_transform = "uppercase") %>%
-      tab_options(stub.font.size = pct(80)) %>%
-      tab_options(stub.font.weight = "bolder")
+      tab_options(
+        data,
+        stub.text_transform = "uppercase",
+        stub.font.size = pct(80),
+        stub.font.weight = "bolder"
+      )
   }
 
   if ("row_group" %in% locations) {
 
     data <-
-      data %>%
-      tab_options(row_group.text_transform = "uppercase") %>%
-      tab_options(row_group.font.size = pct(80)) %>%
-      tab_options(row_group.font.weight = "bolder")
+      tab_options(
+        data,
+        row_group.text_transform = "uppercase",
+        row_group.font.size = pct(80),
+        row_group.font.weight = "bolder"
+      )
   }
 
   data
@@ -679,19 +678,19 @@ opt_add_table_outline <- function(data,
 #' @export
 opt_remove_table_outline <- function(data) {
 
-  data %>%
-    tab_options(
-      table.border.top.style = "none",
-      table.border.bottom.style = "none",
-      table.border.left.style = "none",
-      table.border.right.style = "none",
-      heading.border.lr.style = "none",
-      column_labels.border.lr.style = "none",
-      row_group.border.left.style = "none",
-      row_group.border.right.style = "none",
-      table_body.border.top.style = "none",
-      table_body.border.bottom.style = "none",
-      footnotes.border.lr.style = "none",
-      source_notes.border.lr.style = "none"
-    )
+  tab_options(
+    data,
+    table.border.top.style = "none",
+    table.border.bottom.style = "none",
+    table.border.left.style = "none",
+    table.border.right.style = "none",
+    heading.border.lr.style = "none",
+    column_labels.border.lr.style = "none",
+    row_group.border.left.style = "none",
+    row_group.border.right.style = "none",
+    table_body.border.top.style = "none",
+    table_body.border.bottom.style = "none",
+    footnotes.border.lr.style = "none",
+    source_notes.border.lr.style = "none"
+  )
 }
