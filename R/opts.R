@@ -667,11 +667,8 @@ opt_add_table_outline <- function(data,
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   preset_colorized(style = 5, color = "blue") %>%
+#'   opt_fully_lined() %>%
 #'   opt_remove_table_outline()
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_opt_remove_table_outline_1.svg}{options: width=100\%}}
 #'
 #' @family table option functions
 #'
@@ -680,17 +677,9 @@ opt_remove_table_outline <- function(data) {
 
   tab_options(
     data,
-    table.border.top.style = "none",
-    table.border.bottom.style = "none",
-    table.border.left.style = "none",
-    table.border.right.style = "none",
-    heading.border.lr.style = "none",
-    column_labels.border.lr.style = "none",
-    row_group.border.left.style = "none",
-    row_group.border.right.style = "none",
-    table_body.border.top.style = "none",
-    table_body.border.bottom.style = "none",
-    footnotes.border.lr.style = "none",
-    source_notes.border.lr.style = "none"
+    table.border.top.style = "hidden",
+    table.border.bottom.style = "hidden",
+    table.border.left.style = "hidden",
+    table.border.right.style = "hidden"
   )
 }
