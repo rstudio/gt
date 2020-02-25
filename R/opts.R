@@ -81,6 +81,9 @@
 opt_footnote_marks <- function(data,
                                marks = NULL) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   if (!is.null(marks)) {
     data <- tab_options(data, footnotes.marks = marks)
   }
@@ -139,6 +142,9 @@ opt_footnote_marks <- function(data,
 #'
 #' @export
 opt_add_row_striping <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   tab_options(data, row.striping.include_table_body = TRUE)
 }
@@ -199,6 +205,9 @@ opt_add_row_striping <- function(data) {
 #' @export
 opt_align_table_header <- function(data,
                                    align = c("left", "center", "right")) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   align <- match.arg(align)
 
@@ -277,6 +286,9 @@ opt_align_table_header <- function(data,
 #' @export
 opt_all_caps <- function(data,
                          locations = c("column_labels", "stub", "row_group")) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
@@ -377,6 +389,9 @@ opt_all_caps <- function(data,
 #' @export
 opt_remove_top_bottom_borders <- function(data) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   tab_options(
     data,
     table.border.top.style = "hidden",
@@ -434,6 +449,9 @@ opt_remove_top_bottom_borders <- function(data) {
 #'
 #' @export
 opt_fully_lined <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   tab_options(
     data,
@@ -511,6 +529,9 @@ opt_fully_lined <- function(data) {
 #'
 #' @export
 opt_lineless <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   tab_options(
     data,
@@ -593,6 +614,9 @@ opt_add_table_outline <- function(data,
                                   style = "solid",
                                   width = px(3),
                                   color = "#D3D3D3") {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   tab_options(
     data,
@@ -686,6 +710,9 @@ opt_add_table_outline <- function(data,
 #'
 #' @export
 opt_remove_table_outline <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   tab_options(
     data,
