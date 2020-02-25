@@ -41,7 +41,7 @@ Imports:
 Suggests:
     knitr,
     paletteer,
-    testthat,
+    testthat (>= 2.1.0),
     RColorBrewer,
     rmarkdown,
     rvest,
