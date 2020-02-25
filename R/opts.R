@@ -73,7 +73,9 @@
 #' @section Figures:
 #' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-1
 #'
 #' @export
 opt_footnote_marks <- function(data,
@@ -84,220 +86,6 @@ opt_footnote_marks <- function(data,
   }
 
   data
-}
-
-#' Option to remove the top and bottom borders
-#'
-#' The top and bottom borders of a **gt** table can be removed entirely by
-#' using the `opt_remove_top_bottom_borders()` function. The definition of what
-#' constitutes a top and bottom border depends on which table parts are present
-#' at the top and bottom (e.g., header, table columns, a footnote block, etc.).
-#' Regardless of the available parts, there won't be any top of bottom
-#' horizontal lines after using this function. This function serves as a
-#' convenient shortcut for `<gt_tbl> %>%
-#' tab_options(table.border.top.style = "hidden") %>%
-#' tab_options(table.border.bottom.style = "hidden")`.
-#'
-#' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; next, we
-#' # remove the top and bottom borders with
-#' # `opt_remove_top_bottom_borders()`
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_remove_top_bottom_borders()
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_opt_remove_top_bottom_borders_1.svg}{options: width=100\%}}
-#'
-#' @family table option functions
-#'
-#' @export
-opt_remove_top_bottom_borders <- function(data) {
-
-  tab_options(
-    data,
-    table.border.top.style = "hidden",
-    table.border.bottom.style = "hidden"
-  )
-}
-
-#' Option to remove all lines from a table
-#'
-#' The `opt_lineless()` function effectively produces a table with no visible
-#' lines. This is great as a blank slate for additive styling with
-#' [tab_options()] or [tab_style()]. Or, use it in those cases where you are
-#' using **gt** tables mostly for layout purposes.
-#'
-#' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; then, use
-#' # the `opt_lineless()` function to get
-#' # an ultra-minimal table with no lining
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_lineless()
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_preset_lineless_1.svg}{options: width=100\%}}
-#'
-#' @family table option functions
-#'
-#' @export
-opt_lineless <- function(data) {
-
-  tab_options(
-    data,
-    table.border.top.style = "none",
-    heading.border.bottom.style = "none",
-    column_labels.vlines.style = "none",
-    column_labels.border.top.style = "none",
-    column_labels.border.bottom.style = "none",
-    row_group.border.top.style = "none",
-    row_group.border.bottom.style = "none",
-    stub.border.style = "none",
-    table_body.border.top.style = "none",
-    table_body.border.bottom.style = "none",
-    table_body.hlines.style = "none",
-    summary_row.border.style = "none",
-    grand_summary_row.border.style = "none",
-    footnotes.border.bottom.style = "none",
-    source_notes.border.bottom.style = "none",
-    table.border.bottom.style = "none"
-  )
-}
-
-
-#' Option to create lines everywhere in a table
-#'
-#' The `opt_fully_lined()` function yields a table where all possible lines are
-#' visible. This is great if you want to start off with lots of lines and
-#' subtract just a few of them with [tab_options()] or [tab_style()]. Or, use it
-#' in those cases where you absolutely need to have boundaries between pieces of
-#' information.
-#'
-#' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; then, use
-#' # the `opt_fully_lined()` function to
-#' # haves lines everywhere there can possibly
-#' # be lines
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_fully_lined()
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_preset_fully_lined_1.svg}{options: width=100\%}}
-#'
-#' @family table option functions
-#'
-#' @export
-opt_fully_lined <- function(data) {
-
-  tab_options(
-    data,
-    table.border.top.style = "solid",
-    table.border.left.style = "solid",
-    table.border.right.style = "solid",
-    heading.border.bottom.style = "solid",
-    heading.border.lr.style = "solid",
-    column_labels.vlines.style = "solid",
-    column_labels.border.top.style = "solid",
-    column_labels.border.bottom.style = "solid",
-    column_labels.border.lr.style = "solid",
-    row_group.border.top.style = "solid",
-    row_group.border.bottom.style = "solid",
-    row_group.border.left.style = "solid",
-    row_group.border.right.style = "solid",
-    stub.border.style = "solid",
-    table_body.border.top.style = "solid",
-    table_body.border.bottom.style = "solid",
-    table_body.hlines.style = "solid",
-    table_body.vlines.style = "solid",
-    summary_row.border.style = "solid",
-    footnotes.border.bottom.style = "solid",
-    footnotes.border.lr.style = "solid",
-    source_notes.border.lr.style = "solid",
-    table.border.bottom.style = "solid"
-  )
 }
 
 #' Option to add row striping
@@ -345,7 +133,9 @@ opt_fully_lined <- function(data) {
 #' @section Figures:
 #' \if{html}{\figure{man_opt_add_row_striping_1.svg}{options: width=100\%}}
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-2
 #'
 #' @export
 opt_add_row_striping <- function(data) {
@@ -402,7 +192,9 @@ opt_add_row_striping <- function(data) {
 #' @section Figures:
 #' \if{html}{\figure{man_opt_align_table_header_1.svg}{options: width=100\%}}
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-3
 #'
 #' @export
 opt_align_table_header <- function(data,
@@ -478,7 +270,9 @@ opt_align_table_header <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_opt_all_caps_1.svg}{options: width=100\%}}
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-4
 #'
 #' @export
 opt_all_caps <- function(data,
@@ -524,6 +318,219 @@ opt_all_caps <- function(data,
   }
 
   data
+}
+
+#' Option to remove the top and bottom borders
+#'
+#' The top and bottom borders of a **gt** table can be removed entirely by
+#' using the `opt_remove_top_bottom_borders()` function. The definition of what
+#' constitutes a top and bottom border depends on which table parts are present
+#' at the top and bottom (e.g., header, table columns, a footnote block, etc.).
+#' Regardless of the available parts, there won't be any top of bottom
+#' horizontal lines after using this function. This function serves as a
+#' convenient shortcut for `<gt_tbl> %>%
+#' tab_options(table.border.top.style = "hidden") %>%
+#' tab_options(table.border.bottom.style = "hidden")`.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; next, we
+#' # remove the top and bottom borders with
+#' # `opt_remove_top_bottom_borders()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_remove_top_bottom_borders()
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_remove_top_bottom_borders_1.svg}{options: width=100\%}}
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-5
+#'
+#' @export
+opt_remove_top_bottom_borders <- function(data) {
+
+  tab_options(
+    data,
+    table.border.top.style = "hidden",
+    table.border.bottom.style = "hidden"
+  )
+}
+
+#' Option to create lines everywhere in a table
+#'
+#' The `opt_fully_lined()` function yields a table where all possible lines are
+#' visible. This is great if you want to start off with lots of lines and
+#' subtract just a few of them with [tab_options()] or [tab_style()]. Or, use it
+#' in those cases where you absolutely need to have boundaries between pieces of
+#' information.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `opt_fully_lined()` function to
+#' # haves lines everywhere there can possibly
+#' # be lines
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_fully_lined()
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-6
+#'
+#' @export
+opt_fully_lined <- function(data) {
+
+  tab_options(
+    data,
+    table.border.top.style = "solid",
+    table.border.left.style = "solid",
+    table.border.right.style = "solid",
+    heading.border.bottom.style = "solid",
+    heading.border.lr.style = "solid",
+    column_labels.vlines.style = "solid",
+    column_labels.border.top.style = "solid",
+    column_labels.border.bottom.style = "solid",
+    column_labels.border.lr.style = "solid",
+    row_group.border.top.style = "solid",
+    row_group.border.bottom.style = "solid",
+    row_group.border.left.style = "solid",
+    row_group.border.right.style = "solid",
+    stub.border.style = "solid",
+    table_body.border.top.style = "solid",
+    table_body.border.bottom.style = "solid",
+    table_body.hlines.style = "solid",
+    table_body.vlines.style = "solid",
+    summary_row.border.style = "solid",
+    footnotes.border.bottom.style = "solid",
+    footnotes.border.lr.style = "solid",
+    source_notes.border.lr.style = "solid",
+    table.border.bottom.style = "solid"
+  )
+}
+
+#' Option to remove all lines from a table
+#'
+#' The `opt_lineless()` function effectively produces a table with no visible
+#' lines. This is great as a blank slate for additive styling with
+#' [tab_options()] or [tab_style()]. Or, use it in those cases where you are
+#' using **gt** tables mostly for layout purposes.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; then, use
+#' # the `opt_lineless()` function to get
+#' # an ultra-minimal table with no lining
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = vars(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = vars(currency),
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_lineless()
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-7
+#'
+#' @export
+opt_lineless <- function(data) {
+
+  tab_options(
+    data,
+    table.border.top.style = "none",
+    heading.border.bottom.style = "none",
+    column_labels.vlines.style = "none",
+    column_labels.border.top.style = "none",
+    column_labels.border.bottom.style = "none",
+    row_group.border.top.style = "none",
+    row_group.border.bottom.style = "none",
+    stub.border.style = "none",
+    table_body.border.top.style = "none",
+    table_body.border.bottom.style = "none",
+    table_body.hlines.style = "none",
+    summary_row.border.style = "none",
+    grand_summary_row.border.style = "none",
+    footnotes.border.bottom.style = "none",
+    source_notes.border.bottom.style = "none",
+    table.border.bottom.style = "none"
+  )
 }
 
 #' Option to wrap an outline around the entire table
@@ -577,7 +584,9 @@ opt_all_caps <- function(data,
 #' @section Figures:
 #' \if{html}{\figure{man_opt_add_table_outline_1.svg}{options: width=100\%}}
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-8
 #'
 #' @export
 opt_add_table_outline <- function(data,
@@ -640,9 +649,10 @@ opt_add_table_outline <- function(data,
 #'
 #' @examples
 #' # Use `exibble` to create a gt table with
-#' # a number of table parts added; apply a
-#' # table preset and then remove the table
-#' # outlines with `opt_remove_table_outline()`
+#' # a number of table parts added; use the
+#' # `opt_fully_lined()` function and then
+#' # remove the table outlines with the
+#' # `opt_remove_table_outline()` function
 #' tab_1 <-
 #'   exibble %>%
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
@@ -670,7 +680,9 @@ opt_add_table_outline <- function(data,
 #'   opt_fully_lined() %>%
 #'   opt_remove_table_outline()
 #'
-#' @family table option functions
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-9
 #'
 #' @export
 opt_remove_table_outline <- function(data) {
