@@ -211,18 +211,6 @@ opt_align_table_header <- function(data,
 
   align <- match.arg(align)
 
-  # Ensure that the value for `align` is valid
-  if (!is.character(align) && length(align) != 1) {
-    stop("The value for `align` must be a single character value.",
-         call. = FALSE)
-  }
-
-  # Ensure that an allowed value for `align` is provided
-  if (!(align %in% c("left", "center", "right"))) {
-    stop("The allowed values for `align` are `left`, `center`, and `right`.",
-         call. = FALSE)
-  }
-
   tab_options(data, heading.align = align)
 }
 
