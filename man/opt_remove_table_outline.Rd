@@ -22,11 +22,6 @@ This function serves as a convenient shortcut for a large number of options
 from the \code{\link[=tab_options]{tab_options()}} function. The complementary \verb{opt_*()} function is
 \code{\link[=opt_add_table_outline]{opt_add_table_outline()}}, which adds a table outline.
 }
-\section{Figures}{
-
-\if{html}{\figure{man_opt_remove_table_outline_1.svg}{options: width=100\%}}
-}
-
 \examples{
 # Use `exibble` to create a gt table with
 # a number of table parts added; apply a
@@ -56,7 +51,7 @@ tab_1 <-
     title = "The title of the table",
     subtitle = "The table's subtitle"
   ) \%>\%
-  preset_colorized(style = 5, color = "blue") \%>\%
+  opt_fully_lined() \%>\%
   opt_remove_table_outline()
 
 }
