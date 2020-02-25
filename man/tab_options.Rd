@@ -399,7 +399,6 @@ tab_6 <-
 }
 \seealso{
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},
