@@ -31,6 +31,11 @@ from the \code{\link[=tab_options]{tab_options()}} function. The complementary \
 \if{html}{\figure{man_opt_add_table_outline_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-8
+}
+
 \examples{
 # Use `exibble` to create a gt table with
 # a number of table parts added; have an
@@ -64,7 +69,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
@@ -74,4 +79,4 @@ Other table option functions:
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

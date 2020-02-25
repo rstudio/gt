@@ -22,11 +22,17 @@ This function serves as a convenient shortcut for a large number of options
 from the \code{\link[=tab_options]{tab_options()}} function. The complementary \verb{opt_*()} function is
 \code{\link[=opt_add_table_outline]{opt_add_table_outline()}}, which adds a table outline.
 }
+\section{Function ID}{
+
+9-9
+}
+
 \examples{
 # Use `exibble` to create a gt table with
-# a number of table parts added; apply a
-# table preset and then remove the table
-# outlines with `opt_remove_table_outline()`
+# a number of table parts added; use the
+# `opt_fully_lined()` function and then
+# remove the table outlines with the
+# `opt_remove_table_outline()` function
 tab_1 <-
   exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
@@ -56,7 +62,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
@@ -66,4 +72,4 @@ Other table option functions:
 \code{\link{opt_lineless}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

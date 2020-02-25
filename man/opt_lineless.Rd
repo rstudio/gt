@@ -18,9 +18,9 @@ lines. This is great as a blank slate for additive styling with
 \code{\link[=tab_options]{tab_options()}} or \code{\link[=tab_style]{tab_style()}}. Or, use it in those cases where you are
 using \strong{gt} tables mostly for layout purposes.
 }
-\section{Figures}{
+\section{Function ID}{
 
-\if{html}{\figure{man_preset_lineless_1.svg}{options: width=100\%}}
+9-7
 }
 
 \examples{
@@ -56,7 +56,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
@@ -66,4 +66,4 @@ Other table option functions:
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

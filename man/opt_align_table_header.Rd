@@ -27,6 +27,11 @@ convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>
 \if{html}{\figure{man_opt_align_table_header_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-3
+}
+
 \examples{
 # Use `exibble` to create a gt table with
 # a number of table parts added; the header
@@ -61,7 +66,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_all_caps}()},
@@ -71,4 +76,4 @@ Other table option functions:
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

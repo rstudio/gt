@@ -19,9 +19,9 @@ subtract just a few of them with \code{\link[=tab_options]{tab_options()}} or \c
 in those cases where you absolutely need to have boundaries between pieces of
 information.
 }
-\section{Figures}{
+\section{Function ID}{
 
-\if{html}{\figure{man_preset_fully_lined_1.svg}{options: width=100\%}}
+9-6
 }
 
 \examples{
@@ -58,7 +58,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
@@ -68,4 +68,4 @@ Other table option functions:
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

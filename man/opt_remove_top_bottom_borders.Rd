@@ -26,6 +26,11 @@ convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(table.border.top.style 
 \if{html}{\figure{man_opt_remove_top_bottom_borders_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-5
+}
+
 \examples{
 # Use `exibble` to create a gt table with
 # a number of table parts added; next, we
@@ -59,7 +64,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
@@ -69,4 +74,4 @@ Other table option functions:
 \code{\link{opt_lineless}()},
 \code{\link{opt_remove_table_outline}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}

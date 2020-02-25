@@ -83,6 +83,9 @@ more symbols, making six
 
 \section{Function ID}{
 
+9-1
+
+
 2-10
 }
 
@@ -159,7 +162,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_row_striping}()},
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
@@ -181,4 +184,4 @@ Other Create or Modify Parts:
 \code{\link{tab_style}()}
 }
 \concept{Create or Modify Parts}
-\concept{table option functions}
+\concept{Table Option Functions}

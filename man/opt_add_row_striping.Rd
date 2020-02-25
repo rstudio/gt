@@ -22,6 +22,11 @@ function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(ro
 \if{html}{\figure{man_opt_add_row_striping_1.svg}{options: width=100\%}}
 }
 
+\section{Function ID}{
+
+9-2
+}
+
 \examples{
 # Use `exibble` to create a gt table with
 # a number of table parts added; next, we
@@ -55,7 +60,7 @@ tab_1 <-
 
 }
 \seealso{
-Other table option functions: 
+Other Table Option Functions: 
 \code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
@@ -65,4 +70,4 @@ Other table option functions:
 \code{\link{opt_remove_table_outline}()},
 \code{\link{opt_remove_top_bottom_borders}()}
 }
-\concept{table option functions}
+\concept{Table Option Functions}
