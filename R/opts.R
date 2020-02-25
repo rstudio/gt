@@ -355,7 +355,7 @@ opt_add_row_striping <- function(data) {
 
 #' Option to align the table header
 #'
-#' By default, a table header added to a \pkg{gt} table has center alignment
+#' By default, a table header added to a **gt** table has center alignment
 #' for both the title and the subtitle elements. This function allows us to
 #' easily set the horizontal alignment of the title and subtitle to the left
 #' or right by using the `"align"` argument. This function serves as a
@@ -363,7 +363,7 @@ opt_add_row_striping <- function(data) {
 #'
 #' @inheritParams fmt_number
 #' @param align The alignment of the title and subtitle elements in the table
-#' header. Options are `"center"` (the default), `"left"`, or `"right"`.
+#' header. Options are `"left"` (the default), `"center"`, or `"right"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -406,7 +406,7 @@ opt_add_row_striping <- function(data) {
 #'
 #' @export
 opt_align_table_header <- function(data,
-                                   align = c("center", "left", "right")) {
+                                   align = c("left", "center", "right")) {
 
   align <- match.arg(align)
 

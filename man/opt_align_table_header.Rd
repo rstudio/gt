@@ -4,19 +4,19 @@
 \alias{opt_align_table_header}
 \title{Option to align the table header}
 \usage{
-opt_align_table_header(data, align = c("center", "left", "right"))
+opt_align_table_header(data, align = c("left", "center", "right"))
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment of the title and subtitle elements in the table
-header. Options are \code{"center"} (the default), \code{"left"}, or \code{"right"}.}
+header. Options are \code{"left"} (the default), \code{"center"}, or \code{"right"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-By default, a table header added to a \pkg{gt} table has center alignment
+By default, a table header added to a \strong{gt} table has center alignment
 for both the title and the subtitle elements. This function allows us to
 easily set the horizontal alignment of the title and subtitle to the left
 or right by using the \code{"align"} argument. This function serves as a
