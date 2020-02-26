@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 library(tidyverse)
 
 # Create a display table where individual table cells are styled

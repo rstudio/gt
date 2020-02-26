@@ -4,8 +4,14 @@
 \alias{grand_summary_rows}
 \title{Add grand summary rows using aggregation functions}
 \usage{
-grand_summary_rows(data, columns = TRUE, fns, missing_text = "---",
-  formatter = fmt_number, ...)
+grand_summary_rows(
+  data,
+  columns = TRUE,
+  fns,
+  missing_text = "---",
+  formatter = fmt_number,
+  ...
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -26,7 +32,7 @@ bare function names).}
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
 
-\item{formatter}{A formatter function name. These can be any of the \code{fmt_*()}
+\item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
 functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
 etc.), or a custom function using \code{fmt()}. The default function is
 \code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
@@ -93,6 +99,7 @@ tab_1 <-
 
 }
 \seealso{
-Other Add Rows: \code{\link{summary_rows}}
+Other Add Rows: 
+\code{\link{summary_rows}()}
 }
 \concept{Add Rows}

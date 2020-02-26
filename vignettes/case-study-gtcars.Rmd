@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>")
 
-library(gt)
+library(mrggt)
 library(dplyr)
 library(tibble)
 ```

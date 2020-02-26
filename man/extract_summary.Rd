@@ -76,8 +76,10 @@ tab_1 <-
 
 }
 \seealso{
-Other Export Functions: \code{\link{as_latex}},
-  \code{\link{as_raw_html}}, \code{\link{as_rtf}},
-  \code{\link{gtsave}}
+Other Export Functions: 
+\code{\link{as_latex}()},
+\code{\link{as_raw_html}()},
+\code{\link{as_rtf}()},
+\code{\link{gtsave}()}
 }
 \concept{Export Functions}

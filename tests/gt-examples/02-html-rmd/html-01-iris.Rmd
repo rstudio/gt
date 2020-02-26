@@ -7,7 +7,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(gt)
+library(mrggt)
 ```
 
 Create a display table based on `iris`.
@@ -25,5 +25,5 @@ gt(data = iris) %>%
     subtitle = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
   ) %>%
   tab_source_note(
-    source_note = md("The data were collected by *Anderson* (1935).")
+    source_note = md("The data were collected by *Anderson* (1935)."))
 ```

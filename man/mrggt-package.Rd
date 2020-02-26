@@ -21,12 +21,13 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Richard Iannone \email{rich@rstudio.com} (0000-0003-3925-190X)
+\strong{Maintainer}: Richard Iannone \email{rich@rstudio.com} (\href{https://orcid.org/0000-0003-3925-190X}{ORCID})
 
 Authors:
 \itemize{
   \item Joe Cheng \email{joe@rstudio.com}
-  \item Barret Schloerke \email{barret@rstudio.com} (0000-0001-9986-114X)
+  \item Barret Schloerke \email{barret@rstudio.com} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
+  \item Anna-Christina Nevison \email{annan@metrumrg.com}
 }
 
 Other contributors:

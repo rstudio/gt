@@ -27,7 +27,7 @@ compared to any very dark or very light colors in the input palette.
 }
 \details{
 This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's
-\code{palette} argument, which can use a vector of colors or any of the \code{col_*}
+\code{palette} argument, which can use a vector of colors or any of the \verb{col_*}
 functions from the \strong{scales} package (all of which have a \code{palette}
 argument).
 }
@@ -83,18 +83,26 @@ tab_1 <-
 
 }
 \seealso{
-Other Helper Functions: \code{\link{cell_borders}},
-  \code{\link{cell_fill}}, \code{\link{cell_text}},
-  \code{\link{cells_body}},
-  \code{\link{cells_column_labels}},
-  \code{\link{cells_column_spanners}},
-  \code{\link{cells_grand_summary}},
-  \code{\link{cells_row_groups}},
-  \code{\link{cells_stubhead}}, \code{\link{cells_stub}},
-  \code{\link{cells_summary}}, \code{\link{cells_title}},
-  \code{\link{currency}}, \code{\link{escape_latex}},
-  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
-  \code{\link{random_id}}
+Other Helper Functions: 
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
 }
 \concept{Helper Functions}

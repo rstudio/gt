@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 
 # Create a display table based on `sleep`
 sleep_tbl <-

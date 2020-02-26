@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%

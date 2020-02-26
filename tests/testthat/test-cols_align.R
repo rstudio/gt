@@ -6,7 +6,7 @@ mtcars_short <- mtcars[1:5, ]
 # Create a data frame based on the internal `sp500.csv`
 sp500 <-
   read.csv(
-    system.file("extdata", "sp500.csv", package = "gt"),
+    system.file("extdata", "sp500.csv", package = "mrggt"),
     stringsAsFactors = FALSE)
 
 # Function to skip tests if Suggested packages not available on system

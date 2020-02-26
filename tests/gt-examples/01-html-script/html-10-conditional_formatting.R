@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 library(tidyverse)
 
 # Create a table where rows are formatted conditionally

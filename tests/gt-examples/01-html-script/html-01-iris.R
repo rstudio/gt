@@ -1,4 +1,4 @@
-library(gt)
+library(mrggt)
 
 # Create a display table based on `iris`
 iris_tbl <-

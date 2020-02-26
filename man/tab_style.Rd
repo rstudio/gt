@@ -15,12 +15,12 @@ valid styles. If using more than one helper function to define styles, all
 calls must be enclosed in a \code{\link[=list]{list()}}.}
 
 \item{locations}{the cell or set of cells to be associated with the style.
-Supplying any of the \code{cells_*()} helper functions is a useful way to target
+Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the styling. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
 \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
 \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
-\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \code{cells_*()}
+\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \verb{cells_*()}
 calls within a \code{list()} if we wish to apply styling to different types of
 locations (e.g., body cells, row group labels, the table title, etc.).}
 }
@@ -122,11 +122,15 @@ tab_2 <-
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper
 functions for targeting the locations to be styled.
 
-Other Create or Modify Parts: \code{\link{opt_footnote_marks}},
-  \code{\link{tab_footnote}}, \code{\link{tab_header}},
-  \code{\link{tab_options}}, \code{\link{tab_row_group}},
-  \code{\link{tab_source_note}},
-  \code{\link{tab_spanner_delim}},
-  \code{\link{tab_spanner}}, \code{\link{tab_stubhead}}
+Other Create or Modify Parts: 
+\code{\link{opt_footnote_marks}()},
+\code{\link{tab_footnote}()},
+\code{\link{tab_header}()},
+\code{\link{tab_options}()},
+\code{\link{tab_row_group}()},
+\code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
+\code{\link{tab_spanner}()},
+\code{\link{tab_stubhead}()}
 }
 \concept{Create or Modify Parts}

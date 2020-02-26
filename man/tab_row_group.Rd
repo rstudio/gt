@@ -83,11 +83,15 @@ tab_2 <-
 
 }
 \seealso{
-Other Create or Modify Parts: \code{\link{opt_footnote_marks}},
-  \code{\link{tab_footnote}}, \code{\link{tab_header}},
-  \code{\link{tab_options}}, \code{\link{tab_source_note}},
-  \code{\link{tab_spanner_delim}},
-  \code{\link{tab_spanner}}, \code{\link{tab_stubhead}},
-  \code{\link{tab_style}}
+Other Create or Modify Parts: 
+\code{\link{opt_footnote_marks}()},
+\code{\link{tab_footnote}()},
+\code{\link{tab_header}()},
+\code{\link{tab_options}()},
+\code{\link{tab_source_note}()},
+\code{\link{tab_spanner_delim}()},
+\code{\link{tab_spanner}()},
+\code{\link{tab_stubhead}()},
+\code{\link{tab_style}()}
 }
 \concept{Create or Modify Parts}
