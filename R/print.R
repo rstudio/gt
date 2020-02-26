@@ -60,23 +60,27 @@ knit_print.gt_tbl <- function(x, ...) {
 #' @noRd
 as.tags.gt_tbl <- function(x, ...) {
 
+  table_id <- dt_options_get_value(x, option = "table_id")
+
+  if (!is.na(table_id) && table_id == ":random:") {
+    id <- random_id()
+  } else if (!is.na(table_id)) {
+    id <- table_id
+  } else {
+    id <- NULL
+  }
+
   # Generate the HTML table
   html_table <- render_as_html(data = x)
 
+  # Compile the SCSS as CSS
+  css <- compile_scss(data = x, id = id)
+
   # Get options related to the enclosing <div>
-  id <- x %>% dt_options_get_value(option = "table_id")
   container_overflow_x <- x %>% dt_options_get_value(option = "container_overflow_x")
   container_overflow_y <- x %>% dt_options_get_value(option = "container_overflow_y")
   container_width <- x %>% dt_options_get_value(option = "container_width")
   container_height <- x %>% dt_options_get_value(option = "container_height")
-
-  # If the ID hasn't been set, set `id` as NULL
-  if (is.na(id)) {
-    id <- NULL
-  }
-
-  # Compile the SCSS as CSS
-  css <- compile_scss(data = x, id = id)
 
   # Attach the dependency to the HTML table
   html_tbl <-
