@@ -77,10 +77,10 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_scss(data = x, id = id)
 
   # Get options related to the enclosing <div>
-  container_overflow_x <- x %>% dt_options_get_value(option = "container_overflow_x")
-  container_overflow_y <- x %>% dt_options_get_value(option = "container_overflow_y")
-  container_width <- x %>% dt_options_get_value(option = "container_width")
-  container_height <- x %>% dt_options_get_value(option = "container_height")
+  container_overflow_x <- dt_options_get_value(x, option = "container_overflow_x")
+  container_overflow_y <- dt_options_get_value(x, option = "container_overflow_y")
+  container_width <- dt_options_get_value(x, option = "container_width")
+  container_height <- dt_options_get_value(x, option = "container_height")
 
   # Attach the dependency to the HTML table
   html_tbl <-
