@@ -28,7 +28,7 @@ The \code{cols_merge_uncert()} function is a specialized variant of the
 \code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a base value column
 (\code{col_val}) and an uncertainty column (\code{col_uncert}) and merges them into a
 single column. What results is a column with values and associated
-uncertainties (e.g., \code{12.0 ± 0.1}), and, the column specified in \code{col_uncert}
+uncertainties (e.g., \verb{12.0 ± 0.1}), and, the column specified in \code{col_uncert}
 is dropped from the output table.
 }
 \details{
@@ -92,11 +92,15 @@ tab_1 <-
 
 }
 \seealso{
-Other Modify Columns: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}}, \code{\link{cols_merge}},
-  \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_width}}
+Other Modify Columns: 
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_width}()}
 }
 \concept{Modify Columns}

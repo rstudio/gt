@@ -6,12 +6,20 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![Travis build
-status](https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&branch=master)](https://travis-ci.com/rstudio/gt)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rstudio/gt?branch=master&svg=true)](https://ci.appveyor.com/project/rstudio/gt)
 [![Coverage
-status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
+status](https://codecov.io/gh/metrumresearchgroup/mrggt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
+
+## Scope
+
+The `mrggt` package is a fork of the gt package focused on adding latex
+functionality to bring it closer inline to the capabilities of html. The
+rstudio team has expressed this is eventually on their roadmap, however
+the timelines are uncertain. The original goal was to sit on-top of gt,
+however during the course of development, numerous internal refactorings
+broke our code. As such, a hard fork will keep the functionality locked
+until we explicitly merge upstream changes.
+
+## gt itself:
 
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
@@ -45,7 +53,7 @@ needs. Here is a brief example of how to use **gt** to create a table
 from the included `sp500` dataset:
 
 ``` r
-library(gt)
+library(mrggt)
 library(tidyverse)
 library(glue)
 

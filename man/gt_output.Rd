@@ -16,8 +16,8 @@ Shiny app. The \code{gt_output()} call is to be used in the Shiny \code{ui} comp
 the position and context wherein this call is made determines the where the
 \strong{gt} table is rendered on the app page. It's important to note that the
 ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
-\code{gt_output()} (e.g., \strong{server}: \code{output$<id> <- render_gt(...)}; \strong{ui}:
-\code{gt_output(outputId = "<id>"}).
+\code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
+\verb{gt_output(outputId = "<id>"}).
 }
 \details{
 We need to ensure that we have the \strong{shiny} package installed first. This
@@ -68,6 +68,7 @@ shinyApp(ui, server)
 
 }
 \seealso{
-Other Shiny functions: \code{\link{render_gt}}
+Other Shiny functions: 
+\code{\link{render_gt}()}
 }
 \concept{Shiny functions}

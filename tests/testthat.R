@@ -1,5 +1,5 @@
 library(testthat)
 library(checkmate)
-library(gt)
+library(mrggt)
 
-test_check("gt")
+test_check("mrggt")

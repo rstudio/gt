@@ -22,7 +22,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 \details{
 When using any of the location helper functions with an appropriate function
 that has a \code{locations} argument, multiple locations can be targeted by
-enclosing several \code{cells_*()} helper functions in a \code{list()}. The following
+enclosing several \verb{cells_*()} helper functions in a \code{list()}. The following
 helper functions can be used to target cells (roughly in order from the top
 to the bottom of a table):
 \itemize{
@@ -81,18 +81,26 @@ tab_1 <-
 
 }
 \seealso{
-Other Helper Functions: \code{\link{adjust_luminance}},
-  \code{\link{cell_borders}}, \code{\link{cell_fill}},
-  \code{\link{cell_text}}, \code{\link{cells_body}},
-  \code{\link{cells_column_labels}},
-  \code{\link{cells_column_spanners}},
-  \code{\link{cells_grand_summary}},
-  \code{\link{cells_row_groups}},
-  \code{\link{cells_stubhead}}, \code{\link{cells_stub}},
-  \code{\link{cells_summary}}, \code{\link{currency}},
-  \code{\link{escape_latex}},
-  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}},
-  \code{\link{random_id}}
+Other Helper Functions: 
+\code{\link{adjust_luminance}()},
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{currency}()},
+\code{\link{escape_latex}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()}
 }
 \concept{Helper Functions}

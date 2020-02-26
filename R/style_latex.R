@@ -261,7 +261,7 @@ latex_style_color <- function(color, cell_type){
 #user inputted hex colors must be translated to rgb
 #' @noRd
 create_color_definition <- function(color){
-  s <- col2rgb(color)
+  s <- grDevices::col2rgb(color)
   paste0(
     "\\definecolor{",
     gsub('#', '', color),
@@ -380,13 +380,13 @@ latex_style_it <- function(value, styles) {
   val[['x']]
 }
 
-
-latex_shrink <- function(latex_code, percent_shrink, align = NULL) {
-
-  if(!is.null(align)){
-    alignments <- c('l', 'r', 'c')
-    if(!align %in% alignments){stop('align must be either l, r, c')}
-  }
+#' shrink latex
+#' @param latex_code gt object
+#' @param prop_shrink proportion to shrink
+#' @param align align direction to align
+#' @export
+latex_shrink <- function(latex_code, prop_shrink, align = c('l', 'r', 'c')) {
+  align <- match.arg(align)
   #Shrink the column widths
   tex_split <-
     unlist(stringr::str_split(latex_code %>% as.character(), '\n'))
@@ -395,7 +395,7 @@ latex_shrink <- function(latex_code, percent_shrink, align = NULL) {
   shrink_width <-
     as.double(unlist(
       qdapRegex::rm_between(col_width_row, 'p{', 'cm}', extract = TRUE)
-    )) * percent_shrink
+    )) * prop_shrink
 
   if(is.null(align)){
     new_col_row <-
@@ -423,7 +423,7 @@ latex_shrink <- function(latex_code, percent_shrink, align = NULL) {
   shrink_cap <-
     as.double(unlist(
       qdapRegex::rm_between(cap_width_row, '{', 'cm}', extract = TRUE)
-    )) * percent_shrink
+    )) * prop_shrink
   new_cap_row <-
     paste0('\\setlength\\LTcapwidth{', shrink_cap, 'cm}')
   tex_split[startsWith(tex_split, '\\setlength\\LTcapwidth')] <-

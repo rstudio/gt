@@ -25,7 +25,9 @@ since we test various sizes of the test image within that function.
 }
 
 \seealso{
-Other Image Addition Functions: \code{\link{ggplot_image}},
-  \code{\link{local_image}}, \code{\link{web_image}}
+Other Image Addition Functions: 
+\code{\link{ggplot_image}()},
+\code{\link{local_image}()},
+\code{\link{web_image}()}
 }
 \concept{Image Addition Functions}

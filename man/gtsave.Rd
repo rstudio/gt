@@ -97,8 +97,10 @@ tab_1 \%>\% gtsave("tab_1.tex")
 
 }
 \seealso{
-Other Export Functions: \code{\link{as_latex}},
-  \code{\link{as_raw_html}}, \code{\link{as_rtf}},
-  \code{\link{extract_summary}}
+Other Export Functions: 
+\code{\link{as_latex}()},
+\code{\link{as_raw_html}()},
+\code{\link{as_rtf}()},
+\code{\link{extract_summary}()}
 }
 \concept{Export Functions}

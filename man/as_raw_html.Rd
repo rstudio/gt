@@ -16,7 +16,7 @@ styles.}
 Get the HTML content from a \code{gt_tbl} object as a single-element character
 vector. By default, the generated HTML will have inlined styles, where CSS
 styles (that were previously contained in CSS rule sets external to the
-\code{<table> element}) are included as \code{style} attributes in the HTML table's
+\verb{<table> element}) are included as \code{style} attributes in the HTML table's
 tags. This option is preferable when using the output HTML table in an
 emailing context.
 }
@@ -51,8 +51,10 @@ tab_html \%>\%
 
 }
 \seealso{
-Other Export Functions: \code{\link{as_latex}},
-  \code{\link{as_rtf}}, \code{\link{extract_summary}},
-  \code{\link{gtsave}}
+Other Export Functions: 
+\code{\link{as_latex}()},
+\code{\link{as_rtf}()},
+\code{\link{extract_summary}()},
+\code{\link{gtsave}()}
 }
 \concept{Export Functions}

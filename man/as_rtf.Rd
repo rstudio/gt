@@ -36,8 +36,10 @@ tab_rtf <-
 
 }
 \seealso{
-Other Export Functions: \code{\link{as_latex}},
-  \code{\link{as_raw_html}}, \code{\link{extract_summary}},
-  \code{\link{gtsave}}
+Other Export Functions: 
+\code{\link{as_latex}()},
+\code{\link{as_raw_html}()},
+\code{\link{extract_summary}()},
+\code{\link{gtsave}()}
 }
 \concept{Export Functions}

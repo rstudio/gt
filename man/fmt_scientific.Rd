@@ -4,9 +4,18 @@
 \alias{fmt_scientific}
 \title{Format values to scientific notation}
 \usage{
-fmt_scientific(data, columns, rows = NULL, decimals = 2,
-  drop_trailing_zeros = FALSE, scale_by = 1, pattern = "{x}",
-  sep_mark = ",", dec_mark = ".", locale = NULL)
+fmt_scientific(
+  data,
+  columns,
+  rows = NULL,
+  decimals = 2,
+  drop_trailing_zeros = FALSE,
+  scale_by = 1,
+  pattern = "{x}",
+  sep_mark = ",",
+  dec_mark = ".",
+  locale = NULL
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -22,7 +31,7 @@ provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function fo
 selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
-\code{[colname_1] > 100 & [colname_2] < 50}).}
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
@@ -41,9 +50,9 @@ characters are taken to be string literals.}
 
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \code{1,000}).}
+of \verb{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \code{0,152}).}
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -109,12 +118,18 @@ tab_1 <-
 
 }
 \seealso{
-Other Format Data: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_time}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other Format Data: 
+\code{\link{data_color}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
 }
 \concept{Format Data}
