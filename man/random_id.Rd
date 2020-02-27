@@ -14,7 +14,7 @@ A character vector containing a single, random ID.
 }
 \description{
 This helper function can be used to create a random, character-based ID
-value argument of variable length (the default is 5 letters).
+value argument of variable length (the default is 10 letters).
 }
 \section{Function ID}{
 

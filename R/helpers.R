@@ -1656,7 +1656,7 @@ adjust_luminance <- function(colors,
 #' Helper for creating a random `id` for a **gt** table
 #'
 #' This helper function can be used to create a random, character-based ID
-#' value argument of variable length (the default is 5 letters).
+#' value argument of variable length (the default is 10 letters).
 #'
 #' @param n The number of lowercase letters to use for the random ID.
 #'
