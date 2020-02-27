@@ -13,11 +13,8 @@ random_id(n = 10)
 A character vector containing a single, random ID.
 }
 \description{
-This helper function is to be used with \code{id} argument of the \code{\link[=gt]{gt()}} function.
-The \code{id} option in \code{\link[=gt]{gt()}} uses the \code{":random:"} keyword by default (to assign
-a random ID at render time) but the \code{random_id()} function used at the \code{id}
-argument of \code{\link[=gt]{gt()}} will instead create and assign a random table ID at table
-creation time.
+This helper function can be used to create a random, character-based ID
+value argument of variable length (the default is 5 letters).
 }
 \section{Function ID}{
 
