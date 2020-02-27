@@ -62,12 +62,10 @@ as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
 
-  if (!is.na(table_id) && table_id == ":random:") {
+  if (is.na(table_id)) {
     id <- random_id()
-  } else if (!is.na(table_id)) {
-    id <- table_id
   } else {
-    id <- NULL
+    id <- table_id
   }
 
   # Generate the HTML table
