@@ -998,7 +998,7 @@ validate_table_id <- function(id) {
   if (length(id) != 1) {
     stop("The length of `id` must be 1", call. = FALSE)
   }
-  if (any(is.na(id))) {
+  if (is.na(id)) {
     stop("The value for `id` must not be `NA`", call. = FALSE)
   }
   if (!is.character(id)) {
