@@ -169,3 +169,7 @@ dt_options_tbl <-
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
   )[-1, ]
+
+dt_options_get_default_value <- function(option) {
+  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
+}

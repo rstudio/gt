@@ -25,12 +25,12 @@
 #' }
 #'
 #' @inheritParams fmt_number
-#' @param marks Either a vector (that will represent the series of marks) or a
-#'   keyword that represents a preset sequence of marks. The valid keywords are:
-#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
-#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
-#'   four symbol marks), and `"extended"` (which adds two more symbols to the
-#'   standard set).
+#' @param marks Either a character vector of length greater than 1 (that will
+#'   represent the series of marks) or a single keyword that represents a preset
+#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
+#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
+#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
+#'   (which adds two more symbols to the standard set).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -79,26 +79,27 @@
 #'
 #' @export
 opt_footnote_marks <- function(data,
-                               marks = NULL) {
+                               marks) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  if (!is.null(marks)) {
-    data <- tab_options(data, footnotes.marks = marks)
-  }
+  # Validate input for `marks`
+  validate_marks(marks)
 
-  data
+  tab_options(data, footnotes.marks = marks)
 }
 
-#' Option to add row striping
+#' Option to add or remove row striping
 #'
-#' By default, a **gt** table does not have row striping enabled. However,
-#' this function allows us to easily enable striped rows in the table body. This
-#' function serves as a convenient shortcut for `<gt_tbl> %>%
-#' tab_options(row.striping.include_table_body = TRUE)`.
+#' By default, a **gt** table does not have row striping enabled. However, this
+#' function allows us to easily enable or disable striped rows in the table
+#' body. This function serves as a convenient shortcut for
+#' `<gt_tbl> %>% tab_options(row.striping.include_table_body = <active>)`.
 #'
 #' @inheritParams fmt_number
+#' @param active A logical value to indicate whether the row striping option
+#'   should be active or inactive.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -131,22 +132,23 @@ opt_footnote_marks <- function(data,
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   opt_add_row_striping()
+#'   opt_row_striping()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_add_row_striping_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_row_striping_1.svg}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
 #' 9-2
 #'
 #' @export
-opt_add_row_striping <- function(data) {
+opt_row_striping <- function(data,
+                             active = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  tab_options(data, row.striping.include_table_body = TRUE)
+  tab_options(data, row.striping.include_table_body = active)
 }
 
 #' Option to align the table header
@@ -226,6 +228,8 @@ opt_align_table_header <- function(data,
 #' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
 #'
 #' @inheritParams fmt_number
+#' @param active A logical value to indicate whether the text transformation to
+#'   all caps should be active or inactive for the `locations` targeted.
 #' @param locations Which locations should undergo this text transformation? By
 #'   default it includes all of the `"column_labels"`, the `"stub"`, and the
 #'   `"row_group"` locations. However, we could just choose one or two of those.
@@ -273,6 +277,7 @@ opt_align_table_header <- function(data,
 #'
 #' @export
 opt_all_caps <- function(data,
+                         active = TRUE,
                          locations = c("column_labels", "stub", "row_group")) {
 
   # Perform input object validation
@@ -286,123 +291,98 @@ opt_all_caps <- function(data,
 
   if ("column_labels" %in% locations) {
 
-    data <-
-      tab_options(
-        data,
-        column_labels.text_transform = "uppercase",
-        column_labels.font.size = pct(80),
-        column_labels.font.weight = "bolder"
-      )
+    if (active) {
+
+      data <-
+        tab_options(
+          data,
+          column_labels.text_transform = "uppercase",
+          column_labels.font.size = pct(80),
+          column_labels.font.weight = "bolder"
+        )
+
+    } else {
+
+      data <-
+        tab_options(
+          data,
+          column_labels.text_transform = dt_options_get_default_value("column_labels_text_transform"),
+          column_labels.font.size = dt_options_get_default_value("column_labels_font_size"),
+          column_labels.font.weight = dt_options_get_default_value("column_labels_font_weight")
+        )
+    }
   }
 
   if ("stub" %in% locations) {
 
-    data <-
-      tab_options(
-        data,
-        stub.text_transform = "uppercase",
-        stub.font.size = pct(80),
-        stub.font.weight = "bolder"
-      )
+    if (active) {
+
+      data <-
+        tab_options(
+          data,
+          stub.text_transform = "uppercase",
+          stub.font.size = pct(80),
+          stub.font.weight = "bolder"
+        )
+
+    } else {
+
+      data <-
+        tab_options(
+          data,
+          stub.text_transform = dt_options_get_default_value("stub_text_transform"),
+          stub.font.size = dt_options_get_default_value("stub_font_size"),
+          stub.font.weight = dt_options_get_default_value("stub_font_weight")
+        )
+    }
   }
 
   if ("row_group" %in% locations) {
 
-    data <-
-      tab_options(
-        data,
-        row_group.text_transform = "uppercase",
-        row_group.font.size = pct(80),
-        row_group.font.weight = "bolder"
-      )
+    if (active) {
+
+      data <-
+        tab_options(
+          data,
+          row_group.text_transform = "uppercase",
+          row_group.font.size = pct(80),
+          row_group.font.weight = "bolder"
+        )
+
+    } else {
+
+      data <-
+        tab_options(
+          data,
+          row_group.text_transform = dt_options_get_default_value("row_group_text_transform"),
+          row_group.font.size = dt_options_get_default_value("row_group_font_size"),
+          row_group.font.weight = dt_options_get_default_value("row_group_font_weight")
+        )
+    }
   }
 
   data
 }
 
-#' Option to remove the top and bottom borders
+#' Option to set table lines to different extents
 #'
-#' The top and bottom borders of a **gt** table can be removed entirely by
-#' using the `opt_remove_top_bottom_borders()` function. The definition of what
-#' constitutes a top and bottom border depends on which table parts are present
-#' at the top and bottom (e.g., header, table columns, a footnote block, etc.).
-#' Regardless of the available parts, there won't be any top of bottom
-#' horizontal lines after using this function. This function serves as a
-#' convenient shortcut for `<gt_tbl> %>%
-#' tab_options(table.border.top.style = "hidden") %>%
-#' tab_options(table.border.bottom.style = "hidden")`.
+#' The `opt_table_lines()` function sets table lines in one of three possible
+#' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
+#' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
+#' is great if you want to start off with lots of lines and subtract just a few
+#' of them with [tab_options()] or [tab_style()]. Or, use it to start with a
+#' completely lineless table, adding individual lines as needed.
 #'
 #' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; next, we
-#' # remove the top and bottom borders with
-#' # `opt_remove_top_bottom_borders()`
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_remove_top_bottom_borders()
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_opt_remove_top_bottom_borders_1.svg}{options: width=100\%}}
-#'
-#' @family Table Option Functions
-#' @section Function ID:
-#' 9-5
-#'
-#' @export
-opt_remove_top_bottom_borders <- function(data) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  tab_options(
-    data,
-    table.border.top.style = "hidden",
-    table.border.bottom.style = "hidden"
-  )
-}
-
-#' Option to create lines everywhere in a table
-#'
-#' The `opt_fully_lined()` function yields a table where all possible lines are
-#' visible. This is great if you want to start off with lots of lines and
-#' subtract just a few of them with [tab_options()] or [tab_style()]. Or, use it
-#' in those cases where you absolutely need to have boundaries between pieces of
-#' information.
-#'
-#' @inheritParams fmt_number
+#' @param extent The extent to which lines will be visible in the table. Options
+#' are `"all"`, `"none"`, or `"default"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @examples
 #' # Use `exibble` to create a gt table with
 #' # a number of table parts added; then, use
-#' # the `opt_fully_lined()` function to
+#' # the `opt_table_lines()` function to
 #' # haves lines everywhere there can possibly
 #' # be lines
 #' tab_1 <-
@@ -429,117 +409,110 @@ opt_remove_top_bottom_borders <- function(data) {
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   opt_fully_lined()
+#'   opt_table_lines()
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-6
+#' 9-5
 #'
 #' @export
-opt_fully_lined <- function(data) {
+opt_table_lines <- function(data,
+                            extent = c("all", "none", "default")) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  tab_options(
-    data,
-    table.border.top.style = "solid",
-    table.border.left.style = "solid",
-    table.border.right.style = "solid",
-    heading.border.bottom.style = "solid",
-    heading.border.lr.style = "solid",
-    column_labels.vlines.style = "solid",
-    column_labels.border.top.style = "solid",
-    column_labels.border.bottom.style = "solid",
-    column_labels.border.lr.style = "solid",
-    row_group.border.top.style = "solid",
-    row_group.border.bottom.style = "solid",
-    row_group.border.left.style = "solid",
-    row_group.border.right.style = "solid",
-    stub.border.style = "solid",
-    table_body.border.top.style = "solid",
-    table_body.border.bottom.style = "solid",
-    table_body.hlines.style = "solid",
-    table_body.vlines.style = "solid",
-    summary_row.border.style = "solid",
-    footnotes.border.bottom.style = "solid",
-    footnotes.border.lr.style = "solid",
-    source_notes.border.lr.style = "solid",
-    table.border.bottom.style = "solid"
-  )
-}
+  extent <- match.arg(extent)
 
-#' Option to remove all lines from a table
-#'
-#' The `opt_lineless()` function effectively produces a table with no visible
-#' lines. This is great as a blank slate for additive styling with
-#' [tab_options()] or [tab_style()]. Or, use it in those cases where you are
-#' using **gt** tables mostly for layout purposes.
-#'
-#' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; then, use
-#' # the `opt_lineless()` function to get
-#' # an ultra-minimal table with no lining
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_lineless()
-#'
-#' @family Table Option Functions
-#' @section Function ID:
-#' 9-7
-#'
-#' @export
-opt_lineless <- function(data) {
+  if (extent == "all") {
 
-  # Perform input object validation
-  stop_if_not_gt(data = data)
+    data <-
+      tab_options(
+        data,
+        table.border.top.style = "solid",
+        table.border.left.style = "solid",
+        table.border.right.style = "solid",
+        heading.border.bottom.style = "solid",
+        heading.border.lr.style = "solid",
+        column_labels.vlines.style = "solid",
+        column_labels.border.top.style = "solid",
+        column_labels.border.bottom.style = "solid",
+        column_labels.border.lr.style = "solid",
+        row_group.border.top.style = "solid",
+        row_group.border.bottom.style = "solid",
+        row_group.border.left.style = "solid",
+        row_group.border.right.style = "solid",
+        stub.border.style = "solid",
+        table_body.border.top.style = "solid",
+        table_body.border.bottom.style = "solid",
+        table_body.hlines.style = "solid",
+        table_body.vlines.style = "solid",
+        summary_row.border.style = "solid",
+        footnotes.border.bottom.style = "solid",
+        footnotes.border.lr.style = "solid",
+        source_notes.border.lr.style = "solid",
+        table.border.bottom.style = "solid"
+      )
+  }
 
-  tab_options(
-    data,
-    table.border.top.style = "none",
-    heading.border.bottom.style = "none",
-    column_labels.vlines.style = "none",
-    column_labels.border.top.style = "none",
-    column_labels.border.bottom.style = "none",
-    row_group.border.top.style = "none",
-    row_group.border.bottom.style = "none",
-    stub.border.style = "none",
-    table_body.border.top.style = "none",
-    table_body.border.bottom.style = "none",
-    table_body.hlines.style = "none",
-    summary_row.border.style = "none",
-    grand_summary_row.border.style = "none",
-    footnotes.border.bottom.style = "none",
-    source_notes.border.bottom.style = "none",
-    table.border.bottom.style = "none"
-  )
+  if (extent == "none") {
+
+    data <-
+      tab_options(
+        data,
+        table.border.top.style = "none",
+        heading.border.bottom.style = "none",
+        column_labels.vlines.style = "none",
+        column_labels.border.top.style = "none",
+        column_labels.border.bottom.style = "none",
+        row_group.border.top.style = "none",
+        row_group.border.bottom.style = "none",
+        stub.border.style = "none",
+        table_body.border.top.style = "none",
+        table_body.border.bottom.style = "none",
+        table_body.hlines.style = "none",
+        summary_row.border.style = "none",
+        grand_summary_row.border.style = "none",
+        footnotes.border.bottom.style = "none",
+        source_notes.border.bottom.style = "none",
+        table.border.bottom.style = "none"
+      )
+  }
+
+  if (extent == "default") {
+
+    data <-
+      tab_options(
+        data,
+        table.border.top.style = dt_options_get_default_value("table_border_top_style"),
+        table.border.left.style = dt_options_get_default_value("table_border_left_style"),
+        table.border.right.style = dt_options_get_default_value("table_border_right_style"),
+        heading.border.bottom.style = dt_options_get_default_value("heading_border_bottom_style"),
+        heading.border.lr.style = dt_options_get_default_value("heading_border_lr_style"),
+        column_labels.vlines.style = dt_options_get_default_value("column_labels_vlines_style"),
+        column_labels.border.top.style = dt_options_get_default_value("column_labels_border_top_style"),
+        column_labels.border.lr.style = dt_options_get_default_value("column_labels_border_lr_style"),
+        column_labels.border.bottom.style = dt_options_get_default_value("column_labels_border_bottom_style"),
+        row_group.border.top.style = dt_options_get_default_value("row_group_border_top_style"),
+        row_group.border.bottom.style = dt_options_get_default_value("row_group_border_bottom_style"),
+        row_group.border.left.style = dt_options_get_default_value("row_group_border_left_style"),
+        row_group.border.right.style = dt_options_get_default_value("row_group_border_right_style"),
+        stub.border.style = dt_options_get_default_value("stub_border_style"),
+        table_body.border.top.style = dt_options_get_default_value("table_body_border_top_style"),
+        table_body.border.bottom.style = dt_options_get_default_value("table_body_border_bottom_style"),
+        table_body.hlines.style = dt_options_get_default_value("table_body_hlines_style"),
+        table_body.vlines.style = dt_options_get_default_value("table_body_vlines_style"),
+        summary_row.border.style = dt_options_get_default_value("summary_row_border_style"),
+        grand_summary_row.border.style = dt_options_get_default_value("grand_summary_row_border_style"),
+        footnotes.border.bottom.style = dt_options_get_default_value("footnotes_border_bottom_style"),
+        footnotes.border.lr.style = dt_options_get_default_value("footnotes_border_lr_style"),
+        source_notes.border.lr.style = dt_options_get_default_value("source_notes_border_lr_style"),
+        source_notes.border.bottom.style = dt_options_get_default_value("source_notes_border_bottom_style"),
+        table.border.bottom.style = dt_options_get_default_value("table_border_bottom_style")
+      )
+  }
+
+  data
 }
 
 #' Option to wrap an outline around the entire table
@@ -549,10 +522,12 @@ opt_lineless <- function(data) {
 #' as the `width` is larger that of the existing lines.
 #'
 #' This function serves as a convenient shortcut for a large number of options
-#' from the [tab_options()] function. The complementary `opt_*()` function is
-#' [opt_remove_table_outline()], which removes any table outlines.
+#' from the [tab_options()] function. Using `active = FALSE` will reset table
+#' outlines to their defaults.
 #'
 #' @inheritParams fmt_number
+#' @param active A logical value to indicate whether the table outlines should
+#' be applied or removed (i.e., reset to defaults).
 #' @param style,width,color The style, width, and color properties for the table
 #'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
 #'   `"#D3D3D3"`.
@@ -563,7 +538,7 @@ opt_lineless <- function(data) {
 #' # Use `exibble` to create a gt table with
 #' # a number of table parts added; have an
 #' # outline wrap around the entire table by
-#' # using `opt_add_table_outline()`
+#' # using `opt_table_outline()`
 #' tab_1 <-
 #'   exibble %>%
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
@@ -588,103 +563,63 @@ opt_lineless <- function(data) {
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   opt_add_table_outline()
+#'   opt_table_outline()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_add_table_outline_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_table_outline_1.svg}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-8
+#' 9-6
 #'
 #' @export
-opt_add_table_outline <- function(data,
-                                  style = "solid",
-                                  width = px(3),
-                                  color = "#D3D3D3") {
+opt_table_outline <- function(data,
+                              active = TRUE,
+                              style = "solid",
+                              width = px(3),
+                              color = "#D3D3D3") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  tab_options(
-    data,
-    table.border.top.style = style,
-    table.border.top.width = width,
-    table.border.top.color = color,
-    table.border.bottom.style = style,
-    table.border.bottom.width = width,
-    table.border.bottom.color = color,
-    table.border.left.style = style,
-    table.border.left.width = width,
-    table.border.left.color = color,
-    table.border.right.style = style,
-    table.border.right.width = width,
-    table.border.right.color = color
-  )
-}
+  if (active) {
 
-#' Option to completely remove any table outlines
-#'
-#' This function removes any table outlines that may exist around the entire
-#' table. It won't annihilate the `width` and `color` attributes but simply sets
-#' the relevant line styles to `"none"`.
-#'
-#' This function serves as a convenient shortcut for a large number of options
-#' from the [tab_options()] function. The complementary `opt_*()` function is
-#' [opt_add_table_outline()], which adds a table outline.
-#'
-#' @inheritParams fmt_number
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # a number of table parts added; use the
-#' # `opt_fully_lined()` function and then
-#' # remove the table outlines with the
-#' # `opt_remove_table_outline()` function
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = vars(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = vars(currency),
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_fully_lined() %>%
-#'   opt_remove_table_outline()
-#'
-#' @family Table Option Functions
-#' @section Function ID:
-#' 9-9
-#'
-#' @export
-opt_remove_table_outline <- function(data) {
+    data <-
+      tab_options(
+        data,
+        table.border.top.style = style,
+        table.border.top.width = width,
+        table.border.top.color = color,
+        table.border.bottom.style = style,
+        table.border.bottom.width = width,
+        table.border.bottom.color = color,
+        table.border.left.style = style,
+        table.border.left.width = width,
+        table.border.left.color = color,
+        table.border.right.style = style,
+        table.border.right.width = width,
+        table.border.right.color = color
+      )
 
-  # Perform input object validation
-  stop_if_not_gt(data = data)
+  } else {
 
-  tab_options(
-    data,
-    table.border.top.style = "hidden",
-    table.border.bottom.style = "hidden",
-    table.border.left.style = "hidden",
-    table.border.right.style = "hidden"
-  )
+    data <-
+      tab_options(
+        data,
+        table.border.top.style = dt_options_get_default_value("table_border_top_style"),
+        table.border.top.width = dt_options_get_default_value("table_border_top_width"),
+        table.border.top.color = dt_options_get_default_value("table_border_top_color"),
+        table.border.bottom.style = dt_options_get_default_value("table_border_bottom_style"),
+        table.border.bottom.width = dt_options_get_default_value("table_border_bottom_width"),
+        table.border.bottom.color = dt_options_get_default_value("table_border_bottom_color"),
+        table.border.left.style = dt_options_get_default_value("table_border_left_style"),
+        table.border.left.width = dt_options_get_default_value("table_border_left_width"),
+        table.border.left.color = dt_options_get_default_value("table_border_left_color"),
+        table.border.right.style = dt_options_get_default_value("table_border_right_style"),
+        table.border.right.width = dt_options_get_default_value("table_border_right_width"),
+        table.border.right.color = dt_options_get_default_value("table_border_right_color")
+      )
+  }
+
+  data
 }

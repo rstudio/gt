@@ -67,13 +67,10 @@ tab_1 <-
 }
 \seealso{
 Other Table Option Functions: 
-\code{\link{opt_add_row_striping}()},
-\code{\link{opt_add_table_outline}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
-\code{\link{opt_fully_lined}()},
-\code{\link{opt_lineless}()},
-\code{\link{opt_remove_table_outline}()},
-\code{\link{opt_remove_top_bottom_borders}()}
+\code{\link{opt_row_striping}()},
+\code{\link{opt_table_lines}()},
+\code{\link{opt_table_outline}()}
 }
 \concept{Table Option Functions}

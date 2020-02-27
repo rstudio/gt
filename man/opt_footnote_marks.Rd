@@ -4,17 +4,17 @@
 \alias{opt_footnote_marks}
 \title{Option to modify the set of footnote marks}
 \usage{
-opt_footnote_marks(data, marks = NULL)
+opt_footnote_marks(data, marks)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{marks}{Either a vector (that will represent the series of marks) or a
-keyword that represents a preset sequence of marks. The valid keywords are:
-\code{"numbers"} (for numeric marks), \code{"letters"} and \code{"LETTERS"} (for lowercase
-and uppercase alphabetic marks), \code{"standard"} (for a traditional set of
-four symbol marks), and \code{"extended"} (which adds two more symbols to the
-standard set).}
+\item{marks}{Either a character vector of length greater than 1 (that will
+represent the series of marks) or a single keyword that represents a preset
+sequence of marks. The valid keywords are: \code{"numbers"} (for numeric marks),
+\code{"letters"} and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
+\code{"standard"} (for a traditional set of four symbol marks), and \code{"extended"}
+(which adds two more symbols to the standard set).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -94,13 +94,10 @@ tab_1 <-
 }
 \seealso{
 Other Table Option Functions: 
-\code{\link{opt_add_row_striping}()},
-\code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
-\code{\link{opt_fully_lined}()},
-\code{\link{opt_lineless}()},
-\code{\link{opt_remove_table_outline}()},
-\code{\link{opt_remove_top_bottom_borders}()}
+\code{\link{opt_row_striping}()},
+\code{\link{opt_table_lines}()},
+\code{\link{opt_table_outline}()}
 }
 \concept{Table Option Functions}

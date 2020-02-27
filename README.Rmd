@@ -29,7 +29,7 @@ It all begins with preprocessed **table data** (be it a tibble or a data frame).
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
-The **gt** package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create a table from the included `sp500` dataset:
+The **gt** package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create a table from the included `sp500` dataset: 
 
 ```{r sp500_example, eval=FALSE}
 library(gt)
@@ -66,7 +66,7 @@ sp500 %>%
 
 <p align="center"><img src="man/figures/gt_sp500_table.svg" width="1200px"></p>
 
-There are six datasets included in **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful for experimenting with the **gt**'s functions.
+There are six datasets included in **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful for experimenting with **gt**'s functions.
 
 <p align="center"><img src="man/figures/gt_datasets.svg" width="800px"></p>
 

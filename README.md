@@ -85,7 +85,7 @@ sp500 %>%
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
-for experimenting with the **gt**’s functions.
+for experimenting with **gt**’s functions.
 
 <p align="center">
 

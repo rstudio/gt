@@ -4,10 +4,17 @@
 \alias{opt_all_caps}
 \title{Option to use all caps in select table locations}
 \usage{
-opt_all_caps(data, locations = c("column_labels", "stub", "row_group"))
+opt_all_caps(
+  data,
+  active = TRUE,
+  locations = c("column_labels", "stub", "row_group")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{active}{A logical value to indicate whether the text transformation to
+all caps should be active or inactive for the \code{locations} targeted.}
 
 \item{locations}{Which locations should undergo this text transformation? By
 default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the
@@ -70,13 +77,10 @@ tab_1 <-
 }
 \seealso{
 Other Table Option Functions: 
-\code{\link{opt_add_row_striping}()},
-\code{\link{opt_add_table_outline}()},
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_footnote_marks}()},
-\code{\link{opt_fully_lined}()},
-\code{\link{opt_lineless}()},
-\code{\link{opt_remove_table_outline}()},
-\code{\link{opt_remove_top_bottom_borders}()}
+\code{\link{opt_row_striping}()},
+\code{\link{opt_table_lines}()},
+\code{\link{opt_table_outline}()}
 }
 \concept{Table Option Functions}
