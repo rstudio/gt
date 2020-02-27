@@ -990,14 +990,19 @@ validate_length_one <- function(x, name) {
 }
 
 validate_table_id <- function(id) {
-  if (!is.null(id) && is.na(id)) {
+
+  if (is.null(id)) {
+    return()
+  }
+
+  if (length(id) != 1) {
+    stop("The length of `id` must be 1", call. = FALSE)
+  }
+  if (any(is.na(id))) {
     stop("The value for `id` must not be `NA`", call. = FALSE)
   }
-  if (!is.null(id) && !is.character(id)) {
+  if (!is.character(id)) {
     stop("Any input for `id` must be of the `character` class", call. = FALSE)
-  }
-  if (!is.null(id) && length(id) != 1) {
-    stop("The length of `id` must be 1", call. = FALSE)
   }
 }
 
