@@ -424,17 +424,13 @@ opt_table_lines <- function(data,
 
   extent <- match.arg(extent)
 
-  if (extent == "all") {
-    option_value_list <- create_value_multi_options_list(table_line_style_vec(), "solid")
-    data <- tab_options_multi(data, option_value_list)
-  }
+  # Normalize `extent` values to property values
+  extent <- ifelse(extent == "all", "solid", extent)
 
-  if (extent == "none") {
-    option_value_list <- create_value_multi_options_list(table_line_style_vec(), value = "none")
+  if (extent %in% c("solid", "none")) {
+    option_value_list <- create_value_multi_options_list(table_line_style_vec(), extent)
     data <- tab_options_multi(data, option_value_list)
-  }
-
-  if (extent == "default") {
+  } else {
     option_value_list <- create_default_tab_options_list(table_line_style_vec())
     data <- tab_options_multi(data, option_value_list)
   }
