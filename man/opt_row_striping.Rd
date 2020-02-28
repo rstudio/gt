@@ -4,13 +4,13 @@
 \alias{opt_row_striping}
 \title{Option to add or remove row striping}
 \usage{
-opt_row_striping(data, active = TRUE)
+opt_row_striping(data, row_striping = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{active}{A logical value to indicate whether the row striping option
-should be active or inactive.}
+\item{row_striping}{A logical value to indicate whether row striping should
+be added or removed.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -19,7 +19,7 @@ An object of class \code{gt_tbl}.
 By default, a \strong{gt} table does not have row striping enabled. However, this
 function allows us to easily enable or disable striped rows in the table
 body. This function serves as a convenient shortcut for
-\verb{<gt_tbl> \%>\% tab_options(row.striping.include_table_body = <active>)}.
+\verb{<gt_tbl> \%>\% tab_options(row.striping.include_table_body = TRUE|FALSE)}.
 }
 \section{Figures}{
 

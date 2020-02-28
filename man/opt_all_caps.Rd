@@ -6,15 +6,16 @@
 \usage{
 opt_all_caps(
   data,
-  active = TRUE,
+  all_caps = TRUE,
   locations = c("column_labels", "stub", "row_group")
 )
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{active}{A logical value to indicate whether the text transformation to
-all caps should be active or inactive for the \code{locations} targeted.}
+\item{all_caps}{A logical value to indicate whether the text transformation
+to all caps should be performed (\code{TRUE}, the default) or reset to default
+values (\code{FALSE}) for the \code{locations} targeted.}
 
 \item{locations}{Which locations should undergo this text transformation? By
 default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the

@@ -95,11 +95,11 @@ opt_footnote_marks <- function(data,
 #' By default, a **gt** table does not have row striping enabled. However, this
 #' function allows us to easily enable or disable striped rows in the table
 #' body. This function serves as a convenient shortcut for
-#' `<gt_tbl> %>% tab_options(row.striping.include_table_body = <active>)`.
+#' `<gt_tbl> %>% tab_options(row.striping.include_table_body = TRUE|FALSE)`.
 #'
 #' @inheritParams fmt_number
-#' @param active A logical value to indicate whether the row striping option
-#'   should be active or inactive.
+#' @param row_striping A logical value to indicate whether row striping should
+#'   be added or removed.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -143,12 +143,12 @@ opt_footnote_marks <- function(data,
 #'
 #' @export
 opt_row_striping <- function(data,
-                             active = TRUE) {
+                             row_striping = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  tab_options(data, row.striping.include_table_body = active)
+  tab_options(data, row.striping.include_table_body = row_striping)
 }
 
 #' Option to align the table header
@@ -228,8 +228,9 @@ opt_align_table_header <- function(data,
 #' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
 #'
 #' @inheritParams fmt_number
-#' @param active A logical value to indicate whether the text transformation to
-#'   all caps should be active or inactive for the `locations` targeted.
+#' @param all_caps A logical value to indicate whether the text transformation
+#'   to all caps should be performed (`TRUE`, the default) or reset to default
+#'   values (`FALSE`) for the `locations` targeted.
 #' @param locations Which locations should undergo this text transformation? By
 #'   default it includes all of the `"column_labels"`, the `"stub"`, and the
 #'   `"row_group"` locations. However, we could just choose one or two of those.
@@ -277,7 +278,7 @@ opt_align_table_header <- function(data,
 #'
 #' @export
 opt_all_caps <- function(data,
-                         active = TRUE,
+                         all_caps = TRUE,
                          locations = c("column_labels", "stub", "row_group")) {
 
   # Perform input object validation
@@ -289,15 +290,14 @@ opt_all_caps <- function(data,
          call. = FALSE)
   }
 
-  args_vec <- table_all_caps_vec(locations)
+  # Get vector of `tab_options()` arg names for all specific `locations`
+  options_vec <- table_all_caps_vec(locations)
 
-  if (active) {
-    values_vec <- rep(c("80%", "bolder", "uppercase"), length(args_vec) / 3)
-    option_value_list <- create_value_multi_options_list(args_vec, values_vec)
-    data <- tab_options_multi(data, option_value_list)
+  if (all_caps) {
+    values_vec <- rep(c("80%", "bolder", "uppercase"), length(options_vec) / 3)
+    data <- tab_options_multi(data, create_option_value_list(options_vec, values_vec))
   } else {
-    option_value_list <- create_default_tab_options_list(args_vec)
-    data <- tab_options_multi(data, option_value_list)
+    data <- tab_options_multi(data, create_default_option_value_list(options_vec))
   }
 
   data
@@ -364,13 +364,16 @@ opt_table_lines <- function(data,
   extent <- match.arg(extent)
 
   # Normalize `extent` values to property values
-  extent <- ifelse(extent == "all", "solid", extent)
+  values_vec <- ifelse(extent == "all", "solid", extent)
 
-  if (extent %in% c("solid", "none")) {
-    option_value_list <- create_value_multi_options_list(table_line_style_vec(), extent)
+  # Get vector of `tab_options()` arg names for all specific `locations`
+  options_vec <- table_line_style_vec()
+
+  if (values_vec %in% c("solid", "none")) {
+    option_value_list <- create_option_value_list(options_vec, values_vec)
     data <- tab_options_multi(data, option_value_list)
   } else {
-    option_value_list <- create_default_tab_options_list(table_line_style_vec())
+    option_value_list <- create_default_option_value_list(options_vec)
     data <- tab_options_multi(data, option_value_list)
   }
 
@@ -440,6 +443,5 @@ opt_table_outline <- function(data,
   stop_if_not_gt(data = data)
 
   values_vec <- rep(c(style, width, color), 4)
-  option_value_list <- create_value_multi_options_list(table_borders_vec(), values_vec)
-  tab_options_multi(data, option_value_list)
+  tab_options_multi(data, create_option_value_list(table_borders_vec(), values_vec))
 }

@@ -43,7 +43,7 @@ test_that("The `opt_row_striping()` function sets the correct options", {
   exibble %>%
     gt() %>%
     opt_row_striping() %>%
-    opt_row_striping(active = FALSE) %>%
+    opt_row_striping(row_striping = FALSE) %>%
     dt_options_get_value("row_striping_include_table_body") %>%
     expect_false()
 })
@@ -122,7 +122,7 @@ test_that("The `opt_all_caps()` function sets the correct options", {
   tbl %>% dt_options_get_value("row_group_font_size") %>% expect_equal("100%")
   tbl %>% dt_options_get_value("row_group_font_weight") %>% expect_equal("initial")
 
-  tbl <- exibble %>% gt(rowname_col = "row") %>% opt_all_caps() %>% opt_all_caps(active = FALSE)
+  tbl <- exibble %>% gt(rowname_col = "row") %>% opt_all_caps() %>% opt_all_caps(all_caps = FALSE)
 
   tbl %>% dt_options_get_value("column_labels_text_transform") %>% expect_equal("inherit")
   tbl %>% dt_options_get_value("column_labels_font_size") %>% expect_equal("100%")

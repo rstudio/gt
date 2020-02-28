@@ -172,51 +172,58 @@ dt_options_tbl <-
 
 dt_options_get_default_value <- function(option) {
 
-  # TODO: Add validation function here
+  # Validate the provided `option` value
+  if (length(option) != 1) {
+    stop("A character vector of length one must be provided")
+  }
+  if (!(option %in% dt_options_tbl$parameter)) {
+    stop("The `option` provided is invalid")
+  }
 
   dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
 }
 
-create_value_multi_options_list <- function(tab_options_args, values) {
+# Create an option-value list with a vector of arg names from the
+# `tab_options()` function and either one value or n-length values
+# corresponding to those options
+create_option_value_list <- function(tab_options_args, values) {
 
+  # Validate the length of the `values` vector
   if (length(values) == 1) {
     values <- rep(values, length(tab_options_args))
   } else if (length(values) != length(tab_options_args)) {
     stop("The length of the `values` vector must be 1 or the length of `tab_options_args`")
   }
 
-  # TODO: Add validation function here
+  # Validate the elements of the `tab_options_args` vector
+  validate_tab_options_args(tab_options_args)
 
-  stats::setNames(
-    object = values,
-    tab_options_args
-  ) %>%
-    as.list()
+  stats::setNames(object = values, tab_options_args) %>% as.list()
 }
 
-create_default_tab_options_list <- function(tab_options_args) {
+create_default_option_value_list <- function(tab_options_args) {
 
-  # TODO: Add validation function here
-  #tab_options_arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
-  #all(tab_options_args %in% tab_options_arg_names)
+  # Validate the elements of the `tab_options_args` vector
+  validate_tab_options_args(tab_options_args)
 
   tab_options_args %>%
     vapply(
       FUN.VALUE = character(1),
       FUN = function(x) {
         stats::setNames(
-          object = dt_options_get_default_value(x %>% tidy_gsub(".", "_", fixed = TRUE)),
+          object = dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE)),
           x
         )
       }) %>%
     as.list()
 }
 
+# Do multiple calls of `tab_options()` with an option-value list (`options`)
 tab_options_multi <- function(data, options) {
   do.call(tab_options, c(list(data = data), options))
 }
 
-# Vector of all args from `tab_options()` that involve line styles
+# Create vector of all args from `tab_options()` that involve line styles
 table_line_style_vec <- function() {
 
   formals(tab_options) %>%
@@ -225,7 +232,7 @@ table_line_style_vec <- function() {
     grep(".*style$", ., value = TRUE)
 }
 
-# Vector of all args from `tab_options()` that involve the table border
+# Create vector of all args from `tab_options()` that involve the table border
 table_borders_vec <- function() {
 
   formals(tab_options) %>%
@@ -234,7 +241,7 @@ table_borders_vec <- function() {
     grep("^table.border.*", ., value = TRUE)
 }
 
-# Vector of all args from `tab_options()` that are settable for `opt_all_caps()`
+# Create vector of all args from `tab_options()` that are settable for `opt_all_caps()`
 table_all_caps_vec <- function(locations) {
 
   # Ensure that all named locations are valid
@@ -252,4 +259,15 @@ table_all_caps_vec <- function(locations) {
       ),
       ., value = TRUE
     )
+}
+
+# Validate any vector of `tab_options()` argument names
+validate_tab_options_args <- function(tab_options_args) {
+
+  tab_options_arg_names <-
+    formals(tab_options) %>% names() %>% base::setdiff("data")
+
+  if (!all(tab_options_args %in% tab_options_arg_names)) {
+    stop("All `tab_options_args` must be valid names.")
+  }
 }
