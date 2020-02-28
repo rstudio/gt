@@ -233,3 +233,23 @@ table_borders_vec <- function() {
     base::setdiff("data") %>%
     grep("^table.border.*", ., value = TRUE)
 }
+
+# Vector of all args from `tab_options()` that are settable for `opt_all_caps()`
+table_all_caps_vec <- function(locations) {
+
+  # Ensure that all named locations are valid
+  if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
+    stop("The available locations are `column_labels`, `stub`, and `row_group`.")
+  }
+
+  formals(tab_options) %>%
+    names() %>%
+    base::setdiff("data") %>%
+    grep(
+      paste0(
+        "^(", paste(locations, collapse = "|"),
+        ")\\.(text_transform|font.size|font.weight)"
+      ),
+      ., value = TRUE
+    )
+}

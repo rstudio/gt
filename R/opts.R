@@ -289,76 +289,15 @@ opt_all_caps <- function(data,
          call. = FALSE)
   }
 
-  if ("column_labels" %in% locations) {
+  args_vec <- table_all_caps_vec(locations)
 
-    if (active) {
-
-      data <-
-        tab_options(
-          data,
-          column_labels.text_transform = "uppercase",
-          column_labels.font.size = pct(80),
-          column_labels.font.weight = "bolder"
-        )
-
-    } else {
-
-      data <-
-        tab_options(
-          data,
-          column_labels.text_transform = dt_options_get_default_value("column_labels_text_transform"),
-          column_labels.font.size = dt_options_get_default_value("column_labels_font_size"),
-          column_labels.font.weight = dt_options_get_default_value("column_labels_font_weight")
-        )
-    }
-  }
-
-  if ("stub" %in% locations) {
-
-    if (active) {
-
-      data <-
-        tab_options(
-          data,
-          stub.text_transform = "uppercase",
-          stub.font.size = pct(80),
-          stub.font.weight = "bolder"
-        )
-
-    } else {
-
-      data <-
-        tab_options(
-          data,
-          stub.text_transform = dt_options_get_default_value("stub_text_transform"),
-          stub.font.size = dt_options_get_default_value("stub_font_size"),
-          stub.font.weight = dt_options_get_default_value("stub_font_weight")
-        )
-    }
-  }
-
-  if ("row_group" %in% locations) {
-
-    if (active) {
-
-      data <-
-        tab_options(
-          data,
-          row_group.text_transform = "uppercase",
-          row_group.font.size = pct(80),
-          row_group.font.weight = "bolder"
-        )
-
-    } else {
-
-      data <-
-        tab_options(
-          data,
-          row_group.text_transform = dt_options_get_default_value("row_group_text_transform"),
-          row_group.font.size = dt_options_get_default_value("row_group_font_size"),
-          row_group.font.weight = dt_options_get_default_value("row_group_font_weight")
-        )
-    }
+  if (active) {
+    values_vec <- rep(c("80%", "bolder", "uppercase"), length(args_vec) / 3)
+    option_value_list <- create_value_multi_options_list(args_vec, values_vec)
+    data <- tab_options_multi(data, option_value_list)
+  } else {
+    option_value_list <- create_default_tab_options_list(args_vec)
+    data <- tab_options_multi(data, option_value_list)
   }
 
   data
