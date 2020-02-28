@@ -425,91 +425,18 @@ opt_table_lines <- function(data,
   extent <- match.arg(extent)
 
   if (extent == "all") {
-
-    data <-
-      tab_options(
-        data,
-        table.border.top.style = "solid",
-        table.border.left.style = "solid",
-        table.border.right.style = "solid",
-        heading.border.bottom.style = "solid",
-        heading.border.lr.style = "solid",
-        column_labels.vlines.style = "solid",
-        column_labels.border.top.style = "solid",
-        column_labels.border.bottom.style = "solid",
-        column_labels.border.lr.style = "solid",
-        row_group.border.top.style = "solid",
-        row_group.border.bottom.style = "solid",
-        row_group.border.left.style = "solid",
-        row_group.border.right.style = "solid",
-        stub.border.style = "solid",
-        table_body.border.top.style = "solid",
-        table_body.border.bottom.style = "solid",
-        table_body.hlines.style = "solid",
-        table_body.vlines.style = "solid",
-        summary_row.border.style = "solid",
-        footnotes.border.bottom.style = "solid",
-        footnotes.border.lr.style = "solid",
-        source_notes.border.lr.style = "solid",
-        table.border.bottom.style = "solid"
-      )
+    option_value_list <- create_value_multi_options_list(table_line_style_vec(), "solid")
+    data <- tab_options_multi(data, option_value_list)
   }
 
   if (extent == "none") {
-
-    data <-
-      tab_options(
-        data,
-        table.border.top.style = "none",
-        heading.border.bottom.style = "none",
-        column_labels.vlines.style = "none",
-        column_labels.border.top.style = "none",
-        column_labels.border.bottom.style = "none",
-        row_group.border.top.style = "none",
-        row_group.border.bottom.style = "none",
-        stub.border.style = "none",
-        table_body.border.top.style = "none",
-        table_body.border.bottom.style = "none",
-        table_body.hlines.style = "none",
-        summary_row.border.style = "none",
-        grand_summary_row.border.style = "none",
-        footnotes.border.bottom.style = "none",
-        source_notes.border.bottom.style = "none",
-        table.border.bottom.style = "none"
-      )
+    option_value_list <- create_value_multi_options_list(table_line_style_vec(), value = "none")
+    data <- tab_options_multi(data, option_value_list)
   }
 
   if (extent == "default") {
-
-    data <-
-      tab_options(
-        data,
-        table.border.top.style = dt_options_get_default_value("table_border_top_style"),
-        table.border.left.style = dt_options_get_default_value("table_border_left_style"),
-        table.border.right.style = dt_options_get_default_value("table_border_right_style"),
-        heading.border.bottom.style = dt_options_get_default_value("heading_border_bottom_style"),
-        heading.border.lr.style = dt_options_get_default_value("heading_border_lr_style"),
-        column_labels.vlines.style = dt_options_get_default_value("column_labels_vlines_style"),
-        column_labels.border.top.style = dt_options_get_default_value("column_labels_border_top_style"),
-        column_labels.border.lr.style = dt_options_get_default_value("column_labels_border_lr_style"),
-        column_labels.border.bottom.style = dt_options_get_default_value("column_labels_border_bottom_style"),
-        row_group.border.top.style = dt_options_get_default_value("row_group_border_top_style"),
-        row_group.border.bottom.style = dt_options_get_default_value("row_group_border_bottom_style"),
-        row_group.border.left.style = dt_options_get_default_value("row_group_border_left_style"),
-        row_group.border.right.style = dt_options_get_default_value("row_group_border_right_style"),
-        stub.border.style = dt_options_get_default_value("stub_border_style"),
-        table_body.border.top.style = dt_options_get_default_value("table_body_border_top_style"),
-        table_body.border.bottom.style = dt_options_get_default_value("table_body_border_bottom_style"),
-        table_body.hlines.style = dt_options_get_default_value("table_body_hlines_style"),
-        table_body.vlines.style = dt_options_get_default_value("table_body_vlines_style"),
-        summary_row.border.style = dt_options_get_default_value("summary_row_border_style"),
-        grand_summary_row.border.style = dt_options_get_default_value("grand_summary_row_border_style"),
-        footnotes.border.bottom.style = dt_options_get_default_value("footnotes_border_bottom_style"),
-        footnotes.border.lr.style = dt_options_get_default_value("footnotes_border_lr_style"),
-        source_notes.border.lr.style = dt_options_get_default_value("source_notes_border_lr_style"),
-        source_notes.border.bottom.style = dt_options_get_default_value("source_notes_border_bottom_style"),
-        table.border.bottom.style = dt_options_get_default_value("table_border_bottom_style")
-      )
+    option_value_list <- create_default_tab_options_list(table_line_style_vec())
+    data <- tab_options_multi(data, option_value_list)
   }
 
   data
@@ -519,15 +446,11 @@ opt_table_lines <- function(data,
 #'
 #' This function puts an outline of consistent `style`, `width`, and `color`
 #' around the entire table. It'll write over any existing outside lines so long
-#' as the `width` is larger that of the existing lines.
-#'
-#' This function serves as a convenient shortcut for a large number of options
-#' from the [tab_options()] function. Using `active = FALSE` will reset table
-#' outlines to their defaults.
+#' as the `width` is larger that of the existing lines. The default value of
+#' `style` (`"solid"`) will draw a solid outline, whereas a value of `"none"`
+#' will remove any present outline.
 #'
 #' @inheritParams fmt_number
-#' @param active A logical value to indicate whether the table outlines should
-#' be applied or removed (i.e., reset to defaults).
 #' @param style,width,color The style, width, and color properties for the table
 #'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
 #'   `"#D3D3D3"`.
@@ -574,7 +497,6 @@ opt_table_lines <- function(data,
 #'
 #' @export
 opt_table_outline <- function(data,
-                              active = TRUE,
                               style = "solid",
                               width = px(3),
                               color = "#D3D3D3") {
@@ -582,44 +504,7 @@ opt_table_outline <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  if (active) {
-
-    data <-
-      tab_options(
-        data,
-        table.border.top.style = style,
-        table.border.top.width = width,
-        table.border.top.color = color,
-        table.border.bottom.style = style,
-        table.border.bottom.width = width,
-        table.border.bottom.color = color,
-        table.border.left.style = style,
-        table.border.left.width = width,
-        table.border.left.color = color,
-        table.border.right.style = style,
-        table.border.right.width = width,
-        table.border.right.color = color
-      )
-
-  } else {
-
-    data <-
-      tab_options(
-        data,
-        table.border.top.style = dt_options_get_default_value("table_border_top_style"),
-        table.border.top.width = dt_options_get_default_value("table_border_top_width"),
-        table.border.top.color = dt_options_get_default_value("table_border_top_color"),
-        table.border.bottom.style = dt_options_get_default_value("table_border_bottom_style"),
-        table.border.bottom.width = dt_options_get_default_value("table_border_bottom_width"),
-        table.border.bottom.color = dt_options_get_default_value("table_border_bottom_color"),
-        table.border.left.style = dt_options_get_default_value("table_border_left_style"),
-        table.border.left.width = dt_options_get_default_value("table_border_left_width"),
-        table.border.left.color = dt_options_get_default_value("table_border_left_color"),
-        table.border.right.style = dt_options_get_default_value("table_border_right_style"),
-        table.border.right.width = dt_options_get_default_value("table_border_right_width"),
-        table.border.right.color = dt_options_get_default_value("table_border_right_color")
-      )
-  }
-
-  data
+  values_vec <- rep(c(style, width, color), 4)
+  option_value_list <- create_value_multi_options_list(table_borders_vec(), values_vec)
+  tab_options_multi(data, option_value_list)
 }

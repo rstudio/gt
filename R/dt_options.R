@@ -171,5 +171,65 @@ dt_options_tbl <-
   )[-1, ]
 
 dt_options_get_default_value <- function(option) {
+
+  # TODO: Add validation function here
+
   dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
+}
+
+create_value_multi_options_list <- function(tab_options_args, values) {
+
+  if (length(values) == 1) {
+    values <- rep(values, length(tab_options_args))
+  } else if (length(values) != length(tab_options_args)) {
+    stop("The length of the `values` vector must be 1 or the length of `tab_options_args`")
+  }
+
+  # TODO: Add validation function here
+
+  stats::setNames(
+    object = values,
+    tab_options_args
+  ) %>%
+    as.list()
+}
+
+create_default_tab_options_list <- function(tab_options_args) {
+
+  # TODO: Add validation function here
+  #tab_options_arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+  #all(tab_options_args %in% tab_options_arg_names)
+
+  tab_options_args %>%
+    vapply(
+      FUN.VALUE = character(1),
+      FUN = function(x) {
+        stats::setNames(
+          object = dt_options_get_default_value(x %>% tidy_gsub(".", "_", fixed = TRUE)),
+          x
+        )
+      }) %>%
+    as.list()
+}
+
+tab_options_multi <- function(data, options) {
+  do.call(tab_options, c(list(data = data), options))
+}
+
+# Vector of all args from `tab_options()` that involve line styles
+table_line_style_vec <- function() {
+
+  formals(tab_options) %>%
+    names() %>%
+    base::setdiff("data") %>%
+    grep(".*style$", ., value = TRUE)
+}
+
+# Vector of all args from `tab_options()` that involve the table border
+table_borders_vec <- function() {
+
+  formals(tab_options) %>%
+    names() %>%
+    base::setdiff("data") %>%
+    grep("^table.border.*", ., value = TRUE)
 }

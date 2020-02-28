@@ -4,19 +4,10 @@
 \alias{opt_table_outline}
 \title{Option to wrap an outline around the entire table}
 \usage{
-opt_table_outline(
-  data,
-  active = TRUE,
-  style = "solid",
-  width = px(3),
-  color = "#D3D3D3"
-)
+opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
-
-\item{active}{A logical value to indicate whether the table outlines should
-be applied or removed (i.e., reset to defaults).}
 
 \item{style, width, color}{The style, width, and color properties for the table
 outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and
@@ -28,12 +19,9 @@ An object of class \code{gt_tbl}.
 \description{
 This function puts an outline of consistent \code{style}, \code{width}, and \code{color}
 around the entire table. It'll write over any existing outside lines so long
-as the \code{width} is larger that of the existing lines.
-}
-\details{
-This function serves as a convenient shortcut for a large number of options
-from the \code{\link[=tab_options]{tab_options()}} function. Using \code{active = FALSE} will reset table
-outlines to their defaults.
+as the \code{width} is larger that of the existing lines. The default value of
+\code{style} (\code{"solid"}) will draw a solid outline, whereas a value of \code{"none"}
+will remove any present outline.
 }
 \section{Figures}{
 
