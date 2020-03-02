@@ -290,17 +290,31 @@ opt_all_caps <- function(data,
          call. = FALSE)
   }
 
-  # Get vector of `tab_options()` arg names for all specific `locations`
-  options_vec <- table_all_caps_vec(locations)
+  # Create a regex pattern to obtain arg names for all specific `locations`
+  pattern <-
+    paste0(
+      "^(", paste(locations, collapse = "|"),
+      ")\\.(text_transform|font.size|font.weight)"
+    )
+
+  # Obtain the `tab_options()` args vector with the `pattern`
+  options_vec <- get_tab_options_arg_vec(pattern = pattern)
 
   if (all_caps) {
-    values_vec <- rep(c("80%", "bolder", "uppercase"), length(options_vec) / 3)
-    data <- tab_options_multi(data, create_option_value_list(options_vec, values_vec))
+
+    values_vec <-
+      dplyr::case_when(
+        grepl("\\.font\\.size$", options_vec) ~ "80%",
+        grepl("\\.font\\.weight$", options_vec) ~ "bolder",
+        grepl("\\.text_transform$", options_vec) ~ "uppercase"
+      )
+
+    option_value_list <- create_option_value_list(options_vec, values_vec)
   } else {
-    data <- tab_options_multi(data, create_default_option_value_list(options_vec))
+    option_value_list <- create_default_option_value_list(options_vec)
   }
 
-  data
+  tab_options_multi(data, option_value_list)
 }
 
 #' Option to set table lines to different extents
@@ -364,20 +378,18 @@ opt_table_lines <- function(data,
   extent <- match.arg(extent)
 
   # Normalize `extent` values to property values
-  values_vec <- ifelse(extent == "all", "solid", extent)
+  values_vec <- if (extent == "all") "solid" else extent
 
-  # Get vector of `tab_options()` arg names for all specific `locations`
-  options_vec <- table_line_style_vec()
+  # Get vector of `tab_options()` arg names for all table line styles
+  options_vec <- get_tab_options_arg_vec(pattern = ".*style$")
 
   if (values_vec %in% c("solid", "none")) {
     option_value_list <- create_option_value_list(options_vec, values_vec)
-    data <- tab_options_multi(data, option_value_list)
   } else {
     option_value_list <- create_default_option_value_list(options_vec)
-    data <- tab_options_multi(data, option_value_list)
   }
 
-  data
+  tab_options_multi(data, option_value_list)
 }
 
 #' Option to wrap an outline around the entire table
@@ -391,7 +403,8 @@ opt_table_lines <- function(data,
 #' @inheritParams fmt_number
 #' @param style,width,color The style, width, and color properties for the table
 #'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
-#'   `"#D3D3D3"`.
+#'   `"#D3D3D3"`. If `"none"` is used then any values provided for `width` and
+#'   `color` will be ignored (i.e., not set).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -426,6 +439,12 @@ opt_table_lines <- function(data,
 #'   ) %>%
 #'   opt_table_outline()
 #'
+#' # Remove the table outline with the
+#' # `style = "none"` option
+#' tab_2 <-
+#'   tab_1 %>%
+#'   opt_table_outline(style = "none")
+#'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_table_outline_1.svg}{options: width=100\%}}
 #'
@@ -442,6 +461,98 @@ opt_table_outline <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  values_vec <- rep(c(style, width, color), 4)
-  tab_options_multi(data, create_option_value_list(table_borders_vec(), values_vec))
+  if (style == "none") {
+    width <- NULL
+    color <- NULL
+  }
+
+  params <-
+    c(style = !is.null(style), width = !is.null(width), color = !is.null(color)) %>%
+    which() %>%
+    names()
+
+  pattern <- paste0("^table\\.border.*?\\.(", paste(params, collapse = "|"), ")")
+
+  # Get vector of `tab_options()` arg names for the table border styles
+  options_vec <- get_tab_options_arg_vec(pattern = pattern)
+
+  if (is.null(width)) width <- NA_character_
+  if (is.null(color)) color <- NA_character_
+
+  values_vec <-
+    dplyr::case_when(
+      grepl("^table\\.border.*?\\.style$", options_vec) ~ as.character(style),
+      grepl("^table\\.border.*?\\.width$", options_vec) ~ as.character(width),
+      grepl("^table\\.border.*?\\.color$", options_vec) ~ as.character(color)
+    )
+
+  option_value_list <- create_option_value_list(options_vec, values_vec)
+  tab_options_multi(data, option_value_list)
+}
+
+# Create an option-value list with a vector of arg names from the
+# `tab_options()` function and either one value or n-length values
+# corresponding to those options
+create_option_value_list <- function(tab_options_args, values) {
+
+  # Validate the length of the `values` vector
+  if (length(values) == 1) {
+    values <- rep(values, length(tab_options_args))
+  } else if (length(values) != length(tab_options_args)) {
+    stop("The length of the `values` vector must be 1 or the length of `tab_options_args`")
+  }
+
+  # Validate the elements of the `tab_options_args` vector
+  validate_tab_options_args(tab_options_args)
+
+  stats::setNames(object = values, tab_options_args) %>% as.list()
+}
+
+create_default_option_value_list <- function(tab_options_args) {
+
+  # Validate the elements of the `tab_options_args` vector
+  validate_tab_options_args(tab_options_args)
+
+  lapply(stats::setNames(, tab_options_args), function(x) {
+    dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
+  })
+}
+
+dt_options_get_default_value <- function(option) {
+
+  # Validate the provided `option` value
+  if (length(option) != 1) {
+    stop("A character vector of length one must be provided")
+  }
+  if (!(option %in% dt_options_tbl$parameter)) {
+    stop("The `option` provided is invalid")
+  }
+
+  dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
+}
+
+# Validate any vector of `tab_options()` argument names
+validate_tab_options_args <- function(tab_options_args) {
+
+  tab_options_arg_names <-
+    formals(tab_options) %>% names() %>% base::setdiff("data")
+
+  if (!all(tab_options_args %in% tab_options_arg_names)) {
+    stop("All `tab_options_args` must be valid names.")
+  }
+}
+
+# Do multiple calls of `tab_options()` with an option-value list (`options`)
+tab_options_multi <- function(data, options) {
+  do.call(tab_options, c(list(data = data), options))
+}
+
+# Create vector of all args from `tab_options()` by
+# use of a regex pattern
+get_tab_options_arg_vec <- function(pattern) {
+
+  formals(tab_options) %>%
+    names() %>%
+    base::setdiff("data") %>%
+    grep(pattern = pattern, ., value = TRUE)
 }
