@@ -11,8 +11,8 @@ opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 
 \item{style, width, color}{The style, width, and color properties for the table
 outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and
-\code{"#D3D3D3"}. If \code{"none"} is used then any values provided for \code{width} and
-\code{color} will be ignored (i.e., not set).}
+\code{"#D3D3D3"}. If \code{"none"} is used then the outline is removed and any values
+provided for \code{width} and \code{color} will be ignored (i.e., not set).}
 }
 \value{
 An object of class \code{gt_tbl}.

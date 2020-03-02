@@ -403,8 +403,8 @@ opt_table_lines <- function(data,
 #' @inheritParams fmt_number
 #' @param style,width,color The style, width, and color properties for the table
 #'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
-#'   `"#D3D3D3"`. If `"none"` is used then any values provided for `width` and
-#'   `color` will be ignored (i.e., not set).
+#'   `"#D3D3D3"`. If `"none"` is used then the outline is removed and any values
+#'   provided for `width` and `color` will be ignored (i.e., not set).
 #'
 #' @return An object of class `gt_tbl`.
 #'
