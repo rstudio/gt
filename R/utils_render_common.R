@@ -288,7 +288,9 @@ perform_col_merge <- function(data,
         )
     }
 
-    if (type == "merge_range") {
+    if (type %in% c("merge_range", "merge_uncert")) {
+
+      data_tbl <- dt_data_get(data = data)
 
       mutated_column <- col_merge[[i]]$vars[1]
       mutated_column_sym <- sym(mutated_column)
@@ -319,24 +321,42 @@ perform_col_merge <- function(data,
           )
       }
 
-      data_tbl <- dt_data_get(data = data)
-
+      # Determine rows where NA values exist
       na_1_rows <- which(is.na(data_tbl %>% dplyr::pull(!!mutated_column_sym)))
       na_2_rows <- which(is.na(data_tbl %>% dplyr::pull(!!second_column_sym)))
 
-      no_na_rows <-
-        seq_along(body %>% dplyr::pull(!!mutated_column_sym)) %>%
-        base::setdiff(na_1_rows) %>%
-        base::setdiff(na_2_rows)
+      if (type == "merge_range") {
 
-      body <-
-        body %>%
-        dplyr::mutate(
-          !!mutated_column_sym := dplyr::case_when(
-            dplyr::row_number() %in% no_na_rows ~ glue::glue(pattern) %>% as.character(),
-            TRUE ~ !!mutated_column_sym
+        not_all_na_rows <-
+          seq_along(body %>% dplyr::pull(!!mutated_column_sym)) %>%
+          base::setdiff(base::intersect(na_1_rows, na_2_rows))
+
+        body <-
+          body %>%
+          dplyr::mutate(
+            !!mutated_column_sym := dplyr::case_when(
+              dplyr::row_number() %in% not_all_na_rows ~ glue::glue(pattern) %>% as.character(),
+              TRUE ~ !!mutated_column_sym
+            )
           )
-        )
+      }
+
+      if (type == "merge_uncert") {
+
+        no_na_rows <-
+          seq_along(body %>% dplyr::pull(!!mutated_column_sym)) %>%
+          base::setdiff(na_1_rows) %>%
+          base::setdiff(na_2_rows)
+
+        body <-
+          body %>%
+          dplyr::mutate(
+            !!mutated_column_sym := dplyr::case_when(
+              dplyr::row_number() %in% no_na_rows ~ glue::glue(pattern) %>% as.character(),
+              TRUE ~ !!mutated_column_sym
+            )
+          )
+      }
     }
   }
 

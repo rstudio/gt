@@ -850,14 +850,31 @@ cols_merge_uncert <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Use the `cols_merge_range()` function
-  cols_merge_range(
-    data = data,
-    col_begin = col_val,
-    col_end = col_uncert,
-    sep = sep,
-    autohide = autohide
-  )
+  resolved <-
+    cols_merge_resolver(
+      data = data,
+      col_begin = col_val,
+      col_end = col_uncert,
+      sep = sep
+    )
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = resolved$columns,
+        type = "merge_uncert",
+        pattern = resolved$pattern,
+        sep = sep
+      )
+    )
+
+  if (isTRUE(autohide)) {
+    data <- data %>% cols_hide(columns = col_uncert)
+  }
+
+  data
 }
 
 #' Merge two columns to a value range column
@@ -944,6 +961,35 @@ cols_merge_range <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  resolved <-
+    cols_merge_resolver(
+      data = data,
+      col_begin = col_begin,
+      col_end = col_end,
+      sep = sep
+    )
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = resolved$columns,
+        type = "merge_range",
+        pattern = resolved$pattern,
+        sep = sep
+      )
+    )
+
+  if (isTRUE(autohide)) {
+    data <- data %>% cols_hide(columns = col_end)
+  }
+
+  data
+}
+
+cols_merge_resolver <- function(data, col_begin, col_end, sep) {
+
   # Set the formatting pattern
   pattern <- "{1}{sep}{2}"
 
@@ -958,23 +1004,10 @@ cols_merge_range <- function(data,
 
   columns <- c(col_begin, col_end)
 
-  # Create an entry and add it to the `_col_merge` attribute
-  data <-
-    dt_col_merge_add(
-      data = data,
-      col_merge = dt_col_merge_entry(
-        vars = columns,
-        type = "merge_range",
-        pattern = pattern,
-        sep = sep
-      )
-    )
-
-  if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_end)
-  }
-
-  data
+  list(
+    columns = columns,
+    pattern = pattern
+  )
 }
 
 #' Merge data from two or more columns to a single column

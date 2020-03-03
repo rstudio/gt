@@ -131,7 +131,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -154,7 +154,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -181,7 +181,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -193,7 +193,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_3", "col_4"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -218,7 +218,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   # Get the separator object
   sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
