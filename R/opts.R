@@ -294,7 +294,7 @@ opt_all_caps <- function(data,
   pattern <-
     paste0(
       "^(", paste(locations, collapse = "|"),
-      ")\\.(text_transform|font.size|font.weight)"
+      ")\\.(text_transform|font\\.size|font\\.weight)"
     )
 
   # Obtain the `tab_options()` args vector with the `pattern`
@@ -381,7 +381,7 @@ opt_table_lines <- function(data,
   values_vec <- if (extent == "all") "solid" else extent
 
   # Get vector of `tab_options()` arg names for all table line styles
-  options_vec <- get_tab_options_arg_vec(pattern = ".*style$")
+  options_vec <- get_tab_options_arg_vec(pattern = "\\.style$")
 
   if (values_vec %in% c("solid", "none")) {
     option_value_list <- create_option_value_list(options_vec, values_vec)
@@ -467,9 +467,11 @@ opt_table_outline <- function(data,
   }
 
   params <-
-    c(style = !is.null(style), width = !is.null(width), color = !is.null(color)) %>%
-    which() %>%
-    names()
+    c(
+      if (!is.null(style)) "style" else NULL,
+      if (!is.null(width)) "width" else NULL,
+      if (!is.null(color)) "color" else NULL
+    )
 
   pattern <- paste0("^table\\.border.*?\\.(", paste(params, collapse = "|"), ")")
 
@@ -481,9 +483,9 @@ opt_table_outline <- function(data,
 
   values_vec <-
     dplyr::case_when(
-      grepl("^table\\.border.*?\\.style$", options_vec) ~ as.character(style),
-      grepl("^table\\.border.*?\\.width$", options_vec) ~ as.character(width),
-      grepl("^table\\.border.*?\\.color$", options_vec) ~ as.character(color)
+      grepl("^table\\.border\\..*?\\.style$", options_vec) ~ style,
+      grepl("^table\\.border\\..*?\\.width$", options_vec) ~ width,
+      grepl("^table\\.border\\..*?\\.color$", options_vec) ~ color
     )
 
   option_value_list <- create_option_value_list(options_vec, values_vec)
@@ -497,21 +499,15 @@ create_option_value_list <- function(tab_options_args, values) {
 
   # Validate the length of the `values` vector
   if (length(values) == 1) {
-    values <- rep(values, length(tab_options_args))
+    values <- rep_len(values, length(tab_options_args))
   } else if (length(values) != length(tab_options_args)) {
     stop("The length of the `values` vector must be 1 or the length of `tab_options_args`")
   }
-
-  # Validate the elements of the `tab_options_args` vector
-  validate_tab_options_args(tab_options_args)
 
   stats::setNames(object = values, tab_options_args) %>% as.list()
 }
 
 create_default_option_value_list <- function(tab_options_args) {
-
-  # Validate the elements of the `tab_options_args` vector
-  validate_tab_options_args(tab_options_args)
 
   lapply(stats::setNames(, tab_options_args), function(x) {
     dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
@@ -531,11 +527,18 @@ dt_options_get_default_value <- function(option) {
   dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
 }
 
+# Get vector of argument names (excluding `data`) from `tab_options`
+#' @include tab_create_modify.R
+tab_options_arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+
+# Create vector of all args from `tab_options()` by
+# use of a regex pattern
+get_tab_options_arg_vec <- function(pattern) {
+  grep(pattern = pattern, tab_options_arg_names, value = TRUE)
+}
+
 # Validate any vector of `tab_options()` argument names
 validate_tab_options_args <- function(tab_options_args) {
-
-  tab_options_arg_names <-
-    formals(tab_options) %>% names() %>% base::setdiff("data")
 
   if (!all(tab_options_args %in% tab_options_arg_names)) {
     stop("All `tab_options_args` must be valid names.")
@@ -544,15 +547,9 @@ validate_tab_options_args <- function(tab_options_args) {
 
 # Do multiple calls of `tab_options()` with an option-value list (`options`)
 tab_options_multi <- function(data, options) {
+
+  # Validate the names of the `options`
+  validate_tab_options_args(names(options))
+
   do.call(tab_options, c(list(data = data), options))
-}
-
-# Create vector of all args from `tab_options()` by
-# use of a regex pattern
-get_tab_options_arg_vec <- function(pattern) {
-
-  formals(tab_options) %>%
-    names() %>%
-    base::setdiff("data") %>%
-    grep(pattern = pattern, ., value = TRUE)
 }
