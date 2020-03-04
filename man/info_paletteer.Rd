@@ -65,7 +65,7 @@ are shown by default with \code{info_paletteer()}:
 
 \section{Function ID}{
 
-9-5
+10-5
 }
 
 \examples{

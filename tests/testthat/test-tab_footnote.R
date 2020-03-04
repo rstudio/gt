@@ -708,11 +708,11 @@ test_that("the footnotes table is structured correctly", {
   # Expect that the title and subtitle have the correct
   # footnote glyphs applied
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text(selection = "[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("S&P 5001")
 
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text(selection = "[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("Open and Close Values2")
 })
 

@@ -750,7 +750,7 @@ cells_stub <- function(rows = TRUE) {
 #'       columns = vars(hp),
 #'       rows = hp == max(hp))
 #'   ) %>%
-#'   opt_footnote_marks(marks = "*")
+#'   opt_footnote_marks(marks = c("*", "+"))
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_cells_body_1.svg}{options: width=100\%}}

@@ -76,7 +76,7 @@ tab_1 <-
       columns = vars(hp),
       rows = hp == max(hp))
   ) \%>\%
-  opt_footnote_marks(marks = "*")
+  opt_footnote_marks(marks = c("*", "+"))
 
 }
 \seealso{
