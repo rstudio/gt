@@ -468,9 +468,9 @@ opt_table_outline <- function(data,
 
   params <-
     c(
-      if (!is.null(style)) "style" else NULL,
-      if (!is.null(width)) "width" else NULL,
-      if (!is.null(color)) "color" else NULL
+      if (!is.null(style)) "style",
+      if (!is.null(width)) "width",
+      if (!is.null(color)) "color"
     )
 
   pattern <- paste0("^table\\.border.*?\\.(", paste(params, collapse = "|"), ")")
