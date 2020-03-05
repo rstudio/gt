@@ -27,6 +27,8 @@ will remove any present outline.
 \section{Figures}{
 
 \if{html}{\figure{man_opt_table_outline_1.png}{options: width=100\%}}
+
+\if{html}{\figure{man_opt_table_outline_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

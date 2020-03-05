@@ -364,6 +364,9 @@ opt_all_caps <- function(data,
 #'   ) %>%
 #'   opt_table_lines()
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_table_lines_1.png}{options: width=100\%}}
+#'
 #' @family Table Option Functions
 #' @section Function ID:
 #' 9-5
@@ -447,6 +450,8 @@ opt_table_lines <- function(data,
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_table_outline_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_opt_table_outline_2.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:

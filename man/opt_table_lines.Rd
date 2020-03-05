@@ -23,6 +23,11 @@ is great if you want to start off with lots of lines and subtract just a few
 of them with \code{\link[=tab_options]{tab_options()}} or \code{\link[=tab_style]{tab_style()}}. Or, use it to start with a
 completely lineless table, adding individual lines as needed.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_opt_table_lines_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 9-5
