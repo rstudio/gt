@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2018 RStudio, Inc
+Copyright (c) 2018-2020 RStudio, PBC
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
