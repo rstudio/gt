@@ -550,7 +550,7 @@ as_rtf <- function(data) {
 #'   gt()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_extract_summary_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
 #'
 #' @family Export Functions
 #' @section Function ID:

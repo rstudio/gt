@@ -35,7 +35,7 @@ This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_optio
 }
 \section{Figures}{
 
-\if{html}{\figure{man_opt_all_caps_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_opt_all_caps_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

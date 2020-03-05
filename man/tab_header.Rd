@@ -26,7 +26,7 @@ output, we can use HTML in either of the title or subtitle.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_header_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

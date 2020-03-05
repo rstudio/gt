@@ -116,9 +116,9 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_data_color_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_data_color_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_data_color_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:

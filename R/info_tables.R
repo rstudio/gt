@@ -14,7 +14,7 @@
 #' tab_1 <- info_date_style()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_info_date_style_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -76,7 +76,7 @@ info_date_style <- function() {
 #' tab_1 <- info_time_style()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_info_time_style_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -147,9 +147,9 @@ info_time_style <- function() {
 #' tab_2 <- info_currencies(type = "symbol")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_info_currencies_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_info_currencies_2.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -425,7 +425,7 @@ info_locales <- function(begins_with = NULL) {
 #'     color_pkgs = "ggthemes")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_info_paletteer_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:

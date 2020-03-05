@@ -33,7 +33,7 @@ argument).
 }
 \section{Figures}{
 
-\if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_adjust_luminance_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

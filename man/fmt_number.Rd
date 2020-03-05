@@ -115,9 +115,9 @@ argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_fmt_number_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_fmt_number_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_fmt_number_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

@@ -49,9 +49,9 @@ bold text (the degree of choice is greater with variable fonts)
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_style_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

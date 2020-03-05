@@ -38,7 +38,7 @@ end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_en
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_move_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
