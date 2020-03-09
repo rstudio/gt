@@ -47,92 +47,28 @@ name_exclusions <-
 # Revise the list of topic names by removing the excluded ones
 fn_names <- fn_names %>% base::setdiff(name_exclusions)
 
-# Create a `save_with_webshot()` function that allows us to
-# resize the images before writing to disk
-save_with_webshot <- function(data,
-                              filename,
-                              path = NULL,
-                              ...,
-                              zoom = 2,
-                              expand = 5,
-                              resize = NULL) {
-
-  gtsave_filename <- function(path, filename) {
-
-    if (!is.null(path)) {
-      filename <- file.path(path, filename)
-    }
-
-    filename %>% gt:::path_expand()
-  }
-
-  filename <- gtsave_filename(path = path, filename = filename)
-
-  # Create a temporary file with the `html` extension
-  tempfile_ <- tempfile(fileext = ".html")
-
-  # Reverse slashes on Windows filesystems
-  tempfile_ <-
-    tempfile_ %>%
-    gt:::tidy_gsub("\\\\", "/")
-
-  # Save gt table as HTML using the `gt_save_html()` function
-  data %>% gt:::gt_save_html(filename = tempfile_, path = NULL)
-
-  # Saving an image requires the webshot package; if it's
-  # not present, stop with a message
-  if (!requireNamespace("webshot", quietly = TRUE)) {
-
-    stop("The `webshot` package is required for saving images of gt tables.",
-         call. = FALSE)
-
-  } else {
-
-    if (is.null(resize)) {
-      webshot::webshot(
-        url = paste0("file:///", tempfile_),
-        file = filename,
-        zoom = zoom,
-        expand = expand,
-        ...
-      )
-    } else {
-      webshot::webshot(
-        url = paste0("file:///", tempfile_),
-        file = filename,
-        zoom = zoom,
-        expand = expand,
-        ...
-      ) %>%
-        webshot::resize(resize)
-    }
-  }
-}
-
 # Declare a fixed image width
 image_width <- 1100
 
 # Obtain a temporary directory name
-temp_dir <- tempdir()
+temp_dir <- paste0(tempdir(), random_id())
+dir.create(temp_dir, showWarnings = FALSE)
 
-# Generate images in `temp_dir`
+rm(list = ls(pattern = "^tab_[0-9]*?$"))
+
 for (fn_name in fn_names) {
-
-  # Get the initial list of objects in the environment
-  obj_list_initial <- ls()
 
   # Evaluate the examples in the examples for each topic/function; the
   # objects we'd want to create images from all begin with `tab_`
-  utils::example(topic = fn_name, package = "gt", character.only = TRUE, give.lines = FALSE)
-
-  # Get a vector of new objects created
-  new_obj <- base::setdiff(ls(), obj_list_initial)
+  utils::example(topic = fn_name, package = "gt", character.only = TRUE, give.lines = FALSE, echo = FALSE)
 
   # Get a separate vector of objects that begin with `tab_`
-  tab_obj <- new_obj %>% grep("^tab_.\\d*?", ., value = TRUE)
+  tab_obj <- ls(pattern = "^tab_[0-9]*?$")
 
   # For each of the `tab_` objects, create an image using webshot
   for (i in seq_along(tab_obj)) {
+
+    if (!inherits(get(tab_obj[i]), "gt_tbl")) stop("All `tab_#` objects must be gt objects")
 
     # Create a systematic file name so that the help file
     # can access multiple images in the correct order
@@ -140,52 +76,30 @@ for (fn_name in fn_names) {
 
     # Save the image with a high `zoom` value for clarity,
     # but resized down to 50% of the original
-    save_with_webshot(
-      data = get(tab_obj[i]),
-      filename = filename,
-      zoom = 3,
-      selector = "table",
-      resize = "50%"
-    )
+    gt:::gt_save_webshot(data = get(tab_obj[i]), filename = filename, zoom = 3) %>% webshot::resize("50%")
 
-    # Get the width and height of the image produced by webshot
-    image_x <- readPNG(filename) %>% dim() %>% .[2]
-    image_y <- readPNG(filename) %>% dim() %>% .[1]
+    # Get the height and width of the image produced by webshot
+    image_dim <- readPNG(filename) %>% dim()
 
-    if (image_x > image_width) {
-      eff_image_x <- image_x
-    } else {
-      eff_image_x <- image_width
-    }
-
-    if (image_y >= 1500) {
-      eff_image_y <- 1500
-    } else {
-      eff_image_y <- image_y
-    }
+    if (image_dim[2] > image_width) eff_image_x <- image_dim[2] else eff_image_x <- image_width
+    if (image_dim[1] >= 1500) eff_image_y <- 1500 else eff_image_y <- image_dim[1]
 
     # Use ImageMagick (installed on system) to widen all images to 1100px
-    system(glue::glue("convert {filename} -gravity center -extent {eff_image_x}x{eff_image_y} {filename}"))
+    system(glue::glue("convert {shQuote(filename)} -gravity center -extent {eff_image_x}x{eff_image_y} {shQuote(filename)}"))
   }
 
-  # Clean up some of the created objects
-  rm(list = new_obj)
-  rm(new_obj)
-  rm(tab_obj)
+  rm(list = tab_obj)
 }
 
 # Copy all PNG files to a clean temporary directory
-temp_dir_final <- paste0(tempdir(), "final")
-dir.create(temp_dir_final)
 png_list <- list.files(temp_dir, ".*\\.png$")
-file.copy(file.path(temp_dir, png_list), file.path(temp_dir_final, png_list))
 
 # Shrink PNG files with `webshot::shrink()`
-webshot::shrink(filename = file.path(temp_dir_final, png_list))
+webshot::shrink(filename = file.path(temp_dir, png_list))
 
 # Use `pngquant` to losslessly compress PNG files
 # The project is at https://github.com/kornelski/pngquant
-system(glue::glue("cd {temp_dir_final}; pngquant --force --ext=.png --skip-if-larger --nofs --speed 1 *.png"))
+system(glue::glue("cd {shQuote(temp_dir)}; pngquant --force --ext=.png --skip-if-larger --nofs --speed 1 *.png"))
 
 # Move the files into the `man/figures` directory
-file.copy(file.path(temp_dir_final, png_list), here::here("man", "figures", png_list), overwrite = TRUE)
+file.copy(file.path(temp_dir, png_list), here::here("man", "figures", png_list), overwrite = TRUE)
