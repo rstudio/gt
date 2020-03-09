@@ -18,7 +18,7 @@
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 9-1
+#' 10-1
 #'
 #' @export
 info_date_style <- function() {
@@ -80,7 +80,7 @@ info_date_style <- function() {
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 9-2
+#' 10-2
 #'
 #' @export
 info_time_style <- function() {
@@ -153,7 +153,7 @@ info_time_style <- function() {
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 9-3
+#' 10-3
 #'
 #' @export
 info_currencies <- function(type = c("code", "symbol"),
@@ -292,7 +292,7 @@ info_currencies <- function(type = c("code", "symbol"),
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 9-4
+#' 10-4
 #'
 #' @export
 info_locales <- function(begins_with = NULL) {
@@ -429,7 +429,7 @@ info_locales <- function(begins_with = NULL) {
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 9-5
+#' 10-5
 #'
 #' @export
 info_paletteer <- function(color_pkgs = NULL) {

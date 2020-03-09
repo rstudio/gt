@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(212, 4))
+  css_tbl %>% dim() %>% expect_equal(c(226, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -389,9 +389,12 @@ test_that("the `inline_html_styles()` function works correctly", {
         "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
         "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
         "font-size: 16px; background-color: #FFFFFF; width: auto; ",
-        "border-top-style: solid; border-top-width: 2px; border-top-color: ",
-        "#A8A8A8; border-bottom-style: solid; border-bottom-width: 2px; ",
-        "border-bottom-color: #A8A8A8;\""
+        "border-top-style: solid; border-top-width: 2px; ",
+        "border-top-color: #A8A8A8; border-right-style: none; ",
+        "border-right-width: 2px; border-right-color: #D3D3D3; ",
+        "border-bottom-style: solid; border-bottom-width: 2px; ",
+        "border-bottom-color: #A8A8A8; border-left-style: none; ",
+        "border-left-width: 2px; border-left-color: #D3D3D3;"
       ),
       inlined_html
     )
@@ -433,13 +436,14 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl(
       paste0(
-        "style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; ",
-        "padding-right: 5px; margin: 10px; border-top-style: solid; ",
-        "border-top-width: 1px; border-top-color: #D3D3D3; ",
-        "border-left-style: none; border-left-width: 1px; ",
-        "border-left-color: #D3D3D3; border-right-style: none; ",
-        "border-right-width: 1px; border-right-color: #D3D3D3; ",
-        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
+        "<td style=\"padding-top: 8px; padding-bottom: 8px; ",
+        "padding-left: 5px; padding-right: 5px; margin: 10px; ",
+        "border-top-style: solid; border-top-width: 1px; ",
+        "border-top-color: #D3D3D3; border-left-style: none; ",
+        "border-left-width: 1px; border-left-color: #D3D3D3; ",
+        "border-right-style: none; border-right-width: 1px; ",
+        "border-right-color: #D3D3D3; vertical-align: middle; ",
+        "overflow-x: hidden; text-align: right; ",
         "font-variant-numeric: tabular-nums; font-size: 10px;"
       ),
       inlined_html

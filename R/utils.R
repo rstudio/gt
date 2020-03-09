@@ -944,6 +944,27 @@ glue_char <- function(...) {
   glue::glue(...) %>% as.character()
 }
 
+validate_marks <- function(marks) {
+
+  if (is.null(marks)) {
+    stop("The value for `marks` must not be `NULL`.", call. = FALSE)
+  }
+  if (!is.character(marks)) {
+    stop("The value for `marks` must be a character vector.", call. = FALSE)
+  }
+  if (length(marks) == 0) {
+    stop("The length of `marks` must not be zero.", call. = FALSE)
+  }
+
+  marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
+
+  if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
+    stop("The `marks` keyword provided (\"", marks, "\") is not valid\n",
+         " * \"numbers\", \"letters\", \"LETTERS\", \"standard\", or \"extended\" can be used",
+         call. = FALSE)
+  }
+}
+
 validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
 
   if (arg_name %in% style_names) {

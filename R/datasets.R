@@ -25,7 +25,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-1
+#' 11-1
 #'
 "countrypops"
 
@@ -71,7 +71,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-2
+#' 11-2
 #'
 "sza"
 
@@ -121,7 +121,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-3
+#' 11-3
 #'
 "gtcars"
 
@@ -148,7 +148,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-4
+#' 11-4
 #'
 "sp500"
 
@@ -274,7 +274,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-5
+#' 11-5
 #'
 "pizzaplace"
 
@@ -314,6 +314,6 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-6
+#' 11-6
 #'
 "exibble"

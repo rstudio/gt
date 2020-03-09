@@ -12,13 +12,20 @@
     border-top-style: $table_border_top_style; // table.border.top.style
     border-top-width: $table_border_top_width; // table.border.top.width
     border-top-color: $table_border_top_color; // table.border.top.color
+    border-right-style: $table_border_right_style; // table.border.right.style
+    border-right-width: $table_border_right_width; // table.border.right.width
+    border-right-color: $table_border_right_color; // table.border.right.color
     border-bottom-style: $table_border_bottom_style; // table.border.bottom.style
     border-bottom-width: $table_border_bottom_width; // table.border.bottom.width
     border-bottom-color: $table_border_bottom_color; // table.border.bottom.color
+    border-left-style: $table_border_left_style; // table.border.left.style
+    border-left-width: $table_border_left_width; // table.border.left.width
+    border-left-color: $table_border_left_color; // table.border.left.color
   }
 
   .gt_heading {
     background-color: $heading_background_color; // heading.background.color
+    text-align: $heading_align; // heading.align
     border-bottom-color: $table_background_color; // table.background.color
     border-left-style: $heading_border_lr_style; // heading.border.lr.style
     border-left-width: $heading_border_lr_width; // heading.border.lr.width
@@ -75,6 +82,12 @@
     font-size: $column_labels_font_size; // column_labels.font.size
     font-weight: $column_labels_font_weight; // column_labels.font.weight
     text-transform: $column_labels_text_transform; // column_labels.text_transform
+    border-left-style:  $column_labels_vlines_style; // column_labels.vlines.style
+    border-left-width:  $column_labels_vlines_width; // column_labels.vlines.width
+    border-left-color:  $column_labels_vlines_color; // column_labels.vlines.color
+    border-right-style: $column_labels_vlines_style; // column_labels.vlines.style
+    border-right-width: $column_labels_vlines_width; // column_labels.vlines.width
+    border-right-color: $column_labels_vlines_color; // column_labels.vlines.color
     vertical-align: bottom;
     padding-top: 5px;
     padding-bottom: 6px;
@@ -184,6 +197,7 @@
   .gt_stub {
     color: font-color($stub_background_color);
     background-color: $stub_background_color; // stub.background.color
+    font-size: $stub_font_size; // stub.font.size
     font-weight: $stub_font_weight; // stub.font.weight
     text-transform: $stub_text_transform; // stub.text_transform
     border-right-style: $stub_border_style; // stub.border.style
@@ -273,7 +287,6 @@
     border-right-style: $source_notes_border_lr_style; // source_notes.border.lr.style
     border-right-width: $source_notes_border_lr_width; // source_notes.border.lr.style
     border-right-color: $source_notes_border_lr_color; // source_notes.border.lr.style
-
   }
 
   .gt_sourcenote {
