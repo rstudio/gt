@@ -23,7 +23,7 @@
 #'     title = md("Using *Markdown*"))
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_md_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_md_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -67,7 +67,7 @@ md <- function(text) {
 #'     title = html("<em>HTML</em>"))
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_html_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_html_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -113,7 +113,7 @@ is_html <- function(x) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_px_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_px_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -159,7 +159,7 @@ px <- function(x) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_pct_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_pct_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -237,7 +237,7 @@ pct <- function(x) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_title_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_title_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -315,7 +315,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_stubhead_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_stubhead_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -392,7 +392,7 @@ cells_stubhead <- function() {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_column_spanners_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_column_spanners_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -479,7 +479,7 @@ cells_column_spanners <- function(spanners) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_column_labels_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_column_labels_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -569,7 +569,7 @@ cells_column_labels <- function(columns) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_row_groups_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_row_groups_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -671,7 +671,7 @@ cells_group <- function(groups = TRUE) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_stub_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_stub_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -753,7 +753,7 @@ cells_stub <- function(rows = TRUE) {
 #'   opt_footnote_marks(marks = c("*", "+"))
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_body_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_body_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -888,7 +888,7 @@ cells_data <- function(columns = TRUE,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_summary_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_summary_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -994,7 +994,7 @@ cells_summary <- function(groups = TRUE,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cells_grand_summary_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cells_grand_summary_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1067,7 +1067,7 @@ cells_grand_summary <- function(columns = TRUE,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_currency_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_currency_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1183,7 +1183,7 @@ currency <- function(...,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cell_text_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cell_text_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1325,7 +1325,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cell_fill_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cell_fill_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1437,9 +1437,9 @@ cell_style_to_html.cell_fill <- function(style) {
 #'     )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cell_borders_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cell_borders_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_cell_borders_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cell_borders_2.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1607,7 +1607,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_adjust_luminance_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_adjust_luminance_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:

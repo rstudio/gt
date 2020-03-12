@@ -40,7 +40,7 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_align_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -154,7 +154,7 @@ cols_align <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_width_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -305,9 +305,9 @@ cols_width <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_label_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_label_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_label_2.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -419,9 +419,9 @@ cols_label <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_move_to_start_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_move_to_start_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_move_to_start_2.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -512,9 +512,9 @@ cols_move_to_start <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_move_to_end_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_move_to_end_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_move_to_end_2.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -598,7 +598,7 @@ cols_move_to_end <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_move_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -720,9 +720,9 @@ cols_move <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_hide_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_hide_2.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -833,7 +833,7 @@ cols_hide <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_merge_uncert_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_merge_uncert_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -927,7 +927,7 @@ cols_merge_uncert <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -1036,7 +1036,7 @@ cols_merge_range <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_cols_merge_1.png}{options: width=100\%}}
 #'
 #' @family Modify Columns
 #' @section Function ID:

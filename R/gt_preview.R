@@ -36,7 +36,7 @@
 #'   gt_preview()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
 #'
 #' @family Create Table
 #' @section Function ID:

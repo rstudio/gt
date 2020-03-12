@@ -25,7 +25,7 @@ Perform targeted text transformation with a function
 }
 \section{Figures}{
 
-\if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

@@ -299,17 +299,17 @@ components, the subcomponents, and the element that can adjusted.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_options_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_3.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_4.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_5.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

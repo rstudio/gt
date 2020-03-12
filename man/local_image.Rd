@@ -40,7 +40,7 @@ heights of most table rows.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_local_image_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

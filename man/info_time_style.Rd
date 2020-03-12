@@ -15,7 +15,7 @@ number codes, the format names, and example outputs using a fixed time
 }
 \section{Figures}{
 
-\if{html}{\figure{man_info_time_style_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_info_time_style_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

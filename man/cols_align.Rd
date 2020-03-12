@@ -38,7 +38,7 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_align_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

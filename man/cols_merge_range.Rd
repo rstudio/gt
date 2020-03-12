@@ -60,7 +60,7 @@ non-target columns can be optionally hidden from the output table through the
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

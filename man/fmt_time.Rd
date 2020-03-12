@@ -55,9 +55,9 @@ argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_fmt_time_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_fmt_time_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

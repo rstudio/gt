@@ -52,7 +52,7 @@ using intersections of \code{columns} and \code{rows}
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cells_summary_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cells_summary_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

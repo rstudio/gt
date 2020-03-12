@@ -23,7 +23,7 @@ rendered... to HTML.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_html_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_html_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
