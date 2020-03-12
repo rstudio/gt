@@ -42,9 +42,9 @@ labels once they have been relabeled.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_label_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_label_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_label_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

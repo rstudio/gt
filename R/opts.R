@@ -71,7 +71,7 @@
 #'   opt_footnote_marks(marks = "standard")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_footnote_marks_1.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
@@ -135,7 +135,7 @@ opt_footnote_marks <- function(data,
 #'   opt_row_striping()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_row_striping_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_row_striping_1.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
@@ -198,7 +198,7 @@ opt_row_striping <- function(data,
 #'   opt_align_table_header(align = "left")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_align_table_header_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_align_table_header_1.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
@@ -270,7 +270,7 @@ opt_align_table_header <- function(data,
 #'   opt_all_caps()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_all_caps_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_all_caps_1.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:
@@ -364,6 +364,9 @@ opt_all_caps <- function(data,
 #'   ) %>%
 #'   opt_table_lines()
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_table_lines_1.png}{options: width=100\%}}
+#'
 #' @family Table Option Functions
 #' @section Function ID:
 #' 9-5
@@ -446,7 +449,9 @@ opt_table_lines <- function(data,
 #'   opt_table_outline(style = "none")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_opt_table_outline_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_opt_table_outline_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_opt_table_outline_2.png}{options: width=100\%}}
 #'
 #' @family Table Option Functions
 #' @section Function ID:

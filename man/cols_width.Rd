@@ -45,7 +45,7 @@ favor of the pixel values set for each column.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_width_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

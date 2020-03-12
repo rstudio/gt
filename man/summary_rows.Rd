@@ -66,7 +66,7 @@ rows were added via \code{summary_rows()}.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_summary_rows_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

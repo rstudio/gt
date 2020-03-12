@@ -68,9 +68,9 @@ appear in the display table.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_gt_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_gt_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_gt_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_gt_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

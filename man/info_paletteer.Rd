@@ -60,7 +60,7 @@ are shown by default with \code{info_paletteer()}:
 }
 \section{Figures}{
 
-\if{html}{\figure{man_info_paletteer_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_info_paletteer_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

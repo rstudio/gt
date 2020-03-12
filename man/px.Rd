@@ -23,7 +23,7 @@ function \code{\link[=pct]{pct()}}.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_px_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_px_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

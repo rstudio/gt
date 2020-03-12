@@ -22,7 +22,7 @@ get to use Markdown plus any HTML fragments \emph{at the same time}).
 }
 \section{Figures}{
 
-\if{html}{\figure{man_md_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_md_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

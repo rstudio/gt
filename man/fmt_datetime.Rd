@@ -79,7 +79,7 @@ argument. See the Arguments section for more information on this.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

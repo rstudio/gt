@@ -74,7 +74,7 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_summary_rows_1.png}{options: width=100\%}}
 #'
 #' @family Add Rows
 #' @section Function ID:
@@ -219,7 +219,7 @@ summary_rows <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_grand_summary_rows_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_grand_summary_rows_1.png}{options: width=100\%}}
 #'
 #' @family Add Rows
 #' @section Function ID:

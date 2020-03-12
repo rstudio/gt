@@ -23,7 +23,7 @@ body. This function serves as a convenient shortcut for
 }
 \section{Figures}{
 
-\if{html}{\figure{man_opt_row_striping_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_opt_row_striping_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

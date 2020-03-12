@@ -26,7 +26,7 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cell_fill_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cell_fill_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

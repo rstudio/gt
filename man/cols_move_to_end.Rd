@@ -32,9 +32,9 @@ column.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_move_to_end_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_move_to_end_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_move_to_end_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

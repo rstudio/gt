@@ -90,9 +90,9 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_web_image_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_web_image_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_web_image_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_web_image_2.png}{options: width=100\%}}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:
@@ -164,7 +164,7 @@ web_image <- function(url,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_local_image_1.png}{options: width=100\%}}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:
@@ -268,7 +268,7 @@ local_image <- function(filename,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_ggplot_image_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_ggplot_image_1.png}{options: width=100\%}}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:

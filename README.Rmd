@@ -88,8 +88,8 @@ You can install the development version of **gt** from **GitHub**:
 remotes::install_github("rstudio/gt")
 ```
 
-If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rstudio/gt/issues).
-
+If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/rstudio/gt/issues).
+ 
 ***
 
 <img src="man/figures/gt_tables.png">

@@ -29,7 +29,7 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_header_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -82,7 +82,7 @@ tab_header <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -170,7 +170,7 @@ tab_spanner <- function(data,
 #'   tab_spanner_delim(delim = ".")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -305,9 +305,9 @@ tab_spanner_delim <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_row_group_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -418,7 +418,7 @@ tab_row_group <- function(data,
 #'   tab_stubhead(label = "car")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -504,7 +504,7 @@ tab_stubhead <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_footnote_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -744,7 +744,7 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_source_note_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -856,9 +856,9 @@ tab_source_note <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_style_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1355,17 +1355,17 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_options_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_3.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_4.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_5.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:

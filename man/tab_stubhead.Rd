@@ -26,7 +26,7 @@ intended for HTML output, we can use HTML for the stubhead label.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_stubhead_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
