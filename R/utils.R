@@ -936,14 +936,6 @@ path_expand <- function(file) {
   fs::path_expand(file)
 }
 
-#' Use `glue::glue()` and coerce to a character vector
-#'
-#' @noRd
-glue_char <- function(...) {
-
-  glue::glue(...) %>% as.character()
-}
-
 validate_marks <- function(marks) {
 
   if (is.null(marks)) {
