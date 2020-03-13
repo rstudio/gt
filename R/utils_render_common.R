@@ -295,9 +295,7 @@ perform_col_merge <- function(data,
       body <-
         body %>%
         dplyr::mutate(
-          !!mutated_column_sym := glue::glue(
-            pattern, .transformer = get, .envir = new.env()
-          ) %>%
+          !!mutated_column_sym := glue_gt(., pattern) %>%
             as.character()
         )
 
@@ -337,12 +335,13 @@ perform_col_merge <- function(data,
       #       when the glue pkg is updated in CRAN (and
       #       increase the minimum version requirement)
       body[rows_to_format, mutated_column] <-
-        glue::glue(
-          pattern,
-          "1" = body[[mutated_column]][rows_to_format],
-          "2" = body[[second_column]][rows_to_format],
-          "sep" = sep,
-          .transformer = get, .envir = new.env()
+        glue_gt(
+          list(
+            "1" = body[[mutated_column]][rows_to_format],
+            "2" = body[[second_column]][rows_to_format],
+            "sep" = sep
+          ),
+          pattern
         ) %>%
         as.character()
     }
