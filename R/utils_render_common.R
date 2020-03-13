@@ -273,29 +273,13 @@ perform_col_merge <- function(data,
       columns <- col_merge[[i]]$vars
       pattern <- col_merge[[i]]$pattern
 
-      # Convert any index positions in the pattern
-      # to the column names specified
-      for (j in seq(columns)) {
+      glue_src_data <- body[, columns] %>% as.list()
+      glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
-        pattern <-
-          tidy_gsub(
-            x = pattern,
-            pattern = paste0("\\{", j, "\\}"),
-            replacement = paste0("{", columns[j], "}")
-          )
-      }
-
-      # Use `glue::glue()` with named arguments and
-      # safer `.transformer` function
-      # TODO: Need to set `.envir` to have lexical scoping
-      #       only within this function body (NOTE: used `new.env()`)
-      # TODO: Change `glue::glue()` to `glue::glue_safe()`
-      #       when the glue pkg is updated in CRAN (and
-      #       increase the minimum version requirement)
       body <-
         body %>%
         dplyr::mutate(
-          !!mutated_column_sym := glue_gt(., pattern) %>%
+          !!mutated_column_sym := glue_gt(glue_src_data, pattern) %>%
             as.character()
         )
 
@@ -327,13 +311,6 @@ perform_col_merge <- function(data,
           which(!(na_1_rows | na_2_rows))
         }
 
-      # Use `glue::glue()` with named arguments and
-      # safer `.transformer` function
-      # TODO: Need to set `.envir` to have lexical scoping
-      #       only within this function body (NOTE: used `new.env()`)
-      # TODO: Change `glue::glue()` to `glue::glue_safe()`
-      #       when the glue pkg is updated in CRAN (and
-      #       increase the minimum version requirement)
       body[rows_to_format, mutated_column] <-
         glue_gt(
           list(
