@@ -285,10 +285,20 @@ perform_col_merge <- function(data,
           )
       }
 
+      # Use `glue::glue()` with named arguments and
+      # safer `.transformer` function
+      # TODO: Need to set `.envir` to have lexical scoping
+      #       only within this function body (NOTE: used `new.env()`)
+      # TODO: Change `glue::glue()` to `glue::glue_safe()`
+      #       when the glue pkg is updated in CRAN (and
+      #       increase the minimum version requirement)
       body <-
         body %>%
         dplyr::mutate(
-          !!mutated_column_sym := glue::glue(pattern) %>% as.character()
+          !!mutated_column_sym := glue::glue(
+            pattern, .transformer = get, .envir = new.env()
+          ) %>%
+            as.character()
         )
 
     } else {
@@ -319,28 +329,22 @@ perform_col_merge <- function(data,
           which(!(na_1_rows | na_2_rows))
         }
 
+      # Use `glue::glue()` with named arguments and
+      # safer `.transformer` function
+      # TODO: Need to set `.envir` to have lexical scoping
+      #       only within this function body (NOTE: used `new.env()`)
+      # TODO: Change `glue::glue()` to `glue::glue_safe()`
+      #       when the glue pkg is updated in CRAN (and
+      #       increase the minimum version requirement)
       body[rows_to_format, mutated_column] <-
-        vapply(
-          rows_to_format,
-          FUN.VALUE = character(1), USE.NAMES = FALSE,
-          FUN = function(row) {
-            gfsub(
-              string = pattern,
-              pattern = "\\{([^}]+)\\}",
-              func = function(x, id) {
-                if (id == "1") {
-                  body[[mutated_column]][row]
-                } else if (id == "2") {
-                  body[[second_column]][row]
-                } else if (id == "sep") {
-                  sep
-                } else {
-                  x # leave unchanged; arguably warning or error would be fine too
-                }
-              }
-            )
-          }
-        )
+        glue::glue(
+          pattern,
+          "1" = body[[mutated_column]][rows_to_format],
+          "2" = body[[second_column]][rows_to_format],
+          "sep" = sep,
+          .transformer = get, .envir = new.env()
+        ) %>%
+        as.character()
     }
   }
 
