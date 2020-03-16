@@ -378,4 +378,48 @@ test_that("the `cols_merge_range()` function works correctly", {
   expect_is(sep, "AsIs")
   expect_equal(as.character(sep), "---")
   expect_equal(sep, I("---"))
+
+  # Create two gt table objects; the first will be based
+  # on `tbl` while the second will use a different column name
+  # in `tbl` (`sep`) that collides with a pattern element name
+  tbl_html_1 <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(col_2)
+    )
+
+  tbl_html_2 <-
+    tbl %>%
+    dplyr::rename(sep = col_2) %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(sep)
+    )
+
+  # Expect that the HTML produced from the two tables is the same
+  expect_identical(
+    tbl_html_1 %>% as_raw_html(),
+    tbl_html_2 %>% as_raw_html()
+  )
+
+  # Create another variant that renames `col_2` as `1`, which
+  # might be thought to interfere with the default pattern
+  tbl_html_3 <-
+    tbl %>%
+    dplyr::rename(`1` = col_2) %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(`1`)
+    )
+
+  # Expect that the HTML produced from `tbl_html_2` and
+  # `tbl_html_3` is the same
+  expect_identical(
+    tbl_html_2 %>% as_raw_html(),
+    tbl_html_3 %>% as_raw_html()
+  )
 })
