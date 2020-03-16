@@ -361,3 +361,7 @@ str_catalog <- function(item_vector,
     return(cat_str)
   }
 }
+
+glue_gt <- function(.x, ...) {
+  glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
+}

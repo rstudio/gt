@@ -261,6 +261,10 @@ perform_col_merge <- function(data,
 
     type <- col_merge[[i]]$type
 
+    if (!(type %in% c("merge", "merge_range", "merge_uncert"))) {
+      stop("Unknown `type` supplied.")
+    }
+
     if (type == "merge") {
 
       mutated_column <- col_merge[[i]]$vars[1]
@@ -269,74 +273,54 @@ perform_col_merge <- function(data,
       columns <- col_merge[[i]]$vars
       pattern <- col_merge[[i]]$pattern
 
-      # Convert any index positions in the pattern
-      # to the column names specified
-      for (j in seq(columns)) {
-
-        pattern <-
-          tidy_gsub(
-            x = pattern,
-            pattern = paste0("\\{", j, "\\}"),
-            replacement = paste0("{", columns[j], "}")
-          )
-      }
+      glue_src_data <- body[, columns] %>% as.list()
+      glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
       body <-
         body %>%
         dplyr::mutate(
-          !!mutated_column_sym := glue::glue(pattern) %>% as.character()
+          !!mutated_column_sym := glue_gt(glue_src_data, pattern) %>%
+            as.character()
         )
-    }
 
-    if (type == "merge_range") {
-
-      mutated_column <- col_merge[[i]]$vars[1]
-      mutated_column_sym <- sym(mutated_column)
-
-      second_column <- col_merge[[i]]$vars[2]
-      second_column_sym <- sym(second_column)
-
-      columns <- col_merge[[i]]$vars
-
-      sep <-
-        col_merge[[i]]$sep %>%
-        context_dash_mark(context = context) %>%
-        context_plusminus_mark(context = context)
-
-      pattern <-
-        col_merge[[i]]$pattern %>%
-        tidy_gsub("{sep}", sep, fixed = TRUE)
-
-      # Convert any index positions in the pattern
-      # to the column names specified
-      for (j in seq(columns)) {
-
-        pattern <-
-          tidy_gsub(
-            x = pattern,
-            pattern = paste0("\\{", j, "\\}"),
-            replacement = paste0("{", columns[j], "}")
-          )
-      }
+    } else {
 
       data_tbl <- dt_data_get(data = data)
 
-      na_1_rows <- which(is.na(data_tbl %>% dplyr::pull(!!mutated_column_sym)))
-      na_2_rows <- which(is.na(data_tbl %>% dplyr::pull(!!second_column_sym)))
+      mutated_column <- col_merge[[i]]$vars[1]
+      second_column <- col_merge[[i]]$vars[2]
 
-      no_na_rows <-
-        seq_along(body %>% dplyr::pull(!!mutated_column_sym)) %>%
-        base::setdiff(na_1_rows) %>%
-        base::setdiff(na_2_rows)
+      pattern <- col_merge[[i]]$pattern
+      sep <- col_merge[[i]]$sep
 
-      body <-
-        body %>%
-        dplyr::mutate(
-          !!mutated_column_sym := dplyr::case_when(
-            dplyr::row_number() %in% no_na_rows ~ glue::glue(pattern) %>% as.character(),
-            TRUE ~ !!mutated_column_sym
-          )
-        )
+      # Transform the separator text depending on specific
+      # inputs and the `context`
+      sep <-
+        sep %>%
+        context_dash_mark(context = context) %>%
+        context_plusminus_mark(context = context)
+
+      # Determine rows where NA values exist
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_2_rows <- is.na(data_tbl[[second_column]])
+
+      rows_to_format <-
+        if (type == "merge_range") {
+          which(!(na_1_rows & na_2_rows))
+        } else if (type == "merge_uncert") {
+          which(!(na_1_rows | na_2_rows))
+        }
+
+      body[rows_to_format, mutated_column] <-
+        glue_gt(
+          list(
+            "1" = body[[mutated_column]][rows_to_format],
+            "2" = body[[second_column]][rows_to_format],
+            "sep" = sep
+          ),
+          pattern
+        ) %>%
+        as.character()
     }
   }
 
