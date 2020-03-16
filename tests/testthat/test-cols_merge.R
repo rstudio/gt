@@ -106,6 +106,17 @@ test_that("the function `cols_merge()` works correctly", {
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
     expect_equal("merge")
+
+  # Expect a warning if additional, out of scope columns, are
+  # included in `hide_columns`
+  expect_warning(
+    mtcars_short %>%
+      gt() %>%
+      cols_merge(
+        columns = vars(drat, wt),
+        hide_columns = vars(wt, carb),
+      )
+  )
 })
 
 test_that("the `cols_merge_uncert()` function works correctly", {
