@@ -1038,11 +1038,10 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'   already hidden. This is convenient if the shared purpose of these specified
 #'   columns is only to provide string input to the target column.
 #' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `column` values and any string literals. We can use column names or numbers
-#'   (corresponding to the position of columns provided in `columns`). The
-#'   column names or indices are to be placed in curly braces (e.g., `{price}`
-#'   or `{1}`). All characters outside of braces are taken to be string
-#'   literals.
+#'   `column` values and any string literals. We need to use column numbers
+#'   (corresponding to the position of columns provided in `columns`) within the
+#'   pattern. These indices are to be placed in curly braces (e.g., `{1}`). All
+#'   characters outside of braces are taken to be string literals.
 #'
 #' @return An object of class `gt_tbl`.
 #'

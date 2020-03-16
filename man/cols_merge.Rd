@@ -24,11 +24,10 @@ already hidden. This is convenient if the shared purpose of these specified
 columns is only to provide string input to the target column.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. We can use column names or numbers
-(corresponding to the position of columns provided in \code{columns}). The
-column names or indices are to be placed in curly braces (e.g., \code{{price}}
-or \code{{1}}). All characters outside of braces are taken to be string
-literals.}
+\code{column} values and any string literals. We need to use column numbers
+(corresponding to the position of columns provided in \code{columns}) within the
+pattern. These indices are to be placed in curly braces (e.g., \code{{1}}). All
+characters outside of braces are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
