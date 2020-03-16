@@ -80,7 +80,7 @@
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-1
+#' 13-1
 #'
 #' @export
 gtsave <- function(data,
@@ -293,7 +293,7 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-2
+#' 13-2
 #'
 #' @export
 as_raw_html <- function(data,
@@ -353,7 +353,7 @@ as_raw_html <- function(data,
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-3
+#' 13-3
 #'
 #' @export
 as_latex <- function(data) {
@@ -438,7 +438,7 @@ as_latex <- function(data) {
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-4
+#' 13-4
 #'
 #' @export
 as_rtf <- function(data) {
@@ -550,11 +550,11 @@ as_rtf <- function(data) {
 #'   gt()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_extract_summary_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-5
+#' 13-5
 #'
 #' @export
 extract_summary <- function(data) {
@@ -578,4 +578,3 @@ extract_summary <- function(data) {
   # that contains tidy, unformatted data
   dt_summary_df_data_get(data = built_data) %>% as.list()
 }
-

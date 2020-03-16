@@ -936,12 +936,25 @@ path_expand <- function(file) {
   fs::path_expand(file)
 }
 
-#' Use `glue::glue()` and coerce to a character vector
-#'
-#' @noRd
-glue_char <- function(...) {
+validate_marks <- function(marks) {
 
-  glue::glue(...) %>% as.character()
+  if (is.null(marks)) {
+    stop("The value for `marks` must not be `NULL`.", call. = FALSE)
+  }
+  if (!is.character(marks)) {
+    stop("The value for `marks` must be a character vector.", call. = FALSE)
+  }
+  if (length(marks) == 0) {
+    stop("The length of `marks` must not be zero.", call. = FALSE)
+  }
+
+  marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
+
+  if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
+    stop("The `marks` keyword provided (\"", marks, "\") is not valid\n",
+         " * \"numbers\", \"letters\", \"LETTERS\", \"standard\", or \"extended\" can be used",
+         call. = FALSE)
+  }
 }
 
 validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
@@ -986,6 +999,23 @@ validate_length_one <- function(x, name) {
   if (length(x) != 1) {
     stop("The value for `", name, "` should have a length of one",
          call. = FALSE)
+  }
+}
+
+validate_table_id <- function(id) {
+
+  if (is.null(id)) {
+    return()
+  }
+
+  if (length(id) != 1) {
+    stop("The length of `id` must be 1", call. = FALSE)
+  }
+  if (is.na(id)) {
+    stop("The value for `id` must not be `NA`", call. = FALSE)
+  }
+  if (!is.character(id)) {
+    stop("Any input for `id` must be of the `character` class", call. = FALSE)
   }
 }
 

@@ -20,15 +20,14 @@ mutation) and the other columns will serve to provide input.}
 
 \item{hide_columns}{Any column names provided here will have their state
 changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
-already hidden. This is convenient if the purpose of these specified
-columns are only useful for providing string input to the target column.}
+already hidden. This is convenient if the shared purpose of these specified
+columns is only to provide string input to the target column.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. We can use column names or numbers
-(corresponding to the position of columns provided in \code{columns}). The
-column names or indices are to be placed in curly braces (e.g., \code{{price}}
-or \code{{1}}). All characters outside of braces are taken to be string
-literals.}
+\code{column} values and any string literals. We need to use column numbers
+(corresponding to the position of columns provided in \code{columns}) within the
+pattern. These indices are to be placed in curly braces (e.g., \code{{1}}). All
+characters outside of braces are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -40,17 +39,19 @@ formatting. We can specify which columns to merge together in the \code{columns}
 argument. The string-combining pattern is given in the \code{pattern} argument.
 The first column in the \code{columns} series operates as the target column (i.e.,
 will undergo mutation) whereas all following \code{columns} will be untouched.
+There is the option to hide the non-target columns (i.e., second and
+subsequent columns given in \code{columns}).
 }
 \details{
 There are two other column-merging functions that offer specialized behavior
 that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}} and
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly, where the
 non-target columns can be optionally hidden from the output table through the
-\code{hide_columns} or \code{autohide} options.
+\code{autohide} option.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_merge_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_merge_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

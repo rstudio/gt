@@ -4,7 +4,8 @@
 \name{exibble}
 \alias{exibble}
 \title{A toy example tibble for testing with gt: exibble}
-\format{A tibble with 8 rows and 9 variables:
+\format{
+A tibble with 8 rows and 9 variables:
 \describe{
 \item{num}{a numeric column ordered with increasingly larger values}
 \item{char}{a character column composed of names of fruits from \code{a} to
@@ -19,7 +20,8 @@ useful for testing with row captions in a table stub}
 \item{group}{a character column with four \code{grp_a} values and four
 \code{grp_b} values which can be useful for testing tables that contain
 row groups}
-}}
+}
+}
 \usage{
 exibble
 }
@@ -36,7 +38,7 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 }
 \section{Function ID}{
 
-10-6
+11-6
 }
 
 \examples{

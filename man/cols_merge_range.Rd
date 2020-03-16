@@ -40,17 +40,18 @@ This function could be somewhat replicated using \code{\link[=cols_merge]{cols_m
 handling:
 
 \enumerate{
-\item \code{NA}s in \code{col_begin} result in missing values for the merged
-column (e.g., \code{NA} + \code{20.0} = \code{NA})
+\item \code{NA}s in \code{col_begin} (but not \code{col_end}) result in a display of only
 \item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only
-the \code{col_begin} values only for the merged column
-(e.g., \code{12.0} + \code{NA} = \code{12.0})
+the \code{col_begin} values only for the merged column (this is the converse of
+the previous)
 \item \code{NA}s both in \code{col_begin} and \code{col_end} result in missing values for
-the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
+the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
 operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
+Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_begin} and
+\code{col_end} columns for finer control of the replacement values.
 
 This function is part of a set of three column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
@@ -60,7 +61,7 @@ non-target columns can be optionally hidden from the output table through the
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

@@ -85,7 +85,7 @@ sp500 %>%
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
-for experimenting with the package functions.
+for experimenting with **gt**’s functions.
 
 <p align="center">
 
@@ -102,8 +102,8 @@ for creating super-customized tables.
 
 </p>
 
-Want to try this out? Take the **gt** Test Drive on **RStudio Cloud**.
-It’s full of ready-to-run examples.
+Want to try this out? Then, take the **gt** Test Drive on **RStudio
+Cloud**. It’s full of ready-to-run examples.
 
 <p align="center">
 
@@ -120,7 +120,7 @@ remotes::install_github("rstudio/gt")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to
-make this package better, feel free to file an
+make this package better, please feel free to file an
 [issue](https://github.com/rstudio/gt/issues).
 
 -----
@@ -137,4 +137,4 @@ agree to abide by its terms.
 
 #### License
 
-MIT © RStudio, Inc.
+MIT © RStudio, PBC

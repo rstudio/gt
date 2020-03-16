@@ -35,9 +35,9 @@ of such a pipeline.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_hide_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_hide_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

@@ -20,7 +20,7 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Depends:
     R (>= 3.2.0)
 Imports: 
@@ -41,7 +41,7 @@ Imports:
 Suggests:
     knitr,
     paletteer,
-    testthat,
+    testthat (>= 2.1.0),
     RColorBrewer,
     rmarkdown,
     rvest,
@@ -51,3 +51,60 @@ Suggests:
     xml2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+Collate: 
+    'as_data_frame.R'
+    'base64.R'
+    'build_data.R'
+    'compile_scss.R'
+    'data_color.R'
+    'datasets.R'
+    'dt__.R'
+    'dt_body.R'
+    'dt_boxhead.R'
+    'dt_cols_merge.R'
+    'dt_data.R'
+    'dt_footnotes.R'
+    'dt_formats.R'
+    'dt_groups_rows.R'
+    'dt_has_built.R'
+    'dt_heading.R'
+    'dt_options.R'
+    'dt_row_groups.R'
+    'dt_source_notes.R'
+    'dt_spanners.R'
+    'dt_stub_df.R'
+    'dt_stub_others.R'
+    'dt_stubhead.R'
+    'dt_styles.R'
+    'dt_summary.R'
+    'dt_transforms.R'
+    'export.R'
+    'format_data.R'
+    'gt-package.R'
+    'gt.R'
+    'gt_preview.R'
+    'helpers.R'
+    'image.R'
+    'info_tables.R'
+    'location_methods.R'
+    'modify_columns.R'
+    'modify_rows.R'
+    'tab_create_modify.R'
+    'opts.R'
+    'print.R'
+    'reexports.R'
+    'render_as_html.R'
+    'resolver.R'
+    'shiny.R'
+    'summary_rows.R'
+    'text_transform.R'
+    'utils.R'
+    'utils_formatters.R'
+    'utils_general_str_formatting.R'
+    'utils_pipe.R'
+    'utils_render_common.R'
+    'utils_render_footnotes.R'
+    'utils_render_html.R'
+    'utils_render_latex.R'
+    'utils_render_rtf.R'
+    'zzz.R'

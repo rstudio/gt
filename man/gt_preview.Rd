@@ -40,7 +40,7 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 }
 \section{Figures}{
 
-\if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

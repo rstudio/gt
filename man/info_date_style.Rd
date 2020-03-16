@@ -15,12 +15,12 @@ codes, the format names, and example outputs using a fixed date
 }
 \section{Figures}{
 
-\if{html}{\figure{man_info_date_style_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_info_date_style_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
 
-9-1
+10-1
 }
 
 \examples{

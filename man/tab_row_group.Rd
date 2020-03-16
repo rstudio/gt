@@ -37,9 +37,9 @@ through use of a select helper function like \code{starts_with()}.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_row_group_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -84,7 +84,6 @@ tab_2 <-
 }
 \seealso{
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

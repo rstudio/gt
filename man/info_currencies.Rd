@@ -35,14 +35,14 @@ supplied letter.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_info_currencies_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_info_currencies_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_info_currencies_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_info_currencies_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
 
-9-3
+10-3
 }
 
 \examples{

@@ -4,14 +4,16 @@
 \name{countrypops}
 \alias{countrypops}
 \title{Yearly populations of countries from 1960 to 2017}
-\format{A tibble with 12470 rows and 5 variables:
+\format{
+A tibble with 12470 rows and 5 variables:
 \describe{
 \item{country_name}{Name of the country}
 \item{country_code_2}{The 2-letter ISO 3166-1 country code}
 \item{country_code_3}{The 3-letter ISO 3166-1 country code}
 \item{year}{The year for the population estimate}
 \item{population}{The population estimate, midway through the year}
-}}
+}
+}
 \source{
 \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
 }
@@ -28,7 +30,7 @@ for \code{populations} indicate the non-existence of the country during that yea
 }
 \section{Function ID}{
 
-10-1
+11-1
 }
 
 \examples{

@@ -173,7 +173,7 @@ tab <-
     pattern = "{1}c<br>{2}h"
     ) %>%
   cols_merge(
-    vars(hp_rpm),
+    vars(hp, hp_rpm),
     hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%

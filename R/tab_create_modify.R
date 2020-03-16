@@ -29,7 +29,7 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_header_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -82,7 +82,7 @@ tab_header <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -170,7 +170,7 @@ tab_spanner <- function(data,
 #'   tab_spanner_delim(delim = ".")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -305,9 +305,9 @@ tab_spanner_delim <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_row_group_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_row_group_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -418,7 +418,7 @@ tab_row_group <- function(data,
 #'   tab_stubhead(label = "car")
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -504,7 +504,7 @@ tab_stubhead <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_footnote_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -744,7 +744,7 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_source_note_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -856,9 +856,9 @@ tab_source_note <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_style_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1171,7 +1171,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   `table.font.color.light` is automatically used when text needs to be
 #'   overlaid on darker background colors. A color name or a hexadecimal color
 #'   code should be provided.
-#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,footnotes.font.size,source_notes.font.size
+#' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,stub.font.size,footnotes.font.size,source_notes.font.size
 #'   The font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
 #'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
@@ -1180,6 +1180,8 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percentage units.
+#' @param heading.align Controls the horizontal alignment of the heading title
+#'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
 #' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
 #'   The font weights of the `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
@@ -1194,7 +1196,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   The amount of vertical padding to incorporate in the `data_row`,
 #'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
 #'   `source_notes` locations.
-#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color
+#' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
@@ -1204,6 +1206,9 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param heading.border.lr.style,heading.border.lr.width,heading.border.lr.color
 #'   The style, width, and color properties for the left and right borders of
 #'   the `heading` location.
+#' @param column_labels.vlines.style,column_labels.vlines.width,column_labels.vlines.color
+#'   The style, width, and color properties for all vertical lines ('vlines')
+#'   of the the `column_labels`.
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
@@ -1350,17 +1355,17 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_tab_options_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_3.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_4.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_5.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1383,10 +1388,17 @@ tab_options <- function(data,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
+                        table.border.right.style = NULL,
+                        table.border.right.width = NULL,
+                        table.border.right.color = NULL,
                         table.border.bottom.style = NULL,
                         table.border.bottom.width = NULL,
                         table.border.bottom.color = NULL,
+                        table.border.left.style = NULL,
+                        table.border.left.width = NULL,
+                        table.border.left.color = NULL,
                         heading.background.color = NULL,
+                        heading.align = NULL,
                         heading.title.font.size = NULL,
                         heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
@@ -1401,6 +1413,9 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.text_transform = NULL,
+                        column_labels.vlines.style = NULL,
+                        column_labels.vlines.width = NULL,
+                        column_labels.vlines.color = NULL,
                         column_labels.border.top.style = NULL,
                         column_labels.border.top.width = NULL,
                         column_labels.border.top.color = NULL,
@@ -1441,6 +1456,7 @@ tab_options <- function(data,
                         table_body.border.bottom.width = NULL,
                         table_body.border.bottom.color = NULL,
                         stub.background.color = NULL,
+                        stub.font.size = NULL,
                         stub.font.weight = NULL,
                         stub.text_transform = NULL,
                         stub.border.style = NULL,
@@ -1528,99 +1544,6 @@ tab_options <- function(data,
 
   # Write the modified options table back to `data`
   data <- dt_options_set(data = data, options = opts_df)
-
-  data
-}
-
-#' Modify the set of footnote marks
-#'
-#' Alter the footnote marks for any footnotes that may be present in the table.
-#' Either a vector of marks can be provided (including Unicode characters), or,
-#' a specific keyword could be used to signify a preset sequence. This function
-#' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
-#'
-#' We can supply a vector of that will represent the series of marks.
-#' The series of footnote marks is recycled when its usage goes beyond the
-#' length of the set. At each cycle, the marks are simply doubled, tripled, and
-#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
-#' for certain types of footnote marks. The keywords are:
-#'
-#' \itemize{
-#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
-#' subject to recycling behavior
-#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
-#' vector
-#' which contains 26 lowercase letters of the Roman alphabet
-#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
-#' which has 26 uppercase letters of the Roman alphabet
-#' \item `"standard"`: symbolic marks, four symbols in total
-#' \item `"extended"`: symbolic marks, extends the standard set by adding two
-#' more symbols, making six
-#' }
-#'
-#' @inheritParams fmt_number
-#' @param marks Either a vector (that will represent the series of marks) or a
-#'   keyword that represents a preset sequence of marks. The valid keywords are:
-#'   `"numbers"` (for numeric marks), `"letters"` and `"LETTERS"` (for lowercase
-#'   and uppercase alphabetic marks), `"standard"` (for a traditional set of
-#'   four symbol marks), and `"extended"` (which adds two more symbols to the
-#'   standard set).
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @examples
-#' # Use `sza` to create a gt table,
-#' # adding three footnotes; call
-#' # `opt_footnote_marks()` to specify
-#' # which footnote marks to use
-#' tab_1 <-
-#'   sza %>%
-#'   dplyr::group_by(latitude, tst) %>%
-#'   dplyr::summarize(
-#'     SZA.Max = max(sza),
-#'     SZA.Min = min(sza, na.rm = TRUE)
-#'   ) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
-#'   dplyr::select(-latitude) %>%
-#'   gt(rowname_col = "tst") %>%
-#'   tab_spanner_delim(delim = ".") %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = "90+"
-#'   ) %>%
-#'   tab_stubhead("TST") %>%
-#'   tab_footnote(
-#'     footnote = "True solar time.",
-#'     locations = cells_stubhead()
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "Solar zenith angle.",
-#'     locations = cells_column_spanners(spanners = "SZA")
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "The Lowest SZA.",
-#'     locations = cells_stub(rows = "1200")
-#'   ) %>%
-#'   opt_footnote_marks(marks = "standard")
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_opt_footnote_marks_1.svg}{options: width=100\%}}
-#'
-#' @family Create or Modify Parts
-#' @section Function ID:
-#' 2-10
-#'
-#' @export
-opt_footnote_marks <- function(data,
-                               marks = NULL) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  if (!is.null(marks)) {
-    data <- data %>% tab_options(footnotes.marks = marks)
-  }
 
   data
 }

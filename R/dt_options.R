@@ -12,6 +12,31 @@ dt_options_set <- function(data, options) {
 
 dt_options_init <- function(data) {
 
+  dt_options_tbl %>% dt_options_set(options = ., data = data)
+}
+
+dt_options_set_value <- function(data, option, value) {
+
+  dt_options <-
+    data %>%
+    dt_options_get()
+
+  dt_options$value[[which(dt_options$parameter == option)]] <- value
+
+  dt_options %>%
+    dt_options_set(options = ., data = data)
+}
+
+dt_options_get_value <- function(data, option) {
+
+  dt_options <-
+    data %>%
+    dt_options_get()
+
+  dt_options$value[[which(dt_options$parameter == option)]]
+}
+
+dt_options_tbl <-
   dplyr::tribble(
     ~parameter,                          ~scss,  ~category,          ~type,     ~value,
     "empty",                             FALSE,  "empty",            "value",   list(),
@@ -31,11 +56,18 @@ dt_options_init <- function(data) {
     "table_border_top_style",             TRUE,  "table",            "value",   "solid",
     "table_border_top_width",             TRUE,  "table",            "px",      "2px",
     "table_border_top_color",             TRUE,  "table",            "value",   "#A8A8A8",
+    "table_border_right_style",           TRUE,  "table",            "value",   "none",
+    "table_border_right_width",           TRUE,  "table",            "px",      "2px",
+    "table_border_right_color",           TRUE,  "table",            "value",   "#D3D3D3",
     "table_border_bottom_include",       FALSE,  "table",            "logical", TRUE,
     "table_border_bottom_style",          TRUE,  "table",            "value",   "solid",
     "table_border_bottom_width",          TRUE,  "table",            "px",      "2px",
     "table_border_bottom_color",          TRUE,  "table",            "value",   "#A8A8A8",
+    "table_border_left_style",            TRUE,  "table",            "value",   "none",
+    "table_border_left_width",            TRUE,  "table",            "px",      "2px",
+    "table_border_left_color",            TRUE,  "table",            "value",   "#D3D3D3",
     "heading_background_color",           TRUE,  "heading",          "value",   NA_character_,
+    "heading_align",                      TRUE,  "heading",          "value",   "center",
     "heading_title_font_size",            TRUE,  "heading",          "px",      "125%",
     "heading_title_font_weight",          TRUE,  "heading",          "value",   "initial",
     "heading_subtitle_font_size",         TRUE,  "heading",          "px",      "85%",
@@ -43,13 +75,16 @@ dt_options_init <- function(data) {
     "heading_border_bottom_style",        TRUE,  "heading",          "value",   "solid",
     "heading_border_bottom_width",        TRUE,  "heading",          "px",      "2px",
     "heading_border_bottom_color",        TRUE,  "heading",          "value",   "#D3D3D3",
-    "heading_border_lr_style",            TRUE,  "heading",          "value",   "hidden",
+    "heading_border_lr_style",            TRUE,  "heading",          "value",   "none",
     "heading_border_lr_width",            TRUE,  "heading",          "px",      "1px",
     "heading_border_lr_color",            TRUE,  "heading",          "value",   "#D3D3D3",
     "column_labels_background_color",     TRUE,  "column_labels",    "value",   NA_character_,
     "column_labels_font_size",            TRUE,  "column_labels",    "px",      "100%",
     "column_labels_font_weight",          TRUE,  "column_labels",    "value",   "normal",
     "column_labels_text_transform",       TRUE,  "column_labels",    "value",   "inherit",
+    "column_labels_vlines_style",         TRUE,  "table_body",       "value",   "none",
+    "column_labels_vlines_width",         TRUE,  "table_body",       "px",      "1px",
+    "column_labels_vlines_color",         TRUE,  "table_body",       "value",   "#D3D3D3",
     "column_labels_border_top_style",     TRUE,  "column_labels",    "value",   "solid",
     "column_labels_border_top_width",     TRUE,  "column_labels",    "px",      "2px",
     "column_labels_border_top_color",     TRUE,  "column_labels",    "value",   "#D3D3D3",
@@ -91,6 +126,7 @@ dt_options_init <- function(data) {
     "table_body_border_bottom_color",     TRUE,  "table_body",       "value",   "#D3D3D3",
     "data_row_padding",                   TRUE,  "data_row",         "px",      "8px",
     "stub_background_color",              TRUE,  "stub",             "value",   NA_character_,
+    "stub_font_size",                     TRUE,  "stub",             "px",      "100%",
     "stub_font_weight",                   TRUE,  "stub",             "value",   "initial",
     "stub_text_transform",                TRUE,  "stub",             "value",   "inherit",
     "stub_border_style",                  TRUE,  "stub",             "value",   "solid",
@@ -131,28 +167,5 @@ dt_options_init <- function(data) {
     "source_notes_border_lr_color",       TRUE,  "source_notes",     "value",   "#D3D3D3",
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
-    "row_striping_include_table_body",   FALSE,  "row",              "logical", TRUE,
-  )[-1, ] %>%
-    dt_options_set(options = ., data = data)
-}
-
-dt_options_set_value <- function(data, option, value) {
-
-  dt_options <-
-    data %>%
-    dt_options_get()
-
-  dt_options$value[[which(dt_options$parameter == option)]] <- value
-
-  dt_options %>%
-    dt_options_set(options = ., data = data)
-}
-
-dt_options_get_value <- function(data, option) {
-
-  dt_options <-
-    data %>%
-    dt_options_get()
-
-  dt_options$value[[which(dt_options$parameter == option)]]
-}
+    "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+  )[-1, ]

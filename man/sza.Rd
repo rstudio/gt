@@ -4,7 +4,8 @@
 \name{sza}
 \alias{sza}
 \title{Twice hourly solar zenith angles by month & latitude}
-\format{A tibble with 816 rows and 4 variables:
+\format{
+A tibble with 816 rows and 4 variables:
 \describe{
 \item{latitude}{The latitude in decimal degrees for the observations}
 \item{month}{The measurement month; all calculations where conducted
@@ -13,7 +14,8 @@ for the first day of each month}
 (first of \code{month}) for which the solar zenith angle is calculated}
 \item{sza}{The solar zenith angle in degrees, where \code{NA}s
 indicate that sunrise hadn't yet occurred by the \code{tst} value}
-}}
+}
+}
 \source{
 Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
 Photochemistry Applications (Peterson, 1976), available at:
@@ -44,7 +46,7 @@ noontime SZA to be 43.0 degrees.
 }
 \section{Function ID}{
 
-10-2
+11-2
 }
 
 \examples{

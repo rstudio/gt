@@ -214,7 +214,7 @@ create_heading_component <- function(data,
 
   if (context == "html") {
 
-    title_classes <- c("gt_heading", "gt_title", "gt_font_normal", "gt_center")
+    title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
     subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
 
@@ -385,7 +385,7 @@ create_columns_component_h <- function(data) {
       table_col_headings[[length(table_col_headings) + 1]] <-
         htmltools::tags$th(
           class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border", #"gt_columns_top_border",
+            c("gt_col_heading", "gt_columns_bottom_border",
               paste0("gt_", stubhead_label_alignment)),
             collapse = " "),
           rowspan = 1,
@@ -414,7 +414,7 @@ create_columns_component_h <- function(data) {
       table_col_headings[[length(table_col_headings) + 1]] <-
         htmltools::tags$th(
           class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border", #"gt_columns_top_border",
+            c("gt_col_heading", "gt_columns_bottom_border",
               paste0("gt_", col_alignment[i])),
             collapse = " "),
           rowspan = 1,
@@ -447,7 +447,7 @@ create_columns_component_h <- function(data) {
       first_set[[length(first_set) + 1]] <-
         htmltools::tags$th(
           class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border", #"gt_columns_top_border",
+            c("gt_col_heading", "gt_columns_bottom_border",
               paste0("gt_", stubhead_label_alignment)),
             collapse = " "),
           rowspan = 2,
@@ -513,18 +513,12 @@ create_columns_component_h <- function(data) {
           for (j in 1:length(spanners)) {
 
             if (is.na(spanners[i + j])) {
-              spanner_adjacent <- FALSE
               break
             } else if (duplicated(spanners)[i + j]) {
               colspan <- colspan + 1L
             } else {
-              spanner_adjacent <- ifelse(!is.na(spanners[i + j]), TRUE, FALSE)
               break
             }
-          }
-
-          if (spanner_adjacent) {
-            class <- paste0(class, " gt_sep_right")
           }
 
           styles_spanners <-
@@ -541,13 +535,16 @@ create_columns_component_h <- function(data) {
           first_set[[length(first_set) + 1]] <-
             htmltools::tags$th(
               class = paste(
-                c("gt_col_heading", "gt_center", "gt_columns_top_border", class),
+                c("gt_center", "gt_columns_top_border", "gt_column_spanner_outer"),
                 collapse = " "
               ),
               rowspan = 1,
               colspan = colspan,
               style = spanner_style,
-              htmltools::HTML(spanners[i])
+              htmltools::tags$span(
+                class = "gt_column_spanner",
+                htmltools::HTML(spanners[i])
+              )
             )
         }
       }

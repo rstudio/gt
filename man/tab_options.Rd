@@ -21,10 +21,17 @@ tab_options(
   table.border.top.style = NULL,
   table.border.top.width = NULL,
   table.border.top.color = NULL,
+  table.border.right.style = NULL,
+  table.border.right.width = NULL,
+  table.border.right.color = NULL,
   table.border.bottom.style = NULL,
   table.border.bottom.width = NULL,
   table.border.bottom.color = NULL,
+  table.border.left.style = NULL,
+  table.border.left.width = NULL,
+  table.border.left.color = NULL,
   heading.background.color = NULL,
+  heading.align = NULL,
   heading.title.font.size = NULL,
   heading.title.font.weight = NULL,
   heading.subtitle.font.size = NULL,
@@ -39,6 +46,9 @@ tab_options(
   column_labels.font.size = NULL,
   column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
+  column_labels.vlines.style = NULL,
+  column_labels.vlines.width = NULL,
+  column_labels.vlines.color = NULL,
   column_labels.border.top.style = NULL,
   column_labels.border.top.width = NULL,
   column_labels.border.top.color = NULL,
@@ -79,6 +89,7 @@ tab_options(
   table_body.border.bottom.width = NULL,
   table_body.border.bottom.color = NULL,
   stub.background.color = NULL,
+  stub.font.size = NULL,
   stub.font.weight = NULL,
   stub.text_transform = NULL,
   stub.border.style = NULL,
@@ -171,7 +182,7 @@ hexadecimal color code should be provided.}
 overlaid on darker background colors. A color name or a hexadecimal color
 code should be provided.}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
 \code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \verb{12px}) or as a
@@ -180,8 +191,11 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
-\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color}{The style, width, and color properties of the table's absolute top and
+\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top and
 absolute bottom borders.}
+
+\item{heading.align}{Controls the horizontal alignment of the heading title
+and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
 
 \item{heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the \code{heading.title}, \code{heading.subtitle},
 \code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
@@ -199,6 +213,9 @@ the \code{heading} location.}
 \item{column_labels.text_transform, row_group.text_transform, stub.text_transform, summary_row.text_transform, grand_summary_row.text_transform}{Options to apply text transformations to the \code{column_labels}, \code{row_group},
 \code{stub}, \code{summary_row}, and \code{grand_summary_row} text elements. Either of the
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"} keywords can be used.}
+
+\item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{The style, width, and color properties for all vertical lines ('vlines')
+of the the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{The style, width, and color properties for the top border of the
 \code{column_labels} location. This border shares space with that of the
@@ -282,17 +299,17 @@ components, the subcomponents, and the element that can adjusted.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_options_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_3.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_4.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_5.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_6.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -382,7 +399,6 @@ tab_6 <-
 }
 \seealso{
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},
