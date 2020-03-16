@@ -568,3 +568,42 @@ test_that("the `tidy_gsub()/tidy_gsub()` functions work with Unicode chars", {
   expect_true(identical(tidy_sub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
   expect_true(identical(tidy_gsub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
 })
+
+test_that("the `glue_gt()` function works in a safe manner", {
+
+  lst <- list(a = "foo", b = c("bar", "baz"))
+
+  # Basically works
+  expect_identical(
+    glue_gt(lst, "{a}/{b}") %>% as.character(),
+    c("foo/bar", "foo/baz")
+  )
+  expect_identical(
+    glue_gt(as.data.frame(lst, stringsAsFactors = FALSE), "{a}/{b}") %>% as.character(),
+    c("foo/bar", "foo/baz")
+  )
+  expect_identical(
+    glue_gt(dplyr::as_tibble(lst), "{a}/{b}") %>% as.character(),
+    c("foo/bar", "foo/baz")
+  )
+
+  # Treats expressions as symbols
+  expect_error(glue_gt(lst, "{a + b}"))
+  expect_error(glue_gt(lst, "{print(a)}"))
+  expect_error(glue_gt(lst, "{ a }"))
+  expect_error(glue_gt(lst, "{`a`}"))
+
+  expect_identical(
+    glue_gt(list("a+b" = "foo"), "test {a+b} test") %>% as.character(),
+    "test foo test"
+  )
+
+  # Objects should not be sought in the environment
+  z <- "hello"
+  expect_error(glue_gt(list(), "{z}"))
+  expect_error(glue_gt(list(), "{.Random.seed}"))
+  expect_error(glue_gt(list(), "{letters}"))
+
+  expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
+})
+
