@@ -129,6 +129,50 @@ make this package better, please feel free to file an
 
 -----
 
+#### How **gt** fits in with Other Packages that Generate Display Tables
+
+The **gt** package joins a burgeoning collection of packages for display
+table generation. Why another? We feel that there is enough room in this
+space to innovate further. Here are some of the ways that **gt**
+contributes to this ecosystem:
+
+  - the interface is high-level and declarative (general instructions
+    versus very specific)
+  - the formatting options are ‘batteries included’ (scientific
+    notation, uncertainty, ranges, percentages, suffixes, localized
+    currency, dates/times + much more)
+  - there is excellent, pain-free support for footnotes
+  - the output is ‘camera-ready’
+  - it will eventually support multiple output formats (including LaTeX)
+    with the same declarative interface
+  - the API closely follows tidyverse conventions by adhering to the
+    [tidyverse style guide](https://style.tidyverse.org)
+  - a focus on making the package documentation and examples the best
+    they can be
+  - rigorous QA/QC measures: high test coverage for automated tests, and
+    thorough manual testing by QA engineers (with every proposed code
+    change)
+
+While **gt** is trying to do something different with its own interface,
+it may not suit your specific needs. Here is a listing of leading
+table-making **R** packages, with links to their respective project
+pages:
+
+**kable** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/)) —
+**kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/)) —
+**formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/)) —
+**DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/)) —
+**pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander)) —
+**huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/)) —
+**reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/)) —
+**flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/)) —
+**pixiedust** ([GITHUB](https://github.com/nutterb/pixiedust)) —
+**tangram** ([GITHUB](https://github.com/spgarbet/tangram)) —
+**ztable** ([GITHUB](https://github.com/cardiomoon/ztable)) —
+**condformat** ([GITHUB](https://github.com/zeehio/condformat)) —
+**stargazer** ([CRAN](https://cran.r-project.org/web/packages/stargazer/index.html)) —
+**xtable** ([CRAN](https://cran.r-project.org/web/packages/xtable/index.html))
+
 #### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of

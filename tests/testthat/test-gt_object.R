@@ -188,6 +188,11 @@ test_that("a gt table can use UTF-8 chars in any system locale", {
       "C", "POSIX"
     )
 
+  # Intersect the vector of available locales (on a given test system)
+  # with the `system_locales` vector
+  available_locales <- system("locale -a", intern = TRUE)
+  system_locales <- intersect(system_locales, available_locales)
+
   names_df <-
     data.frame(
       first = c("\u6625", "Fred"),
