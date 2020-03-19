@@ -180,6 +180,45 @@ test_that("a gt table contains the expected spanner column labels", {
   )
 })
 
+test_that("`tab_spanner()` works even when columns are forcibly moved", {
+
+  # Create a table with column spanners, moving the `carb` value
+  # to the beginning of the column sequence (splitting the `group_d`
+  # column spanner into two parts)
+  tbl_html <-
+    gt(mtcars[1, ]) %>%
+    tab_spanner(
+      label = md("*group_a*"),
+      columns = vars(cyl, hp)
+    ) %>%
+    tab_spanner(
+      label = md("*group_b*"),
+      columns = vars(drat, wt)
+    ) %>%
+    tab_spanner(
+      label = md("*group_c*"),
+      columns = vars(qsec, vs, am)
+    ) %>%
+    tab_spanner(
+      label = md("*group_d*"),
+      columns = vars(gear, carb)
+    ) %>%
+    cols_move_to_start(columns = vars(carb)) %>%
+    render_as_html()
+
+
+  # Expect the sequence of `colspan` values across both
+  # <tr>s in <thead> is correct
+  tbl_html %>%
+    xml2::read_html() %>%
+    selection_value("colspan") %>%
+    expect_equal(
+      c("1", "1", "2", "1", "2", "3", "1",           # first <tr>
+        "1", "1", "1", "1", "1", "1", "1", "1", "1"  # second <tr>
+       )
+    )
+})
+
 test_that("a gt table contains the expected source note", {
 
   # Check that specific suggested packages are available
