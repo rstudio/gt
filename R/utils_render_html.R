@@ -508,18 +508,8 @@ create_columns_component_h <- function(data) {
         if (!same_spanner) {
 
           class <- "gt_column_spanner"
-          colspan <- 1
 
-          for (j in 1:length(spanners)) {
-
-            if (is.na(spanners[i + j])) {
-              break
-            } else if (duplicated(spanners)[i + j]) {
-              colspan <- colspan + 1L
-            } else {
-              break
-            }
-          }
+          colspan <- rle(spanners[i:length(spanners)])$lengths[1]
 
           styles_spanners <-
             spanner_style_attrs %>%
