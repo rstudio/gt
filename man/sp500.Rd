@@ -14,9 +14,6 @@ prices in USD; the \code{close} price is adjusted for splits}
 \item{adj_close}{The close price adjusted for both dividends and splits}
 }
 }
-\source{
-Data collected from \url{https://finance.yahoo.com/quote/\\\\\%5EGSPC/history/}.
-}
 \usage{
 sp500
 }

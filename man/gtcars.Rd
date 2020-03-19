@@ -27,9 +27,6 @@ both types (\code{am}), or, direct drive (\code{dd})}
 is headquartered}
 }
 }
-\source{
-Various pages within \url{https://www.edmunds.com}.
-}
 \usage{
 gtcars
 }

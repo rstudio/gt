@@ -87,12 +87,6 @@ There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
 for experimenting with **gt**’s functions.
 
-<p align="center">
-
-<img src="man/figures/gt_datasets.svg" width="800px">
-
-</p>
-
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables.
 
@@ -122,10 +116,6 @@ remotes::install_github("rstudio/gt")
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, please feel free to file an
 [issue](https://github.com/rstudio/gt/issues).
-
------
-
-<img src="man/figures/gt_tables.png">
 
 -----
 
@@ -170,8 +160,8 @@ pages:
 **tangram** ([GITHUB](https://github.com/spgarbet/tangram)) —
 **ztable** ([GITHUB](https://github.com/cardiomoon/ztable)) —
 **condformat** ([GITHUB](https://github.com/zeehio/condformat)) —
-**stargazer** ([CRAN](https://cran.r-project.org/web/packages/stargazer/index.html)) —
-**xtable** ([CRAN](https://cran.r-project.org/web/packages/xtable/index.html))
+**stargazer** ([CRAN](https://CRAN.R-project.org/package=stargazer)) —
+**xtable** ([CRAN](https://CRAN.R-project.org/package=xtable))
 
 #### Code of Conduct
 
