@@ -310,7 +310,7 @@ tab <-
   tab %>%
   tab_source_note(
     source_note = md(
-      "Source: Various pages within [edmunds.com](https://www.edmunds.com).")
+      "Source: Various pages within the Edmonds website.")
   )
 
 # Show the table
@@ -433,7 +433,7 @@ tab <-
   ) %>%
   tab_source_note(
     source_note = md(
-      "Source: Various pages within [edmunds.com](https://www.edmunds.com).")
+      "Source: Various pages within the Edmonds website.")
   ) %>%
   tab_footnote(
     footnote = md("Best gas mileage (city) of all the **gtcars**."),

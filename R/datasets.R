@@ -113,7 +113,6 @@
 #'   is headquartered}
 #' }
 #'
-#' @source Various pages within <https://www.edmunds.com>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `gtcars`
@@ -140,7 +139,6 @@
 #' \item{adj_close}{The close price adjusted for both dividends and splits}
 #' }
 #'
-#' @source Data collected from <https://finance.yahoo.com/quote/\\%5EGSPC/history/>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `sp500`
