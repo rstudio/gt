@@ -89,9 +89,9 @@ gt_preview <- function(data,
     # are retained (with an empty row between these row groups)
     data <-
       rbind(
-        data[seq(top_n), ],
+        data[seq(top_n), , drop = FALSE],
         rep("", ncol(data)),
-        data[(nrow(data) + 1 - rev(seq(bottom_n))), ]
+        data[(nrow(data) + 1 - rev(seq(bottom_n))), , drop = FALSE]
       )
 
     # Relabel the rowname for the ellipsis row
