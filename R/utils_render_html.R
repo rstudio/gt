@@ -431,8 +431,13 @@ create_columns_component_h <- function(data) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
 
-    headings_stack <- c()
-    first_set <- second_set <- list()
+    # A list of <th> elements that will go in the top row. This includes
+    # spanner labels and column labels for solo columns (don't have spanner
+    # labels); in the latter case, rowspan=2 will be used.
+    first_set <- list()
+    # A list of <th> elements that will go in the second row. This is all column
+    # labels that DO have spanners above them.
+    second_set <- list()
 
     # Create the cell for the stubhead label
     if (isTRUE(stub_available)) {
@@ -506,8 +511,6 @@ create_columns_component_h <- function(data) {
             htmltools::HTML(headings_labels[i])
           )
 
-        headings_stack <- c(headings_stack, headings_vars[i])
-
       } else if (!is.na(spanners[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
@@ -544,7 +547,8 @@ create_columns_component_h <- function(data) {
       }
     }
 
-    remaining_headings <- headings_vars[!(headings_vars %in% headings_stack)]
+    solo_headings <- headings_vars[is.na(spanners)]
+    remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
 
     remaining_headings_indices <- which(remaining_headings %in% headings_vars)
 
@@ -555,7 +559,7 @@ create_columns_component_h <- function(data) {
       unlist()
 
     col_alignment <-
-      col_alignment[-1][!(headings_vars %in% headings_stack)]
+      col_alignment[-1][!(headings_vars %in% solo_headings)]
 
     if (length(remaining_headings) > 0) {
 
