@@ -460,6 +460,23 @@ create_columns_component_h <- function(data) {
       headings_labels <- headings_labels[-1]
     }
 
+    # NOTE: rle treats NA values as distinct from each other; in other words,
+    # each NA value starts a new run of length 1.
+    spanners_rle <- rle(spanners)
+    # sig_cells contains the indices of spanners' elements where the value is
+    # either NA, or, is different than the previous value. (Because NAs are
+    # distinct, every NA element will be present sig_cells.)
+    sig_cells <- c(1, head(cumsum(spanners_rle$lengths) + 1, -1))
+    # colspans matches spanners in length; each element is the number of
+    # columns that the <th> at that position should span. If 0, then skip the
+    # <th> at that position.
+    colspans <- ifelse(
+      seq_along(spanners) %in% sig_cells,
+      # Index back into the rle result, working backward through sig_cells
+      spanners_rle$lengths[match(seq_along(spanners), sig_cells)],
+      0
+    )
+
     for (i in seq(headings_vars)) {
 
       if (is.na(spanners[i])) {
@@ -493,23 +510,10 @@ create_columns_component_h <- function(data) {
 
       } else if (!is.na(spanners[i])) {
 
-        if (i > 1) {
-          if (is.na(spanners[i - 1])) {
-            same_spanner <- FALSE
-          } else if (spanners[i] == spanners[i - 1]) {
-            same_spanner <- TRUE
-          } else {
-            same_spanner <- FALSE
-          }
-        } else {
-          same_spanner <- FALSE
-        }
-
-        if (!same_spanner) {
-
+        # If colspans[i] == 0, it means that a previous cell's colspan
+        # will cover us.
+        if (colspans[i] > 0) {
           class <- "gt_column_spanner"
-
-          colspan <- rle(spanners[i:length(spanners)])$lengths[1]
 
           styles_spanners <-
             spanner_style_attrs %>%
@@ -529,7 +533,7 @@ create_columns_component_h <- function(data) {
                 collapse = " "
               ),
               rowspan = 1,
-              colspan = colspan,
+              colspan = colspans[i],
               style = spanner_style,
               htmltools::tags$span(
                 class = "gt_column_spanner",

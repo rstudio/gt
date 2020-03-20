@@ -203,6 +203,10 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
       label = md("*group_d*"),
       columns = vars(gear, carb)
     ) %>%
+    tab_spanner(
+      label = md("*never*"),
+      columns = ends_with("nothing")
+    ) %>%
     cols_move_to_start(columns = vars(carb)) %>%
     render_as_html()
 
