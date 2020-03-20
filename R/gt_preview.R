@@ -85,15 +85,21 @@ gt_preview <- function(data,
     # Prepare a rowname label that represents the hidden row numbers
     between_rownums <- c(ellipsis_row, nrow(data) - bottom_n)
 
+    # Obtain the top and bottom slices of data, and convert all
+    # data values to character with an in-place `lapply()`
+    top_slice <- data[seq(top_n), , drop = FALSE]
+    top_slice[, ] <- lapply(top_slice[, ], as.character)
+
+    bottom_slice <- data[(nrow(data) + 1 - rev(seq(bottom_n))), , drop = FALSE]
+    bottom_slice[, ] <- lapply(bottom_slice[, ], as.character)
+
     # Modify the `data` so that only the `top_n` and `bottom_n` rows
     # are retained (with an empty row between these row groups)
     data <-
       rbind(
-        data[seq(top_n), , drop = FALSE] %>%
-          dplyr::mutate_all(as.character),
+        top_slice,
         rep("", ncol(data)),
-        data[(nrow(data) + 1 - rev(seq(bottom_n))), , drop = FALSE] %>%
-          dplyr::mutate_all(as.character)
+        bottom_slice
       )
 
     # Relabel the rowname for the ellipsis row
