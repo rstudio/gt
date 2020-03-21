@@ -102,8 +102,8 @@ test_that("the `gt_preview()` function works correctly", {
     colnames() %>%
     expect_equal(colnames(mtcars))
 
-  # Expect no errors when all gt datasets (plus a few more)
-  # do not error when calling `gt_preview()` on them
+  # Expect no errors when using all gt datasets (plus a few more
+  # from the datasets package) with the `gt_preview()` function
   expect_error(regexp = NA, gt_preview(countrypops))
   expect_error(regexp = NA, gt_preview(sza))
   expect_error(regexp = NA, gt_preview(gtcars))
