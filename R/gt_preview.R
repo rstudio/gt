@@ -85,20 +85,17 @@ gt_preview <- function(data,
     # Prepare a rowname label that represents the hidden row numbers
     between_rownums <- c(ellipsis_row, nrow(data) - bottom_n)
 
-    # Obtain the top and bottom slices of data, and convert all
-    # data values to character with an in-place `lapply()`
+    # Obtain the top and bottom slices of data
     top_slice <- data[seq(top_n), , drop = FALSE]
-    top_slice[, ] <- lapply(top_slice[, ], as.character)
-
     bottom_slice <- data[(nrow(data) + 1 - rev(seq(bottom_n))), , drop = FALSE]
-    bottom_slice[, ] <- lapply(bottom_slice[, ], as.character)
 
-    # Modify the `data` so that only the `top_n` and `bottom_n` rows
-    # are retained (with an empty row between these row groups)
+    # Modify the `data` so that only the `top_n` (`top_slice`) and
+    # `bottom_n` (`bottom_slice`) rows are retained (with a row of
+    # NAs to clearly separate these slices)
     data <-
       rbind(
         top_slice,
-        rep("", ncol(data)),
+        rep(NA, ncol(data)),
         bottom_slice
       )
 
@@ -131,7 +128,8 @@ gt_preview <- function(data,
 
   visible_vars <- dt_boxhead_get_vars_default(data = gt_tbl)
 
-  # Add styling to ellipsis row, if it is present
+  # Replace the NA values and add styling to the ellipsis
+  # row (if it is present)
   if (isTRUE(has_ellipsis_row)) {
 
     gt_tbl <-
@@ -139,7 +137,8 @@ gt_preview <- function(data,
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
-      )
+      ) %>%
+      fmt_missing(columns = TRUE, rows = ellipsis_row, missing_text = "")
 
     if (isTRUE(incl_rownums)) {
 
@@ -148,11 +147,10 @@ gt_preview <- function(data,
         tab_style(
           style = list(
             cell_fill(color = "#E4E4E4"),
-            cell_text(size = "10px")
+            cell_text(size = "x-small")
           ),
           locations = cells_stub(rows = ellipsis_row)
         )
-
     }
   }
 
