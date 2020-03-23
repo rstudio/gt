@@ -138,7 +138,10 @@ gt_preview <- function(data,
         style = cell_fill(color = "#E4E4E4"),
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
       ) %>%
-      fmt_missing(columns = TRUE, rows = ellipsis_row, missing_text = "")
+      text_transform(
+        locations = cells_body(columns = TRUE, rows = ellipsis_row),
+        fn = function(x) ""
+      )
 
     if (isTRUE(incl_rownums)) {
 
