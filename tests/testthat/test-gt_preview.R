@@ -101,4 +101,30 @@ test_that("the `gt_preview()` function works correctly", {
   output_tbl %>%
     colnames() %>%
     expect_equal(colnames(mtcars))
+
+  # Expect no errors when using all gt datasets (plus a few more
+  # from the datasets package) with the `gt_preview()` function
+  expect_error(regexp = NA, gt_preview(countrypops))
+  expect_error(regexp = NA, gt_preview(sza))
+  expect_error(regexp = NA, gt_preview(gtcars))
+  expect_error(regexp = NA, gt_preview(sp500))
+  expect_error(regexp = NA, gt_preview(pizzaplace))
+  expect_error(regexp = NA, gt_preview(exibble))
+
+  expect_error(regexp = NA, gt_preview(datasets::airquality))
+  expect_error(regexp = NA, gt_preview(datasets::cars))
+  expect_error(regexp = NA, gt_preview(datasets::chickwts))
+  expect_error(regexp = NA, gt_preview(datasets::faithful))
+  expect_error(regexp = NA, gt_preview(datasets::iris))
+  expect_error(regexp = NA, gt_preview(datasets::LifeCycleSavings))
+  expect_error(regexp = NA, gt_preview(datasets::longley))
+  expect_error(regexp = NA, gt_preview(datasets::morley))
+  expect_error(regexp = NA, gt_preview(datasets::mtcars))
+  expect_error(regexp = NA, gt_preview(datasets::Orange))
+  expect_error(regexp = NA, gt_preview(datasets::pressure))
+  expect_error(regexp = NA, gt_preview(datasets::quakes))
+  expect_error(regexp = NA, gt_preview(datasets::rock))
+  expect_error(regexp = NA, gt_preview(datasets::sleep))
+  expect_error(regexp = NA, gt_preview(datasets::swiss))
+  expect_error(regexp = NA, gt_preview(datasets::USJudgeRatings))
 })
