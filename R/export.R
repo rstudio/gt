@@ -50,7 +50,7 @@
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
-#'   tab_stubhead_label(label = "car")
+#'   tab_stubhead(label = "car")
 #'
 #' # Get an HTML file with inlined CSS
 #' # (which is necessary for including the

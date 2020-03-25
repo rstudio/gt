@@ -137,8 +137,9 @@ cols_align <- function(data,
 #' # Use `exibble` to create a gt table;
 #' # with named arguments in `...`, we
 #' # can specify the exact widths for
-#' # table columns (using `TRUE` will
-#' # capture all remaining columns)
+#' # table columns (using `everything()`
+#' # or `TRUE` at the end will capture
+#' # all remaining columns)
 #' tab_1 <-
 #'   exibble %>%
 #'   dplyr::select(
@@ -150,7 +151,7 @@ cols_align <- function(data,
 #'     vars(num) ~ px(150),
 #'     ends_with("r") ~ px(100),
 #'     starts_with("date") ~ px(200),
-#'     TRUE ~ px(60)
+#'     everything() ~ px(60)
 #'   )
 #'
 #' @section Figures:
