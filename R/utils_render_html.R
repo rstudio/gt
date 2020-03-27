@@ -471,7 +471,7 @@ create_columns_component_h <- function(data) {
     # sig_cells contains the indices of spanners' elements where the value is
     # either NA, or, is different than the previous value. (Because NAs are
     # distinct, every NA element will be present sig_cells.)
-    sig_cells <- c(1, head(cumsum(spanners_rle$lengths) + 1, -1))
+    sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
     # colspans matches spanners in length; each element is the number of
     # columns that the <th> at that position should span. If 0, then skip the
     # <th> at that position.
