@@ -166,8 +166,8 @@ pages:
 #### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
-agree to abide by its terms.
+Conduct](https://contributor-covenant.org/version/1/0/0).<br>By
+participating in this project you agree to abide by its terms.
 
 #### License
 
