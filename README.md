@@ -90,12 +90,6 @@ for experimenting with **gt**’s functions.
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables.
 
-<p align="center">
-
-<img src="man/figures/gt_function_reference.png" width="100%">
-
-</p>
-
 Want to try this out? Then, take the **gt** Test Drive on **RStudio
 Cloud**. It’s full of ready-to-run examples.
 
