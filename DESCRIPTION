@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.2.0.1
+Version: 0.2.0.2
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data using with an easy-to-use
     API. With its progressive approach, we can construct display tables with a
