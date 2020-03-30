@@ -91,7 +91,7 @@ server <- function(input,
     )
 }
 
-\dontrun{
+\donttest{
 shinyApp(ui, server)
 }
 

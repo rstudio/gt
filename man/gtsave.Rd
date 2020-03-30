@@ -58,7 +58,7 @@ to \code{...}.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # Use `gtcars` to create a gt table; add
 # a stubhead label to describe what is
 # in the stub
@@ -73,26 +73,31 @@ tab_1 <-
 # (which is necessary for including the
 # table as part of an HTML email)
 tab_1 \%>\%
-  gtsave("tab_1.html", inline_css = TRUE)
+  gtsave(
+    "tab_1.html", inline_css = TRUE,
+    path = tempdir()
+  )
 
 # By leaving out the `inline_css` option,
 # we get a more conventional HTML file
 # with embedded CSS styles
-tab_1 \%>\% gtsave("tab_1.html")
-
-# Save the HTML table as a PDF file; we
-# can optionally add a separate `path`
-tab_1 \%>\% gtsave("tab_1.pdf", path = "~")
+tab_1 \%>\%
+  gtsave("tab_1.html", path = tempdir())
 
 # Saving as PNG file results in a cropped
 # image of an HTML table; the amount of
 # whitespace can be set
-tab_1 \%>\% gtsave("tab_1.png", expand = 10)
+tab_1 \%>\%
+  gtsave(
+    "tab_1.png", expand = 10,
+    path = tempdir()
+  )
 
 # Any use of the `.tex`, `.ltx`, or `.rnw`
 # will result in the output of a LaTeX
 # document
-tab_1 \%>\% gtsave("tab_1.tex")
+tab_1 \%>\%
+  gtsave("tab_1.tex", path = tempdir())
 }
 
 }
