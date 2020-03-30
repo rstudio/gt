@@ -60,11 +60,15 @@ dt_boxhead_edit <- function(data, var, ...) {
 
   val_list <- list(...)
 
+  if (length(val_list) != 1) {
+    stop("`dt_boxhead_edit()` expects a single value at ...")
+  }
+
   check_names_dt_boxhead_expr(val_list)
 
   check_vars_dt_boxhead(var, dt_boxhead)
 
-  if (names(val_list) %in% c("column_label", "column_width", "hidden_px")) {
+  if (is.list(dt_boxhead[[names(val_list)]])) {
     dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unname(val_list)
   } else {
     dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unlist(val_list)
