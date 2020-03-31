@@ -64,7 +64,7 @@
 #'     )
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' shinyApp(ui, server)
 #' }
 #'
@@ -184,7 +184,7 @@ render_gt <- function(expr,
 #'     )
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' shinyApp(ui, server)
 #' }
 #'

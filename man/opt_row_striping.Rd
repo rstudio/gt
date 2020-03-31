@@ -35,7 +35,7 @@ body. This function serves as a convenient shortcut for
 # Use `exibble` to create a gt table with
 # a number of table parts added; next, we
 # add row striping to every second row with
-# the `opt_add_row_striping()` function
+# the `opt_row_striping()` function
 tab_1 <-
   exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%

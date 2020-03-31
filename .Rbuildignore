@@ -14,3 +14,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^TODOS
 tests/gt-examples
+vignettes

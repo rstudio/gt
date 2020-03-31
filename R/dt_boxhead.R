@@ -60,12 +60,19 @@ dt_boxhead_edit <- function(data, var, ...) {
 
   val_list <- list(...)
 
+  if (length(val_list) != 1) {
+    stop("`dt_boxhead_edit()` expects a single value at ...")
+  }
+
   check_names_dt_boxhead_expr(val_list)
 
   check_vars_dt_boxhead(var, dt_boxhead)
 
-  dt_boxhead[which(dt_boxhead$var == var_name), names(val_list)] <-
-    dplyr::as_tibble(val_list)
+  if (is.list(dt_boxhead[[names(val_list)]])) {
+    dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unname(val_list)
+  } else {
+    dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unlist(val_list)
+  }
 
   dt_boxhead %>% dt_boxhead_set(data = data)
 }
@@ -130,7 +137,7 @@ dt_boxhead_set_row_group <- function(data, vars) {
 
 dt_boxhead_edit_column_label <- function(data, var, column_label) {
 
-  dt_boxhead_edit(data, var, column_label = list(column_label))
+  dt_boxhead_edit(data, var, column_label = column_label)
 }
 
 dt_boxhead_get_vars <- function(data) {

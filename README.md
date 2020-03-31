@@ -90,12 +90,6 @@ for experimenting with **gt**’s functions.
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables.
 
-<p align="center">
-
-<img src="man/figures/gt_function_reference.png" width="100%">
-
-</p>
-
 Want to try this out? Then, take the **gt** Test Drive on **RStudio
 Cloud**. It’s full of ready-to-run examples.
 
@@ -148,7 +142,7 @@ it may not suit your specific needs. Here is a listing of leading
 table-making **R** packages, with links to their respective project
 pages:
 
-**kable** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/)) —
+**knitr** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/)) —
 **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/)) —
 **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/)) —
 **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/)) —
@@ -166,8 +160,8 @@ pages:
 #### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md).<br>By participating in this project you
-agree to abide by its terms.
+Conduct](https://contributor-covenant.org/version/1/0/0).<br>By
+participating in this project you agree to abide by its terms.
 
 #### License
 
