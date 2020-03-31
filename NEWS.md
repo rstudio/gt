@@ -1,4 +1,4 @@
-# gt 0.2.0.4
+# gt 0.2.0.5
 
 * New package with 80 exported functions for building display tables
 
