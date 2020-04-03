@@ -62,8 +62,8 @@ server <- function(input,
     )
 }
 
-\donttest{
-shinyApp(ui, server)
+if (interactive()) {
+  shinyApp(ui, server)
 }
 
 }

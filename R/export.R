@@ -41,7 +41,6 @@
 #'   function.
 #'
 #' @examples
-#' \donttest{
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
 #' # in the stub
@@ -81,7 +80,6 @@
 #' # document
 #' tab_1 %>%
 #'   gtsave("tab_1.tex", path = tempdir())
-#' }
 #'
 #' @family Export Functions
 #' @section Function ID:

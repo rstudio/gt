@@ -3,7 +3,7 @@
 .Rapp.history
 
 # Docs folder from `pkgdown::build_site()`
-docs/
+docs/dev/
 inst/doc
 
 # Session Data files

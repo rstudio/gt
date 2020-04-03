@@ -64,8 +64,8 @@
 #'     )
 #' }
 #'
-#' \donttest{
-#' shinyApp(ui, server)
+#' if (interactive()) {
+#'   shinyApp(ui, server)
 #' }
 #'
 #' @family Shiny functions
@@ -184,8 +184,8 @@ render_gt <- function(expr,
 #'     )
 #' }
 #'
-#' \donttest{
-#' shinyApp(ui, server)
+#' if (interactive()) {
+#'   shinyApp(ui, server)
 #' }
 #'
 #' @family Shiny functions
