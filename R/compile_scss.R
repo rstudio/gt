@@ -18,7 +18,7 @@ compile_scss <- function(data, id = NULL) {
       glue::glue(
         .open = "<<", .close = ">>",
         "
-        <<ifelse(has_id, 'html', '.gt_table')>> {
+        <<ifelse(has_id, 'html, :host', '.gt_table')>> {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
             Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans',
             Arial, sans-serif;
