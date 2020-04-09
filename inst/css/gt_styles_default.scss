@@ -163,7 +163,7 @@
     vertical-align: middle;
   }
 
-  .gt_striped {
+  .gt_striped, .gt_stub.gt_striped {
      background-color: $row_striping_background_color; // row.striping.background_color
   }
 
