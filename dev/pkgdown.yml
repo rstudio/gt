@@ -1,0 +1,13 @@
+pandoc: '2.2'
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  case-study-gtcars: case-study-gtcars.html
+  creating-summary-lines: creating-summary-lines.html
+  gt-datasets: gt-datasets.html
+  intro-creating-gt-tables: intro-creating-gt-tables.html
+last_built: 2020-04-15T21:17Z
+urls:
+  reference: https://gt.rstudio.com/reference
+  article: https://gt.rstudio.com/articles
+
