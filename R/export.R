@@ -202,7 +202,6 @@ gt_save_webshot <- function(data,
       selector = "table",
       zoom = zoom,
       expand = expand,
-      wait = TRUE,
       ...
     )
   }
