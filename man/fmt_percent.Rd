@@ -10,6 +10,7 @@ fmt_percent(
   rows = NULL,
   decimals = 2,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
@@ -40,6 +41,11 @@ use. The default number of decimal places is \code{2}.}
 
 \item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
+which means that trailing decimal marks are not shown.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is

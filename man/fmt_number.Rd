@@ -9,7 +9,9 @@ fmt_number(
   columns,
   rows = NULL,
   decimals = 2,
+  n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
   scale_by = 1,
   suffixing = FALSE,
@@ -38,8 +40,20 @@ We can also use expressions to filter down to the rows we need (e.g.,
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
+\item{n_sigfig}{A option to format numbers to \emph{n} significant figures. By
+default, this is \code{NULL} and thus number values will be formatted according
+to the number of decimal places set via \code{decimals}. If opting to format
+according to the rules of significant figures, \code{n_sigfig} must be a number
+greater than or equal to \code{1}. Any values passed to the \code{decimals} and
+\code{drop_trailing_zeros} arguments will be ignored.}
+
 \item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
+which means that trailing decimal marks are not shown.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
