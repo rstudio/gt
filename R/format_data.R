@@ -181,6 +181,10 @@ fmt_number <- function(data,
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
   if (!is.null(n_sigfig)) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig)
+
     formatC_format <- "fg"
   } else {
     formatC_format <- "f"
