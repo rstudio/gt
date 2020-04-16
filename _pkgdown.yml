@@ -241,4 +241,4 @@ navbar:
     href: https://github.com/rstudio/gt
 
 development:
-  mode: auto
+  mode: release
