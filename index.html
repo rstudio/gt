@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -98,6 +98,7 @@
   <div class="contents col-md-9">
 <div id="gt-" class="section level1">
 
+<!-- badges: start -->
 
 <p>With the <strong>gt</strong> package, anyone can make wonderful-looking tables using the <strong>R</strong> programming language. The <strong>gt</strong> philosophy: we can construct a wide variety of useful tables with a cohesive set of table parts. These include the <em>table header</em>, the <em>stub</em>, the <em>column labels</em> and <em>spanner column labels</em>, the <em>table body</em>, and the <em>table footer</em>.</p>
 <p align="center">
@@ -149,10 +150,12 @@
 <p>Want to try this out? Then, take the <strong>gt</strong> Test Drive on <strong>RStudio Cloud</strong>. It’s full of ready-to-run examples.</p>
 <p align="center">
 </p>
-<p><a href="https://rstudio.cloud/project/779965"> <img src="reference/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="60px"></a></p>
+<p><a href="https://rstudio.cloud/project/779965"> <img src="reference/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px"></a></p>
 
-<p>You can install the development version of <strong>gt</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"rstudio/gt"</span>)</pre></div>
+<p>The <strong>gt</strong> package can be installed from <strong>CRAN</strong> with:</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"gt"</span>)</pre></div>
+<p>You can also choose to install the development version of <strong>gt</strong> from <strong>GitHub</strong>:</p>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"rstudio/gt"</span>)</pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/rstudio/gt/issues">issue</a>.</p>
 <hr>
 <div id="how-gt-fits-in-with-other-packages-that-generate-display-tables" class="section level4">
@@ -226,10 +229,9 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
 <li><a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a></li>
-<li><a href="https://travis-ci.com/rstudio/gt"><img src="https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&amp;branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/rstudio/gt"><img src="https://ci.appveyor.com/api/projects/status/github/rstudio/gt?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://github.com/rstudio/gt/actions?workflow=R-CMD-check"><img src="https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 </ul>
 </div>
@@ -242,7 +244,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

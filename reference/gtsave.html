@@ -82,7 +82,7 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -216,7 +216,8 @@ to <code>...</code>.</p>
 <code><a href='extract_summary.html'>extract_summary</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table; add</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Use `gtcars` to create a gt table; add</span>
 <span class='co'># a stubhead label to describe what is</span>
 <span class='co'># in the stub</span>
 <span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
@@ -254,7 +255,8 @@ to <code>...</code>.</p>
 <span class='co'># will result in the output of a LaTeX</span>
 <span class='co'># document</span>
 <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gtsave</span>(<span class='st'>"tab_1.tex"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div></pre>
+  <span class='fu'>gtsave</span>(<span class='st'>"tab_1.tex"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -270,7 +272,7 @@ to <code>...</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
