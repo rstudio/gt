@@ -3,15 +3,17 @@
 
 # gt <img src="man/figures/logo.svg" align="right" height="250px" />
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: start -->
+
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![Travis build
-status](https://travis-ci.com/rstudio/gt.svg?token=P7T9dzi5RLEq9j2Yepx5&branch=master)](https://travis-ci.com/rstudio/gt)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rstudio/gt?branch=master&svg=true)](https://ci.appveyor.com/project/rstudio/gt)
+[![R build
+status](https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/gt/actions?workflow=R-CMD-check)
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
+<!-- badges: end -->
 
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
@@ -101,10 +103,17 @@ Cloud**. It’s full of ready-to-run examples.
 
 </p>
 
-You can install the development version of **gt** from **GitHub**:
+The **gt** package can be installed from **CRAN** with:
 
 ``` r
-remotes::install_github("rstudio/gt")
+install.packages("gt")
+```
+
+You can also choose to install the development version of **gt** from
+**GitHub**:
+
+``` r
+devtools::install_github("rstudio/gt")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to
