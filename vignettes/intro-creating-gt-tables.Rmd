@@ -1,6 +1,8 @@
 ---
 title: "Introduction to Creating gt Tables"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    self_contained: true
 vignette: >
   %\VignetteIndexEntry{Intro to Creating gt Tables}
   %\VignetteEngine{knitr::rmarkdown}
