@@ -42,20 +42,20 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("test heading")
 
-  # Expect that the number of rows with `class='gt_row gt_right'` is `3`
+  # Expect that the number of rows with `class='gt_row gt_right'` is `5`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(3)
+    expect_equal(5)
 
-  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `2`
+  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `0`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right gt_striped']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(2)
+    expect_equal(0)
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
@@ -69,12 +69,12 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text(selection = "[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("test title")
 
   # Expect that the `table_heading` content is 'test subtitle'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
 })
 
@@ -118,7 +118,8 @@ test_that("a gt table contains the expected spanner column labels", {
   # is `perimeter`
   tbl_html %>%
     selection_text("[colspan='2']") %>%
-    expect_equal("perimeter")
+    grepl("perimeter", .) %>%
+    expect_true()
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
@@ -135,8 +136,9 @@ test_that("a gt table contains the expected spanner column labels", {
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
   tbl_html %>%
-    selection_text("[class='gt_col_heading gt_center gt_columns_top_border gt_column_spanner']") %>%
-    expect_equal("perimeter")
+    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
+    grepl("perimeter", .) %>%
+    expect_true()
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
@@ -176,6 +178,49 @@ test_that("a gt table contains the expected spanner column labels", {
         label = "perimeter",
         columns = vars(peris, shapes))
   )
+})
+
+test_that("`tab_spanner()` works even when columns are forcibly moved", {
+
+  # Create a table with column spanners, moving the `carb` value
+  # to the beginning of the column sequence (splitting the `group_d`
+  # column spanner into two parts)
+  tbl_html <-
+    gt(mtcars[1, ]) %>%
+    tab_spanner(
+      label = md("*group_a*"),
+      columns = vars(cyl, hp)
+    ) %>%
+    tab_spanner(
+      label = md("*group_b*"),
+      columns = vars(drat, wt)
+    ) %>%
+    tab_spanner(
+      label = md("*group_c*"),
+      columns = vars(qsec, vs, am)
+    ) %>%
+    tab_spanner(
+      label = md("*group_d*"),
+      columns = vars(gear, carb)
+    ) %>%
+    tab_spanner(
+      label = md("*never*"),
+      columns = ends_with("nothing")
+    ) %>%
+    cols_move_to_start(columns = vars(carb)) %>%
+    render_as_html()
+
+
+  # Expect the sequence of `colspan` values across both
+  # <tr>s in <thead> is correct
+  tbl_html %>%
+    xml2::read_html() %>%
+    selection_value("colspan") %>%
+    expect_equal(
+      c("1", "1", "2", "1", "2", "3", "1",           # first <tr>
+        "1", "1", "1", "1", "1", "1", "1", "1", "1"  # second <tr>
+       )
+    )
 })
 
 test_that("a gt table contains the expected source note", {
@@ -510,7 +555,8 @@ test_that("a gt table contains custom styles at the correct locations", {
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #90EE90;']") %>%
     rvest::html_text() %>%
-    expect_equal("gear_carb_cyl")
+    grepl("gear_carb_cyl", .) %>%
+    expect_true()
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
@@ -521,13 +567,13 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the table title is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal gt_center'][style='text-align: left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Title")
 
   # Expect that the table subtitle is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border'][style='text-align: left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Subtitle")
 })

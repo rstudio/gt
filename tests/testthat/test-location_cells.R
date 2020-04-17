@@ -409,8 +409,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style>The Subtitle</th>"
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: white; font-size: 20px; background-color: #FFA500;\">The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style>The Subtitle</th>"
       )
     ) %>%
     expect_true()
@@ -433,8 +433,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style>The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style>The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
       )
     ) %>%
     expect_true()
@@ -465,8 +465,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal gt_center\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Title</th>.*",
+        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: white; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
       )
     ) %>%
     expect_true()
@@ -492,7 +492,14 @@ test_that("styles are correctly applied to HTML output with location functions",
   # Expect that the styling was applied to the correct column labels
   gt_tbl_cells_column_spanners %>%
     render_as_html() %>%
-    tidy_grepl("<th class=\".*? gt_column_spanner\".*?style=\"color: white; font-size: 20px; background-color: #FFA500;\">spanner</th>") %>%
+    tidy_grepl(
+      paste0(
+        "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
+        "rowspan=\"1\" colspan=\"2\" style=\"color: white; font-size: 20px; ",
+        "background-color: #FFA500;\">.*?<span class=\"gt_column_spanner\">",
+        "spanner</span>"
+        )
+      ) %>%
     expect_true()
 
   #
@@ -723,7 +730,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   #
 
   # Expect that styling to all cells is performed
-  # by default with `cells_data()`
+  # by default with `cells_body()`
   tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     tab_style(

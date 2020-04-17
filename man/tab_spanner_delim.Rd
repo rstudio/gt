@@ -45,7 +45,7 @@ rendered output table).
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_spanner_delim_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -68,7 +68,6 @@ tab_1 <-
 }
 \seealso{
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

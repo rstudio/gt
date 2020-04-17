@@ -1,6 +1,8 @@
 ---
 title: "Introduction to Creating gt Tables"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    self_contained: true
 vignette: >
   %\VignetteIndexEntry{Intro to Creating gt Tables}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,7 +20,7 @@ library(dplyr)
 
 The **gt** package is all about making it simple to produce nice-looking display tables. Display tables? Well yes, we are trying to distinguish between data tables (e.g., tibbles, `data.frame`s, etc.) and those tables you'd find in a web page, a journal article, or in a magazine. Such tables can likewise be called presentation tables, summary tables, or just tables really. Here are some examples, ripped straight from the web:
 
-<img src="images/tables_from_the_web.png" width=100%>
+<img src="../reference/figures/tables_from_the_web.png" width=100%>
 
 We can think of display tables as output only, where we'd not want to use them as input ever again. Other features include annotations, table element styling, and text transformations that serve to communicate the subject matter more clearly.
 
@@ -63,7 +65,7 @@ The **gt** package makes it relatively easy to add parts so that the resulting *
 
 This is the way the main parts of a table (and their subparts) fit together:
 
-<p align="center"><img src="../man/figures/gt_parts_of_a_table.svg" width=100%></p>
+<p align="center"><img src="../reference/figures/gt_parts_of_a_table.svg" width=100%></p>
 
 The parts (roughly from top to bottom) are:
 

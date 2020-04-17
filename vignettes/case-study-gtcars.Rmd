@@ -17,7 +17,7 @@ library(dplyr)
 library(tibble)
 ```
 
-<p align="center"><img src="images/gtcars.svg" width=50%></p>
+<p align="center"><img src="../reference/figures/gtcars.svg" width=50%></p>
 
 Let's make a display table using the `gtcars` dataset. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble:
 
@@ -173,7 +173,7 @@ tab <-
     pattern = "{1}c<br>{2}h"
     ) %>%
   cols_merge(
-    vars(hp_rpm),
+    vars(hp, hp_rpm),
     hide_columns = vars(hp_rpm),
     pattern = "{1}<br>@{2}rpm"
   ) %>%
@@ -310,7 +310,7 @@ tab <-
   tab %>%
   tab_source_note(
     source_note = md(
-      "Source: Various pages within [edmunds.com](https://www.edmunds.com).")
+      "Source: Various pages within the Edmonds website.")
   )
 
 # Show the table
@@ -433,7 +433,7 @@ tab <-
   ) %>%
   tab_source_note(
     source_note = md(
-      "Source: Various pages within [edmunds.com](https://www.edmunds.com).")
+      "Source: Various pages within the Edmonds website.")
   ) %>%
   tab_footnote(
     footnote = md("Best gas mileage (city) of all the **gtcars**."),

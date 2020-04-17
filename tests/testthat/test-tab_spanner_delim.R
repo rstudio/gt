@@ -41,7 +41,9 @@ test_that("the `tab_spanner_delim()` function works correctly", {
     xml2::read_html() %>%
     rvest::html_nodes("[colspan='2']") %>%
     rvest::html_text() %>%
-    expect_equal( c("Sepal", "Petal"))
+    grepl("Sepal|Petal", .) %>%
+    all() %>%
+    expect_true()
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table
@@ -76,7 +78,8 @@ test_that("the `tab_spanner_delim()` function works correctly", {
     xml2::read_html() %>%
     rvest::html_nodes("[colspan='2']") %>%
     rvest::html_text() %>%
-    expect_equal("Sepal")
+    grepl("Sepal", .) %>%
+    expect_true()
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table
@@ -112,7 +115,8 @@ test_that("the `tab_spanner_delim()` function works correctly", {
     xml2::read_html() %>%
     rvest::html_nodes("[colspan='2']") %>%
     rvest::html_text() %>%
-    expect_equal("Sepal")
+    grepl("Sepal", .) %>%
+    expect_true()
 
   # Expect that the columns with a colspan of `2` have the same
   # ordering in the rendered table

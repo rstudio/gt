@@ -45,7 +45,7 @@ favor of the pixel values set for each column.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cols_width_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cols_width_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -57,8 +57,9 @@ favor of the pixel values set for each column.
 # Use `exibble` to create a gt table;
 # with named arguments in `...`, we
 # can specify the exact widths for
-# table columns (using `TRUE` will
-# capture all remaining columns)
+# table columns (using `everything()`
+# or `TRUE` at the end will capture
+# all remaining columns)
 tab_1 <-
   exibble \%>\%
   dplyr::select(
@@ -70,7 +71,7 @@ tab_1 <-
     vars(num) ~ px(150),
     ends_with("r") ~ px(100),
     starts_with("date") ~ px(200),
-    TRUE ~ px(60)
+    everything() ~ px(60)
   )
 
 }

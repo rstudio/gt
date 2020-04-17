@@ -30,7 +30,7 @@ remaining row groups will follow in their original ordering.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_row_group_order_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_row_group_order_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

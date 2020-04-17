@@ -64,13 +64,13 @@
 #'     )
 #' }
 #'
-#' \dontrun{
-#' shinyApp(ui, server)
+#' if (interactive()) {
+#'   shinyApp(ui, server)
 #' }
 #'
 #' @family Shiny functions
 #' @section Function ID:
-#' 11-1
+#' 12-1
 #'
 #' @export
 render_gt <- function(expr,
@@ -184,13 +184,13 @@ render_gt <- function(expr,
 #'     )
 #' }
 #'
-#' \dontrun{
-#' shinyApp(ui, server)
+#' if (interactive()) {
+#'   shinyApp(ui, server)
 #' }
 #'
 #' @family Shiny functions
 #' @section Function ID:
-#' 11-2
+#' 12-2
 #'
 #' @export
 gt_output <- function(outputId) {

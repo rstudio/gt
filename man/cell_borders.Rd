@@ -34,9 +34,9 @@ borders can then be modified.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_cell_borders_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_cell_borders_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cell_borders_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_cell_borders_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

@@ -4,7 +4,8 @@
 \name{pizzaplace}
 \alias{pizzaplace}
 \title{A year of pizza sales from a pizza place}
-\format{A tibble with 49574 rows and 7 variables:
+\format{
+A tibble with 49574 rows and 7 variables:
 \describe{
 \item{id}{The ID for the order, which consists of one or more pizzas
 at a give \code{date} and \code{time}}
@@ -22,7 +23,8 @@ but exceptions apply}
 \code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
 \item{price}{The price of the pizza and the amount that it sold for
 (in USD)}
-}}
+}
+}
 \usage{
 pizzaplace
 }
@@ -123,7 +125,7 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 }
 \section{Function ID}{
 
-10-5
+11-5
 }
 
 \examples{

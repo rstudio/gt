@@ -26,7 +26,7 @@ analogous helper function \code{\link[=pct]{pct()}} will be more useful.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_pct_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_pct_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{

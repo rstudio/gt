@@ -25,7 +25,7 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_source_note_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -49,7 +49,6 @@ tab_1 <-
 }
 \seealso{
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

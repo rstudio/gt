@@ -25,7 +25,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-1
+#' 11-1
 #'
 "countrypops"
 
@@ -71,7 +71,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-2
+#' 11-2
 #'
 "sza"
 
@@ -113,7 +113,6 @@
 #'   is headquartered}
 #' }
 #'
-#' @source Various pages within <https://www.edmunds.com>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `gtcars`
@@ -121,7 +120,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-3
+#' 11-3
 #'
 "gtcars"
 
@@ -140,7 +139,6 @@
 #' \item{adj_close}{The close price adjusted for both dividends and splits}
 #' }
 #'
-#' @source Data collected from <https://finance.yahoo.com/quote/\\%5EGSPC/history/>.
 #' @examples
 #' # Here is a glimpse at the data
 #' # available in `sp500`
@@ -148,7 +146,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-4
+#' 11-4
 #'
 "sp500"
 
@@ -274,7 +272,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-5
+#' 11-5
 #'
 "pizzaplace"
 
@@ -314,6 +312,6 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-6
+#' 11-6
 #'
 "exibble"

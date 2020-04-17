@@ -41,7 +41,7 @@
 #'   function.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
 #' # in the stub
@@ -50,37 +50,42 @@
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
-#'   tab_stubhead_label(label = "car")
+#'   tab_stubhead(label = "car")
 #'
 #' # Get an HTML file with inlined CSS
 #' # (which is necessary for including the
 #' # table as part of an HTML email)
 #' tab_1 %>%
-#'   gtsave("tab_1.html", inline_css = TRUE)
+#'   gtsave(
+#'     "tab_1.html", inline_css = TRUE,
+#'     path = tempdir()
+#'   )
 #'
 #' # By leaving out the `inline_css` option,
 #' # we get a more conventional HTML file
 #' # with embedded CSS styles
-#' tab_1 %>% gtsave("tab_1.html")
-#'
-#' # Save the HTML table as a PDF file; we
-#' # can optionally add a separate `path`
-#' tab_1 %>% gtsave("tab_1.pdf", path = "~")
+#' tab_1 %>%
+#'   gtsave("tab_1.html", path = tempdir())
 #'
 #' # Saving as PNG file results in a cropped
 #' # image of an HTML table; the amount of
 #' # whitespace can be set
-#' tab_1 %>% gtsave("tab_1.png", expand = 10)
+#' tab_1 %>%
+#'   gtsave(
+#'     "tab_1.png", expand = 10,
+#'     path = tempdir()
+#'   )
 #'
 #' # Any use of the `.tex`, `.ltx`, or `.rnw`
 #' # will result in the output of a LaTeX
 #' # document
-#' tab_1 %>% gtsave("tab_1.tex")
+#' tab_1 %>%
+#'   gtsave("tab_1.tex", path = tempdir())
 #' }
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-1
+#' 13-1
 #'
 #' @export
 gtsave <- function(data,
@@ -293,7 +298,7 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-2
+#' 13-2
 #'
 #' @export
 as_raw_html <- function(data,
@@ -353,7 +358,7 @@ as_raw_html <- function(data,
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-3
+#' 13-3
 #'
 #' @export
 as_latex <- function(data) {
@@ -438,7 +443,7 @@ as_latex <- function(data) {
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-4
+#' 13-4
 #'
 #' @export
 as_rtf <- function(data) {
@@ -550,11 +555,11 @@ as_rtf <- function(data) {
 #'   gt()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_extract_summary_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 12-5
+#' 13-5
 #'
 #' @export
 extract_summary <- function(data) {
@@ -578,4 +583,3 @@ extract_summary <- function(data) {
   # that contains tidy, unformatted data
   dt_summary_df_data_get(data = built_data) %>% as.list()
 }
-

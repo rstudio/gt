@@ -36,7 +36,7 @@
 #'   gt_preview()
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
 #'
 #' @family Create Table
 #' @section Function ID:
@@ -85,13 +85,18 @@ gt_preview <- function(data,
     # Prepare a rowname label that represents the hidden row numbers
     between_rownums <- c(ellipsis_row, nrow(data) - bottom_n)
 
-    # Modify the `data` so that only the `top_n` and `bottom_n` rows
-    # are retained (with an empty row between these row groups)
+    # Obtain the top and bottom slices of data
+    top_slice <- data[seq(top_n), , drop = FALSE]
+    bottom_slice <- data[(nrow(data) + 1 - rev(seq(bottom_n))), , drop = FALSE]
+
+    # Modify the `data` so that only the `top_n` (`top_slice`) and
+    # `bottom_n` (`bottom_slice`) rows are retained (with a row of
+    # NAs to clearly separate these slices)
     data <-
       rbind(
-        data[seq(top_n), ],
-        rep("", ncol(data)),
-        data[(nrow(data) + 1 - rev(seq(bottom_n))), ]
+        top_slice,
+        rep(NA, ncol(data)),
+        bottom_slice
       )
 
     # Relabel the rowname for the ellipsis row
@@ -123,7 +128,8 @@ gt_preview <- function(data,
 
   visible_vars <- dt_boxhead_get_vars_default(data = gt_tbl)
 
-  # Add styling to ellipsis row, if it is present
+  # Replace the NA values and add styling to the ellipsis
+  # row (if it is present)
   if (isTRUE(has_ellipsis_row)) {
 
     gt_tbl <-
@@ -131,6 +137,10 @@ gt_preview <- function(data,
       tab_style(
         style = cell_fill(color = "#E4E4E4"),
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
+      ) %>%
+      text_transform(
+        locations = cells_body(columns = TRUE, rows = ellipsis_row),
+        fn = function(x) ""
       )
 
     if (isTRUE(incl_rownums)) {
@@ -140,11 +150,10 @@ gt_preview <- function(data,
         tab_style(
           style = list(
             cell_fill(color = "#E4E4E4"),
-            cell_text(size = "10px")
+            cell_text(size = "x-small")
           ),
           locations = cells_stub(rows = ellipsis_row)
         )
-
     }
   }
 

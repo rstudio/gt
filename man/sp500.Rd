@@ -4,16 +4,15 @@
 \name{sp500}
 \alias{sp500}
 \title{Daily S&P 500 Index data from 1950 to 2015}
-\format{A tibble with 16607 rows and 7 variables:
+\format{
+A tibble with 16607 rows and 7 variables:
 \describe{
 \item{date}{The date expressed as \code{Date} values}
 \item{open, high, low, close}{The day's opening, high, low, and closing
 prices in USD; the \code{close} price is adjusted for splits}
 \item{volume}{the number of trades for the given \code{date}}
 \item{adj_close}{The close price adjusted for both dividends and splits}
-}}
-\source{
-Data collected from \url{https://finance.yahoo.com/quote/\\\\\%5EGSPC/history/}.
+}
 }
 \usage{
 sp500
@@ -25,7 +24,7 @@ companies and captures about 80\\% coverage of available market capitalization.
 }
 \section{Function ID}{
 
-10-4
+11-4
 }
 
 \examples{

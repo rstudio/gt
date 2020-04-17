@@ -106,6 +106,17 @@ test_that("the function `cols_merge()` works correctly", {
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
     expect_equal("merge")
+
+  # Expect a warning if additional, out of scope columns, are
+  # included in `hide_columns`
+  expect_warning(
+    mtcars_short %>%
+      gt() %>%
+      cols_merge(
+        columns = vars(drat, wt),
+        hide_columns = vars(wt, carb),
+      )
+  )
 })
 
 test_that("the `cols_merge_uncert()` function works correctly", {
@@ -131,7 +142,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -154,7 +165,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -181,7 +192,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -193,7 +204,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_3", "col_4"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
     expect_equal(" +/- ")
@@ -218,7 +229,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
-    expect_equal("merge_range")
+    expect_equal("merge_uncert")
 
   # Get the separator object
   sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
@@ -378,4 +389,48 @@ test_that("the `cols_merge_range()` function works correctly", {
   expect_is(sep, "AsIs")
   expect_equal(as.character(sep), "---")
   expect_equal(sep, I("---"))
+
+  # Create two gt table objects; the first will be based
+  # on `tbl` while the second will use a different column name
+  # in `tbl` (`sep`) that collides with a pattern element name
+  tbl_html_1 <-
+    tbl %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(col_2)
+    )
+
+  tbl_html_2 <-
+    tbl %>%
+    dplyr::rename(sep = col_2) %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(sep)
+    )
+
+  # Expect that the HTML produced from the two tables is the same
+  expect_identical(
+    tbl_html_1 %>% as_raw_html(),
+    tbl_html_2 %>% as_raw_html()
+  )
+
+  # Create another variant that renames `col_2` as `1`, which
+  # might be thought to interfere with the default pattern
+  tbl_html_3 <-
+    tbl %>%
+    dplyr::rename(`1` = col_2) %>%
+    gt() %>%
+    cols_merge_range(
+      col_begin = vars(col_1),
+      col_end = vars(`1`)
+    )
+
+  # Expect that the HTML produced from `tbl_html_2` and
+  # `tbl_html_3` is the same
+  expect_identical(
+    tbl_html_2 %>% as_raw_html(),
+    tbl_html_3 %>% as_raw_html()
+  )
 })

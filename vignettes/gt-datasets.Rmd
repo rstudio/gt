@@ -19,9 +19,9 @@ library(tidyr)
 
 The **gt** package comes with six built-in datasets for experimenting with the **gt** API: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. While each dataset has different subject matter, all of them will be used to develop **gt** examples with consistent syntax.
 
-<img src="images/countrypops.svg" width=30%><img src="images/sza.svg" width=30%><img src="images/gtcars.svg" width=30%>
+<img src="../reference/figures/countrypops.png" width=30%><img src="../reference/figures/sza.svg" width=30%><img src="../reference/figures/gtcars.svg" width=30%>
 
-<img src="images/sp500.svg" width=30%><img src="images/pizzaplace.svg" width=30%><img src="images/exibble.svg" width=30%>
+<img src="../reference/figures/sp500.svg" width=30%><img src="../reference/figures/pizzaplace.svg" width=30%><img src="../reference/figures/exibble.svg" width=30%>
 
 Each dataset is stored as a tibble, ranging from very small (like `exibble`, an example tibble of 8 rows) to quite large in size (e.g., at nearly 50,000 rows: `pizzaplace`). Larger datasets are typically impractical as **gt output tables** but they provide opportunities for demonstrating preprocessing using tidyverse tools like **dplyr** and **tidyr** (upstream of **gt**'s `gt()` entry point). 
 

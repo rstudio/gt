@@ -123,9 +123,9 @@
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_number_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_number_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_fmt_number_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_number_2.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -251,7 +251,7 @@ fmt_number <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_scientific_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_scientific_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -522,7 +522,7 @@ fmt_symbol <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_percent_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_percent_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -676,9 +676,9 @@ fmt_percent <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_currency_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_currency_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_fmt_currency_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_currency_2.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -827,9 +827,9 @@ fmt_currency <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_date_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_date_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_fmt_date_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_date_2.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -960,9 +960,9 @@ fmt_date <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_time_1.png}{options: width=100\%}}
 #'
-#' \if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_time_2.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1085,7 +1085,7 @@ fmt_time <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_datetime_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1229,7 +1229,7 @@ fmt_datetime <- function(data,
 #'     tab_options(table.width = px(400))
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_markdown_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_markdown_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1311,7 +1311,7 @@ fmt_markdown <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_passthrough_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1430,7 +1430,7 @@ fmt_passthrough <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_missing_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_missing_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1532,7 +1532,7 @@ fmt_missing <- function(data,
 #'   )
 #'
 #' @section Figures:
-#' \if{html}{\figure{man_fmt_1.svg}{options: width=100\%}}
+#' \if{html}{\figure{man_fmt_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:

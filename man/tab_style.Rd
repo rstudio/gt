@@ -49,9 +49,9 @@ bold text (the degree of choice is greater with variable fonts)
 }
 \section{Figures}{
 
-\if{html}{\figure{man_tab_style_1.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_style_2.svg}{options: width=100\%}}
+\if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -123,7 +123,6 @@ defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of man
 functions for targeting the locations to be styled.
 
 Other Create or Modify Parts: 
-\code{\link{opt_footnote_marks}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

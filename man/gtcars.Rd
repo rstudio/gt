@@ -4,7 +4,8 @@
 \name{gtcars}
 \alias{gtcars}
 \title{Deluxe automobiles from the 2014-2017 period}
-\format{A tibble with 47 rows and 15 variables:
+\format{
+A tibble with 47 rows and 15 variables:
 \describe{
 \item{mfr}{The name of the car manufacturer}
 \item{model}{The car's model name}
@@ -24,9 +25,7 @@ the number of gears; the car could have automatic transmission
 both types (\code{am}), or, direct drive (\code{dd})}
 \item{ctry_origin}{The country name for where the vehicle manufacturer
 is headquartered}
-}}
-\source{
-Various pages within \url{https://www.edmunds.com}.
+}
 }
 \usage{
 gtcars
@@ -49,7 +48,7 @@ safety.
 }
 \section{Function ID}{
 
-10-3
+11-3
 }
 
 \examples{

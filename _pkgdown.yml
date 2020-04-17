@@ -36,7 +36,6 @@ reference:
     - tab_source_note
     - tab_style
     - tab_options
-    - opt_footnote_marks
 
   - title: Format Data
     desc: >
@@ -135,7 +134,7 @@ reference:
     - escape_latex
     - gt_latex_dependencies
 
-  - title: Image Functions
+  - title: Image Addition Functions
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -147,6 +146,20 @@ reference:
     - local_image
     - ggplot_image
     - test_image
+
+  - title: Table Option Functions
+    desc: >
+      With the `opt_*()` functions, we have an easy way to set commonly-used
+      table options without having to use `tab_options()` directly. For
+      instance, we can modify the set of marks to use with footnotes, turn on
+      row striping, change the alignment of the table header, and much more.
+    contents:
+    - opt_footnote_marks
+    - opt_row_striping
+    - opt_align_table_header
+    - opt_all_caps
+    - opt_table_lines
+    - opt_table_outline
 
   - title: Information Functions
     desc: >
@@ -228,4 +241,4 @@ navbar:
     href: https://github.com/rstudio/gt
 
 development:
-  mode: unreleased
+  mode: release
