@@ -41,7 +41,7 @@
 #'   function.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
 #' # in the stub
