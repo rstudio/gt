@@ -672,9 +672,12 @@ num_fmt_factory <- function(context,
     # Create a possibly shorter vector of non-NA `x` values
     x_vals <- x[non_na_x]
 
-    if (length(x_vals) == 0) {
-      return(character(0))
-    }
+    # if (length(x_vals) == 0) {
+    #   return(character(0))
+    # }
+
+    # Return `NA_character_` for non-conforming input
+    if (!is.numeric(x) || length(x) != 1 || is.na(x)) return(NA_character_)
 
     # Apply a series of transformations to `x_str_vals`
     x_str_vals <-

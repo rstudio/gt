@@ -20,9 +20,9 @@ dt_body_build_init <- function(data) {
 
   body <- dt_data_get(data = data)[, dt_boxhead_get_vars(data = data)]
 
-  if (NROW(body) > 0) {
-    body[] <- NA_character_
-  }
+  # if (NROW(body) > 0) {
+  #   body[] <- NA_character_
+  # }
 
   body %>%
     dt_body_set(body = ., data = data)

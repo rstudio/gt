@@ -159,12 +159,12 @@ fmt_number <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  #   stop("The `fmt_number()` function can only be used on `columns` with numeric data",
+  #        call. = FALSE)
+  # }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -283,12 +283,12 @@ fmt_scientific <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  #   stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+  #        call. = FALSE)
+  # }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -539,12 +539,12 @@ fmt_percent <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  #   stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
+  #        call. = FALSE)
+  # }
 
   fmt_symbol(
     data = data,
@@ -701,12 +701,12 @@ fmt_currency <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  #   stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
+  #        call. = FALSE)
+  # }
 
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
@@ -843,12 +843,12 @@ fmt_date <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
+  #   stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
+  #        call. = FALSE)
+  # }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -976,12 +976,12 @@ fmt_time <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+  #   stop("The `fmt_date()` function can only be used on `columns` with `character` values",
+  #        call. = FALSE)
+  # }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1103,12 +1103,12 @@ fmt_datetime <- function(data,
   rows <- rlang::enquo(rows)
   columns <- rlang::enquo(columns)
 
-  # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
-    stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
-  }
+  # # Stop function if any columns have data that is incompatible
+  # # with this formatter
+  # if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+  #   stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
+  #        call. = FALSE)
+  # }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`

@@ -114,10 +114,7 @@ gt <- function(data,
   # Initialize the main objects
   data <-
     list() %>%
-    dt_data_init(
-      data_tbl = data,
-      rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
-    ) %>%
+    dt_data_init(data_tbl = data) %>%
     dt_boxhead_init() %>%
     dt_stub_df_init(
       rowname_col = rowname_col,

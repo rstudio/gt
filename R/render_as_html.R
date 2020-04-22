@@ -23,7 +23,8 @@ render_as_html <- function(data) {
   columns_component <- create_columns_component_h(data = data)
 
   # Create the body component
-  body_component <- create_body_component_h(data = data)
+  #body_component <- create_body_component_h(data = data)
+  body_component <- build_body(data$`_body`, type = "format")
 
   # Create the source notes component
   source_notes_component <- create_source_notes_component_h(data = data)

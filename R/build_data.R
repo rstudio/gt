@@ -14,9 +14,12 @@ build_data <- function(data, context) {
     data %>%
     dt_body_build() %>%
     render_formats(context = context) %>%
-    migrate_unformatted_to_output(context = context) %>%
-    perform_col_merge(context = context) %>%
-    perform_text_transforms()
+    migrate_unformatted_to_output(context = context) #%>%
+    #perform_col_merge(context = context) #%>%
+  #data %>% perform_text_transforms()
+
+  # Transform to character-based tibble
+
 
   data <-
     data %>%

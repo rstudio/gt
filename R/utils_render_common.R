@@ -57,7 +57,7 @@ render_formats <- function(data,
                            context) {
 
   body <- dt_body_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+  #data_tbl <- dt_data_get(data = data)
   formats <- dt_formats_get(data = data)
 
   # Render input data to output data where formatting
@@ -76,15 +76,31 @@ render_formats <- function(data,
     for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_tbl)) {
+      if (col %in% colnames(body)) {
 
-        result <- fmt$func[[eval_func]](data_tbl[[col]][fmt$rows])
+        result_value_list <-
+          body %>%
+          get_values_in_column(column = col, rows = fmt$rows, type = "initial") %>%
+          lapply(fmt$func[[eval_func]])
+
+        #result <- fmt$func[[eval_func]](data_tbl[[col]][fmt$rows])
+
+        body <-
+          body %>%
+          set_values_in_column(
+            values = result_value_list,
+            column = col,
+            rows = fmt$rows,
+            type = "format"
+          )
 
         # If any of the resulting output is `NA`, that
         # means we want to NOT make changes to those
         # particular cells' output (i.e. inherit the
         # results of the previous formatter).
-        body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
+
+        # TODO: revisit this to get the same behavior
+        #body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
@@ -99,43 +115,73 @@ render_formats <- function(data,
 migrate_unformatted_to_output <- function(data,
                                           context) {
 
+  # body <- dt_body_get(data = data)
+  # data_tbl <- dt_data_get(data = data)
+
+  #tbl_gt <- data$`_data`
+
   body <- dt_body_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+  body_list_cols <- body %>% colnames()
 
-  for (colname in colnames(body)) {
 
-    row_index <- is.na(body[[colname]])
+  for (colname in body_list_cols) {
 
-    if (inherits(data_tbl[[colname]], "list")) {
+    #row_index <- is.na(body[[colname]])
 
-      # Use `lapply()` so that all values could be treated independently
-      body[[colname]][row_index] <-
-        lapply(
-          data_tbl[[colname]][row_index],
-          function(x) {
-
-            if (is.numeric(x)) {
-              x <- format(x, drop0trailing = FALSE, trim = TRUE, justify = "none")
-            }
-
-            x %>%
-              tidy_gsub("\\s+$", "") %>%
-              process_text(context) %>%
-              paste(collapse = ", ")
-          }
-        )
-
-    } else {
+    # if (inherits(data_tbl[[colname]], "list")) {
+    #
+    #   # Use `lapply()` so that all values could be treated independently
+    #   body[[colname]][row_index] <-
+    #     lapply(
+    #       data_tbl[[colname]][row_index],
+    #       function(x) {
+    #
+    #         if (is.numeric(x)) {
+    #           x <- format(x, drop0trailing = FALSE, trim = TRUE, justify = "none")
+    #         }
+    #
+    #         x %>%
+    #           tidy_gsub("\\s+$", "") %>%
+    #           process_text(context) %>%
+    #           paste(collapse = ", ")
+    #       }
+    #     )
+    #
+    # } else {
 
       # No `lapply()` used: all values will be treated cohesively
-      vals <- data_tbl[[colname]][row_index]
+      #vals <- tbl_gt[[colname]][row_index]
 
-      if (is.numeric(vals)) {
-        vals <- format(vals, drop0trailing = FALSE, trim = TRUE, justify = "none")
-      }
+      vals_initial <-
+        get_values_in_column(tbl_gt = body, column = colname, type = "initial")
 
-      body[[colname]][row_index] <- vals %>% process_text(context)
-    }
+      vals_format <-
+        get_values_in_column(tbl_gt = body, column = colname, type = "format")
+
+      vals_format_na <-
+        which(vapply(vals_format, FUN = is.na, FUN.VALUE = logical(1)))
+
+      replacement_val_list <-
+        vals_initial[vals_format_na] %>%
+        lapply(function(x) {
+          if (is.numeric(x) && !is.na(x)) {
+            format(x, drop0trailing = FALSE, trim = TRUE, justify = "none") %>%
+              process_text(context)
+          } else {
+            x %>% process_text()
+          }
+        })
+
+      body <-
+        set_values_in_column(
+          tbl_gt = body,
+          values = replacement_val_list,
+          column = colname,
+          rows = vals_format_na,
+          type = "format"
+        )
+
+    # }
   }
 
   data <- dt_body_set(data = data, body = body)
