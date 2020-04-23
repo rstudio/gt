@@ -71,7 +71,8 @@ get_table_defs <- function(data) {
 
     widths <-
       boxh %>%
-      dplyr::filter(type == "default") %>%
+      dplyr::filter(type %in% c("default", "stub")) %>%
+      dplyr::arrange(dplyr::desc(type)) %>%
       .$column_width %>%
       unlist()
 
