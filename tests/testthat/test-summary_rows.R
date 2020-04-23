@@ -20,6 +20,14 @@ tbl <-
     groupname_col = "week"
   )
 
+# Gets the inner HTML text from a single value
+selection_text <- function(html, selection) {
+
+  html %>%
+    rvest::html_nodes(selection) %>%
+    rvest::html_text()
+}
+
 test_that("the `summary_rows()` can make groupwise summaries", {
 
   # Create a table with summary rows for
@@ -817,6 +825,113 @@ test_that("`groups = FALSE` returns data unchanged", {
       ) %>%
       as_raw_html()
   )
+})
+
+test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
+
+  # Create tibbles with rows in different orders
+  tbl_1 <-
+    tibble::tibble(
+      id = c("1", "2", "3", "4", "5", "6"),
+      value = c(1, 10, 1, 10, 99, 1),
+      group = c("b", "a", "b", "a", "c", "b")
+    )
+
+  tbl_2 <-
+    tbl_1 %>%
+    dplyr::slice(6, 3, 5, 1, 4, 2)
+
+  tbl_3 <-
+    tbl_2 %>%
+    dplyr::arrange(group, id)
+
+  # Prepare a set gt tables with summary rows (using the same
+  # `summary_rows()` call each time)
+  gt_tbl_1 <-
+    tbl_1 %>%
+    dplyr::group_by(group) %>%
+    gt(rowname_col = "id") %>%
+    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+
+  gt_tbl_1b <-
+    tbl_1 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+
+  gt_tbl_2 <-
+    tbl_2 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+
+  gt_tbl_3 <-
+    tbl_3 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+
+  # Expect the correct values in summary rows of `gt_tbl`
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row']") %>%
+    expect_equal(c("3.00", "20.00", "99.00"))
+
+  # Expect the HTML output tables of `gt_tbl_1` and `gt_tbl_1b` to be the same
+  expect_identical(
+    gt_tbl_1 %>% render_as_html(),
+    gt_tbl_1b %>% render_as_html()
+  )
+
+  # Expect the correct values in summary rows of `gt_tbl_2`
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row']") %>%
+    expect_equal(c("3.00", "99.00", "20.00"))
+
+  # Expect the correct values in summary rows of `gt_tbl_3`
+  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row']") %>%
+    expect_equal(c("20.00", "3.00", "99.00"))
+
+  # Prepare a set gt tables with a grand summary (using the same
+  # `grand_summary_rows()` call each time)
+  gt_tbl_1_gs <-
+    tbl_1 %>%
+    dplyr::group_by(group) %>%
+    gt(rowname_col = "id") %>%
+    grand_summary_rows(columns = vars(value), fns = list("sum"))
+
+  gt_tbl_1b_gs <-
+    tbl_1 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    grand_summary_rows(columns = vars(value), fns = list("sum"))
+
+  gt_tbl_2_gs <-
+    tbl_2 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    grand_summary_rows(columns = vars(value), fns = list("sum"))
+
+  gt_tbl_3_gs <-
+    tbl_3 %>%
+    gt(rowname_col = "id", groupname_col = "group") %>%
+    grand_summary_rows(columns = vars(value), fns = list("sum"))
+
+  # Expect the correct value in the grand summary row of `gt_tbl_gs`
+  gt_tbl_1_gs %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(c("122.00"))
+
+  # Expect the HTML output tables of `gt_tbl_gs` and `gt_tbl_1b_gs` to be the same
+  expect_identical(
+    gt_tbl_1_gs %>% render_as_html(),
+    gt_tbl_1b_gs %>% render_as_html()
+  )
+
+  # Expect the correct value in the grand summary row of `gt_tbl_2_gs`
+  gt_tbl_2_gs %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(c("122.00"))
+
+  # Expect the correct value in the grand summary row of `gt_tbl_3_gs`
+  gt_tbl_3_gs %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(c("122.00"))
 })
 
 test_that("summary rows can be created when there is no stub", {
