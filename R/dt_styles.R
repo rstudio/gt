@@ -20,7 +20,7 @@ dt_styles_init <- function(data) {
     rownum = NA_integer_,
     colnum = NA_integer_,
     styles = list()
-  )[-1, ] %>%
+  ) %>%
     dt_styles_set(styles = ., data = data)
 }
 
