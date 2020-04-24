@@ -932,6 +932,32 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
   gt_tbl_3_gs %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
     expect_equal(c("122.00"))
+
+  # Example where a columns is named `columns`
+  tbl_4 <-
+    tibble::tibble(
+      id = c("1", "2", "3", "4", "5", "6"),
+      value = c(1, 10, 1, 10, 99, 1),
+      columns = c(2, 20, 2, 20, 198, 2),
+      group = c("b", "a", "b", "a", "c", "b")
+    )
+
+  gt_tbl_4 <-
+    tbl_4 %>%
+    dplyr::group_by(group) %>%
+    gt(rowname_col = "id") %>%
+    summary_rows(groups = TRUE, columns = vars(value, columns), fns = list("sum")) %>%
+    grand_summary_rows(columns = vars(value, columns), fns = list("sum"))
+
+  # Expect the correct values in summary rows of `gt_tbl_4`
+  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row']") %>%
+    expect_equal(c("3.00", "6.00", "20.00", "40.00", "99.00", "198.00"))
+
+  # Expect the correct values in the grand summary row of `gt_tbl_4`
+  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(c("122.00", "244.00"))
 })
 
 test_that("summary rows can be created when there is no stub", {
