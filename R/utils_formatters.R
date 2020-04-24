@@ -245,7 +245,7 @@ format_num_to_str <- function(x,
     flag <- ""
     drop0trailing <- drop_trailing_zeros
   } else if (format == "e") {
-    mode <- NULL
+    mode <- "double"
     digits <- decimals
     flag <- ""
     drop0trailing <- drop_trailing_zeros
@@ -258,7 +258,7 @@ format_num_to_str <- function(x,
       x = x,
       format = format,
       mode = mode,
-      digits = decimals,
+      digits = digits,
       flag = flag,
       drop0trailing = drop0trailing,
       big.mark = sep_mark,

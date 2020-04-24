@@ -422,9 +422,10 @@ test_that("the `fmt_number()` function format to specified significant figures",
     (tab %>%
        fmt_number(columns = "num", n_sigfig = 5) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("50,000", "1,000", "10", "12,345", "1,234", "123", "1.2", "0.12",
-      "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,345",
-      "&minus;1,234", "&minus;123", "&minus;1.2", "&minus;0.12", "&minus;0.000012"
+    c("50,000", "1,000.0", "10.000", "12,345", "1,234.5", "123.45",
+      "1.2345", "0.12345", "0.000012346", "&minus;50,000", "&minus;1,000.0",
+      "&minus;10.000", "&minus;12,345", "&minus;1,234.5", "&minus;123.45",
+      "&minus;1.2345", "&minus;0.12345", "&minus;0.000012346"
     )
   )
 
@@ -433,9 +434,10 @@ test_that("the `fmt_number()` function format to specified significant figures",
     (tab %>%
        fmt_number(columns = "num", n_sigfig = 4) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("50,000", "1,000", "10", "12,340", "1,234", "123", "1.2", "0.12",
-      "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,340",
-      "&minus;1,234", "&minus;123", "&minus;1.2", "&minus;0.12", "&minus;0.000012"
+    c("50,000", "1,000", "10.00", "12,340", "1,234", "123.4", "1.234",
+      "0.1234", "0.00001235", "&minus;50,000", "&minus;1,000", "&minus;10.00",
+      "&minus;12,340", "&minus;1,234", "&minus;123.4", "&minus;1.234",
+      "&minus;0.1234", "&minus;0.00001235"
     )
   )
 
@@ -444,9 +446,10 @@ test_that("the `fmt_number()` function format to specified significant figures",
     (tab %>%
        fmt_number(columns = "num", n_sigfig = 3) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("50,000", "1,000", "10", "12,300", "1,230", "123", "1.2", "0.12",
-      "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,300",
-      "&minus;1,230", "&minus;123", "&minus;1.2", "&minus;0.12", "&minus;0.000012"
+    c("50,000", "1,000", "10.0", "12,300", "1,230", "123", "1.23",
+      "0.123", "0.0000123", "&minus;50,000", "&minus;1,000", "&minus;10.0",
+      "&minus;12,300", "&minus;1,230", "&minus;123", "&minus;1.23",
+      "&minus;0.123", "&minus;0.0000123"
     )
   )
 
@@ -466,9 +469,9 @@ test_that("the `fmt_number()` function format to specified significant figures",
     (tab %>%
        fmt_number(columns = "num", n_sigfig = 1) %>%
        render_formats_test(context = "html"))[["num"]],
-    c("50,000", "1,000", "10", "10,000", "1,000", "100", "1.0", "0.10",
-      "0.000010", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;10,000",
-      "&minus;1,000", "&minus;100", "&minus;1.0", "&minus;0.10", "&minus;0.000010"
+    c("50,000", "1,000", "10", "10,000", "1,000", "100", "1", "0.1",
+      "0.00001", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;10,000",
+      "&minus;1,000", "&minus;100", "&minus;1", "&minus;0.1", "&minus;0.00001"
     )
   )
 
