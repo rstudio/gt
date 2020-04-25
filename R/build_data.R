@@ -15,8 +15,8 @@ build_data <- function(data, context) {
     dt_body_build() %>%
     render_formats(context = context) %>%
     migrate_unformatted_to_output(context = context) %>%
-    perform_col_merge(context = context) %>%
-    perform_text_transforms()
+    perform_text_transforms() %>%
+    perform_col_merge(context = context)
 
   data <-
     data %>%
