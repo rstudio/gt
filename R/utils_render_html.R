@@ -792,7 +792,10 @@ create_body_component_h <- function(data) {
                     c("gt_row", alignment_class, extra_class),
                     collapse = " "),
                   style = cell_style,
-                  htmltools::HTML(x)
+                  htmltools::tags$div(
+                    class = "gt_cell_content",
+                    htmltools::HTML(x)
+                  )
                 )
               }
             )
