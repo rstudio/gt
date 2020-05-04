@@ -18,10 +18,15 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - {os: windows-latest, r: '3.5'}
           - {os: windows-latest, r: '3.6'}
+          - {os: windows-latest, r: '4.0'}
+          - {os: macOS-latest, r: '3.5'}
           - {os: macOS-latest, r: '3.6'}
+          - {os: macOS-latest, r: '4.0'}
           - {os: ubuntu-16.04, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
           - {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04, r: '4.0', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
