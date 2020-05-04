@@ -58,7 +58,8 @@ to \code{...}.
 }
 
 \examples{
-\dontrun{
+if (interactive()) {
+
 # Use `gtcars` to create a gt table; add
 # a stubhead label to describe what is
 # in the stub
@@ -98,6 +99,7 @@ tab_1 \%>\%
 # document
 tab_1 \%>\%
   gtsave("tab_1.tex", path = tempdir())
+
 }
 
 }
