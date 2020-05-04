@@ -39,6 +39,7 @@ Imports:
     tibble (>= 3.0.0),
     tidyselect (>= 1.0.0)
 Suggests:
+    covr,
     knitr,
     paletteer,
     testthat (>= 2.1.0),
