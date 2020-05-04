@@ -1077,40 +1077,80 @@ cells_grand_summary <- function(columns = TRUE,
 currency <- function(...,
                      .list = list2(...)) {
 
-  # Collect a named list of currencies
-  currency_list <- .list
+  make_contextual_list(
+    .list = .list,
+    class_name = "gt_currency",
+    function_name = "currency"
+  )
+}
 
-  # Stop function if the currency list contains no values
-  if (length(currency_list) == 0) {
-    stop("The `currency()` function must be provided with currency symbols.",
-         call. = FALSE)
+
+#' #' Supply a custom format pattern
+#'
+#' @param ... One or more named arguments using output contexts as the names and
+#'   formatting patterns as the values.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#'
+#' @return A list object of class `gt_format_pattern`.
+#'
+#' @export
+format_pattern <- function(...,
+                           .list = list2(...)) {
+
+  make_contextual_list(
+    .list = .list,
+    class_name = "gt_format_pattern",
+    function_name = "format_pattern"
+  )
+}
+
+
+make_contextual_list <- function(.list,
+                                 class_name = NULL,
+                                 function_name = NULL) {
+
+  # Collect what is to be a named list
+  named_list <- .list
+
+  # Stop function if the named list contains no values
+  if (length(named_list) == 0) {
+
+    if (!is.null(function_name)) {
+      stop("The `", function_name, "()` function must be provided with values.",
+           call. = FALSE)
+    } else {
+      stop("Values must be provided.",
+           call. = FALSE)
+    }
   }
 
-  # If only a single string is provided, upgrade the `currency_list`
+  # If only a single string is provided, upgrade the `named_list`
   # to have that string be the `default` value
-  if (length(currency_list) == 1 && !rlang::is_named(currency_list)) {
-    currency_list <- list(default = currency_list[[1]])
+  if (length(named_list) == 1 && !rlang::is_named(named_list)) {
+    named_list <- list(default = named_list[[1]])
   }
 
-  # Stop function if `currency_list` isn't entirely named
-  if (!rlang::is_named(currency_list)) {
+  # Stop function if `named_list` isn't entirely named
+  if (!rlang::is_named(named_list)) {
     stop("Names must be provided for all output contexts.",
          call. = FALSE)
   }
 
   # Stop function if all names are not part of the supported contexts
-  validate_contexts(contexts = names(currency_list))
+  validate_contexts(contexts = names(named_list))
 
   # Stop function if there are duplicated names
-  if (!rlang::is_dictionaryish(currency_list)) {
+  if (!rlang::is_dictionaryish(named_list)) {
     stop("There cannot be any duplicate names for output contexts.",
          call. = FALSE)
   }
 
   # Set the `gt_currency` class
-  class(currency_list) <- "gt_currency"
+  if (!is.null(class_name)) {
+    class(named_list) <- class_name
+  }
 
-  currency_list
+  named_list
 }
 
 #' Helper for defining custom text styles for table cells
