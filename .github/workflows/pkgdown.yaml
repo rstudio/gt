@@ -24,8 +24,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-3.6-${{ hashFiles('depends.Rds') }}
-          restore-keys: macOS-r-3.6-
+          key: macOS-r-3.6-1-${{ hashFiles('depends.Rds') }}
+          restore-keys: macOS-r-3.6-1
 
       - name: Install dependencies
         run: |
