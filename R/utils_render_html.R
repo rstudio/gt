@@ -67,16 +67,20 @@ get_table_defs <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
+  # In the case that column widths are not set for any columns,
+  # there should be no change to the table's style attribute and
+  # there should not be a <colgroup> tag requirement
   if (boxh$column_width %>% unlist() %>% length() < 1) {
     return(list(table_style = NULL, table_colgroups = NULL))
   }
 
+  # Get the table's width (which or may not have been set)
   table_width <- dt_options_get_value(data, option = "table_width")
 
   widths <-
     boxh %>%
     dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
     .$column_width %>%
     unlist()
 
@@ -87,183 +91,23 @@ get_table_defs <- function(data) {
          call. = FALSE)
   }
 
-  # Convert numeric widths to 100px multiples if numbers are less than 10;
-  # otherwise, use them directly as `px` values
-  widths <-
-    vapply(
-      widths,
-      FUN.VALUE = character(1), USE.NAMES = FALSE,
-      FUN = function(x) {
-        if (grepl("^[0-9\\.]*?$", x)) {
-          x_num <- as.numeric(x)
-          x <-
-            if (x_num < 10) {
-              px(x_num * 100)
-            } else {
-              px(x_num)
-            }
-        }
-        x
-      })
-
-  if (table_width == "auto") {
-
-    # Disallow the use of `%` units since the `table.width` option
-    # wasn't explicitly set
-    if (any(grepl("%", widths))) {
-      stop("Percent values for column widths cannot be used if the ",
-           "`table.width` option isn't set:\n",
-           "* Use `tab_options(table.width = px(<numeric>))` to set an overall ",
-           "table width in pixels", call. = FALSE)
-    }
-
-    total_width <- NULL
-    widths_norm <- widths
-
-    if (all(grepl("px", widths_norm))) {
-
-      total_width <-
-        widths_norm %>%
-        tidy_gsub("px", "") %>%
-        as.numeric() %>% sum() %>%
-        px()
-
-    } else {
-
-      # Any `*` chars represent variable-width columns; empty strings
-      # will mean that widths for these are unset
-      widths_norm[grepl("*", widths_norm, fixed = TRUE)] <- ""
-    }
-
-  } else if (grepl("px", table_width)) {
-
-    total_width <- table_width
-    total_width_px <- as.numeric(tidy_gsub(table_width, "px", ""))
-
-    # We have a fixed table width; allow the use of px, %, and `*` values
-
-    if (all(grepl("*", widths, fixed = TRUE))) {
-
-      # If all widths are variable then divide the number of
-      # visible columns by the fixed width of the table
-
-      widths_norm <- total_width_px / length(widths)
-
-    } else if (any(grepl("%", widths))) {
-
-      # If we have the presence of percentage width values
-      # process those first
-      sum_percentages <-
-        widths[grepl("%", widths)] %>%
-        tidy_gsub("%", "") %>%
-        as.numeric() %>%
-        magrittr::divide_by(100) %>%
-        sum()
-
-      total_width_px <- as.numeric(tidy_gsub(table_width, "px", ""))
-
-      # Stop function if the sum of percentage values is > 1
-      if (sum_percentages > 1) {
-        stop("The sum of percentage values supplied in `cols_widths()` ",
-             "cannot be greater than 1.", call. = FALSE)
-      }
-
-      # Transform any `%` values
-      widths_norm <-
-        vapply(
-          widths,
-          FUN.VALUE = character(1), USE.NAMES = FALSE,
-          FUN = function(x) {
-            if (grepl("%", x)) {
-              x <-
-                tidy_gsub(x, "%", "") %>%
-                as.numeric() %>%
-                magrittr::divide_by(100) %>%
-                magrittr::multiply_by(total_width_px) %>%
-                px()
-            }
-            x
-          })
-
-      if (any(grepl("*", widths_norm, fixed = TRUE))) {
-
-        tally_width_px <-
-          widths_norm[grepl("px", widths_norm)] %>%
-          tidy_gsub("px", "") %>%
-          as.numeric() %>% sum()
-
-        if (tally_width_px >= total_width_px) {
-          stop("The total width of columns defined in pixels or percentages ",
-               "is greater than the defined `table.width`", call. = FALSE)
-          # TODO: add more notes to this stop message
-        }
-
-        # Get the width of each `*` (variable width) column
-        variable_col_width <-
-          (total_width_px - tally_width_px) /
-          length(widths_norm[grepl("*", widths_norm, fixed = TRUE)])
-
-        # Transform the remaining `*` values in `widths_norm`
-        widths_norm[grepl("*", widths_norm, fixed = TRUE)] <- px(variable_col_width)
-      }
-
-      total_width <- px(total_width_px)
-
-    } else if (any(grepl("px", widths))) {
-
-      # If we exclusively have all widths defined as pixel values, then
-      # we use those directly, overriding the `total_width_px` with the
-      # sum of the individual `widths` values
-
-      widths_norm <- widths
-
-      if (any(grepl("*", widths_norm, fixed = TRUE))) {
-
-        tally_width_px <-
-          widths_norm[grepl("px", widths_norm)] %>%
-          tidy_gsub("px", "") %>%
-          as.numeric() %>% sum()
-
-        # Stop function (with a detailed message) if the sum of column
-        # widths is greater than the defined, total width (priority: `table.width`)
-        if (tally_width_px >= total_width_px) {
-          stop("The total width of columns defined in px or % units >= ",
-               "the defined `table.width`.\n",
-               "* column widths add up to ", tally_width_px, "px and the defined ",
-               "`table.width` has been set to ", total_width_px, "px\n",
-               "* you can remove the fixed `table.width` requirement, increase ",
-               "its width, or work toward reducing the combined size of column widths\n",
-               "* another option is to define all columns in terms of px values",
-               call. = FALSE)
-        }
-
-        # Get the width of each `*` (variable width) column
-        variable_col_width <-
-          (total_width_px - tally_width_px) /
-          length(widths_norm[grepl("*", widths_norm, fixed = TRUE)])
-
-        # Transform the remaining `*` values in `widths_norm`
-        widths_norm[grepl("*", widths_norm, fixed = TRUE)] <- px(variable_col_width)
-      }
-
-      total_width <-
-        widths_norm %>%
-        tidy_gsub("px", "") %>%
-        as.numeric() %>% sum() %>%
-        px()
-    }
-  }
-
   table_style <- "table-layout: fixed"
 
-  if (!is.null(total_width)) {
-    table_style <- paste(table_style, paste0("width: ", total_width), sep = "; ")
+  # If all of the widths are defined as px values for all columns,
+  # then ensure that the width values are strictly respected as
+  # absolute width values (even if a table width has already been set)
+  if (all(grepl("px", widths))) {
+    table_width <- "0px"
+  }
+
+  if (table_width != "auto") {
+    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
 
   # Create the <colgroup> tag
   table_colgroups <-
     htmltools::tags$colgroup(
-      lapply(widths_norm, function(width) {
+      lapply(widths, function(width) {
         htmltools::tags$col(style = paste0("width: ", width))
       })
     )

@@ -233,7 +233,8 @@ cols_width <- function(data,
     columns_unset <- (data %>% dt_boxhead_get_vars())[unset_widths]
 
     for (column in columns_unset) {
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list("*"))
+
+      data <- data %>% dt_boxhead_edit(var = column, column_width = list(""))
     }
   }
 
