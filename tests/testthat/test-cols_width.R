@@ -13,7 +13,8 @@ tbl <-
     349.7,  307.1,  566.7,  542.9,
     63.7,  504.3,  152.0,  724.5,
     105.4,  729.8,  962.4,  336.4,
-    924.2,  424.6,  740.8,  104.2)
+    924.2,  424.6,  740.8,  104.2
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
@@ -93,8 +94,7 @@ test_that("the function `cols_width()` works correctly", {
 
   # Create a `tbl_html` object with `gt()` and size the
   # first two columns to `100px`; the uncaptured columns
-  # will get default width of `100px` (a warning will be
-  # given)
+  # will variable widths
   tbl_html <-
     suppressWarnings(
       gt(tbl) %>%
@@ -105,7 +105,7 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the first two column widths are
-  # set to `150px`, and the rest are `100px`
+  # set to `150px`, and the rest are blank (variable width)
   suppressWarnings(
     tbl_html %>%
       render_as_html() %>%
@@ -113,7 +113,7 @@ test_that("the function `cols_width()` works correctly", {
         paste0(
           "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
           "<col style=\"width: 150px\"/>\n\\s*?<col style",
-          "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
+          "=\"width: \"/>\\s*?<col style=\"width: \"/>\\s*?",
           "</colgroup>")
       )) %>%
     expect_true()
