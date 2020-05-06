@@ -100,6 +100,10 @@ get_table_defs <- function(data) {
     table_width <- "0px"
   }
 
+  if (all(grepl("%", widths)) && table_width == "auto") {
+    table_width <- "100%"
+  }
+
   if (table_width != "auto") {
     table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
