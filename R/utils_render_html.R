@@ -84,7 +84,7 @@ get_table_defs <- function(data) {
     .$column_width %>%
     unlist()
 
-  if (!all(grepl("^([0-9\\.]*?|[0-9\\.]*?px|[0-9\\.]*?%|\\*)$", widths))) {
+  if (!all(grepl("^([0-9\\.]*)(px|%)?$", widths))) {
     stop("Disallowed inputs provided to `cols_width()`.\n",
          "* Only the `px()` and `pct()` functions should be used on the ",
          "RHS of all column width exprs",
