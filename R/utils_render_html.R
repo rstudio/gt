@@ -96,7 +96,7 @@ get_table_defs <- function(data) {
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
   # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths))) {
+  if (all(grepl("px", widths)) && table_width == "auto") {
     table_width <- "0px"
   }
 
