@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{format_pattern}
 \alias{format_pattern}
-\title{#' Supply a custom format pattern}
+\title{Supply a custom format pattern as a contextual list}
 \usage{
 format_pattern(..., .list = list2(...))
 }
@@ -16,5 +16,5 @@ formatting patterns as the values.}
 A list object of class \code{gt_format_pattern}.
 }
 \description{
-#' Supply a custom format pattern
+Supply a custom format pattern as a contextual list
 }

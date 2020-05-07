@@ -1085,7 +1085,7 @@ currency <- function(...,
 }
 
 
-#' #' Supply a custom format pattern
+#' Supply a custom format pattern as a contextual list
 #'
 #' @param ... One or more named arguments using output contexts as the names and
 #'   formatting patterns as the values.
