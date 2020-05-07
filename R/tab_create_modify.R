@@ -513,13 +513,19 @@ tab_stubhead <- function(data,
 #' @export
 tab_footnote <- function(data,
                          footnote,
-                         locations) {
+                         locations,
+                         pattern = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
+
+  # Resolve the `pattern`
+  if (is.null(pattern)) {
+
+  }
 
   # Resolve the locations of the targeted data cells and append
   # the footnotes
