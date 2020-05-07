@@ -57,6 +57,10 @@ coalesce_marks <- function(fn_tbl,
 
   locname_enquo <- rlang::enquo(locname)
 
+  # TODO: Have the `delimiter` be an option in `tab_options()`, but,
+  # also allow for delimiter to be expressed as inside of `tab_footnote()`'s
+  # new `pattern` argument
+
   fn_tbl %>%
     dplyr::filter(locname == !!locname) %>%
     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
