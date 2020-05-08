@@ -56,8 +56,8 @@
 #'   to all of the `colors` provided (regardless of whether a color palette was
 #'   directly supplied or generated through a color mapping function).
 #' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `fill`) or the cell
-#'   text (`text`).
+#'   include the cell background (the default, given as `"fill"`) or the cell
+#'   text (`"text"`).
 #' @param autocolor_text An option to let **gt** modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
@@ -130,14 +130,22 @@ data_color <- function(data,
                        columns,
                        colors,
                        alpha = NULL,
-                       apply_to = "fill",
+                       apply_to = c("fill", "text"),
                        autocolor_text = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Get the correct `apply_to` value
+  apply_to <- match.arg(apply_to)
+
+  colors <- rlang::enquo(colors)
+
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
+
+  # Evaluate `colors` with `eval_tidy()` (supports quosures)
+  colors <- rlang::eval_tidy(colors, data_tbl)
 
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
@@ -158,7 +166,7 @@ data_color <- function(data,
 
   for (column in resolved_columns) {
 
-    data_vals <- data_tbl[[column]]
+    data_vals <- data_tbl[[column]][rows]
 
     if (inherits(colors, "character")) {
 
@@ -206,7 +214,7 @@ data_color <- function(data,
            call. = FALSE)
     }
 
-    color_fn <- rlang::enquo(color_fn)
+    # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
     color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
     # Evaluate the color function with the data values
