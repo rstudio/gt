@@ -199,7 +199,7 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
 <span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
   <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>contains</a></span>(<span class='st'>"_"</span>))
+  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"_"</span>))
 
 <span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span>(
 

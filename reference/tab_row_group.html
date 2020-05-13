@@ -146,7 +146,7 @@ through use of a select helper function like starts_with()." />
     <div class="ref-description">
     <p>Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>starts_with()</a></code>.</p>
+through use of a select helper function like <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tab_row_group</span>(<span class='no'>data</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>others</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -168,8 +168,8 @@ group label.</p></td>
       <td><p>The rows to be made components of the row group. Can either be a
 vector of row captions provided in <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, a vector of row indices, or a
 helper function focused on selections. The select helper functions are:
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>everything()</a></code>.</p></td>
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p></td>
     </tr>
     <tr>
       <th>others</th>
@@ -222,7 +222,7 @@ without a label.</p></td>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>tab_row_group</span>(
     <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"numbered"</span>,
-    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
+    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
   )
 
 <span class='co'># Use `gtcars` to create a gt table;</span>

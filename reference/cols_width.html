@@ -172,12 +172,12 @@ where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
 <code>{##}px</code> (i.e., pixel dimensions); the <code><a href='px.html'>px()</a></code> helper function is best used
 for this purpose. Column names should be enclosed in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>. The
-column-based select helpers <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>everything()</a></code> can be used in the LHS.
+column-based select helpers <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code> can be used in the LHS.
 Subsequent expressions that operate on the columns assigned previously will
 result in overwriting column width values (both in the same <code>cols_width()</code>
 call and across separate calls). All other columns can be assigned a
-default width value by using <code>TRUE</code> or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>everything()</a></code> on the left-hand
+default width value by using <code>TRUE</code> or <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code> on the left-hand
 side.</p></td>
     </tr>
     <tr>
@@ -235,9 +235,9 @@ favor of the pixel values set for each column.</p>
   <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>cols_width</span>(
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>150</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>ends_with</a></span>(<span class='st'>"r"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>100</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>starts_with</a></span>(<span class='st'>"date"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>200</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>everything</a></span>() ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>60</span>)
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span>(<span class='st'>"r"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>100</span>),
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>200</span>),
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>() ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>60</span>)
   )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

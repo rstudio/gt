@@ -241,7 +241,7 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
     <span class='no'>country_name</span> <span class='kw'>==</span> <span class='st'>"Spain"</span>,
     <span class='no'>year</span> <span class='kw'>&lt;</span> <span class='fl'>1970</span>
   ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>contains</a></span>(<span class='st'>"country"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"country"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"year"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(
     <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>population</span>),
