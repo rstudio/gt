@@ -6,10 +6,13 @@
 \alias{_PACKAGE}
 \title{gt: Easily Create Presentation-Ready Display Tables}
 \description{
-Build display tables from tabular data using with an easy-to-use
-    API. With its progressive approach, we can construct display tables with a
-    clear separation of concerns: you don't have to decide how the tabular data
-    gets transformed and structured whilst also worrying about aesthetics.
+Build display tables from tabular data with an easy-to-use set of
+    functions. With its progressive approach, we can construct display tables
+    with a cohesive set of table parts. Table values can be formatted using any
+    of the included formatter functions. Footnotes and cell styles can be 
+    precisely added through gt's location targeting system. The way in which gt
+    handles things for you means that you don't often have to worry about the
+    fine details.
 }
 \seealso{
 Useful links:
