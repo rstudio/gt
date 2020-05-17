@@ -102,7 +102,7 @@ gt_tbl %>%
 
 
 #
-# II. Defining an absolute table width in percentages
+# II. Defining an absolute table width as a percentage
 #
 
 # (1) UNDEF

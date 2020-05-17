@@ -67,9 +67,12 @@ get_table_defs <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
+  # Get the `table-layout` value, which is set in `_options`
+  table_style <-
+    paste0("table-layout: ", dt_options_get_value(data, option = "table_layout"), ";")
+
   # In the case that column widths are not set for any columns,
-  # there should be no change to the table's style attribute and
-  # there should not be a <colgroup> tag requirement
+  # there should not be a `<colgroup>` tag requirement
   if (boxh$column_width %>% unlist() %>% length() < 1) {
     return(list(table_style = NULL, table_colgroups = NULL))
   }
@@ -84,14 +87,15 @@ get_table_defs <- function(data) {
     .$column_width %>%
     unlist()
 
-  if (!all(grepl("^([0-9\\.]*)(px|%)?$", widths))) {
+  # Stop function if all length dimensions (where provided)
+  # don't conform to accepted CSS length definitions
+  if (!all(are_css_lengths(widths))) {
+
     stop("Disallowed inputs provided to `cols_width()`.\n",
          "* Only the `px()` and `pct()` functions should be used on the ",
          "RHS of all column width exprs",
          call. = FALSE)
   }
-
-  table_style <- "table-layout: fixed"
 
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
@@ -108,7 +112,7 @@ get_table_defs <- function(data) {
     table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
 
-  # Create the <colgroup> tag
+  # Create the `<colgroup>` tag
   table_colgroups <-
     htmltools::tags$colgroup(
       lapply(widths, function(width) {

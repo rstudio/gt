@@ -1019,6 +1019,50 @@ validate_table_id <- function(id) {
   }
 }
 
+is_css_length <- function(x,
+                          must_have_unit = FALSE,
+                          allow_empty = TRUE) {
+
+  # This is adapted from `htmltools::validateCssUnit()` to be a test
+  # function that either returns TRUE or FALSE
+  if (is.null(x) || is.na(x)) {
+    return(FALSE)
+  }
+
+  if (!is.character(x) && !is.numeric(x)) {
+    return(FALSE)
+  }
+
+  if (is.character(x) && nchar(x) < 1) {
+    if (!allow_empty) return(FALSE) else return(TRUE)
+  }
+
+  if (is.character(x) && gsub("^[0-9.]*$", "", x) == "") {
+    x <- as.numeric(x)
+  }
+
+  if (is.numeric(x)) {
+    if (!must_have_unit) return(TRUE) else return(FALSE)
+  }
+
+  pattern <- "^(auto|inherit|calc\\(.*\\)|((\\.\\d+)|(\\d+(\\.\\d+)?))(%|in|cm|mm|ch|em|ex|rem|pt|pc|px|vh|vw|vmin|vmax))$"
+  grepl(pattern, x)
+}
+
+are_css_lengths <- function(x,
+                            must_have_unit = FALSE,
+                            allow_empty = TRUE) {
+
+  vapply(
+    x,
+    FUN = is_css_length,
+    must_have_unit = FALSE,
+    allow_empty = TRUE,
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
+}
+
 column_classes_are_valid <- function(data, columns, valid_classes) {
 
   dt_data_get(data = data) %>%
