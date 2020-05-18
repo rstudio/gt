@@ -1,4 +1,4 @@
-# gt 0.2.0.9000 (in development)
+# gt 0.2.1
 
 * Ensure compatibility with **tibble** 3.0.0. PR: [#557](https://github.com/rstudio/gt/pull/557).
 
