@@ -1113,6 +1113,23 @@ currency <- function(...,
   currency_list
 }
 
+#' A vector of default fonts for use with **gt** tables
+#'
+#' This vector of fonts should be used with an **gt** table that is rendered to
+#' HTML. We can specify additional fonts to use but this default set should be
+#' placed after that to act as fallbacks.
+#'
+#' @family Helper Functions
+#'
+#' @export
+default_fonts <- function() {
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
+}
+
 #' Helper for defining custom text styles for table cells
 #'
 #' This helper function is to be used with the [tab_style()] function, which

@@ -15,6 +15,8 @@ tab_options(
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
+  table.font.names = NULL,
+  table.font.imports = NULL,
   table.font.color = NULL,
   table.font.color.light = NULL,
   table.font.size = NULL,

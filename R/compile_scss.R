@@ -9,6 +9,10 @@ compile_scss <- function(data, id = NULL) {
 
   has_id <- !is.null(id)
 
+  # Get the vector of fonts and transform to a `font-family` string
+  font_vec <- dt_options_get_value(data = data, option = "table_font_names")
+  font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
+
   sass::sass(
     list(
       list(element_id = id),
@@ -19,9 +23,7 @@ compile_scss <- function(data, id = NULL) {
         .open = "<<", .close = ">>",
         "
         <<ifelse(has_id, 'html', '.gt_table')>> {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans',
-            Arial, sans-serif;
+          <<font_family_attr>>
         }
 
         <<ifelse(has_id, '##{$element_id} {', '')>>

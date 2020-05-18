@@ -78,6 +78,7 @@ Other Helper Functions:
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
