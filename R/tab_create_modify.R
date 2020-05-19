@@ -876,10 +876,27 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Intercept font styles that require registration
+  if ("cell_text" %in% names(style)) {
+    if ("font" %in% names(style[["cell_text"]])) {
+      if (inherits(style[["cell_text"]][["font"]], "google_fonts")) {
+
+        existing_import_stmts <- dt_options_get_value(data = data, option = "table_font_imports")
+
+        import_stmts <-
+          c(existing_import_stmts, style[["cell_text"]][["font"]][["import_stmt"]])
+
+        data <- tab_options(data = data, table.font.imports = import_stmts)
+
+        style[["cell_text"]][["font"]] <- style[["cell_text"]][["font"]][["name"]]
+      }
+    }
+  }
+
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
-  style <- as_style(style)
+  style <- as_style(style = style)
 
   # Resolve the locations of the targeted data cells and append
   # the format directives

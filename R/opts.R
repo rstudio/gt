@@ -497,6 +497,49 @@ opt_table_outline <- function(data,
   tab_options_multi(data, option_value_list)
 }
 
+#' @export
+opt_font <- function(data,
+                     font_name) {
+
+  existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
+
+  if (inherits(font_name, "character")) {
+
+    data <- tab_options(data = data, table.font.names = c(font_name, existing_fonts))
+    return(data)
+  }
+
+  if (inherits(font_name, "google_fonts")) {
+    data <- tab_options(data = data, table.font.names = c(font_name$name, existing_fonts))
+    data <- tab_options(data = data, table.font.imports = font_name$import_stmt)
+    return(data)
+  }
+
+}
+
+#' @export
+google_fonts <- function(name) {
+
+  import_stmt <-
+    name %>% tidy_gsub(" ", "+") %>%
+    paste_between(
+      c(
+        "@import url('https://fonts.googleapis.com/css2?family=",
+        "&display=swap');"
+      )
+    )
+
+  google_fonts <-
+    list(
+      name = name,
+      import_stmt = import_stmt
+    )
+
+  class(google_fonts) <- "google_fonts"
+
+  google_fonts
+}
+
 # Create an option-value list with a vector of arg names from the
 # `tab_options()` function and either one value or n-length values
 # corresponding to those options

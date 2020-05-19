@@ -57,7 +57,7 @@ dt_options_tbl <-
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
-    "table_font_imports",                FALSE,  "table",            "value",   NA_character_,
+    "table_font_imports",                FALSE,  "table",            "values",  character(0),
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_font_size",                    TRUE,  "table",            "px",      "16px",
