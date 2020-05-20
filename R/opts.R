@@ -499,18 +499,17 @@ opt_table_outline <- function(data,
 
 #' @export
 opt_font <- function(data,
-                     font_name) {
+                     font_name,
+                     add = TRUE) {
 
   existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
 
   if (inherits(font_name, "character")) {
-
-    data <- tab_options(data = data, table.font.names = c(font_name, existing_fonts))
-    return(data)
+    data <- tab_options(data = data, table.font.names = c(font_name, if (add) existing_fonts))
   }
 
   if (inherits(font_name, "google_fonts")) {
-    data <- tab_options(data = data, table.font.names = c(font_name$name, existing_fonts))
+    data <- tab_options(data = data, table.font.names = c(font_name$name, if (add) existing_fonts))
     data <- tab_options(data = data, table.font.imports = font_name$import_stmt)
     return(data)
   }
