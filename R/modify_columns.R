@@ -219,6 +219,9 @@ cols_width <- function(data,
       rlang::f_rhs() %>%
       rlang::eval_tidy()
 
+    # If a bare numeric value is provided, give that the `px` dimension
+    if (is.numeric(width)) width <- paste_right(as.character(width), "px")
+
     for (column in columns) {
       data <- data %>% dt_boxhead_edit(var = column, column_width = list(width))
     }

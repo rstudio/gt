@@ -89,13 +89,7 @@ get_table_defs <- function(data) {
 
   # Stop function if all length dimensions (where provided)
   # don't conform to accepted CSS length definitions
-  if (!all(are_css_lengths(widths))) {
-
-    stop("Disallowed inputs provided to `cols_width()`.\n",
-         "* Only the `px()` and `pct()` functions should be used on the ",
-         "RHS of all column width exprs",
-         call. = FALSE)
-  }
+  validate_css_lengths(widths)
 
   # If all of the widths are defined as px values for all columns,
   # then ensure that the width values are strictly respected as
@@ -116,7 +110,7 @@ get_table_defs <- function(data) {
   table_colgroups <-
     htmltools::tags$colgroup(
       lapply(widths, function(width) {
-        htmltools::tags$col(style = paste0("width: ", width))
+        htmltools::tags$col(style = htmltools::css(width = width))
       })
     )
 
