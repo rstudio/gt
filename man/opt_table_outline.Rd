@@ -80,6 +80,7 @@ Other Table Option Functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()}
 }
 \concept{Table Option Functions}

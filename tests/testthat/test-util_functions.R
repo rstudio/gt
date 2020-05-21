@@ -360,7 +360,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(226, 4))
+  css_tbl %>% dim() %>% expect_equal(c(228, 4))
 
   css_tbl %>%
     colnames() %>%
@@ -388,7 +388,8 @@ test_that("the `inline_html_styles()` function works correctly", {
         "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
         "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
         "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
-        "font-size: 16px; background-color: #FFFFFF; width: auto; ",
+        "font-size: 16px; font-weight: normal; font-style: normal; ",
+        "background-color: #FFFFFF; width: auto; ",
         "border-top-style: solid; border-top-width: 2px; ",
         "border-top-color: #A8A8A8; border-right-style: none; ",
         "border-right-width: 2px; border-right-color: #D3D3D3; ",

@@ -28,6 +28,7 @@ Other Helper Functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{escape_latex}()},
+\code{\link{google_fonts}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

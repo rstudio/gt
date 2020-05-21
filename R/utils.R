@@ -957,11 +957,21 @@ validate_marks <- function(marks) {
   }
 }
 
-validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
+validate_style_in <- function(style_vals,
+                              style_names,
+                              arg_name,
+                              in_vector,
+                              with_pattern = NULL) {
 
   if (arg_name %in% style_names) {
 
     arg_value <- style_vals[[arg_name]]
+
+    # There is positive validation if a regex pattern is specified
+    # in `with_pattern` and the pattern matches
+    if (!is.null(with_pattern) && grepl(with_pattern, arg_value)) {
+        return()
+    }
 
     if (!(arg_value %in% in_vector)) {
       stop("The provided `", arg_name, "` value cannot be `",

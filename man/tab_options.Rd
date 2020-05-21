@@ -17,9 +17,11 @@ tab_options(
   table.background.color = NULL,
   table.font.names = NULL,
   table.font.imports = NULL,
+  table.font.size = NULL,
+  table.font.weight = NULL,
+  table.font.style = NULL,
   table.font.color = NULL,
   table.font.color.light = NULL,
-  table.font.size = NULL,
   table.border.top.style = NULL,
   table.border.top.width = NULL,
   table.border.top.color = NULL,
@@ -178,11 +180,13 @@ elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \
 \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
 hexadecimal color code should be provided.}
 
-\item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
-\code{table.font.color} is for text overlaid on lighter background colors, and
-\code{table.font.color.light} is automatically used when text needs to be
-overlaid on darker background colors. A color name or a hexadecimal color
-code should be provided.}
+\item{table.font.names}{The names of the fonts used for the table. This is
+a vector of several font names. If the first font isn't available, then
+the next font is tried (and so on).}
+
+\item{table.font.imports}{A vector of \verb{@import} statements pertaining to web
+fonts. If a web font is given in \code{table.font.names} then a corresponding
+entry must be made here for that font to be made available.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
@@ -193,17 +197,26 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
+\item{table.font.weight, heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the table, \code{heading.title}, \code{heading.subtitle},
+\code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
+keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
+numeric value between \code{1} and \code{1000}, inclusive. Note that only variable
+fonts may support the numeric mapping of weight.}
+
+\item{table.font.style}{The font style for the table. Can be one of either
+\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+
+\item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
+\code{table.font.color} is for text overlaid on lighter background colors, and
+\code{table.font.color.light} is automatically used when text needs to be
+overlaid on darker background colors. A color name or a hexadecimal color
+code should be provided.}
+
 \item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top and
 absolute bottom borders.}
 
 \item{heading.align}{Controls the horizontal alignment of the heading title
 and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
-
-\item{heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the \code{heading.title}, \code{heading.subtitle},
-\code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
-keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-numeric value between \code{1} and \code{1000}, inclusive. Note that only variable
-fonts may support the numeric mapping of weight.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the

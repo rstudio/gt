@@ -888,7 +888,13 @@ tab_style <- function(data,
 
         data <- tab_options(data = data, table.font.imports = import_stmts)
 
-        style[["cell_text"]][["font"]] <- style[["cell_text"]][["font"]][["name"]]
+        font_name <- style[["cell_text"]][["font"]][["name"]]
+
+        if (grepl(" ", font_name)) {
+          font_name <- paste_between(font_name, c("'", "'"))
+        }
+
+        style[["cell_text"]][["font"]] <- font_name
       }
     }
   }
@@ -1182,6 +1188,14 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
 #'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
 #'   hexadecimal color code should be provided.
+#' @param table.font.names The names of the fonts used for the table. This is
+#'   a vector of several font names. If the first font isn't available, then
+#'   the next font is tried (and so on).
+#' @param table.font.imports A vector of `@import` statements pertaining to web
+#'   fonts. If a web font is given in `table.font.names` then a corresponding
+#'   entry must be made here for that font to be made available.
+#' @param table.font.style The font style for the table. Can be one of either
+#'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param table.font.color,table.font.color.light
 #'   The text color used throughout the table. There are two variants:
 #'   `table.font.color` is for text overlaid on lighter background colors, and
@@ -1199,8 +1213,8 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   obtain values as pixel or percentage units.
 #' @param heading.align Controls the horizontal alignment of the heading title
 #'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
-#' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
-#'   The font weights of the `heading.title`, `heading.subtitle`,
+#' @param table.font.weight,heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
+#'   The font weights of the table, `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Note that only variable
@@ -1401,9 +1415,11 @@ tab_options <- function(data,
                         table.background.color = NULL,
                         table.font.names = NULL,
                         table.font.imports = NULL,
+                        table.font.size = NULL,
+                        table.font.weight = NULL,
+                        table.font.style = NULL,
                         table.font.color = NULL,
                         table.font.color.light = NULL,
-                        table.font.size = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,

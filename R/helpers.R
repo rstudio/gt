@@ -1145,8 +1145,8 @@ default_fonts <- function() {
 #'   function. We can also use one of the following absolute size keywords:
 #'   `"xx-small"`, `"x-small"`, `"small"`, `"medium"`, `"large"`, `"x-large"`,
 #'   or `"xx-large"`.
-#' @param style The text style. Can be one of either `"center"`, `"normal"`,
-#'   `"italic"`, or `"oblique"`.
+#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
+#'   `"oblique"`.
 #' @param weight The weight of the font. Can be a text-based keyword such as
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
 #'   `1` and `1000`, inclusive. Note that only variable fonts may support the
@@ -1236,43 +1236,53 @@ cell_text <- function(color = NULL,
   #
 
   validate_style_in(
-    style_vals, style_names, "align",
-    c("center", "left", "right", "justify")
+    style_vals, style_names,
+    arg_name = "align",
+    in_vector = c("center", "left", "right", "justify")
   )
 
   validate_style_in(
-    style_vals, style_names, "v_align",
-    c("middle", "top", "bottom")
+    style_vals, style_names,
+    arg_name = "v_align",
+    in_vector = c("middle", "top", "bottom")
   )
 
   validate_style_in(
-    style_vals, style_names, "style",
-    c("normal", "italic", "oblique")
+    style_vals, style_names,
+    arg_name = "style",
+    in_vector = c("normal", "italic", "oblique")
+  )
+
+  # TODO: modify regex to allow only numbers from 100-900 inclusive
+  validate_style_in(
+    style_vals, style_names,
+    arg_name = "weight",
+    in_vector = c("normal", "bold", "lighter", "bolder"),
+    with_pattern = "[1-9][0-9][0-9]"
   )
 
   validate_style_in(
-    style_vals, style_names, "weight",
-    c("normal", "bold", "lighter", "bolder")
-  )
-
-  validate_style_in(
-    style_vals, style_names, "stretch",
-    c("ultra-condensed", "extra-condensed", "condensed",
+    style_vals, style_names, arg_name = "stretch",
+    in_vector = c(
+      "ultra-condensed", "extra-condensed", "condensed",
       "semi-condensed", "normal", "semi-expanded", "expanded",
-      "extra-expanded", "ultra-expanded")
+      "extra-expanded", "ultra-expanded"
+    )
   )
 
   validate_style_in(
-    style_vals, style_names, "decorate",
-    c("overline", "line-through", "underline", "underline overline")
+    style_vals, style_names,
+    arg_name = "decorate",
+    in_vector = c("overline", "line-through", "underline", "underline overline")
   )
 
   validate_style_in(
-    style_vals, style_names, "transform",
-    c("uppercase", "lowercase", "capitalize")
+    style_vals, style_names,
+    arg_name = "transform",
+    in_vector = c("uppercase", "lowercase", "capitalize")
   )
 
-  cell_style_structure("cell_text", style_vals)
+  cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
 cell_style_to_html.cell_text <- function(style) {
@@ -1774,4 +1784,42 @@ gt_latex_dependencies <- function() {
     stop("The `knitr` package is required for getting the LaTeX dependency headers.",
          call. = FALSE)
   }
+}
+
+#' Helper function for specifying a font from the Google Fonts service
+#'
+#' The `google_fonts()` helper function can be used wherever a font name should
+#' be specified. There are two instances where this helper can be used: the
+#' `name` argument in [opt_table_font()] (for setting a table font) and in that
+#' of [cell_text()] (used with [tab_style()]).
+#'
+#' @param name The complete name of a font available in Google Fonts.
+#'
+#' @return An object of class `google_fonts`.
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-22
+#'
+#' @export
+google_fonts <- function(name) {
+
+  import_stmt <-
+    name %>% tidy_gsub(" ", "+") %>%
+    paste_between(
+      c(
+        "@import url('https://fonts.googleapis.com/css2?family=",
+        ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
+      )
+    )
+
+  google_fonts <-
+    list(
+      name = name,
+      import_stmt = import_stmt
+    )
+
+  class(google_fonts) <- "google_fonts"
+
+  google_fonts
 }

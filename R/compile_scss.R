@@ -20,8 +20,7 @@ compile_scss <- function(data, id = NULL) {
 
   if (has_font_imports) {
     font_imports <-
-      paste(font_imports, collapse = "\n") %>%
-      paste_right("\n")
+      paste(font_imports, collapse = "\n") %>% paste_right("\n")
   }
 
   sass::sass(

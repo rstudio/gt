@@ -497,46 +497,74 @@ opt_table_outline <- function(data,
   tab_options_multi(data, option_value_list)
 }
 
+
+#' Option to define a custom font for the table
+#'
+#' @description
+#' The `opt_table_font()` function makes it possible to define a custom font for
+#' the entire **gt** table. The standard fallback fonts are still set by default
+#' but the font defined here will take precedence. You could still have
+#' different fonts in select locations in the table, and for that you would need
+#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
+#'
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_fonts()]
+#' helper function.
+#'
+#' @inheritParams fmt_number
+#' @param font Either the name of a font available in the user system or a call
+#'   to [google_fonts()], which has a large selection of typefaces.
+#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
+#'   `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param add Should this font be added to the front of the already-defined
+#'   fonts for the table? By default, this is `TRUE` and is recommended since
+#'   the list serves as fallbacks when certain fonts are not available.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-7
+#'
 #' @export
-opt_font <- function(data,
-                     font_name,
-                     add = TRUE) {
+opt_table_font <- function(data,
+                           font,
+                           weight = NULL,
+                           style = NULL,
+                           add = TRUE) {
 
   existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
+  existing_font_imports <- dt_options_get_value(data = data, option = "table_font_imports")
 
-  if (inherits(font_name, "character")) {
-    data <- tab_options(data = data, table.font.names = c(font_name, if (add) existing_fonts))
+  if (inherits(font, "character")) {
+    data <- tab_options(data = data, table.font.names = c(font, if (add) existing_fonts))
   }
 
-  if (inherits(font_name, "google_fonts")) {
-    data <- tab_options(data = data, table.font.names = c(font_name$name, if (add) existing_fonts))
-    data <- tab_options(data = data, table.font.imports = font_name$import_stmt)
-    return(data)
+  if (inherits(font, "google_fonts")) {
+
+    font_imports <- c(existing_font_imports, font$import_stmt)
+
+    data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
+    data <- tab_options(data = data, table.font.imports = font_imports)
   }
 
-}
+  if (!is.null(weight)) {
 
-#' @export
-google_fonts <- function(name) {
+    if (is.numeric(weight)) weight <- as.character(weight)
 
-  import_stmt <-
-    name %>% tidy_gsub(" ", "+") %>%
-    paste_between(
-      c(
-        "@import url('https://fonts.googleapis.com/css2?family=",
-        "&display=swap');"
-      )
-    )
+    data <- tab_options(data = data, table.font.weight = weight)
+    data <- tab_options(data = data, column_labels.font.weight = weight)
+  }
 
-  google_fonts <-
-    list(
-      name = name,
-      import_stmt = import_stmt
-    )
+  if (!is.null(style)) {
+    data <- tab_options(data = data, table.font.style = style)
+  }
 
-  class(google_fonts) <- "google_fonts"
-
-  google_fonts
+  data
 }
 
 # Create an option-value list with a vector of arg names from the
