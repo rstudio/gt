@@ -108,23 +108,158 @@ for (file in ofl_files) {
   }
 }
 
+# TODO: Move to function `info_google_fonts()`
+
+# Recommended Fonts
+recommended <-
+  c(
+    "Space Mono",
+    "Work Sans",
+    "Inter",
+    "Rubik",
+    "Libre Franklin",
+    "Comorant",
+    "Fira Sans",
+    "Fira Code",
+    "Eczar",
+    "Chivo",
+    "Inknut",
+    "Source Sans Pro",
+    "Source Serif Pro",
+    "Roboto",
+    "Roboto Slab",
+    "BioRhyme",
+    "Poppins",
+    "Archivo Narrow",
+    "Libre Baskerville",
+    "Playfair Display",
+    "Karla",
+    "Encode Sans",
+    # "Encode Sans Condensed",
+    # "Encode Sans Semi Condensed",
+    # "Encode Sans Semi Expanded",
+    # "Encode Sans Expanded",
+    "Lora",
+    "Proza Libre",
+    "Spectral",
+    "IBM Plex Sans",
+    # "IBM Plex Sans Condensed",
+    # "IBM Plex Serif",
+    "IBM Plex Mono",
+    "Crimson Text",
+    "Montserrat",
+    "PT Sans",
+    "PT Serif",
+    "Lato",
+    "Cardo",
+    "Open Sans",
+    "Inconsolata",
+    "Cabin",
+    "Raleway",
+    "Anonymous Pro",
+    "Merriweather",
+    "Exo 2",
+    "Public Sans",
+    "Muli"
+  )
+
+styles_summary <-
+  styles_tbl %>%
+  dplyr::mutate(weight = as.integer(weight)) %>%
+  dplyr::filter(name %in% recommended) %>%
+  dplyr::group_by(name, style) %>%
+  dplyr::summarize(min_weight = min(weight), max_weight = max(weight)) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(name, desc(style)) %>%
+  dplyr::mutate(weight_range = dplyr::case_when(
+    style == "normal" & min_weight != max_weight ~ paste0("n&nbsp;", min_weight, "&#8209;", max_weight),
+    style == "normal" & min_weight == max_weight ~ paste0("n&nbsp;", min_weight),
+    style == "italic" & min_weight != max_weight ~ paste0("*i*&nbsp;", min_weight, "&#8209;", max_weight),
+    style == "italic" & min_weight == max_weight ~ paste0("*i*&nbsp;", min_weight)
+  )) %>%
+  dplyr::group_by(name) %>%
+  dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"))
+
+source_notes <-
+  styles_tbl %>%
+  dplyr::filter(name %in% recommended) %>%
+  dplyr::select(name, copyright) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(name = paste0("**", name, "** ")) %>%
+  dplyr::mutate(name_copy = paste0(name, copyright)) %>%
+  dplyr::pull(name_copy) %>%
+  paste(collapse = ". ") %>%
+  gsub("..", ".", ., fixed = TRUE) %>%
+  paste_right(".")
 
 font_tbl_int <-
   font_tbl %>%
+  dplyr::filter(name %in% recommended) %>%
+  dplyr::left_join(styles_summary, by = "name") %>%
   dplyr::mutate(
     category = stringr::str_to_title(category) %>%
       tidy_gsub("_", " ") %>%
       tidy_gsub("serif", "Serif")
   ) %>%
-  dplyr::select(-license, -date_added) %>%
-  dplyr::mutate(samp = paste0(LETTERS, letters, collapse = ""))
+  dplyr::select(-license, -date_added, -designer) %>%
+  dplyr::mutate(samp = paste0(LETTERS[1:13], letters[1:13], collapse = ""))
 
 font_tbl_gt <-
   font_tbl_int %>%
   dplyr::arrange(category) %>%
   gt(rowname_col = "name", groupname_col = "category") %>%
-  tab_options(column_labels.hidden = TRUE)
-
+  fmt_markdown(columns = vars(weight_ranges)) %>%
+  tab_style(
+    style = list(
+      cell_text(size = px(8), font = "Courier"),
+      cell_fill(color = "#F7F7F7")
+    ),
+    locations = cells_body(columns = vars(weight_ranges))
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(24)),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(18)),
+    locations = cells_title(groups = "subtitle")
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(28), indent = px(5)),
+    locations = cells_body(columns = vars(samp))
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(14)),
+    locations = cells_stub()
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(18), weight = "600"),
+    locations = cells_row_groups()
+  ) %>%
+  tab_header(
+    title = md("Recommended *Google Fonts* for **gt**"),
+    subtitle = md("Fonts like these can be accessed using the `google_fonts()` function.<br><br>")
+  ) %>%
+  opt_align_table_header("left") %>%
+  opt_table_lines("none") %>%
+  tab_options(
+    table.width = px(800),
+    column_labels.hidden = TRUE,
+    row_group.padding = px(12),
+    data_row.padding = px(4),
+    table_body.hlines.style = "solid",
+    table_body.hlines.width = px(1),
+    table_body.hlines.color = "#F7F7F7",
+    row_group.border.top.style = "solid",
+    row_group.border.top.width = px(1),
+    row_group.border.bottom.width = px(1),
+    table.border.bottom.style = "solid",
+    table.border.bottom.width = px(1),
+    table.border.bottom.color = "#F7F7F7",
+    source_notes.font.size = px(10),
+    source_notes.padding = px(6)
+  ) %>%
+  tab_source_note(md(source_notes))
 
 for (i in seq(nrow(font_tbl_int))) {
 
@@ -137,6 +272,6 @@ for (i in seq(nrow(font_tbl_int))) {
 }
 
 font_tbl_gt
-styles_tbl
-axes_tbl
+
+font_tbl_gt %>% gtsave("google_fonts.png")
 
