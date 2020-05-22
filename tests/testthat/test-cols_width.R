@@ -42,7 +42,7 @@ selection_text <- function(html, selection) {
 
 # Helper function to compare a contiguous set of HTML fragments with raw html
 html_fragment_within <- function(raw_html, ...) {
-  grepl(paste0(c(...), "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
+  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
 test_that("the function `cols_width()` works correctly", {
