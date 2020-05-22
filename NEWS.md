@@ -4,7 +4,9 @@
 
 * Ensure compatibility with **tibble** 3.0.0 (#557).
 
-# gt 0.2.0.5
+* Adapt tests to changes in dependent packages (#575)
+
+# gt 0.2.0.5 (2020-03-31)
 
 * New package with 80 exported functions for building display tables
 
