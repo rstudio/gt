@@ -512,7 +512,7 @@ fmt_symbol <- function(data,
 #'   pizzaplace %>%
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
 #'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizzas_sold = n()) %>%
+#'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
 #'   dplyr::ungroup() %>%
 #'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
 #'   gt(rowname_col = "month") %>%
