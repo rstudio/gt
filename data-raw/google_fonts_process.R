@@ -50,21 +50,21 @@ for (file in ofl_files) {
 
   pb <-
     readr::read_file(file) %>%
-    tidy_gsub("#.*?\n", "\n")
+    gt:::tidy_gsub("#.*?\n", "\n")
 
   font_variants <-
     stringr::str_extract_all(pb, pattern = "fonts \\{(\\n|.)*?\\}") %>% unlist() %>%
-    tidy_gsub("(fonts \\{\n  |\\}$|\"|$)", "") %>%
-    tidy_gsub("\n  ", "\n") %>% tidy_gsub("\n$", "") %>% str_split("\n")
+    gt:::tidy_gsub("(fonts \\{\n  |\\}$|\"|$)", "") %>%
+    gt:::tidy_gsub("\n  ", "\n") %>% tidy_gsub("\n$", "") %>% str_split("\n")
 
   font_info <-
     pb %>%
     stringr::str_replace_all(pattern = "fonts \\{(\\n|.)*?\\}", "") %>%
-    tidy_gsub("axes \\{.*", "") %>%
-    tidy_gsub("subsets:.*", "") %>%
-    tidy_gsub("\n{2,}", "\n") %>%
-    tidy_gsub("\n$", "") %>%
-    tidy_gsub("\"", "") %>%
+    gt:::tidy_gsub("axes \\{.*", "") %>%
+    gt:::tidy_gsub("subsets:.*", "") %>%
+    gt:::tidy_gsub("\n{2,}", "\n") %>%
+    gt:::tidy_gsub("\n$", "") %>%
+    gt:::tidy_gsub("\"", "") %>%
     stringr::str_split("\n") %>%
     unlist()
 
@@ -90,8 +90,8 @@ for (file in ofl_files) {
     axes <-
       stringr::str_extract_all(pb, pattern = "axes(\\n|.)*?\\}") %>%
       unlist() %>%
-      tidy_gsub("(axes \\{\n  |\\}$|\"|$)", "") %>%
-      tidy_gsub("\n  ", "\n") %>% tidy_gsub("\n$", "") %>%
+      gt:::tidy_gsub("(axes \\{\n  |\\}$|\"|$)", "") %>%
+      gt:::tidy_gsub("\n  ", "\n") %>% tidy_gsub("\n$", "") %>%
       stringr::str_split("\n")
 
 
