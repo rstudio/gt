@@ -878,24 +878,21 @@ tab_style <- function(data,
 
   # Intercept font styles that require registration
   if ("cell_text" %in% names(style)) {
+
     if ("font" %in% names(style[["cell_text"]])) {
-      if (inherits(style[["cell_text"]][["font"]], "google_fonts")) {
 
-        existing_import_stmts <- dt_options_get_value(data = data, option = "table_font_imports")
+      font <- style[["cell_text"]][["font"]]
+      font <- normalize_font_input(font_input = font)
 
-        import_stmts <-
-          c(existing_import_stmts, style[["cell_text"]][["font"]][["import_stmt"]])
+      existing_initial_css <- dt_options_get_value(data = data, option = "table_initial_css")
+      initial_css <- c(font$import_stmt, existing_initial_css)
 
-        data <- tab_options(data = data, table.font.imports = import_stmts)
+      data <- tab_options(data = data, table.initial_css = initial_css)
 
-        font_name <- style[["cell_text"]][["font"]][["name"]]
+      font_names <- font$name
 
-        if (grepl(" ", font_name)) {
-          font_name <- paste_between(font_name, c("'", "'"))
-        }
-
-        style[["cell_text"]][["font"]] <- font_name
-      }
+      style[["cell_text"]][["font"]] <-
+        as_css_font_family_attr(font_vec = font_names, value_only = TRUE)
     }
   }
 
@@ -1188,12 +1185,12 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
 #'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
 #'   hexadecimal color code should be provided.
+#' @param table.initial_css This option can be used to supply an additional
+#'   block of CSS rules to be applied before the automatically generated table
+#'   CSS.
 #' @param table.font.names The names of the fonts used for the table. This is
 #'   a vector of several font names. If the first font isn't available, then
 #'   the next font is tried (and so on).
-#' @param table.font.imports A vector of `@import` statements pertaining to web
-#'   fonts. If a web font is given in `table.font.names` then a corresponding
-#'   entry must be made here for that font to be made available.
 #' @param table.font.style The font style for the table. Can be one of either
 #'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param table.font.color,table.font.color.light
@@ -1413,8 +1410,8 @@ tab_options <- function(data,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
                         table.background.color = NULL,
+                        table.initial_css = NULL,
                         table.font.names = NULL,
-                        table.font.imports = NULL,
                         table.font.size = NULL,
                         table.font.weight = NULL,
                         table.font.style = NULL,

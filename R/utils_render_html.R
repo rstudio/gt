@@ -1094,9 +1094,14 @@ build_row_styles <- function(styles_resolved_row,
   row_styles
 }
 
-as_css_font_family_attr <- function(font_vec) {
+as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
 
   fonts_spaces <- grepl(" ", font_vec)
   font_vec[fonts_spaces] <- paste_between(x = font_vec[fonts_spaces], x_2 = c("'", "'"))
-  font_vec %>% paste(collapse = ", ") %>% paste_between(x_2 = c("font-family: ", ";"))
+
+  value <- paste(font_vec, collapse = ", ")
+
+  if (value_only) return(value)
+
+  paste_between(value, x_2 = c("font-family: ", ";"))
 }

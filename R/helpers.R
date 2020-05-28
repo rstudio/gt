@@ -1113,23 +1113,6 @@ currency <- function(...,
   currency_list
 }
 
-#' A vector of default fonts for use with **gt** tables
-#'
-#' This vector of fonts should be used with an **gt** table that is rendered to
-#' HTML. We can specify additional fonts to use but this default set should be
-#' placed after that to act as fallbacks.
-#'
-#' @family Helper Functions
-#'
-#' @export
-default_fonts <- function() {
-  c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
-  )
-}
-
 #' Helper for defining custom text styles for table cells
 #'
 #' This helper function is to be used with the [tab_style()] function, which
@@ -1253,7 +1236,6 @@ cell_text <- function(color = NULL,
     in_vector = c("normal", "italic", "oblique")
   )
 
-  # TODO: modify regex to allow only numbers from 100-900 inclusive
   validate_style_in(
     style_vals, style_names,
     arg_name = "weight",
@@ -1786,6 +1768,55 @@ gt_latex_dependencies <- function() {
   }
 }
 
+#' A vector of default fonts for use with **gt** tables
+#'
+#' The vector of fonts given by `default_fonts()` should be used with a **gt**
+#' table that is rendered to HTML. We can specify additional fonts to use but
+#' this default set should be placed after that to act as fallbacks. This is
+#' useful when specifying `font` values in the [cell_text()] function (itself
+#' used in the [tab_style()] function). If using [opt_table_font()] (which also
+#' has a `font` argument) we probably don't need to specify this vector of fonts
+#' since it is handled by its `add` option (which is `TRUE` by default).
+#'
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # attempting to modify the fonts used
+#' # for the `time` column is much safer
+#' # if `default_fonts()` is appended to
+#' # the end of the `font` listing in the
+#' # `cell_text()` call (the "Comic Sansa"
+#' # and "Menloa" fonts don't exist, but,
+#' # we'll get the first available font
+#' # from the `default_fonts()` set)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(char, time) %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       font = c(
+#'         "Comic Sansa", "Menloa",
+#'         default_fonts()
+#'       )
+#'     ),
+#'     locations = cells_body(columns = vars(time))
+#'   )
+#'
+#' @family Helper Functions
+#'
+#' @section Function ID:
+#' 7-22
+#'
+#' @export
+default_fonts <- function() {
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
+}
+
 #' Helper function for specifying a font from the Google Fonts service
 #'
 #' The `google_fonts()` helper function can be used wherever a font name should
@@ -1799,7 +1830,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-23
 #'
 #' @export
 google_fonts <- function(name) {
@@ -1813,13 +1844,12 @@ google_fonts <- function(name) {
       )
     )
 
-  google_fonts <-
+  font_list <-
     list(
       name = name,
       import_stmt = import_stmt
     )
 
-  class(google_fonts) <- "google_fonts"
-
-  google_fonts
+  class(font_list) <- "font_css"
+  font_list
 }

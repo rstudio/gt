@@ -15,8 +15,8 @@ tab_options(
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
+  table.initial_css = NULL,
   table.font.names = NULL,
-  table.font.imports = NULL,
   table.font.size = NULL,
   table.font.weight = NULL,
   table.font.style = NULL,
@@ -180,13 +180,13 @@ elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \
 \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
 hexadecimal color code should be provided.}
 
+\item{table.initial_css}{This option can be used to supply an additional
+block of CSS rules to be applied before the automatically generated table
+CSS.}
+
 \item{table.font.names}{The names of the fonts used for the table. This is
 a vector of several font names. If the first font isn't available, then
 the next font is tried (and so on).}
-
-\item{table.font.imports}{A vector of \verb{@import} statements pertaining to web
-fonts. If a web font is given in \code{table.font.names} then a corresponding
-entry must be made here for that font to be made available.}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},

@@ -10,17 +10,18 @@ compile_scss <- function(data, id = NULL) {
   has_id <- !is.null(id)
 
   # Get the vector of fonts and transform to a `font-family` string
-  font_vec <- dt_options_get_value(data = data, option = "table_font_names")
+  font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
   font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
-  # Get any font-related @import statements
-  font_imports <- dt_options_get_value(data = data, option = "table_font_imports")
+  # Get any initial CSS statements and deduplicate
+  table_initial_css <- unique(dt_options_get_value(data = data, option = "table_initial_css"))
 
-  has_font_imports <- any(nchar(font_imports) > 0)
+  # Determine if there are any initial CSS statements
+  has_initial_css <- any(nchar(table_initial_css) > 0)
 
-  if (has_font_imports) {
-    font_imports <-
-      paste(font_imports, collapse = "\n") %>% paste_right("\n")
+  # Combine any initial CSS statements and separate with `\n`
+  if (has_initial_css) {
+    table_initial_css <- paste(table_initial_css, collapse = "\n") %>% paste_right("\n")
   }
 
   sass::sass(
@@ -32,7 +33,7 @@ compile_scss <- function(data, id = NULL) {
       glue::glue(
         .open = "<<", .close = ">>",
         "
-        <<ifelse(has_font_imports, font_imports, '')>>
+        <<ifelse(has_initial_css, table_initial_css, '')>>
 
         <<ifelse(has_id, 'html', '.gt_table')>> {
           <<font_family_attr>>

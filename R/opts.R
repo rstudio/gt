@@ -538,19 +538,14 @@ opt_table_font <- function(data,
                            add = TRUE) {
 
   existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
-  existing_font_imports <- dt_options_get_value(data = data, option = "table_font_imports")
+  existing_initial_css <- dt_options_get_value(data = data, option = "table_initial_css")
 
-  if (inherits(font, "character")) {
-    data <- tab_options(data = data, table.font.names = c(font, if (add) existing_fonts))
-  }
+  font <- normalize_font_input(font_input = font)
 
-  if (inherits(font, "google_fonts")) {
+  initial_css <- c(font$import_stmt, existing_initial_css)
 
-    font_imports <- c(existing_font_imports, font$import_stmt)
-
-    data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
-    data <- tab_options(data = data, table.font.imports = font_imports)
-  }
+  data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
+  data <- tab_options(data = data, table.initial_css = initial_css)
 
   if (!is.null(weight)) {
 
@@ -565,6 +560,41 @@ opt_table_font <- function(data,
   }
 
   data
+}
+
+normalize_font_input <- function(font_input) {
+
+  if (!inherits(font_input, "character") && !inherits(font_input, "list")) {
+    stop("Values provided to `font` must either be a list or a character vector.",
+         call. = FALSE)
+  }
+
+  if (inherits(font_input, "character")) {
+    font_input <- list(font_input)
+  }
+
+  # Unlist a list of lists; this normalizes the value for `font_input`
+  # in the cases where multiple fonts were provided in `c()` and `list()`
+  if (any(vapply(font_input, is.list, FUN.VALUE = logical(1)))) {
+    font_input <- unlist(font_input, recursive = FALSE)
+  }
+
+  if (is.null(names(font_input))) {
+    font_names <- unlist(font_input)
+    import_stmts <- ""
+  } else {
+    font_names <- unique(unname(unlist(font_input[names(font_input) %in% c("name", "")])))
+    import_stmts <- unique(unname(unlist(font_input[names(font_input) %in% "import_stmt"])))
+  }
+
+  font_list <-
+    list(
+      name = font_names,
+      import_stmt = import_stmts
+    )
+
+  class(font_list) <- "font_css"
+  font_list
 }
 
 # Create an option-value list with a vector of arg names from the

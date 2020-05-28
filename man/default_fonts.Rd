@@ -7,9 +7,43 @@
 default_fonts()
 }
 \description{
-This vector of fonts should be used with an \strong{gt} table that is rendered to
-HTML. We can specify additional fonts to use but this default set should be
-placed after that to act as fallbacks.
+The vector of fonts given by \code{default_fonts()} should be used with a \strong{gt}
+table that is rendered to HTML. We can specify additional fonts to use but
+this default set should be placed after that to act as fallbacks. This is
+useful when specifying \code{font} values in the \code{\link[=cell_text]{cell_text()}} function (itself
+used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\link[=opt_table_font]{opt_table_font()}} (which also
+has a \code{font} argument) we probably don't need to specify this vector of fonts
+since it is handled by its \code{add} option (which is \code{TRUE} by default).
+}
+\section{Function ID}{
+
+7-22
+}
+
+\examples{
+# Use `exibble` to create a gt table;
+# attempting to modify the fonts used
+# for the `time` column is much safer
+# if `default_fonts()` is appended to
+# the end of the `font` listing in the
+# `cell_text()` call (the "Comic Sansa"
+# and "Menloa" fonts don't exist, but,
+# we'll get the first available font
+# from the `default_fonts()` set)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(char, time) \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cell_text(
+      font = c(
+        "Comic Sansa", "Menloa",
+        default_fonts()
+      )
+    ),
+    locations = cells_body(columns = vars(time))
+  )
+
 }
 \seealso{
 Other Helper Functions: 
