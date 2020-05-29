@@ -564,7 +564,9 @@ opt_table_font <- function(data,
 
 normalize_font_input <- function(font_input) {
 
-  if (!inherits(font_input, "character") && !inherits(font_input, "list")) {
+  if (!inherits(font_input, "character") &&
+      !inherits(font_input, "list") &&
+      !inherits(font_input, "font_css")) {
     stop("Values provided to `font` must either be a list or a character vector.",
          call. = FALSE)
   }
