@@ -12,33 +12,32 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.r }})
 
     strategy:
       fail-fast: false
       matrix:
+        r: 
+          - '3.5'
+          - '3.6'
+          - '4.0'
         config:
-          - {os: windows-latest, r: '3.5'}
-          - {os: windows-latest, r: '3.6'}
-          - {os: windows-latest, r: '4.0'}
-          - {os: macOS-latest, r: '3.5'}
-          - {os: macOS-latest, r: '3.6'}
-          - {os: macOS-latest, r: '4.0'}
-          - {os: ubuntu-16.04, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04, r: '4.0', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: windows-latest}
+          - {os: macOS-latest}
+          - {os: ubuntu-16.04, rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
       RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
         with:
-          r-version: ${{ matrix.config.r }}
+          r-version: ${{ matrix.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -53,8 +52,16 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
+          key: ${{ runner.os }}-r-${{ matrix.r }}-2-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-2-
+      
+      - name: Problematic Pkgs
+        shell: Rscript {0}
+        run: |
+          remotes::install_cran("ellipsis")
+          remotes::install_cran("pillar")
+          remotes::install_cran("ps")
+          remotes::install_cran("processx")
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
@@ -66,23 +73,27 @@ jobs:
           sudo -s eval "$sysreqs"
 
       - name: Install dependencies
+        shell: Rscript {0}
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
+
+      - name: Install rcmdcheck
         shell: Rscript {0}
+        run: |
+          remotes::install_cran("rcmdcheck")
 
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
 
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: ${{ runner.os }}-r${{ matrix.r }}-results
           path: check
 
       - name: Test coverage
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == '3.6'
-        run: covr::codecov()
+        if: matrix.config.os == 'macOS-latest' && matrix.r == '3.6'
         shell: Rscript {0}
+        run: covr::codecov()
