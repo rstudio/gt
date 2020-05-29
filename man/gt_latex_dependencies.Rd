@@ -68,7 +68,7 @@ Other Helper Functions:
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
-\code{\link{google_fonts}()},
+\code{\link{google_font}()},
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{pct}()},

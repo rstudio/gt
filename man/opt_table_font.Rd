@@ -10,7 +10,7 @@ opt_table_font(data, font, weight = NULL, style = NULL, add = TRUE)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{font}{Either the name of a font available in the user system or a call
-to \code{\link[=google_fonts]{google_fonts()}}, which has a large selection of typefaces.}
+to \code{\link[=google_font]{google_font()}}, which has a large selection of typefaces.}
 
 \item{weight}{The weight of the font. Can be a text-based keyword such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
@@ -35,7 +35,7 @@ different fonts in select locations in the table, and for that you would need
 to use \code{\link[=tab_style]{tab_style()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
 
 We have the option to supply either a system font for the \code{font_name}, or, a
-font available at the Google Fonts service by use of the \code{\link[=google_fonts]{google_fonts()}}
+font available at the Google Fonts service by use of the \code{\link[=google_font]{google_font()}}
 helper function.
 }
 \section{Function ID}{

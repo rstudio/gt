@@ -508,12 +508,12 @@ opt_table_outline <- function(data,
 #' to use [tab_style()] in conjunction with the [cell_text()] helper function.
 #'
 #' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_fonts()]
+#' font available at the Google Fonts service by use of the [google_font()]
 #' helper function.
 #'
 #' @inheritParams fmt_number
 #' @param font Either the name of a font available in the user system or a call
-#'   to [google_fonts()], which has a large selection of typefaces.
+#'   to [google_font()], which has a large selection of typefaces.
 #' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
 #'   `"oblique"`.
 #' @param weight The weight of the font. Can be a text-based keyword such as

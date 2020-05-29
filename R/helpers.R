@@ -1819,21 +1819,22 @@ default_fonts <- function() {
 
 #' Helper function for specifying a font from the Google Fonts service
 #'
-#' The `google_fonts()` helper function can be used wherever a font name should
+#' The `google_font()` helper function can be used wherever a font name should
 #' be specified. There are two instances where this helper can be used: the
 #' `name` argument in [opt_table_font()] (for setting a table font) and in that
-#' of [cell_text()] (used with [tab_style()]).
+#' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
+#' that work well in tables, use the [info_google_fonts()] function.
 #'
 #' @param name The complete name of a font available in Google Fonts.
 #'
-#' @return An object of class `google_fonts`.
+#' @return An object of class `font_css`.
 #'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-23
 #'
 #' @export
-google_fonts <- function(name) {
+google_font <- function(name) {
 
   import_stmt <-
     name %>% tidy_gsub(" ", "+") %>%

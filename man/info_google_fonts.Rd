@@ -10,7 +10,7 @@ info_google_fonts()
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{\link[=google_fonts]{google_fonts()}} helper function can be used wherever a font name should
+The \code{\link[=google_font]{google_font()}} helper function can be used wherever a font name should
 be specified. There are two instances where this helper can be used: the
 \code{name} argument in \code{\link[=opt_table_font]{opt_table_font()}} (for setting a table font) and in that
 of \code{\link[=cell_text]{cell_text()}} (used with \code{\link[=tab_style]{tab_style()}}). Because there is an overwhelming

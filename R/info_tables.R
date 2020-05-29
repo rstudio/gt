@@ -520,7 +520,7 @@ info_paletteer <- function(color_pkgs = NULL) {
 
 #' View a table on recommended Google Fonts
 #'
-#' The [google_fonts()] helper function can be used wherever a font name should
+#' The [google_font()] helper function can be used wherever a font name should
 #' be specified. There are two instances where this helper can be used: the
 #' `name` argument in [opt_table_font()] (for setting a table font) and in that
 #' of [cell_text()] (used with [tab_style()]). Because there is an overwhelming
@@ -679,7 +679,7 @@ info_google_fonts <- function() {
     ) %>%
     tab_header(
       title = md("Recommended *Google Fonts* for **gt**"),
-      subtitle = md("Fonts like these can be accessed using the `google_fonts()` function.<br><br>")
+      subtitle = md("Fonts like these can be accessed using the `google_font()` function.<br><br>")
     ) %>%
     opt_align_table_header("left") %>%
     opt_table_lines("none") %>%
@@ -707,7 +707,7 @@ info_google_fonts <- function() {
     google_font_tbl_gt <-
       google_font_tbl_gt %>%
       tab_style(
-        style = cell_text(font = google_fonts(name = google_font_tbl_int$name[i])),
+        style = cell_text(font = google_font(name = google_font_tbl_int$name[i])),
         locations = cells_body(columns = vars(samp), rows = google_font_tbl_int$name[i])
       )
   }

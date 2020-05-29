@@ -133,6 +133,8 @@ reference:
     - random_id
     - escape_latex
     - gt_latex_dependencies
+    - default_fonts
+    - google_font
 
   - title: Image Addition Functions
     desc: >
