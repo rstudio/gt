@@ -47,18 +47,19 @@ jobs:
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
         shell: Rscript {0}
 
-#       - name: Cache R packages
-#         if: runner.os != 'Windows'
-#         uses: actions/cache@v1
-#         with:
-#           path: ${{ env.R_LIBS_USER }}
-#           key: ${{ runner.os }}-r-${{ matrix.r }}-1-${{ hashFiles('depends.Rds') }}
-#           restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-1-
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.r }}-2-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-2-
       
       - name: Problematic Pkgs
         shell: Rscript {0}
         run: |
           remotes::install_cran("ellipsis")
+          remotes::install_cran("pillar")
           remotes::install_cran("ps")
           remotes::install_cran("processx")
 
