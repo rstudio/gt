@@ -56,11 +56,11 @@ jobs:
           restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-1-
       
       - name: Problematic Pkgs
-        if: runner.os == 'macOS'
         shell: Rscript {0}
         run: |
           remotes::install_cran("ellipsis")
           remotes::install_cran("ps")
+          remotes::install_cran("processx")
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
