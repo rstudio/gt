@@ -242,7 +242,7 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
   ) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>name</span>, <span class='no'>size</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
-    <span class='kw'>`Pizzas Sold`</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>()
+    <span class='kw'>`Pizzas Sold`</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"size"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
@@ -256,7 +256,8 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
     <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"The Pepper-Salami."</span>,
     <span class='fu'>cells_row_groups</span>(<span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"peppr_salami"</span>)
-  )</div></pre>
+  )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'name' (override with `.groups` argument)</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
