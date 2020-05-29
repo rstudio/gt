@@ -52,8 +52,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.r }}-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-
+          key: ${{ runner.os }}-r-${{ matrix.r }}-1-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-1-
       
       - name: Problematic Pkgs
         if: runner.os == 'macOS'
