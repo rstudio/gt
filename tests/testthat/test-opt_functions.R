@@ -400,5 +400,20 @@ test_that("The `opt_table_font()` function sets the correct options", {
       "font-family: 'Dancing Script', Courier, Oxygen, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;",
       "}"
     ) %>% expect_true()
+
+  # Expect that weights given as numbers or strings create the
+  # same outputs (e.g., 500 and "500")
+  expect_equivalent(
+    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = 500) %>% compile_scss(),
+    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = "500") %>% compile_scss()
+  )
+
+  # Expect an error if input to `font` is not a character vector
+  # or a list (but no errors otherwise)
+  expect_error(tbl %>% opt_table_font(font = c(TRUE, FALSE)))
+  expect_error(tbl %>% opt_table_font(font = 1:3))
+  expect_error(regexp = NA, tbl %>% opt_table_font(font = c("Courier", "Comic Sans MS")))
+  expect_error(regexp = NA, tbl %>% opt_table_font(font = list("Courier", "Comic Sans MS")))
+  expect_error(regexp = NA, tbl %>% opt_table_font(font = LETTERS))
 })
 
