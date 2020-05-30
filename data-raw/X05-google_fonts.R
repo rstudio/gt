@@ -123,10 +123,18 @@ for (file in ofl_files) {
   }
 }
 
-# Write CSV files to `inst/extdata`
-readr::write_csv(google_font_tbl, path = here("inst", "extdata", "google_font_tbl.csv"))
-readr::write_csv(google_styles_tbl, path = here("inst", "extdata", "google_styles_tbl.csv"))
-readr::write_csv(google_axes_tbl, path = here("inst", "extdata", "google_axes_tbl.csv"))
-
 # Remove the work directory
 unlink(work_dir, recursive = TRUE)
+
+rm(dr)
+rm(file)
+rm(file_list)
+rm(font_info)
+rm(font_name)
+rm(i)
+rm(ofl_dirs)
+rm(ofl_files)
+rm(pb)
+rm(work_dir)
+rm(font_variants)
+rm(axes)

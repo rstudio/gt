@@ -545,18 +545,6 @@ info_paletteer <- function(color_pkgs = NULL) {
 #' @export
 info_google_fonts <- function() {
 
-  google_font_tbl <-
-    utils::read.csv(
-      system.file("extdata/google_font_tbl.csv", package = "gt"),
-      colClasses = rep("character", 5)
-    )
-
-  google_styles_tbl <-
-    utils::read.csv(
-      system.file("extdata/google_styles_tbl.csv", package = "gt"),
-      colClasses = rep("character", 7)
-    )
-
   # Recommended Fonts
   recommended <-
     c(
