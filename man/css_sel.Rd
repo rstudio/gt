@@ -24,6 +24,11 @@ with selectors: all values given are grouped together as a comma-separated
 list (e.g., \code{css_sel("div > p", "p::after")} results in
 \code{"div > p, p::after"}).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_css_sel_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-20

@@ -582,6 +582,11 @@ opt_table_outline <- function(data,
 #'
 #' }
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_table_font_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_opt_table_font_2.png}{options: width=100\%}}
+#'
 #' @family Table Option Functions
 #' @section Function ID:
 #' 9-7
@@ -620,15 +625,11 @@ opt_table_font <- function(data,
 
 #' Option to add custom CSS for the table
 #'
-#' @description
 #' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
 #' CSS will be added after the compiled CSS that **gt** generates automatically
 #' when the object is transformed to an HTML output table. You can supply `css`
-#' as a vector of lines
-#'
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
+#' as a vector of lines or, even better, generate CSS rulesets using a
+#' combination of [css_list()], [css_sel()], and [css_dec()].
 #'
 #' @inheritParams fmt_number
 #' @param css The CSS to include as part of the rendered table's `<style>`
@@ -647,6 +648,42 @@ opt_table_font <- function(data,
 #'   already-defined CSS.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table and
+#' # format the data in both columns; with
+#' # `opt_css()` insert CSS rulesets with
+#' # `css_list()`, `css_sel()`, and `css_dec()`
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = "HKD"
+#'   ) %>%
+#'   fmt_scientific(
+#'     columns = vars(num)
+#'   ) %>%
+#'   opt_css(
+#'     css =
+#'       css_list(
+#'         css_sel(".gt_table") ~
+#'           css_dec(background_color = "skyblue"),
+#'         css_sel(".gt_row") ~
+#'           css_dec(padding = "20px 30px"),
+#'         css_sel(".gt_col_heading") ~
+#'           css_dec("text-align!" = "center")
+#'       )
+#'   )
+#'
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
+#'
+#' @seealso The [css_list()], [css_sel()], and [css_dec()] functions for
+#'   creating complete CSS rulesets, and, the [css_file()] function for using an
+#'   external CSS style sheet.
 #'
 #' @family Table Option Functions
 #' @section Function ID:

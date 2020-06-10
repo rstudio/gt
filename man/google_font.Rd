@@ -19,6 +19,13 @@ be specified. There are two instances where this helper can be used: the
 of \code{\link[=cell_text]{cell_text()}} (used with \code{\link[=tab_style]{tab_style()}}). To get a helpful listing of fonts
 that work well in tables, use the \code{\link[=info_google_fonts]{info_google_fonts()}} function.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_google_font_1.png}{options: width=100\%}}
+
+\if{html}{\figure{man_google_font_2.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-22

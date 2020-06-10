@@ -22,6 +22,13 @@ to build up a CSS stylesheet than can be used as the \code{css} value in the
 \code{\link[=opt_css]{opt_css()}} function (which is great for adding custom CSS to a \strong{gt} table
 rendered as HTML).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_css_list_1.png}{options: width=100\%}}
+
+\if{html}{\figure{man_css_list_2.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-19

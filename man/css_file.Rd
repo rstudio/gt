@@ -9,14 +9,56 @@ css_file(file)
 \arguments{
 \item{file}{Path to a CSS stylesheet.}
 }
-\description{
-Specify CSS rule sets using a CSS file
+\value{
+An object of class \code{css_list}.
 }
+\description{
+Additional CSS rulesets can be added to a \strong{gt} table by way of programmatic
+generation (collecting rulesets with \code{\link[=css_list]{css_list()}}), or, by reading in an
+external CSS stylesheet with \code{css_file()}.
+}
+\section{Figures}{
+
+\if{html}{\figure{man_css_file_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-18
 }
 
+\examples{
+# Get the path to an external CSS
+# stylesheet (this will be used in
+# a gt table)
+external_css <-
+  system.file(
+    "css/external.css",
+    package = "gt"
+  )
+
+# Use `exibble` to create a gt table and
+# format the data in both columns; with
+# `opt_css()` and `css_file()` we can
+# add CSS rulesets from an external CSS
+# stylesheet and incorporate styling that
+# in some cases cannot otherwise be done
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = vars(currency),
+    currency = "HKD"
+  ) \%>\%
+  fmt_scientific(
+    columns = vars(num)
+  ) \%>\%
+  opt_css(
+    css = css_file(file = external_css)
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

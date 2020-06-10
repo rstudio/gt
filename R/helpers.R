@@ -1555,7 +1555,47 @@ cell_style_structure <- function(name, obj, subclass = name) {
 
 #' Specify CSS rule sets using a CSS file
 #'
+#' Additional CSS rulesets can be added to a **gt** table by way of programmatic
+#' generation (collecting rulesets with [css_list()]), or, by reading in an
+#' external CSS stylesheet with `css_file()`.
+#'
 #' @param file Path to a CSS stylesheet.
+#'
+#' @return An object of class `css_list`.
+#'
+#' @examples
+#' # Get the path to an external CSS
+#' # stylesheet (this will be used in
+#' # a gt table)
+#' external_css <-
+#'   system.file(
+#'     "css/external.css",
+#'     package = "gt"
+#'   )
+#'
+#' # Use `exibble` to create a gt table and
+#' # format the data in both columns; with
+#' # `opt_css()` and `css_file()` we can
+#' # add CSS rulesets from an external CSS
+#' # stylesheet and incorporate styling that
+#' # in some cases cannot otherwise be done
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = vars(currency),
+#'     currency = "HKD"
+#'   ) %>%
+#'   fmt_scientific(
+#'     columns = vars(num)
+#'   ) %>%
+#'   opt_css(
+#'     css = css_file(file = external_css)
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_css_file_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1563,6 +1603,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @export
 css_file <- function(file) {
+
   x <- readLines(con = file)
 
   structure(
@@ -1641,6 +1682,11 @@ css_file <- function(file) {
 #'           css_dec(`background-image` = linear_gradient)
 #'       )
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_css_list_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_css_list_2.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1737,6 +1783,9 @@ css_list <- function(...) {
 #'       )
 #'   )
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_css_sel_1.png}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-20
@@ -1828,6 +1877,11 @@ css_sel <- function(...) {
 #'           css_dec(padding.right = "0")
 #'       )
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_css_dec_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_css_dec_2.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1954,6 +2008,11 @@ css_dec <- function(...,
 #'   )
 #' }
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_google_font_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_google_font_2.png}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-22
@@ -2015,6 +2074,9 @@ google_font <- function(name) {
 #'     ),
 #'     locations = cells_body(columns = vars(time))
 #'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_default_fonts_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #'

@@ -39,6 +39,13 @@ quotes or backticks given the nature of the \code{!} character.
 Argument values will be converted to strings. Any property with a value of
 \code{NULL} or \code{""} will be dropped.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_css_dec_1.png}{options: width=100\%}}
+
+\if{html}{\figure{man_css_dec_2.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-21

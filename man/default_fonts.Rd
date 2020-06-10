@@ -18,6 +18,11 @@ used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\lin
 has a \code{font} argument) we probably don't need to specify this vector of fonts
 since it is handled by its \code{add} option (which is \code{TRUE} by default).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_default_fonts_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-23

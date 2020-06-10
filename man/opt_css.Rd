@@ -33,18 +33,54 @@ An object of class \code{gt_tbl}.
 The \code{opt_css()} function makes it possible to add CSS to a \strong{gt} table. This
 CSS will be added after the compiled CSS that \strong{gt} generates automatically
 when the object is transformed to an HTML output table. You can supply \code{css}
-as a vector of lines
-
-We have the option to supply either a system font for the \code{font_name}, or, a
-font available at the Google Fonts service by use of the \code{\link[=google_font]{google_font()}}
-helper function.
+as a vector of lines or, even better, generate CSS rulesets using a
+combination of \code{\link[=css_list]{css_list()}}, \code{\link[=css_sel]{css_sel()}}, and \code{\link[=css_dec]{css_dec()}}.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 9-8
 }
 
+\examples{
+# Use `exibble` to create a gt table and
+# format the data in both columns; with
+# `opt_css()` insert CSS rulesets with
+# `css_list()`, `css_sel()`, and `css_dec()`
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = vars(currency),
+    currency = "HKD"
+  ) \%>\%
+  fmt_scientific(
+    columns = vars(num)
+  ) \%>\%
+  opt_css(
+    css =
+      css_list(
+        css_sel(".gt_table") ~
+          css_dec(background_color = "skyblue"),
+        css_sel(".gt_row") ~
+          css_dec(padding = "20px 30px"),
+        css_sel(".gt_col_heading") ~
+          css_dec("text-align!" = "center")
+      )
+  )
+
+
+}
 \seealso{
+The \code{\link[=css_list]{css_list()}}, \code{\link[=css_sel]{css_sel()}}, and \code{\link[=css_dec]{css_dec()}} functions for
+creating complete CSS rulesets, and, the \code{\link[=css_file]{css_file()}} function for using an
+external CSS style sheet.
+
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},

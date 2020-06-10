@@ -38,6 +38,13 @@ We have the option to supply either a system font for the \code{font_name}, or, 
 font available at the Google Fonts service by use of the \code{\link[=google_font]{google_font()}}
 helper function.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_opt_table_font_1.png}{options: width=100\%}}
+
+\if{html}{\figure{man_opt_table_font_2.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 9-7
