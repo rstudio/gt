@@ -13,15 +13,21 @@ compile_scss <- function(data, id = NULL) {
   font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
   font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
-  # Get any initial CSS statements and deduplicate
-  table_initial_css <- unique(dt_options_get_value(data = data, option = "table_initial_css"))
+  # Get any additional CSS statements
+  additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
 
-  # Determine if there are any initial CSS statements
-  has_initial_css <- any(nchar(table_initial_css) > 0)
+  # Determine if there are any additional CSS statements
+  has_additional_css <- any(nchar(additional_css) > 0)
 
-  # Combine any initial CSS statements and separate with `\n`
-  if (has_initial_css) {
-    table_initial_css <- paste(table_initial_css, collapse = "\n") %>% paste_right("\n")
+  # Combine any additional CSS statements and separate with `\n`
+  if (has_additional_css) {
+
+    table_additional_css <- paste(additional_css, collapse = "\n") %>% paste_right("\n")
+
+    if (has_id) {
+      table_additional_css <-
+        gsub(".gt_", paste0("#", id, " .gt_"), table_additional_css, fixed = TRUE)
+    }
   }
 
   sass::sass(
@@ -33,8 +39,6 @@ compile_scss <- function(data, id = NULL) {
       glue::glue(
         .open = "<<", .close = ">>",
         "
-        <<ifelse(has_initial_css, table_initial_css, '')>>
-
         <<ifelse(has_id, 'html', '.gt_table')>> {
           <<font_family_attr>>
         }
@@ -42,6 +46,8 @@ compile_scss <- function(data, id = NULL) {
         <<ifelse(has_id, '##{$element_id} {', '')>>
         @include gt_styles();
         <<ifelse(has_id, '}', '')>>
+
+        <<ifelse(has_additional_css, table_additional_css, '')>>
         ")
     )
   )

@@ -526,6 +526,62 @@ opt_table_outline <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @examples
+#' if (interactive()) {
+#'
+#' # Use `sp500` to create a small gt table,
+#' # using `fmt_currency()` to provide a
+#' # dollar sign for the first row of monetary
+#' # values; then, set a larger font size for
+#' # the table and use the 'Merriweather' font
+#' # (from Google Fonts, via `google_font()`)
+#' # with two font fallbacks ('Cochin' and the
+#' # catchall 'Serif' group)
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::slice(1:10) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = 2:5,
+#'     rows = 1,
+#'     currency = "USD",
+#'     use_seps = FALSE
+#'   ) %>%
+#'   tab_options(table.font.size = px(18)) %>%
+#'   opt_table_font(
+#'     font = list(
+#'       google_font(name = "Merriweather"),
+#'       "Cochin", "Serif"
+#'     )
+#'   )
+#'
+#' # Use `sza` to create an eleven-row table;
+#' # within `opt_table_font()`, set up a
+#' # preferred list of sans-serif fonts that
+#' # are commonly available in macOS (using
+#' # part of the `default_fonts()` vector as
+#' # a fallback)
+#' # and Windows 10
+#' tab_2 <-
+#'   sza %>%
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) %>%
+#'   dplyr::select(-latitude, -month) %>%
+#'   gt() %>%
+#'   opt_table_font(
+#'     font = c(
+#'       "Helvetica Neue", "Segoe UI",
+#'       default_fonts()[-c(1:3)]
+#'     )
+#'   ) %>%
+#'   opt_all_caps()
+#'
+#' }
+#'
 #' @family Table Option Functions
 #' @section Function ID:
 #' 9-7
@@ -538,14 +594,14 @@ opt_table_font <- function(data,
                            add = TRUE) {
 
   existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
-  existing_initial_css <- dt_options_get_value(data = data, option = "table_initial_css")
+  existing_additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
 
   font <- normalize_font_input(font_input = font)
 
-  initial_css <- c(font$import_stmt, existing_initial_css)
+  additional_css <- c(font$import_stmt, existing_additional_css)
 
   data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
-  data <- tab_options(data = data, table.initial_css = initial_css)
+  data <- tab_options(data = data, table.additional_css = additional_css)
 
   if (!is.null(weight)) {
 
@@ -560,6 +616,64 @@ opt_table_font <- function(data,
   }
 
   data
+}
+
+#' Option to add custom CSS for the table
+#'
+#' @description
+#' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
+#' CSS will be added after the compiled CSS that **gt** generates automatically
+#' when the object is transformed to an HTML output table. You can supply `css`
+#' as a vector of lines
+#'
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_font()]
+#' helper function.
+#'
+#' @inheritParams fmt_number
+#' @param css The CSS to include as part of the rendered table's `<style>`
+#'   element. A `css_list` that's generated though the [css_list()] function
+#'   (along with the [css_sel()] and [css_dec()] functions) is accepted here.
+#'   Another option is to read in a CSS file by use of the [css_file()]
+#'   function. Should these methods not be appealing, a character vector of CSS
+#'   lines representing CSS rulesets can be provided.
+#' @param add If `TRUE`, the default, the CSS is added to any already-defined
+#'   CSS (typically from previous calls of [opt_table_font()], `opt_css()`, or,
+#'   directly setting CSS the `table.additional_css` value in [tab_options()]).
+#'   If this is set to `FALSE`, the CSS provided here will replace any
+#'   previously-stored CSS.
+#' @param allow_duplicates When this is `FALSE` (the default), the CSS provided
+#'   here won't be added (provided that `add = TRUE`) if it is seen in the
+#'   already-defined CSS.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-8
+#'
+#' @export
+opt_css <- function(data,
+                    css,
+                    add = TRUE,
+                    allow_duplicates = FALSE) {
+
+  existing_additional_css <-
+    dt_options_get_value(data = data, option = "table_additional_css")
+
+  if (inherits(css, "css_list")) {
+    css <- as.character(css)
+  } else {
+    css <- paste(css, collapse = "\n")
+  }
+
+  if (!add && !allow_duplicates && css %in% existing_additional_css) {
+    return(data)
+  }
+
+  additional_css <- c(existing_additional_css, css)
+
+  tab_options(data = data, table.additional_css = additional_css)
 }
 
 normalize_font_input <- function(font_input) {

@@ -68,6 +68,7 @@ tab_1 <-
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_all_caps}()},
+\code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_font}()},

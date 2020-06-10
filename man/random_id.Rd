@@ -18,7 +18,7 @@ value argument of variable length (the default is 10 letters).
 }
 \section{Function ID}{
 
-7-19
+7-25
 }
 
 \seealso{
@@ -36,6 +36,10 @@ Other Helper Functions:
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
+\code{\link{css_dec}()},
+\code{\link{css_file}()},
+\code{\link{css_list}()},
+\code{\link{css_sel}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},

@@ -21,9 +21,63 @@ that work well in tables, use the \code{\link[=info_google_fonts]{info_google_fo
 }
 \section{Function ID}{
 
-7-23
+7-22
 }
 
+\examples{
+if (interactive()) {
+
+# Use `exibble` to create a gt table of
+# eight rows, replace missing values with
+# em dashes; for text in the `time` column,
+# we use the Google font 'IBM Plex Mono'
+# and set up the `default_fonts()` as
+# fallbacks (just in case the webfont is
+# not accessible)
+tab_1 <-
+  exibble \%>\%
+  dplyr::select(char, time) \%>\%
+  gt() \%>\%
+  fmt_missing(columns = everything()) \%>\%
+  tab_style(
+    style = cell_text(
+      font = c(
+        google_font(name = "IBM Plex Mono"),
+        default_fonts()
+      )
+    ),
+    locations = cells_body(columns = vars(time))
+  )
+
+# Use `sp500` to create a small gt table,
+# using `fmt_currency()` to provide a
+# dollar sign for the first row of monetary
+# values; then, set a larger font size for
+# the table and use the 'Merriweather' font
+# using the `google_font()` function (with
+# two font fallbacks: 'Cochin' and the
+# catchall 'Serif' group)
+tab_2 <-
+  sp500 \%>\%
+  dplyr::slice(1:10) \%>\%
+  dplyr::select(-volume, -adj_close) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = 2:5,
+    rows = 1,
+    currency = "USD",
+    use_seps = FALSE
+  ) \%>\%
+  tab_options(table.font.size = px(20)) \%>\%
+  opt_table_font(
+    font = list(
+      google_font(name = "Merriweather"),
+      "Cochin", "Serif"
+    )
+  )
+}
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
@@ -39,6 +93,10 @@ Other Helper Functions:
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
+\code{\link{css_dec}()},
+\code{\link{css_file}()},
+\code{\link{css_list}()},
+\code{\link{css_sel}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},

@@ -43,10 +43,68 @@ helper function.
 9-7
 }
 
+\examples{
+if (interactive()) {
+
+# Use `sp500` to create a small gt table,
+# using `fmt_currency()` to provide a
+# dollar sign for the first row of monetary
+# values; then, set a larger font size for
+# the table and use the 'Merriweather' font
+# (from Google Fonts, via `google_font()`)
+# with two font fallbacks ('Cochin' and the
+# catchall 'Serif' group)
+tab_1 <-
+  sp500 \%>\%
+  dplyr::slice(1:10) \%>\%
+  dplyr::select(-volume, -adj_close) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = 2:5,
+    rows = 1,
+    currency = "USD",
+    use_seps = FALSE
+  ) \%>\%
+  tab_options(table.font.size = px(18)) \%>\%
+  opt_table_font(
+    font = list(
+      google_font(name = "Merriweather"),
+      "Cochin", "Serif"
+    )
+  )
+
+# Use `sza` to create an eleven-row table;
+# within `opt_table_font()`, set up a
+# preferred list of sans-serif fonts that
+# are commonly available in macOS (using
+# part of the `default_fonts()` vector as
+# a fallback)
+# and Windows 10
+tab_2 <-
+  sza \%>\%
+  dplyr::filter(
+    latitude == 20 &
+      month == "jan" &
+      !is.na(sza)
+  ) \%>\%
+  dplyr::select(-latitude, -month) \%>\%
+  gt() \%>\%
+  opt_table_font(
+    font = c(
+      "Helvetica Neue", "Segoe UI",
+      default_fonts()[-c(1:3)]
+    )
+  ) \%>\%
+  opt_all_caps()
+
+}
+
+}
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
+\code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_lines}()},

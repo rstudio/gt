@@ -6,6 +6,9 @@
 \usage{
 default_fonts()
 }
+\value{
+A character vector of font names.
+}
 \description{
 The vector of fonts given by \code{default_fonts()} should be used with a \strong{gt}
 table that is rendered to HTML. We can specify additional fonts to use but
@@ -17,7 +20,7 @@ since it is handled by its \code{add} option (which is \code{TRUE} by default).
 }
 \section{Function ID}{
 
-7-22
+7-23
 }
 
 \examples{
@@ -60,6 +63,10 @@ Other Helper Functions:
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
+\code{\link{css_dec}()},
+\code{\link{css_file}()},
+\code{\link{css_list}()},
+\code{\link{css_sel}()},
 \code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},

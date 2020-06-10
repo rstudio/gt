@@ -15,7 +15,7 @@ tab_options(
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
-  table.initial_css = NULL,
+  table.additional_css = NULL,
   table.font.names = NULL,
   table.font.size = NULL,
   table.font.weight = NULL,
@@ -180,8 +180,8 @@ elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \
 \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
 hexadecimal color code should be provided.}
 
-\item{table.initial_css}{This option can be used to supply an additional
-block of CSS rules to be applied before the automatically generated table
+\item{table.additional_css}{This option can be used to supply an additional
+block of CSS rules to be applied after the automatically generated table
 CSS.}
 
 \item{table.font.names}{The names of the fonts used for the table. This is
