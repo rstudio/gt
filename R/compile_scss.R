@@ -21,13 +21,7 @@ compile_scss <- function(data, id = NULL) {
 
   # Combine any additional CSS statements and separate with `\n`
   if (has_additional_css) {
-
     table_additional_css <- paste(additional_css, collapse = "\n") %>% paste_right("\n")
-
-    if (has_id) {
-      table_additional_css <-
-        gsub(".gt_", paste0("#", id, " .gt_"), table_additional_css, fixed = TRUE)
-    }
   }
 
   sass::sass(

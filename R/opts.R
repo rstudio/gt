@@ -628,16 +628,11 @@ opt_table_font <- function(data,
 #' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
 #' CSS will be added after the compiled CSS that **gt** generates automatically
 #' when the object is transformed to an HTML output table. You can supply `css`
-#' as a vector of lines or, even better, generate CSS rulesets using a
-#' combination of [css_list()], [css_sel()], and [css_dec()].
+#' as a vector of lines or as a single string.
 #'
 #' @inheritParams fmt_number
 #' @param css The CSS to include as part of the rendered table's `<style>`
-#'   element. A `css_list` that's generated though the [css_list()] function
-#'   (along with the [css_sel()] and [css_dec()] functions) is accepted here.
-#'   Another option is to read in a CSS file by use of the [css_file()]
-#'   function. Should these methods not be appealing, a character vector of CSS
-#'   lines representing CSS rulesets can be provided.
+#'   element.
 #' @param add If `TRUE`, the default, the CSS is added to any already-defined
 #'   CSS (typically from previous calls of [opt_table_font()], `opt_css()`, or,
 #'   directly setting CSS the `table.additional_css` value in [tab_options()]).
@@ -652,12 +647,13 @@ opt_table_font <- function(data,
 #' @examples
 #' # Use `exibble` to create a gt table and
 #' # format the data in both columns; with
-#' # `opt_css()` insert CSS rulesets with
-#' # `css_list()`, `css_sel()`, and `css_dec()`
+#' # `opt_css()` insert CSS rulesets as
+#' # as string and be sure to set the table
+#' # ID explicitly (here as "one")
 #' tab_1 <-
 #'   exibble %>%
 #'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#'   gt(id = "one") %>%
 #'   fmt_currency(
 #'     columns = vars(currency),
 #'     currency = "HKD"
@@ -666,24 +662,21 @@ opt_table_font <- function(data,
 #'     columns = vars(num)
 #'   ) %>%
 #'   opt_css(
-#'     css =
-#'       css_list(
-#'         css_sel(".gt_table") ~
-#'           css_dec(background_color = "skyblue"),
-#'         css_sel(".gt_row") ~
-#'           css_dec(padding = "20px 30px"),
-#'         css_sel(".gt_col_heading") ~
-#'           css_dec("text-align!" = "center")
-#'       )
+#'     css = "
+#'     #one .gt_table {
+#'       background-color: skyblue;
+#'     }
+#'     #one .gt_row {
+#'       padding: 20px 30px;
+#'     }
+#'     #one .gt_col_heading {
+#'       text-align: center !important;
+#'     }
+#'     "
 #'   )
-#'
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
-#'
-#' @seealso The [css_list()], [css_sel()], and [css_dec()] functions for
-#'   creating complete CSS rulesets, and, the [css_file()] function for using an
-#'   external CSS style sheet.
 #'
 #' @family Table Option Functions
 #' @section Function ID:
@@ -698,11 +691,7 @@ opt_css <- function(data,
   existing_additional_css <-
     dt_options_get_value(data = data, option = "table_additional_css")
 
-  if (inherits(css, "css_list")) {
-    css <- as.character(css)
-  } else {
-    css <- paste(css, collapse = "\n")
-  }
+  css <- paste(css, collapse = "\n")
 
   if (!add && !allow_duplicates && css %in% existing_additional_css) {
     return(data)

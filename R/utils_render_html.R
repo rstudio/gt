@@ -9,38 +9,27 @@ footnote_mark_to_html <- function(mark) {
 
 styles_to_html <- function(styles) {
 
-  style_list <-
-    lapply(styles, function(x) {
-
-      if ("css" %in% names(x)) {
-        css <- x$css
-      } else {
-        css <- cell_style_to_html(x)
-      }
-      css
-    }) %>%
-    unname() %>%
-    unlist(recursive = FALSE)
-
   vapply(
-    seq_along(style_list),
+    styles,
     FUN.VALUE = character(1), USE.NAMES = FALSE,
     FUN = function(x) {
 
-      if (is.null(names(style_list[x]))) {
+      if (any(is.null(names(x)))) {
 
-        style <- style_list[x]
+        style <- gsub(":", ": ", x, fixed = TRUE)
 
-      } else if (names(style_list[x]) != "") {
+      } else if (all(names(x) != "")) {
+
+        x <- cell_style_to_html(x)
 
         style <-
-          paste0(names(style_list[x]), ": ", style_list[x], ";", collapse = " ") %>%
+          paste0(names(x), ": ", x, ";", collapse = " ") %>%
           tidy_gsub(";;", ";")
 
       } else {
-
-        style <- as.character(style_list[x])
+        style <- as.character(x)
       }
+
       style
     }
   ) %>%

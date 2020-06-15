@@ -10,11 +10,7 @@ opt_css(data, css, add = TRUE, allow_duplicates = FALSE)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{css}{The CSS to include as part of the rendered table's \verb{<style>}
-element. A \code{css_list} that's generated though the \code{\link[=css_list]{css_list()}} function
-(along with the \code{\link[=css_sel]{css_sel()}} and \code{\link[=css_dec]{css_dec()}} functions) is accepted here.
-Another option is to read in a CSS file by use of the \code{\link[=css_file]{css_file()}}
-function. Should these methods not be appealing, a character vector of CSS
-lines representing CSS rulesets can be provided.}
+element.}
 
 \item{add}{If \code{TRUE}, the default, the CSS is added to any already-defined
 CSS (typically from previous calls of \code{\link[=opt_table_font]{opt_table_font()}}, \code{opt_css()}, or,
@@ -33,8 +29,7 @@ An object of class \code{gt_tbl}.
 The \code{opt_css()} function makes it possible to add CSS to a \strong{gt} table. This
 CSS will be added after the compiled CSS that \strong{gt} generates automatically
 when the object is transformed to an HTML output table. You can supply \code{css}
-as a vector of lines or, even better, generate CSS rulesets using a
-combination of \code{\link[=css_list]{css_list()}}, \code{\link[=css_sel]{css_sel()}}, and \code{\link[=css_dec]{css_dec()}}.
+as a vector of lines or as a single string.
 }
 \section{Figures}{
 
@@ -49,12 +44,13 @@ combination of \code{\link[=css_list]{css_list()}}, \code{\link[=css_sel]{css_se
 \examples{
 # Use `exibble` to create a gt table and
 # format the data in both columns; with
-# `opt_css()` insert CSS rulesets with
-# `css_list()`, `css_sel()`, and `css_dec()`
+# `opt_css()` insert CSS rulesets as
+# as string and be sure to set the table
+# ID explicitly (here as "one")
 tab_1 <-
   exibble \%>\%
   dplyr::select(num, currency) \%>\%
-  gt() \%>\%
+  gt(id = "one") \%>\%
   fmt_currency(
     columns = vars(currency),
     currency = "HKD"
@@ -63,24 +59,21 @@ tab_1 <-
     columns = vars(num)
   ) \%>\%
   opt_css(
-    css =
-      css_list(
-        css_sel(".gt_table") ~
-          css_dec(background_color = "skyblue"),
-        css_sel(".gt_row") ~
-          css_dec(padding = "20px 30px"),
-        css_sel(".gt_col_heading") ~
-          css_dec("text-align!" = "center")
-      )
+    css = "
+    #one .gt_table {
+      background-color: skyblue;
+    }
+    #one .gt_row {
+      padding: 20px 30px;
+    }
+    #one .gt_col_heading {
+      text-align: center !important;
+    }
+    "
   )
-
 
 }
 \seealso{
-The \code{\link[=css_list]{css_list()}}, \code{\link[=css_sel]{css_sel()}}, and \code{\link[=css_dec]{css_dec()}} functions for
-creating complete CSS rulesets, and, the \code{\link[=css_file]{css_file()}} function for using an
-external CSS style sheet.
-
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},

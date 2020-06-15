@@ -1553,396 +1553,6 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
-#' Specify CSS rule sets using a CSS file
-#'
-#' Additional CSS rulesets can be added to a **gt** table by way of programmatic
-#' generation (collecting rulesets with [css_list()]), or, by reading in an
-#' external CSS stylesheet with `css_file()`.
-#'
-#' @param file Path to a CSS stylesheet.
-#'
-#' @return An object of class `css_list`.
-#'
-#' @examples
-#' # Get the path to an external CSS
-#' # stylesheet (this will be used in
-#' # a gt table)
-#' external_css <-
-#'   system.file(
-#'     "css/external.css",
-#'     package = "gt"
-#'   )
-#'
-#' # Use `exibble` to create a gt table and
-#' # format the data in both columns; with
-#' # `opt_css()` and `css_file()` we can
-#' # add CSS rulesets from an external CSS
-#' # stylesheet and incorporate styling that
-#' # in some cases cannot otherwise be done
-#' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
-#'   fmt_currency(
-#'     columns = vars(currency),
-#'     currency = "HKD"
-#'   ) %>%
-#'   fmt_scientific(
-#'     columns = vars(num)
-#'   ) %>%
-#'   opt_css(
-#'     css = css_file(file = external_css)
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_css_file_1.png}{options: width=100\%}}
-#'
-#' @family Helper Functions
-#' @section Function ID:
-#' 7-18
-#'
-#' @export
-css_file <- function(file) {
-
-  x <- readLines(con = file)
-
-  structure(
-    list(paste(x, collapse = "\n")),
-    class = "css_list"
-  )
-}
-
-#' Specify CSS rulesets programmatically: ruleset container
-#'
-#' A `css_list` serves as container for CSS rulesets. You can provide a sequence
-#' of CSS ruleset statements, where each statement uses R formula syntax with a
-#' [css_sel()] call on the left-hand side (LHS) and a [css_dec()] call on the
-#' right-hand side (RHS). Adding CSS ruleset statements in this manner allows us
-#' to build up a CSS stylesheet than can be used as the `css` value in the
-#' [opt_css()] function (which is great for adding custom CSS to a **gt** table
-#' rendered as HTML).
-#'
-#' @param ... A sequence of CSS ruleset statements formed by [css_sel()] and
-#'   [css_dec()] calls (given as two-sided formulas).
-#'
-#' @return An object of class `css_list`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table and
-#' # format the data in both columns; with
-#' # `css_list()` serving as a container for
-#' # CSS, we can generate an additional
-#' # stylesheet using statements that pair
-#' # `css_sel()` with `css_dec()`
-#' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
-#'   fmt_currency(
-#'     columns = vars(currency),
-#'     currency = "HKD"
-#'   ) %>%
-#'   fmt_scientific(
-#'     columns = vars(num)
-#'   ) %>%
-#'   opt_css(
-#'     css =
-#'       css_list(
-#'         css_sel(".gt_table") ~
-#'           css_dec(background_color = "skyblue"),
-#'         css_sel(".gt_row") ~
-#'           css_dec(padding = "20px 30px"),
-#'         css_sel(".gt_col_heading") ~
-#'           css_dec("text-align!" = "center")
-#'       )
-#'   )
-#'
-#' # Define a linear-gradient CSS function as
-#' # a string
-#' linear_gradient <-
-#'   "linear-gradient(to right, rgba(255,0,0,0) 50%, red)"
-#'
-#' # Use `pizzaplace` to create a gt table;
-#' # `opt_css()` can use a `css_list()` that
-#' # should contain statements for creating
-#' # CSS rulesets (the one used here sets
-#' # a background image on the stub cells
-#' # with the `linear_gradient` property value
-#' tab_2 <-
-#'   pizzaplace %>%
-#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
-#'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
-#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
-#'   gt(rowname_col = "month") %>%
-#'   opt_css(
-#'     css =
-#'       css_list(
-#'         css_sel(".gt_stub") ~
-#'           css_dec(`background-image` = linear_gradient)
-#'       )
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_css_list_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_css_list_2.png}{options: width=100\%}}
-#'
-#' @family Helper Functions
-#' @section Function ID:
-#' 7-19
-#'
-#' @export
-css_list <- function(...) {
-
-  x <- list(...)
-
-  rulesets <-
-    vapply(
-      x,
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = function(x) {
-
-        if (!rlang::is_formula(x)) {
-          stop("A set of two-sided formulas (with `~`) must be given to `css_list()`.",
-               call. = FALSE)
-        }
-
-        x_lhs <- rlang::eval_tidy(rlang::f_lhs(x))
-        x_rhs <- rlang::eval_tidy(rlang::f_rhs(x))
-
-        if (inherits(x_lhs, "css_sel")) {
-          selectors <- x_lhs$selectors
-        } else {
-          selectors <- as.character(x_lhs)
-        }
-
-        declarations <-
-          paste(x_rhs, collapse = "\n") %>%
-          gsub("\n", "\n  ", ., fixed = TRUE) %>%
-          gsub("^", "  ", .)
-
-        paste0(
-          selectors, " {\n",
-          declarations, "\n",
-          "}\n\n"
-        )
-      }
-    )
-
-  structure(
-    list(css = paste(rulesets, collapse = "")),
-    class = "css_list"
-  )
-}
-
-#' Specify CSS rulesets programmatically: selectors
-#'
-#' The `css_sel()` function is used in conjunction with the [css_dec()] function
-#' to define a CSS ruleset (ultimately used within a [opt_css()] function call).
-#' R formula syntax is used when defining a CSS ruleset. Using `css_sel()` on
-#' the left-hand side (LHS) allows us to define one or more CSS selectors per
-#' set of one or more CSS declarations with [css_dec()] on the right-hand side
-#' (RHS). To form CSS selectors with `css_sel()`, provide one or more strings
-#' with selectors: all values given are grouped together as a comma-separated
-#' list (e.g., `css_sel("div > p", "p::after")` results in
-#' `"div > p, p::after"`).
-#'
-#' @param ... One or more CSS selectors. If more than one provided, the list is
-#' flattened to a comma-separated list.
-#'
-#' @return An object of class `css_sel`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table and
-#' # format the data in both columns; add CSS
-#' # rules with the combination of `opt_css()`,
-#' # `css_list()`, `css_sel()`, and `css_dec()`
-#' # to radically modify the look of the table
-#' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
-#'   fmt_currency(
-#'     columns = vars(currency),
-#'     currency = "HKD"
-#'   ) %>%
-#'   fmt_scientific(
-#'     columns = vars(num)
-#'   ) %>%
-#'   opt_css(
-#'     css =
-#'       css_list(
-#'         css_sel(".gt_table") ~
-#'           css_dec(background_color = "skyblue"),
-#'         css_sel(".gt_row") ~
-#'           css_dec(padding = "20px 30px"),
-#'         css_sel(".gt_col_heading") ~
-#'           css_dec("text-align!" = "center")
-#'       )
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_css_sel_1.png}{options: width=100\%}}
-#'
-#' @family Helper Functions
-#' @section Function ID:
-#' 7-20
-#'
-#' @seealso The [css_dec()] and [css_list()] functions for creating complete CSS
-#'   rulesets.
-#'
-#' @export
-css_sel <- function(...) {
-
-  sel_list <-
-    list(selectors = paste(unlist(list(...)), collapse = ", "))
-
-  class(sel_list) <- "css_sel"
-  sel_list
-}
-
-#' Specify CSS rulesets programmatically: declarations
-#'
-#' The `css_dec()` function can be used in conjunction with the [css_sel()]
-#' function to define a CSS ruleset. R formula syntax is used when defining a
-#' CSS ruleset. Using `css_dec()` on the right-hand side (RHS) allows us to
-#' define one or more CSS declarations per set of one or more CSS selectors with
-#' [css_sel()] on the left-hand side (LHS). To form CSS declarations with
-#' `css_dec()`, provide named arguments: names serve CSS properties and values
-#' are, appropriately, the values (e.g., `css_dec(font_size = px(16))`).
-#'
-#' @details
-#' CSS uses a hyphen character within many property names and this doesn't
-#' really work well in R argument names. That's okay though, we can use the
-#' underscore (`_`) or period (`.`) characters in place of these ubiquitous
-#' hyphens. Alternatively, we can opt to surround the hyphen-laden argument
-#' names in double quotes or backticks.
-#'
-#' To mark a property as `!important`, we put an exclamation mark (`!`)
-#' character at the end of the property name. Here, we are forced to use double
-#' quotes or backticks given the nature of the `!` character.
-#'
-#' Argument values will be converted to strings. Any property with a value of
-#' `NULL` or `""` will be dropped.
-#'
-#' @param ... A sequence of named arguments representing property-value pairs
-#'   for CSS rules, or, or complete CSS declaration strings. See *Details* for
-#'   advice on forming names and properties.
-#' @param .collapse Character sequence to use when collapsing declarations.
-#'
-#' @return An object of class `css_dec`.
-#'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # replace missing values with the
-#' # `fmt_missing()` function and then
-#' # add styling to the `char` column
-#' # with `cell_fill()` and, also, with
-#' # `css_dec()`
-#' tab_1 <-
-#'   exibble %>%
-#'     dplyr::select(char, fctr) %>%
-#'     gt() %>%
-#'     fmt_missing(everything()) %>%
-#'     tab_style(
-#'       style = list(
-#'         cell_fill(color = "lightcyan"),
-#'         css_dec(`font-variant` = "small-caps")
-#'       ),
-#'       locations = cells_body(columns = vars(char))
-#'     )
-#'
-#' # Use `exibble` to create a gt table;
-#' # format the data in the two columns
-#' # so that they display 1 decimal value,
-#' # then, add CSS rules with `opt_css()`
-#' # and an assortment of `css_*()` calls
-#' # to modify the look of the table
-#' tab_2 <-
-#'   exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
-#'   fmt_number(
-#'     columns = vars(num, currency),
-#'     decimals = 1
-#'   ) %>%
-#'   opt_css(
-#'     css =
-#'       css_list(
-#'         css_sel(".gt_table") ~
-#'           css_dec(background_color = "khaki"),
-#'         css_sel(".gt_row") ~
-#'           css_dec(padding.right = "0")
-#'       )
-#'   )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_css_dec_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_css_dec_2.png}{options: width=100\%}}
-#'
-#' @family Helper Functions
-#' @section Function ID:
-#' 7-21
-#'
-#' @seealso The [css_sel()] and [css_list()] functions for creating complete CSS
-#'   rulesets for use with [opt_css()].
-#'
-#' @export
-css_dec <- function(...,
-                    .collapse = "\n") {
-
-  declarations <- list(...)
-
-  # Normalize list of declarations to a fully-named list
-  for (i in seq_along(declarations)) {
-
-    if (!rlang::is_named(declarations[i])) {
-
-      if (!grepl(".+?:.+?", declarations[[i]])) {
-        stop("A string-based declaration must at least have a `:` mark",
-             call. = FALSE)
-      }
-      prop_value <-
-        gsub(";$", "", stringr::str_trim(unlist(strsplit(declarations[[i]], ":"))))
-
-      declarations[[i]] <- prop_value[2]
-      names(declarations)[i] <- prop_value[1]
-    }
-  }
-
-  props <- unlist(declarations)
-
-  if (is.null(names(props)) || any(names(props) == "")) {
-    stop("cssList expects all arguments to be named")
-  }
-
-  props[] <- lapply(props, paste, collapse = " ")
-
-  if (length(props) == 0) {
-
-    declarations <- ""
-
-  } else {
-
-    names(props) <-
-      gsub("[._]", "-", tolower(gsub("([A-Z])", "-\\1", names(props))))
-
-    important <- ifelse(grepl("!$", names(props), perl = TRUE), " !important", "")
-
-    names(props) <- sub("!$", "", names(props), perl = TRUE)
-
-    declarations <-
-      paste0(names(props), ": ", props, important, ";", collapse = .collapse)
-  }
-
-  dec_list <-list(declarations = declarations)
-  class(dec_list) <- "css_dec"
-  dec_list
-}
-
 #' Helper function for specifying a font from the Google Fonts service
 #'
 #' The `google_font()` helper function can be used wherever a font name should
@@ -2015,7 +1625,7 @@ css_dec <- function(...,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-18
 #'
 #' @export
 google_font <- function(name) {
@@ -2081,7 +1691,7 @@ google_font <- function(name) {
 #' @family Helper Functions
 #'
 #' @section Function ID:
-#' 7-23
+#' 7-19
 #'
 #' @export
 default_fonts <- function() {
@@ -2159,7 +1769,7 @@ default_fonts <- function() {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-24
+#' 7-20
 #'
 #' @export
 adjust_luminance <- function(colors,
@@ -2212,7 +1822,7 @@ adjust_luminance <- function(colors,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-25
+#' 7-21
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -2233,7 +1843,7 @@ random_id <- function(n = 10) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-26
+#' 7-22
 #'
 #' @export
 escape_latex <- function(text) {
@@ -2285,7 +1895,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-27
+#' 7-23
 #'
 #' @export
 gt_latex_dependencies <- function() {

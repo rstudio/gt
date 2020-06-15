@@ -855,10 +855,31 @@ tab_source_note <- function(data,
 #'       rows = open > close)
 #'   )
 #'
+#' # Use `exibble` to create a gt table;
+#' # replace missing values with the
+#' # `fmt_missing()` function and then
+#' # add styling to the `char` column
+#' # with `cell_fill()` and with a
+#' # CSS style declaration
+#' tab_3 <-
+#'   exibble %>%
+#'   dplyr::select(char, fctr) %>%
+#'   gt() %>%
+#'   fmt_missing(everything()) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "lightcyan"),
+#'       "font-variant: small-caps;"
+#'     ),
+#'     locations = cells_body(columns = vars(char))
+#'   )
+#'
 #' @section Figures:
 #' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 #'
 #' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -921,14 +942,14 @@ as_style <- function(style) {
   # components together
   if (!inherits(style, "cell_styles")) {
 
-    if (!inherits(style, "list") && !inherits(style, "css_dec")) {
-      stop("Styles should be provided exclusively by the stylizing ",
-           "helper functions:\n",
-           " * `cell_text()\n",
-           " * `cell_fill()\n",
-           " * `cell_borders()`",
-           call. = FALSE)
-    }
+    # if (!inherits(style, "list")) {
+    #   stop("Styles should be provided exclusively by the stylizing ",
+    #        "helper functions:\n",
+    #        " * `cell_text()\n",
+    #        " * `cell_fill()\n",
+    #        " * `cell_borders()`",
+    #        call. = FALSE)
+    # }
 
     # Initialize an empty list that will be
     # populated with normalized style declarations
@@ -938,10 +959,8 @@ as_style <- function(style) {
 
       style_item <- style[[i]]
 
-      if (inherits(style_item, "css_dec")) {
+      if (inherits(style_item, "character")) {
 
-        names(style_item) <- "css"
-        class(style_item) <- "cell_style"
         style_item <- list(cell_style = style_item)
 
       } else if (!inherits(style_item, "cell_styles")) {
@@ -958,9 +977,6 @@ as_style <- function(style) {
 
     style <- final_style
   }
-
-  # Check for class of `cell_style` in upgraded `style` list
-  lapply(style, function(x) checkmate::assert_class(x = x, classes = "cell_style"))
 
   style
 }

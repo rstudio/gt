@@ -25,7 +25,7 @@ since it is handled by its \code{add} option (which is \code{TRUE} by default).
 
 \section{Function ID}{
 
-7-23
+7-19
 }
 
 \examples{
@@ -68,10 +68,6 @@ Other Helper Functions:
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
-\code{\link{css_dec}()},
-\code{\link{css_file}()},
-\code{\link{css_list}()},
-\code{\link{css_sel}()},
 \code{\link{currency}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
