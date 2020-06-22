@@ -9,7 +9,7 @@ data_color(
   columns,
   colors,
   alpha = NULL,
-  apply_to = "fill",
+  apply_to = c("fill", "text"),
   autocolor_text = TRUE
 )
 }
@@ -32,8 +32,8 @@ to all of the \code{colors} provided (regardless of whether a color palette was
 directly supplied or generated through a color mapping function).}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
-include the cell background (the default, given as \code{fill}) or the cell
-text (\code{text}).}
+include the cell background (the default, given as \code{"fill"}) or the cell
+text (\code{"text"}).}
 
 \item{autocolor_text}{An option to let \strong{gt} modify the coloring of text
 within cells undergoing background coloring. This will in some cases yield

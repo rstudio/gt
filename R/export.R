@@ -41,7 +41,8 @@
 #'   function.
 #'
 #' @examples
-#' \donttest{
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table; add
 #' # a stubhead label to describe what is
 #' # in the stub

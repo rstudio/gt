@@ -625,18 +625,6 @@ test_that("the correct color values are obtained when defining a palette", {
       )
   )
 
-  # Expect an error when providing an `NA` along
-  # with valid color names to `colors`
-  expect_error(
-    test_tbl %>%
-      gt() %>%
-      data_color(
-        columns = vars(min_sza),
-        colors = c("green", "blue", NA),
-        autocolor_text = TRUE
-      )
-  )
-
   # Expect an error when providing a numeric vector
   # to `colors`
   expect_error(
