@@ -70,6 +70,7 @@ dt_summary_build <- function(data,
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
+  boxh_df <- dt_boxhead_get(data = data)
 
   # If the `summary_list` object is an empty list,
   # return an empty list as the `list_of_summaries`
@@ -170,21 +171,20 @@ dt_summary_build <- function(data,
     if (identical(groups, grand_summary_col)) {
 
       select_data_tbl <-
-        cbind(
-          stub_df[c("groupname", "rowname")],
-          data_tbl
-        )[, -2] %>%
-        dplyr::mutate(groupname = grand_summary_col) %>%
-        dplyr::select(groupname, columns)
+        data_tbl %>%
+        dplyr::select(!!columns) %>%
+        dplyr::mutate(groupname = !!grand_summary_col) %>%
+        dplyr::select(groupname, !!columns) %>%
+        as.data.frame(stringsAsFactors = FALSE)
 
     } else {
 
       select_data_tbl <-
-        cbind(
-          stub_df[c("groupname", "rowname")],
-          data_tbl
-        )[, -2] %>%
-        dplyr::select(groupname, columns)
+        dplyr::bind_cols(
+          stub_df %>% dplyr::select(groupname),
+          data_tbl[stub_df$rownum_i, columns]
+        ) %>%
+        as.data.frame(stringsAsFactors = FALSE)
     }
 
     # Get the registered function calls

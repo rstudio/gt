@@ -493,10 +493,11 @@ fmt_symbol <- function(data,
 #' Format values as a percentage
 #'
 #' With numeric values in a **gt** table, we can perform percentage-based
-#' formatting. It is assumed the input numeric values are in a fractional format
-#' since the numbers will be automatically multiplied by `100` before decorating
-#' with a percent sign. For more control over percentage formatting, we can use
-#' the following options:
+#' formatting. It is assumed the input numeric values are proportional values
+#' and, in this case, the values will be automatically multiplied by `100`
+#' before decorating with a percent sign (the other case is accommodated though
+#' setting the `scale_values` to `FALSE`) For more control over percentage
+#' formatting, we can use the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
@@ -518,6 +519,10 @@ fmt_symbol <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param scale_values Should the values be scaled through multiplication by
+#'   100? By default this is `TRUE` since the expectation is that normally
+#'   values are proportions. Setting to `FALSE` signifies that the values are
+#'   already scaled and require only the percent sign when formatted.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
 #' @param placement The placement of the percent sign. This can be either be
@@ -533,7 +538,7 @@ fmt_symbol <- function(data,
 #'   pizzaplace %>%
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
 #'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizzas_sold = n()) %>%
+#'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
 #'   dplyr::ungroup() %>%
 #'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
 #'   gt(rowname_col = "month") %>%
@@ -557,6 +562,7 @@ fmt_percent <- function(data,
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
                         drop_trailing_dec_mark = TRUE,
+                        scale_values = TRUE,
                         use_seps = TRUE,
                         pattern = "{x}",
                         sep_mark = ",",
@@ -579,6 +585,12 @@ fmt_percent <- function(data,
          call. = FALSE)
   }
 
+  if (scale_values) {
+    scale_by <- 100
+  } else {
+    scale_by <- 1.0
+  }
+
   fmt_symbol(
     data = data,
     columns = !!columns,
@@ -589,7 +601,7 @@ fmt_percent <- function(data,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
     use_seps = use_seps,
-    scale_by = 100,
+    scale_by = scale_by,
     suffixing = FALSE,
     pattern = pattern,
     sep_mark = sep_mark,

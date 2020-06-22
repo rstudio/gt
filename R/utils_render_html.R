@@ -67,37 +67,52 @@ get_table_defs <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
-  if (boxh$column_width %>% unlist() %>% length() > 0) {
+  # Get the `table-layout` value, which is set in `_options`
+  table_style <-
+    paste0("table-layout: ", dt_options_get_value(data, option = "table_layout"), ";")
 
-    widths <-
-      boxh %>%
-      dplyr::filter(type == "default") %>%
-      .$column_width %>%
-      unlist()
-
-    # Assumption is that all width values are `px` values
-    total_width <-
-      widths %>%
-      tidy_gsub("px", "") %>%
-      as.numeric() %>%
-      sum(na.rm = TRUE) %>%
-      as.character() %>%
-      paste_right("px")
-
-    table_style <-
-      paste("table-layout: fixed", paste0("width: ", total_width), sep = "; ")
-
-    table_colgroups <-
-      htmltools::tags$colgroup(
-        lapply(widths, function(width) {
-          htmltools::tags$col(style = paste0("width: ", width))
-        })
-      )
-
-  } else {
-    table_style <- NULL
-    table_colgroups <- NULL
+  # In the case that column widths are not set for any columns,
+  # there should not be a `<colgroup>` tag requirement
+  if (boxh$column_width %>% unlist() %>% length() < 1) {
+    return(list(table_style = NULL, table_colgroups = NULL))
   }
+
+  # Get the table's width (which or may not have been set)
+  table_width <- dt_options_get_value(data, option = "table_width")
+
+  widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
+    .$column_width %>%
+    unlist()
+
+  # Stop function if all length dimensions (where provided)
+  # don't conform to accepted CSS length definitions
+  validate_css_lengths(widths)
+
+  # If all of the widths are defined as px values for all columns,
+  # then ensure that the width values are strictly respected as
+  # absolute width values (even if a table width has already been set)
+  if (all(grepl("px", widths)) && table_width == "auto") {
+    table_width <- "0px"
+  }
+
+  if (all(grepl("%", widths)) && table_width == "auto") {
+    table_width <- "100%"
+  }
+
+  if (table_width != "auto") {
+    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
+  }
+
+  # Create the `<colgroup>` tag
+  table_colgroups <-
+    htmltools::tags$colgroup(
+      lapply(widths, function(width) {
+        htmltools::tags$col(style = htmltools::css(width = width))
+      })
+    )
 
   list(
     table_style = table_style,

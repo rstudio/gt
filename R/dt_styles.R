@@ -13,14 +13,14 @@ dt_styles_set <- function(data, styles) {
 dt_styles_init <- function(data) {
 
   dplyr::tibble(
-    locname = NA_character_,
-    grpname = NA_character_,
-    colname = NA_character_,
-    locnum = NA_real_,
-    rownum = NA_integer_,
-    colnum = NA_integer_,
+    locname = character(0),
+    grpname = character(0),
+    colname = character(0),
+    locnum = numeric(0),
+    rownum = integer(0),
+    colnum = integer(0),
     styles = list()
-  )[-1, ] %>%
+  ) %>%
     dt_styles_set(styles = ., data = data)
 }
 

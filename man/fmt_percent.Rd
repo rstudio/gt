@@ -11,6 +11,7 @@ fmt_percent(
   decimals = 2,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
+  scale_values = TRUE,
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
@@ -47,6 +48,11 @@ marks should always appear even if there are no decimal digits to display
 after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
 which means that trailing decimal marks are not shown.}
 
+\item{scale_values}{Should the values be scaled through multiplication by
+100? By default this is \code{TRUE} since the expectation is that normally
+values are proportions. Setting to \code{FALSE} signifies that the values are
+already scaled and require only the percent sign when formatted.}
+
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
@@ -79,10 +85,11 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform percentage-based
-formatting. It is assumed the input numeric values are in a fractional format
-since the numbers will be automatically multiplied by \code{100} before decorating
-with a percent sign. For more control over percentage formatting, we can use
-the following options:
+formatting. It is assumed the input numeric values are proportional values
+and, in this case, the values will be automatically multiplied by \code{100}
+before decorating with a percent sign (the other case is accommodated though
+setting the \code{scale_values} to \code{FALSE}) For more control over percentage
+formatting, we can use the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the
@@ -122,7 +129,7 @@ tab_1 <-
   pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month) \%>\%
-  dplyr::summarize(pizzas_sold = n()) \%>\%
+  dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
   dplyr::ungroup() \%>\%
   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
   gt(rowname_col = "month") \%>\%
