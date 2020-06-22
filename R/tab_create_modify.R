@@ -1148,6 +1148,9 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   given in units of pixels. The [px()] and [pct()] helper functions can also
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units.
+#' @param table.layout The value for the `table-layout` CSS style in the HTML
+#'   output context. By default, this is `"fixed"` but another valid option is
+#'   `"auto"`.
 #' @param table.align The horizontal alignment of the table in its container. By
 #'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
 #'   will automatically set `table.margin.left` and `table.margin.right` to the
@@ -1378,6 +1381,7 @@ tab_options <- function(data,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
                         table.width = NULL,
+                        table.layout = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
