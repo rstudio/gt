@@ -30,18 +30,21 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Manual specifications of column widths can be performed using the
-\code{cols_width()} function. We choose which columns get specific widths (in
-pixels, usually by use of the \code{\link[=px]{px()}} helper function). Width assignments are
-supplied in \code{...} through two-sided formulas, where the left-hand side
-defines the target columns and the right-hand side is a single width value in
-pixels.
+\code{cols_width()} function. We choose which columns get specific widths. This
+can be in units of pixels (easily set by use of the \code{\link[=px]{px()}} helper function),
+or, as percentages (where the \code{\link[=pct]{pct()}} helper function is useful). Width
+assignments are supplied in \code{...} through two-sided formulas, where the
+left-hand side defines the target columns and the right-hand side is a single
+dimension.
 }
 \details{
-Normally, column widths are automatically set to span across the width of the
-container (both table and container widths can be individually modified with
-the \code{table.width} and \code{container.width} options within \code{\link[=tab_options]{tab_options()}}). When
-using \code{cols_width()} though, the \code{table.width} option is disregarded in
-favor of the pixel values set for each column.
+Column widths can be set as absolute or relative values (with px and
+percentage values). Those columns not specified are treated as having
+variable width. The sizing behavior for column widths depends on the
+combination of value types, and, whether a table width has been set (which
+could, itself, be expressed as an absolute or relative value). Widths for the
+table and its container can be individually modified with the \code{table.width}
+and \code{container.width} arguments within \code{\link[=tab_options]{tab_options()}}).
 }
 \section{Figures}{
 
