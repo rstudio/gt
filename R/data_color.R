@@ -56,8 +56,8 @@
 #'   to all of the `colors` provided (regardless of whether a color palette was
 #'   directly supplied or generated through a color mapping function).
 #' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `fill`) or the cell
-#'   text (`text`).
+#'   include the cell background (the default, given as `"fill"`) or the cell
+#'   text (`"text"`).
 #' @param autocolor_text An option to let **gt** modify the coloring of text
 #'   within cells undergoing background coloring. This will in some cases yield
 #'   more optimal text-to-background color contrast. By default, this is set to
@@ -130,14 +130,22 @@ data_color <- function(data,
                        columns,
                        colors,
                        alpha = NULL,
-                       apply_to = "fill",
+                       apply_to = c("fill", "text"),
                        autocolor_text = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Get the correct `apply_to` value
+  apply_to <- match.arg(apply_to)
+
+  colors <- rlang::enquo(colors)
+
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
+
+  # Evaluate `colors` with `eval_tidy()` (supports quosures)
+  colors <- rlang::eval_tidy(colors, data_tbl)
 
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
@@ -147,20 +155,25 @@ data_color <- function(data,
   columns <- rlang::enquo(columns)
   resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
 
+  # Get the sequence of row indices for the table
+  rows <- seq_len(nrow(data_tbl))
+
+  data_color_styles_tbl <-
+    dplyr::tibble(
+      locname = character(0), grpname = character(0), colname = character(0),
+      locnum = numeric(0), rownum = integer(0), colnum = integer(0), styles = list()
+    )
+
   for (column in resolved_columns) {
 
-    data_vals <- data_tbl[[column]]
+    data_vals <- data_tbl[[column]][rows]
 
     if (inherits(colors, "character")) {
 
       if (is.numeric(data_vals)) {
 
-        color_fn <-
-          scales::col_numeric(
-            palette = colors,
-            domain = data_vals,
-            alpha = TRUE
-          )
+        # Create a color function based on `scales::col_numeric()`
+        color_fn <- scales::col_numeric(palette = colors, domain = data_vals, alpha = TRUE)
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 
@@ -170,22 +183,20 @@ data_color <- function(data,
         # of levels. Instead, colors should be subsetted. scales does the right
         # thing for palette names though, so we need to screen those cases out.
         if (length(colors) > 1) {
-          nlvl <- if (is.factor(data_vals)) {
-            nlevels(data_vals)
-          } else {
-            nlevels(factor(data_vals))
-          }
+          nlvl <-
+            if (is.factor(data_vals)) {
+              nlevels(data_vals)
+            } else {
+              nlevels(factor(data_vals))
+            }
           if (length(colors) > nlvl) {
             colors <- colors[seq_len(nlvl)]
           }
         }
 
-        color_fn <-
-          scales::col_factor(
-            palette = colors,
-            domain = data_vals,
-            alpha = TRUE
-          )
+        # Create a color function based on `scales::col_factor()`
+        color_fn <- scales::col_factor(palette = colors, domain = data_vals, alpha = TRUE)
+
       } else {
 
         stop("Don't know how to map colors to a column of class ", class(data_vals)[1], ".",
@@ -193,13 +204,17 @@ data_color <- function(data,
       }
 
     } else if (inherits(colors, "function")) {
+
+      # If a color function is directly provided, use as is
       color_fn <- colors
 
     } else {
-      stop("The `colors` arg must be either a character vector of colors or a function", call. = FALSE)
+
+      stop("The `colors` arg must be either a character vector of colors or a function",
+           call. = FALSE)
     }
 
-    color_fn <- rlang::enquo(color_fn)
+    # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
     color_fn <- rlang::eval_tidy(color_fn, data_tbl)
 
     # Evaluate the color function with the data values
@@ -209,112 +224,52 @@ data_color <- function(data,
     # fixed alpha value if necessary
     color_vals <- html_color(colors = color_vals, alpha = alpha)
 
-    for (i in seq_along(data_vals)) {
+    color_styles <-
+      switch(
+        apply_to,
+        fill = lapply(color_vals, FUN = function(x) cell_fill(color = x)),
+        text = lapply(color_vals, FUN = function(x) cell_text(color = x))
+      )
 
-      color <- color_vals[i]
+    data_color_styles_tbl <-
+      dplyr::bind_rows(
+        data_color_styles_tbl,
+        generate_data_color_styles_tbl(
+          column = column, rows = rows,
+          color_styles = color_styles
+        )
+      )
 
-      if (apply_to == "fill") {
+    if (apply_to == "fill" && autocolor_text) {
 
-        # Apply color value to the background of the cell
-        data <-
-          scale_apply_styles(
-            data,
-            column = column,
-            apply_to = apply_to,
-            styles = list(list(color = color)),
-            rows_i = i
+      color_vals <- ideal_fgnd_color(bgnd_color = color_vals)
+
+      color_styles <- lapply(color_vals, FUN = function(x) cell_text(color = x))
+
+      data_color_styles_tbl <-
+        dplyr::bind_rows(
+          data_color_styles_tbl,
+          generate_data_color_styles_tbl(
+            column = column, rows = rows,
+            color_styles = color_styles
           )
-
-      } else if (apply_to == "text") {
-
-        # Apply color value to the text within the cell
-        data <-
-          scale_apply_styles(
-            data,
-            column = column,
-            apply_to = apply_to,
-            styles = list(list(color = color)),
-            rows_i = i
-          )
-      }
-
-      # If the `autocolor_text` option is TRUE then the coloring
-      # of text will be modified to achieve the highest contrast
-      # possible
-      if (apply_to == "fill" & autocolor_text) {
-
-        # Apply the `ideal_fgnd_color()` function to
-        # the background color value to obtain a suitable
-        # text color
-        color_text <- ideal_fgnd_color(bgnd_color = color)
-
-        # Apply color value to the text of the cell
-        data <-
-          scale_apply_styles(
-            data,
-            column = column,
-            apply_to = "text",
-            styles = list(list(color = color_text)),
-            rows_i = i
-          )
-      }
+        )
     }
   }
 
-  data
+  dt_styles_set(
+    data = data,
+    styles = dplyr::bind_rows(dt_styles_get(data = data), data_color_styles_tbl)
+  )
 }
 
-#' Apply color scale styles to the gt table data
-#'
-#' @noRd
-scale_apply_styles <- function(data,
-                               column,
-                               apply_to,
-                               styles,
-                               rows_i = NULL) {
+generate_data_color_styles_tbl <- function(column, rows, color_styles) {
 
-  data_tbl <- dt_data_get(data = data)
-
-  if (is.null(rows_i)) {
-    rows_i <- seq(nrow(data_tbl))
-  }
-
-  if (length(styles) != length(rows_i)) {
-
-    stop("The lengths of `styles` (", length(styles),
-         ") and of `rows_i` (", length(rows_i), ") must be equal.",
-         call. = FALSE)
-  }
-
-  for (i in seq_along(rows_i)) {
-
-    if (apply_to == "fill") {
-
-      data <-
-        data %>%
-        tab_style(
-          do.call(cell_fill, styles[[i]]),
-          cells_body(
-            columns = column,
-            rows = rows_i[[i]]
-          )
-        )
-
-    } else if (apply_to == "text") {
-
-      data <-
-        data %>%
-        tab_style(
-          do.call(cell_text, styles[[i]]),
-          cells_body(
-            columns = column,
-            rows = rows_i[[i]]
-          )
-        )
-    }
-  }
-
-  data
+  dplyr::tibble(
+    locname = "data", grpname = NA_character_,
+    colname = column, locnum = 5, rownum = rows,
+    styles = color_styles
+  )
 }
 
 #' Are color values in rgba() format?
