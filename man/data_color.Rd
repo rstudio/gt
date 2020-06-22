@@ -21,8 +21,8 @@ data_color(
 \item{colors}{Either a color mapping function from the \strong{scales} package or
 a vector of colors to use for each distinct value or level in each of the
 provided \code{columns}. The color mapping functions are:
-\code{\link[scales:col_quantile]{scales::col_quantile()}}, \code{\link[scales:col_bin]{scales::col_bin()}}, \code{\link[scales:col_numeric]{scales::col_numeric()}}, and
-\code{\link[scales:col_factor]{scales::col_factor()}}. If providing a vector of colors as a palette, each
+\code{\link[scales:col_numeric]{scales::col_quantile()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, \code{\link[scales:col_numeric]{scales::col_numeric()}}, and
+\code{\link[scales:col_numeric]{scales::col_factor()}}. If providing a vector of colors as a palette, each
 color value provided must either be a color name (in the set of colors
 provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal string in the form of
 "#RRGGBB" or "#RRGGBBAA".}
@@ -63,12 +63,12 @@ the \code{colors} argument. These functions map data values (\code{numeric} or
 \itemize{
 \item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping from
 continuous numeric data to an interpolated palette.
-\item \code{\link[scales:col_bin]{scales::col_bin()}}: provides a mapping of continuous numeric data to
+\item \code{\link[scales:col_numeric]{scales::col_bin()}}: provides a mapping of continuous numeric data to
 value-based bins. This internally uses the \code{\link[base:cut]{base::cut()}} function.
-\item \code{\link[scales:col_quantile]{scales::col_quantile()}}: provides a mapping of continuous
+\item \code{\link[scales:col_numeric]{scales::col_quantile()}}: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
 \code{\link[stats:quantile]{stats::quantile()}} function.
-\item \code{\link[scales:col_factor]{scales::col_factor()}}: provides a mapping of factors to colors. If the
+\item \code{\link[scales:col_numeric]{scales::col_factor()}}: provides a mapping of factors to colors. If the
 palette is discrete and has a different number of colors than the number of
 factors, interpolation is used.
 }
