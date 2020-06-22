@@ -99,7 +99,6 @@ tab_1 \%>\%
 # document
 tab_1 \%>\%
   gtsave("tab_1.tex", path = tempdir())
-
 }
 
 }
