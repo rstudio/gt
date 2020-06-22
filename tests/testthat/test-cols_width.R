@@ -112,10 +112,10 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html %>% render_as_html() %>%
     html_fragment_within(
       "<colgroup>",
-      "<col style=\"\"/>",
-      "<col style=\"\"/>",
-      "<col style=\"\"/>",
-      "<col style=\"\"/>",
+      "<col/>",
+      "<col/>",
+      "<col/>",
+      "<col/>",
       "</colgroup>"
     ) %>%
     expect_true()
@@ -140,7 +140,7 @@ test_that("the function `cols_width()` works correctly", {
       "<col style=\"width:100px;\"/>",
       "<col style=\"width:200px;\"/>",
       "<col style=\"width:20%;\"/>",
-      "<col style=\"\"/>",
+      "<col/>",
       "</colgroup>"
     ) %>%
     expect_true()
@@ -162,8 +162,8 @@ test_that("the function `cols_width()` works correctly", {
       "<colgroup>",
       "<col style=\"width:150px;\"/>",
       "<col style=\"width:150px;\"/>",
-      "<col style=\"\"/>",
-      "<col style=\"\"/>",
+      "<col/>",
+      "<col/>",
       "</colgroup>"
     ) %>%
     expect_true()

@@ -225,23 +225,55 @@ scale_x_values <- function(x,
 format_num_to_str <- function(x,
                               context,
                               decimals,
+                              n_sigfig,
                               sep_mark,
                               dec_mark,
                               drop_trailing_zeros,
+                              drop_trailing_dec_mark,
                               format = "f",
                               replace_minus_mark = TRUE) {
+
+  if (format == "fg") {
+    x <- signif(x, digits = n_sigfig)
+    mode <- NULL
+    digits <- n_sigfig
+    flag <- "#"
+    drop0trailing <- FALSE
+  } else if (format == "f") {
+    mode <- "double"
+    digits <- decimals
+    flag <- ""
+    drop0trailing <- drop_trailing_zeros
+  } else if (format == "e") {
+    mode <- "double"
+    digits <- decimals
+    flag <- ""
+    drop0trailing <- drop_trailing_zeros
+  } else {
+    stop("The format provided isn't recognized.")
+  }
 
   x_str <-
     formatC(
       x = x,
-      digits = decimals,
-      mode = "double",
-      big.mark = sep_mark,
-      decimal.mark = dec_mark,
       format = format,
-      drop0trailing = drop_trailing_zeros
+      mode = mode,
+      digits = digits,
+      flag = flag,
+      drop0trailing = drop0trailing,
+      big.mark = sep_mark,
+      decimal.mark = dec_mark
     )
 
+  # If a trailing decimal mark is to be retained (not the
+  # default option but sometimes desirable), affix the `dec_mark`
+  # to the right of those figures that are missing this mark
+  if (!drop_trailing_dec_mark) {
+    x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
+    x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
+  }
+
+  # Replace the minus mark (a hyphen) with a context-specific minus sign
   if (replace_minus_mark) {
     x_str <- format_minus(x_str = x_str, x = x, context = context)
   }
@@ -258,7 +290,8 @@ format_num_to_str_c <- function(x,
                                 decimals,
                                 sep_mark,
                                 dec_mark,
-                                drop_trailing_zeros = FALSE) {
+                                drop_trailing_zeros = FALSE,
+                                drop_trailing_dec_mark) {
 
   format_num_to_str(
     x = x,
@@ -267,6 +300,7 @@ format_num_to_str_c <- function(x,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
     format = "f"
   )
 }

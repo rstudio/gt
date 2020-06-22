@@ -1019,6 +1019,22 @@ validate_table_id <- function(id) {
   }
 }
 
+validate_n_sigfig <- function(n_sigfig) {
+
+  if (length(n_sigfig) != 1) {
+    stop("The length of `n_sigfig` must be 1.", call. = FALSE)
+  }
+  if (is.na(n_sigfig)) {
+    stop("The value for `n_sigfig` must not be `NA`.", call. = FALSE)
+  }
+  if (!is.numeric(n_sigfig)) {
+    stop("Any input for `n_sigfig` must be numeric.", call. = FALSE)
+  }
+  if (n_sigfig < 1) {
+    stop("The value for `n_sigfig` must be greater than or equal to 1.", call. = FALSE)
+  }
+}
+
 validate_css_lengths <- function(x) {
 
   # Don't include empty strings in the validation; these lengths
