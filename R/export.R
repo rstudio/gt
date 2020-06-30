@@ -332,6 +332,28 @@ as_raw_html <- function(data,
 #'
 #' @param data A table object that is created using the [gt()] function.
 #'
+#' @details
+#' LaTeX packages required to generate tables are:
+#' `r paste0(gt:::latex_packages(), collapse = ", ")`.
+#'
+#' In the event packages are not automatically added during the render phase
+#' of the document, please create and include a style file to load them.
+#'
+#' Inside the document's YAML metadata, please include:
+#'
+#' \preformatted{
+#' output:
+#'   pdf_document: # Change to appropriate LaTeX template
+#'     includes:
+#'       in_header: 'gt_packages.sty'
+#' }
+#'
+#' The `gt_packages.sty` file would then contain the listed dependencies above:
+#'
+#' \preformatted{
+#'   \usepackage{amsmath, booktabs, caption, longtable}
+#' }
+#'
 #' @examples
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
