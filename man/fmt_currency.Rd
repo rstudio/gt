@@ -12,6 +12,7 @@ fmt_currency(
   use_subunits = TRUE,
   accounting = FALSE,
   decimals = NULL,
+  drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
   scale_by = 1,
   suffixing = FALSE,
@@ -68,6 +69,11 @@ Using \code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
+
+\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
+which means that trailing decimal marks are not shown.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is

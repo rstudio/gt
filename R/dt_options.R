@@ -53,6 +53,7 @@ dt_options_tbl <-
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
     "table_width",                        TRUE,  "table",            "px",      "auto",
+    "table_layout",                       TRUE,  "table",            "value",   "fixed",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
